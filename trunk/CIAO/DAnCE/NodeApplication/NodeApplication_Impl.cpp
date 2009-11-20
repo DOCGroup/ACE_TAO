@@ -393,7 +393,7 @@ NodeApplication_Impl::init()
   PortableServer::ObjectId_var sa_id =
     this->poa_->activate_object (this->activator_.get ());
 
-  DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_impl::init - ServerActivator object created\n")));
+  DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::init - ServerActivator object created\n")));
 
   const ACE_TCHAR *ior = 0;
 
@@ -407,14 +407,14 @@ NodeApplication_Impl::init()
         }
       catch (const CORBA::Exception &e)
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_impl::init - ")
+          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::init - ")
                         ACE_TEXT("Unable to resolve the instance naming context:%C\n"),
                         e._info ().c_str ()));
         }
-      DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::init - ")
+      DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init - ")
                     ACE_TEXT("Successfully resolved the instance naming context.\n")));
     }
-  else DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::init - ")
+  else DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init - ")
                      ACE_TEXT("No instance NC was provided\n")));
 }
 
@@ -977,7 +977,7 @@ NodeApplication_Impl::create_component_server (size_t index)
 
     try
     {
-      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::create_component_Server - ")
+      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::create_component_Server - ")
                    ACE_TEXT("creating component server %u\n"), index));
       ::Components::ConfigValues config_values;
 
@@ -991,12 +991,12 @@ NodeApplication_Impl::create_component_server (size_t index)
   }
 
       server.ref = this->activator_->create_component_server (config_values);
-      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::create_component_server - ")
+      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::create_component_server - ")
                    ACE_TEXT("component server created\n")));
     }
   catch (const ::Components::CreateFailure& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_impl::create_container - ")
+      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::create_container - ")
                    ACE_TEXT("Components::Deployment::ServerActivator_var::create_component_server() ")
                    ACE_TEXT("returned ::Components::CreateFailure exception\n")));
       throw ::Deployment::StartError("",
@@ -1004,7 +1004,7 @@ NodeApplication_Impl::create_component_server (size_t index)
     }
   catch (const ::Components::Deployment::InvalidConfiguration& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_impl::create_container - ")
+      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::create_container - ")
                    ACE_TEXT("Components::Deployment::ServerActivator_var::create_component_server() ")
                    ACE_TEXT("returned ::Components::Deployment::InvalidConfiguration exception\n")));
       throw ::Deployment::InvalidProperty("",
@@ -1020,7 +1020,7 @@ NodeApplication_Impl::create_component_server (size_t index)
       }
     catch (...)
       {
-        DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_impl::create_container - ")
+        DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::create_container - ")
                       ACE_TEXT("Caught exception whilst creating container; re-throwing.\n")));
         throw;
       }
@@ -1029,7 +1029,7 @@ NodeApplication_Impl::create_component_server (size_t index)
 void
 NodeApplication_Impl::store_instance_ior (Instance &inst)
 {
-  DANCE_TRACE ("NodeApplication_impl::store_instance_ior");
+  DANCE_TRACE ("NodeApplication_Impl::store_instance_ior");
 
   const char *name = 0;
 
@@ -1037,7 +1037,7 @@ NodeApplication_Impl::store_instance_ior (Instance &inst)
                           this->plan_.instance[inst.idd_idx].configProperty,
                           name))
     {
-      DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::store_instance_ior - ")
+      DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::store_instance_ior - ")
                     ACE_TEXT("Storing instance '%C' object reference in Naming Service as %C\n"),
                     this->plan_.instance[inst.idd_idx].name.in (),
                     name));
@@ -1058,18 +1058,18 @@ NodeApplication_Impl::store_instance_ior (Instance &inst)
 void
 NodeApplication_Impl::create_container (size_t server, size_t cont_idx)
 {
-  DANCE_TRACE ("NodeApplication_impl::create_container");
+  DANCE_TRACE ("NodeApplication_Impl::create_container");
 
   Container &container = this->servers_[server].containers[cont_idx];
 
-  DANCE_DEBUG ((LM_TRACE, ACE_TEXT("NodeApplication_impl::create_container - ")
+  DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::create_container - ")
                 ACE_TEXT("Creating container\n")));
   // TODO: Need to create configvalues
   Components::ConfigValues cvs;
 
   container.ref = this->servers_[server].ref->create_container (cvs);
 
-  DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_impl::create_container - ")
+  DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::create_container - ")
                 ACE_TEXT("Configuring %u homes on container %u on server %u\n"),
                 container.homes.size (),
                 server, cont_idx));
@@ -1081,7 +1081,7 @@ NodeApplication_Impl::create_container (size_t server, size_t cont_idx)
       this->store_instance_ior (container.homes[i]);
     }
 
-  DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_impl::create_container - ")
+  DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::create_container - ")
                 ACE_TEXT("Configuring %u components on container %u on server %u\n"),
                 container.components.size (),
                 server, cont_idx));
@@ -1107,7 +1107,7 @@ NodeApplication_Impl::create_container (size_t server, size_t cont_idx)
 NodeApplication_Impl::ColocationMap
 NodeApplication_Impl::create_colocation_groups (void)
 {
-  DANCE_TRACE ("NodeApplication_impl::create_colocation_groups");
+  DANCE_TRACE ("NodeApplication_Impl::create_colocation_groups");
 
   ColocationMap  retval;
   size_t num_servers = 0;
@@ -1122,7 +1122,7 @@ NodeApplication_Impl::create_colocation_groups (void)
       if (this->plan_.localityConstraint[i].constraint != ::Deployment::PlanSameProcess)
         {
           DANCE_ERROR ((LM_ERROR, DLINFO
-                        ACE_TEXT ("NodeApplication_impl::create_colocation_groups - ")
+                        ACE_TEXT ("NodeApplication_Impl::create_colocation_groups - ")
                         ACE_TEXT ("Error: On locality constraint %u, unsupported locality constraint.\n"),
                         i));
           continue;
@@ -1135,7 +1135,7 @@ NodeApplication_Impl::create_colocation_groups (void)
           std::string id = this->plan_.instance[instances[j]].name.in ();
 
           DANCE_DEBUG ((LM_INFO, DLINFO
-                        ACE_TEXT ("NodeApplication_impl::create_colocation_groups - ")
+                        ACE_TEXT ("NodeApplication_Impl::create_colocation_groups - ")
                         ACE_TEXT ("Instance <%C> allocated to component server %u\n"),
                         id.c_str (), num_servers));
 
@@ -1155,13 +1155,13 @@ NodeApplication_Impl::create_colocation_groups (void)
           if (!create_default_server)
             {
               DANCE_DEBUG ((LM_INFO, DLINFO
-                            ACE_TEXT ("NodeApplication_impl::create_colocation_groups - ")
+                            ACE_TEXT ("NodeApplication_Impl::create_colocation_groups - ")
                             ACE_TEXT ("Creating default colocation group.\n")));
               create_default_server = true;
             }
 
           DANCE_DEBUG ((LM_INFO, DLINFO
-                        ACE_TEXT ("NodeApplication_impl::create_colocation_groups - ")
+                        ACE_TEXT ("NodeApplication_Impl::create_colocation_groups - ")
                         ACE_TEXT ("Assigning instance <%C> to default colocation group.\n"),
                         i->first.c_str ()));
           i->second = num_servers;
@@ -1181,11 +1181,11 @@ NodeApplication_Impl::create_colocation_groups (void)
 void
 NodeApplication_Impl::init_components()
 {
-  DANCE_TRACE ("NodeApplication_impl::init_components");
+  DANCE_TRACE ("NodeApplication_Impl::init_components");
 
   Components::ConfigValues config_values;
   DANCE_DEBUG((LM_DEBUG, DLINFO
-               ACE_TEXT("NodeApplication_impl::init_components - ")
+               ACE_TEXT("NodeApplication_Impl::init_components - ")
                ACE_TEXT("Configuring %u component/home instances\n"),
                this->plan_.instance.length()));
 
@@ -1217,7 +1217,7 @@ NodeApplication_Impl::init_components()
             case eHome:
               {
                 DANCE_DEBUG ((LM_DEBUG, DLINFO
-                              ACE_TEXT("NodeApplication_impl::init_components - ")
+                              ACE_TEXT("NodeApplication_Impl::init_components - ")
                               ACE_TEXT("Allocating instance %C as a home\n"),
                               this->plan_.instance[i].name.in ()));
                 size_t const svr = colocation_map[this->plan_.instance[i].name.in ()];
@@ -1234,7 +1234,7 @@ NodeApplication_Impl::init_components()
               }
             case eComponent:
               {
-                DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::init_components - ")
+                DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init_components - ")
                               ACE_TEXT("Allocating instance %C as a standalone component\n"),
                               this->plan_.instance[i].name.in ()));
                 size_t const svr = colocation_map[this->plan_.instance[i].name.in ()];
@@ -1249,7 +1249,7 @@ NodeApplication_Impl::init_components()
               }
             case eHomedComponent:
               {
-                DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::init_components - ")
+                DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init_components - ")
                               ACE_TEXT("Allocating instance %C as a home managed component\n"),
                               this->plan_.instance[i].name.in ()));
                 size_t const svr = colocation_map[this->plan_.instance[i].name.in ()];
@@ -1264,7 +1264,7 @@ NodeApplication_Impl::init_components()
               }
             default:
               {
-                DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_impl::init_components - ")
+                DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::init_components - ")
                              ACE_TEXT("get_instance_type function returned invalid instance type\n")));
                 throw ::Deployment::InvalidProperty (this->plan_.instance[i].name.in (),
                                                      "Unable to affirmatively determine instance type");
@@ -1281,18 +1281,18 @@ NodeApplication_Impl::init_components()
     }
 
   DANCE_DEBUG ((LM_TRACE, DLINFO
-                ACE_TEXT("NodeApplication_impl::init_components - ")
+                ACE_TEXT("NodeApplication_Impl::init_components - ")
                 ACE_TEXT("Creating component servers and installing components.\n")));
 
   for (size_t i = 0; i < this->servers_.size (); ++i)
     {
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_impl::init_components - ")
+      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::init_components - ")
                     ACE_TEXT("Creating component server with index %u\n"), i));
       this->create_component_server (i);
     }
 
 
-  DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::init_components - finished\n")));
+  DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init_components - finished\n")));
 }
 
 void
@@ -1587,7 +1587,7 @@ NodeApplication_Impl::get_instance_type (const ::Deployment::Properties& prop) c
 ::Deployment::Connections*
 NodeApplication_Impl::getAllConnections()
 {
-  DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::getAllConnections - started\n")));
+  DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - started\n")));
 
   ::Deployment::Connections_var conn;
   ACE_NEW_THROW_EX (conn,
@@ -1627,30 +1627,30 @@ NodeApplication_Impl::getAllConnections()
                         ACE_CString name = this->plan_.connection[i].internalEndpoint[j].portName.in();
                         if (name.compare ("supports") != 0)
                           {
-                            DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::getAllConnections - ")
+                            DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
                                          ACE_TEXT("provide_facet for connection %C endpoint %C started\n"),
                                          this->plan_.connection[i].name.in(),
                                          this->plan_.connection[i].internalEndpoint[j].portName.in()));
                             CORBA::String_var facet_name = CORBA::string_dup (name.c_str());
                             (*conn) [index].endpoint[0] = obj->provide_facet (facet_name.in());
-                            DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::getAllConnections - ")
+                            DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
                                          ACE_TEXT("provide_facet for connection %C endpoint %C finished\n"),
                                          this->plan_.connection[i].name.in(),
                                          this->plan_.connection[i].internalEndpoint[j].portName.in()));
                           }
                         else
                           {
-                            DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::getAllConnections - ")
+                            DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
                                          ACE_TEXT("provide_facet for connection %C endpoint %C started\n"),
                                          this->plan_.connection[i].name.in(),
                                          this->plan_.connection[i].internalEndpoint[j].portName.in()));
                             (*conn) [index].endpoint[0] = CORBA::Object::_duplicate (obj.in());
                           }
-                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::getAllConnections - provide_facet finished\n")));
+                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - provide_facet finished\n")));
                       }
                     catch (const ::Components::InvalidName& )
                       {
-                        DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_impl::getAllConnections - ")
+                        DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::getAllConnections - ")
                                      ACE_TEXT("Components::CCMObject_var::provide_facet() returned ")
                                      ACE_TEXT("::Components::InvalidName exception for connection %C and port %C\n"),
                                      this->plan_.connection[i].name.in (),
@@ -1664,17 +1664,17 @@ NodeApplication_Impl::getAllConnections()
                   {
                     try
                       {
-                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::getAllConnections - ")
+                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
                                      ACE_TEXT("get_consumer for connection %C endpoint %C started\n"),
                                      this->plan_.connection[i].name.in(),
                                      this->plan_.connection[i].internalEndpoint[j].portName.in()));
                         (*conn) [index].endpoint[0] = obj->get_consumer (this->plan_.connection[i].internalEndpoint[j].portName.in());
-                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::getAllConnections - ")
+                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
                                      ACE_TEXT("get_consumer finished\n")));
                       }
                     catch (const ::Components::InvalidName& )
                       {
-                        DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_impl::getAllConnections - ")
+                        DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::getAllConnections - ")
                                      ACE_TEXT("Components::CCMObject_var::get_consumer() returned ")
                                      ACE_TEXT("::Components::InvalidName exception for connection %C and port %C\n"),
                                      this->plan_.connection[i].name.in (),
@@ -1686,7 +1686,7 @@ NodeApplication_Impl::getAllConnections()
                   }
                 default:
                   {
-                    DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_impl::getAllConnections - ")
+                    DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::getAllConnections - ")
                                  ACE_TEXT("Connection.InternalEndPoint.Kind is not a ")
                                  ACE_TEXT("Deployment::Facet or Deployment::EventConsumer\n")));
                     throw ::Deployment::InvalidProperty(this->plan_.connection[i].name.in (),
@@ -1696,7 +1696,7 @@ NodeApplication_Impl::getAllConnections()
             }
         }
     }
-  DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::getAllConnections - finished\n")));
+  DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - finished\n")));
   return conn._retn();
 }
 
@@ -1706,7 +1706,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
 {
   DANCE_TRACE ("NodeApplication_Impl::finishLaunch");
 
-  DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - ")
+  DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
                ACE_TEXT("started for connections sequence with length: %d\n"),
                providedReference.length()));
 
@@ -1714,7 +1714,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
   {
     std::ostringstream pr_stream;
     pr_stream << providedReference << std::endl;
-    DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_impl::finishLaunch - Provided references: %C\n",
+    DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::finishLaunch - Provided references: %C\n",
                   pr_stream.str ().c_str ()));
   }
 #endif /* GEN_OSTREAM_OPS */
@@ -1723,7 +1723,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
     {
       CORBA::ULong inst (this->plan_.connection[j].internalEndpoint[0].instanceRef);
 
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - ")
+      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
                     ACE_TEXT("Connection %C, instance %u\n"),
                     this->plan_.connection[j].name.in (),
                     inst));
@@ -1732,7 +1732,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
       {
         std::ostringstream conn_stream;
         conn_stream << this->plan_.connection[j] << std::endl;
-        DANCE_DEBUG ((LM_TRACE, "NodeApplication_impl::finishLaunch - Local connections: %C\n", conn_stream.str ().c_str ()));
+        DANCE_DEBUG ((LM_TRACE, "NodeApplication_Impl::finishLaunch - Local connections: %C\n", conn_stream.str ().c_str ()));
       }
 #endif /* GEN_OSTREAM_OPS  */
 
@@ -1742,7 +1742,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
 
       if (CORBA::is_nil (obj.in ()))
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - ")
+          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
                         ACE_TEXT("Unable to narrow apparent component instance reference to CCMObject for instance '%C'\n"),
                         this->plan_.instance[inst].name.in ()));
           throw ::Deployment::InvalidConnection (this->plan_.instance[inst].name.in (),
@@ -1763,7 +1763,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                     {
                     case ::Deployment::Facet:
                       {
-                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - ")
+                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
                                      ACE_TEXT("set for facet %C\n"), name.c_str ()));
                         Components::CCMObject_var ext_inst;
                         try
@@ -1788,7 +1788,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                             ext_inst = Components::CCMObject::_narrow (tmp);
                             if (CORBA::is_nil (ext_inst.in()))
                               {
-                                DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - ")
+                                DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
                                              ACE_TEXT("facet for %C can't be narrowed\n"), name.c_str ()));
                                 break;
                               }
@@ -1811,7 +1811,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                       }
                     case ::Deployment::EventConsumer:
                       {
-                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - set for consumer\n")));
+                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - set for consumer\n")));
                         Components::CCMObject_var ext_inst;
                         try
                           {
@@ -1824,7 +1824,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                             ext_inst = Components::CCMObject::_narrow (tmp);
                             if (CORBA::is_nil (ext_inst.in()))
                               {
-                                DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_impl::finishLaunch - ")
+                                DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::finishLaunch - ")
                                              ACE_TEXT("reference for %C can't be narrowed\n"), name.c_str ()));
                                 throw ::Deployment::InvalidConnection(conn.name.in (),
                                                                       "Couldn't narrow reference for external reference");
@@ -1859,7 +1859,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                     case ::Deployment::SimplexReceptacle:
                       {
                         // What we should do with Cookie, returned from connect call???
-                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - set for receptacle\n")));
+                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - set for receptacle\n")));
                         this->connect_receptacle (obj.in(),
                                                   conn.internalEndpoint[0].portName.in(),
                                                   providedReference[i].endpoint[0].in());
@@ -1867,7 +1867,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                       }
                     case ::Deployment::EventEmitter:
                       {
-                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - set for emitter\n")));
+                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - set for emitter\n")));
                         this->connect_emitter (obj.in(),
                                                conn.internalEndpoint[0].portName.in(),
                                                providedReference[i].endpoint[0].in());
@@ -1875,7 +1875,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                       }
                     case ::Deployment::EventPublisher:
                       {
-                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - set for publisher\n")));
+                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - set for publisher\n")));
                         this->connect_publisher (obj.in(),
                                                  conn.internalEndpoint[0].portName.in(),
                                                  providedReference[i].endpoint[0].in());
@@ -1883,7 +1883,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                       }
                     default:
                       {
-                        DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - currect Connection.InternalEndPoint.Kind ")
+                        DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - currect Connection.InternalEndPoint.Kind ")
                                      ACE_TEXT("is not a Deployment::SimplexReceptacle, Deployment::EventEmitter, Deployment::EventPublisher ")
                                      ACE_TEXT("(Connection:%C Kind:%i PortName:%C)\n"),
                                      conn.name.in(),
@@ -1897,7 +1897,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                 }
               catch (::Deployment::StartError &ex)
                 {
-                  DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - ")
+                  DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
                                 ACE_TEXT("Intercepted StartError exception while configuring [%C] connection, rethrowing\n"),
                                 name.c_str ()));
                   ex.name = name.c_str ();
@@ -1905,7 +1905,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                 }
               catch (::Deployment::InvalidConnection &ex)
                 {
-                  DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - ")
+                  DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
                                 ACE_TEXT("Intercepted InvalidConnection exception while configuring [%C] connection, rethrowing\n"),
                                 name.c_str ()));
                   ex.name = name.c_str ();
@@ -1922,7 +1922,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
       this->start();
     }
 
-  DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - finished\n")));
+  DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - finished\n")));
 }
 
 Components::Cookie*
@@ -1933,35 +1933,35 @@ NodeApplication_Impl::connect_receptacle (Components::CCMObject_ptr inst,
   Components::Cookie* res = 0;
   try
     {
-      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - ")
+      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
                    ACE_TEXT("connect SimplexReceptacle for %C started\n"), port_name.c_str()));
       res = inst->connect (port_name.c_str(), facet);
-      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - connect finished\n")));
+      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - connect finished\n")));
     }
   catch (const ::Components::InvalidName& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_impl::finishLaunch - ")
+      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::finishLaunch - ")
                    ACE_TEXT("Components::CCMObject_var::connect() returned ::Components::InvalidName exception\n")));
       throw ::Deployment::StartError("",
                                      "Received InvalidName exception while connecting receptacle.");
     }
   catch (const ::Components::InvalidConnection& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_impl::finishLaunch - ")
+      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::finishLaunch - ")
                    ACE_TEXT("Components::CCMObject_var::connect() returned ::Components::InvalidConnection exception\n")));
       throw ::Deployment::InvalidConnection("",
                                             "InvalidConnection caught while connecting receptacle.");
     }
   catch (const ::Components::AlreadyConnected& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_impl::finishLaunch - ")
+      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::finishLaunch - ")
                    ACE_TEXT("Components::CCMObject_var::connect() returned ::Components::AlreadyConnected exception\n")));
       throw ::Deployment::InvalidConnection("",
                                             "Caught AlreadyConnected exception while connecting receptacle");
     }
   catch (const ::Components::ExceededConnectionLimit& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_impl::finishLaunch - ")
+      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::finishLaunch - ")
                    ACE_TEXT("Components::CCMObject_var::connect() returned ::Components::ExceededConnectionLimit exception\n")));
       throw ::Deployment::InvalidConnection("",
                                             "Caught ExceededConnectionLimit exception while connecting receptacle.");
@@ -1977,35 +1977,35 @@ NodeApplication_Impl::connect_receptacle_ext (Components::CCMObject_ptr inst,
   Components::Cookie* res = 0;
   try
     {
-      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - ")
+      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
                    ACE_TEXT("connect SimplexReceptacle for %C started\n"), port_name.c_str()));
       res = inst->connect (port_name.c_str(), facet);
-      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - connect finished\n")));
+      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - connect finished\n")));
     }
   catch (const ::Components::InvalidName& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_impl::finishLaunch - ")
+      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::finishLaunch - ")
                    ACE_TEXT("Components::CCMObject_var::connect() returned ::Components::InvalidName exception\n")));
       throw ::Deployment::StartError("",
                                      "Caught InvalidName exception while connecting external receptacle.");
     }
   catch (const ::Components::InvalidConnection& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_impl::finishLaunch - ")
+      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::finishLaunch - ")
                    ACE_TEXT("Components::CCMObject_var::connect() returned ::Components::InvalidConnection exception\n")));
       throw ::Deployment::InvalidConnection("",
                                             "Caught InvalidConnection exception while connecting external receptacle.");
     }
   catch (const ::Components::AlreadyConnected& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_impl::finishLaunch - ")
+      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::finishLaunch - ")
                    ACE_TEXT("Components::CCMObject_var::connect() returned ::Components::AlreadyConnected exception\n")));
       throw ::Deployment::InvalidConnection("",
                                             "Caught AlreadyConnected exception while connecting external receptacle.");
     }
   catch (const ::Components::ExceededConnectionLimit& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_impl::finishLaunch - ")
+      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::finishLaunch - ")
                    ACE_TEXT("Components::CCMObject_var::connect() returned ::Components::ExceededConnectionLimit exception\n")));
       throw ::Deployment::InvalidConnection("",
                                             "Caught ExceededConnectionLimit while connecting external receptacle.");
@@ -2021,29 +2021,29 @@ NodeApplication_Impl::connect_emitter (Components::CCMObject_ptr inst,
   Components::EventConsumerBase_var event = Components::EventConsumerBase::_unchecked_narrow (consumer);
   try
     {
-      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - ")
+      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
                    ACE_TEXT("connect_consumer for %C started\n"), port_name.c_str()));
       inst->connect_consumer (port_name.c_str(), event);
-      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - ")
+      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
                    ACE_TEXT("connect_consumer finished\n")));
     }
   catch (const ::Components::InvalidName& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" ACE_TEXT(NodeApplication_impl::finishLaunch - ")
+      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" ACE_TEXT(NodeApplication_Impl::finishLaunch - ")
                    ACE_TEXT("Components::CCMObject_var::connect_consumer() returned ::Components::InvalidName exception\n")));
       throw ::Deployment::StartError("",
                                      "Caught InvalidName while connecting emitter.");
     }
   catch (const ::Components::AlreadyConnected& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_impl::finishLaunch - ")
+      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::finishLaunch - ")
                    ACE_TEXT("Components::CCMObject_var::connect_consumer() returned ::Components::AlreadyConnected exception\n")));
       throw ::Deployment::InvalidConnection("",
                                             "Caught AlreadyConnected exception while connecting emitter");
     }
   catch (const ::Components::InvalidConnection& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_impl::finishLaunch - ")
+      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::finishLaunch - ")
                    ACE_TEXT("Components::CCMObject_var::connect_consumer() returned ::Components::InvalidConnection exception\n")));
       throw ::Deployment::InvalidConnection("",
                                             "Caught InvalidConnection while connecting emitter.");
@@ -2058,21 +2058,21 @@ NodeApplication_Impl::connect_emitter_ext (Components::CCMObject_ptr inst,
   Components::EventConsumerBase_var event = Components::EventConsumerBase::_unchecked_narrow (consumer);
   try
     {
-      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - ")
+      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
                    ACE_TEXT("connect_emitter_ext for %C started\n"), port_name.c_str()));
       inst->connect_consumer (port_name.c_str(), event);
-      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - connect_emitter_ext finished\n")));
+      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - connect_emitter_ext finished\n")));
     }
   catch (const ::Components::AlreadyConnected& )
     {
-      DANCE_DEBUG ( (LM_WARNING, ACE_TEXT("NodeApplication_impl::finishLaunch - ")
+      DANCE_DEBUG ( (LM_WARNING, ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
                      ACE_TEXT("Components::CCMObject_var::connect_consumer() returned ::Components::AlreadyConnected exception\n")));
       throw ::Deployment::InvalidConnection("",
                                             "Caught AlreadyConnected exception while connecting external emitter.");
     }
   catch (const ::Components::InvalidConnection& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_impl::finishLaunch - ")
+      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::finishLaunch - ")
                    ACE_TEXT("Components::CCMObject_var::connect_consumer() returned ::Components::InvalidConnection exception\n")));
       throw ::Deployment::InvalidConnection("",
                                             "Caught InvalidConnection exception while connecting external emitter.");
@@ -2098,24 +2098,24 @@ NodeApplication_Impl::connect_publisher (Components::CCMObject_ptr inst,
   try
     {
       res = inst->subscribe (port_name.c_str(), event);
-      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - successfully subscribed %C\n"),
+      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - successfully subscribed %C\n"),
                    port_name.c_str ()));
     }
   catch (const ::Components::InvalidName& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_impl::finishLaunch - ")
+      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::finishLaunch - ")
                    ACE_TEXT("Components::CCMObject_var::subscribe() returned ::Components::InvalidName exception\n")));
       throw ::Deployment::StartError("", "Caught InvalidName exception while connecting publisher");
     }
   catch (const ::Components::InvalidConnection& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_impl::finishLaunch - ")
+      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::finishLaunch - ")
                    ACE_TEXT("Components::CCMObject_var::subscribe() returned ::Components::InvalidConnection exception\n")));
       throw ::Deployment::InvalidConnection("", "Caught InvalidConnection exception while connecting publisher.");
     }
   catch (const ::Components::ExceededConnectionLimit& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_impl::finishLaunch - ")
+      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::finishLaunch - ")
                    ACE_TEXT("Components::CCMObject_var::subscribe() returned ::Components::ExceededCOnnectionLimit exception\n")));
       throw ::Deployment::InvalidConnection("", "Caught ExceededConnectionLimit exception while connecting publisher.");
     }

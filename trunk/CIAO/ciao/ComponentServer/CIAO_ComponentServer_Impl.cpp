@@ -98,7 +98,7 @@ namespace CIAO
         }
       catch (...)
         {
-          CIAO_ERROR ((LM_ERROR, "CIAO_ComponentServer_Impl: Caught unknown exception\n"));
+          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_ComponentServer_Impl: Caught unknown exception\n"));
         }
 
       throw Components::CreateFailure ();

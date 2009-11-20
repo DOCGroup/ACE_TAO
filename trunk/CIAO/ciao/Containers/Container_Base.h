@@ -50,7 +50,7 @@ namespace CIAO
                                 ACE_Null_Mutex> REC_POL_MAP_ITERATOR;
 
   /**
-   * @class Container
+   * @class Container_i
    *
    * @brief Common container interface definition.
    *
