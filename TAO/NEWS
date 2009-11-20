@@ -7,8 +7,12 @@ USER VISIBLE CHANGES BETWEEN TAO-1.7.4 and TAO-1.7.5
   attributes in a local interface derived from a non local interface
   where not regenerated as pure virtual
 
-. The idl3p keywords porttype/port/mirrorport are now fully
+. The IDL3+ keywords porttype/port/mirrorport are now fully
   implemented and tested
+  
+. Fixed bug in code generation for components, where a derived
+  component or home with more than one generation of ancestors
+  was missing inherited operations in its operation table
 
 USER VISIBLE CHANGES BETWEEN TAO-1.7.3 and TAO-1.7.4
 ====================================================
