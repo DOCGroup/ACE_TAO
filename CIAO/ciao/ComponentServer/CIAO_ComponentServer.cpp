@@ -1,7 +1,8 @@
 /**
  * @file CIAO_ComponentServer.cpp
  * @author William R. Otte
- * // $Id$
+ * $Id$
+ *
  * Implementation and main for CIAO_ComponentServer.
  */
 
@@ -21,9 +22,8 @@
 #include "ciao/Logger/Logger_Service.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "ciao/Server_init.h"
-
-
 #include "CIAO_ComponentServer_Impl.h"
+
 #include "CIAO_CS_ClientC.h"
 
 #ifdef CIAO_BUILD_COMPONENTSERVER_EXE

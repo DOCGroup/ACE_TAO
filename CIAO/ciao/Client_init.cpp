@@ -7,7 +7,7 @@
 #include <ccm/CCM_ObjectC.h>
 #include "Valuetype_Factories/ConfigValue.h"
 #include "ciao/Logger/Log_Macros.h"
-
+  
 int
 CIAO::Client_init (CORBA::ORB_ptr o)
 {

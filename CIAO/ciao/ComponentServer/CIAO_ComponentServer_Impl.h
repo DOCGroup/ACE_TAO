@@ -74,7 +74,7 @@ namespace CIAO
 
       CONTAINERS containers_;
       
-      CIAO::Deployment::ComponentInstallation_var ci_;
+      Components::Deployment::ComponentInstallation_var ci_;
     };
   }
 }

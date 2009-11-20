@@ -72,7 +72,7 @@ namespace CIAO
                               const char * default_cs_path,
                               const char * cs_args,
                               bool multithreaded,
-                              CIAO::Deployment::ComponentInstallation_ptr ci,
+                              Components::Deployment::ComponentInstallation_ptr ci,
                               CORBA::ORB_ptr orb,
                               PortableServer::POA_ptr poa_);
 
@@ -183,7 +183,7 @@ namespace CIAO
 
       ACE_Condition<TAO_SYNCH_MUTEX> condition_;
 
-      CIAO::Deployment::ComponentInstallation_var ci_;
+      Components::Deployment::ComponentInstallation_var ci_;
     };
 
 
