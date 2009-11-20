@@ -1,3 +1,39 @@
+Fri Nov 20 09:28:50 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * orbsvcs/DevGuideExamples/EventServices/OMG_TypedEC/run_test.pl:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_Federated/run_test.pl:
+        * orbsvcs/DevGuideExamples/EventServices/OMG_SupplierSideEC/run_test.pl:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_Filter/run_test.pl:
+        * orbsvcs/DevGuideExamples/EventServices/OMG_Basic/run_test.pl:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_MCast_Federated/run_test.pl:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_Basic/run_test.pl:
+        * orbsvcs/tests/Security/EndpointPolicy/run_test.pl:
+        * DevGuideExamples/Multithreading/ThreadPool/MessengerServer.cpp:
+        * DevGuideExamples/Multithreading/ThreadPool/MessengerClient.cpp:
+        * DevGuideExamples/Multithreading/ThreadPool/run_test.pl:
+        * DevGuideExamples/Multithreading/GracefulShutdown/MessengerServer.cpp:
+        * DevGuideExamples/Multithreading/GracefulShutdown/MessengerClient.cpp:
+        * DevGuideExamples/Multithreading/GracefulShutdown/run_test.pl:
+        * DevGuideExamples/Multithreading/ThreadPerConnection/MessengerServer.cpp:
+        * DevGuideExamples/Multithreading/ThreadPerConnection/MessengerClient.cpp:
+        * DevGuideExamples/Multithreading/ThreadPerConnection/run_test.pl:
+        * DevGuideExamples/AMH_AMI/inner_server.cpp:
+        * DevGuideExamples/AMH_AMI/client.cpp:
+        * DevGuideExamples/AMH_AMI/middle_server.cpp:
+        * DevGuideExamples/AMH_AMI/run_test.pl:
+        * tests/OctetSeq/run_test1.pl:
+        * tests/OctetSeq/run_test2.pl:
+        * tests/OctetSeq/run_test.pl:
+        * tests/Bug_1330_Regression/server.cpp:
+        * tests/Bug_1330_Regression/run_test.pl:
+        * tests/Leader_Followers/run_test.pl:
+        * tests/NestedUpcall/MT_Client_Test/run_test.pl:
+        * tests/Bug_2702_Regression/run_test.pl:
+        * tests/IPV6/run_test.pl:
+        * tests/MProfile_Connection_Timeout/run_test.pl:
+          
+          Tests are converted to use new test framework and added to fuzz build.
+
 Fri Nov 20 08:56:26 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Bug_3755_Regression/server.cpp:
