@@ -40,7 +40,9 @@ namespace CIAO
     public virtual Port_Activator
   {
   public:
-    Port_Activator_i (const char *oid, const char *name, Port_Activator_Types::Type t);
+    Port_Activator_i (const char *oid,
+                      const char *name,
+                      Port_Activator_Types::Type t);
 
     virtual ~Port_Activator_i (void);
 
