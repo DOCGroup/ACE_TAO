@@ -15,7 +15,6 @@ namespace CIAO
   }
 
   // Operations for CCMHome interface.
-
   CORBA::IRObject_ptr
   Home_Servant_Impl_Base::get_component_def (void)
   {

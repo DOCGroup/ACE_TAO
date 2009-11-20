@@ -27,7 +27,7 @@ public:
 
   virtual void key_fields (const ::DDS::StringSeq & key_fields);
 
-private:
+protected:
   CORBA::String_var topic_name_;
   DDS::StringSeq key_fields_;
 };
