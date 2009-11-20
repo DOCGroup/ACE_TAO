@@ -88,9 +88,9 @@ project(CIAO_ComponentServer_exe) : ccm_componentserver_svnt, portableserver, ci
 				    messaging, anytypecode, ciao_server, ciaoexe, ciao_session_container,\
                                     ciao_logger {
   exename = ciao_componentserver
-  macros += CIAO_BUILD_COMPONENTSERVER_EXE
   Source_Files {
     CIAO_ComponentServer.cpp
+    CIAO_ComponentServer_Task.cpp
   }
   Inline_Files {
   }
