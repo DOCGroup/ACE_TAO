@@ -42,9 +42,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      ACE_CString env (ACE_TEXT("SSL_CERT_FILE="));
+      ACE_TString env (ACE_TEXT("SSL_CERT_FILE="));
       env += cert_file;
-      ACE_OS::putenv (env.c_str ());
+      ACE_OS::putenv ( ACE_TEXT_ALWAYS_CHAR(env.c_str ()) );
 
       //
       // Initialize the ORB
