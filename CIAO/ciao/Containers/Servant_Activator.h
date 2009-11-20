@@ -76,7 +76,6 @@ namespace CIAO
                               PortableServer::Servant servant,
                               CORBA::Boolean cleanup_in_progress,
                               CORBA::Boolean remaining_activations);
-    /// Local helper methods
 
   private:
     /// Pointer to our ORB

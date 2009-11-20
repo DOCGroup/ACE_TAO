@@ -1,3 +1,27 @@
+Fri Nov 20 13:15:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ComponentServer_Impl.cpp:
+          Corrected debug statement
+
+        * ciao/ComponentServer/CIAO_ComponentServer_Task.cpp:
+          No need to initialise an _var with 0
+
+        * ciao/Containers/Container_Base.h:
+          Doxygen fix
+
+        * ciao/Containers/Servant_Activator.h:
+          Removed old comment
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+          Fixed some debug statements
+
+        * DAnCE/tests/CIAO/CommandlinePassage/CommandlinePassage_exec.cpp:
+          Use total_size() to check the tcm size
+
+        * DAnCE/tests/CIAO/CommandlinePassage/Component.cdp:
+          Corrected resource factory string and set a higher max, the tcm size
+          can grow if needed, so set it to a value it never should reach
+
 Fri Nov 20 11:42:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/CIAO.mpc
