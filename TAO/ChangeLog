@@ -1,7 +1,14 @@
+Fri Nov 20 18:46:27 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * tao/VarOut_T.h:
+        * tao/VarOut_T.inl:
+
+          Fixed Bug 3766.
+
 Fri Nov 20 16:55:01 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * NEWS:
-        
+
           Update for next release.
 
 Fri Nov 20 13:53:51 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
