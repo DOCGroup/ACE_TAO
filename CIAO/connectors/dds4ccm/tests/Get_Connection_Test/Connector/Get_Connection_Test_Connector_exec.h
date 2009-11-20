@@ -1,8 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
-#ifndef KEYED_TEST_CONNECTOR_EXEC_H_
-#define KEYED_TEST_CONNECTOR_EXEC_H_
+#ifndef GET_CONNECTION_TEST_CONNECTOR_EXEC_H_
+#define GET_CONNECTION_TEST_CONNECTOR_EXEC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -43,7 +43,7 @@ namespace CIAO_Get_Connection_Test_Get_Connection_Test_Connector_Impl
     ::CCM_DDS::Get_ConnectionTest::StateListener,
     ::CCM_DDS::ConnectorStatusListener> Get_ConnectionTest_Connector_Traits;
 
-  class KEYED_TEST_CONNECTOR_EXEC_Export Get_Connection_Test_Connector_exec_i :
+  class GET_CONNECTION_CONNECTOR_EXEC_Export Get_Connection_Test_Connector_exec_i :
     public DDS_Event_Connector_T <Get_ConnectionTest_DDS_Traits, Get_ConnectionTest_Connector_Traits>
   {
   public:
@@ -51,7 +51,7 @@ namespace CIAO_Get_Connection_Test_Get_Connection_Test_Connector_Impl
     virtual ~Get_Connection_Test_Connector_exec_i (void);
   };
 
-  extern "C" KEYED_TEST_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
+  extern "C" GET_CONNECTION_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Get_Connection_Test_Get_Connection_Test_Connector_Impl (void);
 }
 

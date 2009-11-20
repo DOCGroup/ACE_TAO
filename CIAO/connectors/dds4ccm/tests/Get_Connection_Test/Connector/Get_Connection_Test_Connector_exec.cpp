@@ -14,7 +14,7 @@ namespace CIAO_Get_Connection_Test_Get_Connection_Test_Connector_Impl
   {
   }
 
-  extern "C" KEYED_TEST_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
+  extern "C" GET_CONNECTION_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Get_Connection_Test_Get_Connection_Test_Connector_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =

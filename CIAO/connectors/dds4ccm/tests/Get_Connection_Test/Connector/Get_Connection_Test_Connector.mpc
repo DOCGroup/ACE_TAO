@@ -4,13 +4,13 @@
 project(DDS_Get_Connection_Connector_idl_gen) : connectoridldefaults {
   after += DDS4CCM_idl_gen
   custom_only = 1
-  idlflags += -Wb,stub_export_macro=KEYED_TEST_CONNECTOR_STUB_Export \
+  idlflags += -Wb,stub_export_macro=GET_CONNECTION_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=Get_Connection_Test_Connector_stub_export.h \
-              -Wb,skel_export_macro=KEYED_TEST_CONNECTOR_SVNT_Export \
+              -Wb,skel_export_macro=GET_CONNECTION_CONNECTOR_SVNT_Export \
               -Wb,skel_export_include=Get_Connection_Test_Connector_svnt_export.h \
-              -Wb,svnt_export_macro=KEYED_TEST_CONNECTOR_SVNT_Export \
+              -Wb,svnt_export_macro=GET_CONNECTION_CONNECTOR_SVNT_Export \
               -Wb,svnt_export_include=Get_Connection_Test_Connector_svnt_export.h \
-              -Wb,exec_export_macro=KEYED_TEST_CONNECTOR_EXEC_Export \
+              -Wb,exec_export_macro=GET_CONNECTION_CONNECTOR_EXEC_Export \
               -Wb,exec_export_include=Get_Connection_Test_Connector_exec_export.h \
               -I ..
 
@@ -22,7 +22,7 @@ project(DDS_Get_Connection_Connector_idl_gen) : connectoridldefaults {
 project(DDS_Get_Connection_Connector_lem_gen) : ciaoidldefaults {
   custom_only = 1
   after += DDS_Get_Connection_Connector_idl_gen
-  idlflags += -Wb,stub_export_macro=KEYED_TEST_CONNECTOR_LEM_STUB_Export \
+  idlflags += -Wb,stub_export_macro=GET_CONNECTION_CONNECTOR_LEM_STUB_Export \
               -Wb,stub_export_include=Get_Connection_Test_Connector_lem_stub_export.h \
               -SS -Gxhst \
               -I .. -I $(CIAO_ROOT)/connectors -I$(CIAO_ROOT)/connectors/dds4ccm/idl
@@ -39,7 +39,7 @@ project(DDS_Get_Connection_Connector_lem_stub) : ccm_svnt, dds4ccm_base   {
   libout = ../lib
   includes += ..
   sharedname = DDS_Get_Connection_Connector_lem_stub
-  dynamicflags   = KEYED_TEST_CONNECTOR_LEM_STUB_BUILD_DLL
+  dynamicflags   = GET_CONNECTION_CONNECTOR_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -65,7 +65,7 @@ project(DDS_Get_Connection_Connector_stub) : ccm_stub, dds4ccm_base   {
   libout = ../lib
   includes += ..
   sharedname = DDS_Get_Connection_Connector_stub
-  dynamicflags   = KEYED_TEST_CONNECTOR_STUB_BUILD_DLL
+  dynamicflags   = GET_CONNECTION_CONNECTOR_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -91,7 +91,7 @@ project(DDS_Get_Connection_Connector_exec) : ciao_executor, dds4ccm_skel, nddsli
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags   = KEYED_TEST_CONNECTOR_EXEC_BUILD_DLL
+  dynamicflags   = GET_CONNECTION_CONNECTOR_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -121,7 +121,7 @@ project(DDS_Get_Connection_Connector_svnt) : ciao_servant, dds4ccm_skel, nddslib
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags = KEYED_TEST_CONNECTOR_SVNT_BUILD_DLL
+  dynamicflags = GET_CONNECTION_CONNECTOR_SVNT_BUILD_DLL
 
   IDL_Files {
   }
