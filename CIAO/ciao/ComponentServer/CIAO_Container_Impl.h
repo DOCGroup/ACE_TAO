@@ -33,7 +33,7 @@ namespace CIAO
       /// Constructor
       CIAO_Container_i (const Components::ConfigValues &config,
                         const Static_Config_EntryPoints_Maps *,
-                        const char *,
+                        const char *name,
                         const CORBA::PolicyList *,
                         Components::Deployment::ComponentInstallation_ptr,
                         CORBA::ORB_ptr,
