@@ -31,8 +31,8 @@ $server->DeleteFile($mapping1);
 $server->DeleteFile($mapping2);
 
 $SV = $server->CreateProcess ("server",
-    "-a 'AAA -ORBdebuglevel $debug_level -ORBSvcConf $server_svc_conf1' " .
-    "-b 'BBB -ORBdebuglevel $debug_level -ORBGestalt LOCAL -ORBSvcConf $server_svc_conf2' " .
+    "-a \"AAA -ORBdebuglevel $debug_level -ORBSvcConf $server_svc_conf1\" " .
+    "-b \"BBB -ORBdebuglevel $debug_level -ORBGestalt LOCAL -ORBSvcConf $server_svc_conf2\" " .
     "-y $server_mapping1 " .
     "-z $server_mapping2");
 $server_status = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());

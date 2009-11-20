@@ -37,9 +37,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("usage:  %s ")
-                           ACE_TEXT ("-a <orb1_args>")
-                           ACE_TEXT ("-b <orb2_args>")
-                           ACE_TEXT ("-y <mapping_file_for_orb1>")
+                           ACE_TEXT ("-a <orb1_args> ")
+                           ACE_TEXT ("-b <orb2_args> ")
+                           ACE_TEXT ("-y <mapping_file_for_orb1> ")
                            ACE_TEXT ("-z <mapping_file_for_orb2>")
                            ACE_TEXT ("\n"),
                            argv [0]),
