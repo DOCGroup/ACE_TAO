@@ -65,19 +65,36 @@ replacement in the near term:
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.4 and CIAO-0.7.5
 =======================================================
 
-.  Added rudimentary support for PlanLocality, which allows DAnCE to spawn
-   multiple CIAO processes per node.  Currently, only SameProcess
-   constraints are honored.  SameProcess constraints are honored by
-   creating a separate process per constraint as it appears in the
-   plan, with the appropriate component instances spawned in each
-   process.  
+. Added rudimentary support for PlanLocality, which allows DAnCE to spawn
+  multiple CIAO processes per node.  Currently, only SameProcess
+  constraints are honored.  SameProcess constraints are honored by
+  creating a separate process per constraint as it appears in the
+  plan, with the appropriate component instances spawned in each
+  process.
 
-   Constraints are not rigerously checked by the runtime, so behaviour
-   when a component instance appears in multiple SameProcess
-   constraints is currently undefined.  
+  Constraints are not rigerously checked by the runtime, so behaviour
+  when a component instance appears in multiple SameProcess
+  constraints is currently undefined.
 
-   Components not appearing in any constraint are placed in a default
-   component server process.  
+  Components not appearing in any constraint are placed in a default
+  component server process.
+
+. DDS4CCM has been updated to match the beta 2 spec. If you want use
+  a templated module, use TYPED_MODULE macro as helper until the
+  TAO_IDL compiler supports templated modules
+
+. Updated all DDS4CCM code/examples/tests to match beta 2
+
+. Added Shapes sender/receiver for DDS4CCM
+
+. The configProperty edu.vanderbilt.dre.CIAO.ComponentServerExecutable
+  can be used in the deployment plan to set a different ciao component
+  server executable
+
+. The configProperty edu.vanderbilt.dre.CIAO.ComponentServerArgs
+  can be used in the deployment plan to specify a set of additional
+  commandline arguments that are than passed to the ciao component
+  server
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.3 and CIAO-0.7.4
 =======================================================
@@ -100,7 +117,7 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.7.3 and CIAO-0.7.4
   to the file in question.  While this behavior simplified a
   rudimentary use case where interfaces would be provided by only one
   component, more complicated use cases were much more difficult to
-  achieve.  
+  achieve.
 
   The new behvior causes the IDL compiler to generate LEM IDL for all
   interfaces within a given translation unit, regardless of whether or
@@ -109,12 +126,12 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.7.3 and CIAO-0.7.4
   that is not defined with the translation unit of that compoment, it
   is required that the user provide a #include directive to the
   appropriate E.idl file which contains the required LEM interface for
-  the interfaces provided as facets.  
+  the interfaces provided as facets.
 
   This new behavior is similar to the former behavior of -Glfa, and as
   such the behavior of -Glfa has been changed to attempt to be
   reflective of the old behavior of -Glem, and may be used as a
-  stopgap backwards compatibility measure.  
+  stopgap backwards compatibility measure.
 
 . In idl3_to_idl2 tool, replaced manual designation of IDL2-only
   files and resulting generated include of undecorated filename
