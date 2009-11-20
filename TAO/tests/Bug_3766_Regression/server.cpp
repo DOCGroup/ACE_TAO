@@ -25,7 +25,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
 
       Test_i *test_impl = new Test_i;
-      
+
       PortableServer::ServantBase_var owner_transfer(test_impl);
 
       PortableServer::ObjectId_var id =
