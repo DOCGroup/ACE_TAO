@@ -5,14 +5,9 @@
 
 #include "ast_porttype.h"
 
-ACE_RCSID (be,
-           be_extended_port,
-           "$Id$")
-
 be_extended_port::be_extended_port (
       UTL_ScopedName *n,
-      AST_PortType *porttype_ref,
-      AST_PortType::T_ARGLIST *template_args)
+      AST_PortType *porttype_ref)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_ext_port,
@@ -21,8 +16,7 @@ be_extended_port::be_extended_port (
                porttype_ref,
                n),
     AST_Extended_Port (n,
-                       porttype_ref,
-                       template_args),
+                       porttype_ref),
     be_field (porttype_ref,
               n)
 {

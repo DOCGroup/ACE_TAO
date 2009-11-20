@@ -1,3 +1,60 @@
+Fri Nov 20 20:09:59 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_instantiated_connector.h:
+        * TAO_IDL/include/ast_tmpl_port.h:
+        * TAO_IDL/include/ast_tmpl_mirror_port.h:
+        * TAO_IDL/ast/ast_instantiated_connector.cpp:
+        * TAO_IDL/ast/ast_tmpl_mirror_port.cpp:
+        * TAO_IDL/ast/ast_tmpl_port.cpp:
+        * TAO_IDL/be_include/be_tmpl_port.h:
+        * TAO_IDL/be_include/be_instantiated_connector.h:
+        * TAO_IDL/be_include/be_tmpl_mirror_port.h:
+        * TAO_IDL/be/be_tmpl_mirror_port.cpp:
+        * TAO_IDL/be/be_tmpl_port.cpp:
+        * TAO_IDL/be/be_instantiated_connector.cpp:
+
+          Removed these files, the AST node types they contain
+          are not relevant to the updated IDL3+ spec.
+
+        * TAO_IDL/include/ast_template_module_inst.h:
+        * TAO_IDL/ast/ast_template_module_inst.cpp:
+        * TAO_IDL/be/be_template_module_inst.cpp:
+        * TAO_IDL/be_include/be_template_module_inst.h:
+
+          New files, containing the AST node type corresponding
+          to an IDL template module declaration.
+
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/fe_utils.h:
+        * TAO_IDL/include/ast_mirror_port.h:
+        * TAO_IDL/include/ast_provides.h:
+        * TAO_IDL/include/ast_template_module.h:
+        * TAO_IDL/include/ast_extended_port.h:
+        * TAO_IDL/include/ast_uses.h:
+        * TAO_IDL/include/ast_porttype.h:
+        * TAO_IDL/include/ast_consumes.h:
+        * TAO_IDL/include/ast_publishes.h:
+        * TAO_IDL/include/ast_emits.h:
+        * TAO_IDL/be/be_mirror_port.cpp:
+        * TAO_IDL/be/be_extended_port.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_porttype.cpp:
+        * TAO_IDL/ast/ast_template_module.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_extended_port.cpp:
+        * TAO_IDL/ast/ast_mirror_port.cpp:
+        * TAO_IDL/ast/ast_porttype.cpp:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_porttype.h:
+        * TAO_IDL/be_include/be_extended_port.h:
+        * TAO_IDL/be_include/be_mirror_port.h:
+        * TAO_IDL/fe/fe_utils.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+
+          Removed operations, args and blocks of code that are
+          not relelvant to the updated IDL3+ spec.
+
 Thu Nov 19 20:47:43 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_param_holder.h:

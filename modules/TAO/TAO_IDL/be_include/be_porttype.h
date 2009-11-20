@@ -41,9 +41,7 @@ class be_porttype : public virtual AST_PortType,
   //   Extension of class AST_PortType for C++ code generation.
   //
 public:
-  be_porttype (
-    UTL_ScopedName *n,
-    FE_Utils::T_PARAMLIST_INFO *template_params);
+  be_porttype (UTL_ScopedName *n);
     
   virtual ~be_porttype (void);
   

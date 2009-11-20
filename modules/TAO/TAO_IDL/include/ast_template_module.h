@@ -4,13 +4,14 @@
 #ifndef AST_TEMPLATE_MODULE_H
 #define AST_TEMPLATE_MODULE_H
 
-#include "ast_template_common.h"
 #include "ast_module.h"
+#include "ast_type.h"
 
 #include "fe_utils.h"
 
 class TAO_IDL_FE_Export AST_Template_Module
-  : public virtual AST_Module
+  : public virtual AST_Module,
+    public virtual AST_Type
 {
 public:
   AST_Template_Module (UTL_ScopedName *n,

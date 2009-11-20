@@ -81,18 +81,16 @@ class UTL_ExprList;
 class AST_Root;
 class AST_EventType;
 class AST_EventTypeFwd;
-class AST_Template_Interface;
 class AST_Extended_Port;
 class AST_Mirror_Port;
 class AST_Connector;
-class AST_Instantiated_Connector;
-class AST_Tmpl_Port;
-class AST_Tmpl_Mirror_Port;
 class AST_Provides;
 class AST_Uses;
 class AST_Publishes;
 class AST_Emits;
 class AST_Consumes;
+class AST_Template_Module;
+class AST_Param_Holder;
 
 // Defines base class for node generators.
 
@@ -355,18 +353,7 @@ public:
                                          AST_Type *boxed_type);
 
   virtual
-  AST_Template_Interface *create_template_interface (
-    UTL_ScopedName *n,
-    AST_Interface **ih,
-    long nih,
-    AST_Interface **ih_flat,
-    long nih_flat,
-    FE_Utils::T_PARAMLIST_INFO *template_params);
-    
-  virtual
-  AST_PortType *create_porttype (
-    UTL_ScopedName *n,
-    FE_Utils::T_PARAMLIST_INFO *template_params);
+  AST_PortType *create_porttype (UTL_ScopedName *n);
     
   virtual
   AST_Provides *create_provides (UTL_ScopedName *n,
@@ -392,14 +379,12 @@ public:
   virtual
   AST_Extended_Port *create_extended_port (
     UTL_ScopedName *n,
-    AST_PortType *porttype_ref,
-    AST_PortType::T_ARGLIST *template_args);
+    AST_PortType *porttype_ref);
     
   virtual
   AST_Mirror_Port *create_mirror_port (
     UTL_ScopedName *n,
-    AST_PortType *porttype_ref,
-    AST_PortType::T_ARGLIST *template_args);
+    AST_PortType *porttype_ref);
     
   virtual
   AST_Connector *create_connector (
@@ -407,23 +392,13 @@ public:
     AST_Connector *base_connector);
     
   virtual
-  AST_Tmpl_Port *create_tmpl_port (
+  AST_Template_Module *create_template_module (
     UTL_ScopedName *n,
-    AST_PortType *porttype_ref);
+    FE_Utils::T_PARAMLIST_INFO *template_params);
     
   virtual
-  AST_Tmpl_Mirror_Port *create_tmpl_mirror_port (
-    UTL_ScopedName *n,
-    AST_PortType *porttype_ref);
-    
-  virtual
-  AST_Instantiated_Connector *create_instantiated_connector (
-    UTL_ScopedName *n,
-    AST_Connector *connector_type,
-    AST_Template_Common::T_ARGLIST *template_args);
-    
-  virtual
-  AST_Type *create_placeholder (UTL_ScopedName *n);
+  AST_Param_Holder *create_param_holder (
+    Identifier *parameter_name);
 };
 
 #endif           // _AST_GENERATOR_AST_GENERATOR_HH

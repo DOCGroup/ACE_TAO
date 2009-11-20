@@ -12,6 +12,8 @@ AST_Template_Module::AST_Template_Module (
               n),
     UTL_Scope (AST_Decl::NT_module),
     AST_Module (n),
+    AST_Type (AST_Decl::NT_module,
+              n),
     template_params_ (template_params)
 {
 }
