@@ -28,8 +28,7 @@ namespace CIAO
 
       struct Error
       {
-        Error (const ACE_CString &err) : err_(err) {}
-
+        Error (const ACE_CString &err);
         ACE_CString err_;
       };
 
@@ -37,10 +36,6 @@ namespace CIAO
 
     private:
       void parse_args (int argc, ACE_TCHAR **argv);
-
-      void get_log_level (int argc, ACE_TCHAR **argv);
-
-      void set_log_level (void);
 
       void configure_logging_backend (void);
 

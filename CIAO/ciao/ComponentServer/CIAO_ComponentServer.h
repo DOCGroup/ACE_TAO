@@ -28,8 +28,7 @@ namespace CIAO
 
       struct Error
       {
-        Error (const ACE_CString &err) : err_(err) {}
-
+        Error (const ACE_CString &err);
         ACE_CString err_;
       };
 

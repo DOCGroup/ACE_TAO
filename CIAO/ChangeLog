@@ -1,3 +1,12 @@
+Fri Nov 20 09:22:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ComponentServer.h
+        * ciao/ComponentServer/CIAO_ComponentServer_Task.cpp
+        * ciao/ComponentServer/CIAO_ComponentServer_Task.h
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp
+        * ciao/ComponentServer/CIAO_Container_Impl.h
+          Further cleanup
+
 Fri Nov 20 08:28:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/CIAO_ComponentServer.cpp

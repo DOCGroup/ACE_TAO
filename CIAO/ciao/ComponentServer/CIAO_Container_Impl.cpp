@@ -229,7 +229,6 @@ namespace CIAO
     {
       CIAO_TRACE("CIAO_Container_i::get_components");
       throw CORBA::NO_IMPLEMENT ();
-      return 0;
     }
 
     ::Components::ConfigValues *
@@ -237,7 +236,6 @@ namespace CIAO
     {
       CIAO_TRACE("CIAO_Container_i::configuration");
       throw CORBA::NO_IMPLEMENT ();
-      return 0;
     }
 
     ::Components::Deployment::ComponentServer_ptr
@@ -245,7 +243,6 @@ namespace CIAO
     {
       CIAO_TRACE("CIAO_Container_i::get_component_server");
       throw CORBA::NO_IMPLEMENT ();
-      return 0;
     }
 
     ::Components::CCMHome_ptr
@@ -464,7 +461,6 @@ namespace CIAO
 
       this->container_->passivate_component (comp);
     }
-
 
     PortableServer::POA_ptr
     CIAO_Container_i::_default_POA (void)
