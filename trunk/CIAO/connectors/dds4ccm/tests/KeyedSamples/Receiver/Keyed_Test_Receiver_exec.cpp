@@ -57,7 +57,7 @@ namespace CIAO_Keyed_Test_Receiver_Impl
   // Operations from ::CCM_DDS::KeyedTest_Listener
   void
   KeyedTest_Listener_exec_i::on_many_data (
-    const KeyedTest_Seq & an_instance ,
+    const KeyedTest_Seq & /* an_instance */,
     const ::CCM_DDS::ReadInfoSeq & /* info */)
   {
   }

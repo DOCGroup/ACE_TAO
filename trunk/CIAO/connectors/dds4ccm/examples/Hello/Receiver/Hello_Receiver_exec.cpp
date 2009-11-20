@@ -28,8 +28,8 @@ namespace CIAO_Hello_Receiver_Impl
 
   void
   DDSHello_Listener_exec_i::on_many_data (
-    const DDSHello_Seq & an_instance,
-    const ::CCM_DDS::ReadInfoSeq & info)
+    const DDSHello_Seq & /* an_instance */,
+    const ::CCM_DDS::ReadInfoSeq & /* info */)
   {
   }
 
