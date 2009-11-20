@@ -27,7 +27,6 @@ namespace CIAO
     }
 
     ComponentServer_Task::ComponentServer_Task (int argc, ACE_TCHAR **argv)
-      : orb_ (0)
     {
       CIAO_TRACE ("CIAO_ComponentServer_Task::CIAO_ComponentServer_Task ()");
 
