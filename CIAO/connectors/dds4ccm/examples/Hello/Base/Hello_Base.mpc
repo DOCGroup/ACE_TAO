@@ -1,6 +1,7 @@
 // $Id$
 
 project(DDS_Hello_Base_idl_gen) : taoidldefaults, anytypecode {
+  avoids += ace_for_tao
   custom_only = 1
   idlflags -= -St -Sa
   idlflags += -SS -Gxhst \
@@ -13,6 +14,7 @@ project(DDS_Hello_Base_idl_gen) : taoidldefaults, anytypecode {
 }
 
 project(DDS_Hello_Base_ndds_ts_gen) : ndds_ts_defaults   {
+  avoids += ace_for_tao
   custom_only = 1
   after += DDS_Hello_Base_idl_gen
   ndds_ts_flags += -corba Hello_BaseC.h -orb ACE_TAO1.7
@@ -23,8 +25,9 @@ project(DDS_Hello_Base_ndds_ts_gen) : ndds_ts_defaults   {
 }
 
 project(DDS_Hello_Base_NDDS_TS) : nddslib, taolib {
-  after += DDS_Hello_Base_ndds_ts_gen DDS_Hello_Base_stub
-  libs += DDS_Hello_Base_stub
+  avoids += ace_for_tao
+  after  += DDS_Hello_Base_ndds_ts_gen DDS_Hello_Base_stub
+  libs   += DDS_Hello_Base_stub
   libout = ../lib
   libpaths    += ../lib
   sharedname = DDS_Hello_Base_NDDS_TS
@@ -51,8 +54,9 @@ project(DDS_Hello_Base_NDDS_TS) : nddslib, taolib {
 }
 
 project(DDS_Hello_Base_stub) : ccm_stub {
-  after += DDS_Hello_Base_idl_gen
-  libs  +=
+  avoids += ace_for_tao
+  after  += DDS_Hello_Base_idl_gen
+  libs   +=
   libout = ../lib
   sharedname = DDS_Hello_Base_stub
   dynamicflags   = HELLO_BASE_STUB_BUILD_DLL
