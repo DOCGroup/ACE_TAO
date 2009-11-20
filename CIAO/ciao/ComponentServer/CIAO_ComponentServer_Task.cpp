@@ -6,7 +6,7 @@
  * Implementation and main for CIAO_ComponentServer.
  */
 
-#include "CIAO_ComponentServer.h"
+#include "CIAO_ComponentServer_Task.h"
 
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
