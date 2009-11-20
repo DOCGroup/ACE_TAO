@@ -1,3 +1,37 @@
+Fri Nov 20 11:42:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/CIAO.mpc
+        * ciao/CIAO_Client_Export.h
+        * ciao/CIAO_Config.h
+        * ciao/CIAO_FailureReasons.idl
+        * ciao/CIAO_Server_Export.h
+        * ciao/Client_init.cpp
+        * ciao/Client_init.h
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc
+        * ciao/ComponentServer/CIAO_ComponentServer_Task.cpp
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp
+        * ciao/ComponentServer/CIAO_FailureReasons.idl
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.h
+        * ciao/ComponentServer/Client_init.cpp
+        * ciao/ComponentServer/Client_init.h
+        * ciao/ComponentServer/Server_init.cpp
+        * ciao/ComponentServer/Server_init.h
+        * ciao/Server_init.cpp
+        * ciao/Server_init.h
+        * DAnCE/MPC/config/dance_nodeapplication.mpb
+        * DAnCE/NodeApplication/Name_Utilities.cpp
+        * DAnCE/NodeApplication/Name_Utilities.h
+        * DAnCE/RepositoryManager/RepositoryManager.cpp
+        * MPC/config/ciao_client.mpb
+        * MPC/config/ciao_componentserver_stub.mpb
+        * MPC/config/ciao_componentserver_svnt.mpb
+        * MPC/config/ciao_server.mpb
+          Moved a lot of files inside the componentserver directory, saves
+          us a few libraries and makes things much easier to maintain.
+          Zap several helper functions that are not needed in the component
+          server but which did pullin the naming service
+
 Fri Nov 20 09:51:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/CIAO_ComponentServer_Task.cpp:

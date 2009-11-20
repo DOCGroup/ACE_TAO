@@ -11,34 +11,12 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
 #include "ace/Get_Opt.h"
-#include "ace/Sched_Params.h"
-#include "ace/Trace.h"
-#include "ace/Env_Value_T.h"
 #include "tao/ORB.h"
-#include "tao/Object.h"
-#include "tao/CORBA_methods.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "tao/ORB_Core.h"
 #include "ciao/Logger/Logger_Service.h"
 #include "ciao/Logger/Log_Macros.h"
-#include "ciao/Server_init.h"
 #include "CIAO_ComponentServer_Impl.h"
-
-#include "CIAO_CS_ClientC.h"
-
-bool
-write_IOR (const ACE_TCHAR * ior_file_name, const char* ior)
-{
-  FILE* ior_output_file_ = ACE_OS::fopen (ior_file_name, "w");
-
-  if (ior_output_file_)
-    {
-      ACE_OS::fprintf (ior_output_file_, "%s", ior);
-      ACE_OS::fclose (ior_output_file_);
-      return true;
-    }
-  return false;
-}
+#include "Server_init.h"
 
 namespace CIAO
 {
@@ -67,11 +45,8 @@ namespace CIAO
 
       CIAO_DEBUG ((LM_TRACE, CLINFO
                    "CIAO_ComponentServer_Task::CIAO_ComponentServer_Task - "
-                   "Creating server object\n"));
-
-      CIAO_DEBUG ((LM_TRACE, CLINFO
-                   "CIAO_ComponentServer_Task::CIAO_ComponentServer_Task - "
                    "Creating ORB\n"));
+
       this->orb_ = CORBA::ORB_init (argc, argv);
 
       this->parse_args (argc, argv);
@@ -130,7 +105,7 @@ namespace CIAO
       if (this->output_file_ != ACE_TEXT(""))
         {
           CORBA::String_var ior = this->orb_->object_to_string (cs.in ());
-          write_IOR (this->output_file_.c_str (), ior.in ());
+          ::CIAO::Utility::write_IOR (this->output_file_.c_str (), ior.in ());
         }
 
 

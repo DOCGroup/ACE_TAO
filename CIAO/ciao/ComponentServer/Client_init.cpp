@@ -5,7 +5,7 @@
 #include <ccm/CCM_ReceptacleC.h>
 #include <ccm/CCM_EventsC.h>
 #include <ccm/CCM_ObjectC.h>
-#include "Valuetype_Factories/ConfigValue.h"
+#include "ciao/Valuetype_Factories/ConfigValue.h"
 #include "ciao/Logger/Log_Macros.h"
   
 int

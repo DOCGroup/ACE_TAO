@@ -75,17 +75,15 @@ bool
 write_ior_file (CORBA::ORB_ptr orb,
                 CIAO::RepositoryManagerDaemon_ptr obj)
 {
-  CORBA::String_var ior =
-    orb->object_to_string (obj);
+  CORBA::String_var ior = orb->object_to_string (obj);
 
-  FILE* RMior_file =
-    ACE_OS::fopen (CIAO::RepositoryManager::RMior, "w");
+  FILE* RMior_file = ACE_OS::fopen (CIAO::RepositoryManager::RMior, "w");
 
   if (RMior_file)
     {
       ACE_OS::fprintf (RMior_file,
-        "%s",
-        ior.in ());
+                       "%s",
+                       ior.in ());
       ACE_OS::fclose (RMior_file);
     }
   else
