@@ -1,3 +1,17 @@
+Fri Nov 20 08:08:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Client_init.cpp
+        * ciao/ComponentServer/CIAO_ComponentInstallation_Impl.h
+        * ciao/ComponentServer/CIAO_ComponentServer.cpp
+        * ciao/ComponentServer/CIAO_ComponentServer_Impl.cpp
+        * ciao/ComponentServer/CIAO_ComponentServer_Impl.h
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp
+        * ciao/ComponentServer/CIAO_Container_Impl.h
+        * ciao/ComponentServer/CIAO_CS_Client.idl
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.h
+          No need for CIAO specific ComponentInstallation interface
+
 Thu Nov 19 20:10:15 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:

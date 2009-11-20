@@ -18,7 +18,7 @@ namespace CIAO
                                                     const char * default_cs_path,
                                                     const char * cs_args,
                                                     bool multithreaded,
-                                                    CIAO::Deployment::ComponentInstallation_ptr ci,
+                                                    Components::Deployment::ComponentInstallation_ptr ci,
                                                     CORBA::ORB_ptr orb,
                                                     PortableServer::POA_ptr poa)
       : spawn_delay_ (def_spawn_delay),
@@ -29,7 +29,7 @@ namespace CIAO
         cs_args_ (cs_args),
         mutex_ (),
         condition_ (mutex_),
-        ci_ (CIAO::Deployment::ComponentInstallation::_duplicate (ci))
+        ci_ (Components::Deployment::ComponentInstallation::_duplicate (ci))
 
     {
       CIAO_TRACE ("CIAO_ServerActivator_i::CIAO_ServerActivator_i");
@@ -511,8 +511,8 @@ namespace CIAO
                         Components::ConfigValues (1),
                         CORBA::NO_MEMORY ());
 
-      CIAO::Deployment::ComponentInstallation_ptr ci =
-        CIAO::Deployment::ComponentInstallation::_duplicate (this->ci_.in ());
+      Components::Deployment::ComponentInstallation_ptr ci =
+        Components::Deployment::ComponentInstallation::_duplicate (this->ci_.in ());
       CORBA::Any ci_any;
       ci_any <<= ci;
 
