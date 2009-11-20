@@ -1,3 +1,11 @@
+Fri Nov 20 08:56:26 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_3755_Regression/server.cpp:
+        * tests/Bug_3755_Regression/run_test.pl:
+        * bin/tao_orb_tests.lst:
+          Fixed this test on Win32 and disabled it from compact,
+          minimum and single threaded builds.
+
 Fri Nov 20 08:34:48 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.h:
