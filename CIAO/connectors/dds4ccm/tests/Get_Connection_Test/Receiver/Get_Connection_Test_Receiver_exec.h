@@ -1,8 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
-#ifndef CIAO_RECEIVER_EXEC_H_
-#define CIAO_RECEIVER_EXEC_H_
+#ifndef GET_CONNECTION_RECEIVER_EXEC_H_
+#define GET_CONNECTION_RECEIVER_EXEC_H_
 
 #include "Get_Connection_Test_ReceiverEC.h"
 

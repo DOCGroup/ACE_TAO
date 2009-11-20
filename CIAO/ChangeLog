@@ -1,3 +1,13 @@
+Fri Nov 20 14:05:21 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Get_Connection_Test/Base/Get_Connection_Test_Base.idl:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Connector/Get_Connection_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Connector/Get_Connection_Test_Connector_exec.h:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Connector/Get_Connection_Test_Connector_exec.cpp:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Receiver/Get_Connection_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Sender/Get_Connection_Test_Sender_exec.h:
+          Resolved some inconsistencies in naming items.
+
 Fri Nov 20 13:44:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao_tests.lst:
