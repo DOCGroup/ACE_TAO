@@ -1,3 +1,8 @@
+Fri Nov 20 13:44:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Enabled some tests that now should run
+
 Fri Nov 20 13:34:35 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
