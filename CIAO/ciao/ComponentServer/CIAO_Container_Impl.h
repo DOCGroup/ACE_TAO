@@ -4,8 +4,8 @@
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  */
 
-#ifndef CIAO_CONTAINER_H_
-#define CIAO_CONTAINER_H_
+#ifndef CIAO_CONTAINER_IMPL_H_
+#define CIAO_CONTAINER_IMPL_H_
 
 #include "CIAO_ComponentServerS.h"
 #include "CIAO_CS_ClientC.h"
@@ -116,4 +116,4 @@ namespace CIAO
     };
   }
 }
-#endif /* CIAO_CONTAINER_H_ */
+#endif /* CIAO_CONTAINER_IMPL_H_ */
