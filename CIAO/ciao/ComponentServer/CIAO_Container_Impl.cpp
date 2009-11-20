@@ -3,10 +3,9 @@
 
 #include "ace/Log_Msg.h"
 #include "ccm/CCM_HomeC.h"
-#include "ciao/Server_init.h"
-#include "ciao/Client_init.h"
 #include "CIAO_PropertiesC.h"
 #include "CIAO_CS_ClientC.h"
+#include "Client_init.h"
 #include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO

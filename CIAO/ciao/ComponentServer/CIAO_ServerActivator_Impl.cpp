@@ -4,9 +4,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/UUID.h"
 #include "ciao/Logger/Log_Macros.h"
-#include "ciao/Client_init.h"
-#include "ciao/CIAO_FailureReasonsC.h"
 
+#include "CIAO_FailureReasonsC.h"
 #include "CIAO_ComponentServerC.h"
 #include "CIAO_PropertiesC.h"
 
