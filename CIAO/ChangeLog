@@ -1,3 +1,19 @@
+Fri Nov 20 15:20:46 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Base/Hello_Base.mpc:
+        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.mpc:
+        * connectors/dds4ccm/examples/Hello/DDS_Receiver/DDS_Receiver.mpc:
+        * connectors/dds4ccm/examples/Hello/DDS_Sender/DDS_Sender.mpc:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.mpc:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc:
+          Hello won't build on ace_for_tao builds since DateTime is used in
+          this example. Therefore ace_for_tao should be avoided.
+
+        * connectors/dds4ccm/tests/Get_Connection_Test/Receiver/Get_Connection_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Sender/Get_Connection_Test_Sender_exec.cpp:
+          One should at least write one sample, otherwise the listener is not
+          created on the receiver side.
+
 Fri Nov 20 14:48:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/CIAO_ComponentServer.h:

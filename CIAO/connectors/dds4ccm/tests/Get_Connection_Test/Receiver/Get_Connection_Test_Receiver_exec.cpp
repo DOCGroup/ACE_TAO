@@ -100,6 +100,7 @@ namespace CIAO_Get_Connection_Test_Receiver_Impl
     if (!CORBA::is_nil (lc.in ()))
       {
         this->data_listener_control_ok_ = true;
+        lc->mode (::CCM_DDS::ONE_BY_ONE);
       }
   }
 
@@ -134,7 +135,7 @@ namespace CIAO_Get_Connection_Test_Receiver_Impl
       }
     if (!this->raw_listener_created_)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : raw listener not created\n")));
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : listener not created\n")));
       }
     if (!this->listen_port_status_created_)
       {

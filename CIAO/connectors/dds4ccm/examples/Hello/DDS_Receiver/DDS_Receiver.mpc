@@ -2,6 +2,7 @@
 
 project(*receiver) : nddslib, acelib {
   exename = DDS_receiver
+  avoids += ace_for_tao
 
   Source_Files {
     Hello_Receiver.cpp
