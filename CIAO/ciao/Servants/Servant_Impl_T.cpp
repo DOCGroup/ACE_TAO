@@ -30,28 +30,8 @@ namespace CIAO
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::~Servant_Impl (void)
   {
     CIAO_DEBUG ((LM_INFO, "Servant_Impl_T::~Servant_Impl - "
-                 "Executor object reference  count is %u\n",
+                 "Executor object reference count is %u\n",
                  this->executor_->_refcount_value ()));
-    
-  // **********************************************************************
-  /*
-            try
-            {
-              ::Components::SessionComponent_var scom =
-                ::Components::SessionComponent::_narrow (
-                    this->executor_.in ()
-                  );
-
-              if (! ::CORBA::is_nil (scom.in ()))
-                {
-                  scom->ccm_remove ();
-                }
-            }
-            catch (const CORBA::Exception& ex)
-            {
-            }
-   */
-   // *********************************************************************
 
     this->context_->_remove_ref ();
   }
@@ -63,19 +43,20 @@ namespace CIAO
             typename CONTEXT>
   CORBA::Boolean
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::same_component (
-      CORBA::Object_ptr object_ref
-    )
+      CORBA::Object_ptr object_ref)
   {
     if (::CORBA::is_nil (object_ref))
       {
         throw ::CORBA::BAD_PARAM ();
       }
 
-    ::CORBA::Object_var the_other =
-      object_ref->_get_component ();
+    ::CORBA::Object_var the_other = object_ref->_get_component ();
+    ::CORBA::Object_var me = this->context_->get_CCM_object ();
 
-    ::CORBA::Object_var me =
-      this->context_->get_CCM_object ();
+    if (::CORBA::is_nil (me.in ()))
+      {
+        throw ::CORBA::INTERNAL ();
+      }
 
     return me->_is_equivalent (the_other.in ());
 
@@ -85,8 +66,7 @@ namespace CIAO
             typename EXEC,
             typename CONTEXT>
   ::Components::CCMHome_ptr
-  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::get_ccm_home (
-    )
+  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::get_ccm_home (void)
   {
     return this->context_->get_CCM_home ();
   }
@@ -95,13 +75,11 @@ namespace CIAO
             typename EXEC,
             typename CONTEXT>
   Components::SessionComponent_ptr
-  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::get_executor (
-    )
+  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::get_executor (void)
   {
     ::Components::SessionComponent_var temp =
-      ::Components::SessionComponent::_narrow (
-          this->executor_.in ()
-        );
+      ::Components::SessionComponent::_narrow (this->executor_.in ());
+
     return temp._retn ();
   }
 
@@ -109,13 +87,10 @@ namespace CIAO
             typename EXEC,
             typename CONTEXT>
   CORBA::Object_ptr
-  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::_get_component (
-    )
+  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::_get_component (void)
   {
     ::Components::SessionContext_var sc =
-      ::Components::SessionContext::_narrow (
-          this->context_
-        );
+      ::Components::SessionContext::_narrow (this->context_);
 
     if (! ::CORBA::is_nil (sc.in ()))
       {
@@ -123,9 +98,7 @@ namespace CIAO
       }
 
     ::Components::EntityContext_var ec =
-      ::Components::EntityContext::_narrow (
-          this->context_
-        );
+      ::Components::EntityContext::_narrow (this->context_);
 
     if (! ::CORBA::is_nil (ec.in ()))
       {
@@ -141,12 +114,18 @@ namespace CIAO
             typename EXEC,
             typename CONTEXT>
   void
-  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::activate_component (
-    )
+  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::activate_component (void)
   {
-    if (this->configuration_completed_ == 1)
+    if (this->configuration_completed_ && !this->activated_)
       {
-        this->ciao_activate ();
+        ::Components::SessionComponent_var temp =
+          ::Components::SessionComponent::_narrow (this->executor_.in ());
+
+        if (! ::CORBA::is_nil (temp.in ()))
+          {
+            temp->ccm_activate ();
+            this->activated_ = true;
+          }
       }
   }
 
@@ -154,12 +133,18 @@ namespace CIAO
             typename EXEC,
             typename CONTEXT>
   void
-  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::passivate_component (
-    )
+  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::passivate_component (void)
   {
-    if (this->activated_ == 1)
+    if (this->activated_)
       {
-        this->ciao_passivate ();
+        ::Components::SessionComponent_var temp =
+          ::Components::SessionComponent::_narrow (this->executor_.in ());
+
+        if (! ::CORBA::is_nil (temp.in ()))
+          {
+            temp->ccm_passivate ();
+            this->activated_ = false;
+          }
       }
   }
 
@@ -170,69 +155,17 @@ namespace CIAO
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::configuration_complete (
     )
   {
-    ::Components::SessionComponent_var temp =
-      ::Components::SessionComponent::_narrow (
-          this->executor_.in ()
-        );
-
-    if (! ::CORBA::is_nil (temp.in ()))
+    if (!this->configuration_completed_)
       {
-        if (this->configuration_completed_ == 0)
+        ::Components::SessionComponent_var temp =
+          ::Components::SessionComponent::_narrow (this->executor_.in ());
+
+        if (! ::CORBA::is_nil (temp.in ()))
           {
-            this->configuration_completed_ = 1;
             temp->configuration_complete ();
+            this->configuration_completed_ = true;
           }
       }
-  }
-
-  template <typename BASE_SKEL,
-            typename EXEC,
-            typename CONTEXT>
-  void
-  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::ciao_activate ()
-  {
-    ::Components::SessionComponent_var temp =
-      ::Components::SessionComponent::_narrow (
-          this->executor_.in ()
-        );
-
-    if (! ::CORBA::is_nil (temp.in ()))
-      {
-        if (this->activated_ == 0)
-          {
-            this->activated_ = 1;
-            temp->ccm_activate ();
-          }
-      }
-  }
-
-  template <typename BASE_SKEL,
-            typename EXEC,
-            typename CONTEXT>
-  CORBA::Boolean
-  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::is_activated (
-    )
-  {
-    return this->activated_;
-  }
-
-  template <typename BASE_SKEL,
-            typename EXEC,
-            typename CONTEXT>
-  void
-  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::ciao_passivate (
-    )
-  {
-    // @@ Jai, could you please see why this is required?
-    ::Components::SessionComponent_var temp =
-      ::Components::SessionComponent::_narrow (
-          this->executor_.in ()
-        );
-
-    if (! ::CORBA::is_nil (temp.in ()))
-      temp->ccm_passivate ();
-
-    this->activated_ = 0;
   }
 }
 

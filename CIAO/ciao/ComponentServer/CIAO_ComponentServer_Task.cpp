@@ -1,5 +1,5 @@
 /**
- * @file CIAO_ComponentServer.cpp
+ * @file CIAO_ComponentServer_Task.cpp
  * @author William R. Otte
  * $Id$
  *
