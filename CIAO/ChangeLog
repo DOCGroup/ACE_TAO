@@ -1,3 +1,8 @@
+Fri Nov 20 14:10:15 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Get_Connection_Test/descriptors/Plan.cdp:
+          Resolved errors when running this deployment plan.
+
 Fri Nov 20 14:05:21 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Get_Connection_Test/Base/Get_Connection_Test_Base.idl:
