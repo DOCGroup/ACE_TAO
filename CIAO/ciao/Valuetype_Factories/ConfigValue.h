@@ -1,6 +1,5 @@
 // $Id$
 
-
 #ifndef CIAO_CONFIG_VALUE_H
 #define CIAO_CONFIG_VALUE_H
 #include /**/ "ace/pre.h"

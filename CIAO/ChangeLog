@@ -1,3 +1,14 @@
+Fri Nov 20 08:28:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ComponentServer.cpp
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc
+        * ciao/ComponentServer/CIAO_ComponentServer_Task.cpp
+        * ciao/ComponentServer/CIAO_ComponentServer_Task.h
+        * ciao/ComponentServer/CIAO_Container_Impl.h
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp
+        * ciao/Valuetype_Factories/ConfigValue.h
+          Moved ComponentServer_Task to its own file
+
 Fri Nov 20 08:08:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Client_init.cpp

@@ -53,15 +53,6 @@ namespace CIAO
                    "Received callback from ComponentServer %C\n",
                    server_UUID));
 
-      if (this->server_infos_.is_empty ())
-        {
-          CIAO_ERROR ((LM_ERROR, CLINFO
-                       "CIAO_ServerActivator_i::component_server_callback - "
-                       "Received callback from ComponentServer %C, but I don't manage any.\n",
-                       server_UUID));
-          throw CORBA::BAD_PARAM ();
-        }
-
       Server_Info *info = 0;
 
       for (SERVER_INFOS::iterator i (this->server_infos_.begin ());
@@ -76,11 +67,12 @@ namespace CIAO
             }
         }
 
-      if (info == 0)
-        {          CIAO_ERROR ((LM_WARNING, CLINFO
-                                "CIAO_ServerActivator_i::component_server_callback - "
-                                "Received callback from ComponentServer %C, which doesn't belong to me.\n",
-                                server_UUID));
+      if (!info)
+        {
+          CIAO_ERROR ((LM_WARNING, CLINFO
+                      "CIAO_ServerActivator_i::component_server_callback - "
+                      "Received callback from ComponentServer %C, which doesn't belong to me.\n",
+                      server_UUID));
           throw CORBA::BAD_PARAM ();
         }
 
@@ -130,15 +122,6 @@ namespace CIAO
 
       try
         {
-          if (this->server_infos_.is_empty ())
-            {
-              CIAO_ERROR ((LM_ERROR, CLINFO
-                           "CIAO_ServerActivator_i::configuration_complete - "
-                           "Received callback from ComponentServer %C, but I don't manage any.\n",
-                           server_UUID));
-              throw CORBA::BAD_PARAM ();
-            }
-
           Server_Info *info = 0;
 
           for (SERVER_INFOS::ITERATOR j (this->server_infos_);
@@ -150,7 +133,7 @@ namespace CIAO
                 }
             }
 
-          if (info == 0)
+          if (!info)
             {
               CIAO_ERROR ((LM_WARNING, CLINFO
                            "CIAO_ServerActivator_i::configuration_complete - "
@@ -415,14 +398,6 @@ namespace CIAO
     CIAO_ServerActivator_i::remove_component_server (::Components::Deployment::ComponentServer_ptr server)
     {
       CIAO_TRACE ("CIAO_ServerActivator_i::remove_component_server");
-
-      if (this->server_infos_.is_empty ())
-        {
-          CIAO_ERROR ((LM_ERROR, CLINFO
-                       "CIAO_ServerActivator_i::remove_component_server - "
-                       "I don't manage any ComponentServers.\n"));
-          throw CORBA::BAD_PARAM ();
-        }
 
       Server_Info *info = 0;
 
