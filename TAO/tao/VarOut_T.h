@@ -44,6 +44,7 @@ public:
   const T * operator-> (void) const;
 
   operator const T & () const;
+  operator T & ();
   operator T & () const;
 
   typedef const T &   _in_type;
@@ -84,9 +85,6 @@ public:
   // Fixed-size types only.
   TAO_Fixed_Var_T & operator= (const T &);
 
-  // Fixed-size types only.
-  operator T & ();
-
   typedef T &   _out_type;
   typedef T     _retn_type;
 
@@ -115,7 +113,6 @@ public:
 
   // Variable size types only.
   operator T *& ();
-  operator T & ();
 
   typedef T *&  _out_type;
   typedef T *   _retn_type;
