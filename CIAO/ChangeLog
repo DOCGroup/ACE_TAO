@@ -1,3 +1,35 @@
+Fri Nov 20 13:21:38 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender_exec.cpp:
+          Resolved minor typos.
+
+        * connectors/dds4ccm/tests/Writer:
+        * connectors/dds4ccm/tests/Writer/Base:
+        * connectors/dds4ccm/tests/Writer/Base/Writer_Base.idl:
+        * connectors/dds4ccm/tests/Writer/Base/Writer_Base.mpc:
+        * connectors/dds4ccm/tests/Writer/Connector:
+        * connectors/dds4ccm/tests/Writer/Connector/Writer_Connector.idl:
+        * connectors/dds4ccm/tests/Writer/Connector/Writer_Connector.mpc:
+        * connectors/dds4ccm/tests/Writer/Connector/Writer_Connector_exec.h:
+        * connectors/dds4ccm/tests/Writer/Connector/Writer_Connector_exec.cpp:
+        * connectors/dds4ccm/tests/Writer/Receiver:
+        * connectors/dds4ccm/tests/Writer/Receiver/Writer_Receiver.idl:
+        * connectors/dds4ccm/tests/Writer/Receiver/Writer_Receiver.mpc:
+        * connectors/dds4ccm/tests/Writer/Receiver/Writer_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Writer/Receiver/Writer_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Writer/Sender:
+        * connectors/dds4ccm/tests/Writer/Sender/Writer_Sender.idl:
+        * connectors/dds4ccm/tests/Writer/Sender/Writer_Sender.mpc:
+        * connectors/dds4ccm/tests/Writer/Sender/Writer_Sender_exec.h:
+        * connectors/dds4ccm/tests/Writer/Sender/Writer_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/Writer/descriptors:
+        * connectors/dds4ccm/tests/Writer/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/Writer/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/Writer/descriptors/run_test.pl:
+          Added new test in order to test the writer port. For now it
+          tests write_one with and without the use of handles. Should
+          be extended with write_many the write_many interface.
+
 Fri Nov 20 13:15:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/CIAO_ComponentServer_Impl.cpp:

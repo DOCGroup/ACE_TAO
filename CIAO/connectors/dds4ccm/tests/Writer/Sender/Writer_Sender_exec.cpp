@@ -1,13 +1,13 @@
 // -*- C++ -*-
 // $Id$
 
-#include "Unkeyed_Test_Sender_exec.h"
+#include "Writer_Sender_exec.h"
 #include "ace/Guard_T.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
-namespace CIAO_Unkeyed_Test_Sender_Impl
+namespace CIAO_Writer_Sender_Impl
 {
   //============================================================
   // Pulse generator
@@ -33,7 +33,9 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
   Sender_exec_i::Sender_exec_i (void)
     : rate_ (1),
       iterations_ (10),
-      keys_ (5)
+      keys_ (5),
+      write_keyed_ (false),
+      last_iteration_ (0)
   {
     this->ticker_ = new pulse_Generator (*this);
   }
@@ -43,9 +45,40 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
   }
 
   // Supported operations and attributes.
+  void
+  Sender_exec_i::reset_iterations ()
+  {
+    for (Writer_Table::iterator i = this->ktests_.begin ();
+         i != this->ktests_.end ();
+         ++i)
+      {
+        i->second->iteration = 0;
+      }
+  }
 
   void
-  Sender_exec_i::tick ()
+  Sender_exec_i::create_handles()
+  {
+    for (Writer_Table::iterator i = this->ktests_.begin ();
+         i != this->ktests_.end ();
+         ++i)
+      {
+        ::DDS::InstanceHandle_t hnd = this->writer_->register_instance (i->second);
+/*        if (hnd == ::DDS::HANDLE_NIL)
+          {
+            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unable to register handle for %C"),
+              i->first.c_str ()));
+          }*/
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Registring instance with %C and %d : Valid <%d>\n"),
+                    i->second->key.in (),
+                    i->second->iteration,
+                    hnd.isValid));
+        this->handles_[i->first.c_str ()] = hnd;
+      }
+  }
+  
+  void
+  Sender_exec_i::write_unkeyed ()
   {
     if (this->last_key != this->ktests_.end ())
       {
@@ -53,19 +86,15 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
           {
             ++this->last_key->second->iteration;
             this->writer_->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
-            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updated key <%C> with <%d>\n"),
+            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Written unkeyed <%C> with <%d>\n"),
                     this->last_key->first.c_str (),
                     this->last_key->second->iteration));
           }
-        catch (CCM_DDS::NonExistent& )
-          {
-            printf ("Key info for <%s> not updated: <%s> didn't exist.\n",
-                        this->last_key->first.c_str (), this->last_key->first.c_str ());
-          }
         catch (CCM_DDS::InternalError& )
           {
-            printf ("Internal Error while updating key info for <%s>.\n",
-                        this->last_key->first.c_str ());
+            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unexpected exception ")
+                        ACE_TEXT ("while updating writer info for <%s>.\n"),
+                          this->last_key->first.c_str ()));
           }
         ++this->last_key;
       }
@@ -85,6 +114,75 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
                 break;
               }
           }
+        if (this->last_key == this->ktests_.end ())
+          {
+            this->last_key = this->ktests_.begin ();
+            this->write_keyed_ = true;
+            reset_iterations ();
+          }
+      }
+  }
+  
+  void
+  Sender_exec_i::write_keyed ()
+  {
+    if (this->last_key != this->ktests_.end ())
+      {
+        bool exception_caught = false;
+        try
+          {
+            ++this->last_key->second->iteration;
+            ::DDS::InstanceHandle_t hnd = this->handles_[this->last_key->first.c_str ()];
+            this->writer_->write_one (this->last_key->second, hnd);
+            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Written keyed <%C> with <%d> and handle <%d>\n"),
+                    this->last_key->first.c_str (),
+                    this->last_key->second->iteration,
+                    hnd));
+          }
+        catch (CCM_DDS::InternalError& )
+          {
+            exception_caught = true;
+            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error ")
+                        ACE_TEXT ("while updating writer info for <%s>.\n"),
+                          this->last_key->first.c_str ()));
+          }
+        //only the first iterations are registered.
+        if (this->last_key->second->iteration != 1 && !exception_caught)
+          {
+            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: No exception caught ")
+                    ACE_TEXT ("while writing unregistered data\n")));
+          }
+        ++this->last_key;
+      }
+    else
+      {
+        //onto the next iteration
+        this->last_key = this->ktests_.begin ();
+        while (this->last_key != this->ktests_.end ())
+          {
+            if (this->last_key->second->iteration == this->iterations_)
+              {
+                //next key
+                ++this->last_key;
+              }
+            else
+              {
+                break;
+              }
+          }
+      }
+  }
+
+  void
+  Sender_exec_i::tick ()
+  {
+    if (this->write_keyed_)
+      {
+        write_keyed ();
+      }
+    else
+      {
+        write_unkeyed ();
       }
   }
 
@@ -152,7 +250,7 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
   Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
   {
     this->context_ =
-      ::Unkeyed_Test::CCM_Sender_Context::_narrow (ctx);
+      ::Writer::CCM_Sender_Context::_narrow (ctx);
 
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
@@ -170,21 +268,23 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
   Sender_exec_i::ccm_activate (void)
   {
     this->start ();
-    
+
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
                         this->mutex_, CORBA::INTERNAL ());
 
     for (CORBA::UShort i = 1; i < this->keys_ + 1; ++i)
       {
         char key[7];
-        UnkeyedTest *new_key = new UnkeyedTest;
+        WriterTest *new_key = new WriterTest;
         ACE_OS::sprintf (key, "KEY_%d", i);
         new_key->key = CORBA::string_dup(key);
-        new_key->iteration = 0;
+        new_key->iteration = 1;
 
         this->ktests_[key] = new_key;
       }
-     this->last_key = this->ktests_.begin ();
+    this->last_key = this->ktests_.begin ();
+    create_handles ();
+    reset_iterations ();
   }
 
   void
@@ -199,7 +299,7 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
   }
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_Unkeyed_Test_Sender_Impl (void)
+  create_Writer_Sender_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
