@@ -1,3 +1,9 @@
+Fri Nov 20 13:02:24 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * orbsvcs/tests/Security/Callback/server.cpp:
+			
+		  Test is converted to use new test framework and added to fuzz build.          
+
 Fri Nov 20 10:03:43 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_3766_Regression/server.cpp:
