@@ -1,4 +1,4 @@
-﻿// $Id$
+// $Id$
 
 #include "TestI.h"
 #include "ace/OS.h"
