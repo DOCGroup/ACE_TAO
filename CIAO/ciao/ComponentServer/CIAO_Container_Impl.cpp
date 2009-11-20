@@ -18,14 +18,14 @@ namespace CIAO
                                         const Static_Config_EntryPoints_Maps *static_entrypts,
                                         const char *name,
                                         const CORBA::PolicyList *policies,
-                                        CIAO::Deployment::ComponentInstallation_ptr ci,
+                                        Components::Deployment::ComponentInstallation_ptr ci,
                                         CORBA::ORB_ptr orb,
                                         PortableServer::POA_ptr poa)
       : orb_ (CORBA::ORB::_duplicate (orb)),
         poa_ (PortableServer::POA::_duplicate (poa)),
         config_ (config.length ()),
         static_entrypts_maps_ (static_entrypts),
-        ci_ (CIAO::Deployment::ComponentInstallation::_duplicate (ci))
+        ci_ (Components::Deployment::ComponentInstallation::_duplicate (ci))
     {
       CIAO_TRACE("CIAO_Container_i::CIAO_Container_i");
 

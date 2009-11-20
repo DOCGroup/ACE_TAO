@@ -27,7 +27,7 @@ namespace CIAO
   {
 
     class CIAO_CS_CLIENT_SVNT_Export ComponentInstallation_Impl
-      : public virtual POA_CIAO::Deployment::ComponentInstallation
+      : public virtual POA_Components::Deployment::ComponentInstallation
     {
     public:
       ComponentInstallation_Impl();
