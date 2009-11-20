@@ -1,3 +1,9 @@
+Fri Nov 20 10:03:43 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3766_Regression/server.cpp:
+          Resolved compiler error related to invisible
+          characters on Linux.
+
 Fri Nov 20 09:28:50 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/DevGuideExamples/EventServices/OMG_TypedEC/run_test.pl:
@@ -31,7 +37,7 @@ Fri Nov 20 09:28:50 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
         * tests/Bug_2702_Regression/run_test.pl:
         * tests/IPV6/run_test.pl:
         * tests/MProfile_Connection_Timeout/run_test.pl:
-          
+
           Tests are converted to use new test framework and added to fuzz build.
 
 Fri Nov 20 08:56:26 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
