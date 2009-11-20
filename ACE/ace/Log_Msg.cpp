@@ -914,7 +914,8 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
  *   '@': print a void* pointer (in hexadecimal)
  *   'r': call the function pointed to by the corresponding argument
  *   'R': print return status
- *   'S': format the appropriate _sys_siglist entry corresponding to var-argument.
+ *   'S': print out the appropriate signal message corresponding
+ *        to var-argument, e.g., as done by strsignal()
  *   's': format a character string
  *   'T': print timestamp in hour:minute:sec:usec format.
  *   'D': print timestamp in month/day/year hour:minute:sec:usec format.
