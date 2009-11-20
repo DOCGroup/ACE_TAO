@@ -1,3 +1,14 @@
+Fri Nov 20 09:51:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ComponentServer_Task.cpp:
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Servants/CIAO_Port_Activator.idl:
+        * ciao/Servants/Port_Activator.h:
+        * ciao/Servants/Port_Activator_T.cpp:
+        * ciao/Servants/Servant_Impl_T.cpp:
+          Various code improvements and cleanup
+
 Fri Nov 20 10:45:39 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
