@@ -136,7 +136,8 @@ namespace CIAO
 
       if (this->callback_ior_str_ != ACE_TEXT(""))
         {
-          CIAO_DEBUG ((LM_TRACE, CLINFO "Resolving callback IOR\n"));
+          CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::run - "
+                      "Resolving callback IOR\n"));
           CORBA::Object_ptr obj =
             this->orb_->string_to_object (this->callback_ior_str_.c_str ());
           ServerActivator_var sa (ServerActivator::_narrow (obj));

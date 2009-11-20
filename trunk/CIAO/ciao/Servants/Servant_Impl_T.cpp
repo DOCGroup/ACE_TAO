@@ -50,13 +50,14 @@ namespace CIAO
         throw ::CORBA::BAD_PARAM ();
       }
 
-    ::CORBA::Object_var the_other = object_ref->_get_component ();
     ::CORBA::Object_var me = this->context_->get_CCM_object ();
 
     if (::CORBA::is_nil (me.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }
+
+    ::CORBA::Object_var the_other = object_ref->_get_component ();
 
     return me->_is_equivalent (the_other.in ());
 

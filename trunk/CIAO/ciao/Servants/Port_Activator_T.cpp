@@ -37,7 +37,10 @@ namespace CIAO
       PortableServer::Servant servant)
   {
     SERVANT *s = dynamic_cast<SERVANT *> (servant);
-    s->_remove_ref ();
+    if (s)
+      {
+        s->_remove_ref ();
+      }
   }
 
   template <typename SERV,
@@ -48,8 +51,7 @@ namespace CIAO
   Port_Activator_T<SERV, EXEC, CONTEXT, COMP_SERV>::activate (
       const PortableServer::ObjectId &oid)
   {
-    CORBA::String_var str =
-      PortableServer::ObjectId_to_string (oid);
+    CORBA::String_var str = PortableServer::ObjectId_to_string (oid);
 
     // An additional check, may not be necessary. Being on the safe
     // side.
