@@ -1,3 +1,15 @@
+USER VISIBLE CHANGES BETWEEN TAO-1.7.4 and TAO-1.7.5
+====================================================
+
+. Converte a lot of TAO tests to use the new test framework
+
+. Fix problem in the IDL compiler where set/get methods for
+  attributes in a local interface derived from a non local interface
+  where not regenerated as pure virtual
+
+. The idl3p keywords porttype/port/mirrorport are now fully
+  implemented and tested
+
 USER VISIBLE CHANGES BETWEEN TAO-1.7.3 and TAO-1.7.4
 ====================================================
 
