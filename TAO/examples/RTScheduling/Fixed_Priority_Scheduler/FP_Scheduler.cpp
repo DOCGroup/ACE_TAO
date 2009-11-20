@@ -32,6 +32,12 @@ Segment_Sched_Param_Policy::copy (void)
   return copy;
 }
 
+CORBA::PolicyType
+Segment_Sched_Param_Policy::policy_type (void)
+{
+  return 0;
+}
+
 void
 Segment_Sched_Param_Policy::destroy (void)
 {
