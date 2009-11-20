@@ -266,18 +266,7 @@ public:
   virtual AST_Factory *create_factory (UTL_ScopedName *n);
 
   virtual
-  AST_Template_Interface *create_template_interface (
-    UTL_ScopedName *n,
-    AST_Interface **ih,
-    long nih,
-    AST_Interface **ih_flat,
-    long nih_flat,
-    FE_Utils::T_PARAMLIST_INFO *template_params);
-
-  virtual
-  AST_PortType *create_porttype (
-    UTL_ScopedName *n,
-    FE_Utils::T_PARAMLIST_INFO *template_params);
+  AST_PortType *create_porttype (UTL_ScopedName *n);
     
   virtual
   AST_Provides *create_provides (UTL_ScopedName *n,
@@ -302,14 +291,12 @@ public:
   virtual
   AST_Extended_Port *create_extended_port (
     UTL_ScopedName *n,
-    AST_PortType *porttype_ref,
-    AST_PortType::T_ARGLIST *template_args);
+    AST_PortType *porttype_ref);
     
   virtual
   AST_Mirror_Port *create_mirror_port (
     UTL_ScopedName *n,
-    AST_PortType *porttype_ref,
-    AST_PortType::T_ARGLIST *template_args);
+    AST_PortType *porttype_ref);
     
   virtual
   AST_Connector *create_connector (
@@ -317,23 +304,13 @@ public:
     AST_Connector *base_connector);
     
   virtual
-  AST_Tmpl_Port *create_tmpl_port (
+  AST_Template_Module *create_template_module (
     UTL_ScopedName *n,
-    AST_PortType *porttype_ref);
+    FE_Utils::T_PARAMLIST_INFO *template_params);
     
   virtual
-  AST_Tmpl_Mirror_Port *create_tmpl_mirror_port (
-    UTL_ScopedName *n,
-    AST_PortType *porttype_ref);
-    
-  virtual
-  AST_Instantiated_Connector *create_instantiated_connector (
-    UTL_ScopedName *n,
-    AST_Connector *connector_type,
-    AST_Template_Common::T_ARGLIST *template_args);
-    
-  virtual
-  AST_Type *create_placeholder (UTL_ScopedName *n);
+  AST_Param_Holder *create_param_holder (
+    Identifier *parameter_name);
 };
 
 #endif           // _BE_GENERATOR_BE_GENERATOR_HH

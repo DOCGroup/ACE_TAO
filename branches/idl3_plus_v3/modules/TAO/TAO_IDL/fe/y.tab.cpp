@@ -7051,22 +7051,7 @@ tao_yyreduce:
               // the scoped name would just be a simple identifier.
               if (n->length () == 1)
                 {
-                  AST_Template_Interface *ti =
-                    AST_Template_Interface::narrow_from_scope (
-                      ScopeAsDecl (s)->defined_in ());
-
-                  if (ti != 0)
-                    {
-                      so_far_so_good =
-                        ti->find_param (n->head ()->get_string ());
-
-                      if (so_far_so_good)
-                        {
-                          d =
-                            idl_global->gen ()->create_placeholder (n);
-                          s->add_to_scope (d);
-                        }
-                    }
+                  // TODO
                 }
 
               if (!so_far_so_good)
@@ -9061,18 +9046,6 @@ tao_yyreduce:
                                               d);
                   so_far_so_good = false;
                 }
-              else
-                {
-                  FE_Utils::T_PARAMLIST_INFO *p_list =
-                    pt->template_params ();
-
-                  if (p_list != 0 && p_list->size () != 0)
-                    {
-                      idl_global->err ()->error0 (
-                        UTL_Error::EIDL_T_ARG_LENGTH);
-                      so_far_so_good = false;
-                    }
-                }
             }
 
           if (so_far_so_good)
@@ -9087,8 +9060,7 @@ tao_yyreduce:
               AST_Extended_Port *ep =
                 idl_global->gen ()->create_extended_port (
                   &sn,
-                  pt,
-                  0);
+                  pt);
 
               (void) s->fe_add_extended_port (ep);
 
@@ -9146,18 +9118,6 @@ tao_yyreduce:
                                                d);
                    so_far_so_good = false;
                  }
-               else
-                 {
-                   FE_Utils::T_PARAMLIST_INFO *p_list =
-                     pt->template_params ();
-
-                   if (p_list != 0 && p_list->size () != 0)
-                     {
-                       idl_global->err ()->error0 (
-                         UTL_Error::EIDL_T_ARG_LENGTH);
-                       so_far_so_good = false;
-                     }
-                 }
              }
 
           if (so_far_so_good)
@@ -9172,8 +9132,7 @@ tao_yyreduce:
               AST_Mirror_Port *mp =
                 idl_global->gen ()->create_mirror_port (
                   &sn,
-                  pt,
-                  0);
+                  pt);
 
               (void) s->fe_add_mirror_port (mp);
             }

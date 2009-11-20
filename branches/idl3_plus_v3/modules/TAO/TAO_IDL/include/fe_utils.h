@@ -53,6 +53,11 @@ struct TAO_IDL_FE_Export FE_Utils
 
     void destroy (void);
   };
+
+  struct T_ARGLIST : ACE_Unbounded_Queue<AST_Decl *>
+  {
+    void destroy (void);
+  };
 };
 
 #endif /* FE_UTILS_H */

@@ -42,8 +42,7 @@ class be_extended_port : public virtual AST_Extended_Port,
 public:
   be_extended_port (
     UTL_ScopedName *n,
-    AST_PortType *porttype_ref,
-    AST_PortType::T_ARGLIST *template_args);
+    AST_PortType *porttype_ref);
     
   virtual ~be_extended_port (void);
   
