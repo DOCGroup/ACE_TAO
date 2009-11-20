@@ -209,10 +209,6 @@ private:
   virtual
   AST_PortType *fe_add_porttype (AST_PortType *pt);
   
-  virtual
-  AST_Instantiated_Connector *fe_add_instantiated_connector (
-    AST_Instantiated_Connector *ic);
-
   bool pd_has_nested_valuetype;
 
   ACE_Unbounded_Set<AST_Decl *> previous_;

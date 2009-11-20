@@ -36,11 +36,6 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-  
-protected:
-  virtual AST_Tmpl_Port *fe_add_tmpl_port (AST_Tmpl_Port *p);
-  virtual AST_Tmpl_Mirror_Port *fe_add_tmpl_mirror_port (
-    AST_Tmpl_Mirror_Port *p);
 };
 
 #endif // AST_CONNECTOR_H
