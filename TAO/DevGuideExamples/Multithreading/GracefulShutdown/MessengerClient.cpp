@@ -5,16 +5,20 @@
 #include <iostream>
 
 int call_shutdown = 0;
+const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 
 int parse_args (int argc, ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("x"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:x"));
   int c;
 
   while ((c = get_opts ()) != -1)
   {
     switch (c)
     {
+      case 'k':
+        ior = get_opts.opt_arg ();
+        break;
       case 'x':
         call_shutdown = 1;
         break;
@@ -22,6 +26,7 @@ int parse_args (int argc, ACE_TCHAR* argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage: %s\n"
+                           "-k <ior> "
                            "-x - call shutdown on server\n",
                            argv[0]),
                            -1);
@@ -42,7 +47,7 @@ int ACE_TMAIN( int argc, ACE_TCHAR* argv[] )
       return 1;
 
     // Read and destringify the Messenger object's IOR.
-    CORBA::Object_var obj = orb->string_to_object( "file://Messenger.ior" );
+    CORBA::Object_var obj = orb->string_to_object(ior);
     if( CORBA::is_nil( obj.in() ) ) {
       std::cerr << "Could not get Messenger IOR." << std::endl;
       return 1;
