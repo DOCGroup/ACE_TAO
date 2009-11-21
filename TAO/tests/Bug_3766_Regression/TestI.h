@@ -44,7 +44,7 @@ class  Test_i
 {
 public:
   // Constructor 
-  Test_i (void);
+  Test_i (CORBA::ORB_ptr o);
   
   // Destructor 
   virtual ~Test_i (void);
@@ -56,6 +56,11 @@ public:
   virtual
   void do_something_VariableLength (
     ::VariableLengthInfo_out my_info);
+
+  virtual void shutdown (void);
+
+private:
+  CORBA::ORB_var orb_;
 };
 
 
