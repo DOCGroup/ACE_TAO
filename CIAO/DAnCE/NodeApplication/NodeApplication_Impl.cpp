@@ -214,7 +214,7 @@ namespace
   void append_properties (::Deployment::Properties &dest,
         const ::Deployment::Properties &src)
   {
-    const char* edu_prop = "edu.vanderbilt.dre.";
+    const char* edu_prop = "edu.vanderbilt.dre.CIAO.";
     for (CORBA::ULong i = 0; i < src.length (); ++i)
       {
         if (ACE_OS::strncmp (src[i].name.in (), edu_prop, ACE_OS::strlen (edu_prop)) == 0)
