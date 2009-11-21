@@ -1,9 +1,16 @@
+Sat Nov 21 04:44:20 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * tao/VarOut_T.h:
+        * tao/VarOut_T.inl:
+
+          Fixed Bug 3766.
+
 Fri Nov 20 19:52:15 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
 
         * tao/VarOut_T.h:
         * tao/VarOut_T.inl:
 
-          Revert the changes and reopen Bug 3766. The prior commit causes other issues.
+          Revert the changes and reopen Bug 3766. The prior commit causes build issues.
 
 Fri Nov 20 18:46:27 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
 
