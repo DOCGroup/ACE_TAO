@@ -1,3 +1,14 @@
+Sat Nov 21 14:20:19 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * tests/Bug_3766_Regression/Test.idl:
+        * tests/Bug_3766_Regression/TestI.h:
+        * tests/Bug_3766_Regression/TestI.cpp:
+        * tests/Bug_3766_Regression/client.cpp:
+        * tests/Bug_3766_Regression/server.cpp:
+
+          Minor improvement to this test. Add a way for the client to 
+          shut down the server so this test can pass on the scoreboard.
+
 Sat Nov 21 04:44:20 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
 
         * tao/VarOut_T.h:
