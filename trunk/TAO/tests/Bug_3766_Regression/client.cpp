@@ -26,6 +26,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       FixedLengthInfo_var fixed_info;
       test->do_something_FixedLength(fixed_info);
 
+      test->shutdown();
+
       orb->destroy ();
     }
   catch (const CORBA::Exception& ex)

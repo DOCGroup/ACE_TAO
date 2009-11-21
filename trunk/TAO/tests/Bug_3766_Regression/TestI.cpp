@@ -33,8 +33,9 @@
 #include "TestI.h"
 
 // Implementation skeleton constructor
-Test_i::Test_i (void)
+Test_i::Test_i (CORBA::ORB_ptr o)
 {
+  this->orb_ = CORBA::ORB::_duplicate (o);
 }
 
 // Implementation skeleton destructor
@@ -62,4 +63,11 @@ void Test_i::do_something_VariableLength (
   my_info->d = ::CORBA::string_dup("Howdy");
 }
 
+void Test_i::shutdown (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("\nThe server is shutting down\n")));
 
+  // Instruct the ORB to shutdown.
+  this->orb_->shutdown ();
+}

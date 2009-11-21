@@ -22,6 +22,8 @@ interface Test
 {
   void do_something_FixedLength(out FixedLengthInfo my_info);
   void do_something_VariableLength(out VariableLengthInfo my_info);
+
+  oneway void shutdown ();
 };
 
 #endif /* TEST_IDL_ */
