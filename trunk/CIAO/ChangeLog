@@ -1,3 +1,9 @@
+Sun Nov 22 20:00:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Writer/Sender/Writer_Sender_exec.h:
+        * connectors/dds4ccm/tests/Writer/Sender/Writer_Sender_exec.cpp:
+          Extended this test with write_many.
+
 Fri Nov 20 15:20:46 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Base/Hello_Base.mpc:
