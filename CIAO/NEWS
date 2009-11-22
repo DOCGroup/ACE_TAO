@@ -87,11 +87,11 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.7.4 and CIAO-0.7.5
 
 . Added Shapes sender/receiver for DDS4CCM
 
-. The configProperty edu.vanderbilt.dre.CIAO.ComponentServerExecutable
+. The configProperty edu.vanderbilt.dre.CIAO.ComponentServer.Executable
   can be used in the deployment plan to set a different ciao component
   server executable
 
-. The configProperty edu.vanderbilt.dre.CIAO.ComponentServerArgs
+. The configProperty edu.vanderbilt.dre.CIAO.ComponentServer.Args
   can be used in the deployment plan to specify a set of additional
   commandline arguments that are than passed to the ciao component
   server
