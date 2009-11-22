@@ -34,7 +34,7 @@ namespace CIAO_Writer_Sender_Impl
     : rate_ (1),
       iterations_ (10),
       keys_ (5),
-      write_keyed_ (false),
+      assignment_ (WRITE_UNKEYED),
       last_iteration_ (0)
   {
     this->ticker_ = new pulse_Generator (*this);
@@ -76,7 +76,15 @@ namespace CIAO_Writer_Sender_Impl
         this->handles_[i->first.c_str ()] = hnd;
       }
   }
-  
+
+  void
+  Sender_exec_i::start_new_assignment (WRITER_ASSIGNMENT assignment)
+  {
+    this->last_key = this->ktests_.begin ();
+    this->assignment_ = assignment;
+    reset_iterations ();
+  }
+
   void
   Sender_exec_i::write_unkeyed ()
   {
@@ -116,9 +124,7 @@ namespace CIAO_Writer_Sender_Impl
           }
         if (this->last_key == this->ktests_.end ())
           {
-            this->last_key = this->ktests_.begin ();
-            this->write_keyed_ = true;
-            reset_iterations ();
+            start_new_assignment (WRITE_KEYED);
           }
       }
   }
@@ -170,19 +176,61 @@ namespace CIAO_Writer_Sender_Impl
                 break;
               }
           }
+        if (this->last_key == this->ktests_.end ())
+          {
+            start_new_assignment (WRITE_MULTI);
+          }
       }
+  }
+  
+  void
+  Sender_exec_i::write_many ()
+  {
+    WriterTest_Seq write_many_seq;// = new WriterTest_Seq ();
+    write_many_seq.length (this->keys_ * this->iterations_);
+    int iter_key = 0;
+    for (Writer_Table::iterator iter = this->ktests_.begin ();
+         iter != this->ktests_.end ();
+         ++iter)
+      {
+        ++iter_key;
+        for (int i = 1; i < this->iterations_ + 1; ++i)
+          {
+            char key[7];
+            WriterTest new_key;// = new WriterTest;
+            ACE_OS::sprintf (key, "KEY_%d", iter_key);
+            new_key.key = CORBA::string_dup(key);
+            new_key.iteration = i;
+            write_many_seq[iter_key + i - 2] = new_key;
+          }
+      }
+    try
+      {
+        this->writer_->write_many (write_many_seq);
+      }
+    catch (CCM_DDS::InternalError& )
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error ")
+                    ACE_TEXT ("while write many writer info.\n")));
+      }
+    this->assignment_ = WRITE_NONE;
   }
 
   void
   Sender_exec_i::tick ()
   {
-    if (this->write_keyed_)
+    switch (this->assignment_)
       {
-        write_keyed ();
-      }
-    else
-      {
-        write_unkeyed ();
+        case WRITE_UNKEYED:
+          write_unkeyed ();
+          break;
+        case WRITE_KEYED:
+          write_keyed ();
+          break;
+        case WRITE_MULTI:
+          write_many ();
+        default:
+          break;
       }
   }
 
