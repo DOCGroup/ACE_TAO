@@ -60,7 +60,7 @@
       </value>
     </execParameter>
   </implementation>
-  
+
   <implementation xmi:id="Hello_ReceiverConnectorComponentImplementation">
     <name>Hello_ConnectorComponentImplementation</name>
     <source/>
@@ -244,6 +244,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>hello</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
 
@@ -324,6 +335,17 @@
         </type>
         <value>
           <string>ReceiverConnectorTwo</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>hello</string>
         </value>
       </value>
     </configProperty>
@@ -410,6 +432,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>hello</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
 
@@ -490,6 +523,17 @@
         </type>
         <value>
           <string>ReceiverConnectorFour</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>hello</string>
         </value>
       </value>
     </configProperty>
@@ -576,6 +620,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>hello</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <connection>
@@ -653,10 +708,10 @@
       <instance xmi:idref="Hello_ReceiverConnectorComponentInstanceFive" />
     </internalEndpoint>
   </connection>
-  
-  
-  
-  
+
+
+
+
   <connection>
     <name>_portstatuslistenerOne</name>
     <internalEndpoint>
@@ -732,10 +787,10 @@
       <instance xmi:idref="Hello_ReceiverConnectorComponentInstanceFive" />
     </internalEndpoint>
   </connection>
-  
-  
-  
-  
+
+
+
+
   <connection>
     <name>_rawlistnerOne</name>
     <internalEndpoint>
