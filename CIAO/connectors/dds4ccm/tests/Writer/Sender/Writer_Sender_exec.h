@@ -20,6 +20,13 @@
 namespace CIAO_Writer_Sender_Impl
 {
   class Sender_exec_i;
+  
+  enum WRITER_ASSIGNMENT {
+    WRITE_NONE,
+    WRITE_KEYED,
+    WRITE_UNKEYED,
+    WRITE_MULTI
+  };
 
   class pulse_Generator :
     public ACE_Event_Handler
@@ -75,13 +82,16 @@ namespace CIAO_Writer_Sender_Impl
     CORBA::UShort rate_;
     CORBA::UShort iterations_;
     CORBA::UShort keys_;
-    bool write_keyed_;
+    WRITER_ASSIGNMENT assignment_;
     CORBA::Long last_iteration_;
 
     void reset_iterations ();
     void create_handles();
+    void start_new_assignment (
+        WRITER_ASSIGNMENT assignment);
     void write_unkeyed ();
     void write_keyed ();
+    void write_many ();
 
     TAO_SYNCH_MUTEX mutex_;
     typedef std::map<ACE_CString, WriterTest_var> Writer_Table;
