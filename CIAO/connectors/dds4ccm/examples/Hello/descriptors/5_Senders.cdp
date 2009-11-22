@@ -60,7 +60,7 @@
       </value>
     </execParameter>
   </implementation>
-  
+
   <implementation xmi:id="Hello_ConnectorComponentImplementation">
     <name>Hello_ConnectorComponentImplementation</name>
     <source/>
@@ -233,6 +233,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>hello</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <instance xmi:id="Hello_SenderComponentInstanceTwo">
@@ -301,6 +312,17 @@
         </type>
         <value>
           <string>SenderConnectorTwo</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>hello</string>
         </value>
       </value>
     </configProperty>
@@ -373,6 +395,17 @@
         </type>
         <value>
           <string>SenderConnectorThree</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>hello</string>
         </value>
       </value>
     </configProperty>
@@ -449,6 +482,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>hello</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
 
@@ -518,6 +562,17 @@
         </type>
         <value>
           <string>SenderConnectorFive</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>hello</string>
         </value>
       </value>
     </configProperty>
