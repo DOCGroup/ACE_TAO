@@ -67,10 +67,10 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="CommandlinePassageComponentImplementation" />
-    <!-- set both edu.vanderbilt.dre.CIAO.ComponentServerArgs and
+    <!-- set both edu.vanderbilt.dre.CIAO.ComponentServer.Args and
          tc_max to the same number -->
     <configProperty>
-      <name>edu.vanderbilt.dre.CIAO.ComponentServerArgs</name>
+      <name>edu.vanderbilt.dre.CIAO.ComponentServer.Args</name>
       <value>
         <type>
           <kind>tk_string</kind>
