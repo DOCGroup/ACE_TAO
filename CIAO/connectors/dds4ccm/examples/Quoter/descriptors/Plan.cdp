@@ -173,6 +173,17 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="Quoter_ConnectorComponentImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>broker</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
   <instance xmi:id="Quoter_ConnectorComponentInstance2">
     <name>Quoter_ConnectorComponent2</name>
@@ -180,6 +191,17 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="Quoter_ConnectorComponentImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>broker</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
   <instance xmi:id="DistributorComponentInstance">
     <name>DistributorComponent</name>
