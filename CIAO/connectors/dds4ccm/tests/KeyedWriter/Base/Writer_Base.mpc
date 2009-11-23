@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -o ../lib -u DDS -n Writer_Base"
 
-project(DDS_Writer_Base_idl_gen) : taoidldefaults, anytypecode {
+project(DDS_KeyedWriterBase_idl_gen) : taoidldefaults, anytypecode {
   custom_only = 1
   idlflags -= -St -Sa
   idlflags += -SS -Gxhst \
@@ -13,9 +13,9 @@ project(DDS_Writer_Base_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(DDS_Writer_Base_ndds_ts_gen) : ndds_ts_defaults   {
+project(DDS_KeyedWriterBase_ndds_ts_gen) : ndds_ts_defaults   {
   custom_only = 1
-  after += DDS_Writer_Base_idl_gen
+  after += DDS_KeyedWriterBase_idl_gen
   ndds_ts_flags += -corba Writer_BaseC.h -orb ACE_TAO1.7
 
   NDDSTypeSupport_Files {
@@ -23,12 +23,12 @@ project(DDS_Writer_Base_ndds_ts_gen) : ndds_ts_defaults   {
   }
 }
 
-project(DDS_Writer_Base_NDDS_TS) : nddslib, taolib {
-  after += DDS_Writer_Base_ndds_ts_gen DDS_Writer_Base_stub
-  libs += DDS_Writer_Base_stub
+project(DDS_KeyedWriterBase_NDDS_TS) : nddslib, taolib {
+  after += DDS_KeyedWriterBase_ndds_ts_gen DDS_KeyedWriterBase_stub
+  libs += DDS_KeyedWriterBase_stub
   libout = ../lib
   libpaths    += ../lib
-  sharedname = DDS_Writer_Base_NDDS_TS
+  sharedname = DDS_KeyedWriterBase_NDDS_TS
   dynamicflags = NDDS_USER_DLL_EXPORT
 
   verbatim(gnuace, macros) {
@@ -51,11 +51,11 @@ project(DDS_Writer_Base_NDDS_TS) : nddslib, taolib {
   }
 }
 
-project(DDS_Writer_Base_stub) : ccm_stub {
-  after += DDS_Writer_Base_idl_gen
+project(DDS_KeyedWriterBase_stub) : ccm_stub {
+  after += DDS_KeyedWriterBase_idl_gen
   libout = ../lib
   libpaths += ../lib
-  sharedname = DDS_Writer_Base_stub
+  sharedname = DDS_KeyedWriterBase_stub
   dynamicflags = WRITER_BASE_STUB_BUILD_DLL
 
   IDL_Files {

@@ -1,7 +1,7 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -p DDS_Writer_Base -l .. -o ../lib -u DDS Writer_Connector"
+// This file is generated with "generate_component_mpc.pl -p DDS_KeyedWriterBase -l .. -o ../lib -u DDS Writer_Connector"
 
-project(DDS_Writer_Connector_idl_gen) : connectoridldefaults {
+project(DDS_KeyedWriterConnector_idl_gen) : connectoridldefaults {
   after += DDS4CCM_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=WRITER_CONNECTOR_STUB_Export \
@@ -19,9 +19,9 @@ project(DDS_Writer_Connector_idl_gen) : connectoridldefaults {
   }
 }
 
-project(DDS_Writer_Connector_lem_gen) : ciaoidldefaults {
+project(DDS_KeyedWriterConnector_lem_gen) : ciaoidldefaults {
   custom_only = 1
-  after += DDS_Writer_Connector_idl_gen
+  after += DDS_KeyedWriterConnector_idl_gen
   idlflags += -Wb,stub_export_macro=WRITER_CONNECTOR_LEM_STUB_Export \
               -Wb,stub_export_include=Writer_Connector_lem_stub_export.h \
               -SS -Gxhst \
@@ -32,13 +32,13 @@ project(DDS_Writer_Connector_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(DDS_Writer_Connector_lem_stub) : ccm_svnt, dds4ccm_base   {
-  after += DDS_Writer_Connector_lem_gen DDS_Writer_Connector_stub DDS_Writer_Base_stub DDS4CCM_lem_stub
-  libs  += DDS_Writer_Base_stub DDS_Writer_Connector_stub DDS4CCM_lem_stub
+project(DDS_KeyedWriterConnector_lem_stub) : ccm_svnt, dds4ccm_base   {
+  after += DDS_KeyedWriterConnector_lem_gen DDS_KeyedWriterConnector_stub DDS_KeyedWriterBase_stub DDS4CCM_lem_stub
+  libs  += DDS_KeyedWriterBase_stub DDS_KeyedWriterConnector_stub DDS4CCM_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  sharedname = DDS_Writer_Connector_lem_stub
+  sharedname = DDS_KeyedWriterConnector_lem_stub
   dynamicflags   = WRITER_CONNECTOR_LEM_STUB_BUILD_DLL
 
   IDL_Files {
@@ -58,13 +58,13 @@ project(DDS_Writer_Connector_lem_stub) : ccm_svnt, dds4ccm_base   {
   }
 }
 
-project(DDS_Writer_Connector_stub) : ccm_stub, dds4ccm_base   {
-  after += DDS_Writer_Connector_idl_gen DDS_Writer_Base_stub
-  libs  += DDS_Writer_Base_stub
+project(DDS_KeyedWriterConnector_stub) : ccm_stub, dds4ccm_base   {
+  after += DDS_KeyedWriterConnector_idl_gen DDS_KeyedWriterBase_stub
+  libs  += DDS_KeyedWriterBase_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  sharedname = DDS_Writer_Connector_stub
+  sharedname = DDS_KeyedWriterConnector_stub
   dynamicflags   = WRITER_CONNECTOR_STUB_BUILD_DLL
 
   IDL_Files {
@@ -84,10 +84,10 @@ project(DDS_Writer_Connector_stub) : ccm_stub, dds4ccm_base   {
   }
 }
 
-project(DDS_Writer_Connector_exec) : ciao_executor, dds4ccm_skel, nddslib {
-  after   += DDS_Writer_Connector_lem_stub DDS_Writer_Connector_stub DDS4CCM_lem_stub CIAO_DDS4CCM_NDDS_Impl DDS_Writer_Base_NDDS_TS
-  sharedname = DDS_Writer_Connector_exec
-  libs += DDS_Writer_Connector_stub DDS_Writer_Connector_lem_stub DDS_Writer_Base_stub CIAO_DDS4CCM_NDDS_Impl DDS4CCM_lem_stub DDS_Writer_Base_NDDS_TS
+project(DDS_KeyedWriterConnector_exec) : ciao_executor, dds4ccm_skel, nddslib {
+  after   += DDS_KeyedWriterConnector_lem_stub DDS_KeyedWriterConnector_stub DDS4CCM_lem_stub CIAO_DDS4CCM_NDDS_Impl DDS_KeyedWriterBase_NDDS_TS
+  sharedname = DDS_KeyedWriterConnector_exec
+  libs += DDS_KeyedWriterConnector_stub DDS_KeyedWriterConnector_lem_stub DDS_KeyedWriterBase_stub CIAO_DDS4CCM_NDDS_Impl DDS4CCM_lem_stub DDS_KeyedWriterBase_NDDS_TS
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -110,13 +110,13 @@ project(DDS_Writer_Connector_exec) : ciao_executor, dds4ccm_skel, nddslib {
 }
 
 
-project(DDS_Writer_Connector_svnt) : ciao_servant, dds4ccm_skel, nddslib {
-  after      += DDS_Writer_Connector_lem_stub DDS_Writer_Connector_exec DDS_Writer_Connector_stub DDS4CCM_lem_stub
-  sharedname  = DDS_Writer_Connector_svnt
-  libs       += DDS_Writer_Connector_stub \
-                DDS_Writer_Connector_lem_stub  \
-                DDS_Writer_Base_stub \
-                DDS_Writer_Connector_exec \
+project(DDS_KeyedWriterConnector_svnt) : ciao_servant, dds4ccm_skel, nddslib {
+  after      += DDS_KeyedWriterConnector_lem_stub DDS_KeyedWriterConnector_exec DDS_KeyedWriterConnector_stub DDS4CCM_lem_stub
+  sharedname  = DDS_KeyedWriterConnector_svnt
+  libs       += DDS_KeyedWriterConnector_stub \
+                DDS_KeyedWriterConnector_lem_stub  \
+                DDS_KeyedWriterBase_stub \
+                DDS_KeyedWriterConnector_exec \
                 DDS4CCM_lem_stub
   libpaths += ../lib
   libout = ../lib
