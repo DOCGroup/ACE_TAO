@@ -9,6 +9,7 @@
 #include "Duration_t.h"
 #include "InstanceHandle_t.h"
 #include "DataWriterListener.h"
+#include "DataWriterQos.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
@@ -51,14 +52,15 @@ namespace CIAO
           }
 
         DDSTopic *rti_topic = topic->get_topic ();
-
         DDSDataWriterListener *rti_drl = new RTI_DataWriterListener_i (a_listener);
+        DDS_DataWriterQos rti_qos = DDS_DATAWRITER_QOS_DEFAULT;
+//        rti_qos <<= qos;
         DDSDataWriter *rti_dw = this->impl_->create_datawriter (rti_topic,
-                                                               DDS_DATAWRITER_QOS_DEFAULT,
-                                                               rti_drl,
-                                                               mask);
+                                                                rti_qos,
+                                                                rti_drl,
+                                                                mask);
 
-        if (rti_dw == 0)
+        if (!rti_dw)
           {
             CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter - "
                          "Error: RTI Topic returned a nil datawriter.\n"));

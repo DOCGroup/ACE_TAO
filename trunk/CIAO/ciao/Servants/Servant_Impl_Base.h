@@ -33,8 +33,6 @@
 #include "ccm/CCM_ObjectS.h"
 #include "ccm/CCM_StandardConfiguratorC.h"
 
-
-
 namespace CIAO
 {
   class Container;

@@ -130,9 +130,9 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_write (void)
 
           ::DDS::DataWriterQos dwqos;
           ::DDS::DataWriter_var dwv_tmp = this->__info_in_publisher_->create_datawriter (this->topic_.in (),
-                                                                                          dwqos,
-                                                                                          this->__listen_datawriterlistener.in (),
-                                                                                          0);
+                                                                                         dwqos,
+                                                                                         this->__listen_datawriterlistener.in (),
+                                                                                         DDS_OFFERED_DEADLINE_MISSED_STATUS | DDS_OFFERED_INCOMPATIBLE_QOS_STATUS | DDS_LIVELINESS_LOST_STATUS | DDS_PUBLICATION_MATCHED_STATUS);
           this->__info_in_datawriter_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
         }
     }
@@ -167,14 +167,14 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_listen (void)
                 this->__listen_datalistener_mode_,
                 this->__listen_datalistener_max_delivered_data_);
         }
-      if (CORBA::is_nil (this->__listen_datareader_.in ()))
+      if (CORBA::is_nil (this->push_consumer_data_.in ()))
         {
           ::DDS::DataReaderQos drqos;
-          this->__listen_datareader_ =
+          this->push_consumer_data_ =
               this->__listen_subscriber_->create_datareader (this->topic_.in (),
                                                            drqos,
                                                            this->__listen_datareaderlistener.in (),
-                                                           DDS_DATA_AVAILABLE_STATUS);
+                                                           DDS_DATA_AVAILABLE_STATUS | DDS_REQUESTED_DEADLINE_MISSED_STATUS | DDS_SAMPLE_LOST_STATUS | DDS_REQUESTED_INCOMPATIBLE_QOS_STATUS);
         }
 
       if (CORBA::is_nil (this->__info_get_datareader_.in ()))
@@ -184,7 +184,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_listen (void)
               this->__listen_subscriber_->create_datareader (this->topic_.in (),
                                                            drqos,
                                                            this->__listen_datareaderlistener.in (),
-                                                           DDS_DATA_AVAILABLE_STATUS);
+                                                           DDS_DATA_AVAILABLE_STATUS | DDS_REQUESTED_DEADLINE_MISSED_STATUS | DDS_SAMPLE_LOST_STATUS | DDS_REQUESTED_INCOMPATIBLE_QOS_STATUS);
         }
 
     }
@@ -231,7 +231,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_data (void)
   CIAO_TRACE ("get_push_consumer_data");
 
   return new CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> (
-          this->__listen_datareader_.in ());
+          this->push_consumer_data_.in ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -241,7 +241,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_data (void)
   CIAO_TRACE ("get_pull_consumer_data");
 
   return new CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> (
-          this->__listen_datareader_.in ());
+          this->push_consumer_data_.in ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>

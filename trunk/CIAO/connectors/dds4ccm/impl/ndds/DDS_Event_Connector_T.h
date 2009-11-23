@@ -83,7 +83,7 @@ private:
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> __listen_datalistener_mode_;
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> __listen_datalistener_max_delivered_data_;
   ::DDS::Subscriber_var __listen_subscriber_;
-  ::DDS::DataReader_var __listen_datareader_;
+  ::DDS::DataReader_var push_consumer_data_;
   ::DDS::DataReaderListener_var __listen_datareaderlistener;
   ::DDS::DataWriterListener_var __listen_datawriterlistener;
   ::DDS::TopicListener_var __listen_topiclistener;
