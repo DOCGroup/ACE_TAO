@@ -6,12 +6,10 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 use POSIX "sys_wait_h";
 
-$iorfilebase = "server.ior";
-$iorfile = PerlACE::LocalFile ("$iorfilebase");
-unlink $iorfile;
+$status = 0;
 
 $debug_opts = '';
 $srv_debug = '';
@@ -23,20 +21,45 @@ foreach $i (@ARGV) {
     } 
 }
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o $iorfilebase");
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+my $shutdown = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
+
+my $iorbase = "server.ior";
+my $server_iorfile = $server->LocalFile ($iorbase);
+my $client_iorfile = $client->LocalFile ($iorbase);
+my $shutdown_iorfile = $shutdown->LocalFile ($iorbase);
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
+$shutdown->DeleteFile ($iorbase);
+
+$SV = $server->CreateProcess ("server", "-o $server_iorfile $srv_debug");
+my $threads = int (rand() * 6) + 1;
+$CL = $client->CreateProcess ("client", "-k file://$client_iorfile -t $threads $debug_opts");
+$SH = $shutdown->CreateProcess ("shutdown", "-k file://$shutdown_iorfile");
+
+$server_status = $SV->Spawn ();
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    exit 1;
 }
-else {
-    $SV = new PerlACE::Process ("server", "-o $iorfile $srv_debug");
+
+if ($server->WaitForFileTimed ($iorbase,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
 }
-$threads = int (rand() * 6) + 1;
-$CL = new PerlACE::Process ("client", "-k file://$iorfile -t $threads $debug_opts");
 
+if ($server->GetFile ($iorbase) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
 
-$SV->Spawn ();
-
-if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
+if ($client->PutFile ($iorbase) == -1) {
+    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
@@ -52,48 +75,60 @@ if ($ARGV[0] eq '-quick')  {
 }
 
 my $client_idx = 0;
-while (($elapsed < $max_running_time) )
-{
- # ?? Start all clients in parallel
-  my $args_saved = $CL->Arguments ();
-  $CL->Arguments ("$args_saved$client_idx.log") unless $debug_opts eq '';
-  $client = $CL->Spawn ();
-  if ($debug_opts ne '') {
-    $CL->Arguments ($args_saved);
-    print "Spawned client $client_idx\n";
-    ++$client_idx;
-  }
+while (($elapsed < $max_running_time) ) {
+    # Start all clients in parallel
+    my $args_saved = $CL->Arguments ();
+    $CL->Arguments ("$args_saved$client_idx.log") unless $debug_opts eq '';
+    my $client_status = $CL->Spawn ();
+    if ($client_status != 0) {
+        print STDERR "ERROR: client returned $client_status\n";
+        $status = 1;
+    }
 
-  $CL->WaitKill(90) unless $client < 0;
+    if ($debug_opts ne '') {
+        $CL->Arguments ($args_saved);
+        print "Spawned client $client_idx\n";
+        ++$client_idx;
+    }
 
-  print STDERR "checking server alive\n";
+    if ($client_status == 0) {
+        $CL->WaitKill($client->ProcessStartWaitInterval() + 75);
+        if ($client_status != 0) {
+            print STDERR "ERROR: client returned $client_status\n";
+            $status = 1;
+        }
+    }
 
-  my $pid = waitpid ($SV->{PROCESS}, &WNOHANG);
+    print STDERR "checking server alive\n";
 
-  if ($pid != 0 && $? != -1)
-  {
-    $SV->check_return_value ($?);
-    $server_died = 1;
-    last;
-  }
+    my $pid = waitpid ($SV->{PROCESS}, &WNOHANG);
 
-  $elapsed = time() - $start_time;
-  sleep (1);
+    if ($pid != 0 && $? != -1) {
+        $SV->check_return_value ($?);
+        $server_died = 1;
+        last;
+    }
+
+    $elapsed = time() - $start_time;
+    sleep (1);
 }
 
 if (!$server_died) {
-  $SH = new PerlACE::Process ("shutdown", "-k file://$iorfile");
-  my $shutdown = $SH->Spawn();
-  $SH->WaitKill(10) unless $shutdown < 0;
+    my $shutdown_status = $SH->SpawnWaitKill($shutdown->ProcessStartWaitInterval());
+    if ($$shutdown_status != 0) {
+        print STDERR "ERROR: shutdown returned $$shutdown_status\n";
+        $status = 1;
+    }
 
-  $server = $SV->WaitKill (100);
+    $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 85);
+    if ($server_status != 0) {
+        print STDERR "ERROR: server returned $server_status\n";
+        $status = 1;
+    }
 }
 
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
-    $status = 1;
-}
-
-unlink $iorfile;
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
+$shutdown->DeleteFile ($iorbase);
 
 exit $status;

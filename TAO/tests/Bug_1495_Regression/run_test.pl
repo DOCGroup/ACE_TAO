@@ -26,6 +26,7 @@ my $thrserverfile = "thr_server.ior";
 
 my $server_iorbase = $server->LocalFile ($iorbase);
 my $client_iorbase = $client->LocalFile ($iorbase);
+
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
@@ -37,13 +38,14 @@ $client->DeleteFile($thrserverfile);
 $SV = $server->CreateProcess ("server", 
                               "-ORBdebuglevel $debug_level " .
                               "-o $server_iorbase " .
-                              "-i file://server_thrserverfile");
+                              "-i file://$server_thrserverfile");
 
 $CL = $client->CreateProcess ("client", 
                               "-ORBdebuglevel $debug_level " .
-                              "-o $client_thrserverfile" .
+                              "-o $client_thrserverfile " .
                               "-i $client_iorbase");
 
+print "1\n";
 $client_status = $CL->Spawn ();
 
 if ($client_status != 0) {
@@ -51,12 +53,15 @@ if ($client_status != 0) {
     exit 1;
 }
 
+print "2\n";
 if ($client->WaitForFileTimed ($thrserverfile,
                                $client->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$server_thrserverfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
+    $CL->Kill (); $CL->TimedWait (1);
     exit 1;
 }
+
+print "3\n";
 
 if ($client->GetFile ($thrserverfile) == -1) {
     print STDERR "ERROR: cannot retrieve file <$client_thrserverfile>\n";
