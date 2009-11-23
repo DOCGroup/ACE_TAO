@@ -123,7 +123,7 @@ if ($client_status != 0) {
     $status = 1;
 }
 
-$SL->Kill ();
+$SV->Kill ();
 
 $client2->DeleteFile ($server_flag_file);
 $server->DeleteFile($iorfile);
