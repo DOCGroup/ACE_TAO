@@ -82,6 +82,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_mirror_port.h"
 #include "ast_connector.h"
 #include "ast_template_module.h"
+#include "ast_template_module_inst.h"
+#include "ast_template_module_ref.h"
 #include "ast_param_holder.h"
 #include "ast_provides.h"
 #include "ast_uses.h"
@@ -1063,6 +1065,38 @@ AST_Generator::create_template_module (
   return retval;
 }
   
+AST_Template_Module_Inst *
+AST_Generator::create_template_module_inst (
+  UTL_ScopedName *n,
+  AST_Template_Module *ref,
+  FE_Utils::T_ARGLIST *template_args)
+{
+  AST_Template_Module_Inst *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Template_Module_Inst (n,
+                                            ref,
+                                            template_args),
+                  0);
+                  
+  return retval;
+}
+  
+AST_Template_Module_Ref *
+AST_Generator::create_template_module_ref (
+  UTL_ScopedName *n,
+  AST_Template_Module *ref,
+  UTL_StrList *param_refs)
+{
+  AST_Template_Module_Ref *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Template_Module_Ref (n,
+                                           ref,
+                                           param_refs),
+                  0);
+                  
+  return retval;
+}
+    
 AST_Param_Holder *
 AST_Generator::create_param_holder (
   Identifier *parameter_name)

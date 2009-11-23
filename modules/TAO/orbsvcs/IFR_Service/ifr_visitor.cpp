@@ -6,10 +6,6 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
 
-ACE_RCSID (IFR_Service, 
-           ifr_visitor, 
-           "$Id$")
-
 ifr_visitor::ifr_visitor (void)
   : lock_ (0)
 {
@@ -76,11 +72,6 @@ ifr_visitor::visit_interface_fwd (AST_InterfaceFwd *)
   return 0;
 }
 
-int ifr_visitor::visit_template_interface (AST_Template_Interface *)
-{
-  return 0;
-}
-
 int 
 ifr_visitor::visit_valuebox (AST_ValueBox *)
 {
@@ -107,6 +98,24 @@ ifr_visitor::visit_component (AST_Component *)
 
 int 
 ifr_visitor::visit_component_fwd (AST_ComponentFwd *)
+{
+  return 0;
+}
+
+int
+ifr_visitor::visit_template_module (AST_Template_Module *node)
+{
+  return 0;
+}
+
+int
+ifr_visitor::visit_template_module_inst (AST_Template_Module_Inst *node)
+{
+  return 0;
+}
+
+int
+ifr_visitor::visit_template_module_ref (AST_Template_Module_Ref *node)
 {
   return 0;
 }
@@ -160,25 +169,6 @@ ifr_visitor::visit_mirror_port (AST_Mirror_Port *)
 
 int
 ifr_visitor::visit_connector (AST_Connector *)
-{
-  return 0;
-}
-
-int
-ifr_visitor::visit_instantiated_connector (
-  AST_Instantiated_Connector *)
-{
-  return 0;
-}
-
-int
-ifr_visitor::visit_tmpl_port (AST_Tmpl_Port *)
-{
-  return 0;
-}
-
-int
-ifr_visitor::visit_tmpl_mirror_port (AST_Tmpl_Mirror_Port *)
 {
   return 0;
 }
