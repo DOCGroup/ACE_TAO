@@ -103,16 +103,3 @@ project(CIAO_ComponentServer_exe) : ccm_componentserver_svnt, portableserver, ci
   }
 }
 
-project(CIAO_RTComponentServer_exe) : ccm_componentserver_svnt, portableserver, ciao_componentserver_svnt, \
-                                      messaging, anytypecode, ciaoexe, ciao_session_container,\
-                                      ciao_logger, rt_server, rtportableserver {
-  exename = ciao_rtcomponentserver
-  Source_Files {
-    CIAO_RTComponentServer.cpp
-    CIAO_RTComponentServer_Task.cpp
-  }
-  Inline_Files {
-  }
-  IDL_Files {
-  }
-}
