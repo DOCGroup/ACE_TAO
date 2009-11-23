@@ -1,3 +1,10 @@
+Mon Nov 23 12:08:00 UTC 2009  Simon Massey  <sma at prismtech dot com>
+
+        * NEWS:
+        * TAO_IDL/util/utl_global.cpp:
+
+         Another Space in roots fix.
+
 Mon Nov 23 11:23:28 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * examples/RTCORBA/Activity/run_test.pl:
