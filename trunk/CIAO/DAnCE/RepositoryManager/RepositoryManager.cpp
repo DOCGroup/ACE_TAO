@@ -158,9 +158,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     //transfer ownership to the POA
     PortableServer::ServantBase_var owner_transfer(repo);
-
-    //register and implicitly activate servant
-    CIAO::RepositoryManagerDaemon_var RepositoryManagerDaemon = repo->_this ();
+    PortableServer::ObjectId_var id =
+      root_poa->activate_object (ci_srv);
+    CORBA::Object_var repo_object = root_poa->id_to_reference (id.in ());
+    CIAO::RepositoryManagerDaemon_var RepositoryManagerDaemon =
+      CIAO::RepositoryManagerDaemon::_narrow (repo_object.in ());
 
     bool retval = false;
 

@@ -1,3 +1,43 @@
+Mon Nov 23 12:41:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc:
+          Added RTComponent server
+
+        * ciao/ComponentServer/CIAO_ComponentServer_Impl.cpp:
+          Debug changes and use explicit activation
+
+        * ciao/ComponentServer/CIAO_ComponentServer_Task.cpp:
+          Use explicit activation
+
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+          Pass the poa into the Session_Container. For RTCORBA we use
+          a special POA and we would like to see the container to
+          use this POA as his own root
+
+        * ciao/ComponentServer/CIAO_RTComponentServer.cpp:
+        * ciao/ComponentServer/CIAO_RTComponentServer_Task.cpp:
+        * ciao/ComponentServer/CIAO_RTComponentServer_Task.h:
+          New RTComponentServer which supports --static and --dynamic
+          for running a thread pool with threads.
+
+        * ciao/Containers/Container_Base.cpp:
+        * ciao/Containers/Container_Base.h:
+          Added root_poa_ as local member, this is the poa that this
+          container should use as his root. Also destroy its poa's in
+          the destructor
+
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Containers/Session/Session_Container.h:
+          Use the root_poa_ from the base and let the base class cleanup
+          his members
+
+        * ciao/Servants/Servant_Impl_Base.cpp:
+          layout changes
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/RepositoryManager/RepositoryManager.cpp
+          Use explicit activation
+
 Mon Nov 23 12:15:28 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp:
