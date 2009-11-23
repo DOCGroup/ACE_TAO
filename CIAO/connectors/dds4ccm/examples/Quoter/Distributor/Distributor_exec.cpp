@@ -425,8 +425,7 @@ namespace CIAO_Quoter_Distributor_Impl
   void
   Distributor_exec_i::ccm_remove (void)
   {
-    /* Your code here. */
-    //this->stop ();
+    this->stop ();
   }
 
   extern "C" DISTRIBUTOR_EXEC_Export ::Components::EnterpriseComponent_ptr

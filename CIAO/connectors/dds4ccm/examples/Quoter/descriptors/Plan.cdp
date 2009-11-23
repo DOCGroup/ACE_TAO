@@ -180,7 +180,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>broker</string>
+          <string>Quoter</string>
         </value>
       </value>
     </configProperty>
@@ -198,7 +198,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>broker</string>
+          <string>Quoter</string>
         </value>
       </value>
     </configProperty>
