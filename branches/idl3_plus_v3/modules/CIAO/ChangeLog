@@ -1,3 +1,16 @@
+Mon Nov 23 20:39:24 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/checking_visitor.h:
+        * tools/IDL3_to_IDL2/basic_visitor.cpp:
+        * tools/IDL3_to_IDL2/basic_visitor.h:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+        * tools/IDL3_to_IDL2/checking_visitor.cpp:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.h:
+        
+          Updated visit_* methods. New visit_* methods corresponding
+          to the revised IDL3+ grammar types, have not yet been
+          implemented.
+
 Tue Nov 10 20:00:17 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/ReceiverOnly.cdp:
