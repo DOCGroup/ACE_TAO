@@ -1,73 +1,95 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-    & eval 'exec perl -S $0 $argv:q'
-    if 0;
+     & eval 'exec perl -S $0 $argv:q'
+     if 0;
 
 # $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-$iorfile = PerlACE::LocalFile ("test.ior");
-
-unlink $iorfile;
-
-$port = PerlACE::uniqueid () + 10001;  # This can't be 10000 for Chorus 4.0
 $status = 0;
+$debug_level = '0';
 
-if (PerlACE::is_vxworks_test()) {
-  $TARGETHOSTNAME = $ENV{'ACE_RUN_VX_TGTHOST'};
-  $SV  = new PerlACE::ProcessVX ("server", "-ORBEndpoint iiop://$TARGETHOSTNAME:$port -o $iorfile");
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
 }
-else {
-  $TARGETHOSTNAME = "localhost";
-  $SV  = new PerlACE::Process ("server", "-ORBEndpoint iiop://$TARGETHOSTNAME:$port -o $iorfile");
-}
+
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client1 = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+my $client2 = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
+
+my $iorfile = "test.ior";
+
+#Files which used by server
+my $server_iorfile = $server->LocalFile ($iorfile);
+$server->DeleteFile($iorfile);
+
+$hostname = $server->HostName ();
+$port = $server->RandomPort ();
+
+$SV = $server->CreateProcess ("server",
+                              "-ORBdebuglevel $debug_level " .
+                              "-ORBEndpoint iiop://$hostname:$port " .
+                              "-o $server_iorfile");
 
 # Client 1 expects OBJECT_NOT_EXIST exception ("-e 1")
-$CL1 = new PerlACE::Process ("client", 
-                             "-k corbaloc::$TARGETHOSTNAME:$port/Simple_Server -e 1 " 
-                             . "-ORBForwardInvocationOnObjectNotExist 0");
-                             
+$CL1 = $client1->CreateProcess ("client",
+                              "-ORBdebuglevel $debug_level " .
+                              "-k corbaloc::$hostname:$port/Simple_Server " .
+                              "-e 1 " .
+                              "-ORBForwardInvocationOnObjectNotExist 0");
+
 # Client 2 does not expects OBJECT_NOT_EXIST exception ("-e 0")
-$CL2 = new PerlACE::Process ("client", 
-                             "-x -k corbaloc::$TARGETHOSTNAME:$port/Simple_Server -e 0 "
-                             . "-ORBForwardInvocationOnObjectNotExist 1");
+$CL2 = $client2->CreateProcess ("client",
+                              "-ORBdebuglevel $debug_level " .
+                              "-x -k corbaloc::$hostname:$port/Simple_Server " .
+                              "-e 0 " .
+                              "-ORBForwardInvocationOnObjectNotExist 1");
 
-$SV->Spawn ();
+$server_status = $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile,
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill ();
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
     exit 1;
 }
 
+if ($server->WaitForFileTimed ($iorfile,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+    KillServers ();
+    exit 1;
+}
+
+
+
 print STDERR "==== Running first client with -ORBForwardInvocationOnObjectNotExist 0\n";
 
-$client = $CL1->SpawnWaitKill (60);
+$client_status = $CL1->SpawnWaitKill ($client1->ProcessStartWaitInterval() + 45);
 
-if ($client != 0) {
-    print STDERR "ERROR: client 1 returned $client\n";
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 
 print STDERR "==== Running second client with -ORBForwardInvocationOnObjectNotExist 1\n";
 
-$client = $CL2->SpawnWaitKill (60);
+$client_status = $CL2->SpawnWaitKill ($client2->ProcessStartWaitInterval() + 45);
 
-if ($client != 0) {
-    print STDERR "ERROR: client 2 returned $client\n";
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 
-$server = $SV->WaitKill (15);
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
 
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }
 
-unlink $iorfile;
+$server->DeleteFile($iorfile);
 
 exit $status;

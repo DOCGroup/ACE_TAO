@@ -53,7 +53,7 @@ $SV = $server->CreateProcess ("server",
 
 $CL = $client->CreateProcess ("client", 
                               "-ORBdebuglevel $debug_level " .
-                              "-i file://$client_inputfile" .
+                              "-i file://$client_inputfile " .
                               "-o $client_thrserverfile");
 
 $ML = $middle->CreateProcess ("server", 

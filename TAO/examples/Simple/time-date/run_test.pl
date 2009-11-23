@@ -21,7 +21,7 @@ my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 fail
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
 my $iorbase = "ior"; # please note that conf file is defined in *.conf file
-my $client_conffile = $client->LocalFile ($PerlACE::svcconf_ext);
+my $client_conffile = $client->LocalFile ("client"."$PerlACE::svcconf_ext");
 my $server_iorfile = $server->LocalFile ($iorbase);
 my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);

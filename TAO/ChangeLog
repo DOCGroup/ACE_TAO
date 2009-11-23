@@ -1,3 +1,52 @@
+Mon Nov 23 09:38:57 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * orbsvcs/DevGuideExamples/InterfaceRepo/run_test.pl:
+        * orbsvcs/DevGuideExamples/ImplRepo/Basic/MessengerServer.cpp:
+        * orbsvcs/DevGuideExamples/ImplRepo/Basic/MessengerClient.cpp:
+        * orbsvcs/DevGuideExamples/ImplRepo/Basic/run_test.pl:
+        * orbsvcs/DevGuideExamples/ImplRepo/IORTable/MessengerServer.cpp:
+        * orbsvcs/DevGuideExamples/ImplRepo/IORTable/run_test.pl:
+        * orbsvcs/DevGuideExamples/ImplRepo/MessengerClient.cpp:
+        * orbsvcs/DevGuideExamples/ImplRepo/Activator/run_test.pl:
+        * orbsvcs/DevGuideExamples/ImplRepo/run_test.pl:
+        * orbsvcs/tests/Miop/McastHello/run_test.pl:
+        * orbsvcs/tests/Security/Callback/client.cpp:
+        * orbsvcs/tests/CosEvent/Timeout/run_test.pl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/LB_server.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/LB_server.h:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/run_test.pl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/LB_server.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/LB_server.h:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/run_test.pl:
+        * orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/run_test.pl:
+        * performance-tests/Protocols/run_test.pl:
+        * tests/CollocationLockup/run_test.pl:
+        * tests/Bug_1495_Regression/Threaded_Client.cpp:
+        * tests/Bug_1495_Regression/run_test_complex.pl:
+        * tests/Bug_1495_Regression/run_test.pl:
+        * tests/Bug_1361_Regression/run_test.pl:
+        * tests/COIOP/run_test.pl:
+        * tests/Bug_3000_Regression/run_test.pl:
+        * tests/Bug_2186_Regression/run_test.pl:
+        * tests/AlternateIIOP/run_test.pl:
+        * tests/NestedUpcall/Simple/run_test.pl:
+        * tests/MT_BiDir/run_test.pl:
+        * tests/MT_Client/run_test.pl:
+        * tests/ForwardUponObjectNotExist/run_test.pl:
+        * tests/No_Server_MT_Connect_Test/run_test.pl:
+        * tests/Cache_Growth_Test/run_test.pl:
+        * tests/Bug_1476_Test/run_test.pl:
+        * bin/tao_other_tests.lst:
+        * bin/tao_orb_tests.lst:
+        * examples/Simple/time-date/run_test.pl:
+        * examples/CSD_Strategy/ThreadPool/run_test.pl:
+        * examples/CSD_Strategy/ThreadPool3/run_test.pl:
+        * examples/RTCORBA/Activity/run_test.pl:
+        * examples/AMH/Sink_Server/run_test.pl:
+          
+          Tests are converted to use new test framework and added to fuzz build. 
+          
+
 Sat Nov 21 14:20:19 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
 
         * tests/Bug_3766_Regression/Test.idl:
