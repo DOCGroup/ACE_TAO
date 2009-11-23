@@ -723,7 +723,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << "::CIAO::Servant_Activator_var sa =" << be_idt_nl
       << "this->container_->ports_servant_activator ();"
       << be_uidt_nl << be_nl
-      << "if (! sa->register_port_activator (tmp))"
+      << "if (! sa->register_port_activator (pa._retn ()))"
       << be_idt_nl
       << "{" << be_idt_nl
       << "return ::" << fname << "Consumer::_nil ();" << be_uidt_nl

@@ -1,3 +1,16 @@
+Mon Nov 23 10:50:58 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          In the generated servant code (_svnt.cpp) we have an
+          access violation in the method populate_port_tables.
+          The access violation is indirectly caused by a wrong
+          call of the method ports_servant_activator of the
+          Servant_Activator.
+          An instance of Port_Activator is created as a copy
+          of tmp. Instead of the new copy pa the tmp variable
+          is used in the call of ports_servant_activator.
+          Thanks to Wolfgang Pickartz.
+
 Mon Nov 23 09:38:57 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/DevGuideExamples/InterfaceRepo/run_test.pl:
@@ -43,9 +56,9 @@ Mon Nov 23 09:38:57 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
         * examples/CSD_Strategy/ThreadPool3/run_test.pl:
         * examples/RTCORBA/Activity/run_test.pl:
         * examples/AMH/Sink_Server/run_test.pl:
-          
-          Tests are converted to use new test framework and added to fuzz build. 
-          
+
+          Tests are converted to use new test framework and added to fuzz build.
+
 
 Sat Nov 21 14:20:19 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
 
@@ -55,7 +68,7 @@ Sat Nov 21 14:20:19 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
         * tests/Bug_3766_Regression/client.cpp:
         * tests/Bug_3766_Regression/server.cpp:
 
-          Minor improvement to this test. Add a way for the client to 
+          Minor improvement to this test. Add a way for the client to
           shut down the server so this test can pass on the scoreboard.
 
 Sat Nov 21 04:44:20 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
