@@ -58,11 +58,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  // Parse command line
-  if (parse_args (argc, argv) == -1)
-    {
-      return -1;
-    }
 
   try
     {
@@ -72,6 +67,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (main_args_s.get_argc (),
                          main_args_s.get_TCHAR_argv (),
                          "Server_ORB");
+    // Parse command line
+      if (parse_args (argc, argv) == -1)
+      {
+          return -1;
+      }
 
       ACE_Manual_Event me;
 
