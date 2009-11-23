@@ -1,3 +1,38 @@
+Mon Nov 23 20:37:29 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_template_module_ref.h:
+        * TAO_IDL/ast/ast_template_module_ref.cpp:
+        * TAO_IDL/be_include/be_template_module_ref.h:
+        * TAO_IDL/be/be_template_module_ref.cpp:
+
+          New files, containing the AST node type
+          representing a reference to an IDL template
+          module denoted by the IDL keyword 'alias'.
+
+        * TAO_IDL/include/ast_visitor.h:
+        * TAO_IDL/be/be_template_interface.cpp:
+        * TAO_IDL/be/be_typedef.cpp:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/be_include/be_visitor.h:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+
+          - Removed methods and code blocks referencing
+            AST node types that have been removed.
+
+          - Updated visit_* methods to frontend and backend
+            visitor classes.
+
+          - Updated create_* methods in generator classes.
+
+        * orbsvcs/IFR_Service/ifr_visitor.h:
+        * orbsvcs/IFR_Service/ifr_visitor.cpp:
+
+          Update visit_* methods in base class visitor so
+          backend IFR loader library will comple. New visit_*
+          methods are not yet implemented.
+
 Fri Nov 20 20:22:23 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_module.h:
