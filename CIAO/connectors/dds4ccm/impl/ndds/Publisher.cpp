@@ -65,6 +65,7 @@ namespace CIAO
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
 
+        rti_dw->enable ();
         ::DDS::DataWriter_var retval = new RTI_DataWriter_i (rti_dw);
 
         return retval._retn ();

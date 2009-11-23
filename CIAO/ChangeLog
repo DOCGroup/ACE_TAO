@@ -1,3 +1,9 @@
+Mon Nov 23 10:07:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+          Explicitly enable reader/writer
+
 Sun Nov 22 20:00:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Writer/Sender/Writer_Sender_exec.h:

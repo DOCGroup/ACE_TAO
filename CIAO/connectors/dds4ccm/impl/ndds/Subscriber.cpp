@@ -90,6 +90,7 @@ namespace CIAO
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
 
+        rti_dr->enable ();
         ::DDS::DataReader_var retval = new RTI_DataReader_i (rti_dr);
 
         return retval._retn ();
