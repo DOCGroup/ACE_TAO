@@ -309,6 +309,18 @@ public:
     FE_Utils::T_PARAMLIST_INFO *template_params);
     
   virtual
+  AST_Template_Module_Inst *create_template_module_inst (
+    UTL_ScopedName *n,
+    AST_Template_Module *ref,
+    FE_Utils::T_ARGLIST *template_args);
+    
+  virtual
+  AST_Template_Module_Ref *create_template_module_ref (
+    UTL_ScopedName *n,
+    AST_Template_Module *ref,
+    UTL_StrList *param_refs);
+    
+  virtual
   AST_Param_Holder *create_param_holder (
     Identifier *parameter_name);
 };

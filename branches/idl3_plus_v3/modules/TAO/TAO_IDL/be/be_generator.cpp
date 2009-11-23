@@ -85,6 +85,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_mirror_port.h"
 #include "be_connector.h"
 #include "be_template_module.h"
+#include "be_template_module_inst.h"
+#include "be_template_module_ref.h"
 #include "be_param_holder.h"
 #include "be_provides.h"
 #include "be_uses.h"
@@ -1055,6 +1057,38 @@ be_generator::create_template_module (
   return retval;
 }
   
+AST_Template_Module_Inst *
+be_generator::create_template_module_inst (
+  UTL_ScopedName *n,
+  AST_Template_Module *ref,
+  FE_Utils::T_ARGLIST *template_args)
+{
+  be_template_module_inst *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_template_module_inst (n,
+                                           ref,
+                                           template_args),
+                  0);
+                  
+  return retval;
+}
+  
+AST_Template_Module_Ref *
+be_generator::create_template_module_ref (
+  UTL_ScopedName *n,
+  AST_Template_Module *ref,
+  UTL_StrList *param_refs)
+{
+  be_template_module_ref *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_template_module_ref (n,
+                                          ref,
+                                          param_refs),
+                  0);
+                  
+  return retval;
+}
+    
 AST_Param_Holder *
 be_generator::create_param_holder (
   Identifier *parameter_name)

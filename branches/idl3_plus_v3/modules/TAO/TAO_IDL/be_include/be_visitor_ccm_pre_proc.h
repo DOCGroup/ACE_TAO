@@ -120,13 +120,6 @@ private:
   // involve creation of instantiated template interface.
   int store_port_interface (AST_Type *i);
   
-  // Use template interface and template arg flat names.
-  ACE_CString create_inst_name (AST_Template_Interface *ti);
-  
-  // Instantiate a template interface.
-  int create_inst_interface (be_template_interface *ti,
-                             ACE_CString &inst_name);
-
 private:
   // These are created for operations implied by 'uses multiple' declarations.
   Identifier module_id_;

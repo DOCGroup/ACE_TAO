@@ -90,6 +90,8 @@ class AST_Publishes;
 class AST_Emits;
 class AST_Consumes;
 class AST_Template_Module;
+class AST_Template_Module_Inst;
+class AST_Template_Module_Ref;
 class AST_Param_Holder;
 
 // Defines base class for node generators.
@@ -395,6 +397,18 @@ public:
   AST_Template_Module *create_template_module (
     UTL_ScopedName *n,
     FE_Utils::T_PARAMLIST_INFO *template_params);
+    
+  virtual
+  AST_Template_Module_Inst *create_template_module_inst (
+    UTL_ScopedName *n,
+    AST_Template_Module *ref,
+    FE_Utils::T_ARGLIST *template_args);
+    
+  virtual
+  AST_Template_Module_Ref *create_template_module_ref (
+    UTL_ScopedName *n,
+    AST_Template_Module *ref,
+    UTL_StrList *param_refs);
     
   virtual
   AST_Param_Holder *create_param_holder (
