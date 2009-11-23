@@ -9,7 +9,7 @@
 #define WRITER_BASE_IDL
 
 struct WriterTest {
-  string key;
+  string key; //@key
   long iteration;
 };
 
