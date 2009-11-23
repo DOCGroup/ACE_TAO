@@ -1,3 +1,9 @@
+Mon Nov 23 10:56:18 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * THANKS:
+          Added Wolfgang Pickartz.for solving a TAO_IDL compiler
+          issue.
+
 Mon Nov 23 07:53:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debianbuild/changelog:
