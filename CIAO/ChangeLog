@@ -1,3 +1,24 @@
+Mon Nov 23 14:32:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Servant_Impl_Base.h:
+          Layout change
+
+        * connectors/dds4ccm/impl/ndds/DataWriterQos.h:
+          Added missing includes
+
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.h:
+          Enable listeners for more callbacks
+
+        * connectors/dds4ccm/impl/ndds/OwnershipStrengthQosPolicy.h:
+          New file
+
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+          Qos passing changes
+
+        * connectors/dds4ccm/impl/ndds/Updater_T.cpp:
+          delete_ now does a dispose and than unregister_instance
+
 Mon Nov 23 12:41:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/CIAO_ComponentServer.mpc:

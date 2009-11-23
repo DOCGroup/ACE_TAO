@@ -33,13 +33,13 @@ namespace CIAO
         ::DDS::DataWriter *the_writer,
         const ::DDS::OfferedDeadlineMissedStatus & status);
 
-      virtual void on_offered_incompatible_qos (
-        ::DDS::DataWriter *the_writer,
-        const ::DDS::OfferedIncompatibleQosStatus & status);
-
       virtual void on_liveliness_lost (
         ::DDS::DataWriter *the_writer,
         const ::DDS::LivelinessLostStatus & status);
+
+      virtual void on_offered_incompatible_qos (
+        ::DDS::DataWriter *the_writer,
+        const ::DDS::OfferedIncompatibleQosStatus & status);
 
       virtual void on_publication_matched (
         ::DDS::DataWriter *the_writer,

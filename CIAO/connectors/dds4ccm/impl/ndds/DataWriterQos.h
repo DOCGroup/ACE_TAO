@@ -9,6 +9,22 @@
 #ifndef CIAO_RTI_DATAWRITERQOS_H
 #define CIAO_RTI_DATAWRITERQOS_H
 
+#include "DurabilityQosPolicy.h"
+#include "DurabilityServiceQosPolicy.h"
+#include "DeadlineQosPolicy.h"
+#include "LatencyBudgetQosPolicy.h"
+#include "LivelinessQosPolicy.h"
+#include "ReliabilityQosPolicy.h"
+#include "DestinationOrderQosPolicy.h"
+#include "HistoryQosPolicy.h"
+#include "ResourceLimitsQosPolicy.h"
+#include "TransportPriorityQosPolicy.h"
+#include "LifespanQosPolicy.h"
+#include "UserDataQosPolicy.h"
+#include "OwnershipQosPolicy.h"
+#include "OwnershipStrengthQosPolicy.h"
+#include "WriterDataLifecycleQosPolicy.h"
+
 inline void
 operator<<= (::DDS::DataWriterQos &ddsqos, const ::DDS_DataWriterQos & qos)
 {

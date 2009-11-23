@@ -124,7 +124,17 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::delete_i (
     {
       hnd = this->impl_->lookup_instance (an_instance);
     }
-  ::DDS_ReturnCode_t const result =
+  ::DDS_ReturnCode_t result =
+    this->impl_->dispose (an_instance, hnd);
+  if (result != DDS_RETCODE_OK)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("CIAO::DDS4CCM::RTI::Updater_T::delete_i: ")
+                  ACE_TEXT ("Unable to dispose instance, error %C.\n"),
+                  translate_retcode (result)));
+      throw CCM_DDS::InternalError (result, index);
+    }
+  result =
     this->impl_->unregister_instance (an_instance, hnd);
   if (result != DDS_RETCODE_OK)
     {
