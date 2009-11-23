@@ -1,3 +1,46 @@
+Mon Nov 23 15:08:28 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/KeyedWriter:
+          Renamed to KeyedWriter.
+
+        * connectors/dds4ccm/tests/KeyedWriter/Base/Writer_Base.idl:
+          Added DDS key.
+
+        * connectors/dds4ccm/tests/KeyedWriter/Sender/Writer_Sender_exec.h:
+        * connectors/dds4ccm/tests/KeyedWriter/Sender/Writer_Sender_exec.cpp:
+          Optimized for keyed tests.
+
+        * connectors/dds4ccm/tests/KeyedWriter/descriptors/USER_QOS_PROFILES.xml:
+          Set max_instances to 1.
+
+        * connectors/dds4ccm/tests/KeyedWriter/descriptors/run_test.pl:
+          Set sleep time to 60 seconds.
+
+        * connectors/dds4ccm/tests/Writer:
+        * connectors/dds4ccm/tests/Writer/Base:
+        * connectors/dds4ccm/tests/Writer/Base/Writer_Base.idl:
+        * connectors/dds4ccm/tests/Writer/Base/Writer_Base.mpc:
+        * connectors/dds4ccm/tests/Writer/Connector:
+        * connectors/dds4ccm/tests/Writer/Connector/Writer_Connector.idl:
+        * connectors/dds4ccm/tests/Writer/Connector/Writer_Connector.mpc:
+        * connectors/dds4ccm/tests/Writer/Connector/Writer_Connector_exec.h:
+        * connectors/dds4ccm/tests/Writer/Connector/Writer_Connector_exec.cpp:
+        * connectors/dds4ccm/tests/Writer/Receiver:
+        * connectors/dds4ccm/tests/Writer/Receiver/Writer_Receiver.idl:
+        * connectors/dds4ccm/tests/Writer/Receiver/Writer_Receiver.mpc:
+        * connectors/dds4ccm/tests/Writer/Receiver/Writer_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Writer/Receiver/Writer_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Writer/Sender:
+        * connectors/dds4ccm/tests/Writer/Sender/Writer_Sender.idl:
+        * connectors/dds4ccm/tests/Writer/Sender/Writer_Sender.mpc:
+        * connectors/dds4ccm/tests/Writer/Sender/Writer_Sender_exec.h:
+        * connectors/dds4ccm/tests/Writer/Sender/Writer_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/Writer/descriptors:
+        * connectors/dds4ccm/tests/Writer/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/Writer/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/Writer/descriptors/run_test.pl:
+          Removed these files. Renamed to KeyedWriter.
+
 Mon Nov 23 14:32:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Servant_Impl_Base.h:

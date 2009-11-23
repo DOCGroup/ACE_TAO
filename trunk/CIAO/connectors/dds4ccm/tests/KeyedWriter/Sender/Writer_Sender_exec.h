@@ -24,7 +24,6 @@ namespace CIAO_Writer_Sender_Impl
   enum WRITER_ASSIGNMENT {
     WRITE_NONE,
     WRITE_KEYED,
-    WRITE_UNKEYED,
     WRITE_MULTI
   };
 
@@ -86,10 +85,10 @@ namespace CIAO_Writer_Sender_Impl
     CORBA::Long last_iteration_;
 
     void reset_iterations ();
-    void create_handles();
+    void register_handles ();
+    void unregister_handles ();
     void start_new_assignment (
         WRITER_ASSIGNMENT assignment);
-    void write_unkeyed ();
     void write_keyed ();
     void write_many ();
 
