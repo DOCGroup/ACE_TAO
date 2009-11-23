@@ -99,8 +99,8 @@ if ($client_status != 0) {
     exit 1;
 }
 
-if ($client->WaitForFileTimed ($server_flag_file,
-                               $client->ProcessStartWaitInterval() + 45) == -1) {
+if ($client2->WaitForFileTimed ($server_flag_file,
+                               $client2->ProcessStartWaitInterval() + 45) == -1) {
     print STDERR "ERROR: cannot find file <$client2_flag_file>\n";
     $SV->Kill (); $SV->TimedWait (1);
     $CL2->Kill (); $CL2->TimedWait (1);
