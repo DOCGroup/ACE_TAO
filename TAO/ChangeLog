@@ -1,3 +1,9 @@
+Mon Nov 23 11:23:28 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * examples/RTCORBA/Activity/run_test.pl:
+
+         Test is converted to use new test framework and added to fuzz build.
+
 Mon Nov 23 11:07:56 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * tests/MT_Client/run_test.pl:
