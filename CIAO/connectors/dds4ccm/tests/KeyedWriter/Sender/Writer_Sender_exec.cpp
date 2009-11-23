@@ -34,7 +34,7 @@ namespace CIAO_Writer_Sender_Impl
     : rate_ (1),
       iterations_ (10),
       keys_ (5),
-      assignment_ (WRITE_UNKEYED),
+      assignment_ (WRITE_KEYED),
       last_iteration_ (0)
   {
     this->ticker_ = new pulse_Generator (*this);
@@ -56,24 +56,54 @@ namespace CIAO_Writer_Sender_Impl
       }
   }
 
+  
   void
-  Sender_exec_i::create_handles()
+  Sender_exec_i::unregister_handles ()
   {
     for (Writer_Table::iterator i = this->ktests_.begin ();
          i != this->ktests_.end ();
          ++i)
       {
-        ::DDS::InstanceHandle_t hnd = this->writer_->register_instance (i->second);
-/*        if (hnd == ::DDS::HANDLE_NIL)
+        try
           {
-            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unable to register handle for %C"),
-              i->first.c_str ()));
-          }*/
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Registring instance with %C and %d : Valid <%d>\n"),
-                    i->second->key.in (),
-                    i->second->iteration,
-                    hnd.isValid));
-        this->handles_[i->first.c_str ()] = hnd;
+            ::DDS::InstanceHandle_t hnd = this->handles_[i->first.c_str ()];
+            this->writer_->unregister_instance (i->second, hnd);
+            CIAO_DEBUG ((LM_ERROR, ACE_TEXT ("Unregistered <%C> <%d> <%d>\n"),
+                      i->first.c_str (),
+                      i->second->iteration,
+                      hnd.isValid));
+          }
+        catch (...)
+          {
+            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: ")
+                    ACE_TEXT ("unknown exception caught during unregister_instance.\n")));
+          }
+      }
+  }
+
+  void
+  Sender_exec_i::register_handles()
+  {
+    Writer_Table::iterator i = this->ktests_.begin ();
+    ::DDS::InstanceHandle_t hnd = this->writer_->register_instance (i->second);
+    if (!hnd.isValid)
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unable to register handle for %C and %d\n"),
+          i->first.c_str (), i->second->iteration));
+      }
+    CIAO_DEBUG ((LM_ERROR, ACE_TEXT ("Registering instance with %C and %d : Valid <%d>\n"),
+                i->second->key.in (),
+                i->second->iteration,
+                hnd.isValid));
+    this->handles_[i->first.c_str ()] = hnd;
+    ++i;
+    //test exception. In Qos, max_instances is set to 1 
+    //so only one instance may be registered.
+    hnd = this->writer_->register_instance (i->second);
+    if (hnd.isValid)
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Shouldn't be able to register instance for %C and %d\n"),
+          i->first.c_str (), i->second->iteration));
       }
   }
 
@@ -86,50 +116,6 @@ namespace CIAO_Writer_Sender_Impl
   }
 
   void
-  Sender_exec_i::write_unkeyed ()
-  {
-    if (this->last_key != this->ktests_.end ())
-      {
-        try
-          {
-            ++this->last_key->second->iteration;
-            this->writer_->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
-            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Written unkeyed <%C> with <%d>\n"),
-                    this->last_key->first.c_str (),
-                    this->last_key->second->iteration));
-          }
-        catch (CCM_DDS::InternalError& )
-          {
-            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unexpected exception ")
-                        ACE_TEXT ("while updating writer info for <%s>.\n"),
-                          this->last_key->first.c_str ()));
-          }
-        ++this->last_key;
-      }
-    else
-      {
-        //onto the next iteration
-        this->last_key = this->ktests_.begin ();
-        while (this->last_key != this->ktests_.end ())
-          {
-            if (this->last_key->second->iteration == this->iterations_)
-              {
-                //next key
-                ++this->last_key;
-              }
-            else
-              {
-                break;
-              }
-          }
-        if (this->last_key == this->ktests_.end ())
-          {
-            start_new_assignment (WRITE_KEYED);
-          }
-      }
-  }
-  
-  void
   Sender_exec_i::write_keyed ()
   {
     if (this->last_key != this->ktests_.end ())
@@ -139,21 +125,29 @@ namespace CIAO_Writer_Sender_Impl
           {
             ++this->last_key->second->iteration;
             ::DDS::InstanceHandle_t hnd = this->handles_[this->last_key->first.c_str ()];
+            printf ("<%s> <%d> <%d>\n", 
+                    this->last_key->first.c_str (), 
+                    this->last_key->second->iteration, 
+                    hnd.isValid);
             this->writer_->write_one (this->last_key->second, hnd);
-            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Written keyed <%C> with <%d> and handle <%d>\n"),
+            ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Written keyed <%C> with <%d> and handle <%d>\n"),
                     this->last_key->first.c_str (),
                     this->last_key->second->iteration,
-                    hnd));
+                    hnd.isValid));
           }
         catch (CCM_DDS::InternalError& )
           {
             exception_caught = true;
-            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error ")
-                        ACE_TEXT ("while updating writer info for <%s>.\n"),
-                          this->last_key->first.c_str ()));
+            if (this->last_key == this->ktests_.begin ())
+              { // the first key should throw this exception; all others
+                // shouldn't
+                CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
+                            ACE_TEXT ("while updating writer info for <%s>.\n"),
+                              this->last_key->first.c_str ()));
+              }
           }
         //only the first iterations are registered.
-        if (this->last_key->second->iteration != 1 && !exception_caught)
+        if (this->last_key != this->ktests_.begin () && !exception_caught)
           {
             CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: No exception caught ")
                     ACE_TEXT ("while writing unregistered data\n")));
@@ -178,6 +172,7 @@ namespace CIAO_Writer_Sender_Impl
           }
         if (this->last_key == this->ktests_.end ())
           {
+            unregister_handles ();
             start_new_assignment (WRITE_MULTI);
           }
       }
@@ -186,7 +181,7 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::write_many ()
   {
-    WriterTest_Seq write_many_seq;// = new WriterTest_Seq ();
+    WriterTest_Seq write_many_seq;
     write_many_seq.length (this->keys_ * this->iterations_);
     int iter_key = 0;
     for (Writer_Table::iterator iter = this->ktests_.begin ();
@@ -197,7 +192,7 @@ namespace CIAO_Writer_Sender_Impl
         for (int i = 1; i < this->iterations_ + 1; ++i)
           {
             char key[7];
-            WriterTest new_key;// = new WriterTest;
+            WriterTest new_key;
             ACE_OS::sprintf (key, "KEY_%d", iter_key);
             new_key.key = CORBA::string_dup(key);
             new_key.iteration = i;
@@ -210,7 +205,7 @@ namespace CIAO_Writer_Sender_Impl
       }
     catch (CCM_DDS::InternalError& )
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error ")
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
                     ACE_TEXT ("while write many writer info.\n")));
       }
     this->assignment_ = WRITE_NONE;
@@ -221,9 +216,6 @@ namespace CIAO_Writer_Sender_Impl
   {
     switch (this->assignment_)
       {
-        case WRITE_UNKEYED:
-          write_unkeyed ();
-          break;
         case WRITE_KEYED:
           write_keyed ();
           break;
@@ -254,7 +246,7 @@ namespace CIAO_Writer_Sender_Impl
   Sender_exec_i::stop (void)
   {
     this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
+    CIAO_DEBUG ((LM_ERROR, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
     delete this->ticker_;
   }
 
@@ -279,7 +271,7 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::iterations (::CORBA::UShort iterations)
   {
-    this->iterations_ = iterations;
+    this->iterations_ = iterations + 2; //for extra tests.
   }
 
   ::CORBA::UShort
@@ -291,7 +283,7 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::keys (::CORBA::UShort keys)
   {
-    this->keys_ = keys;
+    this->keys_ = keys + 1; //for extra tests.
   }
 
   void
@@ -331,7 +323,7 @@ namespace CIAO_Writer_Sender_Impl
         this->ktests_[key] = new_key;
       }
     this->last_key = this->ktests_.begin ();
-    create_handles ();
+    register_handles ();
     reset_iterations ();
   }
 

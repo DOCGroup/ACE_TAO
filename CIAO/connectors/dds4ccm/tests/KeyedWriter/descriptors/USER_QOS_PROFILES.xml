@@ -42,6 +42,10 @@ RTI Data Distribution Service user manual.
           <kind>KEEP_LAST_HISTORY_QOS</kind>
           <depth>20</depth>
         </history>
+        <resource_limits>
+          <max_instances>1</max_instances>
+          <initial_instances>1</initial_instances>
+        </resource_limits>
         <protocol>
           <rtps_reliable_writer>
             <max_heartbeat_retries>10</max_heartbeat_retries>
