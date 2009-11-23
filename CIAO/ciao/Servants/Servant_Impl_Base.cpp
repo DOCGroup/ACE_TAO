@@ -61,8 +61,7 @@ namespace CIAO
           this->container_->the_port_POA ()->reference_to_id (
             facets[i]->facet_ref ());
 
-        this->container_->the_port_POA ()->deactivate_object (
-          facet_id);
+        this->container_->the_port_POA ()->deactivate_object (facet_id);
 
         CIAO::Servant_Activator_var sa =
           this->container_->ports_servant_activator ();
@@ -538,7 +537,7 @@ namespace CIAO
     CIAO_TRACE("Servant_Impl_Base::add_consumer");
     if (0 == port_name || ::CORBA::is_nil (port_ref))
       {
-  CIAO_ERROR ((LM_ERROR, CLINFO "Servant_Impl_Base::add_consumer - Bad port name [%C] or bad objref\n",
+        CIAO_ERROR ((LM_ERROR, CLINFO "Servant_Impl_Base::add_consumer - Bad port name [%C] or bad objref\n",
                     port_name));
         throw ::CORBA::BAD_PARAM ();
         return;
@@ -681,8 +680,7 @@ namespace CIAO
   Servant_Impl_Base::_default_POA (void)
   {
     CIAO_TRACE("Servant_Impl_Base::_default_POA (void)");
-    return
-      PortableServer::POA::_duplicate (container_->the_POA ());
+    return PortableServer::POA::_duplicate (container_->the_POA ());
   }
 
   ::Components::Cookie *

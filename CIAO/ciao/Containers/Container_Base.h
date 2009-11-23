@@ -62,10 +62,11 @@ namespace CIAO
     public virtual ::CORBA::LocalObject
   {
   public:
-    Container_i (CORBA::ORB_ptr o);
-    Container_i (CORBA::ORB_ptr o, Deployment::CIAO_Container_i *container_impl);
+    Container_i (CORBA::ORB_ptr o, PortableServer::POA_ptr root_poa);
+    Container_i (CORBA::ORB_ptr o, PortableServer::POA_ptr root_poa,
+                 Deployment::CIAO_Container_i *container_impl);
 
-    virtual ~Container_i (void) = 0;
+    virtual ~Container_i (void);
 
     /// Initialize the container with a name.
     virtual void init (const char *name = 0,
@@ -125,6 +126,9 @@ namespace CIAO
   protected:
     /// Reference to the ORB
     CORBA::ORB_var orb_;
+
+    /// POA used as root
+    PortableServer::POA_var root_poa_;
 
     /// POA within which all the components in this container will be
     /// activated.

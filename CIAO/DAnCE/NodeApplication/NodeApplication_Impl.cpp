@@ -370,7 +370,10 @@ NodeApplication_Impl::init()
 
   PortableServer::ServantBase_var safe_servant = tmp_ci;
 
-  this->poa_->activate_object (tmp_ci);
+  PortableServer::ObjectId_var id = this->poa_->activate_object (tmp_ci);
+  CORBA::Object_var ci_object = this->poa_->id_to_reference (id.in ());
+  Components::Deployment::ComponentInstallation_var ci =
+      Components::Deployment::ComponentInstallation::_narrow (ci_object.in ());
 
   for (CORBA::ULong i = 0; i < this->plan_.artifact.length (); ++i)
     {
@@ -384,7 +387,7 @@ NodeApplication_Impl::init()
                                                               cs_path,
                                                               cs_args,
                                                               multithread,
-                                                              tmp_ci->_this (),
+                                                              ci.in (),
                                                               this->orb_.in(),
                                                               this->poa_.in()),
                     CORBA::NO_MEMORY ());
