@@ -1,3 +1,10 @@
+Mon Nov 23 11:07:56 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * tests/MT_Client/run_test.pl:
+        * examples/RTCORBA/Activity/run_test.pl:
+
+          Tests are converted to use new test framework and added to fuzz build.
+
 Mon Nov 23 10:50:58 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/servant_svs.cpp:

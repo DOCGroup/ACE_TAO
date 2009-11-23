@@ -46,7 +46,7 @@ $server_conf1 = $server->LocalFile ($server_conf);
 
 $SV = $server->CreateProcess ("server",
                               "-ORBdebuglevel $debug_level " .
-                              "-ORBsvcconf $server_conf " .
+                              "-ORBsvcconf $server_conf1 " .
                               "-o $server_iorfile");
 
 $CL = $client->CreateProcess ($client_process,
