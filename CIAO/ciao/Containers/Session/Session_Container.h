@@ -95,6 +95,7 @@ namespace CIAO
   {
   public:
     Session_Container (CORBA::ORB_ptr o,
+                       PortableServer::POA_ptr poa,
                        Deployment::CIAO_Container_i *container_impl,
                        bool static_config_flag = false,
                        const Static_Config_EntryPoints_Maps* static_entrypts_maps =0,

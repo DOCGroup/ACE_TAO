@@ -33,12 +33,19 @@ namespace CIAO
     {
       CIAO_TRACE("CIAO_ComponentServer_i::shutdown");
 
-      CIAO_DEBUG ((LM_DEBUG, CLINFO "CIAO_ComponentServer_i::shutdown - ORB shutdown request received at %C.\n",
+      CIAO_DEBUG ((LM_DEBUG, CLINFO
+                  "CIAO_ComponentServer_i::shutdown - ORB shutdown request "
+                  "received at %C.\n",
                   this->uuid_.c_str ()));
 
       if (!this->containers_.is_empty ())
-        CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_ComponentServer_i::shutdown - ComponentServer %C still containers!\n",
-                     this->uuid_.c_str ()));
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO
+                       "CIAO_ComponentServer_i::shutdown - ComponentServer %C "
+                       "still has %u containers!\n",
+                       this->uuid_.c_str (),
+                       this->containers_.size ()));
+        }
 
       this->orb_->shutdown ();
     }
@@ -60,32 +67,41 @@ namespace CIAO
     }
 
     ::Components::Deployment::Container_ptr
-    CIAO_ComponentServer_i::create_container (const ::Components::ConfigValues & config)
+    CIAO_ComponentServer_i::create_container (
+      const ::Components::ConfigValues & config)
     {
       CIAO_TRACE("CIAO_ComponentServer_i::create_container");
 
       try
         {
-          CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_ComponentServer_i::create_container - Request received with %u config values\n",
+          CIAO_DEBUG ((LM_INFO, CLINFO
+                       "CIAO_ComponentServer_i::create_container - Request "
+                       "received with %u config values\n",
                        config.length ()));
 
           CORBA::PolicyList policies;
           const char *name = 0;
           CIAO_Container_i *cont = 0;
           ACE_NEW_THROW_EX (cont,
-                            CIAO_Container_i (config, 0, name, &policies, this->ci_.in (),
-                              this->orb_.in (), this->poa_.in ()),
+                            CIAO_Container_i (config, 0, name, &policies,
+                              this->ci_.in (), this->orb_.in (),
+                              this->poa_.in ()),
                             CORBA::NO_MEMORY ());
 
           CIAO_DEBUG ((LM_DEBUG, CLINFO "CIAO_ComponentServer_i::create_container - "
                        "Container servant successfully allocated.\n"));
 
           PortableServer::ServantBase_var safe_config = cont;
-          CIAO::Deployment::Container_var cont_var = cont->_this  ();
+          PortableServer::ObjectId_var id =
+            this->poa_->activate_object (cont);
+          CORBA::Object_var object = this->poa_->id_to_reference (id.in ());
+          CIAO::Deployment::Container_var cont_var =
+            CIAO::Deployment::Container::_narrow (object.in ());
 
           this->containers_.insert (CIAO::Deployment::Container::_duplicate(cont_var.in ()));
 
-          CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_ComponentServer_i::create_container - Container successfully activated and stored,"
+          CIAO_DEBUG ((LM_INFO, CLINFO
+                       "CIAO_ComponentServer_i::create_container - Container successfully activated and stored,"
                        " now managing %u containers\n",
                        this->containers_.size ()));
 
@@ -110,21 +126,14 @@ namespace CIAO
     {
       CIAO_TRACE("CIAO_ComponentServer_i::remove_container");
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_i::remove_container - remove request received.\n"));
+      CIAO_DEBUG ((LM_TRACE, CLINFO
+                  "CIAO_ComponentServer_i::remove_container - Remove request received.\n"));
 
       if (CORBA::is_nil (cref))
         {
           CIAO_ERROR ((LM_ERROR, CLINFO
                        "CIAO_ComponentServer_i::remove_container - "
                        "Error: Received nil container reference\n"));
-          throw Components::RemoveFailure ();
-        }
-
-      if (this->containers_.is_empty ())
-        {
-          CIAO_ERROR ((LM_ERROR, CLINFO
-                       "CIAO_ComponentServer_i::remove_container - "
-                       "Error: I don't manage any containers!\n"));
           throw Components::RemoveFailure ();
         }
 

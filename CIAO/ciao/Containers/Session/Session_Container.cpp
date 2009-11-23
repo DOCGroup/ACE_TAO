@@ -21,12 +21,13 @@ namespace CIAO
   Session_Container::serial_number_ (0);
 
   Session_Container::Session_Container (CORBA::ORB_ptr o,
+                                        PortableServer::POA_ptr poa,
                                         Deployment::CIAO_Container_i *container_impl,
                                         bool static_config_flag,
                                         const Static_Config_EntryPoints_Maps* maps,
                                         const char *name,
                                         const CORBA::PolicyList *more_policies)
-    : Container_i (o, container_impl),
+    : Container_i (o, poa, container_impl),
       number_ (0),
       static_config_flag_ (static_config_flag),
       static_entrypts_maps_ (maps),
@@ -37,21 +38,6 @@ namespace CIAO
 
   Session_Container::~Session_Container (void)
   {
-    if (! CORBA::is_nil (this->component_poa_.in ()))
-      {
-        this->component_poa_->destroy (1, 1);
-      }
-
-    if (! CORBA::is_nil (this->facet_cons_poa_.in ()))
-      {
-        this->facet_cons_poa_->destroy (1, 1);
-      }
-
-    if (! CORBA::is_nil (this->home_servant_poa_.in ()))
-      {
-        this->home_servant_poa_->destroy (1, 1);
-      }
-
     // delete this->sa_;
   }
 
@@ -79,31 +65,25 @@ namespace CIAO
                  "Initializing a container with name %C\n",
                  name));
 
-    CORBA::Object_var poa_object =
-      this->orb_->resolve_initial_references ("RootPOA");
-
-    if (CORBA::is_nil (poa_object.in ()))
+    if (CORBA::is_nil (this->root_poa_.in ()))
       {
         CIAO_ERROR ((LM_ERROR, CLINFO
                     "CIAO::Session_Container: Unable to initialize the POA.\n"));
         throw Components::CreateFailure ();
       }
 
-    PortableServer::POA_var root_poa =
-      PortableServer::POA::_narrow (poa_object.in ());
-
     this->create_component_POA (name,
                                 more_policies,
-                                root_poa.in ());
+                                this->root_poa_.in ());
 
     ACE_CString port_poa_name (name);
     port_poa_name += ":Port_POA";
     this->create_facet_consumer_POA (port_poa_name.c_str (),
                                      more_policies,
-                                     root_poa.in ());
+                                     this->root_poa_.in ());
 
     PortableServer::POAManager_var poa_manager =
-      root_poa->the_POAManager ();
+      this->root_poa_->the_POAManager ();
 
     poa_manager->activate ();
   }
@@ -202,7 +182,6 @@ namespace CIAO
       }
 
     PortableServer::ObjectId_var tmp_id = tmp->activate_object (p);
-
     CORBA::Object_var objref = tmp->id_to_reference (tmp_id.in ());
     oid = tmp_id._retn ();
 
@@ -738,7 +717,7 @@ namespace CIAO
         else
           {
             CIAO_DEBUG ((LM_TRACE, CLINFO "Session_Container::passivate_component - "
-                         "Invoking CCM activate on provided component object reference.\n"));
+                         "Invoking CCM passivate on provided component object reference.\n"));
             svt->passivate_component ();
           }
       }
