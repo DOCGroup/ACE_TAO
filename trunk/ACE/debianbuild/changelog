@@ -1,3 +1,14 @@
+ace (5.7.4-1) unstable; urgency=low
+
+  * New upstream release
+  * Add dependency on ${misc:Depends}
+  * Add new libraries and update patch 34-bts386713 accordingly
+  * Remove patch 15-fix-fltk-include (fixed upstream)
+  * Remove DH_COMPAT definition from the debian/rules file, it's already in
+    debian/compat
+
+ -- Pau Garcia i Quiles <pgquiles@elpauer.org>  Sun, 25 Oct 2009 12:59:18 +0100
+
 ace (5.6.6-1) experimental; urgency=low
 
   * New upstream release.

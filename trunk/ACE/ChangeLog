@@ -1,3 +1,11 @@
+Mon Nov 23 07:53:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debianbuild/changelog:
+        * debianbuild/control:
+        * debianbuild/dsc:
+        * debianbuild/rules:
+          Imported last version from debian
+
 Thu Nov 19 20:29:57 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Log_Msg_NT_Event_Log.cpp (ACE_Log_Msg_NT_Event_Log::log):
