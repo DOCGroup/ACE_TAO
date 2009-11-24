@@ -50,6 +50,11 @@ namespace CIAO_NonChangeable_NonChangeable_Connector_Impl
     virtual ~NonChangeable_Connector_exec_i (void);
 
     void ccm_activate (void);
+  private:
+    void test_domain_id ();
+    void test_qos_profile ();
+    void test_topic_name ();
+    void test_key_fields ();
   };
 
   extern "C" NONCHANGEABLE_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
