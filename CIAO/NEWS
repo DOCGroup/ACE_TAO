@@ -96,6 +96,13 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.7.4 and CIAO-0.7.5
   commandline arguments that are than passed to the ciao component
   server
 
+. Added support for the environment variable DDS4CCM_DEFAULT_DOMAIN_ID
+  This influences the default domain id which is set by the connector.
+  All test deployment plans don't set a domain id, which cause problems
+  during testing because everyone is in the same domain. Each developer
+  and build system on the same network should have its own unique id
+  to get an isolated test environment.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.3 and CIAO-0.7.4
 =======================================================
 
