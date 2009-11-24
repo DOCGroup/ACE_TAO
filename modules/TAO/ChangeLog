@@ -1,3 +1,10 @@
+Tue Nov 24 21:20:55 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Regenerated parsing code and recompiled.
+
 Tue Nov 24 20:54:20 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/idl_global.h:
@@ -6,7 +13,7 @@ Tue Nov 24 20:54:20 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/fe/idl.yy:
         * TAO_IDL/util/utl_err.cpp:
         * TAO_IDL/util/utl_global.cpp:
-        
+
           - Added check for mismatched 'sequence<xxx>' template param
           - Updated parse state values
           - Updated semantic action that creates a fixed module

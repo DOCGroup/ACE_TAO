@@ -78,7 +78,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_expression.h"
 #include "ast_operation.h"
 #include "ast_generator.h"
-#include "ast_module.h"
+#include "ast_template_module.h"
+#include "ast_template_module_inst.h"
+#include "ast_template_module_ref.h"
 #include "ast_valuebox.h"
 #include "ast_valuetype.h"
 #include "ast_valuetype_fwd.h"
@@ -599,13 +601,13 @@ template_module
         {
 //        '>'
           idl_global->set_parse_state (IDL_GlobalData::PS_TmplModuleParamsSeen);
-          
+
           AST_Template_Module *tm =
             idl_global->gen ()->create_template_module ($1,
                                                         $3);
-                                                        
+
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-                                                     $1);
+
           (void) s->fe_add_module (tm);
 
           /*
@@ -624,7 +626,7 @@ template_module
         '}'
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_TmplModuleQsSeen);
-          
+
           /*
            * Finished with this module - pop it from the scope stack.
            */
