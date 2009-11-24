@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #include "ConnectorStatusListener_Test_Receiver_exec.h"
@@ -8,12 +7,6 @@
 
 namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
 {
-
-
-//============================================================
-  // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
-  //============================================================
-
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &inconsistent)
    : inconsistent_ (inconsistent)
   {
@@ -21,7 +14,6 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
 
   ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
   {
-
   }
 
   // Operations from ::CCM_DDS::ConnectorStatusListener
@@ -58,13 +50,7 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
      //printf("ConnectorStatusListener_exec_i::on_unexpected_status\n");
     }
 
-
-  //============================================================
-  // Facet Executor Implementation Class: TestTopic_RawListener_exec_i
-  //============================================================
-
-  TestTopic_RawListener_exec_i::TestTopic_RawListener_exec_i (Atomic_ULong &received)
-      : received_ (received)
+  TestTopic_RawListener_exec_i::TestTopic_RawListener_exec_i (void)
   {
   }
 
@@ -79,12 +65,7 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
     const TestTopic & an_instance ,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
-    ++this->received_;
     //printf(" receive data ============= %d\n",this->received_);
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("TestTopic_RawListener: ")
-            ACE_TEXT ("received test_topic_info for <%C> at %u\n"),
-            an_instance.key.in (),
-            an_instance.x));
   }
 
   void
@@ -130,31 +111,12 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
   //============================================================
 
   Receiver_exec_i::Receiver_exec_i (void)
-    : raw_listen_ (true),
-      inconsistent_ (false),
-      received_ (0)
+    : inconsistent_ (false)
   {
   }
 
   Receiver_exec_i::~Receiver_exec_i (void)
   {
-  }
-
-  // Supported operations and attributes.
-  // Component attributes.
-
-
-  ::CORBA::Boolean
-  Receiver_exec_i::raw_listen (void)
-  {
-    return this->raw_listen_;
-  }
-
-  void
-  Receiver_exec_i::raw_listen (
-    ::CORBA::Boolean raw_listen)
-  {
-    this->raw_listen_ = raw_listen;
   }
 
   // Port operations.
@@ -163,7 +125,7 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
   {
     //printf ("*************** get_inf-_out_data_listener************************\n");
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new TestTopic RAW listener\n")));
-    return new TestTopic_RawListener_exec_i (this->received_);
+    return new TestTopic_RawListener_exec_i ();
   }
 
 
@@ -222,8 +184,7 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
   Receiver_exec_i::ccm_remove (void)
   {
     //printf("*************in remove Receiver********** \n");
-    CORBA::Boolean _expected = true;
-    if(this->inconsistent_ != _expected)
+    if(!this->inconsistent_.value ())
       {
          CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
                                ACE_TEXT ("error 'on_inconsistent_topic' in Receiver\n")
