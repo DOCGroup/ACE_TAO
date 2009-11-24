@@ -3,8 +3,8 @@
    xmlns:xmi="http://www.omg.org/XMI"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
-  <label>Writer_Depl_1</label>
-  <UUID>Writer_Depl_1</UUID>
+  <label>KeyedWriter_Depl_1</label>
+  <UUID>KeyedWriter_Depl_1</UUID>
 
   <implementation xmi:id="ReceiverComponentImplementation">
     <name>ReceiverComponentImplementation</name>
@@ -314,19 +314,19 @@
     <name>Writer_Connector_exec</name>
     <source/>
     <node/>
-    <location>DDS_Writer_Connector_exec</location>
+    <location>DDS_KeyedWriterConnector_exec</location>
   </artifact>
   <artifact xmi:id="Writer_Connector_SvntArtifact">
     <name>Writer_Connector_svnt</name>
     <source/>
     <node/>
-    <location>DDS_Writer_Connector_svnt</location>
+    <location>DDS_KeyedWriterConnector_svnt</location>
   </artifact>
   <artifact xmi:id="Writer_Connector_StubArtifact">
     <name>Writer_Connector_stub</name>
     <source/>
     <node/>
-    <location>DDS_Writer_Connector_stub</location>
+    <location>DDS_KeyedWriterConnector_stub</location>
   </artifact>
   <artifact xmi:id="Receiver_ExecArtifact">
     <name>Receiver_exec</name>
