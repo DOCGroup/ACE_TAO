@@ -34,7 +34,7 @@ namespace CIAO_Get_Connection_Test_Receiver_Impl
   {
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new Get_ConnectionTest RAW listener\n")));
     this->raw_listener_created_ = true;
-    return 0;
+    return ::CCM_DDS::Get_ConnectionTest::CCM_Listener::_nil ();
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -42,21 +42,21 @@ namespace CIAO_Get_Connection_Test_Receiver_Impl
   {
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener for DDS_Listen\n")));
     this->listen_port_status_created_ = true;
-    return 0;
+    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_get_status (void)
   {
     this->get_port_status_created_ = true;
-    return 0;
+    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
-  
-  CCM_DDS::CCM_ConnectorStatusListener_ptr
+
+  ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Receiver_exec_i::get_status_listener(void)
   {
     this->get_status_listener_created_ = true;
-    return 0;
+    return ::CCM_DDS::CCM_ConnectorStatusListener::_nil ();
   }
 
 
@@ -76,19 +76,19 @@ namespace CIAO_Get_Connection_Test_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
-    this->getter_ = 
+    this->getter_ =
         this->context_->get_connection_info_get_fresh_data ();
     if (!CORBA::is_nil (this->getter_))
       {
         this->getter_ok_ = true;
       }
-    this->reader_listen_ = 
+    this->reader_listen_ =
         this->context_->get_connection_info_listen_data ();
     if (!CORBA::is_nil (this->reader_listen_))
       {
         this->reader_listen_ok_ = true;
       }
-    this->dds_data_reader_listen_ = 
+    this->dds_data_reader_listen_ =
         this->context_->get_connection_info_listen_dds_entity ();
     if (!CORBA::is_nil (this->dds_data_reader_listen_))
       {

@@ -40,8 +40,8 @@ CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_offered_deadline_mis
     }
   catch (...)
     {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataWriterListener_T::on_offered_deadline_missed")
-                             ACE_TEXT (" : DDS Exception caught\n")));
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataWriterListener_T::on_offered_deadline_missed: ")
+                             ACE_TEXT ("DDS Exception caught\n")));
     }
 }
 
@@ -60,8 +60,8 @@ CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_offered_incompatible
     }
   catch (...)
     {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataWriterListener_T::on_offered_incompatible_qos")
-                             ACE_TEXT (" : DDS Exception caught\n")));
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataWriterListener_T::on_offered_incompatible_qos: ")
+                             ACE_TEXT ("DDS Exception caught\n")));
     }
 }
 
@@ -80,8 +80,8 @@ CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_lost (
     }
   catch (...)
     {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataWriterListener_T::on_liveliness_lost")
-                             ACE_TEXT (" : DDS Exception caught\n")));
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataWriterListener_T::on_liveliness_lost: ")
+                             ACE_TEXT ("DDS Exception caught\n")));
     }
 }
 
@@ -100,8 +100,8 @@ CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_publication_matched 
     }
   catch (...)
     {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataWriterListener_T::on_publication_matched")
-                             ACE_TEXT (" : DDS Exception caught\n")));
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataWriterListener_T::on_publication_matched: ")
+                             ACE_TEXT ("DDS Exception caught\n")));
     }
 }
 

@@ -57,7 +57,7 @@ namespace CIAO
           }
 
         if (ACE_OS::strncmp (argv[i], shortl, 2) == 0 ||
-            ACE_OS::strncmp (argv[i], longl,11 ) == 0)
+            ACE_OS::strncmp (argv[i], longl, 11) == 0)
           {
             if ((i + 1) < argc && *argv[i + 1] != '-')
               {
@@ -69,7 +69,7 @@ namespace CIAO
           }
 
         if (ACE_OS::strncmp (argv[i], lfs, 2) == 0 ||
-            ACE_OS::strncmp (argv[i], lfl, 10 ) == 0)
+            ACE_OS::strncmp (argv[i], lfl, 10) == 0)
           {
             if ((i + 1) < argc && *argv[i + 1] != '-')
               {
@@ -137,7 +137,7 @@ namespace CIAO
   ACE_Log_Msg_Backend *
   Logger_Service::get_logger_backend (CORBA::ORB_ptr)
   {
-    File_Logger_Backend * the_backend;
+    File_Logger_Backend * the_backend = 0;
     ACE_NEW_THROW_EX (the_backend,
                       File_Logger_Backend (this->filename_.c_str()),
                       CORBA::NO_MEMORY());
