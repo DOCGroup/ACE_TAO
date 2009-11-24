@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file ConnectorStatusListener_Connector.idl
+ * @file ConnectorStatusListener_TestSec_Connector.idl
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
  *
  * by-hand translation of the idl3p.
