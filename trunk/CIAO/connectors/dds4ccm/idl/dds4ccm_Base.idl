@@ -62,7 +62,8 @@ module CCM_DDS
     DataNumber_t index; // of the erroneaous
   };
 
-  exception NonChangeable {};
+  exception NonChangeable {
+  };
 };
 
 #endif

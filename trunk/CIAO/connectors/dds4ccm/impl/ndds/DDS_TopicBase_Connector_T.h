@@ -28,8 +28,13 @@ public:
   virtual void key_fields (const ::DDS::StringSeq & key_fields);
 
 protected:
+  void configure_default_topic (void);
+
   CORBA::String_var topic_name_;
   DDS::StringSeq key_fields_;
+
+  ::DDS::Topic_var topic_;
+  ::DDS::TopicListener_var topiclistener_;
 };
 
 #include "dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.cpp"
