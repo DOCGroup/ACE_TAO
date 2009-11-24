@@ -1,3 +1,18 @@
+Tue Nov 24 19:34:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h:
+          Removed dump_connections, not used at all
+
+        * DAnCE/DomainApplicationManager/Node_Locator.cpp:
+          Small improvements
+
+        * DAnCE/TargetManager/TargetManager_Impl.cpp:
+          Zap some not needed docu
+
+        * DAnCE/TargetManager/TargetManager_Impl.h:
+          Doxygen changes
+
 Tue Nov 24 15:15:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.cpp:
