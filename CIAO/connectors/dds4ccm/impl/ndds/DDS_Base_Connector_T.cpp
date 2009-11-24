@@ -3,6 +3,7 @@
 
 #include "ciao/Logger/Log_Macros.h"
 #include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
+#include "dds4ccm/impl/ndds/DomainParticipant.h"
 #include "ace/Tokenizer_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
