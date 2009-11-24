@@ -1,0 +1,12 @@
+// $Id$
+#include <Components.idl>
+
+local interface Foo
+{
+};
+
+component Bar
+{
+  uses Foo foo_in;
+  provides Foo foo_out;
+};
