@@ -46,11 +46,43 @@ namespace CIAO
             throw CCM_DDS::InternalError (1, 0);
           }
 
+        part->enable ();
         ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i (part);
 
         return retval._retn ();
       }
 
+
+      ::DDS::DomainParticipant_ptr
+      RTI_DomainParticipantFactory_i::create_participant_with_profile (::DDS::DomainId_t domain_id,
+                                                          const char* library_name,
+                                                          const char *profile_name,
+                                                           ::DDS::DomainParticipantListener_ptr /*a_listener*/,
+                                                           ::DDS::StatusMask mask)
+      {
+        CIAO_TRACE ("RTI_DomainParticipantFactory_i::create_participant_with_profile");
+
+        CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::create_participant_with_profile - "
+                     "Creating domain participant\n"));
+        DDSDomainParticipant *part = DDSDomainParticipantFactory::get_instance ()->
+          create_participant_with_profile (domain_id,
+                              library_name,
+                              profile_name,
+                              0,
+                              mask);
+
+        if (!part)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_DomainParticipantFactory_i::create_participant_with_profile - "
+                         "Error: Unable to create DomainParticipant\n"));
+            throw CCM_DDS::InternalError (1, 0);
+          }
+
+        part->enable ();
+        ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i (part);
+
+        return retval._retn ();
+      }
 
       ::DDS::ReturnCode_t
       RTI_DomainParticipantFactory_i::delete_participant (::DDS::DomainParticipant_ptr a_participant)
@@ -122,7 +154,6 @@ namespace CIAO
 
         throw CORBA::NO_IMPLEMENT ();
       }
-
     }
   }
 }

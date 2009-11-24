@@ -1,3 +1,22 @@
+Tue Nov 24 09:35:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds4ccm_Base.idl
+        * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h
+        * connectors/dds4ccm/impl/ndds/Updater_T.cpp
+          Implemented more functionality of the beta 2 spec:
+          - Attributes are not changeble after configuration_complete
+          - qos_profile is passed to DDS when set, this has to be libraryname#profilename
+          - Enable publisher/subscriber explicitly
+          - Updater create does a register_instance and a write
+
 Tue Nov 24 09:30:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2130_Regression/interfaces/ENW.mpc

@@ -42,6 +42,13 @@ namespace CIAO
                                                            ::DDS::StatusMask mask);
 
         virtual
+          ::DDS::DomainParticipant_ptr create_participant_with_profile (::DDS::DomainId_t domain_id,
+                                                          const char* library_name,
+                                                          const char *profile_name,
+                                                           ::DDS::DomainParticipantListener_ptr a_listener,
+                                                           ::DDS::StatusMask mask);
+
+        virtual
           ::DDS::ReturnCode_t delete_participant (::DDS::DomainParticipant_ptr a_participant);
 
         virtual
