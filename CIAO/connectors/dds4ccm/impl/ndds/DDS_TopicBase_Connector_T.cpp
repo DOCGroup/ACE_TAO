@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ciao/Logger/Log_Macros.h"
+#include "dds4ccm/impl/ndds/TopicListener_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::DDS_TopicBase_Connector_T (void) :
