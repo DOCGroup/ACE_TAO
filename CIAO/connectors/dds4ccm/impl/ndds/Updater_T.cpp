@@ -64,6 +64,15 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::create_i (
                   ACE_TEXT ("Unable to unregister instance, nil handle.\n")));
       throw CCM_DDS::InternalError (::DDS_RETCODE_ERROR, index);
     }
+  ::DDS_ReturnCode_t const result  = this->impl_->write (an_instance, hnd);
+  if (result != DDS_RETCODE_OK)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("CIAO::DDS4CCM::RTI::Updater_T::create_i: ")
+                  ACE_TEXT ("Unable to update data, error %C.\n"),
+                  translate_retcode (result)));
+      throw CCM_DDS::InternalError (result, index);
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -93,7 +102,7 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::update_i (
   if (result != DDS_RETCODE_OK)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("CIAO::DDS4CCM::RTI::Updater_T::update_one: ")
+                  ACE_TEXT ("CIAO::DDS4CCM::RTI::Updater_T::update_i: ")
                   ACE_TEXT ("Unable to update data, error %C.\n"),
                   translate_retcode (result)));
       throw CCM_DDS::InternalError (result, index);

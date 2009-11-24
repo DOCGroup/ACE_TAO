@@ -66,6 +66,7 @@ namespace CIAO
         CIAO_DEBUG ((LM_INFO, CLINFO "RTI_DomainParticipant_i::create_publisher - "
                      "Successfully created a DDSPublisher\n"));
 
+        rti_pub->enable ();
         ::DDS::Publisher_var retval = new RTI_Publisher_i (rti_pub);
 
         return retval._retn ();
@@ -125,6 +126,7 @@ namespace CIAO
         CIAO_DEBUG ((LM_INFO, CLINFO "RTI_DomainParticipant_i::create_subscriber - "
                      "Successfully created a DDSSubscriber\n"));
 
+        rti_sub->enable ();
         ::DDS::Subscriber_var retval = new RTI_Subscriber_i (rti_sub);
 
         return retval._retn ();

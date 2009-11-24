@@ -52,8 +52,6 @@ public:
   virtual ::DDS::CCM_DataReader_ptr get_push_consumer_dds_entity (void);
   //@}
 
-  virtual void set_session_context (::Components::SessionContext_ptr ctx);
-
   virtual void configuration_complete (void);
 
   virtual void ccm_activate (void);
@@ -61,35 +59,22 @@ public:
   virtual void ccm_remove (void);
 
 private:
-  typename CCM_TYPE::context_type::_var_type context_;
-
-  // Default stuff
-  void configure_default_domain_ (void);
-  ::DDS::DomainParticipantFactory_var domain_factory_;
-  ::DDS::DomainParticipant_var domain_;
-
-  // @from DDS_TopicBase
-  void configure_default_topic_ (void);
-  ::DDS::Topic_var topic_;
-
   // @from DDS_Write for
   void configure_port_dds_write (void);
-  ::DDS::Publisher_var __info_in_publisher_;
-  ::DDS::CCM_DataWriter_var __info_in_datawriter_;
-  typename CCM_TYPE::writer_type::_var_type __info_in_writer_;
+  ::DDS::Publisher_var supplier_publisher_;
+  ::DDS::CCM_DataWriter_var supplier_writer_;
+  ::DDS::DataWriterListener_var supplier_listener_;
 
   // @from DDS_Listen
-  void configure_port_listen (void);
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> __listen_datalistener_mode_;
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> __listen_datalistener_max_delivered_data_;
-  ::DDS::Subscriber_var __listen_subscriber_;
+  void configure_port_dds_listen (void);
+  ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> listen_datalistener_mode_;
+  ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> listen_datalistener_max_delivered_data_;
+  ::DDS::Subscriber_var listen_subscriber_;
   ::DDS::DataReader_var push_consumer_data_;
   ::DDS::DataReaderListener_var __listen_datareaderlistener;
-  ::DDS::DataWriterListener_var __listen_datawriterlistener;
-  ::DDS::TopicListener_var __listen_topiclistener;
 
   // @from DDS_Getter
-  ::DDS::DataReader_var __info_get_datareader_;
+  ::DDS::DataReader_var pull_consumer_fresh_data_;
 };
 
 #include "dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp"
