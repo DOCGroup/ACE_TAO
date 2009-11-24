@@ -1,3 +1,79 @@
+Tue Nov 24 09:30:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2130_Regression/interfaces/ENW.mpc
+        * tests/Bug_2130_Regression/interfaces/ENW_skel_export.h
+        * tests/Bug_2130_Regression/interfaces/ENW_stub_export.h
+        * tests/IDL3/Components/ComplexComponent/Attributes/Attributes.mpc
+        * tests/IDL3/Components/ComplexComponent/Attributes/Attributes_stub_export.h
+        * tests/IDL3/Components/ComplexComponent/Attributes/Attributes_svnt_export.h
+        * tests/IDL3/Components/ComplexComponent/EventSink/EventSink.mpc
+        * tests/IDL3/Components/ComplexComponent/EventSink/EventSink_stub_export.h
+        * tests/IDL3/Components/ComplexComponent/EventSink/EventSink_svnt_export.h
+        * tests/IDL3/Components/ComplexComponent/EventSource/EventSource.mpc
+        * tests/IDL3/Components/ComplexComponent/EventSource/EventSource_stub_export.h
+        * tests/IDL3/Components/ComplexComponent/EventSource/EventSource_svnt_export.h
+        * tests/IDL3/Components/ComplexComponent/Facets/Facets.mpc
+        * tests/IDL3/Components/ComplexComponent/Facets/Facets_stub_export.h
+        * tests/IDL3/Components/ComplexComponent/Facets/Facets_svnt_export.h
+        * tests/IDL3/Components/ComplexComponent/Receptacles/Receptacles.mpc
+        * tests/IDL3/Components/ComplexComponent/Receptacles/Receptacles_stub_export.h
+        * tests/IDL3/Components/ComplexComponent/Receptacles/Receptacles_svnt_export.h
+        * tests/IDL3/Components/SimpleComponent/SimpleComponent.mpc
+        * tests/IDL3/Components/SimpleComponent/SimpleComponent_exec_export.h
+        * tests/IDL3/Components/SimpleComponent/SimpleComponent_stub_export.h
+        * tests/IDL3/Components/SimpleComponent/SimpleComponent_svnt_export.h
+        * tests/IDL3/Events/Abstract/Abstract.mpc
+        * tests/IDL3/Events/Abstract/Abstract_stub_export.h
+        * tests/IDL3/Events/Abstract/Abstract_svnt_export.h
+        * tests/IDL3/Events/Regular/Regular.mpc
+        * tests/IDL3/Events/Regular/Regular_stub_export.h
+        * tests/IDL3/Events/Regular/Regular_svnt_export.h
+        * tests/IDL3/Homes/Attributes/HomeAttributes.mpc
+        * tests/IDL3/Homes/Attributes/HomeAttributes_stub_export.h
+        * tests/IDL3/Homes/Attributes/HomeAttributes_svnt_export.h
+        * tests/IDL3/Homes/Basic/Basic.mpc
+        * tests/IDL3/Homes/Basic/Basic_stub_export.h
+        * tests/IDL3/Homes/Basic/Basic_svnt_export.h
+        * tests/IDL3/Homes/Factory/Factory.mpc
+        * tests/IDL3/Homes/Factory/Factory_stub_export.h
+        * tests/IDL3/Homes/Factory/Factory_svnt_export.h
+        * tests/IDL3/Homes/Finder/Finder.mpc
+        * tests/IDL3/Homes/Finder/Finder_stub_export.h
+        * tests/IDL3/Homes/Finder/Finder_svnt_export.h
+        * tests/IDL3/Homes/Inheritance/Inheritance.mpc
+        * tests/IDL3/Homes/Inheritance/Inheritance_stub_export.h
+        * tests/IDL3/Homes/Inheritance/Inheritance_svnt_export.h
+        * tests/IDL3/ImpliedIDL/Components/Basic/ICBasic.mpc
+        * tests/IDL3/ImpliedIDL/Components/Basic/ICBasic_stub_export.h
+        * tests/IDL3/ImpliedIDL/Components/Basic/ICBasic_svnt_export.h
+        * tests/IDL3/ImpliedIDL/Components/EventSink/ICEventSink.mpc
+        * tests/IDL3/ImpliedIDL/Components/EventSink/ICEventSink_stub_export.h
+        * tests/IDL3/ImpliedIDL/Components/EventSink/ICEventSink_svnt_export.h
+        * tests/IDL3/ImpliedIDL/Components/EventSource/ICEventSource.mpc
+        * tests/IDL3/ImpliedIDL/Components/EventSource/ICEventSource_stub_export.h
+        * tests/IDL3/ImpliedIDL/Components/EventSource/ICEventSource_svnt_export.h
+        * tests/IDL3/ImpliedIDL/Components/Receptacles/ICReceptacles.mpc
+        * tests/IDL3/ImpliedIDL/Components/Receptacles/ICReceptacles_stub_export.h
+        * tests/IDL3/ImpliedIDL/Components/Receptacles/ICReceptacles_svnt_export.h
+        * tests/IDL3/ImpliedIDL/Events/Events.mpc
+        * tests/IDL3/ImpliedIDL/Events/Events_stub_export.h
+        * tests/IDL3/ImpliedIDL/Events/Events_svnt_export.h
+        * tests/IDL3/ImpliedIDL/Homes/Homes.mpc
+        * tests/IDL3/ImpliedIDL/Homes/Homes_stub_export.h
+        * tests/IDL3/ImpliedIDL/Homes/Homes_svnt_export.h
+        * tests/IDL_Test/Double_Inherited_Component/Inherited_components.mpc
+        * tests/Minimum/Minimum_Base/Minimum_Base.mpc
+        * tests/Minimum/Minimum_Base/Minimum_Base_skel_export.h
+        * tests/Minimum/Minimum_Base/Minimum_Base_stub_export.h
+          Let the IDL compiler generate all export files
+
+        * tests/IDL_Test/Local_Facet
+        * tests/IDL_Test/Local_Facet/Local_Facet.idl
+        * tests/IDL_Test/Local_Facet/Local_Facet.mpc
+        * tests/IDL_Test/Local_Facet/Local_Facet_exec.cpp
+        * tests/IDL_Test/Local_Facet/Local_Facet_exec.h
+          New test to show that local facets don't work, disabled by default
+
 Mon Nov 23 15:19:00 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
