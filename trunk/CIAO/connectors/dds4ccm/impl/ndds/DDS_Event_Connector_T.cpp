@@ -3,7 +3,6 @@
 
 #include "dds4ccm/impl/ndds/DataReaderListener_T.h"
 #include "dds4ccm/impl/ndds/DataWriterListener_T.h"
-#include "dds4ccm/impl/ndds/TopicListener_T.h"
 #include "dds4ccm/impl/ndds/Writer_T.h"
 #include "dds4ccm/impl/ndds/Updater_T.h"
 #include "dds4ccm/impl/ndds/Getter_T.h"
