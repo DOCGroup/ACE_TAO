@@ -90,20 +90,23 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain (void)
 
         const char* library = 0;
         const char* profile = 0;
-        char* buf = ACE_OS::strdup (this->qos_profile_.in ());
-        ACE_Tokenizer_T<char> tok (buf);
-        tok.delimiter_replace ('#', 0);
-        for (char *p = tok.next (); p; p = tok.next ())
-        {
-          if (!library)
+        if (this->qos_profile_.in ())
           {
-            library = p;
+            char* buf = ACE_OS::strdup (this->qos_profile_.in ());
+            ACE_Tokenizer_T<char> tok (buf);
+            tok.delimiter_replace ('#', 0);
+            for (char *p = tok.next (); p; p = tok.next ())
+            {
+              if (!library)
+              {
+                library = p;
+              }
+              else if (!profile)
+              {
+                profile = p;
+              }
+            }
           }
-          else if (!profile)
-          {
-            profile = p;
-          }
-        }
         if (library && profile)
           {
             this->domain_ =
