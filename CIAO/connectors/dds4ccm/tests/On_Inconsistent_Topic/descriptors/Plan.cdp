@@ -161,8 +161,8 @@
       </value>
     </execParameter>
   </implementation>
-  
-  
+
+
   <implementation xmi:id="SenderComponentImplementation">
     <name>SenderComponentImplementation</name>
     <source/>
@@ -221,7 +221,7 @@
     <source/>
     <implementation xmi:idref="ReceiverComponentImplementation" />
   </instance>
-  
+
   <instance xmi:id="ConnectorStatusListener_Test_ConnectorComponentInstance">
     <name>ConnectorStatusListener_Test_ConnectorComponent</name>
     <node>SenderNode</node>
@@ -259,8 +259,8 @@
       </value>
     </configProperty>
   </instance>
-  
-  
+
+
   <instance xmi:id="ConnectorStatusListener_Test_ConnectorComponentInstance2">
     <name>ConnectorStatusListener_Test_ConnectorComponent2</name>
     <node>ReceiverNode</node>
@@ -288,21 +288,6 @@
   </instance>
 
   <connection>
-    <name>info_out_data</name>
-    <internalEndpoint>
-      <portName>info_out_data</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>info_out_data</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="ConnectorStatusListener_Test_ConnectorComponentInstance2" />
-    </internalEndpoint>
-  </connection>
-  <connection>
     <name>_listenercontrol</name>
     <internalEndpoint>
       <portName>info_out_data_control</portName>
@@ -311,7 +296,7 @@
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_data_control</portName>
+      <portName>push_consumer_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="ConnectorStatusListener_Test_ConnectorComponentInstance2" />
@@ -326,7 +311,7 @@
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_status</portName>
+      <portName>push_consumer_status</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="ConnectorStatusListener_Test_ConnectorComponentInstance2" />
@@ -341,24 +326,9 @@
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_data_listener</portName>
+      <portName>push_consumer_data_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ConnectorStatusListener_Test_ConnectorComponentInstance2" />
-    </internalEndpoint>
-  </connection>
-  <connection>
-    <name>info_out_get_data</name>
-    <internalEndpoint>
-      <portName>info_out_get_data</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>info_out_get_data</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
       <instance xmi:idref="ConnectorStatusListener_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
@@ -390,26 +360,11 @@
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="ConnectorStatusListener_TestSec_ConnectorComponentInstanceSec" />
-    </internalEndpoint>    
+    </internalEndpoint>
   </connection>
-  
- 
-  
-  <connection>
-  <name>updater_connection2</name>
-  <internalEndpoint>
-    <portName>test_sec_topic_update_data</portName>
-    <provider>false</provider>
-    <kind>SimplexReceptacle</kind>
-    <instance xmi:idref="SenderComponentInstance" />
-  </internalEndpoint>
-  <internalEndpoint>
-    <portName>info_update_data</portName>
-    <provider>true</provider>
-    <kind>Facet</kind>
-    <instance xmi:idref="ConnectorStatusListener_TestSec_ConnectorComponentInstanceSec" />
-  </internalEndpoint>
-  </connection>
+
+
+
   <connection>
     <name>writer_connection2</name>
     <internalEndpoint>
@@ -419,7 +374,7 @@
       <instance xmi:idref="SenderComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_in_data</portName>
+      <portName>supplier_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="ConnectorStatusListener_TestSec_ConnectorComponentInstanceSec" />
@@ -481,7 +436,7 @@
     <node/>
     <location>DDS_ConnectorStatusListener_TestSec_Connector_stub</location>
   </artifact>
-  
+
   <artifact xmi:id="Receiver_ExecArtifact">
     <name>Receiver_exec</name>
     <source/>
