@@ -43,7 +43,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         return 1;
 
     // Read and destringify the Asynch_Except_Demo object's IOR.
-    CORBA::Object_var obj = orb->string_to_object(ior_file);
+    CORBA::Object_var obj = orb->string_to_object(ACE_TEXT_ALWAYS_CHAR(ior_file));
     if( CORBA::is_nil( obj.in() ) ) {
       std::cerr << "Could not get middle IOR." << std::endl;
       return 1;

@@ -1,63 +1,99 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-    & eval 'exec perl -S $0 $argv:q'
-    if 0;
+     & eval 'exec perl -S $0 $argv:q'
+     if 0;
 
 # $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 PerlACE::add_lib_path ('../lib');
 
-use strict;
+$status = 0;
+$debug_level = '0';
 
-my $status = 0;
-my $port = PerlACE::random_port();
-my $namingior = PerlACE::LocalFile("naming.ior");
-my $notifyior = PerlACE::LocalFile("notify.ior");
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
+}
 
-my $NS = new PerlACE::Process("../../../Naming_Service/Naming_Service",
-                              "-ORBEndpoint iiop://localhost:$port " .
-                              "-o $namingior");
-my $TS = new PerlACE::Process("../../../Notify_Service/Notify_Service",
-                              "-ORBInitRef NameService=iioploc://" .
-                              "localhost:$port/NameService " .
-                              "-IORoutput $notifyior " .
+my $server1 = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $server2 = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+my $client = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
+
+my $ior1file = "naming.ior";
+my $ior2file = "notify.ior";
+
+#Files which used by server1
+my $server1_ior1file = $server1->LocalFile ($ior1file);
+$server1->DeleteFile($ior1file);
+
+#Files which used by server2
+my $server2_ior2file = $server2->LocalFile ($ior2file);
+$server2->DeleteFile($ior2file);
+
+$hostname = $server1->HostName ();
+$port = $server1->RandomPort ();
+
+$SV1 = $server1->CreateProcess ("../../../Naming_Service/Naming_Service",
+                              "-ORBdebuglevel $debug_level " .
+                              "-ORBEndpoint iiop://$hostname:$port " .
+                              "-o $server1_ior1file");
+
+$SV2 = $server2->CreateProcess ("../../../Notify_Service/Notify_Service",
+                              "-ORBdebuglevel $debug_level " .
+                              "-ORBInitRef NameService=iioploc://$hostname:$port/NameService " .
+                              "-IORoutput $server2_ior2file " .
                               "-Channel -ChannelName Channel1 -ChannelName Channel2");
-my $STC1 = new PerlACE::Process("Consumer",
-                                "-ORBInitRef NameService=iioploc://" .
-                                "localhost:$port/NameService");
 
-unlink($notifyior, $namingior);
+$CL = $client->CreateProcess ("Consumer",
+                              "-ORBdebuglevel $debug_level " .
+                              "-ORBInitRef NameService=iioploc://$hostname:$port/NameService");
 
-$NS->Spawn();
-if (PerlACE::waitforfile_timed($namingior, $PerlACE::wait_interval_for_process_creation) == -1) {
-  print STDERR "ERROR: waiting for the naming service to start\n";
-  $NS->Kill();
-  exit(1);
+$server_status = $SV1->Spawn ();
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    exit 1;
 }
 
-$TS->Spawn();
-if (PerlACE::waitforfile_timed($notifyior, $PerlACE::wait_interval_for_process_creation) == -1) {
-  print STDERR "ERROR: waiting for the notify service to start\n";
-  $TS->Kill();
-  $NS->Kill();
-  exit(1);
+
+if ($server1->WaitForFileTimed ($ior1file,
+                               $server1->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server1_ior1file>\n";
+    $SV1->Kill (); $SV1->TimedWait (1);
+    exit 1;
 }
 
-$STC1->Spawn();
 
-sleep(2);
+$server_status = $SV2->Spawn ();
 
-my $client = $STC1->WaitKill(5);
-if ($client != 0) {
-  $status = 1;
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    exit 1;
 }
 
-$TS->Kill();
-$NS->Kill();
+if ($server2->WaitForFileTimed ($ior2file,
+                               $server2->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server2_ior2file>\n";
+    $SV1->Kill (); $SV1->TimedWait (1);
+    $SV2->Kill (); $SV2->TimedWait (1);
+    exit 1;
+}
 
-unlink($notifyior, $namingior);
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
-exit($status);
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
+    $status = 1;
+}
+
+$SV2->Kill ();
+$SV1->Kill ();
+
+$server1->DeleteFile($ior1file);
+$server2->DeleteFile($ior2file);
+
+exit $status;
