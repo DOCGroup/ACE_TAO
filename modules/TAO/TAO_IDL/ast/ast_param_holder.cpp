@@ -17,7 +17,7 @@ AST_Param_Holder::~AST_Param_Holder (void)
 {
 }
 
-Identifier const * const
+Identifier const *
 AST_Param_Holder::param_name (void) const
 {
   return this->param_name_;
@@ -29,7 +29,7 @@ AST_Param_Holder::destroy (void)
   this->param_name_->destroy ();
   delete this->param_name_;
   this->param_name_ = 0;
-  
+
   this->AST_Decl::destroy ();
 }
 

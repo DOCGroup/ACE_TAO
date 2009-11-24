@@ -31,7 +31,7 @@ AST_Template_Module_Ref::ref (void) const
     AST_Template_Module::narrow_from_decl (this->field_type ());
 }
 
-UTL_StrList const * const
+UTL_StrList const *
 AST_Template_Module_Ref::param_refs (void) const
 {
   return this->param_refs_;
@@ -54,7 +54,7 @@ AST_Template_Module_Ref::destroy (void)
 }
 
 int
-AST_Template_Module_Ref::ast_accept (ast_visitor *visitor)
+AST_Template_Module_Ref::ast_accept (ast_visitor *)
 {
   return 0;//visitor->visit_template_module_ref (this);
 }

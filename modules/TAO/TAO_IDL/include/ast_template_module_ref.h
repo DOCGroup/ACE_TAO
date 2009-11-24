@@ -18,23 +18,23 @@ public:
                            UTL_StrList *param_refs);
 
   virtual ~AST_Template_Module_Ref (void);
-  
+
   AST_Template_Module *ref (void) const;
 
-  UTL_StrList const * const param_refs (void) const;
-  
+  UTL_StrList const * param_refs (void) const;
+
   // Narrowing.
   DEF_NARROW_FROM_DECL (AST_Template_Module_Ref);
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
-  
+
   // Cleanup function.
   virtual void destroy (void);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-  
+
 private:
   UTL_StrList * param_refs_;
 };

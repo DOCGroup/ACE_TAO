@@ -29,7 +29,7 @@ AST_Template_Module_Inst::ref (void) const
     AST_Template_Module::narrow_from_decl (this->field_type ());
 }
 
-FE_Utils::T_ARGLIST const * const
+FE_Utils::T_ARGLIST const *
 AST_Template_Module_Inst::template_args (void) const
 {
   return this->template_args_;
@@ -52,7 +52,7 @@ AST_Template_Module_Inst::destroy (void)
 }
 
 int
-AST_Template_Module_Inst::ast_accept (ast_visitor *visitor)
+AST_Template_Module_Inst::ast_accept (ast_visitor *)
 {
   return 0;//visitor->visit_template_module_inst (this);
 }

@@ -86,10 +86,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_ctype.h"
 #include "ace/Env_Value_T.h"
 
-ACE_RCSID (util,
-           utl_global,
-           "$Id$")
-
 // Define an increment for the size of the array used to store names of
 // included files.
 #undef INCREMENT
@@ -1797,6 +1793,14 @@ UTL_String *
 IDL_GlobalData::utl_string_factory (const char *str)
 {
   return new UTL_String (str);
+}
+
+bool
+IDL_GlobalData::check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
+                                        FE_Utils::T_Param_Info *param)
+{
+  // TODO
+  return true;
 }
 
 void
