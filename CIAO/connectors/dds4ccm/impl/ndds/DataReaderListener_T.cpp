@@ -37,6 +37,12 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(
 
   ::CIAO::DDS4CCM::RTI::RTI_DataReader_i* rd =
       dynamic_cast < ::CIAO::DDS4CCM::RTI::RTI_DataReader_i*>(rdr);
+  if (!rd)
+    {
+      /* In this specific case, this will never fail */
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("DataReaderListener_T::dynamic_cast failed.\n")));
+      return;
+    }
   typename DDS_TYPE::data_reader * reader =
       dynamic_cast< typename DDS_TYPE::data_reader * > ((rd->get_datareader ()));
 
@@ -66,8 +72,8 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadl
     }
   catch (...)
     {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataReaderListener_T::on_requested_deadline_missed")
-                             ACE_TEXT (" : DDS Exception caught\n")));
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataReaderListener_T::on_requested_deadline_missed: ")
+                             ACE_TEXT ("DDS Exception caught\n")));
     }
 }
 
@@ -86,8 +92,8 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
     }
   catch (...)
     {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataReaderListener_T::on_sample_lost")
-                             ACE_TEXT (" : DDS Exception caught\n")));
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataReaderListener_T::on_sample_lost: ")
+                             ACE_TEXT ("DDS Exception caught\n")));
     }
 }
 
@@ -97,9 +103,17 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_requested_incom
                                 ::DDS::DataReader_ptr the_reader,
                                 const ::DDS::RequestedIncompatibleQosStatus & status)
 {
-  if (!CORBA::is_nil (this->info_out_connector_status_))
+  try
     {
-      this->info_out_connector_status_->on_requested_incompatible_qos (the_reader, status);
+      if (!CORBA::is_nil (this->info_out_connector_status_))
+        {
+          this->info_out_connector_status_->on_requested_incompatible_qos (the_reader, status);
+        }
+    }
+  catch (...)
+    {
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataReaderListener_T::on_requested_incompatible_qos: ")
+                             ACE_TEXT ("DDS Exception caught\n")));
     }
 }
 
