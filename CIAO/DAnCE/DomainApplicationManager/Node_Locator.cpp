@@ -33,7 +33,7 @@ namespace DAnCE
   {
     DANCE_TRACE ("Node_Locator::process_node_map");
 
-    if (filename == 0)
+    if (!filename)
       {
         DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Node_Locator::process_node_map - ")
                       ACE_TEXT("Error: Provided with nil filename\n")));
@@ -42,7 +42,7 @@ namespace DAnCE
 
     FILE *inf = ACE_OS::fopen (filename, ACE_TEXT("r"));
 
-    if (inf == 0)
+    if (!inf)
       {
         DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Node_Locator::process_node_map - ")
                       ACE_TEXT("Fail to open node manager map data file: <%s>\n"),
