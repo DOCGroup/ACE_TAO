@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ciao/Logger/Log_Macros.h"
+#include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::DDS_Base_Connector_T (void)
