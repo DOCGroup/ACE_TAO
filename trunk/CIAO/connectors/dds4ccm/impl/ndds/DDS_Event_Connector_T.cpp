@@ -1,7 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-#include "dds4ccm/impl/ndds/DomainParticipant.h"
 #include "dds4ccm/impl/ndds/DataReaderListener_T.h"
 #include "dds4ccm/impl/ndds/DataWriterListener_T.h"
 #include "dds4ccm/impl/ndds/TopicListener_T.h"
