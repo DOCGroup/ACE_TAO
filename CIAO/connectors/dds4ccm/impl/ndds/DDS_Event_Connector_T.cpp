@@ -50,9 +50,9 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_write (void)
 
           ::DDS::DataWriterQos dwqos;
           ::DDS::DataWriter_var dwv_tmp = this->supplier_publisher_->create_datawriter (this->topic_.in (),
-                                                                                         dwqos,
-                                                                                         this->supplier_listener_.in (),
-                                                                                         DDS_OFFERED_DEADLINE_MISSED_STATUS | DDS_OFFERED_INCOMPATIBLE_QOS_STATUS | DDS_LIVELINESS_LOST_STATUS | DDS_PUBLICATION_MATCHED_STATUS);
+                                                                                        dwqos,
+                                                                                        this->supplier_listener_.in (),
+                                                                                        DDS_OFFERED_DEADLINE_MISSED_STATUS | DDS_OFFERED_INCOMPATIBLE_QOS_STATUS | DDS_LIVELINESS_LOST_STATUS | DDS_PUBLICATION_MATCHED_STATUS);
           this->supplier_writer_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
         }
     }

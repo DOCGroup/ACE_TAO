@@ -1,3 +1,20 @@
+Tue Nov 24 13:25:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+          Added missing try/catch
+
+        * connectors/dds4ccm/impl/ndds/DataWriterListener_T.cpp:
+          Debug message changes
+
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp:
+          Layout changes
+
+        * connectors/dds4ccm/tests/Get_Connection_Test/Receiver/Get_Connection_Test_Receiver_exec.cpp:
+          Return no 0
+
+        * ciao/Logger/Logger_Service.cpp:
+          Layout changes and initialise a pointer with 0
+
 Tue Nov 24 12:43:21 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
