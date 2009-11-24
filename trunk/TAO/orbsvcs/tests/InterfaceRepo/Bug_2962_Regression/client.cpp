@@ -4,15 +4,44 @@
 
 #include "ace/config.h"
 #include "tao/IFR_Client/IFR_ComponentsC.h"
+#include "ace/Get_Opt.h"
 
-const char *ifr_ior= "file://ifr.ior";
-const char *member_type_id= "IDL:arrayOfStruct:1.0";
+const ACE_TCHAR *ifr_ior= "file://ifr.ior";
+const ACE_TCHAR *member_type_id= "IDL:arrayOfStruct:1.0";
+
+int
+parse_args (int argc, ACE_TCHAR *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:"));
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'i':
+        ifr_ior = get_opts.opt_arg ();
+        break;
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-i <ior> "
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+  // Indicates successful parsing of the command line
+  return 0;
+}
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
     CORBA::ORB_var the_orb = CORBA::ORB_init (argc, argv);
 
-    CORBA::Object_var obj = the_orb->string_to_object (ifr_ior);
+    if (parse_args (argc, argv) != 0)
+            return 1;
+
+    CORBA::Object_var obj = the_orb->string_to_object (ACE_TEXT_ALWAYS_CHAR(ifr_ior));
     if (CORBA::is_nil (obj.in()))
     {
       ACE_DEBUG ((LM_DEBUG, "Obtained nil reference to Object for interface repository\n" ));

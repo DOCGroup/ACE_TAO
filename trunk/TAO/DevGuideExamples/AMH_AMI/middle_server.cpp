@@ -88,7 +88,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     obj = poa->id_to_reference( oid.in() );
     CORBA::String_var str = orb->object_to_string( obj.in() );
 
-    ACE_CString iorname(ior_output_file);
+    ACE_CString iorname(ACE_TEXT_ALWAYS_CHAR(ior_output_file));
     std::ofstream iorFile (iorname.c_str());
     iorFile << str.in() << std::endl;
     iorFile.close();
