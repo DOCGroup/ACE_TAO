@@ -1,3 +1,13 @@
+Tue Nov 24 15:15:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.cpp:
+          Added support for the environment variable DDS4CCM_DEFAULT_DOMAIN_ID
+          This influences the default domain id which is set by the connector.
+          All test deployment plans don't set a domain id, which cause problems
+          during testing because everyone is in the same domain. Each developer
+          and build system on the same network should have its own unique id
+          to get an isolated test environment.
+
 Tue Nov 24 13:25:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
