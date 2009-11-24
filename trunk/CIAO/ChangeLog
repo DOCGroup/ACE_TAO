@@ -1,3 +1,15 @@
+Tue Nov 24 11:56:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/descriptors/Plan.cdp:
+          Updated for beta 2
+
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/descriptors/run_test.pl:
+          Sleep 10 seconds
+
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Receiver/ConnectorStatusListener_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Sender/ConnectorStatusListener_Test_Sender_exec.cpp:
+          Also print a message when it succeeds
+
 Tue Nov 24 10:11:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/On_Inconsistent_Topic/*:
