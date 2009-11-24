@@ -187,7 +187,8 @@ $cli_idlflags =
               -Wb,skel_export_macro='."$UCOM_NAME"."$USVR_SUFFIX".'_Export \
               -Wb,skel_export_include='."$com_name"."$svr_suffix".'_export.h \
               -Wb,exec_export_macro='."$UCOM_NAME".'_EXEC_Export \
-              -Wb,exec_export_include='."$com_name".'_exec_export.h'
+              -Wb,exec_export_include='."$com_name".'_exec_export.h \
+              -Gxhex -Gxhsk -Gxhst'
 ;
 
 $cli_base = "ccm_stub";
