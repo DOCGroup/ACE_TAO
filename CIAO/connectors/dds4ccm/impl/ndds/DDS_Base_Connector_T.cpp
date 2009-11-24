@@ -5,12 +5,15 @@
 #include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
 #include "dds4ccm/impl/ndds/DomainParticipant.h"
 #include "ace/Tokenizer_T.h"
+#include "ace/Env_Value_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::DDS_Base_Connector_T (void)
   : domain_id_ (0)
-  ,  configuration_complete_ (false)
+  , configuration_complete_ (false)
 {
+  ACE_Env_Value<int> id (ACE_TEXT("DDS4CCM_DEFAULT_DOMAIN_ID"), this->domain_id_);
+  this->domain_id_ = id;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
