@@ -1799,8 +1799,37 @@ bool
 IDL_GlobalData::check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
                                         FE_Utils::T_Param_Info *param)
 {
-  // TODO
-  return true;
+  ACE_CString id;
+  const char *pattern = "sequence<";
+  size_t len = ACE_OS::strlen (pattern);
+  
+  if (param->name_.find (pattern) == 0)
+    {
+      // Get the substring of what's between the brackets.
+      // It will have to match a previous param in the list.
+      id = param->name_.substr (len,
+                                param->name_.length () - (len + 1));
+    }
+  else
+    {
+      // No check to make.
+      return true;
+    }
+
+  for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (*list);
+       !i.done ();
+       i.advance ())
+    {
+      FE_Utils::T_Param_Info *info = 0;
+      i.next (info);
+      
+      if (info->name_ == id)
+        {
+          return true;
+        }
+    }
+
+  return false;
 }
 
 void

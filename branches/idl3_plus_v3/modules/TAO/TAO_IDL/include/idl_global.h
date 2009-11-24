@@ -106,7 +106,6 @@ public:
     , PS_ConstDeclSeen          // Seen complete const declaration
     , PS_ExceptDeclSeen         // Seen complete exception declaration
     , PS_InterfaceDeclSeen      // Seen complete interface declaration
-    , PS_TmplInterfaceDeclSeen  // Seen complete template interface declaration
     , PS_ModuleDeclSeen         // Seen complete module declaration
     , PS_ValueTypeDeclSeen      // Seen complete valuetype declaration
     , PS_ComponentDeclSeen      // Seen complete component declaration
@@ -144,9 +143,11 @@ public:
     , PS_InterfaceSqSeen        // '{' seen for interface
     , PS_InterfaceQsSeen        // '}' seen for interface
     , PS_InterfaceBodySeen      // Seen an interface body
-    , PS_TmplInterfaceSqSeen    // '{' seen for template interface
-    , PS_TmplInterfaceQsSeen    // '}' seen for template interface
-    , PS_TmplInterfaceBodySeen  // Seen a template interface body
+    , PS_TmplModuleIDSeen       // Seen the template module ID
+    , PS_TmplModuleParamsSeen   // Seen template module params
+    , PS_TmplModuleSqSeen       // '{' seen for template module
+    , PS_TmplModuleQsSeen       // '}' seen for template module
+    , PS_TmplModuleBodySeen     // Seen a template module body
     , PS_ValueTypeSeen          // Seen a VALUETYPE keyword
     , PS_ValueTypeForwardSeen   // Forward valuetype decl seen
     , PS_ValueTypeIDSeen        // Seen the valuetype ID

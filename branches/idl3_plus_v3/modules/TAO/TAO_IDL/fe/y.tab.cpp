@@ -8865,9 +8865,8 @@ tao_yyreduce:
               delete (tao_yyvsp[(1) - (4)].plval);
               (tao_yyvsp[(1) - (4)].plval) = 0;
 
-              // TODO - create a specific utl_err msg.
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("bad param\n")));
+              idl_global->err ()->mismatch_seq_of_param (
+                (tao_yyvsp[(4) - (4)].pival)->name_.c_str ());
             }
 
           delete (tao_yyvsp[(4) - (4)].pival);
