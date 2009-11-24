@@ -1,3 +1,9 @@
+Tue Nov 24 12:29:14 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector_exec.h:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector_exec.cpp:
+          Added some more non changeable attributes.
+
 Tue Nov 24 12:14:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/KeyedWriter/Receiver/Writer_Receiver_exec.cpp:

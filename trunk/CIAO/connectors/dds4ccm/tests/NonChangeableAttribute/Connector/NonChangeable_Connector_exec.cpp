@@ -15,7 +15,60 @@ namespace CIAO_NonChangeable_NonChangeable_Connector_Impl
   }
 
   void
-  NonChangeable_Connector_exec_i::ccm_activate ()
+  NonChangeable_Connector_exec_i::test_domain_id ()
+  {
+    bool nonchangeable_caught = false;
+    try
+      {
+        DDS::DomainId_t id;
+        this->domain_id (id);
+      }
+    catch (CCM_DDS::NonChangeable)
+      {
+        CIAO_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("test_domain_id : Expected exception caught\n")));
+        nonchangeable_caught = true;
+      }
+    catch (...)
+      {
+        CIAO_ERROR ((LM_ERROR, 
+          ACE_TEXT ("ERROR: test_domain_id : Unkown exception caught\n")));
+      }
+    if (!nonchangeable_caught)
+      {
+        CIAO_ERROR ((LM_ERROR,
+          ACE_TEXT ("ERROR: test_domain_id : No NonChangeable exception caught\n")));
+      }
+  }
+
+  void
+  NonChangeable_Connector_exec_i::test_qos_profile ()
+  {
+    bool nonchangeable_caught = false;
+    try
+      {
+        this->qos_profile ("test");
+      }
+    catch (CCM_DDS::NonChangeable)
+      {
+        CIAO_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("test_qos_profile : Expected exception caught\n")));
+        nonchangeable_caught = true;
+      }
+    catch (...)
+      {
+        CIAO_ERROR ((LM_ERROR, 
+          ACE_TEXT ("ERROR: test_qos_profile : Unkown exception caught\n")));
+      }
+    if (!nonchangeable_caught)
+      {
+        CIAO_ERROR ((LM_ERROR,
+          ACE_TEXT ("ERROR: test_qos_profile : No NonChangeable exception caught\n")));
+      }
+  }
+
+  void
+  NonChangeable_Connector_exec_i::test_topic_name ()
   {
     bool nonchangeable_caught = false;
     try
@@ -25,19 +78,56 @@ namespace CIAO_NonChangeable_NonChangeable_Connector_Impl
     catch (CCM_DDS::NonChangeable)
       {
         CIAO_DEBUG ((LM_DEBUG,
-          ACE_TEXT ("NonChangeable_Connector_exec_i::ccm_activate : Expected exception caught\n")));
+          ACE_TEXT ("test_topic_name : Expected exception caught\n")));
         nonchangeable_caught = true;
       }
     catch (...)
       {
         CIAO_ERROR ((LM_ERROR, 
-          ACE_TEXT ("ERROR: Unkown exception caught\n")));
+          ACE_TEXT ("ERROR: test_topic_name : Unkown exception caught\n")));
       }
     if (!nonchangeable_caught)
       {
         CIAO_ERROR ((LM_ERROR,
-          ACE_TEXT ("ERROR: No NonChangeable exception caught\n")));
+          ACE_TEXT ("ERROR: test_topic_name : No NonChangeable exception caught\n")));
       }
+  }
+
+  void
+  NonChangeable_Connector_exec_i::test_key_fields ()
+  {
+    bool nonchangeable_caught = false;
+    try
+      {
+        DDS::StringSeq key_fields;
+        this->key_fields (key_fields);
+      }
+    catch (CCM_DDS::NonChangeable)
+      {
+        CIAO_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("test_key_fields : Expected exception caught\n")));
+        nonchangeable_caught = true;
+      }
+    catch (...)
+      {
+        CIAO_ERROR ((LM_ERROR, 
+          ACE_TEXT ("ERROR: test_key_fields : Unkown exception caught\n")));
+      }
+    if (!nonchangeable_caught)
+      {
+        CIAO_ERROR ((LM_ERROR,
+          ACE_TEXT ("ERROR: test_key_fields : No NonChangeable exception caught\n")));
+      }
+  }
+  
+
+  void
+  NonChangeable_Connector_exec_i::ccm_activate ()
+  {
+    test_domain_id ();
+    test_qos_profile ();
+    test_topic_name ();
+    test_key_fields ();
   }
   
   extern "C" NONCHANGEABLE_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
