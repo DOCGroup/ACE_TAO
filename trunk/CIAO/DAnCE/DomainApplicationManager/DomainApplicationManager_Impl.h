@@ -50,8 +50,6 @@ namespace DAnCE
 
       virtual ::Deployment::DeploymentPlan * getPlan (void);
 
-      void dump_connections (const ::Deployment::Connections & connections) const;
-
     private:
       CORBA::ORB_var orb_;
       PortableServer::POA_var poa_;

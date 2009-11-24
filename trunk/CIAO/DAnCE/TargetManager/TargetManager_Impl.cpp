@@ -7,7 +7,6 @@
 
 namespace DAnCE
 {
-// Implementation skeleton constructor
 TargetManagerDaemon_i::TargetManagerDaemon_i (CORBA::ORB_ptr orb)
   : orb_ (::CORBA::ORB::_duplicate (orb))
 {
@@ -27,7 +26,6 @@ void TargetManagerDaemon_i::init (const ACE_TCHAR *file)
 
 void TargetManagerDaemon_i::shutdown (void)
 {
-  // Add your implementation here
 }
 
 ::Deployment::Domain * TargetManagerDaemon_i::getAllResources (void)

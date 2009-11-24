@@ -20,10 +20,10 @@ class DAnCE_TargetManager_Impl_Export TargetManagerDaemon_i
   : public virtual POA_DAnCE::TargetManagerDaemon
 {
 public:
-  // Constructor
+  /// Constructor
   TargetManagerDaemon_i (CORBA::ORB_ptr orb);
 
-  // Destructor
+  /// Destructor
   virtual ~TargetManagerDaemon_i (void);
 
   void init (const ACE_TCHAR *file);
