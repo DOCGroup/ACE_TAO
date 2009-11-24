@@ -229,6 +229,8 @@ error_string (UTL_Error::ErrorCode c)
       return "duplicate template parameter id";
     case UTL_Error::EIDL_T_ARG_LENGTH:
       return "wrong # of template args";
+    case UTL_Error::EIDL_MISMATCHED_SEQ_PARAM:
+      return "no match for identifier";
   }
 
   return 0;
@@ -312,8 +314,6 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Malformed exception declaration";
   case IDL_GlobalData::PS_InterfaceDeclSeen:
     return "Malformed interface declaration";
-  case IDL_GlobalData::PS_TmplInterfaceDeclSeen:
-    return "Malformed template interface declaration";
   case IDL_GlobalData::PS_ValueTypeDeclSeen:
     return "Malformed value type declaration";
   case IDL_GlobalData::PS_ComponentDeclSeen:
@@ -388,12 +388,16 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Illegal syntax following interface '}' closer";
   case IDL_GlobalData::PS_InterfaceBodySeen:
     return "Illegal syntax following interface body statement(s)";
-  case IDL_GlobalData::PS_TmplInterfaceSqSeen:
-    return "Illegal syntax or missing type following '<' in template interface";
-  case IDL_GlobalData::PS_TmplInterfaceQsSeen:
-    return "Illegal syntax or missing type following '>' in template interface";
-  case IDL_GlobalData::PS_TmplInterfaceBodySeen:
-    return "Illegal syntax following template interface body statement(s)";
+  case IDL_GlobalData::PS_TmplModuleIDSeen:
+    return "Illegal syntax following '<' in template module";
+  case IDL_GlobalData::PS_TmplModuleParamsSeen:
+    return "Illegal syntax following '>' in template module";
+  case IDL_GlobalData::PS_TmplModuleSqSeen:
+    return "Illegal syntax or missing type following '{' in template module";
+  case IDL_GlobalData::PS_TmplModuleQsSeen:
+    return "Illegal syntax or missing type following '}' in template module";
+  case IDL_GlobalData::PS_TmplModuleBodySeen:
+    return "Illegal syntax following template module body statement(s)";
   case IDL_GlobalData::PS_ValueTypeSeen:
     return "Missing interface identifier following VALUETYPE keyword";
   case IDL_GlobalData::PS_ValueTypeForwardSeen:
@@ -1490,3 +1494,13 @@ UTL_Error::mismatched_template_param (UTL_ScopedName *n)
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
+void
+UTL_Error::mismatch_seq_of_param (const char *param_id)
+{
+  idl_error_header (EIDL_MISMATCHED_SEQ_PARAM,
+                    idl_global->lineno (),
+                    idl_global->filename ()->get_string ());
+  ACE_ERROR ((LM_ERROR, " - %s", param_id));
+  ACE_ERROR ((LM_ERROR, "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}

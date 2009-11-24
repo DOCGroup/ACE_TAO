@@ -287,7 +287,8 @@ AST_Decl *tao_enum_constant_decl = 0;
 %type <dcval>   param_type_spec type_dcl type_declarator
 
 %type <idlist>  scoped_name interface_type component_inheritance_spec
-%type <idlist>  home_inheritance_spec primary_key_spec
+%type <idlist>  home_inheritance_spec primary_key_spec module_header
+%type <idlist>  template_module_header
 
 %type <slval>   opt_context at_least_one_string_literal
 %type <slval>   string_literals formal_parameter_names
@@ -524,31 +525,12 @@ fixed_definition
 module_header
         : IDL_MODULE
         {
-// module  : IDL_MODULE
+// module_header  : IDL_MODULE
           idl_global->set_parse_state (IDL_GlobalData::PS_ModuleSeen);
         }
         scoped_name
         {
-//          UTL_ScopedName n ($3, 0);
-          AST_Module *m = 0;
-          UTL_Scope *s = idl_global->scopes ().top_non_null ();
-
-          idl_global->set_parse_state (IDL_GlobalData::PS_ModuleIDSeen);
-
-          /*
-           * Make a new module and add it to the enclosing scope
-           */
-          if (s != 0)
-            {
-              m = idl_global->gen ()->create_module (s,
-                                                     $3);
-              (void) s->fe_add_module (m);
-            }
-
-          /*
-           * Push it on the stack
-           */
-          idl_global->scopes ().push (m);
+          $<idlist>$ = $3;
         }
         ;
 
@@ -556,7 +538,25 @@ fixed_module
         : module_header
         {
 // fixed_module : module_header
+          idl_global->set_parse_state (IDL_GlobalData::PS_ModuleIDSeen);
           // Check that scoped name contains no delimitor.
+          AST_Module *m = 0;
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+
+          /*
+           * Make a new module and add it to the enclosing scope
+           */
+          if (s != 0)
+            {
+              m = idl_global->gen ()->create_module (s,
+                                                     $1);
+              (void) s->fe_add_module (m);
+            }
+
+          /*
+           * Push it on the stack
+           */
+          idl_global->scopes ().push (m);
         }
         '{'
         {
@@ -581,6 +581,9 @@ fixed_module
 
 template_module_header
         : module_header '<'
+        {
+          idl_global->set_parse_state (IDL_GlobalData::PS_TmplModuleIDSeen);
+        }
         ;
 
 template_module
@@ -595,17 +598,37 @@ template_module
         '>'
         {
 //        '>'
-//          idl_global->set_parse_state (IDL_GlobalData::PS_TmplInterfaceQsSeen);
-//          $<plval>$ = $4;
+          idl_global->set_parse_state (IDL_GlobalData::PS_TmplModuleParamsSeen);
+          
+          AST_Template_Module *tm =
+            idl_global->gen ()->create_template_module ($1,
+                                                        $3);
+                                                        
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+                                                     $1);
+          (void) s->fe_add_module (tm);
+
+          /*
+           * Push it on the stack
+           */
+          idl_global->scopes ().push (tm);
         }
         '{'
         {
+          idl_global->set_parse_state (IDL_GlobalData::PS_TmplModuleSqSeen);
         }
         at_least_one_tpl_definition
         {
+          idl_global->set_parse_state (IDL_GlobalData::PS_TmplModuleBodySeen);
         }
         '}'
         {
+          idl_global->set_parse_state (IDL_GlobalData::PS_TmplModuleQsSeen);
+          
+          /*
+           * Finished with this module - pop it from the scope stack.
+           */
+          idl_global->scopes ().pop ();
         }
         ;
 
@@ -5999,9 +6022,8 @@ formal_parameters
               delete $1;
               $1 = 0;
 
-              // TODO - create a specific utl_err msg.
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("bad param\n")));
+              idl_global->err ()->mismatch_seq_of_param (
+                $4->name_.c_str ());
             }
 
           delete $4;

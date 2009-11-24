@@ -147,6 +147,7 @@ public:
     EIDL_MISMATCHED_T_PARAM,    // Between defined & referenced template interfaces
     EIDL_DUPLICATE_T_PARAM,     // A template interface's param ids must be unique
     EIDL_T_ARG_LENGTH,          // Wrong # of template args
+    EIDL_MISMATCHED_SEQ_PARAM,  // 'sequence<T> must match a previous param
     EIDL_OK                     // No error
   };
 
@@ -352,6 +353,10 @@ public:
 
   // Referenced template parameter not matched in param list.
   void mismatched_template_param (UTL_ScopedName *n);
+  
+  // Given a template param of the form 'sequence<T>', the
+  // 'T' must match a previous param in the list.
+  void mismatch_seq_of_param (const char *param_id);
 };
 
 #endif           // _UTL_ERR_UTL_ERR_HH
