@@ -21,13 +21,8 @@ module ConnectorStatusListener_Test
 {
   component Sender
   {
-  //  port CCM_DDS::TestTopic::DDS_Update test_topic_update; //info_update;
-  //  port CCM_DDS::TestTopic::DDS_Write test_topic_write; //info_in;
-  //  provides CCM_DDS::ConnectorStatusListener test_topic_connector_status; // info_out_connector_status;
-    port CCM_DDS::TestSecondTopic::DDS_Update test_sec_topic_update;
     port CCM_DDS::TestSecondTopic::DDS_Write test_sec_topic_write;
     provides CCM_DDS::ConnectorStatusListener test_sec_topic_connector_status;
- 
   };
 };
 #endif
