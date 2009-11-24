@@ -1,3 +1,28 @@
+Tue Nov 24 12:14:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/KeyedWriter/Receiver/Writer_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedWriter/Sender/Writer_Sender_exec.cpp:
+          Improved logging.
+
+        * connectors/dds4ccm/tests/KeyedWriter/descriptors/Plan.cdp:
+          Resolved errors in deployment plan.
+
+        * connectors/dds4ccm/tests/NonChangeableAttribute:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Base:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Base/NonChangeable_Base.idl:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Base/NonChangeable_Base.mpc:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector.idl:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector.mpc:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector_exec.h:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector_exec.cpp:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/descriptors:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/descriptors/run_test.pl:
+          Added test in order to test NonChangeable exception. Used topic_name
+          as a starter.
+
 Tue Nov 24 12:11:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao_tests.lst:

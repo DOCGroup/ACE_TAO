@@ -68,7 +68,7 @@ namespace CIAO_Writer_Sender_Impl
           {
             ::DDS::InstanceHandle_t hnd = this->handles_[i->first.c_str ()];
             this->writer_->unregister_instance (i->second, hnd);
-            CIAO_DEBUG ((LM_ERROR, ACE_TEXT ("Unregistered <%C> <%d> <%d>\n"),
+            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Unregistered <%C> - iteration <%d> - valid handle <%d>\n"),
                       i->first.c_str (),
                       i->second->iteration,
                       hnd.isValid));
@@ -88,10 +88,10 @@ namespace CIAO_Writer_Sender_Impl
     ::DDS::InstanceHandle_t hnd = this->writer_->register_instance (i->second);
     if (!hnd.isValid)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unable to register handle for %C and %d\n"),
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unable to register handle for <%C> - iteration <%d>\n"),
           i->first.c_str (), i->second->iteration));
       }
-    CIAO_DEBUG ((LM_ERROR, ACE_TEXT ("Registering instance with %C and %d : Valid <%d>\n"),
+    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Registering instance with <%C> - iteration <%d> - valid handle <%d>\n"),
                 i->second->key.in (),
                 i->second->iteration,
                 hnd.isValid));
@@ -102,7 +102,7 @@ namespace CIAO_Writer_Sender_Impl
     hnd = this->writer_->register_instance (i->second);
     if (hnd.isValid)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Shouldn't be able to register instance for %C and %d\n"),
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Shouldn't be able to register instance for <%C> - iteration <%d>\n"),
           i->first.c_str (), i->second->iteration));
       }
   }
@@ -125,12 +125,8 @@ namespace CIAO_Writer_Sender_Impl
           {
             ++this->last_key->second->iteration;
             ::DDS::InstanceHandle_t hnd = this->handles_[this->last_key->first.c_str ()];
-            printf ("<%s> <%d> <%d>\n", 
-                    this->last_key->first.c_str (), 
-                    this->last_key->second->iteration, 
-                    hnd.isValid);
             this->writer_->write_one (this->last_key->second, hnd);
-            ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Written keyed <%C> with <%d> and handle <%d>\n"),
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written keyed <%C> - iteration <%d> - valid handle <%d>\n"),
                     this->last_key->first.c_str (),
                     this->last_key->second->iteration,
                     hnd.isValid));
@@ -142,7 +138,7 @@ namespace CIAO_Writer_Sender_Impl
               { // the first key should throw this exception; all others
                 // shouldn't
                 CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
-                            ACE_TEXT ("while updating writer info for <%s>.\n"),
+                            ACE_TEXT ("while updating writer info for <%C>.\n"),
                               this->last_key->first.c_str ()));
               }
           }
@@ -203,10 +199,11 @@ namespace CIAO_Writer_Sender_Impl
       {
         this->writer_->write_many (write_many_seq);
       }
-    catch (CCM_DDS::InternalError& )
+    catch (CCM_DDS::InternalError& ex)
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
-                    ACE_TEXT ("while write many writer info.\n")));
+                    ACE_TEXT ("while write many writer info: index <%d> - retval <%d>\n"),
+                      ex.index, ex.error_code));
       }
     this->assignment_ = WRITE_NONE;
   }
@@ -246,7 +243,7 @@ namespace CIAO_Writer_Sender_Impl
   Sender_exec_i::stop (void)
   {
     this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
-    CIAO_DEBUG ((LM_ERROR, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
+    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
     delete this->ticker_;
   }
 
