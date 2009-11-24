@@ -1,3 +1,22 @@
+Tue Nov 24 18:32:54 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_param_holder.cpp:
+        * TAO_IDL/ast/ast_template_module.cpp:
+        * TAO_IDL/ast/ast_template_module_inst.cpp:
+        * TAO_IDL/ast/ast_template_module_ref.cpp:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_param_holder.h:
+        * TAO_IDL/include/ast_template_module.h:
+        * TAO_IDL/include/ast_template_module_inst.h:
+        * TAO_IDL/include/ast_template_module_ref.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Fixed compile warnings and added semantic actions for
+          formal template parameters.
+
 Mon Nov 23 20:37:29 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_template_module_ref.h:
@@ -41,7 +60,7 @@ Fri Nov 20 20:22:23 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/ast/ast_module.cpp:
         * TAO_IDL/fe/y.tab.cpp:
         * TAO_IDL/fe/idl.yy:
-        
+
           Removed more operations and includes that were caught
           by a build from scratch.
 

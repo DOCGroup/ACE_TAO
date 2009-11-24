@@ -116,19 +116,19 @@ be_visitor::visit_component_fwd (be_component_fwd *)
 }
 
 int
-be_visitor::visit_template_module (be_template_module *node)
+be_visitor::visit_template_module (be_template_module *)
 {
   return 0;
 }
 
 int
-be_visitor::visit_template_module_inst (be_template_module_inst *node)
+be_visitor::visit_template_module_inst (be_template_module_inst *)
 {
   return 0;
 }
 
 int
-be_visitor::visit_template_module_ref (be_template_module_ref *node)
+be_visitor::visit_template_module_ref (be_template_module_ref *)
 {
   return 0;
 }

@@ -5950,13 +5950,6 @@ formal_parameter_type
 //        IDL_CONST const_type
           $<ntval>$ = AST_Decl::NT_const;
         }
-        | sequence_param
-        {
-        }
-        ;
-
-sequence_param
-        : IDL_SEQUENCE '<' IDENTIFIER '>'
         ;
 
 at_least_one_formal_parameter
@@ -5992,11 +5985,33 @@ formal_parameters
                               1);
             }
 
-          $1->enqueue_tail (*$4);
+          bool so_far_so_good =
+            idl_global->check_for_seq_of_param ($1,
+                                                $4);
+
+          if (so_far_so_good)
+            {
+              $1->enqueue_tail (*$4);
+              $<plval>$ = $1;
+            }
+          else
+            {
+              delete $1;
+              $1 = 0;
+
+              // TODO - create a specific utl_err msg.
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("bad param\n")));
+            }
+
           delete $4;
           $4 = 0;
 
-          $$ = $1;
+          if (!so_far_so_good)
+            {
+              return 1;
+            }
+
         }
         | /* EMPTY */
         {
@@ -6016,6 +6031,17 @@ formal_parameter
 
           $<pival>$->type_ = $1;
           $<pival>$->name_ = $2;
+        }
+        | IDL_SEQUENCE '<' IDENTIFIER '>'
+        {
+          ACE_NEW_RETURN ($<pival>$,
+                          FE_Utils::T_Param_Info,
+                          1);
+
+          $<pival>$->type_ = AST_Decl::NT_sequence;
+          $<pival>$->name_  = "sequence<";
+          $<pival>$->name_ += $3;
+          $<pival>$->name_ += '>';
         }
         ;
 

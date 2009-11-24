@@ -22,7 +22,7 @@ AST_Template_Module::~AST_Template_Module (void)
 {
 }
 
-FE_Utils::T_PARAMLIST_INFO const * const
+FE_Utils::T_PARAMLIST_INFO const *
 AST_Template_Module::template_params (void) const
 {
   return this->template_params_;
@@ -33,12 +33,12 @@ AST_Template_Module::destroy (void)
 {
   delete this->template_params_;
   this->template_params_ = 0;
-  
+
   this->AST_Module::destroy ();
 }
 
 int
-AST_Template_Module::ast_accept (ast_visitor *visitor)
+AST_Template_Module::ast_accept (ast_visitor *)
 {
   return 0;//visitor->visit_template_module (this);
 }

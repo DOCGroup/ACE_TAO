@@ -78,6 +78,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_predefined_type.h"
 #include "ast_component.h"
 #include "utl_stack.h"
+#include "fe_utils.h"
 
 class AST_Root;
 class AST_Generator;
@@ -646,6 +647,11 @@ public:
 
   UTL_String *utl_string_factory (const char *str);
   // Utility function to create UTL_String classes on the FE heap.
+
+  bool check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
+                               FE_Utils::T_Param_Info *param);
+  // Check if 'param' is a sequence of a previous param, and if
+  // so, if the previous param exists.
 
 #if defined (ACE_OPENVMS)
   static char* translateName(const char* name, char *name_buf);
