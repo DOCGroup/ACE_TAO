@@ -30,32 +30,32 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
      const DDS::InconsistentTopicStatus & status)
     {
       this->inconsistent_ = true;
-      printf("ConnectorStatusListener_exec_i::on_inconsistent_topic\n");
+      //printf("Receiver: ConnectorStatusListener_exec_i::on_inconsistent_topic\n");
     }
   void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
     ::DDS::DataReader_ptr the_reader,
      const DDS::RequestedIncompatibleQosStatus & status)  {
-      printf("ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n");
+     //printf("ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n");
     }
   void ConnectorStatusListener_exec_i::on_sample_rejected(
      ::DDS::DataReader_ptr the_reader, 
      const DDS::SampleRejectedStatus & status)  {
-      printf("ConnectorStatusListener_exec_i::on_sample_rejected\n");
+     //printf("ConnectorStatusListener_exec_i::on_sample_rejected\n");
     }
   void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
      ::DDS::DataWriter_ptr the_writer,
      const DDS::OfferedDeadlineMissedStatus & status)  {
-      printf("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
+     //printf("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
     }
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
      ::DDS::DataWriter_ptr the_writer, 
      const DDS::OfferedIncompatibleQosStatus & status)  {
-      printf("ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n");
+     //printf("ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n");
     }
   void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr the_entity,
     ::DDS::StatusKind  status_kind)  {
-      printf("ConnectorStatusListener_exec_i::on_unexpected_status\n");
+     //printf("ConnectorStatusListener_exec_i::on_unexpected_status\n");
     }
  
 
@@ -80,9 +80,11 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
     const ::CCM_DDS::ReadInfo & /* info */)
   {
     ++this->received_;
+    //printf(" receive data ============= %d\n",this->received_);
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("TestTopic_RawListener: ")
-            ACE_TEXT ("received keyed_test_info for <%C> at %u\n"),
-            an_instance.key.in ()));
+            ACE_TEXT ("received test_topic_info for <%C> at %u\n"),
+            an_instance.key.in (),
+            an_instance.x));
   }
 
   //============================================================
@@ -120,7 +122,7 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
   //============================================================
 
   Receiver_exec_i::Receiver_exec_i (void)
-    : raw_listen_ (false),
+    : raw_listen_ (true),
       inconsistent_ (false),
       received_ (0)
   {
@@ -151,6 +153,7 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
   ::CCM_DDS::TestTopic::CCM_RawListener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
+    //printf ("*************** get_inf-_out_data_listener************************\n");
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new TestTopic RAW listener\n")));
     return new TestTopic_RawListener_exec_i (this->received_);
   }
@@ -166,7 +169,7 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Receiver_exec_i::get_info_out_connector_status (void)
   {
-    printf ("*************** out connector status************************\n");
+    //printf ("*************** out connector status************************\n");
     return new ConnectorStatusListener_exec_i (this->inconsistent_);
   }
  
@@ -200,7 +203,8 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
         CIAO_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw CORBA::INTERNAL ();
       }
-      lc->enabled (this->raw_listen_);
+    lc->enabled (this->raw_listen_);
+    
 
    
   }
@@ -213,14 +217,13 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-    printf("*************in remove********** \n");
-  
+    //printf("*************in remove Receiver********** \n");
     CORBA::Boolean _expected = true;
     if(this->inconsistent_ != _expected)
       {   
      
          CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
-                               ACE_TEXT (" error 'on_inconsistent_topic'")
+                               ACE_TEXT (" error 'on_inconsistent_topic' in Receiver")
                     )); 
       }
     

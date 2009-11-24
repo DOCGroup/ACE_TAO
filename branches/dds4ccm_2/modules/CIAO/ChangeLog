@@ -1,3 +1,23 @@
+Tue Nov 24 9:27:22 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * dds4ccm/tests/ConnectorStatusListener/Base/ConnectorStatusListener_Test_Base.cxx
+        * dds4ccm/tests/ConnectorStatusListener/Base/ConnectorStatusListener_Test_Base.h
+        * dds4ccm/tests/ConnectorStatusListener/Base/ConnectorStatusListener_Test_Base.idl
+        * dds4ccm/tests/ConnectorStatusListener/Connector/ConnectorStatusListener_Test_Connector.idl
+        * dds4ccm/tests/ConnectorStatusListener/descriptors/Plan.cdp
+        * dds4ccm/tests/ConnectorStatusListener/Receiver/ConnectorStatusListener_Test_Receiver.idl
+        * dds4ccm/tests/ConnectorStatusListener/Receiver/ConnectorStatusListener_Test_Receiver_exec.cpp
+        * dds4ccm/tests/ConnectorStatusListener/SecConnector
+        * dds4ccm/tests/ConnectorStatusListener/SecConnector/ConnectorStatusListener_TestSec_Connector.idl
+        * dds4ccm/tests/ConnectorStatusListener/SecConnector/ConnectorStatusListener_TestSec_Connector.mpc
+        * dds4ccm/tests/ConnectorStatusListener/SecConnector/ConnectorStatusListener_TestSec_Connector_exec.cpp
+        * dds4ccm/tests/ConnectorStatusListener/SecConnector/ConnectorStatusListener_TestSec_Connector_exec.h
+        * dds4ccm/tests/ConnectorStatusListener/Sender/ConnectorStatusListener_Test_Sender.idl
+        * dds4ccm/tests/ConnectorStatusListener/Sender/ConnectorStatusListener_Test_Sender.mpc
+        * dds4ccm/tests/ConnectorStatusListener/Sender/ConnectorStatusListener_Test_Sender_exec.cpp
+        * dds4ccm/tests/ConnectorStatusListener/Sender/ConnectorStatusListener_Test_Sender_exec.h
+        Add second topic and second connector for test ConnectorStatusListener : on_inconsistent_topic
+
 
 Wed Nov 18 9:46:22 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 

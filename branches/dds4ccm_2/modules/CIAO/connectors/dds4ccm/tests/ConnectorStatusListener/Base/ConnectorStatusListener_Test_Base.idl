@@ -17,5 +17,12 @@
 
 typedef sequence<TestTopic> TestTopic_Seq;
 
+struct TestSecondTopic {
+    string key; //@key
+    long x;
+    long y;
+   };
 
+
+typedef sequence<TestSecondTopic> TestSecondTopic_Seq;
 #endif

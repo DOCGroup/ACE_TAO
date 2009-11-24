@@ -19,16 +19,17 @@
 
 namespace CIAO_ConnectorStatusListener_Test_Sender_Impl
 {
+  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
+
   class Sender_exec_i;
 
-
-class SENDER_EXEC_Export ConnectorStatusListener_exec_i
+class SENDER_EXEC_Export ConnectorStatusListener_sec_exec_i
     : public virtual ::CCM_DDS::CCM_ConnectorStatusListener,
       public virtual ::CORBA::LocalObject
   {
   public:
-    ConnectorStatusListener_exec_i (void);
-    virtual ~ConnectorStatusListener_exec_i (void);
+    ConnectorStatusListener_sec_exec_i (Atomic_Boolean &);
+   virtual ~ConnectorStatusListener_sec_exec_i (void);
     
     virtual
     void on_inconsistent_topic( ::DDS::Topic_ptr the_topic, 
@@ -48,10 +49,10 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     virtual
       void on_unexpected_status( ::DDS::Entity_ptr the_entity,
        ::DDS::StatusKind  status_kind);
+     private:
+    Atomic_Boolean &inconsistent_;
   
   };
-
-
 
   class pulse_Generator :
     public ACE_Event_Handler
@@ -74,19 +75,10 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     Sender_exec_i (void);
     virtual ~Sender_exec_i (void);
 
-    virtual ::CORBA::ULong rate (void);
-
-    virtual void rate (::CORBA::ULong rate);
-
-    virtual ::CORBA::UShort iterations (void);
-
-    virtual void iterations (::CORBA::UShort iterations);
-
-    virtual ::CORBA::UShort keys (void);
-
-    virtual void keys (::CORBA::UShort keys);
-
     virtual void set_session_context (::Components::SessionContext_ptr ctx);
+
+    virtual void add_instance_of_sec_topic (const char *, int x );
+
 
     virtual void configuration_complete (void);
 
@@ -98,25 +90,27 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
 
      // Port operations.
     virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
-    get_info_out_connector_status (void);
+      get_test_sec_topic_connector_status(void);
 
   private:
     void start (void);
     void stop (void);
 
-    CCM_DDS::TestTopic::Updater_var updater_;
+    CCM_DDS::TestSecondTopic::Updater_var updater2_;
+    CCM_DDS::TestSecondTopic::Writer_var writer2_;
+
 
     pulse_Generator * ticker_;
     ::ConnectorStatusListener_Test::CCM_Sender_Context_var context_;
+   
     CORBA::ULong rate_;
     CORBA::UShort iterations_;
-    CORBA::UShort keys_;
+    Atomic_Boolean inconsistent_;
 
     TAO_SYNCH_MUTEX mutex_;
-    typedef std::map<ACE_CString, TestTopic_var> ConnectorStatusListener_Test_Table;
-    ConnectorStatusListener_Test_Table ktests_;
-    ConnectorStatusListener_Test_Table::iterator last_key;
-  };
+    typedef std::map<ACE_CString, TestSecondTopic_var> ConnectorStatusListener_TestSec_Table;
+    ConnectorStatusListener_TestSec_Table sec_ktests_;
+ };
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_ConnectorStatusListener_Test_Sender_Impl (void);

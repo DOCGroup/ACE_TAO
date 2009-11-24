@@ -10,58 +10,53 @@
 namespace CIAO_ConnectorStatusListener_Test_Sender_Impl
 {
 
-//============================================================
-  // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
+  //============================================================
+  // Facet Executor Implementation Class: ConnectorStatusListener_sec_exec_i
   //============================================================
   
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (void)
+  ConnectorStatusListener_sec_exec_i::ConnectorStatusListener_sec_exec_i (Atomic_Boolean &inconsistent)
+   : inconsistent_ (inconsistent)
   {
   }
   
-  ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
+  ConnectorStatusListener_sec_exec_i::~ConnectorStatusListener_sec_exec_i (void)
   {
     
   }
   
   // Operations from ::CCM_DDS::ConnectorStatusListener
-  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
+  void ConnectorStatusListener_sec_exec_i::on_inconsistent_topic(
      ::DDS::Topic_ptr the_topic, 
      const DDS::InconsistentTopicStatus & status)
     {
-      printf("ConnectorStatusListener_exec_i::on_inconsistent_topic\n");
+//    printf("Sender : ConnectorStatusListener_sec_exec_i::on_inconsistent_topic\n");
+      this->inconsistent_ = true;
     }
-  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
+  void ConnectorStatusListener_sec_exec_i::on_requested_incompatible_qos(
     ::DDS::DataReader_ptr the_reader,
      const DDS::RequestedIncompatibleQosStatus & status)  {
-      printf("ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n");
+//      printf("ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n");
     }
-  void ConnectorStatusListener_exec_i::on_sample_rejected(
+  void ConnectorStatusListener_sec_exec_i::on_sample_rejected(
      ::DDS::DataReader_ptr the_reader, 
      const DDS::SampleRejectedStatus & status)  {
-      printf("ConnectorStatusListener_exec_i::on_sample_rejected\n");
+//      printf("ConnectorStatusListener_exec_i::on_sample_rejected\n");
     }
-  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
+  void ConnectorStatusListener_sec_exec_i::on_offered_deadline_missed(
      ::DDS::DataWriter_ptr the_writer,
      const DDS::OfferedDeadlineMissedStatus & status)  {
-      printf("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
+ //     printf("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
     }
-  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
+  void ConnectorStatusListener_sec_exec_i::on_offered_incompatible_qos(
      ::DDS::DataWriter_ptr the_writer, 
      const DDS::OfferedIncompatibleQosStatus & status)  {
-      printf("ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n");
+ //     printf("ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n");
     }
-  void ConnectorStatusListener_exec_i::on_unexpected_status(
+  void ConnectorStatusListener_sec_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr the_entity,
     ::DDS::StatusKind  status_kind)  {
-      printf("ConnectorStatusListener_exec_i::on_unexpected_status\n");
+ //     printf("ConnectorStatusListener_exec_i::on_unexpected_status\n");
     }
- 
-::CCM_DDS::CCM_ConnectorStatusListener_ptr
-  Sender_exec_i::get_info_out_connector_status (void)
-  {
-    printf ("*************** out connector status************************\n");
-     return new ConnectorStatusListener_exec_i ();
-  }
   //============================================================
   // Pulse generator
   //============================================================
@@ -75,7 +70,7 @@ namespace CIAO_ConnectorStatusListener_Test_Sender_Impl
   pulse_Generator::handle_timeout (const ACE_Time_Value &, const void *)
   {
     // Notify the subscribers
-  //  this->pulse_callback_.tick ();
+    this->pulse_callback_.tick ();
     return 0;
   }
 
@@ -85,8 +80,8 @@ namespace CIAO_ConnectorStatusListener_Test_Sender_Impl
 
   Sender_exec_i::Sender_exec_i (void)
     : rate_ (1),
-      iterations_ (10),
-      keys_ (5)
+      iterations_ (1),
+      inconsistent_ (false)
   {
     this->ticker_ = new pulse_Generator (*this);
   }
@@ -95,100 +90,67 @@ namespace CIAO_ConnectorStatusListener_Test_Sender_Impl
   {
   }
 
+  ::CCM_DDS::CCM_ConnectorStatusListener_ptr
+  Sender_exec_i::get_test_sec_topic_connector_status (void)
+  {
+    //printf ("*************** out connector status sender test_sec_topic************************\n");
+    return new ConnectorStatusListener_sec_exec_i (this->inconsistent_);
+  }
+ 
   // Supported operations and attributes.
-
   void
   Sender_exec_i::tick ()
   {
-  /*  if (this->last_key->second->iteration == 0)
+    
+    if(this->iterations_ == 1)
       {
-        try
+        for (ConnectorStatusListener_TestSec_Table::iterator i = this->sec_ktests_.begin ();
+            i != this->sec_ktests_.end ();
+            ++i)  
           {
-            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Create key <%C>\n"),
-                    this->last_key->first.c_str ()));
-            printf ("@@!!@#!@\n");
-            this->updater_->create (this->last_key->second);
-          }
-        catch (CCM_DDS::AlreadyCreated& )
-          {
-            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("keyedtest_info for <%C> already created.\n"),
-                        this->last_key->first.c_str ()));
-          }
-        catch (CCM_DDS::InternalError& )
-          {
-            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while creating keyedtest_info for <%C>.\n"),
-                        this->last_key->first.c_str ()));
-          }
-      }
-    if (this->last_key != this->ktests_.end ())
-      {
-        try
-          {
-             printf ("1111111111@@!!@#!@\n");
-            ++this->last_key->second->iteration;
-            this->updater_->update (this->last_key->second);
-            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updated key <%C> with <%d>\n"),
-                    this->last_key->first.c_str (),
-                    this->last_key->second->iteration));
-          }
-        catch (CCM_DDS::NonExistent& )
-          {
-            printf ("Stock_info for <%s> not updated: <%s> didn't exist.\n",
-                        this->last_key->first.c_str (), this->last_key->first.c_str ());
-          }
-        catch (CCM_DDS::InternalError& )
-          {
-            printf ("Internal Error while updating Stock_info for <%s>.\n",
-                        this->last_key->first.c_str ());
-          }
-        ++this->last_key;
-         printf ("1a1a1a1a1a1a1a1a1a1last_key = %d   @@!!@#!@\n", this->last_key);
+             try
+             {
+               if (!CORBA::is_nil (this->writer2_) && !CORBA::is_nil (this->updater2_) ) {
+                 this->writer2_->write (i->second);
+               }
+             }
+             catch (CCM_DDS::InternalError& )
+             {
+               CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while creating topic for <%C>.\n"),
+                        i->first.c_str ()));
+             }
+           }
+         this->iterations_++;
       }
     else
-      {
-         printf ("222222222222222222@@!!@#!@\n");
-        //onto the next iteration
-        this->last_key = this->ktests_.begin ();
-        while (this->last_key != this->ktests_.end ())
-          {
-            if (this->last_key->second->iteration == this->iterations_)
-              {
-                //we're done with this one -> unregister it.
-                try
-                  {
-                    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Deleting key <%C> with <%d>\n"),
-                            this->last_key->first.c_str (),
-                            this->last_key->second->iteration));
-                    this->updater_->_cxx_delete (this->last_key->second);
-                  }
-                catch (CCM_DDS::NonExistent& )
-                  {
-                    CIAO_ERROR ((LM_ERROR,
-                                ACE_TEXT ("keyedtest_info for <%C> not deleted: <%C> didn't exist.\n"),
-                                this->last_key->first.c_str (), this->last_key->first.c_str ()));
-                  }
-                catch (CCM_DDS::InternalError& )
-                  {
-                    CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while deleting keyedtest_info for <%C>.\n"),
-                                this->last_key->first.c_str ()));
-                  }
-                //next key
-                ++this->last_key;
+    {
+       for (ConnectorStatusListener_TestSec_Table::iterator i = this->sec_ktests_.begin ();
+            i != this->sec_ktests_.end ();
+            ++i)  
+         {
+           try
+           {
+              if (!CORBA::is_nil (this->updater2_))  {
+              this->updater2_->create (i->second);
               }
-            else
-              {
-                break;
-              }
-          }
-      }
-      */
+           }
+           catch (CCM_DDS::InternalError& )
+           {
+               CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while creating topic for <%C>.\n"),
+                        i->first.c_str ()));
+           }
+        }
+        this->iterations_++;
+    }
+      
   }
 
   void
   Sender_exec_i::start (void)
   {
     // calculate the interval time
-    long usec = 1000000 / this->rate_;
+    long usec = 10000000 / this->rate_;
+
     if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
                 this->ticker_,
                 0,
@@ -208,42 +170,7 @@ namespace CIAO_ConnectorStatusListener_Test_Sender_Impl
     delete this->ticker_;
   }
 
-  ::CORBA::ULong
-  Sender_exec_i::rate (void)
-  {
-    return this->rate_;
-  }
-
-  void
-  Sender_exec_i::rate (::CORBA::ULong rate)
-  {
-    this->rate_ = rate;
-  }
-
-  ::CORBA::UShort
-  Sender_exec_i::iterations (void)
-  {
-    return this->iterations_;
-  }
-
-  void
-  Sender_exec_i::iterations (::CORBA::UShort iterations)
-  {
-    this->iterations_ = iterations;
-  }
-
-  ::CORBA::UShort
-  Sender_exec_i::keys (void)
-  {
-    return this->keys_;
-  }
-
-  void
-  Sender_exec_i::keys (::CORBA::UShort keys)
-  {
-    this->keys_ = keys;
-  }
-  
+ 
   void
   Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
   {
@@ -254,34 +181,37 @@ namespace CIAO_ConnectorStatusListener_Test_Sender_Impl
       {
         throw ::CORBA::INTERNAL ();
       }
-  }
+   }
 
   void
   Sender_exec_i::configuration_complete (void)
   {
-   // this->updater_ = this->context_->get_connection_info_update_data ();
+    //printf("-------------configuration_complete ----------------\n"); 
+    this->writer2_  = this->context_->get_connection_test_sec_topic_write_data ();
+    this->updater2_ = this->context_->get_connection_test_sec_topic_update_data ();
+    
   }
+
+ 
+void
+  Sender_exec_i::add_instance_of_sec_topic (const char * key, int x)
+  {
+    //printf("-------------add_instance_of_second_topic----------------\n");   
+    TestSecondTopic *new_key = new TestSecondTopic;
+    new_key->key = CORBA::string_dup(key);
+    new_key->x = x;
+    new_key->y = x + 10;
+    this->sec_ktests_[key] = new_key;
+  }
+
 
   void
   Sender_exec_i::ccm_activate (void)
   {
     this->start ();
-    
-    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
-                        this->mutex_, CORBA::INTERNAL ());
-
-    for (CORBA::UShort i = 1; i < this->keys_ + 1; ++i)
-      {
-        char key[7];
-        TestTopic *new_key = new TestTopic;
-        ACE_OS::sprintf (key, "KEY_%d", i);
-         printf ("key = %s 1111111111@@!!@#!@\n",key);
-        new_key->key = CORBA::string_dup(key);
-    //    new_key->iteration = 0;
-
-        this->ktests_[key] = new_key;
-      }
-     this->last_key = this->ktests_.begin ();
+    //add 2 different instances of topic
+    this->add_instance_of_sec_topic ("EEN",1);
+    this->add_instance_of_sec_topic ("TWEE",2);
   }
 
   void
@@ -293,6 +223,16 @@ namespace CIAO_ConnectorStatusListener_Test_Sender_Impl
   void
   Sender_exec_i::ccm_remove (void)
   {
+    //printf("*************in remove Sender********** \n");
+  
+    CORBA::Boolean _expected = true;
+    if(this->inconsistent_ != _expected)
+      {   
+     
+         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
+                               ACE_TEXT (" error 'on_inconsistent_topic' in Sender")
+                    )); 
+      }
   }
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
