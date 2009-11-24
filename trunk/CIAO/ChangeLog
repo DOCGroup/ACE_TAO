@@ -1,3 +1,8 @@
+Tue Nov 24 09:36:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_component_mpc.pl:
+          Generate the needed -Gxh flags
+
 Tue Nov 24 09:35:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/dds4ccm_Base.idl
