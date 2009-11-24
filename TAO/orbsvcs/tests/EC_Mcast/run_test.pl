@@ -1,53 +1,75 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-    & eval 'exec perl -S $0 $argv:q'
-    if 0;
+     & eval 'exec perl -S $0 $argv:q'
+     if 0;
 
 # $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 $status = 0;
+$debug_level = '0';
 
-$sample_cfg = PerlACE::LocalFile ("sample.cfg");
-$svc_conf = PerlACE::LocalFile ("svc$PerlACE::svcconf_ext");
+$conf = $PerlACE::svcconf_ext;
+$event_count = '100';
+$event_period = '50000';
+$federation = 'Set02';
 
-# Run two copies of the same test...
-$T1 = new PerlACE::Process ("EC_Mcast",
-                            "-c $sample_cfg -ORBSvcConf $svc_conf "
-                            . "-n 100 -t 50000 -f Set02");
-$T2 = new PerlACE::Process ("EC_Mcast",
-                            "-c $sample_cfg -ORBSvcConf $svc_conf "
-                            . "-n 100 -t 50000 -f Set02");
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
+}
 
-$sp1 = $T1->Spawn ();
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-if ($sp1 != 0) {
-    print STDERR "ERROR: could not spawn EC_MCast, returned $sp1\n";
+my $config_base = "sample.cfg";
+my $server_config = $server->LocalFile ($config_base);
+my $client_config = $client->LocalFile ($config_base);
+
+$SV = $server->CreateProcess ("EC_Mcast",
+                              "-ORBdebuglevel $debug_level " .
+                              "-ORBSvcConf svc$conf " .
+                              "-c $server_config " .
+                              "-n $event_count " .
+                              "-t $event_period " .
+                              "-f $federation");
+
+$CL = $client->CreateProcess ("EC_Mcast",
+                              "-ORBdebuglevel $debug_level " .
+                              "-ORBSvcConf svc$conf " .
+                              "-c $client_config " .
+                              "-n $event_count " .
+                              "-t $event_period " .
+                              "-f $federation");
+
+$server_status = $SV->Spawn ();
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
     exit 1;
 }
 
-$sp2 = $T2->Spawn ();
+$client_status = $CL->Spawn ();
 
-if ($sp2 != 0) {
-    print STDERR "ERROR: could not spawn EC_MCast, returned $sp2\n";
-    $T1->Kill ();
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
     exit 1;
 }
 
-$test1 = $T1->WaitKill (60);
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 45);
+$client_status = $CL->WaitKill ($client->ProcessStopWaitInterval() + 45);
 
-if ($test1 != 0) {
-    print STDERR "ERROR: test 1 returned $test1\n";
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }
 
-$test2 = $T2->WaitKill (60);
-
-if ($test2 != 0) {
-    print STDERR "ERROR: test 2 returned $test2\n";
-    $status = 1;
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
+    exit 1;
 }
 
 exit $status;
