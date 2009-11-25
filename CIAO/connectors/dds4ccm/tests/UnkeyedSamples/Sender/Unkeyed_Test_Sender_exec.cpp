@@ -53,19 +53,19 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
           {
             ++this->last_key->second->iteration;
             this->writer_->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
-            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updated key <%C> with <%d>\n"),
+            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Written key <%C> with <%d>\n"),
                     this->last_key->first.c_str (),
                     this->last_key->second->iteration));
           }
         catch (CCM_DDS::NonExistent& )
           {
-            printf ("Key info for <%s> not updated: <%s> didn't exist.\n",
-                        this->last_key->first.c_str (), this->last_key->first.c_str ());
+            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Key info for <%s> not updated: <%s> didn't exist.\n"),
+                        this->last_key->first.c_str (), this->last_key->first.c_str ()));
           }
         catch (CCM_DDS::InternalError& )
           {
-            printf ("Internal Error while updating key info for <%s>.\n",
-                        this->last_key->first.c_str ());
+            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while updating key info for <%s>.\n"),
+                        this->last_key->first.c_str ()));
           }
         ++this->last_key;
       }
