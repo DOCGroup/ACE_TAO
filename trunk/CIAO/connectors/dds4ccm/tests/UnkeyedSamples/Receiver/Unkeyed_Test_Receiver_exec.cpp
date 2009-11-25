@@ -86,7 +86,7 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
     const ::CCM_DDS::ReadInfo & /* info */)
   {
     ++this->received_;
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("UnkeyedTest_Listener: ")
+    CIAO_DEBUG ((LM_DEBUG, CLINFO ACE_TEXT ("UnkeyedTest_Listener: ")
             ACE_TEXT ("received keyed_test_info for <%C> at %u\n"),
             an_instance.key.in (),
             an_instance.iteration));
