@@ -1,3 +1,31 @@
+Wed Nov 25 14:12:21 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/UnkeyedWriter:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Base:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Base/Writer_Base.idl:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Base/Writer_Base.mpc:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Connector:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Connector/Writer_Connector.idl:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Connector/Writer_Connector.mpc:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Connector/Writer_Connector_exec.h:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Connector/Writer_Connector_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Receiver:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Receiver/Writer_Receiver.idl:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Receiver/Writer_Receiver.mpc:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Receiver/Writer_Receiver_exec.h:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Receiver/Writer_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender.idl:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender.mpc:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender_exec.h:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedWriter/descriptors:
+        * connectors/dds4ccm/tests/UnkeyedWriter/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/UnkeyedWriter/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/UnkeyedWriter/descriptors/run_test.pl:
+          Added an unkeyed writer test.
+
 Wed Nov 25 13:45:05 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
