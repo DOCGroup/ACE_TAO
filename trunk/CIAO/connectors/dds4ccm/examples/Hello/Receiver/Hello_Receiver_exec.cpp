@@ -268,11 +268,15 @@ namespace CIAO_Hello_Receiver_Impl
     CIAO_DEBUG ((LM_INFO, "Receiver_exec_i received %u messages and lost %u messages\n",
                 this->received_.value (),
                 this->lost_.value ()));
-
+    if (this->lost_ > 0)
+      {
+        CIAO_ERROR ((LM_ERROR, "ERROR : Lost %u messages\n",
+            this->lost_.value ()));
+      } 
     if (this->received_ != this->expected_)
       {
-        CIAO_ERROR ((LM_EMERGENCY, "Receiver_exec_i: Warning: Expected to receive %u messages, actually got %u\n",
-        this->expected_, this->received_.value ()));
+        CIAO_ERROR ((LM_ERROR, "ERROR : Expected to receive %u messages, actually got %u\n",
+            this->expected_, this->received_.value ()));
       }
   }
 
