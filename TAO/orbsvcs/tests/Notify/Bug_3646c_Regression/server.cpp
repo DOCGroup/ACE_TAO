@@ -4,28 +4,88 @@
 #include "orbsvcs/Notify_Service/Notify_Service.h"
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/CosNamingC.h"
+#include "ace/Get_Opt.h"
 
 #include "DllORB.h"
 
 char const * const scpc_orbId = "testDllOrb";
 
-ACE_TCHAR const * const scpc_loadOrb = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+const int max_length = 1000;
+
+ACE_TCHAR scpc_loadOrb[max_length] = ACE_DYNAMIC_SERVICE_DIRECTIVE(
   "testDllOrb",
   "bug3646c",
   "_make_DllORB",
-  "testDllOrb -ORBDebugLevel 0 -ORBId testDllOrb -ORBDottedDecimalAddresses 1 -ORBInitRef NameService=iioploc://localhost:3000/NameService"
+  "testDllOrb -ORBDebugLevel 0 -ORBId testDllOrb -ORBDottedDecimalAddresses 1 -ORBInitRef NameService=iioploc://%s:%s/NameService"
 );
 
 ACE_TCHAR const * const scpc_unloadOrb = ACE_REMOVE_SERVICE_DIRECTIVE("testDllOrb");
 
-ACE_TCHAR const * const scpc_loadNotifyService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+ACE_TCHAR scpc_loadNotifyService[max_length] = ACE_DYNAMIC_SERVICE_DIRECTIVE(
   "testNotifyService",
   "TAO_Notify_Service",
   "_make_TAO_Notify_Service_Driver",
-  "-Channel -ChannelName Channel1 -ChannelName Channel2 -RunThreads 0 -ORBInitRef NameService=iioploc://localhost:3000/NameService -IORoutput notify.ior"
+  "-Channel -ChannelName Channel1 -ChannelName Channel2 -RunThreads 0 -ORBInitRef NameService=iioploc://%s:%s/NameService -IORoutput %s"
 );
 
 ACE_TCHAR const * const scpc_unloadNotifyService = ACE_REMOVE_SERVICE_DIRECTIVE("testNotifyService");
+
+int
+parse_args (int argc, ACE_TCHAR *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("h:p:o:"));
+  int c;
+  
+  ACE_TCHAR *hostname = 0;
+  ACE_TCHAR *port = 0;
+  ACE_TCHAR *ior_file = 0;
+  
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'h':
+         hostname = get_opts.opt_arg ();
+        break;
+      case 'p':
+        port = get_opts.opt_arg ();
+        break;
+      case 'o':
+        ior_file = get_opts.opt_arg ();
+        break;
+        
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+           "usage:  %s "
+           "-h <hostname> "
+           "-p <port> "
+           "-o <ior> "           
+           "\n",
+           argv [0]),-1);
+      }
+// Indicates successful parsing of the command line
+if ( hostname == 0 || port == 0 || ior_file == 0){
+    ACE_ERROR_RETURN ((LM_ERROR,
+           "usage:  %s "
+           "-h <hostname> "
+           "-p <port> "
+           "-o <ior> "           
+           "\n",
+           argv [0]),-1);
+}
+
+ACE_TCHAR str[max_length];
+
+ACE_OS::strcpy(str, scpc_loadNotifyService);
+ACE_OS::sprintf(scpc_loadNotifyService, str,  hostname, port, ior_file);
+
+ACE_OS::strcpy(str, scpc_loadOrb);
+ACE_OS::sprintf(scpc_loadOrb, str,  hostname, port);
+
+return 0;
+}
+                                                                
+
 
 void loadunloadcycle()
 {
@@ -36,7 +96,7 @@ void loadunloadcycle()
     ACE_TEXT ("(%P|%t) loadunloadcycle - loading\n")
   ));
 
-  result = ACE_Service_Config::process_directive(scpc_loadOrb);
+  result = ACE_Service_Config::process_directive(ACE_TEXT_ALWAYS_CHAR(scpc_loadOrb));
   ACE_DEBUG((
     LM_DEBUG,
     ACE_TEXT ("(%P|%t) loadunloadcycle - loading ORB done\n")
@@ -65,7 +125,7 @@ void loadunloadcycle()
     ACE_TEXT ("(%P|%t) loadunloadcycle - v_rootPOA OK\n")
   ));
 
-  result = ACE_Service_Config::process_directive(scpc_loadNotifyService);
+  result = ACE_Service_Config::process_directive(ACE_TEXT_ALWAYS_CHAR(scpc_loadNotifyService));
   ACE_DEBUG((
     LM_DEBUG,
     ACE_TEXT ("(%P|%t) loadunloadcycle - loading NotifyService done\n")
@@ -101,12 +161,16 @@ void loadunloadcycle()
     ACE_TEXT ("(%P|%t) loadunloadcycle - unloading ORB done\n")
   ));
 }
-int ACE_TMAIN (int , ACE_TCHAR **)
+
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_DEBUG((
     LM_DEBUG,
     ACE_TEXT ("(%P|%t) main - entered\n")
   ));
+  
+  if (parse_args (argc, argv) != 0)
+        return 1;
 
    for (int cnt = 0, max = 2; cnt < max; ++cnt)
     {

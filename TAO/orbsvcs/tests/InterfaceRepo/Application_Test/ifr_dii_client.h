@@ -79,6 +79,8 @@ private:
 
   bool debug_;
   // Display results and debugging info?
+
+  const ACE_TCHAR *ior_output_file_;
 };
 
 #endif /* IFR_DII_CLIENT_H */
