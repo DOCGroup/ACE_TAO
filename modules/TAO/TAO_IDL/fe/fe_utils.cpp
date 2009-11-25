@@ -7,6 +7,12 @@
 #include "utl_namelist.h"
 #include "utl_identifier.h"
 
+FE_Utils::T_Param_Info::T_Param_Info (void)
+  : const_type_ (AST_Expression::EV_none),
+    enum_const_type_decl_ (0)
+{
+}
+
 FE_Utils::T_Ref_Info::T_Ref_Info (void)
   : name_ (0),
     params_ (0)

@@ -303,7 +303,8 @@ int tao_yylex (void);
 extern "C" int tao_yywrap (void);
 extern char tao_yytext[];
 extern int tao_yyleng;
-AST_Decl *tao_enum_constant_decl = 0;
+AST_Enum *tao_enum_constant_decl = 0;
+AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 #define TAO_YYDEBUG_LEXER_TEXT (tao_yytext[tao_yyleng] = '\0', tao_yytext)
 // Force the pretty debugging code to compile.
 #define TAO_YYDEBUG 1
@@ -4143,23 +4144,17 @@ tao_yyreduce:
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_PredefinedType *c = 0;
           AST_Typedef *t = 0;
+          UTL_ScopedName *sn = (tao_yyvsp[(1) - (1)].idlist);
 
           /*
            * If the constant's type is a scoped name, it must resolve
            * to a scalar constant type
            */
           AST_Decl *d =
-            s->lookup_by_name ((tao_yyvsp[(1) - (1)].idlist),
-                               true);
-
-          (tao_yyvsp[(1) - (1)].idlist)->destroy ();
-          delete (tao_yyvsp[(1) - (1)].idlist);
-          (tao_yyvsp[(1) - (1)].idlist) = 0;
+            s->lookup_by_name (sn, true);
 
           if (s != 0  && d != 0)
             {
-              tao_enum_constant_decl = d;
-
               /*
                * Look through typedefs.
                */
@@ -4175,22 +4170,11 @@ tao_yyreduce:
                   d = t->base_type ();
                 }
 
-              if (d == 0)
-                {
-                  (tao_yyval.etval) = AST_Expression::EV_enum;
-                }
-              else if (d->node_type () == AST_Decl::NT_pre_defined)
+              if (d->node_type () == AST_Decl::NT_pre_defined)
                 {
                   c = AST_PredefinedType::narrow_from_decl (d);
 
-                  if (c != 0)
-                    {
-                      (tao_yyval.etval) = idl_global->PredefinedTypeToExprType (c->pt ());
-                    }
-                  else
-                    {
-                      (tao_yyval.etval) = AST_Expression::EV_enum;
-                    }
+                  (tao_yyval.etval) = idl_global->PredefinedTypeToExprType (c->pt ());
                 }
               else if (d->node_type () == AST_Decl::NT_string)
                 {
@@ -4200,15 +4184,26 @@ tao_yyreduce:
                 {
                   (tao_yyval.etval) = AST_Expression::EV_wstring;
                 }
-              else
+              else if (d->node_type () == AST_Decl::NT_enum)
                 {
                   (tao_yyval.etval) = AST_Expression::EV_enum;
+                  tao_enum_constant_decl =
+                    AST_Enum::narrow_from_decl (d);
+                }
+              else
+                {
+                  idl_global->err ()->constant_expected (sn, d);
                 }
             }
           else
             {
-              (tao_yyval.etval) = AST_Expression::EV_enum;
+              idl_global->err ()->lookup_error (sn);
             }
+            
+          sn->destroy ();
+          delete sn;
+          sn = 0;
+          (tao_yyvsp[(1) - (1)].idlist) = 0;
         }
     break;
 
@@ -8852,6 +8847,7 @@ tao_yyreduce:
     {
 //        IDL_CONST const_type
           (tao_yyval.ntval) = AST_Decl::NT_const;
+          t_param_const_type = (tao_yyvsp[(2) - (2)].etval);
         }
     break;
 
@@ -8932,8 +8928,21 @@ tao_yyreduce:
                           FE_Utils::T_Param_Info,
                           1);
 
-          (tao_yyval.pival)->type_ = (tao_yyvsp[(1) - (2)].ntval);
+          AST_Decl::NodeType nt = (tao_yyvsp[(1) - (2)].ntval);
+          
+          (tao_yyval.pival)->type_ = nt;
           (tao_yyval.pival)->name_ = (tao_yyvsp[(2) - (2)].strval);
+          
+          if (nt == AST_Decl::NT_const)
+            {
+              (tao_yyval.pival)->const_type_ = t_param_const_type;
+              (tao_yyval.pival)->enum_const_type_decl_ =
+                tao_enum_constant_decl;
+                
+              // Reset these values.  
+              t_param_const_type = AST_Expression::EV_none;
+              tao_enum_constant_decl = 0;
+            }
         }
     break;
 

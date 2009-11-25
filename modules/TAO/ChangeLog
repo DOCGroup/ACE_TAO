@@ -1,3 +1,12 @@
+Wed Nov 25 17:58:50 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/fe_utils.h:
+        * TAO_IDL/fe/fe_utils.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        
+          Added support for the 'const' formal template parameter type.
+
 Wed Nov 25 01:35:38 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/idl_global.h:

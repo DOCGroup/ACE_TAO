@@ -5,7 +5,8 @@
 
 #include "ace/Unbounded_Queue.h"
 
-#include "ast_decl.h"
+#include "ast_enum.h"
+#include "ast_expression.h"
 
 class UTL_StrList;
 class UTL_IdList;
@@ -18,9 +19,13 @@ struct TAO_IDL_FE_Export FE_Utils
   struct T_Param_Info
   {
     AST_Decl::NodeType type_;
+    AST_Expression::ExprType const_type_;
+    AST_Enum *enum_const_type_decl_;
     ACE_CString name_;
-  };
 
+    T_Param_Info (void);
+  };
+  
   typedef ACE_Unbounded_Queue<T_Param_Info> T_PARAMLIST_INFO;
 
   struct T_Ref_Info
