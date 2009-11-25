@@ -79,7 +79,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain (void)
   CIAO_DEBUG ((LM_TRACE, CLINFO "DDS_Base_Connector_T::configure_default_domain_ - "
                 "Configuring default domain\n"));
 
-  if (CORBA::is_nil (this->domain_factory_.in ()))
+  if (CORBA::is_nil (this->domain_participant_factory_.in ()))
     {
       try
       {
@@ -89,7 +89,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain (void)
         // Generic code
         ::CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i* df =
           new ::CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i ();
-        this->domain_factory_ = df;
+        this->domain_participant_factory_ = df;
 
         const char* library = 0;
         const char* profile = 0;
@@ -112,7 +112,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain (void)
           }
         if (library && profile)
           {
-            this->domain_ =
+            this->domain_participant_ =
               df->create_participant_with_profile (this->domain_id_,
                                                    library,
                                                    profile,
@@ -122,8 +122,8 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain (void)
         else
           {
             ::DDS::DomainParticipantQos qos;
-            this->domain_ =
-              this->domain_factory_->create_participant (this->domain_id_,
+            this->domain_participant_ =
+              this->domain_participant_factory_->create_participant (this->domain_id_,
                                                          qos,
                                                          0,
                                                          DDS_STATUS_MASK_NONE);
@@ -154,5 +154,21 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::set_session_context (
   this->context_ = lctx;
 }
 
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
+{
+  if (! ::CORBA::is_nil (this->domain_participant_.in ()))
+    {
+      this->domain_participant_->delete_contained_entities ();
+    }
+
+  if (! ::CORBA::is_nil (this->domain_participant_factory_.in ()))
+    {
+      this->domain_participant_factory_->delete_participant (
+        this->domain_participant_.in ());
+      this->domain_participant_ = ::DDS::DomainParticipant::_nil ();
+    }
+}
 
 

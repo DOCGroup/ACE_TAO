@@ -35,7 +35,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_write (void)
       if (CORBA::is_nil (this->supplier_publisher_.in ()))
         {
           ::DDS::PublisherQos pqos;
-          this->supplier_publisher_ = this->domain_->create_publisher (pqos,
+          this->supplier_publisher_ = this->domain_participant_->create_publisher (pqos,
                                                                         0,
                                                                         0);
         }
@@ -74,7 +74,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen (void)
       if (CORBA::is_nil (this->listen_subscriber_.in ()))
         {
           ::DDS::SubscriberQos sqos;
-          this->listen_subscriber_ = this->domain_->create_subscriber (sqos,
+          this->listen_subscriber_ = this->domain_participant_->create_subscriber (sqos,
                                                                        0,
                                                                        0);
         }
@@ -216,4 +216,5 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
 {
+  DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove ();
 }
