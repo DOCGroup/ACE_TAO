@@ -117,7 +117,7 @@ public:
     EIDL_CONCRETE_VT_EXPECTED,  // We got something else..
     EIDL_ABSTRACT_EXPECTED,     // We got something else..
     EIDL_EVENTTYPE_EXPECTED,    // We got something else..
-    EIDL_TMPL_IFACE_EXPECTED,   // We got something else..
+    EIDL_TMPL_MODULE_EXPECTED,  // We got something else..
     EIDL_PORTTYPE_EXPECTED,     // We got something else..
     EIDL_CONNECTOR_EXPECTED,    // We got something else..
     EIDL_TYPEDEF_EXPECTED,      // We got something else..
@@ -271,6 +271,11 @@ public:
   // something else instead. This most likely is a case in a supports
   // or inheritance list.
   void interface_expected (AST_Decl *d);
+
+  // Report a situation where a template module was expected but we got
+  // something else instead. This most likely is a case in a template
+  // module instantiation or alias.
+  void template_module_expected (AST_Decl *d);
 
   // Report a situation where a value type was expected but we got
   // something else instead. This most likely is a case in a primary

@@ -4164,10 +4164,6 @@ tao_yyreduce:
           AST_Decl *d =
             s->lookup_by_name (sn, true);
 
-          (tao_yyvsp[(1) - (1)].idlist)->destroy ();
-          delete (tao_yyvsp[(1) - (1)].idlist);
-          (tao_yyvsp[(1) - (1)].idlist) = 0;
-
           if (s != 0 && d != 0)
             {
               /*
