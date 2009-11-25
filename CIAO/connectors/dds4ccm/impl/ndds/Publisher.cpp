@@ -73,6 +73,45 @@ namespace CIAO
         return retval._retn ();
       }
 
+      ::DDS::DataWriter_ptr
+      RTI_Publisher_i::create_datawriter_with_profile (::DDS::Topic_ptr a_topic,
+          const char* library_name,
+          const char *profile_name,
+                                          ::DDS::DataWriterListener_ptr a_listener,
+                                          ::DDS::StatusMask mask)
+      {
+        CIAO_TRACE ("RTI_Publisher_i::create_datawriter");
+
+        RTI_Topic_i * topic = dynamic_cast < RTI_Topic_i * > (a_topic);
+
+        if (!topic)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter_with_profile - "
+                         "Error: Unable to cast provided topic to its servant.\n"));
+            throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
+          }
+
+        DDSTopic *rti_topic = topic->get_topic ();
+        DDSDataWriterListener *rti_drl = new RTI_DataWriterListener_i (a_listener);
+        DDSDataWriter *rti_dw = this->impl_->create_datawriter_with_profile (rti_topic,
+                                                                library_name,
+                                                                profile_name,
+                                                                rti_drl,
+                                                                mask);
+
+        if (!rti_dw)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter_with_profile - "
+                         "Error: RTI Topic returned a nil datawriter.\n"));
+            throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          }
+
+        rti_dw->enable ();
+        ::DDS::DataWriter_var retval = new RTI_DataWriter_i (rti_dw);
+
+        return retval._retn ();
+      }
+
       ::DDS::ReturnCode_t
       RTI_Publisher_i::delete_datawriter (::DDS::DataWriter_ptr a_datawriter)
       {

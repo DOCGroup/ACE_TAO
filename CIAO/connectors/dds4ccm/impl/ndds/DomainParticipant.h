@@ -43,6 +43,12 @@ namespace CIAO
                                                  ::DDS::PublisherListener_ptr a_listener,
                                                  ::DDS::StatusMask mask);
 
+        virtual ::DDS::Publisher_ptr create_publisher_with_profile (
+          const char* library_name,
+          const char *profile_name,
+          ::DDS::PublisherListener_ptr a_listener,
+          ::DDS::StatusMask mask);
+
         virtual
           ::DDS::ReturnCode_t delete_publisher (::DDS::Publisher_ptr p);
 
@@ -50,6 +56,12 @@ namespace CIAO
           ::DDS::Subscriber_ptr create_subscriber (const ::DDS::SubscriberQos & qos,
                                                    ::DDS::SubscriberListener_ptr a_listener,
                                                    ::DDS::StatusMask mask);
+
+        virtual ::DDS::Subscriber_ptr create_subscriber_with_profile(
+          const char* library_name,
+          const char *profile_name,
+          ::DDS::SubscriberListener_ptr a_listener,
+          ::DDS::StatusMask mask);
 
         virtual
           ::DDS::ReturnCode_t delete_subscriber (::DDS::Subscriber_ptr s);
@@ -63,6 +75,14 @@ namespace CIAO
                                          const ::DDS::TopicQos & qos,
                                          ::DDS::TopicListener_ptr a_listener,
                                          ::DDS::StatusMask mask);
+
+        virtual ::DDS::Topic_ptr create_topic_with_profile (
+            const char * impl_name,
+            const char * type_name,
+            const char* library_name,
+            const char *profile_name,
+            ::DDS::TopicListener_ptr a_listener,
+            ::DDS::StatusMask mask);
 
         virtual
           ::DDS::ReturnCode_t delete_topic (::DDS::Topic_ptr a_topic);

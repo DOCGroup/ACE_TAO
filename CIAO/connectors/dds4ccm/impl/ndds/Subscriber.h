@@ -57,6 +57,14 @@ namespace CIAO
           ::DDS::DataReaderListener_ptr a_listener,
           ::DDS::StatusMask mask);
 
+        virtual ::DDS::DataReader_ptr
+        create_datareader_with_profile (
+          ::DDS::TopicDescription_ptr a_topic,
+          const char* library_name,
+          const char *profile_name,
+          ::DDS::DataReaderListener_ptr a_listener,
+          ::DDS::StatusMask mask);
+
         virtual ::DDS::ReturnCode_t
         delete_datareader (
           ::DDS::DataReader_ptr a_datareader);

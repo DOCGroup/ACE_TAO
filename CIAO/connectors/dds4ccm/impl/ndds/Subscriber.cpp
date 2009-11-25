@@ -97,6 +97,43 @@ namespace CIAO
         return retval._retn ();
       }
 
+      ::DDS::DataReader_ptr
+      RTI_Subscriber_i::create_datareader_with_profile (
+        ::DDS::TopicDescription_ptr a_topic,
+        const char* library_name,
+        const char *profile_name,
+        ::DDS::DataReaderListener_ptr a_listener,
+        ::DDS::StatusMask mask)
+      {
+        RTI_Topic_i * topic = dynamic_cast < RTI_Topic_i * > (a_topic);
+        if (!topic)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
+                         "Error: Unable to cast provided topic to its servant.\n"));
+            throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
+          }
+        DDSTopic *rti_topic = topic->get_topic ();
+//        DDSDataReaderListener *rti_drl = drl->get_datareaderlistener ();
+// todo leak
+        DDSDataReaderListener *rti_drl = new RTI_DataReaderListener_i (a_listener);
+        DDSDataReader *rti_dr = this->impl_->create_datareader_with_profile (rti_topic,
+                                                                library_name,
+                                                                profile_name,
+                                                                rti_drl,
+                                                                mask);
+        if (!rti_dr)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
+                         "Error: RTI Topic returned a nil datareader.\n"));
+            throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          }
+
+        rti_dr->enable ();
+        ::DDS::DataReader_var retval = new RTI_DataReader_i (rti_dr);
+
+        return retval._retn ();
+      }
+
       ::DDS::ReturnCode_t
       RTI_Subscriber_i::delete_datareader (
         ::DDS::DataReader_ptr a_datareader)
