@@ -649,8 +649,7 @@ public:
   UTL_String *utl_string_factory (const char *str);
   // Utility function to create UTL_String classes on the FE heap.
 
-  bool check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
-                               FE_Utils::T_Param_Info *param);
+  ACE_CString check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list);
   // Check if 'param' is a sequence of a previous param, and if
   // so, if the previous param exists.
 
@@ -663,6 +662,11 @@ public:
 
   void original_local_name (Identifier *local_name);
   // Strips _cxx_ prefix for use in port names.
+  
+private:
+  bool check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
+                               ACE_CString &param_id,
+                               size_t index);
 
 private:
   // Data

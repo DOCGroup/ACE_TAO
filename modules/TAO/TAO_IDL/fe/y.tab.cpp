@@ -2867,7 +2867,19 @@ tao_yyreduce:
     {
 // fixed_module : module_header
           idl_global->set_parse_state (IDL_GlobalData::PS_ModuleIDSeen);
-          // Check that scoped name contains no delimitor.
+          
+          // The module_header rule is common to template module, fixed
+          // module and instantiated template module. In the last
+          // case, a fully scoped name is allowed, but here we
+          // allow only an identifier (a scoped name of length
+          // 1). If not satisfied, we output a parse error with
+          // the appropriate message.
+          if ((tao_yyvsp[(1) - (1)].idlist)->length () != 1)
+            {
+              idl_global->err ()->syntax_error (
+                IDL_GlobalData::PS_ModuleIDSeen);
+            }
+            
           AST_Module *m = 0;
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
 
@@ -8857,6 +8869,22 @@ tao_yyreduce:
           (tao_yyvsp[(2) - (2)].plval)->enqueue_head (*(tao_yyvsp[(1) - (2)].pival));
           delete (tao_yyvsp[(1) - (2)].pival);
           (tao_yyvsp[(1) - (2)].pival) = 0;
+          
+          // The param added above is always the last one parsed,
+          // so we check for matches between sequence<T> & T here.
+          ACE_CString bad_id =
+            idl_global->check_for_seq_of_param (
+              (tao_yyvsp[(2) - (2)].plval));
+
+          if (!bad_id.empty ())
+            {
+              delete (tao_yyvsp[(2) - (2)].plval);
+              (tao_yyvsp[(2) - (2)].plval) = 0;
+
+              idl_global->err ()->mismatch_seq_of_param (bad_id.c_str ());
+            }
+
+          (tao_yyval.plval) = (tao_yyvsp[(2) - (2)].plval);
         }
     break;
 
@@ -8879,32 +8907,11 @@ tao_yyreduce:
                               1);
             }
 
-          bool so_far_so_good =
-            idl_global->check_for_seq_of_param ((tao_yyvsp[(1) - (4)].plval),
-                                                (tao_yyvsp[(4) - (4)].pival));
-
-          if (so_far_so_good)
-            {
-              (tao_yyvsp[(1) - (4)].plval)->enqueue_tail (*(tao_yyvsp[(4) - (4)].pival));
-              (tao_yyval.plval) = (tao_yyvsp[(1) - (4)].plval);
-            }
-          else
-            {
-              delete (tao_yyvsp[(1) - (4)].plval);
-              (tao_yyvsp[(1) - (4)].plval) = 0;
-
-              idl_global->err ()->mismatch_seq_of_param (
-                (tao_yyvsp[(4) - (4)].pival)->name_.c_str ());
-            }
-
+          (tao_yyvsp[(1) - (4)].plval)->enqueue_tail (*(tao_yyvsp[(4) - (4)].pival));
+          (tao_yyval.plval) = (tao_yyvsp[(1) - (4)].plval);
+          
           delete (tao_yyvsp[(4) - (4)].pival);
           (tao_yyvsp[(4) - (4)].pival) = 0;
-
-          if (!so_far_so_good)
-            {
-              return 1;
-            }
-
         }
     break;
 
