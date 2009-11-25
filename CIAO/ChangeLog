@@ -1,3 +1,18 @@
+Wed Nov 25 08:31:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Hello/Receiver/Receiver_exec.cpp
+        * examples/Hello/Receiver/Receiver_exec.h
+        * examples/Hello/Sender/Sender_exec.cpp
+        * examples/Hello/Sender/Sender_exec.h
+        * examples/Null_Component/Null_Component_exec.cpp
+        * examples/Null_Component/Null_Component_exec.h
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent_exec.h
+        * tests/Minimum/Receiver/Receiver_exec.cpp
+        * tests/Minimum/Receiver/Receiver_exec.h
+        * tests/Minimum/Sender/Sender_exec.cpp
+        * tests/inimum/Sender/Sender_exec.h
+          Removed generated headers from these files
+
 Wed Nov 25 08:19:31 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/On_Inconsistent_Topic/Sender/ConnectorStatusListener_Test_Sender.mpc:
