@@ -1,3 +1,9 @@
+Wed Nov 25 15:15:43 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Get_Connection_Test/README:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/README:
+          Added test description.
+
 Wed Nov 25 14:26:21 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/dds_rtf2_dcps.idl
