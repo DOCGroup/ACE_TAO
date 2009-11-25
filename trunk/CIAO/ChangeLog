@@ -1,3 +1,12 @@
+Wed Nov 25 09:37:22 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/SecConnector/CSL_TestSec_Connector_exec.h:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/SecConnector/CSL_TestSec_Connector_exec.cpp:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/SecConnector/ConnectorStatusListener_TestSec_Connector.mpc:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/SecConnector/ConnectorStatusListener_TestSec_Connector_exec.h:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/SecConnector/ConnectorStatusListener_TestSec_Connector_exec.cpp:
+          Renamed ConnectorStatusListener_TestSec_Connecto in order to resolve fuzz errors.
+
 Wed Nov 25 09:28:44 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/On_Inconsistent_Topic/Receiver/ConnectorStatusListener_Test_Receiver_exec.cpp:
