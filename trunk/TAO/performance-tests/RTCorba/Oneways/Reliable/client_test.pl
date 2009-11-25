@@ -1,14 +1,22 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-    & eval 'exec perl -S $0 $argv:q'
-    if 0;
+     & eval 'exec perl -S $0 $argv:q'
+     if 0;
 
 # $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-$iorfile = PerlACE::LocalFile ("test.ior");
+$status = 0;
+$debug_level = '0';
+
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
+}
+
 $iterations = 4000;
 $bufsize = 4000;
 $work = 10;
@@ -58,17 +66,23 @@ for ($i = 0; $i <= $#ARGV; $i++) {
     }
 }
 
-$CL = new PerlACE::Process ("client");
+my $client = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+
+my $iorbase = "test.ior";
+my $client_iorfile = $client->LocalFile ($iorbase);
+$client->DeleteFile($iorbase);
+
+$CL = $client->CreateProcess ("client", "");
 
 if ($all == 1) {
     foreach $bufsize (@bufsizes) {
         print STDERR "\n***************** STARTING TEST ******************\n";
-        $CL->Arguments ("-ORBNodelay 0 -t none -i $iterations -m $bufsize");
+        $CL->Arguments ("-k file://$client_iorfile -ORBNodelay 0 -t none ".
+                        "-i $iterations -m $bufsize");
 
-        my $client = $CL->SpawnWaitKill (60);
-        
-        if ($client != 0) {
-            print STDERR "ERROR: client returned $client\n";
+        my $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
+        if ($client_status != 0) {
+            print STDERR "ERROR: client SpawWaiKill returned $client_status\n";
             $status = 1;
         }
     }
@@ -88,16 +102,16 @@ foreach $type (@types) {
 
     print STDERR "\n***************** STARTING TEST ******************\n";
 
-    $CL->Arguments ("$transport -t $type -i $iterations -m $bufsize -w $work $shutdown");
+    $CL->Arguments ("-k file://$client_iorfile $transport -t $type -i $iterations ".
+                    "-m $bufsize -w $work $shutdown");
 
-    my $client = $CL->SpawnWaitKill (60);
-    
-    if ($client != 0) {
-        print STDERR "ERROR: client returned $client\n";
+    my $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
+    if ($client_status != 0) {
+        print STDERR "ERROR: client SpawWaiKill returned $client_status\n";
         $status = 1;
     }
 }
 
-unlink $iorfile;
+$client->DeleteFile($iorbase);
 
 exit $status;
