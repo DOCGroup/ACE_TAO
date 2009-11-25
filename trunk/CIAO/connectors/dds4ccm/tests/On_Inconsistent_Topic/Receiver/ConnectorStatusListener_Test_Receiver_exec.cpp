@@ -18,35 +18,35 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
 
   // Operations from ::CCM_DDS::ConnectorStatusListener
   void ConnectorStatusListener_exec_i::on_inconsistent_topic(
-     ::DDS::Topic_ptr the_topic,
-     const DDS::InconsistentTopicStatus & status)
+     ::DDS::Topic_ptr /* the_topic */,
+     const DDS::InconsistentTopicStatus & /* status */)
     {
       this->inconsistent_ = true;
       //printf("Receiver: ConnectorStatusListener_exec_i::on_inconsistent_topic\n");
     }
   void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
-    ::DDS::DataReader_ptr the_reader,
-     const DDS::RequestedIncompatibleQosStatus & status)  {
+    ::DDS::DataReader_ptr /*the_reader*/,
+     const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
      //printf("ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n");
     }
   void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr the_reader,
-     const DDS::SampleRejectedStatus & status)  {
+     ::DDS::DataReader_ptr /*the_reader*/,
+     const DDS::SampleRejectedStatus & /*status*/)  {
      //printf("ConnectorStatusListener_exec_i::on_sample_rejected\n");
     }
   void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
-     ::DDS::DataWriter_ptr the_writer,
-     const DDS::OfferedDeadlineMissedStatus & status)  {
+     ::DDS::DataWriter_ptr /*the_writer*/,
+     const DDS::OfferedDeadlineMissedStatus & /*status*/)  {
      //printf("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
     }
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr the_writer,
-     const DDS::OfferedIncompatibleQosStatus & status)  {
+     ::DDS::DataWriter_ptr /*the_writer*/,
+     const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
      //printf("ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n");
     }
   void ConnectorStatusListener_exec_i::on_unexpected_status(
-    ::DDS::Entity_ptr the_entity,
-    ::DDS::StatusKind  status_kind)  {
+    ::DDS::Entity_ptr /*the_entity*/,
+    ::DDS::StatusKind  /*status_kind*/)  {
      //printf("ConnectorStatusListener_exec_i::on_unexpected_status\n");
     }
 
@@ -62,7 +62,7 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
 
   void
   TestTopic_RawListener_exec_i::on_one_data (
-    const TestTopic & an_instance ,
+    const TestTopic & /*an_instance*/ ,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
     //printf(" receive data ============= %d\n",this->received_);

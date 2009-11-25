@@ -1,3 +1,18 @@
+Wed Nov 25 07:52:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added !FIXED_BUGS_ONLY to Get_Connection_Test since the updater
+          is not working, yet.
+
+        * connectors/dds4ccm/tests/Get_Connection_Test/Sender/Get_Connection_Test_Sender_exec.cpp:
+          No need to write samples to activate the listener.
+
+        * connectors/dds4ccm/tests/KeyedWriter/Receiver/Writer_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector_exec.cpp:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Receiver/ConnectorStatusListener_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Sender/ConnectorStatusListener_Test_Sender_exec.cpp:
+          Resolved compiler warnings.
+
 Tue Nov 24 19:34:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:

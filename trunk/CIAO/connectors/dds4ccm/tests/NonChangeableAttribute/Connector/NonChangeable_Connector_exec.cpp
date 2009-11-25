@@ -20,7 +20,7 @@ namespace CIAO_NonChangeable_NonChangeable_Connector_Impl
     bool nonchangeable_caught = false;
     try
       {
-        DDS::DomainId_t id;
+        DDS::DomainId_t id = 0;
         this->domain_id (id);
       }
     catch (CCM_DDS::NonChangeable)
