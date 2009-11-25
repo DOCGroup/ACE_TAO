@@ -156,7 +156,7 @@ foreach $file (@files) {
     $E = new PerlACE::Process ("simple_em_launcher",
                                "file://EM.ior $file");
 
-    $status = $E->SpawnWaitKill (5000);
+    $status = $E->SpawnWaitKill (60);
 
     if ($status != 0)
     {

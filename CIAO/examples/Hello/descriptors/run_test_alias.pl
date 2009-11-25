@@ -153,7 +153,7 @@ $E =
   new PerlACE::Process ("$DAnCE/bin/dance_plan_launcher",
                         "-x DeploymentPlan.cdp -k file://EM.ior");
 
-$E->SpawnWaitKill (5000);
+$E->SpawnWaitKill (60);
 
 if (PerlACE::waitforfile_timed (
       "Receiver.ior",
@@ -172,7 +172,7 @@ if (PerlACE::waitforfile_timed ("Sender.ior",
 
 print "Invoking the controller\n";
 $controller = new PerlACE::Process ("$controller_exec", "-k file://Sender.ior");
-$result = $controller->SpawnWaitKill (3000);
+$result = $controller->SpawnWaitKill (60);
 
 if ($result != 0) {
     print STDERR "ERROR: The controller returned $result\n";
@@ -184,7 +184,7 @@ print "Invoking executor - stop the application -\n";
 $E =
   new PerlACE::Process ("$DAnCE/bin/dance_plan_launcher",
                         "-k file://EM.ior -x DeploymentPlan.cdp -q");
-$E->SpawnWaitKill (3000);
+$E->SpawnWaitKill (60);
 
 print "Executor returned.\n";
 print "Shutting down rest of the processes.\n";

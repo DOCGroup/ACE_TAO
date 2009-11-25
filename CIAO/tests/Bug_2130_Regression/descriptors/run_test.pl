@@ -121,7 +121,7 @@ $E =
   new PerlACE::Process ("$CIAO_ROOT/bin/plan_launcher",
                         "-p DeploymentPlan.cdp -k file://EM.ior -o DAM.ior");
 
-$E->SpawnWaitKill (5000);
+$E->SpawnWaitKill (60);
 
 
 if (PerlACE::waitforfile_timed ("TSEC_CheckPoint.ior",
@@ -134,7 +134,7 @@ if (PerlACE::waitforfile_timed ("TSEC_CheckPoint.ior",
 print "Running testcase 1\n";
 
 $controller = new PerlACE::Process ("$controller_exec", "-i 1 -k file://TSEC_CheckPoint.ior -t 1 -l 100000");
-$result = $controller->SpawnWaitKill (3000);
+$result = $controller->SpawnWaitKill (60);
 
 if ($result != 0) {
     print STDERR "ERROR: The controller returned $result\n";
@@ -145,7 +145,7 @@ if ($result != 0) {
 print "Running testcase 2\n";
 
 $controller = new PerlACE::Process ("$controller_exec", "-i 2 -k file://TSEC_CheckPoint.ior -t 1 -l 100000");
-$result = $controller->SpawnWaitKill (3000);
+$result = $controller->SpawnWaitKill (60);
 
 if ($result != 0) {
     print STDERR "ERROR: The controller returned $result\n";
@@ -155,7 +155,7 @@ if ($result != 0) {
 print "Running testcase 3\n";
 
 $controller = new PerlACE::Process ("$controller_exec", "-k file://TSEC_CheckPoint.ior -t 2 -l 100000");
-$result = $controller->SpawnWaitKill (3000);
+$result = $controller->SpawnWaitKill (60);
 
 if ($result != 0) {
     print STDERR "ERROR: The controller returned $result\n";
@@ -168,7 +168,7 @@ print "Invoking executor - stop the application -\n";
 $E =
   new PerlACE::Process ("$CIAO_ROOT/bin/plan_launcher",
                         "-k file://EM.ior -i file://DAM.ior");
-$E->SpawnWaitKill (3000);
+$E->SpawnWaitKill (60);
 
 print "Executor returned.\n";
 print "Shutting down rest of the processes.\n";
