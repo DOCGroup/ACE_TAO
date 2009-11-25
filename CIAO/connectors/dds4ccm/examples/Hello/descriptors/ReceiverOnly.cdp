@@ -119,17 +119,6 @@
     <source/>
     <implementation xmi:idref="ReceiverComponentImplementation" />
     <configProperty>
-      <name>expected_samples</name>
-      <value>
-        <type>
-          <kind>tk_long</kind>
-        </type>
-        <value>
-          <long>100</long>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
       <name>name</name>
       <value>
         <type>

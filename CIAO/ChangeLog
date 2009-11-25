@@ -1,3 +1,11 @@
+Wed Nov 25 15:50:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+          Logged errors instead of warnings when received!=expected.
+
+        * connectors/dds4ccm/examples/Hello/descriptors/ReceiverOnly.cdp:
+          Nothing is received when this deployment plan is ran.
+
 Wed Nov 25 15:40:59 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector_exec.cpp:
