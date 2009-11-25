@@ -49,7 +49,7 @@ $SV = $server->CreateProcess ("server",
 
 $CL = $client->CreateProcess ("client",
                               "-k file://$client_iorfile " .
-                              "-a file:://$client_iorfile_admin " .
+                              "-a file://$client_iorfile_admin " .
                               "$test_type");
 
 $admin_status = $AD->Spawn ();
