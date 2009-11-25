@@ -39,6 +39,41 @@ namespace CIAO
       }
 
       ::DDS::Publisher_ptr
+      RTI_DomainParticipant_i::create_publisher_with_profile (
+        const char* library_name,
+        const char *profile_name,
+        ::DDS::PublisherListener_ptr a_listener,
+        ::DDS::StatusMask mask)
+      {
+        CIAO_TRACE ("DDS_DomainParticipant_i::create_publisher_with_profile");
+
+        CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_DomainParticipant_i::create_publisher_with_profile - "
+                     "Creating Publisher\n"));
+
+        RTI_PublisherListener_i *rti_pl = new RTI_PublisherListener_i (a_listener);
+        DDSPublisher * rti_pub =
+          this->impl_->create_publisher_with_profile (library_name,
+                                         profile_name,
+                                         rti_pl,
+                                         mask);
+
+        if (!rti_pub)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_DomainParticipant_i::create_publisher_with_profile - "
+                         "Error: Unable to create Publisher\n"));
+            throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          }
+
+        CIAO_DEBUG ((LM_INFO, CLINFO "RTI_DomainParticipant_i::create_publisher_with_profile - "
+                     "Successfully created a DDSPublisher\n"));
+
+        rti_pub->enable ();
+        ::DDS::Publisher_var retval = new RTI_Publisher_i (rti_pub);
+
+        return retval._retn ();
+      }
+
+      ::DDS::Publisher_ptr
       RTI_DomainParticipant_i::create_publisher (const ::DDS::PublisherQos & /*qos*/,
                                                  ::DDS::PublisherListener_ptr a_listener,
                                                  ::DDS::StatusMask mask)
@@ -99,6 +134,40 @@ namespace CIAO
                           "Provided publisher successfully created\n"));
 
         return retval;
+      }
+
+      ::DDS::Subscriber_ptr
+      RTI_DomainParticipant_i::create_subscriber_with_profile (
+        const char* library_name,
+        const char *profile_name,
+        ::DDS::SubscriberListener_ptr /*a_listener*/,
+        ::DDS::StatusMask mask)
+      {
+        CIAO_TRACE ("DDS_DomainParticipant_i::create_subscriber_with_profile");
+
+        CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_DomainParticipant_i::create_subscriber_with_profile - "
+                     "Creating Subscriber\n"));
+
+        DDSSubscriber * rti_sub =
+          this->impl_->create_subscriber_with_profile (library_name,
+                                          profile_name,
+                                          0,
+                                          mask);
+
+        if (!rti_sub)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_DomainParticipant_i::create_subscriber_with_profile - "
+                         "Error: Unable to create Subscriber\n"));
+            throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          }
+
+        CIAO_DEBUG ((LM_INFO, CLINFO "RTI_DomainParticipant_i::create_subscriber_with_profile - "
+                     "Successfully created a DDSSubscriber\n"));
+
+        rti_sub->enable ();
+        ::DDS::Subscriber_var retval = new RTI_Subscriber_i (rti_sub);
+
+        return retval._retn ();
       }
 
       ::DDS::Subscriber_ptr
@@ -191,6 +260,61 @@ namespace CIAO
         DDSTopic *rti_topic = this->impl_->create_topic (impl_name,
                                                          type_name,
                                                          DDS_TOPIC_QOS_DEFAULT,
+                                                         rti_tl,
+                                                         mask);
+
+        if (rti_topic == 0)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic - "
+                         "Error: RTI DDS returned a nil topic\n"));
+            throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          }
+
+        CIAO_DEBUG ((LM_INFO, CLINFO "DDS_DomainParticipant_i::create_topic - "
+                     "Successfully created topic with name %C and type %C\n",
+                     impl_name, type_name));
+
+        ::DDS::Topic_var retval = new RTI_Topic_i (rti_topic);
+
+        return retval._retn ();
+      }
+
+      ::DDS::Topic_ptr
+      RTI_DomainParticipant_i::create_topic_with_profile (
+          const char *impl_name,
+          const char *type_name,
+          const char *library_name,
+          const char *profile_name,
+          ::DDS::TopicListener_ptr a_listener,
+          ::DDS::StatusMask mask)
+      {
+        CIAO_TRACE ("DDS_DomainParticipant_i::create_topic_with_profile");
+
+        if (impl_name == 0)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic_with_profile - "
+                         "Error: provided nil topic name\n"));
+            throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER,
+                                          0);
+          }
+
+        if (type_name == 0)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic_with_profile - "
+                         "Error: provided nil type name\n"));
+            throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER,
+                                          0);
+          }
+
+        CIAO_DEBUG ((LM_DEBUG, CLINFO "DDS_DomainParticipant_i::create_topic_with_profile - "
+                     "Attempting to create topic with name %C and type %C\n",
+                     impl_name, type_name));
+
+        RTI_TopicListener_i *rti_tl = new RTI_TopicListener_i (a_listener);
+        DDSTopic *rti_topic = this->impl_->create_topic_with_profile (impl_name,
+                                                         type_name,
+                                                         library_name,
+                                                         profile_name,
                                                          rti_tl,
                                                          mask);
 

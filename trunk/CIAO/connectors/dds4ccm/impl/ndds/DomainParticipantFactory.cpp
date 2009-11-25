@@ -154,6 +154,16 @@ namespace CIAO
 
         throw CORBA::NO_IMPLEMENT ();
       }
+
+      ::DDS::ReturnCode_t
+      RTI_DomainParticipantFactory_i::set_default_participant_qos_with_profile (
+                                                          const char* library_name,
+                                                          const char *profile_name)
+      {
+        CIAO_TRACE ("RTI_DomainParticipantFactory_i::set_default_participant_qos_with_profile");
+
+        return DDSDomainParticipantFactory::get_instance ()->set_default_participant_qos_with_profile (library_name, profile_name);
+      }
     }
   }
 }

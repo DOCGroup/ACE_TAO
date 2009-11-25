@@ -65,6 +65,11 @@ namespace CIAO
 
         virtual
           ::DDS::ReturnCode_t get_qos (::DDS::DomainParticipantFactoryQos & qos);
+
+        virtual ::DDS::ReturnCode_t set_default_participant_qos_with_profile(
+                                                          const char* library_name,
+                                                          const char *profile_name);
+
       };
     }
   }
