@@ -1,3 +1,9 @@
+Wed Nov 25 15:40:59 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector_exec.cpp:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Connector/SetConnectorAttribute_Connector_exec.cpp:
+          Resolved minor typos.
+
 Wed Nov 25 15:30:14 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/KeyedSamples/README:

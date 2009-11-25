@@ -36,7 +36,7 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttribute_Connector_Impl
     catch (...)
       {
         CIAO_ERROR ((LM_ERROR, 
-          ACE_TEXT ("ERROR: test_domain_id : Unkown exception caught\n")));
+          ACE_TEXT ("ERROR: test_domain_id : Unknown exception caught\n")));
       }
   }
 
@@ -56,7 +56,7 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttribute_Connector_Impl
     catch (...)
       {
         CIAO_ERROR ((LM_ERROR, 
-          ACE_TEXT ("ERROR: test_qos_profile : Unkown exception caught\n")));
+          ACE_TEXT ("ERROR: test_qos_profile : Unknown exception caught\n")));
       }
   }
 
@@ -76,7 +76,7 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttribute_Connector_Impl
     catch (...)
       {
         CIAO_ERROR ((LM_ERROR, 
-          ACE_TEXT ("ERROR: test_topic_name : Unkown exception caught\n")));
+          ACE_TEXT ("ERROR: test_topic_name : Unknown exception caught\n")));
       }
   }
 
@@ -109,7 +109,7 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttribute_Connector_Impl
     catch (...)
       {
         CIAO_ERROR ((LM_ERROR, 
-          ACE_TEXT ("ERROR: test_key_fields : Unkown exception caught\n")));
+          ACE_TEXT ("ERROR: test_key_fields : Unknown exception caught\n")));
       }
   }
   
