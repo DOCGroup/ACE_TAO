@@ -39,7 +39,7 @@ namespace CIAO_Writer_Receiver_Impl
     const WriterTest_Seq & an_instance,
     const ::CCM_DDS::ReadInfoSeq & /* info */)
   {
-    for (int i = 0; i < an_instance.length (); ++i)
+    for (unsigned int i = 0; i < an_instance.length (); ++i)
       {
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("WriterTest_Listener: ")
                 ACE_TEXT ("received writer info for <%C> at %u\n"),
@@ -95,7 +95,7 @@ namespace CIAO_Writer_Receiver_Impl
   Receiver_exec_i::ccm_activate (void)
   {
     ::CCM_DDS::DataListenerControl_var lc =
-    this->context_->get_connection_info_out_data_control ();
+      this->context_->get_connection_info_out_data_control ();
 
     if (CORBA::is_nil (lc.in ()))
       {
