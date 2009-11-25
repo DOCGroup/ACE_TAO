@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-#include "ConnectorStatusListener_TestSec_Connector_exec.h"
+#include "CSL_TestSec_Connector_exec.h"
 
 namespace CIAO_ConnectorStatusListener_TestSec_ConnectorStatusListener_TestSec_Connector_Impl
 {
