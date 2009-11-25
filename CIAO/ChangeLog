@@ -1,3 +1,8 @@
+Wed Nov 25 08:19:31 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Sender/ConnectorStatusListener_Test_Sender.mpc:
+          Fixed order error on Windows.
+
 Wed Nov 25 07:52:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
