@@ -50,7 +50,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (const ::DDS::StringSe
       this->key_fields_.length (key_fields.length ());
       for (CORBA::ULong i = 0; i < key_fields.length (); ++i)
         {
-          this->key_fields_.operator [](i) = this->key_fields_[i];
+          this->key_fields_.operator [](i) = key_fields[i];
         }
     }
 }
