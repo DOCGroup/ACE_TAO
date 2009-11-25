@@ -15,14 +15,14 @@ $ciao_root = "$ENV{CIAO_ROOT}";
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_level = '10';
-    } 
+    }
 }
 
 my $target = PerlACE::TestTarget::create_target ($PerlACE::TestConfig);
 
 $SV1 = $target->CreateProcess ("./client", "-s $ciao_root/bin/ciao_componentserver");
 
-$server1 = $SV1->SpawnWaitKill (300);
+$server1 = $SV1->SpawnWaitKill (60);
 
 if ($server1 != 0) {
     $target->GetStderrLog();

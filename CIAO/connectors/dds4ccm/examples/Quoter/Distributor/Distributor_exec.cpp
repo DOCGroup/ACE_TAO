@@ -191,8 +191,7 @@ namespace CIAO_Quoter_Distributor_Impl
   }
 
   Distributor_exec_i::Distributor_exec_i (void)
-    : rate_ (1),
-      updater_ (0)
+    : rate_ (1)
   {
     ACE_OS::srand (static_cast <u_int> (ACE_OS::time ()));
     this->ticker_ = new pulse_Generator (*this);
@@ -242,57 +241,9 @@ namespace CIAO_Quoter_Distributor_Impl
                   printf ("Internal Error while writing Stock_info for <%s>.\n",
                                 i->first.c_str ());
                 }
-
-              try
-                {
-                  if (!CORBA::is_nil (this->updater_))
-                    {
-                      this->updater_->create_one (i->second);
-                    }
-                }
-              catch (CCM_DDS::AlreadyCreated& )
-                {
-                  printf ("Stock_info for <%s> already created.\n",
-                              i->first.c_str ());
-                }
-              catch (CCM_DDS::InternalError& )
-                {
-                  printf ("Internal Error while creating Stock_info for <%s>.\n",
-                                i->first.c_str ());
-                }
             }
             else
               std::cerr << "Writer reference is nil!" << std::endl;
-          }
-        else
-          {
-            if (!CORBA::is_nil (this->updater_))
-              {
-                i->second->current = ACE_OS::rand () % 50;
-                i->second->high = i->second->current + ACE_OS::rand () % 50;
-                i->second->low =  ACE_OS::rand () % 50;
-                try
-                  {
-                    this->updater_->update_one (i->second, ::DDS::HANDLE_NIL);
-                    printf ("Updated stock_info for <%s> %u:%u:%u\n",
-                                            i->first.c_str(),
-                                            i->second->low,
-                                            i->second->current,
-                                            i->second->high);
-                  }
-                catch (CCM_DDS::NonExistent& )
-                  {
-                    printf ("Stock_info for <%s> not updated: <%s> didn't exist.\n",
-                                i->first.c_str (), i->first.c_str ());
-                  }
-                catch (CCM_DDS::InternalError& )
-                  {
-                    printf ("Internal Error while updating Stock_info for <%s>.\n",
-                                i->first.c_str ());
-                  }
-             }
-            else
-              std::cerr << "Updater reference is nil!" << std::endl;
           }
       }
   }
@@ -343,16 +294,6 @@ namespace CIAO_Quoter_Distributor_Impl
   void
   Distributor_exec_i::stop (void)
   {
-    if (!CORBA::is_nil (this->updater_))
-      {
-        for (Stock_Table::iterator i = this->stocks_.begin ();
-            i != this->stocks_.end ();
-            ++i)
-          {
-            printf ("Unregister <%s>\n", i->first.c_str ());
-            this->updater_->delete_one (i->second, ::DDS::HANDLE_NIL);
-          }
-      }
     this->ticker_->stop ();
   }
 
@@ -400,7 +341,6 @@ namespace CIAO_Quoter_Distributor_Impl
   Distributor_exec_i::configuration_complete (void)
   {
     this->writer_  = this->context_->get_connection_info_in_data ();
-    //this->updater_ = this->context_->get_connection_info_update_data ();
     this->ticker_->activate ();
   }
 
@@ -419,13 +359,12 @@ namespace CIAO_Quoter_Distributor_Impl
   void
   Distributor_exec_i::ccm_passivate (void)
   {
-    /* Your code here. */
+    this->stop ();
   }
 
   void
   Distributor_exec_i::ccm_remove (void)
   {
-    this->stop ();
   }
 
   extern "C" DISTRIBUTOR_EXEC_Export ::Components::EnterpriseComponent_ptr

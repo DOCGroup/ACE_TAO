@@ -97,7 +97,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic (void)
       try
         {
           CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i *part =
-            dynamic_cast< CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i * > (this->domain_.in ());
+            dynamic_cast< CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i * > (this->domain_participant_.in ());
           DDS_ReturnCode_t const retcode = DDS_TYPE::type_support::register_type(
                 part->get_participant (), DDS_TYPE::type_support::get_type_name ());
           if (retcode == DDS_RETCODE_OK)
@@ -108,7 +108,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic (void)
 
               ::DDS::TopicQos tqos;
               this->topic_ =
-                this->domain_->create_topic (this->topic_name_.in (),
+                this->domain_participant_->create_topic (this->topic_name_.in (),
                                              DDS_TYPE::type_support::get_type_name (),
                                              tqos,
                                              this->topiclistener_.in (),

@@ -35,7 +35,7 @@ namespace CIAO
                           CORBA::NO_RESOURCES ());
 
       Port_Activators::iterator pa_iter = this->pa_.find (str.in ());
-      
+
       if (pa_iter != this->pa_.end ())
         {
           this->pa_.erase (pa_iter);
@@ -59,26 +59,26 @@ namespace CIAO
                 "Servant_Activator_i::incarnate, "
                 "Attempting to activate port name [%C]\n",
                 str.in ()));
-    
+
     Port_Activators::iterator pa_iter;
-    
+
     {
       ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
                           guard,
                           this->mutex_,
                           CORBA::NO_RESOURCES ());
-      
+
       pa_iter = this->pa_.find (str.in ());
     }
-    
+
     if (pa_iter == this->pa_.end ())
       {
         CIAO_ERROR ((LM_ERROR, CLINFO "Servant_Activator_i::incarnate - "
-                     "Unable to find sutible port activator for ObjectID %C\n",
+                     "Unable to find suitable port activator for ObjectID %C\n",
                      str.in ()));
         throw CORBA::OBJECT_NOT_EXIST ();
       }
-    
+
     if (CORBA::is_nil (pa_iter->second))
       {
         CIAO_ERROR ((LM_ERROR, CLINFO "Servant_Activator_i::incarnate - "
@@ -86,11 +86,11 @@ namespace CIAO
                      str.in ()));
         throw CORBA::OBJECT_NOT_EXIST ();
       }
-    
+
     CIAO_DEBUG ((LM_INFO, CLINFO
                  "Servant_Activator_i::incarnate - Activating Port %C\n",
                  str.in ()));
-    
+
     return pa_iter->second->activate (oid);
   }
 
@@ -103,30 +103,30 @@ namespace CIAO
   {
     CORBA::String_var str =
       PortableServer::ObjectId_to_string (oid);
-    
+
     CIAO_DEBUG ((LM_TRACE, CLINFO "Servant_Activator_i::etherealize - "
                  "Attempting to etherealize servant with object ID %C\n",
                  str.in ()));
-    
+
     Port_Activators::iterator pa_iter;
-    
+
     {
       ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
                           guard,
                           this->mutex_,
                           CORBA::NO_RESOURCES ());
-      
+
       pa_iter = this->pa_.find (str.in ());
     }
-    
+
     if (pa_iter == this->pa_.end ())
       {
         CIAO_ERROR ((LM_ERROR, CLINFO "Servant_Activator_i::etherealize - "
-                     "Unable to find sutible port activator for ObjectID %C\n",
+                     "Unable to find suitable port activator for ObjectID %C\n",
                      str.in ()));
         throw CORBA::OBJECT_NOT_EXIST ();
       }
-    
+
     if (CORBA::is_nil (pa_iter->second))
       {
         CIAO_ERROR ((LM_ERROR, CLINFO "Servant_Activator_i::etherealize - "
@@ -134,10 +134,10 @@ namespace CIAO
                      str.in ()));
         throw CORBA::OBJECT_NOT_EXIST ();
       }
-    
+
     pa_iter->second->deactivate (servant);
   }
-  
+
   bool
   Servant_Activator_i::register_port_activator (Port_Activator_ptr pa)
   {
@@ -145,7 +145,7 @@ namespace CIAO
                       guard,
                       this->mutex_,
                       false);
-    
+
     CIAO_DEBUG ((LM_INFO, CLINFO "Servant_Activator_i::register_port_activator - "
                  "Registering a port activator for port [%C] with ObjectID [%C]\n",
                  pa->name (), pa->oid ()));
@@ -161,7 +161,7 @@ namespace CIAO
                      pa->name (), pa->oid ()));
         return false;
       }
-    
+
     return true;
   }
 }

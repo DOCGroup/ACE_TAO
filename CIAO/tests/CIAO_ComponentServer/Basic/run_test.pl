@@ -15,7 +15,7 @@ $ciao_root = "$ENV{CIAO_ROOT}";
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_level = '10';
-    } 
+    }
 }
 
 my $target = PerlACE::TestTarget::create_target ($PerlACE::TestConfig);
@@ -79,7 +79,7 @@ if ($target->GetFile ($server_iorfile2, $iorbase) == -1) {
     exit 1;
 }
 
-$client_status = $CL->SpawnWaitKill (300);
+$client_status = $CL->SpawnWaitKill (60);
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
