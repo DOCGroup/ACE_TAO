@@ -1,3 +1,9 @@
+Wed Nov 25 15:30:14 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/KeyedSamples/README:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/README:
+          Added test description.
+
 Wed Nov 25 15:15:43 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Get_Connection_Test/README:
