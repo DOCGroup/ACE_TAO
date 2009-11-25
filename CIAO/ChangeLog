@@ -1,3 +1,15 @@
+Wed Nov 25 16:22:26 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp:
+          Using the orb reactor thread in order to handle application specific
+          logic.
+
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender_exec.cpp:
+          Optimized logging.
+
 Wed Nov 25 15:50:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:

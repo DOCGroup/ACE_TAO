@@ -7,6 +7,7 @@
 #include "ace/Guard_T.h"
 #include "ace/CORBA_macros.h"
 #include "ace/OS_NS_time.h"
+#include "tao/ORB_Core.h"
 #include <iostream>
 
 namespace CIAO_Quoter_Distributor_Impl
@@ -16,92 +17,12 @@ namespace CIAO_Quoter_Distributor_Impl
   //============================================================
 
   pulse_Generator::pulse_Generator (Distributor_exec_i &callback)
-    : active_ (0),
-      pulse_callback_ (callback)
+    : pulse_callback_ (callback)
   {
-    // initialize the reactor
-    this->reactor (ACE_Reactor::instance ());
   }
 
   pulse_Generator::~pulse_Generator ()
   {
-  }
-
-  int
-  pulse_Generator::open_h ()
-  {
-    // convert the task into a active object that runs in separate thread
-    return this->activate ();
-  }
-
-  int
-  pulse_Generator::close_h ()
-  {
-    this->reactor ()->end_reactor_event_loop ();
-
-    // wait for all threads in the task to exit before it returns
-    return this->wait ();
-  }
-
-  int
-  pulse_Generator::start (CORBA::ULong hertz)
-  {
-    // return if not valid
-    if (hertz == 0 || this->active_ != 0)
-      {
-        return -1;
-      }
-
-    // calculate the interval time
-    long usec = 1000000 / hertz;
-
-    std::cerr << "Starting pulse_generator with hertz of " << hertz << ", interval of "
-              << usec << std::endl;
-
-    if (this->reactor ()->schedule_timer (this,
-                                          0,
-                                          ACE_Time_Value (0, usec),
-                                          ACE_Time_Value (0, usec)) == -1)
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                          "Unable to setup Timer\n"),
-                            -1);
-      }
-
-    this->active_ = 1;
-    return 0;
-  }
-
-  int
-  pulse_Generator::stop (void)
-  {
-    // return if not valid.
-    if (this->active_ == 0)
-      {
-        return -1;
-      }
-    // cancle the timer
-    this->reactor ()->cancel_timer (this);
-    this->active_ = 0;
-    return 0;
-  }
-
-  int
-  pulse_Generator::active (void)
-  {
-    return this->active_;
-  }
-
-  int
-  pulse_Generator::handle_close (ACE_HANDLE handle,
-                                 ACE_Reactor_Mask close_mask)
-  {
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("[%x] handle = %d, close_mask = %d\n"),
-                this,
-                handle,
-                close_mask));
-    return 0;
   }
 
   int
@@ -121,17 +42,7 @@ namespace CIAO_Quoter_Distributor_Impl
     return 0;
   }
 
-  int
-  pulse_Generator::svc (void)
-  {
-    // define the owner of the reactor thread
-    this->reactor ()->owner (ACE_OS::thr_self ());
 
-    // run event loop to wait for event, and then dispatch them to corresponding handlers
-    this->reactor ()->run_reactor_event_loop ();
-
-    return 0;
-  }
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (void)
   {
   }
@@ -288,13 +199,24 @@ namespace CIAO_Quoter_Distributor_Impl
   void
   Distributor_exec_i::start (void)
   {
-    this->ticker_->start (this->rate_);
+    // calculate the interval time
+    long usec = 1000000 / this->rate_;
+    if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
+                this->ticker_,
+                0,
+                ACE_Time_Value (0, usec),
+                ACE_Time_Value (0, usec)) == -1)
+    {
+      std::cerr << ">>> Distributor_exec_i::start : error scheduling timer" << endl;
+    }
   }
 
   void
   Distributor_exec_i::stop (void)
   {
-    this->ticker_->stop ();
+    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
+    std::cerr << ">>> Distributor_exec_i::stop" << endl;
+    delete this->ticker_;
   }
 
   // Component attributes.
@@ -341,7 +263,6 @@ namespace CIAO_Quoter_Distributor_Impl
   Distributor_exec_i::configuration_complete (void)
   {
     this->writer_  = this->context_->get_connection_info_in_data ();
-    this->ticker_->activate ();
   }
 
   void

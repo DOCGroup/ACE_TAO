@@ -6,98 +6,18 @@
 #include "ace/Reactor.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
+#include "tao/ORB_Core.h"
 
 namespace CIAO_Quoter_Broker_Impl
 {
 
   read_action_Generator::read_action_Generator (Broker_exec_i &callback)
-    : active_ (0),
-      pulse_callback_ (callback)
+    : pulse_callback_ (callback)
   {
-    // initialize the reactor
-    this->reactor (ACE_Reactor::instance ());
   }
 
   read_action_Generator::~read_action_Generator ()
   {
-  }
-
-  int
-  read_action_Generator::open_h ()
-  {
-    // convert the task into a active object that runs in separate thread
-    return this->activate ();
-  }
-
-  int
-  read_action_Generator::close_h ()
-  {
-    this->reactor ()->end_reactor_event_loop ();
-    // wait for all threads in the task to exit before it returns
-    return this->wait ();
-  }
-
-  int
-  read_action_Generator::start (CORBA::ULong hertz)
-  {
-    // return if not valid
-    if (hertz == 0 || this->active_ != 0)
-      {
-        return -1;
-      }
-
-    // calculate the interval time
-    long usec = 1000 / hertz;
-
-    std::cerr << "Starting read_action_generator with hertz of " << hertz << ", interval of "
-              << usec << std::endl;
-
-    if (this->reactor ()->schedule_timer (this,
-                                          0,
-                                          ACE_Time_Value(0),
-                                          ACE_Time_Value(3)) == -1)
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                          "Unable to setup Timer\n"),
-                            -1);
-
-      }
-
-    ACE_OS::sleep (2);
-    this->active_ = 1;
-    return 0;
-  }
-
-  int
-  read_action_Generator::stop (void)
-  {
-    // return if not valid.
-    if (this->active_ == 0)
-      {
-        return -1;
-      }
-    // cancle the timer
-    this->reactor ()->cancel_timer (this);
-    this->active_ = 0;
-    return 0;
-  }
-
-  int
-  read_action_Generator::active (void)
-  {
-    return this->active_;
-  }
-
-  int
-  read_action_Generator::handle_close (ACE_HANDLE handle,
-                                 ACE_Reactor_Mask close_mask)
-  {
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("[%x] handle = %d, close_mask = %d\n"),
-                this,
-                handle,
-                close_mask));
-    return 0;
   }
 
   int
@@ -109,18 +29,6 @@ namespace CIAO_Quoter_Broker_Impl
     //    this->pulse_callback_.read_one_history();
     //    this->pulse_callback_.read_all();
     //    this->pulse_callback_.read_all_history();
-    return 0;
-  }
-
-  int
-  read_action_Generator::svc (void)
-  {
-    // define the owner of the reactor thread
-    this->reactor ()->owner (ACE_OS::thr_self ());
-
-    // run event loop to wait for event, and then dispatch them to corresponding handlers
-    this->reactor ()->run_reactor_event_loop ();
-
     return 0;
   }
 
@@ -378,14 +286,23 @@ namespace CIAO_Quoter_Broker_Impl
   Broker_exec_i::start (void)
   {
     std::cerr << ">>> Broker_exec_i::start" << endl;
-    this->ticker_->start (500);
+    // calculate the interval time
+    if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
+                this->ticker_,
+                0,
+                ACE_Time_Value (0, 2000),
+                ACE_Time_Value (0, 2000)) == -1)
+    {
+      std::cerr << ">>> Broker_exec_i::start : error scheduling timer" << endl;
+    }
   }
 
   void
   Broker_exec_i::stop (void)
   {
+    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
     std::cerr << ">>> Broker_exec_i::stop" << endl;
-    this->ticker_->stop ();
+    delete this->ticker_;
   }
 
   void
@@ -418,7 +335,6 @@ namespace CIAO_Quoter_Broker_Impl
   Broker_exec_i::ccm_remove (void)
   {
     std::cerr << ">>> Broker_exec_i::ccm_remove" << endl;
-    this->ticker_->close_h ();
   }
 
   extern "C" BROKER_EXEC_Export ::Components::EnterpriseComponent_ptr
