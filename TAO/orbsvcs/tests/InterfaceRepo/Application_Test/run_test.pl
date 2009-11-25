@@ -13,9 +13,14 @@ $debug_level = '0';
 
 $test_idl = "test.idl";
 
+$lookup_by_name = "";
+
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_level = '10';
+    }
+    if ($i eq '-n') {
+        $lookup_by_name = "-n";
     }
 }
 
@@ -67,7 +72,8 @@ $SV3 = $server3->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_ifr",
 
 $CL = $client->CreateProcess ("client",
                               "-ORBInitRef InterfaceRepository=file://$client_ior1file " .
-                              "-k file://$client_ior2file");
+                              "-k file://$client_ior2file " .
+                              "$lookup_by_name");
 
 print STDOUT "Start IFR Service\n";
 

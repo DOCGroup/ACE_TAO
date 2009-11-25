@@ -45,7 +45,6 @@ $CL = $client->CreateProcess ("client",
                               "-o $client_thrserverfile " .
                               "-i $client_iorbase");
 
-print "1\n";
 $client_status = $CL->Spawn ();
 
 if ($client_status != 0) {
@@ -53,15 +52,12 @@ if ($client_status != 0) {
     exit 1;
 }
 
-print "2\n";
 if ($client->WaitForFileTimed ($thrserverfile,
                                $client->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$server_thrserverfile>\n";
     $CL->Kill (); $CL->TimedWait (1);
     exit 1;
 }
-
-print "3\n";
 
 if ($client->GetFile ($thrserverfile) == -1) {
     print STDERR "ERROR: cannot retrieve file <$client_thrserverfile>\n";
