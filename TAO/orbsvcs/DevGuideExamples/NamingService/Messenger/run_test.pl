@@ -4,52 +4,100 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-use Env (ACE_ROOT);
-use lib "$ACE_ROOT/bin";
-use PerlACE::Run_Test;
+use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::TestTarget;
 
+$status = 0;
+$debug_level = '0';
 
-$TARGETHOSTNAME = "localhost";
-$def_port = 2809;
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
+}
 
-$nsiorfile = PerlACE::LocalFile ("ns.ior");
-$arg_ns_ref = "-ORBInitRef NameService=file://$nsiorfile";
+my $ns = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $srv = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+my $cli = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
 
-unlink $nsiorfile;
+my $nsiorfile = "ns.ior";
+
+my $ns_nsiorfile = $ns->LocalFile ($nsiorfile);
+my $srv_nsiorfile = $srv->LocalFile ($nsiorfile);
+my $cli_nsiorfile = $cli->LocalFile ($nsiorfile);
+$ns->DeleteFile ($nsiorfile);
+$srv->DeleteFile ($nsiorfile);
+$cli->DeleteFile ($nsiorfile);
 
 # start Naming Service
 $NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
-$NS = new PerlACE::Process($NameService, "-o $nsiorfile");
-$NS->Spawn();
-if (PerlACE::waitforfile_timed ($nsiorfile, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$nsiorfile>\n";
-    $NS->Kill(); 
+$NS = $ns->CreateProcess ($NameService, " -o $ns_nsiorfile");
+$SRV = $srv->CreateProcess ("MessengerServer", "-ORBdebuglevel $debug_level ".
+                                               "-ORBInitRef NameService=file://$srv_nsiorfile");
+$CLI = $cli->CreateProcess ("MessengerClient", "-ORBInitRef NameService=file://$cli_nsiorfile");
+
+$NS_status = $NS->Spawn ();
+
+if ($NS_status != 0) {
+    print STDERR "ERROR: Name Service returned $NS_status\n";
+    exit 1;
+}
+
+if ($ns->WaitForFileTimed ($nsiorfile,$ns->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$ns_nsiorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+
+if ($ns->GetFile ($nsiorfile) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$ns_nsiorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+if ($srv->PutFile ($nsiorfile) == -1) {
+    print STDERR "ERROR: cannot set file <$srv_nsiorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+if ($cli->PutFile ($nsiorfile) == -1) {
+    print STDERR "ERROR: cannot set file <$cli_nsiorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
     exit 1;
 }
 
 # start MessengerServer
-$S = new PerlACE::Process("MessengerServer", $arg_ns_ref);
-$S->Spawn();
+$SRV_status = $SRV->Spawn ();
+
+if ($SRV_status != 0) {
+    print STDERR "ERROR: Messenger Server returned $SRV_status\n";
+    exit 1;
+}
 
 # start MessengerClient
-$C = new PerlACE::Process("MessengerClient", $arg_ns_ref);  
+$CLI_status = $CLI->SpawnWaitKill ($cli->ProcessStartWaitInterval());
 
-if ($C->SpawnWaitKill(15) != 0) {
-   print STDERR "ERROR: client failed\n";
-   $S->Kill();
-   $NS->Kill();
-   exit 1;
+if ($CLI_status != 0) {
+    print STDERR "ERROR: Messenger Client returned $CLI_status\n";
+    $status = 1;
 }
 
 # clean-up 
+$SRV_status = $SRV->TerminateWaitKill ($srv->ProcessStopWaitInterval());
 
-$C->Kill();
-$S->Kill();
-$NS->Kill();
+if ($SRV_status != 0) {
+    print STDERR "ERROR: Messenger Server returned $SRV_status\n";
+    $status = 1;
+}
 
-unlink $nsiorfile;
+$NS_status = $NS->TerminateWaitKill ($ns->ProcessStopWaitInterval());
 
-exit 0;
+if ($NS_status != 0) {
+    print STDERR "ERROR: Name Service returned $NS_status\n";
+    $status = 1;
+}
 
+$ns->DeleteFile ($nsiorfile);
+$srv->DeleteFile ($nsiorfile);
+$cli->DeleteFile ($nsiorfile);
 
-
+exit $status;

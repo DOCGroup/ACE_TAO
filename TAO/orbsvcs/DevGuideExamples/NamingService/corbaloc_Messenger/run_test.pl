@@ -4,31 +4,51 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
   &  eval 'exec perl -S $0 $argv:q'
   if 0;
   
-use Env (ACE_ROOT);
-use lib "$ACE_ROOT/bin";
-use PerlACE::Run_Test;
+use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::TestTarget;
 
+$status = 0;
+$debug_level = '0';
 
-$TARGETHOSTNAME = "localhost";
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
+}
+
+my $ns = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $srv = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+my $cli = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
+my $tnd = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
+
+$TARGETHOSTNAME = $ns->HostName ();
 $def_port = 2809;
 
-my($nsiorfile) = "ns.ior";
-unlink($nsiorfile);
+my $nsiorfile = "ns.ior";
+
+my $ns_nsiorfile = $ns->LocalFile ($nsiorfile);
+$ns->DeleteFile ($nsiorfile);
 
 # start Naming Service
 $NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
-$NS = new PerlACE::Process($NameService, "-ORBListenEndpoints iiop://$TARGETHOSTNAME:$def_port -o $nsiorfile");
+$NS = $ns->CreateProcess ($NameService, " -ORBListenEndpoints iiop://$TARGETHOSTNAME:$def_port ".
+                                        "-o $ns_nsiorfile");
+$NS_status = $NS->Spawn ();
 
-$NS->Spawn();
-if (PerlACE::waitforfile_timed ($nsiorfile, 5) == -1) {
-  print STDERR "ERROR: cannot find file <$nsiorfile>\n";
-  $NS->Kill();
-  exit 1;
+if ($NS_status != 0) {
+    print STDERR "ERROR: Name Service returned $NS_status\n";
+    exit 1;
+}
+
+if ($ns->WaitForFileTimed ($nsiorfile,$ns->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$ns_nsiorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
 }
 
 # File is only used to make sure the NS is fully running, so we can
 # remove it now.
-unlink($nsiorfile);
+$ns->DeleteFile ($nsiorfile);
 
 # List of tests to test corbaloc URL syntax.
 @corbaloc_servers = ( "-ORBDefaultInitRef corbaloc::$TARGETHOSTNAME",
@@ -43,84 +63,105 @@ unlink($nsiorfile);
 @corbaloc_clients = ( "corbaloc::$TARGETHOSTNAME/NameService",
                       "-ORBInitRef NameService=iiop://$TARGETHOSTNAME:$def_port/NameService corbaloc:rir:/NameService");
 
-@clients_comments = ( "Using the URL parameter: \n");
-                      "Using a corbaloc:rir form URL(must specify initial reference): \n",
-
-
-
+@clients_comments = ( "Using the URL parameter: \n",
+                      "Using a corbaloc:rir form URL(must specify initial reference): \n");
 
 $MessengerServer= "MessengerServer";
 $MessengerClient= "MessengerClient";
+$nsdel = "$ENV{ACE_ROOT}/bin/tao_nsdel";
 
 $test_number = 0;
 
 foreach $o (@corbaloc_servers) {  
-  # Run messenger server for each test.  
-  #print "Start $MessengerServer $o \n";
-  $SR = new PerlACE::Process($MessengerServer, $o);
-  $SR->Spawn();
+    # Run messenger server for each test.  
+    #print "Start $MessengerServer $o \n";
+    $SRV = $srv->CreateProcess ($MessengerServer, "-ORBdebuglevel $debug_level ".
+                                               "$o");
+    $SRV->Spawn();
+    if ($SRV_status != 0) {
+        print STDERR "ERROR: Messenger Server returned $SRV_status\n";
+        exit 1;
+    }
 
-  #print "Start $MessengerClient \n";
-  $CL = new PerlACE::Process($MessengerClient, "-ORBDefaultInitRef iiop://$TARGETHOSTNAME:$def_port");
-  $test_number++;
+    #print "Start $MessengerClient \n";
+    $CLI = $cli->CreateProcess ($MessengerClient, "-ORBDefaultInitRef iiop://$TARGETHOSTNAME:$def_port");
+    $test_number++;
 
-  if ($CL->SpawnWaitKill(15) != 0) {
-   print STDERR "ERROR: client failed\n";
-   $SR->Kill();
-   $NS->Kill();
-   exit 1;
-  }
-  
-  print "======================================\n";
-  print "Finish Test $test_number: $servers_comments[$test_number] \n";
-  print "  $MessengerServer $o\n";
-  print "======================================\n\n";
+    $CLI_status = $CLI->SpawnWaitKill($cli->ProcessStartWaitInterval());
+    if ($CLI_status != 0) {
+        print STDERR "ERROR: Messenger Client returned $CLI_status\n";
+        $SRV->Kill(); $SRV->TimedWait (1);
+        $NS->Kill(); $NS->TimedWait (1);
+        exit 1;
+    }
 
-  $SR->Kill(1);
+    print "======================================\n";
+    print "Finish Test $test_number: $servers_comments[$test_number] \n";
+    print "  $MessengerServer $o\n";
+    print "======================================\n\n";
 
-  # remove ns entry...
-  $nsdel = "$ENV{ACE_ROOT}/bin/tao_nsdel";
-  $NSDEL = new PerlACE::Process($nsdel, "--quiet --name example/Messenger -ORBInitRef NameService=corbaloc::$TARGETHOSTNAME:$def_port/NameService");
-  if ($NSDEL->SpawnWaitKill(15) != 0) {
-   print STDERR "ERROR: tao_nsdel failed\n";
-   $NS->Kill();
-   exit 1;
-  }
+    $SRV->Kill(); $SRV->TimedWait (1);
+
+    # remove ns entry...
+    $TND = $tnd->CreateProcess ($nsdel, "--quiet ".
+                                        "--name  example/Messenger ".
+                                        "-ORBInitRef NameService=corbaloc::$TARGETHOSTNAME:$def_port/NameService");
+    $TND_status = $TND->SpawnWaitKill($tnd->ProcessStartWaitInterval());
+    if ($TND_status != 0) {
+        print STDERR "ERROR: tao_nsdel failed with status $TND_status\n";
+        $NS->Kill(); $NS->TimedWait (1);
+        exit 1;
+    }
 }
 
 
 #print "Start $MessengerServer \n";
-$SR = new PerlACE::Process($MessengerServer, "-ORBDefaultInitRef iiop://$TARGETHOSTNAME:$def_port");
-$SR->Spawn();
+$SRV = $srv->CreateProcess ($MessengerServer, "-ORBdebuglevel $debug_level ".
+                                              "-ORBDefaultInitRef iiop://$TARGETHOSTNAME:$def_port");
+$SRV->Spawn();
+if ($SRV_status != 0) {
+    print STDERR "ERROR: Messenger Server returned $SRV_status\n";
+    exit 1;
+}
 
 $i = 0;
 foreach $o (@corbaloc_clients) {
-  
-  # Run the client for each test.  
-  #print "Start $MessengerClient $o \n";
-  $CL = new PerlACE::Process($MessengerClient, $o);
 
+    # Run the client for each test.  
+    #print "Start $MessengerClient $o \n";
+    $CLI = $cli->CreateProcess ($MessengerClient, "$o");
 
-  if ($CL->SpawnWaitKill(15) != 0) {
-   print STDERR "ERROR: client failed\n";
-   $SR->Kill();
-   $NS->Kill();
-   exit 1;
-  }
+    $CLI_status = $CLI->SpawnWaitKill($cli->ProcessStartWaitInterval());
+    if ($CLI_status != 0) {
+        print STDERR "ERROR: Messenger Client returned $CLI_status\n";
+        $SRV->Kill(); $SRV->TimedWait (1);
+        $NS->Kill(); $NS->TimedWait (1);
+        exit 1;
+    }
 
-  $test_number++;
-  print "======================================\n";
-  print "Finish Test $test_number: $clients_comments[$i]\n";
-  print "             $MessengerClient $o";
-  print "\n======================================\n\n";
+    $test_number++;
+    print "======================================\n";
+    print "Finish Test $test_number: $clients_comments[$i]\n";
+    print "             $MessengerClient $o";
+    print "\n======================================\n\n";
 
-  $i ++;
+    $i ++;
 }
 
 
 # clean up 
+$SRV_status = $SRV->TerminateWaitKill ($srv->ProcessStopWaitInterval());
 
-$SR->Kill();
-$NS->Kill();
+if ($SRV_status != 0) {
+    print STDERR "ERROR: Messenger Server returned $SRV_status\n";
+    $status = 1;
+}
 
-exit 0;
+$NS_status = $NS->TerminateWaitKill ($ns->ProcessStopWaitInterval());
+
+if ($NS_status != 0) {
+    print STDERR "ERROR: Name Service returned $NS_status\n";
+    $status = 1;
+}
+
+exit $status;

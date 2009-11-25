@@ -76,33 +76,39 @@
 // static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
 //
 
+const ACE_TCHAR *ior = ACE_TEXT("file://Messenger.ior");
 
 int which = 0;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "e:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("e:k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'k':
+        ior = get_opts.opt_arg ();
+        break;
       case 'e':
         which = ACE_OS::atoi(get_opts.optarg);
     if(which < 1 || 2 < which)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Usage:  %s "
-                               "-e [12]"
+                               "-e [12] "
+                               "-k <ior>"
                                "\n",
                                argv [0]),
                               -1);
         break;
-      case '?':
+      case '?': 
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Usage:  %s "
-                           "-e [12]"
+                           "-e [12] "
+                           "-k <ior>"
                            "\n",
                            argv [0]),
                           -1);
@@ -119,13 +125,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CORBA::ORB_var orb =
       CORBA::ORB_init( argc, argv );
 
-    CORBA::Object_var obj =
-      orb->string_to_object( "file://Messenger.ior" );
-
     if (parse_args (argc, argv) != 0)
       return 1;
     else if(which < 1 || 2 < which)
       return 1;
+
+    CORBA::Object_var obj =
+      orb->string_to_object( ior );
 
     Security::QOP            qop;
     CORBA::Any               protection;

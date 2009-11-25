@@ -6,16 +6,40 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
+
+$status = 0;
+$debug_level = '0';
+
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
+}
+
+my $ns = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $es = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+my $ce = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
+my $co = PerlACE::TestTarget::create_target (5) || die "Create target 5 failed\n";
+my $su = PerlACE::TestTarget::create_target (7) || die "Create target 7 failed\n";
 
 $con_count = 10;
 $sup_count = 10;
 $ev_count = 8;
-$status = 0;
 
-$nsior = PerlACE::LocalFile ("ns.ior");
+$nsiorfile = "ns.ior";
 
-unlink $nsior;
+my $ns_nsiorfile = $ns->LocalFile ($nsiorfile);
+my $es_nsiorfile = $es->LocalFile ($nsiorfile);
+my $ce_nsiorfile = $ce->LocalFile ($nsiorfile);
+my $co_nsiorfile = $co->LocalFile ($nsiorfile);
+my $su_nsiorfile = $su->LocalFile ($nsiorfile);
+
+$ns->DeleteFile ($nsiorfile);
+$es->DeleteFile ($nsiorfile);
+$ce->DeleteFile ($nsiorfile);
+$co->DeleteFile ($nsiorfile);
+$su->DeleteFile ($nsiorfile);
 
 # Parse the arguments
 
@@ -38,96 +62,153 @@ for ($i = 0; $i <= $#ARGV; $i++) {
     }
 }
 
-$NS  = new PerlACE::Process ("../../../../../Naming_Service/Naming_Service", 
-                             "-o $nsior");
-                             
-$EC  = new PerlACE::Process ("../../../../../Event_Service/Event_Service", 
-                             "-t new -ORBInitRef NameService=file://$nsior");
-                             
-$CE1 = new PerlACE::Process ("../../bin/RtEC_Based_CosEC", 
-                             "-ORBInitRef NameService=file://$nsior");
+$NS = $ns->CreateProcess ($ENV{"TAO_ROOT"}."/orbsvcs/Naming_Service/Naming_Service",
+                          "-o $ns_nsiorfile");
+
+$ES = $es->CreateProcess ($ENV{"TAO_ROOT"}."/orbsvcs/Event_Service/Event_Service",
+                          "-t new -ORBInitRef NameService=file://$es_nsiorfile");
+
+$CE = $ce->CreateProcess ("../../bin/RtEC_Based_CosEC",
+                          "-ORBInitRef NameService=file://$ce_nsiorfile");
 
 for ($cntr1 = 0; $cntr1 < $con_count ; ++$cntr1) {
-    push @CONS, (new PerlACE::Process ("Consumer", "-ORBInitRef NameService=file://$nsior -c $ev_count"));
+    push @CONS, ($co->CreateProcess ("Consumer", "-ORBInitRef NameService=file://$co_nsiorfile -c $ev_count"));
 }
 
 for ($cntr2 = 0; $cntr2 < $con_count ; ++$cntr2) {
-    push @SUPS, (new PerlACE::Process ("Supplier", "-ORBInitRef NameService=file://$nsior -c $ev_count"));
+    push @SUPS, ($su->CreateProcess ("Supplier", "-ORBInitRef NameService=file://$su_nsiorfile -c $ev_count"));
 }
 
 # first start the Naming service..
-$NS->Spawn ();
+$NS_status = $NS->Spawn ();
+
+if ($NS_status != 0) {
+    print STDERR "ERROR: Name Service returned $NS_status\n";
+    exit 1;
+}
+
+if ($ns->WaitForFileTimed ($nsiorfile,$ns->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$ns_nsiorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+
+if ($ns->GetFile ($nsiorfile) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$ns_nsiorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+if ($es->PutFile ($nsiorfile) == -1) {
+    print STDERR "ERROR: cannot set file <$es_nsiorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+if ($ce->PutFile ($nsiorfile) == -1) {
+    print STDERR "ERROR: cannot set file <$ce_nsiorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+if ($co->PutFile ($nsiorfile) == -1) {
+    print STDERR "ERROR: cannot set file <$co_nsiorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+if ($su->PutFile ($nsiorfile) == -1) {
+    print STDERR "ERROR: cannot set file <$su_nsiorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
 
 sleep 10;
 
 # now start the Rt EC..
-$EC->Spawn ();
+$ES_status = $ES->Spawn ();
+
+if ($ES_status != 0) {
+    print STDERR "ERROR: Event Service returned $ES_status\n";
+    exit 1;
+}
 
 sleep 10;
 
 # now start the CosEC1..
-$CE1->Spawn ();
+$CE_status = $CE->Spawn ();
+
+if ($CE_status != 0) {
+    print STDERR "ERROR: RtEC_Based_CosEC returned $CE_status\n";
+    exit 1;
+}
 
 sleep 10;
 
 # now start the consumers
-foreach $co (@CONS) {
+foreach $CO (@CONS) {
     print "creating consumer# $cntr1\n";
-    $co->Spawn ();
+    $CO_status = $CO->Spawn ();
+    if ($CO_status != 0) {
+        print STDERR "ERROR: Consumer $cntr1 returned $CO_status\n";
+        exit 1;
+    }
     sleep 10;
 }
 
 # now start the suppliers
-foreach $su (@SUPS) {
+foreach $SU (@SUPS) {
     print "creating supplier# $cntr2\n";
-    $su->Spawn ();
+    $SU_status = $SU->Spawn ();
+    if ($SU_status != 0) {
+        print STDERR "ERROR: Supplier $cntr2 returned $SU_status\n";
+        exit 1;
+    }
     sleep 10;
 }
 
 print "waiting for the suppliers to finish\n";
-foreach $su (@SUPS) {
-    $supplier = $su->WaitKill (60);
-    
-    if ($supplier != 0) {
-        print STDERR "ERROR: A supplier returned $supplier\n";
+foreach $SU (@SUPS) {
+    $SU_status = $SU->WaitKill ($su->ProcessStopWaitInterval()+45);
+    if ($SU_status != 0) {
+        print STDERR "ERROR: A Supplier returned $SU_status\n";
         $status = 1;
     }
 }
 
-
 print "waiting for the last consumer to finish\n";
-foreach $co (@CONS) {
-    $consumer = $co->WaitKill (60);
-    
-    if ($consumer != 0) {
-        print STDERR "ERROR: A consumer returned $consumer\n";
+foreach $CO (@CONS) {
+    $CO_status = $CO->WaitKill ($co->ProcessStopWaitInterval()+45);
+
+    if ($CO_status != 0) {
+        print STDERR "ERROR: A Consumer returned $CO_status\n";
         $status = 1;
     }
 }
 
 print "cleanup...\n";
-$CE1->TerminateWaitKill (5);
+$CE_status = $CE->TerminateWaitKill ($ce->ProcessStopWaitInterval());
 
-if ($server != 0) {
-    print STDERR "ERROR: CosEC1 returned $server\n";
+if ($CE_status != 0) {
+    print STDERR "ERROR: RtEC_Basic_CosEC returned $CE_status\n";
     $status = 1;
 }
 
-$EC->TerminateWaitKill (5);
+$ES_status = $ES->TerminateWaitKill ($es->ProcessStopWaitInterval());
 
-if ($server != 0) {
-    print STDERR "ERROR: EC returned $server\n";
+if ($ES_status != 0) {
+    print STDERR "ERROR: Event Service returned $ES_status\n";
     $status = 1;
 }
 
-$NS->TerminateWaitKill (5);
+$NS_status = $NS->TerminateWaitKill ($ns->ProcessStopWaitInterval());
 
-if ($server != 0) {
-    print STDERR "ERROR: NS returned $server\n";
+if ($NS_status != 0) {
+    print STDERR "ERROR: Name Service returned $NS_status\n";
     $status = 1;
 }
 print "done!.\n";
 
-unlink $nsior;
+$ns->DeleteFile ($nsiorfile);
+$es->DeleteFile ($nsiorfile);
+$ce->DeleteFile ($nsiorfile);
+$co->DeleteFile ($nsiorfile);
+$su->DeleteFile ($nsiorfile);
 
 exit $status;

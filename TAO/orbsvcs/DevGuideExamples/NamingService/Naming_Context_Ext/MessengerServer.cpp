@@ -4,12 +4,57 @@
 #include "orbsvcs/CosNamingC.h"
 #include <iostream>
 #include <fstream>
+#include "ace/Get_Opt.h"
+
+const ACE_TCHAR *ior_output_file = ACE_TEXT ("url.ior");
+const ACE_TCHAR *hostname = ACE_TEXT ("localhost");
+const ACE_TCHAR *port = ACE_TEXT ("2809");
+
+int
+parse_args (int argc, ACE_TCHAR *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:h:p:"));
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'o':
+        ior_output_file = get_opts.opt_arg ();
+        break;
+
+      case 'h':
+        hostname = get_opts.opt_arg ();
+        break;
+
+      case 'p':
+        port = get_opts.opt_arg ();
+        break;
+
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-o <iorfile> "
+                           "-h <host> "
+                           "-p <port>"
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+  // Indicates sucessful parsing of the command line
+  return 0;
+}
+
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   try {
     // Initialize orb
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+
+    if (parse_args (argc, argv) != 0)
+      return 1;
 
     //Get reference to Root POA
     CORBA::Object_var obj = orb->resolve_initial_references("RootPOA");
@@ -87,8 +132,15 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
+    ACE_CString base_address (":");
+    base_address += ACE_TEXT_ALWAYS_CHAR (hostname);
+    base_address += ":";
+    base_address += ACE_TEXT_ALWAYS_CHAR (port);
+    ACE_CString addr ("");
+    addr = base_address + "/key/str";
+
     // Create an URL string for application object.
-    CORBA::String_var address = CORBA::string_dup (":localhost:2809/key/str");
+    CORBA::String_var address = CORBA::string_dup (addr.c_str());
 
     std::cout << "call to_url(\"" << address.in() << "\"" << std::endl;
     std::cout << "           ,\"" << str_simple.in() << "\")"<< std::endl;
@@ -100,7 +152,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     // Write NS url to a file to let client read NS URL to get
     // NamingContext reference.
-    CORBA::String_var ns_addr = CORBA::string_dup(":localhost:2809");
+    CORBA::String_var ns_addr = CORBA::string_dup(base_address.c_str());
 
     std::cout << "call to_url(\"" <<ns_addr.in() << "\",\""
          << str_simple.in() << "\")"<< std::endl;
@@ -109,11 +161,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     std::cout << "to_url result:    " << url.in() << std::endl;
 
 
-    std::ofstream iorFile("url.ior");
+    std::ofstream iorFile(ACE_TEXT_ALWAYS_CHAR (ior_output_file));
     iorFile << url.in() << std::endl;
     iorFile.close();
 
-    std::cout << "Naming Service URL written to file url.ior" << std::endl;
+    std::cout << "Naming Service URL written to file " << ior_output_file << std::endl;
 
     // Accept requests
     orb->run();
