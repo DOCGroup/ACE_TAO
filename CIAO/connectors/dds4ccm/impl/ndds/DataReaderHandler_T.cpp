@@ -32,7 +32,7 @@ CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::handle_exception (A
         {
           typename DDS_TYPE::value_type instance;
           ::DDS_SampleInfo sampleinfo;
-          ::DDS::ReturnCode_t const result  = this->reader_->take_next_sample(instance,
+          ::DDS::ReturnCode_t const result = this->reader_->take_next_sample(instance,
                                                                       sampleinfo);
           if (result == DDS_RETCODE_NO_DATA)
               break;
