@@ -117,7 +117,7 @@ $E =
   new PerlACE::Process ("$CIAO_ROOT/bin/plan_launcher",
                         "-p flattened_deploymentplan.cdp -k file://EM.ior -o DAM.ior");
 
-$E->SpawnWaitKill (5000);
+$E->SpawnWaitKill (60);
 
 if (PerlACE::waitforfile_timed (
       "GPS.ior",
@@ -136,7 +136,7 @@ if (PerlACE::waitforfile_timed ("RateGen.ior",
 
 print "Invoking the controller\n";
 $controller = new PerlACE::Process ("$controller_exec", "-k file://RateGen.ior");
-$result = $controller->SpawnWaitKill (3000);
+$result = $controller->SpawnWaitKill (60);
 if ($result != 0) {
     print STDERR "ERROR: The controller returned $result\n";
     $status = 1;
@@ -148,7 +148,7 @@ sleep (20);
 # invoking the controller again to stop the rategen
 print "Invoking the controller to stop RateGen\n";
 $controller = new PerlACE::Process ("$controller_exec", "-k file://RateGen.ior -f");
-$result = $controller->SpawnWaitKill (3000);
+$result = $controller->SpawnWaitKill (60);
 if ($result != 0) {
     print STDERR "ERROR: The controller returned $result\n";
     $status = 1;
@@ -162,7 +162,7 @@ print "Invoking executor - stop the application -\n";
 $E =
   new PerlACE::Process ("$CIAO_ROOT/bin/plan_launcher",
                         "-k file://EM.ior -i file://DAM.ior");
-$E->SpawnWaitKill (3000);
+$E->SpawnWaitKill (60);
 
 print "Executor returned.\n";
 print "Shutting down rest of the processes.\n";

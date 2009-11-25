@@ -102,7 +102,7 @@ foreach $file (@files) {
     $E = new PerlACE::Process ("simple_nm_launcher",
                                "file://NodeApp1.ior $file");
 
-    $status = $E->SpawnWaitKill (5000);
+    $status = $E->SpawnWaitKill (60);
 
     if ($status != 0)
     {
