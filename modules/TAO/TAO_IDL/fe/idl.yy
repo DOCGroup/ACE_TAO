@@ -605,7 +605,6 @@ template_module
         : template_module_header
         {
 // template_module : template_module_header
-
           // The module_header rule is common to template module, fixed
           // module and instantiated template module. In the last
           // case, a fully scoped name is allowed, but here we
@@ -690,12 +689,36 @@ template_module_ref
 template_module_inst
         : template_module_header
         {
+// template_module_inst : template_module_header
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          UTL_ScopedName *sn = $1;
+          AST_Template_Module *ref = 0;
+          AST_Decl *d = s->lookup_by_name (sn, true);
+          bool so_far_so_good = true;
+          
+          if (d == 0)
+            {
+              idl_global->err ()->lookup_error (sn);
+              so_far_so_good = false;
+            }
+          else
+            {
+              ref = AST_Template_Module::narrow_from_decl (d);
+              
+              if (ref == 0)
+                {
+                  idl_global->err ()->template_module_expected (d);
+                  so_far_so_good = false;
+                }
+            }
         }
         at_least_one_actual_parameter '>'
         {
+//        at_least_one_actual_parameter '>'
         }
         id
         {
+//        id
         }
         ;
 
@@ -1713,10 +1736,6 @@ const_type
            */
           AST_Decl *d =
             s->lookup_by_name (sn, true);
-
-          $1->destroy ();
-          delete $1;
-          $1 = 0;
 
           if (s != 0 && d != 0)
             {

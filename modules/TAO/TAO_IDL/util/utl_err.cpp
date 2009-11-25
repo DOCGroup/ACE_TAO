@@ -165,8 +165,8 @@ error_string (UTL_Error::ErrorCode c)
       return "abstract type expected: ";
     case UTL_Error::EIDL_EVENTTYPE_EXPECTED:
       return "event type expected: ";
-    case UTL_Error::EIDL_TMPL_IFACE_EXPECTED:
-      return "template interface expected: ";
+    case UTL_Error::EIDL_TMPL_MODULE_EXPECTED:
+      return "template module expected: ";
     case UTL_Error::EIDL_PORTTYPE_EXPECTED:
       return "porttype expected: ";
     case UTL_Error::EIDL_CONNECTOR_EXPECTED:
@@ -1112,6 +1112,18 @@ void
 UTL_Error::interface_expected (AST_Decl *d)
 {
   idl_error_header (EIDL_INTERFACE_EXPECTED,
+                    idl_global->lineno (),
+                    idl_global->filename ()->get_string ());
+  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+void
+UTL_Error::template_module_expected (AST_Decl *d)
+{
+  idl_error_header (EIDL_TMPL_MODULE_EXPECTED,
                     idl_global->lineno (),
                     idl_global->filename ()->get_string ());
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
