@@ -542,7 +542,7 @@ fixed_module
         {
 // fixed_module : module_header
           idl_global->set_parse_state (IDL_GlobalData::PS_ModuleIDSeen);
-          
+
           // The module_header rule is common to template module, fixed
           // module and instantiated template module. In the last
           // case, a fully scoped name is allowed, but here we
@@ -554,7 +554,7 @@ fixed_module
               idl_global->err ()->syntax_error (
                 IDL_GlobalData::PS_ModuleIDSeen);
             }
-            
+
           AST_Module *m = 0;
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
 
@@ -605,18 +605,18 @@ template_module
         : template_module_header
         {
 // template_module : template_module_header
-          
+
           // The module_header rule is common to template module, fixed
           // module and instantiated template module. In the last
           // case, a fully scoped name is allowed, but here we
           // allow only an identifier (a scoped name of length
           // 1). If not satisfied, we output a parse error with
           // the appropriate message.
-          if ((tao_yyvsp[(1) - (1)].idlist)->length () != 1)
+          if ($1->length () != 1)
             {
               idl_global->err ()->syntax_error (
                 IDL_GlobalData::PS_ModuleIDSeen);
-            }            
+            }
         }
         at_least_one_formal_parameter
         {
@@ -6025,10 +6025,10 @@ at_least_one_formal_parameter
             {
               delete $2;
               $2 = 0;
-              
+
               idl_global->err ()->mismatch_seq_of_param (bad_id.c_str ());
             }
-            
+
           $<plval>$ = $2;
         }
         ;
@@ -6052,32 +6052,8 @@ formal_parameters
           $1->enqueue_tail (*$4);
           $<plval>$ = $1;
 
-          bool so_far_so_good =
-            idl_global->check_for_seq_of_param ($1,
-                                                $4);
-
-          if (so_far_so_good)
-            {
-              $1->enqueue_tail (*$4);
-              $<plval>$ = $1;
-            }
-          else
-            {
-              delete $1;
-              $1 = 0;
-
-              idl_global->err ()->mismatch_seq_of_param (
-                $4->name_.c_str ());
-            }
-
           delete $4;
           $4 = 0;
-
-          if (!so_far_so_good)
-            {
-              return 1;
-            }
-
         }
         | /* EMPTY */
         {
@@ -6094,18 +6070,18 @@ formal_parameter
           ACE_NEW_RETURN ($<pival>$,
                           FE_Utils::T_Param_Info,
                           1);
-                          
+
           AST_Decl::NodeType nt = $1;
 
           $<pival>$->type_ = nt;
           $<pival>$->name_ = $2;
-          
+
           if (nt == AST_Decl::NT_const)
             {
               $<pival>$->const_type_ = t_param_const_type;
               $<pival>$->enum_const_type_decl_ =
                 tao_enum_constant_decl;
-                
+ 
               // Reset these values.  
               t_param_const_type = AST_Expression::EV_none;
               tao_enum_constant_decl = 0;

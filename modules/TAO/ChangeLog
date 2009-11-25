@@ -1,10 +1,18 @@
+Wed Nov 25 18:52:19 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Fixed typos and some discrepancies between idl.yy and a
+          hand-crafted y.tab.cpp, and regenerated.
+
 Wed Nov 25 17:58:50 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/fe_utils.h:
         * TAO_IDL/fe/fe_utils.cpp:
         * TAO_IDL/fe/y.tab.cpp:
         * TAO_IDL/fe/idl.yy:
-        
+
           Added support for the 'const' formal template parameter type.
 
 Wed Nov 25 01:35:38 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -13,7 +21,7 @@ Wed Nov 25 01:35:38 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/util/utl_global.cpp:
         * TAO_IDL/fe/y.tab.cpp:
         * TAO_IDL/fe/idl.yy:
-        
+
           Fixed bugs in 'sequence<xxx>' template param checking.
 
 Tue Nov 24 21:20:55 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
