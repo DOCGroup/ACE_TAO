@@ -43,7 +43,6 @@
 
 #include /**/ "Broker_exec_export.h"
 #include "tao/LocalObject.h"
-#include "ace/Task.h"
 #include "ace/Reactor.h"
 
 namespace CIAO_Quoter_Broker_Impl
@@ -56,44 +55,18 @@ namespace CIAO_Quoter_Broker_Impl
   * @brief an active object used by StockBroker to perform a periodical read action
   *
   */
-  class read_action_Generator : public ACE_Task_Base
+  class read_action_Generator : public ACE_Event_Handler
   {
   public:
     read_action_Generator (Broker_exec_i &callback);
 
     ~read_action_Generator ();
 
-    /// Hook method that performs application-defined initialization activities
-    int open_h (void);
-
-    /// Hook method that performs application-defined destruction activites
-    int close_h (void);
-
-    /// appliation-defined method for starting the pulse-generation service
-    int start (CORBA::ULong hertz);
-
-    /// application-defined method for stopping the pulse-generation service
-    int stop (void);
-
-    /// Indicate whether the current object is active
-    int active (void);
-
     /// Handle the timeout.
     virtual int handle_timeout (const ACE_Time_Value &tv,
                                 const void *arg);
 
-    /// Called when timer handler is removed.
-    virtual int handle_close (ACE_HANDLE handle,
-                              ACE_Reactor_Mask close_mask);
-
-    /// Hook methods implemnting the task's service processing,
-    /// invoked by all threads activated by activate () method
-    virtual int svc (void);
-
   private:
-    /// Tracking whether we are actively generating pulse or not.
-    int active_;
-
     /// Maintains a handle that actually process the event
     Broker_exec_i &pulse_callback_;
   };

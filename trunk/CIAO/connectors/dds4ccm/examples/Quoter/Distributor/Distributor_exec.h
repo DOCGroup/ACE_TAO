@@ -16,7 +16,6 @@
 #include /**/ "Distributor_exec_export.h"
 #include "tao/LocalObject.h"
 #include "ace/Thread_Mutex.h"
-#include "ace/Task.h"
 #include "ace/Reactor.h"
 
 #include <map>
@@ -31,44 +30,17 @@ namespace CIAO_Quoter_Distributor_Impl
   * @brief an active object used by StockDistributor to perform periodical pulse generation
   *
   */
-  class pulse_Generator : public ACE_Task_Base
+  class pulse_Generator : public ACE_Event_Handler
   {
   public:
     pulse_Generator (Distributor_exec_i &callback);
 
     ~pulse_Generator ();
 
-    /// Hook method that performs application-defined initialization activities
-    int open_h (void);
-
-    /// Hook method that performs application-defined destruction activites
-    int close_h (void);
-
-    /// appliation-defined method for starting the pulse-generation service
-    int start (CORBA::ULong hertz);
-
-    /// application-defined method for stopping the pulse-generation service
-    int stop (void);
-
-    /// Indicate whether the current object is active
-    int active (void);
-
     /// Handle the timeout.
     virtual int handle_timeout (const ACE_Time_Value &tv,
                                 const void *arg);
-
-    /// Called when timer handler is removed.
-    virtual int handle_close (ACE_HANDLE handle,
-                              ACE_Reactor_Mask close_mask);
-
-    /// Hook methods implemnting the task's service processing,
-    /// invoked by all threads activated by activate () method
-    virtual int svc (void);
-
   private:
-    /// Tracking whether we are actively generating pulse or not.
-    int active_;
-
     /// Maintains a handle that actually process the event
     Distributor_exec_i &pulse_callback_;
 

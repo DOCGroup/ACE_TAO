@@ -53,7 +53,7 @@ namespace CIAO_Keyed_Test_Sender_Impl
           {
             ++this->last_key->second->iteration;
             this->writer_->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
-            CIAO_DEBUG ((LM_ERROR, ACE_TEXT ("Written key <%C> with <%d>\n"),
+            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Written key <%C> with <%d>\n"),
                     this->last_key->first.c_str (),
                     this->last_key->second->iteration));
           }
