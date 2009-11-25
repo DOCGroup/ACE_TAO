@@ -133,7 +133,8 @@ int yylex (void);
 extern "C" int yywrap (void);
 extern char yytext[];
 extern int yyleng;
-AST_Decl *tao_enum_constant_decl = 0;
+AST_Enum *tao_enum_constant_decl = 0;
+AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 #define YYDEBUG_LEXER_TEXT (yytext[yyleng] = '\0', yytext)
 // Force the pretty debugging code to compile.
 #define YYDEBUG 1
@@ -1704,23 +1705,21 @@ const_type
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_PredefinedType *c = 0;
           AST_Typedef *t = 0;
+          UTL_ScopedName *sn = $1;
 
           /*
            * If the constant's type is a scoped name, it must resolve
            * to a scalar constant type
            */
           AST_Decl *d =
-            s->lookup_by_name ($1,
-                               true);
+            s->lookup_by_name (sn, true);
 
           $1->destroy ();
           delete $1;
           $1 = 0;
 
-          if (s != 0  && d != 0)
+          if (s != 0 && d != 0)
             {
-              tao_enum_constant_decl = d;
-
               /*
                * Look through typedefs.
                */
@@ -1736,40 +1735,40 @@ const_type
                   d = t->base_type ();
                 }
 
-              if (d == 0)
-                {
-                  $$ = AST_Expression::EV_enum;
-                }
-              else if (d->node_type () == AST_Decl::NT_pre_defined)
+              if (d->node_type () == AST_Decl::NT_pre_defined)
                 {
                   c = AST_PredefinedType::narrow_from_decl (d);
 
-                  if (c != 0)
-                    {
-                      $$ = idl_global->PredefinedTypeToExprType (c->pt ());
-                    }
-                  else
-                    {
-                      $$ = AST_Expression::EV_enum;
-                    }
+                  $<etval>$ = idl_global->PredefinedTypeToExprType (c->pt ());
                 }
               else if (d->node_type () == AST_Decl::NT_string)
                 {
-                  $$ = AST_Expression::EV_string;
+                  $<etval>$ = AST_Expression::EV_string;
                 }
               else if (d->node_type () == AST_Decl::NT_wstring)
                 {
-                  $$ = AST_Expression::EV_wstring;
+                  $<etval>$ = AST_Expression::EV_wstring;
+                }
+              else if (d->node_type () == AST_Decl::NT_enum)
+                {
+                  $<etval>$ = AST_Expression::EV_enum;
+                  tao_enum_constant_decl =
+                    AST_Enum::narrow_from_decl (d);
                 }
               else
                 {
-                  $$ = AST_Expression::EV_enum;
+                  idl_global->err ()->constant_expected (sn, d);
                 }
             }
           else
             {
-              $$ = AST_Expression::EV_enum;
+              idl_global->err ()->lookup_error (sn);
             }
+            
+          sn->destroy ();
+          delete sn;
+          sn = 0;
+          $1 = 0;
         }
         ;
 
@@ -5997,6 +5996,7 @@ formal_parameter_type
         {
 //        IDL_CONST const_type
           $<ntval>$ = AST_Decl::NT_const;
+          t_param_const_type = $2;
         }
         ;
 
@@ -6094,9 +6094,22 @@ formal_parameter
           ACE_NEW_RETURN ($<pival>$,
                           FE_Utils::T_Param_Info,
                           1);
+                          
+          AST_Decl::NodeType nt = $1;
 
-          $<pival>$->type_ = $1;
+          $<pival>$->type_ = nt;
           $<pival>$->name_ = $2;
+          
+          if (nt == AST_Decl::NT_const)
+            {
+              $<pival>$->const_type_ = t_param_const_type;
+              $<pival>$->enum_const_type_decl_ =
+                tao_enum_constant_decl;
+                
+              // Reset these values.  
+              t_param_const_type = AST_Expression::EV_none;
+              tao_enum_constant_decl = 0;
+            }
         }
         | IDL_SEQUENCE '<' IDENTIFIER '>'
         {
