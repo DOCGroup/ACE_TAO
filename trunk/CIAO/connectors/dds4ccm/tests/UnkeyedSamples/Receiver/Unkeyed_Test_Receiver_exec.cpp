@@ -8,6 +8,63 @@
 
 namespace CIAO_Unkeyed_Test_Receiver_Impl
 {
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i ()
+  {
+  }
+
+  ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
+  {
+  }
+
+  // Operations from ::CCM_DDS::ConnectorStatusListener
+  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
+     ::DDS::Topic_ptr /* the_topic */,
+     const DDS::InconsistentTopicStatus & /* status */)
+  {
+    CIAO_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
+          ACE_TEXT ("ConnectorStatusListener_exec_i::on_inconsistent_topic\n")));
+  }
+
+  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
+    ::DDS::DataReader_ptr /*the_reader*/,
+     const DDS::RequestedIncompatibleQosStatus & /*status*/)  
+  {
+    CIAO_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
+          ACE_TEXT ("ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n")));
+  }
+
+  void ConnectorStatusListener_exec_i::on_sample_rejected(
+     ::DDS::DataReader_ptr /*the_reader*/,
+     const DDS::SampleRejectedStatus & /*status*/)  
+  {
+    CIAO_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
+          ACE_TEXT ("ConnectorStatusListener_exec_i::on_sample_rejected\n")));
+  }
+
+  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
+     ::DDS::DataWriter_ptr /*the_writer*/,
+     const DDS::OfferedDeadlineMissedStatus & /*status*/)  
+  {
+    CIAO_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
+          ACE_TEXT ("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n")));
+  }
+
+  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
+     ::DDS::DataWriter_ptr /*the_writer*/,
+     const DDS::OfferedIncompatibleQosStatus & /*status*/)  
+  {
+    CIAO_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
+          ACE_TEXT ("ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n")));
+  }
+
+  void ConnectorStatusListener_exec_i::on_unexpected_status(
+    ::DDS::Entity_ptr /*the_entity*/,
+    ::DDS::StatusKind  /*status_kind*/)  
+  {
+    CIAO_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
+          ACE_TEXT ("ConnectorStatusListener_exec_i::on_unexpected_status\n")));
+  }
+
   //============================================================
   // Facet Executor Implementation Class: UnkeyedTest_Listener_exec_i
   //============================================================
@@ -80,6 +137,13 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
   Receiver_exec_i::get_info_out_status (void)
   {
     return 0;
+  }
+
+  ::CCM_DDS::CCM_ConnectorStatusListener_ptr
+  Receiver_exec_i::get_info_out_connector_status (void)
+  {
+    printf ("*************** out connector status************************\n");
+    return new ConnectorStatusListener_exec_i ();
   }
 
   // Operations from Components::SessionComponent.

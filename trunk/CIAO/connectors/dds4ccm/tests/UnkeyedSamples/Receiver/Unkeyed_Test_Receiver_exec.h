@@ -20,6 +20,33 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
 {
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong > Atomic_ULong;
 
+  class RECEIVER_EXEC_Export ConnectorStatusListener_exec_i
+    : public virtual ::CCM_DDS::CCM_ConnectorStatusListener,
+      public virtual ::CORBA::LocalObject
+  {
+  public:
+    ConnectorStatusListener_exec_i ();
+    virtual ~ConnectorStatusListener_exec_i (void);
+
+    virtual void 
+    on_inconsistent_topic( ::DDS::Topic_ptr the_topic,
+                           const DDS::InconsistentTopicStatus & status);
+    virtual void 
+    on_requested_incompatible_qos( ::DDS::DataReader_ptr the_reader,
+                           const DDS::RequestedIncompatibleQosStatus & status);
+    virtual void 
+    on_sample_rejected( ::DDS::DataReader_ptr the_reader,
+                           const DDS::SampleRejectedStatus & status);
+    virtual void 
+    on_offered_deadline_missed( ::DDS::DataWriter_ptr the_writer,
+                           const DDS::OfferedDeadlineMissedStatus & status);
+    virtual void 
+    on_offered_incompatible_qos( ::DDS::DataWriter_ptr the_writer,
+                           const DDS::OfferedIncompatibleQosStatus & status);
+    virtual void on_unexpected_status( ::DDS::Entity_ptr the_entity,
+                           ::DDS::StatusKind  status_kind);
+  };
+
   class RECEIVER_EXEC_Export UnkeyedTest_Listener_exec_i
     : public virtual ::CCM_DDS::UnkeyedTest::CCM_Listener,
       public virtual ::CORBA::LocalObject
@@ -59,6 +86,9 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_out_status (void);
+
+    virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
+    get_info_out_connector_status (void);
 
     // Operations from Components::SessionComponent.
     virtual void
