@@ -1,3 +1,21 @@
+Wed Nov 25 13:45:05 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/SetConnectorAttributes:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Base:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Base/SetConnectorAttribute_Base.idl:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Base/SetConnectorAttribute_Base.mpc:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Connector:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Connector/SetConnectorAttribute_Connector.idl:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Connector/SetConnectorAttribute_Connector.mpc:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Connector/SetConnectorAttribute_Connector_exec.h:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Connector/SetConnectorAttribute_Connector_exec.cpp:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/descriptors:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/descriptors/run_test.pl:
+          Added this test in order to test whether the connector attributes are set properly.
+
 Wed Nov 25 13:15:25 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.cpp:
