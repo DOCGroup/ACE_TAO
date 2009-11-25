@@ -1,3 +1,22 @@
+Wed Nov 25 12:07:28 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * orbsvcs/tests/InterfaceRepo/Application_Test/run_test.pl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/run_test.pl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/run_test.pl:
+        * tests/AMI_Buffering/run_timeout.pl:
+        * tests/AMI_Buffering/run_message_count.pl:
+        * tests/AMI_Buffering/run_buffer_size.pl:
+        * tests/AMI_Buffering/run_timeout_reactive.pl:
+        * tests/AMI_Buffering/run_test.pl:
+        * tests/Bug_1495_Regression/run_test.pl:
+        * tests/Oneway_Buffering/run_timeout.pl:
+        * tests/Oneway_Buffering/run_message_count.pl:
+        * tests/Oneway_Buffering/run_buffer_size.pl:
+        * tests/Oneway_Buffering/run_timeout_reactive.pl:
+        * tests/Oneway_Buffering/run_test.pl:
+
+          Tests are converted to use new test framework and added to fuzz build.
+
 Wed Nov 25 09:01:20 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/DevGuideExamples/ValueTypes/Notify/supplier.cpp:

@@ -14,7 +14,7 @@ $debug_level = '0';
 ## The LoadManager needs to register signals with the ORB's reactor (on
 ## Windows only) and thus can not use the TP Reactor since it doesn't
 ## support that kind of thing.  So, we swith to the Select MT Reactor.
-$lm_conf = "windows" + $PerlACE::svcconf_ext;
+$lm_conf = "windows" . $PerlACE::svcconf_ext;
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
