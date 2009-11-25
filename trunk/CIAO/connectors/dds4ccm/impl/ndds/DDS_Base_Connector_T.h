@@ -31,6 +31,8 @@ public:
 
   virtual void set_session_context (::Components::SessionContext_ptr ctx);
 
+  virtual void ccm_remove (void);
+
 protected:
   void configure_default_domain (void);
 
@@ -38,8 +40,8 @@ protected:
   CORBA::String_var qos_profile_;
   bool configuration_complete_;
 
-  ::DDS::DomainParticipantFactory_var domain_factory_;
-  ::DDS::DomainParticipant_var domain_;
+  ::DDS::DomainParticipantFactory_var domain_participant_factory_;
+  ::DDS::DomainParticipant_var domain_participant_;
 
   typename CCM_TYPE::context_type::_var_type context_;
 };

@@ -1,3 +1,29 @@
+Wed Nov 25 13:05:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Servant_Activator.cpp:
+          Fix typo in debug statement
+
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.h:
+          Removed updater functionality
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Module.cpp:
+          Added missing \n to debug messages
+
+        * tests/CIAO_ComponentServer/Activator/run_test.pl:
+        * tests/CIAO_ComponentServer/Basic/run_test.pl:
+        * connectors/dds4ccm/examples/Quoter/descriptors/run_test.pl:
+          Shortened timeouts
+
+        * ciao/ComponentServer/CIAO_ComponentServer.cpp:
+          For x.7.5, don't wait for worker threads
+
+        * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.cpp:
+          Some cleanup and destroy dds entities at ccm_remove
+
 Wed Nov 25 10:54:24 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/SenderOnly.cdp:

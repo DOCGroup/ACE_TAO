@@ -24,19 +24,18 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
       cs.run ();
 
       // Wait for the threads to exit.
-      ACE_Thread_Manager::instance ()->wait ();
-
+      //ACE_Thread_Manager::instance ()->wait ();
     }
   catch (CIAO::Deployment::ComponentServer_Task::Error &e)
     {
       CIAO_DEBUG ((LM_ALERT, CLINFO "CIAO_ComponentServer main: Caught ComponentServer exception: %C\n",
                   e.err_.c_str ()));
-      retval = -1;                  
+      retval = -1;
     }
   catch (...)
     {
       CIAO_DEBUG ((LM_ALERT, CLINFO "CIAO_ComponentServer main: Caught unknown exception.\n"));
-      retval = -1;                  
+      retval = -1;
     }
 
   return retval;

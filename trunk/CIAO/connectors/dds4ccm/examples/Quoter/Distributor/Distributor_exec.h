@@ -173,7 +173,7 @@ class DISTRIBUTOR_EXEC_Export ConnectorStatusListener_exec_i
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
-  
+
   private:
     pulse_Generator * ticker_;
     ::Quoter::CCM_Distributor_Context_var context_;
@@ -182,9 +182,8 @@ class DISTRIBUTOR_EXEC_Export ConnectorStatusListener_exec_i
     Stock_Table stocks_;
     CORBA::ULong rate_;
     CCM_DDS::Quoter::Writer_var writer_;
-    CCM_DDS::Quoter::Updater_var updater_;
   };
-  
+
   extern "C" DISTRIBUTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Quoter_Distributor_Impl (void);
 }
