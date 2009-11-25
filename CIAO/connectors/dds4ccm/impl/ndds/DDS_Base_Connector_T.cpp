@@ -11,6 +11,8 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::DDS_Base_Connector_T (void)
   : domain_id_ (0)
   , configuration_complete_ (false)
+  , library_name_ (0)
+  , profile_name_ (0)
 {
   ACE_Env_Value<int> id (ACE_TEXT("DDS4CCM_DEFAULT_DOMAIN_ID"), this->domain_id_);
   this->domain_id_ = id;
@@ -87,12 +89,9 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain (void)
         //                                                           NDDS_CONFIG_LOG_VERBOSITY_STATUS_ALL );
 
         // Generic code
-        ::CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i* df =
+        this->domain_participant_factory_ =
           new ::CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i ();
-        this->domain_participant_factory_ = df;
 
-        const char* library = 0;
-        const char* profile = 0;
         if (this->qos_profile_.in ())
           {
             char* buf = ACE_OS::strdup (this->qos_profile_.in ());
@@ -100,22 +99,23 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain (void)
             tok.delimiter_replace ('#', 0);
             for (char *p = tok.next (); p; p = tok.next ())
             {
-              if (!library)
+              if (!this->library_name_)
               {
-                library = p;
+                this->library_name_ = p;
               }
-              else if (!profile)
+              else if (!this->profile_name_)
               {
-                profile = p;
+                this->profile_name_ = p;
               }
             }
           }
-        if (library && profile)
+        if (this->library_name_ && this->profile_name_)
           {
+            this->domain_participant_factory_->set_default_participant_qos_with_profile (this->library_name_, this->profile_name_);
             this->domain_participant_ =
-              df->create_participant_with_profile (this->domain_id_,
-                                                   library,
-                                                   profile,
+              this->domain_participant_factory_->create_participant_with_profile (this->domain_id_,
+                                                   this->library_name_,
+                                                   this->profile_name_,
                                                    0,
                                                    DDS_STATUS_MASK_NONE);
           }
