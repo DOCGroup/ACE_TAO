@@ -71,8 +71,6 @@ namespace CIAO_Get_Connection_Test_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-    Get_ConnectionTest gct;
-    this->writer_->write_one (gct, ::DDS::HANDLE_NIL);
   }
 
   void
