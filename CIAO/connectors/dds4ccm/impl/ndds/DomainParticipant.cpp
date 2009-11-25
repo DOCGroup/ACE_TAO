@@ -39,7 +39,7 @@ namespace CIAO
       }
 
       ::DDS::Publisher_ptr
-      RTI_DomainParticipant_i::create_publisher (const ::DDS::PublisherQos & qos,
+      RTI_DomainParticipant_i::create_publisher (const ::DDS::PublisherQos & /*qos*/,
                                                  ::DDS::PublisherListener_ptr a_listener,
                                                  ::DDS::StatusMask mask)
       {
@@ -49,7 +49,7 @@ namespace CIAO
                      "Creating Publisher\n"));
 
         DDS_PublisherQos rti_qos = DDS_PUBLISHER_QOS_DEFAULT;
-        rti_qos <<= qos;
+//        rti_qos <<= qos;
         RTI_PublisherListener_i *rti_pl = new RTI_PublisherListener_i (a_listener);
         DDSPublisher * rti_pub =
           this->impl_->create_publisher (rti_qos,

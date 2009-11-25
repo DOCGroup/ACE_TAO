@@ -32,6 +32,8 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(::DDS::DataReader *rdr)
 {
+  CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderListener_T::on_data_available");
+
   if (this->mode_.value () == ::CCM_DDS::NOT_ENABLED)
     return;
 
@@ -43,6 +45,7 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("DataReaderListener_T::dynamic_cast failed.\n")));
       return;
     }
+
   typename DDS_TYPE::data_reader * reader =
       dynamic_cast< typename DDS_TYPE::data_reader * > ((rd->get_datareader ()));
 
