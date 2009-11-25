@@ -1,3 +1,33 @@
+Wed Nov 25 08:47:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2130_Regression/descriptors/run_test.pl:
+        * examples/Null_Component/descriptors/run_test.pl:
+        * examples/Hello/descriptors_RTCCM/rt_run_test.pl:
+        * examples/Hello/descriptors/run_test_without_ns.pl:
+        * examples/Hello/descriptors/run_test_alias.pl:
+        * examples/Display/descriptors/run_test_without_ns.pl:
+        * examples/BasicSP/descriptors/run_test.pl:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test.pl:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/run_test.pl:
+          Use more realistic timeouts, this will shorten the test runs
+          a lot at the moment a test or example is broken
+
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker_exec.cpp
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker_exec.h
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor_exec.cpp
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor_exec.h
+        * DAnCE/tests/CIAO/Components/SimpleAttribute_exec.h
+        * DAnCE/tests/CIAO/Components/SimpleConsumer_exec.h
+        * DAnCE/tests/CIAO/Components/SimpleEmitter_exec.h
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser_exec.h
+        * DAnCE/tests/CIAO/Components/SimpleNilFacetProvider_exec.h
+        * DAnCE/tests/CIAO/Components/SimpleNilFacetUser_exec.h
+        * DAnCE/tests/CIAO/Components/SimpleNull_exec.h
+        * DAnCE/tests/CIAO/Components/SimpleProvider_exec.h
+        * DAnCE/tests/CIAO/Components/SimplePublisher_exec.h
+        * DAnCE/tests/CIAO/Components/SimpleUser_exec.h
+          Removed generated headers from these files
+
 Wed Nov 25 08:31:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Hello/Receiver/Receiver_exec.cpp

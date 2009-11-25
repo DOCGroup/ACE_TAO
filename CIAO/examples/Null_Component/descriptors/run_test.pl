@@ -155,7 +155,7 @@ foreach $file (@files) {
 	new PerlACE::Process ("$DAnCE/bin/dance_plan_launcher",
 			      "-x $file -k file://EM.ior");
 
-    $E->SpawnWaitKill (5000);
+    $E->SpawnWaitKill (60);
 
     if ($status != 0)
     {
@@ -168,7 +168,7 @@ foreach $file (@files) {
     $E =
 	new PerlACE::Process ("$DAnCE/bin/dance_plan_launcher",
 			      "-k file://EM.ior -x $file -q");
-    $E->SpawnWaitKill (3000);
+    $E->SpawnWaitKill (60);
 
     print "Executor returned.\n";
 

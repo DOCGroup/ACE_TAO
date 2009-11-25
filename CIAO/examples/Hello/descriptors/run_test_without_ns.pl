@@ -86,8 +86,7 @@ sub run_node_daemons {
       $result = $Daemons[$i]->Spawn ();
       push(@processes, $Daemons[$i]);
 
-      if (PerlACE::waitforfile_timed ($iorfile,
-                                      30) == -1) {
+      if (PerlACE::waitforfile_timed ($iorfile, 30) == -1) {
           print STDERR
             "ERROR: The ior $iorfile file of node daemon $i could not be found\n";
           for (; $i >= 0; --$i) {
@@ -99,7 +98,7 @@ sub run_node_daemons {
   return 0;
 }
 
-delete_ior_files ();  
+delete_ior_files ();
 
 # Invoke node daemons.
 print "Invoking node daemons\n";
@@ -137,7 +136,7 @@ $E =
   new PerlACE::Process ("$DAnCE/bin/dance_plan_launcher",
                         "-x DeploymentPlan_without_ns.cdp -k file://EM.ior");
 
-$E->SpawnWaitKill (5000);
+$E->SpawnWaitKill (30);
 
 if (PerlACE::waitforfile_timed (
       "Receiver.ior",
@@ -156,7 +155,7 @@ if (PerlACE::waitforfile_timed ("Sender.ior",
 
 print "Invoking the controller ($controller_exec -k file://Sender.ior)\n";
 $controller = new PerlACE::Process ("$controller_exec", "-k file://Sender.ior");
-$result = $controller->SpawnWaitKill (3000);
+$result = $controller->SpawnWaitKill (120);
 
 if ($result != 0) {
     print STDERR "ERROR: The controller returned $result\n";
@@ -170,7 +169,7 @@ print "by running dance_plan_launcher.exe with -k file://EM.ior -x DeploymentPla
 $E =
   new PerlACE::Process ("$DAnCE/bin/dance_plan_launcher",
                         "-k file://EM.ior -x DeploymentPlan.cdp -q");
-$E->SpawnWaitKill (3000);
+$E->SpawnWaitKill (30);
 
 print "Executor returned.\n";
 print "Shutting down rest of the processes.\n";
