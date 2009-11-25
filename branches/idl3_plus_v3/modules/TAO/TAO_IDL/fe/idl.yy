@@ -541,7 +541,19 @@ fixed_module
         {
 // fixed_module : module_header
           idl_global->set_parse_state (IDL_GlobalData::PS_ModuleIDSeen);
-          // Check that scoped name contains no delimitor.
+          
+          // The module_header rule is common to template module, fixed
+          // module and instantiated template module. In the last
+          // case, a fully scoped name is allowed, but here we
+          // allow only an identifier (a scoped name of length
+          // 1). If not satisfied, we output a parse error with
+          // the appropriate message.
+          if ($1->length () != 1)
+            {
+              idl_global->err ()->syntax_error (
+                IDL_GlobalData::PS_ModuleIDSeen);
+            }
+            
           AST_Module *m = 0;
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
 
@@ -592,7 +604,18 @@ template_module
         : template_module_header
         {
 // template_module : template_module_header
-          // Check that scoped name contains no delimitor.
+          
+          // The module_header rule is common to template module, fixed
+          // module and instantiated template module. In the last
+          // case, a fully scoped name is allowed, but here we
+          // allow only an identifier (a scoped name of length
+          // 1). If not satisfied, we output a parse error with
+          // the appropriate message.
+          if ((tao_yyvsp[(1) - (1)].idlist)->length () != 1)
+            {
+              idl_global->err ()->syntax_error (
+                IDL_GlobalData::PS_ModuleIDSeen);
+            }            
         }
         at_least_one_formal_parameter
         {
@@ -5980,7 +6003,7 @@ formal_parameter_type
 at_least_one_formal_parameter
         : formal_parameter formal_parameters
         {
-//        formal_parameter formal_parameters
+// at_least_one_formal_parameter : formal_parameter formal_parameters
           if ($2 == 0)
             {
               ACE_NEW_RETURN ($2,
@@ -5991,6 +6014,22 @@ at_least_one_formal_parameter
           $2->enqueue_head (*$1);
           delete $1;
           $1 = 0;
+          
+          // The param added above is always the last one parsed,
+          // so we check for matches between sequence<T> & T here.
+          ACE_CString bad_id =
+            idl_global->check_for_seq_of_param (
+              $2);
+
+          if (!bad_id.empty ())
+            {
+              delete $2;
+              $2 = 0;
+              
+              idl_global->err ()->mismatch_seq_of_param (bad_id.c_str ());
+            }
+            
+          $<plval>$ = $2;
         }
         ;
 
@@ -6009,6 +6048,9 @@ formal_parameters
                               FE_Utils::T_PARAMLIST_INFO,
                               1);
             }
+
+          $1->enqueue_tail (*$4);
+          $<plval>$ = $1;
 
           bool so_far_so_good =
             idl_global->check_for_seq_of_param ($1,
