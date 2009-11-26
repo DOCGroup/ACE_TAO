@@ -308,7 +308,8 @@ namespace CIAO
           "Using default component server executable\n"));
         }
 
-      ACE_Process_Options options;
+      ACE_Process_Options options (true,
+        ACE_OS::strlen (path) + ACE_OS::strlen (cmd_line.c_str()) + ACE_OS::strlen (ior.in ()) + 15);
       if (options.command_line ("%s %s -c %s",
                                 path,
                                 cmd_line.c_str (),
