@@ -1,3 +1,13 @@
+Thu Nov 26 07:32:26 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/run_1_to_5.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_5_to_1.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_5_to_5.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/descriptors/run_test.pl:
+          Since the connector is now cleaning up the DDS environment, shutting
+          down takes considerably longer. Therefore extended the shutdown times.
+
 Wed Nov 25 16:22:26 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.h:
