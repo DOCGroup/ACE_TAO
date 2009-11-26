@@ -1,3 +1,20 @@
+Thu Nov 26 10:42:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/Hello/Receiver/Receiver.idl:
+        * examples/Hello/Receiver/Receiver_exec.h:
+        * examples/Hello/Receiver/Receiver_exec.cpp:
+          Reverted some of my last changes.
+          Removed timer functionality.
+
+        * examples/Hello/Sender/Sender.idl:
+        * examples/Hello/Sender/Sender_exec.h:
+        * examples/Hello/Sender/Sender_exec.cpp:
+        * examples/Hello/descriptors/DeploymentPlan.cdp:
+          Removed log_time attribute.
+
+        * examples/Hello/descriptors/run_test.pl:
+          No sleep necessary anymore.
+
 Thu Nov 26 10:19:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
