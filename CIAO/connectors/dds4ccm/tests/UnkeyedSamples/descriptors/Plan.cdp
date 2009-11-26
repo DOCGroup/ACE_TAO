@@ -174,7 +174,7 @@
         </type>
         <value>
           <!-- Sender->keys * Sender->iterations -->
-          <ushort>50</ushort>
+          <ushort>30</ushort>
         </value>
       </value>
     </configProperty>
@@ -250,7 +250,7 @@
           <kind>tk_ushort</kind>
         </type>
         <value>
-          <ushort>5</ushort>
+          <ushort>3</ushort>
         </value>
       </value>
     </configProperty>

@@ -187,7 +187,7 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
   Receiver_exec_i::ccm_remove (void)
   {
     CIAO_DEBUG ((LM_INFO, "Receiver_exec_i summary: received <%u>\n",
-                this->received_));
+                this->received_.value ()));
   }
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
