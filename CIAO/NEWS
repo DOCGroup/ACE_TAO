@@ -103,6 +103,9 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.7.4 and CIAO-0.7.5
   and build system on the same network should have its own unique id
   to get an isolated test environment.
 
+. DDS4CCM qos_profile attribute has to be used as library#profile. If
+  this is not set, we use default qos
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.3 and CIAO-0.7.4
 =======================================================
 
