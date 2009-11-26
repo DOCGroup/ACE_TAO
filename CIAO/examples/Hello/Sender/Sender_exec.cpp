@@ -8,9 +8,8 @@ namespace CIAO_Hello_Sender_Impl
   char*
   Message_Impl::get_message ()
   {
-    CORBA::String_var message;
     ACE_DEBUG ((LM_EMERGENCY, "Sender returning message: [%C]\n", component_.message_.in ()));
-    return CORBA::string_dup (message);
+    return CORBA::string_dup (component_.message_.in ());
   }
 
   Sender_exec_i::~Sender_exec_i ()
