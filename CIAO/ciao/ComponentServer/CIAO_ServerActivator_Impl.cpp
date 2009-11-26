@@ -289,8 +289,6 @@ namespace CIAO
     {
       CIAO_TRACE ("CIAO_ServerActivator_i::spawn_component_server");
 
-      ACE_Process_Options options;
-
       // Get my object reference
       CORBA::Object_var obj = this->poa_->servant_to_reference (this);
       CORBA::String_var ior = this->orb_->object_to_string (obj.in ());
@@ -310,10 +308,16 @@ namespace CIAO
           "Using default component server executable\n"));
         }
 
-      options.command_line ("%s %s -c %s",
-                            path,
-                            cmd_line.c_str (),
-                            ior.in ());
+      ACE_Process_Options options;
+      if (options.command_line ("%s %s -c %s",
+                                path,
+                                cmd_line.c_str (),
+                                ior.in ()) != 0)
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO
+                       "Failed to create commandline\n"));
+          throw Components::CreateFailure (CIAO::SERVER_SPAWN_FAILURE);
+        }
 
       options.avoid_zombies (0);
 
