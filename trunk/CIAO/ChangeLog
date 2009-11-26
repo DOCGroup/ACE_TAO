@@ -1,3 +1,12 @@
+Thu Nov 26 08:09:39 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+          Optimized logging for ConnectorStatusListener.
+
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Base/SetConnectorAttribute_Base.mpc:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Connector/SetConnectorAttribute_Connector.mpc:
+          Resolved fuzz warning (project names too long).
+
 Thu Nov 26 07:32:26 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/run_1_to_5.pl:
