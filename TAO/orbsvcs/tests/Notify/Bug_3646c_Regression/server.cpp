@@ -96,7 +96,7 @@ void loadunloadcycle()
     ACE_TEXT ("(%P|%t) loadunloadcycle - loading\n")
   ));
 
-  result = ACE_Service_Config::process_directive(ACE_TEXT_ALWAYS_CHAR(scpc_loadOrb));
+  result = ACE_Service_Config::process_directive(scpc_loadOrb);
   ACE_DEBUG((
     LM_DEBUG,
     ACE_TEXT ("(%P|%t) loadunloadcycle - loading ORB done\n")
@@ -125,7 +125,7 @@ void loadunloadcycle()
     ACE_TEXT ("(%P|%t) loadunloadcycle - v_rootPOA OK\n")
   ));
 
-  result = ACE_Service_Config::process_directive(ACE_TEXT_ALWAYS_CHAR(scpc_loadNotifyService));
+  result = ACE_Service_Config::process_directive(scpc_loadNotifyService);
   ACE_DEBUG((
     LM_DEBUG,
     ACE_TEXT ("(%P|%t) loadunloadcycle - loading NotifyService done\n")
