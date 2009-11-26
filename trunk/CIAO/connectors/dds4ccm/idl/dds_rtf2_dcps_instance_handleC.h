@@ -20,14 +20,11 @@
 
 // TAO_IDL - Generated from
 // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_root/root_ch.cpp:62
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace DDS
 {
   extern DDS4CCM_STUB_Export ::DDS::InstanceHandle_t const HANDLE_NIL;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
