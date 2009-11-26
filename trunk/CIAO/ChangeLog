@@ -1,3 +1,8 @@
+Thu Nov 26 19:03:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
+          Check if we successfully constructed the commandline
+
 Thu Nov 26 18:52:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/CIAO_ComponentServer_Task.cpp:
