@@ -1,3 +1,9 @@
+Thu Nov 26 13:29:51 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver_exec.cpp:
+          Removed CLINFO from log message in order to consistent with other
+          log messages.
+
 Thu Nov 26 13:11:06 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.h:
