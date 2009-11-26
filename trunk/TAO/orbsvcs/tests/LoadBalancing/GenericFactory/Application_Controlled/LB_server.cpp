@@ -11,7 +11,7 @@ ACE_RCSID (Application_Controlled,
 LB_server::LB_server (int argc, ACE_TCHAR **argv)
   : argc_ (argc)
   , argv_ (argv)
-  , ior_output_file_("obj.ior")
+  , ior_output_file_(ACE_TEXT("obj.ior"))
 {
 }
 
