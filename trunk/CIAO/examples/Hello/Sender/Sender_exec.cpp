@@ -27,11 +27,12 @@ namespace CIAO_Hello_Sender_Impl
         strcpy(message, tm.in ());
         strcat(message, " ");
         strcat(message, this->component_.message_.in ());
+        ACE_DEBUG ((LM_EMERGENCY, "Sender returning message: [%C]\n", component_.message_.in ()));
         return CORBA::string_dup(message);
       }
     else
       {
-        ACE_DEBUG ((LM_EMERGENCY, "Sender sending out message: [%C]\n", component_.message_.in ()));
+        ACE_DEBUG ((LM_EMERGENCY, "Sender returning message: [%C]\n", component_.message_.in ()));
         return CORBA::string_dup (message);
       }
   }
@@ -62,19 +63,6 @@ namespace CIAO_Hello_Sender_Impl
   Sender_exec_i::log_time ()
   {
     return log_time_;
-  }
-
-  void
-  Sender_exec_i::hertz (CORBA::Long hertz)
-  {
-    this->hertz_ = hertz;
-    ACE_DEBUG ((LM_EMERGENCY, "Sender_exec_i::Hertz:%d\n", this->hertz_));
-  }
-
-  CORBA::Long
-  Sender_exec_i::hertz ()
-  {
-    return this->hertz_;
   }
 
   ::Hello::COLOR_SELECTION
