@@ -1,3 +1,17 @@
+Thu Nov 26 12:18:07 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+
+        * connectors/dds4ccm/examples/Quoter/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/examples/Shapes/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/Get_Connection_Test/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/UnkeyedSamples/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/UnkeyedWriter/descriptors/USER_QOS_PROFILES.xml:
+          Removed these files since the default qos is coded.
+
 Thu Nov 26 12:12:36 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.cpp:
