@@ -184,6 +184,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>KeyedWriter_Library#KeyedWriter_Profile</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
   <instance xmi:id="Writer_ConnectorComponentInstance2">
     <name>Writer_ConnectorComponent2</name>
@@ -199,6 +210,17 @@
         </type>
         <value>
           <string>KeyedWriter</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>KeyedWriter_Library#KeyedWriter_Profile</string>
         </value>
       </value>
     </configProperty>
