@@ -36,11 +36,12 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_write (void)
         {
           if (this->library_name_ && this->profile_name_)
             {
-              this->supplier_publisher_ = this->domain_participant_->create_publisher_with_profile (
-                this->library_name_,
-                this->profile_name_,
-                                                                        0,
-                                                                        0);
+              this->supplier_publisher_ = this->domain_participant_->
+                create_publisher_with_profile (
+                  this->library_name_,
+                  this->profile_name_,
+                  0,
+                  0);
             }
           else
             {
@@ -61,20 +62,24 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_write (void)
 
           if (this->library_name_ && this->profile_name_)
             {
-              ::DDS::DataWriter_var dwv_tmp = this->supplier_publisher_->create_datawriter_with_profile (this->topic_.in (),
-                                                                                            this->library_name_,
-                                                                                            this->profile_name_,
-                                                                                            this->supplier_listener_.in (),
-                                                                                            DDS_OFFERED_DEADLINE_MISSED_STATUS | DDS_OFFERED_INCOMPATIBLE_QOS_STATUS | DDS_LIVELINESS_LOST_STATUS | DDS_PUBLICATION_MATCHED_STATUS);
+              ::DDS::DataWriter_var dwv_tmp = this->supplier_publisher_->
+                create_datawriter_with_profile (
+                  this->topic_.in (),
+                  this->library_name_,
+                  this->profile_name_,
+                  this->supplier_listener_.in (),
+                  DDS_OFFERED_DEADLINE_MISSED_STATUS | DDS_OFFERED_INCOMPATIBLE_QOS_STATUS | DDS_LIVELINESS_LOST_STATUS | DDS_PUBLICATION_MATCHED_STATUS);
               this->supplier_writer_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
             }
             else
             {
               ::DDS::DataWriterQos dwqos;
-              ::DDS::DataWriter_var dwv_tmp = this->supplier_publisher_->create_datawriter (this->topic_.in (),
-                                                                                            dwqos,
-                                                                                            this->supplier_listener_.in (),
-                                                                                            DDS_OFFERED_DEADLINE_MISSED_STATUS | DDS_OFFERED_INCOMPATIBLE_QOS_STATUS | DDS_LIVELINESS_LOST_STATUS | DDS_PUBLICATION_MATCHED_STATUS);
+              ::DDS::DataWriter_var dwv_tmp = this->supplier_publisher_->
+                create_datawriter (
+                  this->topic_.in (),
+                  dwqos,
+                  this->supplier_listener_.in (),
+                  DDS_OFFERED_DEADLINE_MISSED_STATUS | DDS_OFFERED_INCOMPATIBLE_QOS_STATUS | DDS_LIVELINESS_LOST_STATUS | DDS_PUBLICATION_MATCHED_STATUS);
               this->supplier_writer_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
             }
         }
@@ -98,18 +103,20 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen (void)
         {
           if (this->library_name_ && this->profile_name_)
             {
-              this->listen_subscriber_ = this->domain_participant_->create_subscriber_with_profile (
-                this->library_name_,
-                this->profile_name_,
-                                                                           0,
-                                                                           0);
+              this->listen_subscriber_ = this->domain_participant_->
+                create_subscriber_with_profile (
+                  this->library_name_,
+                  this->profile_name_,
+                  0,
+                  0);
             }
           else
             {
               ::DDS::SubscriberQos sqos;
-              this->listen_subscriber_ = this->domain_participant_->create_subscriber (sqos,
-                                                                           0,
-                                                                           0);
+              this->listen_subscriber_ = this->domain_participant_->
+                create_subscriber (sqos,
+                0,
+                0);
             }
         }
 
@@ -127,20 +134,22 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen (void)
           if (this->library_name_ && this->profile_name_)
             {
               this->push_consumer_data_ =
-                  this->listen_subscriber_->create_datareader_with_profile (this->topic_.in (),
-                                                               this->library_name_,
-                                                               this->profile_name_,
-                                                               this->__listen_datareaderlistener.in (),
-                                                               DDS_DATA_AVAILABLE_STATUS | DDS_REQUESTED_DEADLINE_MISSED_STATUS | DDS_SAMPLE_LOST_STATUS | DDS_REQUESTED_INCOMPATIBLE_QOS_STATUS);
+                  this->listen_subscriber_->create_datareader_with_profile (
+                    this->topic_.in (),
+                    this->library_name_,
+                    this->profile_name_,
+                    this->__listen_datareaderlistener.in (),
+                    DDS_DATA_AVAILABLE_STATUS | DDS_REQUESTED_DEADLINE_MISSED_STATUS | DDS_SAMPLE_LOST_STATUS | DDS_REQUESTED_INCOMPATIBLE_QOS_STATUS);
             }
           else
             {
               ::DDS::DataReaderQos drqos;
               this->push_consumer_data_ =
-                  this->listen_subscriber_->create_datareader (this->topic_.in (),
-                                                               drqos,
-                                                               this->__listen_datareaderlistener.in (),
-                                                               DDS_DATA_AVAILABLE_STATUS | DDS_REQUESTED_DEADLINE_MISSED_STATUS | DDS_SAMPLE_LOST_STATUS | DDS_REQUESTED_INCOMPATIBLE_QOS_STATUS);
+                  this->listen_subscriber_->create_datareader (
+                    this->topic_.in (),
+                    drqos,
+                    this->__listen_datareaderlistener.in (),
+                    DDS_DATA_AVAILABLE_STATUS | DDS_REQUESTED_DEADLINE_MISSED_STATUS | DDS_SAMPLE_LOST_STATUS | DDS_REQUESTED_INCOMPATIBLE_QOS_STATUS);
             }
         }
 
@@ -149,20 +158,22 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen (void)
           if (this->profile_name_ && this->library_name_)
             {
               this->pull_consumer_fresh_data_ =
-                  this->listen_subscriber_->create_datareader_with_profile (this->topic_.in (),
-                                                               this->library_name_,
-                                                               this->profile_name_,
-                                                               this->__listen_datareaderlistener.in (),
-                                                               DDS_DATA_AVAILABLE_STATUS | DDS_REQUESTED_DEADLINE_MISSED_STATUS | DDS_SAMPLE_LOST_STATUS | DDS_REQUESTED_INCOMPATIBLE_QOS_STATUS);
+                  this->listen_subscriber_->create_datareader_with_profile (
+                    this->topic_.in (),
+                    this->library_name_,
+                    this->profile_name_,
+                    this->__listen_datareaderlistener.in (),
+                    DDS_DATA_AVAILABLE_STATUS | DDS_REQUESTED_DEADLINE_MISSED_STATUS | DDS_SAMPLE_LOST_STATUS | DDS_REQUESTED_INCOMPATIBLE_QOS_STATUS);
             }
           else
             {
               ::DDS::DataReaderQos drqos;
               this->pull_consumer_fresh_data_ =
-                  this->listen_subscriber_->create_datareader (this->topic_.in (),
-                                                               drqos,
-                                                               this->__listen_datareaderlistener.in (),
-                                                               DDS_DATA_AVAILABLE_STATUS | DDS_REQUESTED_DEADLINE_MISSED_STATUS | DDS_SAMPLE_LOST_STATUS | DDS_REQUESTED_INCOMPATIBLE_QOS_STATUS);
+                  this->listen_subscriber_->create_datareader (
+                    this->topic_.in (),
+                    drqos,
+                    this->__listen_datareaderlistener.in (),
+                    DDS_DATA_AVAILABLE_STATUS | DDS_REQUESTED_DEADLINE_MISSED_STATUS | DDS_SAMPLE_LOST_STATUS | DDS_REQUESTED_INCOMPATIBLE_QOS_STATUS);
             }
 
         }
