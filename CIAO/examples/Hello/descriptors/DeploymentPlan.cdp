@@ -197,6 +197,17 @@
       </value>
     </configProperty>
     <configProperty>
+      <name>rate</name>
+      <value>
+        <type>
+          <kind>tk_short</kind>
+        </type>
+        <value>
+          <short>1</short>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
       <value>
         <type>

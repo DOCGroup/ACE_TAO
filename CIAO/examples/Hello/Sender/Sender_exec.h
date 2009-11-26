@@ -56,13 +56,6 @@ namespace CIAO_Hello_Sender_Impl
     /// Operation to get the value of the attribute "log_time"
     virtual bool log_time ();
 
-
-    /// Operation to set the value of the attribute "hertz"
-    virtual void hertz (CORBA::Long hertz);
-
-    /// Operation to get the value of the attribute "hertz"
-    virtual CORBA::Long hertz ();
-
     /* Operations for obtaining the interface reference. */
     /* This method will be used in the assembly face so the
      * ObjRef of this read_message facet will be sent to the
@@ -100,8 +93,6 @@ namespace CIAO_Hello_Sender_Impl
     CORBA::String_var message_;
 
     CORBA::Boolean log_time_;
-
-    CORBA::Long hertz_;
 
     ::Hello::COLOR_SELECTION color_;
 
