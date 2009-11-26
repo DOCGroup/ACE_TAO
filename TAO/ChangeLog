@@ -1,3 +1,9 @@
+Thu Nov 26 12:45:41 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * tests/Bug_1361_Regression/run_test.pl:
+
+          Test is converted to use new test framework and added to fuzz build.
+
 Thu Nov 26 10:42:27 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/Notify/Bug_3646c_Regression/server.cpp:

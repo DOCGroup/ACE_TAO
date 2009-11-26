@@ -67,7 +67,6 @@ if ($client->PutFile ($iorbase) == -1) {
 local $start_time = time();
 local $max_running_time = 720;
 local $elapsed = time() - $start_time;
-my $p = $SV->{'PROCESS'};
 
 if ($ARGV[0] eq '-quick')  {
     $elapsed = 0;
@@ -101,21 +100,19 @@ while (($elapsed < $max_running_time) ) {
 
     print STDERR "checking server alive\n";
 
-    my $pid = waitpid ($SV->{PROCESS}, &WNOHANG);
+    my $res = $SV->Wait(1);
 
-    if ($pid != 0 && $? != -1) {
-        $SV->check_return_value ($?);
+    if ($res != -1) {
         $server_died = 1;
         last;
     }
 
     $elapsed = time() - $start_time;
-    sleep (1);
 }
 
 if (!$server_died) {
     my $shutdown_status = $SH->SpawnWaitKill($shutdown->ProcessStartWaitInterval());
-    if ($$shutdown_status != 0) {
+    if ($shutdown_status != 0) {
         print STDERR "ERROR: shutdown returned $$shutdown_status\n";
         $status = 1;
     }
