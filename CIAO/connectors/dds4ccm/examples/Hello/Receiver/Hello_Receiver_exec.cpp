@@ -162,6 +162,13 @@ namespace CIAO_Hello_Receiver_Impl
           ACE_TEXT ("ConnectorStatusListener_exec_i::on_unexpected_status\n")));
   }
 
+  void ConnectorStatusListener_exec_i::on_subscription_matched (
+    ::DDS::DataReader_ptr /*the_reader*/,
+    const ::DDS::SubscriptionMatchedStatus & /*status*/)
+  {
+    CIAO_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
+          ACE_TEXT ("ConnectorStatusListener_exec_i::on_subscription_matched\n")));
+  }  
 
   //============================================================
   // Component Executor Implementation Class: Receiver_exec_iDDSHello_Listener_exec_i ();
