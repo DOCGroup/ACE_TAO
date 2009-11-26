@@ -1,3 +1,10 @@
+Thu Nov 26 19:30:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
+          When creating the process options, calculate the size of the
+          commandline, the default of 1024 can be too small if the
+          system has multiple network interfaces
+
 Thu Nov 26 19:03:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
