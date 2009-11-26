@@ -1,3 +1,16 @@
+Thu Nov 26 12:40:18 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+          Resolved test errors. Expected samples should always be in the
+          deployment plan.
+
+        * connectors/dds4ccm/examples/Hello/descriptors/1_to_5.cdp:
+          Added expected samples.
+
+        * connectors/dds4ccm/tests/KeyedWriter/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/KeyedWriter/descriptors/USER_QOS_PROFILES.xml:
+          Resolved test error by adding qos_profile to the deployment plan.
+
 Thu Nov 26 12:18:07 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
 

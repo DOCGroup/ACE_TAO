@@ -175,7 +175,7 @@ namespace CIAO_Hello_Receiver_Impl
   //============================================================
 
   Receiver_exec_i::Receiver_exec_i (void)
-    : expected_ (100),
+    : expected_ (0),
       received_ (0),
       lost_ (0)
   {
