@@ -1,3 +1,12 @@
+Thu Nov 26 10:42:27 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * orbsvcs/tests/Notify/Bug_3646c_Regression/server.cpp:
+        * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/client.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/LB_server.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/LB_server.cpp:
+
+          Tests are converted to use new test framework and added to fuzz build.
+
 Wed Nov 25 15:37:11 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/RTCORBA/RT_ORB_Loader.cpp:

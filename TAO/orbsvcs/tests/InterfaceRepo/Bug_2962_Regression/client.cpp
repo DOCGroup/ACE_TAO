@@ -6,8 +6,8 @@
 #include "tao/IFR_Client/IFR_ComponentsC.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ifr_ior= "file://ifr.ior";
-const ACE_TCHAR *member_type_id= "IDL:arrayOfStruct:1.0";
+const ACE_TCHAR *ifr_ior= ACE_TEXT("file://ifr.ior");
+const ACE_TCHAR *member_type_id= ACE_TEXT("IDL:arrayOfStruct:1.0");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -65,7 +65,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     ACE_DEBUG ((LM_DEBUG, "Looking up %C", member_type_id ));
     CORBA::Contained_var
-      dependency = ifr->lookup_id (member_type_id);
+      dependency = ifr->lookup_id (ACE_TEXT_ALWAYS_CHAR(member_type_id));
     if (CORBA::is_nil (dependency.in ()))
     {
       ACE_DEBUG ((LM_DEBUG, " *** failed ***\n" ));
