@@ -31,7 +31,6 @@ namespace CIAO
 {
   class Session_Container;
   class Servant_Activator;
-  class Home_Servant_Impl_Base;
 
   namespace Deployment
   {

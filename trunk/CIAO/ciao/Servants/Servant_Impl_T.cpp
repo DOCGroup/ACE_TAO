@@ -29,9 +29,12 @@ namespace CIAO
             typename CONTEXT>
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::~Servant_Impl (void)
   {
-    CIAO_DEBUG ((LM_INFO, "Servant_Impl_T::~Servant_Impl - "
-                 "Executor object reference count is %u\n",
-                 this->executor_->_refcount_value ()));
+    if (this->executor_->_refcount_value () > 1)
+      {
+        CIAO_DEBUG ((LM_INFO, "Servant_Impl_T::~Servant_Impl - "
+                     "Executor object reference count is %u\n",
+                     this->executor_->_refcount_value ()));
+      }
 
     this->context_->_remove_ref ();
   }

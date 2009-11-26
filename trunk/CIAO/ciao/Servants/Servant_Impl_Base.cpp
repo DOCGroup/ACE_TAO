@@ -15,6 +15,10 @@ namespace CIAO
       home_servant_ (home_servant),
       container_ (Container::_duplicate (c))
   {
+    if (home_servant_)
+      {
+        home_servant_->_add_ref ();
+      }
   }
 
   Servant_Impl_Base::~Servant_Impl_Base (void)
@@ -113,7 +117,11 @@ namespace CIAO
                                            oid.out ());
 
       if (this->home_servant_)
-        this->home_servant_->update_component_map (oid);
+        {
+          this->home_servant_->update_component_map (oid);
+          this->home_servant_->_remove_ref ();
+          this->home_servant_ = 0;
+        }
     }
     catch (const CORBA::Exception& ex)
     {
