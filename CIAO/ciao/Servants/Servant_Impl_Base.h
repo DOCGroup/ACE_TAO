@@ -98,15 +98,11 @@ namespace CIAO
 
     virtual CORBA::IRObject_ptr get_component_def (void);
 
-    virtual Components::SessionComponent_ptr get_executor (void);
+    virtual Components::SessionComponent_ptr get_executor (void) = 0;
 
-    virtual void configuration_complete (void);
+    virtual void activate_component (void) = 0;
 
-    virtual void activate_component (void);
-
-    virtual void passivate_component (void);
-
-    virtual ::Components::CCMHome_ptr get_ccm_home (void);
+    virtual void passivate_component (void) = 0;
 
     virtual void remove (void);
 
@@ -143,7 +139,7 @@ namespace CIAO
     get_named_publishers (const ::Components::NameList & names);
 
     /// Operation to set attributes on the component.
-    virtual void set_attributes (const Components::ConfigValues &descr);
+    virtual void set_attributes (const Components::ConfigValues &descr) = 0;
 
     // Creates and returns the StandardConfigurator for the component.
     virtual ::Components::StandardConfigurator_ptr
@@ -168,8 +164,6 @@ namespace CIAO
     virtual ::Components::EmitterDescriptions * get_all_emitters (void);
 
     virtual ::Components::PublisherDescriptions * get_all_publishers (void);
-
-    virtual ::CORBA::Boolean same_component (::CORBA::Object_ptr object_ref);
 
     virtual ::Components::Cookie * connect (const char * name,
                                             ::CORBA::Object_ptr connection);
