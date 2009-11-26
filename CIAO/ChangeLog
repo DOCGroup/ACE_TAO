@@ -1,3 +1,8 @@
+Thu Nov 26 13:59:39 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          KeyedWriter is not fixed, yet.
+
 Thu Nov 26 13:48:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Servant_Impl_Base.cpp:
