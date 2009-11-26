@@ -123,7 +123,7 @@ Counting_Test_Producer::svc (void)
   // correct.
   // Also, to be sure there's not just 1 producer and 1 consumer pinging
   // back and forth, make the producers randomly delay between blocks.
-  ACE_OS::srand ((u_int) ACE_OS::time ());
+  ACE_OS::srand (static_cast<ACE_RANDR_TYPE> (ACE_OS::time ()));
   int multiple = ACE_OS::rand () % 10;
   int delay_ms = (ACE_OS::rand () % 10) / 2;
   // The delay usually causes the test to time out in the automated
