@@ -191,8 +191,9 @@ namespace CIAO
                    "CIAO_ServerActivator_i::create_component_server - "
                    "Attempting to spawn ComponentServer with UUID %C\n",
                    server->uuid_.c_str ()));
+
       // Now we need to get a copy of the one that was inserted...
-      pid_t pid = this->spawn_component_server (*server, cmd_options);
+      pid_t const pid = this->spawn_component_server (*server, cmd_options);
       ACE_UNUSED_ARG (pid);
 
       ACE_Time_Value timeout (this->spawn_delay_);
