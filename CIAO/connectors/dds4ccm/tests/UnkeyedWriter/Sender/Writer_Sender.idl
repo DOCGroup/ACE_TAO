@@ -20,7 +20,6 @@ module Writer
     port CCM_DDS::WriterTest::DDS_Write info_write;
     attribute unsigned short rate;
     attribute unsigned short iterations;
-    attribute unsigned short keys;
   };
 };
 

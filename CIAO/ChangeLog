@@ -1,3 +1,19 @@
+Thu Nov 26 15:32:37 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/KeyedWriter/README:
+        * connectors/dds4ccm/tests/UnkeyedSamples/README:
+          Added test description
+
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender.idl:
+          Removed keys.
+
+        * connectors/dds4ccm/tests/UnkeyedWriter/descriptors/Plan.cdp:
+          Removed keys. Added qos_profile.
+
+        * connectors/dds4ccm/tests/UnkeyedWriter/descriptors/USER_QOS_PROFILES.xml:
+          Started with configuring DDS in order to test the unkeyed
+          writer.
+
 Thu Nov 26 13:59:39 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
