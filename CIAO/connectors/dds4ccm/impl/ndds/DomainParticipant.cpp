@@ -74,9 +74,10 @@ namespace CIAO
       }
 
       ::DDS::Publisher_ptr
-      RTI_DomainParticipant_i::create_publisher (const ::DDS::PublisherQos & /*qos*/,
-                                                 ::DDS::PublisherListener_ptr a_listener,
-                                                 ::DDS::StatusMask mask)
+      RTI_DomainParticipant_i::create_publisher (
+        const ::DDS::PublisherQos & /*qos*/,
+        ::DDS::PublisherListener_ptr a_listener,
+        ::DDS::StatusMask mask)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::create_publisher");
 

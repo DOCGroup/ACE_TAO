@@ -1,3 +1,16 @@
+Thu Nov 26 10:50:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Connector/SetConnectorAttribute_Connector_exec.cpp:
+          Give more feedback on the test itself
+
+        * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp
+          Layout changes, create topic with profile, and fixed key_fields set/get methods
+
 Thu Nov 26 10:42:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * examples/Hello/Receiver/Receiver.idl:

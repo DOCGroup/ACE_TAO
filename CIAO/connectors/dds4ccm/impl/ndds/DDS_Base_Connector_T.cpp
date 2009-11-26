@@ -27,6 +27,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::DomainId_t
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::domain_id (void)
 {
+  CIAO_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::domain_id");
   return this->domain_id_;
 }
 
@@ -35,6 +36,7 @@ void
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::domain_id (
   ::DDS::DomainId_t domain_id)
 {
+  CIAO_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::domain_id");
   if (this->configuration_complete_)
     {
       throw ::CCM_DDS::NonChangeable ();
@@ -49,6 +51,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 char *
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile (void)
 {
+  CIAO_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile");
   return CORBA::string_dup (this->qos_profile_.in ());
 }
 
@@ -57,6 +60,7 @@ void
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile (
   const char * qos_profile)
 {
+  CIAO_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile");
   if (this->configuration_complete_)
     {
       throw ::CCM_DDS::NonChangeable ();
@@ -71,6 +75,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
 {
+  CIAO_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
   this->configuration_complete_ = true;
 }
 
