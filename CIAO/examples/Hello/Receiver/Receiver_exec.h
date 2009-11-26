@@ -13,34 +13,9 @@
 
 #include "Receiver_exec_export.h"
 #include "tao/LocalObject.h"
-#include "ace/Reactor.h"
 
 namespace CIAO_Hello_Receiver_Impl
 {
-  class Receiver_exec_i;
-  /**
-  * @class reader activity generator
-  *
-  * @brief an active object used by Receiver to perform a periodical read action
-  *
-  */
-  class read_action_Generator
-    : public ACE_Event_Handler
-  {
-  public:
-    read_action_Generator (Receiver_exec_i &callback);
-
-    ~read_action_Generator ();
-
-    /// Handle the timeout.
-    virtual int handle_timeout (const ACE_Time_Value &tv,
-                                const void *arg);
-
-  private:
-    /// Maintains a handle that actually process the event
-    Receiver_exec_i &pulse_callback_;
-
-  };
   /**
    * @class Receiver_exec_i
    *
@@ -64,17 +39,9 @@ namespace CIAO_Hello_Receiver_Impl
     /// Operation to get the value of the attribute "iterations"
     virtual CORBA::Short iterations ();
 
-    /// Operation to set the value of the attribute "rate"
-    virtual void rate (CORBA::Short rate);
-
-    /// Operation to get the value of the attribute "rate"
-    virtual CORBA::Short rate ();
-
     // Operation which will be called upon receiving the timeout event.
     virtual void
     push_click_in (::Hello::TimeOut *ev);
-
-    void tick ();
 
     // Operations from Components::SessionComponent
     virtual void set_session_context (::Components::SessionContext_ptr ctx);
@@ -92,10 +59,6 @@ namespace CIAO_Hello_Receiver_Impl
   private:
     CORBA::String_var message_;
     CORBA::Short iterations_;
-    CORBA::Short iteration_;
-    CORBA::Short rate_;
-    read_action_Generator *ticker_;
-    Hello::ReadMessage_var rev_;
   };
 
   /**

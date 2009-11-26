@@ -32,7 +32,6 @@ module Hello
     publishes TimeOut click_out;
 
     attribute string local_message;
-    attribute boolean log_time;
     // A test attribute to test setting attributes through XML
     attribute COLOR_SELECTION color;
   };

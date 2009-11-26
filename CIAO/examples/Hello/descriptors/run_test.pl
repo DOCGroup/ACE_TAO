@@ -187,9 +187,6 @@ if ($result != 0) {
     $status = 1;
 }
 
-print "Let the application run for 60 seconds\n";
-sleep (60);
-
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";
 print "by running dance_plan_launcher.exe with -k file://EM.ior -x DeploymentPlan.cdp -q\n";
