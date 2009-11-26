@@ -1,3 +1,8 @@
+Thu Nov 26 12:12:36 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.cpp:
+          Resolved compiler warnings on linux.
+
 Thu Nov 26 11:43:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Get_Connection_Test/Receiver/Get_Connection_Test_Receiver_exec.cpp:
