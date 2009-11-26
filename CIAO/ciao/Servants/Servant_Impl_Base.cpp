@@ -42,13 +42,6 @@ namespace CIAO
   }
 
   void
-  Servant_Impl_Base::configuration_complete (void)
-  {
-    CIAO_TRACE("Servant_Impl_Base::configuration_complete (void)");
-    // CIAO to-do
-  }
-
-  void
   Servant_Impl_Base::remove (void)
   {
     CIAO_TRACE("Servant_Impl_Base::remove (void)");
@@ -648,42 +641,6 @@ namespace CIAO
     return configurator._retn ();
   }
 
-  void
-  Servant_Impl_Base::activate_component (void)
-  {
-    CIAO_TRACE ("Servant_Impl_Base::activate_component");
-    throw CORBA::NO_IMPLEMENT ();
-  }
-
-
-  void
-  Servant_Impl_Base::passivate_component (void)
-  {
-    CIAO_TRACE ("Servant_Impl_Base::passivate_component");
-    throw CORBA::NO_IMPLEMENT ();
-  }
-
-  Components::SessionComponent_ptr
-  Servant_Impl_Base::get_executor (void)
-  {
-    CIAO_TRACE ("Servant_Impl_Base::get_executor");
-    throw CORBA::NO_IMPLEMENT ();
-  }
-
-  void
-  Servant_Impl_Base::set_attributes (const Components::ConfigValues &/*descr*/)
-  {
-    CIAO_TRACE ("Servant_Impl_Base::set_attributes");
-    throw CORBA::NO_IMPLEMENT ();
-  }
-
-  ::Components::CCMHome_ptr
-  Servant_Impl_Base::get_ccm_home (void)
-  {
-    CIAO_TRACE ("Servant_Impl_Base::get_ccm_home");
-    throw CORBA::NO_IMPLEMENT ();
-  }
-
   PortableServer::POA_ptr
   Servant_Impl_Base::_default_POA (void)
   {
@@ -736,14 +693,6 @@ namespace CIAO
     CIAO_TRACE ("Servant_Impl_Base::get_all_publishers");
     throw CORBA::NO_IMPLEMENT ();
   }
-
-  ::CORBA::Boolean
-  Servant_Impl_Base::same_component (::CORBA::Object_ptr)
-  {
-    CIAO_TRACE ("Servant_Impl_Base::same_component");
-    throw CORBA::NO_IMPLEMENT ();
-  }
-
 
   ::Components::Cookie *
   Servant_Impl_Base::connect (const char *,
