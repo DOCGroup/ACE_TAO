@@ -37,6 +37,12 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttribute_Connector_Impl
             CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("domain_id has been properly set\n")));
           }
       }
+    catch (const CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("Exception caught:");
+        CIAO_ERROR ((LM_ERROR,
+          ACE_TEXT ("ERROR: test_domain_id : Exception caught\n")));
+      }
     catch (...)
       {
         CIAO_ERROR ((LM_ERROR,
@@ -61,6 +67,12 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttribute_Connector_Impl
             CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("qos_profile has been properly set\n")));
           }
       }
+    catch (const CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("Exception caught:");
+        CIAO_ERROR ((LM_ERROR,
+          ACE_TEXT ("ERROR: test_qos_profile : Exception caught\n")));
+      }
     catch (...)
       {
         CIAO_ERROR ((LM_ERROR,
@@ -84,6 +96,12 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttribute_Connector_Impl
           {
             CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("topic_name has been properly set\n")));
           }
+      }
+    catch (const CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("Exception caught:");
+        CIAO_ERROR ((LM_ERROR,
+          ACE_TEXT ("ERROR: test_topic_name : Exception caught\n")));
       }
     catch (...)
       {

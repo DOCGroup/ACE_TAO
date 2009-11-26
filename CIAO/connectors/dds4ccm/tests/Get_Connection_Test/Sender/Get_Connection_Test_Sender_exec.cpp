@@ -85,17 +85,33 @@ namespace CIAO_Get_Connection_Test_Sender_Impl
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Sender : get updater failed\n")));
       }
+    else
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender : Get updater passed\n")));
+      }
     if (!this->writer_ok_)
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Sender : get writer failed\n")));
+      }
+    else
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender : Get writer passed\n")));
       }
     if (!this->updater_dds_datawriter_ok_)
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Sender : get dds updater failed\n")));
       }
+    else
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender : Get dds updater passed\n")));
+      }
     if (!this->writer_dds_datawriter_ok_)
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Sender : get dds writer failed\n")));
+      }
+    else
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender : Get dds writer passed\n")));
       }
   }
 

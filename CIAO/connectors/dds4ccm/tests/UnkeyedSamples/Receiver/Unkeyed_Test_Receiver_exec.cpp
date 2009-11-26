@@ -186,14 +186,8 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-    CIAO_DEBUG ((LM_INFO, "Receiver_exec_i summary: received <%u> - expected <%d>\n",
-                this->received_,
-                this->expected_));
-    if (this->received_ < this->expected_)
-      {
-        CIAO_ERROR ((LM_ERROR, "ERROR : Expected to receive %u samples, actually got %u\n",
-            this->expected_, this->received_));
-      }
+    CIAO_DEBUG ((LM_INFO, "Receiver_exec_i summary: received <%u>\n",
+                this->received_));
   }
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
