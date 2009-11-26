@@ -221,7 +221,7 @@ print "by running dance_plan_launcher.exe with -k file://$ior_emfile -x $cdp_fil
 $E =
   new PerlACE::Process ("$DANCE_ROOT/bin/dance_plan_launcher",
                         "-k file://$ior_emfile -x $cdp_file -q");
-$E->SpawnWaitKill ($tg_executor->ProcessStopWaitInterval ());
+$E->SpawnWaitKill (5 * $tg_executor->ProcessStopWaitInterval ());
 
 print "Invoking executor - stop the application -\n";
 print "by running dance_plan_launcher.exe with -k file://$ior_emfile -x $cdp_file_two -q\n";
@@ -229,7 +229,7 @@ print "by running dance_plan_launcher.exe with -k file://$ior_emfile -x $cdp_fil
 $E2 =
   new PerlACE::Process ("$DANCE_ROOT/bin/dance_plan_launcher",
                         "-k file://$ior_emfile -x $cdp_file_two -q");
-$E2->SpawnWaitKill ($tg_executor->ProcessStopWaitInterval ());
+$E2->SpawnWaitKill (5 * $tg_executor->ProcessStopWaitInterval ());
 
 
 print "Executor returned.\n";
