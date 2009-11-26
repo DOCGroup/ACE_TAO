@@ -54,11 +54,12 @@ namespace CIAO
 
 
       ::DDS::DomainParticipant_ptr
-      RTI_DomainParticipantFactory_i::create_participant_with_profile (::DDS::DomainId_t domain_id,
-                                                          const char* library_name,
-                                                          const char *profile_name,
-                                                           ::DDS::DomainParticipantListener_ptr /*a_listener*/,
-                                                           ::DDS::StatusMask mask)
+      RTI_DomainParticipantFactory_i::create_participant_with_profile (
+        ::DDS::DomainId_t domain_id,
+        const char* library_name,
+        const char *profile_name,
+        ::DDS::DomainParticipantListener_ptr /*a_listener*/,
+        ::DDS::StatusMask mask)
       {
         CIAO_TRACE ("RTI_DomainParticipantFactory_i::create_participant_with_profile");
 
