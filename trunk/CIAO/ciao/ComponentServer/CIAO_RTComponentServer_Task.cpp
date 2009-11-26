@@ -62,7 +62,7 @@ namespace CIAO
     }
 
     RTComponentServer_Task::RTComponentServer_Task (int argc, ACE_TCHAR **argv) :
-      static_threads_ (1),
+      static_threads_ (0),
       dynamic_threads_ (0)
     {
       CIAO_TRACE ("CIAO_RTComponentServer_Task::CIAO_RTComponentServer_Task ()");
@@ -126,36 +126,43 @@ namespace CIAO
       CORBA::ULong max_buffered_requests = 0;
       CORBA::ULong max_request_buffer_size = 0;
 
-      object =
-        this->orb_->resolve_initial_references ("RTCurrent");
-
-      RTCORBA::Current_var current =
-        RTCORBA::Current::_narrow (object.in ());
-
-      RTCORBA::Priority default_thread_priority =
-        get_implicit_thread_CORBA_priority (this->orb_.in ());
-
-      RTCORBA::ThreadpoolId threadpool_id_1 =
-        rt_orb->create_threadpool (stacksize,
-                                   this->static_threads_,
-                                   this->dynamic_threads_,
-                                   default_thread_priority,
-                                   allow_request_buffering,
-                                   max_buffered_requests,
-                                   max_request_buffer_size);
-
-      CORBA::Policy_var threadpool_policy_1 =
-        rt_orb->create_threadpool_policy (threadpool_id_1);
-
-
       CIAO_DEBUG ((LM_TRACE, CLINFO
                    "RTComponentServer_Task::svc - "
                    "Creating server implementation object\n"));
 
-      CORBA::PolicyList policies (1); policies.length (1);
+      CORBA::PolicyList policies (0);
 
-      policies[0] =
-        CORBA::Policy::_duplicate (threadpool_policy_1);
+      if (this->static_threads_ > 0)
+        {
+          object =
+            this->orb_->resolve_initial_references ("RTCurrent");
+
+          RTCORBA::Current_var current =
+            RTCORBA::Current::_narrow (object.in ());
+
+          RTCORBA::Priority default_thread_priority =
+            get_implicit_thread_CORBA_priority (this->orb_.in ());
+
+          RTCORBA::ThreadpoolId threadpool_id_1 =
+            rt_orb->create_threadpool (stacksize,
+                                       this->static_threads_,
+                                       this->dynamic_threads_,
+                                       default_thread_priority,
+                                       allow_request_buffering,
+                                       max_buffered_requests,
+                                       max_request_buffer_size);
+
+          CORBA::Policy_var threadpool_policy_1 =
+            rt_orb->create_threadpool_policy (threadpool_id_1);
+
+          policies.length (2);
+          policies[0] =
+            CORBA::Policy::_duplicate (threadpool_policy_1);
+
+          policies[1] =
+            rt_orb->create_priority_model_policy (RTCORBA::SERVER_DECLARED,
+                                                  0);
+        }
 
       // Create the POA under the RootPOA.
       PortableServer::POA_var poa =

@@ -24,8 +24,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
       cs.run ();
 
       // Wait for the threads to exit.
-      ACE_Thread_Manager::instance ()->wait ();
-
+      //ACE_Thread_Manager::instance ()->wait ();
     }
   catch (CIAO::Deployment::RTComponentServer_Task::Error &e)
     {
