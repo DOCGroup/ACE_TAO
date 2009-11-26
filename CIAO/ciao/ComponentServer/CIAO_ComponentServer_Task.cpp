@@ -110,7 +110,6 @@ namespace CIAO
           ::CIAO::Utility::write_IOR (this->output_file_.c_str (), ior.in ());
         }
 
-
       if (this->callback_ior_str_ != ACE_TEXT(""))
         {
           CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::run - "
