@@ -29,6 +29,12 @@ namespace CIAO_NonChangeable_NonChangeable_Connector_Impl
           ACE_TEXT ("test_domain_id : Expected exception caught\n")));
         nonchangeable_caught = true;
       }
+    catch (const CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("Exception caught:");
+        CIAO_ERROR ((LM_ERROR,
+          ACE_TEXT ("ERROR: test_domain_id : Exception caught\n")));
+      }
     catch (...)
       {
         CIAO_ERROR ((LM_ERROR, 
@@ -54,6 +60,12 @@ namespace CIAO_NonChangeable_NonChangeable_Connector_Impl
         CIAO_DEBUG ((LM_DEBUG,
           ACE_TEXT ("test_qos_profile : Expected exception caught\n")));
         nonchangeable_caught = true;
+      }
+    catch (const CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("Exception caught:");
+        CIAO_ERROR ((LM_ERROR,
+          ACE_TEXT ("ERROR: test_qos_profile : Exception caught\n")));
       }
     catch (...)
       {
@@ -81,6 +93,12 @@ namespace CIAO_NonChangeable_NonChangeable_Connector_Impl
           ACE_TEXT ("test_topic_name : Expected exception caught\n")));
         nonchangeable_caught = true;
       }
+    catch (const CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("Exception caught:");
+        CIAO_ERROR ((LM_ERROR,
+          ACE_TEXT ("ERROR: test_topic_name : Exception caught\n")));
+      }
     catch (...)
       {
         CIAO_ERROR ((LM_ERROR, 
@@ -107,6 +125,12 @@ namespace CIAO_NonChangeable_NonChangeable_Connector_Impl
         CIAO_DEBUG ((LM_DEBUG,
           ACE_TEXT ("test_key_fields : Expected exception caught\n")));
         nonchangeable_caught = true;
+      }
+    catch (const CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("Exception caught:");
+        CIAO_ERROR ((LM_ERROR,
+          ACE_TEXT ("ERROR: test_key_fields : Exception caught\n")));
       }
     catch (...)
       {
