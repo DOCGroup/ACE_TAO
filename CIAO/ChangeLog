@@ -1,3 +1,16 @@
+Thu Nov 26 12:56:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Session/Session_Container.h:
+          Removed not needed forward declaration
+
+        * ciao/Servants/Servant_Impl_Base.cpp:
+          Keep a reference to the home servant so that it doesn't get deleted
+          when we have a reference to it
+
+        * ciao/Servants/Servant_Impl_T.cpp:
+          Only print the refcount of the executor when it is > 1, than we have
+          a leak
+
 Thu Nov 26 12:54:39 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/KeyedWriter/Sender/Writer_Sender_exec.cpp:
