@@ -264,17 +264,18 @@ namespace CIAO_Hello_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-    CIAO_DEBUG ((LM_INFO, "Receiver_exec_i received %u messages and lost %u messages\n",
+    CIAO_DEBUG ((LM_INFO, "Receiver_exec_i summary: received <%u> - expected <%d> - lost <%u>\n",
                 this->received_.value (),
+                this->expected_,
                 this->lost_.value ()));
     if (this->lost_ > 0)
       {
-        CIAO_ERROR ((LM_ERROR, "ERROR : Lost %u messages\n",
+        CIAO_ERROR ((LM_ERROR, "ERROR : Lost %u samples\n",
             this->lost_.value ()));
       } 
-    if (this->received_ != this->expected_)
+    if (this->received_ < this->expected_)
       {
-        CIAO_ERROR ((LM_ERROR, "ERROR : Expected to receive %u messages, actually got %u\n",
+        CIAO_ERROR ((LM_ERROR, "ERROR : Expected to receive %u samples, actually got %u\n",
             this->expected_, this->received_.value ()));
       }
   }

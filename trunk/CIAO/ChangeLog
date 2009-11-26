@@ -1,3 +1,10 @@
+Thu Nov 26 10:19:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver_exec.cpp:
+          Changed logging on exit. Reporting an error only when received < expected.
+
 Thu Nov 26 09:28:25 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * examples/Hello/Receiver/Receiver.idl:
