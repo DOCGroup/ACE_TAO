@@ -409,13 +409,14 @@ namespace CIAO_Keyed_Test_Receiver_Impl
 
   void
   Receiver_exec_i::ccm_remove (void)
-  {
-    if (this->received_ != this->expected_)
+  {    
+    CIAO_DEBUG ((LM_INFO, "Receiver_exec_i summary: received <%u> - expected <%d>\n",
+                this->received_,
+                this->expected_));
+    if (this->received_ < this->expected_)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected")
-                               ACE_TEXT (" number of samples! Received <%d> ")
-                               ACE_TEXT ("Expected <%d>\n"),
-          this->received_.value (), this->expected_));
+        CIAO_ERROR ((LM_ERROR, "ERROR : Expected to receive %u samples, actually got %u\n",
+            this->expected_, this->received_));
       }
   }
 
