@@ -1,3 +1,10 @@
+Thu Nov 26 13:48:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Servant_Impl_Base.cpp:
+        * ciao/Servants/Servant_Impl_Base.h:
+          Removed some methods or made them pure virtual, no need to let
+          them throw no_implement, the derived template does implement it
+
 Thu Nov 26 13:29:51 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver_exec.cpp:
