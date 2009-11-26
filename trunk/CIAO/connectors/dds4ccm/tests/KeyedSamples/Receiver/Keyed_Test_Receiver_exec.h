@@ -154,7 +154,7 @@ namespace CIAO_Keyed_Test_Receiver_Impl
     CORBA::UShort iterations_;
     CORBA::UShort keys_;
     CORBA::Boolean get_data_, read_data_, raw_listen_;
-    long expected_;
+    CORBA::ULong expected_;
     Atomic_ULong received_;
   };
 

@@ -413,7 +413,7 @@ namespace CIAO_Keyed_Test_Receiver_Impl
     CIAO_DEBUG ((LM_INFO, "Receiver_exec_i summary: received <%u> - expected <%d>\n",
                 this->received_.value (),
                 this->expected_));
-    if (this->received_ < this->expected_)
+    if (this->received_.value () < this->expected_)
       {
         CIAO_ERROR ((LM_ERROR, "ERROR : Expected to receive %u samples, actually got %u\n",
             this->expected_, this->received_.value ()));
