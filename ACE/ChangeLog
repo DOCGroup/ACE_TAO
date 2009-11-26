@@ -1,9 +1,14 @@
+Thu Nov 26 12:33:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Message_Queue_Test.cpp:
+          Fixed msvc warning
+
 Thu Nov 26 04:19:02 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/Message_Queue_Test.cpp:
 
-          Attempt to resolve warning for MSVC. 
-        
+          Attempt to resolve warning for MSVC.
+
 Tue Nov 24 09:39:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Tokenizer_T.cpp:
