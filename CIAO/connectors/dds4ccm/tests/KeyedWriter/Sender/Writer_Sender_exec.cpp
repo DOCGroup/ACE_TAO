@@ -105,6 +105,11 @@ namespace CIAO_Writer_Sender_Impl
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Shouldn't be able to register instance for <%C> - iteration <%d>\n"),
           i->first.c_str (), i->second->iteration));
       }
+    else
+      {
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Expected : Registering second key not succeeded.\n"),
+          i->first.c_str (), i->second->iteration));
+      }
   }
 
   void
@@ -177,6 +182,8 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::write_many ()
   {
+    bool expected_exception_thrown = false;
+    
     WriterTest_Seq write_many_seq;
     write_many_seq.length (this->keys_ * this->iterations_);
     int iter_key = 0;
@@ -201,10 +208,26 @@ namespace CIAO_Writer_Sender_Impl
       }
     catch (CCM_DDS::InternalError& ex)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
+        if (ex.index == 0)
+          {
+            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal excep ")
+                        ACE_TEXT ("while write many for first instance : index <%d> - retval <%d>\n"),
+                          ex.index, ex.error_code));
+          }
+        else 
+          {
+            expected_exception_thrown = true;
+            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Expected Internal excep ")
                     ACE_TEXT ("while write many writer info: index <%d> - retval <%d>\n"),
                       ex.index, ex.error_code));
+          }
       }
+    if (!expected_exception_thrown)
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Expected Internal excep ")
+                ACE_TEXT ("was not thrown\n")));
+      }
+
     this->assignment_ = WRITE_NONE;
   }
 
