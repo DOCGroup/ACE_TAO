@@ -1,3 +1,8 @@
+Thu Nov 26 12:54:39 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/KeyedWriter/Sender/Writer_Sender_exec.cpp:
+          Resolved some test errors when using write_many.
+
 Thu Nov 26 12:40:18 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
