@@ -123,7 +123,8 @@ namespace CIAO
             {
               CIAO_DEBUG ((LM_ERROR, CLINFO
                            "ComponentServer_Task::svc - "
-                           "Failed to narrow callback IOR\n"));
+                           "Failed to narrow callback IOR %s\n",
+                           this->callback_ior_str_.c_str ()));
               throw Error ("Failed to narrow callback IOR");
             }
 

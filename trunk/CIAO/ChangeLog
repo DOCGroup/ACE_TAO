@@ -1,3 +1,11 @@
+Thu Nov 26 18:52:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ComponentServer_Task.cpp:
+          If the narrow of the callback IOR fails, print the IOR
+
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
+          Const change
+
 Thu Nov 26 15:32:37 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/KeyedWriter/README:
