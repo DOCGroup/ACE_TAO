@@ -13,7 +13,6 @@ module Hello
     consumes TimeOut click_in;
 
     attribute short iterations;
-    attribute short rate;
   };
 
   home ReceiverHome manages Receiver

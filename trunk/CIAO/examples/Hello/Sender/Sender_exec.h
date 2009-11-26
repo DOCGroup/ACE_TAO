@@ -50,12 +50,6 @@ namespace CIAO_Hello_Sender_Impl
     /// Operation to get the value of the attribute "local_message"
     virtual char * local_message ();
 
-    /// Operation to set the value of the attribute "log_time"
-    virtual void log_time (bool log_time);
-
-    /// Operation to get the value of the attribute "log_time"
-    virtual bool log_time ();
-
     /* Operations for obtaining the interface reference. */
     /* This method will be used in the assembly face so the
      * ObjRef of this read_message facet will be sent to the
