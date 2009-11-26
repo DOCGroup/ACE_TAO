@@ -133,18 +133,18 @@
     <name>SetConnectorAttributeConnector_exec</name>
     <source/>
     <node/>
-    <location>DDS_SetConnectorAttributeConnector_exec</location>
+    <location>DDS_SCAConnector_exec</location>
   </artifact>
   <artifact xmi:id="SetConnectorAttributeConnector_SvntArtifact">
     <name>SetConnectorAttributeConnector_svnt</name>
     <source/>
     <node/>
-    <location>DDS_SetConnectorAttributeConnector_svnt</location>
+    <location>DDS_SCAConnector_svnt</location>
   </artifact>
   <artifact xmi:id="SetConnectorAttributeConnector_StubArtifact">
     <name>SetConnectorAttributeConnector_stub</name>
     <source/>
     <node/>
-    <location>DDS_SetConnectorAttributeConnector_stub</location>
+    <location>DDS_SCAConnector_stub</location>
   </artifact>
 </Deployment:DeploymentPlan>
