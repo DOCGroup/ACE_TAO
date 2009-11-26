@@ -32,7 +32,7 @@ namespace CIAO_Hello_Receiver_Impl
     ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("Receiver - Informed by the Sender with message [%C]\n"),
           ev->data ()));
-    Hello::ReadMessage_var rev = this->context_->get_connection_read_message();
+    Hello::ReadMessage_var rev = this->context_->get_connection_read_message ();
     if (CORBA::is_nil (rev.in ()))
       throw CORBA::BAD_INV_ORDER ();
     for (CORBA::Short i = 0; i < this->iterations_; ++i)

@@ -1,3 +1,14 @@
+Thu Nov 26 11:37:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Hello/descriptors_RTCCM/*:
+          Deleted, not used
+
+        * examples/Hello/Sender/Sender_exec.cpp:
+          Return the correct string
+
+        * examples/Hello/descriptors/DeploymentPlan.cdp:
+          Removed rate attribute
+
 Thu Nov 26 10:50:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/SetConnectorAttributes/Connector/SetConnectorAttribute_Connector_exec.cpp:
