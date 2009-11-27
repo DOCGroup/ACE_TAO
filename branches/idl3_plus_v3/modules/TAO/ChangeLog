@@ -1,3 +1,20 @@
+Fri Nov 27 23:13:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/utl_list.h:
+        * TAO_IDL/include/utl_idlist.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/util/utl_exprlist.cpp:
+        * TAO_IDL/util/utl_list.cpp:
+        * TAO_IDL/util/utl_exceptlist.cpp:
+        * TAO_IDL/util/utl_idlist.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        
+          - Cosmetic changes to list classes
+          - Check for illegal const type in expression with scoped name
+          - Minor modifications of <primary_expr> production rule code
+
 Fri Nov 27 19:03:58 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_constant.cpp:

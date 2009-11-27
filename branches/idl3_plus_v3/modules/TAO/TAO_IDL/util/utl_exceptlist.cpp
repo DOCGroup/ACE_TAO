@@ -105,9 +105,9 @@ UTL_ExceptList::head (void)
 void
 UTL_ExceptList::destroy (void)
 {
-  if (this->pd_cdr_data != 0)
+  if (this->tail () != 0)
     {
-      this->pd_cdr_data->destroy ();
+      this->tail ()->destroy ();
     }
 
   delete this;
@@ -120,8 +120,8 @@ UTL_ExceptList::copy (void)
   ACE_NEW_RETURN (retval,
                   UTL_ExceptList (
                       this->pd_car_data,
-                      this->pd_cdr_data != 0
-                        ? (UTL_ExceptList *) this->pd_cdr_data->copy ()
+                      this->tail () != 0
+                        ? (UTL_ExceptList *) this->tail ()->copy ()
                         : 0
                     ),
                   0);

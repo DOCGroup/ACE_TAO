@@ -663,6 +663,10 @@ public:
   void original_local_name (Identifier *local_name);
   // Strips _cxx_ prefix for use in port names.
   
+  bool name_is_const_type (AST_Expression *ex);
+  // If the scoped name member is non-zero, make sure it's
+  // a legal const type.
+  
 private:
   bool check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
                                ACE_CString &param_id,

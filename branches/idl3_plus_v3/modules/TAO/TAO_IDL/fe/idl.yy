@@ -6417,9 +6417,10 @@ actual_parameter
           // we take advantage of the fact that an expression can
           // be a scoped name. At that lower level, we create an
           // expression containing the scoped name, and at a
-          // higher lever, deduce that it's not supposede to be
+          // higher lever, deduce that it's not supposed to be
           // a constant and look up the type to add to the template
           // arg list.
+          AST_Expression *ex = $1;
           $<dcval>$ = 0;
         }
         ;
