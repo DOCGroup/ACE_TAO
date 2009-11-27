@@ -75,10 +75,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_list.h"
 #include "ace/OS_Memory.h"
 
-ACE_RCSID (util,
-           utl_list,
-           "$Id$")
-
 UTL_List::UTL_List (UTL_List *c)
   : pd_cdr_data (c)
 {
