@@ -3035,18 +3035,42 @@ tao_yyreduce:
   case 61:
 
     {
+// template_module_inst : template_module_header
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          UTL_ScopedName *sn = (tao_yyvsp[(1) - (1)].idlist);
+          AST_Template_Module *ref = 0;
+          AST_Decl *d = s->lookup_by_name (sn, true);
+          bool so_far_so_good = true;
+          
+          if (d == 0)
+            {
+              idl_global->err ()->lookup_error (sn);
+              so_far_so_good = false;
+            }
+          else
+            {
+              ref = AST_Template_Module::narrow_from_decl (d);
+              
+              if (ref == 0)
+                {
+                  idl_global->err ()->template_module_expected (d);
+                  so_far_so_good = false;
+                }
+            }
         }
     break;
 
   case 62:
 
     {
+//        at_least_one_actual_parameter '>'
         }
     break;
 
   case 63:
 
     {
+//        id
         }
     break;
 
@@ -4401,29 +4425,54 @@ tao_yyreduce:
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(1) - (1)].idlist),
                                            true);
-
-          /*
-           * If the scoped name is an IDL constant, it may be used in an
-           * array dim, a string bound, or a sequence bound. If so, it
-           * must be unsigned and > 0. We assign the constant's value
-           * and type to the expression created here so we can check
-           * them later.
-           */
-          if (d != 0 && d->node_type () == AST_Decl::NT_const)
+                                           
+          if (d == 0)
             {
-              AST_Constant *c = AST_Constant::narrow_from_decl (d);
-              (tao_yyval.exval) =
-                idl_global->gen ()->create_expr (c->constant_value (),
-                                                 c->et ());
-
-              (tao_yyvsp[(1) - (1)].idlist)->destroy ();
-              delete (tao_yyvsp[(1) - (1)].idlist);
-              (tao_yyvsp[(1) - (1)].idlist) = 0;
+              idl_global->err ()->lookup_error ((tao_yyvsp[(1) - (1)].idlist));
             }
           else
             {
-              (tao_yyval.exval) = idl_global->gen ()->create_expr ((tao_yyvsp[(1) - (1)].idlist));
+              switch (d->node_type ())
+                {
+                  case AST_Decl::NT_const:
+                    {
+                      /*
+                       * If the scoped name is an IDL constant, it
+                       * may be used in an array dim, a string
+                       * bound, or a sequence bound. If so, it
+                       * must be unsigned and > 0. We assign the
+                       * constant's value and type to the
+                       * expression created here so we can check
+                       * them later.
+                       */
+                      AST_Constant *c =
+                        AST_Constant::narrow_from_decl (d);
+                        
+                      (tao_yyval.exval) =
+                        idl_global->gen ()->create_expr (
+                          c->constant_value (),
+                          c->et ());
+
+                      break;
+                    }
+                  case AST_Decl::NT_enum_val:
+                    {
+                      // An AST_Expression owns the scoped name
+                      // passed in this constructor, so we copy it
+                      // and destroy it below no matter which case
+                      // is followed.
+                      (tao_yyval.exval) =
+                        idl_global->gen ()->create_expr (
+                          (tao_yyvsp[(1) - (1)].idlist)->copy ());
+                          
+                       break;
+                    }
+                }
             }
+
+          (tao_yyvsp[(1) - (1)].idlist)->destroy ();
+          delete (tao_yyvsp[(1) - (1)].idlist);
+          (tao_yyvsp[(1) - (1)].idlist) = 0;
         }
     break;
 
