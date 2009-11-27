@@ -26,15 +26,17 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
+my $server_conf = $server->LocalFile ("server.conf");
+my $client_conf = $client->LocalFile ("client.conf");
 
 $SV = $server->CreateProcess ("server",
                               "-ORBdebuglevel $debug_level " .
-                              "-ORBSvcConf server.conf " .
+                              "-ORBSvcConf $server_conf " .
                               "-ORBListenendpoints iiop://:/reuse_addr=0 " .
                               "-o $server_iorfile");
 
 $CL = $client->CreateProcess ("client",
-                              "-ORBSvcConf client.conf " .
+                              "-ORBSvcConf $client_conf " .
                               "-k file://$client_iorfile");
                               
 $server_status = $SV->Spawn ();

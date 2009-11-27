@@ -1,3 +1,14 @@
+Fri Nov 27 10:12:19 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * tests/OctetSeq/run_test1.pl:
+        * tests/OctetSeq/run_test2.pl:
+        * tests/Bug_3000_Regression/run_test.pl:
+        * tests/Bug_3068_Regression/run_test.pl:
+        * tests/Bug_2186_Regression/run_test.pl:
+
+          Test are converted to use new test framework
+          and added to fuzz build.
+
 Thu Nov 26 12:45:41 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * tests/Bug_1361_Regression/run_test.pl:
