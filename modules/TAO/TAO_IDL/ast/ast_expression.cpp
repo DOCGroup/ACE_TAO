@@ -3194,12 +3194,12 @@ AST_Expression::destroy (void)
 
   delete this->pd_v2;
   this->pd_v2 = 0;
-  
+
   if (this->pd_n != 0)
     {
       this->pd_n->destroy ();
     }
-    
+
   delete this->pd_n;
   this->pd_n = 0;
 }

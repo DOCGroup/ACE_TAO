@@ -1,14 +1,27 @@
+Fri Nov 27 19:03:58 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_constant.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+
+          Cosmetic changes.
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Added semantic actions for template argument list.
+
 Fri Nov 27 16:53:09 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_template_interface_header.cpp:
-        
+
           Minor change to avoid compilation error. This file will
           eventually be removed once some of its code has been
           relocated.
-          
+
         * TAO_IDL/fe/y.tab.cpp:
         * TAO_IDL/fe/idl.yy:
-        
+
           Cleaned up semantic action for <primary_expr> and tested
           lookup and narrowing of template module referenced in a
           template module instantiation.
@@ -19,7 +32,7 @@ Wed Nov 25 20:19:10 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/util/utl_err.cpp:
         * TAO_IDL/fe/y.tab.cpp:
         * TAO_IDL/fe/idl.yy:
-        
+
           Start of semantic actions for instantiated template modules,
           and related error messages.
 

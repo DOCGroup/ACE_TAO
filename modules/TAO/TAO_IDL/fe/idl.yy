@@ -184,6 +184,7 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
   FE_Utils::T_REFLIST_INFO      *rlval;         /* List of above structs */
   FE_Utils::T_Inst_Info         *tival;         /* Template instantiation */
   FE_Utils::T_Port_Info         *ptval;         /* Porttype reference */
+  FE_Utils::T_ARGLIST           *alval;         /* List of template args */
 }
 
 /*
@@ -287,7 +288,7 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 %type <dcval>   template_type_spec sequence_type_spec string_type_spec
 %type <dcval>   struct_type enum_type switch_type_spec union_type
 %type <dcval>   array_declarator op_type_spec seq_head wstring_type_spec
-%type <dcval>   param_type_spec type_dcl type_declarator
+%type <dcval>   param_type_spec type_dcl type_declarator actual_parameter
 
 %type <idlist>  scoped_name interface_type component_inheritance_spec
 %type <idlist>  home_inheritance_spec primary_key_spec module_header
@@ -348,6 +349,8 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 %type <plval>   formal_parameters at_least_one_formal_parameter
 
 %type <sval>    formal_parameter_name
+
+%type <alval>   actual_parameters at_least_one_actual_parameter
 %%
 
 /*
@@ -1964,56 +1967,46 @@ primary_expr
            * as a constant value).
            */
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(1) - (1)].idlist),
+          AST_Decl *d = s->lookup_by_name ($1,
                                            true);
-                                           
+
           if (d == 0)
             {
-              idl_global->err ()->lookup_error ((tao_yyvsp[(1) - (1)].idlist));
+              idl_global->err ()->lookup_error ($1);
+            }
+          else if (d->node_type () == AST_Decl::NT_const)
+            {
+              /*
+               * If the scoped name is an IDL constant, it
+               * may be used in an array dim, a string
+               * bound, or a sequence bound. If so, it
+               * must be unsigned and > 0. We assign the
+               * constant's value and type to the
+               * expression created here so we can check
+               * them later.
+               */
+              AST_Constant *c =
+                AST_Constant::narrow_from_decl (d);
+
+              $<exval>$ =
+                idl_global->gen ()->create_expr (
+                  c->constant_value (),
+                  c->et ());
             }
           else
             {
-              switch (d->node_type ())
-                {
-                  case AST_Decl::NT_const:
-                    {
-                      /*
-                       * If the scoped name is an IDL constant, it
-                       * may be used in an array dim, a string
-                       * bound, or a sequence bound. If so, it
-                       * must be unsigned and > 0. We assign the
-                       * constant's value and type to the
-                       * expression created here so we can check
-                       * them later.
-                       */
-                      AST_Constant *c =
-                        AST_Constant::narrow_from_decl (d);
-                        
-                      (tao_yyval.exval) =
-                        idl_global->gen ()->create_expr (
-                          c->constant_value (),
-                          c->et ());
-
-                      break;
-                    }
-                  case AST_Decl::NT_enum_val:
-                    {
-                      // An AST_Expression owns the scoped name
-                      // passed in this constructor, so we copy it
-                      // and destroy it below no matter which case
-                      // is followed.
-                      (tao_yyval.exval) =
-                        idl_global->gen ()->create_expr (
-                          (tao_yyvsp[(1) - (1)].idlist)->copy ());
-                          
-                       break;
-                    }
-                }
+              // An AST_Expression owns the scoped name
+              // passed in this constructor, so we copy it
+              // and destroy it below no matter which case
+              // is followed.
+              $<exval>$ =
+                idl_global->gen ()->create_expr (
+                  $1->copy ());
             }
 
-          (tao_yyvsp[(1) - (1)].idlist)->destroy ();
-          delete (tao_yyvsp[(1) - (1)].idlist);
-          (tao_yyvsp[(1) - (1)].idlist) = 0;
+          $1->destroy ();
+          delete $1;
+          $1 = 0;
         }
         | literal
         | '(' const_expr ')'
@@ -6058,7 +6051,7 @@ at_least_one_formal_parameter
           $2->enqueue_head (*$1);
           delete $1;
           $1 = 0;
-          
+
           // The param added above is always the last one parsed,
           // so we check for matches between sequence<T> & T here.
           ACE_CString bad_id =
@@ -6381,11 +6374,39 @@ extended_port_decl
 
 at_least_one_actual_parameter
         : actual_parameter actual_parameters
+        {
+// at_least_one_actual_parameter : actual_parameter actual_parameters
+          if ($2 == 0)
+            {
+              ACE_NEW_RETURN ($2,
+                              FE_Utils::T_ARGLIST,
+                              1);
+            }
+
+          $2->enqueue_head ($1);
+          $<alval>$ = $2;
+        }
         ;
 
 actual_parameters
         : actual_parameters ',' actual_parameter
+        {
+// actual_parameters : actual_parameters ',' actual_parameter
+          if ($1 == 0)
+            {
+              ACE_NEW_RETURN ($1,
+                              FE_Utils::T_ARGLIST,
+                              1);
+            }
+
+          $1->enqueue_tail ($3);
+          $<alval>$ = $1;
+        }
         | /* EMPTY */
+        {
+//         | /* EMPTY */
+          $<alval>$ = 0;
+        }
         ;
 
 actual_parameter
@@ -6399,6 +6420,7 @@ actual_parameter
           // higher lever, deduce that it's not supposede to be
           // a constant and look up the type to add to the template
           // arg list.
+          $<dcval>$ = 0;
         }
         ;
 
