@@ -1964,31 +1964,56 @@ primary_expr
            * as a constant value).
            */
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = s->lookup_by_name ($1,
+          AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(1) - (1)].idlist),
                                            true);
-
-          /*
-           * If the scoped name is an IDL constant, it may be used in an
-           * array dim, a string bound, or a sequence bound. If so, it
-           * must be unsigned and > 0. We assign the constant's value
-           * and type to the expression created here so we can check
-           * them later.
-           */
-          if (d != 0 && d->node_type () == AST_Decl::NT_const)
+                                           
+          if (d == 0)
             {
-              AST_Constant *c = AST_Constant::narrow_from_decl (d);
-              $$ =
-                idl_global->gen ()->create_expr (c->constant_value (),
-                                                 c->et ());
-
-              $1->destroy ();
-              delete $1;
-              $1 = 0;
+              idl_global->err ()->lookup_error ((tao_yyvsp[(1) - (1)].idlist));
             }
           else
             {
-              $$ = idl_global->gen ()->create_expr ($1);
+              switch (d->node_type ())
+                {
+                  case AST_Decl::NT_const:
+                    {
+                      /*
+                       * If the scoped name is an IDL constant, it
+                       * may be used in an array dim, a string
+                       * bound, or a sequence bound. If so, it
+                       * must be unsigned and > 0. We assign the
+                       * constant's value and type to the
+                       * expression created here so we can check
+                       * them later.
+                       */
+                      AST_Constant *c =
+                        AST_Constant::narrow_from_decl (d);
+                        
+                      (tao_yyval.exval) =
+                        idl_global->gen ()->create_expr (
+                          c->constant_value (),
+                          c->et ());
+
+                      break;
+                    }
+                  case AST_Decl::NT_enum_val:
+                    {
+                      // An AST_Expression owns the scoped name
+                      // passed in this constructor, so we copy it
+                      // and destroy it below no matter which case
+                      // is followed.
+                      (tao_yyval.exval) =
+                        idl_global->gen ()->create_expr (
+                          (tao_yyvsp[(1) - (1)].idlist)->copy ());
+                          
+                       break;
+                    }
+                }
             }
+
+          (tao_yyvsp[(1) - (1)].idlist)->destroy ();
+          delete (tao_yyvsp[(1) - (1)].idlist);
+          (tao_yyvsp[(1) - (1)].idlist) = 0;
         }
         | literal
         | '(' const_expr ')'

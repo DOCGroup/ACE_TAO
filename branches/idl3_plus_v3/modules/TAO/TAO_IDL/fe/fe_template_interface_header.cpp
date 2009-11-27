@@ -95,7 +95,7 @@ FE_Template_InterfaceHeader::compile_template_inheritance (void)
 
       if (i == 0)
         {
-          idl_global->err ()->error1 (UTL_Error::EIDL_TMPL_IFACE_EXPECTED,
+          idl_global->err ()->error1 (UTL_Error::EIDL_TMPL_MODULE_EXPECTED,
                                       i);
 
           // Keep going but don't process the bad parent further
