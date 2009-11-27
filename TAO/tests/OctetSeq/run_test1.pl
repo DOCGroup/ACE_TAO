@@ -11,7 +11,7 @@ use PerlACE::TestTarget;
 $status = 0;
 $debug_level = '0';
 
-$conf = $PerlACE::svcconf_ext;
+
 
 $client_iterations = '5000';
 
@@ -35,21 +35,26 @@ $status = 0;
 my $iorbase = "test.ior";
 my $server_iorfile = $server->LocalFile ($iorbase);
 my $client_iorfile = $t3->LocalFile ($iorbase);
+
+my $server_conf = $server->LocalFile ("svc1" . $PerlACE::svcconf_ext);
+my $client_conf = $client->LocalFile ("svc1" . $PerlACE::svcconf_ext);
+my $t3_conf = $t3->LocalFile ("svc1" . $PerlACE::svcconf_ext);
+
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
 $SV = $server->CreateProcess ("server",
                               "-ORBdebuglevel $debug_level " .
-                              "-ORBSvcConf svc1$conf " .
+                              "-ORBSvcConf $server_conf " .
                               "-o $server_iorfile");
 
 $T = $client->CreateProcess ("OctetSeq",
                              "-ORBdebuglevel $debug_level " .
-                             "-ORBSvcConf svc1$conf " .
+                             "-ORBSvcConf $client_conf " .
                              "-n $octet_iterations -l $low -h $high -s $step -q");
 
 $CL = $t3->CreateProcess ("client",
-                          "-ORBSvcConf svc1$conf " .
+                          "-ORBSvcConf $t3_conf " .
                           "-i $client_iterations -k file://$client_iorfile");
 
 print STDERR "\n\n==== Octet sequence passing test\n";

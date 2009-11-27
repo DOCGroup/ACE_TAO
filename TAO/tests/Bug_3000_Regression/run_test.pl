@@ -11,9 +11,6 @@ use PerlACE::TestTarget;
 $status = 0;
 $debug_level = '0';
 
-# By default use RW wait startegy
-my $sr_svc_opt = "-ORBSvcConf rw.conf";
-
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_level = '10';
@@ -30,6 +27,8 @@ my $iorfile = "test.ior";
 my $server_iorfile = $server->LocalFile ($iorfile);
 $server->DeleteFile($iorfile);
 
+my $server_conf = $server->LocalFile ("rw.conf");
+
 #Files which used by client1
 my $client1_iorfile = $client1->LocalFile ($iorfile);
 $client1->DeleteFile($iorfile);
@@ -40,7 +39,7 @@ $client2->DeleteFile($iorfile);
 
 $SV = $server->CreateProcess ("server",
                               "-ORBdebuglevel $debug_level " .
-                              "$sr_svc_opt " .
+                              "-ORBSvcConf $server_conf " .
                               "-o $server_iorfile");
 
 $port1 = $client1->RandomPort ();

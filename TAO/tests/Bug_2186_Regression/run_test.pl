@@ -31,9 +31,11 @@ $client->DeleteFile($iorbase);
 my $client_iorbase_file = $client->LocalFile ($client_iorbase);
 $client->DeleteFile($client_iorbase);
 
+my $server_conf = $server->LocalFile ("server.conf");
+
 $SV = $server->CreateProcess ("server",
                               "-ORBdebuglevel $debug_level " .
-                              "-ORBSvcConf server.conf " .
+                              "-ORBSvcConf $server_conf " .
                               "-o $server_iorfile");
 
 $port = $client->RandomPort ();
