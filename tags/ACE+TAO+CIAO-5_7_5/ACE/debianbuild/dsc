@@ -1,0 +1,10 @@
+# Format: 1.0
+# Source: ace
+# Version: 1.7.4
+# Binary: ace
+# Maintainer: Johnny Willemsen  <jwillemsen@remedy.nl>
+# Architecture: any
+# Build-Depends: g++
+# Files:
+#  3799215851ec57601b21bf81c58ac2e5 133282 ACE+TAO+CIAO-src-5.7.4.tar.bz2
+#

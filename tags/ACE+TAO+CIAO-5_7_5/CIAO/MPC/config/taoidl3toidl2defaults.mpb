@@ -1,0 +1,23 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  // Set the idl3_to_idl2 compiler and flags as template values
+  specific {
+    tao_idl3_to_idl2       = $(CIAO_ROOT)/bin/tao_idl3_to_idl2
+    tao_idl3_to_idl2_dep   = $(CIAO_ROOT)/bin/tao_idl3_to_idl2
+  }
+
+  Define_Custom(IDL3TOIDL2) {
+    automatic                   = 1
+    dependent                   = $(TAO_IDL3_TO_IDL2_DEP)
+    command                     = $(TAO_IDL3_TO_IDL2)
+    commandflags                = -I$(CIAO_ROOT) -I$(CIAO_ROOT)/ccm -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
+    libpath                     = $(ACE_ROOT)/lib
+    inputext                    = .idl
+    generic_outputext           = _IDL2.idl
+    keyword idl3toidl2flags     = commandflags
+  }
+
+  after += TAO_IDL3_TO_IDL2_EXE
+}
