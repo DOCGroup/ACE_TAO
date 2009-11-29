@@ -1,3 +1,7 @@
+Sun Nov 29 13:06:02 CST 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ACE version 5.7.5 released.
+
 Thu Nov 26 12:33:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Message_Queue_Test.cpp:
