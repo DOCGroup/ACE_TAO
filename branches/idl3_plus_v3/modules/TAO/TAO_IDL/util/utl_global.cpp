@@ -2066,28 +2066,6 @@ IDL_GlobalData::original_local_name (Identifier *local_name)
 }
 
 bool
-IDL_GlobalData::name_is_const_type (AST_Expression *ex)
-{
-  UTL_ScopedName *sn = ex->n ();
-  
-  if (sn != 0)
-    {
-      AST_Decl *d =
-        this->pd_scopes.top_non_null ()->lookup_by_name (sn, true);
-        
-      AST_Decl::NodeType nt = d->node_type ();
-      
-      if (nt != AST_Decl::NT_const && nt != AST_Decl::NT_enum_val)
-        {
-          this->pd_err->constant_expected (sn, d);
-          return false;
-        }
-    }
-    
-  return true;
-}
-
-bool
 IDL_GlobalData::check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
                                         ACE_CString &param_id,
                                         size_t index)

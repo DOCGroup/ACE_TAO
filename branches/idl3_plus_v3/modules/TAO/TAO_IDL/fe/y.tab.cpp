@@ -4429,6 +4429,7 @@ tao_yyreduce:
           if (d == 0)
             {
               idl_global->err ()->lookup_error ((tao_yyvsp[(1) - (1)].idlist));
+              return 1;
             }
           else if (d->node_type () == AST_Decl::NT_const)
             {
@@ -9327,7 +9328,51 @@ tao_yyreduce:
           // a constant and look up the type to add to the template
           // arg list.
           AST_Expression *ex = (tao_yyvsp[(1) - (1)].exval);
-          (tao_yyval.dcval) = 0;
+          UTL_ScopedName *sn = ex->n ();
+          AST_Decl *d = 0;
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          
+          if (sn != 0)
+            {
+              d = s->lookup_by_name (sn, true);
+              
+              if (d == 0)
+                {
+                  idl_global->err ()->lookup_error (sn);
+                  return 1;
+                }
+              else
+                {
+                  AST_Decl::NodeType nt = d->node_type ();
+                  
+                  if (nt == AST_Decl::NT_enum_val)
+                    {
+                      (tao_yyvsp[(1) - (1)].exval)->evaluate (
+                        AST_Expression::EK_const);
+                
+                      (tao_yyval.dcval) =
+                        idl_global->gen ()->create_constant (
+                          (tao_yyvsp[(1) - (1)].exval)->ev ()->et,
+                          (tao_yyvsp[(1) - (1)].exval),
+                          sn);
+                    }
+                  else
+                    {
+                      (tao_yyval.dcval) = d;
+                    }
+                }
+            }
+          else
+            {
+              (tao_yyvsp[(1) - (1)].exval)->evaluate (
+                AST_Expression::EK_const);
+                
+              (tao_yyval.dcval) =
+                idl_global->gen ()->create_constant (
+                  (tao_yyvsp[(1) - (1)].exval)->ev ()->et,
+                  (tao_yyvsp[(1) - (1)].exval),
+                  0);
+          }
         }
     break;
 

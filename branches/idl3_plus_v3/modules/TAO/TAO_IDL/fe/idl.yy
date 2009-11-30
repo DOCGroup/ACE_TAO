@@ -1973,6 +1973,7 @@ primary_expr
           if (d == 0)
             {
               idl_global->err ()->lookup_error ($1);
+              return 1;
             }
           else if (d->node_type () == AST_Decl::NT_const)
             {
