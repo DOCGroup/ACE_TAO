@@ -1,3 +1,19 @@
+Mon Nov 30 16:56:21 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+        
+          Removed check for illegal const type added in
+          
+          Fri Nov 27 23:13:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+          
+          since it turned out to be unnecessary, the check is made elswhere.
+          
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        
+          Added semantic action for single template arg.
+
 Fri Nov 27 23:13:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/idl_global.h:
