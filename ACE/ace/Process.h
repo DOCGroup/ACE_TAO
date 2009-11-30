@@ -82,9 +82,9 @@ public:
    * max strlen for command-line arguments.
    */
   ACE_Process_Options (bool inherit_environment = true,
-                       int command_line_buf_len = DEFAULT_COMMAND_LINE_BUF_LEN,
-                       int env_buf_len = ENVIRONMENT_BUFFER,
-                       int max_env_args = MAX_ENVIRONMENT_ARGS);
+                       size_t command_line_buf_len = DEFAULT_COMMAND_LINE_BUF_LEN,
+                       size_t env_buf_len = ENVIRONMENT_BUFFER,
+                       size_t max_env_args = MAX_ENVIRONMENT_ARGS);
 
   /// Destructor.
   ~ACE_Process_Options (void);
@@ -388,7 +388,7 @@ protected:
   size_t environment_buf_index_;
 
   /// Pointer to environment_argv_.
-  int environment_argv_index_;
+  size_t environment_argv_index_;
 
   /// Pointer to buffer of the environment settings.
   ACE_TCHAR *environment_buf_;
@@ -400,7 +400,7 @@ protected:
   ACE_TCHAR **environment_argv_;
 
   /// Maximum number of environment variables. Configurable
-  int max_environment_args_;
+  size_t max_environment_args_;
 
   /// Maximum index of environment_argv_ buffer
   int max_environ_argv_index_;
@@ -410,7 +410,7 @@ protected:
 #endif /* !ACE_HAS_WINCE */
 
   /// Ensures command_line_argv is only calculated once.
-  int command_line_argv_calculated_;
+  bool command_line_argv_calculated_;
 
   /// Pointer to buffer of command-line arguments.  E.g., "-f foo -b bar".
   ACE_TCHAR *command_line_buf_;
@@ -420,7 +420,7 @@ protected:
   ACE_TCHAR *command_line_copy_;
 
   /// Max length of command_line_buf_
-  int command_line_buf_len_;
+  size_t command_line_buf_len_;
 
   /// Argv-style command-line arguments.
   ACE_TCHAR *command_line_argv_[MAX_COMMAND_LINE_OPTIONS];
