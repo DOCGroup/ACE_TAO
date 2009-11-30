@@ -693,27 +693,6 @@ template_module_inst
         : template_module_header
         {
 // template_module_inst : template_module_header
-          UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName *sn = $1;
-          AST_Template_Module *ref = 0;
-          AST_Decl *d = s->lookup_by_name (sn, true);
-          
-          if (d == 0)
-            {
-              idl_global->err ()->lookup_error (sn);
-              return 1;
-            }
-          else
-            {
-              ref = AST_Template_Module::narrow_from_decl (d);
-              
-              if (ref == 0)
-                {
-                  idl_global->err ()->template_module_expected (d);
-                  return 1;
-                }
-            }
-            
           idl_global->set_parse_state (
             IDL_GlobalData::PS_InstModuleSeen);
         }
@@ -728,7 +707,7 @@ template_module_inst
 //        id
           idl_global->set_parse_state (
             IDL_GlobalData::PS_InstModuleIDSeen);
-            
+
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName *sn = $1;
           AST_Template_Module *ref = 0;
@@ -749,29 +728,29 @@ template_module_inst
                   return 1;
                 }
             }
-            
+
           sn->destroy ();
           delete sn;
           sn = 0;
           $1 = 0;
-            
+
           if (! ref->match_arg_names ($3))
             {
               return 1;
             }
-            
+
           ACE_NEW_RETURN (sn,
-                          UTL_ScopedName ($5,
+                          UTL_ScopedName ($6,
                                            0),
                           1);
-            
+
           AST_Template_Module_Inst *tmi =
             idl_global->gen ()->create_template_module_inst (
               sn,
               ref,
               $3);
-                                                             
-          s->add_to_scope (tmi);    
+
+          s->add_to_scope (tmi);
         }
         ;
 
@@ -1836,7 +1815,7 @@ const_type
             {
               idl_global->err ()->lookup_error (sn);
             }
-            
+ 
           sn->destroy ();
           delete sn;
           sn = 0;
