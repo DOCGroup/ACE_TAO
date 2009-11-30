@@ -5,7 +5,7 @@
 
 namespace CIAO_CSL_QoSTest_CSL_QoSTest_Connector_Impl
 {
-  CSL_QoSTest_Connector_exec_i::CSL_QoSTest_Connector_exec_i (const char * topic_name)
+  CSL_QoSTest_Connector_exec_i::CSL_QoSTest_Connector_exec_i (const char * /*topic_name*/)
     : DDS_Event_Connector_T<TestTopic_DDS_Traits, TestTopic_Connector_Traits> ()
   {
   }

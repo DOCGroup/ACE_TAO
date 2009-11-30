@@ -32,8 +32,8 @@ namespace CIAO_CSL_QoSTest_Receiver_Impl
       //printf("Receiver: ConnectorStatusListener_exec_i::on_incompatible_topic\n");
     }
   void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
-    ::DDS::DataReader_ptr the_reader,
-     const DDS::RequestedIncompatibleQosStatus & status)  {
+    ::DDS::DataReader_ptr /*the_reader*/,
+     const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
      this->incompatible_ = true;
      //printf("ConnectorStatusListener_exec_i::on_requested_incompatible_qos, status = %dl\n",status);
     }
