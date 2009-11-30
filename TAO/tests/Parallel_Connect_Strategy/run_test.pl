@@ -24,9 +24,9 @@ my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 fail
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
 my $TARGETHOSTNAME = $server->HostName ();
-my $port = PerlACE::random_port ();
+my $port = $server->RandomPort ();
 my $port1 = $port + 1;
-my $port1 = $port + 2;
+my $port2 = $port + 2;
 
 my @bogus_eps = (
     "-ORBListenEndpoints iiop://$TARGETHOSTNAME:$port1/hostname_in_ior=126.0.0.123",
