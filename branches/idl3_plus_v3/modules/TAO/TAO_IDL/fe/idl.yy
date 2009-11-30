@@ -6025,6 +6025,11 @@ formal_parameter_type
 //        IDL_VALUETYPE
           $<ntval>$ = AST_Decl::NT_valuetype;
         }
+        | IDL_ENUM
+        {
+//        IDL_ENUM
+          $<ntval>$ = AST_Decl::NT_enum;
+        }
         | IDL_EXCEPTION
         {
 //        IDL_EXCEPTION
