@@ -1501,14 +1501,12 @@ UTL_Error::duplicate_param_id (UTL_ScopedName *n)
 }
 
 void
-UTL_Error::mismatched_template_param (UTL_ScopedName *n)
+UTL_Error::mismatched_template_param (const char *name)
 {
   idl_error_header (EIDL_MISMATCHED_T_PARAM,
                     idl_global->lineno (),
                     idl_global->filename ()->get_string ());
-  ACE_ERROR ((LM_ERROR, " - "));
-  n->dump (*ACE_DEFAULT_LOG_STREAM);
-  ACE_ERROR ((LM_ERROR, "\n"));
+  ACE_ERROR ((LM_ERROR, " - %s\n", name));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
@@ -1518,7 +1516,6 @@ UTL_Error::mismatch_seq_of_param (const char *param_id)
   idl_error_header (EIDL_MISMATCHED_SEQ_PARAM,
                     idl_global->lineno (),
                     idl_global->filename ()->get_string ());
-  ACE_ERROR ((LM_ERROR, " - %s", param_id));
-  ACE_ERROR ((LM_ERROR, "\n"));
+  ACE_ERROR ((LM_ERROR, " - %s\n", param_id));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }

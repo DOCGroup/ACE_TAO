@@ -2770,6 +2770,15 @@ AST_Expression::evaluate (EvalKind ek)
   AST_ExprValue *tmp = eval_kind (this->pd_ev, ek);
   delete this->pd_ev;
   this->pd_ev = tmp;
+  
+  // Artifact of expressions doing double duty for all template
+  // args. At this point, we have knowledge that we must be an
+  // enum constant, so we set the expression type here, rather
+  // than at the point of creation.
+  if (ek == AST_Expression::EK_const && this->pd_n != 0)
+    {
+      this->pd_ev->et = AST_Expression::EV_enum;
+    }
 }
 
 // Expression equality comparison operator.

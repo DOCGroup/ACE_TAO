@@ -750,7 +750,7 @@ template_module_inst
               ref,
               $3);
 
-          s->add_to_scope (tmi);
+          (void) s->fe_add_template_module_inst (tmi);
         }
         ;
 

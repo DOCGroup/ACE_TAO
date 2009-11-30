@@ -85,7 +85,7 @@ AST_Template_Common::match_arg_names (UTL_NameList *arg_names)
         
       if (! this->match_param_type (param->type_, d))
         {
-          idl_global->err ()->mismatched_template_param (d->name ());
+//          idl_global->err ()->mismatched_template_param (d->name ());
           good = false;
           break;
         }
@@ -127,7 +127,7 @@ AST_Template_Common::match_params (UTL_StrList *param_names)
       
       if (param->name_ != s->get_string ())
         {
-          idl_global->err ()->mismatched_template_param (this->name ());
+//          idl_global->err ()->mismatched_template_param (this->name ());
         
           return false;
         }

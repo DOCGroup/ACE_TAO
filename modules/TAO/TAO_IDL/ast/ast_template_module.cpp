@@ -46,7 +46,7 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
   
   for (FE_Utils::T_ARGLIST::CONST_ITERATOR i (*args);
        !i.done ();
-       i.advance ())
+       i.advance (), ++slot)
     {
       AST_Decl **item = 0;
       i.next (item);
@@ -62,11 +62,25 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
         
       FE_Utils::T_Param_Info *param = 0;
       (void) this->template_params_->get (param, slot);
+      const char *s = 0;
       
       if (! this->match_param_type (param, d))
         {
-          idl_global->err ()->mismatched_template_param (
-            d->name ());
+          UTL_ScopedName *n = d->name ();
+          
+          if (n == 0)
+            {
+              AST_Constant *c =
+                AST_Constant::narrow_from_decl (d);
+                
+              s = c->exprtype_to_string ();
+            }
+          else
+            {
+              s = d->full_name ();
+            }
+        
+          idl_global->err ()->mismatched_template_param (s);
             
           return false;
         }
