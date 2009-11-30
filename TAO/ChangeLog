@@ -1,3 +1,75 @@
+Mon Nov 30 10:01:49 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/default_configuration.pl:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/run_test.pl:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/default_configuration.pl:
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+        * orbsvcs/tests/Security/InsecureReferences/run_test.pl:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/run_test.pl:
+        * orbsvcs/tests/Security/Bug_1107_Regression/run_test.pl:
+        * orbsvcs/tests/Security/Crash_Test/run_test.pl:
+        * orbsvcs/tests/Security/MT_SSLIOP/run_test_harsh.pl:
+        * orbsvcs/tests/Security/MT_SSLIOP/run_test_heavy.pl:
+        * orbsvcs/tests/Security/MT_SSLIOP/run_test.pl:
+        * orbsvcs/tests/AVStreams/Component_Switching/run_test.pl:
+        * orbsvcs/tests/AVStreams/Full_Profile/run_test.pl:
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/run_test.pl:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/run_test.pl:
+        * orbsvcs/tests/AVStreams/Latency/run_test.pl:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl:
+        * orbsvcs/tests/AVStreams/Pluggable/run_test.pl:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl:
+        * orbsvcs/tests/AVStreams/Multiple_Flows/run_test.pl:
+        * orbsvcs/tests/AVStreams/Multicast/run_test.pl:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/run_test.pl:
+        * orbsvcs/tests/AVStreams/Modify_QoS/run_test.pl:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/run_all.pl:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/run_test.pl:
+        * orbsvcs/tests/Notify/XML_Persistence/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Duplicate_Typedef_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Latency_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Recursive_IDL_Test/run_test.pl:
+        * performance-tests/POA/Implicit_Activation/run_test.pl:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/run-test.pl:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/run-test.pl:
+        * performance-tests/Callback/run_test.pl:
+        * performance-tests/Latency/AMH_Single_Threaded/run_test.pl:
+        * performance-tests/Cubit/TAO/MT_Cubit/run_test.pl:
+        * performance-tests/Cubit/TAO/DII_Cubit/run_test.pl:
+        * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+        * tests/Big_Twoways/run_test.pl:
+        * tests/Bug_2918_Regression/run_test.pl:
+        * tests/Strategies/run_test.pl:
+        * tests/Bug_1482_Regression/run_test.pl:
+        * tests/Portable_Interceptors/Benchmark/run_test.pl:
+        * tests/Xt_Stopwatch/run_test.pl:
+        * tests/Multiple/run_test.pl:
+        * tests/CSD_Strategy_Tests/Broken/run_test.pl:
+        * tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl:
+        * tests/Oneway_Timeouts/client.cpp:
+        * tests/Oneway_Timeouts/server.cpp:
+        * tests/Oneway_Timeouts/run_test.pl:
+        * tests/Smart_Proxies/Policy/server.cpp:
+        * tests/Smart_Proxies/Policy/run_test.pl:
+        * tests/Bug_1270_Regression/run_test.pl:
+        * tests/Parallel_Connect_Strategy/run_test.pl:
+        * tests/Muxed_GIOP_Versions/run_test.pl:
+        * tests/Connect_Strategy_Test/run_test.pl:
+        * tests/Big_Oneways/run_test.pl:
+        * tests/Bug_1627_Regression/server.cpp:
+        * tests/Bug_1627_Regression/run_test.pl:
+        * tests/InterOp-Naming/run_test.pl:
+        * tests/Nested_Upcall_Crash/run_test.pl:
+        * tests/Bug_1269_Regression/client.cpp:
+        * tests/Bug_1269_Regression/run_test.pl:
+
+          Test are converted to use new test framework
+          and added to fuzz build.
+
 Sun Nov 29 13:06:02 CST 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAO version 1.7.5 released.
