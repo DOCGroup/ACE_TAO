@@ -21,6 +21,8 @@ public:
 
   FE_Utils::T_PARAMLIST_INFO const *
   template_params (void) const;
+  
+  bool match_arg_names (FE_Utils::T_ARGLIST *args);
 
   // Narrowing.
   DEF_NARROW_FROM_DECL (AST_Template_Module);
@@ -37,6 +39,10 @@ public:
 
 protected:
   FE_Utils::T_PARAMLIST_INFO * template_params_;
+  
+private:
+  bool match_param_type (FE_Utils::T_Param_Info *param,
+                         AST_Decl *d);
 };
 
 #endif           // AST_TEMPLATE_MODULE_H
