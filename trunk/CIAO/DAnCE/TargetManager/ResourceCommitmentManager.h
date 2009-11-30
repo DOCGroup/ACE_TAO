@@ -17,7 +17,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-namespace DAnCE 
+namespace DAnCE
 {
 
   class  ResourceCommitmentManager_i
@@ -31,10 +31,9 @@ namespace DAnCE
         virtual ~ResourceCommitmentManager_i (void);
 
         /**
-         * @function commitResources
          * @brief Commits the resources
          *
-         * @description This function makes a call to the DomainDataManager in order
+         * This function makes a call to the DomainDataManager in order
          * to commit the resources mentioned in the ResourceAllocation
          * sequence. If the resource cannot be allocated throws a
          * ResourceCommitmentFailed exception
@@ -48,8 +47,8 @@ namespace DAnCE
               const ::Deployment::ResourceAllocations & resources);
 
       private:
+
         /**
-         * @function add_to_commited_resource
          * @brief This function adds the res to already commited resources.
          *        This is to be called from within commitResources
          */
