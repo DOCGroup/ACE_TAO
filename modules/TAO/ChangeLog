@@ -1,17 +1,25 @@
+Mon Nov 30 17:30:44 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Added overlooked case IDL_ENUM to <formal_parameter_type>
+          and regenerated.
+
 Mon Nov 30 16:56:21 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/idl_global.h:
         * TAO_IDL/util/utl_global.cpp:
-        
+
           Removed check for illegal const type added in
-          
+
           Fri Nov 27 23:13:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
-          
+
           since it turned out to be unnecessary, the check is made elswhere.
-          
+
         * TAO_IDL/fe/y.tab.cpp:
         * TAO_IDL/fe/idl.yy:
-        
+
           Added semantic action for single template arg.
 
 Fri Nov 27 23:13:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -26,7 +34,7 @@ Fri Nov 27 23:13:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/util/utl_exceptlist.cpp:
         * TAO_IDL/util/utl_idlist.cpp:
         * TAO_IDL/util/utl_global.cpp:
-        
+
           - Cosmetic changes to list classes
           - Check for illegal const type in expression with scoped name
           - Minor modifications of <primary_expr> production rule code
