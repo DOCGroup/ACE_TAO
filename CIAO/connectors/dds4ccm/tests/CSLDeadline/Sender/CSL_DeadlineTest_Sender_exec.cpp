@@ -50,7 +50,7 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
      this->deadline_missed_ = true;
     }
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr the_writer, 
+     ::DDS::DataWriter_ptr /*the_writer*/, 
      const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
      //printf("Sender:ConnectorStatusListener_exec_i::on_offered_incompatible_qos status = %dl\n", status);
    
