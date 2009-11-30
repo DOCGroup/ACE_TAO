@@ -697,12 +697,11 @@ template_module_inst
           UTL_ScopedName *sn = $1;
           AST_Template_Module *ref = 0;
           AST_Decl *d = s->lookup_by_name (sn, true);
-          bool so_far_so_good = true;
           
           if (d == 0)
             {
               idl_global->err ()->lookup_error (sn);
-              so_far_so_good = false;
+              return 1;
             }
           else
             {
@@ -711,17 +710,68 @@ template_module_inst
               if (ref == 0)
                 {
                   idl_global->err ()->template_module_expected (d);
-                  so_far_so_good = false;
+                  return 1;
                 }
             }
+            
+          idl_global->set_parse_state (
+            IDL_GlobalData::PS_InstModuleSeen);
         }
         at_least_one_actual_parameter '>'
         {
 //        at_least_one_actual_parameter '>'
+          idl_global->set_parse_state (
+            IDL_GlobalData::PS_InstModuleArgsSeen);
         }
         id
         {
 //        id
+          idl_global->set_parse_state (
+            IDL_GlobalData::PS_InstModuleIDSeen);
+            
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          UTL_ScopedName *sn = $1;
+          AST_Template_Module *ref = 0;
+          AST_Decl *d = s->lookup_by_name (sn, true);
+
+          if (d == 0)
+            {
+              idl_global->err ()->lookup_error (sn);
+              return 1;
+            }
+          else
+            {
+              ref = AST_Template_Module::narrow_from_decl (d);
+
+              if (ref == 0)
+                {
+                  idl_global->err ()->template_module_expected (d);
+                  return 1;
+                }
+            }
+            
+          sn->destroy ();
+          delete sn;
+          sn = 0;
+          $1 = 0;
+            
+          if (! ref->match_arg_names ($3))
+            {
+              return 1;
+            }
+            
+          ACE_NEW_RETURN (sn,
+                          UTL_ScopedName ($5,
+                                           0),
+                          1);
+            
+          AST_Template_Module_Inst *tmi =
+            idl_global->gen ()->create_template_module_inst (
+              sn,
+              ref,
+              $3);
+                                                             
+          s->add_to_scope (tmi);    
         }
         ;
 
@@ -6427,7 +6477,51 @@ actual_parameter
           // a constant and look up the type to add to the template
           // arg list.
           AST_Expression *ex = $1;
-          $<dcval>$ = 0;
+          UTL_ScopedName *sn = ex->n ();
+          AST_Decl *d = 0;
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          
+          if (sn != 0)
+            {
+              d = s->lookup_by_name (sn, true);
+              
+              if (d == 0)
+                {
+                  idl_global->err ()->lookup_error (sn);
+                  return 1;
+                }
+              else
+                {
+                  AST_Decl::NodeType nt = d->node_type ();
+                  
+                  if (nt == AST_Decl::NT_enum_val)
+                    {
+                      $1->evaluate (
+                        AST_Expression::EK_const);
+                
+                      $<dcval>$ =
+                        idl_global->gen ()->create_constant (
+                          $1->ev ()->et,
+                          $1,
+                          sn);
+                    }
+                  else
+                    {
+                      $<dcval>$ = d;
+                    }
+                }
+            }
+          else
+            {
+              $1->evaluate (
+                AST_Expression::EK_const);
+                
+              $<dcval>$ =
+                idl_global->gen ()->create_constant (
+                  $1->ev ()->et,
+                  $1,
+                  0);
+            }
         }
         ;
 

@@ -148,6 +148,9 @@ public:
     , PS_TmplModuleSqSeen       // '{' seen for template module
     , PS_TmplModuleQsSeen       // '}' seen for template module
     , PS_TmplModuleBodySeen     // Seen a template module body
+    , PS_InstModuleSeen         // Seen MODULE keyword + reference
+    , PS_InstModuleArgsSeen     // Seen template args 
+    , PS_InstModuleIDSeen       // Seen instantiated module ID
     , PS_ValueTypeSeen          // Seen a VALUETYPE keyword
     , PS_ValueTypeForwardSeen   // Forward valuetype decl seen
     , PS_ValueTypeIDSeen        // Seen the valuetype ID

@@ -398,6 +398,12 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Illegal syntax or missing type following '}' in template module";
   case IDL_GlobalData::PS_TmplModuleBodySeen:
     return "Illegal syntax following template module body statement(s)";
+  case IDL_GlobalData::PS_InstModuleSeen:
+    return "Illegal syntax following following '<' of module instantiation";
+  case IDL_GlobalData::PS_InstModuleArgsSeen:
+    return "Illegal syntax following following template args";
+  case IDL_GlobalData::PS_InstModuleIDSeen:
+    return "Illegal syntax following following instantiated module identifier";
   case IDL_GlobalData::PS_ValueTypeSeen:
     return "Missing interface identifier following VALUETYPE keyword";
   case IDL_GlobalData::PS_ValueTypeForwardSeen:

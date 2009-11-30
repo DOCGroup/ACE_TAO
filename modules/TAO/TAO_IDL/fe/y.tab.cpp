@@ -3026,16 +3026,36 @@ tao_yyreduce:
 
     {
 // template_module_inst : template_module_header
+          idl_global->set_parse_state (
+            IDL_GlobalData::PS_InstModuleSeen);
+        }
+    break;
+
+  case 62:
+
+    {
+//        at_least_one_actual_parameter '>'
+          idl_global->set_parse_state (
+            IDL_GlobalData::PS_InstModuleArgsSeen);
+        }
+    break;
+
+  case 63:
+
+    {
+//        id
+          idl_global->set_parse_state (
+            IDL_GlobalData::PS_InstModuleIDSeen);
+            
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName *sn = (tao_yyvsp[(1) - (1)].idlist);
+          UTL_ScopedName *sn = (tao_yyvsp[(1) - (5)].idlist);
           AST_Template_Module *ref = 0;
           AST_Decl *d = s->lookup_by_name (sn, true);
-          bool so_far_so_good = true;
 
           if (d == 0)
             {
               idl_global->err ()->lookup_error (sn);
-              so_far_so_good = false;
+              return 1;
             }
           else
             {
@@ -3044,23 +3064,31 @@ tao_yyreduce:
               if (ref == 0)
                 {
                   idl_global->err ()->template_module_expected (d);
-                  so_far_so_good = false;
+                  return 1;
                 }
             }
-        }
-    break;
-
-  case 62:
-
-    {
-//        at_least_one_actual_parameter '>'
-        }
-    break;
-
-  case 63:
-
-    {
-//        id
+            
+          sn->destroy ();
+          delete sn;
+          sn = 0;
+            
+          if (! ref->match_arg_names ((tao_yyvsp[(1) - (3)].alval)))
+            {
+              return 1;
+            }
+            
+          ACE_NEW_RETURN (sn,
+                          UTL_ScopedName ((tao_yyvsp[(1) - (1)].idval),
+                                           0),
+                          1);
+            
+          AST_Template_Module_Inst *tmi =
+            idl_global->gen ()->create_template_module_inst (
+              sn,
+              ref,
+              (tao_yyvsp[(1) - (3)].alval));
+                                                             
+          s->add_to_scope (tmi);    
         }
     break;
 
@@ -9326,7 +9354,51 @@ tao_yyreduce:
           // a constant and look up the type to add to the template
           // arg list.
           AST_Expression *ex = (tao_yyvsp[(1) - (1)].exval);
-          (tao_yyval.dcval) = 0;
+          UTL_ScopedName *sn = ex->n ();
+          AST_Decl *d = 0;
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          
+          if (sn != 0)
+            {
+              d = s->lookup_by_name (sn, true);
+              
+              if (d == 0)
+                {
+                  idl_global->err ()->lookup_error (sn);
+                  return 1;
+                }
+              else
+                {
+                  AST_Decl::NodeType nt = d->node_type ();
+                  
+                  if (nt == AST_Decl::NT_enum_val)
+                    {
+                      (tao_yyvsp[(1) - (1)].exval)->evaluate (
+                        AST_Expression::EK_const);
+                
+                      (tao_yyval.dcval) =
+                        idl_global->gen ()->create_constant (
+                          (tao_yyvsp[(1) - (1)].exval)->ev ()->et,
+                          (tao_yyvsp[(1) - (1)].exval),
+                          sn);
+                    }
+                  else
+                    {
+                      (tao_yyval.dcval) = d;
+                    }
+                }
+            }
+          else
+            {
+              (tao_yyvsp[(1) - (1)].exval)->evaluate (
+                AST_Expression::EK_const);
+                
+              (tao_yyval.dcval) =
+                idl_global->gen ()->create_constant (
+                  (tao_yyvsp[(1) - (1)].exval)->ev ()->et,
+                  (tao_yyvsp[(1) - (1)].exval),
+                  0);
+            }
         }
     break;
 
