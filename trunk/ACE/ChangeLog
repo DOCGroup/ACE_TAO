@@ -1,3 +1,14 @@
+Mon Nov 30 10:08:00 UTC 2009  Martin Corino <mcorino@remedy.nl>
+
+        * include/makeinclude/platform_linux_common.GNU:
+        
+          Added some rules to support cross builds.
+          Setting the environment variable (or make variable) CROSS_COMPILE
+          to the platform tool prefix will redefine the CC, CXX and AR
+          variables and add a '-Wl,-rpath-link' option to the LDFLAGS.
+          If the HOST_ROOT variable has been set as well TAO_IDLxxx variables
+          will be redefined as well.
+
 Mon Nov 30 08:58:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/diff-builds-and-group-fixed-tests-only.sh:
