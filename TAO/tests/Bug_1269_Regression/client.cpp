@@ -10,6 +10,7 @@
 ACE_RCSID(Bug_1269_Regression, client, "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+bool do_shutdown = false;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[]);
@@ -97,6 +98,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
+      if (do_shutdown)
+        {
+          server->shutdown ();
+          return 0;
+        }
+
       poa_manager->activate ();
 
       server->start_task(echo.in());
@@ -122,7 +129,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:x"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -130,6 +137,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
       {
       case 'k':
         ior = get_opts.opt_arg ();
+        break;
+
+      case 'x':
+        do_shutdown = true;
         break;
 
       case '?':
