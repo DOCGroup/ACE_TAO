@@ -22,7 +22,11 @@ public:
   FE_Utils::T_PARAMLIST_INFO const *
   template_params (void) const;
   
+  // Checks for errors in the template args of an instantiation.
   bool match_arg_names (FE_Utils::T_ARGLIST *args);
+  
+  // Checks for errors in the template param refs of an alias.
+  bool match_param_refs (UTL_StrList *refs, UTL_Scope *decl_scope);
 
   // Narrowing.
   DEF_NARROW_FROM_DECL (AST_Template_Module);
@@ -41,8 +45,15 @@ protected:
   FE_Utils::T_PARAMLIST_INFO * template_params_;
   
 private:
-  bool match_param_type (FE_Utils::T_Param_Info *param,
-                         AST_Decl *d);
+  // Match with a template arg.
+  bool match_one_param (FE_Utils::T_Param_Info *param,
+                        AST_Decl *d);
+   
+  // Find one of our params by name.                       
+  FE_Utils::T_Param_Info *find_param (UTL_String *name);
+  
+  // Match a param with an aliased id by type.
+  bool match_param_by_type (FE_Utils::T_Param_Info *param);
 };
 
 #endif           // AST_TEMPLATE_MODULE_H

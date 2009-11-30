@@ -675,17 +675,46 @@ tpl_definition
         ;
 
 template_module_ref
-        : IDL_ALIAS
+        : IDL_ALIAS scoped_name
         {
-        }
-        scoped_name
-        {
+// template_module_ref : IDL_ALIAS scoped_name
+          idl_global->set_parse_state (
+            IDL_GlobalData::PS_ModuleRefSeen);
         }
         '<' at_least_one_formal_parameter_name '>'
         {
+//        '<' at_least_one_formal_parameter_name '>'
+          idl_global->set_parse_state (
+            IDL_GlobalData::PS_ModuleRefParamsSeen);
         }
-        IDENTIFIER
+        id
         {
+//        id
+          idl_global->set_parse_state (
+            IDL_GlobalData::PS_ModuleRefIDSeen);
+            
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Decl *d = s->lookup_by_name ($2, true);
+          
+          if (d == 0)
+            {
+              idl_global->err ()->lookup_error ($2);
+              return 1;
+            }
+            
+          AST_Template_Module *ref =
+            AST_Template_Module::narrow_from_decl (d);
+            
+          if (ref == 0)
+            {
+              idl_global->err ()->template_module_expected (d);
+              return 1;
+            }
+            
+          if (! ref->match_param_refs ($5, s))
+            {
+              // TODO
+            }
         }
         ;
 

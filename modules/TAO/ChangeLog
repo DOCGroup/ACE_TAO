@@ -1,3 +1,16 @@
+Mon Nov 30 23:14:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/ast_template_module.h:
+        * TAO_IDL/ast/ast_template_module.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/util/utl_err.cpp:
+        
+          Added parse state flags & associated error messages
+          for aliased modules. Also added error-checking code
+          for aliases to AST_Template_Module, and some semantic
+          action code for aliased modules.
+
 Mon Nov 30 21:46:22 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_module.h:

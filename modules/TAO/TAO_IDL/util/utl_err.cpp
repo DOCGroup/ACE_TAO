@@ -404,6 +404,12 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Illegal syntax following following template args";
   case IDL_GlobalData::PS_InstModuleIDSeen:
     return "Illegal syntax following following instantiated module identifier";
+  case IDL_GlobalData::PS_ModuleRefSeen:
+    return "Mising '<' or illegal syntax in template module alias";
+  case IDL_GlobalData::PS_ModuleRefParamsSeen:
+    return "Illegal syntax following module alias param names";
+  case IDL_GlobalData::PS_ModuleRefIDSeen:
+    return "Illegal syntax following module alias identifier";
   case IDL_GlobalData::PS_ValueTypeSeen:
     return "Missing interface identifier following VALUETYPE keyword";
   case IDL_GlobalData::PS_ValueTypeForwardSeen:

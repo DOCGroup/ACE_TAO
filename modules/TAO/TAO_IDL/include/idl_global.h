@@ -151,6 +151,9 @@ public:
     , PS_InstModuleSeen         // Seen MODULE keyword + reference
     , PS_InstModuleArgsSeen     // Seen template args 
     , PS_InstModuleIDSeen       // Seen instantiated module ID
+    , PS_ModuleRefSeen          // Seen ALIAS keyword + reference
+    , PS_ModuleRefParamsSeen    // Seen the subset of params used
+    , PS_ModuleRefIDSeen        // Seen referenced module ID
     , PS_ValueTypeSeen          // Seen a VALUETYPE keyword
     , PS_ValueTypeForwardSeen   // Forward valuetype decl seen
     , PS_ValueTypeIDSeen        // Seen the valuetype ID
