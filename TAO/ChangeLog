@@ -1,3 +1,16 @@
+Mon Nov 30 12:26:32 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+        * orbsvcs/tests/AVStreams/Full_Profile/run_test.pl:
+        * tests/Oneway_Timeouts/run_test.pl:
+        * tests/Parallel_Connect_Strategy/run_test.pl:
+        * tests/Muxed_GIOP_Versions/run_test.pl:
+        * tests/InterOp-Naming/run_test.pl:
+        * bin/tao_other_tests.lst:
+
+          Test are converted to use new test framework
+          and added to fuzz build.
+
 Mon Nov 30 10:01:49 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/default_configuration.pl:

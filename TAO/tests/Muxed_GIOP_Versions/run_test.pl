@@ -16,7 +16,7 @@ my $client2 = PerlACE::TestTarget::create_target (3) || die "Create target 3 fai
 my $client3 = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
 
 my $TARGETHOSTNAME = $server->HostName ();
-my $port = PerlACE::random_port ();
+my $port = $server->RandomPort ();
 
 my $iorbase = "server.ior";
 my $logbase = "orb.$port.log";
@@ -92,7 +92,7 @@ if ($server->WaitForFileTimed ($iorbase,
 
 # leave server reap some self abuse before clients start abusing it
 if ($serveriterations > 20) {
-  $SV->TimedWait(10);
+    $SV->TimedWait(10);
 }
 
 if ($server->GetFile ($iorbase) == -1) {
@@ -179,11 +179,10 @@ if ($clients > 2) {
     }
 }
 
-$CLS = $client1->CreateProcess ("client",
-                                "-l $corbaloc_str -i 1 -x ".
-                                "-k file://$client1_iorfile");
+$CL1->Arguments ("-l $corbaloc_str -i 1 -x ".
+                 "-k file://$client1_iorfile");
 
-$client_status = $CLS->SpawnWaitKill ($client1->ProcessStopWaitInterval());
+$client_status = $CL1->SpawnWaitKill ($client1->ProcessStopWaitInterval());
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";

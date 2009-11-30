@@ -26,8 +26,8 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-$SV_PORT = PerlACE::random_port();
-$SV_ARGS = "-ORBListenEndpoints iiop://:$SRV_PORT -server_ior $server_iorfile";
+$SV_PORT = $server->RandomPort();
+$SV_ARGS = "-ORBListenEndpoints iiop://:$SV_PORT -server_ior $server_iorfile";
 $CL_ARGS = "-server_ior file://$client_iorfile";
 
 $SV = $server->CreateProcess ("server");
@@ -111,7 +111,7 @@ sub test_timeouts
     $CL->Arguments("-sync delayed -force_timeout -request_timeout 100 -connect_timeout 200 -max_request_time 30");
     run_only_client;
     print "test_timeouts 6 passed...\n";
-    return $ret;
+    return 0;
 }
 
 sub test_buffering

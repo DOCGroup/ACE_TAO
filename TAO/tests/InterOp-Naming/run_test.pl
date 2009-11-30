@@ -21,7 +21,7 @@ my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 fail
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
 my $TARGETHOSTNAME = $server->HostName ();
-my $port = PerlACE::random_port ();
+my $port = $server->RandomPort ();
 
 my $iorbase = "server.ior";
 my $server_iorfile = $server->LocalFile ($iorbase);
