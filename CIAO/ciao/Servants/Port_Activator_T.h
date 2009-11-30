@@ -63,7 +63,7 @@ namespace CIAO
     /// Context classes
     CONTEXT *context_;
 
-    /// Component servant which created <this>
+    /// Component servant which created @c this
     COMP_SERV *comp_serv_;
   };
 }
