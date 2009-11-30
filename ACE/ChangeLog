@@ -1,7 +1,13 @@
+Mon Nov 30 10:53:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debianbuild/patches/18-fix-bswap-detection.dpatch:
+        * debianbuild/patches/22-tao_idl-64bit-fix.dpatch:
+          Removed, not needed anymore
+
 Mon Nov 30 10:08:00 UTC 2009  Martin Corino <mcorino@remedy.nl>
 
         * include/makeinclude/platform_linux_common.GNU:
-        
+
           Added some rules to support cross builds.
           Setting the environment variable (or make variable) CROSS_COMPILE
           to the platform tool prefix will redefine the CC, CXX and AR
