@@ -69,6 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // of UTL_Scope.
 
 #include "ast_module.h"
+#include "ast_template_module_inst.h"
 #include "ast_predefined_type.h"
 #include "ast_valuebox.h"
 #include "ast_valuetype.h"
@@ -265,6 +266,54 @@ AST_Module::fe_add_module (AST_Module *t)
     }
 
   return t;
+}
+
+AST_Template_Module_Inst *
+AST_Module::fe_add_template_module_inst (AST_Template_Module_Inst *m)
+{
+  AST_Decl *d = 0;
+
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = this->lookup_for_add (m, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      m,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, m->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      m,
+                                      this,
+                                      d);
+          return 0;
+        }
+    }
+
+  // Add it to scope.
+  this->add_to_scope (m);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (m,
+                           false,
+                           m->local_name ());
+
+  AST_Type *ft = m->field_type ();
+  UTL_ScopedName *mru = ft->last_referenced_as ();
+
+  if (mru != 0)
+    {
+      this->add_to_referenced (ft,
+                               false,
+                               mru->first_component ());
+    }
+
+  return m;
 }
 
 // Add this AST_Interface node (an interface declaration) to this scope.

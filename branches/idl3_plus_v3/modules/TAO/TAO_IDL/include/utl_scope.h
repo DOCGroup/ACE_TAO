@@ -91,6 +91,7 @@ class Identifier;
 
 class AST_PredefinedType;
 class AST_Module;
+class AST_Template_Module_Inst;
 class AST_Interface;
 class AST_InterfaceFwd;
 class AST_ValueBox;
@@ -128,9 +129,6 @@ class AST_Consumes;
 class AST_Extended_Port;
 class AST_Mirror_Port;
 class AST_Connector;
-class AST_Instantiated_Connector;
-class AST_Tmpl_Port;
-class AST_Tmpl_Mirror_Port;
 class UTL_StrList;
 class UTL_NameList;
 
@@ -386,6 +384,10 @@ private:
 
   virtual
   AST_Module *fe_add_module (AST_Module *m);
+  
+  virtual
+  AST_Template_Module_Inst *fe_add_template_module_inst (
+    AST_Template_Module_Inst *m);
 
   virtual
   AST_Interface *fe_add_interface (AST_Interface *i);
@@ -506,17 +508,6 @@ private:
 
   virtual
   AST_Mirror_Port *fe_add_mirror_port (AST_Mirror_Port *mp);
-  
-  virtual
-  AST_Tmpl_Port *fe_add_tmpl_port (AST_Tmpl_Port *p);
-  
-  virtual
-  AST_Tmpl_Mirror_Port *fe_add_tmpl_mirror_port (
-    AST_Tmpl_Mirror_Port *p);
-  
-  virtual
-  AST_Instantiated_Connector *fe_add_instantiated_connector (
-    AST_Instantiated_Connector *ic);
 };
 
 // Active iterator for a UTL_Scope node

@@ -1047,6 +1047,12 @@ UTL_Scope::fe_add_module (AST_Module *)
   return 0;
 }
 
+AST_Template_Module_Inst *
+UTL_Scope::fe_add_template_module_inst (AST_Template_Module_Inst *)
+{
+  return 0;
+}
+
 AST_Interface *
 UTL_Scope::fe_add_interface (AST_Interface *)
 {
@@ -1283,25 +1289,6 @@ UTL_Scope::fe_add_mirror_port (AST_Mirror_Port *)
 
 AST_Connector *
 UTL_Scope::fe_add_connector (AST_Connector *)
-{
-  return 0;
-}
-
-AST_Tmpl_Port *
-UTL_Scope::fe_add_tmpl_port (AST_Tmpl_Port *)
-{
-  return 0;
-}
-
-AST_Tmpl_Mirror_Port *
-UTL_Scope::fe_add_tmpl_mirror_port (AST_Tmpl_Mirror_Port *)
-{
-  return 0;
-}
-
-AST_Instantiated_Connector *
-UTL_Scope::fe_add_instantiated_connector (
-    AST_Instantiated_Connector *)
 {
   return 0;
 }

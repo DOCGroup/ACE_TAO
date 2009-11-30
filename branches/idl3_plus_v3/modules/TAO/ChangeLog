@@ -1,3 +1,20 @@
+Mon Nov 30 21:46:22 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_template_module.cpp:
+        * TAO_IDL/ast/ast_template_common.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Finished semantic actions and added diagnostics
+          for template module instantiations.
+
 Mon Nov 30 20:11:27 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:

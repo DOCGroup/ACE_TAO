@@ -357,7 +357,7 @@ public:
   void duplicate_param_id (UTL_ScopedName *n);
 
   // Referenced template parameter not matched in param list.
-  void mismatched_template_param (UTL_ScopedName *n);
+  void mismatched_template_param (const char *name);
   
   // Given a template param of the form 'sequence<T>', the
   // 'T' must match a previous param in the list.
