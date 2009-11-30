@@ -10,7 +10,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # It starts all the servers and clients as necessary.
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 use Cwd;
 
 ## Save the starting directory
@@ -23,30 +23,52 @@ if ($ARGV[0] eq '-q') {
     $quiet = 1;
 }
 
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+
 # Variables for command-line arguments to client and server
 # executables.
-$ns_multicast_port = 10001 + PerlACE::uniqueid (); # Can not be 10000 on Chorus 4.0
-$ns_orb_port = 12000 + PerlACE::uniqueid ();
-$iorfile = PerlACE::LocalFile ("ns.ior");
-$persistent_ior_file = PerlACE::LocalFile ("pns.ior");
-$persistent_log_file = PerlACE::LocalFile ("test_log");
-$data_file = PerlACE::LocalFile ("test_run.data");
+$ns_multicast_port = 10001 + $client->RandomPort(); # Can not be 10000 on Chorus 4.0
+$ns_orb_port = 12000 + $server->RandomPort();
+
+$iorfile = "ns.ior";
+$persistent_ior_file = "pns.ior";
+$persistent_log_file = "test_log";
+$data_file = "test_run.data";
+
+my $server_iorfile = $server->LocalFile ($iorfile);
+my $client_iorfile = $client->LocalFile ($iorfile);
+$server->DeleteFile($iorfile);
+$client->DeleteFile($iorfile);
 
 $status = 0;
 
 sub name_server
 {
-    my $args = "-ORBMulticastDiscoveryEndpoint 224.9.9.2:$ns_multicast_port -o $iorfile -m 1 @_";
+    my $args = "-ORBMulticastDiscoveryEndpoint 224.9.9.2:$server_ns_multicast_port -o $server_iorfile -m 1 @_";
     my $prog = "$startdir/../../Naming_Service/Naming_Service";
-    $NS = new PerlACE::Process ($prog, $args);
+    
+    $SV = $server->CreateProcess ("$prog", "$args");
 
-    unlink $iorfile;
+    $server->DeleteFile($server_iorfile);
 
-    $NS->Spawn ();
+    $SV->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
-        print STDERR "ERROR: cannot find IOR file <$iorfile>\n";
-        $NS->Kill (); 
+    if ($server->WaitForFileTimed ($iorfile,
+                               $server->ProcessStartWaitInterval()) == -1) {
+        print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+        $SV->Kill (); $SV->TimedWait (1);
+        exit 1;
+    }
+
+    if ($server->GetFile ($iorfile) == -1) {
+        print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
+        $SV->Kill (); $SV->TimedWait (1);
+        exit 1;
+    }
+    if ($client->PutFile ($iorfile) == -1) {
+        print STDERR "ERROR: cannot set file <$client_iorfile>\n";
+        $SV->Kill (); $SV->TimedWait (1);
         exit 1;
     }
 }
@@ -56,14 +78,15 @@ sub client
     my $args = "@_"." ";
     my $prog = "$startdir/client";
 
-    $CL = new PerlACE::Process ($prog, $args);
+    $CL = $client->CreateProcess ("$prog", "$args");
 
-    $client = $CL->SpawnWaitKill (60);
+    $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
 
-    if ($client != 0) {
-        print STDERR "ERROR: client returned $client\n";
+    if ($client_status != 0) {
+        print STDERR "ERROR: client returned $client_status\n";
         $status = 1;
     }
+    
 }
 
 ## The options below have been reordered due to a
@@ -71,20 +94,22 @@ sub client
 ## that has only been seen on Windows XP.
 
 # Options for all simple tests recognized by the 'client' program.
-@opts = ("-s -ORBInitRef NameService=file://$iorfile",
-         "-p $persistent_ior_file -ORBInitRef NameService=file://$iorfile",
-         "-s -ORBInitRef NameService=mcast://224.9.9.2:$ns_multicast_port\::/NameService",
-         "-t -ORBInitRef NameService=file://$iorfile",
-         "-i -ORBInitRef NameService=file://$iorfile",
-         "-e -ORBInitRef NameService=file://$iorfile",
-         "-y -ORBInitRef NameService=file://$iorfile",
-         "-c file://$persistent_ior_file -ORBInitRef NameService=file://$iorfile",
+@opts = ("-s -ORBInitRef NameService=file://$client_iorfile",
+         "-p $persistent_ior_file -ORBInitRef NameService=file://$client_iorfile",
+         "-s -ORBInitRef NameService=mcast://224.9.9.2:$client_ns_multicast_port\::/NameService",
+         "-t -ORBInitRef NameService=file://$client_iorfile",
+         "-i -ORBInitRef NameService=file://$client_iorfile",
+         "-e -ORBInitRef NameService=file://$client_iorfile",
+         "-y -ORBInitRef NameService=file://$client_iorfile",
+         "-c file://$client_persistent_ior_file -ORBInitRef NameService=file://$client_iorfile",
          );
 
+$hostname = $server->HostName ();
+
 @server_opts = ("-t 30",
-                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -f $persistent_log_file",
+                "-ORBEndpoint iiop://$hostname:$server_ns_orb_port -f $server_persistent_log_file",
                 "", "", "", "", "",
-                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -f $persistent_log_file",
+                "-ORBEndpoint iiop://$hostname:$server_ns_orb_port -f $server_persistent_log_file",
                 );
 
 @comments = ("Simple Test: \n",
@@ -126,7 +151,7 @@ foreach $o (@opts) {
 
     client ($o);
 
-    $NS->Kill ();
+    $SV->Kill ();
 
     ## For some reason, only on Windows XP, we need to
     ## wait before starting another Naming_Service when
@@ -155,14 +180,14 @@ $fh = \*OLDERR;
 
 name_server ();
 
-client ("-ORBInitRef NameService=file://$iorfile", "-m15");
+client ("-ORBInitRef NameService=file://$client_iorfile", "-m15");
 
 close (STDERR);
 close (STDOUT);
 open (STDOUT, ">&OLDOUT");
 open (STDERR, ">&OLDERR");
 
-$NS->Kill ();
+$SV->Kill ();
 
 unlink $iorfile;
 

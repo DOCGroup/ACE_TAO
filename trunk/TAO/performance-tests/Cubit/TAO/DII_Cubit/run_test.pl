@@ -1,19 +1,33 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-    & eval 'exec perl -S $0 $argv:q'
-    if 0;
+     & eval 'exec perl -S $0 $argv:q'
+     if 0;
 
 # $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 $status = 0;
-$iorfile = PerlACE::LocalFile ("cubit.ior");
-$svnsflags = " -f $iorfile ";
-$clnsflags = " -f $iorfile ";
-$clflags = "";
-$svflags = "";
+$debug_level = '0';
+
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
+}
+
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+
+my $iorbase = "cubit.ior";
+my $server_iorfile = $server->LocalFile ($iorbase);
+my $client_iorfile = $client->LocalFile ($iorbase);
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
+
+$client_flags = "";
+$server_flags = "";
 
 ###############################################################################
 # Parse the arguments
@@ -29,16 +43,16 @@ for (my $i = 0; $i <= $#ARGV; $i++) {
         exit;
     }
     elsif ($ARGV[$i] eq "-debug") {
-        $clflags .= " -d ";
-        $svflags .= " -d ";
+        $client_flags .= " -d ";
+        $server_flags .= " -d ";
     }
     elsif ($ARGV[$i] eq "-n") {
-        $clflags .= " -n $ARGV[$i + 1] ";
+        $client_flags .= " -n $ARGV[$i + 1] ";
         $i++;
     }
     elsif ($ARGV[$i] eq "-orblite") {
-        $clflags .= " -ORBgioplite ";
-        $svflags .= " -ORBgioplite ";
+        $client_flags .= " -ORBgioplite ";
+        $server_flags .= " -ORBgioplite ";
     }
     else {
         print STDERR "ERROR: Unknown Option: ".$ARGV[$i]."\n";    
@@ -46,9 +60,9 @@ for (my $i = 0; $i <= $#ARGV; $i++) {
 }
 
 ###############################################################################
-
-my $SV = new PerlACE::Process ("../IDL_Cubit/server", $svflags . $svnsflags);
-my $CL = new PerlACE::Process ("client", "$clflags $clnsflags -x");
+$SV = $server->CreateProcess ("../IDL_Cubit/server", "-ORBdebuglevel $debug_level ".
+                                                     "-f $server_iorfile $server_flags");
+$CL = $client->CreateProcess ("client", "-f $client_iorfile $client_flags -x");
 
 if (! (-x $SV->Executable () && -x $CL->Executable)) {
     print STDERR "ERROR: server and/or client missing or not executable!\n";
@@ -56,29 +70,47 @@ if (! (-x $SV->Executable () && -x $CL->Executable)) {
 }
 
 # Make sure the file is gone, so we can wait on it.
-unlink $iorfile;
+$server_status = $SV->Spawn ();
 
-$SV->Spawn ();
-
-if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill (); 
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
     exit 1;
 }
 
-$client = $CL->SpawnWaitKill (60);
-$server = $SV->WaitKill (10);
+if ($server->WaitForFileTimed ($iorbase,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+if ($server->GetFile ($iorbase) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+
+if ($client->PutFile ($iorbase) == -1) {
+    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
+
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }
 
-unlink $iorfile;
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
 
 exit $status;

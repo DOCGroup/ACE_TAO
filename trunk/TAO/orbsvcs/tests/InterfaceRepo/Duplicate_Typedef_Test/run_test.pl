@@ -1,76 +1,101 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-    & eval 'exec perl -S $0 $argv:q'
-    if 0;
+     & eval 'exec perl -S $0 $argv:q'
+     if 0;
 
 # $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
-
-$locking = "";
-
-$iorfile = "if_repo.ior";
+use PerlACE::TestTarget;
 
 $status = 0;
 
+$locking = "";
 $nice = "";
 
-unlink $iorfile;
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-$SV = new PerlACE::Process ("../../../IFR_Service/IFR_Service",
-                            " $nice " . " -o $iorfile" . " $locking");
-$CL1 = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/tao_ifr",
-                             "-ORBInitRef InterfaceRepository=file://$iorfile -T test1.idl");
-$CL2 = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/tao_ifr",
-                             "-ORBInitRef InterfaceRepository=file://$iorfile -T test2.idl");
+my $iorbase = "if_repo.ior";
 
-$SV->Spawn ();
+my $server_iorfile = $server->LocalFile ($iorbase);
+my $client_iorfile = $client->LocalFile ($iorbase);
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
 
-if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill ();
+$SV = $server->CreateProcess ("../../../IFR_Service/IFR_Service",
+                              " $nice " .
+                              " -o $server_iorfile " .
+                              " $locking");
+
+$CL = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_ifr",
+                              "-ORBInitRef InterfaceRepository=file://$client_iorfile " .
+                              "-T test1.idl");
+
+$server_status = $SV->Spawn ();
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
     exit 1;
 }
 
-$client1 = $CL1->SpawnWaitKill (60);
+if ($server->WaitForFileTimed ($iorbase,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
 
-if ($client1 != 0) {
-    print STDERR "ERROR: client returned $client1\n";
+if ($server->GetFile ($iorbase) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    $server->DeleteFile($backing_file);
+    exit 1;
+}
+if ($client->PutFile ($iorbase) == -1) {
+    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    $server->DeleteFile($backing_file);
+    exit 1;
+}
+
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
+
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 
-$client2 = $CL2->SpawnWaitKill (60);
+$CL->Arguments ("-ORBInitRef InterfaceRepository=file://$client_iorfile " .
+                              "-T test2.idl");
 
-if ($client2 != 0) {
-    print STDERR "ERROR: client returned $client2\n";
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
+
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 
-$server = $SV->TerminateWaitKill (5);
+print "Terminating IFR_Service\n";
+$server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
 
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }
 
-unlink $iorfile;
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
 
 exit $status;
-
-eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-    & eval 'exec perl -S $0 $argv:q'
-    if 0;
 
 # $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 $locking = "";
-
-$iorfile = "if_repo.ior";
 
 $status = 0;
 
@@ -78,16 +103,24 @@ $nice = "";
 
 $ifrflags = '-Si';
 
-unlink $iorfile;
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-$SV = new PerlACE::Process ("../../../IFR_Service/IFR_Service", " $nice " . " -o $iorfile" . " $locking");
-$CL1 = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/tao_ifr",
-                             "-ORBInitRef InterfaceRepository=file://$iorfile  $ifrflags test1.idl");
-$CL2 = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/tao_ifr",
-                             "-ORBInitRef InterfaceRepository=file://$iorfile  $ifrflags test2.idl");
+my $iorbase = "if_repo.ior";
 
-$CL3 = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/tao_ifr",
-                             "-ORBInitRef InterfaceRepository=file://$iorfile  $ifrflags test3.idl");
+my $server_iorfile = $server->LocalFile ($iorbase);
+my $client_iorfile = $client->LocalFile ($iorbase);
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
+
+$SV = $server->CreateProcess ("../../../IFR_Service/IFR_Service",
+                              " $nice " .
+                              " -o $server_iorfile " .
+                              " $locking");
+
+$CL = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_ifr",
+                              "-ORBInitRef InterfaceRepository=file://$client_iorfile " .
+                              "$ifrflags -T test1.idl");
 
 $SV->Spawn ();
 
@@ -97,37 +130,48 @@ if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
     exit 1;
 }
 
-foreach $i (1..2) {
-$client1 = $CL1->SpawnWaitKill (60);
+foreach (1..2) {
 
-if ($client1 != 0) {
-    print STDERR "ERROR: client returned $client1\n";
+$CL->Arguments ("-ORBInitRef InterfaceRepository=file://$client_iorfile " .
+                              "$ifrflags -T test1.idl");
+
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
+
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 
-$client2 = $CL2->SpawnWaitKill (60);
+$CL->Arguments ("-ORBInitRef InterfaceRepository=file://$client_iorfile " .
+                              "$ifrflags -T test2.idl");
 
-if ($client2 != 0) {
-    print STDERR "ERROR: client returned $client2\n";
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
+
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 
-$client3 = $CL3->SpawnWaitKill (60);
+$CL->Arguments ("-ORBInitRef InterfaceRepository=file://$client_iorfile " .
+                              "$ifrflags -T test3.idl");
 
-if ($client3 != 0) {
-    print STDERR "ERROR: client returned $client3\n";
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
+
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 }
 
-$server = $SV->TerminateWaitKill (5);
+print "Terminating IFR_Service\n";
+$server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
 
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }
 
-unlink $iorfile;
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
 
 exit $status;
-
