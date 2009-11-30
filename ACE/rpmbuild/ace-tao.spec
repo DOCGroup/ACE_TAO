@@ -62,7 +62,7 @@ URL:          http://www.cs.wustl.edu/~schmidt/ACE.html
 License:      DOC License
 Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO+CIAO-src-%{ACEVER}.tar.gz
 Source1:      ace-tao-rpmlintrc
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %if 0%{?centos_version}
 %define _extension .gz
@@ -177,7 +177,7 @@ BuildRequires: fox16-devel
 NoSource: 0
 %endif
 
-%description
+%description -n ace-tao
 
 The ADAPTIVE Communication Environment (ACE) is a freely available,
 open-source object-oriented (OO) framework that implements many core

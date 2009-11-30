@@ -1,3 +1,20 @@
+Mon Nov 30 08:58:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * bin/Download.html:
+          updated for x.7.5
+
+        * bin/make_release.py
+        * rpmbuild/ace-tao-ciao.spec
+        * rpmbuild/ace-tao.spec
+          Updated to match opensuse build service
+
+        * docs/svn/svn-prefs.reg:
+          Added idl3+
+
+        * etc/index.html:
+          Added 5.7.5
+
 Sun Nov 29 13:06:02 CST 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ACE version 5.7.5 released.
