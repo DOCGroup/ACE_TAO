@@ -1003,8 +1003,11 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
   va_start (argp, format);
 
   // Add the rest of the varargs.
-  size_t tmp_buflen = DEFAULT_COMMAND_LINE_BUF_LEN > buflen
-                      ? DEFAULT_COMMAND_LINE_BUF_LEN : buflen;
+  size_t tmp_buflen = buflen;
+  if (DEFAULT_COMMAND_LINE_BUF_LEN > buflen)
+    {
+      tmp_buflen = DEFAULT_COMMAND_LINE_BUF_LEN;
+    }
   int retval = 0;
 
   ACE_TCHAR *stack_buf = 0;

@@ -403,7 +403,7 @@ protected:
   size_t max_environment_args_;
 
   /// Maximum index of environment_argv_ buffer
-  int max_environ_argv_index_;
+  size_t max_environ_argv_index_;
 
   /// The current working directory.
   ACE_TCHAR working_directory_[MAXPATHLEN + 1];
