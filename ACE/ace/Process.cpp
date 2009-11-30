@@ -794,9 +794,9 @@ ACE_Process::convert_env_buffer (const char* env) const
 #endif
 
 ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
-                                          int command_line_buf_len,
-                                          int env_buf_len,
-                                          int max_env_args)
+                                          size_t command_line_buf_len,
+                                          size_t env_buf_len,
+                                          size_t max_env_args)
   :
 #if !defined (ACE_HAS_WINCE)
     inherit_environment_ (inherit_environment),
@@ -826,7 +826,7 @@ ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
     max_environment_args_ (max_env_args),
     max_environ_argv_index_ (max_env_args - 1),
 #endif /* !ACE_HAS_WINCE */
-    command_line_argv_calculated_ (0),
+    command_line_argv_calculated_ (false),
     command_line_buf_ (0),
     command_line_copy_ (0),
     command_line_buf_len_ (command_line_buf_len),
@@ -1004,7 +1004,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
 
   // Add the rest of the varargs.
   size_t tmp_buflen = DEFAULT_COMMAND_LINE_BUF_LEN > buflen
-                      ? static_cast<size_t> (DEFAULT_COMMAND_LINE_BUF_LEN) : buflen;
+                      ? DEFAULT_COMMAND_LINE_BUF_LEN : buflen;
   int retval = 0;
 
   ACE_TCHAR *stack_buf = 0;
@@ -1185,17 +1185,16 @@ ACE_Process_Options::command_line (const ACE_TCHAR *const argv[])
   if (argv[i])
     {
       ACE_OS::strcat (command_line_buf_, argv[i]);
-      
+
       while (argv[++i])
         {
-          // Check to see if the next argument will overflow the  
+          // Check to see if the next argument will overflow the
           // command_line buffer.
-          int cur_len =
-            static_cast<int> (
-              ACE_OS::strlen (command_line_buf_)
-              + ACE_OS:: strlen (argv[i])
-              + 2);
-              
+          size_t const cur_len =
+            ACE_OS::strlen (command_line_buf_)
+              + ACE_OS::strlen (argv[i])
+              + 2;
+
           if (cur_len > command_line_buf_len_)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -1205,13 +1204,13 @@ ACE_Process_Options::command_line (const ACE_TCHAR *const argv[])
                                  command_line_buf_len_),
                                 1);
             }
-            
+
           ACE_OS::strcat (command_line_buf_, ACE_TEXT (" "));
           ACE_OS::strcat (command_line_buf_, argv[i]);
         }
     }
 
-  command_line_argv_calculated_ = 0;
+  command_line_argv_calculated_ = false;
   return 0; // Success.
 }
 
@@ -1241,7 +1240,7 @@ ACE_Process_Options::command_line (const ACE_TCHAR *format, ...)
   // Useless macro.
   va_end (argp);
 
-  command_line_argv_calculated_ = 0;
+  command_line_argv_calculated_ = false;
   return 0;
 }
 
@@ -1253,7 +1252,7 @@ ACE_Process_Options::command_line (const ACE_TCHAR *format, ...)
 int
 ACE_Process_Options::command_line (const ACE_ANTI_TCHAR *format, ...)
 {
-  ACE_ANTI_TCHAR *anti_clb;
+  ACE_ANTI_TCHAR *anti_clb = 0;
   ACE_NEW_RETURN (anti_clb,
                   ACE_ANTI_TCHAR[this->command_line_buf_len_],
                   -1);
@@ -1275,7 +1274,7 @@ ACE_Process_Options::command_line (const ACE_ANTI_TCHAR *format, ...)
 
   delete [] anti_clb;
 
-  command_line_argv_calculated_ = 0;
+  command_line_argv_calculated_ = false;
   return 0;
 }
 #endif /* ACE_HAS_WCHAR && !ACE_HAS_WINCE */
@@ -1296,9 +1295,9 @@ ACE_Process_Options::env_buf (void)
 ACE_TCHAR * const *
 ACE_Process_Options::command_line_argv (void)
 {
-  if (command_line_argv_calculated_ == 0)
+  if (!command_line_argv_calculated_)
     {
-      command_line_argv_calculated_ = 1;
+      command_line_argv_calculated_ = true;
 
       // We need to free up any previous allocated memory first.
       ACE::strdelete (command_line_copy_);

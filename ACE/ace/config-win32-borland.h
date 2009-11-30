@@ -11,7 +11,7 @@
 #error Use config-win32.h in config.h instead of this header
 #endif /* ACE_CONFIG_WIN32_H */
 
-#if (__BORLANDC__ != 0x613)
+#if (__BORLANDC__ != 0x620)
 #error This version of CodeGear C++ is not supported.
 #endif
 
@@ -140,10 +140,10 @@
 #if (__BORLANDC__ < 0x620)
 # define ACE_LACKS_ISBLANK
 # define ACE_LACKS_ISWBLANK
-# define ACE_LACKS_ISWCTYPE
 # define ACE_LACKS_PRAGMA_ONCE 1
 #endif
 
+#define ACE_LACKS_ISWCTYPE
 #define ACE_LACKS_ISCTYPE
 
 #if (__BORLANDC__ < 0x620)
