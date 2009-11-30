@@ -1,3 +1,11 @@
+Mon Nov 30 13:00:37 UTC 2009  Marijke Hengstmengel <mhengstmengel@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/CSLDeadline/Connector/CSL_DeadlineTest_Connector.mpc:
+        * connectors/dds4ccm/tests/CSLDeadline/Receiver/CSL_DeadlineTest_Receiver.mpc:
+        * connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender.mpc:
+          Corrected long project names and add tests to test list.
+
 Mon Nov 30 12:27:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.cpp:
