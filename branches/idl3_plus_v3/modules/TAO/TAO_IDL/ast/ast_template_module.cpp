@@ -5,7 +5,10 @@
 #include "ast_visitor.h"
 
 #include "utl_err.h"
+#include "utl_string.h"
+#include "utl_strlist.h"
 #include "global_extern.h"
+#include "nr_extern.h"
 
 AST_Template_Module::AST_Template_Module (
       UTL_ScopedName *n,
@@ -64,7 +67,7 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
       (void) this->template_params_->get (param, slot);
       const char *s = 0;
       
-      if (! this->match_param_type (param, d))
+      if (! this->match_one_param (param, d))
         {
           UTL_ScopedName *n = d->name ();
           
@@ -82,6 +85,42 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
         
           idl_global->err ()->mismatched_template_param (s);
             
+          return false;
+        }
+    }
+    
+  return true;
+}
+
+bool
+AST_Template_Module::match_param_refs (UTL_StrList *refs,
+                                       UTL_Scope *decl_scope)
+{
+  UTL_Scope *s = decl_scope;
+  AST_Template_Module *enclosing = 0;
+  
+  while (enclosing == 0 && s != 0)
+    {
+      enclosing = AST_Template_Module::narrow_from_scope (s);
+      s = ScopeAsDecl (s)->defined_in ();
+    }
+
+  for (UTL_StrlistActiveIterator i (refs);
+       !i.is_done ();
+       i.next ())
+    {
+      FE_Utils::T_Param_Info *enclosing_param =
+        enclosing->find_param (i.item ());
+        
+      if (enclosing_param == 0)
+        {
+          // Enclosing param not found
+          return false;
+        }
+        
+      if (!this->match_param_by_type (enclosing_param))
+        {
+          // Referenced param type not matched to enclosiong param.
           return false;
         }
     }
@@ -110,8 +149,8 @@ AST_Template_Module::dump (ACE_OSTREAM_TYPE & /* o */)
 }
 
 bool
-AST_Template_Module::match_param_type (FE_Utils::T_Param_Info *param,
-                                       AST_Decl *d)
+AST_Template_Module::match_one_param (FE_Utils::T_Param_Info *param,
+                                      AST_Decl *d)
 {
   if (param->type_ == AST_Decl::NT_type)
     {
@@ -147,6 +186,32 @@ AST_Template_Module::match_param_type (FE_Utils::T_Param_Info *param,
     }
     
   return (param->type_ == other_type);
+}
+
+FE_Utils::T_Param_Info *
+AST_Template_Module::find_param (UTL_String *name)
+{
+  for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (
+         *this->template_params_);
+       !i.done ();
+       i.advance ())
+    {
+      FE_Utils::T_Param_Info *param = 0;
+      i.next (param);
+      
+      if (param->name_ == name->get_string ())
+        {
+          return param;
+        }
+    }
+    
+  return 0;
+}
+
+bool
+match_param_by_type (FE_Utils::T_Param_Info *param)
+{
+  return true;
 }
 
 IMPL_NARROW_FROM_DECL (AST_Template_Module)
