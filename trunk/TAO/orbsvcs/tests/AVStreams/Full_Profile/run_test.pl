@@ -32,7 +32,6 @@ my $cl_inputfile = $cl->LocalFile ($inputfile);
 my $ns_nsiorfile = $ns->LocalFile ($nsiorfile);
 my $sv_nsiorfile = $sv->LocalFile ($nsiorfile);
 my $cl_nsiorfile = $cl->LocalFile ($nsiorfile);
-my $cl_inputfile = $cl->LocalFile ($inputfile);
 $ns->DeleteFile ($nsiorfile);
 $sv->DeleteFile ($nsiorfile);
 $cl->DeleteFile ($nsiorfile);
