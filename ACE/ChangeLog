@@ -1,3 +1,30 @@
+Mon Nov 30 14:02:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Process.cpp:
+        * ace/Process.h:
+          Fixed gcc warnings
+
+Mon Nov 30 12:38:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+          Started port to C++ Builder 2010, older versions of C++ Builder are
+          now deprecated
+
+        * ace/MMAP_Memory_Pool.cpp:
+          Layout change
+
+        * ace/OS_NS_sys_time.h:
+        * ace/OS_NS_sys_time.inl:
+          Removed workarounds for ancient wince versions
+
+        * ace/Process.cpp:
+        * ace/Process.h:
+          Use bool and size_t and removed some ugly casts
+
+        * ace/Trace.cpp:
+        * ace/Trace.h:
+          Use bool
+
 Mon Nov 30 10:53:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debianbuild/patches/18-fix-bswap-detection.dpatch:
