@@ -1,3 +1,9 @@
+Mon Nov 30 19:11:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/gperf/src/Bool_Array.h:
+        * apps/gperf/src/Key_List.h:
+          C++ Builder 2010 fixes
+
 Mon Nov 30 14:02:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Process.cpp:
