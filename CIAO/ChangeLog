@@ -1,3 +1,55 @@
+Mon Nov 30 11:32:37 UTC 2009  Marijke Hengstmengel <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLDeadline:
+        * connectors/dds4ccm/tests/CSLDeadline/Base:
+        * connectors/dds4ccm/tests/CSLDeadline/Base/CSL_DeadlineTest_Base.idl:
+        * connectors/dds4ccm/tests/CSLDeadline/Base/CSL_DeadlineTest_Base.mpc:
+        * connectors/dds4ccm/tests/CSLDeadline/Connector:
+        * connectors/dds4ccm/tests/CSLDeadline/Connector/CSL_DeadlineTest_Connector.idl:
+        * connectors/dds4ccm/tests/CSLDeadline/Connector/CSL_DeadlineTest_Connector.mpc:
+        * connectors/dds4ccm/tests/CSLDeadline/Connector/CSL_DeadlineTest_Connector_exec.cpp:
+        * connectors/dds4ccm/tests/CSLDeadline/Connector/CSL_DeadlineTest_Connector_exec.h:
+        * connectors/dds4ccm/tests/CSLDeadline/descriptors:
+        * connectors/dds4ccm/tests/CSLDeadline/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/CSLDeadline/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLDeadline/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/CSLDeadline/Receiver:
+        * connectors/dds4ccm/tests/CSLDeadline/Receiver/CSL_DeadlineTest_Receiver.idl:
+        * connectors/dds4ccm/tests/CSLDeadline/Receiver/CSL_DeadlineTest_Receiver.mpc:
+        * connectors/dds4ccm/tests/CSLDeadline/Receiver/CSL_DeadlineTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CSLDeadline/Receiver/CSL_DeadlineTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CSLDeadline/Sender:
+        * connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender.idl:
+        * connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender.mpc:
+        * connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender_exec.h:
+          Test ConnectorStatusListener on_offered_deadline_missed.
+        
+        * connectors/dds4ccm/tests/CSLQoS:
+        * connectors/dds4ccm/tests/CSLQoS/Base:
+        * connectors/dds4ccm/tests/CSLQoS/Base/CSL_QoSTest_Base.idl:
+        * connectors/dds4ccm/tests/CSLQoS/Base/CSL_QoSTest_Base.mpc:
+        * connectors/dds4ccm/tests/CSLQoS/Connector:
+        * connectors/dds4ccm/tests/CSLQoS/Connector/CSL_QoSTest_Connector.idl:
+        * connectors/dds4ccm/tests/CSLQoS/Connector/CSL_QoSTest_Connector.mpc:
+        * connectors/dds4ccm/tests/CSLQoS/Connector/CSL_QoSTest_Connector_exec.cpp:
+        * connectors/dds4ccm/tests/CSLQoS/Connector/CSL_QoSTest_Connector_exec.h:
+        * connectors/dds4ccm/tests/CSLQoS/descriptors:
+        * connectors/dds4ccm/tests/CSLQoS/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/CSLQoS/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLQoS/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/CSLQoS/Receiver:
+        * connectors/dds4ccm/tests/CSLQoS/Receiver/CSL_QoSTest_Receiver.idl:
+        * connectors/dds4ccm/tests/CSLQoS/Receiver/CSL_QoSTest_Receiver.mpc:
+        * connectors/dds4ccm/tests/CSLQoS/Receiver/CSL_QoSTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CSLQoS/Receiver/CSL_QoSTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CSLQoS/Sender:
+        * connectors/dds4ccm/tests/CSLQoS/Sender/CSL_QoSTest_Sender.idl:
+        * connectors/dds4ccm/tests/CSLQoS/Sender/CSL_QoSTest_Sender.mpc:
+        * connectors/dds4ccm/tests/CSLQoS/Sender/CSL_QoSTest_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/CSLQoS/Sender/CSL_QoSTest_Sender_exec.h:
+          Test ConnectorStatusListener on_requested- and on_offered_incompatible_QoS.
+
 Mon Nov 30 09:21:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/CIAO_ServerActivator_Impl.h:
