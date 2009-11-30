@@ -47,7 +47,7 @@ namespace CIAO_CSL_QoSTest_Sender_Impl
      //printf("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
     }
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr the_writer, 
+     ::DDS::DataWriter_ptr /*the_writer*/, 
      const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
 //     printf("Sender:ConnectorStatusListener_exec_i::on_offered_incompatible_qos status = %dl\n", status);
        this->incompatible_ = true;
@@ -113,7 +113,6 @@ namespace CIAO_CSL_QoSTest_Sender_Impl
   {
     //printf("*************in remove Sender********** \n");
   
-    CORBA::Boolean _expected = true;
     if(!this->incompatible_.value ())
       {   
      

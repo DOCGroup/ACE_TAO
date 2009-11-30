@@ -5,7 +5,7 @@
 
 namespace CIAO_CSL_DeadlineTest_CSL_DeadlineTest_Connector_Impl
 {
-  CSL_DeadlineTest_Connector_exec_i::CSL_DeadlineTest_Connector_exec_i (const char * topic_name)
+  CSL_DeadlineTest_Connector_exec_i::CSL_DeadlineTest_Connector_exec_i (const char * /*topic_name*/)
     : DDS_Event_Connector_T<TestTopic_DDS_Traits, TestTopic_Connector_Traits> ()
   {
   }
