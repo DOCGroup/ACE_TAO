@@ -110,7 +110,7 @@ namespace CIAO
                                     const ACE_CString &cmd_line);
 
       /// This method is only applicable when our program is configured as
-      /// singled threaded . Internally it uses a <perform_work> blocking
+      /// singled threaded . Internally it uses a @c perform_work blocking
       /// call to wait for NA object to call back
       void single_threaded_wait_for_callback (const Server_Info &si,
                                               ACE_Time_Value &timeout);

@@ -1,3 +1,11 @@
+Mon Nov 30 09:21:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.h:
+        * ciao/Servants/Port_Activator_T.h:
+        * DAnCE/TargetManager/DomainDataManager.h:
+        * DAnCE/TargetManager/ResourceCommitmentManager.h:
+          Doxygen fixes
+
 Sun Nov 29 13:06:02 CST 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* CIAO version 0.7.5 released.

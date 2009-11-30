@@ -63,13 +63,11 @@ namespace DAnCE
      * @brief returns the sequence of node managers
      * object reference
      */
-    ::Deployment::ResourceCommitmentManager_ptr  
+    ::Deployment::ResourceCommitmentManager_ptr
     commitResources (const ::Deployment::ResourceAllocations & resources);
 
     /**
      * @brief The function releases the resources held by a plan
-     * @param plan ::Deployment::DeploymentPlan the plan whose
-     *                resources are to be released
      */
     void releaseResources (const ::Deployment::ResourceCommitmentManager_ptr manager);
 
@@ -109,9 +107,9 @@ namespace DAnCE
     void init (CORBA::ORB_ptr orb,
                ::Deployment::TargetManager_ptr target,
                const ACE_TCHAR *domain_name);
-      
+
   private:
-     
+
     /**
      * @brief   It will read the initial Domain data from
      *          XML files.
