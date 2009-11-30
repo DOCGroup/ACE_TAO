@@ -36,7 +36,7 @@
 
 #if defined (ACE_HAS_GPERF)
 
-#if defined (__BORLANDC__) && (__BORLANDC__ < 0x620)
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x620)
 #include "gperf_export.h"
 #endif
 
@@ -47,7 +47,7 @@
  * Uses a "Generation Numbering" implementation to minimize
  * initialization time.
  */
-#if defined (__BORLANDC__) && (__BORLANDC__ < 0x620)
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x620)
 class ACE_GPERF_Export Bool_Array
 #else
 class Bool_Array
