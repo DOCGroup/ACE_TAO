@@ -1,3 +1,12 @@
+Mon Nov 30 12:27:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.h:
+          Empty state connector so that we can start with creating tests
+
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.h:
+          Corrected ifdef guards
+
 Mon Nov 30 11:32:37 UTC 2009  Marijke Hengstmengel <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLDeadline:
@@ -24,7 +33,7 @@ Mon Nov 30 11:32:37 UTC 2009  Marijke Hengstmengel <mhengstmengel@remedy.nl>
         * connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender_exec.cpp:
         * connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender_exec.h:
           Test ConnectorStatusListener on_offered_deadline_missed.
-        
+
         * connectors/dds4ccm/tests/CSLQoS:
         * connectors/dds4ccm/tests/CSLQoS/Base:
         * connectors/dds4ccm/tests/CSLQoS/Base/CSL_QoSTest_Base.idl:

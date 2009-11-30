@@ -5,8 +5,8 @@
  *
  * Wrapper facade for NDDS.
  */
-#ifndef CONNECTOR_T_H_
-#define CONNECTOR_T_H_
+#ifndef DDS_EVENT_CONNECTOR_T_H_
+#define DDS_EVENT_CONNECTOR_T_H_
 
 #include "dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.h"
 
@@ -79,4 +79,4 @@ private:
 
 #include "dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp"
 
-#endif /* CONNECTOR_T_H_ */
+#endif /* DDS_EVENT_CONNECTOR_T_H_ */
