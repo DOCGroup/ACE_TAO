@@ -10,14 +10,18 @@
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::DataReaderListener_T (
       typename CCM_TYPE::context_type::_ptr_type context,
+      typename CCM_TYPE::listener_type::_ptr_type listener,
+      ::CCM_DDS::PortStatusListener_ptr port_status_listener,
       ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> &mode,
       ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> &max_delivered_data)
       : context_ (CCM_TYPE::context_type::_duplicate (context)),
+        listener_ (CCM_TYPE::listener_type::_duplicate (listener)),
         mode_ (mode),
         max_delivered_data_ (max_delivered_data)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderListener_T::DataReaderListener_T");
-  this->info_out_portstatus_ = this->context_->get_connection_pull_consumer_status ();
+  this->info_out_portstatus_ =
+   ::CCM_DDS::PortStatusListener::_duplicate (port_status_listener);
   this->info_out_connector_status_ = this->context_->get_connection_error_listener ();
 }
 
@@ -56,7 +60,7 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(
       return;
     }
   ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>* rh =
-      new  ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>(this->context_, reader);
+      new  ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>(this->listener_.in (), reader);
   this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (rh);
 }
 

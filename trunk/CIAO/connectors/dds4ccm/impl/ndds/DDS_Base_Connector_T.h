@@ -46,6 +46,8 @@ protected:
   ::DDS::DomainParticipant_var domain_participant_;
 
   typename CCM_TYPE::context_type::_var_type context_;
+
+  ::CCM_DDS::ConnectorStatusListener_var error_listener_;
 };
 
 #include "dds4ccm/impl/ndds/DDS_Base_Connector_T.cpp"

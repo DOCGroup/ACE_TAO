@@ -64,6 +64,21 @@ public:
   virtual void ccm_remove (void);
 
 private:
+  void configure_port_dds_update (void);
+  ::DDS::Publisher_var supplier_publisher_;
+  ::DDS::CCM_DataWriter_var observable_data_;
+  ::DDS::DataWriterListener_var supplier_listener_;
+
+  // @from DDS_Listen
+  void configure_port_dds_listen (void);
+  ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> listen_datalistener_mode_;
+  ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> listen_datalistener_max_delivered_data_;
+  ::DDS::Subscriber_var listen_subscriber_;
+  ::DDS::DataReader_var push_consumer_data_;
+  ::DDS::DataReaderListener_var __listen_datareaderlistener;
+
+  // @from DDS_Getter
+  ::DDS::DataReader_var pull_consumer_fresh_data_;
 };
 
 #include "dds4ccm/impl/ndds/DDS_State_Connector_T.cpp"
