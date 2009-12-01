@@ -92,6 +92,7 @@ class Identifier;
 class AST_PredefinedType;
 class AST_Module;
 class AST_Template_Module_Inst;
+class AST_Template_Module_Ref;
 class AST_Interface;
 class AST_InterfaceFwd;
 class AST_ValueBox;
@@ -389,7 +390,11 @@ private:
   AST_Template_Module_Inst *fe_add_template_module_inst (
     AST_Template_Module_Inst *m);
 
-  virtual
+    virtual
+  AST_Template_Module_Ref *fe_add_template_module_ref (
+    AST_Template_Module_Ref *m);
+
+virtual
   AST_Interface *fe_add_interface (AST_Interface *i);
 
   virtual

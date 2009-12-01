@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ast_template_module.h"
+#include "ast_template_module_ref.h"
 #include "ast_constant.h"
 #include "ast_visitor.h"
 
@@ -143,6 +144,55 @@ AST_Template_Module::ast_accept (ast_visitor *)
   return 0;//visitor->visit_template_module (this);
 }
 
+AST_Template_Module_Ref *
+AST_Template_Module::fe_add_template_module_ref (
+  AST_Template_Module_Ref *m)
+{
+  AST_Decl *d = 0;
+
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = this->lookup_for_add (m, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      m,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, m->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      m,
+                                      this,
+                                      d);
+          return 0;
+        }
+    }
+
+  // Add it to scope.
+  this->add_to_scope (m);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (m,
+                           false,
+                           m->local_name ());
+
+  AST_Type *ft = m->field_type ();
+  UTL_ScopedName *mru = ft->last_referenced_as ();
+
+  if (mru != 0)
+    {
+      this->add_to_referenced (ft,
+                               false,
+                               mru->first_component ());
+    }
+
+  return m;
+}
+
 void
 AST_Template_Module::dump (ACE_OSTREAM_TYPE & /* o */)
 {
@@ -209,9 +259,48 @@ AST_Template_Module::find_param (UTL_String *name)
 }
 
 bool
-match_param_by_type (FE_Utils::T_Param_Info *param)
+AST_Template_Module::match_param_by_type (
+  FE_Utils::T_Param_Info *param)
 {
-  return true;
+  for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (
+         *this->template_params_);
+       !i.done ();
+       i.advance ())
+    {
+      FE_Utils::T_Param_Info *my_param = 0;
+      i.next (my_param);
+      
+      if (param->type_ == my_param->type_)
+        {
+          if (param->type_ == AST_Decl::NT_const)
+            {
+              if (param->const_type_ == my_param->const_type_)
+                {
+                  if (param->const_type_ == AST_Expression::EV_enum)
+                    {
+                      if (param->enum_const_type_decl_
+                            == my_param->enum_const_type_decl_)
+                        {
+                          return true;
+                        }
+                    }
+                  else
+                    {
+                      return true;
+                    }
+                }
+            }
+          else
+            {
+              return true;
+            }
+        }
+    }
+    
+  idl_global->err ()->mismatched_template_param (
+    param->name_.c_str ());
+    
+  return false;
 }
 
 IMPL_NARROW_FROM_DECL (AST_Template_Module)

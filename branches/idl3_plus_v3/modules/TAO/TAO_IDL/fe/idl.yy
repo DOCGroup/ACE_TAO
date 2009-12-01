@@ -711,10 +711,30 @@ template_module_ref
               return 1;
             }
             
-          if (! ref->match_param_refs ($5, s))
+          bool refs_match =
+            ref->match_param_refs ($5,
+                                   s);
+            
+          if (! refs_match)
             {
-              // TODO
+              // Error message is already output.
+              return 1;
             }
+            
+          UTL_ScopedName sn ((tao_yyvsp[(8) - (8)].idval), 0);
+            
+          AST_Template_Module_Ref *tmr =
+            idl_global->gen ()->create_template_module_ref (
+              &sn,
+              ref,
+              $5);
+              
+           (void) s->fe_add_template_module_ref (tmr);
+              
+           sn.destroy ();
+           $2->destroy ();
+           delete $2;
+           $2 = 0;
         }
         ;
 
@@ -1467,7 +1487,7 @@ at_least_one_scoped_name :
         scoped_name scoped_names
         {
 // at_least_one_scoped_name : scoped_name scoped_names
-          ACE_NEW_RETURN ($$,
+          ACE_NEW_RETURN ($<nlval>$,
                           UTL_NameList ($1,
                                         $2),
                           1);
@@ -1486,28 +1506,26 @@ scoped_names
 //      scoped_name
           idl_global->set_parse_state (IDL_GlobalData::PS_ScopedNameSeen);
 
+          UTL_NameList *nl = 0;
+          ACE_NEW_RETURN (nl,
+                          UTL_NameList ($4,
+                                        0),
+                          1);
+
           if ($1 == 0)
             {
-              ACE_NEW_RETURN ($$,
-                              UTL_NameList ($4,
-                                            0),
-                              1);
+              $<nlval>$ = nl;
             }
           else
             {
-              UTL_NameList *nl = 0;
-              ACE_NEW_RETURN (nl,
-                              UTL_NameList ($4,
-                                            0),
-                              1);
               $1->nconc (nl);
-              $$ = $1;
+              $<nlval>$ = $1;
             }
         }
         | /* EMPTY */
         {
 /*      |  EMPTY */
-          $$ = 0;
+          $<nlval>$ = 0;
         }
         ;
 
@@ -1543,7 +1561,7 @@ scoped_name
                           UTL_IdList ($3,
                                       0),
                           1);
-          ACE_NEW_RETURN ($$,
+          ACE_NEW_RETURN ($<idlist>$,
                           UTL_IdList (id,
                                       sn),
                           1);
@@ -1571,7 +1589,7 @@ scoped_name
                                       0),
                           1);
           $1->nconc (sn);
-          $$ = $1;
+          $<idlist>$ = $1;
         }
         ;
 
@@ -2425,28 +2443,26 @@ declarators
 //      declarator
           idl_global->set_parse_state (IDL_GlobalData::PS_DeclsDeclSeen);
 
+          UTL_DeclList *dl = 0;
+          ACE_NEW_RETURN (dl,
+                          UTL_DeclList ($4,
+                                        0),
+                          1);
+
           if ($1 == 0)
             {
-              ACE_NEW_RETURN ($$,
-                              UTL_DeclList ($4,
-                                            0),
-                              1);
+              $<dlval>$ = dl;
             }
           else
             {
-              UTL_DeclList *dl = 0;
-              ACE_NEW_RETURN (dl,
-                              UTL_DeclList ($4,
-                                            0),
-                              1);
               $1->nconc (dl);
-              $$ = $1;
+              $<dlval>$ = $1;
             }
         }
         | /* EMPTY */
         {
 /*      |  EMPTY */
-          $$ = 0;
+          $<dlval>$ = 0;
         }
         ;
 
@@ -2459,7 +2475,7 @@ at_least_one_simple_declarator :
         simple_declarator simple_declarators
         {
 // at_least_one_simple_declarator : simple_declarator simple_declarators
-          ACE_NEW_RETURN ($$,
+          ACE_NEW_RETURN ($<dlval>$,
                           UTL_DeclList ($1,
                                         $2),
                           1);
@@ -2478,28 +2494,26 @@ simple_declarators
 //      simple_declarator
           idl_global->set_parse_state (IDL_GlobalData::PS_DeclsDeclSeen);
 
+          UTL_DeclList *dl = 0;
+          ACE_NEW_RETURN (dl,
+                          UTL_DeclList ($4,
+                                        0),
+                          1);
+
           if ($1 == 0)
             {
-              ACE_NEW_RETURN ($$,
-                              UTL_DeclList ($4,
-                                            0),
-                              1);
+              $<dlval>$ = dl;
             }
           else
             {
-              UTL_DeclList *dl = 0;
-              ACE_NEW_RETURN (dl,
-                              UTL_DeclList ($4,
-                                            0),
-                              1);
               $1->nconc (dl);
-              $$ = $1;
+              $<dlval>$ = $1;
             }
         }
         | /* EMPTY */
         {
 /*      |  EMPTY */
-          $$ = 0;
+          $<dlval>$ = 0;
         }
         ;
 
@@ -2512,7 +2526,7 @@ simple_declarator :
                           UTL_ScopedName ($1,
                                           0),
                           1);
-          ACE_NEW_RETURN ($$,
+          ACE_NEW_RETURN ($<deval>$,
                           FE_Declarator (sn,
                                          FE_Declarator::FD_simple,
                                          0),
@@ -2531,7 +2545,7 @@ complex_declarator :
                               0
                             ),
                           1);
-          ACE_NEW_RETURN ($$,
+          ACE_NEW_RETURN ($<deval>$,
                           FE_Declarator (sn,
                                          FE_Declarator::FD_complex,
                                          $1),
@@ -3152,7 +3166,7 @@ at_least_one_case_label :
         case_label case_labels
         {
 // at_least_one_case_label : case_label case_labels
-          ACE_NEW_RETURN ($$,
+          ACE_NEW_RETURN ($<llval>$,
                           UTL_LabelList ($1,
                                          $2),
                           1);
@@ -3163,28 +3177,26 @@ case_labels
         : case_labels case_label
         {
 // case_labels : case_labels case_label
+          UTL_LabelList *ll = 0;
+          ACE_NEW_RETURN (ll,
+                          UTL_LabelList ($2,
+                                         0),
+                          1);
+
           if ($1 == 0)
             {
-              ACE_NEW_RETURN ($$,
-                              UTL_LabelList ($2,
-                                             0),
-                              1);
+              $<llval>$ = ll;
             }
           else
             {
-              UTL_LabelList *ll = 0;
-              ACE_NEW_RETURN (ll,
-                              UTL_LabelList ($2,
-                                             0),
-                              1);
               $1->nconc (ll);
-              $$ = $1;
+              $<llval>$ = $1;
             }
         }
         | /* EMPTY */
         {
 /*      |  EMPTY */
-          $$ = 0;
+          $<llval>$ = 0;
         }
         ;
 
@@ -3789,7 +3801,7 @@ at_least_one_array_dim :
         array_dim array_dims
         {
 // at_least_one_array_dim : array_dim array_dims
-          ACE_NEW_RETURN ($$,
+          ACE_NEW_RETURN ($<elval>$,
                           UTL_ExprList ($1,
                                         $2),
                           1);
@@ -3800,28 +3812,26 @@ array_dims
         : array_dims array_dim
         {
 // array_dims : array_dims array_dim
+          UTL_ExprList *el = 0;
+          ACE_NEW_RETURN (el,
+                          UTL_ExprList ($2,
+                                        0),
+                          1);
+
           if ($1 == 0)
             {
-              ACE_NEW_RETURN ($$,
-                              UTL_ExprList ($2,
-                                            0),
-                              1);
+              $<elval>$ = el;
             }
           else
             {
-              UTL_ExprList *el = 0;
-              ACE_NEW_RETURN (el,
-                              UTL_ExprList ($2,
-                                            0),
-                              1);
               $1->nconc (el);
-              $$ = $1;
+              $<elval>$ = $1;
             }
         }
         | /* EMPTY */
         {
 /*      |  EMPTY */
-          $$ = 0;
+          $<elval>$ = 0;
         }
         ;
 
@@ -4721,7 +4731,7 @@ at_least_one_string_literal :
         IDL_STRING_LITERAL string_literals
         {
 // at_least_one_string_literal : IDL_STRING_LITERAL string_literals
-          ACE_NEW_RETURN ($$,
+          ACE_NEW_RETURN ($<slval>$,
                           UTL_StrList ($1,
                                        $2),
                           1);
@@ -4738,22 +4748,20 @@ string_literals
         IDL_STRING_LITERAL
         {
 //      IDL_STRING_LITERAL
+          UTL_StrList *sl = 0;
+          ACE_NEW_RETURN (sl,
+                          UTL_StrList ($4,
+                                       0),
+                          1);
+
           if ($1 == 0)
             {
-              ACE_NEW_RETURN ($$,
-                              UTL_StrList ($4,
-                                           0),
-                              1);
+              $<slval>$ = sl;
             }
           else
             {
-              UTL_StrList *sl = 0;
-              ACE_NEW_RETURN (sl,
-                              UTL_StrList ($4,
-                                           0),
-                              1);
               $1->nconc (sl);
-              $$ = $1;
+              $<slval>$ = $1;
             }
         }
         | /* EMPTY */
@@ -4950,9 +4958,10 @@ component_header :
            */
           UTL_ScopedName *n = 0;
           ACE_NEW_RETURN (n,
-                          UTL_ScopedName ($2, 0),
+                          UTL_ScopedName ($2,
+                                          0),
                           1);
-          ACE_NEW_RETURN ($$,
+          ACE_NEW_RETURN ($<chval>$,
                           FE_ComponentHeader (n,
                                               $4,
                                               $6,
@@ -4984,7 +4993,7 @@ component_inheritance_spec
           scoped_name
         {
 //      scoped_name
-          $$ = $3;
+          $<idlist>$ = $3;
         }
         | /* EMPTY */
         {
@@ -5141,23 +5150,25 @@ interface_type
         {
 //      | IDL_OBJECT
           Identifier *corba_id = 0;
+          
           ACE_NEW_RETURN (corba_id,
                           Identifier ("Object"),
                           1);
+                          
           UTL_IdList *conc_name = 0;
           ACE_NEW_RETURN (conc_name,
                           UTL_IdList (corba_id,
                                       0),
                           1);
+                          
           ACE_NEW_RETURN (corba_id,
                           Identifier ("CORBA"),
                           1);
-          UTL_IdList *corba_name = 0;
-          ACE_NEW_RETURN (corba_name,
+                          
+          ACE_NEW_RETURN ($<idlist>$,
                           UTL_IdList (corba_id,
                                       conc_name),
                           1);
-          $$ = corba_name;
         }
         ;
 
@@ -5491,7 +5502,8 @@ home_header :
           ACE_NEW_RETURN (n,
                           UTL_ScopedName ($3, 0),
                           1);
-          ACE_NEW_RETURN ($$,
+                          
+          ACE_NEW_RETURN ($<hhval>$,
                           FE_HomeHeader (n,
                                          $5,
                                          $7,
@@ -5535,7 +5547,7 @@ home_inheritance_spec
           scoped_name
         {
 //      scoped_name
-          $$ = $3;
+          $<idlist>$ = $3;
         }
         | /* EMPTY */
         {
@@ -5933,7 +5945,7 @@ event_rest_of_header :
 //      supports_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_SupportSpecSeen);
 
-          ACE_NEW_RETURN ($$,
+          ACE_NEW_RETURN ($<ehval>$,
                           FE_EventHeader (
                               0,
                               $1,
@@ -6204,7 +6216,11 @@ formal_parameter
 at_least_one_formal_parameter_name
         : formal_parameter_name formal_parameter_names
         {
-          $<slval>$ = 0;
+// at_least_one_formal_parameter_name : formal_parameter_name formal_parameter_names
+          ACE_NEW_RETURN ($<slval>$,
+                          UTL_StrList ($1,
+                                       $2),
+                          1);
         }
         ;
 
@@ -6212,25 +6228,21 @@ formal_parameter_names
         : formal_parameter_names ',' formal_parameter_name
         {
 // formal_parameter_names : formal_parameter_names ',' formal_parameter_name
+          UTL_StrList *sl = 0;
+          ACE_NEW_RETURN (sl,
+                          UTL_StrList ($3,
+                                       0),
+                          1);
+
           if ($1 == 0)
             {
-              ACE_NEW_RETURN ($1,
-                              UTL_StrList ($3,
-                                           0),
-                              1);
+              $<slval>$ = sl;
             }
           else
             {
-              UTL_StrList *l = 0;
-              ACE_NEW_RETURN (l,
-                              UTL_StrList ($3,
-                                           0),
-                              1);
-
-              $1->nconc (l);
+              $1->nconc (sl);
+              $<slval>$ = $1;
             }
-
-          $<slval>$ = $1;
         }
         | /* EMPTY */
         {

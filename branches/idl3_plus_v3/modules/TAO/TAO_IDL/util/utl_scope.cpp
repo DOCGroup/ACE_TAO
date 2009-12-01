@@ -1053,6 +1053,12 @@ UTL_Scope::fe_add_template_module_inst (AST_Template_Module_Inst *)
   return 0;
 }
 
+AST_Template_Module_Ref *
+UTL_Scope::fe_add_template_module_ref (AST_Template_Module_Ref *)
+{
+  return 0;
+}
+
 AST_Interface *
 UTL_Scope::fe_add_interface (AST_Interface *)
 {

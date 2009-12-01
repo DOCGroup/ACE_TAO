@@ -3024,7 +3024,8 @@ tao_yyreduce:
             IDL_GlobalData::PS_ModuleRefIDSeen);
 
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(2) - (8)].idlist), true);
+          AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(2) - (8)].idlist),
+                                           true);
 
           if (d == 0)
             {
@@ -3040,11 +3041,31 @@ tao_yyreduce:
               idl_global->err ()->template_module_expected (d);
               return 1;
             }
+            
+          bool refs_match =
+            ref->match_param_refs ((tao_yyvsp[(5) - (8)].slval),
+                                    s);
 
-          if (! ref->match_param_refs ((tao_yyvsp[(5) - (8)].slval), s))
+          if (! refs_match)
             {
-              // TODO
+              // Error message is already output.
+              return 1;
             }
+            
+          UTL_ScopedName sn ((tao_yyvsp[(8) - (8)].idval), 0);
+            
+          AST_Template_Module_Ref *tmr =
+            idl_global->gen ()->create_template_module_ref (
+              &sn,
+              ref,
+              (tao_yyvsp[(5) - (8)].slval));
+              
+           (void) s->fe_add_template_module_ref (tmr);
+              
+           sn.destroy ();
+           (tao_yyvsp[(2) - (8)].idlist)->destroy ();
+           delete (tao_yyvsp[(2) - (8)].idlist);
+           (tao_yyvsp[(2) - (8)].idlist) = 0;
         }
     break;
 
@@ -7452,20 +7473,18 @@ tao_yyreduce:
 
     {
 //      IDL_STRING_LITERAL
+          UTL_StrList *sl = 0;
+          ACE_NEW_RETURN (sl,
+                          UTL_StrList ((tao_yyvsp[(4) - (4)].sval),
+                                       0),
+                          1);
+
           if ((tao_yyvsp[(1) - (4)].slval) == 0)
             {
-              ACE_NEW_RETURN ((tao_yyval.slval),
-                              UTL_StrList ((tao_yyvsp[(4) - (4)].sval),
-                                           0),
-                              1);
+              (tao_yyval.slval) = sl;
             }
           else
             {
-              UTL_StrList *sl = 0;
-              ACE_NEW_RETURN (sl,
-                              UTL_StrList ((tao_yyvsp[(4) - (4)].sval),
-                                           0),
-                              1);
               (tao_yyvsp[(1) - (4)].slval)->nconc (sl);
               (tao_yyval.slval) = (tao_yyvsp[(1) - (4)].slval);
             }
@@ -9067,7 +9086,11 @@ tao_yyreduce:
   case 526:
 
     {
-          (tao_yyval.slval) = 0;
+// at_least_one_formal_parameter_name : formal_parameter_name formal_parameter_names
+          ACE_NEW_RETURN ((tao_yyval.slval),
+                          UTL_StrList ((tao_yyvsp[(1) - (2)].sval),
+                                       (tao_yyvsp[(2) - (2)].slval)),
+                          1);
         }
     break;
 
@@ -9075,25 +9098,21 @@ tao_yyreduce:
 
     {
 // formal_parameter_names : formal_parameter_names ',' formal_parameter_name
+          UTL_StrList *sl = 0;
+          ACE_NEW_RETURN (sl,
+                          UTL_StrList ((tao_yyvsp[(3) - (3)].sval),
+                                       0),
+                          1);
+
           if ((tao_yyvsp[(1) - (3)].slval) == 0)
             {
-              ACE_NEW_RETURN ((tao_yyvsp[(1) - (3)].slval),
-                              UTL_StrList ((tao_yyvsp[(3) - (3)].sval),
-                                           0),
-                              1);
+              (tao_yyval.slval) = sl;
             }
           else
             {
-              UTL_StrList *l = 0;
-              ACE_NEW_RETURN (l,
-                              UTL_StrList ((tao_yyvsp[(3) - (3)].sval),
-                                           0),
-                              1);
-
-              (tao_yyvsp[(1) - (3)].slval)->nconc (l);
+              (tao_yyvsp[(1) - (3)].slval)->nconc (sl);
+              (tao_yyval.slval) = (tao_yyvsp[(1) - (3)].slval);
             }
-
-          (tao_yyval.slval) = (tao_yyvsp[(1) - (3)].slval);
         }
     break;
 

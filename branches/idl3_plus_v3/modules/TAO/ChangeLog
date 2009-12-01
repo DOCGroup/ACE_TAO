@@ -1,6 +1,25 @@
+Tue Dec  1 17:39:09 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_template_module.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/ast/ast_template_module.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/util/utl_scope.cpp:
+        
+          - Finished matching/error checking code for template
+            parameter references
+          - Finished semantic actions for template module aliases
+            and the associated template parameter references
+          - Factored ACE_NEW_RETURN macro out of both paths of an
+            IF block in several production rules dealing with
+            comma-separated lists
+
 Tue Dec  1 14:46:26 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/y.tab.cpp:
+        
+          Regenrerated and recompiled.
 
 Mon Nov 30 23:14:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 

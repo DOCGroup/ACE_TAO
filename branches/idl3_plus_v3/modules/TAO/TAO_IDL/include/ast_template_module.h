@@ -41,6 +41,11 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
+  // Scope Management Protocol
+  virtual
+  AST_Template_Module_Ref *fe_add_template_module_ref (
+    AST_Template_Module_Ref *m);
+
 protected:
   FE_Utils::T_PARAMLIST_INFO * template_params_;
   
