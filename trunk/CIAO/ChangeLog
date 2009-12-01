@@ -1,3 +1,12 @@
+Tue Dec 01 11:50:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderHandler_T.cpp
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener.h
+        * connectors/dds4ccm/impl/ndds/ndds_impl.mpc
+        * connectors/dds4ccm/impl/ndds/StateListenerControl.cpp
+        * connectors/dds4ccm/impl/ndds/StateListenerControl.h
+          StateListenerControl
+
 Tue Dec 01 10:59:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderHandler_T.cpp

@@ -22,6 +22,7 @@ project(CIAO_DDS4CCM_NDDS_Impl) : dds4ccm_skel, taolib, ciao_output, nddslib, cc
     DataReader.cpp
     DataReaderListener.cpp
     DomainParticipant.cpp
+    DomainParticipantListener.cpp
     DomainParticipantFactory.cpp
     Topic.cpp
     TopicDescription.cpp
@@ -35,5 +36,6 @@ project(CIAO_DDS4CCM_NDDS_Impl) : dds4ccm_skel, taolib, ciao_output, nddslib, cc
     Utils.cpp
     DataListenerControl.cpp
     TopicListener.cpp
+    StateListenerControl.cpp
   }
 }
