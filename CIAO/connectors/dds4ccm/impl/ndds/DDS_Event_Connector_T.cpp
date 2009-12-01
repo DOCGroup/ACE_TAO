@@ -136,6 +136,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen (void)
           this->__listen_datareaderlistener = new ::CIAO::DDS4CCM::RTI::DataReaderListener_T
             <DDS_TYPE, CCM_TYPE> (
                   this->context_,
+                  this->context_->get_connection_error_listener (),
                   this->context_->get_connection_push_consumer_data_listener (),
                   this->context_->get_connection_pull_consumer_status (),
                   this->listen_datalistener_mode_,

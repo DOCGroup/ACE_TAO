@@ -17,22 +17,22 @@ namespace CIAO
     namespace RTI
     {
       template <typename DDS_TYPE, typename CCM_TYPE>
-      class DataReaderListener_T :
+      class DataReaderStateListener_T :
         public ::DDS::DataReaderListener,
         private ACE_Copy_Disabled
       {
       public:
         /// Constructor
-        DataReaderListener_T (
+        DataReaderStateListener_T (
                       typename CCM_TYPE::context_type::_ptr_type context,
                       ::CCM_DDS::ConnectorStatusListener_ptr error_listener,
-                      typename CCM_TYPE::listener_type::_ptr_type listener,
+                      typename CCM_TYPE::statelistener_type::_ptr_type listener,
                       ::CCM_DDS::PortStatusListener_ptr port_status_listener,
                       ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> &mode,
                       ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> &max_delivered_data);
 
         /// Destructor
-        virtual ~DataReaderListener_T (void);
+        virtual ~DataReaderStateListener_T (void);
 
         virtual void on_data_available( ::DDS::DataReader *rdr);
 
@@ -49,7 +49,7 @@ namespace CIAO
         typename CCM_TYPE::context_type::_var_type context_;
         ::CCM_DDS::ConnectorStatusListener_var  error_listener_;
         ::CCM_DDS::PortStatusListener_var       info_out_portstatus_;
-        typename CCM_TYPE::listener_type::_var_type listener_;
+        typename CCM_TYPE::statelistener_type::_var_type listener_;
         ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> &mode_;
         ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> &max_delivered_data_;
       };
@@ -57,4 +57,4 @@ namespace CIAO
   }
 }
 
-#include "dds4ccm/impl/ndds/DataReaderListener_T.cpp"
+#include "dds4ccm/impl/ndds/DataReaderStateListener_T.cpp"
