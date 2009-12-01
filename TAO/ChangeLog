@@ -1,3 +1,11 @@
+Tue Dec  1 10:44:09 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * orbsvcs/examples/Notify/Subscribe/run_test.pl:
+        * orbsvcs/examples/Notify/Filter/run_test.pl:
+
+          Test are converted to use new test framework
+          and added to fuzz build.
+
 Tue Dec  1 09:48:38 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/Log/Basic_Log_Test/run_test.pl:

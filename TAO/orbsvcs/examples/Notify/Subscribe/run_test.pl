@@ -45,7 +45,7 @@ $NFS = $nfs->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/Notify_Servic
 $Notify_Args = "-ORBInitRef NameService=file://$nfs_nsiorfile -IORoutput $nfs_nfsiorfile ";
 
 $SUB = $sub->CreateProcess ("Subscribe"); 
-$Subscribe_Args = "-ORBInitRef NameService=file://$sub_nsiorfile -ORBDebugLevel $debug";
+$Subscribe_Args = "-ORBInitRef NameService=file://$sub_nsiorfile -ORBDebugLevel $debug_level";
 
 $NS_status = $NS->Spawn ();
 if ($NS_status != 0) {
