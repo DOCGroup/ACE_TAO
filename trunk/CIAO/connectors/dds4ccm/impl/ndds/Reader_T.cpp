@@ -255,83 +255,83 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_last (
 template <typename DDS_TYPE, typename CCM_TYPE >
 void
 CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_all (
-          const typename DDS_TYPE::value_type& an_instance,
-          typename CCM_TYPE::seq_type::_out_type instances,
-          ::CCM_DDS::ReadInfoSeq_out infos,
-          const ::DDS::InstanceHandle_t & instance_handle)
+  const typename DDS_TYPE::value_type& an_instance,
+  typename CCM_TYPE::seq_type::_out_type instances,
+  ::CCM_DDS::ReadInfoSeq_out infos,
+  const ::DDS::InstanceHandle_t & instance_handle)
 {
-  ACE_UNUSED_ARG (instance_handle);
-  //this function has to return all samples of all instances
-  typename CCM_TYPE::seq_type::_var_type  inst_seq = new typename CCM_TYPE::seq_type;
-  ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;
-  DDS_InstanceHandle_t hnd = this->impl_->lookup_instance (an_instance);
+  DDS_InstanceHandle_t hnd = ::DDS_HANDLE_NIL;
+  hnd <<= instance_handle;
+  if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
+    {
+      hnd = this->impl_->lookup_instance (an_instance);
+    }
+
   DDS_SampleInfoSeq sample_info;
   DDS_ReturnCode_t retval = DDS_RETCODE_NO_DATA;
   typename DDS_TYPE::dds_seq_type data;
 
-  // DDS_TYPE::dds_seq_type = dds sequence
-  // CCM_TYPE::seq_type = ccm sequence
-      if (!DDS_InstanceHandle_equals (&hnd, & ::DDS_HANDLE_NIL))
-        {
-          retval = this->impl_->read_instance(data,
-                            sample_info,
-                            DDS_LENGTH_UNLIMITED,
-                            hnd,
-                            DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
-                            DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-                            DDS_ALIVE_INSTANCE_STATE);
-        }
-      else
-        {
-          CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_all - ")
-                                ACE_TEXT ("No instance found.\n")));
-          retval = this->impl_->read(data,
-                            sample_info,
-                            DDS_LENGTH_UNLIMITED,
-                            DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
-                            DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-                            DDS_ALIVE_INSTANCE_STATE);
-
-        }
-  CORBA::ULong ix = 0;
-  CORBA::ULong nr_of_samples = 0;
-  switch(retval)
+  if (!DDS_InstanceHandle_equals (&hnd, & ::DDS_HANDLE_NIL))
     {
-      case DDS_RETCODE_OK:
-        //count the number of valid data
-        for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
-          {
-            if(sample_info[i].valid_data)
-              {
-                ++nr_of_samples;
-              }
-          }
-        infoseq->length(nr_of_samples);
-        inst_seq->length(nr_of_samples);
-
-        for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
-          {
-            sample_info[i].source_timestamp >>= infoseq[ix].source_timestamp;
-            inst_seq[ix] = data[i];
-            ++ix;
-          }
-        break;
-      case DDS_RETCODE_NO_DATA:
-        CIAO_DEBUG ((LM_INFO, ACE_TEXT ("Reader_T: read_one_all No data : retval is %C ---\n"), translate_retcode(retval)));
-        if (!DDS_InstanceHandle_equals (&hnd, & ::DDS_HANDLE_NIL))
-          {
-            this->impl_->return_loan(data,sample_info);
-            throw ::CCM_DDS::NonExistent(0);
-          }
-        break;
-      default:
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Reader_T: read_one_all Failed retval is %C ---\n"), translate_retcode(retval)));
-        this->impl_->return_loan(data,sample_info);
-        throw ::CCM_DDS::InternalError (retval, 0);
-        break;
+      CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_all - ")
+                            ACE_TEXT ("Reading with instance.\n")));
+      retval = this->impl_->read_instance (
+                  data,
+                  sample_info,
+                  DDS_LENGTH_UNLIMITED,
+                  hnd,
+                  DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
+                  DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
+                  DDS_ALIVE_INSTANCE_STATE);
     }
-  //return the loan
-  this->impl_->return_loan(data,sample_info);
+  else
+    {
+      CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_all - ")
+                            ACE_TEXT ("Reading without instance.\n")));
+      retval = this->impl_->read (
+                  data,
+                  sample_info,
+                  DDS_LENGTH_UNLIMITED,
+                  DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
+                  DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
+                  DDS_ALIVE_INSTANCE_STATE);
+    }
+
+  if (retval != DDS_RETCODE_OK)
+    {
+      throw ::CCM_DDS::InternalError (retval, 0);
+    }
+
+  // Count the number of valid samples
+  CORBA::ULong nr_of_samples = 0;
+  for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
+    {
+      if(sample_info[i].valid_data)
+        {
+          ++nr_of_samples;
+        }
+    }
+
+  typename CCM_TYPE::seq_type::_var_type inst_seq = new typename CCM_TYPE::seq_type;
+  ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;
+  infoseq->length(nr_of_samples);
+  inst_seq->length(nr_of_samples);
+
+  // Copy the valid samples
+  CORBA::ULong ix = 0;
+  for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
+    {
+      if(sample_info[i].valid_data)
+        {
+          infoseq[ix] <<= sample_info[i];
+          inst_seq[ix] = data[i];
+          ++ix;
+        }
+    }
+
+  // Return the loan
+  this->impl_->return_loan(data, sample_info);
+
   infos = infoseq._retn ();
   instances = inst_seq._retn();
 }
