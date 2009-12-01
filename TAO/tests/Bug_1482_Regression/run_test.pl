@@ -43,7 +43,7 @@ $CL2 = $client2->CreateProcess ("client", "-k file://$client2_iorfile");
 $CL3 = $client3->CreateProcess ("client", "-k file://$client3_iorfile");
 
 local $start_time = time();
-local $max_running_time = 600; # 5 minutes
+local $max_running_time = 600; # 10 minutes
 local $elapsed = time() - $start_time;
 
 if ($quick)  {
@@ -89,14 +89,14 @@ while($elapsed < $max_running_time) {
         exit 1;
     }
 
-    $client_status = $CL1->Spawn ($client1->ProcessStartWaitInterval() + 45);
+    $client_status = $CL1->Spawn ();
     if ($client_status != 0) {
         print STDERR "ERROR: client returned $client_status\n";
         $SV->Kill (); $SV->TimedWait (1);
         exit 1;
     }
 
-    $client_status = $CL2->Spawn ($client2->ProcessStartWaitInterval() + 45);
+    $client_status = $CL2->Spawn ();
     if ($client_status != 0) {
         print STDERR "ERROR: client returned $client_status\n";
         $SV->Kill (); $SV->TimedWait (1);
@@ -104,7 +104,7 @@ while($elapsed < $max_running_time) {
         exit 1;
     }
 
-    $client_status = $CL3->Spawn ($client3->ProcessStartWaitInterval() + 45);
+    $client_status = $CL3->Spawn ();
     if ($client_status != 0) {
         print STDERR "ERROR: client returned $client_status\n";
         $SV->Kill (); $SV->TimedWait (1);

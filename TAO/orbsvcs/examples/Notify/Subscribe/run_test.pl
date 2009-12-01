@@ -6,70 +6,118 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
+
+$status = 0;
+$debug_level = '0';
+
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
+}
+
+my $ns = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $nfs = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+my $sub = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
 
 PerlACE::check_privilege_group();
 
 $experiment_timeout = 60;
 $startup_timeout = 60;
 
-$notify_ior = PerlACE::LocalFile ("notify.ior");
+$nsiorfile = "naming.ior";
+$nfsiorfile = "notify.ior";
 
-$naming_ior = PerlACE::LocalFile ("naming.ior");
+my $ns_nsiorfile = $ns->LocalFile ($nsiorfile);
+my $nfs_nsiorfile = $nfs->LocalFile ($nsiorfile);
+my $sub_nsiorfile = $sub->LocalFile ($nsiorfile);
+my $nfs_nfsiorfile = $nfs->LocalFile ($nfsiorfile);
+$ns->DeleteFile ($nsiorfile);
+$nfs->DeleteFile ($nsiorfile);
+$sub->DeleteFile ($nsiorfile);
+$nfs->DeleteFile ($nfsiorfile);
 
-$status = 0;
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service", 
+                          " -o $ns_nsiorfile");
 
-$Naming = new PerlACE::Process ("../../../Naming_Service/Naming_Service",
-                                "-o $naming_ior");
+$NFS = $nfs->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/Notify_Service");
+$Notify_Args = "-ORBInitRef NameService=file://$nfs_nsiorfile -IORoutput $nfs_nfsiorfile ";
 
-$Notification = new PerlACE::Process ("../../../Notify_Service/Notify_Service");
+$SUB = $sub->CreateProcess ("Subscribe"); 
+$Subscribe_Args = "-ORBInitRef NameService=file://$sub_nsiorfile -ORBDebugLevel $debug";
 
-$Notify_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $notify_ior ";
-
-$Subscribe = new PerlACE::Process ("Subscribe");
-
-$Subscribe_Args = "-ORBInitRef NameService=file://$naming_ior";
-
-unlink $naming_ior;
-$Naming->Spawn ();
-
-if (PerlACE::waitforfile_timed ($naming_ior, $startup_timeout) == -1) {
-  print STDERR "ERROR: waiting for the naming service to start\n";
-  $Naming->Kill ();
-  exit 1;
-}
-
-unlink $notify_ior;
-$Notification->Arguments ($Notify_Args);
-$args = $Notification->Arguments ();
-print STDERR "Running Notification with arguments: $args\n";
-$Notification->Spawn ();
-
-if (PerlACE::waitforfile_timed ($notify_ior, $startup_timeout) == -1) {
-  print STDERR "ERROR: waiting for the notify service to start\n";
-  $Notification->Kill ();
-  $Naming->Kill ();
-  exit 1;
-}
-
-$Subscribe->Arguments ($Subscribe_Args);
-$args = $Subscribe->Arguments ();
-print STDERR "Running Subscribe with arguments: $args\n";
-$status = $Subscribe->SpawnWaitKill ($experiment_timeout);
-
-if ($status != 0)
-  {
-    print STDERR "ERROR: Subscribe returned $status\n";
-    $Subscribe->Kill ();
-    $Notification->Kill ();
-    $Naming->Kill ();
+$NS_status = $NS->Spawn ();
+if ($NS_status != 0) {
+    print STDERR "ERROR: Name Service returned $NS_status\n";
     exit 1;
-  }
+}
 
-$Notification->Kill ();
-unlink $notify_ior;
+if ($ns->WaitForFileTimed ($nsiorfile,$ns->ProcessStartWaitInterval()+$startup_timeout) == -1) {
+    print STDERR "ERROR: cannot find file <$ns_nsiorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
 
-$Naming->Kill ();
-unlink $naming_ior;
+if ($ns->GetFile ($nsiorfile) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$ns_nsiorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+if ($nfs->PutFile ($nsiorfile) == -1) {
+    print STDERR "ERROR: cannot set file <$nfs_nsiorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+if ($sub->PutFile ($nsiorfile) == -1) {
+    print STDERR "ERROR: cannot set file <$sub_nsiorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+
+$NFS->Arguments ($Notify_Args);
+$args = $NFS->Arguments ();
+print STDERR "Running Notification with arguments: $args\n";
+$NFS_status = $NFS->Spawn ();
+
+if ($NFS_status != 0) {
+    print STDERR "ERROR: Notification Service returned $NFS_status\n";
+    exit 1;
+}
+
+if ($nfs->WaitForFileTimed ($nfsiorfile,$nfs->ProcessStartWaitInterval()+$startup_timeout) == -1) {
+    print STDERR "ERROR: cannot find file <$nfs_nfsiorfile>\n";
+    $NFS->Kill (); $NFS->TimedWait (1);
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+
+$SUB->Arguments ($Subscribe_Args);
+$args = $SUB->Arguments ();
+print STDERR "Running Subscribe with arguments: $args\n";
+$SUB_status = $SUB->SpawnWaitKill ($sub->ProcessStartWaitInterval()+$experiment_timeout);
+if ($SUB_status != 0) {
+    print STDERR "ERROR: Subscriber returned $SUB_status\n";
+    $status = 1;
+}
+
+$NFS_status = $NFS->TerminateWaitKill ($nfs->ProcessStopWaitInterval());
+
+if ($NFS_status != 0) {
+    print STDERR "ERROR: Notification Service returned $NFS_status\n";
+    $status = 1;
+}
+
+$NS_status = $NS->TerminateWaitKill ($ns->ProcessStopWaitInterval());
+
+if ($NS_status != 0) {
+    print STDERR "ERROR: Name Service returned $NS_status\n";
+    $status = 1;
+}
+
+$ns->DeleteFile ($nsiorfile);
+$nfs->DeleteFile ($nsiorfile);
+$sub->DeleteFile ($nsiorfile);
+$nfs->DeleteFile ($nfsiorfile);
 
 exit $status;

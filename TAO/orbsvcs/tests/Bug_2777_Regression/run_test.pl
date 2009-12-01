@@ -1,71 +1,100 @@
-# $Id$
-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      & eval 'exec perl -S $0 $argv:q'
      if 0;
 
+# $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-$nsiorfile = PerlACE::LocalFile("ns.ior");
-unlink $nsiorfile;
+$status = 0;
+$debug_level = '0';
 
-my $exec_extn="";
-if ($^O eq "MSWin32") {
-  $exec_extn=".exe";
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
 }
 
-$nslist = "../../../../bin/tao_nslist";
-if (! -e $nslist . $exec_extn ) {
-    $nslist = "../../../../TAO/utils/nslist/tao_nslist";
-    if (! -e $nslist . $exec_extn ) {
+my $exec_extn = "";
+if ($^O eq "MSWin32") {
+    $exec_extn = ".exe";
+}
+
+$nslist_path = "../../../../bin/tao_nslist";
+if (! -e $nslist_path . $exec_extn ) {
+    $nslist_path = "../../../../TAO/utils/nslist/tao_nslist";
+    if (! -e $nslist_path . $exec_extn ) {
         print STDERR "ERROR: tao_nslist utility not found.\n";
         exit 1;
     }
 }
 
-$status = 0;
+my $ns_service = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $ns_list = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-# Fire up the Name Service
-$NS   = new PerlACE::Process ("../../../../TAO/orbsvcs/Naming_Service/Naming_Service");
-$NS->Arguments("-o $nsiorfile -ORBObjRefStyle URL -ORBEndpoint shmiop:// -ORBSvcConfDirective \"dynamic SHMIOP_Factory Service_Object *TAO_Strategies:_make_TAO_SHMIOP_Protocol_Factory () ''\"");
-$NS->Spawn ();
+my $iorbase = "ns.ior";
+my $ns_service_iorfile = $ns_service->LocalFile ($iorbase);
+my $ns_list_iorfile = $ns_list->LocalFile ($iorbase);
+$ns_service->DeleteFile($iorbase);
+$ns_list->DeleteFile($iorbase);
 
-if (PerlACE::waitforfile_timed ($nsiorfile, 10) == -1)
-{
-   print STDERR "ERROR: cannot find Name Service IOR file <$nsiorfile>\n";
-   $NS->Kill (); $NS->TimedWait (1);
-   exit 1;
+$NS = $ns_service->CreateProcess ("../../../../TAO/orbsvcs/Naming_Service/Naming_Service",
+                                  "-ORBdebuglevel $debug_level -o $ns_service_iorfile ".
+                                  "-ORBObjRefStyle URL -ORBEndpoint shmiop:// -ORBSvcConfDirective ".
+                                  "\"dynamic SHMIOP_Factory Service_Object ".
+                                  "*TAO_Strategies:_make_TAO_SHMIOP_Protocol_Factory () ''\"");
+
+$NSL = $ns_list->CreateProcess ($nslist_path, "-ORBSvcConfDirective \"dynamic SHMIOP_Factory Service_Object ".
+                                              "*TAO_Strategies:_make_TAO_SHMIOP_Protocol_Factory () ''\" ".
+                                              "-ORBInitRef NameService=file://$ns_list_iorfile --ior --ctxior ".
+                                              "--node \"\" --tree \"\"");
+
+$process_status = $NS->Spawn ();
+
+if ($process_status != 0) {
+    print STDERR "ERROR: naming service returned $process_status\n";
+    exit 1;
 }
 
-# Call nslist
-$NSLIST  = new PerlACE::Process ($nslist);
-$NSLIST->Arguments("-ORBSvcConfDirective \"dynamic SHMIOP_Factory Service_Object *TAO_Strategies:_make_TAO_SHMIOP_Protocol_Factory () ''\" -ORBInitRef NameService=file://$nsiorfile --ior --ctxior --node \"\" --tree \"\"");
-
-$list_result = $NSLIST->SpawnWaitKill (300);
-
-# Check return
-if ($list_result != 0)
-{
-   print STDERR "ERROR: Regression - tao_nslist returned $listresult\n";
-   $status = 1;
+if ($ns_service->WaitForFileTimed ($iorbase,
+                                   $ns_service->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$ns_service_iorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
 }
 
-# Shutting down NameService and clean up
-$server = $NS->TerminateWaitKill (5);
+if ($ns_service->GetFile ($iorbase) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$ns_service_iorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
 
-if ($server != 0)
-{
-    print STDERR "ERROR: Closing Name Service returned $server\n";
+if ($ns_list->PutFile ($iorbase) == -1) {
+    print STDERR "ERROR: cannot set file <$ns_list_iorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+
+$process_status = $NSL->SpawnWaitKill ($ns_list->ProcessStartWaitInterval() + 285);
+
+if ($process_status != 0) {
+    print STDERR "ERROR: Regression - tao_nslist returned $process_status\n";
     $status = 1;
 }
 
-unlink $nsiorfile;
+$process_status = $NS->TerminateWaitKill ($ns_service->ProcessStopWaitInterval());
 
-if ($status == 0)
-{
+if ($process_status != 0) {
+    print STDERR "ERROR: naming service TerminateWaitKill returned $process_status\n";
+    $status = 1;
+}
+
+$ns_service->DeleteFile($iorbase);
+$ns_list->DeleteFile($iorbase);
+
+if ($status == 0) {
     print "Test passed !!\n";
 }
 
