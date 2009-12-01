@@ -11,7 +11,7 @@ CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::DataReaderHandler_T
             typename CCM_TYPE::listener_type::_ptr_type listener,
             typename DDS_TYPE::data_reader * reader)
       : reader_ (reader),
-        listener_ (CCM_TYPE::listener_type::_duplicate (listener)),
+        listener_ (CCM_TYPE::listener_type::_duplicate (listener))
 {
 }
 

@@ -33,7 +33,7 @@ namespace CIAO
         // Destructor
         virtual ~RTI_DomainParticipantListener_i (void);
 
-        ::DDS::DomainParticipantListener_ptr get_datareaderlistener (void);
+        ::DDS::DomainParticipantListener_ptr get_domainparticipantlistener (void);
       private:
         ::DDS::DomainParticipantListener_var impl_;
       };
