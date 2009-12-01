@@ -116,22 +116,27 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain (void)
           }
         if (this->library_name_ && this->profile_name_)
           {
-            this->domain_participant_factory_->set_default_participant_qos_with_profile (this->library_name_, this->profile_name_);
+            this->domain_participant_factory_->
+              set_default_participant_qos_with_profile (
+                this->library_name_,
+                this->profile_name_);
             this->domain_participant_ =
-              this->domain_participant_factory_->create_participant_with_profile (this->domain_id_,
-                                                   this->library_name_,
-                                                   this->profile_name_,
-                                                   0,
-                                                   DDS_STATUS_MASK_NONE);
+              this->domain_participant_factory_->create_participant_with_profile (
+                this->domain_id_,
+                this->library_name_,
+                this->profile_name_,
+                0,
+                DDS_STATUS_MASK_NONE);
           }
         else
           {
             ::DDS::DomainParticipantQos qos;
             this->domain_participant_ =
-              this->domain_participant_factory_->create_participant (this->domain_id_,
-                                                         qos,
-                                                         0,
-                                                         DDS_STATUS_MASK_NONE);
+              this->domain_participant_factory_->create_participant (
+                this->domain_id_,
+                qos,
+                0,
+                DDS_STATUS_MASK_NONE);
           }
       }
     catch (...)

@@ -20,7 +20,7 @@ namespace CIAO
     {
     public:
       /// Constructor
-      TopicListener_T (typename CCM_TYPE::context_type::_ptr_type context);
+      TopicListener_T (::CCM_DDS::ConnectorStatusListener_ptr error_listener);
 
       /// Destructor
       virtual ~TopicListener_T (void);
@@ -30,8 +30,7 @@ namespace CIAO
         const ::DDS::InconsistentTopicStatus & status);
 
     private:
-      typename CCM_TYPE::context_type::_var_type context_;
-      CCM_DDS::ConnectorStatusListener_var  info_out_connector_status_;
+      CCM_DDS::ConnectorStatusListener_var  error_listener_;
     };
   }
 }

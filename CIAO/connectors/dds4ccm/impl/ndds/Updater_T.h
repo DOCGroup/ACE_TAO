@@ -47,9 +47,9 @@ namespace CIAO
         virtual void delete_many (
           const typename CCM_TYPE::seq_type& data);
 
-        virtual bool is_global_scope () const;
+        virtual bool is_global_scope ();
 
-        virtual bool is_coherent_write () const;
+        virtual bool is_coherent_write ();
 
         virtual void is_coherent_write (bool value_);
 
