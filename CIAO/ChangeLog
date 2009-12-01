@@ -1,3 +1,9 @@
+Tue Dec 01 08:33:37 UTC 2009  Marijke Hengstmengel <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLDeadline/Receiver/CSL_DeadlineTest_Receiver.mpc
+          Corrected mpc file for connector_stub
+
+
 Mon Nov 30 13:00:37 UTC 2009  Marijke Hengstmengel <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLDeadline/Connector/CSL_DeadlineTest_Connector_exec.cpp:
