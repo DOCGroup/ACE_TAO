@@ -1,10 +1,12 @@
 // -*- C++ -*-
 // $Id$
 
-#include "dds4ccm/impl/ndds/DataReaderListener_T.h"
+#include "dds4ccm/impl/ndds/DataReaderStateListener_T.h"
 #include "dds4ccm/impl/ndds/DataWriterListener_T.h"
 #include "dds4ccm/impl/ndds/Updater_T.h"
 #include "dds4ccm/impl/ndds/Reader_T.h"
+#include "dds4ccm/impl/ndds/PublisherListener_T.h"
+#include "dds4ccm/impl/ndds/SubscriberListener_T.h"
 #include "dds4ccm/impl/ndds/DataListenerControl.h"
 
 #include "ciao/Logger/Log_Macros.h"
@@ -122,8 +124,8 @@ void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
 {
   DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete ();
-//  this->configure_port_dds_listen ();
-//  this->configure_port_dds_write ();
+  this->configure_port_dds_update ();
+  this->configure_port_dds_listen ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -155,27 +157,33 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_update (void)
     {
       if (CORBA::is_nil (this->supplier_publisher_.in ()))
         {
+          this->publisher_listener_ = new ::CIAO::DDS4CCM::RTI::PublisherListener_T
+            <DDS_TYPE, CCM_TYPE> (
+                  this->context_->get_connection_error_listener ());
+
           if (this->library_name_ && this->profile_name_)
             {
               this->supplier_publisher_ = this->domain_participant_->
                 create_publisher_with_profile (
                   this->library_name_,
                   this->profile_name_,
-                  0,
-                  0);
+                  this->publisher_listener_.in (),
+                  DDS_STATUS_MASK_NONE);
             }
           else
             {
               ::DDS::PublisherQos pqos;
-              this->supplier_publisher_ = this->domain_participant_->create_publisher (pqos,
-                                                                            0,
-                                                                            0);
+              this->supplier_publisher_ =
+                this->domain_participant_->create_publisher (
+                  pqos,
+                  this->publisher_listener_.in (),
+                  DDS_STATUS_MASK_NONE);
             }
         }
 
       if (CORBA::is_nil  (this->observable_data_.in ()))
         {
-          this->supplier_listener_ = new ::CIAO::DDS4CCM::DataWriterListener_T
+          this->datawriter_listener_ = new ::CIAO::DDS4CCM::DataWriterListener_T
             <DDS_TYPE, CCM_TYPE> (
                   this->context_,
                   this->listen_datalistener_mode_,
@@ -188,7 +196,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_update (void)
                   this->topic_.in (),
                   this->library_name_,
                   this->profile_name_,
-                  this->supplier_listener_.in (),
+                  this->datawriter_listener_.in (),
                   DDS_OFFERED_DEADLINE_MISSED_STATUS | DDS_OFFERED_INCOMPATIBLE_QOS_STATUS | DDS_LIVELINESS_LOST_STATUS | DDS_PUBLICATION_MATCHED_STATUS);
               this->observable_data_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
             }
@@ -199,7 +207,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_update (void)
                 create_datawriter (
                   this->topic_.in (),
                   dwqos,
-                  this->supplier_listener_.in (),
+                  this->datawriter_listener_.in (),
                   DDS_OFFERED_DEADLINE_MISSED_STATUS | DDS_OFFERED_INCOMPATIBLE_QOS_STATUS | DDS_LIVELINESS_LOST_STATUS | DDS_PUBLICATION_MATCHED_STATUS);
               this->observable_data_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
             }
@@ -222,31 +230,37 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen (void)
     {
       if (CORBA::is_nil (this->listen_subscriber_.in ()))
         {
+          this->subscriber_listener_ = new ::CIAO::DDS4CCM::RTI::SubscriberListener_T
+            <DDS_TYPE, CCM_TYPE> (
+                  this->context_->get_connection_error_listener ());
+
           if (this->library_name_ && this->profile_name_)
             {
               this->listen_subscriber_ = this->domain_participant_->
                 create_subscriber_with_profile (
                   this->library_name_,
                   this->profile_name_,
-                  0,
-                  0);
+                  this->subscriber_listener_.in (),
+                  DDS_STATUS_MASK_NONE);
             }
           else
             {
               ::DDS::SubscriberQos sqos;
               this->listen_subscriber_ = this->domain_participant_->
-                create_subscriber (sqos,
-                0,
-                0);
+                create_subscriber (
+                  sqos,
+                  this->subscriber_listener_.in (),
+                  DDS_STATUS_MASK_NONE);
             }
         }
 
       if (CORBA::is_nil (this->__listen_datareaderlistener.in ()))
         {
-          this->__listen_datareaderlistener = new ::CIAO::DDS4CCM::RTI::DataReaderListener_T
+          this->__listen_datareaderlistener = new ::CIAO::DDS4CCM::RTI::DataReaderStateListener_T
             <DDS_TYPE, CCM_TYPE> (
                   this->context_,
-                  this->context_->get_connection_push_observer_data_listener (),
+                  this->context_->get_connection_error_listener (),
+                  this->context_->get_connection_push_state_observer_data_listener (),
                   this->context_->get_connection_pull_observer_status (),
                   this->listen_datalistener_mode_,
                   this->listen_datalistener_max_delivered_data_);
