@@ -1,3 +1,8 @@
+Tue Dec 01 12:39:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Implemented read_one_all
+
 Tue Dec 01 11:50:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderHandler_T.cpp
