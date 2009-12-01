@@ -44,7 +44,7 @@ $Notify_Args = "-ORBInitRef NameService=file://$nfs_nsiorfile -IORoutput $nfs_nf
 
 $FLT = $flt->CreateProcess ("Filter", 
                           " -o $ns_nsiorfile");
-$Filter_Args = "-ORBInitRef NameService=file://$flt_nsiorfile -ORBDebugLevel $debug";
+$Filter_Args = "-ORBInitRef NameService=file://$flt_nsiorfile -ORBDebugLevel $debug_level";
 
 $NS_status = $NS->Spawn ();
 
