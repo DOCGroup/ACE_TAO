@@ -21,15 +21,22 @@ my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 fail
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
 my $iorbase = "server.ior";
+my $svcconf = "server$PerlACE::svcconf_ext";
 my $server_iorfile = $server->LocalFile ($iorbase);
+my $server_svcfile = $server->LocalFile ($svcconf);
 my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
-$CL = $client->CreateProcess ("client", "-k file://$client_iorfile");
+$SV = $server->CreateProcess ("ping",
+                              "-ORBdebuglevel $debug_level -o $server_iorfile");
+$CL = $client->CreateProcess ("pong",
+                              "-k file://$client_iorfile -p 100 -i 60 -t 30");
 
-# Test A: object exists (_non_existent() returns false)
+###############################################################################
+print STDERR "################ Default ORB Config###############\n";
+print STDERR "===== Ping-pong test, server crashes but client continues\n";
+
 $server_status = $SV->Spawn ();
 
 if ($server_status != 0) {
@@ -55,28 +62,31 @@ if ($client->PutFile ($iorbase) == -1) {
     exit 1;
 }
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 85);
 
-if ($client_status != 2) {
+if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+    $status = 1;
 }
 
-$server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 45);
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+    $status = 1;
 }
 
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-# Test B: object does not exist (_non_existent() returns true)
-$SV->Arguments ("-ORBdebuglevel $debug_level -o $server_iorfile -r");
+########################################################################
+########################################################################
+########################################################################
+print STDERR "################ Thread-Per-Connection Config###############\n";
+print STDERR "===== Ping-pong test, server crashes but client continues\n";
 
+$SV->Arguments ("-ORBdebuglevel $debug_level -ORBSvcConf $server_svcfile ".
+                "-o $server_iorfile");
 $server_status = $SV->Spawn ();
 
 if ($server_status != 0) {
@@ -102,31 +112,17 @@ if ($client->PutFile ($iorbase) == -1) {
     exit 1;
 }
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 85);
 
-if ($client_status != 3) {
+if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+    $status = 1;
 }
 
-$server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 45);
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-# Test C: server does not run (_non_existent() throws TRANSIENT)
-
-# This test was failing on win32 without this sleep.
-sleep 1;
-
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
-
-if ($client_status != 5) {
-    print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 

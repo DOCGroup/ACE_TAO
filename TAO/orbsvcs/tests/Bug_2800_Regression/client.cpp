@@ -12,13 +12,14 @@ bool shutdown_nsmain = false;
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
+        ior = get_opts.opt_arg ();
         shutdown_nsmain = true;
         break;
       default:

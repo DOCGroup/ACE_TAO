@@ -1,3 +1,57 @@
+Tue Dec  1 09:48:38 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * orbsvcs/tests/Log/Basic_Log_Test/run_test.pl:
+        * orbsvcs/tests/Bug_2800_Regression/client.cpp:
+        * orbsvcs/tests/Bug_2800_Regression/run_test_federated.pl:
+        * orbsvcs/tests/Bug_2800_Regression/nsmain.cpp:
+        * orbsvcs/tests/Bug_2800_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_2777_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_3673_Regression/client.cpp:
+        * orbsvcs/tests/Bug_3673_Regression/nsmain.cpp:
+        * orbsvcs/tests/Bug_3673_Regression/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops_RTCORBA/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated/run_test.pl:
+        * orbsvcs/tests/EC_Multiple/run_test.pl:
+        * orbsvcs/tests/Interoperable_Naming/run_test.pl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/run_test.pl:
+        * orbsvcs/examples/ORT/run_test.pl:
+        * orbsvcs/examples/Notify/Subscribe/run_test.pl:
+        * orbsvcs/examples/Notify/ThreadPool/run_test.pl:
+        * orbsvcs/examples/Notify/Lanes/run_test.pl:
+        * orbsvcs/examples/Notify/Filter/run_test.pl:
+        * orbsvcs/examples/RtEC/IIOPGateway/consumerec_crash.pl:
+        * orbsvcs/examples/RtEC/IIOPGateway/run_test.pl:
+        * orbsvcs/examples/RtEC/Simple/run_test.pl:
+        * performance-tests/POA/Create_Reference/run_test.pl:
+        * tests/Faults/run_test_pp.pl:
+        * tests/Faults/run_test.pl:
+        * tests/Muxing/run_test.pl:
+        * tests/Bug_1020_Regression/run_test.pl:
+        * tests/Bug_1551_Regression/run_test.pl:
+        * tests/Bug_2678_Regression/run_test.pl:
+        * tests/MT_Server/run_test.pl:
+        * tests/LongUpcalls/run_test.pl:
+        * tests/Bug_2084_Regression/run_test.pl:
+        * tests/Bug_1482_Regression/run_test.pl:
+        * tests/Bug_3547_Regression/run_test.pl:
+        * tests/Bug_2174_Regression/run_test.pl:
+        * tests/POA/TIE/server.cpp:
+        * tests/POA/TIE/run_test.pl:
+        * tests/MT_BiDir/run_test.pl:
+        * tests/Monitor/Marshal_Buffer/run_test.pl:
+        * tests/Bug_1869_Regression/client.cpp:
+        * tests/Bug_1869_Regression/run_test.pl:
+        * tests/Nested_Upcall_Crash/run_test.pl:
+        * tests/ORB_Local_Config/run_tests_all.pl:
+        * tests/Bug_1269_Regression/run_test.pl:
+        * tests/Forwarding/run_test.pl:
+        * bin/tao_orb_tests.lst:
+
+          Test are converted to use new test framework
+          and added to fuzz build.
+
 Thu Nov 26 02:02:24 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * docs/documentation.html: Updated the documentation to reference

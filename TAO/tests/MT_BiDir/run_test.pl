@@ -76,7 +76,7 @@ if ($client3->PutFile ($iorbase) == -1) {
     exit 1;
 }
 
-$client_status = $CL1->Spawn ($client1->ProcessStartWaitInterval() + 45);
+$client_status = $CL1->Spawn ();
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
@@ -84,7 +84,7 @@ if ($client_status != 0) {
     exit 1;
 }
 
-$client_status = $CL2->Spawn ($client2->ProcessStartWaitInterval() + 45);
+$client_status = $CL2->Spawn ();
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
@@ -93,7 +93,7 @@ if ($client_status != 0) {
     exit 1;
 }
 
-$client_status = $CL3->Spawn ($client3->ProcessStartWaitInterval() + 45);
+$client_status = $CL3->Spawn ();
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
