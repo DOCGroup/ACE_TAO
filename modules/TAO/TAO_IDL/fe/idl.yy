@@ -692,45 +692,45 @@ template_module_ref
 //        id
           idl_global->set_parse_state (
             IDL_GlobalData::PS_ModuleRefIDSeen);
-            
+
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d = s->lookup_by_name ($2, true);
-          
+
           if (d == 0)
             {
               idl_global->err ()->lookup_error ($2);
               return 1;
             }
-            
+
           AST_Template_Module *ref =
             AST_Template_Module::narrow_from_decl (d);
-            
+
           if (ref == 0)
             {
               idl_global->err ()->template_module_expected (d);
               return 1;
             }
-            
+
           bool refs_match =
             ref->match_param_refs ($5,
                                    s);
-            
+
           if (! refs_match)
             {
               // Error message is already output.
               return 1;
             }
-            
-          UTL_ScopedName sn ((tao_yyvsp[(8) - (8)].idval), 0);
-            
+
+          UTL_ScopedName sn ($8, 0);
+
           AST_Template_Module_Ref *tmr =
             idl_global->gen ()->create_template_module_ref (
               &sn,
               ref,
               $5);
-              
+
            (void) s->fe_add_template_module_ref (tmr);
-              
+
            sn.destroy ();
            $2->destroy ();
            delete $2;
