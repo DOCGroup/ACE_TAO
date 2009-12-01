@@ -22,7 +22,7 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::~Updater_T (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 bool
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::is_global_scope () const
+CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::is_global_scope ()
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::is_global_scope");
   return this->is_global_scope_;
@@ -30,7 +30,7 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::is_global_scope () const
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 bool
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::is_coherent_write () const
+CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::is_coherent_write ()
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::is_coherent_write");
   return this->is_coherent_write_;

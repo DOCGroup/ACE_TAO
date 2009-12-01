@@ -1,8 +1,36 @@
+Tue Dec 01 09:42:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderHandler_T.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderHandler_T.h
+        * connectors/dds4ccm/impl/ndds/DataReaderListener.h
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener.cpp
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener_T.h
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.h
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.h
+        * connectors/dds4ccm/impl/ndds/TopicListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/TopicListener_T.h
+        * connectors/dds4ccm/impl/ndds/Updater_T.cpp
+        * connectors/dds4ccm/impl/ndds/Updater_T.h
+          Implemented empty listeners for each dds entity and first
+          part of DDS_State
+
 Tue Dec 01 08:33:37 UTC 2009  Marijke Hengstmengel <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLDeadline/Receiver/CSL_DeadlineTest_Receiver.mpc
           Corrected mpc file for connector_stub
-
 
 Mon Nov 30 13:00:37 UTC 2009  Marijke Hengstmengel <mhengstmengel@remedy.nl>
 
@@ -12,7 +40,7 @@ Mon Nov 30 13:00:37 UTC 2009  Marijke Hengstmengel <mhengstmengel@remedy.nl>
         * connectors/dds4ccm/tests/CSLQoS/Connector/CSL_QoSTest_Connector_exec.cpp:
         * connectors/dds4ccm/tests/CSLQoS/Receiver/CSL_QoSTest_Receiver_exec.cpp:
         * connectors/dds4ccm/tests/CSLQoS/Sender/CSL_QoSTest_Sender_exec.cpp:
-          Corrected warnings for unused parameters 
+          Corrected warnings for unused parameters
 
 
 Mon Nov 30 13:00:37 UTC 2009  Marijke Hengstmengel <mhengstmengel@remedy.nl>

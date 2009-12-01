@@ -8,12 +8,11 @@
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::DataReaderHandler_T (
-            typename CCM_TYPE::context_type::_ptr_type context,
+            typename CCM_TYPE::listener_type::_ptr_type listener,
             typename DDS_TYPE::data_reader * reader)
-      : context_ (CCM_TYPE::context_type::_duplicate (context)),
+      : listener_ (CCM_TYPE::listener_type::_duplicate (listener)),
         reader_ (reader)
 {
-  listener_ = CCM_TYPE::listener_type::_duplicate (this->context_->get_connection_push_consumer_data_listener ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>

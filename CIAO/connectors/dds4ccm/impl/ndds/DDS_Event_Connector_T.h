@@ -63,7 +63,7 @@ private:
   void configure_port_dds_write (void);
   ::DDS::Publisher_var supplier_publisher_;
   ::DDS::CCM_DataWriter_var supplier_writer_;
-  ::DDS::DataWriterListener_var supplier_listener_;
+  ::DDS::DataWriterListener_var datawriter_listener_;
 
   // @from DDS_Listen
   void configure_port_dds_listen (void);
@@ -72,6 +72,8 @@ private:
   ::DDS::Subscriber_var listen_subscriber_;
   ::DDS::DataReader_var push_consumer_data_;
   ::DDS::DataReaderListener_var __listen_datareaderlistener;
+  ::DDS::SubscriberListener_var subscriber_listener_;
+  ::DDS::PublisherListener_var publisher_listener_;
 
   // @from DDS_Getter
   ::DDS::DataReader_var pull_consumer_fresh_data_;
