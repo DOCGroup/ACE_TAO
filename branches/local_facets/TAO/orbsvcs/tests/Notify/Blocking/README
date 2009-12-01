@@ -1,0 +1,42 @@
+Notification Blocking Policy Test
+================================
+
+Description
+-----------
+
+This test exercises the event blocking policy of the Notification
+Service.  The Blocking policy is not one of the policies defined in the
+Notification Spec.  It is a feature requested by CISCO.
+
+A number of events are sent by the supplier.  The supplier should begin to
+block when the event queue begins to fill.  The supplier should then
+continue to send events once the consumer catches up on the events that are
+sent out.
+
+
+Usage
+-----
+
+The test consists of a Structured_Supplier and Structured_Consumer.
+The usage for each as is follows:
+
+$ Structured_Supplier -\?
+usage:  Structured_Supplier -o <iorfile> -e <# of events> -d
+
+$ Structured_Consumer -\?
+usage:  Structured_Consumer -k <ior> -e <expected events>
+                            -t <relative blocking timeout seconds>
+
+
+To run this test, just run the run_test.pl perl script.  It will run both
+structured and sequence tests with each of the implemented discard policies.
+
+
+Expected Results
+----------------
+The consumers of each type expect to only receive a certain number of
+events.  If you see:
+
+ERROR: too many events received.
+
+then the test has failed.  Otherwise, the test was ok.
