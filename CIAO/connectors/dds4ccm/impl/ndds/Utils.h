@@ -20,6 +20,8 @@ namespace CIAO
     namespace RTI
     {
       DDS4CCM_NDDS_IMPL_Export const char * translate_retcode (DDS_ReturnCode_t ret);
+
+      DDS4CCM_NDDS_IMPL_Export const char * translate_statuskind (DDS_StatusKind ret);
     }
   }
 }
