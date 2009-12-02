@@ -1,3 +1,8 @@
+Wed Dec  2 13:58:57 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Add test to test list.
+
 Wed Dec  2 13:49:57 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Utils.cpp:
