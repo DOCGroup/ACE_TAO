@@ -3,6 +3,8 @@
 #include "ast_template_module.h"
 #include "ast_template_module_ref.h"
 #include "ast_constant.h"
+#include "ast_enum.h"
+#include "ast_typedef.h"
 #include "ast_visitor.h"
 
 #include "utl_err.h"

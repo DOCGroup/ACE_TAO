@@ -1,3 +1,66 @@
+Wed Dec  2 21:21:24 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_param_holder.h:
+        * TAO_IDL/include/fe_utils.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/fe_interface_header.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/include/ast_consumes.h:
+        * TAO_IDL/include/ast_publishes.h:
+        * TAO_IDL/include/ast_operation.h:
+        * TAO_IDL/include/ast_emits.h:
+        * TAO_IDL/be/be_param_holder.cpp:
+        * TAO_IDL/be/be_publishes.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_consumes.cpp:
+        * TAO_IDL/be/be_emits.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/ast/ast_consumes.cpp:
+        * TAO_IDL/ast/ast_publishes.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_template_module.cpp:
+        * TAO_IDL/ast/ast_emits.cpp:
+        * TAO_IDL/ast/ast_template_common.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDL/ast/ast_param_holder.cpp:
+        * TAO_IDL/ast/ast_exception.cpp:
+        * TAO_IDL/ast/ast_structure.cpp:
+        * TAO_IDL/ast/ast_attribute.cpp:
+        * TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/ast/ast_argument.cpp:
+        * TAO_IDL/be_include/be_publishes.h:
+        * TAO_IDL/be_include/be_param_holder.h:
+        * TAO_IDL/be_include/be_emits.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_consumes.h:
+        * TAO_IDL/fe/fe_utils.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          - Added code to UTL_Scope::lookup_by_name() that can
+            match an input to a template parameter, if any, of the 
+            enclosing scope.
+
+          - Changed constructor and IDL compiler factory function
+            signatures for publishes, emits and consumes nodes to
+            take AST_Type rather than AST_EventType, allowing a
+            template parameter placeholder to be accepted if that
+            particular IDL construct is parameterized.
+
+          - Removed #include of ast_typedef.h from utl_scope.h and
+            added it to the necessary .cpp files.
+
+          - Added check for duplicate names in a formal template
+            parameter list.
+
 Tue Dec  1 18:00:15 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:

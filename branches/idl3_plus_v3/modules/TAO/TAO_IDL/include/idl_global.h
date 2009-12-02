@@ -651,6 +651,15 @@ public:
   
   const char *big_file_name (void) const;
   // Just get the const string.
+  
+  FE_Utils::T_PARAMLIST_INFO const *current_params (void) const;
+  void current_params (FE_Utils::T_PARAMLIST_INFO *params);
+  // Accessors for the member. If UTL_Scope::lookup_by_name()
+  // has a 0 result, it will check this param list (if it is not
+  // 0, meaning we are in the scope of a template module) for a
+  // match before returning, in case it is processing a 
+  // referenced template parameter of the eclosing template
+  // module.
 
   UTL_String *utl_string_factory (const char *str);
   // Utility function to create UTL_String classes on the FE heap.
@@ -797,6 +806,10 @@ private:
   
   const char *big_file_name_;
   // Used if the above flag is set.
+  
+  FE_Utils::T_PARAMLIST_INFO *current_params_;
+  // Stored if we are parsing the scope of a template module,
+  // 0 otherwise.
 };
 
 

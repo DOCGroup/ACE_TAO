@@ -69,6 +69,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_scoped_name.h"
 
+#include "ast_typedef.h"
+
 class UTL_NameList;
 class AST_Interface;
 

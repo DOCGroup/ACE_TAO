@@ -88,19 +88,18 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_structure_fwd.h"
 #include "ast_enum.h"
 #include "ast_enum_val.h"
+#include "ast_typedef.h"
 #include "ast_native.h"
 #include "ast_generator.h"
 #include "ast_visitor.h"
 #include "ast_extern.h"
+
 #include "utl_err.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
+
 #include "global_extern.h"
 #include "nr_extern.h"
-
-ACE_RCSID (ast,
-           ast_module,
-           "$Id$")
 
 AST_Module::AST_Module (void)
  : AST_Decl (),
@@ -1684,7 +1683,7 @@ AST_Module::fe_add_typedef (AST_Typedef *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add(t, false)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {

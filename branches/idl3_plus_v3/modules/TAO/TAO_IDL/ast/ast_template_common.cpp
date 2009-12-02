@@ -3,6 +3,7 @@
 #include "ast_template_common.h"
 #include "ast_field.h"
 #include "ast_constant.h"
+#include "ast_typedef.h"
 
 #include "utl_identifier.h"
 #include "utl_namelist.h"

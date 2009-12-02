@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ast_valuetype.h"
+#include "ast_typedef.h"
 #include "ast_factory.h"
 #include "ast_visitor.h"
 #include "ast_extern.h"
@@ -14,10 +15,6 @@
 #include "nr_extern.h"
 
 #include "ace/streams.h"
-
-ACE_RCSID (ast,
-           ast_valuetype,
-           "$Id$")
 
 AST_ValueType::AST_ValueType (void)
   : COMMON_Base (),

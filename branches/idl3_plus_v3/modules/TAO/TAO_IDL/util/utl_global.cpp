@@ -1789,6 +1789,18 @@ IDL_GlobalData::big_file_name (void) const
   return this->big_file_name_;
 }
 
+FE_Utils::T_PARAMLIST_INFO const *
+IDL_GlobalData::current_params (void) const
+{
+  return this->current_params_;
+}
+
+void
+IDL_GlobalData::current_params (FE_Utils::T_PARAMLIST_INFO *params)
+{
+  this->current_params_ = params;
+}
+
 UTL_String *
 IDL_GlobalData::utl_string_factory (const char *str)
 {

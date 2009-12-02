@@ -79,10 +79,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 #include "global_extern.h"
 
-ACE_RCSID (ast,
-           ast_attribute,
-           "$Id$")
-
 // Constructor(s) and destructor.
 AST_Attribute::AST_Attribute (void)
   : COMMON_Base (),
