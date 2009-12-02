@@ -32,14 +32,14 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
   ACE_TRACE ("TAO_RT_ORB_Loader::init");
 
   ACE_Service_Gestalt *gestalt = ACE_Service_Config::current ();
-  ACE_Service_Gestalt *global = ACE_Service_Config::global ();
 
   ACE_Service_Object * const rt_loader =
     ACE_Dynamic_Service<ACE_Service_Object>::instance (
       gestalt,
-      "RT_ORB_Loader");
+      "RT_ORB_Loader",
+      true);
 
-  if (rt_loader != 0 && rt_loader != this && gestalt == global)
+  if (rt_loader != 0 && rt_loader != this)
     {
       this->initialized_ = true;
       return rt_loader->init (argc, argv);

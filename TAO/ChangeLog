@@ -1,3 +1,9 @@
+Wed Dec  2 14:01:43 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/RTCORBA/RT_ORB_Loader.cpp:
+          Improved a little the fix for bug#3755. There is no need
+          to obtain a global gestalt.
+
 Wed Dec  2 12:32:36 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl:
