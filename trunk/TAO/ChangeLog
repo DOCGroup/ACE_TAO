@@ -1,3 +1,11 @@
+Wed Dec  2 12:32:36 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl:
+        * examples/RTScheduling/MIF_Scheduler/run_test.pl:
+
+          Tests are converted to use new test framework
+          and added to fuzz build.
+
 Wed Dec  2 10:07:02 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/Bug_1630_Regression/run_test.pl:
