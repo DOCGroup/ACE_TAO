@@ -21,6 +21,8 @@ ACE_RCSID (LoadBalancer,
 
 
 static const ACE_TCHAR *lm_ior_file = ACE_TEXT("lm.ior");
+static int ping_timeout_milliseconds = 2000;
+static int ping_interval_seconds = 0; 
 
 void
 usage (const ACE_TCHAR * cmd)
@@ -30,6 +32,8 @@ usage (const ACE_TCHAR * cmd)
               ACE_TEXT ("  %s\n")
               ACE_TEXT ("    -o <ior_output_file>\n")
               ACE_TEXT ("    -s <RoundRobin | Random | LeastLoaded>\n")
+              ACE_TEXT ("    -i <ping_interval_seconds>\n")
+              ACE_TEXT ("    -t <ping_timeout_milliseconds>\n")
               ACE_TEXT ("    -h\n")
               ACE_TEXT ("\n")
               ACE_TEXT (" NOTE: Standard default values will be used ")
@@ -42,7 +46,7 @@ parse_args (int argc,
             ACE_TCHAR *argv[],
             int & default_strategy)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:s:h"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:s:i:t:h"));
 
   int c = 0;
 
@@ -67,6 +71,12 @@ parse_args (int argc,
           else
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("Unknown strategy, using RoundRobin\n")));
+          break;
+        case 'i':
+          ::ping_interval_seconds = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
+        case 't':
+          ::ping_timeout_milliseconds = ACE_OS::atoi (get_opts.opt_arg ());
           break;
 
         case 'h':
@@ -144,8 +154,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       TAO_LB_LoadManager * lm = 0;
       ACE_NEW_THROW_EX (lm,
-                        TAO_LB_LoadManager,
-                        CORBA::NO_MEMORY (
+        TAO_LB_LoadManager(::ping_timeout_milliseconds,
+                           ::ping_interval_seconds),
+                          CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
                             TAO::VMCID,
                             ENOMEM),
