@@ -139,7 +139,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_subscriber (void)
               this->library_name_,
               this->profile_name_,
               this->subscriber_listener_.in (),
-              DDS_STATUS_MASK_NONE);
+              ::CIAO::DDS4CCM::RTI::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
         }
       else
         {
@@ -148,7 +148,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_subscriber (void)
             create_subscriber (
               sqos,
               this->subscriber_listener_.in (),
-              DDS_STATUS_MASK_NONE);
+              ::CIAO::DDS4CCM::RTI::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
         }
     }
 }
@@ -173,7 +173,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_publisher (void)
               this->library_name_,
               this->profile_name_,
               this->publisher_listener_.in (),
-              DDS_STATUS_MASK_NONE);
+              ::CIAO::DDS4CCM::RTI::PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
         }
       else
         {
@@ -182,7 +182,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_publisher (void)
             create_publisher (
               pqos,
               this->publisher_listener_.in (),
-              DDS_STATUS_MASK_NONE);
+              ::CIAO::DDS4CCM::RTI::PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
         }
     }
 }
@@ -221,7 +221,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic (void)
                       this->library_name_,
                       this->profile_name_,
                       this->topiclistener_.in (),
-                      DDS_INCONSISTENT_TOPIC_STATUS);
+                      ::CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
                 }
               else
                 {
@@ -232,7 +232,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic (void)
                       DDS_TYPE::type_support::get_type_name (),
                       tqos,
                       this->topiclistener_.in (),
-                      DDS_INCONSISTENT_TOPIC_STATUS);
+                      ::CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
                 }
             }
           else

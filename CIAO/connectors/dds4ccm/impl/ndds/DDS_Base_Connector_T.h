@@ -45,7 +45,7 @@ protected:
 
   ::DDS::DomainParticipantFactory_var domain_participant_factory_;
   ::DDS::DomainParticipant_var domain_participant_;
-
+  ::DDS::DomainParticipantListener_var domainparticipantlistener_;
   typename CCM_TYPE::context_type::_var_type context_;
 
   ::CCM_DDS::ConnectorStatusListener_var error_listener_;

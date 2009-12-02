@@ -4,6 +4,7 @@
 #include "ciao/Logger/Log_Macros.h"
 #include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
 #include "dds4ccm/impl/ndds/DomainParticipant.h"
+#include "dds4ccm/impl/ndds/DomainParticipantListener_T.h"
 #include "ace/Tokenizer_T.h"
 #include "ace/Env_Value_T.h"
 
@@ -106,6 +107,9 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain (void)
               }
             }
           }
+        this->domainparticipantlistener_ = new ::CIAO::DDS4CCM::DomainParticipantListener_T
+          <DDS_TYPE, CCM_TYPE> (
+            this->context_->get_connection_error_listener ());
         if (this->library_name_ && this->profile_name_)
           {
             this->domain_participant_factory_->
@@ -117,8 +121,8 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain (void)
                 this->domain_id_,
                 this->library_name_,
                 this->profile_name_,
-                0,
-                DDS_STATUS_MASK_NONE);
+                this->domainparticipantlistener_.in (),
+                ::CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
           }
         else
           {
@@ -127,8 +131,8 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain (void)
               this->domain_participant_factory_->create_participant (
                 this->domain_id_,
                 qos,
-                0,
-                DDS_STATUS_MASK_NONE);
+                this->domainparticipantlistener_.in (),
+                ::CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
           }
       }
     catch (...)

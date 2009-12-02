@@ -14,25 +14,24 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    namespace RTI
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class DomainParticipantListener_T :
+      public ::DDS::DomainParticipantListener,
+      private ACE_Copy_Disabled
     {
-      template <typename DDS_TYPE, typename CCM_TYPE>
-      class DomainParticipantListener_T :
-        public ::DDS::DomainParticipantListener,
-        private ACE_Copy_Disabled
-      {
-      public:
-        /// Constructor
-        DomainParticipantListener_T (
-          ::CCM_DDS::ConnectorStatusListener_ptr error_listener);
+    public:
+      /// Constructor
+      DomainParticipantListener_T (
+        ::CCM_DDS::ConnectorStatusListener_ptr error_listener);
 
-        /// Destructor
-        virtual ~DomainParticipantListener_T (void);
+      /// Destructor
+      virtual ~DomainParticipantListener_T (void);
 
-      private:
-        ::CCM_DDS::ConnectorStatusListener_var error_listener_;
-      };
-    }
+      static ::DDS::StatusMask get_mask (void);
+
+    private:
+      ::CCM_DDS::ConnectorStatusListener_var error_listener_;
+    };
   }
 }
 

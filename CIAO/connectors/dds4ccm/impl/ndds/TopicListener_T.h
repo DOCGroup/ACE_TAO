@@ -29,6 +29,8 @@ namespace CIAO
         ::DDS::Topic_ptr the_topic,
         const ::DDS::InconsistentTopicStatus & status);
 
+      static ::DDS::StatusMask get_mask (void);
+
     private:
       CCM_DDS::ConnectorStatusListener_var  error_listener_;
     };

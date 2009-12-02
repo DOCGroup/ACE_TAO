@@ -22,3 +22,10 @@ CIAO::DDS4CCM::RTI::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::~SubscriberListene
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::SubscriberListener_T::~SubscriberListener_T");
 }
 
+template <typename DDS_TYPE, typename CCM_TYPE>
+::DDS::StatusMask
+CIAO::DDS4CCM::RTI::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::get_mask (void)
+{
+  return DDS_STATUS_MASK_NONE;
+}
+
