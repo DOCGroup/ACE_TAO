@@ -54,6 +54,10 @@ namespace CIAO
       private:
         typename DDS_TYPE::data_reader *impl_;
         ::DDS::DataReader_ptr reader_;
+
+        DDS_InstanceHandle_t check_handle (
+          const typename DDS_TYPE::value_type& an_instance,
+          const ::DDS::InstanceHandle_t & instance_handle);
       };
     }
   }

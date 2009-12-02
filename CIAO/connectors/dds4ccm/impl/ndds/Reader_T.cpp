@@ -173,57 +173,51 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_all (
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE >
+DDS_InstanceHandle_t
+CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::check_handle (
+          const typename DDS_TYPE::value_type& an_instance,
+          const ::DDS::InstanceHandle_t & instance_handle)
+{
+  DDS_InstanceHandle_t hnd = ::DDS_HANDLE_NIL;
+  hnd <<= instance_handle;
+
+  DDS_InstanceHandle_t lookup_hnd = 
+      this->impl_->lookup_instance (an_instance);
+  if (!DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL) && 
+      !DDS_InstanceHandle_equals (&hnd, &lookup_hnd))
+    {
+      throw ::CCM_DDS::InternalError (0, 0);
+    }
+  if (DDS_InstanceHandle_equals (&lookup_hnd, &::DDS_HANDLE_NIL))
+    {
+      throw ::CCM_DDS::NonExistent ();
+    }
+  return lookup_hnd;
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE >
 void
 CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_last (
           typename DDS_TYPE::value_type& an_instance,
           ::CCM_DDS::ReadInfo_out info,
           const ::DDS::InstanceHandle_t & instance_handle)
 {
-  DDS_InstanceHandle_t hnd = ::DDS_HANDLE_NIL;
-  hnd <<= instance_handle;
-  if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
-    {
-      hnd = this->impl_->lookup_instance (an_instance);
-    }
+  DDS_InstanceHandle_t lookup_hnd = check_handle (an_instance, instance_handle);
+
   DDS_SampleInfoSeq sample_info;
-  DDS_ReturnCode_t retval = DDS_RETCODE_NO_DATA;
   typename DDS_TYPE::dds_seq_type data;
-
-  // if initial instance has a registered key, pass back instance with this key,
-  // else return last instance regardless of key
-  if (!DDS_InstanceHandle_equals (&hnd, & ::DDS_HANDLE_NIL))
-    {
-/*  if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
-    {
-      throw ::CCM_DDS::NonExistent(0);
-    }*/
-      CIAO_DEBUG ((LM_INFO,
-                  ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_last - ")
-                  ACE_TEXT ("Read with instance.\n")));
-      retval = this->impl_->read_instance(
-                    data,
-                    sample_info,
-                    1,
-                    hnd,
-                    DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
-                    DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-                    DDS_ALIVE_INSTANCE_STATE);
-    }
-  else
-    {
-      CIAO_DEBUG ((LM_INFO,
-                  ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_last - ")
-                  ACE_TEXT ("Read without instance.\n")));
-      retval = this->impl_->read(
-                    data,
-                    sample_info,
-                    1,
-                    DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
-                    DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-                    DDS_ALIVE_INSTANCE_STATE);
-
-    }
- 
+  //for now, only read with instance...
+  CIAO_DEBUG ((LM_INFO,
+              ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_last - ")
+              ACE_TEXT ("Read with instance.\n")));
+  DDS_ReturnCode_t retval = this->impl_->read_instance(
+                data,
+                sample_info,
+                DDS_LENGTH_UNLIMITED,
+                lookup_hnd,
+                DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
+                DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
+                DDS_ALIVE_INSTANCE_STATE);
   if (retval != DDS_RETCODE_OK)
     {
       this->impl_->return_loan(data, sample_info);
@@ -249,7 +243,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_last (
     }
   // Return the loan
   this->impl_->return_loan(data, sample_info);
- }
+}
 
 template <typename DDS_TYPE, typename CCM_TYPE >
 void
@@ -259,43 +253,21 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_all (
   ::CCM_DDS::ReadInfoSeq_out infos,
   const ::DDS::InstanceHandle_t & instance_handle)
 {
-  DDS_InstanceHandle_t hnd = ::DDS_HANDLE_NIL;
-  hnd <<= instance_handle;
-  if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
-    {
-      hnd = this->impl_->lookup_instance (an_instance);
-    }
+  DDS_InstanceHandle_t lookup_hnd = check_handle (an_instance, instance_handle);
 
   DDS_SampleInfoSeq sample_info;
-  DDS_ReturnCode_t retval = DDS_RETCODE_NO_DATA;
   typename DDS_TYPE::dds_seq_type data;
 
-  if (!DDS_InstanceHandle_equals (&hnd, & ::DDS_HANDLE_NIL))
-    {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_all - ")
-                            ACE_TEXT ("Reading with instance.\n")));
-      retval = this->impl_->read_instance (
-                  data,
-                  sample_info,
-                  DDS_LENGTH_UNLIMITED,
-                  hnd,
-                  DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
-                  DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-                  DDS_ALIVE_INSTANCE_STATE);
-    }
-  else
-    {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_all - ")
-                            ACE_TEXT ("Reading without instance.\n")));
-      retval = this->impl_->read (
-                  data,
-                  sample_info,
-                  DDS_LENGTH_UNLIMITED,
-                  DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
-                  DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-                  DDS_ALIVE_INSTANCE_STATE);
-    }
-
+  CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_all - ")
+                        ACE_TEXT ("Reading with instance.\n")));
+  DDS_ReturnCode_t retval = this->impl_->read_instance (
+              data,
+              sample_info,
+              DDS_LENGTH_UNLIMITED,
+              lookup_hnd,
+              DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
+              DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
+              DDS_ALIVE_INSTANCE_STATE);
   if (retval != DDS_RETCODE_OK)
     {
       CIAO_ERROR ((LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_last - ")
