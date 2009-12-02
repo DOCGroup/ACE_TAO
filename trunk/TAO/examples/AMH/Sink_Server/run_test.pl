@@ -36,9 +36,11 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
+my $server_conf = $server->LocalFile ("st_server" . $conf);
+
 $SV = $server->CreateProcess ("st_server",
                               "-ORBdebuglevel $debug_level " .
-                              "-ORBsvcconf st_server$conf " .
+                              "-ORBsvcconf $server_conf " .
                               "-o $server_iorfile " .
                               "-s $delay_time");
 

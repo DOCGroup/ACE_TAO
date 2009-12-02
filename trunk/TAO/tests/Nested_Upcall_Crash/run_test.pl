@@ -35,7 +35,8 @@ $client1->DeleteFile($iorbase);
 $client2->DeleteFile($iorbase);
 $client3->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level ".
+$SV = $server->CreateProcess ("server",
+                              "-ORBdebuglevel $debug_level ".
                               "-o $server_iorfile");
 $CL1 = $client1->CreateProcess ("client", "-k file://$client1_iorfile");
 $CL2 = $client2->CreateProcess ("client", "-k file://$client2_iorfile");
@@ -138,7 +139,6 @@ $server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
-    exit 1;
 }
 
 $server->DeleteFile($iorbase);

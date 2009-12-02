@@ -78,13 +78,17 @@ noinst_PROGRAMS += list_interfaces
 
 list_interfaces_CPPFLAGS = \
   -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR)
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
 
 list_interfaces_SOURCES = \
-  list_interfaces.cpp \
-  bogus_i.h
+  list_interfaces.cpp
 
 list_interfaces_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
