@@ -101,17 +101,16 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_sequence.h"
 #include "ast_string.h"
 #include "ast_structure_fwd.h"
+#include "ast_typedef.h"
 #include "ast_native.h"
 #include "ast_factory.h"
+
 #include "utl_identifier.h"
+
 #include "nr_extern.h"
 #include "ace/OS_NS_wchar.h"
 
 #include "ast_generator.h"
-
-ACE_RCSID (ast,
-           ast_generator,
-           "$Id$")
 
 AST_PredefinedType *
 AST_Generator::create_predefined_type (AST_PredefinedType::PredefinedType t,
@@ -973,7 +972,7 @@ AST_Generator::create_uses (UTL_ScopedName *n,
 
 AST_Publishes *
 AST_Generator::create_publishes (UTL_ScopedName *n,
-                                 AST_EventType *publishes_type)
+                                 AST_Type *publishes_type)
 {
   AST_Publishes *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -986,7 +985,7 @@ AST_Generator::create_publishes (UTL_ScopedName *n,
 
 AST_Emits *
 AST_Generator::create_emits (UTL_ScopedName *n,
-                             AST_EventType *emits_type)
+                             AST_Type *emits_type)
 {
   AST_Emits *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -998,7 +997,7 @@ AST_Generator::create_emits (UTL_ScopedName *n,
 }
 AST_Consumes *
 AST_Generator::create_consumes (UTL_ScopedName *n,
-                                AST_EventType *consumes_type)
+                                AST_Type *consumes_type)
 {
   AST_Consumes *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -1099,7 +1098,7 @@ AST_Generator::create_template_module_ref (
     
 AST_Param_Holder *
 AST_Generator::create_param_holder (
-  Identifier *parameter_name)
+  UTL_ScopedName *parameter_name)
 {
   AST_Param_Holder *retval = 0;
   ACE_NEW_RETURN (retval,

@@ -81,10 +81,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // the responsibility of those functions then to call the add()
 // function defined in the parent "AST_" class.
 
-#include "ast_decl.h"
-#include "ast_expression.h"
-#include "ast_typedef.h"
-#include "utl_scoped_name.h"
+#include "fe_utils.h"
 
 // This is for AIX w/IBM C++.
 class Identifier;
@@ -108,6 +105,7 @@ class AST_Exception;
 class AST_Attribute;
 class AST_Operation;
 class AST_Argument;
+class AST_Param_Holder;
 class AST_Union;
 class AST_UnionFwd;
 class AST_UnionBranch;
@@ -118,6 +116,7 @@ class AST_Enum;
 class AST_EnumVal;
 class AST_Sequence;
 class AST_String;
+class AST_Typedef;
 class AST_Array;
 class AST_Native;
 class AST_Factory;
@@ -338,7 +337,15 @@ protected:
   void check_for_predef_seq (AST_Decl *d);
   // Set the appropriate *_seen_ flag if we are seeing a spec-defined
   // sequence of a basic type.
-
+  
+  AST_Param_Holder *match_param (
+    UTL_ScopedName *e,
+    FE_Utils::T_PARAMLIST_INFO const *params);
+  // If the Identifier string (from the scoped name which has been
+  // already determined to be of length 1) matches a param,
+  // create and return a param holder AST node, otherwise 
+  // return 0.
+  
 protected:
   // Data.
 

@@ -85,21 +85,20 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_union.h"
 #include "ast_union_fwd.h"
 #include "ast_structure_fwd.h"
+#include "ast_typedef.h"
 #include "ast_native.h"
 #include "ast_visitor.h"
 #include "ast_extern.h"
+
 #include "utl_err.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
 #include "utl_string.h"
+
 #include "global_extern.h"
 #include "nr_extern.h"
 
 #include "ace/streams.h"
-
-ACE_RCSID (ast,
-           ast_interface,
-           "$Id$")
 
 AST_Interface::AST_Interface (void)
   : COMMON_Base (),

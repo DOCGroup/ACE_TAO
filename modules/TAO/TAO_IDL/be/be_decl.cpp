@@ -37,9 +37,13 @@
 #include "be_factory.h"
 #include "be_sequence.h"
 #include "be_visitor.h"
+
 #include "ast_structure_fwd.h"
+#include "ast_typedef.h"
 #include "ast_string.h"
+
 #include "utl_identifier.h"
+
 #include "global_extern.h"
 #include "ace/Log_Msg.h"
 #include "ace/String_Base.h"

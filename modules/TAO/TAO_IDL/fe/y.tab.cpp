@@ -251,6 +251,7 @@
 #include "ast_template_module.h"
 #include "ast_template_module_inst.h"
 #include "ast_template_module_ref.h"
+#include "ast_typedef.h"
 #include "ast_valuebox.h"
 #include "ast_valuetype.h"
 #include "ast_valuetype_fwd.h"
@@ -2948,6 +2949,13 @@ tao_yyreduce:
   case 47:
 
     {
+          if (FE_Utils::duplicate_param_id ((tao_yyvsp[(3) - (3)].plval)))
+            {
+              idl_global->err ()->duplicate_param_id (
+                (tao_yyvsp[(1) - (3)].idlist));
+                
+              return 1;
+            }
         }
     break;
 
@@ -2969,6 +2977,10 @@ tao_yyreduce:
            * Push it on the stack
            */
           idl_global->scopes ().push (tm);
+          
+          // Store these for reference as we parse the scope 
+          // of the template module.
+          idl_global->current_params ((tao_yyvsp[(3) - (5)].plval));
         }
     break;
 
@@ -2995,6 +3007,10 @@ tao_yyreduce:
            * Finished with this module - pop it from the scope stack.
            */
           idl_global->scopes ().pop ();
+          
+          // Clear the pointer so scoped name lookup will know
+          // that we are no longer in a template module scope.
+          idl_global->current_params (0);
         }
     break;
 
@@ -8994,8 +9010,9 @@ tao_yyreduce:
               (tao_yyvsp[(2) - (2)].plval) = 0;
 
               idl_global->err ()->mismatch_seq_of_param (bad_id.c_str ());
+              return 1;
             }
-
+            
           (tao_yyval.plval) = (tao_yyvsp[(2) - (2)].plval);
         }
     break;

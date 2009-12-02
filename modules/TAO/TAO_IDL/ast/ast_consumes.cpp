@@ -5,7 +5,7 @@
 #include "ast_visitor.h"
 
 AST_Consumes::AST_Consumes (UTL_ScopedName *n,
-                            AST_EventType *consumes_type)
+                            AST_Type *consumes_type)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_consumes,

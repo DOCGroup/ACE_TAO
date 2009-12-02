@@ -21,14 +21,15 @@
 #ifndef TAO_BE_PARAM_HOLDER_H
 #define TAO_BE_PARAM_HOLDER_H
 
-#include "be_decl.h"
+#include "be_type.h"
+
 #include "ast_param_holder.h"
 
 class be_param_holder : public virtual AST_Param_Holder,
-                        public virtual be_decl
+                        public virtual be_type
 {
 public:
-  be_param_holder (Identifier *parameter_name);
+  be_param_holder (UTL_ScopedName *parameter_name);
 
   virtual ~be_param_holder (void);
   

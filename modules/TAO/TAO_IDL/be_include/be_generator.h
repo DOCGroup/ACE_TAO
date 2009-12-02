@@ -279,15 +279,15 @@ public:
     
   virtual
   AST_Publishes *create_publishes (UTL_ScopedName *n,
-                                   AST_EventType *publishes_type);
+                                   AST_Type *publishes_type);
     
   virtual
   AST_Emits *create_emits (UTL_ScopedName *n,
-                           AST_EventType *emits_type);
+                           AST_Type *emits_type);
     
   virtual
   AST_Consumes *create_consumes (UTL_ScopedName *n,
-                                 AST_EventType *consumes_type);
+                                 AST_Type *consumes_type);
   virtual
   AST_Extended_Port *create_extended_port (
     UTL_ScopedName *n,
@@ -322,7 +322,7 @@ public:
     
   virtual
   AST_Param_Holder *create_param_holder (
-    Identifier *parameter_name);
+    UTL_ScopedName *parameter_name);
 };
 
 #endif           // _BE_GENERATOR_BE_GENERATOR_HH

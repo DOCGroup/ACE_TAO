@@ -965,7 +965,7 @@ be_generator::create_uses (UTL_ScopedName *n,
 
 AST_Publishes *
 be_generator::create_publishes (UTL_ScopedName *n,
-                                AST_EventType *publishes_type)
+                                AST_Type *publishes_type)
 {
   be_publishes *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -978,7 +978,7 @@ be_generator::create_publishes (UTL_ScopedName *n,
 
 AST_Emits *
 be_generator::create_emits (UTL_ScopedName *n,
-                            AST_EventType *emits_type)
+                            AST_Type *emits_type)
 {
   be_emits *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -990,7 +990,7 @@ be_generator::create_emits (UTL_ScopedName *n,
 }
 AST_Consumes *
 be_generator::create_consumes (UTL_ScopedName *n,
-                               AST_EventType *consumes_type)
+                               AST_Type *consumes_type)
 {
   be_consumes *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -1091,7 +1091,7 @@ be_generator::create_template_module_ref (
     
 AST_Param_Holder *
 be_generator::create_param_holder (
-  Identifier *parameter_name)
+  UTL_ScopedName *parameter_name)
 {
   be_param_holder *retval = 0;
   ACE_NEW_RETURN (retval,

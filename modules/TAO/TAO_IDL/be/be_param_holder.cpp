@@ -19,14 +19,18 @@
 
 #include "be_param_holder.h"
 
-be_param_holder::be_param_holder (Identifier *parameter_name)
+be_param_holder::be_param_holder (UTL_ScopedName *parameter_name)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_param_holder,
-              0),
+              parameter_name),
+    AST_Type (AST_Decl::NT_param_holder,
+              parameter_name),
     AST_Param_Holder (parameter_name),
     be_decl (AST_Decl::NT_param_holder,
-              0)
+             parameter_name),
+    be_type (AST_Decl::NT_param_holder,
+             parameter_name)
 {
 }
 
@@ -46,7 +50,7 @@ void
 be_param_holder::destroy (void)
 {
   this->AST_Param_Holder::destroy ();
-  this->be_decl::destroy ();
+  this->be_type::destroy ();
 }
 
 IMPL_NARROW_FROM_DECL (be_param_holder)

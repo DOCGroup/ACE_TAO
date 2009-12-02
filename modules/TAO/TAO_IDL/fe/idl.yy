@@ -81,6 +81,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_template_module.h"
 #include "ast_template_module_inst.h"
 #include "ast_template_module_ref.h"
+#include "ast_typedef.h"
 #include "ast_valuebox.h"
 #include "ast_valuetype.h"
 #include "ast_valuetype_fwd.h"
@@ -612,7 +613,7 @@ template_module
           // module and instantiated template module. In the last
           // case, a fully scoped name is allowed, but here we
           // allow only an identifier (a scoped name of length
-          // 1). If not satisfied, we output a parse error with
+          // 1). If not satisfied, we output a syntax error with
           // the appropriate message.
           if ($1->length () != 1)
             {
@@ -622,6 +623,13 @@ template_module
         }
         at_least_one_formal_parameter
         {
+          if (FE_Utils::duplicate_param_id ($3))
+            {
+              idl_global->err ()->duplicate_param_id (
+                $1);
+                
+              return 1;
+            }
         }
         '>'
         {
@@ -640,6 +648,10 @@ template_module
            * Push it on the stack
            */
           idl_global->scopes ().push (tm);
+          
+          // Store these for reference as we parse the scope 
+          // of the template module.
+          idl_global->current_params ($3);
         }
         '{'
         {
@@ -657,6 +669,10 @@ template_module
            * Finished with this module - pop it from the scope stack.
            */
           idl_global->scopes ().pop ();
+          
+          // Clear the pointer so scoped name lookup will know
+          // that we are no longer in a template module scope.
+          idl_global->current_params (0);
         }
         ;
 
@@ -6140,6 +6156,7 @@ at_least_one_formal_parameter
               $2 = 0;
 
               idl_global->err ()->mismatch_seq_of_param (bad_id.c_str ());
+              return 1;
             }
 
           $<plval>$ = $2;

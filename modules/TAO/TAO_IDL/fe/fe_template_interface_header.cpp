@@ -3,6 +3,7 @@
 #include "fe_template_interface_header.h"
 #include "fe_extern.h"
 #include "ast_template_interface.h"
+#include "ast_typedef.h"
 #include "utl_err.h"
 #include "global_extern.h"
 

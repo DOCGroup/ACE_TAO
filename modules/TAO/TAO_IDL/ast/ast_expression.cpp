@@ -68,12 +68,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_expression.h"
 #include "ast_constant.h"
+#include "ast_typedef.h"
 #include "ast_visitor.h"
-#include "global_extern.h"
+
 #include "utl_err.h"
 #include "utl_scope.h"
 #include "utl_string.h"
+
 #include "nr_extern.h"
+#include "global_extern.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
