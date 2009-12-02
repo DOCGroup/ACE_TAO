@@ -58,6 +58,18 @@ namespace CIAO
         DDS_InstanceHandle_t check_handle (
           const typename DDS_TYPE::value_type& an_instance,
           const ::DDS::InstanceHandle_t & instance_handle);
+
+        void read_with_instance (
+          typename DDS_TYPE::dds_seq_type & data,
+          const ::DDS_InstanceHandle_t & lookup_hnd,
+          DDS_SampleInfoSeq & sample_info);
+
+        void read_without_instance (
+          typename DDS_TYPE::dds_seq_type & data,
+          DDS_SampleInfoSeq & sample_info);
+
+        CORBA::ULong get_nr_valid_samples (
+          const DDS_SampleInfoSeq & sample_info);
       };
     }
   }
