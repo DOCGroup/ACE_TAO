@@ -69,7 +69,8 @@ namespace CIAO
           DDS_SampleInfoSeq & sample_info);
 
         CORBA::ULong get_nr_valid_samples (
-          const DDS_SampleInfoSeq & sample_info);
+          const DDS_SampleInfoSeq & sample_info,
+          bool determine_last = false);
       };
     }
   }
