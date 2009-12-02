@@ -1,3 +1,15 @@
+Wed Dec  2 20:56:35 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/run_test.pl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/run_test.pl:
+
+          Tests are converted to use new test framework.
+
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/DeadMemberDetection_App_Ctrl.mpc:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/DeadMemberDetection_Inf_Ctrl.mpc:
+
+          Removed duplicated sections introduced from merging.
+          
 Wed Dec  2 18:17:04 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         Merged in changes from OCI (RT #13323) that added member validation
