@@ -74,7 +74,7 @@ ComponentAttributesSetter::SetComponentAttributes (ACE_CString /*componentName*/
         {
           DANCE_ERROR ((LM_WARNING, DLINFO
                         ACE_TEXT("ComponentAttributesSetter::SetComponentAttributes - ")
-                        ACE_TEXT("Caught BAD_OPERATION while trying to set attribute %C\n"),
+                        ACE_TEXT("ERROR: BAD_OPERATION while trying to set attribute %C\n"),
                         name.c_str ()));
         }
       catch (const CORBA::Exception &e)
