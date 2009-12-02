@@ -27,6 +27,8 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_write (void)
 {
+  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_write");
+
   this->configure_default_topic ();
   this->configure_publisher ();
   try
@@ -74,6 +76,8 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen (void)
 {
+  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen");
+
   this->configure_default_topic ();
   this->configure_subscriber ();
 
@@ -226,6 +230,8 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
 {
+  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
+
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete ();
 }
 
@@ -233,6 +239,8 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
 {
+  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate");
+
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate ();
   this->configure_port_dds_listen ();
   this->configure_port_dds_write ();
@@ -242,6 +250,8 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
 {
+  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate");
+
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate ();
 }
 
@@ -249,5 +259,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
 {
+  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove");
+
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove ();
 }

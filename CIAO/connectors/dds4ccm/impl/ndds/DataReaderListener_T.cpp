@@ -71,6 +71,8 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadl
                                               ::DDS::DataReader_ptr the_reader,
                                                const ::DDS::RequestedDeadlineMissedStatus & status)
 {
+  CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderListener_T::on_requested_deadline_missed");
+
   try
     {
       if (!CORBA::is_nil (this->info_out_portstatus_))
@@ -91,6 +93,8 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
                                   ::DDS::DataReader_ptr the_reader,
                                   const ::DDS::SampleLostStatus & status)
 {
+  CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderListener_T::on_sample_lost");
+
   try
     {
       if (!CORBA::is_nil (this->info_out_portstatus_))
@@ -111,6 +115,8 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_requested_incom
                                 ::DDS::DataReader_ptr the_reader,
                                 const ::DDS::RequestedIncompatibleQosStatus & status)
 {
+  CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderListener_T::on_requested_incompatible_qos");
+
   try
     {
       if (!CORBA::is_nil (this->error_listener_))
@@ -131,6 +137,8 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_chan
           ::DDS::DataReader* reader,
           const ::DDS::LivelinessChangedStatus& /*status*/)
 {
+  CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderListener_T::on_liveliness_changed");
+
   try
     {
       if (!CORBA::is_nil (this->error_listener_))
@@ -151,6 +159,8 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_sample_rejected
           ::DDS::DataReader* reader,
           const ::DDS::SampleRejectedStatus& status)
 {
+  CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderListener_T::on_sample_rejected");
+
   try
     {
       if (!CORBA::is_nil (this->error_listener_))
@@ -171,6 +181,8 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_subscription_ma
           ::DDS::DataReader* reader,
           const ::DDS::SubscriptionMatchedStatus& /*status*/)
 {
+  CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderListener_T::on_subscription_matched");
+
   try
     {
       if (!CORBA::is_nil (this->error_listener_))
