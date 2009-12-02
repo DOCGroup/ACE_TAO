@@ -27,11 +27,12 @@ public:
 
   virtual void qos_profile (const char * qos_profile);
 
-  virtual void configuration_complete (void);
-
   virtual void set_session_context (::Components::SessionContext_ptr ctx);
 
+  virtual void configuration_complete (void);
   virtual void ccm_remove (void);
+  virtual void ccm_activate (void);
+  virtual void ccm_passivate (void);
 
 protected:
   void configure_default_domain (void);

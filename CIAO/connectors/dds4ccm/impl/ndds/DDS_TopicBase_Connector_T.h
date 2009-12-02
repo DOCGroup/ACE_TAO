@@ -27,14 +27,26 @@ public:
 
   virtual void key_fields (const ::DDS::StringSeq & key_fields);
 
+  virtual void configuration_complete (void);
+  virtual void ccm_remove (void);
+  virtual void ccm_activate (void);
+  virtual void ccm_passivate (void);
+
 protected:
   void configure_default_topic (void);
+  void configure_publisher (void);
+  void configure_subscriber (void);
 
   CORBA::String_var topic_name_;
   DDS::StringSeq key_fields_;
 
   ::DDS::Topic_var topic_;
   ::DDS::TopicListener_var topiclistener_;
+
+  ::DDS::Publisher_var publisher_;
+  ::DDS::PublisherListener_var publisher_listener_;
+  ::DDS::Subscriber_var subscriber_;
+  ::DDS::SubscriberListener_var subscriber_listener_;
 };
 
 #include "dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.cpp"

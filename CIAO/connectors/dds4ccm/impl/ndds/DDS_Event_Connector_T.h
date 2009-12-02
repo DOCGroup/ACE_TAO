@@ -61,7 +61,6 @@ public:
 private:
   // @from DDS_Write for
   void configure_port_dds_write (void);
-  ::DDS::Publisher_var supplier_publisher_;
   ::DDS::CCM_DataWriter_var supplier_writer_;
   ::DDS::DataWriterListener_var datawriter_listener_;
 
@@ -69,11 +68,8 @@ private:
   void configure_port_dds_listen (void);
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> listen_datalistener_mode_;
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> listen_datalistener_max_delivered_data_;
-  ::DDS::Subscriber_var listen_subscriber_;
   ::DDS::DataReader_var push_consumer_data_;
   ::DDS::DataReaderListener_var __listen_datareaderlistener;
-  ::DDS::SubscriberListener_var subscriber_listener_;
-  ::DDS::PublisherListener_var publisher_listener_;
 
   // @from DDS_Getter
   ::DDS::DataReader_var pull_consumer_fresh_data_;
