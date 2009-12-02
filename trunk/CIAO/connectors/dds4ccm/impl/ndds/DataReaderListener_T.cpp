@@ -129,7 +129,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_changed(
           ::DDS::DataReader* reader,
-          const ::DDS::LivelinessChangedStatus& status)
+          const ::DDS::LivelinessChangedStatus& /*status*/)
 {
   try
     {
@@ -169,7 +169,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_subscription_matched(
           ::DDS::DataReader* reader,
-          const ::DDS::SubscriptionMatchedStatus& status)
+          const ::DDS::SubscriptionMatchedStatus& /*status*/)
 {
   try
     {
@@ -180,8 +180,14 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_subscription_ma
     }
   catch (...)
     {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataReaderListener_T::on_requested_on_subscription_matchedncompatible_qos: ")
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataReaderListener_T::on_subscription_matched: ")
                              ACE_TEXT ("DDS Exception caught\n")));
     }
 }
 
+template <typename DDS_TYPE, typename CCM_TYPE>
+::DDS::StatusMask
+CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask (void)
+{
+  return DDS_DATA_AVAILABLE_STATUS | DDS_REQUESTED_DEADLINE_MISSED_STATUS | DDS_SAMPLE_LOST_STATUS | DDS_REQUESTED_INCOMPATIBLE_QOS_STATUS | DDS_SAMPLE_REJECTED_STATUS | DDS_LIVELINESS_CHANGED_STATUS | DDS_SUBSCRIPTION_MATCHED_STATUS;
+}
