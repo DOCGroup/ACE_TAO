@@ -29,7 +29,8 @@ ACE_RCSID (LoadBalancing,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_LB_LoadManager::TAO_LB_LoadManager (void)
+TAO_LB_LoadManager::TAO_LB_LoadManager (int ping_timeout, 
+                                        int ping_interval)
   : reactor_ (0),
     poa_ (),
     root_poa_ (),
@@ -53,7 +54,11 @@ TAO_LB_LoadManager::TAO_LB_LoadManager (void)
     load_average_ (),
     built_in_balancing_strategy_info_name_ (1),
     built_in_balancing_strategy_name_ (1),
-    custom_balancing_strategy_name_ (1)
+    custom_balancing_strategy_name_ (1),
+    validate_condition_ (validate_lock_),
+    shutdown_ (false),
+    ping_timeout_ (ping_timeout * 10000),
+    ping_interval_ (ping_interval)
 {
   this->pull_handler_.initialize (&this->monitor_map_, this);
 
@@ -67,6 +72,14 @@ TAO_LB_LoadManager::TAO_LB_LoadManager (void)
 
 TAO_LB_LoadManager::~TAO_LB_LoadManager (void)
 {
+  this->shutdown_ = true;
+  this->validate_condition_.signal ();
+
+  if (this->ping_interval_ > ACE_Time_Value::zero)
+  {
+    // Wait for liveliness checking thread exit.
+    this->wait ();
+  }
 }
 
 void
@@ -528,11 +541,15 @@ TAO_LB_LoadManager::add_member (
     const PortableGroup::Location & the_location,
     CORBA::Object_ptr member)
 {
-  return
+  PortableGroup::ObjectGroup_var ret =
     this->object_group_manager_.add_member (object_group,
                                             the_location,
                                             member);
+
+  this->validate_condition_.signal ();
+  return ret._retn ();
 }
+
 
 PortableGroup::ObjectGroup_ptr
 TAO_LB_LoadManager::remove_member (
@@ -543,6 +560,7 @@ TAO_LB_LoadManager::remove_member (
     this->object_group_manager_.remove_member (object_group,
                                                the_location);
 }
+
 
 PortableGroup::Locations *
 TAO_LB_LoadManager::locations_of_members (
@@ -700,11 +718,50 @@ TAO_LB_LoadManager::next_member (const PortableServer::ObjectId & oid)
        && (value >>= strategy)
        && !CORBA::is_nil (strategy))
     {
-      return strategy->next_member (object_group.in (),
-                                    this->lm_ref_.in ());
-    }
+      CORBA::Object_var obj;
 
-  throw CORBA::OBJECT_NOT_EXIST ();
+      // The following iteration to get next_member from strategy needs
+      // be synchronized with any member change method (e.g. add_member, 
+      // remove_member). We need make the LB use RW strategy to ensure
+      // single threaded.
+      
+      // Remove any disconnected members. Doing removing in the ORB thread
+      // to avoid synchnorize between ORB and validate thread.
+      this->object_group_manager_.remove_inactive_members ();
+
+      size_t n_members = this->object_group_manager_.member_count (oid, true);
+    
+      size_t count = 0;
+
+      while (count < n_members)
+      {
+        ++ count;
+
+        obj = CORBA::Object::_nil ();
+        try {
+          obj = strategy->next_member (object_group.in (),
+                                       this->lm_ref_.in ());
+        }
+        catch (const CORBA::TRANSIENT&) //no member
+        {
+          break;
+        }
+        catch (...)
+        {
+          throw;
+        }
+
+        if (this->object_group_manager_.is_alive (oid, obj))
+          break;
+      }
+
+      if (CORBA::is_nil (obj.in ()))
+        throw CORBA::OBJECT_NOT_EXIST ();
+      else
+        return obj._retn ();
+    }
+  else
+    throw CORBA::OBJECT_NOT_EXIST ();
 }
 
 void
@@ -718,6 +775,11 @@ TAO_LB_LoadManager::init (ACE_Reactor * reactor,
   ACE_GUARD (TAO_SYNCH_MUTEX,
              guard,
              this->lock_);
+
+  if (CORBA::is_nil (this->orb_.in ()))
+  {
+    this->orb_ = CORBA::ORB::_duplicate (orb);
+  }
 
   if (CORBA::is_nil (this->poa_.in ()))
     {
@@ -802,6 +864,14 @@ TAO_LB_LoadManager::init (ACE_Reactor * reactor,
       this->root_poa_ = PortableServer::POA::_duplicate (root_poa);
     }
 
+  if (this->ping_interval_ > ACE_Time_Value::zero && this->activate(THR_NEW_LWP | THR_JOINABLE, 1) != 0)
+  {
+    ACE_ERROR((LM_ERROR,
+      ACE_TEXT ("(%P|%t)TAO_LB_LoadManager::init  failed to activate ")
+      ACE_TEXT ("thread to validate connection.\n")));
+    throw CORBA::INTERNAL ();
+  }
+    
   if (CORBA::is_nil (this->lm_ref_.in ()))
     {
       this->lm_ref_ = this->_this ();
@@ -1093,5 +1163,28 @@ TAO_LB_LoadManager::make_strategy (CosLoadBalancing::StrategyInfo * info)
 //     this->poa_->reference_to_id (
 //   this->poa_->deactivate_object ();
 // }
+
+
+int
+TAO_LB_LoadManager::svc (void)
+{
+  while (! this->shutdown_)
+  {
+    // The validate interval for each member is in the range 
+    // between ping_interval_ and  ping_timeout_ * number of members.
+    ACE_Time_Value start = ACE_OS::gettimeofday ();
+    ACE_Time_Value due = start + this->ping_interval_;
+    this->object_group_manager_.validate_members (this->orb_, this->ping_timeout_);
+    ACE_Time_Value end = ACE_OS::gettimeofday ();
+    if (due > end)
+    {
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->validate_lock_, -1);
+      this->validate_condition_.wait (&due);
+    }
+  }
+
+  return 0;
+}
+ 
 
 TAO_END_VERSIONED_NAMESPACE_DECL

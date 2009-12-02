@@ -111,7 +111,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           return 1;
         }
 
-      lb_server.orb ()->shutdown (0);
+      //lb_server.orb ()->shutdown (0);
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
