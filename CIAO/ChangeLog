@@ -1,3 +1,36 @@
+Wed Dec  2 08:28:44 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Started with read_one_last.
+
+        * connectors/dds4ccm/tests/Reader:
+        * connectors/dds4ccm/tests/Reader/Base:
+        * connectors/dds4ccm/tests/Reader/Base/Reader_Starter.idl:
+        * connectors/dds4ccm/tests/Reader/Base/Reader_Starter.mpc:
+        * connectors/dds4ccm/tests/Reader/Base/Reader_Test_Base.idl:
+        * connectors/dds4ccm/tests/Reader/Base/Reader_Test_Base.mpc:
+        * connectors/dds4ccm/tests/Reader/Connector:
+        * connectors/dds4ccm/tests/Reader/Connector/Reader_Test_Connector.idl:
+        * connectors/dds4ccm/tests/Reader/Connector/Reader_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/Reader/Connector/Reader_Test_Connector_exec.h:
+        * connectors/dds4ccm/tests/Reader/Connector/Reader_Test_Connector_exec.cpp:
+        * connectors/dds4ccm/tests/Reader/README:
+        * connectors/dds4ccm/tests/Reader/Receiver:
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Reader/Sender:
+        * connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender.idl:
+        * connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/Reader/descriptors:
+        * connectors/dds4ccm/tests/Reader/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/Reader/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/Reader/descriptors/run_test.pl:
+          Added test to test the Reader.
+
 Tue Dec 01 12:39:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
@@ -148,7 +181,7 @@ Mon Nov 30 09:21:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Nov 29 13:06:02 CST 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* CIAO version 0.7.5 released.
+        * CIAO version 0.7.5 released.
 
 Thu Nov 26 20:18:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
