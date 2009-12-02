@@ -1,3 +1,8 @@
+Wed Dec  2 08:33:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added reader test to the test framework.
+
 Wed Dec  2 08:28:44 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
