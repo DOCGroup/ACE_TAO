@@ -1,3 +1,8 @@
+Wed Dec  2 14:57:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplication/ComponentAttributesSetter.cpp:
+          Use the word error to trigger the scoreboard parser
+
 Wed Dec  2 14:19:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
