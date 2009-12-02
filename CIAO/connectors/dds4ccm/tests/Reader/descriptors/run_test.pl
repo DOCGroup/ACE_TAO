@@ -47,7 +47,7 @@ $cdp_file = "Plan.cdp";
 PerlACE::add_lib_path ('../lib');
 $ENV{"DANCE_TRACE_ENABLE"} = 0;
 $ENV{"CIAO_TRACE_ENABLE"} = 0;
-$ENV{"CIAO_LOG_LEVEL"} = 8;
+$ENV{"CIAO_LOG_LEVEL"} = 5;
 $ENV{"DANCE_LOG_LEVEL"} = 5;
 
 
@@ -207,7 +207,7 @@ for ($i = 0; $i < $nr_daemon; ++$i) {
 }
 
 print "Sleeping 15 seconds to allow task to complete\n";
-sleep (1500);
+sleep (15);
 
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";
