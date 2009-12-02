@@ -1,3 +1,17 @@
+Wed Dec  2 09:05:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.h:
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.h:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.h:
+          Moved publisher and subscriber to the DDS_TopicBase
+
 Wed Dec  2 08:33:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:

@@ -7,6 +7,9 @@
  * Wrapper facade for NDDS.
  */
 
+#ifndef DDS_SUBSCRIBERLISTENER_T_H_
+#define DDS_SUBSCRIBERLISTENER_T_H_
+
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
 
@@ -37,3 +40,5 @@ namespace CIAO
 }
 
 #include "dds4ccm/impl/ndds/SubscriberListener_T.cpp"
+
+#endif /* DDS_SUBSCRIBERLISTENER_T_H_ */

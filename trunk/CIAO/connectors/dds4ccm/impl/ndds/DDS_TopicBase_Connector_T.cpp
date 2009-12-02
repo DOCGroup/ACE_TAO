@@ -3,6 +3,8 @@
 
 #include "ciao/Logger/Log_Macros.h"
 #include "dds4ccm/impl/ndds/TopicListener_T.h"
+#include "dds4ccm/impl/ndds/PublisherListener_T.h"
+#include "dds4ccm/impl/ndds/SubscriberListener_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::DDS_TopicBase_Connector_T (void) :
@@ -13,6 +15,34 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::DDS_TopicBase_Connector_T (void) 
 template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::~DDS_TopicBase_Connector_T (void)
 {
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
+{
+  DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete ();
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
+{
+  DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove ();
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
+{
+  DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate ();
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
+{
+  DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -87,6 +117,74 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (void)
       (*retval)[i] = CORBA::string_dup (this->key_fields_[i]);
     }
   return retval._retn ();
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_subscriber (void)
+{
+  CIAO_DEBUG ((LM_TRACE, CLINFO "DDS_TopicBase_Connector_T::configure_subscriber - "
+                "Configuring subscriber\n"));
+
+  if (CORBA::is_nil (this->subscriber_.in ()))
+    {
+      this->subscriber_listener_ = new ::CIAO::DDS4CCM::RTI::SubscriberListener_T
+        <DDS_TYPE, CCM_TYPE> (
+              this->context_->get_connection_error_listener ());
+
+      if (this->library_name_ && this->profile_name_)
+        {
+          this->subscriber_ = this->domain_participant_->
+            create_subscriber_with_profile (
+              this->library_name_,
+              this->profile_name_,
+              this->subscriber_listener_.in (),
+              DDS_STATUS_MASK_NONE);
+        }
+      else
+        {
+          ::DDS::SubscriberQos sqos;
+          this->subscriber_ = this->domain_participant_->
+            create_subscriber (
+              sqos,
+              this->subscriber_listener_.in (),
+              DDS_STATUS_MASK_NONE);
+        }
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_publisher (void)
+{
+  CIAO_DEBUG ((LM_TRACE, CLINFO "DDS_TopicBase_Connector_T::configure_publisher - "
+                "Configuring publisher\n"));
+
+  if (CORBA::is_nil (this->publisher_.in ()))
+    {
+      this->publisher_listener_ = new ::CIAO::DDS4CCM::RTI::PublisherListener_T
+        <DDS_TYPE, CCM_TYPE> (
+              this->context_->get_connection_error_listener ());
+
+      if (this->library_name_ && this->profile_name_)
+        {
+          this->publisher_ = this->domain_participant_->
+            create_publisher_with_profile (
+              this->library_name_,
+              this->profile_name_,
+              this->publisher_listener_.in (),
+              DDS_STATUS_MASK_NONE);
+        }
+      else
+        {
+          ::DDS::PublisherQos pqos;
+          this->publisher_ = this->domain_participant_->
+            create_publisher (
+              pqos,
+              this->publisher_listener_.in (),
+              DDS_STATUS_MASK_NONE);
+        }
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
