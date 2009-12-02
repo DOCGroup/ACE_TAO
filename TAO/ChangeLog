@@ -1,3 +1,32 @@
+Wed Dec  2 10:07:02 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * orbsvcs/tests/Bug_1630_Regression/run_test.pl:
+        * orbsvcs/tests/BiDir_CORBALOC/run_test.pl:
+        * orbsvcs/tests/HTIOP/Hello/run_test.pl:
+        * orbsvcs/tests/HTIOP/AMI/run_test.pl:
+        * orbsvcs/tests/HTIOP/BiDirectional/run_test.pl:
+        * orbsvcs/tests/Notify/Lanes/README:
+        * orbsvcs/tests/Notify/Lanes/run_test.pl:
+        * orbsvcs/tests/FaultTolerance/IOGR/run_test.pl:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/run_test.pl:
+        * orbsvcs/tests/Bug_2248_Regression/run_test.pl:
+        * orbsvcs/tests/Time/run_test.pl:
+        * DevGuideExamples/Multithreading/ThreadPerConnection/run_test.pl:
+        * tests/IOR_Endpoint_Hostnames/list_interfaces.cpp:
+        * tests/IOR_Endpoint_Hostnames/generate_ior.cpp:
+        * tests/IOR_Endpoint_Hostnames/IOR_Endpoint_Hostnames.mpc:
+        * tests/IOR_Endpoint_Hostnames/Makefile.am:
+        * tests/IOR_Endpoint_Hostnames/run_test.pl:
+        * tests/Bug_1482_Regression/run_test.pl:
+        * tests/Nested_Upcall_Crash/run_test.pl:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl:
+        * examples/RTScheduling/MIF_Scheduler/run_test.pl:
+        * examples/AMH/Sink_Server/run_test.pl:
+        * examples/Load_Balancing/run_test.pl:
+
+          Tests are converted to use new test framework
+          and added to fuzz build.
+
 Tue Dec  1 10:44:09 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/examples/Notify/Subscribe/run_test.pl:

@@ -27,6 +27,11 @@ my $inside = "inside.conf";
 
 my $server_iorfile = $server->LocalFile ($iorbase);
 my $client_iorfile = $client->LocalFile ($iorbase);
+
+my $server_conf = $server->LocalFile ($outside);
+my $client_conf = $client->LocalFile ($inside);
+
+
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
@@ -35,12 +40,13 @@ $hostname = $server->HostName();
 $SV = $server->CreateProcess ("server", 
                               "-ORBdebuglevel $debug_level " .
                               "-ORBEndPoint htiop://$hostname: " .
-                              "-ORBSvcConf $outside " .
+                              "-ORBSvcConf $server_conf " .
                               "-i $iterations " .
                               "-o $server_iorfile");
 
+                              
 $CL = $client->CreateProcess ("client",
-                              "-ORBSvcConf $inside " .
+                              "-ORBSvcConf $client_conf " .
                               "-k file://$client_iorfile");
 $server_status = $SV->Spawn ();
 

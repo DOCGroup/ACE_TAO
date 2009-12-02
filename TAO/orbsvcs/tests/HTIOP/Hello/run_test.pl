@@ -6,86 +6,139 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
-use Sys::Hostname;
-
-$iorfile = PerlACE::LocalFile ("server.ior");
-$nsiorfile = PerlACE::LocalFile ("ns.ior");
-
-unlink $iorfile;
-unlink $nsiorfile;
+use PerlACE::TestTarget;
 
 $status = 0;
-$host = hostname();
+$debug_level = '0';
 
-$ior = "file://$iorfile";
-$server_port = 8088;
-$name_port = 8087;
-$server_config = PerlACE::LocalFile ("outside.conf");
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+my $ns_service = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
 
+my $host = $ns_service->HostName();
+my $server_port = 8088;
+my $name_port = 8087;
+
+my $srv_conf = "outside.conf";
+my $srv_ior = "server.ior";
+my $ns_ior = "ns.ior";
+
+my $ns_service_srv_conf = $ns_service->LocalFile($srv_conf);
+my $server_srv_conf = $server->LocalFile($srv_conf);
+my $client_srv_ior = $client->LocalFile ($srv_ior);
+my $ns_service_ns_ior = $ns_service->LocalFile($ns_ior);
+my $server_ns_ior = $ns_service->LocalFile($ns_ior);
+my $server_srv_ior = $server->LocalFile ($srv_ior);
+
+$ns_service->DeleteFile($ns_ior);
+$server->DeleteFile($ns_ior);
+$server->DeleteFile($srv_ior);
+$client->DeleteFile($srv_ior);
+
+$client_param_ior = "file://$client_srv_ior";
 foreach $i (@ARGV) {
     if ($i eq '-corbaloc') {
-        $ior = "corbaloc:htiop:$host:$server_port/HelloObj";
+        $client_param_ior = "corbaloc:htiop:$host:$server_port/HelloObj";
     }
     elsif ($i eq '-corbaname') {
-        $ior = "corbaname:htiop:$host:$name_port#HelloObj";
-        $use_ns = 1;
+        $client_param_ior = "corbaname:htiop:$host:$name_port#HelloObj";
+#        $use_ns = 1;
+    }
+    elsif ($i eq '-debug') {
+        $debug_level = '10';
     }
 }
 
-$NS =
-    new PerlACE::Process ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
-                          "-ORBSvcConf $server_config "
-                          . "-ORBEndpoint \"iiop://;htiop://$host:$name_port\" "
-                          . "-o $nsiorfile");
+$NS = $ns_service->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
+                                  "-ORBSvcConf $ns_service_srv_conf -ORBEndpoint \"iiop://;".
+                                  "htiop://$host:$name_port\" -o $ns_service_ns_ior");
+
+$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_srv_ior ".
+                                        "-ORBInitRef NameService=file://$server_ns_ior ".
+                                        "-ORBSvcConf $server_srv_conf ".
+                                        "-ORBEndpoint htiop://$host:$server_port");
+
+$CL = $client->CreateProcess ("client", "-k $client_param_ior");
 
 $NS->IgnoreExeSubDir ();
-$NS->Spawn ();
-print "Waiting for Name Service to start\n";
-if (PerlACE::waitforfile_timed ($nsiorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: nameserver not started\n";
+
+$server_status = $NS->Spawn ();
+
+if ($server_status != 0) {
+    print STDERR "ERROR: naming service returned $server_status\n";
+    exit 1;
+}
+
+if ($ns_service->WaitForFileTimed ($ns_ior,
+                                   $ns_service->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$ns_service_ns_ior>\n";
     $NS->Kill (); $NS->TimedWait (1);
     exit 1;
 }
 
-$SV =
-  new PerlACE::Process ("server",
-                        "-o $iorfile "
-                        . "-ORBInitRef NameService=file://$nsiorfile "
-                        . "-ORBSvcConf $server_config "
-                        . "-ORBEndpoint htiop://$host:$server_port");
+if ($ns_service->GetFile ($ns_ior) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$ns_service_ns_ior>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
 
-$CL = new PerlACE::Process ("client", " -k $ior");
+if ($server->PutFile ($ns_ior) == -1) {
+    print STDERR "ERROR: cannot set file <$server_ns_ior>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
 
-$SV->Spawn ();
 print "Waiting for server to start\n";
-if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
+$server_status = $SV->Spawn ();
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+
+if ($server->WaitForFileTimed ($srv_ior,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_srv_ior>\n";
     $SV->Kill (); $SV->TimedWait (1);
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+
+if ($server->GetFile ($srv_ior) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$server_srv_ior>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+
+if ($client->PutFile ($srv_ior) == -1) {
+    print STDERR "ERROR: cannot set file <$client_srv_ior>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    $NS->Kill (); $NS->TimedWait (1);
     exit 1;
 }
 
 print "Running Client\n";
-$client = $CL->SpawnWaitKill (300);
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 285);
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
-    $SV->Kill(); $SV->TimedWait (1);
 }
-else {
-    $server = $SV->WaitKill (10);
 
-    if ($server != 0) {
-        print STDERR "ERROR: server returned $server\n";
-        $status = 1;
-    }
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    $status = 1;
 }
 
 $NS->Kill ();
 $NS->TimedWait (1);
 
-unlink $nsiorfile;
-unlink $iorfile;
+$ns_service->DeleteFile($ns_ior);
+$server->DeleteFile($ns_ior);
+$server->DeleteFile($srv_ior);
+$client->DeleteFile($srv_ior);
 
 exit $status;

@@ -24,7 +24,9 @@ my $client3 = PerlACE::TestTarget::create_target (4) || die "Create target 4 fai
 my $client4 = PerlACE::TestTarget::create_target (5) || die "Create target 5 failed\n";
 
 my $iorbase = "server.ior";
+my $svcbase = "server$PerlACE::svcconf_ext";
 my $server_iorfile = $server->LocalFile ($iorbase);
+my $server_svcfile = $server->LocalFile ($svcbase);
 my $client1_iorfile = $client1->LocalFile ($iorbase);
 my $client2_iorfile = $client2->LocalFile ($iorbase);
 my $client3_iorfile = $client3->LocalFile ($iorbase);
@@ -39,7 +41,7 @@ my $hostname = $server->HostName ();
 
 $SV = $server->CreateProcess ("MessengerServer",
                               "-ORBdebuglevel $debug_level " .
-                              "-ORBSvcConf server.conf " .
+                              "-ORBSvcConf $server_svcfile " .
                               "-ORBListenEndpoints iiop://$hostname " .
                               "-o $server_iorfile");
 $CL1 = $client1->CreateProcess ("MessengerClient", "-k file://$client1_iorfile");
