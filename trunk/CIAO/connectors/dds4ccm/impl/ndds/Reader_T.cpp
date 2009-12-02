@@ -193,63 +193,62 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_last (
   // else return last instance regardless of key
   if (!DDS_InstanceHandle_equals (&hnd, & ::DDS_HANDLE_NIL))
     {
-      retval = this->impl_->read_instance(data,
-                            sample_info,
-                            1,
-                            hnd,
-                            DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
-                            DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-                            DDS_ALIVE_INSTANCE_STATE);
+/*  if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
+    {
+      throw ::CCM_DDS::NonExistent(0);
+    }*/
+      CIAO_DEBUG ((LM_INFO,
+                  ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_last - ")
+                  ACE_TEXT ("Read with instance.\n")));
+      retval = this->impl_->read_instance(
+                    data,
+                    sample_info,
+                    1,
+                    hnd,
+                    DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
+                    DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
+                    DDS_ALIVE_INSTANCE_STATE);
     }
   else
     {
       CIAO_DEBUG ((LM_INFO,
                   ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_last - ")
-                  ACE_TEXT ("No instance found.\n")));
-      retval = this->impl_->read(data,
-                            sample_info,
-                            1,
-                            DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
-                            DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-                            DDS_ALIVE_INSTANCE_STATE);
+                  ACE_TEXT ("Read without instance.\n")));
+      retval = this->impl_->read(
+                    data,
+                    sample_info,
+                    1,
+                    DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
+                    DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
+                    DDS_ALIVE_INSTANCE_STATE);
 
     }
-  switch(retval)
+ 
+  if (retval != DDS_RETCODE_OK)
     {
-      case DDS_RETCODE_OK:
-        {
-          ::DDS_Long const number_of_samples = data.length();
-          CIAO_DEBUG ((LM_INFO,
-                      ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_last - ")
-                      ACE_TEXT ("number_of_samples = %d\n"),
-                      number_of_samples));
-
-          // Get last instance
-          if(sample_info[number_of_samples-1].valid_data)
-            {
-              an_instance = data[number_of_samples-1];
-              info <<= sample_info[number_of_samples-1];
-            }
-          this->impl_->return_loan(data,sample_info);
-          }
-        break;
-      case DDS_RETCODE_NO_DATA:
-        CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_last - ")
-                              ACE_TEXT ("No data\n")));
-        this->impl_->return_loan(data,sample_info);
-        //only if a key and no instance for that key throw NonExistent exception
-        if (!DDS_InstanceHandle_equals (&hnd, & ::DDS_HANDLE_NIL))
-          {
-            throw ::CCM_DDS::NonExistent(0);
-          }
-        break;
-      default:
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_last - ")
-                               ACE_TEXT ("retval <%C>\n"), translate_retcode(retval)));
-        this->impl_->return_loan(data,sample_info);
-        throw ::CCM_DDS::InternalError (retval, 0);
-        break;
+      this->impl_->return_loan(data, sample_info);
+      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_last - ")
+                            ACE_TEXT ("retval is %C\n"), translate_retcode(retval)));
+      throw ::CCM_DDS::InternalError (retval, 0);
     }
+
+  ::DDS_Long sample = data.length();
+  CIAO_DEBUG ((LM_INFO,
+              ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_last - ")
+              ACE_TEXT ("number_of_samples = %d\n"),
+              sample));
+  while (sample >= 0 && !sample_info[sample-1].valid_data)
+    --sample;
+  if (sample >= 0)
+    {
+      if(sample_info[sample-1].valid_data)
+        {
+          an_instance = data[sample-1];
+          info <<= sample_info[sample-1];
+        }
+    }
+  // Return the loan
+  this->impl_->return_loan(data, sample_info);
  }
 
 template <typename DDS_TYPE, typename CCM_TYPE >
@@ -273,7 +272,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_all (
 
   if (!DDS_InstanceHandle_equals (&hnd, & ::DDS_HANDLE_NIL))
     {
-      CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_all - ")
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_all - ")
                             ACE_TEXT ("Reading with instance.\n")));
       retval = this->impl_->read_instance (
                   data,
@@ -286,7 +285,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_all (
     }
   else
     {
-      CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_all - ")
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_all - ")
                             ACE_TEXT ("Reading without instance.\n")));
       retval = this->impl_->read (
                   data,
@@ -299,6 +298,9 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_all (
 
   if (retval != DDS_RETCODE_OK)
     {
+      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_last - ")
+                            ACE_TEXT ("retval is %C\n"), translate_retcode(retval)));
+      this->impl_->return_loan(data, sample_info);
       throw ::CCM_DDS::InternalError (retval, 0);
     }
 
