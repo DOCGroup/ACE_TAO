@@ -45,6 +45,8 @@ namespace CIAO
         ::DDS::DataWriter *the_writer,
         const ::DDS::PublicationMatchedStatus & status);
 
+      static ::DDS::StatusMask get_mask (void);
+
     private:
       typename CCM_TYPE::context_type::_var_type context_;
       CCM_DDS::ConnectorStatusListener_var  info_out_connector_status_;

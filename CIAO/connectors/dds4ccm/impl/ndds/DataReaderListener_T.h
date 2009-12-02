@@ -57,6 +57,7 @@ namespace CIAO
           ::DDS::DataReader* reader,
           const ::DDS::SubscriptionMatchedStatus& status);
 
+        static ::DDS::StatusMask get_mask (void);
       private:
         typename CCM_TYPE::context_type::_var_type context_;
         ::CCM_DDS::ConnectorStatusListener_var  error_listener_;

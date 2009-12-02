@@ -1,3 +1,31 @@
+Wed Dec  2 13:12:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h
+        * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.h
+        * connectors/dds4ccm/impl/ndds/DataWriterListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/DataWriterListener_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener_T.h
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.h
+        * connectors/dds4ccm/impl/ndds/SubscriberListener.cpp
+        * connectors/dds4ccm/impl/ndds/SubscriberListener.h
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.h
+        * connectors/dds4ccm/impl/ndds/TopicListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/TopicListener_T.h
+          Added a get_mask to all listeners, this should return the
+          mask the listener needs, this is then used by the connector
+          templates. This way a listener can listen for more callbacks
+          and update his mask without any connector to be updated
+
 Wed Dec  2 13:10:40 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Reader_T.h:

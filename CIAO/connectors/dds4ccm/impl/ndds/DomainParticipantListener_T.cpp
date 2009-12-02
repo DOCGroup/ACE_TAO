@@ -8,17 +8,25 @@
 
 // Implementation skeleton constructor
 template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::RTI::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE>::DomainParticipantListener_T (
+CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE>::DomainParticipantListener_T (
       ::CCM_DDS::ConnectorStatusListener_ptr error_listener)
       : error_listener_ (::CCM_DDS::ConnectorStatusListener::_duplicate (error_listener))
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::DomainParticipantListener_T::DomainParticipantListener_T");
+  CIAO_TRACE ("CIAO::DDS4CCM::DomainParticipantListener_T::DomainParticipantListener_T");
 }
 
 // Implementation skeleton destructor
 template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::RTI::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE>::~DomainParticipantListener_T (void)
+CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE>::~DomainParticipantListener_T (void)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::DomainParticipantListener_T::~DomainParticipantListener_T");
+  CIAO_TRACE ("CIAO::DDS4CCM::DomainParticipantListener_T::~DomainParticipantListener_T");
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+::DDS::StatusMask
+CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE>::get_mask (void)
+{
+  CIAO_TRACE ("CIAO::DDS4CCM::DomainParticipantListener_T::get_mask");
+  return DDS_STATUS_MASK_NONE;
 }
 

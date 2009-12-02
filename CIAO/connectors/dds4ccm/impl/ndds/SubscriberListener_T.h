@@ -32,6 +32,7 @@ namespace CIAO
         /// Destructor
         virtual ~SubscriberListener_T (void);
 
+        static ::DDS::StatusMask get_mask (void);
       private:
         ::CCM_DDS::ConnectorStatusListener_var error_listener_;
       };
