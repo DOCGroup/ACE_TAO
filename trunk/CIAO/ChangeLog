@@ -1,3 +1,19 @@
+Wed Dec  2 14:19:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Used operators to file readinfo sequences.
+
+        * connectors/dds4ccm/impl/ndds/SampleInfo.h:
+          Removed <== operator for readinfo_seq. Also added
+          instance handle when copying sample_info.
+
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.cpp:
+          Added handle tests and test exceptions related to handles.
+
+        * connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender_exec.cpp:
+          Changed timing.
+
 Wed Dec  2 13:58:57 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * bin/ciao_tests.lst:
@@ -30,7 +46,7 @@ Wed Dec  2 13:49:57 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender.mpc:
         * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender_exec.cpp:
         * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender_exec.h:
-	Created test ConnectorStatusListener:on_sample_rejected
+        Created test ConnectorStatusListener:on_sample_rejected
 
 Wed Dec  2 13:35:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 

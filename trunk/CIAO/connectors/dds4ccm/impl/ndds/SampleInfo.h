@@ -38,22 +38,7 @@ operator<<= (::CCM_DDS::ReadInfo& ccm_dds_readinfo, const ::DDS_SampleInfo& samp
   ccm_dds_readinfo.source_timestamp <<= sample_info.source_timestamp;
   ccm_dds_readinfo.access_status <<= sample_info.sample_state;
   ccm_dds_readinfo.instance_status <<= sample_info.instance_state;
-}
-
-inline void
-operator<<= (::CCM_DDS::ReadInfoSeq & ccm_dds_readinfo_seq, const ::DDS_SampleInfoSeq & sample_info)
-{
-// @todo, not ok, check
-  ccm_dds_readinfo_seq.length(sample_info.length ());
-  for (::DDS_Long i = 0; i < sample_info.length(); i++)
-    {
-      if (sample_info[i].valid_data)
-        {
-          ccm_dds_readinfo_seq[i].source_timestamp <<= sample_info[i].source_timestamp;
-          ccm_dds_readinfo_seq[i].access_status <<= sample_info[i].sample_state;
-          ccm_dds_readinfo_seq[i].instance_status <<= sample_info[i].instance_state;
-        }
-    }
+  ccm_dds_readinfo.instance_handle <<= sample_info.instance_handle;
 }
 
 #endif

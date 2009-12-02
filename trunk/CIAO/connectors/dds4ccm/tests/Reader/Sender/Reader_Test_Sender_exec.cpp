@@ -92,7 +92,7 @@ namespace CIAO_Reader_Test_Sender_Impl
             for (CORBA::UShort iter = 1; iter < this->iterations_ + 1; ++iter)
               {
                 new_key->iteration = iter;
-                ACE_Time_Value tv (0, 2500);
+                ACE_Time_Value tv (0, 5000);
                 ACE_OS::sleep (tv);
                 this->writer_->write_one (*new_key, ::DDS::HANDLE_NIL);
                 CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Written key <%C> with <%d>\n"),

@@ -124,7 +124,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_last (
     {
       if((sample_info[i].sample_rank == 0) && (sample_info[i].valid_data))
         {
-          sample_info[i].source_timestamp >>= infoseq[ix].source_timestamp;
+          infoseq[ix] <<= sample_info[i];
           inst_seq[ix] = data[i];
           ++ix;
         }
@@ -166,7 +166,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_all (
     {
         if(sample_info[i].valid_data)
           {
-            sample_info[i].source_timestamp >>= infoseq[ix].source_timestamp;
+            infoseq[ix] <<= sample_info[i];
             inst_seq[ix] = data[i];
             ++ix;
           }
