@@ -1,3 +1,9 @@
+Wed Dec  2 18:17:04 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * NEWS:
+
+          Added entry for member validation feature in LoadBalancer. 
+
 Wed Dec  2 13:46:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
 
         * debianbuild/{all files containign version numbers}:
@@ -6,10 +12,10 @@ Wed Dec  2 13:46:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
 Wed Dec  2 13:30:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
 
         * bin/make_release.py:
-          Added code to update version numbers in ACE_ROOT/debianbuild files 
+          Added code to update version numbers in ACE_ROOT/debianbuild files
           on release.
           Changed to retrieve repo root by default from info of working copy.
-          
+
 Wed Dec  2 07:51:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/copy-script.sh:
@@ -91,7 +97,7 @@ Mon Nov 30 08:58:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Nov 29 13:06:02 CST 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ACE version 5.7.5 released.
+        * ACE version 5.7.5 released.
 
 Thu Nov 26 12:33:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
