@@ -1,3 +1,104 @@
+Wed Dec  2 18:17:04 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        Merged in changes from OCI (RT #13323) that added member validation
+        feature to LoadBalancer.
+        
+        * orbsvcs/LoadBalancer/LoadManager.cpp:
+        
+          - Added parameters for passing ping_timeout in milliseconds('-t') and
+            ping_interval in seconds('-i'). The default ping_interval is 0 which means
+            no validation thread launched. Otherwise each member will be validated
+            periodically. The period is in a range of minimum ping_interval and maximum
+            num of members validated * ping_timeout.
+          - The LB service needs be run with RW strategy configuration to ensure the
+            next_member, add_member and remove_member performed sequentially.
+
+            static Client_Strategy_Factory "-ORBWaitStrategy rw -ORBTransportMuxStrategy
+              exclusive -ORBConnectStrategy blocked -ORBConnectionHandlerCleanup 1"
+            static Resource_Factory "-ORBFlushingStrategy blocking"        
+        
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
+        
+          Added the validate thread to periodically ping all active members. The 
+          liveliness status update is done in PortableGroup lib. The next_member()
+          query strategy to get next member in maximum number of existing members
+          times until an active member is found.
+          
+        * orbsvcs/orbsvcs/LoadBalancing/LB_RoundRobin.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_RoundRobin.cpp:
+        
+          Fixed issue that the location index from previous next_member() call may
+          not be valid if the member list is changed since then. Now it verify if
+          the list is changed and then find the next member based on RR strategy.
+        
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
+
+          Added try/catch around factory delete_object() call,
+          because it's possible the factory is down. This could
+          be called in the path of remove_member after member
+          liveliness check failure. Without try/catch, the member
+          will not be removed cleanly.
+          
+        * orbsvcs/orbsvcs/PortableGroup/PG_MemberInfo.h:
+        
+          Added liveliness status and group reference.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+        
+          Added more functions to support member validation and inactive
+          member removing.
+
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/Basic.h:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/Basic.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/DeadMemberDetection_App_Ctrl.mpc:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/LB_server.h:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/LB_server.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/Makefile.am:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/README:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/Test.idl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/client.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/non-windows.conf:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/run_test.pl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/server.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/svc.conf:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/windows.conf:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/DeadMemberDetection_Inf_Ctrl.mpc:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/Factory.h:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/Factory.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/Factory_Map.h:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/Factory_Map.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/Factory_Struct.h:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/Factory_Struct.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/LB_Factory_Server.h:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/LB_Factory_Server.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/LB_server.h:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/LB_server.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/Makefile.am:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/README:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/Simple.h:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/Simple.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/Test.idl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/client.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/factory_server.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/non-windows.conf:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/run_test.pl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/server.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/windows.conf:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/windows.conf.xml:
+
+          Added validation tests.
+
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/server.cpp:
+
+          Fixed a bug that deleted object after orb shutdown and got
+          COMM_FAILURE.
+
+        * bin/tao_other_tests.lst:
+
+          Added validation tests.
+          
 Wed Dec  2 14:01:43 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/RTCORBA/RT_ORB_Loader.cpp:

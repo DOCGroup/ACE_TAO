@@ -185,6 +185,8 @@ TAO/orbsvcs/tests/Miop/McastHello/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_
 TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !STATIC !ACE_FOR_TAO !LynxOS
 TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !STATIC !ACE_FOR_TAO !LynxOS
 TAO/orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !NO_LOADAVG !DISABLE_ToFix_LynxOS_x86 !LynxOS
+TAO/orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !NO_LOADAVG !DISABLE_ToFix_LynxOS_x86 !LynxOS
+TAO/orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !NO_LOADAVG !DISABLE_ToFix_LynxOS_x86 !LynxOS
 TAO/examples/RTCORBA/Activity/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !ACE_FOR_TAO
 TAO/examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS  !STATIC !ST !ACE_FOR_TAO !LynxOS
 TAO/examples/RTScheduling/MIF_Scheduler/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !STATIC !ST !ACE_FOR_TAO !LynxOS

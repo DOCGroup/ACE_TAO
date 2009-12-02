@@ -33,16 +33,24 @@
 #include "orbsvcs/PortableGroup/PG_PropertyManager.h"
 #include "orbsvcs/PortableGroup/PG_GenericFactory.h"
 #include "orbsvcs/PortableGroup/PG_ObjectGroupManager.h"
+#include "ace/Unbounded_Queue.h"
+#include "ace/Task.h"
+#include "tao/Condition.h"
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LoadBalancing_Export TAO_LB_LoadManager
-  : public virtual POA_CosLoadBalancing::LoadManager
+  : public virtual POA_CosLoadBalancing::LoadManager,
+    public ACE_Task_Base
 {
 public:
 
   /// Constructor.
-  TAO_LB_LoadManager (void);
+  TAO_LB_LoadManager (int ping_timeout, 
+                      int ping_interval);
+
+  virtual int svc (void);
 
   /**
    * @name CosLoadBalancing::LoadManager Methods
@@ -311,6 +319,8 @@ private:
 
 private:
 
+  CORBA::ORB_var orb_;
+
   /// Reactor used when pulling loads from registered load monitors.
   ACE_Reactor * reactor_;
 
@@ -404,6 +414,15 @@ private:
   /// "org.omg.CosLoadBalancing.CustomStrategy".
   PortableGroup::Name custom_balancing_strategy_name_;
 
+  TAO_SYNCH_MUTEX validate_lock_;
+  TAO_Condition<TAO_SYNCH_MUTEX> validate_condition_;
+
+  bool shutdown_;
+
+  /// Short timeout for non_exist call. defaults to 1 second
+  TimeBase::TimeT ping_timeout_;
+  /// Long timeout for non_exist call. defaults to 5 seconds
+  ACE_Time_Value ping_interval_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

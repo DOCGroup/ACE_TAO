@@ -301,7 +301,19 @@ TAO_PG_GenericFactory::delete_member (
 
           if (info.the_location == location)
             {
-              info.the_factory->delete_object (node.factory_creation_id.in ());
+              try {
+                info.the_factory->delete_object (node.factory_creation_id.in ());
+              }
+              catch (const CORBA::Exception& ex)
+              {
+                 // Common failure is CORBA::TRANSIENT due to remote factory 
+                 // is shutdown.
+                 // We just ignore the exception and continue.
+                 if (TAO_debug_level > 0)
+                 {
+                   ex._tao_print_exception ("TAO_PG_GenericFactory::delete_member \n");
+                 }
+              }
 
               // The member has been successfully deleted.  Reduce the
               // size of the factory_set accordingly.
