@@ -1,3 +1,8 @@
+Wed Dec  2 13:46:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
+
+        * debianbuild/{all files containign version numbers}:
+          Updated to latest micro release.
+
 Wed Dec  2 13:30:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
 
         * bin/make_release.py:
