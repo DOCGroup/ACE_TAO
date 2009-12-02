@@ -1,3 +1,10 @@
+Wed Dec  2 13:30:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/make_release.py:
+          Added code to update version numbers in ACE_ROOT/debianbuild files 
+          on release.
+          Changed to retrieve repo root by default from info of working copy.
+          
 Wed Dec  2 07:51:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/copy-script.sh:
