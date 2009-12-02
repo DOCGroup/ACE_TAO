@@ -54,7 +54,7 @@ be_visitor_interface_ex_idl::visit_interface (be_interface *node)
       return 0;
     }
     
-  if (node->is_local () || node->imported () || node->is_abstract ())
+  if (/*node->is_local () || */ node->imported () || node->is_abstract ())
     {
       return 0;
     }
