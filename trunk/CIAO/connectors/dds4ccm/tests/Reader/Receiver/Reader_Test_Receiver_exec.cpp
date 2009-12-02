@@ -85,7 +85,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
     catch(CCM_DDS::InternalError& ex)
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver_exec_i::read_one_last: ")
-              ACE_TEXT ("caught exception: retval <%u>\n"),
+              ACE_TEXT ("caught InternalError exception: retval <%u>\n"),
               ex.error_code));
       }
     catch (const CORBA::Exception& ex)
@@ -119,37 +119,17 @@ namespace CIAO_Reader_Test_Receiver_Impl
               {
                 CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ONE ALL: ")
                     ACE_TEXT ("Didn't receive the expected number of ")
-                    ACE_TEXT ("samples : expected <%u> - received <%u>\n"),
-                    this->iterations_,
-                    readertest_info_seq->length ()));
-              }
-            CORBA::UShort last_iter = 0;
-            for (CORBA::ULong it = 0; it < readertest_info_seq->length (); ++it)
-              {
-                ++last_iter;
-                if (last_iter != (*readertest_info_seq)[it].iteration)
-                  {
-                    CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ONE ALL : ")
-                        ACE_TEXT ("Didn't receive samples for <%C> in order: iteration <%u>\n"),
-                        (*readertest_info_seq)[it].key.in (),
-                        (*readertest_info_seq)[it].iteration));
-                  }
-              }
-            if (last_iter != this->iterations_)
-              {
-                CIAO_DEBUG ((LM_ERROR, ACE_TEXT ("ERROR: READ ONE ALL : ")
-                    ACE_TEXT ("Didn't receive all iterations for ")
-                    ACE_TEXT ("<%C>: expected <%u> - latest <%u>\n"),
+                    ACE_TEXT ("samples for <%C>: expected <%u> - received <%u>\n"),
                     key,
                     this->iterations_,
-                    last_iter));
+                    readertest_info_seq->length ()));
               }
             else
               {
                 CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ONE ALL: ")
                     ACE_TEXT ("All iterations received for <%C>: number of iterations <%u>\n"),
                     key,
-                    last_iter));
+                    readertest_info_seq->length ()));
               }
           }
       }
@@ -321,7 +301,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
   void
   Receiver_exec_i::run ()
   {
-    //read_one_last ();
+    read_one_last ();
     read_one_all ();
     //read_last ();
     //read_all ();
@@ -370,12 +350,12 @@ namespace CIAO_Reader_Test_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
+    this->reader_ = this->context_->get_connection_info_out_data();
   }
 
   void
   Receiver_exec_i::ccm_activate (void)
   {
-    this->reader_ = this->context_->get_connection_info_out_data();
   }
 
   void

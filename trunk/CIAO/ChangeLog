@@ -1,3 +1,19 @@
+Wed Dec  2 10:57:20 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.h:
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Implemented read_one_last and read_one_all according to
+          spec.
+
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.cpp:
+          Enabled read_one_last and read_one_all to test.
+
+        * connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender_exec.cpp:
+          Sleep between writing samples to DDS.
+
+        * connectors/dds4ccm/tests/Reader/descriptors/run_test.pl:
+          Optimized logging.
+
 Wed Dec  2 10:26:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Session/Session_Container.cpp:
