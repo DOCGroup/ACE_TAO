@@ -304,7 +304,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
     read_one_last ();
     read_one_all ();
     //read_last ();
-    //read_all ();
+    read_all ();
     //test_exception ();
   }
 
