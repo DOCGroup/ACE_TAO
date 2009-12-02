@@ -15,6 +15,8 @@
 #include "tao/LocalObject.h"
 #include "ace/Reactor.h"
 
+#include <map>
+
 namespace CIAO_Reader_Test_Receiver_Impl
 {
   class Receiver_exec_i;
@@ -79,11 +81,16 @@ namespace CIAO_Reader_Test_Receiver_Impl
 
     void run (void);
 
-    void read_one_last (void);
-    void read_one_all (void);
-    void read_last (void);
-    void read_all (void);
-    void test_exception (void);
+    void read_all ();
+    void read_last ();
+    void read_one_all (bool test_handles = false);
+    void read_one_last (bool test_handles = false);
+    void test_exception ();
+    void test_exception_with_handles ();
+
+    typedef std::map<ACE_CString, DDS::InstanceHandle_t> Handle_Table;
+    Handle_Table handles_;
+
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
