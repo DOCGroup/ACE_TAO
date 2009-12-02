@@ -1,4 +1,4 @@
-#!/usr/local/bin/python2.5
+#!/usr/bin/python2
 
 # @file make_release.py
 # @author William R. Otte <wotte@dre.vanderbilt.edu>
@@ -102,7 +102,9 @@ def parse_args ():
 
     parser.add_option ("--root", dest="repo_root", action="store",
                        help="Specify an alternate repository root",
-                       default="https://svn.dre.vanderbilt.edu/DOC/")
+                       default=None)
+                       # By default get repo root from working copy
+                       # default="https://svn.dre.vanderbilt.edu/DOC/")
 
     parser.add_option ("-n", dest="take_action", action="store_false",
                        help="Take no action", default=True)
@@ -185,10 +187,11 @@ def commit (files):
     """ Commits the supplied list of files to the repository. """
     vprint ("Committing the following files: " + " ".join (files))
 
-    rev = svn_client.checkin (files,
-                              "ChangeLogTag:%s  %s  <%s>" % (release_date, signature, mailid))
-
-    print "Checked in files, resuling in revision ", rev.number
+    if opts.take_action:
+        rev = svn_client.checkin (files,
+                                  "ChangeLogTag:%s  %s  <%s>" % (release_date, signature, mailid))
+    
+        print "Checked in files, resuling in revision ", rev.number
 
 def check_workspace ():
     """ Checks that the DOC and MPC repositories are up to date.  """
@@ -202,11 +205,19 @@ def check_workspace ():
         raise
 
     try:
-        rev = svn_client.update (doc_root + "ACE/MPC")
+        rev = svn_client.update (doc_root + "/ACE/MPC")
         print "Successfully updated MPC working copy to revision "
     except:
-        print "Unable to update the MPC workspace at " + doc_root + "/MPC"
+        print "Unable to update the MPC workspace at " + doc_root + "/ACE/MPC"
         raise
+    
+    # By default retrieve repo root from working copy
+    if opts.repo_root is None:
+        info = svn_client.info2 (doc_root + "/ACE")[0]
+        opts.repo_root = info[1]["repos_root_URL"]
+       
+    vprint ("Repos root URL = " + opts.repo_root + "\n")
+        
 
 def update_version_files (component):
     """ Updates the version files for a given component.  This includes
@@ -297,7 +308,7 @@ def update_spec_file ():
 
     global comp_versions, opts
 
-    with open ("ACE/rpmbuild/ace-tao.spec", 'r+') as spec_file:
+    with open (doc_root + "/ACE/rpmbuild/ace-tao.spec", 'r+') as spec_file:
         new_spec = ""
         for line in spec_file.readlines ():
             if line.find ("define ACEVER ") is not -1:
@@ -322,7 +333,105 @@ def update_spec_file ():
             print "New spec file:"
             print "".join (new_spec)
 
-    return ["ACE/rpmbuild/ace-tao-ciao.spec"]
+    return [doc_root + "/ACE/rpmbuild/ace-tao.spec"]
+
+def update_debianbuild ():
+    """ Updates ACE_ROOT/debianbuild directory.
+    - renames all files with version nrs in name to new scheme.
+    - updates version nrs in file debianbuild/control 
+    Currently ONLY ACE & TAO stuff is handled here """
+  
+    global comp_versions
+  
+    import glob
+    import re
+    from os.path import basename
+    from os.path import dirname
+    from os.path import join
+    
+    files = list ()
+    prev_ace_ver = None
+    prev_tao_ver = None
+    
+    # rename files
+    mask = re.compile ("(libace|libkokyu|libtao)(.*)(\d+\.\d+\.\d+)(.*)")
+    tao = re.compile ("tao", re.IGNORECASE) 
+    
+    for fname in glob.iglob(doc_root + '/ACE/debianbuild/*'):
+        match = None        
+        
+        fbase = basename (fname)
+        
+        match = mask.search (fbase)
+        fnewname = None
+        if match is not None:
+            if tao.search (fbase) is not None:
+                fnewname = join (dirname (fname), match.group (1) + match.group (2) + comp_versions["TAO_version"] + match.group (4))
+                prev_tao_ver = match.group (3)
+            else:
+                fnewname = join (dirname (fname), match.group (1) + match.group (2) + comp_versions["ACE_version"] + match.group (4))
+                prev_ace_ver = match.group (3)
+                
+        if fnewname is not None:
+            if opts.take_action:
+                svn_client.move (fname, fnewname)
+            else:
+                print "Rename: " + fname + " to " + fnewname + "\n"
+                
+            files.append (fname)
+            files.append (fnewname)
+        
+    # update debianbuild/control
+    def update_ver (match):
+        if match.group (1) == 'libtao':
+            return match.group (1) + match.group (2) + comp_versions["TAO_version"] + match.group (4)
+        else:
+            return match.group (1) + match.group (2) + comp_versions["ACE_version"] + match.group (4)
+    
+    with open (doc_root + "/ACE/debianbuild/control", 'r+') as control_file:
+        new_ctrl = ""
+        for line in control_file.readlines ():
+            if re.search ("^(Package|Depends|Suggests):", line) is not None:
+                line = mask.sub (update_ver, line)
+            elif re.search ('^Replaces:', line) is not None:
+                line = line.replace (prev_ace_ver, comp_versions["ACE_version"])
+                
+            new_ctrl += line
+
+        if opts.take_action:
+            control_file.seek (0)
+            control_file.truncate (0)
+            control_file.writelines (new_ctrl)
+        else:
+            print "New control file:"
+            print "".join (new_ctrl)
+            
+    files.append (doc_root + "/ACE/debianbuild/control")
+            
+    # rewrite debianbuild/dsc
+    dsc_lines = """# Format: 1.0
+# Source: ace
+# Version: %s
+# Binary: ace
+# Maintainer: Johnny Willemsen  <jwillemsen@remedy.nl>
+# Architecture: any
+# Build-Depends: g++
+# Files:
+#  <hash> <size> ACE+TAO+CIAO-src-%s.tar.bz2
+#
+""" % (comp_versions["TAO_version"], comp_versions["ACE_version"])
+    if opts.take_action:
+        with open (doc_root + "/ACE/debianbuild/dsc", 'r+') as dsc_file:
+            dsc_file.seek (0)
+            dsc_file.truncate (0)
+            dsc_file.writelines (dsc_lines)
+    else:
+        print "New dsc file:\n"
+        print dsc_lines
+            
+    files.append (doc_root + "/ACE/debianbuild/dsc")
+            
+    return files
 
 def get_and_update_versions ():
     """ Gets current version information for each component,
@@ -342,6 +451,7 @@ def get_and_update_versions ():
         files += create_changelog ("TAO")
         files += create_changelog ("CIAO")
         files += update_spec_file ()
+        files += update_debianbuild ()
 
         commit (files)
     except:
@@ -452,9 +562,9 @@ def update_latest_tag (which, branch):
     """ Update one of the Latest_* tags externals to point the new release """
     global opts
     root_anon = re.sub ("^https:", "svn:", opts.repo_root)
-    propval = """ACE_wrappers %sMiddleware/tags/%s/ACE
-ACE_wrappers/TAO %sMiddleware/tags/%s/TAO
-ACE_wrappers/TAO/CIAO %sMiddleware/tags/%s/CIAO
+    propval = """ACE_wrappers %s/Middleware/tags/%s/ACE
+ACE_wrappers/TAO %s/Middleware/tags/%s/TAO
+ACE_wrappers/TAO/CIAO %s/Middleware/tags/%s/CIAO
 """ % (root_anon, branch, root_anon, branch, root_anon, branch)
     svn_client.propset ("svn:externals", propval,
                         opts.repo_root + "/Middleware/tags/Latest_" + which)
@@ -466,24 +576,32 @@ def tag ():
     branch = "ACE+TAO+CIAO-%d_%d_%d" % (comp_versions["ACE_major"],
                                         comp_versions["ACE_minor"],
                                         comp_versions["ACE_beta"])
-    # Tag middleware
-    svn_client.copy (opts.repo_root + "/Middleware/trunk",
-                     opts.repo_root + "/Middleware/tags/" + branch)
+                                        
+    if opts.take_action:                                        
+        # Tag middleware
+        svn_client.copy (opts.repo_root + "/Middleware/trunk",
+                        opts.repo_root + "/Middleware/tags/" + branch)
+    
+        # Tag MPC
+        svn_client.copy (opts.repo_root + "/MPC/trunk",
+                        opts.repo_root + "/MPC/tags/" + branch)
 
-    # Tag MPC
-    svn_client.copy (opts.repo_root + "/MPC/trunk",
-                     opts.repo_root + "/MPC/tags/" + branch)
-
-    # Update latest tag
-#    if opts.release_type == "major":
-#        update_latest_tag ("Major", branch)
-#    elif opts.release_type == "minor":
-#        update_latest_tag ("Minor", branch)
-#    elif opts.release_type == "beta":
-#        update_latest_tag ("Beta", branch)
-#        update_latest_tag ("Micro", branch)
-#        if comp_versions["ACE_beta"] == 1:
-#                update_latest_tag ("BFO", branch)
+        # Update latest tag
+        # mcorino@remedy.nl - subversion does not seem to support propset directly
+        #                     on URLs (except for some strange reason through propedit)
+        #if opts.release_type == "major":
+            #update_latest_tag ("Major", branch)
+        #elif opts.release_type == "minor":
+            #update_latest_tag ("Minor", branch)
+        #elif opts.release_type == "beta":
+            #update_latest_tag ("Beta", branch)
+            #update_latest_tag ("Micro", branch)
+            #if comp_versions["ACE_beta"] == 1:
+                    #update_latest_tag ("BFO", branch)
+    else:
+        print "Creating tags:\n"
+        print opts.repo_root + "/Middleware/tags/" + branch + "\n"
+        print opts.repo_root + "/MPC/tags/" + branch + "\n"
 
 ##################################################
 #### Packaging methods
