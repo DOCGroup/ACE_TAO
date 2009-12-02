@@ -56,7 +56,7 @@ print STDERR "Starting Naming Service\n";
 $nstarget_status = $NS->Spawn ();
 
 if ($nstarget_status != 0) {
-    print STDERR "ERROR: ns returned $ns_status\n";
+    print STDERR "ERROR: ns returned $nstarget_status\n";
     exit 1;
 }
 
