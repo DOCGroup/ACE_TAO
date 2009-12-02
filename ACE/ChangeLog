@@ -1,3 +1,11 @@
+Wed Dec  2 07:51:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/copy-script.sh:
+          Also copy md5 files
+
+        * bin/MakeProjectCreator/config/bmake.features:
+          Enable mcpp for bmake
+
 Thu Nov 26 02:08:59 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * Gaurav Kulshreshtha is the 2300th contributor to ACE+TAO+CIAO!
