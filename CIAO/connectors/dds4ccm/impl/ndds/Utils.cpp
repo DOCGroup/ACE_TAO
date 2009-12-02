@@ -1,65 +1,10 @@
 // $Id$
 
 #include "Utils.h"
-#include "ndds/ndds_cpp.h"
 
 namespace CIAO
 {
   namespace DDS4CCM
   {
-    namespace RTI
-    {
-      const char * translate_retcode (DDS_ReturnCode_t ret)
-      {
-#define RTI_DDS_RETCODE(X) case X: return #X
-        switch (ret)
-          {
-            RTI_DDS_RETCODE (DDS_RETCODE_OK);
-            RTI_DDS_RETCODE (DDS_RETCODE_ERROR);
-            RTI_DDS_RETCODE (DDS_RETCODE_UNSUPPORTED);
-            RTI_DDS_RETCODE (DDS_RETCODE_BAD_PARAMETER);
-            RTI_DDS_RETCODE (DDS_RETCODE_PRECONDITION_NOT_MET);
-            RTI_DDS_RETCODE (DDS_RETCODE_OUT_OF_RESOURCES);
-            RTI_DDS_RETCODE (DDS_RETCODE_NOT_ENABLED);
-            RTI_DDS_RETCODE (DDS_RETCODE_IMMUTABLE_POLICY);
-            RTI_DDS_RETCODE (DDS_RETCODE_INCONSISTENT_POLICY);
-            RTI_DDS_RETCODE (DDS_RETCODE_ALREADY_DELETED);
-            RTI_DDS_RETCODE (DDS_RETCODE_TIMEOUT);
-            RTI_DDS_RETCODE (DDS_RETCODE_NO_DATA);
-            RTI_DDS_RETCODE (DDS_RETCODE_ILLEGAL_OPERATION);
-          }
-        return "***Unknown enum value, update RTI::translate_retcode()";
-#undef RTI_DDS_RETCODE
-      }
-
-      const char * translate_statuskind (DDS_StatusKind ret)
-      {
-#define RTI_DDS_RETCODE(X) case X: return #X
-        switch (ret)
-          {
-            RTI_DDS_RETCODE (DDS_INCONSISTENT_TOPIC_STATUS);
-            RTI_DDS_RETCODE (DDS_OFFERED_DEADLINE_MISSED_STATUS);
-            RTI_DDS_RETCODE (DDS_REQUESTED_DEADLINE_MISSED_STATUS);
-            RTI_DDS_RETCODE (DDS_OFFERED_INCOMPATIBLE_QOS_STATUS);
-            RTI_DDS_RETCODE (DDS_REQUESTED_INCOMPATIBLE_QOS_STATUS);
-            RTI_DDS_RETCODE (DDS_SAMPLE_LOST_STATUS);
-            RTI_DDS_RETCODE (DDS_SAMPLE_REJECTED_STATUS);
-            RTI_DDS_RETCODE (DDS_DATA_ON_READERS_STATUS);
-            RTI_DDS_RETCODE (DDS_DATA_AVAILABLE_STATUS);
-            RTI_DDS_RETCODE (DDS_LIVELINESS_LOST_STATUS);
-            RTI_DDS_RETCODE (DDS_LIVELINESS_CHANGED_STATUS);
-            RTI_DDS_RETCODE (DDS_PUBLICATION_MATCHED_STATUS);
-            RTI_DDS_RETCODE (DDS_SUBSCRIPTION_MATCHED_STATUS);
-            RTI_DDS_RETCODE (DDS_RELIABLE_WRITER_CACHE_CHANGED_STATUS);
-            RTI_DDS_RETCODE (DDS_RELIABLE_READER_ACTIVITY_CHANGED_STATUS);
-            RTI_DDS_RETCODE (DDS_DATA_WRITER_CACHE_STATUS);
-            RTI_DDS_RETCODE (DDS_DATA_WRITER_PROTOCOL_STATUS);
-            RTI_DDS_RETCODE (DDS_DATA_READER_CACHE_STATUS);
-            RTI_DDS_RETCODE (DDS_DATA_READER_PROTOCOL_STATUS);
-          }
-        return "***Unknown enum value, update RTI::translate_statuskind()";
-#undef RTI_DDS_RETCODE
-      }
-    }
   }
 }

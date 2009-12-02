@@ -1,3 +1,32 @@
+Wed Dec  2 13:49:57 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Utils.cpp:
+        * connectors/dds4ccm/impl/ndds/Utils.h:
+        * connectors/dds4ccm/tests/CSLSampleRejected:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Base:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Base/CSL_SRTest_Base.idl:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Base/CSL_SRTest_Base.mpc:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Connector:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Connector/CSL_SRTest_Connector.idl:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Connector/CSL_SRTest_Connector.mpc:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Connector/CSL_SRTest_Connector_exec.cpp:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Connector/CSL_SRTest_Connector_exec.h:
+        * connectors/dds4ccm/tests/CSLSampleRejected/descriptors:
+        * connectors/dds4ccm/tests/CSLSampleRejected/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/CSLSampleRejected/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLSampleRejected/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Receiver:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver.idl:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver.mpc:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Sender:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender.idl:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender.mpc:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender_exec.h:
+	Created test ConnectorStatusListener:on_sample_rejected
+
 Wed Dec  2 13:35:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/SubscriberListener_T.cpp:
