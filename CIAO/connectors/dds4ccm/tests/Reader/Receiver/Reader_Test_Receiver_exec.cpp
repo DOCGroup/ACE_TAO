@@ -43,7 +43,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
 
   // Supported operations and attributes.
   void
-  Receiver_exec_i::read_one_last (void)
+  Receiver_exec_i::read_one_last (bool test_handles)
   {
     try
       {
@@ -54,7 +54,13 @@ namespace CIAO_Reader_Test_Receiver_Impl
             char key[100];
             ACE_OS::sprintf (key, "KEY_%d", i);
             readertest_info.key = CORBA::string_dup (key);
-            this->reader_->read_one_last (readertest_info, readinfo, ::DDS::HANDLE_NIL);
+            DDS::InstanceHandle_t hnd = test_handles
+                ? this->handles_[key] 
+                : ::DDS::HANDLE_NIL;
+            this->reader_->read_one_last (
+                    readertest_info,
+                    readinfo,
+                    hnd);
             if (readertest_info.iteration == this->iterations_)
               {
                 CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ONE LAST: ")
@@ -77,27 +83,27 @@ namespace CIAO_Reader_Test_Receiver_Impl
       {
         for (CORBA::ULong i = 0; i < ex.indexes.length (); ++i)
           {
-            CIAO_DEBUG ((LM_ERROR, ACE_TEXT ("Receiver_exec_i::read_one_last: ")
+            CIAO_DEBUG ((LM_ERROR, ACE_TEXT ("READ ONE LAST: ")
                   ACE_TEXT ("caught expected exception: index <%u>\n"),
                   ex.indexes[i]));
           }
       }
     catch(CCM_DDS::InternalError& ex)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver_exec_i::read_one_last: ")
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ONE LAST: ")
               ACE_TEXT ("caught InternalError exception: retval <%u>\n"),
               ex.error_code));
       }
     catch (const CORBA::Exception& ex)
       {
-        ex._tao_print_exception ("Exception caught:");
+        ex._tao_print_exception ("ERROR: READ ONE LAST:");
         CIAO_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: Receiver_exec_i::read_one_last : Exception caught\n")));
       }
   }
 
   void
-  Receiver_exec_i::read_one_all (void)
+  Receiver_exec_i::read_one_all (bool test_handles)
   {
     try
       {
@@ -109,11 +115,16 @@ namespace CIAO_Reader_Test_Receiver_Impl
             char key[100];
             ACE_OS::sprintf (key, "KEY_%d", i);
             readertest_info.key = CORBA::string_dup (key);
+            DDS::InstanceHandle_t hnd = ::DDS::HANDLE_NIL;
+            if (test_handles)
+              {
+                hnd = this->handles_[key];
+              }
             this->reader_->read_one_all (
                     readertest_info,
                     readertest_info_seq,
                     readinfo_seq,
-                    ::DDS::HANDLE_NIL);
+                    hnd);
 
             if (readertest_info_seq->length () != this->iterations_)
               {
@@ -126,10 +137,16 @@ namespace CIAO_Reader_Test_Receiver_Impl
               }
             else
               {
+                this->handles_[key] = (*readinfo_seq)[0].instance_handle;
                 CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ONE ALL: ")
                     ACE_TEXT ("All iterations received for <%C>: number of iterations <%u>\n"),
                     key,
                     readertest_info_seq->length ()));
+                CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ONE ALL: ")
+                    ACE_TEXT ("Handle created for <%C>: length <%u> - isValid <%d>\n"),
+                    key,
+                    (*readinfo_seq)[0].instance_handle.length,
+                    (*readinfo_seq)[0].instance_handle.isValid));
               }
           }
       }
@@ -137,20 +154,20 @@ namespace CIAO_Reader_Test_Receiver_Impl
       {
         for (CORBA::ULong i = 0; i < ex.indexes.length (); ++i)
           {
-            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("ReaderTest_Read_One: ")
+            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ONE ALL: ")
                   ACE_TEXT ("caught expected exception: index <%u>\n"),
                   ex.indexes[i]));
           }
       }
     catch(CCM_DDS::InternalError& ex)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver_exec_i::read_one_all: ")
-              ACE_TEXT ("caught exception: retval <%u>\n"),
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ONE ALL: ")
+              ACE_TEXT ("caught InternalError exception: retval <%u>\n"),
               ex.error_code));
       }
     catch (const CORBA::Exception& ex)
       {
-        ex._tao_print_exception ("Exception caught:");
+        ex._tao_print_exception ("ERROR: READ ONE ALL: ");
         CIAO_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: Receiver_exec_i::read_one_all : Exception caught\n")));
       }
@@ -187,20 +204,20 @@ namespace CIAO_Reader_Test_Receiver_Impl
       {
         for (CORBA::ULong i = 0; i < ex.indexes.length (); ++i)
           {
-            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver_exec_i::read_last: ")
+            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ LAST: ")
                   ACE_TEXT ("caught expected exception: index <%u>\n"),
                   ex.indexes[i]));
           }
       }
     catch(CCM_DDS::InternalError& ex)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver_exec_i::read_last: ")
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ LAST: ")
               ACE_TEXT ("caught InternalError exception: retval <%u>\n"),
               ex.error_code));
       }
     catch (const CORBA::Exception& ex)
       {
-        ex._tao_print_exception ("Exception caught:");
+        ex._tao_print_exception ("ERROR: READ LAST: ");
         CIAO_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: Receiver_exec_i::read_last : Exception caught\n")));
       }
@@ -262,27 +279,27 @@ namespace CIAO_Reader_Test_Receiver_Impl
       {
         for (CORBA::ULong i = 0; i < ex.indexes.length (); ++i)
           {
-            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver_exec_i::read_all: ")
+            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ALL: ")
                   ACE_TEXT ("caught expected exception: index <%u>\n"),
                   ex.indexes[i]));
           }
       }
     catch(CCM_DDS::InternalError& ex)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver_exec_i::read_all: ")
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ALL: ")
               ACE_TEXT ("caught InternalError exception: retval <%u>\n"),
               ex.error_code));
       }
     catch (const CORBA::Exception& ex)
       {
-        ex._tao_print_exception ("Exception caught:");
+        ex._tao_print_exception ("ERROR: READ ALL: ");
         CIAO_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: Receiver_exec_i::read_all : Exception caught\n")));
       }
   }
 
   void
-  Receiver_exec_i::test_exception (void)
+  Receiver_exec_i::test_exception ()
   {
     // test exception handling
     bool except_caught = false;
@@ -293,20 +310,53 @@ namespace CIAO_Reader_Test_Receiver_Impl
         ::CCM_DDS::ReadInfo readinfo;
         this->reader_->read_one_last (readertest_info, readinfo, ::DDS::HANDLE_NIL);
       }
+    catch(CCM_DDS::InternalError& )
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Receiver_exec_i::test_exception: ")
+                  ACE_TEXT ("Wrong exception caught while reading non existent instance\n")));
+      }
     catch(CCM_DDS::NonExistent& ex)
       {
         except_caught = true;
-        for (CORBA::ULong i = 0; i < ex.indexes.length (); ++i)
-          {
-            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("ReaderTest_Read_One: ")
-                  ACE_TEXT ("caught expected exception: index <%u>\n"),
-                  ex.indexes[i]));
-          }
       }
     if (!except_caught)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : ReaderTest_Read_One: ")
-                  ACE_TEXT ("no excep caught while reading non exsistent instance\n")));
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Receiver_exec_i::test_exception: ")
+                  ACE_TEXT ("no excep caught while reading non existent instance\n")));
+      }
+  }
+
+  void
+  Receiver_exec_i::test_exception_with_handles ()
+  {
+    // test exception handling
+    bool except_caught = false;
+    try
+      {
+        ReaderTest readertest_info;
+        readertest_info.key = CORBA::string_dup ("KEY_1");
+        ::CCM_DDS::ReadInfo readinfo;
+        DDS::InstanceHandle_t hnd = this->handles_["KEY_2"];
+        this->reader_->read_one_last (
+            readertest_info,
+            readinfo,
+            hnd);
+      }
+    catch(CCM_DDS::InternalError& )
+      {
+        except_caught = true;
+        CIAO_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver_exec_i::test_exception_with_handles: ")
+                  ACE_TEXT ("Expected exception caught while reading non existent instance\n")));
+      }
+    catch(CCM_DDS::NonExistent& ex)
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Receiver_exec_i::test_exception_with_handles: ")
+                  ACE_TEXT ("Wrong exception caught while reading non existent instance\n")));
+      }
+    if (!except_caught)
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Receiver_exec_i::test_exception_with_handles: ")
+                  ACE_TEXT ("no excep caught while reading non existent instance\n")));
       }
   }
 
@@ -317,7 +367,11 @@ namespace CIAO_Reader_Test_Receiver_Impl
     read_last ();
     read_one_all ();
     read_one_last ();
-    //test_exception ();
+    test_exception ();
+    //now test with collected handles
+    read_one_all (true);
+    read_one_last (true);
+    test_exception_with_handles ();
   }
 
   void
