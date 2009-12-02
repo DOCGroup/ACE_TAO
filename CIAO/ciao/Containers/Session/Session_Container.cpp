@@ -28,7 +28,6 @@ namespace CIAO
                                         const char *name,
                                         const CORBA::PolicyList *more_policies)
     : Container_i (o, poa, container_impl),
-      number_ (0),
       static_config_flag_ (static_config_flag),
       static_entrypts_maps_ (maps),
       sa_ (0)
@@ -49,15 +48,21 @@ namespace CIAO
 
     char buffer[MAXPATHLEN];
 
-    if (name == 0)
+    if (!name)
       {
-        this->number_ = ++Session_Container::serial_number_;
+        unsigned long number = ++Session_Container::serial_number_;
         CIAO_DEBUG ((LM_TRACE, CLINFO "Session_Container::init - "
                      "Constructing container name from serial number %u\n",
-                     this->number_));
-        ACE_OS::sprintf (buffer,
-                         "CIAO::Session_Container-%ld",
-                         this->number_);
+                     number));
+        if (ACE_OS::sprintf (buffer,
+                             "CIAO::Session_Container-%ld",
+                             number) < 0)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO
+                        "CIAO::Session_Container: Unable to create name from number.\n"));
+            throw Components::CreateFailure ();
+          }
+
         name = buffer;
       }
 
@@ -220,93 +225,78 @@ namespace CIAO
                     "Servant library [%C] with entrypoint [%C]\n",
                     servant_artifact, servant_entrypoint));
 
-        if (primary_artifact == 0 || servant_artifact == 0)
+        if (!primary_artifact)
           {
-            ACE_CString exception;
-
-            if (primary_artifact == 0)
-              {
-                exception = "Null component executor DLL name";
-              }
-
-            if (servant_artifact == 0)
-              {
-                exception = "Null component servant DLL name";
-              }
-
             CIAO_ERROR ((LM_ERROR, CLINFO
-                        "Session_Container::install_home - "
-                        "ERROR: %C\n",
-                        exception.c_str ()));
-
+                    "Session_Container::install_home - "
+                    "ERROR: Null component executor DLL name\n"));
             throw Components::Deployment::UnknownImplId ();
           }
 
-        ACE_DLL executor_dll;
-        ACE_DLL servant_dll;
+        if (!servant_artifact)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO
+                    "Session_Container::install_home - "
+                    "ERROR: Null component servant DLL name\n"));
+            throw Components::Deployment::UnknownImplId ();
+          }
 
+        if (!entry_point)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO
+                        "Session_Container::install_home - "
+                        "ERROR: Null entry point for executor DLL [%C]\n",
+                        primary_artifact));
+            throw Components::Deployment::ImplEntryPointNotFound ();
+          }
+
+        if (!servant_entrypoint)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO
+                        "Session_Container::install_home - "
+                        "ERROR: Null entry point for servant DLL [%C]\n",
+                        servant_artifact));
+            throw Components::Deployment::ImplEntryPointNotFound ();
+          }
+
+        ACE_DLL executor_dll;
         if (executor_dll.open (ACE_TEXT_CHAR_TO_TCHAR (primary_artifact),
                                ACE_DEFAULT_SHLIB_MODE,
                                0) != 0)
           {
-            ACE_CString error ("Failed to open executor DLL: ");
-            error += primary_artifact;
-
+            const ACE_TCHAR* error = executor_dll.error ();
             CIAO_ERROR ((LM_ERROR, CLINFO
                         "Session_Container::install_home - "
-                        "ERROR in opening the executor DLL [%C]\n",
-                        primary_artifact));
+                        "ERROR in opening the executor DLL [%C] with error [%s]\n",
+                        primary_artifact, error));
 
             throw Components::Deployment::UnknownImplId ();
           }
+        else
+          {
+            CIAO_DEBUG ((LM_TRACE, CLINFO
+                        "Session_Container::install_home - "
+                        "Executor DLL successfully opened\n"));
+          }
 
-        CIAO_DEBUG ((LM_TRACE, CLINFO
-                    "Session_Container::install_home - "
-                    "Executor DLL successfully opened\n"));
-
+        ACE_DLL servant_dll;
         if (servant_dll.open (ACE_TEXT_CHAR_TO_TCHAR (servant_artifact),
                               ACE_DEFAULT_SHLIB_MODE,
                               0) != 0)
           {
-            ACE_CString error ("Failed to open executor DLL: ");
-            error += servant_artifact;
-
+            const ACE_TCHAR* error = servant_dll.error ();
             CIAO_ERROR ((LM_ERROR, CLINFO
                         "Session_Container::install_home - "
-                        "ERROR in opening the servant DLL [%C]\n",
-                        servant_artifact));
+                        "ERROR in opening the servant DLL [%C] with error [%s]\n",
+                        servant_artifact, error));
 
             throw Components::Deployment::UnknownImplId ();
           }
-
-        CIAO_DEBUG ((LM_TRACE, CLINFO
-                    "Session_Container::install_home - "
-                    "Servant DLL successfully openend.\n"));
-
-        if (entry_point == 0 || servant_entrypoint == 0)
+        else
           {
-            ACE_CString error ("Entry point is null for ");
-
-            if (entry_point == 0)
-              {
-                CIAO_ERROR ((LM_ERROR, CLINFO
-                            "Session_Container::install_home - "
-                            "ERROR in opening the executor entry point "
-                            "for executor DLL [%C]\n",
-                            primary_artifact));
-                error += primary_artifact;
-              }
-            else
-              {
-                CIAO_ERROR ((LM_ERROR, CLINFO
-                            "Session_Container::install_home - "
-                            "ERROR in opening the servant entry point "
-                            "for servant DLL [%C]\n",
-                            servant_artifact));
-                error += servant_artifact;
-              }
-
-            throw Components::Deployment::ImplEntryPointNotFound ();
+            CIAO_DEBUG ((LM_TRACE, CLINFO
+                        "Session_Container::install_home - "
+                        "Servant DLL successfully openend.\n"));
           }
 
         // We have to do this casting in two steps because the C++
@@ -346,27 +336,21 @@ namespace CIAO
           servant_entrypoint_str, screator);
       }
 
-    if (hcreator == 0 || screator == 0)
+    if (!hcreator)
       {
-        ACE_CString error ("Entry point ");
+        CIAO_ERROR ((LM_ERROR, CLINFO
+                     "Session_Container::install_home - Error: Entry point "
+                     "invalid in dll [%C]",
+                     primary_artifact));
+        throw Components::Deployment::ImplEntryPointNotFound ();
+      }
 
-        if (hcreator == 0)
-          {
-            error += entry_point;
-            error += " invalid in dll ";
-            error += primary_artifact;
-          }
-        else
-          {
-            error += servant_entrypoint;
-            error += " invalid in dll ";
-            error += servant_artifact;
-          }
-
-            CIAO_ERROR ((LM_ERROR, CLINFO
-                         "Session_Container::install_home - Error: %C\n",
-                         error.c_str ()));
-
+    if (!screator)
+      {
+        CIAO_ERROR ((LM_ERROR, CLINFO
+                     "Session_Container::install_home - Error: Entry point "
+                     "invalid in dll [%C]",
+                     servant_artifact));
         throw Components::Deployment::ImplEntryPointNotFound ();
       }
 
@@ -388,7 +372,7 @@ namespace CIAO
                                                      this,
                                                      name);
 
-    if (home_servant == 0)
+    if (!home_servant)
       {
             CIAO_ERROR ((LM_ERROR, CLINFO
                     "Session_Container::install_home - "
@@ -442,90 +426,77 @@ namespace CIAO
                     "Servant library [%C] with entrypoint [%C]\n",
                     servant_artifact, servant_entrypoint));
 
-        ACE_DLL executor_dll, servant_dll;
-
-        if (primary_artifact == 0 || servant_artifact == 0)
+        if (!primary_artifact)
           {
-            ACE_CString exception;
-
-            if (primary_artifact == 0)
-              {
-                exception = "Null component executor DLL name";
-              }
-
-            if (servant_artifact == 0)
-              {
-                exception = "Null component servant DLL name";
-              }
-
             CIAO_ERROR ((LM_ERROR, CLINFO
-                        "Session_Container::install_component -"
-                        "ERROR: %C\n",
-                        exception.c_str ()));
-
+                    "Session_Container::install_component - "
+                    "ERROR: Null component executor DLL name\n"));
             throw Components::Deployment::UnknownImplId ();
           }
 
+        if (!servant_artifact)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO
+                    "Session_Container::install_component - "
+                    "ERROR: Null component servant DLL name\n"));
+            throw Components::Deployment::UnknownImplId ();
+          }
+
+        if (!entry_point)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO
+                        "Session_Container::install_component - "
+                        "ERROR: Null entry point for executor DLL [%C]\n",
+                        primary_artifact));
+            throw Components::Deployment::ImplEntryPointNotFound ();
+          }
+
+        if (!servant_entrypoint)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO
+                        "Session_Container::install_component - "
+                        "ERROR: Null entry point for servant DLL [%C]\n",
+                        servant_artifact));
+            throw Components::Deployment::ImplEntryPointNotFound ();
+          }
+
+
+        ACE_DLL executor_dll;
         if (executor_dll.open (ACE_TEXT_CHAR_TO_TCHAR (primary_artifact),
                                ACE_DEFAULT_SHLIB_MODE,
                                0) != 0)
           {
-            ACE_CString error ("Failed to open executor DLL: ");
-            error += primary_artifact;
-
+            const ACE_TCHAR* error = executor_dll.error ();
             CIAO_ERROR ((LM_ERROR, CLINFO
                         "Session_Container::install_component - "
-                        "ERROR in opening the executor DLL [%C]\n",
-                        primary_artifact));
+                        "ERROR in opening the executor DLL [%C] with error [%s]\n",
+                        primary_artifact, error));
 
             throw Components::Deployment::UnknownImplId ();
           }
+        else
+          {
+            CIAO_DEBUG ((LM_TRACE, CLINFO
+                        "Session_Container::install_component - Executor DLL successfully opened\n"));
+          }
 
-        CIAO_DEBUG ((LM_TRACE, CLINFO
-                    "Session_Container::install_component - Executor DLL successfully opened\n"));
-
+        ACE_DLL servant_dll;
         if (servant_dll.open (ACE_TEXT_CHAR_TO_TCHAR (servant_artifact),
                               ACE_DEFAULT_SHLIB_MODE,
                               0) != 0)
           {
-            ACE_CString error ("Failed to open executor DLL: ");
-            error += servant_artifact;
-
+            const ACE_TCHAR* error = servant_dll.error ();
             CIAO_ERROR ((LM_ERROR, CLINFO
                         "Session_Container::install_component - "
-                        "ERROR in opening the servant DLL [%C]\n",
-                        servant_artifact));
+                        "ERROR in opening the servant DLL [%C] with error [%s]\n",
+                        servant_artifact, error));
 
             throw Components::Deployment::UnknownImplId ();
           }
-
-        CIAO_DEBUG ((LM_TRACE, CLINFO
-                    "Session_Container::install_component - Servant DLL successfully openend.\n"));
-
-        if (entry_point == 0 || servant_entrypoint == 0)
+        else
           {
-            ACE_CString error ("Entry point is null for ");
-
-            if (entry_point == 0)
-              {
-                CIAO_ERROR ((LM_ERROR, CLINFO
-                            "Session_Container::install_component - "
-                            "ERROR in opening the executor entry point "
-                            "for executor DLL [%C]\n",
-                            primary_artifact));
-                error += primary_artifact;
-              }
-            else
-              {
-                CIAO_ERROR ((LM_ERROR, CLINFO
-                            "Session_Container::install_component - "
-                            "ERROR in opening the servant entry point "
-                            "for servant DLL [%C]\n",
-                            servant_artifact));
-                error += servant_artifact;
-              }
-
-            throw Components::Deployment::ImplEntryPointNotFound ();
+            CIAO_DEBUG ((LM_TRACE, CLINFO
+                        "Session_Container::install_component - Servant DLL successfully openend.\n"));
           }
 
         // We have to do this casting in two steps because the C++
@@ -566,33 +537,28 @@ namespace CIAO
                                                                              screator);
       }
 
-    if (ccreator == 0 || screator == 0)
+    if (!ccreator)
       {
-        ACE_CString error ("Entry point ");
-
-        if (ccreator == 0)
-          {
-            error += entry_point;
-            error += " invalid in dll ";
-            error += primary_artifact;
-          }
-        else
-          {
-            error += servant_entrypoint;
-            error += " invalid in dll ";
-            error += servant_artifact;
-          }
-
         CIAO_ERROR ((LM_ERROR, CLINFO
-        "Session_Container::install_component - Error: %C\n",
-                    error.c_str ()));
+                     "Session_Container::install_home - Error: Entry point "
+                     "invalid in dll [%C]",
+                     primary_artifact));
+        throw Components::Deployment::ImplEntryPointNotFound ();
+      }
 
+    if (!screator)
+      {
+        CIAO_ERROR ((LM_ERROR, CLINFO
+                     "Session_Container::install_home - Error: Entry point "
+                     "invalid in dll [%C]",
+                     servant_artifact));
         throw Components::Deployment::ImplEntryPointNotFound ();
       }
 
     CIAO_DEBUG ((LM_TRACE, CLINFO
                 "Session_Container::install_component - "
                 "Loading component executor\n"));
+
     Components::EnterpriseComponent_var component_executor = ccreator ();
 
     if (CORBA::is_nil (component_executor.in ()))
@@ -610,7 +576,7 @@ namespace CIAO
                                                           this,
                                                           name);
 
-    if (component_servant == 0)
+    if (!component_servant)
       {
       CIAO_ERROR ((LM_ERROR, CLINFO
                     "Session_Container::install_component - "

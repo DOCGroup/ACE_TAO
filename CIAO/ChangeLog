@@ -1,3 +1,10 @@
+Wed Dec  2 10:26:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Containers/Session/Session_Container.h:
+          Improved failure reporting in case we can't get the needed
+          entities
+
 Wed Dec  2 09:05:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.cpp:
