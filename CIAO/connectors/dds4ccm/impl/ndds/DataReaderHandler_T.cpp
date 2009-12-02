@@ -43,9 +43,9 @@ CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::handle_exception (A
           if (sampleinfo.valid_data)
             {
               CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataReaderHandler_T : found valid data\n")));
-              ::CCM_DDS::ReadInfo empty;
-              empty <<= sampleinfo;
-              listener_->on_one_data (instance, empty);
+              ::CCM_DDS::ReadInfo readinfo;
+              readinfo <<= sampleinfo;
+              listener_->on_one_data (instance, readinfo);
             }
         }
     }
