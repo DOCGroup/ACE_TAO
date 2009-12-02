@@ -43,7 +43,8 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 typename CCM_TYPE::reader_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::get_passive_observer_data (void)
 {
-  return 0;
+  return new CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> (
+          this->push_consumer_data_.in ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -123,28 +124,30 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
 {
-  DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete ();
-  this->configure_port_dds_update ();
-  this->configure_port_dds_listen ();
+  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
 {
+  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate ();
+  this->configure_port_dds_update ();
+  this->configure_port_dds_listen ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
 {
+  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
 {
-  DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove ();
+  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -152,35 +155,10 @@ void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_update (void)
 {
   this->configure_default_topic ();
+  this->configure_publisher ();
 
   try
     {
-      if (CORBA::is_nil (this->supplier_publisher_.in ()))
-        {
-          this->publisher_listener_ = new ::CIAO::DDS4CCM::RTI::PublisherListener_T
-            <DDS_TYPE, CCM_TYPE> (
-                  this->context_->get_connection_error_listener ());
-
-          if (this->library_name_ && this->profile_name_)
-            {
-              this->supplier_publisher_ = this->domain_participant_->
-                create_publisher_with_profile (
-                  this->library_name_,
-                  this->profile_name_,
-                  this->publisher_listener_.in (),
-                  DDS_STATUS_MASK_NONE);
-            }
-          else
-            {
-              ::DDS::PublisherQos pqos;
-              this->supplier_publisher_ =
-                this->domain_participant_->create_publisher (
-                  pqos,
-                  this->publisher_listener_.in (),
-                  DDS_STATUS_MASK_NONE);
-            }
-        }
-
       if (CORBA::is_nil  (this->observable_data_.in ()))
         {
           this->datawriter_listener_ = new ::CIAO::DDS4CCM::DataWriterListener_T
@@ -191,7 +169,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_update (void)
 
           if (this->library_name_ && this->profile_name_)
             {
-              ::DDS::DataWriter_var dwv_tmp = this->supplier_publisher_->
+              ::DDS::DataWriter_var dwv_tmp = this->publisher_->
                 create_datawriter_with_profile (
                   this->topic_.in (),
                   this->library_name_,
@@ -203,7 +181,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_update (void)
             else
             {
               ::DDS::DataWriterQos dwqos;
-              ::DDS::DataWriter_var dwv_tmp = this->supplier_publisher_->
+              ::DDS::DataWriter_var dwv_tmp = this->publisher_->
                 create_datawriter (
                   this->topic_.in (),
                   dwqos,
@@ -225,35 +203,10 @@ void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen (void)
 {
   this->configure_default_topic ();
+  this->configure_subscriber ();
 
   try
     {
-      if (CORBA::is_nil (this->listen_subscriber_.in ()))
-        {
-          this->subscriber_listener_ = new ::CIAO::DDS4CCM::RTI::SubscriberListener_T
-            <DDS_TYPE, CCM_TYPE> (
-                  this->context_->get_connection_error_listener ());
-
-          if (this->library_name_ && this->profile_name_)
-            {
-              this->listen_subscriber_ = this->domain_participant_->
-                create_subscriber_with_profile (
-                  this->library_name_,
-                  this->profile_name_,
-                  this->subscriber_listener_.in (),
-                  DDS_STATUS_MASK_NONE);
-            }
-          else
-            {
-              ::DDS::SubscriberQos sqos;
-              this->listen_subscriber_ = this->domain_participant_->
-                create_subscriber (
-                  sqos,
-                  this->subscriber_listener_.in (),
-                  DDS_STATUS_MASK_NONE);
-            }
-        }
-
       if (CORBA::is_nil (this->__listen_datareaderlistener.in ()))
         {
           this->__listen_datareaderlistener = new ::CIAO::DDS4CCM::RTI::DataReaderStateListener_T
@@ -271,7 +224,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen (void)
           if (this->library_name_ && this->profile_name_)
             {
               this->push_consumer_data_ =
-                  this->listen_subscriber_->create_datareader_with_profile (
+                  this->subscriber_->create_datareader_with_profile (
                     this->topic_.in (),
                     this->library_name_,
                     this->profile_name_,
@@ -282,7 +235,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen (void)
             {
               ::DDS::DataReaderQos drqos;
               this->push_consumer_data_ =
-                  this->listen_subscriber_->create_datareader (
+                  this->subscriber_->create_datareader (
                     this->topic_.in (),
                     drqos,
                     this->__listen_datareaderlistener.in (),
@@ -295,7 +248,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen (void)
           if (this->profile_name_ && this->library_name_)
             {
               this->pull_consumer_fresh_data_ =
-                  this->listen_subscriber_->create_datareader_with_profile (
+                  this->subscriber_->create_datareader_with_profile (
                     this->topic_.in (),
                     this->library_name_,
                     this->profile_name_,
@@ -306,7 +259,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen (void)
             {
               ::DDS::DataReaderQos drqos;
               this->pull_consumer_fresh_data_ =
-                  this->listen_subscriber_->create_datareader (
+                  this->subscriber_->create_datareader (
                     this->topic_.in (),
                     drqos,
                     this->__listen_datareaderlistener.in (),

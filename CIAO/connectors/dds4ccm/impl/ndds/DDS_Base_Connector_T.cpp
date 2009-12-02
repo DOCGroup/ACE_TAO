@@ -73,14 +73,6 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
-{
-  CIAO_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
-  this->configuration_complete_ = true;
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain (void)
 {
   CIAO_DEBUG ((LM_TRACE, CLINFO "DDS_Base_Connector_T::configure_default_domain_ - "
@@ -180,5 +172,28 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
       this->domain_participant_ = ::DDS::DomainParticipant::_nil ();
     }
 }
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
+{
+  CIAO_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate");
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
+{
+  CIAO_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate");
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
+{
+  CIAO_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
+  this->configuration_complete_ = true;
+}
+
 
 
