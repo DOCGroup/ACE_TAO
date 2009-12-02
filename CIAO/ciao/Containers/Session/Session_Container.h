@@ -207,8 +207,6 @@ namespace CIAO
     Session_Container (void);
 
   protected:
-    unsigned long number_;
-
     /// Static variable to store the highest number we have given out until
     /// now
     static ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned long> serial_number_;
