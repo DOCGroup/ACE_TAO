@@ -192,6 +192,12 @@ namespace CIAO_Reader_Test_Receiver_Impl
                   ex.indexes[i]));
           }
       }
+    catch(CCM_DDS::InternalError& ex)
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver_exec_i::read_last: ")
+              ACE_TEXT ("caught InternalError exception: retval <%u>\n"),
+              ex.error_code));
+      }
     catch (const CORBA::Exception& ex)
       {
         ex._tao_print_exception ("Exception caught:");
@@ -261,6 +267,12 @@ namespace CIAO_Reader_Test_Receiver_Impl
                   ex.indexes[i]));
           }
       }
+    catch(CCM_DDS::InternalError& ex)
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver_exec_i::read_all: ")
+              ACE_TEXT ("caught InternalError exception: retval <%u>\n"),
+              ex.error_code));
+      }
     catch (const CORBA::Exception& ex)
       {
         ex._tao_print_exception ("Exception caught:");
@@ -301,10 +313,10 @@ namespace CIAO_Reader_Test_Receiver_Impl
   void
   Receiver_exec_i::run ()
   {
-    read_one_last ();
-    read_one_all ();
-    //read_last ();
     read_all ();
+    read_last ();
+    read_one_all ();
+    read_one_last ();
     //test_exception ();
   }
 
