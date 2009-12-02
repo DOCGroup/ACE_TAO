@@ -46,12 +46,21 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::~Reader_T (void)
 template <typename DDS_TYPE, typename CCM_TYPE >
 CORBA::ULong
 CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::get_nr_valid_samples (
-  const DDS_SampleInfoSeq & sample_info)
+  const DDS_SampleInfoSeq & sample_info,
+  bool determine_last)
 {
   CORBA::ULong nr_of_samples = 0;
   for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
     {
-      if(sample_info[i].valid_data)
+      if (determine_last)
+        {
+          if (sample_info[i].sample_rank == 0 && 
+              sample_info[i].valid_data)
+            {
+              ++nr_of_samples;
+            }
+        }
+      else if (sample_info[i].valid_data)
         {
           ++nr_of_samples;
         }
@@ -72,7 +81,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_without_instance (
                                 DDS_LENGTH_UNLIMITED,
                                 DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE,
                                 DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-                                DDS_ALIVE_INSTANCE_STATE);
+                                DDS_ANY_INSTANCE_STATE);
 
   if (retval != DDS_RETCODE_OK)
     {
@@ -91,57 +100,34 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_last (
   ::CCM_DDS::ReadInfoSeq_out infos)
 {
   //this function has to return the last sample of all instances
-  typename CCM_TYPE::seq_type::_var_type inst_seq = new typename CCM_TYPE::seq_type;
-  ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;
-
   DDS_SampleInfoSeq sample_info;
   typename DDS_TYPE::dds_seq_type data;
-  DDS_ReturnCode_t retval = this->impl_->read ( data,
-                            sample_info,
-                            DDS_LENGTH_UNLIMITED,
-                            DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
-                            DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-                            DDS_ALIVE_INSTANCE_STATE);
+
+  read_without_instance (data, sample_info);
+
+  typename CCM_TYPE::seq_type::_var_type  inst_seq = new typename CCM_TYPE::seq_type;
+  ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;
+
+  CORBA::ULong nr_of_last_samples = get_nr_valid_samples (sample_info, true);
+
+  CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_last - ")
+                          ACE_TEXT ("total number of samples <%u> - ")
+                          ACE_TEXT ("last number of samples <%u>\n"),
+                            data.length(),
+                            nr_of_last_samples));
 
   CORBA::ULong ix = 0;
-  CORBA::ULong nr_of_last_samples = 0;
-  switch(retval)
+  infoseq->length (nr_of_last_samples);
+  inst_seq->length (nr_of_last_samples);
+  // we need only the last sample of each instance
+  for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
     {
-      case DDS_RETCODE_OK:
-        ix = 0;
-        nr_of_last_samples = 0;
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_last - ")
-                                ACE_TEXT ("number_of_samples <%d>\n"), data.length() ));
-
-        // count the last samples of all instances
-        for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
-          {
-            if((sample_info[i].sample_rank == 0) && (sample_info[i].valid_data))
-              {
-                ++nr_of_last_samples;
-              }
-          }
-        infoseq->length(nr_of_last_samples);
-        inst_seq->length(nr_of_last_samples);
-        // we need only the last sample of each instance
-        for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
-          {
-            if((sample_info[i].sample_rank == 0) && (sample_info[i].valid_data))
-              {
-                sample_info[i].source_timestamp >>= infoseq[ix].source_timestamp;
-                inst_seq[ix] = data[i];
-                ++ix;
-              }
-          }
-        break;
-      case DDS_RETCODE_NO_DATA:
-        CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_last - No data")));
-        break;
-      default:
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_last - ")
-                                ACE_TEXT ("retval is %C\n"), translate_retcode(retval)));
-        throw ::CCM_DDS::InternalError (retval, 0);
-        break;
+      if((sample_info[i].sample_rank == 0) && (sample_info[i].valid_data))
+        {
+          sample_info[i].source_timestamp >>= infoseq[ix].source_timestamp;
+          inst_seq[ix] = data[i];
+          ++ix;
+        }
     }
   //return the loan
   this->impl_->return_loan(data,sample_info);
@@ -163,8 +149,8 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_all (
 
   CORBA::ULong nr_of_valid_samples = get_nr_valid_samples (sample_info);
   CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all - ")
-                          ACE_TEXT ("total number of samples <%d> - ")
-                          ACE_TEXT ("valid number of samples <%d>\n"), 
+                          ACE_TEXT ("total number of samples <%u> - ")
+                          ACE_TEXT ("valid number of samples <%u>\n"), 
                             data.length (),
                             nr_of_valid_samples));
 
@@ -258,7 +244,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_last (
   ::DDS_Long sample = data.length();
   CIAO_DEBUG ((LM_INFO,
               ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_last - ")
-              ACE_TEXT ("total number of samples <%d>\n"),
+              ACE_TEXT ("total number of samples <%u>\n"),
               sample));
   while (sample >= 0 && !sample_info[sample-1].valid_data)
     --sample;
@@ -292,8 +278,8 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_all (
   // Count the number of valid samples
   CORBA::ULong nr_of_valid_samples = get_nr_valid_samples (sample_info);
   CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all - ")
-                          ACE_TEXT ("total number of samples <%d> - ")
-                          ACE_TEXT ("valid number of samples <%d>\n"), 
+                          ACE_TEXT ("total number of samples <%u> - ")
+                          ACE_TEXT ("valid number of samples <%u>\n"), 
                             data.length (),
                             nr_of_valid_samples));
 
