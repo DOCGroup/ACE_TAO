@@ -1,3 +1,8 @@
+Thu Dec  3 08:09:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+          Enable mcpp support
+
 Thu Dec  3 08:03:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Naming_Service/NT_Naming_Server.cpp:

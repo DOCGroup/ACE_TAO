@@ -40,11 +40,11 @@ project(TAO_IFR_BE) : taolib, tao_output, conv_lib, ifr_client, crosscompile, av
 }
 
 
-project(TAO_IFR_EXE) : aceexe, install, ifr_client, crosscompile, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, tao_idl_fe {
+project(TAO_IFR_EXE) : aceexe, install, ifr_client, mcpp, tao_idl_mcpp, crosscompile, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, tao_idl_fe {
   after          += TAO_IFR_BE
   exename         = tao_ifr
   libs           += TAO_IFR_BE TAO
-  includes       += $(TAO_ROOT)/orbsvcs/IFR_Service 
+  includes       += $(TAO_ROOT)/orbsvcs/IFR_Service
   install         = $(ACE_ROOT)/bin
 
   specific(automake) {
