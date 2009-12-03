@@ -1,3 +1,14 @@
+Thu Dec  3 10:14:28 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/UnkeyedWriter/Receiver/Writer_Receiver.idl:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Receiver/Writer_Receiver_exec.h:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Receiver/Writer_Receiver_exec.cpp:
+          Build in checks on received data.
+
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedWriter/descriptors/Plan.cdp:
+          Write more samples
+
 Wed Dec  3 08:56:57 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender_exec.h:

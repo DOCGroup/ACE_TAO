@@ -13,7 +13,8 @@ namespace CIAO_Writer_Receiver_Impl
   // Facet Executor Implementation Class: WriterTest_Listener_exec_i
   //============================================================
 
-  WriterTest_Listener_exec_i::WriterTest_Listener_exec_i ()
+  WriterTest_Listener_exec_i::WriterTest_Listener_exec_i (CORBA::UShort iterations)
+    : iterations_ (iterations)
   {
   }
 
@@ -32,6 +33,18 @@ namespace CIAO_Writer_Receiver_Impl
             ACE_TEXT ("received writer info for <%C> at %u\n"),
             an_instance.key.in (),
             an_instance.iteration));
+    if (an_instance.iteration > this->iterations_)
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: received iteration ")
+                        ACE_TEXT ("greater than expected : ")
+                        ACE_TEXT ("expected <%u> - received <%u>\n"),
+                        an_instance.iteration, this->iterations_));
+      }
+    if (an_instance.iteration == 0)
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: received iteration ")
+                        ACE_TEXT ("is zero\n")));
+      }
   }
 
   void
@@ -52,6 +65,7 @@ namespace CIAO_Writer_Receiver_Impl
   // Component Executor Implementation Class: Receiver_exec_iKeyedTest_Listener_exec_i ();
   //============================================================
   Receiver_exec_i::Receiver_exec_i (void)
+    : iterations_ (15)
   {
   }
 
@@ -64,7 +78,7 @@ namespace CIAO_Writer_Receiver_Impl
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new WriterTest RAW listener\n")));
-    return new WriterTest_Listener_exec_i ();
+    return new WriterTest_Listener_exec_i (this->iterations_);
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -74,6 +88,18 @@ namespace CIAO_Writer_Receiver_Impl
   }
   
   // Operations from Components::SessionComponent.
+  ::CORBA::UShort
+  Receiver_exec_i::iterations (void)
+  {
+    return this->iterations_;
+  }
+
+  void
+  Receiver_exec_i::iterations (::CORBA::UShort iterations)
+  {
+    this->iterations_ = iterations;
+  }
+
   void
   Receiver_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)

@@ -166,6 +166,19 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="ReceiverComponentImplementation" />
+    <configProperty>
+      <name>iterations</name>
+      <value>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <!-- should be equal to iterations in 
+               Sender component -->
+          <ushort>15</ushort>
+        </value>
+      </value>
+    </configProperty>
   </instance>
   <instance xmi:id="Writer_ConnectorComponentInstance">
     <name>Writer_ConnectorComponent</name>
@@ -238,7 +251,7 @@
           <kind>tk_ushort</kind>
         </type>
         <value>
-          <ushort>100</ushort>
+          <ushort>15</ushort>
         </value>
       </value>
     </configProperty>
@@ -251,7 +264,7 @@
         <value>
           <!-- should be more than max_samples in
                USER_QOS_PROFILES. Thus more than 5-->
-          <ushort>10</ushort>
+          <ushort>15</ushort>
         </value>
       </value>
     </configProperty>
