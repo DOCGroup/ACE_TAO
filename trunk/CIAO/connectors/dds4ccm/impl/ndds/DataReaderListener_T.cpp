@@ -90,7 +90,7 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(
           listener_->on_one_data (data[i], info);
         }
     }
-  else 
+  else
     {
       CORBA::ULong nr_of_samples = 0;
       for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
@@ -172,5 +172,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::StatusMask
 CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask (void)
 {
-  return DDS_DATA_AVAILABLE_STATUS | DDS_REQUESTED_DEADLINE_MISSED_STATUS | DDS_SAMPLE_LOST_STATUS;
+  return DDS_DATA_AVAILABLE_STATUS |
+         DDS_REQUESTED_DEADLINE_MISSED_STATUS |
+         DDS_SAMPLE_LOST_STATUS;
 }
