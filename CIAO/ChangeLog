@@ -1,3 +1,10 @@
+Thu Dec  3 08:28:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.h:
+          Don't handle data_on_readers, if we install this listener,
+          the data reader listener will not get any on_data_available
+
 Wed Dec  2 14:57:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplication/ComponentAttributesSetter.cpp:
