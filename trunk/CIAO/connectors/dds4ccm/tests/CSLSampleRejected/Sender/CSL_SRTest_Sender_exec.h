@@ -91,14 +91,13 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     void start (void);
     void stop (void);
 
-//    CCM_DDS::TestTopic::Updater_var updater_;
     CCM_DDS::TestTopic::Writer_var writer_;
-
+   ::CSL_SRTest::CCM_Sender_Context_var context_;
     pulse_Generator * ticker_;
-    CORBA::ULong rate_;
-//    CORBA::UShort iterations_;
-    ::CSL_SRTest::CCM_Sender_Context_var context_;
+ 
     Atomic_Boolean rejected_;
+    CORBA::ULong rate_;
+   
     TAO_SYNCH_MUTEX mutex_;
     typedef std::map<ACE_CString, TestTopic_var> CSL_SRTest_Table;
     CSL_SRTest_Table _ktests_;
