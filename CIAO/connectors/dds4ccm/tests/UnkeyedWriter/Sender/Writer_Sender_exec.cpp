@@ -277,7 +277,7 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::keys (::CORBA::UShort keys)
   {
-    this->keys_ = keys + 1; //for extra tests.
+    this->keys_ = keys;
   }
 
   void
