@@ -888,9 +888,10 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
               //    profile from the IOR.
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) ERROR: Could not create all ")
-                                 ACE_TEXT ("profiles while extracting object\n")
+                                 ACE_TEXT ("profiles while extracting object [%d, %d]\n")
                                  ACE_TEXT ("TAO (%P|%t) ERROR: reference from the ")
-                                 ACE_TEXT ("CDR stream.\n")),
+                                 ACE_TEXT ("CDR stream.\n"),
+                                 mp.profile_count (), profile_count),
                                 false);
             }
 
@@ -910,7 +911,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
       TAO_Stub_Auto_Ptr safe_objdata (objdata);
 
       x = orb_core->create_object (safe_objdata.get ());
-      if (x == 0)
+      if (!x)
         return false;
 
       // Transfer ownership to the CORBA::Object

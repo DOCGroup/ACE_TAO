@@ -251,7 +251,6 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
   // Will expand the environment variables, if any were used.
   // Is this a good thing? I guess it provides greater flexibility
   // for deployment,so let's leave it. Will also quote arguments.
-
   ACE_ARGV copyargv (argc, argv, true, true);
 
   // Adjust to proper type
@@ -541,7 +540,7 @@ namespace
             factory =
               ACE_Dynamic_Service<
                   TAO_Codeset_Manager_Factory_Base
-                >::instance ("TAO_Codeset");
+                 >::instance ("TAO_Codeset");
 #endif /* !TAO_AS_STATIC_LIBS && !(ACE_VXWORKS && !__RTP__) */
           }
 
@@ -757,7 +756,7 @@ namespace
                 errno = EINVAL;
 
                 ACE_ERROR_RETURN ((LM_ERROR,
-                                   ACE_TEXT ("TAO (%P|%t) Unable to open file %s")
+                                   ACE_TEXT ("TAO (%P|%t) - Unable to open file <%s>")
                                    ACE_TEXT (", referenced by -ORBSvcConf option\n"),
                                    current_arg),
                                   -1);
