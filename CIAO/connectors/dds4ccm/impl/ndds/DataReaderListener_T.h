@@ -42,21 +42,6 @@ namespace CIAO
         virtual void on_sample_lost (::DDS::DataReader_ptr the_reader,
                                  const ::DDS::SampleLostStatus & status);
 
-        virtual void on_requested_incompatible_qos (::DDS::DataReader_ptr the_reader,
-                                 const ::DDS::RequestedIncompatibleQosStatus & status);
-
-        virtual void on_liveliness_changed(
-          ::DDS::DataReader* reader,
-          const ::DDS::LivelinessChangedStatus& status);
-
-        virtual void on_sample_rejected(
-          ::DDS::DataReader* reader,
-          const ::DDS::SampleRejectedStatus& status);
-
-        virtual void on_subscription_matched(
-          ::DDS::DataReader* reader,
-          const ::DDS::SubscriptionMatchedStatus& status);
-
         static ::DDS::StatusMask get_mask (void);
       private:
         typename CCM_TYPE::context_type::_var_type context_;

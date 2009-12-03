@@ -22,36 +22,17 @@ namespace CIAO
     public:
       /// Constructor
       DataWriterListener_T (
-                    typename CCM_TYPE::context_type::_ptr_type context,
-                    ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> &mode,
-                    ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> &max_delivered_data);
+        typename CCM_TYPE::context_type::_ptr_type context,
+        CCM_DDS::ConnectorStatusListener_ptr error_listener);
 
       /// Destructor
       virtual ~DataWriterListener_T (void);
-
-      virtual void on_offered_deadline_missed (
-        ::DDS::DataWriter *the_writer,
-        const ::DDS::OfferedDeadlineMissedStatus & status);
-
-      virtual void on_liveliness_lost (
-        ::DDS::DataWriter *the_writer,
-        const ::DDS::LivelinessLostStatus & status);
-
-      virtual void on_offered_incompatible_qos (
-        ::DDS::DataWriter *the_writer,
-        const ::DDS::OfferedIncompatibleQosStatus & status);
-
-      virtual void on_publication_matched (
-        ::DDS::DataWriter *the_writer,
-        const ::DDS::PublicationMatchedStatus & status);
 
       static ::DDS::StatusMask get_mask (void);
 
     private:
       typename CCM_TYPE::context_type::_var_type context_;
-      CCM_DDS::ConnectorStatusListener_var  info_out_connector_status_;
-      ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> &mode_;
-      ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> &max_delivered_data_;
+      CCM_DDS::ConnectorStatusListener_var  error_listener_;
     };
   }
 }

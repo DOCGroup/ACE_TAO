@@ -6,26 +6,118 @@
 #include "dds4ccm/impl/ndds/DataReaderHandler_T.h"
 #include "tao/ORB_Core.h"
 
-// Implementation skeleton constructor
 template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::RTI::PublisherListener_T<DDS_TYPE, CCM_TYPE>::PublisherListener_T (
-      ::CCM_DDS::ConnectorStatusListener_ptr error_listener)
-      : error_listener_ (::CCM_DDS::ConnectorStatusListener::_duplicate (error_listener))
+CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::PublisherListener_T (
+  typename CCM_TYPE::context_type::_ptr_type context,
+  ::CCM_DDS::ConnectorStatusListener_ptr error_listener)
+      : context_ (CCM_TYPE::context_type::_duplicate (context)),
+        error_listener_ (::CCM_DDS::ConnectorStatusListener::_duplicate (error_listener))
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::PublisherListener_T::PublisherListener_T");
+  CIAO_TRACE ("CIAO::DDS4CCM::PublisherListener_T::PublisherListener_T");
 }
 
-// Implementation skeleton destructor
 template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::RTI::PublisherListener_T<DDS_TYPE, CCM_TYPE>::~PublisherListener_T (void)
+CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::~PublisherListener_T (void)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::PublisherListener_T::~PublisherListener_T");
+  CIAO_TRACE ("CIAO::DDS4CCM::PublisherListener_T::~PublisherListener_T");
 }
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_deadline_missed (
+  ::DDS::DataWriter_ptr the_Writer,
+  const ::DDS::OfferedDeadlineMissedStatus & status)
+{
+  CIAO_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_offered_deadline_missed");
+
+  try
+    {
+      if (!CORBA::is_nil (this->error_listener_))
+        {
+          this->error_listener_->on_offered_deadline_missed (the_Writer, status);
+        }
+    }
+  catch (...)
+    {
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("PublisherListener_T::on_offered_deadline_missed: ")
+                             ACE_TEXT ("DDS Exception caught\n")));
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_incompatible_qos (
+  ::DDS::DataWriter_ptr the_Writer,
+  const ::DDS::OfferedIncompatibleQosStatus & status)
+{
+  CIAO_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_offered_incompatible_qos");
+
+  try
+    {
+      if (!CORBA::is_nil (this->error_listener_))
+        {
+          this->error_listener_->on_offered_incompatible_qos (the_Writer, status);
+        }
+    }
+  catch (...)
+    {
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("PublisherListener_T::on_offered_incompatible_qos: ")
+                             ACE_TEXT ("DDS Exception caught\n")));
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_lost (
+  ::DDS::DataWriter_ptr the_Writer,
+  const ::DDS::LivelinessLostStatus &)
+{
+  CIAO_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_liveliness_lost");
+
+  try
+    {
+      if (!CORBA::is_nil (this->error_listener_))
+        {
+          this->error_listener_->on_unexpected_status (the_Writer, ::DDS::LIVELINESS_LOST_STATUS);
+        }
+    }
+  catch (...)
+    {
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("PublisherListener_T::on_liveliness_lost: ")
+                             ACE_TEXT ("DDS Exception caught\n")));
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_publication_matched (
+  ::DDS::DataWriter_ptr the_Writer,
+  const ::DDS::PublicationMatchedStatus &)
+{
+  CIAO_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_publication_matched");
+
+  try
+    {
+      if (!CORBA::is_nil (this->error_listener_))
+        {
+          this->error_listener_->on_unexpected_status (the_Writer, ::DDS::PUBLICATION_MATCHED_STATUS);
+        }
+    }
+  catch (...)
+    {
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("PublisherListener_T::on_publication_matched: ")
+                             ACE_TEXT ("DDS Exception caught\n")));
+    }
+}
+
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::StatusMask
-CIAO::DDS4CCM::RTI::PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_mask (void)
+CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_mask (void)
 {
-  return DDS_STATUS_MASK_NONE;
+  return DDS_OFFERED_DEADLINE_MISSED_STATUS |
+         DDS_OFFERED_INCOMPATIBLE_QOS_STATUS |
+         DDS_LIVELINESS_LOST_STATUS |
+         DDS_PUBLICATION_MATCHED_STATUS;
 }
 

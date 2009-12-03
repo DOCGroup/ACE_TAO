@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (DAnCE_RepositoryManagerDaemon_IDL) : componentidldefaults {
+project (DAnCE_RepositoryManagerDaemon_IDL) : ciaoidldefaults {
   custom_only = 1
   IDL_Files {
     RepositoryManagerDaemon.idl
