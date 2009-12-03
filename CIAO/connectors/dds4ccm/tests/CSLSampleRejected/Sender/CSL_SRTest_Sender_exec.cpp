@@ -2,7 +2,7 @@
 // $Id$
 
 
-// Test for REJECTED_SAMPLE status  
+// Test for REJECTED_SAMPLE status
 
 #include "CSL_SRTest_Sender_exec.h"
 #include "ace/Guard_T.h"
@@ -17,20 +17,20 @@ namespace CIAO_CSL_SRTest_Sender_Impl
   //============================================================
   // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
   //============================================================
-  
+
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &rejected)
    : rejected_ (rejected)
   {
   }
-  
+
   ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
   {
-    
+
   }
-  
+
   // Operations from ::CCM_DDS::ConnectorStatusListener
   void ConnectorStatusListener_exec_i::on_inconsistent_topic(
-    ::DDS::Topic_ptr /*the_topic*/, 
+    ::DDS::Topic_ptr /*the_topic*/,
      const DDS::InconsistentTopicStatus & /*status*/){
      //printf("Sender : ConnectorStatusListener_exec_i::on_inconsistent_topic\n");
     }
@@ -40,7 +40,7 @@ namespace CIAO_CSL_SRTest_Sender_Impl
      //printf("Sender:ConnectorStatusListener_exec_i::on_requested_incompatible_qos, status = %dl\n", status);
     }
   void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr /*the_reader*/, 
+     ::DDS::DataReader_ptr /*the_reader*/,
      const DDS::SampleRejectedStatus & /*status*/)  {
      //printf("Sender: ConnectorStatusListener_exec_i::on_sample_rejected\n");
        this->rejected_ = true;
@@ -51,7 +51,7 @@ namespace CIAO_CSL_SRTest_Sender_Impl
      //printf("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
     }
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr /*the_writer*/, 
+     ::DDS::DataWriter_ptr /*the_writer*/,
      const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
      //printf("Sender:ConnectorStatusListener_exec_i::on_offered_incompatible_qos status = %dl\n", status);
    }
@@ -62,7 +62,7 @@ namespace CIAO_CSL_SRTest_Sender_Impl
     //printf("Sender :ConnectorStatusListener_exec_i::on_unexpected_status #### status_kind = %d %s \n", kind, ::CIAO::DDS4CCM::translate_statuskind (kind));
     }
 
-  
+
   //============================================================
   // Pulse generator
   //============================================================
@@ -99,15 +99,15 @@ namespace CIAO_CSL_SRTest_Sender_Impl
   {
     return new ConnectorStatusListener_exec_i (this->rejected_);
   }
- 
+
   // Supported operations and attributes.
   void
   Sender_exec_i::tick ()
   {
-    
+
     for (CSL_SRTest_Table::iterator i = this->_ktests_.begin ();
         i != this->_ktests_.end ();
-        ++i)  
+        ++i)
       {
          try
          {
@@ -149,7 +149,7 @@ namespace CIAO_CSL_SRTest_Sender_Impl
     delete this->ticker_;
   }
 
- 
+
 
   void
   Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
@@ -167,7 +167,7 @@ namespace CIAO_CSL_SRTest_Sender_Impl
   {
     this->writer_  = this->context_->get_connection_test_topic_write_data ();
   }
- 
+
   void
   Sender_exec_i::add_instance_of_topic (const char * key, int x)
   {
@@ -184,8 +184,8 @@ namespace CIAO_CSL_SRTest_Sender_Impl
     this->add_instance_of_topic ("TWEE",2);
     this->start ();
   }
-  
-  
+
+
 
   void
   Sender_exec_i::ccm_passivate (void)
@@ -196,22 +196,20 @@ namespace CIAO_CSL_SRTest_Sender_Impl
   void
   Sender_exec_i::ccm_remove (void)
   {
-   
+
     if(!this->rejected_.value ())
-      {   
-     
-         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
-                               ACE_TEXT (" warning 'on_sample_rejected' in Sender")
-                    )); 
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
+                               ACE_TEXT ("warning 'on_sample_rejected' in Sender\n")
+                    ));
       }
-   
+
     else
       {
          CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Received the expected ")
                                ACE_TEXT ("'on_sample_rejected' in Sender\n")
                     ));
       }
-
   }
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
