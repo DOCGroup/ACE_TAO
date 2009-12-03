@@ -47,7 +47,7 @@ $cdp_file = "Plan.cdp";
 PerlACE::add_lib_path ('../lib');
 $ENV{"DANCE_TRACE_ENABLE"} = 0;
 $ENV{"CIAO_TRACE_ENABLE"} = 0;
-$ENV{"CIAO_LOG_LEVEL"} = 8;
+$ENV{"CIAO_LOG_LEVEL"} = 5;
 $ENV{"DANCE_LOG_LEVEL"} = 5;
 
 
