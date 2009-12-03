@@ -7,6 +7,7 @@
 #include "LivelinessLostStatus.h"
 #include "OfferedIncompatibleQosStatus.h"
 #include "OfferedDeadlineMissedStatus.h"
+#include "ciao/Logger/Log_Macros.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
@@ -20,11 +21,13 @@ namespace CIAO
       RTI_PublisherListener_i::RTI_PublisherListener_i ( ::DDS::PublisherListener_ptr p)
         : impl_ (::DDS::PublisherListener::_duplicate (p))
       {
+        CIAO_TRACE ("RTI_PublisherListener_i::RTI_PublisherListener_i");
       }
 
       // Implementation skeleton destructor
       RTI_PublisherListener_i::~RTI_PublisherListener_i (void)
       {
+        CIAO_TRACE ("RTI_PublisherListener_i::~RTI_PublisherListener_i");
       }
 
       void
@@ -32,6 +35,8 @@ namespace CIAO
         ::DDSDataWriter* writer,
         const ::DDS_OfferedDeadlineMissedStatus & status)
       {
+        CIAO_TRACE ("RTI_PublisherListener_i::on_offered_deadline_missed");
+
         ::DDS::OfferedDeadlineMissedStatus ddsstatus;
         ddsstatus <<= status;
         ::DDS::DataWriter_var dds_writer = new RTI_DataWriter_i (writer);
@@ -43,6 +48,8 @@ namespace CIAO
         ::DDSDataWriter* writer,
         const ::DDS_OfferedIncompatibleQosStatus & status)
       {
+        CIAO_TRACE ("RTI_PublisherListener_i::on_offered_incompatible_qos");
+
         ::DDS::OfferedIncompatibleQosStatus ddsstatus;
         ddsstatus <<= status;
         ::DDS::DataWriter_var dds_writer = new RTI_DataWriter_i (writer);
@@ -54,6 +61,8 @@ namespace CIAO
         ::DDSDataWriter* writer,
         const ::DDS_LivelinessLostStatus & status)
       {
+        CIAO_TRACE ("RTI_PublisherListener_i::on_liveliness_lost");
+
         ::DDS::LivelinessLostStatus ddsstatus;
         ddsstatus <<= status;
         ::DDS::DataWriter_var dds_writer = new RTI_DataWriter_i (writer);
@@ -65,6 +74,8 @@ namespace CIAO
         ::DDSDataWriter* writer,
         const ::DDS_PublicationMatchedStatus & status)
       {
+        CIAO_TRACE ("RTI_PublisherListener_i::on_publication_matched");
+
         ::DDS::PublicationMatchedStatus ddsstatus;
         ddsstatus <<= status;
         ::DDS::DataWriter_var dds_writer = new RTI_DataWriter_i (writer);

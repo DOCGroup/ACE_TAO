@@ -1,7 +1,18 @@
+Thu Dec  3 20:08:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp
+        * connectors/dds4ccm/impl/ndds/PublisherListener.cpp
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/SubscriberListener.cpp
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.cpp
+          Added a lot of logging and made the subscriberlistener
+          working again
+
 Thu Dec  3 20:08:39 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
-          Only returning valid data. 
+          Only returning valid data.
 
 Thu Dec  3 18:46:35 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 

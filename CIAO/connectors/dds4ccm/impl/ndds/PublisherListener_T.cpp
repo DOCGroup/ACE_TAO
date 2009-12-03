@@ -36,6 +36,12 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_deadline_miss
         {
           this->error_listener_->on_offered_deadline_missed (the_Writer, status);
         }
+      else
+        {
+          CIAO_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("PublisherListener_T::on_offered_deadline_missed: ")
+                      ACE_TEXT ("No error listener installed\n")));
+        }
     }
   catch (...)
     {
@@ -57,6 +63,12 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_incompatible_
       if (!CORBA::is_nil (this->error_listener_))
         {
           this->error_listener_->on_offered_incompatible_qos (the_Writer, status);
+        }
+      else
+        {
+          CIAO_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("PublisherListener_T::on_offered_incompatible_qos: ")
+                      ACE_TEXT ("No error listener installed\n")));
         }
     }
   catch (...)
@@ -80,6 +92,12 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_lost (
         {
           this->error_listener_->on_unexpected_status (the_Writer, ::DDS::LIVELINESS_LOST_STATUS);
         }
+      else
+        {
+          CIAO_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("PublisherListener_T::on_liveliness_lost: ")
+                      ACE_TEXT ("No error listener installed\n")));
+        }
     }
   catch (...)
     {
@@ -101,6 +119,12 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_publication_matched (
       if (!CORBA::is_nil (this->error_listener_))
         {
           this->error_listener_->on_unexpected_status (the_Writer, ::DDS::PUBLICATION_MATCHED_STATUS);
+        }
+      else
+        {
+          CIAO_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("PublisherListener_T::on_publication_matched: ")
+                      ACE_TEXT ("No error listener installed\n")));
         }
     }
   catch (...)
