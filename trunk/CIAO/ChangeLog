@@ -1,3 +1,8 @@
+Thu Dec  3 08:55:27 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors/run_test.pl:
+          Reduced log level.
+
 Thu Dec  3 08:47:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver.idl:
