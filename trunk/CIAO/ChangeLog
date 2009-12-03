@@ -1,3 +1,10 @@
+Thu Dec  3 12:06:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender.idl:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedWriter/descriptors/Plan.cdp:
+          Added keys and max_dds_samples to idl.
+
 Thu Dec  3 11:07:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
