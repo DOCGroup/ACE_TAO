@@ -1,3 +1,20 @@
+Thu Dec  3 12:15:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Incoming_Message_Stack.h:
+          C++ Builder 2010 fix
+
+        * tao/Object.cpp:
+          Extended some debug info
+
+        * tao/Synch_Invocation.cpp:
+          Removed intermediate variable
+
+        * tao/TAO_Internal.cpp:
+          Improved debug message
+
+        * tao/ZIOP/ZIOP.cpp:
+          Layout change
+
 Thu Dec  3 09:24:17 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/Bug_1395_Regression/run_test.pl:
