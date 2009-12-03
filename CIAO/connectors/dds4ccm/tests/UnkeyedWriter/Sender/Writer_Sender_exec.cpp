@@ -32,7 +32,7 @@ namespace CIAO_Writer_Sender_Impl
 
   Sender_exec_i::Sender_exec_i (void)
     : rate_ (1),
-      iterations_ (10),
+      iterations_ (15),
       keys_ (5),
       assignment_ (WRITE_UNKEYED),
       last_iteration_ (0)
@@ -204,7 +204,7 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::iterations (::CORBA::UShort iterations)
   {
-    this->iterations_ = iterations + 2; //for extra tests.
+    this->iterations_ = iterations;
   }
 
   ::CORBA::UShort
@@ -240,8 +240,6 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-    this->start ();
-
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
                         this->mutex_, CORBA::INTERNAL ());
 
@@ -255,7 +253,8 @@ namespace CIAO_Writer_Sender_Impl
 
         this->ktests_[key] = new_key;
       }
-    this->last_key = this->ktests_.begin ();
+   this->start ();
+   this->last_key = this->ktests_.begin ();
     reset_iterations ();
   }
 
