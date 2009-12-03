@@ -23,7 +23,7 @@ namespace CIAO_Writer_Receiver_Impl
       public virtual ::CORBA::LocalObject
   {
   public:
-    WriterTest_Listener_exec_i ();
+    WriterTest_Listener_exec_i (CORBA::UShort iterations);
     virtual ~WriterTest_Listener_exec_i (void);
 
     virtual void
@@ -34,6 +34,8 @@ namespace CIAO_Writer_Receiver_Impl
     on_many_data (
       const WriterTest_Seq & an_instance,
       const ::CCM_DDS::ReadInfoSeq & info);
+  private:
+    CORBA::UShort iterations_;
   };
 
   class RECEIVER_EXEC_Export Receiver_exec_i
@@ -45,6 +47,9 @@ namespace CIAO_Writer_Receiver_Impl
     virtual ~Receiver_exec_i (void);
 
     // Component attributes.
+    virtual ::CORBA::UShort iterations (void);
+
+    virtual void iterations (::CORBA::UShort iterations);
 
     // Port operations.
     virtual ::CCM_DDS::WriterTest::CCM_Listener_ptr
@@ -66,6 +71,7 @@ namespace CIAO_Writer_Receiver_Impl
 
   private:
     ::Writer::CCM_Receiver_Context_var context_;
+    CORBA::UShort iterations_;
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
