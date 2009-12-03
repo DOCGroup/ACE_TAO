@@ -1,3 +1,10 @@
+Thu Dec  3 18:46:35 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.cpp:
+          Using a take in stead of take_next_sample. Also created
+          Created difference between ONE_BY_ONE and MANY_BY_MANY by
+          invoking on_one_update and on_many_updates on the listener.
+
 Thu Dec  3 15:13:57 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLUnexpStat/Connector/CSL_USTest_Connector_exec.cpp:
