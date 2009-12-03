@@ -61,7 +61,7 @@ private:
   void print_usage_and_die (void);
 
 private:
-  char progname[128];
+  ACE_TCHAR progname[128];
 
   int opt_install;
   int opt_remove;
@@ -85,7 +85,7 @@ Options::Options (void)
     opt_startup (0)
 {
   ACE_OS::strcpy (progname,
-                  "service");
+                  ACE_TEXT("service"));
   ACE::init ();
 }
 
@@ -98,14 +98,14 @@ void
 Options::print_usage_and_die (void)
 {
   ACE_DEBUG ((LM_INFO,
-              "Usage: %s"
-              " -in -r -s -k -tn -d\n"
-              "  -i: Install this program as an NT service, with specified startup\n"
-              "  -r: Remove this program from the Service Manager\n"
-              "  -s: Start the service\n"
-              "  -k: Kill the service\n"
-              "  -t: Set startup for an existing service\n"
-              "  -d: Debug; run as a regular application\n",
+              ACE_TEXT("Usage: %s")
+              ACE_TEXT(" -in -r -s -k -tn -d\n")
+              ACE_TEXT("  -i: Install this program as an NT service, with specified startup\n")
+              ACE_TEXT("  -r: Remove this program from the Service Manager\n")
+              ACE_TEXT("  -s: Start the service\n")
+              ACE_TEXT("  -k: Kill the service\n")
+              ACE_TEXT("  -t: Set startup for an existing service\n")
+              ACE_TEXT("  -d: Debug; run as a regular application\n"),
               progname,
               0));
   ACE_OS::exit (1);
