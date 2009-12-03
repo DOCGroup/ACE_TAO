@@ -49,7 +49,7 @@ CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE>::write_one (
   const typename DDS_TYPE::value_type & an_instance,
   const ::DDS::InstanceHandle_t & instance_handle)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Writer_T::write");
+  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Writer_T::write_one");
 
   this->write_i (an_instance, instance_handle, 0);
 
