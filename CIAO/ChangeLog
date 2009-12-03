@@ -1,3 +1,15 @@
+Thu Dec  3 08:47:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors/run_test.pl:
+          Adapted to the update Reader port.
+
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.cpp:
+          Minor code optimization.
+
 Thu Dec  3 08:28:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/SubscriberListener_T.cpp:
