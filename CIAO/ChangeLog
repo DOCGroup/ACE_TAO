@@ -1,3 +1,9 @@
+Thu Dec  3 11:03:34 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/SenderOnly.cdp:
+          Resolved some runtime errors. Expected_samples and name are not
+          used in Sender.
+
 Thu Dec  3 10:51:20 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/UnkeyedWriter/Receiver/Writer_Receiver_exec.cpp:
