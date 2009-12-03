@@ -620,8 +620,8 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR& cdr, TAO_ORB_Core& orb_core)
         this->compression_policy_value (policy_min_ratio.in ());
 
       return compress_data(cdr, compression_manager.in (),
-                            low_value, min_ratio,
-                            compressor_id, compression_level);
+                           low_value, min_ratio,
+                           compressor_id, compression_level);
     }
   return false;
 
