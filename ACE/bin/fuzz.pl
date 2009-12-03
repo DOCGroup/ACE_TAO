@@ -50,6 +50,7 @@ use PerlACE::Run_Test;
 @files_noncvs = ();
 @files_sln = ();
 @files_vcproj = ();
+@files_run_test_pl = ();
 
 # To keep track of errors and warnings
 $errors = 0;
@@ -122,6 +123,9 @@ sub store_file ($)
     }
     elsif ($name =~ /\.pl$/i) {
         push @files_pl, ($name);
+        if ($name =~ /run_\.pl$/i) {
+            push @files_run_test_pl, ($name);
+        }
     }
     elsif ($name =~ /\.vcproj$/i) {
         push @files_vcproj, ($name);
@@ -1394,6 +1398,7 @@ sub check_for_bad_run_test ()
     }
     $config_list->add_one_config ("FUZZ");
     @valid_files = $config_list->valid_entries ();
+# @files_run_test_pl
     foreach $file (@valid_files) {
         if (open (FILE, $file)) {
             my $is_run_test = 0;
@@ -1594,7 +1599,8 @@ sub check_for_bad_ace_trace()
 
                 # Look for TRACE statements
                 if (m/ACE_OS_TRACE\s*\(\s*\"(.*)\"/
-                    || m/ACE_TRACE\s*\(\s*\"(.*)\"/) {
+                    || m/ACE_TRACE\s*\(\s*\"(.*)\"/)
+                    || m/CIAO_TRACE\s*\(\s*\"(.*)\"/) {
                     my $trace = $1;
 
                     # reduce the classname

@@ -1,8 +1,14 @@
+Thu Dec  3 11:59:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Check CIAO_TRACE macros and put all run_*.pl files in a separate
+          list
+
 Wed Dec  2 18:17:04 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * NEWS:
 
-          Added entry for member validation feature in LoadBalancer. 
+          Added entry for member validation feature in LoadBalancer.
 
 Wed Dec  2 13:46:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
 
