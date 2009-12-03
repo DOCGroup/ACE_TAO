@@ -72,6 +72,7 @@ FT_ReplicaFactory_i::FT_ReplicaFactory_i ()
   , replicas_ ()
   , empty_slots_(0)
   , quit_requested_(0)
+  , name_persistent_file_(ACE_TEXT(""))
 {
   char const * repo_id =
     FT_TEST::_tc_TestReplica->id ();
@@ -160,7 +161,7 @@ int FT_ReplicaFactory_i::write_ior(const ACE_TCHAR * outputFile, const char * io
 
 int FT_ReplicaFactory_i::parse_args (int argc, ACE_TCHAR * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:n:f:i:l:t:qu"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:n:f:i:l:t:p:qu"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -208,6 +209,11 @@ int FT_ReplicaFactory_i::parse_args (int argc, ACE_TCHAR * argv[])
         this->test_output_file_ = get_opts.opt_arg ();
         break;
       }
+      case 'p':
+      {
+       this->name_persistent_file_ = get_opts.opt_arg ();
+       break;
+      }
 
       case '?':
         // fall thru
@@ -220,6 +226,7 @@ int FT_ReplicaFactory_i::parse_args (int argc, ACE_TCHAR * argv[])
                            " -i <registration: role>\n"
                            " -l <registration: location>\n"
                            " -t <test replica ior file>\n"
+                           " -p <name presistent file>\n"
                            " -u{nregister by location}\n"
                            " -q{uit on idle}\n",
                            argv [0]),
@@ -670,7 +677,7 @@ FT_TestReplica_i * FT_ReplicaFactory_i::create_replica(const char * name)
   this->replicas_[factoryId] = pFTReplica;
   this->empty_slots_ -= 1;
 
-  pFTReplica->init (this->orb_);
+  pFTReplica->init (this->orb_, this->name_persistent_file_);
   return pFTReplica;
 }
 
