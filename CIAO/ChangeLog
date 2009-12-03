@@ -1,3 +1,13 @@
+Thu Dec  3 10:51:20 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/UnkeyedWriter/Receiver/Writer_Receiver_exec.cpp:
+          Disabled the listener for now. No takes should be performed.
+
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender_exec.h:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedWriter/descriptors/Plan.cdp:
+          Rewritten in order to test exceptions from the connector.
+
 Thu Dec  3 10:14:28 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/UnkeyedWriter/Receiver/Writer_Receiver.idl:
