@@ -127,7 +127,7 @@ void
     if(!this->inconsistent_.value ())
       {
          CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
-                               ACE_TEXT (" error 'on_inconsistent_topic' in Sender\n")
+                               ACE_TEXT ("error 'on_inconsistent_topic' in Sender\n")
                     ));
       }
     else

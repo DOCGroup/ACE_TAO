@@ -17,21 +17,21 @@ namespace CIAO_CSL_USTest_Receiver_Impl
 //============================================================
   // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
   //============================================================
-  
+
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &unexpected_matched,Atomic_Boolean &unexpected_liveliness)
    : unexpected_matched_ (unexpected_matched),
      unexpected_liveliness_ (unexpected_liveliness)
   {
   }
-  
+
   ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
   {
-    
+
   }
-  
+
   // Operations from ::CCM_DDS::ConnectorStatusListener
   void ConnectorStatusListener_exec_i::on_inconsistent_topic(
-     ::DDS::Topic_ptr /*the_topic*/, 
+     ::DDS::Topic_ptr /*the_topic*/,
      const DDS::InconsistentTopicStatus & /*status*/)
     {
       //printf("Receiver: ConnectorStatusListener_exec_i::on_incompatible_topic\n");
@@ -42,7 +42,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
      //printf("ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n");
     }
   void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr /*the_reader*/, 
+     ::DDS::DataReader_ptr /*the_reader*/,
      const DDS::SampleRejectedStatus & /*status*/)  {
      //printf("ConnectorStatusListener_exec_i::on_sample_rejected\n");
     }
@@ -52,7 +52,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
      //printf("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
     }
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr /*the_writer*/, 
+     ::DDS::DataWriter_ptr /*the_writer*/,
      const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
      //printf("ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n");
     }
@@ -70,7 +70,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
       }
       //printf("Receiver :CSL:on_unexpected_status status_kind = %d %s \n", kind, ::CIAO::DDS4CCM::translate_statuskind (kind));
     }
- 
+
 
   //============================================================
   // Facet Executor Implementation Class: TestTopic_RawListener_exec_i
@@ -99,7 +99,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
             an_instance.x));
   }
 
-  
+
   void
   TestTopic_RawListener_exec_i::on_many_data (
     const TestTopic_Seq & /*an_instance */,
@@ -160,8 +160,8 @@ namespace CIAO_CSL_USTest_Receiver_Impl
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new TestTopic RAW listener\n")));
     return new TestTopic_RawListener_exec_i (this->received_);
   }
-  
-  
+
+
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
   {
@@ -174,7 +174,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   {
     return new ConnectorStatusListener_exec_i (this->unexpected_matched_,this->unexpected_liveliness_);
   }
- 
+
   // Operations from Components::SessionComponent.
   void
   Receiver_exec_i::set_session_context (
@@ -187,7 +187,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
         throw ::CORBA::INTERNAL ();
       }
   }
-  
+
   void
   Receiver_exec_i::configuration_complete (void)
   {
@@ -199,7 +199,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
 
        }
    }
-  
+
   void
   Receiver_exec_i::ccm_activate (void)
   {
@@ -213,36 +213,32 @@ namespace CIAO_CSL_USTest_Receiver_Impl
         throw CORBA::INTERNAL ();
       }
     lc->mode (::CCM_DDS::NOT_ENABLED);
-  
+
   }
-  
+
   void
   Receiver_exec_i::ccm_passivate (void)
   {
   }
-  
+
   void
   Receiver_exec_i::ccm_remove (void)
   {
      if(!this->unexpected_matched_.value () || !this->unexpected_liveliness_.value ())
-      {   
-     
-         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
-                               ACE_TEXT (" states 'PUBLICATION_MATCHED_STATUS and/or LIVELINESS_CHANGED_STATUS' in Receiver")
-                    )); 
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
+                               ACE_TEXT ("states 'PUBLICATION_MATCHED_STATUS and/or LIVELINESS_CHANGED_STATUS' in Receiver\n")
+                    ));
       }
-   
+
     else
       {
          CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Received the expected ")
                                ACE_TEXT ("'PUBLICATION_MATCHED_STATUS and LIVELINESS_CHANGED_STATUS' in Receiver\n")
                     ));
       }
-
- 
-
   }
-  
+
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_CSL_USTest_Receiver_Impl (void)
   {
