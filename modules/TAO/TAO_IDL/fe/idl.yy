@@ -1760,12 +1760,17 @@ const_dcl :
            */
           if ($9 != 0 && s != 0)
             {
+              bool param_holder =
+                $9->is_param_holder ();
+
               AST_Expression::AST_ExprValue *result =
                 $9->check_and_coerce ($3,
                                       tao_enum_constant_decl);
               tao_enum_constant_decl = 0;
 
-              if (result == 0)
+              // If the expression is a template parameter place
+              // holder, 'result' will be 0, but it's ok.
+              if (result == 0 && ! param_holder)
                 {
                   idl_global->err ()->coercion_error ($9,
                                                       $3);

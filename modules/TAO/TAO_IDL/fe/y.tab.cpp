@@ -4201,12 +4201,17 @@ tao_yyreduce:
            */
           if ((tao_yyvsp[(9) - (9)].exval) != 0 && s != 0)
             {
+              bool param_holder =
+                (tao_yyvsp[(9) - (9)].exval)->is_param_holder ();
+
               AST_Expression::AST_ExprValue *result =
                 (tao_yyvsp[(9) - (9)].exval)->check_and_coerce ((tao_yyvsp[(3) - (9)].etval),
                                       tao_enum_constant_decl);
               tao_enum_constant_decl = 0;
-
-              if (result == 0)
+              
+              // If the expression is a template parameter place
+              // holder, 'result' will be 0, but it's ok.
+              if (result == 0 && ! param_holder)
                 {
                   idl_global->err ()->coercion_error ((tao_yyvsp[(9) - (9)].exval),
                                                       (tao_yyvsp[(3) - (9)].etval));
