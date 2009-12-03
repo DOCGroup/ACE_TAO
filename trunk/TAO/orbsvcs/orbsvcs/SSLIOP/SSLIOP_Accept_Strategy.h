@@ -85,7 +85,6 @@ namespace TAO
        * handshake.
        */
       const ACE_Time_Value timeout_;
-
     };
 
   }  // End SSLIOP namespace

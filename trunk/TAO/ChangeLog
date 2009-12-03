@@ -1,3 +1,14 @@
+Thu Dec  3 08:03:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Naming_Service/NT_Naming_Server.cpp:
+          Unicode fixes
+
+        * orbsvcs/orbsvcs/Notify/Delivery_Request.h:
+          Doxygen fix
+
+        * orbsvcs/orbsvcs/Trader/Trader.h:
+          Fix for CB2010
+
 Wed Dec  2 20:56:35 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/run_test.pl:
@@ -9,14 +20,14 @@ Wed Dec  2 20:56:35 UTC 2009  Yan Dai  <dai_y@ociweb.com>
         * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/DeadMemberDetection_Inf_Ctrl.mpc:
 
           Removed duplicated sections introduced from merging.
-          
+
 Wed Dec  2 18:17:04 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         Merged in changes from OCI (RT #13323) that added member validation
         feature to LoadBalancer.
-        
+
         * orbsvcs/LoadBalancer/LoadManager.cpp:
-        
+
           - Added parameters for passing ping_timeout in milliseconds('-t') and
             ping_interval in seconds('-i'). The default ping_interval is 0 which means
             no validation thread launched. Otherwise each member will be validated
@@ -27,23 +38,23 @@ Wed Dec  2 18:17:04 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
             static Client_Strategy_Factory "-ORBWaitStrategy rw -ORBTransportMuxStrategy
               exclusive -ORBConnectStrategy blocked -ORBConnectionHandlerCleanup 1"
-            static Resource_Factory "-ORBFlushingStrategy blocking"        
-        
+            static Resource_Factory "-ORBFlushingStrategy blocking"
+
         * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.h:
         * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
-        
-          Added the validate thread to periodically ping all active members. The 
+
+          Added the validate thread to periodically ping all active members. The
           liveliness status update is done in PortableGroup lib. The next_member()
           query strategy to get next member in maximum number of existing members
           times until an active member is found.
-          
+
         * orbsvcs/orbsvcs/LoadBalancing/LB_RoundRobin.h:
         * orbsvcs/orbsvcs/LoadBalancing/LB_RoundRobin.cpp:
-        
+
           Fixed issue that the location index from previous next_member() call may
           not be valid if the member list is changed since then. Now it verify if
           the list is changed and then find the next member based on RR strategy.
-        
+
         * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
 
           Added try/catch around factory delete_object() call,
@@ -51,14 +62,14 @@ Wed Dec  2 18:17:04 UTC 2009  Yan Dai  <dai_y@ociweb.com>
           be called in the path of remove_member after member
           liveliness check failure. Without try/catch, the member
           will not be removed cleanly.
-          
+
         * orbsvcs/orbsvcs/PortableGroup/PG_MemberInfo.h:
-        
+
           Added liveliness status and group reference.
 
         * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
         * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
-        
+
           Added more functions to support member validation and inactive
           member removing.
 
@@ -110,7 +121,7 @@ Wed Dec  2 18:17:04 UTC 2009  Yan Dai  <dai_y@ociweb.com>
         * bin/tao_other_tests.lst:
 
           Added validation tests.
-          
+
 Wed Dec  2 14:01:43 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/RTCORBA/RT_ORB_Loader.cpp:
