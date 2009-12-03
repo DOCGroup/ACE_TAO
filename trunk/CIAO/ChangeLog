@@ -1,3 +1,31 @@
+Thu Dec  3 13:52:57 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        *bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/CSLUnexpStat:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Base:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Base/CSL_USTest_Base.idl:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Base/CSL_USTest_Base.mpc:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Connector:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Connector/CSL_USTest_Connector.idl:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Connector/CSL_USTest_Connector.mpc:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Connector/CSL_USTest_Connector_exec.cpp:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Connector/CSL_USTest_Connector_exec.h:
+        * connectors/dds4ccm/tests/CSLUnexpStat/descriptors:
+        * connectors/dds4ccm/tests/CSLUnexpStat/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/CSLUnexpStat/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver.idl:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver.mpc:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender.idl:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender.mpc:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.h:
+          Test ConnectorStatusListener:on_unexpected_status implemented
+
+
 Thu Dec  3 12:56:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.cpp:
