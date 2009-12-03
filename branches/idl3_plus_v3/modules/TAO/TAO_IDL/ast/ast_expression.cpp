@@ -69,6 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_expression.h"
 #include "ast_constant.h"
 #include "ast_typedef.h"
+#include "ast_param_holder.h"
 #include "ast_visitor.h"
 
 #include "utl_err.h"
@@ -100,9 +101,20 @@ AST_Expression::AST_Expression (UTL_ScopedName *nm)
     pd_v1 (0),
     pd_v2 (0),
     pd_n (nm),
-    tdef (0)
+    tdef (0),
+    param_holder_ (0)
 {
   this->fill_definition_details ();
+  
+  AST_Decl *d =
+    idl_global->scopes ().top_non_null ()->lookup_by_name (nm,
+                                                           true);
+  
+  if (d->node_type () == AST_Decl::NT_param_holder)
+    {
+      this->param_holder_ =
+        AST_Param_Holder::narrow_from_decl (d);
+    }
 }
 
 // An AST_Expression denoting a type coercion from another AST_Expression.
@@ -113,7 +125,8 @@ AST_Expression::AST_Expression (AST_Expression *v,
     pd_v1 (0),
     pd_v2 (0),
     pd_n (0),
-    tdef (0)
+    tdef (0),
+    param_holder_ (0)
 {
   this->fill_definition_details ();
 
@@ -166,7 +179,8 @@ AST_Expression::AST_Expression (ExprComb c,
     pd_v1 (ev1),
     pd_v2 (ev2),
     pd_n (0),
-    tdef (0)
+    tdef (0),
+    param_holder_ (0)
 {
   this->fill_definition_details ();
 }
@@ -178,7 +192,8 @@ AST_Expression::AST_Expression (ACE_CDR::Short sv)
     pd_v1 (0),
     pd_v2 (0),
     pd_n (0),
-    tdef (0)
+    tdef (0),
+    param_holder_ (0)
 {
   this->fill_definition_details ();
 
@@ -196,7 +211,8 @@ AST_Expression::AST_Expression (ACE_CDR::UShort usv)
     pd_v1 (0),
     pd_v2 (0),
     pd_n (0),
-    tdef (0)
+    tdef (0),
+    param_holder_ (0)
 {
   this->fill_definition_details ();
 
@@ -214,7 +230,8 @@ AST_Expression::AST_Expression (ACE_CDR::Long lv)
     pd_v1 (0),
     pd_v2 (0),
     pd_n (0),
-    tdef (0)
+    tdef (0),
+    param_holder_ (0)
 {
   this->fill_definition_details ();
 
@@ -232,7 +249,8 @@ AST_Expression::AST_Expression (ACE_CDR::Boolean b)
     pd_v1 (0),
     pd_v2 (0),
     pd_n (0),
-    tdef (0)
+    tdef (0),
+    param_holder_ (0)
 {
   this->fill_definition_details ();
 
@@ -250,7 +268,8 @@ AST_Expression::AST_Expression (ACE_CDR::ULong ulv)
     pd_v1 (0),
     pd_v2 (0),
     pd_n (0),
-    tdef (0)
+    tdef (0),
+    param_holder_ (0)
 {
   this->fill_definition_details ();
 
@@ -269,7 +288,8 @@ AST_Expression::AST_Expression (ACE_CDR::ULong ulv,
     pd_v1 (0),
     pd_v2 (0),
     pd_n (0),
-    tdef (0)
+    tdef (0),
+    param_holder_ (0)
 {
   this->fill_definition_details ();
 
@@ -291,7 +311,8 @@ AST_Expression::AST_Expression (ACE_CDR::Float fv)
     pd_v1 (0),
     pd_v2 (0),
     pd_n (0),
-    tdef (0)
+    tdef (0),
+    param_holder_ (0)
 {
   this->fill_definition_details ();
 
@@ -309,7 +330,8 @@ AST_Expression::AST_Expression (ACE_CDR::Double dv)
     pd_v1 (0),
     pd_v2 (0),
     pd_n (0),
-    tdef (0)
+    tdef (0),
+    param_holder_ (0)
 {
   this->fill_definition_details ();
 
@@ -327,7 +349,8 @@ AST_Expression::AST_Expression (ACE_CDR::Char cv)
     pd_v1 (0),
     pd_v2 (0),
     pd_n (0),
-    tdef (0)
+    tdef (0),
+    param_holder_ (0)
 {
   this->fill_definition_details ();
 
@@ -345,7 +368,8 @@ AST_Expression::AST_Expression (ACE_OutputCDR::from_wchar wcv)
     pd_v1 (0),
     pd_v2 (0),
     pd_n (0),
-    tdef (0)
+    tdef (0),
+    param_holder_ (0)
 {
   this->fill_definition_details ();
 
@@ -363,7 +387,8 @@ AST_Expression::AST_Expression (ACE_CDR::Octet ov)
     pd_v1 (0),
     pd_v2 (0),
     pd_n (0),
-    tdef (0)
+    tdef (0),
+    param_holder_ (0)
 {
   this->fill_definition_details ();
 
@@ -381,7 +406,8 @@ AST_Expression::AST_Expression (UTL_String *sv)
     pd_v1 (0),
     pd_v2 (0),
     pd_n (0),
-    tdef (0)
+    tdef (0),
+    param_holder_ (0)
 {
   this->fill_definition_details ();
 
@@ -403,7 +429,8 @@ AST_Expression::AST_Expression (char *sv)
     pd_v1 (0),
     pd_v2 (0),
     pd_n (0),
-    tdef (0)
+    tdef (0),
+    param_holder_ (0)
 {
   this->fill_definition_details ();
 
@@ -2476,6 +2503,14 @@ AST_Expression::eval_symbol (AST_Expression::EvalKind ek)
       idl_global->err ()->lookup_error (this->pd_n);
       return 0;
     }
+    
+  // If we are a template parameter placeholder, just skip the
+  // rest - nothing needs to be evaluated until instantiation
+  // time.  
+  if (this->param_holder_ != 0)
+    {
+      return 0;
+    }
 
   // Do lookup.
   d = s->lookup_by_name (this->pd_n,
@@ -2709,8 +2744,7 @@ AST_Expression::coerce (AST_Expression::ExprType t)
     }
   else
     {
-      return coerce_value (copy,
-                           t);
+      return coerce_value (copy, t);
     }
 }
 
@@ -2971,6 +3005,12 @@ AST_Expression::get_tdef (void) const
   return this->tdef;
 }
 
+bool
+AST_Expression::is_param_holder (void) const
+{
+  return (this->param_holder_ != 0);
+}
+
 // Helper functions for expression dumpers.
 
 // Dump this binary AST_Expression node to the ostream o.
@@ -3214,6 +3254,13 @@ AST_Expression::destroy (void)
 
   delete this->pd_n;
   this->pd_n = 0;
+  
+  if (this->param_holder_ != 0)
+    {
+      this->param_holder_->destroy ();
+      delete this->param_holder_;
+      this->param_holder_ = 0;
+    }
 }
 
 // Data accessors.
