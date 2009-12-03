@@ -6217,16 +6217,20 @@ formal_parameter
               tao_enum_constant_decl = 0;
             }
         }
-        | IDL_SEQUENCE '<' IDENTIFIER '>'
+        | IDL_SEQUENCE '<' IDENTIFIER '>' IDENTIFIER
         {
           ACE_NEW_RETURN ($<pival>$,
                           FE_Utils::T_Param_Info,
                           1);
 
           $<pival>$->type_ = AST_Decl::NT_sequence;
-          $<pival>$->name_  = "sequence<";
-          $<pival>$->name_ += $3;
-          $<pival>$->name_ += '>';
+          $<pival>$->seq_param_ref_  = $3;
+          $<pival>$->name_ += $5;
+
+          ACE::strdelete ($3);
+          $3 = 0;
+          ACE::strdelete ($5);
+          $5 = 0;
         }
         ;
 

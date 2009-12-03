@@ -1,13 +1,20 @@
+Thu Dec  3 19:15:15 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+        * TAO_IDL/include/fe_utils.h:
+
 Thu Dec  3 18:52:22 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_field.cpp:
-        
+
           Added check for AST_Param_Holder as field type, and
           made this type (along with sequence and array) one
           whose lifetime is tied to the field node.
-          
+
         * TAO_IDL/util/utl_global.cpp:
-        
+
           Added initialization in the constuctor for the new
           member that stores a template param list.
 
@@ -59,7 +66,7 @@ Wed Dec  2 21:21:24 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/util/utl_scope.cpp:
 
           - Added code to UTL_Scope::lookup_by_name() that can
-            match an input to a template parameter, if any, of the 
+            match an input to a template parameter, if any, of the
             enclosing scope.
 
           - Changed constructor and IDL compiler factory function

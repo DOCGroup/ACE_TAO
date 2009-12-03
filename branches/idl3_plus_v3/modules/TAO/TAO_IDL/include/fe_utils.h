@@ -23,12 +23,13 @@ struct TAO_IDL_FE_Export FE_Utils
     AST_Expression::ExprType const_type_;
     AST_Enum *enum_const_type_decl_;
     ACE_CString name_;
+    ACE_CString seq_param_ref_;
 
     T_Param_Info (void);
   };
-  
+
   typedef ACE_Unbounded_Queue<T_Param_Info> T_PARAMLIST_INFO;
-  
+
   static bool duplicate_param_id (T_PARAMLIST_INFO *params);
 
   struct T_Ref_Info
