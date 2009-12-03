@@ -85,9 +85,12 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(
     {
       for (::DDS_Long i = 0; i < data.length (); ++i)
         {
-          ::CCM_DDS::ReadInfo info;
-          info <<= sample_info[i];
-          listener_->on_one_data (data[i], info);
+          if (sample_info[i].valid_data)
+            {
+              ::CCM_DDS::ReadInfo info;
+              info <<= sample_info[i];
+              listener_->on_one_data (data[i], info);
+            }
         }
     }
   else
