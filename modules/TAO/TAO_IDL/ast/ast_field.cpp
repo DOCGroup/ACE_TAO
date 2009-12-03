@@ -101,10 +101,12 @@ AST_Field::AST_Field (AST_Type *ft,
 {
   AST_Decl::NodeType fnt = ft->node_type ();
   
-  if (AST_Decl::NT_array == fnt || AST_Decl::NT_sequence == fnt)
-    {
-      this->owns_base_type_ = true;
-    }
+  // In each of these cases, we are responsible for destroying
+  // our ref_type_ member.
+  this->owns_base_type_ =
+    fnt == AST_Decl::NT_array
+    || fnt == AST_Decl::NT_sequence
+    || fnt == AST_Decl::NT_param_holder;
 }
 
 // To be used when constructing a node of a subclass of AST_Field.
@@ -121,10 +123,12 @@ AST_Field::AST_Field (AST_Decl::NodeType nt,
 {
   AST_Decl::NodeType fnt = ft->node_type ();
   
-  if (AST_Decl::NT_array == fnt || AST_Decl::NT_sequence == fnt)
-    {
-      this->owns_base_type_ = true;
-    }
+  // In each of these cases, we are responsible for destroying
+  // our ref_type_ member.
+  this->owns_base_type_ =
+    fnt == AST_Decl::NT_array
+    || fnt == AST_Decl::NT_sequence
+    || fnt == AST_Decl::NT_param_holder;
 }
 
 AST_Field::~AST_Field (void)
