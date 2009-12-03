@@ -115,11 +115,9 @@ namespace CIAO_Reader_Test_Receiver_Impl
             char key[100];
             ACE_OS::sprintf (key, "KEY_%d", i);
             readertest_info.key = CORBA::string_dup (key);
-            DDS::InstanceHandle_t hnd = ::DDS::HANDLE_NIL;
-            if (test_handles)
-              {
-                hnd = this->handles_[key];
-              }
+            DDS::InstanceHandle_t hnd = test_handles
+                ? this->handles_[key] 
+                : ::DDS::HANDLE_NIL;
             this->reader_->read_one_all (
                     readertest_info,
                     readertest_info_seq,

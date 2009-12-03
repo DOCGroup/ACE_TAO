@@ -195,40 +195,7 @@
           <kind>tk_ulong</kind>
         </type>
         <value>
-          <ulong>10</ulong>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>get_data</name>
-      <value>
-        <type>
-          <kind>tk_boolean</kind>
-        </type>
-        <value>
-          <boolean>false</boolean>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>read_data</name>
-      <value>
-        <type>
-          <kind>tk_boolean</kind>
-        </type>
-        <value>
-          <boolean>false</boolean>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>raw_listen</name>
-      <value>
-        <type>
-          <kind>tk_boolean</kind>
-        </type>
-        <value>
-          <boolean>true</boolean>
+          <ulong>9</ulong>
         </value>
       </value>
     </configProperty>
@@ -304,7 +271,7 @@
           <kind>tk_ulong</kind>
         </type>
         <value>
-          <ulong>10</ulong>
+          <ulong>9</ulong>
         </value>
       </value>
     </configProperty>
@@ -365,21 +332,6 @@
     </internalEndpoint>
     <internalEndpoint>
       <portName>push_consumer_data</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Keyed_Test_ConnectorComponentInstance2" />
-    </internalEndpoint>
-  </connection>
-  <connection>
-    <name>info_get_get_fresh_data</name>
-    <internalEndpoint>
-      <portName>info_get_fresh_data</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>pull_consumer_fresh_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Keyed_Test_ConnectorComponentInstance2" />
