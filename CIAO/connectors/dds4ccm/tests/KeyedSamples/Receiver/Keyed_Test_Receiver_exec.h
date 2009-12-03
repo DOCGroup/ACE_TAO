@@ -13,13 +13,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-#include "ace/Task.h"
 #include "ace/Reactor.h"
+
+#include <map>
 
 namespace CIAO_Keyed_Test_Receiver_Impl
 {
-  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong > Atomic_ULong;
-
   class Receiver_exec_i;
   /**
   * @class reader activity generator
@@ -45,45 +44,6 @@ namespace CIAO_Keyed_Test_Receiver_Impl
 
   };
 
-  class RECEIVER_EXEC_Export KeyedTest_Listener_exec_i
-    : public virtual ::CCM_DDS::KeyedTest::CCM_Listener,
-      public virtual ::CORBA::LocalObject
-  {
-  public:
-    KeyedTest_Listener_exec_i (Atomic_ULong &);
-    virtual ~KeyedTest_Listener_exec_i (void);
-
-    virtual void
-    on_one_data (
-      const KeyedTest & an_instance,
-      const ::CCM_DDS::ReadInfo & info);
-    virtual void
-    on_many_data (
-      const KeyedTest_Seq & an_instance,
-      const ::CCM_DDS::ReadInfoSeq & info);
-  private:
-    Atomic_ULong &received_;
-  };
-
-  class RECEIVER_EXEC_Export PortStatusListener_exec_i
-    : public virtual ::CCM_DDS::CCM_PortStatusListener,
-      public virtual ::CORBA::LocalObject
-  {
-  public:
-    PortStatusListener_exec_i (void);
-    virtual ~PortStatusListener_exec_i (void);
-
-    virtual void
-    on_requested_deadline_missed (
-      ::DDS::DataReader_ptr the_reader,
-      const ::DDS::RequestedDeadlineMissedStatus & status);
-
-    virtual void
-    on_sample_lost (
-      ::DDS::DataReader_ptr the_reader,
-      const ::DDS::SampleLostStatus & status);
-  };
-
   class RECEIVER_EXEC_Export Receiver_exec_i
     : public virtual Receiver_Exec,
       public virtual ::CORBA::LocalObject
@@ -93,10 +53,7 @@ namespace CIAO_Keyed_Test_Receiver_Impl
     virtual ~Receiver_exec_i (void);
 
     // Supported operations and attributes.
-    void read_one (void);
-    void read_all (void);
-    void get_one (void);
-    void get_all (void);
+    void read (void);
 
     // Component attributes.
     virtual ::CORBA::ULong rate (void);
@@ -111,27 +68,12 @@ namespace CIAO_Keyed_Test_Receiver_Impl
 
     virtual void keys (::CORBA::UShort keys);
 
-    virtual ::CORBA::Boolean get_data (void);
-
-    virtual void get_data (::CORBA::Boolean get_data);
-
-    virtual ::CORBA::Boolean read_data (void);
-
-    virtual void read_data (::CORBA::Boolean read_data);
-
-    virtual ::CORBA::Boolean raw_listen (void);
-
-    virtual void raw_listen (::CORBA::Boolean raw_listen);
-
     // Port operations.
     virtual ::CCM_DDS::KeyedTest::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_out_status (void);
-
-    virtual ::CCM_DDS::CCM_PortStatusListener_ptr
-    get_info_get_status (void);
 
     // Operations from Components::SessionComponent.
     virtual void
@@ -147,15 +89,18 @@ namespace CIAO_Keyed_Test_Receiver_Impl
   private:
     ::Keyed_Test::CCM_Receiver_Context_var context_;
     ::CCM_DDS::KeyedTest::Reader_var reader_;
-    ::CCM_DDS::KeyedTest::Getter_var getter_;
 
     read_action_Generator * ticker_;
     CORBA::ULong rate_;
     CORBA::UShort iterations_;
     CORBA::UShort keys_;
-    CORBA::Boolean get_data_, read_data_, raw_listen_;
     CORBA::ULong expected_;
-    Atomic_ULong received_;
+
+    typedef std::map<ACE_CString, CORBA::UShort> Last_Iteration_Table;
+    Last_Iteration_Table last_iters_;
+
+    void
+    check_received_samples ();
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
