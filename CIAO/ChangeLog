@@ -1,3 +1,8 @@
+Thu Dec  3 15:13:57 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLUnexpStat/Connector/CSL_USTest_Connector_exec.cpp:
+          Resolved warning unused parameter.
+
 Thu Dec  3 14:06:14 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
