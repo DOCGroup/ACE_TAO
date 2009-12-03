@@ -36,6 +36,12 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_requested_incompatib
         {
           this->error_listener_->on_requested_incompatible_qos (the_reader, status);
         }
+      else
+        {
+          CIAO_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("SubscriberListener_T::on_requested_incompatible_qos: ")
+                      ACE_TEXT ("No error listener installed\n")));
+        }
     }
   catch (...)
     {
@@ -57,6 +63,12 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_changed(
       if (!CORBA::is_nil (this->error_listener_))
         {
           this->error_listener_->on_unexpected_status (reader, ::DDS::LIVELINESS_CHANGED_STATUS);
+        }
+      else
+        {
+          CIAO_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("SubscriberListener_T::on_liveliness_changed: ")
+                      ACE_TEXT ("No error listener installed\n")));
         }
     }
   catch (...)
@@ -80,6 +92,12 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_sample_rejected(
         {
           this->error_listener_->on_sample_rejected (reader, status);
         }
+      else
+        {
+          CIAO_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("SubscriberListener_T::on_sample_rejected: ")
+                      ACE_TEXT ("No error listener installed\n")));
+        }
     }
   catch (...)
     {
@@ -101,6 +119,12 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_subscription_matched
       if (!CORBA::is_nil (this->error_listener_))
         {
           this->error_listener_->on_unexpected_status (reader, ::DDS::SUBSCRIPTION_MATCHED_STATUS);
+        }
+      else
+        {
+          CIAO_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("SubscriberListener_T::on_subscription_matched: ")
+                      ACE_TEXT ("No error listener installed\n")));
         }
     }
   catch (...)

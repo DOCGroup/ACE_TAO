@@ -12,6 +12,7 @@
 #include "Time_t.h"
 #include "InstanceHandleSeq.h"
 #include "PublisherListener.h"
+#include "SubscriberListener.h"
 #include "TopicListener.h"
 #include "PublisherQos.h"
 
@@ -141,7 +142,7 @@ namespace CIAO
       RTI_DomainParticipant_i::create_subscriber_with_profile (
         const char* library_name,
         const char *profile_name,
-        ::DDS::SubscriberListener_ptr /*a_listener*/,
+        ::DDS::SubscriberListener_ptr a_listener,
         ::DDS::StatusMask mask)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::create_subscriber_with_profile");
@@ -149,11 +150,13 @@ namespace CIAO
         CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_DomainParticipant_i::create_subscriber_with_profile - "
                      "Creating Subscriber\n"));
 
+        RTI_SubscriberListener_i *rti_sl = new RTI_SubscriberListener_i (a_listener);
         DDSSubscriber * rti_sub =
-          this->impl_->create_subscriber_with_profile (library_name,
-                                          profile_name,
-                                          0,
-                                          mask);
+          this->impl_->create_subscriber_with_profile (
+            library_name,
+            profile_name,
+            rti_sl,
+            mask);
 
         if (!rti_sub)
           {
@@ -173,7 +176,7 @@ namespace CIAO
 
       ::DDS::Subscriber_ptr
       RTI_DomainParticipant_i::create_subscriber (const ::DDS::SubscriberQos & /*qos*/,
-                                                  ::DDS::SubscriberListener_ptr /*a_listener*/,
+                                                  ::DDS::SubscriberListener_ptr a_listener,
                                                   ::DDS::StatusMask mask)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::create_subscriber");
@@ -181,10 +184,11 @@ namespace CIAO
         CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_DomainParticipant_i::create_subscriber - "
                      "Creating Subscriber\n"));
 
+        RTI_SubscriberListener_i *rti_sl = new RTI_SubscriberListener_i (a_listener);
         DDSSubscriber * rti_sub =
           this->impl_->create_subscriber (DDS_SUBSCRIBER_QOS_DEFAULT,
-                                                0,
-                                                mask);
+                                          rti_sl,
+                                          mask);
 
         if (!rti_sub)
           {
