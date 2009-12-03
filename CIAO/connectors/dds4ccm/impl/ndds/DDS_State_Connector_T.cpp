@@ -154,9 +154,6 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_update (void)
 {
-  this->configure_default_topic ();
-  this->configure_publisher ();
-
   try
     {
       if (CORBA::is_nil  (this->observable_data_.in ()))
@@ -202,9 +199,6 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen (void)
 {
-  this->configure_default_topic ();
-  this->configure_subscriber ();
-
   try
     {
       if (CORBA::is_nil (this->__listen_datareaderlistener.in ()))

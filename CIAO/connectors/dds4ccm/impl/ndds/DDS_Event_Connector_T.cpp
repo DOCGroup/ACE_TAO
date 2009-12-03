@@ -29,8 +29,6 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_write (void)
 {
   CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_write");
 
-  this->configure_default_topic ();
-  this->configure_publisher ();
   try
     {
       if (CORBA::is_nil  (this->supplier_writer_.in ()))
@@ -77,9 +75,6 @@ void
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen (void)
 {
   CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen");
-
-  this->configure_default_topic ();
-  this->configure_subscriber ();
 
   try
     {
