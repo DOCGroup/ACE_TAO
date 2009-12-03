@@ -1,3 +1,8 @@
+Thu Dec  3 11:06:37 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.cpp:
+          Resolved compiler warnings on Windows.
+
 Thu Dec  3 11:03:34 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/SenderOnly.cdp:

@@ -313,7 +313,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Receiver_exec_i::test_exception: ")
                   ACE_TEXT ("Wrong exception caught while reading non existent instance\n")));
       }
-    catch(CCM_DDS::NonExistent& ex)
+    catch(CCM_DDS::NonExistent& )
       {
         except_caught = true;
       }
@@ -346,7 +346,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
         CIAO_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver_exec_i::test_exception_with_handles: ")
                   ACE_TEXT ("Expected exception caught while reading non existent instance\n")));
       }
-    catch(CCM_DDS::NonExistent& ex)
+    catch(CCM_DDS::NonExistent& )
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Receiver_exec_i::test_exception_with_handles: ")
                   ACE_TEXT ("Wrong exception caught while reading non existent instance\n")));
