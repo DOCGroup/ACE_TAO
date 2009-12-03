@@ -32,9 +32,6 @@ namespace CIAO
         /// Destructor
         virtual ~SubscriberListener_T (void);
 
-        virtual void
-        on_data_on_readers (::DDS::Subscriber* the_subscriber);
-
         static ::DDS::StatusMask get_mask (void);
       private:
         ::CCM_DDS::ConnectorStatusListener_var error_listener_;
