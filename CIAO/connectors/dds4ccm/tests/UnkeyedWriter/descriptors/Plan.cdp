@@ -175,7 +175,7 @@
         <value>
           <!-- should be equal to iterations in 
                Sender component -->
-          <ushort>15</ushort>
+          <ushort>10</ushort>
         </value>
       </value>
     </configProperty>
@@ -269,15 +269,24 @@
       </value>
     </configProperty>
     <configProperty>
+      <name>keys</name>
+      <value>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <ushort>5</ushort>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
       <name>iterations</name>
       <value>
         <type>
           <kind>tk_ushort</kind>
         </type>
         <value>
-          <!-- should be more than max_samples in
-               USER_QOS_PROFILES. Thus more than 10-->
-          <ushort>15</ushort>
+          <ushort>10</ushort>
         </value>
       </value>
     </configProperty>
