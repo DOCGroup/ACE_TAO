@@ -256,6 +256,19 @@
       </value>
     </configProperty>
     <configProperty>
+      <name>max_dds_samples</name>
+      <value>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <!-- should matches max_samples in
+               USER_QOS_PROFILES.-->
+          <ushort>10</ushort>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
       <name>iterations</name>
       <value>
         <type>
@@ -263,7 +276,7 @@
         </type>
         <value>
           <!-- should be more than max_samples in
-               USER_QOS_PROFILES. Thus more than 5-->
+               USER_QOS_PROFILES. Thus more than 10-->
           <ushort>15</ushort>
         </value>
       </value>

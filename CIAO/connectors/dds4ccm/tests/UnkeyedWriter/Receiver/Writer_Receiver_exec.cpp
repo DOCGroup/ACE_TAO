@@ -128,7 +128,7 @@ namespace CIAO_Writer_Receiver_Impl
         CIAO_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw CORBA::INTERNAL ();
       }
-    lc->mode (::CCM_DDS::ONE_BY_ONE);
+    lc->mode (::CCM_DDS::NOT_ENABLED);
   }
 
   void

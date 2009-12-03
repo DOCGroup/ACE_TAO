@@ -56,6 +56,10 @@ namespace CIAO_Writer_Sender_Impl
 
     virtual void iterations (::CORBA::UShort iterations);
 
+    virtual ::CORBA::UShort max_dds_samples (void);
+
+    virtual void max_dds_samples (::CORBA::UShort max_dds_samples);
+
     virtual ::CORBA::UShort keys (void);
 
     virtual void keys (::CORBA::UShort keys);
@@ -82,7 +86,8 @@ namespace CIAO_Writer_Sender_Impl
     CORBA::UShort iterations_;
     CORBA::UShort keys_;
     WRITER_ASSIGNMENT assignment_;
-    CORBA::Long last_iteration_;
+    CORBA::UShort samples_written_;
+    CORBA::UShort max_dds_samples_;
 
     void reset_iterations ();
     void start_new_assignment (
