@@ -271,6 +271,11 @@ private:
    */
   int quit_requested_;
 
+  /**
+  * A file that use by FT_TestReplica_i object
+  */
+  const ACE_TCHAR* name_persistent_file_;
+
 };
 
 #endif /* FT_REPLICAFACTORY_H_  */

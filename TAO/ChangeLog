@@ -1,3 +1,25 @@
+Thu Dec  3 09:24:17 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * orbsvcs/tests/Bug_1395_Regression/run_test.pl:
+        * orbsvcs/tests/CosEvent/Basic/run_test.pl:
+        * orbsvcs/tests/Bug_2285_Regression/run_test2.pl:
+        * orbsvcs/tests/Bug_2285_Regression/run_test.pl:
+        * orbsvcs/tests/AVStreams/Full_Profile/run_test.pl:
+        * orbsvcs/tests/Notify/Bug_1884_Regression/run_test.pl:
+        * orbsvcs/tests/Notify/Ordering/run_test.pl:
+        * orbsvcs/tests/Notify/Bug_2415_Regression/run_test.pl:
+        * orbsvcs/tests/Notify/ThreadPool/run_test.pl:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.h:
+        * orbsvcs/tests/FT_App/run_test_rmnotifier.pl:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.h:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+        * orbsvcs/tests/FT_App/run_test_basic.pl:
+        * tests/Nested_Upcall_Crash/run_test.pl:
+
+          Tests are converted to use new test framework
+          and added to fuzz build.
+
 Thu Dec  3 08:09:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/IFR_Service/IFR_Service.mpc:

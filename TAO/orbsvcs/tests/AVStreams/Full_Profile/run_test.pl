@@ -26,7 +26,7 @@ $inputfile = "test_input";
 # generate test stream data
 # the size of this file is limited by the maximum packet size
 # windows has a maximum size of 8KB
-$inputfile = PerlACE::generate_test_file($inputfile, 102400);
+$inputfile = PerlACE::generate_test_file($inputfile, 32000);
 my $cl_inputfile = $cl->LocalFile ($inputfile);
 
 my $ns_nsiorfile = $ns->LocalFile ($nsiorfile);
@@ -149,7 +149,7 @@ for $protocol (@protocols) {
     $ns->DeleteFile ($outputfile);
 }
 
-$NS_status = $NS->TerminateWaitKill ($ns->ProcessStopWaitInterval()+985);
+$NS_status = $NS->TerminateWaitKill ($ns->ProcessStopWaitInterval());
 if ($NS_status != 0) {
     print STDERR "ERROR: Naming Service returned $NS_status\n";
     $status = 1;
