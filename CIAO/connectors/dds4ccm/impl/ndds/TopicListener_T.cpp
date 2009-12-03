@@ -24,7 +24,7 @@ CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::on_inconsistent_topic (
   ::DDS::Topic_ptr the_topic,
   const ::DDS::InconsistentTopicStatus & status)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::TopicListener_T::on_inconsistent_topic");
+  CIAO_TRACE ("CIAO::DDS4CCM::TopicListener_T::on_inconsistent_topic");
 
   if (!CORBA::is_nil (this->error_listener_.in ()))
     {
@@ -36,7 +36,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::StatusMask
 CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::get_mask (void)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::TopicListener_T::get_mask");
+  CIAO_TRACE ("CIAO::DDS4CCM::TopicListener_T::get_mask");
 
   return DDS_INCONSISTENT_TOPIC_STATUS;
 }

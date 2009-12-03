@@ -175,6 +175,8 @@ namespace CIAO
       RTI_Publisher_i::set_listener (::DDS::PublisherListener_ptr a_listener,
                                      ::DDS::StatusMask mask)
       {
+        CIAO_TRACE ("RTI_Publisher_i::set_listener");
+
         RTI_PublisherListener_i* rti_impl_list = new RTI_PublisherListener_i (a_listener);
         return this->impl_->set_listener (rti_impl_list, mask);
       }
@@ -224,6 +226,7 @@ namespace CIAO
       ::DDS::DomainParticipant_ptr
       RTI_Publisher_i::get_participant (void)
       {
+        CIAO_TRACE ("RTI_Publisher_i::get_participant");
         DDSDomainParticipant* p = this->impl_->get_participant ();
         ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i (p);
         return retval._retn ();
