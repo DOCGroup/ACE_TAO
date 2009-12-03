@@ -149,7 +149,8 @@ IDL_GlobalData::IDL_GlobalData (void)
     dcps_gen_zero_copy_read_ (false),
     recursion_start_ (0),
     multi_file_input_ (false),
-    big_file_name_ ("PICML_IDL_file_bag")
+    big_file_name_ ("PICML_IDL_file_bag"),
+    current_params_ (0)
 {
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.

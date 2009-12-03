@@ -1,3 +1,16 @@
+Thu Dec  3 18:52:22 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_field.cpp:
+        
+          Added check for AST_Param_Holder as field type, and
+          made this type (along with sequence and array) one
+          whose lifetime is tied to the field node.
+          
+        * TAO_IDL/util/utl_global.cpp:
+        
+          Added initialization in the constuctor for the new
+          member that stores a template param list.
+
 Wed Dec  2 21:21:24 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_generator.h:
