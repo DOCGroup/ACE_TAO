@@ -134,8 +134,8 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_subscriber (void)
     {
       this->subscriber_listener_ = new ::CIAO::DDS4CCM::SubscriberListener_T
         <DDS_TYPE, CCM_TYPE> (
-              this->context_,
-              this->context_->get_connection_error_listener ());
+          this->context_,
+          this->context_->get_connection_error_listener ());
 
       if (this->library_name_ && this->profile_name_)
         {
@@ -169,8 +169,8 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_publisher (void)
     {
       this->publisher_listener_ = new ::CIAO::DDS4CCM::PublisherListener_T
         <DDS_TYPE, CCM_TYPE> (
-              this->context_,
-              this->context_->get_connection_error_listener ());
+          this->context_,
+          this->context_->get_connection_error_listener ());
 
       if (this->library_name_ && this->profile_name_)
         {
@@ -210,7 +210,8 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic (void)
             dynamic_cast< CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i * > (
               this->domain_participant_.in ());
           DDS_ReturnCode_t const retcode = DDS_TYPE::type_support::register_type(
-                part->get_participant (), DDS_TYPE::type_support::get_type_name ());
+            part->get_participant (), DDS_TYPE::type_support::get_type_name ());
+
           if (retcode == DDS_RETCODE_OK)
             {
               this->topiclistener_ = new ::CIAO::DDS4CCM::TopicListener_T
