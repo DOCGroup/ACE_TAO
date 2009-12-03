@@ -1,3 +1,10 @@
+Thu Dec  3 14:06:14 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+          Removed the context switch.
+          Created difference between ONE_BY_ONE and MANY_BY_MANY by
+          introducing a take (in stead of take_next_sample).
+
 Thu Dec  3 13:57:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
