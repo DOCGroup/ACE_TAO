@@ -60,9 +60,68 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("DataReaderListener_T::narrow failed.\n")));
       return;
     }
-  ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>* rh =
-      new  ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>(this->listener_.in (), reader);
-  this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (rh);
+// for now, don't use a DataReaderHandler. Just perform inline.
+//  ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>* rh =
+//      new  ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>(this->listener_.in (), reader);
+//  this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (rh);
+  typename DDS_TYPE::dds_seq_type data;
+  DDS_SampleInfoSeq sample_info;
+  ::DDS::ReturnCode_t const result = reader->take (
+              data,
+              sample_info,
+              DDS_LENGTH_UNLIMITED,
+              DDS_NOT_READ_SAMPLE_STATE,
+              DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
+              DDS_ANY_INSTANCE_STATE);
+  if (result == DDS_RETCODE_NO_DATA)
+      return;
+  else if (result != DDS_RETCODE_OK)
+    {
+      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unable to take data from data reader, error %d.\n"), result));
+      return;
+    }
+
+  if (this->mode_.value () == ::CCM_DDS::ONE_BY_ONE)
+    {
+      for (::DDS_Long i = 0; i < data.length (); ++i)
+        {
+          ::CCM_DDS::ReadInfo info;
+          info <<= sample_info[i];
+          listener_->on_one_data (data[i], info);
+        }
+    }
+  else 
+    {
+      CORBA::ULong nr_of_samples = 0;
+      for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
+        {
+          if (sample_info[i].valid_data)
+            {
+              ++nr_of_samples;
+            }
+        }
+
+      typename CCM_TYPE::seq_type::_var_type inst_seq = new typename CCM_TYPE::seq_type;
+      ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;
+
+      infoseq->length (nr_of_samples);
+      inst_seq->length (nr_of_samples);
+
+      // Copy the valid samples
+      CORBA::ULong ix = 0;
+      for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
+        {
+          if(sample_info[i].valid_data)
+            {
+              infoseq[ix] <<= sample_info[i];
+              inst_seq[ix] = data[i];
+              ++ix;
+            }
+        }
+      listener_->on_many_data (inst_seq, infoseq);
+    }
+  // Return the loan
+  reader->return_loan(data, sample_info);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
