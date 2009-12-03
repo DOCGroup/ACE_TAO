@@ -29,6 +29,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::domain_id (void)
 {
   CIAO_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::domain_id");
+
   return this->domain_id_;
 }
 
@@ -38,6 +39,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::domain_id (
   ::DDS::DomainId_t domain_id)
 {
   CIAO_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::domain_id");
+
   if (this->configuration_complete_)
     {
       throw ::CCM_DDS::NonChangeable ();
@@ -53,6 +55,7 @@ char *
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile (void)
 {
   CIAO_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile");
+
   return CORBA::string_dup (this->qos_profile_.in ());
 }
 
@@ -62,6 +65,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile (
   const char * qos_profile)
 {
   CIAO_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile");
+
   if (this->configuration_complete_)
     {
       throw ::CCM_DDS::NonChangeable ();
@@ -148,7 +152,8 @@ void
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::set_session_context (
   ::Components::SessionContext_ptr ctx)
 {
-  CIAO_TRACE ("set_session_context");
+  CIAO_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::set_session_context");
+
   typename CCM_TYPE::context_type::_var_type lctx =
     CCM_TYPE::context_type::_narrow (ctx);
 
@@ -164,6 +169,8 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
 {
+  CIAO_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove");
+
   if (! ::CORBA::is_nil (this->domain_participant_.in ()))
     {
       this->domain_participant_->delete_contained_entities ();
@@ -182,6 +189,8 @@ void
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
 {
   CIAO_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate");
+
+  this->configure_default_domain ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
