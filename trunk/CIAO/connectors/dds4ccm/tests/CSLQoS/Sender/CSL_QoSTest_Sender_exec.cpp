@@ -13,20 +13,20 @@ namespace CIAO_CSL_QoSTest_Sender_Impl
   //============================================================
   // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
   //============================================================
-  
+
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &incompatible)
    : incompatible_ (incompatible)
   {
   }
-  
+
   ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
   {
-    
+
   }
-  
+
   // Operations from ::CCM_DDS::ConnectorStatusListener
   void ConnectorStatusListener_exec_i::on_inconsistent_topic(
-    ::DDS::Topic_ptr /*the_topic*/, 
+    ::DDS::Topic_ptr /*the_topic*/,
      const DDS::InconsistentTopicStatus & /*status*/)
     {
        //printf("Sender : ConnectorStatusListener_exec_i::on_inconsistent_topic\n");
@@ -37,7 +37,7 @@ namespace CIAO_CSL_QoSTest_Sender_Impl
        //printf("Sender:ConnectorStatusListener_exec_i::on_requested_incompatible_qos, status = %dl\n", status);
     }
   void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr /*the_reader*/, 
+     ::DDS::DataReader_ptr /*the_reader*/,
      const DDS::SampleRejectedStatus & /*status*/)  {
       //printf("ConnectorStatusListener_exec_i::on_sample_rejected\n");
     }
@@ -47,7 +47,7 @@ namespace CIAO_CSL_QoSTest_Sender_Impl
      //printf("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
     }
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr /*the_writer*/, 
+     ::DDS::DataWriter_ptr /*the_writer*/,
      const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
 //     printf("Sender:ConnectorStatusListener_exec_i::on_offered_incompatible_qos status = %dl\n", status);
        this->incompatible_ = true;
@@ -77,9 +77,9 @@ namespace CIAO_CSL_QoSTest_Sender_Impl
    // printf ("*************** out connector status sender ************************\n");
     return new ConnectorStatusListener_exec_i (this->incompatible_);
   }
- 
+
   // Supported operations and attributes.
- 
+
   void
   Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
   {
@@ -95,9 +95,9 @@ namespace CIAO_CSL_QoSTest_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
-    //printf("-------------configuration_complete ----------------\n"); 
+    //printf("-------------configuration_complete ----------------\n");
   }
- 
+
   void
   Sender_exec_i::ccm_activate (void)
   {
@@ -112,18 +112,17 @@ namespace CIAO_CSL_QoSTest_Sender_Impl
   Sender_exec_i::ccm_remove (void)
   {
     //printf("*************in remove Sender********** \n");
-  
+
     if(!this->incompatible_.value ())
-      {   
-     
-         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
-                               ACE_TEXT (" error 'on_offered_incompatible_Qos' in Sender")
-                    )); 
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
+                               ACE_TEXT ("error 'on_offered_incompatible_Qos' in Sender\n")
+                    ));
       }
-   
+
     else
       {
-         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Received the expected ")
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Received the expected ")
                                ACE_TEXT ("'on_offered_incompatible_qos' in Sender\n")
                     ));
       }

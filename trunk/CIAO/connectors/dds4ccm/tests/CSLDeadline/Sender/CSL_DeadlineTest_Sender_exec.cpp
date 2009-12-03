@@ -2,7 +2,7 @@
 // $Id$
 
 
-// Test for OFFERED_DEADLINE_MISSED status : Writer failed to write data within the deadline time period set in the profile. 
+// Test for OFFERED_DEADLINE_MISSED status : Writer failed to write data within the deadline time period set in the profile.
 
 #include "CSL_DeadlineTest_Sender_exec.h"
 #include "ace/Guard_T.h"
@@ -16,20 +16,20 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
   //============================================================
   // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
   //============================================================
-  
+
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &deadline_missed)
    : deadline_missed_ (deadline_missed)
   {
   }
-  
+
   ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
   {
-    
+
   }
-  
+
   // Operations from ::CCM_DDS::ConnectorStatusListener
   void ConnectorStatusListener_exec_i::on_inconsistent_topic(
-    ::DDS::Topic_ptr /*the_topic*/, 
+    ::DDS::Topic_ptr /*the_topic*/,
      const DDS::InconsistentTopicStatus & /*status*/){
        //printf("Sender : ConnectorStatusListener_exec_i::on_inconsistent_topic\n");
     }
@@ -39,7 +39,7 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
      //printf("Sender:ConnectorStatusListener_exec_i::on_requested_incompatible_qos, status = %dl\n", status);
     }
   void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr /*the_reader*/, 
+     ::DDS::DataReader_ptr /*the_reader*/,
      const DDS::SampleRejectedStatus & /*status*/)  {
      //printf("ConnectorStatusListener_exec_i::on_sample_rejected\n");
     }
@@ -50,10 +50,10 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
      this->deadline_missed_ = true;
     }
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr /*the_writer*/, 
+     ::DDS::DataWriter_ptr /*the_writer*/,
      const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
      //printf("Sender:ConnectorStatusListener_exec_i::on_offered_incompatible_qos status = %dl\n", status);
-   
+
     }
   void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr /*the_entity*/,
@@ -79,9 +79,9 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
   {
     return new ConnectorStatusListener_exec_i (this->deadline_missed_);
   }
- 
+
   // Supported operations and attributes.
- 
+
   void
   Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
   {
@@ -102,11 +102,11 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
   void
   Sender_exec_i::write (void)
   {
-    //to force an 'offered_deadline_missed'  write the topics with a pause of 2 sec in between and 
+    //to force an 'offered_deadline_missed'  write the topics with a pause of 2 sec in between and
     //in the profile the deadline is set to 1 sec.
     for (CSL_QoSTest_Table::iterator i = this->_ktests_.begin ();
             i != this->_ktests_.end ();
-            ++i)  
+            ++i)
     {
       try
       {
@@ -140,10 +140,10 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
     this->add_instance_of_topic ("TWEE",2);
 
     //write the instances once for the test
-    this->write();  
+    this->write();
   }
-  
-  
+
+
 
   void
   Sender_exec_i::ccm_passivate (void)
@@ -153,18 +153,17 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
   void
   Sender_exec_i::ccm_remove (void)
   {
-   
+
     if(!this->deadline_missed_.value ())
-      {   
-     
-         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
-                               ACE_TEXT (" warning 'on_offered_deadline_missed' in Sender")
-                    )); 
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
+                               ACE_TEXT ("warning 'on_offered_deadline_missed' in Sender\n")
+                    ));
       }
-   
+
     else
       {
-         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Received the expected ")
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Received the expected ")
                                ACE_TEXT ("'on_offered_deadline_missed' in Sender\n")
                     ));
       }
