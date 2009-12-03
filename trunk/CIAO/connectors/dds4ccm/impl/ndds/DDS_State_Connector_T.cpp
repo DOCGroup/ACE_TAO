@@ -161,8 +161,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_update (void)
           this->datawriter_listener_ = new ::CIAO::DDS4CCM::DataWriterListener_T
             <DDS_TYPE, CCM_TYPE> (
                   this->context_,
-                  this->listen_datalistener_mode_,
-                  this->listen_datalistener_max_delivered_data_);
+                  this->context_->get_connection_error_listener ());
 
           if (this->library_name_ && this->profile_name_)
             {

@@ -132,8 +132,9 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_subscriber (void)
 
   if (CORBA::is_nil (this->subscriber_.in ()))
     {
-      this->subscriber_listener_ = new ::CIAO::DDS4CCM::RTI::SubscriberListener_T
+      this->subscriber_listener_ = new ::CIAO::DDS4CCM::SubscriberListener_T
         <DDS_TYPE, CCM_TYPE> (
+              this->context_,
               this->context_->get_connection_error_listener ());
 
       if (this->library_name_ && this->profile_name_)
@@ -143,7 +144,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_subscriber (void)
               this->library_name_,
               this->profile_name_,
               this->subscriber_listener_.in (),
-              ::CIAO::DDS4CCM::RTI::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+              ::CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
         }
       else
         {
@@ -152,7 +153,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_subscriber (void)
             create_subscriber (
               sqos,
               this->subscriber_listener_.in (),
-              ::CIAO::DDS4CCM::RTI::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+              ::CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
         }
     }
 }
@@ -166,8 +167,9 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_publisher (void)
 
   if (CORBA::is_nil (this->publisher_.in ()))
     {
-      this->publisher_listener_ = new ::CIAO::DDS4CCM::RTI::PublisherListener_T
+      this->publisher_listener_ = new ::CIAO::DDS4CCM::PublisherListener_T
         <DDS_TYPE, CCM_TYPE> (
+              this->context_,
               this->context_->get_connection_error_listener ());
 
       if (this->library_name_ && this->profile_name_)
@@ -177,7 +179,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_publisher (void)
               this->library_name_,
               this->profile_name_,
               this->publisher_listener_.in (),
-              ::CIAO::DDS4CCM::RTI::PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+              ::CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
         }
       else
         {
@@ -186,7 +188,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_publisher (void)
             create_publisher (
               pqos,
               this->publisher_listener_.in (),
-              ::CIAO::DDS4CCM::RTI::PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+              ::CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
         }
     }
 }
