@@ -17,27 +17,42 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    namespace RTI
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class PublisherListener_T :
+      public ::DDS::PublisherListener,
+      private ACE_Copy_Disabled
     {
-      template <typename DDS_TYPE, typename CCM_TYPE>
-      class PublisherListener_T :
-        public ::DDS::PublisherListener,
-        private ACE_Copy_Disabled
-      {
-      public:
-        /// Constructor
-        PublisherListener_T (
-          ::CCM_DDS::ConnectorStatusListener_ptr error_listener);
+    public:
+      /// Constructor
+      PublisherListener_T (
+        typename CCM_TYPE::context_type::_ptr_type context,
+        ::CCM_DDS::ConnectorStatusListener_ptr error_listener);
 
-        /// Destructor
-        virtual ~PublisherListener_T (void);
+      virtual void on_offered_deadline_missed (
+        ::DDS::DataWriter *the_writer,
+        const ::DDS::OfferedDeadlineMissedStatus & status);
 
-        static ::DDS::StatusMask get_mask (void);
+      virtual void on_liveliness_lost (
+        ::DDS::DataWriter *the_writer,
+        const ::DDS::LivelinessLostStatus & status);
 
-      private:
-        ::CCM_DDS::ConnectorStatusListener_var error_listener_;
-      };
-    }
+      virtual void on_offered_incompatible_qos (
+        ::DDS::DataWriter *the_writer,
+        const ::DDS::OfferedIncompatibleQosStatus & status);
+
+      virtual void on_publication_matched (
+        ::DDS::DataWriter *the_writer,
+        const ::DDS::PublicationMatchedStatus & status);
+
+      /// Destructor
+      virtual ~PublisherListener_T (void);
+
+      static ::DDS::StatusMask get_mask (void);
+
+    private:
+      typename CCM_TYPE::context_type::_var_type context_;
+      ::CCM_DDS::ConnectorStatusListener_var error_listener_;
+    };
   }
 }
 

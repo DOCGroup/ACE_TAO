@@ -1,3 +1,22 @@
+Thu Dec  3 13:57:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DataWriterListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriterListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.h:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.h:
+          Handle everything related to the CSL at subscriber/publisher
+          level
+
+        * DAnCE/RepositoryManager/RepositoryManager.mpc:
+          Corrected base project
+
 Thu Dec  3 13:52:57 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         *bin/ciao_tests.lst:
