@@ -1,3 +1,11 @@
+Fri Dec  4 21:00:38 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
+        * orbsvcs/LoadBalancer/LoadManager.cpp:
+
+          Renamed init() to initialize() to avoid Warning W8022 on borland build.
+          
 Fri Dec  4 17:25:32 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * NEWS:
