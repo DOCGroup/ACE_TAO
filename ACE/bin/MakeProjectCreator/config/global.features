@@ -136,3 +136,5 @@ tao_no_iiop = 0
 // Option to enable the linking of the TAO_CodecFactory library
 // whenever TAO is linked in
 link_codecfactory = 0
+
+valuetype_out_indirection=1
