@@ -65,7 +65,6 @@ project(TAO_IFR_EXE) : aceexe, install, ifr_client, mcpp, tao_idl_mcpp, crosscom
 
   Source_Files {
     drv_args.cpp
-    drv_preproc.cpp
     tao_idl.cpp
   }
 
