@@ -37,9 +37,13 @@
 # define ACE_CC_MINOR_VERSION (__BORLANDC__ % 0x100)
 # define ACE_CC_BETA_VERSION (0)
 
-# ifndef ACE_USING_MCPP_PREPROCESSOR
+#ifndef ACE_USING_MCPP_PREPROCESSOR
+# if (__BORLANDC__ >= 0x620)
+#  define ACE_CC_PREPROCESSOR_ARGS "-q -Sl -o%s"
+# else
 #  define ACE_CC_PREPROCESSOR_ARGS "-q -P- -o%s"
 # endif
+#endif
 
 // Automatically define WIN32 macro if the compiler tells us it is our
 // target platform.
