@@ -1,3 +1,8 @@
+Fri Dec  4 08:32:42 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/descriptors/run_test.pl:
+          Resolved fuzz errors/warnings.
+
 Thu Dec  3 20:12:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender_exec.cpp
