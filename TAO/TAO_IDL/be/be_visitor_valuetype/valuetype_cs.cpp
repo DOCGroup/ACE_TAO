@@ -258,7 +258,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << node->name () << "::_tao_marshal_v (TAO_OutputCDR &) const"
           << be_nl
           << "{" << be_idt_nl
-          << "return true;" << be_uidt_nl
+          << "return 1;" << be_uidt_nl
           << "}" << be_nl << be_nl;
 
       // The virtual _tao_unmarshal_v method.
@@ -266,7 +266,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << node->name () << "::_tao_unmarshal_v (TAO_InputCDR &)"
           << be_nl
           << "{" << be_idt_nl
-          << "return true;" << be_uidt_nl
+          << "return 1;" << be_uidt_nl
           << "}" << be_nl << be_nl;
 
       // The virtual _tao_match_formal_type method.
@@ -275,7 +275,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "::_tao_match_formal_type (ptrdiff_t ) const"
           << be_nl
           << "{" << be_idt_nl
-          << "return false;"<< be_uidt_nl
+          << "return 0;"<< be_uidt_nl
           << "}" << be_nl << be_nl;
 
 
@@ -285,14 +285,14 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
               << node->name () << "::_tao_marshal__" << node->flat_name ()
               << " (TAO_OutputCDR &, TAO_ChunkInfo&) const" << be_nl
               << "{" << be_idt_nl
-              << "return true;" << be_uidt_nl
+              << "return 1;" << be_uidt_nl
               << "}" << be_nl << be_nl;
 
           *os << "::CORBA::Boolean" << be_nl
               << node->name () << "::_tao_unmarshal__" << node->flat_name ()
               << " (TAO_InputCDR &, TAO_ChunkInfo&)" << be_nl
               << "{" << be_idt_nl
-              << "return true;" << be_uidt_nl
+              << "return 1;" << be_uidt_nl
               << "}" << be_nl << be_nl;
         }
     }
@@ -323,25 +323,32 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "::CORBA::ValueBase *base = 0;" << be_nl
+      << "::CORBA::Boolean is_indirected = 0;" << be_nl
+      << "::CORBA::Boolean is_null_object = 0;" << be_nl
       << "::CORBA::Boolean const retval =" << be_idt_nl
       << "::CORBA::ValueBase::_tao_unmarshal_pre ("
       << be_idt << be_idt_nl
       << "strm," << be_nl
       << "base," << be_nl
-      << node->local_name () << "::_tao_obv_static_repository_id ()"
-      << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
+      << node->local_name () << "::_tao_obv_static_repository_id ()," << be_nl
+      << "is_null_object," << be_nl
+      << "is_indirected" << be_uidt_nl << be_nl
+      << ");" << be_uidt << be_uidt_nl << be_nl
       << "::CORBA::ValueBase_var owner (base);" << be_nl << be_nl
       << "if (!retval)" << be_idt_nl
-      << "return false;" << be_uidt_nl << be_nl
-      << "if (base != 0 && ! base->_tao_unmarshal_v (strm))" << be_idt_nl
-      << "return false;" << be_uidt_nl << be_nl
+      << "return 0;" << be_uidt_nl << be_nl
+      << "if (is_null_object)"  << be_idt_nl
+      << "return 1;" << be_uidt_nl << be_nl
+      << "if (!is_indirected && base != 0 && ! base->_tao_unmarshal_v (strm))" << be_idt_nl
+      << "return 0;" << be_uidt_nl << be_nl
       << "// Now base must be null or point to the unmarshaled object."
       << be_nl
       << "// Align the pointer to the right subobject." << be_nl
-      << "new_object = " << node->local_name () << "::_downcast (base);"
-      << be_nl << "owner._retn ();" << be_nl
-      << "return true;" << be_uidt_nl
+      << "new_object = " << node->local_name () << "::_downcast (base);" << be_nl
+      << "if (is_indirected)" << be_idt_nl
+      << "new_object->_add_ref ();" << be_uidt_nl << be_nl
+      << "owner._retn ();" << be_nl
+      << "return 1;" << be_uidt_nl
       << "}";
 
   // If we inherit from CORBA::Object and/or CORBA::AbstractBase

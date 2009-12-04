@@ -257,6 +257,40 @@ TAO_OutputCDR::fragment_stream (ACE_CDR::ULong pending_alignment,
 }
 
 
+
+int 
+TAO_OutputCDR::offset (char* pos)
+{
+  int offset = 0;
+  const ACE_Message_Block * cur = this->current ();
+  
+  char* last = cur->wr_ptr();
+
+  while (cur != 0)
+  {
+    if (pos >= cur->base () && pos <= last)
+    {
+      offset += (last - pos);
+      break;
+    }
+    else
+    {
+      offset += (last - cur->base ());
+    }
+
+    last = cur->end ();   
+    cur = cur->prev();
+  }
+
+  if (cur == 0)
+  {
+    throw ::CORBA::BAD_PARAM ();
+  }
+
+  return offset;
+}
+
+
 // ****************************************************************
 
 TAO_InputCDR::TAO_InputCDR (const TAO_OutputCDR& rhs,
