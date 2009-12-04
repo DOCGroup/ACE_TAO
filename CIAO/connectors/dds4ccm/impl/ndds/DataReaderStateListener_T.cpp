@@ -155,6 +155,12 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_requested_
         {
           this->info_out_portstatus_->on_requested_deadline_missed (the_reader, status);
         }
+      else
+        {
+          CIAO_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("DataReaderStateListener_T::on_requested_deadline_missed: ")
+                      ACE_TEXT ("No portstatus listener installed\n")));
+        }
     }
   catch (...)
     {
@@ -174,6 +180,12 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_sample_los
       if (!CORBA::is_nil (this->info_out_portstatus_))
         {
           this->info_out_portstatus_->on_sample_lost (the_reader, status);
+        }
+      else
+        {
+          CIAO_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("DataReaderStateListener_T::on_sample_lost: ")
+                      ACE_TEXT ("No portstatus listener installed\n")));
         }
     }
   catch (...)
