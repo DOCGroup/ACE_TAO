@@ -1,3 +1,8 @@
+Fri Dec  4 07:30:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+          CB2010 fix
+
 Thu Dec  3 11:59:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
