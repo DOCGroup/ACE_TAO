@@ -1,3 +1,15 @@
+Fri Dec  4 09:49:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/Updater/*
+          Use the stateconnector as starting point
+
+        * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.cpp:
+          First compile fixes
+
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.h:
+          Handle data_on_readers
+
 Fri Dec  4 09:34:09 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/tests/CIAO/CommandlinePassage/run_test.pl:
