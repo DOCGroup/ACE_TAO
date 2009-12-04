@@ -87,8 +87,12 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain (void)
     {
       try
       {
-        //NDDSConfigLogger::get_instance()->set_verbosity_by_category(NDDS_CONFIG_LOG_CATEGORY_API,
-        //                                                           NDDS_CONFIG_LOG_VERBOSITY_STATUS_ALL );
+        ACE_Env_Value<int> verbosity (ACE_TEXT("DDS4CCM_NDDS_LOG_VERBOSITY"),
+          NDDS_CONFIG_LOG_VERBOSITY_SILENT);
+
+        NDDS_Config_LogVerbosity n_verbosity =
+          static_cast <NDDS_Config_LogVerbosity> (verbosity.operator int());
+        NDDSConfigLogger::get_instance()->set_verbosity (n_verbosity);
 
         // Generic code
         this->domain_participant_factory_ =

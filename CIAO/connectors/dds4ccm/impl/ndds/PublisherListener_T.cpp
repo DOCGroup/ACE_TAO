@@ -40,7 +40,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_deadline_miss
         {
           CIAO_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("PublisherListener_T::on_offered_deadline_missed: ")
-                      ACE_TEXT ("No error listener installed\n")));
+                      ACE_TEXT ("No error listener connected\n")));
         }
     }
   catch (...)
@@ -68,7 +68,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_incompatible_
         {
           CIAO_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("PublisherListener_T::on_offered_incompatible_qos: ")
-                      ACE_TEXT ("No error listener installed\n")));
+                      ACE_TEXT ("No error listener connected\n")));
         }
     }
   catch (...)
@@ -96,7 +96,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_lost (
         {
           CIAO_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("PublisherListener_T::on_liveliness_lost: ")
-                      ACE_TEXT ("No error listener installed\n")));
+                      ACE_TEXT ("No error listener connected\n")));
         }
     }
   catch (...)
@@ -124,7 +124,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_publication_matched (
         {
           CIAO_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("PublisherListener_T::on_publication_matched: ")
-                      ACE_TEXT ("No error listener installed\n")));
+                      ACE_TEXT ("No error listener connected\n")));
         }
     }
   catch (...)

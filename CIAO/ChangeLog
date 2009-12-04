@@ -1,3 +1,17 @@
+Fri Dec  4 20:41:45 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.h:
+        * connectors/dds4ccm/impl/ndds/PortStatusListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/PortStatusListener_T.h:
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.cpp:
+          Introduced a PortStatusListener which is than the base of
+          the DataReaderListener
+
 Fri Dec  4 14:31:45 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIAO_ComponentServer/SimpleComponent/run_test.pl:
