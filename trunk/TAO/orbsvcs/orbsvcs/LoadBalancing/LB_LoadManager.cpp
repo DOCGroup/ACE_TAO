@@ -62,11 +62,11 @@ TAO_LB_LoadManager::TAO_LB_LoadManager (int ping_timeout,
 {
   this->pull_handler_.initialize (&this->monitor_map_, this);
 
-  // @note "this->init()" is not called here (in the constructor)
+  // @note "this->initialize()" is not called here (in the constructor)
   //       since it may thrown an exception.  Throwing an exception in
   //       a constructor in an emulated exception environment is
   //       problematic since native exception semantics cannot be
-  //       reproduced in such a case.  As such, init() must be called
+  //       reproduced in such a case.  As such, initialize() must be called
   //       by whatever code instantiates this LoadManager.
 }
 
@@ -618,7 +618,7 @@ TAO_LB_LoadManager::create_object (
     PortableGroup::GenericFactory::FactoryCreationId_out
       factory_creation_id)
 {
-//   this->init ();
+//   this->initialize ();
 
 
   PortableGroup::Criteria new_criteria (the_criteria);
@@ -765,9 +765,9 @@ TAO_LB_LoadManager::next_member (const PortableServer::ObjectId & oid)
 }
 
 void
-TAO_LB_LoadManager::init (ACE_Reactor * reactor,
-                          CORBA::ORB_ptr orb,
-                          PortableServer::POA_ptr root_poa)
+TAO_LB_LoadManager::initialize (ACE_Reactor * reactor,
+                                CORBA::ORB_ptr orb,
+                                PortableServer::POA_ptr root_poa)
 {
   ACE_ASSERT (!CORBA::is_nil (orb));
   ACE_ASSERT (!CORBA::is_nil (root_poa));
@@ -867,7 +867,7 @@ TAO_LB_LoadManager::init (ACE_Reactor * reactor,
   if (this->ping_interval_ > ACE_Time_Value::zero && this->activate(THR_NEW_LWP | THR_JOINABLE, 1) != 0)
   {
     ACE_ERROR((LM_ERROR,
-      ACE_TEXT ("(%P|%t)TAO_LB_LoadManager::init  failed to activate ")
+      ACE_TEXT ("(%P|%t)TAO_LB_LoadManager::initialize  failed to activate ")
       ACE_TEXT ("thread to validate connection.\n")));
     throw CORBA::INTERNAL ();
   }
