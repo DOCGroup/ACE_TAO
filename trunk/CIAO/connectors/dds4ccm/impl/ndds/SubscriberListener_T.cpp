@@ -134,6 +134,32 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_subscription_matched
     }
 }
 
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_data_on_readers(
+  ::DDS::Subscriber* sub)
+{
+  CIAO_TRACE ("CIAO::DDS4CCM::SubscriberListener_T::on_data_on_readers");
+
+  try
+    {
+      if (!CORBA::is_nil (this->error_listener_))
+        {
+          this->error_listener_->on_unexpected_status (sub, ::DDS::DATA_ON_READERS_STATUS);
+        }
+      else
+        {
+          CIAO_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("SubscriberListener_T::on_data_on_readers: ")
+                      ACE_TEXT ("No error listener installed\n")));
+        }
+    }
+  catch (...)
+    {
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("SubscriberListener_T::on_data_on_readers: ")
+                             ACE_TEXT ("DDS Exception caught\n")));
+    }
+}
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::StatusMask
@@ -142,6 +168,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::get_mask (void)
   return DDS_REQUESTED_INCOMPATIBLE_QOS_STATUS |
          DDS_SAMPLE_REJECTED_STATUS |
          DDS_LIVELINESS_CHANGED_STATUS |
-         DDS_SUBSCRIPTION_MATCHED_STATUS;
+         DDS_SUBSCRIPTION_MATCHED_STATUS |
+         DDS_DATA_ON_READERS_STATUS;
 }
 

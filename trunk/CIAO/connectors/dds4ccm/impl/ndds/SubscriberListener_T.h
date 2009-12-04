@@ -47,6 +47,9 @@ namespace CIAO
         ::DDS::DataReader* reader,
         const ::DDS::SubscriptionMatchedStatus& status);
 
+      virtual void on_data_on_readers(
+        ::DDS::Subscriber* subscriber);
+
       static ::DDS::StatusMask get_mask (void);
 
     private:
