@@ -7,6 +7,7 @@
 #include "tao/SystemException.h"
 #include "tao/Argument.h"
 #include "tao/CDR.h"
+#include "tao/debug.h"
 
 #include "ace/OS_NS_string.h"
 
@@ -72,6 +73,10 @@ TAO_Operation_Details::marshal_args (TAO_OutputCDR &cdr)
   // data in the CDR stream since the operation was a marshaling
   // operation, not a fragmentation operation.
   cdr.more_fragments (false);
+  
+#ifdef TAO_HAS_VALUETYPE_OUT_INDIRECTION
+  cdr.reset_vt_indirect_maps ();
+#endif
 
   return true;
 }
@@ -84,6 +89,8 @@ TAO_Operation_Details::demarshal_args (TAO_InputCDR &cdr)
       if (!((*this->args_[i]).demarshal (cdr)))
         return false;
     }
+
+  cdr.reset_vt_indirect_maps ();
 
   return true;
 }

@@ -56,7 +56,7 @@ project(TAO_Core_idl) : tao_versioning_idl_defaults, gen_ostream {
 
 }
 
-project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoidldefaults, gen_ostream, corba_e_micro, corba_e_compact, core_minimum_corba, tao_no_iiop {
+project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoidldefaults, gen_ostream, corba_e_micro, corba_e_compact, core_minimum_corba, tao_no_iiop, valuetype_out_indirection {
   after       += TAO_Core_idl
   sharedname   = TAO
   dynamicflags = TAO_BUILD_DLL

@@ -133,12 +133,12 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
 
   // _tao_match_formal_type method.  Generated because ValueBase interface
   // requires it. Since value boxes do not support inheritence, this can
-  // simply return true.
+  // simply return 1.
   *os << "::CORBA::Boolean " << be_nl
       << node->name ()
       << "::_tao_match_formal_type (ptrdiff_t ) const" << be_nl
       << "{" << be_idt_nl
-      << "return true;" << be_uidt_nl
+      << "return 1;" << be_uidt_nl
       << "}" << be_nl << be_nl;
       
 
@@ -242,22 +242,31 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << node->local_name () << " *&vb_object" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "::CORBA::Boolean is_null_object;" << be_nl
+      << "::CORBA::Boolean is_null_object = 0;" << be_nl
+      << "::CORBA::Boolean is_indirected = 0;" << be_nl
+      << "TAO_InputCDR indrected_strm ((size_t) 0);" << be_nl
       << "if ( ::CORBA::ValueBase::_tao_validate_box_type (" << be_idt
       << be_idt << be_idt_nl
-      << "strm," << be_nl
+      << "strm, indrected_strm, " << be_nl
       << node->local_name () << "::_tao_obv_static_repository_id (),"
       << be_nl
-      << "is_null_object"
+      << "is_null_object, is_indirected"
       << be_uidt_nl
       << ") == false)" << be_uidt_nl
       << "{" << be_idt_nl
-      << "return false;" << be_uidt_nl
+      << "return 0;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "vb_object = 0;" << be_nl
       << "if (is_null_object)"  << be_idt_nl
       << "{" << be_idt_nl
-      << "return true;" << be_uidt_nl
+      << "return 1;" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
+      << "if (is_indirected)"  << be_idt_nl
+      << "{" << be_idt_nl
+      << "return " << node->name () << "::_tao_unmarshal (" << be_idt
+      << be_idt << be_idt_nl
+      << " indrected_strm, vb_object);" 
+      << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "ACE_NEW_RETURN (" << be_idt_nl
       << "vb_object," << be_nl
@@ -304,7 +313,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << node->name ()
       << "::_tao_unmarshal_v (TAO_InputCDR &)" << be_nl
       << "{" << be_idt_nl
-      << "return true;" << be_uidt_nl
+      << "return 1;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // Emit the type specific elements.  The visit_* methods in this
