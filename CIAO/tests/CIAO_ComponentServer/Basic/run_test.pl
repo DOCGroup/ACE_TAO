@@ -79,15 +79,15 @@ if ($target->GetFile ($server_iorfile2, $iorbase) == -1) {
     exit 1;
 }
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval ());
+$client_status = $CL->SpawnWaitKill ($host->ProcessStartWaitInterval ());
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 
-$server_status1 = $SV1->WaitKill ($server1->ProcessStopWaitInterval ());
-$server_status2 = $SV2->WaitKill ($server2->ProcessStopWaitInterval ());
+$server_status1 = $SV1->WaitKill ($target->ProcessStopWaitInterval ());
+$server_status2 = $SV2->WaitKill ($target->ProcessStopWaitInterval ());
 
 if ($server_status1 != 0) {
     print STDERR "ERROR: server1 returned $server_status1\n";

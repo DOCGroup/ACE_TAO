@@ -1,3 +1,9 @@
+Fri Dec  4 13:23:46 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/tests/CIAO/CommandlinePassage/run_test.pl:
+        * tests/CIAO_ComponentServer/Basic/run_test.pl:
+          Resolved runtime errors in script.
+
 Fri Dec  4 13:14:10 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.cpp:
