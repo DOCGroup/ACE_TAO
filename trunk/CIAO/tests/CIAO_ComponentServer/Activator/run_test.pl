@@ -22,11 +22,11 @@ my $target = PerlACE::TestTarget::create_target ($PerlACE::TestConfig);
 
 $SV1 = $target->CreateProcess ("./client", "-s $ciao_root/bin/ciao_componentserver");
 
-$server1 = $SV1->SpawnWaitKill (60);
+$server_status = $SV1->SpawnWaitKill ($target->ProcessStartWaitInterval ());
 
-if ($server1 != 0) {
+if ($server_status != 0) {
     $target->GetStderrLog();
-    print STDERR "ERROR: server1 returned $server\n";
+    print STDERR "ERROR: server1 returned $server_status\n";
     exit 1;
 }
 
