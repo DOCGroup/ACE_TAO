@@ -1,3 +1,9 @@
+Fri Dec  4 09:04:34 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIAO_ComponentServer/Activator/run_test.pl:
+        * tests/CIAO_ComponentServer/Basic/run_test.pl:
+          Resolved fuzz errors/warnings.
+
 Fri Dec  4 08:32:42 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/descriptors/run_test.pl:

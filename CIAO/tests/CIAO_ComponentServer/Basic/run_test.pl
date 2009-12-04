@@ -18,7 +18,7 @@ foreach $i (@ARGV) {
     }
 }
 
-my $target = PerlACE::TestTarget::create_target ($PerlACE::TestConfig);
+my $target = PerlACE::TestTarget::create_target (1);
 my $host = new PerlACE::TestTarget;
 
 $iorbase1 = "server1.ior";
@@ -68,26 +68,26 @@ if ($target->WaitForFileTimed ($iorbase2,
 }
 
 if ($target->GetFile ($server_iorfile1, $iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$iorfile1>\n";
+    print STDERR "ERROR: cannot retrieve file <$iorbase1>\n";
     $SV1->Kill (); $SV1->TimedWait (1);
     exit 1;
 }
 
 if ($target->GetFile ($server_iorfile2, $iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$iorfile2>\n";
+    print STDERR "ERROR: cannot retrieve file <$iorbase2>\n";
     $SV2->Kill (); $SV2->TimedWait (1);
     exit 1;
 }
 
-$client_status = $CL->SpawnWaitKill (60);
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval ());
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 
-$server_status1 = $SV1->WaitKill (10);
-$server_status2 = $SV2->WaitKill (10);
+$server_status1 = $SV1->WaitKill ($server1->ProcessStopWaitInterval ());
+$server_status2 = $SV2->WaitKill ($server2->ProcessStopWaitInterval ());
 
 if ($server_status1 != 0) {
     print STDERR "ERROR: server1 returned $server_status1\n";
