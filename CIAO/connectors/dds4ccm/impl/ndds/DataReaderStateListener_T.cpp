@@ -78,25 +78,25 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
         {
           CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unable to take data from data reader, error %d.\n"), result));
         }
-      if (sampleinfo.instance_state == ::DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
+      if (this->mode_.value () == ::CCM_DDS::ONE_BY_ONE)
         {
-          ::CCM_DDS::ReadInfo empty;
-          empty <<= sample_info;
-          listener_->on_deletion (instance, empty);
-        }
-      else if (sampleinfo.view_state == ::DDS_NEW_VIEW_STATE)
-        {
-          ::CCM_DDS::ReadInfo empty;
-          empty <<= sample_info;
-          listener_->on_creation (instance, empty);
-        }
-      else
-        {
-          if (this->mode_.value () == ::CCM_DDS::ONE_BY_ONE)
+          for (::DDS_Long i = 0; i < data.length (); ++i)
             {
-              for (::DDS_Long i = 0; i < data.length (); ++i)
+              if (sample_info[i].valid_data)
                 {
-                  if (sample_info[i].valid_data)
+                  if (sample_info[i].instance_state == ::DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
+                    {
+                      ::CCM_DDS::ReadInfo readinfo;
+                      readinfo <<= sample_info[i];
+                      listener_->on_deletion (data[i], readinfo);
+                    }
+                  else if (sample_info[i].view_state == ::DDS_NEW_VIEW_STATE)
+                    {
+                      ::CCM_DDS::ReadInfo readinfo;
+                      readinfo <<= sample_info[i];
+                      listener_->on_creation (data[i], readinfo);
+                    }
+                  else
                     {
                       ::CCM_DDS::ReadInfo info;
                       info <<= sample_info[i];
@@ -104,38 +104,6 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
                     }
                 }
             }
-          else
-            {
-              CORBA::ULong nr_of_samples = 0;
-              for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
-                {
-                  if (sample_info[i].valid_data)
-                    {
-                      ++nr_of_samples;
-                    }
-                }
-
-              typename CCM_TYPE::seq_type::_var_type inst_seq = new typename CCM_TYPE::seq_type;
-              ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;
-
-              infoseq->length (nr_of_samples);
-              inst_seq->length (nr_of_samples);
-
-              // Copy the valid samples
-              CORBA::ULong ix = 0;
-              for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
-                {
-                  if(sample_info[i].valid_data)
-                    {
-                      infoseq[ix] <<= sample_info[i];
-                      inst_seq[ix] = data[i];
-                      ++ix;
-                    }
-                }
-              listener_->on_many_updates (inst_seq, infoseq);
-            }
-          // Return the loan
-          reader->return_loan(data, sample_info);
         }
     }
   catch (...)
