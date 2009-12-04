@@ -65,12 +65,6 @@ namespace CIAO
         typedef DATA_WRITER data_writer;
         typedef DATA_READER data_reader;
       };
-
-      typedef Type_Traits < const char *,
-                            DDS_StringSeq,
-                            DDSStringTypeSupport,
-                            DDSStringDataWriter,
-                            DDSStringDataReader > String_Traits;
     }
   }
 }

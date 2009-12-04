@@ -70,10 +70,10 @@ private:
 
   // @from DDS_Listen
   void configure_port_dds_listen (void);
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> listen_datalistener_mode_;
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> listen_datalistener_max_delivered_data_;
   ::DDS::DataReader_var push_consumer_data_;
   ::DDS::DataReaderListener_var __listen_datareaderlistener;
+  ::CCM_DDS::CCM_DataListenerControl_var push_consumer_data_control_;
+  ::CCM_DDS::CCM_StateListenerControl_var push_consumer_state_control_;
 
   // @from DDS_Getter
   ::DDS::DataReader_var pull_consumer_fresh_data_;

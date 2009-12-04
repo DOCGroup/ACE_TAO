@@ -28,8 +28,7 @@ namespace CIAO
                       ::CCM_DDS::ConnectorStatusListener_ptr error_listener,
                       typename CCM_TYPE::listener_type::_ptr_type listener,
                       ::CCM_DDS::PortStatusListener_ptr port_status_listener,
-                      ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> &mode,
-                      ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> &max_delivered_data);
+                      ::CCM_DDS::DataListenerControl_ptr control);
 
         /// Destructor
         virtual ~DataReaderListener_T (void);
@@ -45,11 +44,10 @@ namespace CIAO
         static ::DDS::StatusMask get_mask (void);
       private:
         typename CCM_TYPE::context_type::_var_type context_;
-        ::CCM_DDS::ConnectorStatusListener_var  error_listener_;
-        ::CCM_DDS::PortStatusListener_var       info_out_portstatus_;
+        ::CCM_DDS::ConnectorStatusListener_var error_listener_;
         typename CCM_TYPE::listener_type::_var_type listener_;
-        ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> &mode_;
-        ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> &max_delivered_data_;
+        ::CCM_DDS::PortStatusListener_var port_status_listener_;
+        ::CCM_DDS::DataListenerControl_var control_;
       };
     }
   }

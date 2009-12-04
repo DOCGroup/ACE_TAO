@@ -6,15 +6,13 @@
 #include "dds4ccm/impl/ndds/Writer_T.h"
 #include "dds4ccm/impl/ndds/Getter_T.h"
 #include "dds4ccm/impl/ndds/Reader_T.h"
-#include "dds4ccm/impl/ndds/DataListenerControl.h"
+#include "dds4ccm/impl/ndds/DataListenerControl_T.h"
 
 #include "ciao/Logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::DDS_Event_Connector_T (void) :
-    DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>(),
-    listen_datalistener_mode_ ( ::CCM_DDS::NOT_ENABLED),
-    listen_datalistener_max_delivered_data_ (0)
+    DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>()
 {
 }
 
@@ -85,8 +83,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen (void)
                   this->context_->get_connection_error_listener (),
                   this->context_->get_connection_push_consumer_data_listener (),
                   this->context_->get_connection_pull_consumer_status (),
-                  this->listen_datalistener_mode_,
-                  this->listen_datalistener_max_delivered_data_);
+                  this->get_push_consumer_data_control ());
         }
 
       if (CORBA::is_nil (this->push_consumer_data_.in ()))
@@ -199,9 +196,13 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_data_control (void)
 {
   CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_data_control");
-  return new CCM_DDS_DataListenerControl_i (
-          this->listen_datalistener_mode_,
-          this->listen_datalistener_max_delivered_data_);
+  if (CORBA::is_nil (this->push_consumer_data_control_.in ()))
+    {
+      this->push_consumer_data_control_ = new CCM_DDS_DataListenerControl_T
+        < ::CCM_DDS::CCM_DataListenerControl> ();
+    }
+
+  return this->push_consumer_data_control_.in ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
