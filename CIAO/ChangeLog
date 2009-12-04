@@ -1,3 +1,9 @@
+Fri Dec  4 10:11:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.h:
+          Removed listener callbacks that are handled by the subscriber
+
 Fri Dec  4 09:49:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/Updater/*
