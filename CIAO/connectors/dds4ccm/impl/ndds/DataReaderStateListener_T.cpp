@@ -84,13 +84,15 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
             {
               if (sample_info[i].valid_data)
                 {
-                  if (sample_info[i].instance_state == ::DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
+                  if (sample_info[i].instance_state == 
+                          ::DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
                     {
                       ::CCM_DDS::ReadInfo readinfo;
                       readinfo <<= sample_info[i];
                       listener_->on_deletion (data[i], readinfo);
                     }
-                  else if (sample_info[i].view_state == ::DDS_NEW_VIEW_STATE)
+                  else if (sample_info[i].view_state == 
+                          ::DDS_NEW_VIEW_STATE)
                     {
                       ::CCM_DDS::ReadInfo readinfo;
                       readinfo <<= sample_info[i];
@@ -104,6 +106,70 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
                     }
                 }
             }
+        }
+      else if (this->mode_.value () == ::CCM_DDS::MANY_BY_MANY)
+        {
+          //first get the valid samples.
+          //sort them by new/updated/deleted
+          //call the listener in subsequent order.
+          CORBA::ULong nr_of_samples = 0;
+          for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
+            {
+              if (sample_info[i].valid_data)
+                {
+                  // we can notify the listener when samples 
+                  // are new. Those will not be copied later on
+                  if (sample_info[i].view_state == ::DDS_NEW_VIEW_STATE)
+                    {
+                      ::CCM_DDS::ReadInfo readinfo;
+                      readinfo <<= sample_info[i];
+                      listener_->on_creation (data[i], readinfo);
+                    }
+                  else if (sample_info[i].instance_state != 
+                          ::DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
+                    {
+                      ++nr_of_samples;
+                    }
+                }
+            }
+          typename CCM_TYPE::seq_type::_var_type  inst_seq = new typename CCM_TYPE::seq_type;
+          ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;
+
+          CORBA::ULong ix = 0;
+          infoseq->length (nr_of_samples);
+          inst_seq->length (nr_of_samples);
+
+          for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
+            {
+              if(sample_info[i].valid_data                          && 
+                 sample_info[i].view_state == ::DDS_NEW_VIEW_STATE  && 
+                 sample_info[i].instance_state != ::DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
+                {
+                  infoseq[ix] <<= sample_info[i];
+                  inst_seq[ix] = data[i];
+                  ++ix;
+                }
+            }
+          //Do an on_many_update
+          listener_->on_many_updates (inst_seq, infoseq);
+          //now handle the deleted ones.
+          for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
+            {
+              if (sample_info[i].valid_data)
+                {
+                  // we can notify the listener when samples 
+                  // are removed
+                  if (sample_info[i].instance_state == 
+                          ::DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
+                    {
+                      ::CCM_DDS::ReadInfo readinfo;
+                      readinfo <<= sample_info[i];
+                      listener_->on_deletion (data[i], readinfo);
+                    }
+                }
+            }
+          // Return the loan      
+          reader->return_loan(data, sample_info);        
         }
     }
   catch (...)
