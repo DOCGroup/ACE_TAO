@@ -1,6 +1,8 @@
 USER VISIBLE CHANGES BETWEEN TAO-1.7.5 and TAO-1.7.6
 ====================================================
 
+. Added member validation feature to LoadBalancer. 
+
 USER VISIBLE CHANGES BETWEEN TAO-1.7.4 and TAO-1.7.5
 ====================================================
 
