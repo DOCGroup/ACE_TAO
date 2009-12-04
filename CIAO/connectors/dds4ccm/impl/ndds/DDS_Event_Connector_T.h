@@ -59,19 +59,34 @@ public:
   virtual void ccm_remove (void);
 
 private:
-  // @from DDS_Write for
-  void configure_port_dds_write (void);
+  /**
+   * DDS_Write supplier
+   */
+  //@{
+  void configure_port_dds_write_supplier (void);
   ::DDS::CCM_DataWriter_var supplier_writer_;
   ::DDS::DataWriterListener_var datawriter_listener_;
+  //@}
 
-  // @from DDS_Listen
-  void configure_port_dds_listen (void);
+  /**
+   * DDS_Listen push_consumer
+   */
+  //@{
+  void configure_port_dds_listen_push_consumer (void);
   ::DDS::DataReader_var push_consumer_data_;
-  ::DDS::DataReaderListener_var __listen_datareaderlistener;
   ::CCM_DDS::CCM_DataListenerControl_var push_consumer_data_control_;
+  ::DDS::DataReaderListener_var push_consumer_data_listener_;
+  //@}
 
-  // @from DDS_Getter
+  /**
+   * DDS_Get pull_consumer
+   */
+  //@{
+  void configure_port_dds_get_pull_consumer (void);
+  ::DDS::DataReader_var pull_consumer_data_;
   ::DDS::DataReader_var pull_consumer_fresh_data_;
+  ::DDS::DataReaderListener_var pull_consumer_data_listener_;
+  //@}
 };
 
 #include "dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp"

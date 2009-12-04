@@ -40,7 +40,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_requested_incompatib
         {
           CIAO_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("SubscriberListener_T::on_requested_incompatible_qos: ")
-                      ACE_TEXT ("No error listener installed\n")));
+                      ACE_TEXT ("No error listener connected\n")));
         }
     }
   catch (...)
@@ -68,7 +68,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_changed(
         {
           CIAO_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("SubscriberListener_T::on_liveliness_changed: ")
-                      ACE_TEXT ("No error listener installed\n")));
+                      ACE_TEXT ("No error listener connected\n")));
         }
     }
   catch (...)
@@ -96,7 +96,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_sample_rejected(
         {
           CIAO_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("SubscriberListener_T::on_sample_rejected: ")
-                      ACE_TEXT ("No error listener installed\n")));
+                      ACE_TEXT ("No error listener connected\n")));
         }
     }
   catch (...)
@@ -124,7 +124,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_subscription_matched
         {
           CIAO_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("SubscriberListener_T::on_subscription_matched: ")
-                      ACE_TEXT ("No error listener installed\n")));
+                      ACE_TEXT ("No error listener connected\n")));
         }
     }
   catch (...)
@@ -151,7 +151,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_data_on_readers(
         {
           CIAO_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("SubscriberListener_T::on_data_on_readers: ")
-                      ACE_TEXT ("No error listener installed\n")));
+                      ACE_TEXT ("No error listener connected\n")));
         }
     }
   catch (...)
