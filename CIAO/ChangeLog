@@ -1,3 +1,9 @@
+Fri Dec  4 13:14:10 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.cpp:
+          Fixed many_by_many. The last updates should be send to
+          the listener.
+
 Fri Dec  4 13:04:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/dds4ccm.mpc

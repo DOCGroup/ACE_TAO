@@ -163,6 +163,25 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
                     }
                 }
             }
+          //send the latest updates.
+          if (updates.size () > 0)
+            {
+              typename CCM_TYPE::seq_type::_var_type  inst_seq = new typename CCM_TYPE::seq_type;
+              ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;
+
+              infoseq->length (nr_of_updates);
+              inst_seq->length (nr_of_updates);
+              CORBA::ULong ix = 0;
+              for(Updates::iterator iter = updates.begin();
+                  iter != updates.end();
+                  ++iter)
+                {
+                  infoseq[ix] <<= sample_info[*iter];
+                  inst_seq[ix] = data[*iter];
+                  ++ix;
+                }
+              listener_->on_many_updates (inst_seq, infoseq);
+            }
           // Return the loan      
           reader->return_loan(data, sample_info);
         }
