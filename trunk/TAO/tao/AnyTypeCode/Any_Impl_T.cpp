@@ -9,6 +9,7 @@
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/SystemException.h"
+#include "tao/debug.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_Memory.h"

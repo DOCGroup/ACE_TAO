@@ -1,3 +1,99 @@
+Fri Dec  4 23:18:26 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        Merged in valuetype repository id and value indirection support
+        on both input and output streams from OCI (RT #13502).
+
+        * MPC/config/valuetype_out_indirection.mpb:
+
+          Added mpc feature to optionally turn on the indirection
+          support on valuetype outgoing message. It defaults to
+          be enabled. To be compatible with previous version TAO,
+          run mwc.pl with
+          "-features valuetype_out_indirection=0" to disable it.
+
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+
+          Modified the valuetype unmarshall method to support
+          value indirection.
+
+        * tao/Intrusive_Ref_Count_Object_T.h:
+        * tao/Intrusive_Ref_Count_Object_T.inl:
+        * tao/Intrusive_Ref_Count_Object_T.cpp:
+
+          Added wrapper for non reference counted data type to provide reference
+          counting feature so it can use the TAO_Intrusive_Ref_Count_Handle
+          smart-pointer.
+
+        * tao/CDR.h:
+        * tao/CDR.inl:
+        * tao/CDR.cpp:
+
+          - Used smart point hash map for indirection maps (repository id, value
+            and codebase_url). The maps map the already read/written values.
+          - Added methods to access/update indirection maps.
+          - The maps are only created when valuetype data is marshalled or
+            demarshalled.
+          - Added offset(pos) method to calculate the offset between provided
+            position and current wr_ptr.
+
+        * tao/Valuetype/ValueBase.h:
+        * tao/Valuetype/ValueBase.inl:
+        * tao/Valuetype/ValueBase.cpp:
+
+          - Added repository id and value indirection support on both input
+            and output stream.
+          - The codebase_url indirection on input stream was also added but
+            not tested. TAO does not support codebase currently and the codebase
+            url indirection is added for future support. TAO can read codebase_url
+            from other ORB implementation but the codebase_url is not used.
+          - Used TAO_HAS_VALUETYPE_OUT_INDIRECTION define to optionally turn on
+            and off the outgoing message indirection. This is to support backward
+            compatibility.
+
+        * tao/operation_details.cpp:
+        * tao/PortableServer/Upcall_Wrapper.cpp:
+
+          Cleaned the indirection maps after marshalling/unmarshalling complete.
+
+        * tao/AnyTypeCode/Any_Impl_T.cpp:
+        * tao/AnyTypeCode/Any_Unknown_IDL_Type.cpp:
+
+          Made Any_Unknown_IDL_Type cdr share the maps from input cdr of the
+          request so previous indirection can be used during unmarshalling any.
+
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.cpp:
+
+          Updated unmarshal method based on tao_idl changes.
+
+        * tao/Valuetype.mpc:
+        * tao/PortableServer.mpc:
+        * tao/tao.mpc:
+
+          Added dependency on valuetype_out_indirection feature.
+
+        * tests/OBV/indirection/Factory.h:
+        * tests/OBV/indirection/Factory.cpp:
+        * tests/OBV/indirection/Messenger.idl:
+        * tests/OBV/indirection/MessengerClient.cpp:
+        * tests/OBV/indirection/MessengerServer.cpp:
+        * tests/OBV/indirection/Messenger_i.h:
+        * tests/OBV/indirection/Messenger_i.cpp:
+        * tests/OBV/indirection/README:
+        * tests/OBV/indirection/indirection.mpc:
+        * tests/OBV/indirection/run_test.pl:
+
+          - Added automation test for indirection support in TAO. The test
+            based on the JacORB demo/value test. This can also be used for
+            interoperability test between TAO and JacORB.
+          - The indirection test with truncatable value was added. The test
+            passed between the TAO server and client, but the interoperablity
+            test with JacORB failed. It also failed on previous TAO version.
+
+        * NEWS:
+
+          Added entry for indirection support.
+
 Fri Dec  4 21:00:38 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.h:
@@ -5,17 +101,17 @@ Fri Dec  4 21:00:38 UTC 2009  Yan Dai  <dai_y@ociweb.com>
         * orbsvcs/LoadBalancer/LoadManager.cpp:
 
           Renamed init() to initialize() to avoid Warning W8022 on borland build.
-          
+
 Fri Dec  4 17:25:32 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * NEWS:
 
-          Added entry for member validation feature in LoadBalancer. 
-          
+          Added entry for member validation feature in LoadBalancer.
+
         * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.h:
 
           Disable Warning 8022 for borland build.
-          
+
         * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/run_test.pl:
         * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/DeadMemberDetection_Inf_Ctrl.mpc:
         * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/run_test.pl:
@@ -425,7 +521,7 @@ Mon Nov 30 10:01:49 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
 Sun Nov 29 13:06:02 CST 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO version 1.7.5 released.
+        * TAO version 1.7.5 released.
 
 Fri Nov 27 10:12:19 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 

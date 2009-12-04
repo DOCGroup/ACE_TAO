@@ -18,6 +18,7 @@
 #include "tao/Argument.h"
 #include "tao/operation_details.h"
 #include "ace/Log_Msg.h"
+#include "tao/debug.h"
 
 ACE_RCSID (PortableServer,
            Upcall_Wrapper,
@@ -238,6 +239,8 @@ TAO::Upcall_Wrapper::pre_upcall (TAO_InputCDR & cdr,
           TAO_InputCDR::throw_skel_exception (errno);
         }
     }
+
+  cdr.reset_vt_indirect_maps ();
 }
 
 void
@@ -259,6 +262,10 @@ TAO::Upcall_Wrapper::post_upcall (TAO_ServerRequest& server_request,
 
   // Reply body marshaling completed.  No other fragments to send.
   cdr.more_fragments (false);
+
+#ifdef TAO_HAS_VALUETYPE_OUT_INDIRECTION
+  cdr.reset_vt_indirect_maps ();
+#endif
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
