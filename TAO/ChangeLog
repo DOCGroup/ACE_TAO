@@ -1,3 +1,19 @@
+Fri Dec  4 17:25:32 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * NEWS:
+
+          Added entry for member validation feature in LoadBalancer. 
+          
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.h:
+
+          Disable Warning 8022 for borland build.
+          
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/run_test.pl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/DeadMemberDetection_Inf_Ctrl.mpc:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/run_test.pl:
+
+          Fixed fuzz warning and errors.
+
 Fri Dec  4 12:39:26 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * tests/Bug_1869_Regression/client.cpp:

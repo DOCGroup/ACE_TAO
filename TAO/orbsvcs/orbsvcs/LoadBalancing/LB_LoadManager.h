@@ -22,6 +22,9 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (__BORLANDC__)
+# pragma option push -w-hid
+#endif /* __BORLANDC__ */
 
 #include "orbsvcs/LoadBalancing/LB_LoadAlertMap.h"
 #include "orbsvcs/LoadBalancing/LB_MonitorMap.h"
@@ -424,6 +427,10 @@ private:
   /// Long timeout for non_exist call. defaults to 5 seconds
   ACE_Time_Value ping_interval_;
 };
+
+#if defined (__BORLANDC__)
+# pragma option pop
+#endif /* _MSC_VER */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
