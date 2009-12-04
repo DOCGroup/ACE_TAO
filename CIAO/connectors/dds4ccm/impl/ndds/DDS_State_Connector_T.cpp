@@ -142,7 +142,10 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
 {
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate ();
   this->configure_port_dds_update ();
-  this->configure_port_dds_listen ();
+  this->configure_passive_observer ();
+  this->configure_pull_observer ();
+  this->configure_push_observer ();
+  this->configure_push_state_observer ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -205,7 +208,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_update (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen (void)
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_passive_observer (void)
 {
   try
     {
@@ -274,4 +277,22 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen (void)
       CIAO_ERROR ((LM_EMERGENCY, "Caught unknown c++ exception while creating subscriber entities\n"));
       throw CORBA::INTERNAL ();
     }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_pull_observer (void)
+{
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_push_observer (void)
+{
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_push_state_observer (void)
+{
 }
