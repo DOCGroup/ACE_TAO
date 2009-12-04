@@ -1,8 +1,6 @@
 USER VISIBLE CHANGES BETWEEN ACE-5.7.5 and ACE-5.7.6
 ====================================================
 
-. Added member validation feature to LoadBalancer. 
-
 USER VISIBLE CHANGES BETWEEN ACE-5.7.4 and ACE-5.7.5
 ====================================================
 
