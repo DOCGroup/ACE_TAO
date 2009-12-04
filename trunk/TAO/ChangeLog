@@ -1,3 +1,10 @@
+Fri Dec  4 12:39:26 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * tests/Bug_1869_Regression/client.cpp:
+
+          Tests is converted to use new test framework
+          and added to fuzz build.
+
 Fri Dec  4 09:13:17 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/Notify/Persistent_Filter/run_test.pl:
