@@ -81,13 +81,13 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
       if (sampleinfo.instance_state == ::DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
         {
           ::CCM_DDS::ReadInfo empty;
-          empty <<= sampleinfo;
+          empty <<= sample_info;
           listener_->on_deletion (instance, empty);
         }
       else if (sampleinfo.view_state == ::DDS_NEW_VIEW_STATE)
         {
           ::CCM_DDS::ReadInfo empty;
-          empty <<= sampleinfo;
+          empty <<= sample_info;
           listener_->on_creation (instance, empty);
         }
       else
@@ -141,13 +141,6 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
   catch (...)
     {
     }
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
-CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::handle_valid_data ()
-{
-
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
