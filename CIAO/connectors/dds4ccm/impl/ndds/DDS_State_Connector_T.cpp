@@ -7,15 +7,14 @@
 #include "dds4ccm/impl/ndds/Reader_T.h"
 #include "dds4ccm/impl/ndds/PublisherListener_T.h"
 #include "dds4ccm/impl/ndds/SubscriberListener_T.h"
-#include "dds4ccm/impl/ndds/DataListenerControl.h"
+#include "dds4ccm/impl/ndds/DataListenerControl_T.h"
+#include "dds4ccm/impl/ndds/StateListenerControl_T.h"
 
 #include "ciao/Logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::DDS_State_Connector_T (void) :
-    DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>(),
-    listen_datalistener_mode_ ( ::CCM_DDS::NOT_ENABLED),
-    listen_datalistener_max_delivered_data_ (0)
+    DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>()
 {
 }
 
@@ -87,9 +86,13 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 ::CCM_DDS::CCM_DataListenerControl_ptr
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_observer_data_control (void)
 {
-  return new CCM_DDS_DataListenerControl_i (
-          this->listen_datalistener_mode_,
-          this->listen_datalistener_max_delivered_data_);
+  if (CORBA::is_nil (this->push_consumer_data_control_.in ()))
+    {
+      this->push_consumer_data_control_ = new CCM_DDS_DataListenerControl_T
+        < ::CCM_DDS::CCM_DataListenerControl> ();
+    }
+
+  return this->push_consumer_data_control_.in ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -110,7 +113,13 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 ::CCM_DDS::CCM_StateListenerControl_ptr
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_state_observer_data_control (void)
 {
-  return 0;
+  if (CORBA::is_nil (this->push_consumer_state_control_.in ()))
+    {
+      this->push_consumer_state_control_ = new CCM_DDS_StateListenerControl_T
+        < ::CCM_DDS::CCM_StateListenerControl> ();
+    }
+
+  return this->push_consumer_state_control_.in ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -208,8 +217,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen (void)
                   this->context_->get_connection_error_listener (),
                   this->context_->get_connection_push_state_observer_data_listener (),
                   this->context_->get_connection_pull_observer_status (),
-                  this->listen_datalistener_mode_,
-                  this->listen_datalistener_max_delivered_data_);
+                  this->get_push_state_observer_data_control ());
         }
 
       if (CORBA::is_nil (this->push_consumer_data_.in ()))
