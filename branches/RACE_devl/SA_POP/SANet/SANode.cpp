@@ -24,7 +24,8 @@ Node::Node (NodeID ID, std::string name, MultFactor atten_factor)
   atten_factor_ (atten_factor),
   step_ (0),
   prob_changed_ (false),
-  util_changed_ (false)
+  util_changed_ (false) ,
+  active(true)
 {
   // Initialize probability and utility info.
   pos_util_.utility = 0;
@@ -89,6 +90,12 @@ std::string Node::get_name (void)
   return name_;
 };
 
+/// Set activity flag
+void Node::set_activity (bool state)
+{
+  active = state;
+}
+
 NodeID Node::get_ID (void)
 {
   return ID_;
@@ -128,8 +135,18 @@ void TaskNode::set_pos_util(double util){
 	this->pos_util_.utility = util;
 }
 
+
+
 bool TaskNode::update (void)
 {
+
+  //Check to see if node is active before updating 
+  if(!active)
+  {
+    //the node should return as not changing the network
+    return false;
+  }
+
   // Reset change flags.
   prob_changed_ = false;
   util_changed_ = false;
@@ -139,6 +156,8 @@ bool TaskNode::update (void)
   prob_changed_ = true;
   util_changed_ = true;
   //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+
+
 
   // Flag for detection of loops.
   bool is_loop = false;
@@ -972,6 +991,14 @@ void CondNode::print (std::basic_ostream<char, std::char_traits<char> >&
 
 bool CondNode::update (void)
 {
+
+  //Check to see if node is active before updating 
+  if(!active)
+  {
+    //the node should return as not changing the network
+    return false;
+  }
+
   // Reset change flags.
   prob_changed_ = false;
   util_changed_ = false;

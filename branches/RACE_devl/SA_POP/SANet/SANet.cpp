@@ -63,6 +63,9 @@ void SANet::Network::add_task (TaskID ID, std::string name, MultFactor atten_fac
   // Task node pointer.
   TaskNode *node;
 
+  // Set initially to active
+  active_tasks.insert(ID);
+
   // Add task node, throwing exception if insertion fails.
   node = new TaskNode (ID, name, atten_factor, cost, prior_prob);
   if (!(task_nodes_.insert (std::make_pair (ID, node))).second)
@@ -128,6 +131,9 @@ void SANet::Network::add_cond (CondID ID, std::string name, MultFactor atten_fac
 
   // Condition node pointer.
   CondNode *node;
+
+  // Set initially to active
+  active_conds.insert(ID);
 
   // Add condition node, throwing exception if insertion fails.
   node = new CondNode (ID, name, atten_factor,
@@ -385,22 +391,26 @@ void SANet::Network::update (int max_steps)
     // Reset net_changed flag.
     net_changed = false;
 
-    // Update all task nodes.
-    for (TaskNodeMap::iterator node_iter = task_nodes_.begin ();
-      node_iter != task_nodes_.end (); node_iter++)
+    // Update all active task nodes.
+    //for (TaskNodeMap::iterator node_iter = task_nodes_.begin ();
+    //  node_iter != task_nodes_.end (); node_iter++)
+    for(std::set<TaskID>::iterator node_iter = active_tasks.begin();
+      node_iter != active_tasks.end(); node_iter++)
     {
       // Update node, setting net_changed flag if node changed.
-      if (node_iter->second->update ()) {
+      if (task_nodes_.find(*node_iter)->second->update ()) {
         net_changed = true;
       }
     }
 
-    // Update all condition nodes.
-    for (CondNodeMap::iterator node_iter = cond_nodes_.begin ();
-      node_iter != cond_nodes_.end (); node_iter++)
+    // Update all active condition nodes.
+    //for (CondNodeMap::iterator node_iter = cond_nodes_.begin ();
+    //  node_iter != cond_nodes_.end (); node_iter++)
+    for(std::set<CondID>::iterator node_iter = active_conds.begin();
+      node_iter != active_conds.end(); node_iter++)
     {
       // Update node, setting net_changed flag if node changed.
-      if (node_iter->second->update ()) {
+      if (cond_nodes_.find(*node_iter)->second->update ()) {
         net_changed = true;
       }
     }
@@ -651,3 +661,102 @@ LinkPorts SANet::Network::get_clink_ports (TaskID task1_id, CondID cond_id,
   return std::make_pair (this->get_effect_port (task1_id, cond_id),
     this->get_precond_port (cond_id, task2_id));
 };
+
+/// Set Task State.
+void SANet::Network::set_task_state(TaskID task_ID, bool state)
+{
+
+    task_nodes_.find(task_ID)->second->set_activity(state);
+
+    if(state)
+    {
+      //insetr into active, remove from disabled
+      active_tasks.insert(task_ID);
+
+      disabled_tasks.erase(task_ID);
+
+    }
+    else
+    {
+      //remove from active, insert into disabled
+
+      active_tasks.erase(task_ID);
+
+      disabled_tasks.insert(task_ID);
+    }
+}
+
+/// Set Cond State.
+void SANet::Network::set_cond_state(CondID cond_ID, bool state)
+{
+    
+    cond_nodes_.find(cond_ID)->second->set_activity(state);
+    if(state)
+    {
+      //insetr into active, remove from disabled
+      active_conds.insert(cond_ID);
+
+
+      disabled_conds.erase(cond_ID);
+
+    }
+    else
+    {
+      //remove from active, insert into disabled
+
+      active_conds.erase(cond_ID);
+
+      disabled_conds.insert(cond_ID);
+    }
+
+}
+
+/// Set All nodes to State.
+void SANet::Network::set_nodes_state(bool state)
+{
+    if(state)
+    {
+
+      //insetr all tasks into active, remove from disabled
+      for (TaskNodeMap::iterator node_iter = task_nodes_.begin ();
+      node_iter != task_nodes_.end (); node_iter++)
+      {
+        node_iter->second->set_activity(state);
+        active_tasks.insert(node_iter->first);
+
+        disabled_tasks.erase(node_iter->first);
+      }
+
+      for (CondNodeMap::iterator node_iter = cond_nodes_.begin ();
+      node_iter != cond_nodes_.end (); node_iter++)
+      {
+        node_iter->second->set_activity(state);
+        active_conds.insert(node_iter->first);
+
+        disabled_conds.erase(node_iter->first);
+      }
+    }
+    else
+    {
+      //remove from active, insert into disabled
+
+      for (TaskNodeMap::iterator node_iter = task_nodes_.begin ();
+      node_iter != task_nodes_.end (); node_iter++)
+      {
+        node_iter->second->set_activity(state);
+        active_tasks.erase(node_iter->first);
+
+        disabled_tasks.insert(node_iter->first);
+      }
+
+      for (CondNodeMap::iterator node_iter = cond_nodes_.begin ();
+      node_iter != cond_nodes_.end (); node_iter++)
+      {
+        node_iter->second->set_activity(state);
+        active_conds.erase(node_iter->first);
+
+        disabled_conds.insert(node_iter->first);
+      }
+    }
+
+}
