@@ -1,3 +1,8 @@
+Fri Dec  4 14:31:45 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIAO_ComponentServer/SimpleComponent/run_test.pl:
+          Resolved fuzz error.
+
 Fri Dec  4 14:28:18 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
