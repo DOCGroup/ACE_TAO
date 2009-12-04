@@ -1,3 +1,10 @@
+Fri Dec  4 17:25:32 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * NEWS:
+
+          Removed entry for member validation feature in LoadBalancer as it
+          should be in TAO NEWS.
+
 Fri Dec  4 13:19:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * html/Stats/index.shtml:
