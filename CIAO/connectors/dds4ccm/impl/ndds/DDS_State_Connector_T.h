@@ -64,19 +64,47 @@ public:
   virtual void ccm_remove (void);
 
 private:
+  /**
+   * DDS_Update observable
+   */
+  //@{
   void configure_port_dds_update (void);
   ::DDS::CCM_DataWriter_var observable_data_;
   ::DDS::DataWriterListener_var datawriter_listener_;
+  //@}
 
-  // @from DDS_Listen
-  void configure_port_dds_listen (void);
+  /**
+   * DDS_Read passive_observer
+   */
+  //@{
+  void configure_passive_observer (void);
   ::DDS::DataReader_var push_consumer_data_;
   ::DDS::DataReaderListener_var __listen_datareaderlistener;
-  ::CCM_DDS::CCM_DataListenerControl_var push_consumer_data_control_;
-  ::CCM_DDS::CCM_StateListenerControl_var push_consumer_state_control_;
+  //@}
 
-  // @from DDS_Getter
+  /**
+   * DDS_Get pull_observer
+   */
+  //@{
+  void configure_pull_observer (void);
   ::DDS::DataReader_var pull_consumer_fresh_data_;
+  //@}
+
+  /**
+   * DDS_Listen push_observer
+   */
+  //@{
+  void configure_push_observer (void);
+  ::CCM_DDS::CCM_DataListenerControl_var push_consumer_data_control_;
+  //@}
+
+  /**
+   * DDS_StateListen push_state_observer
+   */
+  //@{
+  void configure_push_state_observer (void);
+  ::CCM_DDS::CCM_StateListenerControl_var push_consumer_state_control_;
+  //@}
 };
 
 #include "dds4ccm/impl/ndds/DDS_State_Connector_T.cpp"

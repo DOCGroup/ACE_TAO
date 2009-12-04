@@ -1,3 +1,10 @@
+Fri Dec  4 13:49:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.h:
+          Add more infrastructure for the 5 extended ports this connector
+          provides
+
 Fri Dec  4 13:23:46 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/tests/CIAO/CommandlinePassage/run_test.pl:
