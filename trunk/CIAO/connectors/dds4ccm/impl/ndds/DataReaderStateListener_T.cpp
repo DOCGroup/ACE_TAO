@@ -15,17 +15,14 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::DataReaderSta
       CCM_DDS::ConnectorStatusListener_ptr error_listener,
       typename CCM_TYPE::statelistener_type::_ptr_type listener,
       ::CCM_DDS::PortStatusListener_ptr port_status_listener,
-      ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> &mode,
-      ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> &max_delivered_data)
+      ::CCM_DDS::DataListenerControl_ptr control)
       : context_ (CCM_TYPE::context_type::_duplicate (context)),
         error_listener_ (::CCM_DDS::ConnectorStatusListener::_duplicate (error_listener)),
         listener_ (CCM_TYPE::statelistener_type::_duplicate (listener)),
-        mode_ (mode),
-        max_delivered_data_ (max_delivered_data)
+        port_status_listener_ (::CCM_DDS::PortStatusListener::_duplicate (port_status_listener)),
+        control_ (::CCM_DDS::DataListenerControl::_duplicate (control))
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderStateListener_T::DataReaderStateListener_T");
-  this->info_out_portstatus_ =
-   ::CCM_DDS::PortStatusListener::_duplicate (port_status_listener);
 }
 
 // Implementation skeleton destructor
@@ -41,7 +38,7 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderStateListener_T::on_data_available");
 
-  if (this->mode_.value () == ::CCM_DDS::NOT_ENABLED)
+  if (this->control_->mode () == ::CCM_DDS::NOT_ENABLED)
     return;
 
   ::CIAO::DDS4CCM::RTI::RTI_DataReader_i* rd =
@@ -80,7 +77,7 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
         {
           CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unable to take data from data reader, error %d.\n"), result));
         }
-      if (this->mode_.value () == ::CCM_DDS::ONE_BY_ONE)
+      if (this->control_->mode () == ::CCM_DDS::ONE_BY_ONE)
         {
           for (::DDS_Long i = 0; i < data.length (); ++i)
             {
@@ -109,7 +106,7 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
                 }
             }
         }
-      else if (this->mode_.value () == ::CCM_DDS::MANY_BY_MANY)
+      else if (this->control_->mode () == ::CCM_DDS::MANY_BY_MANY)
         {
           typedef std::vector<DDS_Long> Updates;
           Updates updates;
@@ -183,9 +180,9 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_requested_
 {
   try
     {
-      if (!CORBA::is_nil (this->info_out_portstatus_))
+      if (!CORBA::is_nil (this->port_status_listener_))
         {
-          this->info_out_portstatus_->on_requested_deadline_missed (the_reader, status);
+          this->port_status_listener_->on_requested_deadline_missed (the_reader, status);
         }
       else
         {
@@ -209,9 +206,9 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_sample_los
 {
   try
     {
-      if (!CORBA::is_nil (this->info_out_portstatus_))
+      if (!CORBA::is_nil (this->port_status_listener_))
         {
-          this->info_out_portstatus_->on_sample_lost (the_reader, status);
+          this->port_status_listener_->on_sample_lost (the_reader, status);
         }
       else
         {

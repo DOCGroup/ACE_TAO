@@ -1,3 +1,27 @@
+Fri Dec  4 13:04:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds4ccm.mpc
+        * connectors/dds4ccm/impl/ndds/DataListenerControl.cpp
+        * connectors/dds4ccm/impl/ndds/DataListenerControl.h
+        * connectors/dds4ccm/impl/ndds/DataListenerControl_T.cpp
+        * connectors/dds4ccm/impl/ndds/DataListenerControl_T.h
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h
+        * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.h
+        * connectors/dds4ccm/impl/ndds/DataWriterListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS4CCM_Traits.h
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.h
+        * connectors/dds4ccm/impl/ndds/ndds_impl.mpc
+        * connectors/dds4ccm/impl/ndds/StateListenerControl.cpp
+        * connectors/dds4ccm/impl/ndds/StateListenerControl.h
+        * connectors/dds4ccm/impl/ndds/StateListenerControl_T.cpp
+        * connectors/dds4ccm/impl/ndds/StateListenerControl_T.h
+          Refactored data/state listener controls
+
 Fri Dec  4 12:56:58 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.cpp:
