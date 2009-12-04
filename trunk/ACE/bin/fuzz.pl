@@ -1560,7 +1560,7 @@ sub check_for_absolute_ace_wrappers()
                 if (m/\~schmidt\/ACE_wrappers\//) {
                     chomp;
                     print_error ("$file:$.: ~schmidt/ACE_wrappers found");
-                    print_error ($_) if (defined $opt_v);
+                    print_error ($_);
                 }
             }
             close (FILE);
@@ -1616,7 +1616,7 @@ sub check_for_bad_ace_trace()
                         || ($trace =~ m/\:\:/ && !($trace =~ m/\Q$class\E/ && $trace =~ m/\Q$function\E/))) {
                         print_error ("$file:$.: Mismatched TRACE");
                         print_error ("$file:$.:   I see \"$trace\" but I think I'm in \""
-                                     . $class . "::" . $function . "\"") if (defined $opt_v);
+                                     . $class . "::" . $function . "\"");
                     }
                 }
             }
@@ -1747,15 +1747,15 @@ sub check_for_include ()
                 }
                 if ($disable == 0) {
                     if (/^\s*#\s*include\s*<[(ace)|(TAO)|(CIAO)]\/.*>/) {
-                        print_error ("$file:$.: include <ace\/..> used") if ($opt_v);
+                        print_error ("$file:$.: include <ace\/..> used");
                         ++$bad_occurance;
                     }
                     if (/^\s*#\s*include\s*<tao\/.*>/) {
-                        print_error ("$file:$.: include <tao\/..> used") if ($opt_v);
+                        print_error ("$file:$.: include <tao\/..> used");
                         ++$bad_occurance;
                     }
                     if (/^\s*#\s*include\s*<ciao\/.*>/) {
-                        print_error ("$file:$.: include <ciao\/..> used") if ($opt_v);
+                        print_error ("$file:$.: include <ciao\/..> used");
                         ++$bad_occurance;
                     }
                 }
@@ -2006,7 +2006,7 @@ sub check_for_ORB_init ()
 
 ##############################################################################
 
-use vars qw/$opt_c $opt_d $opt_h $opt_l $opt_t $opt_m $opt_v/;
+use vars qw/$opt_c $opt_d $opt_h $opt_l $opt_t $opt_m/;
 
 if (!getopts ('cdhl:t:mv') || $opt_h) {
     print "fuzz.pl [-cdhm] [-l level] [-t test_name][file1, file2, ...]\n";
@@ -2017,7 +2017,6 @@ if (!getopts ('cdhl:t:mv') || $opt_h) {
     print "    -l level       set detection level (default = 5)\n";
     print "    -t test_name   specify any single test to run. This will disable the run level setting\n";
     print "    -m             only check locally modified files (uses cvs)\n";
-    print "    -v             verbose mode\n";
     print "======================================================\n";
     print "list of the tests that could be run:\n";
     print "\t   check_for_noncvs_files
