@@ -6,13 +6,18 @@
 
 #include "ast_type.h"
 
+#include "fe_utils.h"
+
 class TAO_IDL_FE_Export AST_Param_Holder
   : public virtual AST_Type
 {
 public:
-  AST_Param_Holder (UTL_ScopedName *parameter_name);
+  AST_Param_Holder (UTL_ScopedName *parameter_name,
+                    FE_Utils::T_Param_Info *info);
 
   virtual ~AST_Param_Holder (void);
+  
+  FE_Utils::T_Param_Info const *info (void) const;
 
   // Narrowing.
   DEF_NARROW_FROM_DECL (AST_Param_Holder);
@@ -25,6 +30,9 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
+  
+private:
+  FE_Utils::T_Param_Info *info_;
 };
 
 #endif // AST_PARAM_HOLDER_H

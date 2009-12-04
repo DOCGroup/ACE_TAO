@@ -260,7 +260,6 @@
 #include "ast_component.h"
 #include "ast_component_fwd.h"
 #include "ast_home.h"
-#include "ast_template_interface.h"
 #include "ast_porttype.h"
 #include "ast_connector.h"
 #include "ast_uses.h"
@@ -275,6 +274,8 @@
 #include "ast_string.h"
 #include "ast_factory.h"
 #include "ast_exception.h"
+#include "ast_param_holder.h"
+
 #include "fe_declarator.h"
 #include "fe_interface_header.h"
 #include "fe_template_interface_header.h"
@@ -283,6 +284,7 @@
 #include "fe_component_header.h"
 #include "fe_home_header.h"
 #include "fe_utils.h"
+
 #include "utl_identifier.h"
 #include "utl_err.h"
 #include "utl_string.h"
@@ -291,6 +293,7 @@
 #include "utl_exprlist.h"
 #include "utl_labellist.h"
 #include "utl_decllist.h"
+
 #include "global_extern.h"
 #include "nr_extern.h"
 
@@ -4201,8 +4204,8 @@ tao_yyreduce:
            */
           if ((tao_yyvsp[(9) - (9)].exval) != 0 && s != 0)
             {
-              bool param_holder =
-                (tao_yyvsp[(9) - (9)].exval)->is_param_holder ();
+              AST_Param_Holder *param_holder =
+                (tao_yyvsp[(9) - (9)].exval)->param_holder ();
 
               AST_Expression::AST_ExprValue *result =
                 (tao_yyvsp[(9) - (9)].exval)->check_and_coerce ((tao_yyvsp[(3) - (9)].etval),
@@ -4211,7 +4214,7 @@ tao_yyreduce:
               
               // If the expression is a template parameter place
               // holder, 'result' will be 0, but it's ok.
-              if (result == 0 && ! param_holder)
+              if (result == 0 && param_holder == 0)
                 {
                   idl_global->err ()->coercion_error ((tao_yyvsp[(9) - (9)].exval),
                                                       (tao_yyvsp[(3) - (9)].etval));
@@ -4221,20 +4224,33 @@ tao_yyreduce:
                 }
               else
                 {
-                  c =
-                    idl_global->gen ()->create_constant (
-                                            (tao_yyvsp[(3) - (9)].etval),
-                                            (tao_yyvsp[(9) - (9)].exval),
-                                            &n
-                                          );
-                  (void) s->fe_add_constant (c);
-                  delete result;
-                  result = 0;
+                  AST_Expression::ExprType et =
+                    (tao_yyvsp[(3) - (9)].etval);
+                    
+                  if (param_holder != 0
+                      && et != param_holder->info ()->const_type_)
+                    {
+                      idl_global->err ()->mismatched_template_param (
+                        param_holder->info ()->name_.c_str ());
+                    }
+                  else
+                    {                    
+                      c =
+                        idl_global->gen ()->create_constant (
+                          (tao_yyvsp[(3) - (9)].etval),
+                          (tao_yyvsp[(9) - (9)].exval),
+                          &n);
+                          
+                      (void) s->fe_add_constant (c);
+                    }
                 }
 
               (tao_yyvsp[(5) - (9)].idval)->destroy ();
               delete (tao_yyvsp[(5) - (9)].idval);
               (tao_yyvsp[(5) - (9)].idval) = 0;
+              
+              delete result;
+              result = 0;
             }
         }
     break;
@@ -6078,13 +6094,21 @@ tao_yyreduce:
            * Create a node representing a sequence
            */
           AST_Expression::AST_ExprValue *ev = 0;
+          AST_Param_Holder *param_holder = 0;
 
           if ((tao_yyvsp[(4) - (6)].exval) != 0)
             {
+              param_holder =
+                (tao_yyvsp[(4) - (6)].exval)->param_holder ();
+                
               ev = (tao_yyvsp[(4) - (6)].exval)->coerce (AST_Expression::EV_ulong);
             }
 
-          if (0 == (tao_yyvsp[(4) - (6)].exval) || 0 == ev)
+          // If the expression corresponds to a template parameter,
+          // it's ok for the coercion to fail at this point. We check
+          // for a type mismatch below.
+          if (0 == (tao_yyvsp[(4) - (6)].exval)
+              || (0 == ev && 0 == param_holder))
             {
               idl_global->err ()->coercion_error ((tao_yyvsp[(4) - (6)].exval),
                                                   AST_Expression::EV_ulong);
@@ -6104,6 +6128,25 @@ tao_yyreduce:
                 }
               else
                 {
+                  if (param_holder != 0)
+                    {
+                      AST_Expression::ExprType et =
+                        param_holder->info ()->const_type_;
+                        
+                      // If the bound expression represents a
+                      // template parameter, it must be a const
+                      // and of type unsigned long.  
+                      if (et != AST_Expression::EV_ulong)
+                        {
+                          idl_global->err ()->mismatched_template_param (
+                            param_holder->info ()->name_.c_str ());
+                            
+                          delete ev;
+                          ev = 0;
+                          return 1;
+                        }
+                    }
+                    
                   Identifier id ("sequence");
                   UTL_ScopedName sn (&id,
                                      0);

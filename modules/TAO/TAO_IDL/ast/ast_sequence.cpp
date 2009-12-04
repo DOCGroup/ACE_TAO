@@ -116,14 +116,18 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
     owns_base_type_ (false)
 {
   // Check if we are bounded or unbounded. An expression value of 0 means
-  // unbounded.
-  if (ms->ev ()->u.ulval == 0)
+  // unbounded. If our bound is a template parameter, skip the
+  // check altogether, this node will trigger no code generation.
+  if (ms->param_holder () == 0)
     {
-      this->unbounded_ = true;
-    }
-  else
-    {
-      this->unbounded_ = false;
+      if (ms->ev ()->u.ulval == 0)
+        {
+          this->unbounded_ = true;
+        }
+      else
+        {
+          this->unbounded_ = false;
+        }
     }
 
   // A sequence data type is always VARIABLE.
@@ -131,10 +135,10 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
 
   AST_Decl::NodeType nt = bt->node_type ();
 
-  if (AST_Decl::NT_array == nt || AST_Decl::NT_sequence == nt)
-    {
-      this->owns_base_type_ = true;
-    }
+  this->owns_base_type_ =
+    nt == AST_Decl::NT_array
+    || nt == AST_Decl::NT_sequence
+    || nt == AST_Decl::NT_param_holder;
 }
 
 AST_Sequence::~AST_Sequence (void)

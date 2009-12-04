@@ -29,7 +29,8 @@ class be_param_holder : public virtual AST_Param_Holder,
                         public virtual be_type
 {
 public:
-  be_param_holder (UTL_ScopedName *parameter_name);
+  be_param_holder (UTL_ScopedName *parameter_name,
+                   FE_Utils::T_Param_Info *info);
 
   virtual ~be_param_holder (void);
   

@@ -285,9 +285,8 @@ public:
   // Accessor for the member.
   AST_Decl *get_tdef (void) const;
   
-  // We don't need to access this member, just determine if is
-  // 0 or not.
-  bool is_param_holder (void) const;
+  // Accessor for the member.
+  AST_Param_Holder *param_holder (void) const;
 
 protected:
   // Evaluate different sets of operators.
