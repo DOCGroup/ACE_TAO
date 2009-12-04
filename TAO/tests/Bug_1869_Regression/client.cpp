@@ -94,7 +94,7 @@ ACE_TCHAR address_servant[1000];
 
     mgr->activate();
 
-    ACE_OS::sprintf(address_servant, "corbaloc:iiop:%s:%s/Adder", hostname, port);
+    ACE_OS::sprintf(address_servant, ACE_TEXT("corbaloc:iiop:%s:%s/Adder"), hostname, port);
 
     // Resolve Adder Reference
     obj = orb->string_to_object(ACE_TEXT_ALWAYS_CHAR(address_servant));
