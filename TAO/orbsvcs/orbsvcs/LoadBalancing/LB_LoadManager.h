@@ -22,10 +22,6 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (__BORLANDC__)
-# pragma option push -w-hid
-#endif /* __BORLANDC__ */
-
 #include "orbsvcs/LoadBalancing/LB_LoadAlertMap.h"
 #include "orbsvcs/LoadBalancing/LB_MonitorMap.h"
 #include "orbsvcs/LoadBalancing/LB_LoadListMap.h"
@@ -273,9 +269,9 @@ public:
   /// Initialize the load balancer.  This will cause a child POA to be
   /// created with the appropriate policies to support ServantLocators
   /// (i.e. for the MemberLocator).
-  void init (ACE_Reactor * reactor,
-             CORBA::ORB_ptr orb,
-             PortableServer::POA_ptr root_poa);
+  void initialize (ACE_Reactor * reactor,
+                   CORBA::ORB_ptr orb,
+                   PortableServer::POA_ptr root_poa);
 
 protected:
 
@@ -428,9 +424,6 @@ private:
   ACE_Time_Value ping_interval_;
 };
 
-#if defined (__BORLANDC__)
-# pragma option pop
-#endif /* _MSC_VER */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
