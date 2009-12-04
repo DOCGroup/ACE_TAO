@@ -116,7 +116,7 @@ while($elapsed < $max_running_time) {
     sleep (90);
 
     $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
-    if ($server_status != 0) {
+    if ($server_status < 0) {
         print STDERR "ERROR: server returned $server_status\n";
         $CL1->Kill (); $CL1->TimedWait (1);
         $CL2->Kill (); $CL2->TimedWait (1);
