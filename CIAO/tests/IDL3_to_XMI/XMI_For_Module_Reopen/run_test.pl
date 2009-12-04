@@ -19,7 +19,6 @@ my $target_idl = $target->LocalFile ($idl);
 my $target_dtd = $target->LocalFile ($dtd);
 my $target_xmi = $target->LocalFile ($xmi);
 $target->DeleteFile($xmi);
-unlink $xmi;
 
 $I2X = $target->CreateProcess ("$ENV{'CIAO_ROOT'}/bin/tao_idl3_to_xmi",
                                "-f -xd $target_dtd -of $target_xmi $target_idl");
@@ -74,6 +73,5 @@ if ($A_occurs == 1 && $B_occurs == 1 && $A_xmiid eq $B_ns &&
 }
 
 $target->DeleteFile($xmi);
-unlink $xmi;
 
 exit $status;
