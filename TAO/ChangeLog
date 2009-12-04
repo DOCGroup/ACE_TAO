@@ -1,3 +1,32 @@
+Fri Dec  4 09:13:17 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * orbsvcs/tests/Notify/Persistent_Filter/run_test.pl:
+        * orbsvcs/tests/Notify/Discarding/run_test.pl:
+        * orbsvcs/tests/FT_App/run_test_notifier.pl:
+        * orbsvcs/tests/Event/Basic/run_test.pl:
+        * orbsvcs/tests/Event/Performance/run_test.pl:
+        * orbsvcs/tests/Event/UDP/run_test.pl:
+        * orbsvcs/tests/Bug_3387_Regression/MessengerServer.cpp:
+        * orbsvcs/tests/Bug_3387_Regression/MessengerClient.cpp:
+        * orbsvcs/tests/Bug_3387_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_2247_Regression/run_test.pl:
+        * orbsvcs/tests/EC_MT_Mcast/run_test.pl:
+        * performance-tests/Protocols/run_senders.pl:
+        * tests/Server_Leaks/run_test.pl:
+        * tests/Bug_1551_Regression/server.cpp:
+        * tests/Bug_1551_Regression/run_test.pl:
+        * tests/IOR_Endpoint_Hostnames/list_interfaces.cpp:
+        * tests/Connection_Purging/run_test.pl:
+        * tests/Bug_1482_Regression/server.cpp:
+        * tests/Bug_1482_Regression/run_test.pl:
+        * tests/ForwardOnceUponException/run_test.pl:
+        * tests/Reliable_Oneways/run_test.pl:
+        * examples/Buffered_Oneways/run_test.pl:
+        * examples/ior_corbaloc/run_test.pl:
+
+          Tests are converted to use new test framework
+          and added to fuzz build.
+
 Thu Dec  3 12:15:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Incoming_Message_Stack.h:

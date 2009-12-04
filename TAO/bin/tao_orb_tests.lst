@@ -225,7 +225,7 @@ TAO/tests/MT_Server/run_test.pl: !ST
 TAO/tests/No_Server_MT_Connect_Test/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Connect_Strategy_Test/run_test.pl:
 # DISABLED TAO/tests/Client_Leaks/run_test.pl: !VxWorks !ST !Tru64
-TAO/tests/Server_Leaks/run_test.pl: !LabVIEW_RT !WinCE !FUZZ
+TAO/tests/Server_Leaks/run_test.pl:
 TAO/tests/Smart_Proxies/Policy/run_test.pl:
 TAO/tests/Smart_Proxies/run_test.pl:
 TAO/tests/Smart_Proxies/dtor/run_test.pl:
@@ -306,10 +306,10 @@ TAO/tests/DSI_AMH/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/DII_AMI_Forward/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/DynAny_Test/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/DynUnion_Test/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
-TAO/tests/Connection_Purging/run_test.pl: !VxWorks !ST !ACE_FOR_TAO !LabVIEW_RT !WinCE !FUZZ
+TAO/tests/Connection_Purging/run_test.pl: !ST !ACE_FOR_TAO
 TAO/tests/Server_Connection_Purging/run_test.pl: !Win32
 TAO/tests/LongUpcalls/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
-TAO/tests/Reliable_Oneways/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT !WinCE !FUZZ
+TAO/tests/Reliable_Oneways/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Blocking_Sync_None/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Oneway_Buffering/run_message_count.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Oneway_Buffering/run_buffer_size.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
@@ -414,7 +414,7 @@ TAO/tests/Compression/run_test.pl
 TAO/tests/Collocated_Forwarding/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO
 TAO/tests/ZIOP/run_test.pl: ZIOP ZLIB
 TAO/tests/ForwardUponObjectNotExist/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO
-TAO/tests/ForwardOnceUponException/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LabVIEW_RT !WinCE !FUZZ !ST
+TAO/tests/ForwardOnceUponException/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !ST
 TAO/DevGuideExamples/BiDirectionalGIOP/run_test.pl: !MINIMUM !CORBA_E_MICRO
 TAO/DevGuideExamples/GettingStarted/run_test.pl:
 TAO/DevGuideExamples/LocalObjects/Messenger/run_test.pl:
