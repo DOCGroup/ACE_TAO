@@ -7,6 +7,7 @@
 #include "dds4ccm/impl/ndds/Getter_T.h"
 #include "dds4ccm/impl/ndds/Reader_T.h"
 #include "dds4ccm/impl/ndds/DataListenerControl_T.h"
+#include "dds4ccm/impl/ndds/PortStatusListener_T.h"
 
 #include "ciao/Logger/Log_Macros.h"
 
@@ -23,9 +24,9 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::~DDS_Event_Connector_T (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_write (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_write_supplier (void)
 {
-  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_write");
+  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_write_supplier");
 
   try
     {
@@ -69,20 +70,19 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_write (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen_push_consumer (void)
 {
-  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen");
+  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen_push_consumer");
 
   try
     {
-      if (CORBA::is_nil (this->__listen_datareaderlistener.in ()))
+      if (CORBA::is_nil (this->push_consumer_data_listener_.in ()))
         {
-          this->__listen_datareaderlistener = new ::CIAO::DDS4CCM::RTI::DataReaderListener_T
+          this->push_consumer_data_listener_ = new ::CIAO::DDS4CCM::RTI::DataReaderListener_T
             <DDS_TYPE, CCM_TYPE> (
                   this->context_,
-                  this->context_->get_connection_error_listener (),
                   this->context_->get_connection_push_consumer_data_listener (),
-                  this->context_->get_connection_pull_consumer_status (),
+                  this->context_->get_connection_push_consumer_status (),
                   this->get_push_consumer_data_control ());
         }
 
@@ -95,7 +95,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen (void)
                     this->topic_.in (),
                     this->library_name_,
                     this->profile_name_,
-                    this->__listen_datareaderlistener.in (),
+                    this->push_consumer_data_listener_.in (),
                     ::CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
             }
           else
@@ -105,9 +105,32 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen (void)
                   this->subscriber_->create_datareader (
                     this->topic_.in (),
                     drqos,
-                    this->__listen_datareaderlistener.in (),
+                    this->push_consumer_data_listener_.in (),
                     ::CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
             }
+        }
+    }
+  catch (...)
+    {
+      CIAO_ERROR ((LM_EMERGENCY, "Caught unknown c++ exception while creating subscriber entities\n"));
+      throw CORBA::INTERNAL ();
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_get_pull_consumer (void)
+{
+  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_get_pull_consumer");
+
+  try
+    {
+      if (CORBA::is_nil (this->pull_consumer_data_listener_.in ()))
+        {
+          this->pull_consumer_data_listener_ = new ::CIAO::DDS4CCM::RTI::PortStatusListener_T
+            <DDS_TYPE, CCM_TYPE> (
+                  this->context_,
+                  this->context_->get_connection_push_consumer_status ());
         }
 
       if (CORBA::is_nil (this->pull_consumer_fresh_data_.in ()))
@@ -119,8 +142,8 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen (void)
                     this->topic_.in (),
                     this->library_name_,
                     this->profile_name_,
-                    this->__listen_datareaderlistener.in (),
-                    ::CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+                    this->pull_consumer_data_listener_.in (),
+                    ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
             }
           else
             {
@@ -129,10 +152,9 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_listen (void)
                   this->subscriber_->create_datareader (
                     this->topic_.in (),
                     drqos,
-                    this->__listen_datareaderlistener.in (),
-                    ::CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+                    this->pull_consumer_data_listener_.in (),
+                    ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
             }
-
         }
     }
   catch (...)
@@ -237,8 +259,9 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
   CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate");
 
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate ();
-  this->configure_port_dds_listen ();
-  this->configure_port_dds_write ();
+  this->configure_port_dds_listen_push_consumer ();
+  this->configure_port_dds_get_pull_consumer ();
+  this->configure_port_dds_write_supplier ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
