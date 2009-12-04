@@ -29,7 +29,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   ACE_UNUSED_ARG (argv);
 
   CORBA::ULong endpoint_count;
+#if defined (ACE_HAS_IPV6)
   int def_type = AF_UNSPEC;
+#endif /* ACE_HAS_IPV6 */
 
   // network interfaces.
   ACE_INET_Addr *if_addrs = 0;
