@@ -322,7 +322,8 @@ public:
     
   virtual
   AST_Param_Holder *create_param_holder (
-    UTL_ScopedName *parameter_name);
+    UTL_ScopedName *parameter_name,
+    FE_Utils::T_Param_Info *info);
 };
 
 #endif           // _BE_GENERATOR_BE_GENERATOR_HH

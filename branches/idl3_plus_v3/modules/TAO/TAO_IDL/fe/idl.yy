@@ -90,7 +90,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_component.h"
 #include "ast_component_fwd.h"
 #include "ast_home.h"
-#include "ast_template_interface.h"
 #include "ast_porttype.h"
 #include "ast_connector.h"
 #include "ast_uses.h"
@@ -105,6 +104,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_string.h"
 #include "ast_factory.h"
 #include "ast_exception.h"
+#include "ast_param_holder.h"
+
 #include "fe_declarator.h"
 #include "fe_interface_header.h"
 #include "fe_template_interface_header.h"
@@ -113,6 +114,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_component_header.h"
 #include "fe_home_header.h"
 #include "fe_utils.h"
+
 #include "utl_identifier.h"
 #include "utl_err.h"
 #include "utl_string.h"
@@ -121,6 +123,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_exprlist.h"
 #include "utl_labellist.h"
 #include "utl_decllist.h"
+
 #include "global_extern.h"
 #include "nr_extern.h"
 
@@ -1760,8 +1763,8 @@ const_dcl :
            */
           if ($9 != 0 && s != 0)
             {
-              bool param_holder =
-                $9->is_param_holder ();
+              AST_Param_Holder *param_holder =
+                $9->param_holder ();
 
               AST_Expression::AST_ExprValue *result =
                 $9->check_and_coerce ($3,
@@ -1770,7 +1773,7 @@ const_dcl :
 
               // If the expression is a template parameter place
               // holder, 'result' will be 0, but it's ok.
-              if (result == 0 && ! param_holder)
+              if (result == 0 && param_holder == 0)
                 {
                   idl_global->err ()->coercion_error ($9,
                                                       $3);
@@ -1780,20 +1783,33 @@ const_dcl :
                 }
               else
                 {
-                  c =
-                    idl_global->gen ()->create_constant (
-                                            $3,
-                                            $9,
-                                            &n
-                                          );
-                  (void) s->fe_add_constant (c);
-                  delete result;
-                  result = 0;
+                  AST_Expression::ExprType et =
+                    $3;
+                    
+                  if (param_holder != 0
+                      && et != param_holder->info ()->const_type_)
+                    {
+                      idl_global->err ()->mismatched_template_param (
+                        param_holder->info ()->name_.c_str ());
+                    }
+                  else
+                    {                    
+                      c =
+                        idl_global->gen ()->create_constant (
+                          $3,
+                          $9,
+                          &n);
+                          
+                      (void) s->fe_add_constant (c);
+                    }
                 }
 
               $5->destroy ();
               delete $5;
               $5 = 0;
+              
+              delete result;
+              result = 0;
             }
         }
         ;
@@ -3509,21 +3525,29 @@ sequence_type_spec
            * Create a node representing a sequence
            */
           AST_Expression::AST_ExprValue *ev = 0;
+          AST_Param_Holder *param_holder = 0;
 
           if ($4 != 0)
             {
+              param_holder =
+                $4->param_holder ();
+                
               ev = $4->coerce (AST_Expression::EV_ulong);
             }
 
-          if (0 == $4 || 0 == ev)
+          // If the expression corresponds to a template parameter,
+          // it's ok for the coercion to fail at this point. We check
+          // for a type mismatch below.
+          if (0 == $4
+              || (0 == ev && 0 == param_holder))
             {
               idl_global->err ()->coercion_error ($4,
                                                   AST_Expression::EV_ulong);
-              $$ = 0;
+              $<dcval>$ = 0;
             }
           else if (0 == $1)
             {
-              $$ = 0;
+              $<dcval>$ = 0;
             }
           else
             {

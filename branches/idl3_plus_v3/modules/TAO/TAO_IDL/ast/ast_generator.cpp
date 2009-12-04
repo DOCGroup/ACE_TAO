@@ -1098,11 +1098,13 @@ AST_Generator::create_template_module_ref (
     
 AST_Param_Holder *
 AST_Generator::create_param_holder (
-  UTL_ScopedName *parameter_name)
+  UTL_ScopedName *parameter_name,
+  FE_Utils::T_Param_Info *info)
 {
   AST_Param_Holder *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_Param_Holder (parameter_name),
+                  AST_Param_Holder (parameter_name,
+                                    info),
                   0);
                   
   return retval;

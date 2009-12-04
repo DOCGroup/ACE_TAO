@@ -1,3 +1,27 @@
+Fri Dec  4 19:23:17 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_param_holder.h:
+        * TAO_IDL/include/ast_expression.h:
+        * TAO_IDL/be/be_param_holder.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_param_holder.cpp:
+        * TAO_IDL/be_include/be_param_holder.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/fe_declarator.cpp:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Support for template parameter as sequence
+          bound, and additional error checking for
+          template parameter as const type, sequence
+          type and sequence bound.
+
 Thu Dec  3 20:39:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_expression.h:

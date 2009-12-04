@@ -1091,11 +1091,13 @@ be_generator::create_template_module_ref (
     
 AST_Param_Holder *
 be_generator::create_param_holder (
-  UTL_ScopedName *parameter_name)
+  UTL_ScopedName *parameter_name,
+  FE_Utils::T_Param_Info *info)
 {
   be_param_holder *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_param_holder (parameter_name),
+                  be_param_holder (parameter_name,
+                                   info),
                   0);
                   
   return retval;

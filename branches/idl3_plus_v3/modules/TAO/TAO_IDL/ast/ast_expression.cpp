@@ -3005,10 +3005,10 @@ AST_Expression::get_tdef (void) const
   return this->tdef;
 }
 
-bool
-AST_Expression::is_param_holder (void) const
+AST_Param_Holder *
+AST_Expression::param_holder (void) const
 {
-  return (this->param_holder_ != 0);
+  return this->param_holder_;
 }
 
 // Helper functions for expression dumpers.

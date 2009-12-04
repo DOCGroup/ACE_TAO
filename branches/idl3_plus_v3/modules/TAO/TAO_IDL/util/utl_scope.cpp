@@ -594,7 +594,7 @@ UTL_Scope::match_param (
       if (param->name_ == name)
         {
           retval =
-            idl_global->gen ()->create_param_holder (e);
+            idl_global->gen ()->create_param_holder (e, param);
             
           break;
         }

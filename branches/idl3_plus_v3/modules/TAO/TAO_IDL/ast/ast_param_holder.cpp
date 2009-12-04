@@ -4,18 +4,26 @@
 
 #include "utl_identifier.h"
 
-AST_Param_Holder::AST_Param_Holder (UTL_ScopedName *parameter_name)
+AST_Param_Holder::AST_Param_Holder (UTL_ScopedName *parameter_name,
+                                    FE_Utils::T_Param_Info *info)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_param_holder,
               parameter_name),
     AST_Type (AST_Decl::NT_param_holder,
-              parameter_name)
+              parameter_name),
+    info_ (info)
 {
 }
 
 AST_Param_Holder::~AST_Param_Holder (void)
 {
+}
+
+FE_Utils::T_Param_Info const *
+AST_Param_Holder::info (void) const
+{
+  return this->info_;
 }
 
 void
