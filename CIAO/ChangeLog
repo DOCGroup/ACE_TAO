@@ -1,3 +1,8 @@
+Fri Dec  4 10:38:26 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.cpp:
+          Resolved compiler errors.
+
 Fri Dec  4 10:21:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
