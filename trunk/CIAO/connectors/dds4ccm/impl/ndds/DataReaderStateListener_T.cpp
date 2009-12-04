@@ -104,7 +104,7 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
                     }
                 }
             }
-          else 
+          else
             {
               CORBA::ULong nr_of_samples = 0;
               for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
@@ -184,89 +184,11 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_sample_los
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-void
-CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_requested_incompatible_qos (
-                                ::DDS::DataReader_ptr the_reader,
-                                const ::DDS::RequestedIncompatibleQosStatus & status)
-{
-  try
-    {
-      if (!CORBA::is_nil (this->error_listener_))
-        {
-          this->error_listener_->on_requested_incompatible_qos (the_reader, status);
-        }
-    }
-  catch (...)
-    {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataReaderStateListener_T::on_requested_incompatible_qos: ")
-                             ACE_TEXT ("DDS Exception caught\n")));
-    }
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
-CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_changed(
-          ::DDS::DataReader* reader,
-          const ::DDS::LivelinessChangedStatus& status)
-{
-  try
-    {
-      if (!CORBA::is_nil (this->error_listener_))
-        {
-          this->error_listener_->on_unexpected_status (reader, ::DDS::LIVELINESS_CHANGED_STATUS);
-        }
-    }
-  catch (...)
-    {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataReaderStateListener_T::on_liveliness_changed: ")
-                             ACE_TEXT ("DDS Exception caught\n")));
-    }
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
-CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_sample_rejected(
-          ::DDS::DataReader* reader,
-          const ::DDS::SampleRejectedStatus& status)
-{
-  try
-    {
-      if (!CORBA::is_nil (this->error_listener_))
-        {
-          this->error_listener_->on_sample_rejected (reader, status);
-        }
-    }
-  catch (...)
-    {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataReaderStateListener_T::on_sample_rejected: ")
-                             ACE_TEXT ("DDS Exception caught\n")));
-    }
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
-CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_subscription_matched(
-          ::DDS::DataReader* reader,
-          const ::DDS::SubscriptionMatchedStatus& status)
-{
-  try
-    {
-      if (!CORBA::is_nil (this->error_listener_))
-        {
-          this->error_listener_->on_unexpected_status (reader, ::DDS::SUBSCRIPTION_MATCHED_STATUS);
-        }
-    }
-  catch (...)
-    {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataReaderStateListener_T::on_requested_on_subscription_matchedncompatible_qos: ")
-                             ACE_TEXT ("DDS Exception caught\n")));
-    }
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::StatusMask
 CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::get_mask (void)
 {
-  return DDS_DATA_AVAILABLE_STATUS | DDS_REQUESTED_DEADLINE_MISSED_STATUS | DDS_SAMPLE_LOST_STATUS | DDS_REQUESTED_INCOMPATIBLE_QOS_STATUS | DDS_SAMPLE_REJECTED_STATUS | DDS_LIVELINESS_CHANGED_STATUS | DDS_SUBSCRIPTION_MATCHED_STATUS;
+  return DDS_DATA_AVAILABLE_STATUS |
+         DDS_REQUESTED_DEADLINE_MISSED_STATUS |
+         DDS_SAMPLE_LOST_STATUS;
 }
 
