@@ -128,6 +128,13 @@ namespace SANet {
      */
     virtual NodeID get_ID (void);
 
+    /// Set activity flag
+    /**
+     * 
+     * @param state the new state for the node
+     */
+    virtual void set_activity (bool state);
+
     /// Get pre-links (nodes with links to this node).
     /**
      * @return  Map of pre-node IDs to link weights.
@@ -160,6 +167,9 @@ namespace SANet {
   protected:
     /// Unique ID of node (for identification within network).
     NodeID ID_;
+
+    /// Flag indicating whether the node is active.
+    bool active;
 
     /// Name of node (descriptive only).
     std::string name_;
@@ -298,6 +308,7 @@ namespace SANet {
      * 
      */
     virtual void update_prior (Probability prior);
+
 
     /// Add precondition link.
     /**

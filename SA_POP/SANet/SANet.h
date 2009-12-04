@@ -16,6 +16,7 @@
 
 #include <iostream>
 #include <map>
+#include <set>
 #include <stdexcept>
 #include "SANet_Types.h"
 #include "SANode.h"
@@ -152,6 +153,34 @@ namespace SANet {
      */
     virtual void update_effect_link(TaskID task_ID, CondID cond_ID,
                                LinkWeight weight, PortID port_ID= "");
+
+    /// Set Task State.
+    /**
+     *
+     * @param task_ID  Task node ID.
+     *
+     *
+     * @param state State for the task to be set to;
+     */
+    virtual void set_task_state(TaskID task_ID, bool state);
+
+    /// Set Cond State.
+    /**
+     *
+     * @param cond_ID  Condition node ID.
+     *
+     *
+     * @param state State for the condition to be set to;
+     */
+    virtual void set_cond_state(CondID cond_ID, bool state);
+
+        /// Set All nodes to State.
+    /**
+     *
+     *
+     * @param state State to set all nodes to;
+     */
+    virtual void set_nodes_state(bool state);
 
     /// Update the task prior.
     /**
@@ -367,6 +396,18 @@ namespace SANet {
 
     /// Map from ID to node pointer for all condition nodes in network.
     CondNodeMap cond_nodes_;
+
+    //Set of Active Task Nodes
+    std::set<SANet::TaskID> active_tasks;
+
+    //Set of Disabled Task Nodes
+    std::set<SANet::TaskID> disabled_tasks;
+
+    //Set of Active Condition Nodes
+    std::set<SANet::CondID> active_conds;
+
+    //Set of Active Task Nodes
+    std::set<SANet::CondID> disabled_conds;
 
     /// Map from precondition links to associated ports.
     PrecondLinkPortMap precond_links_;
