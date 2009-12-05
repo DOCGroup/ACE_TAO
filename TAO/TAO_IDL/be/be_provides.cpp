@@ -51,10 +51,10 @@ be_provides::gen_facet_svnt_decl (TAO_OutStream &os)
    be_type *impl =
     be_type::narrow_from_decl (this->provides_type ());
 
-  if (impl->svnt_hdr_facet_gen ())
-    {
-      return 0;
-    }
+   if (impl->is_local () || impl->svnt_hdr_facet_gen ())
+     {
+       return 0;
+     }
 
   // No '_cxx_' prefix>
   const char *lname =
@@ -145,7 +145,7 @@ be_provides::gen_facet_svnt_defn (TAO_OutStream &os)
   be_type *impl =
     be_type::narrow_from_decl (this->provides_type ());
 
-  if (impl->svnt_src_facet_gen ())
+  if (impl->is_local () || impl->svnt_src_facet_gen ())
     {
       return 0;
     }

@@ -268,7 +268,10 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
   AST_Decl *scope = ScopeAsDecl (obj->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
-
+  
+  if (node->provides_type ()->is_local ())
+    return 0;
+  
   // Avoid '_cxx_' prefix.
   const char *lname =
     obj->original_local_name ()->get_string ();
@@ -369,7 +372,10 @@ be_visitor_servant_svs::visit_uses (be_uses *node)
   
   const char *obj_name = node->uses_type ()->full_name ();
   bool is_multiple = node->is_multiple ();
-
+  
+  if (node->uses_type ()->is_local ())
+    return 0;
+  
   os_ << be_nl << be_nl
       << (is_multiple ? "::Components::Cookie *" : "void")
       << be_nl
@@ -1264,7 +1270,7 @@ be_visitor_facet_executor_block::visit_provides (
   ACE_CString prefix (this->port_prefix_);
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
-
+  
   os_ << be_nl << be_nl
       << "if (ACE_OS::strcmp (name, \"" << port_name
       << "\") == 0)" << be_idt_nl
@@ -1305,40 +1311,49 @@ be_visitor_connect_block::visit_uses (be_uses *node)
       << "::" << obj_name << "_var _ciao_conn =" << be_idt_nl
       << "::" << obj_name << "::_narrow (connection);"
       << be_uidt_nl << be_nl
+    // @@ TODO: Spec indicates that facet references can be nil.
       << "if ( ::CORBA::is_nil (_ciao_conn.in ()))" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::Components::InvalidConnection ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
-
-  if (! is_multiple)
+  
+  if (node->uses_type ()->is_local ())
     {
-      os_ << "ACE_CString receptacle_name (\"" << port_name
-          << "\");" << be_nl
-          << "receptacle_name += \'_\';" << be_nl
-          << "receptacle_name += "
-          << "this->context_->_ciao_instance_id ();" << be_nl
-          << "::CORBA::PolicyList_var policy_list =" << be_idt_nl
-          << "this->container_->get_receptacle_policy "
-          << "(receptacle_name.c_str ());" << be_uidt_nl << be_nl
-          << "if (policy_list->length () != 0)" << be_idt_nl
-          << "{" << be_idt_nl
-          << "::CORBA::Object_var over_ridden_object ="
-          << be_idt_nl
-          << "_ciao_conn->_set_policy_overrides (policy_list.in (),"
-          << be_nl
-          << "                                   CORBA::SET_OVERRIDE);"
-          << be_uidt_nl
-          << "_ciao_conn =" << be_idt_nl
-          << "::" << obj_name << "::_narrow (over_ridden_object.in ());"
-          << be_uidt << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl;
+      // @@todo: placeholder for connection logic
     }
-
-  os_ << "/// " << (is_multiple ? "Multiplex" : "Simplex")
-      << " connect." << be_nl
-      << (is_multiple ? "return " : "") << "this->connect_"
-      << port_name << " (_ciao_conn.in ());";
-
+  else
+    {
+      if (! is_multiple)
+        {
+          os_ << "ACE_CString receptacle_name (\"" << port_name
+              << "\");" << be_nl
+              << "receptacle_name += \'_\';" << be_nl
+              << "receptacle_name += "
+              << "this->context_->_ciao_instance_id ();" << be_nl
+              << "::CORBA::PolicyList_var policy_list =" << be_idt_nl
+              << "this->container_->get_receptacle_policy "
+              << "(receptacle_name.c_str ());" << be_uidt_nl << be_nl
+              << "if (policy_list->length () != 0)" << be_idt_nl
+              << "{" << be_idt_nl
+              << "::CORBA::Object_var over_ridden_object ="
+              << be_idt_nl
+              << "_ciao_conn->_set_policy_overrides (policy_list.in (),"
+              << be_nl
+              << "                                   CORBA::SET_OVERRIDE);"
+              << be_uidt_nl
+              << "_ciao_conn =" << be_idt_nl
+              << "::" << obj_name << "::_narrow (over_ridden_object.in ());"
+              << be_uidt << be_uidt_nl
+              << "}" << be_uidt_nl << be_nl;
+        }
+      
+      os_ << "/// " << (is_multiple ? "Multiplex" : "Simplex")
+          << " connect." << be_nl
+          << (is_multiple ? "return " : "") << "this->connect_"
+          << port_name << " (_ciao_conn.in ());";
+      
+    }
+  
   if (! is_multiple)
     {
       os_ << be_nl << be_nl
@@ -1372,26 +1387,33 @@ be_visitor_disconnect_block::visit_uses (be_uses *node)
   const char *port_name = prefix.c_str ();
   
   bool is_multiple = node->is_multiple ();
-
-  os_ << be_nl << be_nl
-      << "if (ACE_OS::strcmp (name, \"" << port_name
-      << "\") == 0)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "/// " << (is_multiple ? "Multiplex" : "Simplex")
-      << " disconnect." << be_nl;
-
- if (is_multiple)
-  {
-    os_ << "if (ck == 0)" << be_idt_nl
-        << "{" << be_idt_nl
-        << "throw ::Components::CookieRequired ();" << be_uidt_nl
-        << "}" << be_uidt_nl << be_nl;
-  }
-
- os_ << "return this->disconnect_" << port_name
-      << " (" << (is_multiple ? "ck" : "") << ");" << be_uidt_nl
-      << "}" << be_uidt;
-
+  
+  if (node->uses_type ()->is_local ())
+    {
+      // @@ placeholder for local interface behavior
+    }
+  else
+    {
+      os_ << be_nl << be_nl
+          << "if (ACE_OS::strcmp (name, \"" << port_name
+          << "\") == 0)" << be_idt_nl
+          << "{" << be_idt_nl
+          << "/// " << (is_multiple ? "Multiplex" : "Simplex")
+          << " disconnect." << be_nl;
+      
+      if (is_multiple)
+        {
+          os_ << "if (ck == 0)" << be_idt_nl
+              << "{" << be_idt_nl
+              << "throw ::Components::CookieRequired ();" << be_uidt_nl
+              << "}" << be_uidt_nl << be_nl;
+        }
+      
+      os_ << "return this->disconnect_" << port_name
+          << " (" << (is_multiple ? "ck" : "") << ");" << be_uidt_nl
+          << "}" << be_uidt;
+    }
+  
   return 0;
 }
 
@@ -1724,10 +1746,17 @@ be_visitor_populate_port_tables::visit_provides (
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
   
-  os_ << be_nl
-      << "obj_var = this->provide_"
-      << port_name << "_i ();";
-
+  if (node->provides_type ()->is_local ())
+    {
+      // @@ placeholder for local interface behavior.
+    }
+  else
+    {
+      os_ << be_nl
+          << "obj_var = this->provide_"
+          << port_name << "_i ();";
+    }
+  
   return 0;
 }
 
