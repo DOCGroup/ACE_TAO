@@ -1,3 +1,19 @@
+Sat Dec  5 00:59:20 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * tests/Bug_3769_Regression:
+        * tests/Bug_3769_Regression/Foo.idl:
+        * tests/Bug_3769_Regression/Foo.mpc:
+        * tests/Bug_3769_Regression/Foo_exec.h:
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+        * tests/Bug_3769_Regression/descriptors:
+        * tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+        * tests/Bug_3769_Regression/descriptors/NodeMap.dat:
+        * tests/Bug_3769_Regression/descriptors/run_test.pl:
+        * tests/Bug_3769_Regression/model:
+
+          Added bugzilla 3769. Component attributes of type double and float
+          do not get set properly by DAnCE.
+
 Fri Dec  4 20:41:45 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
