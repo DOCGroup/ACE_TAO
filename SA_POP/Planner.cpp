@@ -126,6 +126,7 @@ bool Planner::plan (size_t sa_max_steps, SA_POP::Goal goal)
 
   if (this->plan_strat_->satisfy_open_conds ()) {
     this->plan_ = this->working_plan_->get_plan ();
+
     this->notify_plan_changed ();
     return true;
   }
@@ -510,6 +511,24 @@ void Planner::notify_plan_changed (void)
     (*iter)->notify_plan (this);
   }
 };
+
+void Planner::calculate_plan_utility(size_t sa_max_steps)
+{
+	sanet_->set_nodes_state(false);
+
+	for(CLSet::iterator it = this->plan_.causal_links.begin(); it != 
+		this->plan_.causal_links.end(); it++){
+
+			this->sanet_->set_task_state((*it).first, true);
+			this->sanet_->set_task_state((*it).second, true);
+			this->sanet_->set_cond_state((*it).cond.id, true);
+	}
+
+	sanet_->update(sa_max_steps);
+
+	//TODO the rest
+
+}
 
 /// Get the Task instances in a particular set of the specified task instance
 const TaskInstSet* Planner::get_prec_insts (TaskInstID task_inst, PrecedenceRelation prec_rel)

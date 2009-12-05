@@ -145,7 +145,7 @@ public class PDDL_Translator {
         //of the conditions can come true
         setup_initial_action(init_act);
 
-        calculateNetworkStatistics("before_impossibility_removal");
+    //    calculateNetworkStatistics("before_impossibility_removal");
 
         System.out.println("Before optimizing: "+ this.task_nodes.size()+" tasks "+ this.condition_nodes.size()+" conditions");
         System.out.println("Elapsed: "+ (new Date().getTime()-start_time));
@@ -170,9 +170,9 @@ public class PDDL_Translator {
         //TODO maybe try something like a kmap here?
         
 
-        calculateNetworkStatistics("before_cond_combining");
+   //     calculateNetworkStatistics("before_cond_combining");
 
-    //    combine_conditions(condition_combine_levels);
+        combine_conditions(condition_combine_levels);
         
  //       calculateNetworkStatistics("after_cond_combining");
         
@@ -2241,7 +2241,13 @@ public class PDDL_Translator {
 	private void record_task_impls(){
 		
 		for(TaskNode t: this.task_nodes.values()){
+			
+			if(t.getName().equals("initact")){
+				continue;
+			}
+			
 			task_impls.put(t.getName(), new TaskImpl(t.getName()+"_impl"));
+			
 			task_to_impl_links.add(new TaskToImpl(t.getNodeID(), (t.getName()+"_impl"), "1"));
 			
 			for(String c: task_to_resources.get(t)){
@@ -2652,10 +2658,6 @@ public class PDDL_Translator {
 	        }
 	        
 	        for(TaskToImpl t: task_to_impl_links){
-	        	
-				if(!init_act_visible && t.getTaskID().equals("20")){
-					continue;
-				}
 	        	
 	        	Element taskToImpl = doc.createElement("taskToImpl");
 	        	

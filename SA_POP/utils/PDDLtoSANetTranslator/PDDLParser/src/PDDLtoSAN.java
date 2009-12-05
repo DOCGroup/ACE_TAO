@@ -23,7 +23,8 @@ import pddl4j.RequireKey;
 import pddl4j.Source;
 import pddl4j.ErrorManager.Message;
 
-public class PDDLtoSAN {
+public class PDDLtoSAN
+{
 
 	/**
 	 * @param args
@@ -62,6 +63,8 @@ public class PDDLtoSAN {
 	//	List<StatisticsReport> info_sets = new LinkedList<StatisticsReport>();
 		
 		StatisticsCompilation all_stat_compl = new StatisticsCompilation();
+		
+		int all_count = 0;
 		
 		for(String domain_path: domains_to_problems.keySet()){
 			
@@ -106,72 +109,81 @@ public class PDDLtoSAN {
 					System.out.println("Translating: "+ problem_file+ " " + domain_file);
 					System.out.println();
 					
-					PDDL_Translator n = new PDDL_Translator(obj, 1, false);
+					PDDL_Translator n = new PDDL_Translator(obj, 3, false);
 					
 					System.out.println("Done translating");
 					System.out.println("  SAN number of conditions: "+ n.getConditonNodeCount());
 					System.out.println("  SAN number of actions: " + n.getActionNodeCount());
 
-					stat_compl.all_reports.add(n.getStatReport());
-					all_stat_compl.all_reports.add(n.getStatReport());
+			//		stat_compl.all_reports.add(n.getStatReport());
+			//		all_stat_compl.all_reports.add(n.getStatReport());
 					
 			//		n.printSAN();
-			//		n.write_SAN_to_xml(domain.getDomainName()+"_"+problem.getProblemName()+"-san.xml");
-			//		n.write_TM_to_xml(domain.getDomainName()+"_"+problem.getProblemName()+"-tm.xml");
-			//		n.write_goals_to_file(domain.getDomainName()+"_"+problem.getProblemName()+"-goals");
+					
+					int this_count = all_count++;
+					
+					n.write_SAN_to_xml("output\\"+this_count+"_"+domain.getDomainName()+"_"+problem.getProblemName()+"-san.xml");
+					n.write_TM_to_xml("output\\"+this_count+"_"+domain.getDomainName()+"_"+problem.getProblemName()+"-tm.xml");
+					n.write_goals_to_file("output\\"+this_count+"_"+domain.getDomainName()+"_"+problem.getProblemName()+"-goals");
 				}
 			}
 			
-			try {
-				FileWriter fileout = new FileWriter(new File(domain_path+args[1]));
-				fileout.write(stat_compl.toString());
-				fileout.close();
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}		
+//			try {
+//			//	FileWriter fileout = new FileWriter(new File(domain_path+args[1]));
+//			//	fileout.write(stat_compl.toString());
+//			//	fileout.close();
+//				
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}		
 			
 		}
 		
-		FileWriter fileout;
-		try {
-			fileout = new FileWriter(new File(args[1]));
-			fileout.write(all_stat_compl.toString());
-			fileout.close();	
-			
-		} catch (IOException e) {
+//		FileWriter fileout;
+//		try {
+//			fileout = new FileWriter(new File(args[1]));
+//			fileout.write(all_stat_compl.toString());
+//			fileout.close();	
+//			
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+
+	//	System.out.println(stat_compl.toString());
+	}
+
+	public static Map<String, List<String>> read_input_file(String filename)
+	{
+		//TODO make this work properly
+		Map<String, List<String>> to_ret = new LinkedHashMap<String, List<String>>();
+		Scanner scan = null;
+		try
+		{
+			scan = new Scanner(new FileReader(new File(filename)));
+		}
+		catch (FileNotFoundException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-	//	System.out.println(stat_compl.toString());
-	}
-	
-	public static Map<String, List<String>>  read_input_file(String filename){
-		//TODO make this work properly
-		Map<String, List<String>> to_ret = new LinkedHashMap<String, List<String>>();
-		Scanner scan = null;
-		try {
-			scan = new Scanner(new FileReader(new File(filename)));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		while(scan.hasNext()){
+		while (scan.hasNext())
+		{
 			String domain_name = scan.next();
-			
+
 			String next = scan.next();
 			List<String> problems = new LinkedList<String>();
-			
-			while(!next.equals("END")){
+
+			while (!next.equals("END"))
+			{
 				problems.add(next);
 				next = scan.next();
 			}
 			to_ret.put(domain_name, problems);
 		}
-		
+
 		return to_ret;
 	}
 }

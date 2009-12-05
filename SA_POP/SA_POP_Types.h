@@ -30,10 +30,10 @@
 #endif  /* SA_POP_HAS_ACE */
 
 
-#define SA_POP_DEBUG_MINIMAL 2
+#define SA_POP_DEBUG_VERBOSE 1
 #define SA_POP_DEBUG_NORMAL 5
-#define SA_POP_DEBUG_VERBOSE 10
-#define SA_POP_DEBUG_HIGH 15
+#define SA_POP_DEBUG_MINIMAL 9
+#define SA_POP_DEBUG_HIGH 10
 
 // SET current SA-POP Debug output level.
 #define SA_POP_DEBUG_LEVEL SA_POP_DEBUG_MINIMAL
@@ -196,7 +196,6 @@ namespace SA_POP {
     TaskInstID task_inst_id;
     TaskID task_id;
   };
-
 
   /// Initial state (as task) implementation ID (for placeholder in planning/scheduling).
   const TaskImplID INIT_TASK_IMPL_ID = "init_impl";
