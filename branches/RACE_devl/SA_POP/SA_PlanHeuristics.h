@@ -84,6 +84,9 @@ namespace SA_POP {
      * @return  Sorted list of tasks that satisfy given condition.
      */
 	virtual TaskChoiceList choose_task_fair (Condition open_cond);
+
+	virtual TaskChoiceList choose_task_once(Condition open_cond);
+
   };
 
   /**

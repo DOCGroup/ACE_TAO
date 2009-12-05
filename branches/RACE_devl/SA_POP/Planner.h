@@ -519,6 +519,8 @@ namespace SA_POP {
 
   virtual void set_backtrack_cmd_id(CommandID cmd){backtrack_cmd = cmd;};
 
+  virtual void Planner::calculate_plan_utility(size_t sa_max_steps);
+
   protected:
     /// Threshold for current probability of a condition to be satisfied.
     const Probability cond_prob_thresh_;

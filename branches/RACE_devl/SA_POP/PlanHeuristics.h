@@ -91,6 +91,9 @@ namespace SA_POP {
      */
 	virtual TaskChoiceList choose_task_fair (Condition open_cond) = 0;
 
+	virtual TaskChoiceList choose_task_once(Condition open_cond) = 0;
+
+
   protected:
     /// Pointer to Planner object.
     SA_POP::Planner *planner_;

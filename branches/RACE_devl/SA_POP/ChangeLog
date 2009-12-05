@@ -1,3 +1,21 @@
+Sat Dec  5 07:07:45 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
+
+        * C2W/C2W_Demo.cpp:
+
+        * PlanHeuristics.h:
+        * Planner.h:
+        * Planner.cpp:
+        * SA_POP_Types.h:
+        * SA_PlanHeuristics.h:
+        * SA_PlanHeuristics.cpp:
+        * SA_PlanStrategy.cpp:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/PDDLtoSAN.java:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/Translator/PDDL_Translator.java:
+
+	Added choose-task-once strategy, other cleanup.  Metrics gathering in translator
+
 Fri Dec  4 18:16:57 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
         * SANet/SANet.h:
@@ -5,8 +23,8 @@ Fri Dec  4 18:16:57 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
         * SANet/SANode.h:
         * SANet/SANode.cpp:
 
-	These files were modified to take the new active and disabled flags
-	for computing expected utilities of plans.
+        These files were modified to take the new active and disabled flags
+        for computing expected utilities of plans.
 
 Tue Nov 10 21:55:22 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 

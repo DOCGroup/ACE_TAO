@@ -201,20 +201,20 @@ bool SA_PlanStrategy::satisfy_open_conds (void)
 			}
 
 			//Do not execute if the condition has been noted before and not helped
-			std::pair<bool, CommandID> return_data = 
-			  this->store_map.should_continue(add_task_cmd->get_id(), 
-							  add_task_cmd->get_condition(), 
-							  stored_task, 
-							  this->open_conds_, 
-							  this->planner_->get_working_plan()->get_task_insts());
+			//std::pair<bool, CommandID> return_data = 
+			//  this->store_map.should_continue(add_task_cmd->get_id(), 
+			//				  add_task_cmd->get_condition(), 
+			//				  stored_task, 
+			//				  this->open_conds_, 
+			//				  this->planner_->get_working_plan()->get_task_insts());
 
-			if(return_data.first)
-			{
+			//if(return_data.first)
+			//{
 				// Try to satisfy threats and continue recursive planning.
 				if (this->satisfy_everything())
 					return true;
 
-			}
+			//}
 
 			this->store_map.undo_binding(add_task_cmd->get_id(), add_task_cmd->get_condition(), stored_task);
 
@@ -579,7 +579,7 @@ AddTaskCmd *SA_PlanStrategy::satisfy_cond (Condition open_cond)
 	// Get add task command.
 	AddTaskCmd *add_task_cmd =
 		static_cast<AddTaskCmd *> (this->add_task_cmd_->clone ());
-	TaskChoiceList task_list = this->task_choice_->choose_task_fair (open_cond);
+	TaskChoiceList task_list = this->task_choice_->choose_task_once (open_cond);
 	add_task_cmd->set_id (this->get_next_cmd_id ());
 	add_task_cmd->set_tasks (task_list);
 

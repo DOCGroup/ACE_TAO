@@ -263,6 +263,8 @@ int main (int argc, char* argv[])
 	  //planner->add_out_adapter (&screen_out);
 
     planner->plan (15, goal);
+	
+
 
   //} 
   /*
