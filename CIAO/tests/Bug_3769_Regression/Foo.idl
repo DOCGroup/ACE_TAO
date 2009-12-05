@@ -1,0 +1,16 @@
+// $Id$
+
+#ifndef FOO_IDL_
+#define FOO_IDL_
+
+#include <Components.idl>
+
+component Foo
+{
+  attribute short  my_short;
+  attribute long   my_long;
+  attribute float  my_float;
+  attribute double my_double;
+};
+
+#endif /* FOO_IDL_ */
