@@ -1,3 +1,11 @@
+Sun Dec  6 02:01:17 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * tao/Intrusive_Ref_Count_Object_T.h:
+        * tao/Intrusive_Ref_Count_Object_T.inl:
+        * tao/Intrusive_Ref_Count_Object_T.cpp:
+
+          Added missing files in last commit.
+          
 Fri Dec  4 23:18:26 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         Merged in valuetype repository id and value indirection support
