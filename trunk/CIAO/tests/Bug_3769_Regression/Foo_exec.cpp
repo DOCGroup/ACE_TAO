@@ -90,7 +90,7 @@ namespace CIAO_Foo_Impl
   Foo_exec_i::my_float (
     ::CORBA::Float my_float)
   {
-    if(my_float != 45.67)
+    if(my_float != 45.67F)
       ACE_ERROR ((LM_ERROR, "ERROR: my_float != 45.67, it is %f\n", my_float));
   }
   

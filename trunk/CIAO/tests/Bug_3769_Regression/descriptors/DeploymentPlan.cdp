@@ -96,10 +96,10 @@
       <name>my_float</name>
       <value>
         <type>
-          <kind>tk_double</kind>
+          <kind>tk_float</kind>
         </type>
         <value>
-          <double>45.67</double>
+          <float>45.67</float>
         </value>
       </value>
     </configProperty>
