@@ -1,3 +1,18 @@
+Sun Dec  6 03:07:00 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * tao/Makefile.am:
+        
+          Updated automake files.
+          
+        * tests/OBV/Indirection/Makefile.am:
+
+          Added automake file.
+
+        * tao/CDR.inl:
+
+          Made copy constructor initialize indirection maps instead of 
+          using assign operator.
+          
 Sun Dec  6 02:01:17 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * tao/Intrusive_Ref_Count_Object_T.h:
@@ -5,7 +20,7 @@ Sun Dec  6 02:01:17 UTC 2009  Yan Dai  <dai_y@ociweb.com>
         * tao/Intrusive_Ref_Count_Object_T.cpp:
 
           Added missing files in last commit.
-          
+
 Fri Dec  4 23:18:26 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         Merged in valuetype repository id and value indirection support
