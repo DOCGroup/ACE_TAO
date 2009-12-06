@@ -1181,6 +1181,9 @@ nobase_include_HEADERS = \
   Intrusive_Ref_Count_Handle_T.cpp \
   Intrusive_Ref_Count_Handle_T.h \
   Intrusive_Ref_Count_Handle_T.inl \
+  Intrusive_Ref_Count_Object_T.cpp \
+  Intrusive_Ref_Count_Object_T.h \
+  Intrusive_Ref_Count_Object_T.inl \
   InvalidName.pidl \
   Invocation_Adapter.h \
   Invocation_Adapter.inl \

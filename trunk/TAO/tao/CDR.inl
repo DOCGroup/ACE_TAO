@@ -248,11 +248,11 @@ TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
 ACE_INLINE
 TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs)
   : ACE_InputCDR (rhs),
-    orb_core_ (rhs.orb_core_)
+    orb_core_ (rhs.orb_core_),
+    repo_id_map_ (rhs.repo_id_map_),
+    codebase_map_ (rhs.codebase_map_),
+    value_map_ (rhs.value_map_)
 {
-  this->repo_id_map_ = rhs.repo_id_map_; 
-  this->codebase_map_ = rhs.codebase_map_; 
-  this->value_map_ = rhs.value_map_; 
 }
 
 ACE_INLINE
