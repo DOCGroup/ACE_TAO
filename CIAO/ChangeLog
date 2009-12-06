@@ -1,3 +1,18 @@
+Sun Dec  6 18:49:47 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+
+          Fixed the comparison for float to ensure the numeric literal isn't
+          converted to a double. 
+        
+        * tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+        
+          Float configproperty was incorrectly typed as a double. 
+        
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+
+          Fixed bug whereby floats/doubles weren't properly dereferences. 
+        
 Sat Dec  5 01:06:06 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
 
         * bin/ciao_tests.lst:

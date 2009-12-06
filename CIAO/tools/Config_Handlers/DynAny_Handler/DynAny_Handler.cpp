@@ -88,12 +88,12 @@ namespace CIAO
 
         case TCKind::tk_float_l:
           if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_float);
-          retval->insert_float (CORBA::Float (*value.begin_float ()));
+          retval->insert_float (CORBA::Float (*(*value.begin_float ())));
           break;
 
         case TCKind::tk_double_l:
           if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_double);
-          retval->insert_double (CORBA::Double (*value.begin_double ()));
+          retval->insert_double (CORBA::Double (*(*value.begin_double ())));
           break;
 
         case TCKind::tk_boolean_l:
