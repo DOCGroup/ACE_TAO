@@ -150,7 +150,7 @@ namespace CIAO
           exec_art = this->ci_->get_implementation (tmp);
           CIAO_DEBUG ((LM_TRACE, CLINFO
                        "CIAO_Container_i::install_component - "
-                       "Found executor artifact:  %C\n", exec_art.in ()));
+                       "Found executor artifact: %C\n", exec_art.in ()));
         }
       else
         {
