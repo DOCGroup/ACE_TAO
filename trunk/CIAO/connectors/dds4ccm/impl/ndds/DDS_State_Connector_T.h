@@ -78,7 +78,7 @@ private:
    */
   //@{
   void configure_passive_observer (void);
-  ::DDS::DataReader_var push_consumer_data_;
+  ::DDS::DataReader_var push_observer_data_;
   ::DDS::DataReaderListener_var __listen_datareaderlistener;
   //@}
 
@@ -86,8 +86,10 @@ private:
    * DDS_Get pull_observer
    */
   //@{
-  void configure_pull_observer (void);
-  ::DDS::DataReader_var pull_consumer_fresh_data_;
+  void configure_dds_get_pull_observer (void);
+  ::DDS::DataReader_var pull_observer_data_;
+  ::DDS::DataReader_var pull_observer_fresh_data_;
+  ::DDS::DataReaderListener_var pull_observer_status_;
   //@}
 
   /**
@@ -95,7 +97,7 @@ private:
    */
   //@{
   void configure_push_observer (void);
-  ::CCM_DDS::CCM_DataListenerControl_var push_consumer_data_control_;
+  ::CCM_DDS::CCM_DataListenerControl_var push_observer_data_control_;
   //@}
 
   /**
@@ -103,7 +105,7 @@ private:
    */
   //@{
   void configure_push_state_observer (void);
-  ::CCM_DDS::CCM_StateListenerControl_var push_consumer_state_control_;
+  ::CCM_DDS::CCM_StateListenerControl_var push_observer_state_control_;
   //@}
 };
 

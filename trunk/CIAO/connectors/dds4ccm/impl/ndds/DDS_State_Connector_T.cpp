@@ -9,6 +9,7 @@
 #include "dds4ccm/impl/ndds/SubscriberListener_T.h"
 #include "dds4ccm/impl/ndds/DataListenerControl_T.h"
 #include "dds4ccm/impl/ndds/StateListenerControl_T.h"
+#include "dds4ccm/impl/ndds/PortStatusListener_T.h"
 
 #include "ciao/Logger/Log_Macros.h"
 
@@ -43,7 +44,7 @@ typename CCM_TYPE::reader_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::get_passive_observer_data (void)
 {
   return new CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> (
-          this->push_consumer_data_.in ());
+          this->push_observer_data_.in ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -79,20 +80,20 @@ typename CCM_TYPE::reader_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_observer_data (void)
 {
   return new CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> (
-          this->push_consumer_data_.in ());
+          this->push_observer_data_.in ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 ::CCM_DDS::CCM_DataListenerControl_ptr
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_observer_data_control (void)
 {
-  if (CORBA::is_nil (this->push_consumer_data_control_.in ()))
+  if (CORBA::is_nil (this->push_observer_data_control_.in ()))
     {
-      this->push_consumer_data_control_ = new CCM_DDS_DataListenerControl_T
+      this->push_observer_data_control_ = new CCM_DDS_DataListenerControl_T
         < ::CCM_DDS::CCM_DataListenerControl> ();
     }
 
-  return this->push_consumer_data_control_.in ();
+  return this->push_observer_data_control_.in ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -113,13 +114,13 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 ::CCM_DDS::CCM_StateListenerControl_ptr
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_state_observer_data_control (void)
 {
-  if (CORBA::is_nil (this->push_consumer_state_control_.in ()))
+  if (CORBA::is_nil (this->push_observer_state_control_.in ()))
     {
-      this->push_consumer_state_control_ = new CCM_DDS_StateListenerControl_T
+      this->push_observer_state_control_ = new CCM_DDS_StateListenerControl_T
         < ::CCM_DDS::CCM_StateListenerControl> ();
     }
 
-  return this->push_consumer_state_control_.in ();
+  return this->push_observer_state_control_.in ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -143,7 +144,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate ();
   this->configure_port_dds_update ();
   this->configure_passive_observer ();
-  this->configure_pull_observer ();
+  this->configure_dds_get_pull_observer ();
   this->configure_push_observer ();
   this->configure_push_state_observer ();
 }
@@ -223,11 +224,11 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_passive_observer (void)
                   this->get_push_state_observer_data_control ());
         }
 
-      if (CORBA::is_nil (this->push_consumer_data_.in ()))
+      if (CORBA::is_nil (this->push_observer_data_.in ()))
         {
           if (this->library_name_ && this->profile_name_)
             {
-              this->push_consumer_data_ =
+              this->push_observer_data_ =
                   this->subscriber_->create_datareader_with_profile (
                     this->topic_.in (),
                     this->library_name_,
@@ -238,7 +239,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_passive_observer (void)
           else
             {
               ::DDS::DataReaderQos drqos;
-              this->push_consumer_data_ =
+              this->push_observer_data_ =
                   this->subscriber_->create_datareader (
                     this->topic_.in (),
                     drqos,
@@ -247,11 +248,11 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_passive_observer (void)
             }
         }
 
-      if (CORBA::is_nil (this->pull_consumer_fresh_data_.in ()))
+      if (CORBA::is_nil (this->pull_observer_fresh_data_.in ()))
         {
           if (this->profile_name_ && this->library_name_)
             {
-              this->pull_consumer_fresh_data_ =
+              this->pull_observer_fresh_data_ =
                   this->subscriber_->create_datareader_with_profile (
                     this->topic_.in (),
                     this->library_name_,
@@ -262,7 +263,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_passive_observer (void)
           else
             {
               ::DDS::DataReaderQos drqos;
-              this->pull_consumer_fresh_data_ =
+              this->pull_observer_fresh_data_ =
                   this->subscriber_->create_datareader (
                     this->topic_.in (),
                     drqos,
@@ -281,8 +282,49 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_passive_observer (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_pull_observer (void)
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_dds_get_pull_observer (void)
 {
+  CIAO_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configure_dds_get_pull_observer");
+
+  try
+    {
+      if (CORBA::is_nil (this->pull_observer_status_.in ()))
+        {
+          this->pull_observer_status_ = new ::CIAO::DDS4CCM::RTI::PortStatusListener_T
+            <DDS_TYPE, CCM_TYPE> (
+                  this->context_,
+                  this->context_->get_connection_pull_observer_status ());
+        }
+
+      if (CORBA::is_nil (this->pull_observer_fresh_data_.in ()))
+        {
+          if (this->profile_name_ && this->library_name_)
+            {
+              this->pull_observer_fresh_data_ =
+                  this->subscriber_->create_datareader_with_profile (
+                    this->topic_.in (),
+                    this->library_name_,
+                    this->profile_name_,
+                    this->pull_observer_status_.in (),
+                    ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+            }
+          else
+            {
+              ::DDS::DataReaderQos drqos;
+              this->pull_observer_fresh_data_ =
+                  this->subscriber_->create_datareader (
+                    this->topic_.in (),
+                    drqos,
+                    this->pull_observer_status_.in (),
+                    ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+            }
+        }
+    }
+  catch (...)
+    {
+      CIAO_ERROR ((LM_EMERGENCY, "Caught unknown c++ exception while creating subscriber entities\n"));
+      throw CORBA::INTERNAL ();
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>

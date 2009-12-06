@@ -85,7 +85,7 @@ private:
   void configure_port_dds_get_pull_consumer (void);
   ::DDS::DataReader_var pull_consumer_data_;
   ::DDS::DataReader_var pull_consumer_fresh_data_;
-  ::DDS::DataReaderListener_var pull_consumer_data_listener_;
+  ::DDS::DataReaderListener_var pull_consumer_status_;
   //@}
 };
 

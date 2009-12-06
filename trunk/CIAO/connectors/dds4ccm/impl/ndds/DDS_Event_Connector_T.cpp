@@ -125,12 +125,12 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_get_pull_consumer 
 
   try
     {
-      if (CORBA::is_nil (this->pull_consumer_data_listener_.in ()))
+      if (CORBA::is_nil (this->pull_consumer_status_.in ()))
         {
-          this->pull_consumer_data_listener_ = new ::CIAO::DDS4CCM::RTI::PortStatusListener_T
+          this->pull_consumer_status_ = new ::CIAO::DDS4CCM::RTI::PortStatusListener_T
             <DDS_TYPE, CCM_TYPE> (
                   this->context_,
-                  this->context_->get_connection_push_consumer_status ());
+                  this->context_->get_connection_pull_consumer_status ());
         }
 
       if (CORBA::is_nil (this->pull_consumer_fresh_data_.in ()))
@@ -142,7 +142,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_get_pull_consumer 
                     this->topic_.in (),
                     this->library_name_,
                     this->profile_name_,
-                    this->pull_consumer_data_listener_.in (),
+                    this->pull_consumer_status_.in (),
                     ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
             }
           else
@@ -152,7 +152,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_get_pull_consumer 
                   this->subscriber_->create_datareader (
                     this->topic_.in (),
                     drqos,
-                    this->pull_consumer_data_listener_.in (),
+                    this->pull_consumer_status_.in (),
                     ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
             }
         }
