@@ -1,10 +1,19 @@
+Mon Dec  7 06:52:05 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * tests/Bug_3769_Regression/Foo.idl:
+        * tests/Bug_3769_Regression/Foo_exec.h:
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+
+          Extended this test to test a struct attribute of a component.
+          The descriptor file needs to be extended as well.          
+
 Mon Dec  7 06:08:31 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
 
         * tests/Bug_3769_Regression/Foo.idl:
         * tests/Bug_3769_Regression/Foo_exec.h:
         * tests/Bug_3769_Regression/Foo_exec.cpp:
 
-          Extend this test to test a sequence attribute of a component.
+          Extended this test to test a sequence attribute of a component.
           The descriptor file needs to be extended to capture data
           for the sequence attribute(s).
 
