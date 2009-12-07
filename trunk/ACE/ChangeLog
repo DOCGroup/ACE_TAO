@@ -1,11 +1,16 @@
+Mon Dec  7 07:40:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/bmake.features:
+          Disable mcpp for bmake
+
 Fri Dec  4 23:24:21 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * bin/MakeProjectCreator/config/global.features:
 
-          Added mpc feature to optionally turn on the indirection 
+          Added mpc feature to optionally turn on the indirection
           support on valuetype outgoing message. It defaults to
-          be enabled. To be compatible with previous version TAO, 
-          it needs run mwc.pl with 
+          be enabled. To be compatible with previous version TAO,
+          it needs run mwc.pl with
           "-features valuetype_out_indirection=0" to disable it.
 
 Fri Dec  4 17:25:32 UTC 2009  Yan Dai  <dai_y@ociweb.com>
