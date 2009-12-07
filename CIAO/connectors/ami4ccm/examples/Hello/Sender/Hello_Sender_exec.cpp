@@ -281,6 +281,18 @@ namespace CIAO_Hello_AMI_Sender_Impl
   // Component attributes.
 
   // Port operations.
+
+  ::Hello_AMI::CCM_AMI_MyFooCallback_ptr
+  Sender_exec_i::get_the_my_foo_callback ()
+  {
+    if (CORBA::is_nil (global_foo_callback_))
+    {
+      global_foo_callback_ = new MyFoo_callback_exec_i ();
+    }
+
+    return  global_foo_callback_;
+  }
+
   // Operations from Components::SessionComponent.
 
   void
