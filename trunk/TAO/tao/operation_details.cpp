@@ -63,35 +63,46 @@ TAO_Operation_Details::has_exception (::CORBA::Exception& ex) const
 bool
 TAO_Operation_Details::marshal_args (TAO_OutputCDR &cdr)
 {
-  for (CORBA::ULong i = 0; i != this->num_args_; ++i)
-    {
+  try {
+    for (CORBA::ULong i = 0; i != this->num_args_; ++i)
+      {
       if (!((*this->args_[i]).marshal (cdr)))
         return false;
-    }
+      }
 
-  // Nothing else to fragment.  We're also guaranteed to have
-  // data in the CDR stream since the operation was a marshaling
-  // operation, not a fragmentation operation.
-  cdr.more_fragments (false);
-  
+    // Nothing else to fragment.  We're also guaranteed to have
+    // data in the CDR stream since the operation was a marshaling
+    // operation, not a fragmentation operation.
+    cdr.more_fragments (false);
 #ifdef TAO_HAS_VALUETYPE_OUT_INDIRECTION
-  cdr.reset_vt_indirect_maps ();
+    cdr.reset_vt_indirect_maps ();
 #endif
-
+    }
+  catch (...) {
+#ifdef TAO_HAS_VALUETYPE_OUT_INDIRECTION
+    cdr.reset_vt_indirect_maps ();
+#endif
+    throw;
+  }
   return true;
 }
 
 bool
 TAO_Operation_Details::demarshal_args (TAO_InputCDR &cdr)
 {
-  for (CORBA::ULong i = 0; i != this->num_args_; ++i)
-    {
-      if (!((*this->args_[i]).demarshal (cdr)))
-        return false;
-    }
+  try {
+    for (CORBA::ULong i = 0; i != this->num_args_; ++i)
+      {
+        if (!((*this->args_[i]).demarshal (cdr)))
+          return false;
+      }
 
-  cdr.reset_vt_indirect_maps ();
-
+    cdr.reset_vt_indirect_maps ();
+  }
+  catch (...) {
+    cdr.reset_vt_indirect_maps ();
+    throw;
+  }
   return true;
 }
 
