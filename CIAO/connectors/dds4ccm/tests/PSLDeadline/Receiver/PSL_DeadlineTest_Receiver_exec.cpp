@@ -2,7 +2,7 @@
 //
 // $Id$
 
-// Test for PORTSTUSLISTENER in DDS_LOSTEN port: on_requested_deadline_missed. 
+// Test for PORTSTUSLISTENER in DDS_LISTEN and DDS_Get port: on_requested_deadline_missed. 
 // Writer writes every sec, Reader starts reading after 2 sec and try to read every 1,1 sec, but has a minimum seperation time of 1.5 sec (QoS)
 // and a deadline of 2 sec (QoS), so periodically  the deadline will be missed. 
 
@@ -122,8 +122,11 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
   // Facet Executor Implementation Class: PortStatusListener_exec_i
   //============================================================
 
-  PortStatusListener_exec_i::PortStatusListener_exec_i (Atomic_Boolean &deadline)
-    : deadline_(deadline)
+  PortStatusListener_exec_i::PortStatusListener_exec_i (Atomic_Boolean &deadline_port_1, Atomic_Boolean &deadline_port_2,int port_nr)
+    : deadline_port_1_(deadline_port_1),
+      deadline_port_2_(deadline_port_2),
+      port_nr_(port_nr)
+
   {
   }
 
@@ -132,14 +135,21 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
   }
 
   // Operations from ::CCM_DDS::PortStatusListener
-
   void
     PortStatusListener_exec_i::on_requested_deadline_missed (
     ::DDS::DataReader_ptr /* the_reader */,
     const ::DDS::RequestedDeadlineMissedStatus & /* status */)
   {
-       // printf("Receiver: PortStatusStatusListener_exec_i::on_requested_deadline_missed\n");
-        this->deadline_ = true;
+        if(this->port_nr_ == 1)       
+        {
+          this->deadline_port_1_ = true;
+        }
+        if(this->port_nr_ == 2)
+        {
+          this->deadline_port_2_ = true;
+        }
+    
+   
   }
 
   void
@@ -157,7 +167,8 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
 
   Receiver_exec_i::Receiver_exec_i (void)
   : rate_ (10),
-    deadline_(false)
+    deadline_port_1_ (false),
+    deadline_port_2_ (false)
   {
     this->ticker_ = new read_action_Generator (*this); 
   }
@@ -189,7 +200,6 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
                             time ? time->tm_sec : 0,
                             readinfoseq[i].source_timestamp.nanosec));
       }
-      //printf("data\n");
       for(CORBA::ULong i = 0; i < TestTopic_infos->length(); ++i)
       {
          CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL keyed test info : ")
@@ -217,7 +227,14 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
   Receiver_exec_i::get_info_out_status (void)
   {
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
-    return new PortStatusListener_exec_i (this->deadline_);
+    return new PortStatusListener_exec_i ( this->deadline_port_1_,this->deadline_port_2_, 1);
+  }
+
+  ::CCM_DDS::CCM_PortStatusListener_ptr
+  Receiver_exec_i::get_info_get_status (void)
+  {
+    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
+    return new PortStatusListener_exec_i (this->deadline_port_1_,this->deadline_port_2_,2);
   }
 
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
@@ -281,18 +298,18 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
   void
   Receiver_exec_i::ccm_remove (void)
   {
-     if(!this->deadline_.value ())
+     if(!this->deadline_port_1_.value () || !this->deadline_port_2_.value ())
       {   
      
          CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
-                               ACE_TEXT (" error 'on_requested_deadline_missed' in Receiver")
+                               ACE_TEXT (" error 'on_requested_deadline_missed' on DDS_Listen and/or DDS_GET port in Receiver")
                     )); 
       }
    
     else
       {
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Have received the expected ")
-                               ACE_TEXT ("'on_requested_deadline_missed' in Receiver\n")
+                               ACE_TEXT ("'on_requested_deadline_missed' in on DDS_Listen and DDS_GET port Receiver\n")
                     ));
       }
  
