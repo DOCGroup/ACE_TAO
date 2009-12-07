@@ -81,7 +81,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_without_instance (
                                 DDS_LENGTH_UNLIMITED,
                                 DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE,
                                 DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-                                DDS_ANY_INSTANCE_STATE);
+                                DDS_ALIVE_INSTANCE_STATE);
 
   if (retval != DDS_RETCODE_OK)
     {
