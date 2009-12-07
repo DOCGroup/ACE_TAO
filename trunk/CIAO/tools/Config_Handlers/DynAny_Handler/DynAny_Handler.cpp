@@ -55,7 +55,7 @@ namespace CIAO
                                          CORBA::TypeCode_ptr req_tc)
     {
       DynamicAny::DynAny_var retval;
-      
+
       if (req_tc)
         retval = this->daf_->create_dyn_any_from_type_code (req_tc);
 
@@ -65,12 +65,14 @@ namespace CIAO
         case TCKind::tk_null_l:
         case TCKind::tk_void_l:
           ACE_ERROR ((LM_WARNING, ACE_TEXT ("I don't know how to handle null or void types\n")));
-              
+          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Null or void types not supported"));
+          break;
+
         case TCKind::tk_short_l:
           if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_short);
           retval->insert_short (CORBA::Short (static_cast < ::XMLSchema::short_ const & > (*(*value.begin_short ()))));
           break;
-              
+
         case TCKind::tk_long_l:
           if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_long);
           retval->insert_long (CORBA::Long (static_cast < ::XMLSchema::int_ const& > (*(*value.begin_long ()))));
@@ -133,10 +135,10 @@ namespace CIAO
 
         case TCKind::tk_enum_l:
           return DynEnum_Handler::extract_into_dynany (type, value, req_tc);
-          
+
         case TCKind::tk_sequence_l:
           return DynSequence_Handler::extract_into_dynany (type, value, req_tc);
-          
+
         case TCKind::tk_struct_l:
           return DynStruct_Handler::extract_into_dynany (type, value, req_tc);
 
@@ -247,11 +249,11 @@ namespace CIAO
       Any retval (TCKind::tk_char, val);
       return retval;
     }
-    
+
     CORBA::TypeCode_ptr 
     DynAny_Handler::create_typecode (const DataType &type)
     {
-      
+
       switch (type.kind ().integral ())
         {
           // ========== BASIC TYPES
@@ -350,18 +352,18 @@ namespace CIAO
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("Type not supported\n")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Type not supported"));
         }
-      
+
       return 0;
     }
-    
+
     void 
     DynAny_Handler::register_typecode (const std::basic_string<ACE_TCHAR> typeID,
                                        CORBA::TypeCode_ptr tc)
     {
       this->typecode_map_[typeID] = tc;
     }
-    
-    
+
+
     CORBA::TypeCode_ptr
     DynAny_Handler::get_typecode (const std::basic_string<ACE_TCHAR> typeID)
     {
