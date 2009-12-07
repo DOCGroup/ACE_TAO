@@ -80,6 +80,7 @@ namespace CIAO_Reader_Test_Sender_Impl
     //start can be called more than once...
     if (!this->done_ && this->ccm_activated_)
       {
+        this->done_ = true;
         if (!CORBA::is_nil (this->starter_))
           {
             this->starter_->set_reader_properties (this->keys_, this->iterations_);
@@ -89,9 +90,6 @@ namespace CIAO_Reader_Test_Sender_Impl
           {
             CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unable to start the reader\n")));
           }
-        this->done_ = true;
-        ACE_Time_Value tv_init (1, 5000);
-        ACE_OS::sleep (tv_init);
         for (CORBA::UShort iter_key = 1; iter_key < this->keys_ + 1; ++iter_key)
           {
             char key[7];
@@ -101,8 +99,6 @@ namespace CIAO_Reader_Test_Sender_Impl
             for (CORBA::UShort iter = 1; iter < this->iterations_ + 1; ++iter)
               {
                 new_key->iteration = iter;
-                ACE_Time_Value tv (0, 5000);
-                ACE_OS::sleep (tv);
                 this->writer_->write_one (*new_key, ::DDS::HANDLE_NIL);
                 CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Written key <%C> with <%d>\n"),
                             key, iter));

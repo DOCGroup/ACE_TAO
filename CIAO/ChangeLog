@@ -1,3 +1,15 @@
+Mon Dec  7 13:25:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+          Reads according to DDS4CCM spec.
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          NO_DATA shouldn't throw an exception but just return
+          an empty sequence.
+
+        * connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender_exec.cpp:
+          Optimized test. Don't need to sleep prior to writing samples to DDS.
+
 Mon Dec  7 13:07:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp
