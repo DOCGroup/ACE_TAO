@@ -65,7 +65,7 @@ if ($ns_status != 0) {
 
 if ($nstarget->WaitForFileTimed ($nsiorbase,
                                  $nstarget->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$nstarget_iorfile>\n";
+    print STDERR "ERROR: cannot find file <$nstarget_nsiorfile>\n";
     $NS->Kill (); $NS->TimedWait (1);
     exit 1;
 }
@@ -75,17 +75,17 @@ if ($nstarget->GetFile ($nsiorbase) == -1) {
     exit 1;
 }
 if ($ntarget->PutFile ($nsiorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$ntarget_iorfile>\n";
+    print STDERR "ERROR: cannot set file <$ntarget_nsiorfile>\n";
     $NS->Kill (); $NS->TimedWait (1);
     exit 1;
 }
 if ($ctarget->PutFile ($nsiorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$ctarget_iorfile>\n";
+    print STDERR "ERROR: cannot set file <$ctarget_nsiorfile>\n";
     $NS->Kill (); $NS->TimedWait (1);
     exit 1;
 }
 if ($starget->PutFile ($nsiorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$starget_iorfile>\n";
+    print STDERR "ERROR: cannot set file <$starget_nsiorfile>\n";
     $NS->Kill (); $NS->TimedWait (1);
     exit 1;
 }
@@ -101,7 +101,7 @@ sleep $sleeptime;
 
 $c_status = $C->Spawn ();
 
-if ($sv_status != 0) {
+if ($c_status != 0) {
     print STDERR "ERROR: consumer returned $c_status\n";
     $NS->Kill (); $NS->TimedWait (1);
     $N->Kill (); $N->TimedWait (1);

@@ -33,7 +33,7 @@ foreach $i (@ARGV) {
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-$server->AddLibPath ($PerlACE::Process::ExeSubDir);
+$server->AddLibPath ($server->ExeSubDir ());
 
 my $iorbase = "server.ior";
 my $server_iorfile = $server->LocalFile ($iorbase);
@@ -67,7 +67,7 @@ if ($server_status != 0) {
 }
 
 # Fill up the array of hostnames; can't use the hostname() from
-# Sys::Hostname because it's too good at figuring out that IP
+# Sys :: Hostname because it's too good at figuring out that IP
 # addresses that aren't in a host table actually DO match to a host
 # name.  So, we use gethostbyaddr().
 @HOSTNAMES = map { (gethostbyaddr(inet_aton($_),AF_INET))[0] || $_ } @IPADDRS;
