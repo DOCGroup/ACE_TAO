@@ -26,7 +26,6 @@ namespace CIAO
       public:
         /// Constructor
         DataReaderListener_T (
-          typename CCM_TYPE::context_type::_ptr_type context,
           typename CCM_TYPE::listener_type::_ptr_type listener,
           ::CCM_DDS::PortStatusListener_ptr port_status_listener,
           ::CCM_DDS::DataListenerControl_ptr control);

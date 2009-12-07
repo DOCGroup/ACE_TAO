@@ -50,6 +50,7 @@ ComponentAttributesSetter::SetComponentAttributes (ACE_CString /*componentName*/
   for (CORBA::ULong i = 0; i < prop.length(); i++)
     {
       ACE_CString name = prop[i].name.in();
+
       // Ignore configuration properties, since attributes can't have . in them, this seems like a good method.
       if (name.find (".") != ACE_CString::npos)
         {

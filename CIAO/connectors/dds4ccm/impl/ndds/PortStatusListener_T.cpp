@@ -9,10 +9,8 @@
 // Implementation skeleton constructor
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::PortStatusListener_T (
-      typename CCM_TYPE::context_type::_ptr_type context,
       ::CCM_DDS::PortStatusListener_ptr port_status_listener)
-      : context_ (CCM_TYPE::context_type::_duplicate (context)),
-        port_status_listener_ (::CCM_DDS::PortStatusListener::_duplicate (port_status_listener))
+      : port_status_listener_ (::CCM_DDS::PortStatusListener::_duplicate (port_status_listener))
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::PortStatusListener_T::PortStatusListener_T");
 }

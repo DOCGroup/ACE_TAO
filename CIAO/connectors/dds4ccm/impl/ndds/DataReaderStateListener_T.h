@@ -7,6 +7,9 @@
  * Wrapper facade for NDDS.
  */
 
+#ifndef DDS4CCM_DATAREADERSTATELISTENER_T_H
+#define DDS4CCM_DATAREADERSTATELISTENER_T_H
+
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
 
@@ -24,11 +27,9 @@ namespace CIAO
       public:
         /// Constructor
         DataReaderStateListener_T (
-                      typename CCM_TYPE::context_type::_ptr_type context,
-                      ::CCM_DDS::ConnectorStatusListener_ptr error_listener,
                       typename CCM_TYPE::statelistener_type::_ptr_type listener,
                       ::CCM_DDS::PortStatusListener_ptr port_status_listener,
-                      ::CCM_DDS::DataListenerControl_ptr control);
+                      ::CCM_DDS::StateListenerControl_ptr control);
 
         /// Destructor
         virtual ~DataReaderStateListener_T (void);
@@ -44,14 +45,14 @@ namespace CIAO
         static ::DDS::StatusMask get_mask (void);
 
       private:
-        typename CCM_TYPE::context_type::_var_type context_;
-        ::CCM_DDS::ConnectorStatusListener_var  error_listener_;
         typename CCM_TYPE::statelistener_type::_var_type listener_;
         ::CCM_DDS::PortStatusListener_var port_status_listener_;
-        ::CCM_DDS::DataListenerControl_var control_;
+        ::CCM_DDS::StateListenerControl_var control_;
       };
     }
   }
 }
 
 #include "dds4ccm/impl/ndds/DataReaderStateListener_T.cpp"
+
+#endif /* DDS4CCM_DATAREADERSTATELISTENER_T_H */

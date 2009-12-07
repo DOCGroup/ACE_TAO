@@ -11,16 +11,12 @@
 // Implementation skeleton constructor
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::DataReaderStateListener_T (
-      typename CCM_TYPE::context_type::_ptr_type context,
-      CCM_DDS::ConnectorStatusListener_ptr error_listener,
       typename CCM_TYPE::statelistener_type::_ptr_type listener,
       ::CCM_DDS::PortStatusListener_ptr port_status_listener,
-      ::CCM_DDS::DataListenerControl_ptr control)
-      : context_ (CCM_TYPE::context_type::_duplicate (context)),
-        error_listener_ (::CCM_DDS::ConnectorStatusListener::_duplicate (error_listener)),
-        listener_ (CCM_TYPE::statelistener_type::_duplicate (listener)),
+      ::CCM_DDS::StateListenerControl_ptr control)
+      : listener_ (CCM_TYPE::statelistener_type::_duplicate (listener)),
         port_status_listener_ (::CCM_DDS::PortStatusListener::_duplicate (port_status_listener)),
-        control_ (::CCM_DDS::DataListenerControl::_duplicate (control))
+        control_ (::CCM_DDS::StateListenerControl::_duplicate (control))
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderStateListener_T::DataReaderStateListener_T");
 }
@@ -91,14 +87,14 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
             {
               if (sample_info[i].valid_data)
                 {
-                  if (sample_info[i].instance_state == 
+                  if (sample_info[i].instance_state ==
                           ::DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
                     {
                       ::CCM_DDS::ReadInfo readinfo;
                       readinfo <<= sample_info[i];
                       listener_->on_deletion (data[i], readinfo);
                     }
-                  else if (sample_info[i].view_state == 
+                  else if (sample_info[i].view_state ==
                           ::DDS_NEW_VIEW_STATE)
                     {
                       ::CCM_DDS::ReadInfo readinfo;
@@ -190,7 +186,7 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
                 }
               listener_->on_many_updates (inst_seq, infoseq);
             }
-          // Return the loan      
+          // Return the loan
           reader->return_loan(data, sample_info);
         }
     }

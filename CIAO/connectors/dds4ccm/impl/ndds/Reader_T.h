@@ -6,6 +6,8 @@
  *
  * Wrapper facade for NDDS.
  */
+#ifndef DDS_READER_T
+#define DDS_READER_T
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
@@ -77,3 +79,5 @@ namespace CIAO
 }
 
 #include "dds4ccm/impl/ndds/Reader_T.cpp"
+
+#endif /* DDS_READER_T */
