@@ -2095,7 +2095,7 @@ NodeApplication_Impl::connect_local_receptacle (Components::CCMObject_ptr facet,
                     ACE_TEXT ("Connecting local facet %C to receptacle %C\n"),
                     facet_name.c_str (), recep_name.c_str ()));
       
-      // Need to insert invocation on container. 
+      cont->connect_local_facet (facet, facet_name.c_str (), receptacle, recep_name.c_str ());
     }
   catch (CORBA::Exception  &ex)
     { // @@todo: need better exception handling.
