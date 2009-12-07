@@ -165,6 +165,19 @@ namespace CIAO_Foo_Impl
     virtual void
     my_double_sequence (
       const ::double_sequence & my_double_sequence);
+    
+    // TAO_IDL - Generated from
+    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
+    
+    virtual ::Bar
+    my_bar_struct (void);
+    
+    // TAO_IDL - Generated from
+    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
+    
+    virtual void
+    my_bar_struct (
+      const ::Bar & my_bar_struct);
     //@}
     
     //@{

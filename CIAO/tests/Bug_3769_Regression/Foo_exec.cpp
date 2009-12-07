@@ -217,6 +217,30 @@ namespace CIAO_Foo_Impl
       ACE_ERROR ((LM_ERROR, "ERROR: my_double_sequence[2] != 623.32, it is %f\n", my_double_sequence[2]));
   }
   
+  ::Bar
+  Foo_exec_i::my_bar_struct (void)
+  {
+    /* Your code here. */
+    return ::Bar ();
+  }
+  
+  void
+  Foo_exec_i::my_bar_struct (
+    const ::Bar & my_bar_struct)
+  {
+    if(my_bar_struct.s != 3)
+      ACE_ERROR ((LM_ERROR, "ERROR: short value != 3, it is %d\n", my_bar_struct.s));
+
+    if(my_bar_struct.l != 4)
+      ACE_ERROR ((LM_ERROR, "ERROR: long value != 4, it is %d\n", my_bar_struct.l));
+
+    if(my_bar_struct.f != 5.6F)
+      ACE_ERROR ((LM_ERROR, "ERROR: float value != 5.6, it is %f\n", my_bar_struct.f));
+
+    if(my_bar_struct.s != 7.8)
+      ACE_ERROR ((LM_ERROR, "ERROR: short value != 7.8, it is %f\n", my_bar_struct.d));
+  }
+  
   // Operations from Components::SessionComponent.
   
   void
