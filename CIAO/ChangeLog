@@ -1,3 +1,14 @@
+Mon Dec  7 18:21:43 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/schema/Basic_Deployment_Data.xsd:
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp:
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp:
+        * tools/Config_Handlers/CPD_Handler.cpp:
+        * tools/Config_Handlers/DnC_Dump.cpp:
+        * tools/Config_Handlers/PSPE_Handler.cpp:
+
+          Config handler updates. 
+        
 Mon Dec  7 17:51:30 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/CIAO_ComponentServer/Local_Facet/Local_Facet.idl:
@@ -7,8 +18,8 @@ Mon Dec  7 17:51:30 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tests/CIAO_ComponentServer/Local_Facet/client.cpp:
         * tests/CIAO_ComponentServer/Local_Facet/run_test.pl:
 
-          Added simple test for local facet connection logic. 
-        
+          Added simple test for local facet connection logic.
+
 Mon Dec  7 17:04:43 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/CIAO_ComponentServer/Local_Facet:
