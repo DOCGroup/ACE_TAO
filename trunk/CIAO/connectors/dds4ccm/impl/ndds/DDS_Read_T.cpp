@@ -43,23 +43,25 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE>::init (
         {
           if (profile_name && library_name)
             {
-              this->data_ =
+              ::DDS::DataReader_var reader =
                 subscriber->create_datareader_with_profile (
                   topic,
                   library_name,
                   profile_name,
                   this->status_.in (),
                   ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+              this->data_ = ::DDS::CCM_DataReader::_narrow (reader);
             }
           else
             {
               ::DDS::DataReaderQos drqos;
-              this->data_ =
+              ::DDS::DataReader_var reader =
                 subscriber->create_datareader (
                   topic,
                   drqos,
                   this->status_.in (),
                   ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+              this->data_ = ::DDS::CCM_DataReader::_narrow (reader);
             }
         }
     }
@@ -85,6 +87,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_Read_T<DDS_TYPE, CCM_TYPE>::get_dds_entity (void)
 {
   CIAO_TRACE ("DDS_Read_T<DDS_TYPE, CCM_TYPE>::get_dds_entity");
-  return ::DDS::CCM_DataReader::_nil ();
+
+  return this->data_.in ();
 }
 
