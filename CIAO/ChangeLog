@@ -1,3 +1,10 @@
+Mon Dec  7 03:02:18 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+
+          Fixed a small bug in a switch statement where one of the 
+          cases did not have a 'break' statement.
+
 Sun Dec  6 19:22:45 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/CIAO_Container_Impl.cpp:
