@@ -1,3 +1,14 @@
+Mon Dec  7 10:30:38 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Reader/Base/Reader_Starter.idl:
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/Reader/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/Reader/descriptors/run_test.pl:
+          Rewritten test due to timing issues. Also added a 'no data' test.
+
 Mon Dec  7 10:07:57 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * bin/ciao_tests.lst:
@@ -33,7 +44,7 @@ Mon Dec  7 06:52:05 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
         * tests/Bug_3769_Regression/Foo_exec.cpp:
 
           Extended this test to test a struct attribute of a component.
-          The descriptor file needs to be extended as well.          
+          The descriptor file needs to be extended as well.
 
 Mon Dec  7 06:08:31 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
 

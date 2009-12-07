@@ -272,6 +272,22 @@
   </connection>
 
   <connection>
+    <name>info_out_connector_status_rec</name>
+    <internalEndpoint>
+      <portName>info_out_connector_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>error_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Reader_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
     <name>info_out_connector_status_sender</name>
     <internalEndpoint>
       <portName>info_out_connector_status</portName>

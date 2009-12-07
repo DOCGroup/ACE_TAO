@@ -9,6 +9,60 @@
 
 namespace CIAO_Reader_Test_Receiver_Impl
 {
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Receiver_exec_i &callback)
+    : callback_ (callback),
+      has_run_ (false)
+  {
+  }
+
+  ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
+  {
+  }
+
+  // Operations from ::CCM_DDS::ConnectorStatusListener
+  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
+     ::DDS::Topic_ptr ,
+     const DDS::InconsistentTopicStatus & )
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
+    ::DDS::DataReader_ptr ,
+     const DDS::RequestedIncompatibleQosStatus & )
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_sample_rejected(
+     ::DDS::DataReader_ptr ,
+     const DDS::SampleRejectedStatus & )
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
+     ::DDS::DataWriter_ptr ,
+     const DDS::OfferedDeadlineMissedStatus & )
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
+     ::DDS::DataWriter_ptr ,
+     const DDS::OfferedIncompatibleQosStatus & )
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_unexpected_status(
+    ::DDS::Entity_ptr /*the_entity*/,
+    ::DDS::StatusKind  status_kind)
+  {
+    if (status_kind == ::DDS::DATA_ON_READERS_STATUS && 
+        !this->has_run_ && 
+        this->callback_.check_last ())
+      {
+        this->has_run_ = true;
+        this->callback_.run ();
+      }
+  }
+
   //============================================================
   // Component Executor Implementation Class: Receiver_exec_iReaderTest_Listener_exec_i ();
   //============================================================
@@ -22,17 +76,23 @@ namespace CIAO_Reader_Test_Receiver_Impl
   }
 
   void
-  Starter_exec_i::start_reader (CORBA::UShort nr_keys,
-                                CORBA::UShort nr_iterations)
+  Starter_exec_i::set_reader_properties (CORBA::UShort nr_keys,
+                                         CORBA::UShort nr_iterations)
   {
-    this->callback_.start (nr_keys, nr_iterations);
+    this->callback_.keys (nr_keys);
+    this->callback_.iterations (nr_iterations);
   }
 
+  void
+  Starter_exec_i::read_no_data ()
+  {
+    this->callback_.read_no_data ();
+  }
 
   Receiver_exec_i::Receiver_exec_i (void)
     : iterations_ (10),
       keys_ (5),
-      timer_started_ (false)
+      has_run_ (false)
   {
   }
 
@@ -40,6 +100,34 @@ namespace CIAO_Reader_Test_Receiver_Impl
   {
   }
 
+
+  bool
+  Receiver_exec_i::check_last ()
+  {
+    try
+      {
+        ReaderTest readertest_info;
+        ::CCM_DDS::ReadInfo readinfo;
+        char key[100];
+        ACE_OS::sprintf (key, "KEY_%d", this->keys_);
+        readertest_info.key = CORBA::string_dup (key);
+        this->reader_->read_one_last (
+                readertest_info,
+                readinfo,
+                ::DDS::HANDLE_NIL);
+        return readertest_info.iteration == this->iterations_;
+      }
+    catch(CCM_DDS::NonExistent& ex)
+      {
+      }
+    catch(CCM_DDS::InternalError& ex)
+      {
+      }
+    catch (const CORBA::Exception& ex)
+      {
+      }
+    return false;
+  }
 
   // Supported operations and attributes.
   void
@@ -159,9 +247,17 @@ namespace CIAO_Reader_Test_Receiver_Impl
       }
     catch(CCM_DDS::InternalError& ex)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ONE ALL: ")
-              ACE_TEXT ("caught InternalError exception: retval <%u>\n"),
-              ex.error_code));
+        if (ex.error_code == 0)
+          {
+            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ONE ALL: ")
+                  ACE_TEXT ("caught InternalError exception: handles differ\n")));
+          }
+        else 
+          {
+            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ONE ALL: ")
+                  ACE_TEXT ("caught InternalError exception: retval <%u>\n"),
+                  ex.error_code));
+          }
       }
     catch (const CORBA::Exception& ex)
       {
@@ -359,8 +455,53 @@ namespace CIAO_Reader_Test_Receiver_Impl
   }
 
   void
+  Receiver_exec_i::read_no_data ()
+  {
+    try
+      {
+        ReaderTest_Seq          *readertest_info_seq;
+        ::CCM_DDS::ReadInfoSeq  *readinfo_seq;
+        this->reader_->read_all (
+                readertest_info_seq,
+                readinfo_seq);
+
+        if (readertest_info_seq->length () > 0)
+          {
+            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ NO DATA: ")
+                ACE_TEXT ("Didn't receive the expected number of ")
+                ACE_TEXT ("samples : expected <%u> - received <%u>\n"),
+                0,
+                readertest_info_seq->length ()));
+          }
+        else
+          {
+            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ NO DATA: ")
+                ACE_TEXT ("No data available.\n")));
+          }
+      }
+    catch(CCM_DDS::NonExistent& ex)
+      {
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("ERROR: READ NO DATA: ")
+              ACE_TEXT ("Caught NonExistent exception")));
+      }
+    catch(CCM_DDS::InternalError& ex)
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ NO DATA: ")
+              ACE_TEXT ("caught InternalError exception: retval <%u>\n"),
+              ex.error_code));
+      }
+    catch (const CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("ERROR: READ NO DATA: ");
+        CIAO_ERROR ((LM_ERROR,
+          ACE_TEXT ("ERROR: Receiver_exec_i::read_no_data : Exception caught\n")));
+      }
+  }
+
+  void
   Receiver_exec_i::run ()
   {
+    this->has_run_ = true;
     read_all ();
     read_last ();
     read_one_all ();
@@ -372,13 +513,30 @@ namespace CIAO_Reader_Test_Receiver_Impl
     test_exception_with_handles ();
   }
 
-  void
-  Receiver_exec_i::start (CORBA::UShort nr_keys, CORBA::UShort nr_iterations)
+  ::CORBA::UShort
+  Receiver_exec_i::iterations (void)
   {
-    this->keys_ = nr_keys;
-    this->iterations_ = nr_iterations;
-    run ();
+    return this->iterations_;
   }
+
+  void
+  Receiver_exec_i::iterations (::CORBA::UShort iterations)
+  {
+    this->iterations_ = iterations;
+  }
+
+  ::CORBA::UShort
+  Receiver_exec_i::keys (void)
+  {
+    return this->keys_;
+  }
+
+  void
+  Receiver_exec_i::keys (::CORBA::UShort keys)
+  {
+    this->keys_ = keys;
+  }
+
   // Port operations.
   ::CCM_DDS::ReaderTest::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
@@ -390,6 +548,12 @@ namespace CIAO_Reader_Test_Receiver_Impl
   Receiver_exec_i::get_info_out_status (void)
   {
     return 0;
+  }
+
+  ::CCM_DDS::CCM_ConnectorStatusListener_ptr
+  Receiver_exec_i::get_info_out_connector_status (void)
+  {
+    return new ConnectorStatusListener_exec_i (*this);
   }
 
   ::CCM_ReaderStarter_ptr
@@ -430,6 +594,13 @@ namespace CIAO_Reader_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
+    if (!this->has_run_)
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: ")
+            ACE_TEXT ("Test did not run: Didn't receive ")
+            ACE_TEXT ("the expected number of DATA_ON_READERS")
+            ACE_TEXT ("events.\n")));
+      }
   }
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
