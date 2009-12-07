@@ -1,3 +1,34 @@
+Mon Dec  7 13:07:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h
+        * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.h
+        * connectors/dds4ccm/impl/ndds/DataWriterListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/DataWriterListener_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_Get_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Get_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_Listen_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Listen_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_Read_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Read_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_StateListen_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_StateListen_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_Update_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Update_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_Write_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Write_T.h
+        * connectors/dds4ccm/impl/ndds/PortStatusListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/PortStatusListener_T.h
+        * connectors/dds4ccm/impl/ndds/Reader_T.h
+        * connectors/dds4ccm/impl/ndds/Updater_T.h
+          Introduced DDS_Get_T, DDS_Listen_T, DDS_Read_T, DDS_Update_T, and
+          DDS_Write_T templates which implement the dds4ccm extended ports
+
 Mon Dec  7 11:157:57 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/PSLDeadline/descriptors/Plan.cdp:

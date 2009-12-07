@@ -9,6 +9,10 @@
 #define DDS_STATE_CONNECTOR_T_H_
 
 #include "dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.h"
+#include "dds4ccm/impl/ndds/DDS_Get_T.h"
+#include "dds4ccm/impl/ndds/DDS_Listen_T.h"
+#include "dds4ccm/impl/ndds/DDS_StateListen_T.h"
+#include "dds4ccm/impl/ndds/DDS_Update_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 class DDS_State_Connector_T
@@ -68,44 +72,35 @@ private:
    * DDS_Update observable
    */
   //@{
-  void configure_port_dds_update (void);
-  ::DDS::CCM_DataWriter_var observable_data_;
-  ::DDS::DataWriterListener_var datawriter_listener_;
+  DDS_Update_T <DDS_TYPE, CCM_TYPE> observable_;
   //@}
 
   /**
    * DDS_Read passive_observer
    */
   //@{
-  void configure_passive_observer (void);
-  ::DDS::DataReader_var push_observer_data_;
-  ::DDS::DataReaderListener_var __listen_datareaderlistener;
+  DDS_Read_T <DDS_TYPE, CCM_TYPE> passive_observer_;
   //@}
 
   /**
    * DDS_Get pull_observer
    */
   //@{
-  void configure_dds_get_pull_observer (void);
-  ::DDS::DataReader_var pull_observer_data_;
-  ::DDS::DataReader_var pull_observer_fresh_data_;
-  ::DDS::DataReaderListener_var pull_observer_status_;
+  DDS_Get_T <DDS_TYPE, CCM_TYPE> pull_observer_;
   //@}
 
   /**
    * DDS_Listen push_observer
    */
   //@{
-  void configure_push_observer (void);
-  ::CCM_DDS::CCM_DataListenerControl_var push_observer_data_control_;
+  DDS_Listen_T <DDS_TYPE, CCM_TYPE> push_observer_;
   //@}
 
   /**
    * DDS_StateListen push_state_observer
    */
   //@{
-  void configure_push_state_observer (void);
-  ::CCM_DDS::CCM_StateListenerControl_var push_observer_state_control_;
+  DDS_StateListen_T <DDS_TYPE, CCM_TYPE> push_state_observer_;
   //@}
 };
 

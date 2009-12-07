@@ -6,6 +6,9 @@
  * Wrapper facade for NDDS.
  */
 
+#ifndef DDS4CCM_UPDATER_H
+#define DDS4CCM_UPDATER_H
+
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
 #include "InstanceHandleManager_T.h"
@@ -76,3 +79,5 @@ namespace CIAO
 }
 
 #include "dds4ccm/impl/ndds/Updater_T.cpp"
+
+#endif /* DDS4CCM_UPDATER_H */

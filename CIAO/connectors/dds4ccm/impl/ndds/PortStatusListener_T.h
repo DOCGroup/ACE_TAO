@@ -27,7 +27,6 @@ namespace CIAO
       public:
         /// Constructor
         PortStatusListener_T (
-          typename CCM_TYPE::context_type::_ptr_type context,
           ::CCM_DDS::PortStatusListener_ptr port_status_listener);
 
         /// Destructor
@@ -43,7 +42,6 @@ namespace CIAO
 
         static ::DDS::StatusMask get_mask (void);
       private:
-        typename CCM_TYPE::context_type::_var_type context_;
         ::CCM_DDS::PortStatusListener_var port_status_listener_;
       };
     }
