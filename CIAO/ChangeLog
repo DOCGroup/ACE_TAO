@@ -1,3 +1,14 @@
+Mon Dec  7 14:53:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Get_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_Read_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Read_T.h:
+          Implement get_dds_entity methods
+
+        * NEWS
+          Added DDS4CCM_NDDS_LOG_VERBOSITY
+
 Mon Dec  7 13:28:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.cpp

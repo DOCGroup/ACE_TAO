@@ -39,7 +39,7 @@ private:
    * DDS_Read
    */
   //@{
-  ::DDS::DataReader_var data_;
+  ::DDS::CCM_DataReader_var data_;
   ::DDS::DataReaderListener_var status_;
   //@}
 };

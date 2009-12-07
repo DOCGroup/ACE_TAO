@@ -41,8 +41,7 @@ private:
    * DDS_Get
    */
   //@{
-  ::DDS::DataReader_var data_;
-  ::DDS::DataReader_var fresh_data_;
+  ::DDS::CCM_DataReader_var data_;
   ::DDS::DataReaderListener_var status_;
   //@}
 };
