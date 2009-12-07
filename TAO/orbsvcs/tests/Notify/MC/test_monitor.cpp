@@ -366,7 +366,7 @@ static const ACE_TCHAR* monitor_ior = 0;
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:o:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -442,7 +442,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       // before we write out our IOR
       mti->running (MonitorTestInterface::NotifyService);
 
-      FILE *output_file= ACE_OS::fopen (ior_output_file, ACE_TEXT ("w"));
+      FILE *output_file= ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ior_output_file), ACE_TEXT ("w"));
 
       if (output_file == 0)
         {

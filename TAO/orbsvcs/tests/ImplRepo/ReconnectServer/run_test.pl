@@ -7,16 +7,27 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 ###############################################################################
 
-use strict;
-use Sys::Hostname;
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
+
+$status = 0;
+$debug_level = '0';
+my $imr_debug_level = 0;
+
+my $imr = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $srva = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+my $srvb = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
+my $cli = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
 
 my $forward_opt = "-ORBForwardOnceOnObjectNotExist 1";
-my $debug_level = 0;
-my $imr_debug_level = 0;
 my $delay = 0;
 my $got_object_not_exist_exception = 0;
+my $protocol = "iiop";
+my $port = $imr->RandomPort ();
+my $srv_port_base = $srva->RandomPort ();
+my $srv_a_id = "AAA";
+my $srv_b_id = "BBB";
+my $client_duration = 30;
 
 foreach my $i (@ARGV) {
     if ($i eq '-debug') {
@@ -34,145 +45,250 @@ foreach my $i (@ARGV) {
     }
 }
 
-my $imr_locator_ior = PerlACE::LocalFile ("imr_locator.ior");
-my $protocol = "iiop";
-my $host = hostname();
-my $port = PerlACE::uniqueid () + 10001;
-my $imr_endpoint = "-ORBEndpoint " . "$protocol" . "://:" . $port;
-my $imr_db = PerlACE::LocalFile ("imr.db");
-# -ORBDebugLevel 10 -ORBVerboseLogging 1 -ORBLogFile imr.log 
-my $imr_locator_args = "$imr_endpoint -UnregisterIfAddressReused -d $imr_debug_level -o $imr_locator_ior -p $imr_db";
-my $IMR_LOCATOR = new PerlACE::Process ("../../../ImplRepo_Service/ImplRepo_Service", $imr_locator_args);
-my $TAO_IMR = new PerlACE::Process("$ENV{ACE_ROOT}/bin/tao_imr");
-my $svr_port_base = PerlACE::uniqueid () + 9000;
-my $svr_a_id = "AAA";
-my $svr_b_id = "BBB";
-my $svr_a_ior = PerlACE::LocalFile ("A.ior");
-my $svr_b_ior = PerlACE::LocalFile ("B.ior");
-my $client_duration = 30;
-my $svr_endpoint = "-ORBEndpoint " . "$protocol" . "://:" . "$svr_port_base/portspan=20";
-my $imr_initref = "-ORBInitRef ImplRepoService=file://$imr_locator_ior";
-my $svr_a_args = "$svr_endpoint $imr_initref -ORBServerId $svr_a_id -ORBUseIMR 1 -o $svr_a_ior";
-my $svr_b_args = "$svr_endpoint $imr_initref -ORBServerId $svr_b_id -ORBUseIMR 1 -o $svr_b_ior";
-my $cli_args = "$forward_opt -i file://$svr_a_ior -t $client_duration -e $got_object_not_exist_exception";
+my $imriorfile = "imr_locator.ior";
+my $imrdbfile = "imr.db";
+my $srvaiorfile = "A.ior";
+my $srvbiorfile = "B.ior";
 
-my $SVR_A = new PerlACE::Process ("serverA", $svr_a_args);
-my $SVR_B = new PerlACE::Process ("serverB", $svr_b_args);
-my $CLI = new PerlACE::Process ("client", $cli_args);
+my $imr_imriorfile = $imr->LocalFile ($imriorfile);
+my $srva_imriorfile = $srva->LocalFile ($imriorfile);
+my $srvb_imriorfile = $srvb->LocalFile ($imriorfile);
+my $imr_imrdbfile = $imr->LocalFile ($imrdbfile);
+my $srva_srvaiorfile = $srva->LocalFile ($srvaiorfile);
+my $srvb_srvbiorfile = $srvb->LocalFile ($srvbiorfile);
+my $cli_srvaiorfile = $cli->LocalFile ($srvaiorfile);
 
-# Make sure the files are gone, so we can wait on them.
-unlink $svr_a_ior;
-unlink $svr_b_ior;
-unlink $imr_db;
-unlink $imr_locator_ior;
+$imr->DeleteFile ($imriorfile);
+$srva->DeleteFile ($imriorfile);
+$srvb->DeleteFile ($imriorfile);
+$imr->DeleteFile ($imrdbfile);
+$srva->DeleteFile ($srvaiorfile);
+$srvb->DeleteFile ($srvbiorfile);
+$cli->DeleteFile ($srvaiorfile);
 
-my $status = 0;
-print STDERR $IMR_LOCATOR->CommandLine () . "\n";
-$IMR_LOCATOR->Spawn ();
-print STDERR "command " .$IMR_LOCATOR->CommandLine () . "\n";
 
-if (PerlACE::waitforfile_timed ($imr_locator_ior, 10) == -1) {
-    print STDERR "ERROR: cannot find $imr_locator_ior\n";
-    $IMR_LOCATOR->Kill ();
-    $status = 1;
+$IMR = $imr->CreateProcess ("../../../ImplRepo_Service/ImplRepo_Service", 
+                            "-ORBEndpoint "."$protocol"."://:".$port." ".
+                            "-UnregisterIfAddressReused ".
+                            "-d $imr_debug_level ".
+                            "-o $imr_imriorfile ".
+                            "-p $imr_imrdbfile");
+$SRV_A = $srva->CreateProcess ("serverA", 
+                               "_ORBDebugLevel = $debug_level ".
+                               "-ORBEndpoint " . "$protocol" . "://:" . "$srv_port_base/portspan=20 ".
+                               "-ORBInitRef ImplRepoService=file://$srva_imriorfile ".
+                               "-ORBServerId $srv_a_id ".
+                               "-ORBUseIMR 1 ".
+                               "-o $srva_srvaiorfile");
+$SRV_B = $srvb->CreateProcess ("serverB", 
+                               "_ORBDebugLevel = $debug_level ".
+                               "-ORBEndpoint " . "$protocol" . "://:" . "$srv_port_base/portspan=20 ".
+                               "-ORBInitRef ImplRepoService=file://$srvb_imriorfile ".
+                               "-ORBServerId $srv_b_id ".
+                               "-ORBUseIMR 1 ".
+                               "-o $srvb_srvbiorfile");
+$CLI = $cli->CreateProcess ("client", 
+                            "$forward_opt -i file://$cli_srvaiorfile ".
+                            "-t $client_duration ".
+                            "-e $got_object_not_exist_exception ");
+
+
+print STDERR $IMR->CommandLine () . "\n";
+$IMR_status = $IMR->Spawn ();
+print STDERR "command " .$IMR->CommandLine () . "\n";
+if ($IMR_status != 0) {
+    print STDERR "ERROR: ImplRepo Service returned $IMR_status\n";
+    exit 1;
+}
+if ($imr->WaitForFileTimed ($imriorfile,$imr->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$imr_imriorfile>\n";
+    $IMR->Kill (); $IMR->TimedWait (1);
+    exit 1;
+}
+if ($imr->GetFile ($imriorfile) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$imr_imriorfile>\n";
+    $IMR->Kill (); $IMR->TimedWait (1);
+    exit 1;
+}
+if ($srva->PutFile ($imriorfile) == -1) {
+    print STDERR "ERROR: cannot set file <$srva_imriorfile>\n";
+    $IMR->Kill (); $IMR->TimedWait (1);
+    exit 1;
+}
+if ($srvb->PutFile ($imriorfile) == -1) {
+    print STDERR "ERROR: cannot set file <$srvb_imriorfile>\n";
+    $IMR->Kill (); $IMR->TimedWait (1);
+    exit 1;
 }
 
-sleep (2);
-print STDERR "=== start server A: " . $SVR_A->CommandLine () . "\n";
-$SVR_A->Spawn ();
-print STDERR "command " . $SVR_A->CommandLine () . "\n";
-
-if (PerlACE::waitforfile_timed ($svr_a_ior, 10) == -1) {
-    print STDERR "ERROR: cannot find $svr_a_ior\n";
-    $IMR_LOCATOR->Kill ();
-    $SVR_A->Kill ();
-    $status = 1;
+#sleep (2);
+print STDERR "=== start server A: " . $SRV_A->CommandLine () . "\n";
+$SRVA_status = $SRV_A->Spawn ();
+print STDERR "command " . $SRV_A->CommandLine () . "\n";
+if ($SRVA_status != 0) {
+    print STDERR "ERROR: Server A returned $SRVA_status\n";
+    exit 1;
+}
+if ($srva->WaitForFileTimed ($srvaiorfile,$srva->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$srva_srvaiorfile>\n";
+    $SRV_A->Kill (); $SRV_A->TimedWait (1);
+    $IMR->Kill (); $IMR->TimedWait (1);
+    exit 1;
+}
+if ($srva->GetFile ($srvaiorfile) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$srva_srvaiorfile>\n";
+    $SRV_A->Kill (); $SRV_A->TimedWait (1);
+    $IMR->Kill (); $IMR->TimedWait (1);
+    exit 1;
+}
+if ($cli->PutFile ($srvaiorfile) == -1) {
+    print STDERR "ERROR: cannot set file <$cli_srvaiorfile>\n";
+    $SRV_A->Kill (); $SRV_A->TimedWait (1);
+    $IMR->Kill (); $IMR->TimedWait (1);
+    exit 1;
 }
 
-print STDERR "=== start server B: " . $SVR_B->CommandLine () . "\n";
-$SVR_B->Spawn ();
-print STDERR "command " .$SVR_B->CommandLine () . "\n";
-
-if (PerlACE::waitforfile_timed ($svr_b_ior, 10) == -1) {
-    print STDERR "ERROR: cannot find $svr_b_ior\n";
-    $IMR_LOCATOR->Kill ();
-    $SVR_A->Kill ();
-    $SVR_B->Kill ();
-    $status = 1;
+print STDERR "=== start server B: " . $SRV_B->CommandLine () . "\n";
+$SRVB_status = $SRV_B->Spawn ();
+print STDERR "command " .$SRV_B->CommandLine () . "\n";
+if ($SRVB_status != 0) {
+    print STDERR "ERROR: Server B returned $SRVB_status\n";
+    exit 1;
+}
+if ($srvb->WaitForFileTimed ($srvbiorfile,$srvb->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$srvb_srvbiorfile>\n";
+    $SRV_B->Kill (); $SRV_B->TimedWait (1);
+    $SRV_A->Kill (); $SRV_A->TimedWait (1);
+    $IMR->Kill (); $IMR->TimedWait (1);
+    exit 1;
 }
 
 print STDERR "=== start client: " . $CLI->CommandLine () . "\n";
-my $client = $CLI->Spawn ();
-
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
-    $IMR_LOCATOR->Kill ();
-    $SVR_A->Kill ();
-    $SVR_B->Kill ();
-    $status = 1;
+$CLI_status = $CLI->Spawn ();
+if ($CLI_status != 0) {
+    print STDERR "ERROR: Client returned $CLI_status\n";
+    $CLI->Kill (); $CLI->TimedWait (1);
+    $SRV_B->Kill (); $SRV_B->TimedWait (1);
+    $SRV_A->Kill (); $SRV_A->TimedWait (1);
+    $IMR->Kill (); $IMR->TimedWait (1);
+    exit 1;
 }
 
 sleep (5);
 
 print STDERR "=== kill server A\n"; 
-my $server = $SVR_A->TerminateWaitKill (5);
-
-if ($server != 0) {
-    print STDERR "ERROR: server A returned $server\n";
-    $status = 1;
+$SRVA_status = $SRV_A->TerminateWaitKill ($srva->ProcessStopWaitInterval());
+if ($SRVA_status != 0) {
+    print STDERR "ERROR: Server A returned $SRVA_status\n";
+    $CLI->Kill (); $CLI->TimedWait (1);
+    $SRV_B->Kill (); $SRV_B->TimedWait (1);
+    $SRV_A->Kill (); $SRV_A->TimedWait (1);
+    $IMR->Kill (); $IMR->TimedWait (1);
+    exit 1;
 }
 
 print STDERR "=== kill server B\n"; 
-$server = $SVR_B->TerminateWaitKill (5);
-
-if ($server != 0) {
-    print STDERR "ERROR: server B returned $server\n";
-    $status = 1;
+$SRVB_status = $SRV_B->TerminateWaitKill ($srvb->ProcessStopWaitInterval());
+if ($SRVB_status != 0) {
+    print STDERR "ERROR: Server B returned $SRVB_status\n";
+    $CLI->Kill (); $CLI->TimedWait (1);
+    $SRV_B->Kill (); $SRV_B->TimedWait (1);
+    $IMR->Kill (); $IMR->TimedWait (1);
+    exit 1;
 }
 
 sleep (5);
-unlink $svr_a_ior;
-unlink $svr_b_ior;
+$srva->DeleteFile ($srvaiorfile);
+$srvb->DeleteFile ($srvbiorfile);
+$cli->DeleteFile ($srvaiorfile);
 
 print STDERR "=== restart server B\n"; 
-$svr_b_args = $svr_b_args . " -l $delay";
 # Run -ORBDebugLevel 10 to see server raise OBJECT_NOT_EXIST exception.
-$SVR_B = new PerlACE::Process ("serverB", $svr_b_args);
-print STDERR $SVR_B->CommandLine () . "\n";
-
-$SVR_B->Spawn ();
-if (PerlACE::waitforfile_timed ($svr_b_ior, 10) == -1) {
-    print STDERR "ERROR: cannot find $svr_b_ior\n";
-    $IMR_LOCATOR->Kill ();
-    $SVR_B->Kill ();
-    $CLI->Kill ();
-    $status = 1;
+$SRV_B = $srvb->CreateProcess ("serverB", 
+                               "_ORBDebugLevel = $debug_level ".
+                               "-ORBEndpoint " . "$protocol" . "://:" . "$srv_port_base/portspan=20 ".
+                               "-ORBInitRef ImplRepoService=file://$srvb_imriorfile ".
+                               "-ORBServerId $srv_b_id ".
+                               "-ORBUseIMR 1 ".
+                               "-o $srvb_srvbiorfile ".
+                               "-l $delay");
+print STDERR $SRV_B->CommandLine () . "\n";
+$SRVB_status = $SRV_B->Spawn ();
+if ($SRVB_status != 0) {
+    print STDERR "ERROR: Server B returned $SRVB_status\n";
+    exit 1;
+}
+if ($srvb->WaitForFileTimed ($srvbiorfile,$srvb->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$srvb_srvbiorfile>\n";
+    $CLI->Kill (); $CLI->TimedWait (1);
+    $SRV_B->Kill (); $SRV_B->TimedWait (1);
+    $IMR->Kill (); $IMR->TimedWait (1);
+    exit 1;
 }
 
 sleep ($delay * 2);
 
 print STDERR "=== restart server A\n"; 
-print STDERR $SVR_A->CommandLine () . "\n";
-$SVR_A->Spawn ();
-if (PerlACE::waitforfile_timed ($svr_a_ior, 10) == -1) {
-    print STDERR "ERROR: cannot find $svr_a_ior\n";
-    $IMR_LOCATOR->Kill ();
-    $SVR_A->Kill ();
-    $SVR_B->Kill ();
-    $CLI->Kill ();
+print STDERR $SRV_A->CommandLine () . "\n";
+$SRVA_status = $SRV_A->Spawn ();
+if ($SRVA_status != 0) {
+    print STDERR "ERROR: Server A returned $SRVA_status\n";
+    exit 1;
+}
+if ($srva->WaitForFileTimed ($srvaiorfile,$srva->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$srva_srvaiorfile>\n";
+    $SRV_A->Kill (); $SRV_A->TimedWait (1);
+    $CLI->Kill (); $CLI->TimedWait (1);
+    $SRV_B->Kill (); $SRV_B->TimedWait (1);
+    $IMR->Kill (); $IMR->TimedWait (1);
+    exit 1;
+}
+if ($srva->GetFile ($srvaiorfile) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$srva_srvaiorfile>\n";
+    $SRV_A->Kill (); $SRV_A->TimedWait (1);
+    $CLI->Kill (); $CLI->TimedWait (1);
+    $SRV_B->Kill (); $SRV_B->TimedWait (1);
+    $IMR->Kill (); $IMR->TimedWait (1);
+    exit 1;
+}
+if ($cli->PutFile ($srvaiorfile) == -1) {
+    print STDERR "ERROR: cannot set file <$cli_srvaiorfile>\n";
+    $SRV_A->Kill (); $SRV_A->TimedWait (1);
+    $CLI->Kill (); $CLI->TimedWait (1);
+    $SRV_B->Kill (); $SRV_B->TimedWait (1);
+    $IMR->Kill (); $IMR->TimedWait (1);
+    exit 1;
+}
+
+$CLI_status = $CLI->WaitKill ($cli->ProcessStartWaitInterval()+$client_duration);
+if ($CLI_status != 0) {
+    print STDERR "ERROR: CLient returned $CLI_status\n";
     $status = 1;
 }
 
-$CLI->WaitKill ($client_duration);
-
-$IMR_LOCATOR->Kill();
-$SVR_A->Kill();
-$SVR_B->Kill();
+$IMR_status = $IMR->TerminateWaitKill ($imr->ProcessStopWaitInterval());
+if ($IMR_status != 0) {
+    print STDERR "ERROR: ImplRepo Service returned $IMR_status\n";
+    $status = 1;
+}
+$SRVA_status = $SRV_A->TerminateWaitKill ($srva->ProcessStopWaitInterval());
+if ($SRVA_status != 0) {
+    print STDERR "Error : Server A returned $SRVA_status.";
+    $status = 1;
+}
+$SRVB_status = $SRV_B->TerminateWaitKill ($srvb->ProcessStopWaitInterval());
+if ($SRVB_status != 0) {
+    print STDERR "Error : Server B returned $SRVB_status.";
+    $status = 1;
+}
 
 # Make sure the files are gone, so we can wait on them.
-unlink $svr_a_ior;
-unlink $svr_b_ior;
-unlink $imr_db;
-unlink $imr_locator_ior;
+$imr->DeleteFile ($imriorfile);
+$srva->DeleteFile ($imriorfile);
+$srvb->DeleteFile ($imriorfile);
+$imr->DeleteFile ($imrdbfile);
+$srva->DeleteFile ($srvaiorfile);
+$srvb->DeleteFile ($srvbiorfile);
+$cli->DeleteFile ($srvaiorfile);
 
 exit $status;
