@@ -113,6 +113,58 @@ namespace CIAO_Foo_Impl
     virtual void
     my_double (
       ::CORBA::Double my_double);
+    
+    // TAO_IDL - Generated from
+    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
+    
+    virtual ::short_sequence *
+    my_short_sequence (void);
+    
+    // TAO_IDL - Generated from
+    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
+    
+    virtual void
+    my_short_sequence (
+      const ::short_sequence & my_short_sequence);
+    
+    // TAO_IDL - Generated from
+    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
+    
+    virtual ::long_sequence *
+    my_long_sequence (void);
+    
+    // TAO_IDL - Generated from
+    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
+    
+    virtual void
+    my_long_sequence (
+      const ::long_sequence & my_long_sequence);
+    
+    // TAO_IDL - Generated from
+    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
+    
+    virtual ::float_sequence *
+    my_float_sequence (void);
+    
+    // TAO_IDL - Generated from
+    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
+    
+    virtual void
+    my_float_sequence (
+      const ::float_sequence & my_float_sequence);
+    
+    // TAO_IDL - Generated from
+    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
+    
+    virtual ::double_sequence *
+    my_double_sequence (void);
+    
+    // TAO_IDL - Generated from
+    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
+    
+    virtual void
+    my_double_sequence (
+      const ::double_sequence & my_double_sequence);
     //@}
     
     //@{

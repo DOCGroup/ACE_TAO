@@ -109,6 +109,114 @@ namespace CIAO_Foo_Impl
       ACE_ERROR ((LM_ERROR, "ERROR: my_double != 56.78, it is %f\n", my_double));
   }
   
+  ::short_sequence *
+  Foo_exec_i::my_short_sequence (void)
+  {
+    /* Your code here. */
+    return 0;
+  }
+  
+  void
+  Foo_exec_i::my_short_sequence (
+    const ::short_sequence & my_short_sequence)
+  {
+    if(my_short_sequence.length() != 3)
+    {
+      ACE_ERROR ((LM_ERROR, "ERROR: my_short_sequence does not have the correct length\n"));
+      return;
+    }
+
+    if(my_short_sequence[0] != 11)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_short_sequence[0] != 11, it is %d\n", my_short_sequence[0]));
+
+    if(my_short_sequence[1] != 12)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_short_sequence[1] != 12, it is %d\n", my_short_sequence[1]));
+
+    if(my_short_sequence[2] != 13)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_short_sequence[2] != 13, it is %d\n", my_short_sequence[2]));
+  }
+  
+  ::long_sequence *
+  Foo_exec_i::my_long_sequence (void)
+  {
+    /* Your code here. */
+    return 0;
+  }
+  
+  void
+  Foo_exec_i::my_long_sequence (
+    const ::long_sequence & my_long_sequence)
+  {
+    if(my_long_sequence.length() != 3)
+    {
+      ACE_ERROR ((LM_ERROR, "ERROR: my_long_sequence does not have the correct length\n"));
+      return;
+    }
+
+    if(my_long_sequence[0] != 21)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_long_sequence[0] != 21, it is %d\n", my_long_sequence[0]));
+
+    if(my_long_sequence[1] != 22)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_long_sequence[1] != 22, it is %d\n", my_long_sequence[1]));
+
+    if(my_long_sequence[2] != 23)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_long_sequence[2] != 23, it is %d\n", my_long_sequence[2]));
+  }
+  
+  ::float_sequence *
+  Foo_exec_i::my_float_sequence (void)
+  {
+    /* Your code here. */
+    return 0;
+  }
+  
+  void
+  Foo_exec_i::my_float_sequence (
+    const ::float_sequence & my_float_sequence)
+  {
+    if(my_float_sequence.length() != 3)
+    {
+      ACE_ERROR ((LM_ERROR, "ERROR: my_float_sequence does not have the correct length\n"));
+      return;
+    }
+
+    if(my_float_sequence[0] != 21.12F)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_float_sequence[0] != 21.12, it is %f\n", my_float_sequence[0]));
+
+    if(my_float_sequence[1] != 22.22F)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_float_sequence[1] != 22.22, it is %f\n", my_float_sequence[1]));
+
+    if(my_float_sequence[2] != 23.32F)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_float_sequence[2] != 23.32, it is %f\n", my_float_sequence[2]));
+  }
+  
+  ::double_sequence *
+  Foo_exec_i::my_double_sequence (void)
+  {
+    /* Your code here. */
+    return 0;
+  }
+  
+  void
+  Foo_exec_i::my_double_sequence (
+    const ::double_sequence & my_double_sequence)
+  {
+    if(my_double_sequence.length() != 3)
+    {
+      ACE_ERROR ((LM_ERROR, "ERROR: my_double_sequence does not have the correct length\n"));
+      return;
+    }
+
+    if(my_double_sequence[0] != 621.12)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_double_sequence[0] != 621.12, it is %f\n", my_double_sequence[0]));
+
+    if(my_double_sequence[1] != 622.22)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_double_sequence[1] != 622.22, it is %f\n", my_double_sequence[1]));
+
+    if(my_double_sequence[2] != 623.32)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_double_sequence[2] != 623.32, it is %f\n", my_double_sequence[2]));
+  }
+  
   // Operations from Components::SessionComponent.
   
   void
