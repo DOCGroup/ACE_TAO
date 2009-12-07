@@ -1,9 +1,20 @@
+Mon Dec  7 17:51:30 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/CIAO_ComponentServer/Local_Facet/Local_Facet.idl:
+        * tests/CIAO_ComponentServer/Local_Facet/Local_Facet.mpc:
+        * tests/CIAO_ComponentServer/Local_Facet/Local_Facet_exec.h:
+        * tests/CIAO_ComponentServer/Local_Facet/Local_Facet_exec.cpp:
+        * tests/CIAO_ComponentServer/Local_Facet/client.cpp:
+        * tests/CIAO_ComponentServer/Local_Facet/run_test.pl:
+
+          Added simple test for local facet connection logic. 
+        
 Mon Dec  7 17:04:43 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/CIAO_ComponentServer/Local_Facet:
-        
-          Moved local facet test under ComponentServer. 
-        
+
+          Moved local facet test under ComponentServer.
+
         * tests/IDL_Test/Local_Facet:
 
           Removed these files.

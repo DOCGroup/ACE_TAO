@@ -30,6 +30,7 @@
 // be/be_codegen.cpp:1278
 
 #include "Local_Facet_exec.h"
+#include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO_Bar_Impl
 {
@@ -43,6 +44,11 @@ namespace CIAO_Bar_Impl
   
   Foo_exec_i::~Foo_exec_i (void)
   {
+  }
+  
+  void Foo_exec_i::simple (void)
+  {
+    CIAO_DEBUG ((LM_INFO, "Got simple invocation\n"));
   }
   
   // Operations from ::Foo
@@ -66,8 +72,7 @@ namespace CIAO_Bar_Impl
   ::CCM_Foo_ptr
   Bar_exec_i::get_foo_out (void)
   {
-    /* Your code here. */
-    return ::CCM_Foo::_nil ();
+    return new Foo_exec_i ();
   }
   
   // Operations from Components::SessionComponent.
@@ -83,6 +88,23 @@ namespace CIAO_Bar_Impl
       {
         throw ::CORBA::INTERNAL ();
       }
+  }
+  
+  void
+  Bar_exec_i::run_test (void)
+  {
+    ::Foo_var foo_intf = this->context_->get_connection_foo_in ();
+    
+    if (CORBA::is_nil (foo_intf))
+      {
+        CIAO_ERROR ((LM_ERROR, "ERROR: Local_Facet_Test: got a nil object reference for my connection\n"));
+        return;
+      }
+    
+    CIAO_DEBUG ((LM_DEBUG, "Invoking simple\n"));
+    foo_intf->simple ();
+    
+    CIAO_DEBUG ((LM_INFO, "Test successful!\n"));
   }
   
   void
