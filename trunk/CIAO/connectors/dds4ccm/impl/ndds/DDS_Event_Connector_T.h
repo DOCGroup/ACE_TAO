@@ -9,6 +9,9 @@
 #define DDS_EVENT_CONNECTOR_T_H_
 
 #include "dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.h"
+#include "dds4ccm/impl/ndds/DDS_Get_T.h"
+#include "dds4ccm/impl/ndds/DDS_Write_T.h"
+#include "dds4ccm/impl/ndds/DDS_Listen_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 class DDS_Event_Connector_T
@@ -63,29 +66,21 @@ private:
    * DDS_Write supplier
    */
   //@{
-  void configure_port_dds_write_supplier (void);
-  ::DDS::CCM_DataWriter_var supplier_writer_;
-  ::DDS::DataWriterListener_var datawriter_listener_;
+  DDS_Write_T <DDS_TYPE, CCM_TYPE> supplier_;
   //@}
 
   /**
    * DDS_Listen push_consumer
    */
   //@{
-  void configure_port_dds_listen_push_consumer (void);
-  ::DDS::DataReader_var push_consumer_data_;
-  ::CCM_DDS::CCM_DataListenerControl_var push_consumer_data_control_;
-  ::DDS::DataReaderListener_var push_consumer_data_listener_;
+  DDS_Listen_T <DDS_TYPE, CCM_TYPE> push_consumer_;
   //@}
 
   /**
    * DDS_Get pull_consumer
    */
   //@{
-  void configure_port_dds_get_pull_consumer (void);
-  ::DDS::DataReader_var pull_consumer_data_;
-  ::DDS::DataReader_var pull_consumer_fresh_data_;
-  ::DDS::DataReaderListener_var pull_consumer_status_;
+  DDS_Get_T <DDS_TYPE, CCM_TYPE> pull_consumer_;
   //@}
 };
 

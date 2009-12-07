@@ -6,6 +6,8 @@
  *
  * Wrapper facade for NDDS.
  */
+#ifndef DDS_DATAWRITERLISTENER_T
+#define DDS_DATAWRITERLISTENER_T
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
@@ -21,20 +23,16 @@ namespace CIAO
     {
     public:
       /// Constructor
-      DataWriterListener_T (
-        typename CCM_TYPE::context_type::_ptr_type context,
-        CCM_DDS::ConnectorStatusListener_ptr error_listener);
+      DataWriterListener_T (void);
 
       /// Destructor
       virtual ~DataWriterListener_T (void);
 
       static ::DDS::StatusMask get_mask (void);
-
-    private:
-      typename CCM_TYPE::context_type::_var_type context_;
-      CCM_DDS::ConnectorStatusListener_var  error_listener_;
     };
   }
 }
 
 #include "dds4ccm/impl/ndds/DataWriterListener_T.cpp"
+
+#endif /* DDS_DATAWRITERLISTENER_T */
