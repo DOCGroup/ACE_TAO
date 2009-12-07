@@ -50,3 +50,5 @@ TAO/CIAO/connectors/dds4ccm/tests/Reader/descriptors/run_test.pl: !STATIC !MINIM
 TAO/CIAO/connectors/dds4ccm/tests/CSLSampleRejected/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
 TAO/CIAO/connectors/dds4ccm/tests/CSLUnexpStat/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
 TAO/CIAO/tests/Bug_3769_Regression/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
+TAO/CIAO/connectors/dds4ccm/tests/PSLDeadline/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
+
