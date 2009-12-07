@@ -515,7 +515,7 @@ TAO_Thread_Lane_Resources::shutdown_reactor (void)
 }
 
 void
-TAO_Thread_Lane_Resources::cleanup_rw_transports (void)
+TAO_Thread_Lane_Resources::close_all_transports (void)
 {
   // If we have no-drop-reply strategy or already fininalized simply return.
   if (!this->orb_core_.resource_factory ()->drop_replies_during_shutdown () ||
@@ -525,7 +525,12 @@ TAO_Thread_Lane_Resources::cleanup_rw_transports (void)
   // Set of handlers still in the connection cache.
   TAO::Connection_Handler_Set handlers;
 
-  this->transport_cache_->blockable_client_transports (handlers);
+  // Close the transport cache and return the handlers that were still
+  // registered.  The cache will decrease the #REFCOUNT# on the
+  // handler when it removes the handler from cache.  However,
+  // #REFCOUNT# is increased when the handler is placed in the handler
+  // set.
+  this->transport_cache_->close (handlers);
 
   // Go through the handler set, closing the connections and removing
   // the references.
@@ -535,9 +540,8 @@ TAO_Thread_Lane_Resources::cleanup_rw_transports (void)
        iter.next (handler);
        iter.advance ())
     {
-      // Connection is closed. There will be a double closure but that
-      // is okay.
-      (*handler)->release_os_resources ();
+      // Connection is closed.  Potential removal from the Reactor.
+      (*handler)->close_connection ();
 
       // #REFCOUNT# related to the handler set decreases.
       (*handler)->transport ()->remove_reference ();

@@ -70,9 +70,9 @@ TAO_Default_Thread_Lane_Resources_Manager::shutdown_reactor (void)
 }
 
 void
-TAO_Default_Thread_Lane_Resources_Manager::cleanup_rw_transports (void)
+TAO_Default_Thread_Lane_Resources_Manager::close_all_transports (void)
 {
-  this->lane_resources_->cleanup_rw_transports ();
+  this->lane_resources_->close_all_transports ();
 }
 
 int
