@@ -1774,6 +1774,7 @@ namespace CIAO
       CCMComponentPortKind (::XSCRT::XML::Attribute< ACE_TCHAR > const&);
 
       static CCMComponentPortKind const Facet;
+      static CCMComponentPortKind const LocalFacet;
       static CCMComponentPortKind const SimplexReceptacle;
       static CCMComponentPortKind const MultiplexReceptacle;
       static CCMComponentPortKind const EventEmitter;
@@ -1784,7 +1785,7 @@ namespace CIAO
 
       enum Value
       {
-        Facet_l, SimplexReceptacle_l, MultiplexReceptacle_l, EventEmitter_l, EventPublisher_l, EventConsumer_l, ExtendedPort_l, MirrorPort_l
+        Facet_l, LocalFacet_l, SimplexReceptacle_l, MultiplexReceptacle_l, EventEmitter_l, EventPublisher_l, EventConsumer_l, ExtendedPort_l, MirrorPort_l
       };
 
 

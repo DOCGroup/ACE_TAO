@@ -6575,6 +6575,7 @@ namespace CIAO
       ::std::basic_string< ACE_TCHAR > v (e.value ());
 
       if (v == ACE_TEXT ("Facet")) v_ = Facet_l;
+      else if (v == ACE_TEXT ("LocalFacet")) v_ = LocalFacet_l;
       else if (v == ACE_TEXT ("SimplexReceptacle")) v_ = SimplexReceptacle_l;
       else if (v == ACE_TEXT ("MultiplexReceptacle")) v_ = MultiplexReceptacle_l;
       else if (v == ACE_TEXT ("EventEmitter")) v_ = EventEmitter_l;
@@ -6594,6 +6595,7 @@ namespace CIAO
       ::std::basic_string< ACE_TCHAR > v (a.value ());
 
       if (v == ACE_TEXT ("Facet")) v_ = Facet_l;
+      else if (v == ACE_TEXT ("LocalFacet")) v_ = LocalFacet_l;
       else if (v == ACE_TEXT ("SimplexReceptacle")) v_ = SimplexReceptacle_l;
       else if (v == ACE_TEXT ("MultiplexReceptacle")) v_ = MultiplexReceptacle_l;
       else if (v == ACE_TEXT ("EventEmitter")) v_ = EventEmitter_l;
@@ -6607,6 +6609,7 @@ namespace CIAO
     }
 
     CCMComponentPortKind const CCMComponentPortKind::Facet (CCMComponentPortKind::Facet_l);
+    CCMComponentPortKind const CCMComponentPortKind::LocalFacet (CCMComponentPortKind::LocalFacet_l);
     CCMComponentPortKind const CCMComponentPortKind::SimplexReceptacle (CCMComponentPortKind::SimplexReceptacle_l);
     CCMComponentPortKind const CCMComponentPortKind::MultiplexReceptacle (CCMComponentPortKind::MultiplexReceptacle_l);
     CCMComponentPortKind const CCMComponentPortKind::EventEmitter (CCMComponentPortKind::EventEmitter_l);
@@ -16648,6 +16651,7 @@ namespace CIAO
         ::std::basic_string< ACE_TCHAR > s;
 
         if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::Facet) s = ACE_TEXT ("Facet");
+        else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::LocalFacet) s = ACE_TEXT ("LocalFacet");
         else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::SimplexReceptacle) s = ACE_TEXT ("SimplexReceptacle");
         else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::MultiplexReceptacle) s = ACE_TEXT ("MultiplexReceptacle");
         else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::EventEmitter) s = ACE_TEXT ("EventEmitter");
