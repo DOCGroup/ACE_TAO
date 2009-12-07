@@ -1,3 +1,12 @@
+Mon Dec  7 10:19:29 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * tests/IOR_Endpoint_Hostnames/run_test.pl:
+        * examples/Quoter/run_test.pl:
+        * examples/Callback_Quoter/run_test.pl:
+
+          Tests are converted to use new test framework
+          and added to fuzz build.
+
 Mon Dec  7 09:59:08 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/EC_Custom_Marshal/run_test.pl:

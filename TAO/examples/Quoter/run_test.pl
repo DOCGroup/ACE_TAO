@@ -118,7 +118,7 @@ if ($ns_status != 0) {
 
 if ($nstarget->WaitForFileTimed ($nsiorbase,
                                  $nstarget->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$nstarget_iorfile>\n";
+    print STDERR "ERROR: cannot find file <$nstarget_nsiorfile>\n";
     $NS->Kill (); $NS->TimedWait (1);
     exit 1;
 }
@@ -128,27 +128,27 @@ if ($nstarget->GetFile ($nsiorbase) == -1) {
     exit 1;
 }
 if ($lctarget->PutFile ($nsiorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$lctarget_iorfile>\n";
+    print STDERR "ERROR: cannot set file <$lctarget_nsiorfile>\n";
     $NS->Kill (); $NS->TimedWait (1);
     exit 1;
 }
 if ($svtarget->PutFile ($nsiorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$svtarget_iorfile>\n";
+    print STDERR "ERROR: cannot set file <$svtarget_nsiorfile>\n";
     $NS->Kill (); $NS->TimedWait (1);
     exit 1;
 }
 if ($fftarget->PutFile ($nsiorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$fftarget_iorfile>\n";
+    print STDERR "ERROR: cannot set file <$fftarget_nsiorfile>\n";
     $NS->Kill (); $NS->TimedWait (1);
     exit 1;
 }
 if ($gftarget->PutFile ($nsiorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$gftarget_iorfile>\n";
+    print STDERR "ERROR: cannot set file <$gftarget_nsiorfile>\n";
     $NS->Kill (); $NS->TimedWait (1);
     exit 1;
 }
 if ($cltarget->PutFile ($nsiorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$cltarget_iorfile>\n";
+    print STDERR "ERROR: cannot set file <$cltarget_nsiorfile>\n";
     $NS->Kill (); $NS->TimedWait (1);
     exit 1;
 }
