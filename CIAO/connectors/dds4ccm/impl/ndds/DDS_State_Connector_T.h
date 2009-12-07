@@ -13,6 +13,7 @@
 #include "dds4ccm/impl/ndds/DDS_Listen_T.h"
 #include "dds4ccm/impl/ndds/DDS_StateListen_T.h"
 #include "dds4ccm/impl/ndds/DDS_Update_T.h"
+#include "dds4ccm/impl/ndds/DDS_Read_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 class DDS_State_Connector_T

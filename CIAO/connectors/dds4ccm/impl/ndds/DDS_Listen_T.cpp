@@ -12,7 +12,9 @@
 #include "ciao/Logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-DDS_Listen_T<DDS_TYPE, CCM_TYPE>::DDS_Listen_T (void)
+DDS_Listen_T<DDS_TYPE, CCM_TYPE>::DDS_Listen_T (void) :
+  data_control_ (new CCM_DDS_DataListenerControl_T
+    < ::CCM_DDS::CCM_DataListenerControl> ())
 {
 }
 
@@ -35,17 +37,11 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE>::init (
 
   try
     {
-      if (CORBA::is_nil (this->data_control_.in ()))
-        {
-          this->data_control_ = new CCM_DDS_DataListenerControl_T
-            < ::CCM_DDS::CCM_DataListenerControl> ();
-        }
-
       if (CORBA::is_nil (this->data_listener_.in ()))
         {
           this->data_listener_ = new ::CIAO::DDS4CCM::RTI::DataReaderListener_T
             <DDS_TYPE, CCM_TYPE> (
-              listener, 
+              listener,
               status,
               data_control_.in ());
         }

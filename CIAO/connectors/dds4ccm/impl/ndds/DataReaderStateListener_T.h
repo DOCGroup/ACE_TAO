@@ -21,8 +21,7 @@ namespace CIAO
     {
       template <typename DDS_TYPE, typename CCM_TYPE>
       class DataReaderStateListener_T :
-        public ::DDS::DataReaderListener,
-        private ACE_Copy_Disabled
+        public PortStatusListener_T <DDS_TYPE, CCM_TYPE>
       {
       public:
         /// Constructor
@@ -36,17 +35,10 @@ namespace CIAO
 
         virtual void on_data_available( ::DDS::DataReader *rdr);
 
-        virtual void on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,
-                                 const ::DDS::RequestedDeadlineMissedStatus & status);
-
-        virtual void on_sample_lost (::DDS::DataReader_ptr the_reader,
-                                 const ::DDS::SampleLostStatus & status);
-
         static ::DDS::StatusMask get_mask (void);
 
       private:
         typename CCM_TYPE::statelistener_type::_var_type listener_;
-        ::CCM_DDS::PortStatusListener_var port_status_listener_;
         ::CCM_DDS::StateListenerControl_var control_;
       };
     }
