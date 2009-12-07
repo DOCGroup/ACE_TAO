@@ -37,12 +37,12 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::Getter_T (
   ws_ = new DDSWaitSet ();
   gd_ = new DDSGuardCondition ();
   rd_condition_ = this->impl_->create_readcondition (DDS_NOT_READ_SAMPLE_STATE,
-                                                     DDS_ANY_VIEW_STATE,
-                                                     DDS_ANY_INSTANCE_STATE);
+                                                     DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
+                                                     DDS_ALIVE_INSTANCE_STATE | DDS_NOT_ALIVE_INSTANCE_STATE);
   DDS_ReturnCode_t retcode = ws_->attach_condition (gd_);
   if (retcode != DDS_RETCODE_OK)
     {
-      CIAO_ERROR ((LM_ERROR, CLINFO "GETTER:Unable to attach guard condition to waitset.\n"));
+      CIAO_ERROR ((LM_ERROR, CLINFO "GETTER: Unable to attach guard condition to waitset.\n"));
       throw CCM_DDS::InternalError (retcode, 0);
     }
   retcode = ws_->attach_condition (rd_condition_);

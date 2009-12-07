@@ -83,7 +83,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_without_instance (
                                 DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
                                 DDS_ALIVE_INSTANCE_STATE);
 
-  if (retval != DDS_RETCODE_OK)
+  if (retval != DDS_RETCODE_OK && retval != DDS_RETCODE_NO_DATA)
     {
       this->impl_->return_loan(data, sample_info);
       CIAO_ERROR ((LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_without_instance - ")
@@ -218,7 +218,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_with_instance (
                                       DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
                                       DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
                                       DDS_ALIVE_INSTANCE_STATE);
-  if (retval != DDS_RETCODE_OK)
+  if (retval != DDS_RETCODE_OK && retval != DDS_RETCODE_NO_DATA)
     {
       this->impl_->return_loan(data, sample_info);
       CIAO_ERROR ((LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_with_instance - ")
