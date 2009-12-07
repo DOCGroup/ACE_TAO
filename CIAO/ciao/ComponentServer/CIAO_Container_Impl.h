@@ -72,14 +72,14 @@ namespace CIAO
 
       virtual PortableServer::POA_ptr _default_POA (void);
       
-      virtual void connect_local_facet (::Components::CCMHome_ptr provider,
+      virtual void connect_local_facet (::Components::CCMObject_ptr provider,
 					const char * provider_port,
-					::Components::CCMHome_ptr user,
+					::Components::CCMObject_ptr user,
 					const char * user_port);
       
-      virtual void disconnect_local_facet (::Components::CCMHome_ptr provider,
+      virtual void disconnect_local_facet (::Components::CCMObject_ptr provider,
 					   const char * provider_port,
-					   ::Components::CCMHome_ptr user,
+					   ::Components::CCMObject_ptr user,
 					   const char * user_port);
 
     private:

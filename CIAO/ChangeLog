@@ -1,3 +1,12 @@
+Mon Dec  7 14:52:43 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * ciao/ComponentServer/CIAO_Container_Impl.h:
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+        * ciao/Containers/Session/Session_Container.cpp:
+
+          Integration. 
+        
 Mon Dec  7 14:11:14 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/ComponentServer/CIAO_ComponentServer.idl:
@@ -8,8 +17,8 @@ Mon Dec  7 14:11:14 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/Containers/Session/Session_Container.cpp:
         * ciao/Servants/Servant_Impl_Base.h:
 
-          Container code. 
-        
+          Container code.
+
 Sat Dec  5 05:33:43 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/Deployment_DeploymentPlan.idl:

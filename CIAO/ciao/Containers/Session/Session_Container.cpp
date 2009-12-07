@@ -699,10 +699,17 @@ namespace CIAO
     
     try
       {
-        ::CORBA::LocalObject_ptr exec (prov_serv->get_facet_executor (provider_port));
+        ::CORBA::Object_ptr exec (prov_serv->get_facet_executor (provider_port));
         
         // Note:  Spec says that facet executor provided by component MAY BE NIL
-        
+        user_serv->connect (user_port, exec);
+      }
+    catch (::Components::InvalidConnection &ex)
+      {
+        CIAO_ERROR ((LM_ERROR, CLINFO "Session_Container::connect_local_facet - "
+                     "Caught InvliadConnection exception while attempting to connect facet %C to "
+                     "receptacle %C\n", provider_port, user_port));
+        throw;
       }
   }
   

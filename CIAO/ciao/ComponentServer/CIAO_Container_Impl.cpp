@@ -474,6 +474,8 @@ namespace CIAO
                                                 const char * user_port)
     {
       CIAO_TRACE ("CIAO_Container_i::connect_local_facet");
+      this->container_->connect_local_facet (provider, provider_port, user, user_port);
+      
     }
     
     void CIAO_Container_i::disconnect_local_facet (::Components::CCMObject_ptr provider,
@@ -482,7 +484,7 @@ namespace CIAO
                                                    const char * user_port)
     {
       CIAO_TRACE ("CIAO_Container_i::connect_local_facet");
-
+      this->container_->disconnect_local_facet (provider, provider_port, user, user_port);
     }
   }
 }
