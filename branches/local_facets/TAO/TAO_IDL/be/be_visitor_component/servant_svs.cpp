@@ -1320,6 +1320,10 @@ be_visitor_connect_block::visit_uses (be_uses *node)
   if (node->uses_type ()->is_local ())
     {
       // @@todo: placeholder for connection logic
+      os_ << "/// " << (is_multiple ? "Multiplex" : "Simplex")
+          << " connect." << be_nl
+          << (is_multiple ? "return " : "") << "this->context_->connect_"
+          << port_name << " (_ciao_conn.in ());";
     }
   else
     {
