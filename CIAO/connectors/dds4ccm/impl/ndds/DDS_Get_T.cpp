@@ -40,51 +40,29 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE>::init (
             <DDS_TYPE, CCM_TYPE> (listener);
         }
 
-      if (CORBA::is_nil (this->fresh_data_.in ()))
-        {
-          if (profile_name && library_name)
-            {
-              this->fresh_data_ =
-                subscriber->create_datareader_with_profile (
-                  topic,
-                  library_name,
-                  profile_name,
-                  this->status_.in (),
-                  ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
-            }
-          else
-            {
-              ::DDS::DataReaderQos drqos;
-              this->fresh_data_ =
-                  subscriber->create_datareader (
-                    topic,
-                    drqos,
-                    this->status_.in (),
-                    ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
-            }
-        }
-
       if (CORBA::is_nil (this->data_.in ()))
         {
           if (profile_name && library_name)
             {
-              this->data_ =
+              ::DDS::DataReader_var reader =
                 subscriber->create_datareader_with_profile (
                   topic,
                   library_name,
                   profile_name,
                   this->status_.in (),
                   ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+              this->data_ = ::DDS::CCM_DataReader::_narrow (reader);
             }
           else
             {
               ::DDS::DataReaderQos drqos;
-              this->data_ =
+              ::DDS::DataReader_var reader =
                   subscriber->create_datareader (
                     topic,
                     drqos,
                     this->status_.in (),
                     ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+              this->data_ = ::DDS::CCM_DataReader::_narrow (reader);
             }
         }
     }
@@ -102,7 +80,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE>::get_fresh_data (void)
   CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE>::get_fresh_data");
 
   return new CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE> (
-          this->fresh_data_.in ());
+          this->data_.in ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -120,6 +98,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_Get_T<DDS_TYPE, CCM_TYPE>::get_dds_entity (void)
 {
   CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE>::get_dds_entity");
-  return ::DDS::CCM_DataReader::_nil ();
+
+  return this->data_.in ();
 }
 
