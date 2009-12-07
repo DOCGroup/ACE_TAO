@@ -21,6 +21,7 @@ module Reader_Test
     port CCM_DDS::ReaderTest::DDS_Listen info_out;
 
     provides ReaderStarter reader_start;
+    provides CCM_DDS::ConnectorStatusListener info_out_connector_status;
   };
 };
 
