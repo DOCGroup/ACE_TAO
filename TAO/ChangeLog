@@ -1,3 +1,11 @@
+Mon Dec  7 10:40:49 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * orbsvcs/tests/Notify/Basic/run_test_ipv6.pl:
+        * bin/tao_other_tests.lst:
+
+          Test is converted to use new test framework
+          and added to fuzz build.
+
 Mon Dec  7 10:19:29 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * tests/IOR_Endpoint_Hostnames/run_test.pl:
