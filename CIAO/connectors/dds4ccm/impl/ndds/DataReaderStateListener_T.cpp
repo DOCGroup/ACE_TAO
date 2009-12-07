@@ -11,12 +11,12 @@
 // Implementation skeleton constructor
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::DataReaderStateListener_T (
-      typename CCM_TYPE::statelistener_type::_ptr_type listener,
-      ::CCM_DDS::PortStatusListener_ptr port_status_listener,
-      ::CCM_DDS::StateListenerControl_ptr control)
-      : listener_ (CCM_TYPE::statelistener_type::_duplicate (listener)),
-        port_status_listener_ (::CCM_DDS::PortStatusListener::_duplicate (port_status_listener)),
-        control_ (::CCM_DDS::StateListenerControl::_duplicate (control))
+  typename CCM_TYPE::statelistener_type::_ptr_type listener,
+  ::CCM_DDS::PortStatusListener_ptr port_status_listener,
+  ::CCM_DDS::StateListenerControl_ptr control)
+  : PortStatusListener_T <DDS_TYPE, CCM_TYPE> (port_status_listener) ,
+    listener_ (CCM_TYPE::statelistener_type::_duplicate (listener)),
+    control_ (::CCM_DDS::StateListenerControl::_duplicate (control))
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderStateListener_T::DataReaderStateListener_T");
 }
@@ -64,9 +64,9 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
 
       this->control_->mode () == ::CCM_DDS::ONE_BY_ONE
         ? max_samples = DDS_LENGTH_UNLIMITED
-        : this->max_delivered_data_ == 0
+        : this->control_->max_delivered_data() == 0
           ? max_samples = DDS_LENGTH_UNLIMITED
-          : max_samples = this->max_delivered_data_;
+          : max_samples = this->control_->max_delivered_data ();
 
       ::DDS::ReturnCode_t const result = reader->take (
                   data,
@@ -192,58 +192,6 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
     }
   catch (...)
     {
-    }
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
-CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadline_missed (
-                                              ::DDS::DataReader_ptr the_reader,
-                                               const ::DDS::RequestedDeadlineMissedStatus & status)
-{
-  try
-    {
-      if (!CORBA::is_nil (this->port_status_listener_))
-        {
-          this->port_status_listener_->on_requested_deadline_missed (the_reader, status);
-        }
-      else
-        {
-          CIAO_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("DataReaderStateListener_T::on_requested_deadline_missed: ")
-                      ACE_TEXT ("No portstatus listener installed\n")));
-        }
-    }
-  catch (...)
-    {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataReaderStateListener_T::on_requested_deadline_missed: ")
-                             ACE_TEXT ("DDS Exception caught\n")));
-    }
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
-CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
-                                  ::DDS::DataReader_ptr the_reader,
-                                  const ::DDS::SampleLostStatus & status)
-{
-  try
-    {
-      if (!CORBA::is_nil (this->port_status_listener_))
-        {
-          this->port_status_listener_->on_sample_lost (the_reader, status);
-        }
-      else
-        {
-          CIAO_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("DataReaderStateListener_T::on_sample_lost: ")
-                      ACE_TEXT ("No portstatus listener installed\n")));
-        }
-    }
-  catch (...)
-    {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataReaderStateListener_T::on_sample_lost: ")
-                             ACE_TEXT ("DDS Exception caught\n")));
     }
 }
 
