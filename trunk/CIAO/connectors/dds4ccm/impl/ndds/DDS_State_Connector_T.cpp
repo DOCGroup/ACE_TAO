@@ -158,7 +158,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
     this->profile_name_);
 
   this->passive_observer_.init (
-    this->context_->get_connection_passive_observer__status (),
+    this->context_->get_connection_passive_observer_status (),
     this->topic_.in (),
     this->subscriber_.in (),
     this->library_name_,

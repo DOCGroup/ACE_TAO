@@ -1,3 +1,14 @@
+Mon Dec  7 13:28:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_Listen_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Read_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_StateListen_T.cpp
+          Fixed runtime problems and refactored statelistener
+
 Mon Dec  7 13:25:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
