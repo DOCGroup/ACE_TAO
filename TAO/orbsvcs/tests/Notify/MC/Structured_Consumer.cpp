@@ -18,7 +18,7 @@
 // ******************************************************************
 
 static const ACE_TCHAR *ior = ACE_TEXT ("file://test_monitor.ior");
-static const char* ready = "ready.txt";
+static const ACE_TCHAR *ready_output_file = ACE_TEXT ("ready.txt");
 static unsigned int expected = 2000;
 static unsigned int delay_period = 5;
 static unsigned int delay_count = 0;
@@ -34,7 +34,7 @@ public:
 int
 Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:e:p:d:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:e:p:d:o:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -56,6 +56,10 @@ Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
           delay_count = ACE_OS::atoi (get_opts.optarg);
           break;
 
+        case 'o':
+          ready_output_file = get_opts.optarg;
+          break;
+
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
             "usage:  %s "
@@ -63,6 +67,7 @@ Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
             "-e <expected events> "
             "-d <delay every 'n' seconds> "
             "-p <how many seconds to delay> "
+            "-o <readyfile> -e <# of events> "
             "\n",
             argv [0]),
             -1);
@@ -160,7 +165,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "\nConsumer waiting for events...\n"));
 
-      FILE* ready_file = ACE_OS::fopen (ready, "w");
+      FILE* ready_file = ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ready_output_file), "w");
 
       if (ready_file == 0)
         {

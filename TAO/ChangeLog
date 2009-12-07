@@ -1,3 +1,45 @@
+Mon Dec  7 09:59:08 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
+        * orbsvcs/tests/COIOP_Naming_Test/run_test.pl:
+        * orbsvcs/tests/Notify/Timeout/run_test.pl:
+        * orbsvcs/tests/Notify/MT_Dispatching/run_test.pl:
+        * orbsvcs/tests/Notify/Bug_1385_Regression/run_test.pl:
+        * orbsvcs/tests/Notify/Reconnecting/run_test.pl:
+        * orbsvcs/tests/Notify/Basic/run_test.pl:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/run_test.pl:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/run_test.pl:
+        * orbsvcs/tests/Notify/MC/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/MC/test_monitor.cpp:
+        * orbsvcs/tests/Notify/MC/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/MC/run_test.pl:
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/run_test.pl:
+        * orbsvcs/tests/ImplRepo/scale/run_test.pl:
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/MessengerServer.cpp:
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/MessengerClient.cpp:
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/run_test.pl:
+        * orbsvcs/tests/ImplRepo/NameService/run_test.pl:
+        * orbsvcs/tests/ImplRepo/locked/run_test.pl:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/run_test.pl:
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+        * orbsvcs/tests/Bug_3598b_Regression/run_test.pl:
+        * tests/Muxing/run_test.pl:
+        * tests/ORB_init/Portspan/run_test.pl:
+        * tests/Bug_2183_Regression/run_test.pl:
+        * tests/Bug_3108_Regression/run_test.pl:
+        * bin/tao_other_tests.lst:
+        * bin/tao_orb_tests.lst:
+        * utils/nslist/run_test.pl:
+        * examples/Quoter/run_test.pl:
+        * examples/Callback_Quoter/run_test.pl:
+        * examples/Persistent_Grid/run_test.pl:
+
+          Tests are converted to use new test framework
+          and added to fuzz build.
+
 Mon Dec  7 09:43:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
 
         * ACE_wrappers/TAO/tao/Thread_Lane_Resources.h:

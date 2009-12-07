@@ -1,71 +1,148 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-    & eval 'exec perl -S $0 $argv:q'
-    if 0;
+     & eval 'exec perl -S $0 $argv:q'
+     if 0;
 
 # $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 $status = 0;
-$ns_ior = PerlACE::LocalFile ("NameService.ior");
+$debug_level = '0';
+
+# amount of delay between running the servers
+
 $sleeptime = 15;
 
-unlink $ns_ior;
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
+}
 
-$NS = new PerlACE::Process ("../../orbsvcs/Naming_Service/Naming_Service", "-o $ns_ior");
-$N = new PerlACE::Process ("notifier", "-ORBInitRef NameService=file://$ns_ior");
-$C = new PerlACE::Process ("consumer", "-ORBInitRef NameService=file://$ns_ior -t 12 -a TAO");
-$S = new PerlACE::Process ("supplier", "-ORBInitRef NameService=file://$ns_ior -iexample.stocks");
+my $nstarget = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $ntarget = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+my $ctarget = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
+my $starget = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
+
+my $nsiorbase = "ns.ior";
+my $examplebase = "example.stocks";
+my $nstarget_nsiorfile = $nstarget->LocalFile ($nsiorbase);
+my $ntarget_nsiorfile = $ntarget->LocalFile ($nsiorbase);
+my $ctarget_nsiorfile = $ctarget->LocalFile ($nsiorbase);
+my $starget_nsiorfile = $starget->LocalFile ($nsiorbase);
+my $starget_examplefile = $starget->LocalFile ($examplebase);
+$nstarget->DeleteFile($nsiorbase);
+$ntarget->DeleteFile($nsiorbase);
+$ctarget->DeleteFile($nsiorbase);
+$starget->DeleteFile($nsiorbase);
+
+# Programs that are run
+
+$NS = $nstarget->CreateProcess (
+    "../../orbsvcs/Naming_Service/Naming_Service",
+    "-o $nstarget_nsiorfile");
+$N = $ntarget->CreateProcess (
+    "notifier",
+    "-ORBDebugLevel $debug_level ".
+    "-ORBInitRef NameService=file://$ntarget_nsiorfile");
+$C = $ctarget->CreateProcess (
+    "consumer",
+    "-ORBInitRef NameService=file://$ctarget_nsiorfile -t 12 -a TAO");
+$S = $starget->CreateProcess (
+    "supplier",
+    "-ORBInitRef NameService=file://$starget_nsiorfile -i $starget_examplefile");
 
 print STDERR "================ Remote test\n";
 
-$NS->Spawn ();
+$ns_status = $NS->Spawn ();
 
-if (PerlACE::waitforfile_timed ($ns_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$ns_ior>\n";
-    $NS->Kill (); 
+if ($ns_status != 0) {
+    print STDERR "ERROR: Naming_Service returned $ns_status\n";
     exit 1;
 }
 
+if ($nstarget->WaitForFileTimed ($nsiorbase,
+                                 $nstarget->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$nstarget_iorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+if ($nstarget->GetFile ($nsiorbase) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$nstarget_nsiorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+if ($ntarget->PutFile ($nsiorbase) == -1) {
+    print STDERR "ERROR: cannot set file <$ntarget_iorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+if ($ctarget->PutFile ($nsiorbase) == -1) {
+    print STDERR "ERROR: cannot set file <$ctarget_iorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+if ($starget->PutFile ($nsiorbase) == -1) {
+    print STDERR "ERROR: cannot set file <$starget_iorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
 
-$N->Spawn ();
+$n_status = $N->Spawn ();
 
+if ($n_status != 0) {
+    print STDERR "ERROR: notifier returned $n_status\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
 sleep $sleeptime;
 
-$C->Spawn ();
+$c_status = $C->Spawn ();
 
+if ($sv_status != 0) {
+    print STDERR "ERROR: consumer returned $c_status\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    $N->Kill (); $N->TimedWait (1);
+    exit 1;
+}
 sleep $sleeptime;
 
-$supplier = $S->SpawnWaitKill (60);
+$s_status = $S->SpawnWaitKill ($starget->ProcessStopWaitInterval() + 60);
 
-if ($supplier != 0) {
-    print STDERR "ERROR: supplier returned $supplier\n";
+if ($s_status != 0) {
+    print STDERR "ERROR: supplier returned $s_status\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    $N->Kill (); $N->TimedWait (1);
+    $C->Kill (); $C->TimedWait (1);
+    exit 1;
+}
+
+$c_status = $C->TerminateWaitKill ($ctarget->ProcessStopWaitInterval());
+
+if ($c_status != 0) {
+    print STDERR "ERROR: consumer returned $c_status\n";
     $status = 1;
 }
 
-$server = $C->TerminateWaitKill (5);
+$n_status = $N->TerminateWaitKill ($ntarget->ProcessStopWaitInterval());
 
-if ($server != 0) {
-    print STDERR "ERROR: consumer returned $server\n";
+if ($n_status != 0) {
+    print STDERR "ERROR: notifier returned $n_status\n";
     $status = 1;
 }
 
-$server = $N->TerminateWaitKill (5);
+$ns_status = $NS->TerminateWaitKill ($nstarget->ProcessStopWaitInterval());
 
-if ($server != 0) {
-    print STDERR "ERROR: notifier returned $server\n";
+if ($ns_status != 0) {
+    print STDERR "ERROR: Naming_Service returned $ns_status\n";
     $status = 1;
 }
 
-$server = $NS->TerminateWaitKill (5);
-
-if ($server != 0) {
-    print STDERR "ERROR: naming service returned $server\n";
-    $status = 1;
-}
-
-unlink $ns_ior;
+$nstarget->DeleteFile($nsiorbase);
+$ntarget->DeleteFile($nsiorbase);
+$ctarget->DeleteFile($nsiorbase);
+$starget->DeleteFile($nsiorbase);
 
 exit $status;
