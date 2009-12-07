@@ -128,8 +128,18 @@ namespace CIAO
                                                          const char *servant_artifact,
                                                          const char *servant_entrypoint,
                                                          const char *name);
+    
+    virtual void connect_local_facet (::Components::CCMObject_ptr provider,
+                                      const char * provider_port,
+                                      ::Components::CCMObject_ptr user,
+                                      const char * user_port);
+    
+    virtual void disconnect_local_facet (::Components::CCMObject_ptr provider,
+                                         const char * provider_port,
+                                         ::Components::CCMObject_ptr user,
+                                         const char * user_port);
 
-        /// Activate component
+    /// Activate component
     virtual void activate_component (Components::CCMObject_ptr compref);
 
     virtual void passivate_component (Components::CCMObject_ptr compref);

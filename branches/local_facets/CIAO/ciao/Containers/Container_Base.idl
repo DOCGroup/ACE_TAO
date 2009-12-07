@@ -7,6 +7,7 @@
 
 #include "tao/PortableServer/PortableServer_include.pidl"
 #include "ccm/CCM_Home.idl"
+#include "ccm/CCM_Base.idl"
 #include "ciao/Containers/CIAO_Servant_Activator.idl"
 
 module CIAO
@@ -57,7 +58,20 @@ module CIAO
     void passivate_component (in Components::CCMObject name);
     
     void uninstall_component (in Components::CCMObject compptr);
+
+    void connect_local_facet (in ::Components::CCMObject provider_ref,
+			      in string provider_port,
+			      in ::Components::CCMObject user_ref,
+			      in string user_port)
+      raises (::Components::InvalidConnection,
+	      ::Components::AlreadyConnected);
     
+    void disconnect_local_facet (in ::Components::CCMObject provider_ref,
+				 in string provider_port,
+				 in ::Components::CCMObject user_ref,
+				 in string user_port)
+      raises (::Components::InvalidConnection);
+
     // *** Methods used by component specific container portions
     Object install_servant (in PortableServer::Servant svnt, 
                             in Container_Types::OA_Type type,

@@ -171,6 +171,8 @@ namespace CIAO
     virtual ::CORBA::Object_ptr disconnect (const char * name,
                                             ::Components::Cookie * ck);
 
+    
+    virtual ::CORBA::Object_ptr get_facet_executor (const char *name) = 0;
 
   protected:
     void add_facet (const char *port_name,

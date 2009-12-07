@@ -1,15 +1,27 @@
+Mon Dec  7 14:11:14 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/ComponentServer/CIAO_ComponentServer.idl:
+        * ciao/ComponentServer/CIAO_Container_Impl.h:
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+        * ciao/Containers/Container_Base.idl:
+        * ciao/Containers/Session/Session_Container.h:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Servants/Servant_Impl_Base.h:
+
+          Container code. 
+        
 Sat Dec  5 05:33:43 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/Deployment_DeploymentPlan.idl:
         * DAnCE/NodeApplication/NodeApplication_Impl.h:
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
 
-          Infrastructure to connect local interfaces. 
-        
+          Infrastructure to connect local interfaces.
+
         * tests/IDL_Test/Local_Facet/Local_Facet.mpc:
-        
-          Enabled test. 
-        
+
+          Enabled test.
+
 Local Variables:
 mode: change-log
 add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
