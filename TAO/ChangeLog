@@ -1,3 +1,8 @@
+Mon Dec  7 18:22:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Removed !FIXED_BUGS_ONLY for Bug_3672_Regression test.
+
 Mon Dec  7 10:40:49 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/Notify/Basic/run_test_ipv6.pl:
