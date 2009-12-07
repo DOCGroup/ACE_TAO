@@ -82,10 +82,10 @@ TAO_RT_Thread_Lane_Resources_Manager::shutdown_reactor (void)
 }
 
 void
-TAO_RT_Thread_Lane_Resources_Manager::cleanup_rw_transports (void)
+TAO_RT_Thread_Lane_Resources_Manager::close_all_transports (void)
 {
   // Shutdown default reactors.
-  this->default_lane_resources_->cleanup_rw_transports ();
+  this->default_lane_resources_->close_all_transports ();
 }
 
 int

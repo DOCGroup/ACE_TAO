@@ -72,10 +72,9 @@ public:
   /// Shutdown the reactor.
   void shutdown_reactor (void);
 
-  /// Certain ORB policies such as dropping replies on shutdown with
-  /// RW connection handlers would need cleanup of transports to wake
-  /// threads up.
-  void cleanup_rw_transports (void);
+  /// Certain ORB policies such as dropping replies on shutdown
+  /// would need cleanup of transports to wake threads up.
+  void close_all_transports (void);
 
   /// @name Accessors
   //@{
