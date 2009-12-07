@@ -29,8 +29,6 @@ $server->DeleteFile($iorbase);
 $client1->DeleteFile($iorbase);
 $client2->DeleteFile($iorbase);
 
-my $server_conf = $server->LocalFile ("server$PerlACE::svcconf_ext");
-
 $SV = $server->CreateProcess ("server",
                               "-ORBdebuglevel $debug_level " .
                               "-o $server_iorfile");
