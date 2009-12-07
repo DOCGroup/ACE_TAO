@@ -267,6 +267,21 @@
     </internalEndpoint>
   </connection>
   <connection>
+    <name>_portstatuslistener2</name>
+    <internalEndpoint>
+      <portName>info_get_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>pull_consumer_status</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="PSL_DeadlineTest_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
     <name>_rawlistner</name>
     <internalEndpoint>
       <portName>info_out_data_listener</portName>

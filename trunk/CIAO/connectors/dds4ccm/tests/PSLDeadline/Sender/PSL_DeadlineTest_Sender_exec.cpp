@@ -118,7 +118,7 @@ namespace CIAO_PSL_DeadlineTest_Sender_Impl
    void
   Sender_exec_i::tick ()
   {
-     for (PSL_DLTest_Table::iterator i = this->_ktests_.begin ();
+    for (PSL_DLTest_Table::iterator i = this->_ktests_.begin ();
         i != this->_ktests_.end ();
         ++i)
       {

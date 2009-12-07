@@ -20,7 +20,6 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
 {
   //typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong > Atomic_ULong;
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
-
   
   class Receiver_exec_i;
   
@@ -95,7 +94,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
       public virtual ::CORBA::LocalObject
   {
   public:
-    PortStatusListener_exec_i (Atomic_Boolean &);
+    PortStatusListener_exec_i (Atomic_Boolean &,Atomic_Boolean &, int port_nr);
     virtual ~PortStatusListener_exec_i (void);
 
     virtual void
@@ -108,7 +107,9 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
       ::DDS::DataReader_ptr the_reader,
       const ::DDS::SampleLostStatus & status);
   private:
-    Atomic_Boolean &deadline_;
+    Atomic_Boolean &deadline_port_1_;
+    Atomic_Boolean &deadline_port_2_;
+    int port_nr_;
 
   };
 
@@ -126,6 +127,9 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_out_status (void);
+
+    virtual ::CCM_DDS::CCM_PortStatusListener_ptr
+    get_info_get_status (void);
 
     virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
     get_info_out_connector_status (void);
@@ -147,7 +151,8 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
     ::CCM_DDS::TestTopic::Reader_var reader_;
     read_action_Generator * ticker_;
     CORBA::ULong rate_;
-    Atomic_Boolean deadline_;
+    Atomic_Boolean deadline_port_1_;
+    Atomic_Boolean deadline_port_2_;
 };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
