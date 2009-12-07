@@ -1,3 +1,20 @@
+Mon Dec  7 09:43:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
+
+        * ACE_wrappers/TAO/tao/Thread_Lane_Resources.h:
+        * ACE_wrappers/TAO/tao/Thread_Lane_Resources.cpp:
+        * ACE_wrappers/TAO/tao/Thread_Lane_Resources_Manager.h:
+        * ACE_wrappers/TAO/tao/Default_Thread_Lane_Resources_Manager.cpp:
+        * ACE_wrappers/TAO/tao/Default_Thread_Lane_Resources_Manager.h:
+        * ACE_wrappers/TAO/tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h:
+        * ACE_wrappers/TAO/tao/RTCORBA/RT_Thread_Lane_Resources_Manager.cpp:
+        * ACE_wrappers/TAO/tao/ORB_Core.cpp:
+        
+          Replaced #clear_rw_transports() method by #close_all_transports() method.
+          This fixes Bugzilla #3672.
+          Like before this behaviour is controlled by ORB option 
+          ORBDropRepliesDuringShutdown, which by default is on.
+
+
 Mon Dec  7 07:13:34 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * tao/PortableServer/Upcall_Wrapper.cpp:
