@@ -55,6 +55,7 @@ namespace CIAO_Bar_Impl
     virtual ~Foo_exec_i (void);
     
     // Operations and attributes from ::Foo
+    virtual void simple (void);
   };
   
   class LOCAL_FACET_EXEC_Export Bar_exec_i
@@ -67,6 +68,7 @@ namespace CIAO_Bar_Impl
     
     //@{
     /** Supported operations and attributes. */
+    virtual void run_test (void);
     
     //@}
     

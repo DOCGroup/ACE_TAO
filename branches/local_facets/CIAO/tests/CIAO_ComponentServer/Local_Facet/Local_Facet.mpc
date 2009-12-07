@@ -135,4 +135,12 @@ project(Local_Facet_svnt) : ciao_servant   {
   }
 }
 
-
+project (Lf_CIAOComponentServer_Tst) : ciao_componentserver_stub, ccm_configvalue, ciao_cs_client, ciao_logger {
+   after += Local_Facet_stub Local_Facet_svnt
+   libs += Local_Facet_stub
+   IDL_Files {
+   }
+   Source_Files {
+     client.cpp
+   }
+}
