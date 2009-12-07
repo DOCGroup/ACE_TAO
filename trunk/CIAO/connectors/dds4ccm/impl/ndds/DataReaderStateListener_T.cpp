@@ -64,10 +64,18 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
     {
       typename DDS_TYPE::dds_seq_type data;
       DDS_SampleInfoSeq sample_info;
+      ::DDS_Long max_samples = 0;
+
+      this->control_->mode () == ::CCM_DDS::ONE_BY_ONE
+        ? max_samples = DDS_LENGTH_UNLIMITED
+        : this->max_delivered_data_ == 0
+          ? max_samples = DDS_LENGTH_UNLIMITED
+          : max_samples = this->max_delivered_data_;
+
       ::DDS::ReturnCode_t const result = reader->take (
                   data,
                   sample_info,
-                  DDS_LENGTH_UNLIMITED,
+                  max_samples,
                   DDS_NOT_READ_SAMPLE_STATE,
                   DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
                   DDS_ANY_INSTANCE_STATE);

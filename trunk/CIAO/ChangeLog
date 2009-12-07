@@ -1,3 +1,8 @@
+Mon Dec  7 10:54:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.cpp:
+          Implemented max_delivered_data.
+
 Mon Dec  7 10:30:38 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Reader/Base/Reader_Starter.idl:
