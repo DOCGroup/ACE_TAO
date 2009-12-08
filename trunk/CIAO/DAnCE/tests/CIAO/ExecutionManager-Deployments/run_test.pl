@@ -42,63 +42,61 @@ sub delete_ior_files {
 }
 
 sub kill_node_daemons {
-  for ($i = 0; $i < $daemons; ++$i) {
-    $Daemons[$i]->Kill (); $Daemons[$i]->TimedWait (1);
-  }
+    for ($i = 0; $i < $daemons; ++$i) {
+        $Daemons[$i]->Kill (); $Daemons[$i]->TimedWait (1);
+    }
 }
 
 sub kill_open_processes {
-  if ($daemons_running == 1) {
-    kill_node_daemons ();
-  }
+    if ($daemons_running == 1) {
+        kill_node_daemons ();
+    }
 
-  if ($em_running == 1) {
-    $EM->Kill ();
-    $EM->TimedWait (1);
-  }
+    if ($em_running == 1) {
+        $EM->Kill ();
+        $EM->TimedWait (1);
+    }
 
-  if ($ns_running == 1) {
-    $NS->Kill ();
-    $NS->TimedWait (1);
-  }
-
+    if ($ns_running == 1) {
+        $NS->Kill ();
+        $NS->TimedWait (1);
+    }
 }
 
 sub run_node_daemons {
-  for ($i = 0; $i < $daemons; ++$i)
-  {
-      $iorfile = $iorfiles[$i];
-      $port = $ports[$i];
-      $nodename = $nodenames[$i];
-      $iiop = "iiop://localhost:$port";
-      $node_app = "$CIAO_ROOT/bin/ciao_componentserver";
+    for ($i = 0; $i < $daemons; ++$i) {
+        $iorfile = $iorfiles[$i];
+        $port = $ports[$i];
+        $nodename = $nodenames[$i];
+        $iiop = "iiop://localhost:$port";
+        $node_app = "$CIAO_ROOT/bin/ciao_componentserver";
 
-      $d_cmd = "$DAnCE/bin/dance_node_manager";
-      $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30 --domain-nc corbaloc:rir:/NameService --instance-nc corbaloc:rir:/NameService";
+        $d_cmd = "$DAnCE/bin/dance_node_manager";
+        $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30 --domain-nc corbaloc:rir:/NameService --instance-nc corbaloc:rir:/NameService";
 
-      $Daemons[$i] = new PerlACE::Process ($d_cmd, $d_param);
-      $result = $Daemons[$i]->Spawn ();
-      push(@processes, $Daemons[$i]);
+        $Daemons[$i] = new PerlACE::Process ($d_cmd, $d_param);
+        $result = $Daemons[$i]->Spawn ();
+        push(@processes, $Daemons[$i]);
 
-      if (PerlACE::waitforfile_timed ($iorfile,
-                                      30) == -1) {
-          print STDERR
-            "ERROR: The ior $iorfile file of node daemon $i could not be found\n";
-          for (; $i >= 0; --$i) {
-            $Daemons[$i]->Kill (); $Daemons[$i]->TimedWait (1);
-          }
-          return -1;
-      }
-  }
-  return 0;
+        if (PerlACE::waitforfile_timed ($iorfile,
+                                        30) == -1) {
+            print STDERR
+                "ERROR: The ior $iorfile file of node daemon $i could not be found\n";
+            for (; $i >= 0; --$i) {
+                $Daemons[$i]->Kill (); $Daemons[$i]->TimedWait (1);
+            }
+            return -1;
+        }
+    }
+    return 0;
 }
 
-if ($#ARGV == -1)
-{
+if ($#ARGV == -1) {
     opendir(DIR, ".");
     @files = grep(/\.cdp$/,readdir(DIR));
     closedir(DIR);
-} else {
+} 
+else {
     @files = @ARGV;
 }
 
@@ -111,19 +109,17 @@ foreach $file (@files) {
     $NS = new PerlACE::Process ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 0 -ORBEndpoint iiop://localhost:60003 -o ns.ior");
     $NS->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($nsior, $PerlACE::wait_interval_for_process_creation) == -1)
-    {
+    if (PerlACE::waitforfile_timed ($nsior, $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR "ERROR: cannot find naming service IOR file\n";
         $NS->Kill ();
         exit 1;
     }
     $ns_running = 1;
 
-# Set up NamingService environment
+    # Set up NamingService environment
     $ENV{"NameServiceIOR"} = "corbaloc:iiop:localhost:60003/NameService";
 
-
-# Invoke node daemons.
+    # Invoke node daemons.
     print "Invoking node daemons\n";
     $status = run_node_daemons ();
 
@@ -158,8 +154,7 @@ foreach $file (@files) {
 
     $status = $E->SpawnWaitKill (60);
 
-    if ($status != 0)
-    {
+    if ($status != 0) {
         print "ERROR: simple_em_launcher returned an error code while deploying $file\n";
         $retval = -1;
     }

@@ -1,3 +1,10 @@
+Tue Dec  8 15:11:22 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test.pl:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/run_test.pl:
+        * tests/Bug_3769_Regression/descriptors/run_test.pl:
+          Resolved fuzz errors.
+
 Tue Dec  8 15:01:58 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * examples/BasicSP/descriptors/run_test.pl:
