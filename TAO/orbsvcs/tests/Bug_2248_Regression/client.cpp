@@ -11,6 +11,7 @@
 #include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS.h"
 
 // Files which have the IOR
 const ACE_TCHAR *first_ior = 0;
@@ -19,6 +20,8 @@ const ACE_TCHAR *second_ior = 0;
 const ACE_TCHAR *second_key = 0;
 const ACE_TCHAR *first_iogr_file = 0;
 const ACE_TCHAR *second_iogr_file = 0;
+
+int delay = 15; //seconds
 
 // Objects
 CORBA::Object_var object_primary = 0;
@@ -29,7 +32,7 @@ CORBA::Object_var object_secondary = 0;
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:k:b:l:g:h:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:k:b:l:g:h:t:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -52,6 +55,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 'h':
         second_iogr_file = get_opts.opt_arg ();
+        break;
+      case 't':
+        delay = atoi(get_opts.opt_arg ());
         break;
       case '?':
       default:
@@ -91,6 +97,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (manager.write_to_files ())
         return -1;
 
+      ACE_OS::sleep (delay);
       // Client, who is going to use the merged IOR
       // Construct that with the managers ORB
       Client_i client_imp (manager.orb ());

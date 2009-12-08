@@ -73,20 +73,8 @@ if ($server1->GetFile ($file1_ior) == -1) {
     exit 1;
 }
 
-if ($server1->GetFile ($iogr11_ior) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server1_iogr11_ior>\n";
-    $SV1->Kill (); $SV1->TimedWait (1);
-    exit 1;
-}
-
 if ($client->PutFile ($file1_ior) == -1) {
     print STDERR "ERROR: cannot set file <$client_file1_ior>\n";
-    $SV1->Kill (); $SV1->TimedWait (1);
-    exit 1;
-}
-
-if ($client->PutFile ($iogr11_ior) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iogr11_ior>\n";
     $SV1->Kill (); $SV1->TimedWait (1);
     exit 1;
 }
@@ -124,7 +112,39 @@ if ($client->PutFile ($file2_ior) == -1) {
 }
 
 print STDERR "Starting Client\n";
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 15);
+$client_status = $CL->Spawn ();
+
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
+    $status = 1;
+}
+
+if ($client->WaitForFileTimed ($iogr11_ior,
+                               $client->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$client_iogr11_ior>\n";
+    $SV2->Kill (); $SV2->TimedWait (1);
+    $SV1->Kill (); $SV1->TimedWait (1);
+    $CL->Kill (); $CL->TimedWait (1);
+    exit 1;
+}
+
+if ($client->GetFile ($iogr11_ior) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$client_iogr11_ior>\n";
+    $SV2->Kill (); $SV2->TimedWait (1);
+    $SV1->Kill (); $SV1->TimedWait (1);
+    $CL->Kill (); $CL->TimedWait (1);
+    exit 1;
+}
+
+if ($server1->PutFile ($iogr11_ior) == -1) {
+    print STDERR "ERROR: cannot set file <$server1_iogr11_ior>\n";
+    $SV2->Kill (); $SV2->TimedWait (1);
+    $SV1->Kill (); $SV1->TimedWait (1);
+    $CL->Kill (); $CL->TimedWait (1);
+    exit 1;
+}
+
+$client_status = $CL->WaitKill ($client->ProcessStopWaitInterval() + 15);
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
@@ -145,8 +165,12 @@ if ($server_status != 0) {
     $status = 1;
 }
 
-if ($status != 0) {
-    ++$status;
-}
+$server1->DeleteFile ($file1_ior);
+$server1->DeleteFile ($iogr11_ior);
+$server2->DeleteFile ($file2_ior);
+$client->DeleteFile ($file1_ior);
+$client->DeleteFile ($file2_ior);
+$client->DeleteFile ($iogr10_ior);
+$client->DeleteFile ($iogr11_ior);
 
 exit $status
