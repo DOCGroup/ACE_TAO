@@ -51,12 +51,7 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::create_i (
   ::CCM_DDS::DataNumber_t index)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::create_i");
-  DDS_InstanceHandle_t hnd = this->impl_->lookup_instance (an_instance);
-  if (!DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
-    {
-      throw CCM_DDS::AlreadyCreated (index);
-    }
-  hnd = this->impl_->register_instance (an_instance);
+  DDS_InstanceHandle_t const hnd = this->impl_->register_instance (an_instance);
   if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
     {
       ACE_ERROR ((LM_ERROR,
@@ -81,6 +76,12 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::create_one (
   const typename DDS_TYPE::value_type & an_instance)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::create_one");
+  DDS_InstanceHandle_t const hnd = this->impl_->lookup_instance (an_instance);
+  if (!DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
+    {
+      throw CCM_DDS::AlreadyCreated (0);
+    }
+
   this->create_i (an_instance, 0);
 }
 
@@ -94,10 +95,6 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::update_i (
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::update_i");
   DDS_InstanceHandle_t hnd = ::DDS_HANDLE_NIL;
   hnd <<= instance_handle;
-  if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
-    {
-      hnd = this->impl_->lookup_instance (an_instance);
-    }
   ::DDS_ReturnCode_t const result  = this->impl_->write (an_instance, hnd);
   if (result != DDS_RETCODE_OK)
     {
@@ -116,6 +113,16 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::update_one (
   const ::DDS::InstanceHandle_t & instance_handle)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::update_one");
+  DDS_InstanceHandle_t hnd = ::DDS_HANDLE_NIL;
+  hnd <<= instance_handle;
+  if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
+    {
+      hnd = this->impl_->lookup_instance (an_instance);
+    }
+  if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
+    {
+      throw CCM_DDS::NonExistent (0);
+    }
   this->update_i (an_instance, instance_handle, 0);
 }
 
@@ -129,12 +136,7 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::delete_i (
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::delete_i");
   DDS_InstanceHandle_t hnd = ::DDS_HANDLE_NIL;
   hnd <<= instance_handle;
-  if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
-    {
-      hnd = this->impl_->lookup_instance (an_instance);
-    }
-  ::DDS_ReturnCode_t result =
-    this->impl_->dispose (an_instance, hnd);
+  ::DDS_ReturnCode_t result = this->impl_->dispose (an_instance, hnd);
   if (result != DDS_RETCODE_OK)
     {
       ACE_ERROR ((LM_ERROR,
@@ -162,6 +164,16 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::delete_one (
   const ::DDS::InstanceHandle_t & instance_handle)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::delete_one");
+  DDS_InstanceHandle_t hnd = ::DDS_HANDLE_NIL;
+  hnd <<= instance_handle;
+  if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
+    {
+      hnd = this->impl_->lookup_instance (an_instance);
+    }
+  if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
+    {
+      throw CCM_DDS::NonExistent (0);
+    }
   this->delete_i (an_instance, instance_handle, 0);
 }
 
@@ -171,7 +183,12 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::create_many (
   const typename CCM_TYPE::seq_type& data)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::create_many");
-  Coherent_Changes_Guard guard (this->impl_->get_publisher(), this->is_coherent_write_);
+
+  // Check for existance of instances
+  this->check_existence (data, true);
+
+  Coherent_Changes_Guard guard (this->impl_->get_publisher(),
+                                this->is_coherent_write_);
 
   for (typename CCM_TYPE::seq_type::size_type index = 0; index < data.length (); index++)
     {
@@ -181,10 +198,53 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::create_many (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
+CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::check_existence (
+  const typename CCM_TYPE::seq_type& data,
+  bool existent)
+{
+  ::CCM_DDS::NonExistent exception;
+  for (typename CCM_TYPE::seq_type::size_type index = 0; index < data.length (); index++)
+    {
+      DDS_InstanceHandle_t const hnd = this->impl_->lookup_instance (data[index]);
+      bool failed = false;
+      if (existent)
+        {
+          if (::DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
+            {
+              failed = true;
+            }
+        }
+      else
+        {
+          if (!::DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
+            {
+              failed = true;
+            }
+        }
+      if (failed)
+        {
+          CORBA::ULong length = exception.indexes.length ();
+          exception.indexes.length (length + 1);
+          exception.indexes[length] = index;
+        }
+    }
+
+  if (exception.indexes.length () > 0)
+    {
+      throw exception;
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
 CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::update_many (
   const typename CCM_TYPE::seq_type& data)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::update_many");
+
+  // Check for existance of instances
+  this->check_existence (data, true);
+
   Coherent_Changes_Guard guard (this->impl_->get_publisher(), this->is_coherent_write_);
 
   for (typename CCM_TYPE::seq_type::size_type index = 0; index < data.length (); index++)
@@ -199,6 +259,10 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::delete_many (
   const typename CCM_TYPE::seq_type& data)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::delete_many");
+
+  // Check for existance of instances
+  this->check_existence (data, true);
+
   Coherent_Changes_Guard guard (this->impl_->get_publisher(), this->is_coherent_write_);
 
   for (typename CCM_TYPE::seq_type::size_type index = 0; index < data.length (); index++)
