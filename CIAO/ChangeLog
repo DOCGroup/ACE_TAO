@@ -1,3 +1,13 @@
+Tue Dec  8 08:17:57 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/PSLSampleLost/Connector/PSL_SampleLost_Connector.mpc:
+        * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver.mpc:
+        * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/PSLSampleLost/Sender/PSL_SampleLost_Sender.mpc:
+        * connectors/dds4ccm/tests/PSLSampleLost/Sender/PSL_SampleLost_Sender_exec.cpp:
+          Solved errors duplicate projectnames
+
+
 Tue Dec  8 07:21:52 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
