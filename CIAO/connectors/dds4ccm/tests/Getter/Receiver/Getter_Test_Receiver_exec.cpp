@@ -166,10 +166,13 @@ namespace CIAO_Getter_Test_Receiver_Impl
   void
   Receiver_exec_i::get_many (CORBA::Short keys , CORBA::Long iterations)
   {
+    CORBA::ULong expected = keys * iterations;
+    //ACE_OS::sleep (5);
     DDS::Duration_t to;
     to.sec = 10;
     to.nanosec = 0;
     this->getter_->time_out (to);
+    this->getter_->max_delivered_data (40);
     CIAO_DEBUG ((LM_DEBUG, CLINFO ACE_TEXT ("Receiver_exec_i::get_many: ")
                               ACE_TEXT ("Start getting data from DDS: ")
                               ACE_TEXT ("#keys <%d> - #iterations <%d> with timeout: ")
@@ -183,13 +186,13 @@ namespace CIAO_Getter_Test_Receiver_Impl
     bool result = this->getter_->get_many (gettertest_seq, readinfo);
     if (result)
       {
-        if (gettertest_seq->length () != (keys * iterations))
+        if (gettertest_seq->length () != expected)
           {
             CIAO_ERROR ((LM_ERROR, CLINFO ACE_TEXT ("Receiver_exec_i::get_many: ")
                                   ACE_TEXT ("Returned data : Didn't receive correct ") 
                                   ACE_TEXT ("number of samples: ")
                                   ACE_TEXT ("expected <%d> - received <%d>\n"),
-                                  keys * iterations,
+                                  expected,
                                   gettertest_seq->length ()));
           }
         for (CORBA::ULong i = 0; i < gettertest_seq->length (); ++i)
@@ -205,7 +208,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
         CIAO_ERROR ((LM_ERROR, CLINFO ACE_TEXT ("ERROR: GET MANY: ")
                               ACE_TEXT ("Time out while waiting for ")
                               ACE_TEXT ("#iterations <%d>\n"),
-                              iterations));
+                              expected));
       }
   }
 

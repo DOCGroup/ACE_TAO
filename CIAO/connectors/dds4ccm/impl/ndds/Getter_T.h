@@ -45,15 +45,16 @@ namespace CIAO
         virtual ::CCM_DDS::DataNumber_t max_delivered_data (void);
         virtual void max_delivered_data (::CCM_DDS::DataNumber_t max_delivered_data);
       private:
-        bool wait (DDSConditionSeq& active_conditions);
-
         typename DDS_TYPE::data_reader *impl_;
         DDSQueryCondition* condition_;
         ::DDS::Duration_t time_out_;
         ::CCM_DDS::DataNumber_t max_delivered_data_;
         DDSGuardCondition*  gd_;
-        DDSWaitSet* ws_;
-        DDSReadCondition* rd_condition_;
+        DDSReadCondition*   rd_condition_;
+
+        bool wait (DDSWaitSet* ws,
+                   DDSConditionSeq& active_conditions);
+        void configure_waitset (DDSWaitSet* ws);
       };
     }
   }
