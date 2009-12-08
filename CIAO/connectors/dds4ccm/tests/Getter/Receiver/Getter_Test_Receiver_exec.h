@@ -14,6 +14,7 @@
 
 #include "tao/LocalObject.h"
 #include "ace/Reactor.h"
+#include "ace/Task.h"
 
 #include <map>
 
@@ -63,6 +64,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
     virtual ~GetterHandler ();
 
     virtual int handle_exception (ACE_HANDLE fc = ACE_INVALID_HANDLE);
+
   private:
     Receiver_exec_i &callback_;
     const char * key_;
