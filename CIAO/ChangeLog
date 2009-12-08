@@ -1,3 +1,11 @@
+Tue Dec  8 15:20:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_StateListen_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_StateListen_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_Update_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Update_T.h
+          Cache dds executors
+
 Tue Dec  8 15:17:44 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.cpp:
