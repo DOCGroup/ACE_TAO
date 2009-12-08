@@ -100,6 +100,41 @@ namespace CIAO_Getter_Test_Sender_Impl
   {
     this->invoker_->get_no_data ();
   }
+  
+  void
+  Sender_exec_i::get_many (void)
+  {
+    GetterTest_Seq write_many;
+    write_many.length (this->keys_ * this->iterations_);
+    for (CORBA::UShort key = 1; key < this->keys_ + 1; ++key)
+      {
+        GetterTest new_key;
+        char tmp[7];
+        ACE_OS::sprintf (tmp, "KEY_%d", key);
+        new_key.key = CORBA::string_dup(tmp);
+        for (CORBA::UShort iter = 1; iter < this->iterations_ + 1; ++iter)
+          {
+            new_key.iteration = iter;
+            write_many[key + iter - 2] = new_key;
+          }
+      }
+    try
+      {
+        this->invoker_->start_get_many (this->keys_, this->iterations_);
+        ACE_Time_Value tv (1, 0);
+        ACE_OS::sleep (tv);
+        this->writer_->write_many (write_many);
+        CIAO_DEBUG ((LM_ERROR, ACE_TEXT ("write_many : written <%u> samples\n"),
+              write_many.length ()));
+      }
+    catch (CCM_DDS::InternalError& ex)
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
+                    ACE_TEXT ("while write many writer info: index <%d> - retval <%d>\n"),
+                      ex.index, ex.error_code));
+      }
+  }
+
 
   void
   Sender_exec_i::start (void)
@@ -112,8 +147,8 @@ namespace CIAO_Getter_Test_Sender_Impl
         if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
                     this->ticker_,
                     0,
-                    ACE_Time_Value (1, 0),
-                    ACE_Time_Value (1, 0)) == -1)
+                    ACE_Time_Value (0, 500000),
+                    ACE_Time_Value (0, 500000)) == -1)
           {
             CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
                                   ACE_TEXT ("Error scheduling timer")));
@@ -124,21 +159,26 @@ namespace CIAO_Getter_Test_Sender_Impl
   void
   Sender_exec_i::tick (void)
   {
-    if (this->last_iter_ < this->iterations_)
+    if (this->last_iter_ <= this->iterations_)
       {
         GetterTest *new_key = new GetterTest;
         new_key->key = CORBA::string_dup("KEY_1");
-        this->invoker_->start_getting_data (
+        this->invoker_->start_get_one (
                         CORBA::string_dup("KEY_1"),
                         last_iter_);
         new_key->iteration = last_iter_;
-        ACE_Time_Value tv (0, 500000);
+        ACE_Time_Value tv (0, 50000);
         ACE_OS::sleep (tv);
         this->writer_->write_one (*new_key, ::DDS::HANDLE_NIL);
         CIAO_DEBUG ((LM_DEBUG, CLINFO ACE_TEXT ("Written key <%C> with <%d>\n"),
                     new_key->key.in (), last_iter_));
         ++last_iter_;
      }
+   else 
+    {
+      get_many ();
+      this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
+    }
   }
 
   ::CORBA::UShort

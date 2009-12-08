@@ -11,7 +11,8 @@
 interface GetInvoker
 {
   void get_no_data ();
-  void start_getting_data (in string key, in long iteration);
+  void start_get_one (in string key, in long iteration);
+  void start_get_many (in short keys, in long iterations);
 };
 
 #endif /* SAMPLE_INFO_IDL */
