@@ -1,3 +1,11 @@
+Tue Dec  8 14:56:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Listen_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_StateListen_T.h:
+          Provide access to the DDS entities
+
 Tue Dec  8 12:51:33 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Getter_T.h:

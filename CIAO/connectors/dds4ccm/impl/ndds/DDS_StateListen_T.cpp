@@ -1,10 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-#include "dds4ccm/impl/ndds/DataReaderListener_T.h"
-#include "dds4ccm/impl/ndds/DataWriterListener_T.h"
-#include "dds4ccm/impl/ndds/Writer_T.h"
-#include "dds4ccm/impl/ndds/Getter_T.h"
+#include "dds4ccm/impl/ndds/DataReaderStateListener_T.h"
 #include "dds4ccm/impl/ndds/Reader_T.h"
 #include "dds4ccm/impl/ndds/StateListenerControl_T.h"
 #include "dds4ccm/impl/ndds/PortStatusListener_T.h"
@@ -50,23 +47,25 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE>::init (
         {
           if (library_name && profile_name)
             {
-              this->data_reader_ =
+              ::DDS::DataReader_var reader =
                   subscriber->create_datareader_with_profile (
                     topic,
                     library_name,
                     profile_name,
                     this->data_listener_.in (),
-                    ::CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+                    ::CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+              this->data_reader_ = ::DDS::CCM_DataReader::_narrow (reader);
             }
           else
             {
               ::DDS::DataReaderQos drqos;
-              this->data_reader_ =
+              ::DDS::DataReader_var reader =
                   subscriber->create_datareader (
                     topic,
                     drqos,
                     this->data_listener_.in (),
-                    ::CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+                    ::CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+              this->data_reader_ = ::DDS::CCM_DataReader::_narrow (reader);
             }
         }
     }
@@ -92,7 +91,8 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_StateListen_T<DDS_TYPE, CCM_TYPE>::get_dds_entity (void)
 {
   CIAO_TRACE ("DDS_StateListen_T<DDS_TYPE, CCM_TYPE>::get_dds_entity");
-  return ::DDS::CCM_DataReader::_nil ();
+
+  return this->data_reader_.in ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
