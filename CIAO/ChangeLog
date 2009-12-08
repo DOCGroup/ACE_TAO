@@ -1,3 +1,8 @@
+Tue Dec  8 15:17:44 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.cpp:
+          Resolved compiler warnings.
+
 Tue Dec  8 15:11:22 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test.pl:
