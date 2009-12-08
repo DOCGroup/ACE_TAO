@@ -106,6 +106,7 @@ namespace CIAO_Getter_Test_Sender_Impl
 
 
     void start_get_no_data (void);
+    void get_many (void);
 
     pulse_Generator * ticker_;
   };

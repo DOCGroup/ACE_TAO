@@ -1,3 +1,15 @@
+Tue Dec  8 10:48:04 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added Getter test to the test framework.
+
+        * connectors/dds4ccm/tests/Getter/Base/Get_Invoker.idl:
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:
+          Implemented get_many.
+
 Tue Dec  8 09:05:57 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/PSLSampleLost/descriptors/run_test.pl:

@@ -9,6 +9,9 @@
 
 namespace CIAO_Getter_Test_Receiver_Impl
 {
+  //============================================================
+  // ConnectorStatusListener_exec_i
+  //============================================================
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Receiver_exec_i &callback)
     : callback_ (callback),
       has_run_ (false)
@@ -56,6 +59,9 @@ namespace CIAO_Getter_Test_Receiver_Impl
   {
   }
 
+  //============================================================
+  // Invoker_exec_i
+  //============================================================
   Invoker_exec_i::Invoker_exec_i (Receiver_exec_i & callback)
     : callback_ (callback)
   {
@@ -65,19 +71,11 @@ namespace CIAO_Getter_Test_Receiver_Impl
   {
   }
 
-  void
-  Invoker_exec_i::set_getter_properties (CORBA::UShort nr_keys,
-                                         CORBA::UShort nr_iterations)
-  {
-    this->callback_.keys (nr_keys);
-    this->callback_.iterations (nr_iterations);
-  }
-
   void 
-  Invoker_exec_i::start_getting_data (const char * key,
+  Invoker_exec_i::start_get_one (const char * key,
                                      CORBA::Long iteration)
   {
-    this->callback_.start_getting_data (key, iteration);
+    this->callback_.start_get_one (key, iteration);
   }
 
   void
@@ -86,8 +84,16 @@ namespace CIAO_Getter_Test_Receiver_Impl
     this->callback_.get_no_data ();
   }
 
+  void
+  Invoker_exec_i::start_get_many (::CORBA::Short keys, ::CORBA::Long iterations)
+  {
+    this->callback_.start_get_many (keys, iterations);
+  }
 
-  GetterHandler::GetterHandler (Receiver_exec_i &callback,
+  //============================================================
+  // GetOneHandler
+  //============================================================
+  GetOneHandler::GetOneHandler (Receiver_exec_i &callback,
                                 const char * key,
                                 CORBA::Long iteration)
     : callback_ (callback),
@@ -96,20 +102,44 @@ namespace CIAO_Getter_Test_Receiver_Impl
   {
   }
 
-  GetterHandler::~GetterHandler ()
+  GetOneHandler::~GetOneHandler ()
   {
   }
 
   int
-  GetterHandler::handle_exception (ACE_HANDLE)
+  GetOneHandler::handle_exception (ACE_HANDLE)
   {
-    this->callback_.get_data (this->key_, this->iteration_);
+    this->callback_.get_one (this->key_, this->iteration_);
     return 0;
   }
 
+  //============================================================
+  // GetManyHandler
+  //============================================================
+  GetManyHandler::GetManyHandler (Receiver_exec_i &callback,
+                                  CORBA::UShort keys,
+                                  CORBA::Long iterations)
+    : callback_ (callback),
+      keys_ (keys),
+      iterations_ (iterations)
+  {
+  }
+
+  GetManyHandler::~GetManyHandler ()
+  {
+  }
+
+  int
+  GetManyHandler::handle_exception (ACE_HANDLE)
+  {
+    this->callback_.get_many (this->keys_, this->iterations_);
+    return 0;
+  }
+
+  //============================================================
+  // Receiver_exec_i
+  //============================================================
   Receiver_exec_i::Receiver_exec_i (void)
-    : iterations_ (10),
-      keys_ (5)
   {
   }
 
@@ -118,21 +148,75 @@ namespace CIAO_Getter_Test_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::start_getting_data (const char * key,
+  Receiver_exec_i::start_get_one (const char * key,
                                           CORBA::Long iteration)
   {
-    GetterHandler* rh = new  GetterHandler (*this, CORBA::string_dup (key), iteration);
+    GetOneHandler* rh = new  GetOneHandler (*this, CORBA::string_dup (key), iteration);
     this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (rh);
   }
 
+  void
+  Receiver_exec_i::start_get_many (CORBA::Short keys,
+                         CORBA::Long iterations)
+  {
+    GetManyHandler* rh = new  GetManyHandler (*this, keys, iterations);
+    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (rh);
+  }
+
+  void
+  Receiver_exec_i::get_many (CORBA::Short keys , CORBA::Long iterations)
+  {
+    DDS::Duration_t to;
+    to.sec = 10;
+    to.nanosec = 0;
+    this->getter_->time_out (to);
+    CIAO_DEBUG ((LM_DEBUG, CLINFO ACE_TEXT ("Receiver_exec_i::get_many: ")
+                              ACE_TEXT ("Start getting data from DDS: ")
+                              ACE_TEXT ("#keys <%d> - #iterations <%d> with timeout: ")
+                              ACE_TEXT ("sec <%d> - nanosec <%u>\n"),
+                              keys, iterations,
+                              this->getter_->time_out ().sec,
+                              this->getter_->time_out ().nanosec));
+
+    GetterTest_Seq *gettertest_seq;
+    ::CCM_DDS::ReadInfoSeq *readinfo;
+    bool result = this->getter_->get_many (gettertest_seq, readinfo);
+    if (result)
+      {
+        if (gettertest_seq->length () != (keys * iterations))
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO ACE_TEXT ("Receiver_exec_i::get_many: ")
+                                  ACE_TEXT ("Returned data : Didn't receive correct ") 
+                                  ACE_TEXT ("number of samples: ")
+                                  ACE_TEXT ("expected <%d> - received <%d>\n"),
+                                  keys * iterations,
+                                  gettertest_seq->length ()));
+          }
+        for (CORBA::ULong i = 0; i < gettertest_seq->length (); ++i)
+          {
+            CIAO_DEBUG ((LM_DEBUG, CLINFO ACE_TEXT ("Receiver_exec_i::get_many: ")
+                              ACE_TEXT ("Returned data : key <%C> - iteration <%d>\n"),
+                              (*gettertest_seq)[i].key.in (),
+                              (*gettertest_seq)[i].iteration));
+          }
+      }
+    else
+      {
+        CIAO_ERROR ((LM_ERROR, CLINFO ACE_TEXT ("ERROR: GET MANY: ")
+                              ACE_TEXT ("Time out while waiting for ")
+                              ACE_TEXT ("#iterations <%d>\n"),
+                              iterations));
+      }
+  }
+
   void 
-  Receiver_exec_i::get_data (const char * key, CORBA::Long iteration)
+  Receiver_exec_i::get_one (const char * key, CORBA::Long iteration)
   {
     DDS::Duration_t to;
     to.sec = 5;
     to.nanosec = 0;
     this->getter_->time_out (to);
-    CIAO_DEBUG ((LM_DEBUG, CLINFO ACE_TEXT ("Receiver_exec_i::get_data: ")
+    CIAO_DEBUG ((LM_DEBUG, CLINFO ACE_TEXT ("Receiver_exec_i::get_one: ")
                               ACE_TEXT ("Start getting data from DDS: ")
                               ACE_TEXT ("key <%C> - iteration <%d> ")
                               ACE_TEXT (" with timeout: ")
@@ -147,7 +231,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
       {
         if (ACE_OS::strcmp (gettertest_info->key, key) != 0)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO ACE_TEXT ("ERROR: GET DATA: ")
+            CIAO_ERROR ((LM_ERROR, CLINFO ACE_TEXT ("ERROR: GET ONE: ")
                                   ACE_TEXT ("Expected key does ")
                                   ACE_TEXT ("not match received key: ")
                                   ACE_TEXT ("expected <%C> - received <%C>\n"),
@@ -156,21 +240,21 @@ namespace CIAO_Getter_Test_Receiver_Impl
           }
         if (gettertest_info->iteration != iteration)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO ACE_TEXT ("ERROR: GET DATA: ")
+            CIAO_ERROR ((LM_ERROR, CLINFO ACE_TEXT ("ERROR: GET ONE: ")
                                   ACE_TEXT ("Expected iteration does ")
                                   ACE_TEXT ("not match received iteration: ")
                                   ACE_TEXT ("expected <%d> - received <%d>\n"),
                                   iteration,
                                   gettertest_info->iteration));
           }
-        CIAO_DEBUG ((LM_DEBUG, CLINFO ACE_TEXT ("Receiver_exec_i::get_data: ")
+        CIAO_DEBUG ((LM_DEBUG, CLINFO ACE_TEXT ("Receiver_exec_i::get_one: ")
                               ACE_TEXT ("Returned data : key <%C> - iteration <%d>\n"),
                               gettertest_info->key.in (),
                               gettertest_info->iteration));
       }
     else
       {
-        CIAO_ERROR ((LM_ERROR, CLINFO ACE_TEXT ("ERROR: GET DATA: ")
+        CIAO_ERROR ((LM_ERROR, CLINFO ACE_TEXT ("ERROR: GET ONE: ")
                               ACE_TEXT ("Time out while waiting for ")
                               ACE_TEXT ("key <%C> - iteration <%d>\n"),
                               key,
@@ -209,7 +293,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
     catch(CCM_DDS::InternalError& ex)
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: GET NO DATA: ")
-                               ACE_TEXT ("Caught excepted InternalError ")
+                               ACE_TEXT ("Caught unexcepted InternalError ")
                                ACE_TEXT ("exception\n")));
       }
     catch (const CORBA::Exception& ex)
@@ -218,30 +302,6 @@ namespace CIAO_Getter_Test_Receiver_Impl
         CIAO_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: Receiver_exec_i::get_no_data : Exception caught\n")));
       }
-  }
-
-  ::CORBA::UShort
-  Receiver_exec_i::iterations (void)
-  {
-    return this->iterations_;
-  }
-
-  void
-  Receiver_exec_i::iterations (::CORBA::UShort iterations)
-  {
-    this->iterations_ = iterations;
-  }
-
-  ::CORBA::UShort
-  Receiver_exec_i::keys (void)
-  {
-    return this->keys_;
-  }
-
-  void
-  Receiver_exec_i::keys (::CORBA::UShort keys)
-  {
-    this->keys_ = keys;
   }
 
   // Port operations.
