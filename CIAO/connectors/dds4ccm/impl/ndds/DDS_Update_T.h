@@ -30,8 +30,9 @@ private:
    * DDS_Update
    */
   //@{
-  ::DDS::CCM_DataWriter_var data_;
+  ::DDS::CCM_DataWriter_var data_writer_;
   ::DDS::DataWriterListener_var data_listener_;
+  typename CCM_TYPE::updater_type::_var_type dds_update_;
   //@}
 };
 
