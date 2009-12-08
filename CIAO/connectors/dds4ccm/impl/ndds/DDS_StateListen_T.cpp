@@ -6,7 +6,7 @@
 #include "dds4ccm/impl/ndds/Writer_T.h"
 #include "dds4ccm/impl/ndds/Getter_T.h"
 #include "dds4ccm/impl/ndds/Reader_T.h"
-#include "dds4ccm/impl/ndds/DataListenerControl_T.h"
+#include "dds4ccm/impl/ndds/StateListenerControl_T.h"
 #include "dds4ccm/impl/ndds/PortStatusListener_T.h"
 
 #include "ciao/Logger/Log_Macros.h"
