@@ -1,3 +1,13 @@
+Tue Dec  8 08:56:42 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+          RETCODE_NO_DATA should throw an exception since
+          there always must be data after when the timeout does
+          not occur.
+
+        * connectors/dds4ccm/tests/Getter/descriptors/Plan.cdp:
+          Removed qos_profile config property.
+
 Tue Dec  8 08:47:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.h:
