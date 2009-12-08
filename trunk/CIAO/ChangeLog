@@ -1,3 +1,8 @@
+Tue Dec  8 16:31:33 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/Hello/descriptors/run_test.pl:
+          Adapted to the new test framework.
+
 Tue Dec  8 15:54:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Updater_T.cpp:
