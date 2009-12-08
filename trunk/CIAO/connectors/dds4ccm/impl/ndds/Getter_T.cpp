@@ -119,18 +119,6 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_many (
                                     DDS_ANY_VIEW_STATE,
                                     DDS_ANY_INSTANCE_STATE);
 
-          if (retcode == DDS_RETCODE_NO_DATA)
-            {
-              throw CCM_DDS::InternalError (retcode, 1);
-            }
-          else if (retcode != DDS_RETCODE_OK)
-            {
-              CIAO_ERROR ((LM_ERROR, CLINFO
-                    "CIAO::DDS4CCM::RTI::Getter_T::Getter_T - "
-                    "Unable to return the loan to DDS: <%C>\n",
-                    translate_retcode (retcode)));
-              break;
-            }
           if (retcode == DDS_RETCODE_OK && data.length () >= 1)
             {
               ::CORBA::ULong number_read = 0;
@@ -154,9 +142,14 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_many (
                     }
                 }
             }
-          else
+          else if (retcode != DDS_RETCODE_NO_DATA)
             {
-              throw CCM_DDS::InternalError (retcode, 0);
+              CIAO_ERROR ((LM_ERROR, CLINFO
+                    "CIAO::DDS4CCM::RTI::Getter_T::Getter_T - "
+                    "Error while reading from DDS: <%C>\n",
+                    translate_retcode (retcode)));
+              this->impl_->return_loan(data,sample_info);
+              throw CCM_DDS::InternalError (retcode, 1);
             }
 
           retcode = this->impl_->return_loan(data,sample_info);

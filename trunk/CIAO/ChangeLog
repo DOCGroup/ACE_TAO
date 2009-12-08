@@ -1,3 +1,11 @@
+Tue Dec  8 07:21:52 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+          Minor changes in order to meet the spec.
+
+        * connectors/dds4ccm/tests/Getter/*:
+          Added test for the getter.
+
 Mon Dec  7 15:37:57 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * bin/ciao_tests.lst
