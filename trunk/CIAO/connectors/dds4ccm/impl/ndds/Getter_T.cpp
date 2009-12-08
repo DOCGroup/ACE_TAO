@@ -34,23 +34,10 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::Getter_T (
     }
 
   // Now create the waitset conditions
-  ws_ = new DDSWaitSet ();
   gd_ = new DDSGuardCondition ();
   rd_condition_ = this->impl_->create_readcondition (DDS_NOT_READ_SAMPLE_STATE,
                                                      DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
                                                      DDS_ALIVE_INSTANCE_STATE | DDS_NOT_ALIVE_INSTANCE_STATE);
-  DDS_ReturnCode_t retcode = ws_->attach_condition (gd_);
-  if (retcode != DDS_RETCODE_OK)
-    {
-      CIAO_ERROR ((LM_ERROR, CLINFO "GETTER: Unable to attach guard condition to waitset.\n"));
-      throw CCM_DDS::InternalError (retcode, 0);
-    }
-  retcode = ws_->attach_condition (rd_condition_);
-  if (retcode != DDS_RETCODE_OK)
-    {
-      CIAO_ERROR ((LM_ERROR, CLINFO "GETTER: Unable to attach read condition to waitset.\n"));
-      throw CCM_DDS::InternalError (retcode, 1);
-    }
 }
 
 // Implementation skeleton destructor
@@ -58,24 +45,42 @@ template <typename DDS_TYPE, typename CCM_TYPE >
 CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::~Getter_T (void)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Getter_T::~Getter_T");
-  delete ws_;
   delete gd_;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE >
 bool
 CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::wait (
+          DDSWaitSet* ws,
           DDSConditionSeq& active_conditions)
 {
   DDS_Duration_t timeout;
   timeout <<= this->time_out_;
-  DDS_ReturnCode_t const retcode = ws_->wait (active_conditions, timeout);
+  DDS_ReturnCode_t const retcode = ws->wait (active_conditions, timeout);
   if (retcode == DDS_RETCODE_TIMEOUT)
     {
       CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Getter: No data available after timeout.\n")));
       return false;
     }
   return true;
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE >
+void
+CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::configure_waitset (DDSWaitSet* ws)
+{
+  DDS_ReturnCode_t retcode = ws->attach_condition (gd_);
+  if (retcode != DDS_RETCODE_OK)
+    {
+      CIAO_ERROR ((LM_ERROR, CLINFO "GETTER: Unable to attach guard condition to waitset.\n"));
+      throw CCM_DDS::InternalError (retcode, 0);
+    }
+  retcode = ws->attach_condition (rd_condition_);
+  if (retcode != DDS_RETCODE_OK)
+    {
+      CIAO_ERROR ((LM_ERROR, CLINFO "GETTER: Unable to attach read condition to waitset.\n"));
+      throw CCM_DDS::InternalError (retcode, 1);
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE >
@@ -87,9 +92,17 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_many (
   instances = new typename CCM_TYPE::seq_type;
   infos = new ::CCM_DDS::ReadInfoSeq;
 
+//  DDS_WaitSetProperty_t wsp;
+//  wsp.max_event_count = this->max_delivered_data_;
+  DDSWaitSet* ws = new DDSWaitSet ();
+  configure_waitset (ws);
+
   DDSConditionSeq active_conditions;
-  if (!this->wait (active_conditions))
-    return false;
+  if (!this->wait (ws, active_conditions))
+    {
+      delete ws;
+      return false;
+    }
 
   ::DDS_Long max_samples = this->max_delivered_data_;
   if (max_samples == 0)
@@ -129,6 +142,10 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_many (
                       ++number_read;
                     }
                 }
+              CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Getter_T::get_many: ")
+                                ACE_TEXT ("read <%d> - valid <%d>\n"),
+                                sample_info.length (),
+                                number_read));
               infos->length (number_read);
               instances->length (number_read);
               number_read = 0;
@@ -152,6 +169,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_many (
                     "Error while reading from DDS: <%C>\n",
                     translate_retcode (retcode)));
               this->impl_->return_loan(data,sample_info);
+              delete ws;
               throw CCM_DDS::InternalError (retcode, 1);
             }
 
@@ -163,6 +181,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_many (
             }
         }
     }
+  delete ws;
   return true;
 }
 
@@ -174,8 +193,11 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
 {
   an_instance = new typename DDS_TYPE::value_type;
 
+  DDSWaitSet* ws = new DDSWaitSet ();
+  configure_waitset (ws);
+
   DDSConditionSeq active_conditions;
-  if (!this->wait (active_conditions))
+  if (!this->wait (ws, active_conditions))
     return false;
 
   DDS_SampleInfoSeq sample_info;
@@ -215,6 +237,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
                     "Error while reading from DDS: <%C>\n",
                     translate_retcode (retcode)));
               this->impl_->return_loan(data,sample_info);
+              delete ws;
               throw CCM_DDS::InternalError (retcode, 1);
             }
 
@@ -227,6 +250,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
             }
         }
     }
+  delete ws;
   return true;
 }
 
