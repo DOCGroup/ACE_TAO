@@ -84,8 +84,7 @@ sub run_node_daemons {
         print "Run dance_node_manager with $d_param\n";
 
         $Daemons[$i] = new PerlACE::Process ($d_cmd, $d_param);
-        $result = $Daemons[$i]->Spawn ();
-        push(@processes, $Daemons[$i]);
+        $Daemons[$i]->Spawn ();
 
         if (PerlACE::waitforfile_timed ($iorfile,
                                         30) == -1) {

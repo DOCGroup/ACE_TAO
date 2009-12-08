@@ -73,8 +73,7 @@ sub run_node_daemons {
         $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30 --domain-nc corbaloc:rir:/NameService --instance-nc corbaloc:rir:/NameService";
 
         $Daemons[$i] = new PerlACE::Process ($d_cmd, $d_param);
-        $result = $Daemons[$i]->Spawn ();
-        push(@processes, $Daemons[$i]);
+        $Daemons[$i]->Spawn ();
 
         if (PerlACE::waitforfile_timed ($iorfile,
                                         30) == -1) {
