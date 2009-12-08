@@ -129,7 +129,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
   Receiver_exec_i::get_data (const char * key, CORBA::Long iteration)
   {
     DDS::Duration_t to;
-    to.sec = 10;
+    to.sec = 5;
     to.nanosec = 0;
     this->getter_->time_out (to);
     CIAO_DEBUG ((LM_DEBUG, CLINFO ACE_TEXT ("Receiver_exec_i::get_data: ")
