@@ -38,10 +38,13 @@ RTI Data Distribution Service user manual.
         <durability>
           <kind>TRANSIENT_DURABILITY_QOS</kind>
         </durability>
-        <history>
-          <kind>KEEP_LAST_HISTORY_QOS</kind>
-          <depth>1</depth>
-        </history>
+        <durability_service>
+          <history_kind>KEEP_LAST_HISTORY_QOS</history_kind>
+          <history_depth>10</history_depth>
+          <max_samples>10</max_samples>
+          <max_samples_per_instance>5</max_samples_per_instance>
+          <max_instances>2</max_instances>
+        </durability_service>
         <protocol>
           <rtps_reliable_writer>
             <max_heartbeat_retries>10</max_heartbeat_retries>
@@ -61,8 +64,15 @@ RTI Data Distribution Service user manual.
         </reliability>
         <history>
           <kind>KEEP_LAST_HISTORY_QOS</kind>
-          <depth>1</depth>
+          <depth>10</depth>
         </history>
+        <resource_limits>
+          <initial_samples>1</initial_samples>
+          <initial_instances>1</initial_instances>
+          <max_samples>10</max_samples>
+          <max_instances>1</max_instances>
+          <max_samples_per_instance>10</max_samples_per_instance>
+        </resource_limits>
         <durability>
           <kind>TRANSIENT_DURABILITY_QOS</kind>
         </durability>
