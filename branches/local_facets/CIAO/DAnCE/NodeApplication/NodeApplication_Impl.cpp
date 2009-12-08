@@ -1927,9 +1927,37 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                       {
                         // What we should do with Cookie, returned from connect call???
                         DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - set for receptacle\n")));
-                        this->connect_receptacle (obj.in(),
-                                                  conn.internalEndpoint[0].portName.in(),
-                                                  providedReference[i].endpoint[0].in());
+                        
+                        if (conn.internalEndpoint.length () == 2 &&
+                            conn.internalEndpoint[1].kind == ::Deployment::LocalFacet)
+                          {
+                            ::Components::CCMObject_var facet = 
+                              ::Components::CCMObject::_narrow (providedReference[i].endpoint[0].in ());
+                            
+                            ::CIAO::Deployment::Container_var cont = 
+                                    ::CIAO::Deployment::Container::_narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->container->ref.in ());
+                            
+                            if (CORBA::is_nil (facet.in ()) ||
+                                CORBA::is_nil (cont.in ()))
+                              {
+                                DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch -")
+                                              ACE_TEXT ("Unable to narrow all participants for a local facet connection\n")));
+                                throw ::Deployment::InvalidConnection ("", "");
+                              }
+                            
+                            this->connect_local_receptacle (facet.in (),
+                                                            conn.internalEndpoint[1].portName.in (),
+                                                            obj.in (),
+                                                            conn.internalEndpoint[0].portName.in (),
+                                                            cont.in ());
+                          }
+                        else
+                          {
+                            this->connect_receptacle (obj.in(),
+                                                      conn.internalEndpoint[0].portName.in(),
+                                                      providedReference[i].endpoint[0].in());
+                          }
+                        
                         break;
                       }
                     case ::Deployment::EventEmitter:

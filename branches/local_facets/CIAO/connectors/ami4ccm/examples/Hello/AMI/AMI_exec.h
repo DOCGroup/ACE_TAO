@@ -59,8 +59,7 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
       public virtual ::CORBA::LocalObject
   {
   public:
-    AMI_MyFoo_exec_i (::Hello_AMI::AMI_MyFooCallback_ptr foo_callback,
-      ::Hello::MyFoo_ptr receiver_foo);
+    AMI_MyFoo_exec_i (::Hello::MyFoo_ptr receiver_foo);
 
     virtual ~AMI_MyFoo_exec_i (void);
     virtual void
@@ -85,7 +84,6 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
     
   private:
     Hello::MyFoo_var ami_foo_server_;
-    ::Hello_AMI::AMI_MyFooCallback_ptr foo_callback_;
   };
   
   class  AMI_exec_i

@@ -11,7 +11,6 @@ project(AMI_Hello_idl_gen) : componentidldefaults, ami   {
               -Wb,exec_export_include=Hello_exec_export.h -I..
 
   IDL_Files {
-    Hello.idl
   }
 }
 
@@ -23,7 +22,6 @@ project(AMI_Hello_lem_gen) : ciaoidldefaults {
               -Wb,export_include=Hello_exec_export.h   -I.. -SS
 
   IDL_Files {
-    HelloE.idl
   }
 }
 
@@ -38,6 +36,7 @@ project(AMI_Hello_Base_idl_gen) : componentidldefaults {
 
   IDL_Files {
     Hello_Base.idl
+    Hello.idl
   }
 }
 
@@ -50,6 +49,7 @@ project(AMI_Hello_Base_lem_gen) : ciaoidldefaults {
 
   IDL_Files {
     Hello_BaseE.idl
+    HelloE.idl
   }
 }
 

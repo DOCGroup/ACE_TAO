@@ -194,7 +194,7 @@
 
   <instance xmi:id="Hello.ComponentImplementations.HelloImplementation.Hello.AMI">
     <name>Hello.ComponentImplementations.HelloImplementation.Hello.AMI</name>
-    <node>AMI</node>
+    <node>Sender</node>
     <source/>
     <implementation xmi:idref="Hello_AMIHomeImplementation"/>
     <configProperty>
@@ -213,31 +213,15 @@
   <connection>
     <name>run_asynch_foo_connection</name>
     <internalEndpoint>
-      <portName>perform_asynch_my_foo</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
-    </internalEndpoint>
-    <internalEndpoint>
       <portName>run_asynch_my_foo</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />
     </internalEndpoint>
-  </connection>
-
-  <connection>
-    <name>foo_callback_connection</name>
     <internalEndpoint>
-      <portName>the_my_foo_callback</portName>
+      <portName>perform_asynch_my_foo</portName>
       <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>callback_my_foo</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
+      <kind>LocalFacet</kind>
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
     </internalEndpoint>
   </connection>
