@@ -1,3 +1,8 @@
+Tue Dec  8 09:20:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added OBV/Indirection
+
 Mon Dec  7 18:22:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
 
         * bin/tao_orb_tests.lst:
@@ -72,10 +77,10 @@ Mon Dec  7 09:43:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
         * ACE_wrappers/TAO/tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h:
         * ACE_wrappers/TAO/tao/RTCORBA/RT_Thread_Lane_Resources_Manager.cpp:
         * ACE_wrappers/TAO/tao/ORB_Core.cpp:
-        
+
           Replaced #clear_rw_transports() method by #close_all_transports() method.
           This fixes Bugzilla #3672.
-          Like before this behaviour is controlled by ORB option 
+          Like before this behaviour is controlled by ORB option
           ORBDropRepliesDuringShutdown, which by default is on.
 
 
@@ -86,7 +91,7 @@ Mon Dec  7 07:13:34 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
           Fixed the issue that the indirection maps are not cleaned up
           when marshal/demarshal raises exception.
-          
+
 Sun Dec  6 03:07:00 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * tao/Makefile.am:
