@@ -19,6 +19,19 @@ namespace CIAO_Getter_Test_Sender_Impl
 {
   class Sender_exec_i;
 
+  class pulse_Generator :
+    public ACE_Event_Handler
+  {
+  public:
+    pulse_Generator (Sender_exec_i &callback);
+    /// Handle the timeout.
+    virtual int handle_timeout (const ACE_Time_Value &tv,
+                                const void *arg);
+  private:
+    /// Maintains a handle that actually process the event
+    Sender_exec_i &pulse_callback_;
+  };
+
   class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     : public virtual ::CCM_DDS::CCM_ConnectorStatusListener,
       public virtual ::CORBA::LocalObject
@@ -78,6 +91,7 @@ namespace CIAO_Getter_Test_Sender_Impl
     virtual void ccm_remove (void);
 
     void start (void);
+    void tick (void);
 
   private:
     ::Getter_Test::CCM_Sender_Context_var context_;
@@ -88,9 +102,12 @@ namespace CIAO_Getter_Test_Sender_Impl
     CORBA::UShort keys_;
     bool          done_;
     bool          ccm_activated_;
+    CORBA::ULong last_iter_;
+
 
     void start_get_no_data (void);
 
+    pulse_Generator * ticker_;
   };
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
