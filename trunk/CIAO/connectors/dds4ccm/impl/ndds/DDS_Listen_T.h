@@ -40,9 +40,10 @@ private:
    * DDS_Listen
    */
   //@{
-  ::DDS::DataReader_var data_reader_;
+  ::DDS::CCM_DataReader_var data_reader_;
   ::CCM_DDS::CCM_DataListenerControl_var data_control_;
   ::DDS::DataReaderListener_var data_listener_;
+  typename CCM_TYPE::reader_type::_var_type dds_read_;
   //@}
 };
 
