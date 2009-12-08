@@ -1,3 +1,8 @@
+Tue Dec  8 16:36:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+          Fixes to debug statements
+
 Tue Dec  8 16:31:33 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * examples/Hello/descriptors/run_test.pl:
