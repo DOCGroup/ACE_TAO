@@ -1,3 +1,9 @@
+Tue Dec  8 09:05:57 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/PSLSampleLost/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/PSLSampleLost/descriptors/USER_QOS_PROFILES.xml:
+          Change QoS settings of test to generate  a on_sample_lost callback.
+
 Tue Dec  8 08:56:42 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
