@@ -1,3 +1,11 @@
+Tue Dec  8 15:01:58 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/BasicSP/descriptors/run_test.pl:
+        * examples/Hello/descriptors/run_test.pl:
+        * examples/Hello/descriptors/run_test_without_ns.pl:
+        * examples/Null_Component/descriptors/run_test.pl:
+          Resolved fuzz errors.
+
 Tue Dec  8 14:56:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDS_Listen_T.cpp:

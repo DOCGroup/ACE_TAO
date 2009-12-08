@@ -49,56 +49,54 @@ sub delete_ior_files {
 }
 
 sub kill_node_daemons {
-  for ($i = 0; $i < $daemons; ++$i) {
-    $Daemons[$i]->Kill (); $Daemons[$i]->TimedWait (1);
-  }
+    for ($i = 0; $i < $daemons; ++$i) {
+        $Daemons[$i]->Kill (); $Daemons[$i]->TimedWait (1);
+    }
 }
 
 sub kill_open_processes {
-  if ($daemons_running == 1) {
-    kill_node_daemons ();
-  }
+    if ($daemons_running == 1) {
+        kill_node_daemons ();
+    }
 
-  if ($em_running == 1) {
-    $EM->Kill ();
-    $EM->TimedWait (1);
-  }
+    if ($em_running == 1) {
+        $EM->Kill ();
+        $EM->TimedWait (1);
+    }
 
-  if ($ns_running == 1) {
-    $NS->Kill ();
-    $NS->TimedWait (1);
-  }
-
+    if ($ns_running == 1) {
+        $NS->Kill ();
+        $NS->TimedWait (1);
+    }
 }
 
 sub run_node_daemons {
-  for ($i = 0; $i < $daemons; ++$i)
-  {
-      $iorfile = $iorfiles[$i];
-      $port = $ports[$i];
-      $nodename = $nodenames[$i];
-      $iiop = "iiop://localhost:$port";
-      $node_app = "$CIAO_ROOT/bin/ciao_componentserver";
+    for ($i = 0; $i < $daemons; ++$i) {
+        $iorfile = $iorfiles[$i];
+        $port = $ports[$i];
+        $nodename = $nodenames[$i];
+        $iiop = "iiop://localhost:$port";
+        $node_app = "$CIAO_ROOT/bin/ciao_componentserver";
 
-      $d_cmd = "$DAnCE/bin/dance_node_manager";
-      $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30 --instance-nc corbaloc:rir:/NameService";
+        $d_cmd = "$DAnCE/bin/dance_node_manager";
+        $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30 --instance-nc corbaloc:rir:/NameService";
 
-      print "Run dance_node_manager with $d_param\n";
+        print "Run dance_node_manager with $d_param\n";
 
-      $Daemons[$i] = new PerlACE::Process ($d_cmd, $d_param);
-      $result = $Daemons[$i]->Spawn ();
-      push(@processes, $Daemons[$i]);
+        $Daemons[$i] = new PerlACE::Process ($d_cmd, $d_param);
+        $result = $Daemons[$i]->Spawn ();
+        push(@processes, $Daemons[$i]);
 
-      if (PerlACE::waitforfile_timed ($iorfile,
-                                      30) == -1) {
-          print STDERR
-            "ERROR: The ior $iorfile file of node daemon $i could not be found\n";
-          for (; $i >= 0; --$i) {
-            $Daemons[$i]->Kill (); $Daemons[$i]->TimedWait (1);
-          }
-          return -1;
-      }
-  }
+        if (PerlACE::waitforfile_timed ($iorfile,
+                                        30) == -1) {
+            print STDERR
+                "ERROR: The ior $iorfile file of node daemon $i could not be found\n";
+            for (; $i >= 0; --$i) {
+                $Daemons[$i]->Kill (); $Daemons[$i]->TimedWait (1);
+            }
+            return -1;
+        }
+    }
   return 0;
 }
 
@@ -130,9 +128,9 @@ print "Invoking node daemons\n";
 $status = run_node_daemons ();
 
 if ($status != 0) {
-  print STDERR "ERROR: Unable to execute the node daemons\n";
-  kill_open_processes ();
-  exit 1;
+    print STDERR "ERROR: Unable to execute the node daemons\n";
+    kill_open_processes ();
+    exit 1;
 }
 
 $daemons_running = 1;
@@ -146,7 +144,7 @@ $EM->Spawn ();
 if (PerlACE::waitforfile_timed ("EM.ior",
                                 $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR
-      "ERROR: The ior file of execution manager could not be found\n";
+        "ERROR: The ior file of execution manager could not be found\n";
     kill_open_processes ();
     exit 1;
 }
@@ -157,15 +155,14 @@ $em_running = 1;
 print "Invoking executor - start the application -\n";
 
 print "Start dance_plan_launcher.exe with -x DeploymentPlan.cdp -k file://EM.ior\n";
-$E =
-  new PerlACE::Process ("$DAnCE/bin/dance_plan_launcher",
+$E = new PerlACE::Process ("$DAnCE/bin/dance_plan_launcher",
                         "-x DeploymentPlan.cdp -k file://EM.ior");
 
 $E->SpawnWaitKill (50);
 
 if (PerlACE::waitforfile_timed (
-      "Receiver.ior",
-      $PerlACE::wait_interval_for_process_creation) == -1) {
+        "Receiver.ior",
+        $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: The ior file of receiver could not be found\n";
     kill_open_processes ();
     exit 1;
@@ -191,8 +188,7 @@ if ($result != 0) {
 print "Invoking executor - stop the application -\n";
 print "by running dance_plan_launcher.exe with -k file://EM.ior -x DeploymentPlan.cdp -q\n";
 
-$E =
-  new PerlACE::Process ("$DAnCE/bin/dance_plan_launcher",
+$E = new PerlACE::Process ("$DAnCE/bin/dance_plan_launcher",
                         "-k file://EM.ior -x DeploymentPlan.cdp -q");
 $E->SpawnWaitKill (30);
 
