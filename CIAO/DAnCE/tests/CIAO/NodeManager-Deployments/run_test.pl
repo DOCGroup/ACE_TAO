@@ -31,52 +31,51 @@ sub delete_ior_files {
 }
 
 sub kill_node_daemons {
-  for ($i = 0; $i < $daemons; ++$i) {
-    $Daemons[$i]->Kill (); $Daemons[$i]->TimedWait (1);
-  }
+    for ($i = 0; $i < $daemons; ++$i) {
+        $Daemons[$i]->Kill (); $Daemons[$i]->TimedWait (1);
+    }
 }
 
 sub kill_open_processes {
-  if ($daemons_running == 1) {
-    kill_node_daemons ();
-  }
+    if ($daemons_running == 1) {
+        kill_node_daemons ();
+    }
 }
 
 sub run_node_daemons {
-  for ($i = 0; $i < $daemons; ++$i)
-  {
-      $iorfile = $iorfiles[$i];
-      $port = $ports[$i];
-      $nodename = $nodenames[$i];
-      $iiop = "iiop://localhost:$port";
-      $node_app = "$CIAO_ROOT/bin/ciao_componentserver";
+    for ($i = 0; $i < $daemons; ++$i) {
+        $iorfile = $iorfiles[$i];
+        $port = $ports[$i];
+        $nodename = $nodenames[$i];
+        $iiop = "iiop://localhost:$port";
+        $node_app = "$CIAO_ROOT/bin/ciao_componentserver";
 
-      $d_cmd = "$DAnCE/bin/dance_node_manager";
-      $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30";
+        $d_cmd = "$DAnCE/bin/dance_node_manager";
+        $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30";
 
-      $Daemons[$i] = new PerlACE::Process ($d_cmd, $d_param);
-      $result = $Daemons[$i]->Spawn ();
-      push(@processes, $Daemons[$i]);
+        $Daemons[$i] = new PerlACE::Process ($d_cmd, $d_param);
+        $result = $Daemons[$i]->Spawn ();
+        push(@processes, $Daemons[$i]);
 
-      if (PerlACE::waitforfile_timed ($iorfile,
-                                      30) == -1) {
-          print STDERR
-            "ERROR: The ior $iorfile file of node daemon $i could not be found\n";
-          for (; $i >= 0; --$i) {
-            $Daemons[$i]->Kill (); $Daemons[$i]->TimedWait (1);
-          }
-          return -1;
-      }
-  }
-  return 0;
+        if (PerlACE::waitforfile_timed ($iorfile,
+                                        30) == -1) {
+            print STDERR
+                "ERROR: The ior $iorfile file of node daemon $i could not be found\n";
+            for (; $i >= 0; --$i) {
+                $Daemons[$i]->Kill (); $Daemons[$i]->TimedWait (1);
+            }
+            return -1;
+        }
+    }
+    return 0;
 }
 
-if ($#ARGV == -1)
-{
+if ($#ARGV == -1) {
     opendir(DIR, ".");
     @files = grep(/\.cdp$/,readdir(DIR));
     closedir(DIR);
-} else {
+}
+else {
     @files = @ARGV;
 }
 
@@ -104,8 +103,7 @@ foreach $file (@files) {
 
     $status = $E->SpawnWaitKill (60);
 
-    if ($status != 0)
-    {
+    if ($status != 0) {
         print "ERROR:  simple_nm_launcher returned error status $status\n";
     }
 
