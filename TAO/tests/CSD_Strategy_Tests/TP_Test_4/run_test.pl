@@ -113,10 +113,9 @@ for ($i = 0; $i < $num_servants; $i++) {
     $client->DeleteFile ($iorbase[$i]);
 }
 $server_fname = $server->LocalFile ($iorfname_prefix);
-$server->DeleteFile ($server_fname);
 
 $SV = $server->CreateProcess ("server_main",
-                              "-p $server_fname "        .
+                              "-p $server_fname "           .
                               "-s $num_servants "           .
                               "-n $num_csd_threads "        .
                               "-t $num_orb_threads "        .
@@ -128,7 +127,7 @@ $SV->Spawn();
 # Wait for the servant ior files created by server.
 for ($i = 0; $i < $num_servants; $i++) {
     if ($server->WaitForFileTimed ($iorbase[$i],
-                                   2*$server->ProcessStartWaitInterval()) == -1) {
+                                   $server->ProcessStartWaitInterval()) == -1) {
         print STDERR "ERROR: cannot find file <$server_iorfile[$i]>\n";
         $SV->Kill(); $SV->TimedWait(1);
         exit 1;
