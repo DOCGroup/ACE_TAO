@@ -18,9 +18,6 @@ module Hello_AMI_AMI
 
     //uses the interface of the Receiver ('server')
     uses Hello::MyFoo my_foo_receiver;
-
-    //uses the callback interface of the sender
-    uses Hello_AMI::AMI_MyFooCallback callback_my_foo;
   };
 
   home AMIHome manages AMI

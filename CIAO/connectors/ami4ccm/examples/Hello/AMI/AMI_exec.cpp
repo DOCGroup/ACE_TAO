@@ -70,10 +70,10 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
   // Facet Executor Implementation Class: AMI_MyFoo_exec_i
   //============================================================
   AMI_MyFoo_exec_i::AMI_MyFoo_exec_i (
-    ::Hello_AMI::AMI_MyFooCallback_ptr foo_callback,
     ::Hello::MyFoo_ptr receiver_foo)
-  : foo_callback_ (::Hello_AMI::AMI_MyFooCallback::_duplicate (foo_callback))
   {
+    // @@TODO:  This is all sorts of wrong.  We should be using the container ORB.
+
     //initialize AMI client
     int argc = 2;
     ACE_TCHAR **argv = new ACE_TCHAR *[argc];
@@ -114,12 +114,12 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
 
   void
   AMI_MyFoo_exec_i::sendc_foo (
-    ::Hello_AMI::AMI_MyFooCallback_ptr /*ami_handler*/,
+    ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler,
     const char * in_str)
   {
     printf ("AMI (FOO) :\tsendc_foo <%s>\n", in_str);
     ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler*  handler =
-        new ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler (foo_callback_);
+        new ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler (ami_handler);
     //Create a reply handler the CORBA-way
     Hello::AMI_MyFooHandler_var the_handler_var = handler->_this ();
     printf ("AMI (FOO) :\tSending string <%s> to AMI CORBA server\n", in_str);
@@ -129,12 +129,12 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
 
   void
   AMI_MyFoo_exec_i::sendc_hello (
-    ::Hello_AMI::AMI_MyFooCallback_ptr /*ami_handler*/)
+    ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler)
   {
     printf ("AMI (FOO) :\tsendc_hello\n");
 
     ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler*  handler =
-        new ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler (foo_callback_);
+        new ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler (ami_handler);
     //Create a reply handler the CORBA-way
     Hello::AMI_MyFooHandler_var the_handler_var = handler->_this ();
     printf ("AMI (FOO) :\tCalling AMI CORBA server\n");
@@ -144,11 +144,11 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
 
   void
   AMI_MyFoo_exec_i::sendc_get_rw_attrib (
-    ::Hello_AMI::AMI_MyFooCallback_ptr /*ami_handler*/)
+    ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler)
   {
     printf ("AMI (FOO) :\tsendc_get_rw_attrib\n");
     ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler*  handler =
-        new ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler (foo_callback_);
+        new ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler (ami_handler);
     //Create a reply handler the CORBA-way
     Hello::AMI_MyFooHandler_var the_handler_var = handler->_this ();
     ami_foo_server_->sendc_get_rw_attrib (the_handler_var.in ());
@@ -157,12 +157,12 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
 
   void
   AMI_MyFoo_exec_i::sendc_set_rw_attrib (
-    ::Hello_AMI::AMI_MyFooCallback_ptr /*ami_handler*/,
+    ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler,
   CORBA::Short rw_attrib)
   {
     printf ("AMI (FOO) :\tsendc_set_rw_attrib\n");
     ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler*  handler =
-        new ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler (foo_callback_);
+        new ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler (ami_handler);
     //Create a reply handler the CORBA-way
     Hello::AMI_MyFooHandler_var the_handler_var = handler->_this ();
     printf ("AMI (FOO) : \tSet rw_attrib <%d>\n", rw_attrib);
@@ -172,11 +172,11 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
 
   void
   AMI_MyFoo_exec_i::sendc_get_ro_attrib (
-    ::Hello_AMI::AMI_MyFooCallback_ptr /*ami_handler*/)
+    ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler)
   {
     printf ("AMI (FOO) :\tsendc_get_ro_attrib\n");
     ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler*  handler =
-        new ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler (foo_callback_);
+        new ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler (ami_handler);
     //Create a reply handler the CORBA-way
     Hello::AMI_MyFooHandler_var the_handler_var = handler->_this ();
     ami_foo_server_->sendc_get_ro_attrib (the_handler_var.in ());
@@ -203,10 +203,7 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
   ::Hello_AMI::CCM_AMI_MyFoo_ptr
   AMI_exec_i::get_perform_asynch_my_foo (void)
   {
-    ::Hello_AMI::AMI_MyFooCallback_var foo_callback =
-      this->context_->get_connection_callback_my_foo ();
-    return new AMI_MyFoo_exec_i (foo_callback.in (),
-                                 receiver_foo_.in ());
+    return new AMI_MyFoo_exec_i (receiver_foo_.in ());
   }
   // Operations from Components::SessionComponent.
 
