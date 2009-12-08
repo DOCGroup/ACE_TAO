@@ -50,24 +50,33 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE>::init (
         {
           if (library_name && profile_name)
             {
-              this->data_reader_ =
+              ::DDS::DataReader_var reader =
                   subscriber->create_datareader_with_profile (
                     topic,
                     library_name,
                     profile_name,
                     this->data_listener_.in (),
                     ::CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+              this->data_reader_ = ::DDS::CCM_DataReader::_narrow (reader);
             }
           else
             {
               ::DDS::DataReaderQos drqos;
-              this->data_reader_ =
+              ::DDS::DataReader_var reader =
                   subscriber->create_datareader (
                     topic,
                     drqos,
                     this->data_listener_.in (),
                     ::CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+              this->data_reader_ = ::DDS::CCM_DataReader::_narrow (reader);
             }
+        }
+
+      if (CORBA::is_nil (this->dds_read_.in ()) &&
+          !CORBA::is_nil (this->data_reader_.in ()))
+        {
+          this->dds_read_ = new CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> (
+            this->data_reader_.in ());
         }
     }
   catch (...)
@@ -83,8 +92,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE>::get_data (void)
 {
   CIAO_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE>::get_data");
 
-  return new CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> (
-          this->data_reader_.in ());
+  return CCM_TYPE::reader_type::_duplicate (this->dds_read_.in ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -92,7 +100,8 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_Listen_T<DDS_TYPE, CCM_TYPE>::get_dds_entity (void)
 {
   CIAO_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE>::get_dds_entity");
-  return ::DDS::CCM_DataReader::_nil ();
+
+  return ::DDS::CCM_DataReader::_duplicate (this->data_reader_.in ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -101,6 +110,6 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE>::get_data_control (void)
 {
   CIAO_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE>::get_data_control");
 
-  return this->data_control_.in ();
+  return ::CCM_DDS::CCM_DataListenerControl::_duplicate (this->data_control_.in ());
 }
 
