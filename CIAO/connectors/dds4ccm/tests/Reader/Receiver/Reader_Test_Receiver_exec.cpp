@@ -117,14 +117,10 @@ namespace CIAO_Reader_Test_Receiver_Impl
                 ::DDS::HANDLE_NIL);
         return readertest_info.iteration == this->iterations_;
       }
-    catch(CCM_DDS::NonExistent& ex)
+    catch(...)
       {
-      }
-    catch(CCM_DDS::InternalError& ex)
-      {
-      }
-    catch (const CORBA::Exception& ex)
-      {
+        // no need to catch. An error is given
+        // when this example didn't run at all.
       }
     return false;
   }
