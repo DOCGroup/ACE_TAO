@@ -148,7 +148,7 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
     ::DDS::DataReader_ptr /* the_reader */,
     const ::DDS::SampleLostStatus & /* status */)
   {
-    printf("Receiver: PortStatusStatusListener_exec_i::SampleLostStatus\n");
+    //printf("Receiver: PortStatusStatusListener_exec_i::SampleLostStatus\n");
     if(this->port_nr_ == 1)       
     {
       this->sample_port_1_ = true;
@@ -206,7 +206,7 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
             i,
             TestTopic_infos[i].key.in (),
             TestTopic_infos[i].x));
-            printf("data key %s and x %ld\n",TestTopic_infos[i].key.in (),TestTopic_infos[i].x);
+            //printf("data key %s and x %ld\n",TestTopic_infos[i].key.in (),TestTopic_infos[i].x);
       }
     }
     catch(CCM_DDS::InternalError& )

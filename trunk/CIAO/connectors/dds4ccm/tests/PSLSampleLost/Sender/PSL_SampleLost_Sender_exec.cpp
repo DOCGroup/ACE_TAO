@@ -124,7 +124,7 @@ namespace CIAO_PSL_SampleLost_Sender_Impl
          {
            if (!CORBA::is_nil (this->writer_) ) {
               this->writer_->write_one(i->second,::DDS::HANDLE_NIL);
-              printf("wrote x = %ld\n", i->second->x++);
+              //printf("wrote x = %ld\n", i->second->x++);
               i->second->x++;
            }
          }
