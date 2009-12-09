@@ -1,3 +1,64 @@
+Wed Dec  9 10:38:26 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * orbsvcs/tests/CosEvent/Basic/run_test.pl:
+        * orbsvcs/tests/Bug_1334_Regression/run_test.pl:
+        * orbsvcs/tests/Notify/Timeout/run_test.pl:
+        * orbsvcs/tests/Notify/Bug_2561_Regression/run_test.pl:
+        * orbsvcs/tests/Notify/MT_Dispatching/run_test.pl:
+        * orbsvcs/tests/Notify/Bug_1385_Regression/run_test.pl:
+        * orbsvcs/tests/Notify/Persistent_POA/run_test.pl:
+        * orbsvcs/tests/Notify/Bug_3646a_Regression/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/Filter/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/run_test.pl:
+        * orbsvcs/tests/Notify/Bug_3646c_Regression/run_test.pl:
+        * orbsvcs/tests/Notify/Ordering/run_test.pl:
+        * orbsvcs/tests/Notify/Reconnecting/run_test.pl:
+        * orbsvcs/tests/Notify/Basic/run_test_ipv6.pl:
+        * orbsvcs/tests/Notify/Basic/run_test.pl:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/run_test.pl:
+        * orbsvcs/tests/Notify/Blocking/run_test.pl:
+        * orbsvcs/tests/Notify/Bug_2415_Regression/run_test.pl:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/run_test.pl:
+        * orbsvcs/tests/Notify/MC/run_test.pl:
+        * orbsvcs/tests/Notify/Lanes/run_test.pl:
+        * orbsvcs/tests/Notify/Discarding/run_test.pl:
+        * orbsvcs/tests/Notify/Structured_Filter/run_test.pl:
+        * orbsvcs/tests/Event/Basic/run_test.pl:
+        * orbsvcs/tests/Event/Performance/run_test.pl:
+        * orbsvcs/tests/Bug_1393_Regression/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Duplicate_Typedef_Test/run_test.pl:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/run-test.pl:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/run-test.pl:
+        * tests/Bug_1476_Regression/run_test.pl:
+        * tests/Bug_2494_Regression/run_test.pl:
+        * tests/POA/Adapter_Activator/run_test.pl:
+        * tests/POA/Explicit_Activation/run_test.pl:
+        * tests/POA/On_Demand_Activation/run_test.pl:
+        * tests/POA/Loader/run_test.pl:
+        * tests/POA/On_Demand_Loading/run_test.pl:
+        * tests/POA/Reference_Counted_Servant/run_test.pl:
+        * tests/Collocation/run_test.pl:
+        * tests/CodeSets/simple/run_test.pl:
+        * tests/CSD_Strategy_Tests/Broken/run_test.pl:
+        * tests/CSD_Strategy_Tests/TP_Test_1/run_test.pl:
+        * tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl:
+        * tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl:
+        * tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl:
+        * tests/CSD_Strategy_Tests/TP_Test_Dynamic/run_test.pl:
+        * tests/CSD_Strategy_Tests/TP_Test_Static/run_test.pl:
+        * tests/Oneway_Timeouts/run_test.pl:
+        * tests/Smart_Proxies/On_Demand/server.cpp:
+        * tests/Smart_Proxies/On_Demand/run_test.pl:
+        * tests/Smart_Proxies/Benchmark/server.cpp:
+        * tests/Smart_Proxies/Benchmark/run_test.pl:
+        * tests/Bug_3676_Regression/run_test.pl:
+        * tests/Oneways_Invoking_Twoways/run_test_svc.pl:
+        * bin/tao_other_tests.lst:
+
+          Tests are converted to use new test framework
+          and added to fuzz build.
+
 Wed Dec  9 10:11:14 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_provides.cpp:

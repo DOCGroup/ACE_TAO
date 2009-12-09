@@ -8,8 +8,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
-PerlACE::add_lib_path ("../lib");
-
 PerlACE::check_privilege_group();
 
 $status = 0;
@@ -28,6 +26,11 @@ my $server1 = PerlACE::TestTarget::create_target (1) || die "Create target 1 fai
 my $server2 = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 my $client1 = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
 my $client2 = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
+
+$server1->AddLibPath ("../lib");
+$server2->AddLibPath ("../lib");
+$client1->AddLibPath ("../lib");
+$client2->AddLibPath ("../lib");
 
 my $ior1file = "naming.ior";
 my $ior2file = "notify.ior";

@@ -51,8 +51,8 @@ sub run_client_n_server
         print STDERR "ERROR: server returned $ret\n";
         exit 1;
     }
-    if (PerlACE::waitforfile_timed ($iorbase,
-                                    $server->ProcessStartWaitInterval()) == -1) {
+    if ($server->WaitForFileTimed ($iorbase,
+                               $server->ProcessStartWaitInterval()) == -1) {
         print STDERR "ERROR: cannot find file <$server_iorfile>\n";
         $SV->Kill (); $SV->TimedWait (1);
         exit 1;

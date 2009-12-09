@@ -24,7 +24,12 @@ my $stc = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\
 my $ses = PerlACE::TestTarget::create_target (5) || die "Create target 5 failed\n";
 my $sec = PerlACE::TestTarget::create_target (6) || die "Create target 6 failed\n";
 
-PerlACE::add_lib_path ('../lib');
+$ns->AddLibPath ('../lib');
+$ns->AddLibPath ('../lib');
+$sts->AddLibPath ('../lib');
+$stc->AddLibPath ('../lib');
+$ses->AddLibPath ('../lib');
+$sec->AddLibPath ('../lib');
 
 PerlACE::check_privilege_group();
 
@@ -66,7 +71,7 @@ foreach my $arg (@ARGV) {
     }
 }
 
-$NS = $ns->CreateProcess ("../../../Naming_Service/Naming_Service", 
+$NS = $ns->CreateProcess ("../../../Naming_Service/Naming_Service",
                             "-ORBEndpoint iiop://$host:$port ".
                             "-o $ns_nsiorfile");
 
@@ -77,7 +82,7 @@ $NFS = $nfs->CreateProcess ("../../../Notify_Service/Notify_Service",
                             "$nfs_nfsconffile");
 
 $STS = $sts->CreateProcess ("Structured_Supplier",
-                            "-ORBDebugLevel $debug_level ".  
+                            "-ORBDebugLevel $debug_level ".
                             "-ORBInitRef NameService=iioploc://".
                             "$host:$port/NameService ".
                             "-o $sts_stsiorfile");
@@ -85,7 +90,7 @@ $STS = $sts->CreateProcess ("Structured_Supplier",
 $STC = $stc->CreateProcess ("Structured_Consumer");
 
 $SES = $ses->CreateProcess ("Sequence_Supplier",
-                            "-ORBDebugLevel $debug_level ".  
+                            "-ORBDebugLevel $debug_level ".
                             "-ORBInitRef NameService=iioploc://".
                             "$host:$port/NameService ".
                             "-o $ses_sesiorfile");
@@ -209,7 +214,7 @@ if ($stc->PutFile ($stsiorfile) == -1) {
     $NFS->Kill (); $NFS->TimedWait (1);
     exit 1;
 }
-sleep 2; 
+sleep 2;
 
 $STC->Arguments($CLI_args . " -k file://$stc_stsiorfile -d priority -o");
 $STC_status = $STC->SpawnWaitKill ($stc->ProcessStartWaitInterval()+5);
@@ -262,7 +267,7 @@ if ($sec->PutFile ($stsiorfile) == -1) {
     $NFS->Kill (); $NFS->TimedWait (1);
     exit 1;
 }
-sleep 2; 
+sleep 2;
 
 $SEC->Arguments($CLI_args . " -k file://$sec_stsiorfile -d priority -o");
 $SEC_status = $SEC->SpawnWaitKill ($sec->ProcessStartWaitInterval()+5);
@@ -315,7 +320,7 @@ if ($stc->PutFile ($sesiorfile) == -1) {
     $NFS->Kill (); $NFS->TimedWait (1);
     exit 1;
 }
-sleep 2; 
+sleep 2;
 
 $STC->Arguments($CLI_args . " -k file://$stc_sesiorfile -d priority -o");
 $STC_status = $STC->SpawnWaitKill ($stc->ProcessStartWaitInterval()+5);
@@ -367,7 +372,7 @@ if ($sec->PutFile ($sesiorfile) == -1) {
     $NFS->Kill (); $NFS->TimedWait (1);
     exit 1;
 }
-sleep 2; 
+sleep 2;
 
 $SEC->Arguments($CLI_args . " -k file://$sec_sesiorfile -d priority -o");
 $SEC_status = $SEC->SpawnWaitKill ($sec->ProcessStartWaitInterval()+5);

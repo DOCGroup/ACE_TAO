@@ -11,7 +11,8 @@ use PerlACE::TestTarget;
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-PerlACE::add_lib_path ('../Generic_Servant/.');
+$server->AddLibPath ('../Generic_Servant/.');
+$client->AddLibPath ('../Generic_Servant/.');
 
 $iorbase = "ior";
 
