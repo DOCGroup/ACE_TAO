@@ -335,7 +335,7 @@ DomainApplicationManager_Impl::split_plan (const Deployment::DeploymentPlan & pl
                   Deployment::PlanConnectionDescription * connection_copied = 0;
                   for (CORBA::ULong m = 0; m < child_plan.connection.length(); ++m)
                     {
-                      if (plan.connection[j].name == child_plan.connection[m].name)
+                      if (ACE_OS::strcmp (plan.connection[j].name, child_plan.connection[m].name) == 0)
                         {
                           connection_copied = &child_plan.connection[m];
                           break;
@@ -354,6 +354,12 @@ DomainApplicationManager_Impl::split_plan (const Deployment::DeploymentPlan & pl
 
                   // Copy the endpoint
                   CORBA::ULong const index_ep = connection_copied->internalEndpoint.length();
+
+                  DANCE_DEBUG ((LM_TRACE, DLINFO
+                                ACE_TEXT("DomainApplicationManager_Impl::split_plan - ")
+                                ACE_TEXT ("Copying endpoint %u from connection into endpoint %u\n"),
+                                k, index_ep));
+
                   connection_copied->internalEndpoint.length (index_ep + 1);
                   connection_copied->internalEndpoint[index_ep] = plan.connection[j].internalEndpoint[k];
                   connection_copied->internalEndpoint[index_ep].instanceRef = index_ins - 1;
