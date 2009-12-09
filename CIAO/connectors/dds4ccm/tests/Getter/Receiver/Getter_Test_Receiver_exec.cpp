@@ -21,17 +21,23 @@ namespace CIAO_Getter_Test_Receiver_Impl
   {
   }
 
+  void
+  Invoker_exec_i::start_timeout_get_one ()
+  {
+    this->callback_.timeout_get_one ();
+  }
+
+  void
+  Invoker_exec_i::start_timeout_get_many ()
+  {
+    this->callback_.timeout_get_many ();
+  }
+
   void 
   Invoker_exec_i::start_get_one (const char * key,
                                      CORBA::Long iteration)
   {
     this->callback_.start_get_one (key, iteration);
-  }
-
-  void
-  Invoker_exec_i::get_no_data ()
-  {
-    this->callback_.get_no_data ();
   }
 
   void
@@ -221,7 +227,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::get_no_data ()
+  Receiver_exec_i::timeout_get_one ()
   {
     try
       {
@@ -229,7 +235,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
         to.sec = 1;
         to.nanosec = 0;
         this->getter_->time_out (to);
-        CIAO_DEBUG ((LM_DEBUG, CLINFO ACE_TEXT ("Receiver_exec_i::get_no_data: ")
+        CIAO_DEBUG ((LM_DEBUG, CLINFO ACE_TEXT ("Receiver_exec_i::timeout_get_one: ")
                                   ACE_TEXT ("Start getting data from DDS: timeout: ")
                                   ACE_TEXT ("sec <%d> - nanosec <%u>\n"),
                                   this->getter_->time_out ().sec,
@@ -239,26 +245,68 @@ namespace CIAO_Getter_Test_Receiver_Impl
         bool result = this->getter_->get_one (gettertest_info, readinfo);
         if (result)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO ACE_TEXT ("ERROR: GET NO DATA: ")
+            CIAO_ERROR ((LM_ERROR, CLINFO ACE_TEXT ("ERROR: TIMEOUT GET ONE: ")
                                  ACE_TEXT ("Returning true when get no data.\n")));
           }
         else
           {
-            CIAO_DEBUG ((LM_DEBUG, CLINFO ACE_TEXT ("Receiver_exec_i::get_no_data: ")
+            CIAO_DEBUG ((LM_DEBUG, CLINFO ACE_TEXT ("Receiver_exec_i::timeout_get_one: ")
                               ACE_TEXT ("Expected to return no data.\n")));
           }
       }
     catch(CCM_DDS::InternalError& )
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: GET NO DATA: ")
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: TIMEOUT GET ONE: ")
                                ACE_TEXT ("Caught unexcepted InternalError ")
                                ACE_TEXT ("exception\n")));
       }
     catch (const CORBA::Exception& ex)
       {
-        ex._tao_print_exception ("ERROR: GET NO DATA:");
+        ex._tao_print_exception ("ERROR: TIMEOUT GET ONE:");
         CIAO_ERROR ((LM_ERROR,
-          ACE_TEXT ("ERROR: Receiver_exec_i::get_no_data : Exception caught\n")));
+          ACE_TEXT ("ERROR: Receiver_exec_i::timeout_get_one : Exception caught\n")));
+      }
+  }
+
+  void
+  Receiver_exec_i::timeout_get_many ()
+  {
+    try
+      {
+        DDS::Duration_t to;
+        to.sec = 1;
+        to.nanosec = 0;
+        this->getter_->time_out (to);
+        CIAO_DEBUG ((LM_DEBUG, CLINFO ACE_TEXT ("Receiver_exec_i::timeout_get_many: ")
+                                  ACE_TEXT ("Start getting data from DDS: timeout: ")
+                                  ACE_TEXT ("sec <%d> - nanosec <%u>\n"),
+                                  this->getter_->time_out ().sec,
+                                  this->getter_->time_out ().nanosec));
+        GetterTest_Seq *gettertest_seq;
+        ::CCM_DDS::ReadInfoSeq *readinfo;
+        bool result = this->getter_->get_many (gettertest_seq, readinfo);
+        if (result)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO ACE_TEXT ("ERROR: TIMEOUT GET MANY: ")
+                                 ACE_TEXT ("Returning true when get no data.\n")));
+          }
+        else
+          {
+            CIAO_DEBUG ((LM_DEBUG, CLINFO ACE_TEXT ("Receiver_exec_i::timeout_get_many: ")
+                              ACE_TEXT ("Expected to return no data.\n")));
+          }
+      }
+    catch(CCM_DDS::InternalError& )
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: TIMEOUT GET MANY: ")
+                               ACE_TEXT ("Caught unexcepted InternalError ")
+                               ACE_TEXT ("exception\n")));
+      }
+    catch (const CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("ERROR: TIMEOUT GET MANY:");
+        CIAO_ERROR ((LM_ERROR,
+          ACE_TEXT ("ERROR: Receiver_exec_i::timeout_get_many : Exception caught\n")));
       }
   }
 
