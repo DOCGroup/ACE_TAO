@@ -1,3 +1,9 @@
+Wed Dec  9 12:48:35 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/SecConnector/ConnectorStatusListener_TestSec_Connector.mpc:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Sender/ConnectorStatusListener_Test_Sender.mpc:
+          Shorten the shared name of DDS_ConnectorStatusListener_TestSec_Connector_lem_stub.
+
 Wed Dec  9 12:40:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao_tests.lst:
@@ -1588,11 +1594,11 @@ Tue Nov 24 19:34:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
           Resolved a bug whereby connection endpoints in the original plan
           would be copied into two separate connections in a child plan.
-        
+
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
 
-          Bugfix with connection logic. 
-        
+          Bugfix with connection logic.
+
         * connectors/ami4ccm/examples/Hello/AMI/AMI.idl:
         * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.h:
         * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.cpp:
@@ -1604,8 +1610,8 @@ Tue Nov 24 19:34:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
         * connectors/ami4ccm/examples/Hello/descriptors/Plan.cdp:
         * connectors/ami4ccm/examples/Hello/descriptors/run_test.pl:
 
-          Ported to new local interface support. 
-        
+          Ported to new local interface support.
+
 Mon Dec  7 18:21:43 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/schema/Basic_Deployment_Data.xsd:
