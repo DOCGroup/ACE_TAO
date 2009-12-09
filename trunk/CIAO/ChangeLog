@@ -1,3 +1,19 @@
+Wed Dec  9 19:52:16 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Deployment/Deployment_DeploymentPlan.idl
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp
+        * DAnCE/NodeApplication/NodeApplication_Impl.h
+        * docs/schema/Basic_Deployment_Data.xsd
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp
+        * tools/Config_Handlers/CPD_Handler.cpp
+        * tools/Config_Handlers/DnC_Dump.cpp
+        * tools/Config_Handlers/PSPE_Handler.cpp
+          Merged changes from local_facets branch from Will Otte to svn head.
+          This is going to be used by at least ami4ccm. We are looking if there
+          is a different way to determine whether we need to connect a local
+          facet.
+
 Wed Dec  9 15:53:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * examples/BasicSP/descriptors/run_test.pl:
