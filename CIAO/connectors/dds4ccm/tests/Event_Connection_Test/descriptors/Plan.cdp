@@ -425,19 +425,19 @@
     <name>Event_Connection_Test_Connector_exec</name>
     <source/>
     <node/>
-    <location>DDS_Event_Connection_Connector_exec</location>
+    <location>DDS_ECT_Connector_exec</location>
   </artifact>
   <artifact xmi:id="Event_Connection_Test_Connector_SvntArtifact">
     <name>Event_Connection_Test_Connector_svnt</name>
     <source/>
     <node/>
-    <location>DDS_Event_Connection_Connector_svnt</location>
+    <location>DDS_ECT_Connector_svnt</location>
   </artifact>
   <artifact xmi:id="Event_Connection_Test_Connector_StubArtifact">
     <name>Event_Connection_Test_Connector_stub</name>
     <source/>
     <node/>
-    <location>DDS_Event_Connection_Connector_stub</location>
+    <location>DDS_ECT_Connector_stub</location>
   </artifact>
   <artifact xmi:id="Receiver_ExecArtifact">
     <name>Receiver_exec</name>
