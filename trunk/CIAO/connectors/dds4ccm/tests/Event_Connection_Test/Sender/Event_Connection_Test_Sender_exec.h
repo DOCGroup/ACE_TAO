@@ -37,14 +37,10 @@ namespace CIAO_Event_Connection_Test_Sender_Impl
 
   private:
     ::Event_Connection_Test::CCM_Sender_Context_var context_;
-    CCM_DDS::Event_ConnectionTest::Updater_var updater_;
     CCM_DDS::Event_ConnectionTest::Writer_var writer_;
-    DDS::DataWriter_var updater_dds_datawriter_;
     DDS::DataWriter_var writer_dds_datawriter_;
-    
-    bool updater_ok_;
+
     bool writer_ok_;
-    bool updater_dds_datawriter_ok_;
     bool writer_dds_datawriter_ok_;
   };
 

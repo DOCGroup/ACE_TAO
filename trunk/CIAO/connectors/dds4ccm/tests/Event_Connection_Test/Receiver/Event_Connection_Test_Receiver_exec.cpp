@@ -13,14 +13,19 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
   //============================================================
 
   Receiver_exec_i::Receiver_exec_i (void)
-    : getter_ok_ (false),
-      reader_listen_ok_ (false),
-      dds_data_reader_listen_ok_ (false),
-      data_listener_control_ok_ (false),
-      raw_listener_created_ (false),
+    : //DDS_Get
+      getter_ok_ (false),
+      getter_dds_data_reader_ok_ (false),
+      getter_reader_ok_ (false),
+      //DDS_Listen
+      listen_data_control_ok_ (false),
+      listen_reader_ok_ (false),
+      listen_dds_data_reader_ok_ (false),
+      //Provides
       listen_port_status_created_ (false),
       get_port_status_created_ (false),
-      get_status_listener_created_ (false)
+      get_status_listener_created_ (false),
+      raw_listener_created_ (false)
   {
   }
 
@@ -76,31 +81,44 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
-    this->getter_ =
+    //DDS_Get
+    this->getter_getter_ =
         this->context_->get_connection_info_get_fresh_data ();
-    if (!CORBA::is_nil (this->getter_))
+    if (!CORBA::is_nil (this->getter_getter_))
       {
         this->getter_ok_ = true;
       }
-    this->reader_listen_ =
-        this->context_->get_connection_info_listen_data ();
-    if (!CORBA::is_nil (this->reader_listen_))
+    this->getter_dds_data_reader_ =
+        this->context_->get_connection_info_get_dds_entity ();
+    if (!CORBA::is_nil (this->getter_dds_data_reader_))
       {
-        this->reader_listen_ok_ = true;
+        this->getter_dds_data_reader_ok_ = true;
       }
-    this->dds_data_reader_listen_ =
-        this->context_->get_connection_info_listen_dds_entity ();
-    if (!CORBA::is_nil (this->dds_data_reader_listen_))
+    this->getter_reader_ =
+        this->context_->get_connection_info_get_data ();
+    if (!CORBA::is_nil (this->getter_reader_))
       {
-        this->dds_data_reader_listen_ok_ = true;
+        this->getter_reader_ok_ = true;
       }
-    ::CCM_DDS::DataListenerControl_var lc =
+    //DDS_Listen
+    this->listen_data_control_ =
         this->context_->get_connection_info_listen_data_control ();
 
-    if (!CORBA::is_nil (lc.in ()))
+    if (!CORBA::is_nil (this->listen_data_control_))
       {
-        this->data_listener_control_ok_ = true;
-        lc->mode (::CCM_DDS::ONE_BY_ONE);
+        this->listen_data_control_ok_ = true;
+      }
+    this->listen_reader_ =
+        this->context_->get_connection_info_listen_data ();
+    if (!CORBA::is_nil (this->listen_reader_))
+      {
+        this->listen_reader_ok_ = true;
+      }
+    this->listen_dds_data_reader_ =
+        this->context_->get_connection_info_listen_dds_entity ();
+    if (!CORBA::is_nil (this->listen_dds_data_reader_))
+      {
+        this->listen_dds_data_reader_ok_ = true;
       }
   }
 
@@ -117,6 +135,7 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
+    //DDS_Get
     if (!this->getter_ok_)
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : get getter failed\n")));
@@ -125,23 +144,24 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver : Get getter passed\n")));
       }
-    if (!this->reader_listen_ok_)
+    if (!this->getter_dds_data_reader_ok_)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : get reader of DDS_Listen failed\n")));
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : get DDS reader of DDS_Get failed\n")));
       }
     else
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver : Get reader of DDS_Listen passed\n")));
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver : Get DDS reader of DDS_Get passed\n")));
       }
-    if (!this->dds_data_reader_listen_ok_)
+    if (!this->getter_reader_ok_)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : get dds reader of DDS_Listen failed\n")));
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : get reader of DDS_Get failed\n")));
       }
     else
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver : Get dds reader of DDS_Listen passed\n")));
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver : Get reader of DDS_Get passed\n")));
       }
-    if (!this->data_listener_control_ok_)
+    //DDS_Listen
+    if (!this->listen_data_control_ok_)
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : get data listen control of DDS_Listen failed\n")));
       }
@@ -149,6 +169,23 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver : Get data listen control of DDS_Listen passed\n")));
       }
+    if (!this->listen_reader_ok_)
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : get reader of DDS_Listen failed\n")));
+      }
+    else
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver : Get reader of DDS_Listen passed\n")));
+      }
+    if (!this->listen_dds_data_reader_ok_)
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : get dds reader of DDS_Listen failed\n")));
+      }
+    else
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver : Get dds reader of DDS_Listen passed\n")));
+      }
+    //Provides
     if (!this->raw_listener_created_)
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : listener not created\n")));
