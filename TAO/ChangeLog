@@ -1,3 +1,8 @@
+Wed Dec  9 12:31:58 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_1361_Regression/Server_Thread_Pool.h:
+          Fixed fuzz error.
+
 Wed Dec  9 10:38:26 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/CosEvent/Basic/run_test.pl:
