@@ -162,7 +162,12 @@ be_visitor_ccm_pre_proc::visit_provides (be_provides *node)
                          "store_port_interface failed\n"),
                         -1);
     }
- 
+  
+  if (node->provides_type ()->is_local ())
+    {
+      return 0;
+    }
+  
   // If this facet comes from a porttype, the instantiated
   // port/mirrorport name is prefixed to the facet name.
   ACE_CString prefix ("provide_");
@@ -209,7 +214,12 @@ be_visitor_ccm_pre_proc::visit_uses (be_uses *node)
                          "store_port_interface failed\n"),
                         -1);
     }
-    
+  
+  if (node->uses_type ()->is_local ())
+    {
+      return 0;
+    }
+
   if (node->is_multiple ())
     {
       if (this->gen_connect_multiple (node) == -1)
