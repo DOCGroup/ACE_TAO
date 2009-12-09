@@ -1927,7 +1927,7 @@ TAO_CodeGen::gen_export_file (const char *filename,
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO_CodeGen::gen_export_file() - ")
-                  ACE_TEXT ("Error: %C export include not initialized\n"),
+                  ACE_TEXT ("%C export include not initialized\n"),
                   msg));
       return;
     }
