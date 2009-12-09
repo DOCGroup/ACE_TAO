@@ -406,7 +406,7 @@ namespace CIAO
   Servant_Impl_Base::lookup_facet (const char *port_name)
   {
     CIAO_TRACE("Servant_Impl_Base::lookup_facet");
-    if (0 == port_name)
+    if (!port_name)
       {
         return CORBA::Object::_nil ();
       }
@@ -416,11 +416,13 @@ namespace CIAO
                              this->lock_,
                              CORBA::NO_RESOURCES ());
 
-    FacetTable::const_iterator iter =
-      this->facet_table_.find (port_name);
+    FacetTable::const_iterator iter = this->facet_table_.find (port_name);
 
     if (iter == this->facet_table_.end ())
       {
+        CIAO_ERROR ((LM_ERROR, CLINFO
+                  "Servant_Impl_Base::lookup_facet - Found no facet named (%C)\n",
+                  port_name));
         return CORBA::Object::_nil ();
       }
 
@@ -469,8 +471,7 @@ namespace CIAO
     ::Components::ReceptacleDescription_var safe;
     ::Components::ReceptacleDescription *rd = 0;
 
-    if (this->receptacle_table_.find (receptacle_name,
-                                      safe) == -1)
+    if (this->receptacle_table_.find (receptacle_name, safe) == -1)
     {
       CIAO_DEBUG ((LM_DEBUG, CLINFO
                   "Servant_Impl_Base::add_receptacle - Found no receptacle named (%C), creating it...\n",
@@ -519,7 +520,7 @@ namespace CIAO
 
       CIAO_DEBUG ((LM_DEBUG, CLINFO
                   "Servant_Impl_Base::add_receptacle - Added new connection to "
-      "existing receptacle named  (%C)\n",
+                  "existing receptacle named  (%C)\n",
                   receptacle_name));
     }
 
