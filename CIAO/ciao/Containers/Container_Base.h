@@ -40,15 +40,6 @@ namespace CIAO
     class CIAO_Container_i;
   }
 
-  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                  CORBA::PolicyList,
-                                  ACE_Hash<ACE_CString>,
-                                  ACE_Equal_To<ACE_CString>,
-                                  ACE_Null_Mutex> REC_POL_MAP;
-  typedef ACE_Hash_Map_Iterator<ACE_CString,
-                                CORBA::PolicyList,
-                                ACE_Null_Mutex> REC_POL_MAP_ITERATOR;
-
   /**
    * @class Container_i
    *
@@ -79,9 +70,6 @@ namespace CIAO
      */
     virtual PortableServer::POA_ptr the_POA (void);
     virtual PortableServer::POA_ptr the_port_POA (void);
-
-    /// Get the receptacle policy given the receptacle name
-    CORBA::PolicyList * get_receptacle_policy (const char *name);
 
     /// Install a new home
     virtual Components::CCMHome_ptr install_home (const char *primary_artifact,
@@ -120,9 +108,6 @@ namespace CIAO
     /// Get a reference to the underlying ORB.
     CORBA::ORB_ptr the_ORB (void) const;
 
-    /// Set the policy map for all the receptacles hosted in this container.
-    void set_receptacle_policy_map (::CIAO::REC_POL_MAP &rec_pol_map);
-
   protected:
     /// Reference to the ORB
     CORBA::ORB_var orb_;
@@ -145,8 +130,6 @@ namespace CIAO
     PortableServer::POA_var home_servant_poa_;
 
     Deployment::CIAO_Container_i *container_impl_;
-
-    ::CIAO::REC_POL_MAP rec_pol_map_;
 
   private:
     /// Not allowed to be used
