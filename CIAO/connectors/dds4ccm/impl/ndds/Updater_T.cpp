@@ -119,6 +119,18 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::update_one (
     {
       hnd = this->impl_->lookup_instance (an_instance);
     }
+  else
+    {
+      // Check explicitly if the instance handle matches the instance, this
+      // is not checked by RTI DDS
+      DDS_InstanceHandle_t const instance_handle =
+        this->impl_->lookup_instance (an_instance);
+
+      if (!DDS_InstanceHandle_equals (&hnd, &instance_handle))
+        {
+          throw CCM_DDS::InternalError (::DDS_RETCODE_BAD_PARAMETER, 0);
+        }
+    }
   if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
     {
       throw CCM_DDS::NonExistent (0);
