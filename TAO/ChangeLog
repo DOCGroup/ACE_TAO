@@ -1,11 +1,17 @@
+Wed Dec  9 14:24:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          Don't generate code to call get_receptacle_policy, that doesn't
+          do anything
+
 Wed Dec  9 12:45:58 UTC 2009  Martin Corino  <mcorino@remedy.nl>
 
         * tests/OBV/Supports/Supports_Test.mpc:
           Removed dummy_label dependency.
-          
+
         * tests/OBV/Supports/client.cpp:
           Fixed small coding error.
-          
+
         * bin/tao_orb_tests.lst:
           Reenabled the OBV/Supports test again since the reason for
           excluding this one seems to have been invalidated (long ago?).
