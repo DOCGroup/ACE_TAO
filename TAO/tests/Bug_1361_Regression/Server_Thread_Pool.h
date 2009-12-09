@@ -31,5 +31,5 @@ private:
   virtual int close (u_long);
   // Close hook.
   CORBA::ORB_var orb_;
-  ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> nt_;     // number of threads
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> nt_;     // number of threads
 };
