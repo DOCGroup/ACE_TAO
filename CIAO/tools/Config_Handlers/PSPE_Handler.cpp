@@ -62,6 +62,10 @@ namespace CIAO
           dest.kind = Deployment::Facet;
           break;
 
+        case CCMComponentPortKind::LocalFacet_l:
+          dest.kind = Deployment::LocalFacet;
+          break;
+
         case CCMComponentPortKind::SimplexReceptacle_l:
           dest.kind = Deployment::SimplexReceptacle;
           break;
@@ -115,6 +119,10 @@ namespace CIAO
         {
         case ::Deployment::Facet:
           pspe.kind (CCMComponentPortKind::Facet);
+          break;
+
+        case ::Deployment::LocalFacet:
+          pspe.kind (CCMComponentPortKind::LocalFacet);
           break;
 
         case ::Deployment::SimplexReceptacle:

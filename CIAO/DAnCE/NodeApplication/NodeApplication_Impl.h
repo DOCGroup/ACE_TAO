@@ -174,7 +174,13 @@ namespace DAnCE
     Components::Cookie* connect_receptacle_ext (Components::CCMObject_ptr inst,
                                               const ACE_CString& port_name,
                                               CORBA::Object_ptr facet);
-
+    
+    void connect_local_receptacle (Components::CCMObject_ptr facet,
+                                   const ACE_CString &facet_name,
+                                   Components::CCMObject_ptr receptacle,
+                                   const ACE_CString &recep_name,
+                                   CIAO::Deployment::Container_ptr cont);
+    
     void connect_emitter (Components::CCMObject_ptr inst,
                          const ACE_CString& port_name,
                          CORBA::Object_ptr consumer);
