@@ -73,7 +73,8 @@ namespace CIAO_Getter_Test_Receiver_Impl
     Invoker_exec_i (Receiver_exec_i & callback);
     virtual ~Invoker_exec_i (void);
 
-    virtual void get_no_data ();
+    virtual void start_timeout_get_one ();
+    virtual void start_timeout_get_many ();
 
     virtual void start_get_one (const char * key,
                                      ::CORBA::Long iteration);
@@ -107,7 +108,9 @@ namespace CIAO_Getter_Test_Receiver_Impl
     virtual ::CCM_GetInvoker_ptr
     get_getter_invoke ();
 
-    void get_no_data ();
+    void timeout_get_one ();
+    void timeout_get_many ();
+
     void start_get_one (const char * key,
                         CORBA::Long iteration);
     void get_one (const char * key,

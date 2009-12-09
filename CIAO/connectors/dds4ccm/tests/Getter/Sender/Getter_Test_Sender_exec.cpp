@@ -94,13 +94,13 @@ namespace CIAO_Getter_Test_Sender_Impl
   {
   }
 
-
   void
-  Sender_exec_i::start_get_no_data (void)
+  Sender_exec_i::start_timeout_tests (void)
   {
-    this->invoker_->get_no_data ();
+    this->invoker_->start_timeout_get_one ();
+    this->invoker_->start_timeout_get_many ();
   }
-  
+
   void
   Sender_exec_i::get_many (void)
   {
@@ -143,7 +143,7 @@ namespace CIAO_Getter_Test_Sender_Impl
     if (!this->done_ && this->ccm_activated_)
       {
         this->done_ = true;
-        start_get_no_data ();
+        start_timeout_tests ();
         if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
                     this->ticker_,
                     0,
