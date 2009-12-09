@@ -38,7 +38,7 @@ int
 be_visitor_servant_svs::visit_component (be_component *node)
 {
   node_ = node;
-  
+
   n_provides_ = 0UL;
   n_uses_ = 0UL;
   n_publishes_ = 0UL;
@@ -46,7 +46,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
   n_consumes_ = 0UL;
 
   this->compute_slots (node_);
-  
+
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
@@ -81,7 +81,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
       << "this->context_->_ciao_instance_id (this->ins_name_);";
 
   be_visitor_obv_factory_reg ofr_visitor (this->ctx_);
-  
+
   if (ofr_visitor.visit_component_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -132,7 +132,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
       << "::CORBA::Any & descr_value = descr[i]->value ();";
 
   be_visitor_attr_set as_visitor (this->ctx_);
-  
+
   if (as_visitor.visit_component_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -175,7 +175,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
                          "inheritance graph traversal failed\n"),
                         -1);
     }
-    
+
   os_ << be_nl << be_nl
       << "/// All ports and component attributes.";
 
@@ -185,7 +185,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
   this->gen_uses_top ();
   this->gen_publishes_top ();
   this->gen_emits_top ();
-  
+
   // This call will generate all other operations and attributes,
   // including inherited ones.
   if (this->visit_component_scope (node) == -1)
@@ -238,7 +238,7 @@ be_visitor_servant_svs::visit_operation (be_operation *node)
     {
       return 0;
     }
-    
+
   be_visitor_operation_svs v (this->ctx_);
   v.scope (this->op_scope_);
 
@@ -262,12 +262,17 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
   ACE_CString prefix (this->port_prefix_);
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
-  
+
   AST_Type *obj = node->provides_type ();
   const char *obj_name = obj->full_name ();
   AST_Decl *scope = ScopeAsDecl (obj->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
+
+  if (node->provides_type ()->is_local ())
+    {
+      return 0;
+    }
 
   // Avoid '_cxx_' prefix.
   const char *lname =
@@ -366,9 +371,14 @@ be_visitor_servant_svs::visit_uses (be_uses *node)
   ACE_CString prefix (this->port_prefix_);
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
-  
+
   const char *obj_name = node->uses_type ()->full_name ();
   bool is_multiple = node->is_multiple ();
+
+  if (node->uses_type ()->is_local ())
+    {
+      return 0;
+    }
 
   os_ << be_nl << be_nl
       << (is_multiple ? "::Components::Cookie *" : "void")
@@ -812,14 +822,14 @@ be_visitor_servant_svs::gen_provides_top (void)
       << "}" << be_uidt;
 
   be_visitor_facet_executor_block feb_visitor (this->ctx_);
-  
+
   if (feb_visitor.visit_component_scope (node_) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "be_visitor_component_svs::"
                   "gen_provides_top - "
                   "facet executor block visitor failed\n"));
-                  
+
       return;
     }
 
@@ -859,7 +869,7 @@ be_visitor_servant_svs::gen_publishes_top (void)
                   "be_visitor_component_svs::"
                   "gen_publishes_top - "
                   "subscribe block visitor failed\n"));
-                  
+
       return;
     }
 
@@ -894,7 +904,7 @@ be_visitor_servant_svs::gen_publishes_top (void)
                   "be_visitor_component_svs::"
                   "gen_publishes_top - "
                   "unsubscribe block visitor failed\n"));
-                  
+
       return;
     }
 
@@ -926,7 +936,7 @@ be_visitor_servant_svs::gen_publishes_top (void)
                   "be_visitor_component_svs::"
                   "gen_publishes_top - "
                   "event source description visitor failed\n"));
-                  
+
       return;
     }
 
@@ -959,14 +969,14 @@ be_visitor_servant_svs::gen_uses_top (void)
       << "}" << be_uidt;
 
   be_visitor_connect_block cb_visitor (this->ctx_);
-  
+
   if (cb_visitor.visit_component_scope (node_) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "be_visitor_component_svs::"
                   "gen_uses_top - "
                   "connect block visitor failed\n"));
-                  
+
       return;
     }
 
@@ -994,14 +1004,14 @@ be_visitor_servant_svs::gen_uses_top (void)
       << "}" << be_uidt;
 
   be_visitor_disconnect_block db_visitor (this->ctx_);
-  
+
   if (db_visitor.visit_component_scope (node_) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "be_visitor_component_svs::"
                   "gen_uses_top - "
                   "disconnect block visitor failed\n"));
-                  
+
       return;
     }
 
@@ -1026,14 +1036,14 @@ be_visitor_servant_svs::gen_uses_top (void)
       << "UL);";
 
   be_visitor_receptacle_desc rd_visitor (this->ctx_);
-  
+
   if (rd_visitor.visit_component_scope (node_) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "be_visitor_component_svs::"
                   "gen_uses_top - "
                   "receptacle description visitor failed\n"));
-                  
+
       return;
     }
 
@@ -1072,7 +1082,7 @@ be_visitor_servant_svs::gen_emits_top (void)
                   "be_visitor_component_svs::"
                   "gen_emits_top - "
                   "connect consumer block visitor failed\n"));
-                  
+
       return;
     }
 
@@ -1106,7 +1116,7 @@ be_visitor_servant_svs::gen_emits_top (void)
                   "be_visitor_component_svs::"
                   "gen_emits_top - "
                   "disconnect consumer block visitor failed\n"));
-                  
+
       return;
     }
 
@@ -1138,7 +1148,7 @@ be_visitor_servant_svs::gen_emits_top (void)
                   "be_visitor_component_svs::"
                   "gen_emits_top - "
                   "emitter description visitor failed\n"));
-                  
+
       return;
     }
 
@@ -1163,7 +1173,7 @@ int
 be_visitor_obv_factory_reg::visit_publishes (be_publishes *node)
 {
   this->gen_obv_factory_registration (node->field_type ());
-  
+
   return 0;
 }
 
@@ -1171,7 +1181,7 @@ int
 be_visitor_obv_factory_reg::visit_emits (be_emits *node)
 {
   this->gen_obv_factory_registration (node->field_type ());
-  
+
   return 0;
 }
 
@@ -1179,7 +1189,7 @@ int
 be_visitor_obv_factory_reg::visit_consumes (be_consumes *node)
 {
   this->gen_obv_factory_registration (node->field_type ());
-  
+
   return 0;
 }
 
@@ -1222,7 +1232,7 @@ be_visitor_attr_set::visit_attribute (be_attribute *node)
                          ACE_TEXT ("failed\n")),
                         -1);
     }
-    
+
   return 0;
 }
 
@@ -1272,7 +1282,7 @@ be_visitor_facet_executor_block::visit_provides (
       << "return this->executor_->get_" << port_name
       << " ();" << be_uidt_nl
       << "}" << be_uidt;
-      
+
   return 0;
 }
 
@@ -1294,7 +1304,7 @@ be_visitor_connect_block::visit_uses (be_uses *node)
   ACE_CString prefix (this->port_prefix_);
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
-  
+
   const char *obj_name = node->uses_type ()->full_name ();
   bool is_multiple = node->is_multiple ();
 
@@ -1305,39 +1315,52 @@ be_visitor_connect_block::visit_uses (be_uses *node)
       << "::" << obj_name << "_var _ciao_conn =" << be_idt_nl
       << "::" << obj_name << "::_narrow (connection);"
       << be_uidt_nl << be_nl
+    // @@ TODO: Spec indicates that facet references can be nil.
       << "if ( ::CORBA::is_nil (_ciao_conn.in ()))" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::Components::InvalidConnection ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
 
-  if (! is_multiple)
+  if (node->uses_type ()->is_local ())
     {
-      os_ << "ACE_CString receptacle_name (\"" << port_name
-          << "\");" << be_nl
-          << "receptacle_name += \'_\';" << be_nl
-          << "receptacle_name += "
-          << "this->context_->_ciao_instance_id ();" << be_nl
-          << "::CORBA::PolicyList_var policy_list =" << be_idt_nl
-          << "this->container_->get_receptacle_policy "
-          << "(receptacle_name.c_str ());" << be_uidt_nl << be_nl
-          << "if (policy_list->length () != 0)" << be_idt_nl
-          << "{" << be_idt_nl
-          << "::CORBA::Object_var over_ridden_object ="
-          << be_idt_nl
-          << "_ciao_conn->_set_policy_overrides (policy_list.in (),"
-          << be_nl
-          << "                                   CORBA::SET_OVERRIDE);"
-          << be_uidt_nl
-          << "_ciao_conn =" << be_idt_nl
-          << "::" << obj_name << "::_narrow (over_ridden_object.in ());"
-          << be_uidt << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl;
+      // @@todo: placeholder for connection logic
+      os_ << "/// " << (is_multiple ? "Multiplex" : "Simplex")
+          << " connect." << be_nl
+          << (is_multiple ? "return " : "") << "this->context_->connect_"
+          << port_name << " (_ciao_conn.in ());";
     }
+  else
+    {
+      if (! is_multiple)
+        {
+          os_ << "ACE_CString receptacle_name (\"" << port_name
+              << "\");" << be_nl
+              << "receptacle_name += \'_\';" << be_nl
+              << "receptacle_name += "
+              << "this->context_->_ciao_instance_id ();" << be_nl
+              << "::CORBA::PolicyList_var policy_list =" << be_idt_nl
+              << "this->container_->get_receptacle_policy "
+              << "(receptacle_name.c_str ());" << be_uidt_nl << be_nl
+              << "if (policy_list->length () != 0)" << be_idt_nl
+              << "{" << be_idt_nl
+              << "::CORBA::Object_var over_ridden_object ="
+              << be_idt_nl
+              << "_ciao_conn->_set_policy_overrides (policy_list.in (),"
+              << be_nl
+              << "                                   CORBA::SET_OVERRIDE);"
+              << be_uidt_nl
+              << "_ciao_conn =" << be_idt_nl
+              << "::" << obj_name << "::_narrow (over_ridden_object.in ());"
+              << be_uidt << be_uidt_nl
+              << "}" << be_uidt_nl << be_nl;
+        }
 
-  os_ << "/// " << (is_multiple ? "Multiplex" : "Simplex")
-      << " connect." << be_nl
-      << (is_multiple ? "return " : "") << "this->connect_"
-      << port_name << " (_ciao_conn.in ());";
+      os_ << "/// " << (is_multiple ? "Multiplex" : "Simplex")
+          << " connect." << be_nl
+          << (is_multiple ? "return " : "") << "this->connect_"
+          << port_name << " (_ciao_conn.in ());";
+
+    }
 
   if (! is_multiple)
     {
@@ -1347,7 +1370,7 @@ be_visitor_connect_block::visit_uses (be_uses *node)
 
   os_ << be_uidt_nl
       << "}" << be_uidt;
-      
+
   return 0;
 }
 
@@ -1370,27 +1393,34 @@ be_visitor_disconnect_block::visit_uses (be_uses *node)
   ACE_CString prefix (this->port_prefix_);
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
-  
+
   bool is_multiple = node->is_multiple ();
 
-  os_ << be_nl << be_nl
-      << "if (ACE_OS::strcmp (name, \"" << port_name
-      << "\") == 0)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "/// " << (is_multiple ? "Multiplex" : "Simplex")
-      << " disconnect." << be_nl;
+  if (node->uses_type ()->is_local ())
+    {
+      // @@ placeholder for local interface behavior
+    }
+  else
+    {
+      os_ << be_nl << be_nl
+          << "if (ACE_OS::strcmp (name, \"" << port_name
+          << "\") == 0)" << be_idt_nl
+          << "{" << be_idt_nl
+          << "/// " << (is_multiple ? "Multiplex" : "Simplex")
+          << " disconnect." << be_nl;
 
- if (is_multiple)
-  {
-    os_ << "if (ck == 0)" << be_idt_nl
-        << "{" << be_idt_nl
-        << "throw ::Components::CookieRequired ();" << be_uidt_nl
-        << "}" << be_uidt_nl << be_nl;
-  }
+      if (is_multiple)
+        {
+          os_ << "if (ck == 0)" << be_idt_nl
+              << "{" << be_idt_nl
+              << "throw ::Components::CookieRequired ();" << be_uidt_nl
+              << "}" << be_uidt_nl << be_nl;
+        }
 
- os_ << "return this->disconnect_" << port_name
-      << " (" << (is_multiple ? "ck" : "") << ");" << be_uidt_nl
-      << "}" << be_uidt;
+      os_ << "return this->disconnect_" << port_name
+          << " (" << (is_multiple ? "ck" : "") << ");" << be_uidt_nl
+          << "}" << be_uidt;
+    }
 
   return 0;
 }
@@ -1415,7 +1445,7 @@ be_visitor_receptacle_desc::visit_uses (be_uses *node)
   ACE_CString prefix (this->port_prefix_);
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
-  
+
   AST_Type *obj = node->uses_type ();
   bool is_multiple = node->is_multiple ();
 
@@ -1472,7 +1502,7 @@ be_visitor_subscribe_block::visit_publishes (
 {
   const char *obj_name =
     node->publishes_type ()->full_name ();
-  const char *port_name = 
+  const char *port_name =
     node->local_name ()->get_string ();
 
   os_ << be_nl << be_nl
@@ -1632,7 +1662,7 @@ be_visitor_connect_consumer_block::visit_emits (
       << " (_ciao_consumer.in ());" << be_nl << be_nl
       << "return;" << be_uidt_nl
       << "}" << be_uidt;
-      
+
   return 0;
 }
 
@@ -1723,10 +1753,17 @@ be_visitor_populate_port_tables::visit_provides (
   ACE_CString prefix (this->port_prefix_);
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
-  
-  os_ << be_nl
-      << "obj_var = this->provide_"
-      << port_name << "_i ();";
+
+  if (node->provides_type ()->is_local ())
+    {
+      // @@ placeholder for local interface behavior.
+    }
+  else
+    {
+      os_ << be_nl
+          << "obj_var = this->provide_"
+          << port_name << "_i ();";
+    }
 
   return 0;
 }
