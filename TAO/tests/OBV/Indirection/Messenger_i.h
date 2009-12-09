@@ -29,6 +29,9 @@ public:
   virtual char * receive_truncatable (
     ::demo::value::idl::TValue *& v);
 
+  virtual char * receive_sequence (
+	  const ::demo::value::idl::ConfigValues & v);
+
 protected:
   virtual ~Messenger_i();
 };

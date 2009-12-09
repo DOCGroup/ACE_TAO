@@ -6,6 +6,7 @@
 
 const char* server_ior = "file://server.ior";
 using namespace demo::value::idl;
+const char* IOR = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
 
 int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
 
@@ -17,6 +18,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
     BoxedValueFactory::register_new_factory(* orb.in());
     BaseValueFactory::register_new_factory(* orb.in());
     TValueFactory::register_new_factory(* orb.in());
+    ConfigValueFactory::register_new_factory(* orb.in());
 
     CORBA::Object_var obj = orb->string_to_object(server_ior);
     ValueServer_var tst = ValueServer::_narrow(obj.in());
@@ -72,6 +74,16 @@ int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
     }
 #endif
 
+    const int sz = 100;
+    ::demo::value::idl::ConfigValues configs (sz);
+    configs.length (sz);
+    for (CORBA::ULong i = 0; i < sz; ++i)
+    {
+      configs[i] = new ConfigValueImpl ("IOR", IOR);
+    }
+
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t)Passing sequence: %s\n",
+      tst->receive_sequence (configs)));
 
     while (orb->work_pending()) {
       orb->perform_work();

@@ -557,7 +557,6 @@ CORBA::ValueBase::_tao_unmarshal_repo_id_indirection (TAO_InputCDR &strm,
   }
 
   void* pos = strm.rd_ptr () + offset - sizeof (CORBA::Long);
-
   if (strm.get_repo_id_map()->get()->find (pos, id) != 0)
     throw CORBA::INTERNAL ();
   else if (TAO_debug_level > 0)
@@ -793,7 +792,7 @@ CORBA::ValueBase::_tao_write_repository_id (TAO_OutputCDR &strm,
     if (! strm.write_long (TAO_OBV_GIOP_Flags::Indirection_tag))
       return 0;
 
-    CORBA::Long offset = pos - strm.current ()->wr_ptr ();
+    CORBA::Long offset = - strm.offset (pos);
         
     if (TAO_debug_level > 0)
     {

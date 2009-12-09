@@ -1,3 +1,27 @@
+Wed Dec  9 01:27:54 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * tao/CDR.cpp:
+        
+          Fixed bugs in offset() method that incorrectly calculate
+          the offset when multiple message blocks are chained.
+          
+        * tao/Valuetype/ValueBase.cpp:
+
+          Fixed bugs that should use the offset() to find out a 
+          position to current wr_ptr.
+          
+        * tests/OBV/Indirection/Factory.h:
+        * tests/OBV/Indirection/Factory.cpp:
+        * tests/OBV/Indirection/Messenger.idl:
+        * tests/OBV/Indirection/MessengerClient.cpp:
+        * tests/OBV/Indirection/MessengerServer.cpp:
+        * tests/OBV/Indirection/Messenger_i.h:
+        * tests/OBV/Indirection/Messenger_i.cpp:
+
+          Added test case to verify the fixes. The new test case
+          send longer message that would involve multiple message 
+          blocks with indirection in output CDR stream.
+
 Tue Dec  8 10:25:47 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/Notify/Bug_2561_Regression/run_test.pl:
