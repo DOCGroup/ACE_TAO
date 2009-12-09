@@ -209,6 +209,7 @@ namespace Deployment
     ACE_DEBUG ((LM_DEBUG, "%skind: ", Dump_Obj::indent()));
     switch (compportdesc.kind) {
     case Facet: ACE_DEBUG ((LM_DEBUG, "Facet\n")); break;
+    case LocalFacet: ACE_DEBUG ((LM_DEBUG, "LocalFacet\n")); break;
     case SimplexReceptacle: ACE_DEBUG ((LM_DEBUG, "SimplexReceptacle\n")); break;
     case MultiplexReceptacle: ACE_DEBUG ((LM_DEBUG, "MultiplexReceptacle\n")); break;
     case EventEmitter: ACE_DEBUG ((LM_DEBUG, "EventEmitter\n")); break;
