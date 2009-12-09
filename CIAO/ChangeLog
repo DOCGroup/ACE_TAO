@@ -1,14 +1,22 @@
+Wed Dec  9 15:58:08 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.h:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.cpp:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+
+          Bugfixes.
+        
 Tue Dec  8 21:54:06 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
 
           Resolved a bug whereby connection endpoints in the original plan
           would be copied into two separate connections in a child plan.
-        
+
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
 
-          Bugfix with connection logic. 
-        
+          Bugfix with connection logic.
+
         * connectors/ami4ccm/examples/Hello/AMI/AMI.idl:
         * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.h:
         * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.cpp:
@@ -20,8 +28,8 @@ Tue Dec  8 21:54:06 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * connectors/ami4ccm/examples/Hello/descriptors/Plan.cdp:
         * connectors/ami4ccm/examples/Hello/descriptors/run_test.pl:
 
-          Ported to new local interface support. 
-        
+          Ported to new local interface support.
+
 Mon Dec  7 18:21:43 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/schema/Basic_Deployment_Data.xsd:
