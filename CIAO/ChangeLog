@@ -1,3 +1,8 @@
+Wed Dec  9 07:47:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ciao_dds4ccm.doxygen:
+          Also exclude the tests directory
+
 Wed Dec  9 07:17:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * examples/BasicSP/descriptors/run_test.pl:
