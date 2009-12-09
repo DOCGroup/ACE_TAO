@@ -45,24 +45,4 @@ namespace CIAO
         this->home_servant_poa_->destroy (1, 1);
       }
   }
-
-  CORBA::PolicyList *
-  Container_i::get_receptacle_policy (const char* name)
-  {
-    CORBA::PolicyList_var policy_list;
-
-    ACE_NEW_THROW_EX (policy_list,
-                      CORBA::PolicyList (),
-                      CORBA::NO_MEMORY ());
-
-    if (this->rec_pol_map_.find (name, policy_list) != 0)
-      {
-        CIAO_ERROR ((LM_DEBUG, CLINFO
-                    "Container_i::get_receptacle_policy - No policies found "
-                    "for the receptacle %C\n",
-                    name));
-      }
-
-    return policy_list._retn ();
-  }
 }
