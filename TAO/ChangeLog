@@ -1,3 +1,9 @@
+Wed Dec  9 21:16:38 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * tests/OBV/Indirection/MessengerClient.cpp:
+
+          Fixed a warning.
+          
 Wed Dec  9 14:24:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/servant_svs.cpp:

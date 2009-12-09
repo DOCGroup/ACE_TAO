@@ -74,7 +74,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
     }
 #endif
 
-    const int sz = 100;
+    const CORBA::ULong sz = 50;
     ::demo::value::idl::ConfigValues configs (sz);
     configs.length (sz);
     for (CORBA::ULong i = 0; i < sz; ++i)
