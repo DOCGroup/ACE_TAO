@@ -1331,30 +1331,6 @@ be_visitor_connect_block::visit_uses (be_uses *node)
     }
   else
     {
-      if (! is_multiple)
-        {
-          os_ << "ACE_CString receptacle_name (\"" << port_name
-              << "\");" << be_nl
-              << "receptacle_name += \'_\';" << be_nl
-              << "receptacle_name += "
-              << "this->context_->_ciao_instance_id ();" << be_nl
-              << "::CORBA::PolicyList_var policy_list =" << be_idt_nl
-              << "this->container_->get_receptacle_policy "
-              << "(receptacle_name.c_str ());" << be_uidt_nl << be_nl
-              << "if (policy_list->length () != 0)" << be_idt_nl
-              << "{" << be_idt_nl
-              << "::CORBA::Object_var over_ridden_object ="
-              << be_idt_nl
-              << "_ciao_conn->_set_policy_overrides (policy_list.in (),"
-              << be_nl
-              << "                                   CORBA::SET_OVERRIDE);"
-              << be_uidt_nl
-              << "_ciao_conn =" << be_idt_nl
-              << "::" << obj_name << "::_narrow (over_ridden_object.in ());"
-              << be_uidt << be_uidt_nl
-              << "}" << be_uidt_nl << be_nl;
-        }
-
       os_ << "/// " << (is_multiple ? "Multiplex" : "Simplex")
           << " connect." << be_nl
           << (is_multiple ? "return " : "") << "this->connect_"
