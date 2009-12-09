@@ -1,3 +1,8 @@
+Wed Dec  9 13:54:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Servant_Impl_Base.cpp (lookup_facet):
+          Log an error when we can't find a facet
+
 Wed Dec  9 13:53:47 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
