@@ -475,7 +475,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
                 ACE_TEXT ("No data available.\n")));
           }
       }
-    catch(CCM_DDS::NonExistent& ex)
+    catch(CCM_DDS::NonExistent& )
       {
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("ERROR: READ NO DATA: ")
               ACE_TEXT ("Caught NonExistent exception")));
