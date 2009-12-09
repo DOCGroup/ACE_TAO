@@ -190,17 +190,17 @@ namespace CIAO_Hello_AMI_Sender_Impl
         else
           {
             printf ("Sender (ASYNCH) :\tInvoke Asynchronous calls\n");
-            my_foo_ami_->sendc_foo (0, "Do something asynchronous");
-            my_foo_ami_->sendc_hello (0);
-            my_foo_ami_->sendc_get_rw_attrib(0);
-            my_foo_ami_->sendc_set_rw_attrib(0, 15);
-            my_foo_ami_->sendc_get_ro_attrib(0);
+            my_foo_ami_->sendc_foo (new MyFoo_callback_exec_i (), "Do something asynchronous");
+            my_foo_ami_->sendc_hello (new MyFoo_callback_exec_i ());
+            my_foo_ami_->sendc_get_rw_attrib(new MyFoo_callback_exec_i ());
+            my_foo_ami_->sendc_set_rw_attrib(new MyFoo_callback_exec_i (), 15);
+            my_foo_ami_->sendc_get_ro_attrib(new MyFoo_callback_exec_i ());
             printf ("Sender (ASYNCH) :\tInvoked Asynchronous calls\n");
           }
       }
     printf ("Sender (ASYNCH) :\tInvoke Asynchronous calls to test except handling\n");
-    my_foo_ami_->sendc_foo (0, "");
-    my_foo_ami_->sendc_set_rw_attrib(0, 0);
+    my_foo_ami_->sendc_foo (new MyFoo_callback_exec_i (), "");
+    my_foo_ami_->sendc_set_rw_attrib(new MyFoo_callback_exec_i (), 0);
     printf ("Sender (ASYNCH) :\tInvoked Asynchronous call.\n");
     return 0;
   }

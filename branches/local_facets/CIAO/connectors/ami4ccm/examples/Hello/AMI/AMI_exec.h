@@ -59,9 +59,12 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
       public virtual ::CORBA::LocalObject
   {
   public:
-    AMI_MyFoo_exec_i (::Hello::MyFoo_ptr receiver_foo);
+    AMI_MyFoo_exec_i ();
 
     virtual ~AMI_MyFoo_exec_i (void);
+    
+    void provide_receiver (::Hello::MyFoo_ptr receiver_foo);
+    
     virtual void
     sendc_foo (
       ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler,
@@ -119,6 +122,8 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
     ::Hello_AMI_AMI::CCM_AMI_Context_var  context_;
     ::Hello_AMI::AMI_MyFooCallback_var callback_foo_;
     ::Hello::MyFoo_var receiver_foo_;
+    
+    AMI_MyFoo_exec_i *myfoo_;
   };
   
   extern "C" AMI_EXEC_Export ::Components::EnterpriseComponent_ptr

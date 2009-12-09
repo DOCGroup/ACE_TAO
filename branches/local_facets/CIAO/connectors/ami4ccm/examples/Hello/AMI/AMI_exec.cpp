@@ -69,8 +69,7 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
   //============================================================
   // Facet Executor Implementation Class: AMI_MyFoo_exec_i
   //============================================================
-  AMI_MyFoo_exec_i::AMI_MyFoo_exec_i (
-    ::Hello::MyFoo_ptr receiver_foo)
+  AMI_MyFoo_exec_i::AMI_MyFoo_exec_i ()
   {
     // @@TODO:  This is all sorts of wrong.  We should be using the container ORB.
 
@@ -82,12 +81,6 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
     CORBA::ORB_var orb =
       CORBA::ORB_init (argc, argv, ACE_TEXT ("AMI_foo_client"));
 
-    ami_foo_server_ = ::Hello::MyFoo::_duplicate (receiver_foo);
-
-    if (CORBA::is_nil (ami_foo_server_.in ()))
-      {
-        printf ("Server is NIL\n");
-      }
     // Activate POA to handle the call back.
     CORBA::Object_var poa_object =
       orb->resolve_initial_references("RootPOA");
@@ -109,14 +102,32 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
   AMI_MyFoo_exec_i::~AMI_MyFoo_exec_i (void)
   {
   }
-
+  
+  void 
+  AMI_MyFoo_exec_i::provide_receiver (::Hello::MyFoo_ptr receiver_foo)
+  {
+    ami_foo_server_ = ::Hello::MyFoo::_duplicate (receiver_foo);    
+    
+    if (CORBA::is_nil (ami_foo_server_.in ()))
+      {
+        printf ("Server is NIL\n");
+        throw CORBA::BAD_PARAM ();
+      }
+  }
+  
   // Operations from ::CCM_AMI::AMI_ami_foo
-
+  
   void
   AMI_MyFoo_exec_i::sendc_foo (
     ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler,
     const char * in_str)
   {
+    if (CORBA::is_nil (ami_foo_server_.in ()))
+      {
+        printf ("AMI(FOO) error: ami_foo_server_ reference is nil\n");
+        return;
+      }
+
     printf ("AMI (FOO) :\tsendc_foo <%s>\n", in_str);
     ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler*  handler =
         new ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler (ami_handler);
@@ -187,11 +198,13 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
   //============================================================
 
   AMI_exec_i::AMI_exec_i (void)
+    : myfoo_ (0)
   {
   }
 
   AMI_exec_i::~AMI_exec_i (void)
   {
+    delete myfoo_;
   }
 
   // Supported operations and attributes.
@@ -203,7 +216,8 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
   ::Hello_AMI::CCM_AMI_MyFoo_ptr
   AMI_exec_i::get_perform_asynch_my_foo (void)
   {
-    return new AMI_MyFoo_exec_i (receiver_foo_.in ());
+    this->myfoo_ = new AMI_MyFoo_exec_i ();
+    return this->myfoo_;
   }
   // Operations from Components::SessionComponent.
 
@@ -223,14 +237,15 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
   void
   AMI_exec_i::configuration_complete (void)
   {
-    /* Your code here. */
+    receiver_foo_ =
+      this->context_->get_connection_my_foo_receiver ();
+
+    this->myfoo_->provide_receiver (receiver_foo_.in ());
   }
 
   void
   AMI_exec_i::ccm_activate (void)
   {
-    receiver_foo_ =
-        this->context_->get_connection_my_foo_receiver ();
     ::CCM_CORBA_AMI_MyFoo_Impl::CORBA_MyFoo_server* foo_srv =
         new ::CCM_CORBA_AMI_MyFoo_Impl::CORBA_MyFoo_server (receiver_foo_.in ());
     printf ("AMI :\tStarting MyFoo CORBA server thread.\n");
