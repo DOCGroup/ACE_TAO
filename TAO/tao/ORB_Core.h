@@ -537,6 +537,12 @@ public:
 
   void set_sync_scope_hook (Sync_Scope_Hook hook);
 
+  /// Default Sync_Scope_Hook.
+  static void default_sync_scope_hook (TAO_ORB_Core *,
+                                       TAO_Stub *,
+                                       bool &has_synchronization,
+                                       Messaging::SyncScope &scope);
+
   /// Handle to the factory for protocols_hooks_..
   TAO_Protocols_Hooks *protocols_hooks_;
 

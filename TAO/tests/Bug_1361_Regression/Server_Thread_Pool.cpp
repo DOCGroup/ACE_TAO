@@ -14,9 +14,11 @@ Thread_Pool::close (u_long)
   return 0;
 }
 
-Thread_Pool::Thread_Pool (ACE_Thread_Manager *thr_mgr,
+Thread_Pool::Thread_Pool (CORBA::ORB_ptr orb,
+                          ACE_Thread_Manager *thr_mgr,
                           int n_threads)
   : ACE_Task<ACE_SYNCH> (thr_mgr),
+  orb_(CORBA::ORB::_duplicate(orb)),
   nt_(n_threads)
 {
   if (this->activate (THR_NEW_LWP,
@@ -35,7 +37,8 @@ Thread_Pool::shutdown (void)
 {
   thr_mgr_->cancel_grp (grp_id_);
 
-  for (int i = 0; i < nt_; i++)
+  int n_threads = nt_.value ();
+  for (int i = 0; i < n_threads; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) eof, sending block for thread=%d\n",
@@ -168,6 +171,12 @@ Thread_Pool::svc (void)
             }
         }
 
+    }
+
+  --nt_;
+  if (nt_ == 0)
+    {
+      orb_->shutdown (0);
     }
 
   // Note that the <ACE_Task::svc_run> method automatically removes us

@@ -1,3 +1,27 @@
+Wed Dec  9 09:40:10 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_1361_Regression/Echo_Caller.cpp:
+        * tests/Bug_1361_Regression/Echo_Caller.h:
+        * tests/Bug_1361_Regression/server.cpp:
+        * tests/Bug_1361_Regression/Server_Thread_Pool.cpp:
+        * tests/Bug_1361_Regression/Server_Thread_Pool.h:
+        * tests/Bug_1361_Regression/run_test.pl:
+          Changed the test so that it doesn't shutdown the orb until
+          all threads are done with the remote calls. Substantially
+          extended the time for server shutdown since threads in server's
+          pool don't handle shutdown message until they send all (50)
+          remote messages.
+
+        * tao/ORB_Core.cpp:
+        * tao/Messaging/Messaging_Policy_i.cpp:
+        * tao/ORB_Core.h:
+          This fixes Bug#3682. SYNC_WITH_TRANSPORT is now really
+          default synch scope policy in TAO.
+
+        * tao/Leader_Follower_Flushing_Strategy.cpp:
+          Changed the code to poll the reactor instead of running
+          it indefinitely. This fixes bug#3697.
+
 Wed Dec  9 08:15:14 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
