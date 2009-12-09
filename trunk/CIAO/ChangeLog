@@ -1,3 +1,9 @@
+Wed Dec  9 15:53:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/BasicSP/descriptors/run_test.pl:
+        * examples/Null_Component/descriptors/run_test.pl:
+          Resolved fuzz errors/warnings.
+
 Wed Dec  9 15:01:48 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
