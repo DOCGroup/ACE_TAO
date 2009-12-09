@@ -23,41 +23,6 @@ namespace CIAO_Getter_Test_Receiver_Impl
   class Receiver_exec_i;
 
   //============================================================
-  // ConnectorStatusListener_exec_i
-  //============================================================
-  class RECEIVER_EXEC_Export ConnectorStatusListener_exec_i
-    : public virtual ::CCM_DDS::CCM_ConnectorStatusListener,
-      public virtual ::CORBA::LocalObject
-  {
-  public:
-    ConnectorStatusListener_exec_i (Receiver_exec_i &);
-    virtual ~ConnectorStatusListener_exec_i (void);
-
-    virtual
-    void on_inconsistent_topic( ::DDS::Topic_ptr ,
-                              const DDS::InconsistentTopicStatus & );
-    virtual
-    void on_requested_incompatible_qos( ::DDS::DataReader_ptr ,
-                              const DDS::RequestedIncompatibleQosStatus & );
-    virtual
-    void on_sample_rejected( ::DDS::DataReader_ptr ,
-                              const DDS::SampleRejectedStatus & );
-    virtual
-    void on_offered_deadline_missed( ::DDS::DataWriter_ptr ,
-                              const DDS::OfferedDeadlineMissedStatus & );
-    virtual
-    void on_offered_incompatible_qos( ::DDS::DataWriter_ptr ,
-                              const DDS::OfferedIncompatibleQosStatus & );
-    virtual
-    void on_unexpected_status( ::DDS::Entity_ptr ,
-                              ::DDS::StatusKind );
-  private:
-    /// Maintains a handle that actually process the event
-    Receiver_exec_i &callback_;
-    bool has_run_;
-  };
-
-  //============================================================
   // GetOneHandler
   //============================================================
   class GetOneHandler
@@ -141,9 +106,6 @@ namespace CIAO_Getter_Test_Receiver_Impl
 
     virtual ::CCM_GetInvoker_ptr
     get_getter_invoke ();
-
-    virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
-    get_info_out_connector_status (void);
 
     void get_no_data ();
     void start_get_one (const char * key,

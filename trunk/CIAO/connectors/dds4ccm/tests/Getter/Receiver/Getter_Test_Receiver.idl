@@ -21,7 +21,6 @@ module Getter_Test
     port CCM_DDS::GetterTest::DDS_Get info_get;
 
     provides GetInvoker getter_invoke;
-    provides CCM_DDS::ConnectorStatusListener info_out_connector_status;
   };
 };
 

@@ -124,7 +124,7 @@ namespace CIAO_Getter_Test_Sender_Impl
         ACE_Time_Value tv (1, 0);
         ACE_OS::sleep (tv);
         this->writer_->write_many (write_many);
-        CIAO_DEBUG ((LM_ERROR, ACE_TEXT ("write_many : written <%u> samples\n"),
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("write_many : written <%u> samples\n"),
               write_many.length ()));
       }
     catch (CCM_DDS::InternalError& ex)
