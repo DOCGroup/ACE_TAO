@@ -10,56 +10,6 @@
 namespace CIAO_Getter_Test_Receiver_Impl
 {
   //============================================================
-  // ConnectorStatusListener_exec_i
-  //============================================================
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Receiver_exec_i &callback)
-    : callback_ (callback),
-      has_run_ (false)
-  {
-  }
-
-  ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
-  {
-  }
-
-  // Operations from ::CCM_DDS::ConnectorStatusListener
-  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
-     ::DDS::Topic_ptr ,
-     const DDS::InconsistentTopicStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
-    ::DDS::DataReader_ptr ,
-     const DDS::RequestedIncompatibleQosStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr ,
-     const DDS::SampleRejectedStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
-     ::DDS::DataWriter_ptr ,
-     const DDS::OfferedDeadlineMissedStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr ,
-     const DDS::OfferedIncompatibleQosStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_unexpected_status(
-    ::DDS::Entity_ptr ,
-    ::DDS::StatusKind )
-  {
-  }
-
-  //============================================================
   // Invoker_exec_i
   //============================================================
   Invoker_exec_i::Invoker_exec_i (Receiver_exec_i & callback)
@@ -329,12 +279,6 @@ namespace CIAO_Getter_Test_Receiver_Impl
   Receiver_exec_i::get_getter_invoke ()
   {
     return new Invoker_exec_i (*this);
-  }
-
-  ::CCM_DDS::CCM_ConnectorStatusListener_ptr
-  Receiver_exec_i::get_info_out_connector_status (void)
-  {
-    return new ConnectorStatusListener_exec_i (*this);
   }
 
   // Operations from Components::SessionComponent.
