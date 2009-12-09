@@ -170,7 +170,7 @@ namespace CIAO_Getter_Test_Sender_Impl
         ACE_Time_Value tv (0, 50000);
         ACE_OS::sleep (tv);
         this->writer_->write_one (*new_key, ::DDS::HANDLE_NIL);
-        CIAO_DEBUG ((LM_DEBUG, CLINFO ACE_TEXT ("Written key <%C> with <%d>\n"),
+        CIAO_DEBUG ((LM_DEBUG, CLINFO "Written key <%C> with <%d>\n",
                     new_key->key.in (), last_iter_));
         ++last_iter_;
      }
