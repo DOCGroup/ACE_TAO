@@ -27,41 +27,40 @@ $lm_conf = $^O eq 'MSWin32' ? "windows$PerlACE::svcconf_ext"
 $init_ref = "-ORBInitRef LoadManager=file://$ior1file";
 
 
-@tests =
-    (
-        {   description => "Dead Member Detection",
+@tests = ({   
+            description => "Dead Member Detection",
             strategy  => "RoundRobin",
             svr_args => "$init_ref -o $ior2file -x file://$ior3file -y file://$ior4file -z file://$ior5file",
             svr1_args => "$init_ref -n 1 -o $ior3file",
             svr2_args => "$init_ref -n 2 -o $ior4file -j $ior6file",
             svr3_args => "$init_ref -n 3 -o $ior5file",
             client_args => "-k file://$ior2file -j file://$ior6file -s RoundRobin",
-        },
-        {   description => "Hang Member Detection",
+          },{   
+            description => "Hang Member Detection",
             strategy  => "RoundRobin",
             svr_args => "$init_ref -o $ior2file -x file://$ior3file -y file://$ior4file -z file://$ior5file",
             svr1_args => "$init_ref -n 1 -o $ior3file",
             svr2_args => "$init_ref -n 2 -o $ior4file -j $ior6file -l 2",
             svr3_args => "$init_ref -n 3 -o $ior5file",
             client_args => "-k file://$ior2file -j file://$ior6file -s RoundRobin -l",
-        },
-        {   description => "Dead Member Detection",
+          },{   
+            description => "Dead Member Detection",
             strategy  => "Random",
             svr_args => "$init_ref -o $ior2file -x file://$ior3file -y file://$ior4file -z file://$ior5file",
             svr1_args => "$init_ref -n 1 -o $ior3file",
             svr2_args => "$init_ref -n 2 -o $ior4file -j $ior6file",
             svr3_args => "$init_ref -n 3 -o $ior5file",
             client_args => "-k file://$ior2file -j file://$ior6file -s Random",
-        },
-        {   description => "Hang Member Detection",
+          },{ 
+            description => "Hang Member Detection",
             strategy  => "Random",
             svr_args => "$init_ref -o $ior2file -x file://$ior3file -y file://$ior4file -z file://$ior5file",
             svr1_args => "$init_ref -n 1 -o $ior3file",
             svr2_args => "$init_ref -n 2 -o $ior4file -j $ior6file -l 2",
             svr3_args => "$init_ref -n 3 -o $ior5file",
             client_args => "-k file://$ior2file -j file://$ior6file -s Random -l",
-        },
-    );
+          },
+         );
 
 
 $status = 0;
@@ -114,15 +113,15 @@ for $test (@tests) {
     }
 
     if ($server1->GetFile ($ior1file) == -1) {
-	    print STDERR "ERROR: cannot retrieve file <$server1_ior1file>\n";
-	    $LM->Kill (); $LM->TimedWait (1);
-	    exit 1;
+        print STDERR "ERROR: cannot retrieve file <$server1_ior1file>\n";
+        $LM->Kill (); $LM->TimedWait (1);
+        exit 1;
     }
 
     if ($server3->PutFile ($ior3file) == -1) {
-	    print STDERR "ERROR: cannot set file <$server3_ior1file>\n";
-	    $LM->Kill (); $LM->TimedWait (1);
-	    exit 1;
+        print STDERR "ERROR: cannot set file <$server3_ior1file>\n";
+        $LM->Kill (); $LM->TimedWait (1);
+        exit 1;
     }
 
     print STDERR "== Start 3 servers and an app to add them to a Object Group.\n";
@@ -136,16 +135,16 @@ for $test (@tests) {
         exit 1;
     }
     if ($server3->GetFile ($ior3file) == -1) {
-	    print STDERR "ERROR: cannot retrieve file <$server3_ior1file>\n";
+        print STDERR "ERROR: cannot retrieve file <$server3_ior1file>\n";
         $LM->Kill ();
         $SV1->Kill (); $SV1->TimedWait (1);
-	    exit 1;
+        exit 1;
     }
     if ($server3->PutFile ($ior3file) == -1) {
-	    print STDERR "ERROR: cannot set file <$server3_ior1file>\n";
+        print STDERR "ERROR: cannot set file <$server3_ior1file>\n";
         $LM->Kill ();
         $SV1->Kill (); $SV1->TimedWait (1);
-	    exit 1;
+        exit 1;
     }
 
 
@@ -161,19 +160,19 @@ for $test (@tests) {
     }
 
     if ($server4->GetFile ($ior4file) == -1) {
-	    print STDERR "ERROR: cannot retrieve file <$server4_ior1file>\n";
+        print STDERR "ERROR: cannot retrieve file <$server4_ior1file>\n";
         $LM->Kill ();
         $SV1->Kill (); $SV1->TimedWait (1);
         $SV2->Kill (); $SV2->TimedWait (1);
-	    exit 1;
+        exit 1;
     }
 
     if ($server5->PutFile ($ior5file) == -1) {
-	    print STDERR "ERROR: cannot set file <$server5_ior1file>\n";
+        print STDERR "ERROR: cannot set file <$server5_ior1file>\n";
         $LM->Kill ();
         $SV1->Kill (); $SV1->TimedWait (1);
         $SV2->Kill (); $SV2->TimedWait (1);
-	    exit 1;
+        exit 1;
     }
 
     print STDERR $SV3->CommandLine () . "\n";
@@ -189,21 +188,21 @@ for $test (@tests) {
     }
 
     if ($server5->GetFile ($ior5file) == -1) {
-	    print STDERR "ERROR: cannot retrieve file <$server5_ior1file>\n";
+        print STDERR "ERROR: cannot retrieve file <$server5_ior1file>\n";
         $LM->Kill ();
         $SV1->Kill (); $SV1->TimedWait (1);
         $SV2->Kill (); $SV2->TimedWait (1);
         $SV3->Kill (); $SV3->TimedWait (1);
-	    exit 1;
+        exit 1;
     }
 
     if ($server2->PutFile ($ior2file) == -1) {
-	    print STDERR "ERROR: cannot set file <$server2_ior1file>\n";
+        print STDERR "ERROR: cannot set file <$server2_ior1file>\n";
         $LM->Kill ();
         $SV1->Kill (); $SV1->TimedWait (1);
         $SV2->Kill (); $SV2->TimedWait (1);
         $SV3->Kill (); $SV3->TimedWait (1);
-	    exit 1;
+        exit 1;
     }
 
     print STDERR $SV->CommandLine () . "\n";
@@ -220,13 +219,13 @@ for $test (@tests) {
     }
 
     if ($server2->GetFile ($ior2file) == -1) {
-	    print STDERR "ERROR: cannot retrieve file <$server2_ior1file>\n";
+        print STDERR "ERROR: cannot retrieve file <$server2_ior1file>\n";
         $LM->Kill ();
         $SV1->Kill (); $SV1->TimedWait (1);
         $SV2->Kill (); $SV2->TimedWait (1);
         $SV3->Kill (); $SV3->TimedWait (1);
         $SV->Kill (); $SV->TimedWait (1);
-	    exit 1;
+        exit 1;
     }
 
     #Give enough time for group and member register with LB.

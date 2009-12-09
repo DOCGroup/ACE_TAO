@@ -30,7 +30,7 @@ public:
     ::demo::value::idl::TValue *& v);
 
   virtual char * receive_sequence (
-	  const ::demo::value::idl::ConfigValues & v);
+    const ::demo::value::idl::ConfigValues & v);
 
 protected:
   virtual ~Messenger_i();

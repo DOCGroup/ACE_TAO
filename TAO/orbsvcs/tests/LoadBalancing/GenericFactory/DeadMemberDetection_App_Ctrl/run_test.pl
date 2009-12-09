@@ -24,38 +24,38 @@ $init_ref = "-ORBInitRef LoadManager=file://$ior1file";
 
 
 @tests =
-    (
-     {   description => "Dead Member Detection",
+    (   {   
+         description => "Dead Member Detection",
          strategy  => "RoundRobin",
          svr1_args => "$init_ref -n 1 -o $ior2file",
          svr2_args => "$init_ref -n 2 -k file://$ior2file -j $ior3file",
          svr3_args => "$init_ref -n 3 -k file://$ior2file",
          client_args => "-k file://$ior2file -j file://$ior3file -s RoundRobin",
-     },
-     {   description => "Hang Member Detection",
+        }, {   
+         description => "Hang Member Detection",
          strategy  => "RoundRobin",
          svr1_args => "$init_ref -n 1 -o $ior2file",
          svr2_args => "$init_ref -n 2 -k file://$ior2file -j $ior3file -l 2",
          svr3_args => "$init_ref -n 3 -k file://$ior2file",
          client_args => "-k file://$ior2file -j file://$ior3file -s RoundRobin -l",
-     },
-     {   description => "Dead Member Detection",
+        }, {   
+         description => "Dead Member Detection",
          strategy  => "Random",
          svr1_args => "$init_ref -n 1 -o $ior2file",
          svr2_args => "$init_ref -n 2 -k file://$ior2file -j $ior3file",
          svr3_args => "$init_ref -n 3 -k file://$ior2file",
          client_args => "-k file://$ior2file -j file://$ior3file -s Random",
-     },
-     {   description => "Hang Member Detection",
+        }, {   
+         description => "Hang Member Detection",
          strategy  => "Random",
          svr1_args => "$init_ref -n 1 -o $ior2file",
          svr2_args => "$init_ref -n 2 -k file://$ior2file -j $ior3file -l 2",
          svr3_args => "$init_ref -n 3 -k file://$ior2file",
          client_args => "-k file://$ior2file -j file://$ior3file -s Random -l",
-     },
+        },
     );
-  
-  
+
+
 $status = 0;
 for $test (@tests) {
     my $server1 = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
@@ -100,10 +100,10 @@ for $test (@tests) {
     
     if ($server1->GetFile ($ior1file) == -1) {
         print STDERR "ERROR: cannot retrieve file <$server1_ior1file>\n";
-	    $LM->Kill (); $LM->TimedWait (1);
-	    exit 1;
-	}
-    
+        $LM->Kill (); $LM->TimedWait (1);
+        exit 1;
+    }
+ 
     if ($server2->PutFile ($ior2file) == -1) {
         print STDERR "ERROR: cannot set file <$server2_ior2file>\n";
         $LM->Kill (); $LM->TimedWait (1);
@@ -122,19 +122,19 @@ for $test (@tests) {
     }
     
     if ($server2->GetFile ($ior2file) == -1) {
-   	    print STDERR "ERROR: cannot retrieve file <$server2_ior2file>\n";
+        print STDERR "ERROR: cannot retrieve file <$server2_ior2file>\n";
         $LM->Kill ();
         $SV1->Kill (); $SV1->TimedWait (1);
-	    exit 1;
-	}
-	
-	if ($server3->PutFile ($ior3file) == -1) {
-	    print STDERR "ERROR: cannot set file <$server3_ior1file>\n";
-        $LM->Kill ();
-        $SV1->Kill (); $SV1->TimedWait (1);
-	    exit 1;
+        exit 1;
     }
-  
+
+    if ($server3->PutFile ($ior3file) == -1) {
+        print STDERR "ERROR: cannot set file <$server3_ior1file>\n";
+        $LM->Kill ();
+        $SV1->Kill (); $SV1->TimedWait (1);
+        exit 1;
+    }
+
     sleep (2);
 
     print STDERR $SV2->CommandLine () . "\n";
@@ -149,13 +149,13 @@ for $test (@tests) {
     }
     
     if ($server3->GetFile ($ior3file) == -1) {
- 	    print STDERR "ERROR: cannot retrieve file <$server3_ior1file>\n";
+        print STDERR "ERROR: cannot retrieve file <$server3_ior1file>\n";
         $LM->Kill ();
         $SV1->Kill (); $SV1->TimedWait (1);
         $SV2->Kill (); $SV2->TimedWait (1);
-	    exit 1;
+        exit 1;
     }
-	
+
     sleep (2);
 
     print STDERR $SV3->CommandLine () . "\n";
@@ -210,7 +210,7 @@ for $test (@tests) {
     else {
       print STDERR "$description test failed.\n";
     }
-  }
+}
 
 
 exit $status;
