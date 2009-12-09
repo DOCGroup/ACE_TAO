@@ -8,7 +8,9 @@ project(Messenge_idl_gen) : componentidldefaults {
               -Wb,skel_export_macro=MESSENGER_SVNT_Export \
               -Wb,skel_export_include=Messenger_svnt_export.h \
               -Wb,exec_export_macro=MESSENGER_EXEC_Export \
-              -Wb,exec_export_include=Messenger_exec_export.h
+              -Wb,exec_export_include=Messenger_exec_export.h \
+              -Wb,svnt_export_macro=MESSENGER_SVNT_Export \
+              -Wb,svnt_export_include=Messenger_svnt_export.h \
 
   IDL_Files {
     Message.idl
