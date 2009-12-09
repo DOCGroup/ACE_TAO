@@ -23,6 +23,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
   BoxedValueFactory::register_new_factory(* orb.in());
   BaseValueFactory::register_new_factory(* orb.in());
   TValueFactory::register_new_factory(* orb.in());
+  ConfigValueFactory::register_new_factory(* orb.in());
 
   CORBA::Object_var obj = orb->resolve_initial_references("RootPOA");
   PortableServer::POA_var poa = PortableServer::POA::_narrow(obj.in());

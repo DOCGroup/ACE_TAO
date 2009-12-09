@@ -262,29 +262,31 @@ int
 TAO_OutputCDR::offset (char* pos)
 {
   int offset = 0;
-  const ACE_Message_Block * cur = this->current ();
-  
-  char* last = cur->wr_ptr();
+  const ACE_Message_Block * cur_mb = this->begin ();
+  char* wr_ptr = this->current ()->wr_ptr ();
+  bool found = false;
 
-  while (cur != 0)
+  while (cur_mb != this->end ())
   {
-    if (pos >= cur->base () && pos <= last)
+    if (pos >= cur_mb->rd_ptr () && pos <= cur_mb->wr_ptr ())
     {
-      offset += (last - pos);
-      break;
+      offset += (cur_mb->wr_ptr () - pos);
+      found = true;
     }
-    else
+    else if (found)
     {
-      offset += (last - cur->base ());
+      offset += cur_mb->length ();
     }
 
-    last = cur->end ();   
-    cur = cur->prev();
+    if (wr_ptr == cur_mb->wr_ptr ())
+      break;
+
+    cur_mb = cur_mb->cont();
   }
 
-  if (cur == 0)
+  if (!found || wr_ptr != cur_mb->wr_ptr ())
   {
-    throw ::CORBA::BAD_PARAM ();
+    throw ::CORBA::INTERNAL ();
   }
 
   return offset;
@@ -369,5 +371,6 @@ TAO_InputCDR::clr_mb_flags( ACE_Message_Block::Message_Flags less_flags )
 {
   return start_.clr_self_flags( less_flags );
 }
+
 
 TAO_END_VERSIONED_NAMESPACE_DECL

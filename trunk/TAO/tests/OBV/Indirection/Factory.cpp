@@ -84,3 +84,29 @@ TValueFactory::create_for_unmarshal(void)
   return ret_val;
 }
 
+void
+ConfigValueFactory::register_new_factory(CORBA::ORB& orb) {
+  CORBA::ValueFactoryBase_var mf = new ConfigValueFactory;
+  OBV_demo::value::idl::ConfigValue bv;
+  CORBA::String_var id = bv._tao_type()->id ();;
+  orb.register_value_factory(id.in(), mf.in());
+}
+
+CORBA::ValueBase*
+ConfigValueFactory::create_for_unmarshal(void)
+{
+  ::CORBA::ValueBase *ret_val = 0;
+  ACE_NEW_THROW_EX (
+      ret_val,
+      OBV_demo::value::idl::ConfigValue,
+      ::CORBA::NO_MEMORY ()
+    );
+  return ret_val;
+}
+
+
+ConfigValueImpl::ConfigValueImpl (const char* name, const char* value)
+{
+  this->name (name);
+  this->value () <<= value;
+}

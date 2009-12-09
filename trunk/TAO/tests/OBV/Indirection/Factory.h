@@ -33,6 +33,16 @@ class TValueFactory : public CORBA::ValueFactoryBase
   virtual CORBA::ValueBase* create_for_unmarshal(void);
 };
 
+class ConfigValueFactory : public CORBA::ValueFactoryBase
+{
+ public:
+  static void register_new_factory(CORBA::ORB& orb);
+  virtual CORBA::ValueBase* create_for_unmarshal(void);
+};
 
-
+class ConfigValueImpl : public ::OBV_demo::value::idl::ConfigValue
+{
+public:
+  ConfigValueImpl (const char* name, const char* value);
+};
 
