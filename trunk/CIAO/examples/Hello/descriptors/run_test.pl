@@ -87,7 +87,7 @@ sub delete_ior_files {
 
 sub kill_node_daemons {
     for ($i = 0; $i < $daemons; ++$i) {
-        @DEAMONS[$i]->Kill (); @DEAMONS[$i]->TimedWait (1);
+        $DEAMONS[$i]->Kill (); $DEAMONS[$i]->TimedWait (1);
     }
 }
 
