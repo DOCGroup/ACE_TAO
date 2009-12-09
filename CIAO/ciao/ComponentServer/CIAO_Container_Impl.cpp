@@ -467,5 +467,24 @@ namespace CIAO
       CIAO_TRACE ("CIAO_Container_i::_default_POA");
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
+    
+    void CIAO_Container_i::connect_local_facet (::Components::CCMObject_ptr provider,
+                                                const char * provider_port,
+                                                ::Components::CCMObject_ptr user,
+                                                const char * user_port)
+    {
+      CIAO_TRACE ("CIAO_Container_i::connect_local_facet");
+      this->container_->connect_local_facet (provider, provider_port, user, user_port);
+      
+    }
+    
+    void CIAO_Container_i::disconnect_local_facet (::Components::CCMObject_ptr provider,
+                                                   const char * provider_port,
+                                                   ::Components::CCMObject_ptr user,
+                                                   const char * user_port)
+    {
+      CIAO_TRACE ("CIAO_Container_i::connect_local_facet");
+      this->container_->disconnect_local_facet (provider, provider_port, user, user_port);
+    }
   }
 }
