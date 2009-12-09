@@ -1,3 +1,9 @@
+Wed Dec  9 07:17:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/BasicSP/descriptors/run_test.pl:
+        * examples/Hello/descriptors/run_test.pl:
+          Resolved some fuzz errors/warnings.
+
 Tue Dec  8 16:36:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
