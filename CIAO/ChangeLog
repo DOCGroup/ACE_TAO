@@ -1,3 +1,14 @@
+Wed Dec  9 13:58:44 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Getter/descriptors/Plan.cdp:
+          Don't need the ConnectorStatusListener anymore.
+
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:
+          Print debug message in stead of an error message.
+
 Wed Dec  9 13:54:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Servant_Impl_Base.cpp (lookup_facet):
