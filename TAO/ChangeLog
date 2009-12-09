@@ -1,3 +1,15 @@
+Wed Dec  9 12:45:58 UTC 2009  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/OBV/Supports/Supports_Test.mpc:
+          Removed dummy_label dependency.
+          
+        * tests/OBV/Supports/client.cpp:
+          Fixed small coding error.
+          
+        * bin/tao_orb_tests.lst:
+          Reenabled the OBV/Supports test again since the reason for
+          excluding this one seems to have been invalidated (long ago?).
+
 Wed Dec  9 12:31:58 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Bug_1361_Regression/Server_Thread_Pool.h:

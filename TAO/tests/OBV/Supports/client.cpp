@@ -16,11 +16,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 't':
-        num_trials = ACE_OS::atoi (get_opts.opt_arg);
+        num_trials = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'i':
-        id = ACE_OS::atoi (get_opts.opt_arg);
+        id = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'k':
