@@ -1,3 +1,12 @@
+Wed Dec  9 12:55:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Event_Connection_Test/Base/Event_Connection_Test_Base.mpc:
+        * connectors/dds4ccm/tests/Event_Connection_Test/Connector/Event_Connection_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/Event_Connection_Test/Receiver/Event_Connection_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/Event_Connection_Test/Sender/Event_Connection_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/Event_Connection_Test/descriptors/Plan.cdp:
+          Changed project names in order to resolve fuzz warnings.
+
 Wed Dec  9 12:48:35 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/On_Inconsistent_Topic/SecConnector/ConnectorStatusListener_TestSec_Connector.mpc:
