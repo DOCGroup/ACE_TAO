@@ -117,7 +117,7 @@ if (!$server_died) {
         $status = 1;
     }
 
-    $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 85);
+    $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 300);
     if ($server_status != 0) {
         print STDERR "ERROR: server returned $server_status\n";
         $status = 1;

@@ -12,9 +12,8 @@
 
 ACE_RCSID(Bug_1270_Regression, Echo_Caller, "$Id$")
 
-Echo_Caller::Echo_Caller(CORBA::ORB_ptr orb, Thread_Pool *pool)
-  : orb_(CORBA::ORB::_duplicate(orb)),
-    pool_(pool)
+Echo_Caller::Echo_Caller(Thread_Pool *pool)
+  : pool_(pool)
 {
 }
 
@@ -27,6 +26,6 @@ Echo_Caller::start_task(Test::Echo_ptr client)
 void
 Echo_Caller::shutdown(void)
 {
-  ACE_DEBUG ((LM_DEBUG, "Server received shutdown message\n"));
-  orb_->shutdown(0);
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Server received shutdown message\n"));
+  pool_->shutdown();
 }
