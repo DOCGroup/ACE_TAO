@@ -111,3 +111,20 @@ Messenger_i::receive_truncatable (::demo::value::idl::TValue *& v)
 }
 
 
+char *  
+Messenger_i::receive_sequence (const ::demo::value::idl::ConfigValues & v)
+{
+	std::ostringstream os;
+	os << "valuetype sequence: " << std::endl;
+	CORBA::ULong len = v.length ();
+	for (CORBA::ULong i = 0; i < len; ++i)
+	{
+		os << v[i]->name();
+		const char* str;
+    v[i]->value () >>= str;
+    os << " - " << str << std::endl;
+	}
+	os << std::endl;
+	return CORBA::string_dup (os.str().c_str());
+}
+
