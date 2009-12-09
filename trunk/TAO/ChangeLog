@@ -1,15 +1,27 @@
+Wed Dec  9 05:55:14 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/run_test.pl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/run_test.pl:
+        * tests/OBV/Indirection/Factory.h:
+        * tests/OBV/Indirection/Factory.cpp:
+        * tests/OBV/Indirection/Messenger.idl:
+        * tests/OBV/Indirection/Messenger_i.h:
+        * tests/OBV/Indirection/Messenger_i.cpp:
+        
+          Fixed fuzz errors.
+
 Wed Dec  9 01:27:54 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * tao/CDR.cpp:
-        
+
           Fixed bugs in offset() method that incorrectly calculate
           the offset when multiple message blocks are chained.
-          
+
         * tao/Valuetype/ValueBase.cpp:
 
-          Fixed bugs that should use the offset() to find out a 
+          Fixed bugs that should use the offset() to find out a
           position to current wr_ptr.
-          
+
         * tests/OBV/Indirection/Factory.h:
         * tests/OBV/Indirection/Factory.cpp:
         * tests/OBV/Indirection/Messenger.idl:
@@ -19,7 +31,7 @@ Wed Dec  9 01:27:54 UTC 2009  Yan Dai  <dai_y@ociweb.com>
         * tests/OBV/Indirection/Messenger_i.cpp:
 
           Added test case to verify the fixes. The new test case
-          send longer message that would involve multiple message 
+          send longer message that would involve multiple message
           blocks with indirection in output CDR stream.
 
 Tue Dec  8 10:25:47 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
