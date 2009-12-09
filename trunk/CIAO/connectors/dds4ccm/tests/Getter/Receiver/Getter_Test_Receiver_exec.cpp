@@ -293,7 +293,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
                               ACE_TEXT ("Expected to return no data.\n")));
           }
       }
-    catch(CCM_DDS::InternalError& ex)
+    catch(CCM_DDS::InternalError& )
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: GET NO DATA: ")
                                ACE_TEXT ("Caught unexcepted InternalError ")
