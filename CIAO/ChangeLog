@@ -1,3 +1,11 @@
+Wed Dec  9 14:29:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Container_Base.cpp:
+        * ciao/Containers/Container_Base.h:
+        * ciao/Containers/Container_Base.idl:
+        * ciao/Containers/Container_Base.inl:
+          Get rid of the receptacle policy map, this doesn't do a thing
+
 Wed Dec  9 14:26:17 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Getter/Base/Get_Invoker.idl:
