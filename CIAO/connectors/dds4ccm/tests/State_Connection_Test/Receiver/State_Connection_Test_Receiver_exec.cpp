@@ -49,7 +49,7 @@ namespace CIAO_State_Connection_Test_Receiver_Impl
   Receiver_exec_i::get_info_read_status (void)
   {
     this->reader_port_status_created_ = true;
-    return 0;
+    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
   //Provides for DDS_Get
@@ -57,7 +57,7 @@ namespace CIAO_State_Connection_Test_Receiver_Impl
   Receiver_exec_i::get_info_get_status (void)
   {
     this->getter_port_status_created_ = true;
-    return 0;
+    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
   //Provides for DDS_Listen
@@ -65,14 +65,14 @@ namespace CIAO_State_Connection_Test_Receiver_Impl
   Receiver_exec_i::get_info_listen_data_listener ()
   {
     this->listen_data_listener_created_ = true;
-    return 0;
+    return ::CCM_DDS::State_ConnectionTest::CCM_Listener::_nil ();
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_listen_status (void)
   {
     this->listen_port_status_created_ = true;
-    return 0;
+    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
   //Provides for DDS_StateListen
@@ -80,14 +80,14 @@ namespace CIAO_State_Connection_Test_Receiver_Impl
   Receiver_exec_i::get_info_statelisten_data_listener (void)
   {
     this->statelisten_data_listener_created_ = true;
-    return 0;
+    return ::CCM_DDS::State_ConnectionTest::CCM_StateListener::_nil ();
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_statelisten_status (void)
   {
     this->statelisten_port_status_created_ = true;
-    return 0;
+    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
   // Operations from Components::SessionComponent.
