@@ -7,7 +7,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
-PerlACE::add_lib_path ('../../lib');
 PerlACE::check_privilege_group();
 
 $status = 0;
@@ -17,6 +16,10 @@ $status = 0;
 my $nm_service = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $test = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 my $nt_service = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
+
+$nm_service->AddLibPath ('../../lib');
+$test->AddLibPath ('../../lib');
+$nt_service->AddLibPath ('../../lib');
 
 my $notify_ior = "notify.ior";
 my $naming_ior = "naming.ior";
@@ -94,7 +97,7 @@ for $config (@test_configs) {
 
     if ($test_status != 0) {
         print STDERR "ERROR: test returned $test_status\n";
-        $status = 1; 
+        $status = 1;
     }
 
     $NT_SV->Kill ();

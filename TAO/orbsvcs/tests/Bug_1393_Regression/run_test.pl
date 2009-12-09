@@ -6,105 +6,146 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 $status = 0;
 
+my @generated_files = ("testC.h", "testC.cpp", "testC.inl", "testS.h", "testS.cpp", "testS.inl");
+
 # The location of the IFR_Service binary
-$ifr_service_bin = "../../IFR_Service";
+my $ifr_service_bin = "../../IFR_Service";
 
 # The location of the tao_ifr utility binary
-$tao_ifr_bin = "$ENV{ACE_ROOT}/bin";
+my $tao_ifr_bin = "$ENV{ACE_ROOT}/bin";
 
 # The location of the tao_idl utility binary
-$tao_idl_bin = "$ENV{ACE_ROOT}/bin";
+my $tao_idl_bin = "$ENV{ACE_ROOT}/bin";
 
+my $service = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client  = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+my $taoifr  = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
+ 
 # The idl file to be used for the test
-$test_idl = PerlACE::LocalFile("test.idl");
+my $test_idl = "test.idl";
+my $ifr_ior  = "ifr.ior";
+my $service_test_idl = $service->LocalFile ($test_idl);
+my $taoifr_test_idl = $taoifr->LocalFile ($test_idl);
+my $service_ifr_ior = $service->LocalFile($ifr_ior);
+my $taoifr_ifr_ior = $taoifr->LocalFile($ifr_ior);
+my $client_ifr_ior = $client->LocalFile($ifr_ior);
+$service->DeleteFile ($ifr_ior);
+$client->DeleteFile ($ifr_ior);
+$taoifr->DeleteFile ($ifr_ior);
+
+$TAO_IDL     = $service->CreateProcess("$tao_idl_bin/tao_idl", "$service_test_idl");
+$IFR_SERVICE = $service->CreateProcess("$ifr_service_bin/IFR_Service", "-o $service_ifr_ior");
+$TAO_IFR     = $service->CreateProcess("$tao_ifr_bin/tao_ifr",
+                                       "-ORBInitRef InterfaceRepository=file://$taoifr_ifr_ior ".
+                                       "$taoifr_test_idl");
+$CL = $client->CreateProcess("client", "-ORBInitRef InterfaceRepository=file://$client_ifr_ior");
 
 # Create an idl file contaning an interface with a C++ reserved word name
-open(HANDLE, ">$test_idl");
+open(HANDLE, ">$service_test_idl");
 print HANDLE <<_EOF_
-interface int 
-{
+interface int {
 };
 _EOF_
 ;
 close(HANDLE);
 
-$TAO_IDL    = new PerlACE::Process("$tao_idl_bin/tao_idl");
-$TAO_IDL->Arguments("$test_idl");
-$result = $TAO_IDL->SpawnWaitKill (30);
+my $result = $TAO_IDL->SpawnWaitKill ($service->ProcessStartWaitInterval() + 15);
 
 # Search one of the stub files for the munged for of the interface name
-if ($result == 0) 
-{
-   $result = 1;
-   open (HANDLE, "<testC.h");
-   while (<HANDLE>)
-   {
-      if (/^class\s+_cxx_int/)
-      {
-         $result = 0;
-         last;
-      }
-   }
-   close(HANDLE);  
+if ($result == 0) {
+    $result = 1;
+    open (HANDLE, "<testC.h");
+    while (<HANDLE>) {
+        if (/^class\s+_cxx_int/) {
+            $result = 0;
+            last;
+        }
+    }
+    close (HANDLE);  
 }
 
 # Check result of idl compiler test
-if ($result != 0)
-{
-   print STDERR "ERROR: Bug #1393 Idl compiler test failed\n";
-   $status = 1;
+if ($result != 0) {
+    print STDERR "ERROR: Bug #1393 Idl compiler test failed\n";
+    $status = 1;
 }
 
 # Delete files created during IDL compilation
-unlink <test*.h>;
-unlink <test*.cpp>;
-unlink <test*.inl>;
-   
-# The file name for the IFR service IOR
-$ifr_service_ior_file = PerlACE::LocalFile("ifr.ior");
-unlink $ifr_service_ior_file;   
-   
-# Start the IFR service
-$IFR_SERVICE = new PerlACE::Process("$ifr_service_bin/IFR_Service");
-$IFR_SERVICE->Arguments("-o $ifr_service_ior_file");
-$IFR_SERVICE->Spawn();
+foreach $file(@generated_files) {
+    $service->DeleteFile ($file)
+}
 
-if (PerlACE::waitforfile_timed ($ifr_service_ior_file, $PerlACE::wait_interval_for_process_creation) == -1) 
-{
-   print STDERR "ERROR: cannot find $ifr_service_ior_file\n";
-   $IFR_SERVICE->Kill ();
-   $status = 1; 
+# Start the IFR service
+$result = $IFR_SERVICE->Spawn();
+
+if ($result != 0) {
+    print STDERR "ERROR: IFR service returned $result\n";
+    exit 1;
+}
+
+if ($service->WaitForFileTimed ($ifr_ior, $service->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find $service_ifr_ior\n";
+    $IFR_SERVICE->Kill (); $IFR_SERVICE->TimedWait (1);
+    $status = 1; 
+}
+
+if ($service->GetFile ($test_idl) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$service_test_idl>\n";
+    $IFR_SERVICE->Kill (); $IFR_SERVICE->TimedWait (1);
+    exit 1;
+}
+
+if ($service->GetFile ($ifr_ior) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$service_ifr_ior>\n";
+    $IFR_SERVICE->Kill (); $IFR_SERVICE->TimedWait (1);
+    exit 1;
+}
+
+if ($taoifr->PutFile ($test_idl) == -1) {
+    print STDERR "ERROR: cannot set file <$taoifr_test_idl>\n";
+    $IFR_SERVICE->Kill (); $IFR_SERVICE->TimedWait (1);
+    exit 1;
+}
+
+if ($taoifr->PutFile ($ifr_ior) == -1) {
+    print STDERR "ERROR: cannot set file <$taoifr_ifr_ior>\n";
+    $IFR_SERVICE->Kill (); $IFR_SERVICE->TimedWait (1);
+    exit 1;
+}
+
+if ($client->PutFile ($ifr_ior) == -1) {
+    print STDERR "ERROR: cannot set file <$client_ifr_ior>\n";
+    $IFR_SERVICE->Kill (); $IFR_SERVICE->TimedWait (1);
+    exit 1;
 }
 
 # Use the iao_ifr utility to add our test IDL 
-$TAO_IFR = new PerlACE::Process("$tao_ifr_bin/tao_ifr");
-$TAO_IFR->Arguments("-ORBInitRef InterfaceRepository=file://$ifr_service_ior_file $test_idl"); 
-$result = $TAO_IFR->SpawnWaitKill (30);
+$result = $TAO_IFR->SpawnWaitKill ($taoifr->ProcessStartWaitInterval() + 15);
 
-if ($result != 0)
-{
+if ($result != 0) {
    print STDERR "ERROR: Failed to add IDL to interface repository\n";
    $status = 1;
 }
 
 # Invoke the client code that retrieves the interface and checks it's not munged   
-$CLIENT = new PerlACE::Process("client");
-$CLIENT->Arguments("-ORBInitRef InterfaceRepository=file://$ifr_service_ior_file");
-$result = $CLIENT->SpawnWaitKill (30);
+$result = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 15);
 
-if ($result != 0)
-{
+if ($result != 0) {
    print STDERR "ERROR: Interface definition incorrect in IFR\n";
    $status = 1;
 }
 
 # Tidy up
-$IFR_SERVICE->TerminateWaitKill (10);
-unlink $test_idl;
-unlink $ifr_service_ior_file;
+$IFR_SERVICE->TerminateWaitKill ($service->ProcessStopWaitInterval());
+
+$service->DeleteFile ($test_idl);
+$taoifr->DeleteFile ($test_idl);
+$service->DeleteFile ($ifr_ior);
+$client->DeleteFile ($ifr_ior);
+$taoifr->DeleteFile ($ifr_ior);
 
 exit $status;

@@ -23,7 +23,11 @@ my $mon = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\
 my $sup = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
 my $con = PerlACE::TestTarget::create_target (5) || die "Create target 5 failed\n";
 
-PerlACE::add_lib_path ('../lib');
+$ns->AddLibPath ('../lib');
+$nfs->AddLibPath ('../lib');
+$mon->AddLibPath ('../lib');
+$sup->AddLibPath ('../lib');
+$con->AddLibPath ('../lib');
 
 PerlACE::check_privilege_group();
 
@@ -77,8 +81,8 @@ if($static_build){
               "-ORBArg -ORBInitRef ".
               "-ORBArg NameService=corbaloc:iiop:$host:$port/NameService" .
               "\"\n";
-}  
-close(FH);    
+}
+close(FH);
 
 if ($nfs->PutFile ($notify_conf) == -1) {
     print STDERR "ERROR: cannot set file <$nfs_notify_conf>\n";

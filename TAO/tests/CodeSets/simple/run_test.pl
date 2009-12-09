@@ -8,12 +8,13 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
-PerlACE::add_lib_path ('../libs/IBM1047_ISO8859/.');
-PerlACE::add_lib_path ('../libs/UCS4_UTF16/.');
-
-
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+
+$server->AddLibPath ('../libs/IBM1047_ISO8859/.');
+$client->AddLibPath ('../libs/IBM1047_ISO8859/.');
+$server->AddLibPath ('../libs/UCS4_UTF16/.');
+$client->AddLibPath ('../libs/UCS4_UTF16/.');
 
 my $iorbase = "server.ior";
 my $server_iorfile = $server->LocalFile ($iorbase);

@@ -8,8 +8,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
-PerlACE::add_lib_path ('../Common');
-
 $status = 0;
 $debug_level = '0';
 
@@ -27,6 +25,8 @@ foreach $i (@ARGV) {
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
+$server->AddLibPath ('../Common');
+$client->AddLibPath ('../Common');
 
 $client_conf = $client->LocalFile ("client$conf");
 $server_conf = $server->LocalFile ("server$conf");
