@@ -403,38 +403,6 @@
     </internalEndpoint>
   </connection>
 
-  <!--connection>
-    <name>updater_data</name>
-    <internalEndpoint>
-      <portName>info_write_data</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="SenderComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>supplier_data</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Event_Connection_Test_ConnectorComponentInstance" />
-    </internalEndpoint>
-  </connection>
-  
-  <connection>
-    <name>updater_dds_writer</name>
-    <internalEndpoint>
-      <portName>info_write_dds_entity</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="SenderComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>supplier_dds_entity</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Event_Connection_Test_ConnectorComponentInstance" />
-    </internalEndpoint>
-  </connection-->
-
   <artifact xmi:id="Sender_ExecArtifact">
     <name>Sender_exec</name>
     <source/>

@@ -33,6 +33,7 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_listen_status (void);
 
+    //DDS_Get
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_get_status (void);
 
@@ -52,20 +53,29 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
 
   private:
     ::Event_Connection_Test::CCM_Receiver_Context_var context_;
-    ::CCM_DDS::Event_ConnectionTest::Reader_var reader_;
-    ::CCM_DDS::Event_ConnectionTest::Getter_var getter_;
-    ::CCM_DDS::Event_ConnectionTest::Reader_var reader_listen_;
-    ::DDS::DataReader_var dds_data_reader_;
-    ::DDS::DataReader_var dds_data_reader_listen_;
-    
+    //DDS_Get
+    ::CCM_DDS::Event_ConnectionTest::Getter_var getter_getter_;
+    ::DDS::DataReader_var getter_dds_data_reader_;
+    ::CCM_DDS::Event_ConnectionTest::Reader_var getter_reader_;
+
     bool getter_ok_;
-    bool reader_listen_ok_;
-    bool dds_data_reader_listen_ok_;
-    bool data_listener_control_ok_;
-    bool raw_listener_created_;
+    bool getter_dds_data_reader_ok_;
+    bool getter_reader_ok_;
+
+    //DDS_Listen
+    ::CCM_DDS::DataListenerControl_var listen_data_control_;
+    ::CCM_DDS::Event_ConnectionTest::Reader_var listen_reader_;
+    ::DDS::DataReader_var listen_dds_data_reader_;
+
+    bool listen_data_control_ok_;
+    bool listen_reader_ok_;
+    bool listen_dds_data_reader_ok_;
+
+    //Provide checks
     bool listen_port_status_created_;
     bool get_port_status_created_;
     bool get_status_listener_created_;
+    bool raw_listener_created_;
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

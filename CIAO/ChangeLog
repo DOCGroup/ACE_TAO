@@ -1,3 +1,13 @@
+Wed Dec  9 08:56:42 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Event_Connection_Test/Receiver/Event_Connection_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Event_Connection_Test/Receiver/Event_Connection_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Event_Connection_Test/Sender/Event_Connection_Test_Sender.idl:
+        * connectors/dds4ccm/tests/Event_Connection_Test/Sender/Event_Connection_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/Event_Connection_Test/Sender/Event_Connection_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/Event_Connection_Test/descriptors/Plan.cdp:
+          Support only the DDS_Event connector. Removed DDS_State connector stuff.
+
 Wed Dec  9 08:25:57 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/PSLDeadline/Sender/PSL_DeadlineTest_Sender_exec.cpp
