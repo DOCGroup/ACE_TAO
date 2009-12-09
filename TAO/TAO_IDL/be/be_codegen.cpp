@@ -1927,7 +1927,7 @@ TAO_CodeGen::gen_export_file (const char *filename,
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO_CodeGen::gen_export_file() - ")
-                  ACE_TEXT ("%C export include not initialized\n"),
+                  ACE_TEXT ("Error: %C export include not initialized\n"),
                   msg));
       return;
     }
@@ -1940,7 +1940,7 @@ TAO_CodeGen::gen_export_file (const char *filename,
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO_CodeGen::gen_export_file() - ")
-                  ACE_TEXT ("file open failed on %C\n"),
+                  ACE_TEXT ("Error: file open failed on %C\n"),
                   filename));
       return;
     }
@@ -1953,7 +1953,7 @@ TAO_CodeGen::gen_export_file (const char *filename,
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO_CodeGen::gen_export_file() - ")
-                  ACE_TEXT ("export macro %C does not end with ")
+                  ACE_TEXT ("Error: export macro %C does not end with ")
                   ACE_TEXT ("\"_Export\""),
                   macro));
       return;
