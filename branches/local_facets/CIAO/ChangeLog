@@ -1,3 +1,9 @@
+Wed Dec  9 17:05:16 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/ami4ccm/examples/Hello/Hello_Base/Hello_Base.mpc:
+
+          Reverted spurious commit. 
+        
 Wed Dec  9 15:58:08 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.h:
@@ -5,7 +11,7 @@ Wed Dec  9 15:58:08 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
 
           Bugfixes.
-        
+
 Tue Dec  8 21:54:06 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
