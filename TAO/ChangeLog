@@ -1,3 +1,33 @@
+Wed Dec  9 10:11:14 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_provides.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ex_idl.cpp:
+          Merged changes from local facets branch
+
+        Mon Dec  7 17:51:59 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+
+          filled in connection logic.
+
+        Sat Dec  5 05:35:27 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/be/be_provides.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+
+          Codegen modifications for local facets.
+
+        Wed Dec  2 00:45:54 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ex_idl.cpp:
+
+          preliminary changes.
+
 Wed Dec  9 09:40:10 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Bug_1361_Regression/Echo_Caller.cpp:

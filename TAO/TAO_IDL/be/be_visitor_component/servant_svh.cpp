@@ -32,7 +32,7 @@ int
 be_visitor_servant_svh::visit_component (be_component *node)
 {
   node_ = node;
-  
+
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
@@ -130,6 +130,11 @@ be_visitor_servant_svh::visit_provides (be_provides *node)
   const char *port_name = prefix.c_str ();
   const char *obj_name = node->provides_type ()->full_name ();
 
+  if (node->provides_type ()->is_local ())
+    {
+      return 0;
+    }
+
   os_ << be_uidt_nl << be_nl
       << "public:" << be_idt_nl
       << "virtual ::" << obj_name << "_ptr" << be_nl
@@ -156,6 +161,11 @@ be_visitor_servant_svh::visit_uses (be_uses *node)
   const char *port_name = prefix.c_str ();
   const char *obj_name = node->uses_type ()->full_name ();
   bool is_multiple = node->is_multiple ();
+
+  if (node->uses_type ()->is_local ())
+    {
+      return 0;
+    }
 
   os_ << be_uidt_nl << be_nl
       << "public:" << be_idt_nl
