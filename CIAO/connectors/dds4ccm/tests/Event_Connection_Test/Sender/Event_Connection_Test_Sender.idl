@@ -7,8 +7,8 @@
  * by-hand idl3 translation of sender components.
  */
 
-#ifndef DDS_KEYED_TEST_SENDER_IDL
-#define DDS_KEYED_TEST_SENDER_IDL
+#ifndef DDS_EVENT_CONNECTION_TEST_SENDER_IDL
+#define DDS_EVENT_CONNECTION_TEST_SENDER_IDL
 
 #include "Connector/Event_Connection_Test_Connector.idl"
 #include "Connector/Event_Connection_Test_ConnectorE.idl"
@@ -18,7 +18,6 @@ module Event_Connection_Test
   component Sender
   {
     port CCM_DDS::Event_ConnectionTest::DDS_Write info_write;
-    port CCM_DDS::Event_ConnectionTest::DDS_Update info_update;
   };
 };
 

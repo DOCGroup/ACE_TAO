@@ -14,9 +14,7 @@ namespace CIAO_Event_Connection_Test_Sender_Impl
   //============================================================
 
   Sender_exec_i::Sender_exec_i (void)
-    : updater_ok_ (false),
-      writer_ok_ (false),
-      updater_dds_datawriter_ok_ (false),
+    : writer_ok_ (false),
       writer_dds_datawriter_ok_ (false)
   {
   }
@@ -48,18 +46,6 @@ namespace CIAO_Event_Connection_Test_Sender_Impl
       {
         this->writer_ok_ = true;
       }
-    this->updater_ = 
-        this->context_->get_connection_info_update_data ();
-    if (!CORBA::is_nil (this->updater_))
-      {
-        this->updater_ok_ = true;
-      }
-    this->updater_dds_datawriter_ = 
-        this->context_->get_connection_info_update_dds_entity ();
-    if (!CORBA::is_nil (this->updater_dds_datawriter_))
-      {
-        this->updater_dds_datawriter_ok_ = true;
-      }
     this->writer_dds_datawriter_ = 
         this->context_->get_connection_info_write_dds_entity ();
     if (!CORBA::is_nil (this->writer_dds_datawriter_))
@@ -81,14 +67,6 @@ namespace CIAO_Event_Connection_Test_Sender_Impl
   void
   Sender_exec_i::ccm_remove (void)
   {
-    if (!this->updater_ok_)
-      {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Sender : get updater failed\n")));
-      }
-    else
-      {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender : Get updater passed\n")));
-      }
     if (!this->writer_ok_)
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Sender : get writer failed\n")));
@@ -96,14 +74,6 @@ namespace CIAO_Event_Connection_Test_Sender_Impl
     else
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender : Get writer passed\n")));
-      }
-    if (!this->updater_dds_datawriter_ok_)
-      {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Sender : get dds updater failed\n")));
-      }
-    else
-      {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender : Get dds updater passed\n")));
       }
     if (!this->writer_dds_datawriter_ok_)
       {
