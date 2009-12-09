@@ -142,7 +142,7 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
       }
     else
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver : Get getter passed\n")));
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get getter passed\n")));
       }
     if (!this->getter_dds_data_reader_ok_)
       {
@@ -150,7 +150,7 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
       }
     else
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver : Get DDS reader of DDS_Get passed\n")));
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get DDS reader of DDS_Get passed\n")));
       }
     if (!this->getter_reader_ok_)
       {
@@ -158,7 +158,7 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
       }
     else
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver : Get reader of DDS_Get passed\n")));
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get reader of DDS_Get passed\n")));
       }
     //DDS_Listen
     if (!this->listen_data_control_ok_)
@@ -167,7 +167,7 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
       }
     else
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver : Get data listen control of DDS_Listen passed\n")));
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get data listen control of DDS_Listen passed\n")));
       }
     if (!this->listen_reader_ok_)
       {
@@ -175,7 +175,7 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
       }
     else
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver : Get reader of DDS_Listen passed\n")));
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get reader of DDS_Listen passed\n")));
       }
     if (!this->listen_dds_data_reader_ok_)
       {
@@ -183,7 +183,7 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
       }
     else
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver : Get dds reader of DDS_Listen passed\n")));
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get dds reader of DDS_Listen passed\n")));
       }
     //Provides
     if (!this->raw_listener_created_)
@@ -192,7 +192,7 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
       }
     else
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver : Listener was created\n")));
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Listener was created\n")));
       }
     if (!this->listen_port_status_created_)
       {
@@ -200,7 +200,7 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
       }
     else
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver : PortStatusListener of DDS_Listen was created\n")));
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : PortStatusListener of DDS_Listen was created\n")));
       }
     if (!this->get_port_status_created_)
       {
@@ -208,7 +208,7 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
       }
     else
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver : PortStatusListener of DDS_Get was created\n")));
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : PortStatusListener of DDS_Get was created\n")));
       }
     if (!this->get_status_listener_created_)
       {
@@ -216,7 +216,7 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
       }
     else
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Receiver : ConnectorStatusListener was created\n")));
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : ConnectorStatusListener was created\n")));
       }
   }
 

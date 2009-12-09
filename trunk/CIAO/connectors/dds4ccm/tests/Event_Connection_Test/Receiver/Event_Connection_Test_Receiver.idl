@@ -17,7 +17,6 @@ module Event_Connection_Test
   {
     port CCM_DDS::Event_ConnectionTest::DDS_Listen  info_listen;
     port CCM_DDS::Event_ConnectionTest::DDS_Get     info_get;
-    //port CCM_DDS::Event_ConnectionTest::DDS_StateListen
     provides CCM_DDS::ConnectorStatusListener status_listener;
   };
 };
