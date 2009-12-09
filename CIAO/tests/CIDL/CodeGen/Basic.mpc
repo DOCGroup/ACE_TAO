@@ -13,7 +13,7 @@ project(Basic_idl_gen) : componentidldefaults {
   }
 }
 
-project(Basic_lem_gen) : componentidldefaults {
+project(Basic_lem_gen) : ciaoidldefaults {
   custom_only = 1
   after += Basic_idl_gen
   idlflags += -Wb,stub_export_macro=BASIC_STUB_Export \
