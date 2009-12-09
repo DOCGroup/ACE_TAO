@@ -1,3 +1,8 @@
+Wed Dec  9 13:11:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Updater_T.cpp:
+          Check whether instance_handle and instance match
+
 Wed Dec  9 12:55:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Event_Connection_Test/Base/Event_Connection_Test_Base.mpc:
