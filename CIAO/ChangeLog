@@ -1,3 +1,22 @@
+Wed Dec  9 11:13:44 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added State_Connection_Test.
+
+        * connectors/dds4ccm/tests/Event_Connection_Test/README:
+          Changed to meet the latest code updates.
+
+        * connectors/dds4ccm/tests/Event_Connection_Test/Receiver/Event_Connection_Test_Receiver.idl:
+          Removed comments.
+
+        * connectors/dds4ccm/tests/Event_Connection_Test/Receiver/Event_Connection_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Event_Connection_Test/Sender/Event_Connection_Test_Sender_exec.cpp:
+          Logging debug messages (in stead of error messages).
+
+        * connectors/dds4ccm/tests/State_Connection_Test/*:
+          Added this test in order to test all the connections a state connector
+          needs.
+
 Wed Dec  9 08:56:42 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Event_Connection_Test/Receiver/Event_Connection_Test_Receiver_exec.h:

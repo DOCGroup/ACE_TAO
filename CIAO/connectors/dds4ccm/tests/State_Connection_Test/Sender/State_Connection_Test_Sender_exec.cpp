@@ -1,21 +1,21 @@
 // -*- C++ -*-
 // $Id$
 
-#include "Event_Connection_Test_Sender_exec.h"
+#include "State_Connection_Test_Sender_exec.h"
 #include "ace/Guard_T.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
-namespace CIAO_Event_Connection_Test_Sender_Impl
+namespace CIAO_State_Connection_Test_Sender_Impl
 {
   //============================================================
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
 
   Sender_exec_i::Sender_exec_i (void)
-    : writer_ok_ (false),
-      writer_dds_datawriter_ok_ (false)
+    : updater_ok_ (false),
+      updater_dds_datawriter_ok_ (false)
   {
   }
 
@@ -29,7 +29,7 @@ namespace CIAO_Event_Connection_Test_Sender_Impl
   Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
   {
     this->context_ =
-      ::Event_Connection_Test::CCM_Sender_Context::_narrow (ctx);
+      ::State_Connection_Test::CCM_Sender_Context::_narrow (ctx);
 
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
@@ -40,17 +40,17 @@ namespace CIAO_Event_Connection_Test_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
-    this->writer_ = 
-        this->context_->get_connection_info_write_data ();
-    if (!CORBA::is_nil (this->writer_))
+    this->updater_ = 
+        this->context_->get_connection_info_update_data ();
+    if (!CORBA::is_nil (this->updater_))
       {
-        this->writer_ok_ = true;
+        this->updater_ok_ = true;
       }
-    this->writer_dds_datawriter_ = 
-        this->context_->get_connection_info_write_dds_entity ();
-    if (!CORBA::is_nil (this->writer_dds_datawriter_))
+    this->updater_dds_datawriter_ = 
+        this->context_->get_connection_info_update_dds_entity ();
+    if (!CORBA::is_nil (this->updater_dds_datawriter_))
       {
-        this->writer_dds_datawriter_ok_ = true;
+        this->updater_dds_datawriter_ok_ = true;
       }
   }
 
@@ -67,26 +67,26 @@ namespace CIAO_Event_Connection_Test_Sender_Impl
   void
   Sender_exec_i::ccm_remove (void)
   {
-    if (!this->writer_ok_)
+    if (!this->updater_ok_)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Sender : get writer failed\n")));
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Sender : get updater failed\n")));
       }
     else
       {
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender : Get writer passed\n")));
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender : Get updater passed\n")));
       }
-    if (!this->writer_dds_datawriter_ok_)
+    if (!this->updater_dds_datawriter_ok_)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Sender : get dds writer failed\n")));
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Sender : get dds updater failed\n")));
       }
     else
       {
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender : Get dds writer passed\n")));
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender : Get dds updater passed\n")));
       }
   }
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_Event_Connection_Test_Sender_Impl (void)
+  create_State_Connection_Test_Sender_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
