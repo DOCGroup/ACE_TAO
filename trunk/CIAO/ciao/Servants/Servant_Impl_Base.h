@@ -151,26 +151,29 @@ namespace CIAO
     virtual PortableServer::POA_ptr _default_POA (void);
 
     virtual ::Components::Cookie * subscribe (const char * publisher_name,
-                                              ::Components::EventConsumerBase_ptr subscriber);
+                                              ::Components::EventConsumerBase_ptr subscriber) = 0;
 
     virtual ::Components::EventConsumerBase_ptr unsubscribe (const char * publisher_name,
-                                                             ::Components::Cookie * ck);
+                                                             ::Components::Cookie * ck) = 0;
 
     virtual void connect_consumer (const char * emitter_name,
-                                   ::Components::EventConsumerBase_ptr consumer);
+                                   ::Components::EventConsumerBase_ptr consumer) = 0;
 
-    virtual ::Components::EventConsumerBase_ptr disconnect_consumer (const char * source_name);
+    virtual ::Components::EventConsumerBase_ptr disconnect_consumer (
+      const char * source_name) = 0;
 
-    virtual ::Components::EmitterDescriptions * get_all_emitters (void);
+    virtual ::Components::EmitterDescriptions * get_all_emitters (void) = 0;
 
-    virtual ::Components::PublisherDescriptions * get_all_publishers (void);
+    virtual ::Components::PublisherDescriptions * get_all_publishers (void) = 0;
 
     virtual ::Components::Cookie * connect (const char * name,
-                                            ::CORBA::Object_ptr connection);
+                                            ::CORBA::Object_ptr connection) = 0;
 
     virtual ::CORBA::Object_ptr disconnect (const char * name,
-                                            ::Components::Cookie * ck);
+                                            ::Components::Cookie * ck) = 0;
 
+
+    virtual ::CORBA::Object_ptr get_facet_executor (const char *name) = 0;
 
   protected:
     void add_facet (const char *port_name,
