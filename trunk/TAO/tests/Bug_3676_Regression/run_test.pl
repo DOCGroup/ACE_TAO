@@ -17,11 +17,13 @@ foreach $i (@ARGV) {
     }
 }
 
-PerlACE::add_lib_path ('IBM1047_ISO8859/.');
-PerlACE::add_lib_path ('UCS4_UTF16/.');
-
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+
+$server->AddLibPath ('IBM1047_ISO8859/.');
+$client->AddLibPath ('IBM1047_ISO8859/.');
+$server->AddLibPath ('UCS4_UTF16/.');
+$client->AddLibPath ('UCS4_UTF16/.');
 
 my $iorbase = "server.ior";
 my $server_iorfile = $server->LocalFile ($iorbase);

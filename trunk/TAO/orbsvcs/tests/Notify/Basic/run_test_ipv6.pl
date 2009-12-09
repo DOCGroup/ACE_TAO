@@ -21,7 +21,9 @@ my $ns = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n
 my $nfs = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 my $test = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
 
-PerlACE::add_lib_path ('../lib');
+$ns->AddLibPath ('../lib');
+$nfs->AddLibPath ('../lib');
+$test->AddLibPath ('../lib');
 
 PerlACE::check_privilege_group();
 
@@ -127,7 +129,7 @@ for $config (@test_configs) {
       }
 
     print STDERR "\nTesting Notification Service with config file = $config ....\n\n";
-    
+
     my $nfs_config = $nfs->LocalFile ($config);
 
     $NFS = $nfs->CreateProcess ("../../../Notify_Service/Notify_Service",

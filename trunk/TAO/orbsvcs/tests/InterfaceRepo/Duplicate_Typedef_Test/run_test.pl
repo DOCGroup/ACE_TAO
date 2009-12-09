@@ -103,13 +103,13 @@ $nice = "";
 
 $ifrflags = '-Si';
 
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+$server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+$client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-my $iorbase = "if_repo.ior";
+$iorbase = "if_repo.ior";
 
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($iorbase);
+$server_iorfile = $server->LocalFile ($iorbase);
+$client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
@@ -124,9 +124,10 @@ $CL = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_ifr",
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill ();
+if ($server->WaitForFileTimed ($iorbase,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
 

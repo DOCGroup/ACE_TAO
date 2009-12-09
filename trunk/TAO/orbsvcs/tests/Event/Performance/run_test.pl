@@ -11,11 +11,11 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib  "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
-PerlACE::add_lib_path ('../lib');
-
 $status = 0;
 
 my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+
+$test->AddLibPath ('../lib');
 
 $ec_st_conf = $test->LocalFile ("ec.st$PerlACE::svcconf_ext");
 

@@ -22,7 +22,10 @@ my $nfs = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\
 my $sup = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
 my $con = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
 
-PerlACE::add_lib_path ('../lib');
+$ns->AddLibPath ('../lib');
+$nfs->AddLibPath ('../lib');
+$sup->AddLibPath ('../lib');
+$con->AddLibPath ('../lib');
 
 PerlACE::check_privilege_group();
 
@@ -47,7 +50,7 @@ $nfs->DeleteFile ($nfsiorfile);
 $sup->DeleteFile ($supiorfile);
 $con->DeleteFile ($supiorfile);
 
-$NS = $ns->CreateProcess ("../../../Naming_Service/Naming_Service", 
+$NS = $ns->CreateProcess ("../../../Naming_Service/Naming_Service",
                           " -ORBEndpoint iiop://$ns_host:$ns_port");
 
 $NFS = $nfs->CreateProcess ("../../../Notify_Service/Notify_Service",
