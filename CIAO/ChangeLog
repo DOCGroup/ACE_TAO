@@ -1,3 +1,9 @@
+Wed Dec  9 08:14:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/Event_Connection_Test/*:
+          Renamed Get_Connection_Test to Event_Connection_Test.
+
 Wed Dec  9 07:47:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ciao_dds4ccm.doxygen:
