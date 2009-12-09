@@ -78,13 +78,13 @@ sub init_ior_files {
 sub delete_ior_files {
     for ($i = 0; $i < $daemons; ++$i) {
         $tg_daemons[$i]->DeleteFile ($iorbases[$i]);
+        $tg_daemons[$i]->DeleteFile ("rategen.ior");
     }
     $tg_naming->DeleteFile ($ior_nsbase);
     $tg_exe_man->DeleteFile ($ior_embase);
     for ($i = 0; $i < $daemons; ++$i) {
         $iorfiles[$i] = $tg_daemons[$i]->LocalFile ($iorbases[$i]);
     }
-    unlink PerlACE::LocalFile ("rategen.ior");
 }
 
 sub kill_node_daemons {
