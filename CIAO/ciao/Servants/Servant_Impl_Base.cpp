@@ -200,7 +200,7 @@ namespace CIAO
         ::Components::FacetDescription *tmp =
           this->lookup_facet_description (names[i]);
 
-        if (0 == tmp)
+        if (!tmp)
           {
             throw Components::InvalidName ();
           }
@@ -300,7 +300,7 @@ namespace CIAO
         ::Components::ConsumerDescription *tmp =
           this->lookup_consumer_description (names[i]);
 
-        if (0 == tmp)
+        if (!tmp)
           {
             throw Components::InvalidName ();
           }
@@ -431,7 +431,7 @@ namespace CIAO
   Servant_Impl_Base::lookup_facet_description (const char *port_name)
   {
     CIAO_TRACE("Servant_Impl_Base::lookup_facet_description");
-    if (0 == port_name)
+    if (!port_name)
       {
         /// Calling function will throw InvalidName after getting this.
         return 0;
@@ -646,68 +646,6 @@ namespace CIAO
   {
     CIAO_TRACE("Servant_Impl_Base::_default_POA (void)");
     return PortableServer::POA::_duplicate (container_->the_POA ());
-  }
-
-  ::Components::Cookie *
-  Servant_Impl_Base::subscribe (const char *,
-                                ::Components::EventConsumerBase_ptr)
-  {
-    CIAO_TRACE ("Servant_Impl_Base::subscribe");
-    throw CORBA::NO_IMPLEMENT ();
-  }
-
-
-   ::Components::EventConsumerBase_ptr
-   Servant_Impl_Base::unsubscribe (const char *,
-                                   ::Components::Cookie *)
-  {
-    CIAO_TRACE ("Servant_Impl_Base::unsubscribe");
-    throw CORBA::NO_IMPLEMENT ();
-  }
-
-   void
-   Servant_Impl_Base::connect_consumer (const char *,
-                                        ::Components::EventConsumerBase_ptr)
-  {
-    CIAO_TRACE ("Servant_Impl_Base::connect_consumer");
-    throw CORBA::NO_IMPLEMENT ();
-  }
-
-  ::Components::EventConsumerBase_ptr
-  Servant_Impl_Base::disconnect_consumer (const char *)
-  {
-    CIAO_TRACE ("Servant_Impl_Base::disconnect_consumer");
-    throw CORBA::NO_IMPLEMENT ();
-  }
-
-  ::Components::EmitterDescriptions *
-  Servant_Impl_Base::get_all_emitters (void)
-  {
-    CIAO_TRACE ("Servant_Impl_Base::get_all_emitters");
-    throw CORBA::NO_IMPLEMENT ();
-  }
-
-  ::Components::PublisherDescriptions *
-  Servant_Impl_Base::get_all_publishers (void)
-  {
-    CIAO_TRACE ("Servant_Impl_Base::get_all_publishers");
-    throw CORBA::NO_IMPLEMENT ();
-  }
-
-  ::Components::Cookie *
-  Servant_Impl_Base::connect (const char *,
-                              ::CORBA::Object_ptr)
-  {
-    CIAO_TRACE ("Servant_Impl_Base::connect");
-    throw CORBA::NO_IMPLEMENT ();
-  }
-
-  ::CORBA::Object_ptr
-  Servant_Impl_Base::disconnect (const char *,
-                                 ::Components::Cookie *)
-  {
-    CIAO_TRACE ("Servant_Impl_Base::disconnect");
-    throw CORBA::NO_IMPLEMENT ();
   }
 }
 
