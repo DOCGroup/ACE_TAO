@@ -1,3 +1,9 @@
+Wed Dec  9 10:52:26 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * bin/fuzz.pl: 
+
+          Updated conditions for new framework
+
 Mon Dec  7 16:09:18 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * tests/Basic_Types_Test.cpp: Add a verification for the endianness
