@@ -1,3 +1,8 @@
+Wed Dec  9 08:15:14 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Use Error in error messages so that the scoreboard flags them red
+
 Wed Dec  9 05:55:14 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/run_test.pl:
@@ -7,7 +12,7 @@ Wed Dec  9 05:55:14 UTC 2009  Yan Dai  <dai_y@ociweb.com>
         * tests/OBV/Indirection/Messenger.idl:
         * tests/OBV/Indirection/Messenger_i.h:
         * tests/OBV/Indirection/Messenger_i.cpp:
-        
+
           Fixed fuzz errors.
 
 Wed Dec  9 01:27:54 UTC 2009  Yan Dai  <dai_y@ociweb.com>
