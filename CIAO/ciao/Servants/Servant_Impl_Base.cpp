@@ -420,9 +420,6 @@ namespace CIAO
 
     if (iter == this->facet_table_.end ())
       {
-        CIAO_ERROR ((LM_ERROR, CLINFO
-                  "Servant_Impl_Base::lookup_facet - Found no facet named (%C)\n",
-                  port_name));
         return CORBA::Object::_nil ();
       }
 
