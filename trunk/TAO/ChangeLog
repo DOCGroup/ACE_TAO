@@ -1,8 +1,14 @@
+Thu Dec 10 18:42:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+        * bin/tao_orb_tests.lst:
+          Removed FUZZ completely, fuzz now checks all run*.pl scripts
+
 Thu Dec 10 16:45:24 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * bin/tao_other_tests.lst:
         * bin/tao_orb_tests.lst:
-          
+
           Tests are added to fuzz build.
 
 Thu Dec 10 15:06:28 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
@@ -10,7 +16,7 @@ Thu Dec 10 15:06:28 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
         * orbsvcs/examples/ImR/Combined_Service/run_test.pl:
 
           Test is converted to use new test framework
-          and added to fuzz build.	
+          and added to fuzz build.
 
 Thu Dec 10 14:54:27 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
@@ -43,7 +49,7 @@ Thu Dec 10 13:45:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
         * tests/Oneways_Invoking_Twoways/client.cpp:
         * tests/Oneways_Invoking_Twoways/Sender_i.cpp:
         * tests/Oneways_Invoking_Twoways/run_test.pl:
-          Changed to fix problems with incorrect shutdown sequence 
+          Changed to fix problems with incorrect shutdown sequence
           (see Bugzilla 2068).
 
 Thu Dec 10 13:03:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
