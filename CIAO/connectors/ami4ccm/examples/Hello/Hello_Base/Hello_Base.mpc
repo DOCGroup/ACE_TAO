@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n Hello_Base"
 
-project(AMI_Hello_idl_gen) : componentidldefaults, ami   {
+project(AMI_Hello_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_STUB_Export \
               -Wb,stub_export_include=Hello_stub_export.h \
@@ -11,7 +11,7 @@ project(AMI_Hello_idl_gen) : componentidldefaults, ami   {
               -Wb,exec_export_include=Hello_exec_export.h -I..
 
   IDL_Files {
-    Hello.idl
+    Hello_Base.idl
   }
 }
 
@@ -23,11 +23,11 @@ project(AMI_Hello_lem_gen) : ciaoidldefaults {
               -Wb,export_include=Hello_exec_export.h   -I.. -SS
 
   IDL_Files {
-    HelloE.idl
+    Hello_BaseE.idl
   }
 }
 
-project(AMI_Hello_Base_idl_gen) : componentidldefaults {
+project(AMI_Hello_Base_idl_gen) : componentidldefaults, ami {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_BASE_STUB_Export \
               -Wb,stub_export_include=Hello_Base_stub_export.h \
@@ -37,7 +37,7 @@ project(AMI_Hello_Base_idl_gen) : componentidldefaults {
               -Wb,exec_export_include=Hello_Base_exec_export.h -I..
 
   IDL_Files {
-    Hello_Base.idl
+    Hello.idl
   }
 }
 
@@ -49,7 +49,7 @@ project(AMI_Hello_Base_lem_gen) : ciaoidldefaults {
               -Wb,export_include=Hello_Base_exec_export.h -I.. -SS
 
   IDL_Files {
-    Hello_BaseE.idl
+    HelloE.idl
   }
 }
 

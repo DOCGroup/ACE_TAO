@@ -71,9 +71,11 @@ namespace CIAO
           const ::DDS::InstanceHandle_t & instance_handle,
           ::CCM_DDS::DataNumber_t index);
 
-        void check_existence (
-          const typename CCM_TYPE::seq_type& data,
-          bool existent);
+        void check_existent (
+          const typename CCM_TYPE::seq_type& data);
+
+        void check_already_created (
+          const typename CCM_TYPE::seq_type& data);
 
         bool is_global_scope_;
         bool is_coherent_write_;
