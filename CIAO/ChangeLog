@@ -1,3 +1,9 @@
+Thu Dec 10 08:37:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Getter/README:
+        * connectors/dds4ccm/tests/Reader/README:
+          Described the tests.
+
 Thu Dec 10 08:21:16 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Updater_T.cpp:
