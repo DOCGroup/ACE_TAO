@@ -1,3 +1,20 @@
+Thu Dec 10 19:15:15 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLDeadline/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLQoS/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLSampleRejected/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLUnexpStat/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/Event_Connection_Test/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/Getter/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/KeyedWriter/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/ListenNotEnabled/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/ListenOneByOne/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/PSLDeadline/descriptors/run_test.pl:
+        * examples/Hello/descriptors/run_test_alias.pl:
+          Resolved some fuzz errors/warnings.
+
 Thu Dec 10 19:03:16 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.h:
