@@ -1,3 +1,15 @@
+Thu Dec 10 19:31:15 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/run_1_to_5.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_5_to_1.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_5_to_5.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_receiver.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_sender.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_test.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_test_dds.pl:
+        * docs/tutorials/Quoter/Simple/descriptors/runNodeDaemons.pl:
+          Resolved fuzz errors/warnings.
+
 Thu Dec 10 19:26:16 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Home_Servant_Impl_T.cpp:
