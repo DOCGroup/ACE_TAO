@@ -50,7 +50,7 @@
 <presetreference>Classes and Structs_Member Alignment Together_False</presetreference>
 </rule>
 <rule name="constructor-initialiser-packing">
-<presetreference>Constructor_Member Initializers_One Per Line</presetreference>
+<presetreference>Constructor_Member Initializers_One Per Line Comma Below</presetreference>
 </rule>
 <rule name="constructor-initialiser-style">
 <presetreference>Constructor_Initializer Alignment_True</presetreference>
@@ -245,7 +245,7 @@
 <presetreference>Global_Line Wrapping_80</presetreference>
 </rule>
 <rule name="member-initialiser-position">
-<presetreference>Constructor_Member Initializer Position_Below Indented</presetreference>
+<presetreference>Constructor_Member Initializer Position_Below</presetreference>
 </rule>
 <rule name="min-member-align">
 <presetreference>Classes and Structs_Minimum Member Alignment_None</presetreference>
