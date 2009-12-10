@@ -1,3 +1,20 @@
+Thu Dec 10 19:03:16 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.h:
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+          Removed generated headers
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+          const changes and improved debug messages
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
+          Const change
+
+        * DAnCE/RepositoryManager/Repository_Manager_Module.cpp:
+          Fixed typo in debug statement
+
 Thu Dec 109 17:02:57 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/Updater/Sender/Updater_Sender_exec.cpp
