@@ -1,10 +1,23 @@
+Thu Dec 10 11:57:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/String_Manager_T.h
+        * tao/String_Sequence_Element_T.h:
+          Added private operator != and ==, the string elements
+          just behave like char*, so != and == on them is illegal
+          and doesn't check the strings itself. If any user has
+          done this without realizing this, this change will now
+          give the user a compile error
+
+        * tao/TransportCurrent/Transport_Current.h:
+          Layout change
+
 Thu Dec 10 11:42:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Bug_3672_Regression/ami_test_i.cpp:
         * tests/Bug_3672_Regression/client.cpp:
           Test did not work correctly on Windows because of timing issues.
           Changed to work correctly on Windows also.
-        
+
 Thu Dec 10 10:32:56 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/Bug_1436_Regression/run_test.pl:
@@ -35,7 +48,7 @@ Wed Dec  9 21:16:38 UTC 2009  Yan Dai  <dai_y@ociweb.com>
         * tests/OBV/Indirection/MessengerClient.cpp:
 
           Fixed a warning.
-          
+
 Wed Dec  9 14:24:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/servant_svs.cpp:

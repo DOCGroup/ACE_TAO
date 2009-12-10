@@ -1,7 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-
 #include "tao/TransportCurrent/TCC.h"
 #include "tao/TransportCurrent/Current_Loader.h"
 
