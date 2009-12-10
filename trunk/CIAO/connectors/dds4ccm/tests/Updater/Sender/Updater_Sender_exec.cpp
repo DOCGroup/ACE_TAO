@@ -3,6 +3,7 @@
 
 //Test Updater functions
 #include "Updater_Sender_exec.h"
+#include "ace/Guard_T.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
@@ -50,7 +51,7 @@ namespace CIAO_Updater_Sender_Impl
     {
       if (!CORBA::is_nil (this->updater_) ) {
         this->updater_->create_one(i);
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: create_one with instance key <%s>\n"),
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: create_one with instance key <%C>\n"),
                      i.key));
       }
       else
@@ -61,13 +62,13 @@ namespace CIAO_Updater_Sender_Impl
     }
     catch(CCM_DDS::AlreadyCreated &)
     {
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: AlreadyCreated with test updater create_one <%s>.\n"),
+      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: AlreadyCreated with test updater create_one <%C>.\n"),
                       i.key));   
       result= false;
     }
     catch (CCM_DDS::InternalError& )
     {
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while create_one for <%s>.\n"),
+      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while create_one for <%C>.\n"),
                       i.key));   
       result=false;;
     }
@@ -83,7 +84,7 @@ namespace CIAO_Updater_Sender_Impl
     try
     {
       this->updater_->create_one(i);
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: create_one with already existing instance key <%s>\n"),
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: create_one with already existing instance key <%Cs>\n"),
                     i.key));
     }
     catch(CCM_DDS::AlreadyCreated &)
@@ -93,7 +94,7 @@ namespace CIAO_Updater_Sender_Impl
     }
     catch (CCM_DDS::InternalError& )
     {
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while create_one for <%s>.\n"),
+      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while create_one for <%C>.\n"),
                       i.key));   
       result=false;
     }
@@ -109,18 +110,18 @@ namespace CIAO_Updater_Sender_Impl
     try
     {
       this->updater_->update_one(i, DDS::HANDLE_NIL);
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: update_one with already existing instance with DDS::HANDLE_NIL, key <%s>\n"),
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: update_one with already existing instance with DDS::HANDLE_NIL, key <%C>\n"),
                     i.key));
     }
     catch(CCM_DDS::NonExistent &)
     {
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater update_one <%s>.\n"),
+      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater update_one <%C>.\n"),
                      i.key));   
       result =  false;
     }
     catch (CCM_DDS::InternalError& )
     {
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while update_one for <%s>.\n"),
+      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while update_one for <%C>.\n"),
                       i.key));   
       result = false;
     }
@@ -137,7 +138,7 @@ namespace CIAO_Updater_Sender_Impl
     try
     {
       this->updater_->update_one(i, DDS::HANDLE_NIL);
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: update_one with not registerd instance, key <%s>\n"),
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: update_one with not registerd instance, key <%C>\n"),
                     i.key));
     }
     catch(CCM_DDS::NonExistent &)
@@ -147,7 +148,7 @@ namespace CIAO_Updater_Sender_Impl
     }
     catch (CCM_DDS::InternalError& )
     {
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while update_one for <%s>.\n"),
+      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while update_one for <%C>.\n"),
                       i.key)); 
       result = false;
     }
@@ -162,19 +163,19 @@ namespace CIAO_Updater_Sender_Impl
     TestTopic i = this->topic_seq_one_[0];
     try
     {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: delete_one with registerd instance with DDS::HANDLE_NIL, key <%s>\n"),
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: delete_one with registerd instance with DDS::HANDLE_NIL, key <%C>\n"),
                     i.key));
       this->updater_->delete_one(i, DDS::HANDLE_NIL);
     }
     catch(CCM_DDS::NonExistent &)
     {
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater delete_one <%s>.\n"),
+      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater delete_one <%C>.\n"),
                      i.key));   
       result = false;
     }
     catch (CCM_DDS::InternalError& )
     {
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while delete_one for <%s>.\n"),
+      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while delete_one for <%C>.\n"),
                       i.key)); 
       result = false;
     }
@@ -189,7 +190,7 @@ namespace CIAO_Updater_Sender_Impl
     TestTopic i = this->topic_seq_one_[1];
     try
     {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: delete_one with not registerd instance, key <%s>\n"),
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: delete_one with not registerd instance, key <%C>\n"),
                    i.key));
       this->updater_->delete_one(i, DDS::HANDLE_NIL);
     }
@@ -200,7 +201,7 @@ namespace CIAO_Updater_Sender_Impl
     }
     catch (CCM_DDS::InternalError& )
     {
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while delete_one for <%s>.\n"),
+      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while delete_one for <%C>.\n"),
                      i.key)); 
       result = false;
     }
@@ -219,27 +220,27 @@ namespace CIAO_Updater_Sender_Impl
     {
       if(hnd.isValid)
       {  
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: update a new  instance after registrating instance, key <%s>\n"),
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: update a new  instance after registrating instance, key <%C>\n"),
                     i.key));
         this->updater_->update_one(i, hnd);
      
       }
       else
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Error, invalid handle for <%s>.\n"),
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Error, invalid handle for <%C>.\n"),
                       i.key)); 
         result =  false;
       }
     }
     catch(CCM_DDS::NonExistent &)
     {
-       CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater update_one using handle <%s>.\n"),
+       CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater update_one using handle <%C>.\n"),
                      i.key));   
        result =  false;
     }
     catch (CCM_DDS::InternalError& )
     {
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while update_one for <%s>.\n"),
+      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while update_one for <%C>.\n"),
                       i.key)); 
       result = false;
     }
@@ -255,7 +256,7 @@ namespace CIAO_Updater_Sender_Impl
       }
       catch(CCM_DDS::NonExistent &)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater update_one with incompatible datum and handle <%s>.\n")));   
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater update_one with incompatible datum and handle.\n")));   
         result =  false;
       }
       catch (CCM_DDS::InternalError& )
@@ -269,19 +270,19 @@ namespace CIAO_Updater_Sender_Impl
       try
       {
          i = this->topic_seq_one_[2];
-         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: delete a instance with handle, key <%s>\n"),
+         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: delete a instance with handle, key <%C>\n"),
                     i.key));
          this->updater_->delete_one(i, hnd);
       }
      
       catch(CCM_DDS::NonExistent &)
       {
-         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater delett_one with valid handler <%s>.\n")));   
+         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater delett_one with valid handler.\n")));   
          result =  false;
       }
       catch (CCM_DDS::InternalError& )
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while delete_one for <%s>.\n"),
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while delete_one for <%C>.\n"),
                       i.key)); 
         result = false;
       }
