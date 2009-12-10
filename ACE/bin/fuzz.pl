@@ -50,7 +50,7 @@ use PerlACE::Run_Test;
 @files_noncvs = ();
 @files_sln = ();
 @files_vcproj = ();
-@files_run_test_pl = ();
+@files_run_pl = ();
 
 # To keep track of errors and warnings
 $errors = 0;
@@ -123,8 +123,8 @@ sub store_file ($)
     }
     elsif ($name =~ /\.pl$/i) {
         push @files_pl, ($name);
-        if ($name =~ /run_\.pl$/i) {
-            push @files_run_test_pl, ($name);
+        if ($name =~ /run.*\.pl$/i) {
+            push @files_run_pl, ($name);
         }
     }
     elsif ($name =~ /\.vcproj$/i) {
@@ -1384,22 +1384,7 @@ sub check_for_mismatched_filename ()
 sub check_for_bad_run_test ()
 {
     print "Running run_test.pl test\n";
-    # Add the know ACE files
-    if (defined $ENV{"TAO_ROOT"}) {
-        push @files_lst, $ENV{"TAO_ROOT"} . "/bin/tao_orb_tests.lst";
-        push @files_lst, $ENV{"TAO_ROOT"} . "/bin/tao_other_tests.lst";
-    }
-    if (defined $ENV{"CIAO_ROOT"}) {
-        push @files_lst, $ENV{"CIAO_ROOT"} . "/bin/ciao_tests.lst";
-    }
-    $config_list = new PerlACE::ConfigList;
-    foreach $file (@files_lst) {
-      $config_list->load ($file);
-    }
-    $config_list->add_one_config ("FUZZ");
-    @valid_files = $config_list->valid_entries ();
-# @files_run_test_pl
-    foreach $file (@valid_files) {
+    foreach $file (@files_run_pl) {
         if (open (FILE, $file)) {
             my $is_run_test = 0;
             my $sub = 0;
