@@ -41,8 +41,6 @@ $tg_exe_man = 0;
 $tg_executor = 0;
 
 $status = 0;
-$cdp_file = "";
-$dat_file = "NodeMap.dat";
 
 PerlACE::add_lib_path ('..');
 $ENV{"DANCE_TRACE_ENABLE"} = 0;
