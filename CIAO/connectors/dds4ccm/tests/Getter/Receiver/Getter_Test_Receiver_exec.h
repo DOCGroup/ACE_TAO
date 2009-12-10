@@ -135,9 +135,6 @@ namespace CIAO_Getter_Test_Receiver_Impl
   private:
     ::Getter_Test::CCM_Receiver_Context_var context_;
     ::CCM_DDS::GetterTest::Getter_var       getter_;
-
-    typedef std::map<ACE_CString, DDS::InstanceHandle_t> Handle_Table;
-    Handle_Table handles_;
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
