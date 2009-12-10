@@ -1,3 +1,36 @@
+Thu Dec 10 20:23:15 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/tests/CIAO/CommandlinePassage/run_test.pl:
+        * connectors/ami4ccm/examples/Hello/descriptors/run_test.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_test.pl:
+        * connectors/dds4ccm/examples/Quoter/descriptors/run_test.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLDeadline/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLQoS/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLSampleRejected/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLUnexpStat/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/Event_Connection_Test/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/Getter/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/KeyedWriter/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/ListenNotEnabled/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/ListenOneByOne/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/PSLDeadline/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/PSLSampleLost/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/Reader/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/State_Connection_Test/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/UnkeyedSamples/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/UnkeyedWriter/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/Updater/descriptors/run_test.pl:
+        * examples/BasicSP/descriptors/run_test.pl:
+        * examples/Hello/descriptors/run_test.pl:
+        * examples/Null_Component/descriptors/run_test.pl:
+        * tests/IDL_Test/Double_Inherited_Component/run_test.pl:
+          Removed add_lib_path in order to resolve fuzz error.
+
 Thu Dec 10 20:05:00 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/run_test_dds.pl:
