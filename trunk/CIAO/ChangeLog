@@ -1,3 +1,9 @@
+Thu Dec 10 13:30:01 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added !FIXED_BUGS_ONLY for the connection tests since
+          there's a known issue in the connector.
+
 Thu Dec 10 12:44:31 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
