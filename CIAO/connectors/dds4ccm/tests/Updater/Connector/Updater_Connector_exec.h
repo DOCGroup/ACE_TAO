@@ -22,28 +22,28 @@
 
 namespace CIAO_Updater_Updater_Connector_Impl
 {
-  // @from use of UpdaterTest as a parameter
+  // @from use of TestTopic as a parameter
   typedef CIAO::DDS4CCM::RTI::Type_Traits <
-    UpdaterTest,
-    UpdaterTestSeq,
-    UpdaterTestTypeSupport,
-    UpdaterTestDataWriter,
-    UpdaterTestDataReader > UpdaterTest_DDS_Traits;
+    TestTopic,
+    TestTopicSeq,
+    TestTopicTypeSupport,
+    TestTopicDataWriter,
+    TestTopicDataReader > TestTopic_DDS_Traits;
 
   typedef CIAO::DDS4CCM::Connector_Traits <
     ::CIAO_Updater_Updater_Connector_Impl::Updater_Connector_Exec,
-    UpdaterTest_Seq,
-    ::CCM_DDS::UpdaterTest::CCM_Writer,
-    ::CCM_DDS::UpdaterTest::CCM_Updater,
-    ::CCM_DDS::UpdaterTest::CCM_Getter,
-    ::CCM_DDS::UpdaterTest::CCM_Reader,
+    TestTopic_Seq,
+    ::CCM_DDS::TestTopic::CCM_Writer,
+    ::CCM_DDS::TestTopic::CCM_Updater,
+    ::CCM_DDS::TestTopic::CCM_Getter,
+    ::CCM_DDS::TestTopic::CCM_Reader,
     ::Updater::CCM_Updater_Connector_Context,
-    ::CCM_DDS::UpdaterTest::Listener,
-    ::CCM_DDS::UpdaterTest::StateListener,
-    ::CCM_DDS::ConnectorStatusListener> UpdaterTest_Connector_Traits;
+    ::CCM_DDS::TestTopic::Listener,
+    ::CCM_DDS::TestTopic::StateListener,
+    ::CCM_DDS::ConnectorStatusListener> TestTopic_Connector_Traits;
 
   class UPDATER_CONNECTOR_EXEC_Export Updater_Connector_exec_i :
-    public DDS_State_Connector_T <UpdaterTest_DDS_Traits, UpdaterTest_Connector_Traits>
+    public DDS_State_Connector_T <TestTopic_DDS_Traits, TestTopic_Connector_Traits>
   {
   public:
     Updater_Connector_exec_i (void);

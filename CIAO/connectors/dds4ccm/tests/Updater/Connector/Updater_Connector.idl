@@ -14,11 +14,11 @@
 #include "Base/Updater_Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
-TYPED_MODULE( ::UpdaterTest, ::UpdaterTest_Seq, UpdaterTest)
+TYPED_MODULE( ::TestTopic, ::TestTopic_Seq, TestTopic)
 
 module Updater
 {
-  connector Updater_Connector : ::CCM_DDS::UpdaterTest::DDS_State
+  connector Updater_Connector : ::CCM_DDS::TestTopic::DDS_State
   {
   };
 };

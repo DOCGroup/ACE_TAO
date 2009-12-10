@@ -8,11 +8,11 @@
 #ifndef UPDATER_BASE_IDL
 #define UPDATER_BASE_IDL
 
-struct UpdaterTest {
+struct TestTopic {
   string key; //@key
-  long iteration;
+  long x;
 };
 
-typedef sequence<UpdaterTest> UpdaterTest_Seq;
+typedef sequence<TestTopic> TestTopic_Seq;
 
 #endif
