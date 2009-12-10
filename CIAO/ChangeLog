@@ -1,3 +1,8 @@
+Thu Dec 10 19:26:16 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Home_Servant_Impl_T.cpp:
+          Check return value sprintf and use is_nil
+
 Thu Dec 10 19:15:15 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLDeadline/descriptors/run_test.pl:

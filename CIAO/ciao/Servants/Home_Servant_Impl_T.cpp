@@ -135,7 +135,7 @@ namespace CIAO
   {
     CIAO_TRACE ("Home_Servant_Impl<>::create");
 
-    if (this->executor_.in () == 0)
+    if (::CORBA::is_nil (this->executor_.in ()))
       {
         CIAO_ERROR ((LM_ERROR, CLINFO "Home_Servant_Impl<>:create - nil executor reference\n"));
         throw CORBA::INTERNAL ();
@@ -170,10 +170,11 @@ namespace CIAO
       Components::CCMHome::_narrow (hobj.in ());
 
     char buffer[256];
-    unsigned long serial = this->serial_number_++;
-    ACE_OS::sprintf (buffer,
-                     "%ld",
-                     serial);
+    unsigned long const serial = this->serial_number_++;
+    if (ACE_OS::sprintf (buffer, "%ld", serial) < 0)
+      {
+        throw CORBA::INTERNAL ();
+      }
 
     typedef typename COMP_SVNT::_stub_type stub_type;
     COMP_SVNT *svt = 0;
