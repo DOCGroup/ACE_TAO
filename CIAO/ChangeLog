@@ -1,3 +1,11 @@
+Thu Dec 10 15:29:00 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/Reader/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/Updater/descriptors/run_test.pl:
+          Resolved fuzz errors/warnings.
+
 Thu Dec 10 14:41:13 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
