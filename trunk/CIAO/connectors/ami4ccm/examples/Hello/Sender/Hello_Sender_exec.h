@@ -140,11 +140,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
     // Component attributes.
     
     // Port operations.
-    
-    virtual ::Hello_AMI::CCM_AMI_MyFooCallback_ptr
-    get_the_my_foo_callback (void);
-    // Operations from Components::SessionComponent.
-    
+
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);

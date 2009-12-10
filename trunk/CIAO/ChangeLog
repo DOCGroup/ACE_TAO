@@ -1,3 +1,23 @@
+Thu Dec 10 08:21:16 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Updater_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Updater_T.h:
+          Fixed bugs in the updater
+
+        * connectors/ami4ccm/examples/Hello/AMI/AMI.idl
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.cpp
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.h
+        * connectors/ami4ccm/examples/Hello/descriptors/Plan.cdp
+        * connectors/ami4ccm/examples/Hello/descriptors/run_test.pl
+        * connectors/ami4ccm/examples/Hello/Hello_Base/Hello_Base.idl
+        * connectors/ami4ccm/examples/Hello/Hello_Base/Hello_Base.mpc
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender.idl
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.h
+          Merged a revised ami4ccm example that has local interfaces for the
+          reply handler, which reduces the footprint of ami4ccm and also
+          simplifies the code
+
 Thu Dec 10 08:06:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/State_Connection_Test/Base/State_Connection_Test_Base.mpc:
