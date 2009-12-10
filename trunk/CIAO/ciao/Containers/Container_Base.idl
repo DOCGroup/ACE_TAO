@@ -59,16 +59,16 @@ module CIAO
     void uninstall_component (in Components::CCMObject compptr);
 
     void connect_local_facet (in ::Components::CCMObject provider_ref,
-			      in string provider_port,
-			      in ::Components::CCMObject user_ref,
-			      in string user_port)
+                              in string provider_port,
+                              in ::Components::CCMObject user_ref,
+                              in string user_port)
       raises (::Components::InvalidConnection,
-	      ::Components::AlreadyConnected);
+              ::Components::AlreadyConnected);
 
     void disconnect_local_facet (in ::Components::CCMObject provider_ref,
-				 in string provider_port,
-				 in ::Components::CCMObject user_ref,
-				 in string user_port)
+                                 in string provider_port,
+                                 in ::Components::CCMObject user_ref,
+                                 in string user_port)
       raises (::Components::InvalidConnection);
 
     // *** Methods used by component specific container portions
