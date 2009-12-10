@@ -1608,7 +1608,7 @@ NodeApplication_Impl::getAllConnections()
               conn->length (index + 1);
               (*conn) [index].name = CORBA::string_dup (this->plan_.connection[i].name.in());
 
-              ACE_CString inst_name =
+              ACE_CString const inst_name =
                 this->plan_.instance[this->plan_.connection[i].internalEndpoint[j].instanceRef].name.in();
 
               DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
@@ -1627,7 +1627,7 @@ NodeApplication_Impl::getAllConnections()
                   {
                     try
                       {
-                        ACE_CString name = this->plan_.connection[i].internalEndpoint[j].portName.in();
+                        ACE_CString const name = this->plan_.connection[i].internalEndpoint[j].portName.in();
                         if (name.compare ("supports") != 0)
                           {
                             DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
@@ -1721,8 +1721,9 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
   DANCE_TRACE ("NodeApplication_Impl::finishLaunch");
 
   DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
-               ACE_TEXT("started for connections sequence with length: %d\n"),
-               providedReference.length()));
+               ACE_TEXT("started for connections sequence with length %d and plan size &d\n"),
+               providedReference.length(),
+               this->plan_.connection.length()));
 
 #ifdef GEN_OSTREAM_OPS
   {
@@ -1762,9 +1763,9 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                                                  "Unable to narrow apparent component instance reference to CCMObject\n");
         }
 
-      const ::Deployment::PlanConnectionDescription &conn = this->plan_.connection[j];
+      ::Deployment::PlanConnectionDescription const &conn = this->plan_.connection[j];
 
-      ACE_CString name = conn.name.in();
+      ACE_CString const name = conn.name.in();
 
       for (CORBA::ULong i = 0; i < providedReference.length(); ++i)
         {
@@ -1777,7 +1778,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                     case ::Deployment::Facet:
                       {
                         DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
-                                     ACE_TEXT("Set for facet %C\n"), name.c_str ()));
+                                     ACE_TEXT("Set for facet [%C]\n"), name.c_str ()));
                         Components::CCMObject_var ext_inst;
                         try
                           {
@@ -1802,7 +1803,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                             if (CORBA::is_nil (ext_inst.in()))
                               {
                                 DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
-                                             ACE_TEXT("facet for %C can't be narrowed\n"), name.c_str ()));
+                                             ACE_TEXT("facet for [%C] can't be narrowed\n"), name.c_str ()));
                                 break;
                               }
                             this->connect_receptacle_ext (ext_inst,
@@ -2028,7 +2029,7 @@ NodeApplication_Impl::connect_receptacle (Components::CCMObject_ptr inst,
   try
     {
       DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - ")
-                   ACE_TEXT("connect SimplexReceptacle for %C started\n"), port_name.c_str()));
+                   ACE_TEXT("connect SimplexReceptacle for [%C] started\n"), port_name.c_str()));
       res = inst->connect (port_name.c_str(), facet);
       DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - connect finished\n")));
     }
@@ -2129,8 +2130,7 @@ NodeApplication_Impl::connect_local_receptacle (Components::CCMObject_ptr facet,
       DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("NodeApplication_Impl::connect_local_receptacle - ")
                     ACE_TEXT ("Caught unexpected CORBA excption while connecting port %C ")
                     ACE_TEXT ("to port %C\n"), facet_name.c_str (), recep_name.c_str ()));
-      throw ::Deployment::InvalidConnection ("",
-                                             "");
+      throw ::Deployment::InvalidConnection ("", "");
     }
 }
 
