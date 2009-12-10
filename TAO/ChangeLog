@@ -1,3 +1,13 @@
+Thu Dec 10 13:45:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Oneways_Invoking_Twoways/Client_Task.cpp:
+        * tests/Oneways_Invoking_Twoways/Receiver_i.cpp:
+        * tests/Oneways_Invoking_Twoways/client.cpp:
+        * tests/Oneways_Invoking_Twoways/Sender_i.cpp:
+        * tests/Oneways_Invoking_Twoways/run_test.pl:
+          Changed to fix problems with incorrect shutdown sequence 
+          (see Bugzilla 2068).
+
 Thu Dec 10 13:03:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Reverted change below, causes correct code to break

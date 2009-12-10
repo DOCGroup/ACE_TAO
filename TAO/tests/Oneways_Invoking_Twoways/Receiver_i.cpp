@@ -39,6 +39,6 @@ void
 Receiver_i::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) About to invoke shudown...\n"));
+              "(%P|%t) About to invoke shutdown...\n"));
   this->orb_->shutdown (0);
 }
