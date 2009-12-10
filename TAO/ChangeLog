@@ -1,3 +1,12 @@
+Thu Dec 10 12:42:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/BiDirectional_DelayedUpcall/client.cpp:
+        * tests/BiDirectional_DelayedUpcall/test_i.cpp:
+        * tests/BiDirectional_DelayedUpcall/test_i.inl:
+        * tests/BiDirectional_DelayedUpcall/test_i.h:
+          Fixed problem with illegal send of request after ORB shutdown.
+          See Bugzilla 2068.
+
 Thu Dec 10 11:57:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/String_Manager_T.h
