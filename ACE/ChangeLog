@@ -1,6 +1,11 @@
+Thu Dec 10 13:07:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+          Removed hard supported version check
+
 Wed Dec  9 10:52:26 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
-        * bin/fuzz.pl: 
+        * bin/fuzz.pl:
 
           Updated conditions for new framework
 
