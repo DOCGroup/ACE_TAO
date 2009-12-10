@@ -1,3 +1,10 @@
+Thu Dec 10 16:20:37 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/run_1_to_5.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_receiver.pl:
+        * connectors/dds4ccm/tests/ListenOneByOne/descriptors/run_test.pl:
+          Resolved some fuzz errors/warnings.
+
 Thu Dec 10 15:56:13 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/run_5_to_1.pl:
