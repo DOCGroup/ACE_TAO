@@ -57,7 +57,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         second_iogr_file = get_opts.opt_arg ();
         break;
       case 't':
-        delay = atoi(get_opts.opt_arg ());
+        delay = ACE_OS::atoi(get_opts.opt_arg ());
         break;
       case '?':
       default:
