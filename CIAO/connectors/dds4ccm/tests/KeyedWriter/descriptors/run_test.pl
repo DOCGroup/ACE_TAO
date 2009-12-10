@@ -85,24 +85,23 @@ sub delete_ior_files {
 }
 
 sub kill_node_daemon {
-  for ($i = 0; $i < $nr_daemon; ++$i) {
-    $DEAMONS[$i]->Kill (); $DEAMONS[$i]->TimedWait (1);
-  }
+    for ($i = 0; $i < $nr_daemon; ++$i) {
+        $DEAMONS[$i]->Kill (); $DEAMONS[$i]->TimedWait (1);
+    }
 }
 
 sub kill_open_processes {
-  if ($daemons_running == 1) {
-    kill_node_daemon ();
-  }
+    if ($daemons_running == 1) {
+        kill_node_daemon ();
+    }
 
-  if ($em_running == 1) {
-    $EM->Kill (); $EM->TimedWait (1);
-  }
+    if ($em_running == 1) {
+        $EM->Kill (); $EM->TimedWait (1);
+    }
 
-  if ($ns_running == 1) {
-    $NS->Kill (); $NS->TimedWait (1);
-  }
-
+    if ($ns_running == 1) {
+        $NS->Kill (); $NS->TimedWait (1);
+    }
 }
 
 sub run_node_daemons {
@@ -120,13 +119,12 @@ sub run_node_daemons {
       print "Run dance_node_manager with $d_param\n";
 
       $DEAMONS[$i] = $tg_daemons[$i]->CreateProcess ($d_cmd, $d_param);
-      $result = $DEAMONS[$i]->Spawn ();
-      push(@processes, $DEAMONS[$i]);
+      $DEAMONS[$i]->Spawn ();
 
       if ($tg_daemons[$i]->WaitForFileTimed($iorbase,
                                       $tg_daemons[$i]->ProcessStartWaitInterval ()) == -1) {
           print STDERR
-            "ERROR: The ior $iorfile file of node daemon $i could not be found\n";
+              "ERROR: The ior $iorfile file of node daemon $i could not be found\n";
           for (; $i >= 0; --$i) {
               $DEAMONS[$i]->Kill (); $DEAMONS[$i]->TimedWait (1);
           }
@@ -148,8 +146,7 @@ $NS->Spawn ();
 print STDERR "Starting Naming Service with -m 1 -ORBEndpoint iiop://localhost:60003 -o ns.ior\n";
 
 if ($tg_naming->WaitForFileTimed ($ior_nsbase,
-                                  $tg_naming->ProcessStartWaitInterval ()) == -1)
-{
+                                  $tg_naming->ProcessStartWaitInterval ()) == -1) {
     print STDERR "ERROR: cannot find naming service IOR file\n";
     $NS->Kill (); $NS->TimedWait (1);
     exit 1;
@@ -211,8 +208,7 @@ sleep (60);
 print "Invoking executor - stop the application -\n";
 print "by running dance_plan_launcher.exe with -k file://$ior_emfile -x $cdp_file -q\n";
 
-$E =
-  new PerlACE::Process ("$DANCE_ROOT/bin/dance_plan_launcher",
+$E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
                         "-k file://$ior_emfile -x $cdp_file -q");
 $E->SpawnWaitKill ($tg_executor->ProcessStopWaitInterval ());
 
