@@ -190,17 +190,17 @@ namespace CIAO_Hello_AMI_Sender_Impl
         else
           {
             printf ("Sender (ASYNCH) :\tInvoke Asynchronous calls\n");
-            my_foo_ami_->sendc_foo (0, "Do something asynchronous");
-            my_foo_ami_->sendc_hello (0);
-            my_foo_ami_->sendc_get_rw_attrib(0);
-            my_foo_ami_->sendc_set_rw_attrib(0, 15);
-            my_foo_ami_->sendc_get_ro_attrib(0);
+            my_foo_ami_->sendc_foo (new MyFoo_callback_exec_i (), "Do something asynchronous");
+            my_foo_ami_->sendc_hello (new MyFoo_callback_exec_i ());
+            my_foo_ami_->sendc_get_rw_attrib(new MyFoo_callback_exec_i ());
+            my_foo_ami_->sendc_set_rw_attrib(new MyFoo_callback_exec_i (), 15);
+            my_foo_ami_->sendc_get_ro_attrib(new MyFoo_callback_exec_i ());
             printf ("Sender (ASYNCH) :\tInvoked Asynchronous calls\n");
           }
       }
     printf ("Sender (ASYNCH) :\tInvoke Asynchronous calls to test except handling\n");
-    my_foo_ami_->sendc_foo (0, "");
-    my_foo_ami_->sendc_set_rw_attrib(0, 0);
+    my_foo_ami_->sendc_foo (new MyFoo_callback_exec_i (), "");
+    my_foo_ami_->sendc_set_rw_attrib(new MyFoo_callback_exec_i (), 0);
     printf ("Sender (ASYNCH) :\tInvoked Asynchronous call.\n");
     return 0;
   }
@@ -281,18 +281,6 @@ namespace CIAO_Hello_AMI_Sender_Impl
   // Component attributes.
 
   // Port operations.
-
-  ::Hello_AMI::CCM_AMI_MyFooCallback_ptr
-  Sender_exec_i::get_the_my_foo_callback ()
-  {
-    if (CORBA::is_nil (global_foo_callback_))
-    {
-      global_foo_callback_ = new MyFoo_callback_exec_i ();
-    }
-
-    return  global_foo_callback_;
-  }
-
   // Operations from Components::SessionComponent.
 
   void
