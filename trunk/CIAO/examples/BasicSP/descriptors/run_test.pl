@@ -46,23 +46,24 @@ $tg_naming = 0;
 $tg_exe_man = 0;
 $tg_executor = 0;
 
-PerlACE::add_lib_path ('../lib');
-
 $ENV{"DANCE_TRACE_ENABLE"} = 0;
 $ENV{"CIAO_TRACE_ENABLE"} = 0;
 
 sub create_targets {
     #   naming service
     $tg_naming = PerlACE::TestTarget::create_target (1) || die "Create target for ns failed\n";
-
+    $tg_naming->AddLibPath ('../lib');
     #   daemon
-    for ($i = 0; $i < $daemons; ++$i) {
+    for ($i = 0; $i < $nr_daemon; ++$i) {
         $tg_daemons[$i] = PerlACE::TestTarget::create_target ($i+1) || die "Create target for deamon $i failed\n";
+        $tg_daemons[$i]->AddLibPath ('../lib');
     }
     #   execution manager
     $tg_exe_man = PerlACE::TestTarget::create_target (1) || die "Create target for EM failed\n";
+    $tg_exe_man->AddLibPath ('../lib');
     #   executor (plan_launcher)
     $tg_executor = PerlACE::TestTarget::create_target (1) || die "Create target for executor failed\n";
+    $tg_executor->AddLibPath ('../lib');
 }
 
 sub init_ior_files {
