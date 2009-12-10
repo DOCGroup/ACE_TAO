@@ -29,7 +29,7 @@ class Callback_i : public virtual POA_Callback
   //   connection that was established by the client
   //
 public:
-  Callback_i (CORBA::ORB_ptr orb);
+  Callback_i (CORBA::ORB_ptr orb, Simple_Server_ptr srv);
   // ctor
 
   void shutdown (void);
@@ -41,6 +41,8 @@ public:
 private:
   CORBA::ORB_var orb_;
   // The orb
+  Simple_Server_var server_;
+  // The server
 };
 
 class Simple_Server_i : public virtual POA_Simple_Server, public virtual ACE_Event_Handler
