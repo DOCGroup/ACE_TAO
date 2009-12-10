@@ -34,13 +34,21 @@ namespace CIAO
                           this->mutex_,
                           CORBA::NO_RESOURCES ());
 
+      CIAO_DEBUG ((LM_INFO, CLINFO
+                  "Servant_Activator_i::update_port_activator, "
+                  "Attempting to update port name [%C]\n",
+                  str.in ()));
+
       Port_Activators::iterator pa_iter = this->pa_.find (str.in ());
 
       if (pa_iter != this->pa_.end ())
         {
           this->pa_.erase (pa_iter);
         }
-      else return false;
+      else
+        {
+          return false;
+        }
     }
 
     return true;
