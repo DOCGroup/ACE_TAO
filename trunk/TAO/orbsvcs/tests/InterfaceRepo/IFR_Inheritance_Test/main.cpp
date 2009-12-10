@@ -28,14 +28,16 @@ void printContents (const CORBA::ContainedSeq& cont)
               //printf ("-- %s:\n", desc->name.in ());
 
               for (CORBA::ULong j1 = 0; j1 < desc->operations.length (); ++j1)
-                ACE_OS::printf ("operation %s::%s\n",
-                                desc->name.in (),
-                                desc->operations[j1].name.in ());
+                ACE_DEBUG ((LM_DEBUG,
+                            "operation %C::%C\n",
+                            desc->name.in (),
+                            desc->operations[j1].name.in ()));
 
               for (CORBA::ULong j2 = 0; j2 < desc->attributes.length (); ++j2)
-                ACE_OS::printf ("attribute %s::%s\n",
-                                desc->name.in (),
-                                desc->attributes[j2].name.in ());
+                ACE_DEBUG ((LM_DEBUG,
+                            "attribute %C::%C\n",
+                            desc->name.in (),
+                            desc->attributes[j2].name.in ()));
             }
           else if (topdesc->kind == CORBA::dk_Module)
             {
