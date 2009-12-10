@@ -9,8 +9,6 @@ use lib "$ENV{'ACE_ROOT'}/bin";
 use PerlACE::TestTarget;
 
 $CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
-$TAO_ROOT = "$ENV{'TAO_ROOT'}";
-$DAnCE = "$ENV{'DANCE_ROOT'}";
 
 $tg_sender = PerlACE::TestTarget::create_target (1) || die "Create target for EM failed\n";
 $tg_receiver = PerlACE::TestTarget::create_target (1) || die "Create target for EM failed\n";
