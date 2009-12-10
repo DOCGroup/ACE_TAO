@@ -1,3 +1,15 @@
+Thu Dec 10 09:41:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Getter/Base/Getter_Test_Base.mpc:
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver.mpc:
+          Removed some unnecessary defines.
+
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.h:
+          Removed unused class variable.
+
+        * connectors/dds4ccm/tests/Listener/*:
+          Empty test framework for the listener test.
+
 Thu Dec 10 08:37:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Getter/README:
