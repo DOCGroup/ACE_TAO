@@ -1,3 +1,10 @@
+Thu Dec 10 15:06:28 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * orbsvcs/examples/ImR/Combined_Service/run_test.pl:
+
+          Test is converted to use new test framework
+          and added to fuzz build.	
+
 Thu Dec 10 14:54:27 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/Simple_Naming/run_test_ipv6.pl:
