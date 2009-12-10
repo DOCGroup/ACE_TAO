@@ -1,16 +1,27 @@
 // $Id$
 
 // ============================================================================
+// This version of Param_Test has been modified to use std::string for
+// the test_unbounded_string operation, and std::vector for the
+// test_long_sequence operation. Since modifications were done to generated
+// stub code, Param_TestC.h and Param_TestC.cpp have been added to the
+// repository in this branch, for the time being until the branch is merged
+// or until a dedicated test/example is created. So far, these modifications
+// are to the client side only.
 //
-// = LIBRARY
-//    TAO/tests/Param_Test
+// Each data type tested in Param_Test has its own class that plugs into the
+// test framework. In this version, the classes in ub_string.{h,cpp} and
+// ub_long_sequence.{h,cpp} have also been modified to use the respective
+// STL types. These classes handle the nuts and bolts of a particular test -
+// initializing and resetting the argument values, and validating the
+// results. In this way, a single driver can run any or all of the tests.
+// To test the modified data types, use the options '-t ubstring' or
+// '-t ub_long_sequence'. All other options work as usual.
 //
-// = FILENAME
-//    README
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
+// One final note, the MPC file for this test has been modified to remove
+// the IDL processing step, since the generated stub files have been
+// modified by hand. Since these generated files have been added to the
+// repository, the test will build normally.
 // ============================================================================
 
 This directory contains an application that tests all the parameter
