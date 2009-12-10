@@ -630,7 +630,7 @@ void Plan_Launcher_Base_Impl::create_external_connections(
                   "Plan_Launcher_i::create_external_connections - create connection %C from IOR %C\n",
                   plan.connection[i].name.in(),
                   plan.connection[i].externalReference[0].location.in()));
-          unsigned int indx = conn.length();
+          CORBA::ULong const indx = conn.length();
           conn.length(indx + 1);
           conn[indx].name= CORBA::string_dup (plan.connection[i].name.in());
           conn[indx].endpoint.length(1L);

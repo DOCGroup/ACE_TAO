@@ -280,7 +280,7 @@ DAnCE_RepositoryManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
   if (this->options_.server_address_ == 0)
     {
       DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
-                    ACE_TEXT("Must provider server address using --server-address option.\n")));
+                    ACE_TEXT("Must provide server address using --server-address option.\n")));
       return false;
     }
 
