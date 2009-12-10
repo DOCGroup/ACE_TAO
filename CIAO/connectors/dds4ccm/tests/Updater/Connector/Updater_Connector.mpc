@@ -1,7 +1,7 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -p DDS_UpdaterBase -l .. -o ../lib -u DDS Updater_Connector"
+// This file is generated with "generate_component_mpc.pl -p DDS_Updater_Base -l .. -o ../lib -u DDS Updater_Connector"
 
-project(DDS_UpdaterConnector_idl_gen) : connectoridldefaults {
+project(DDS_UPDATER_Connector_idl_gen) : connectoridldefaults {
   after += DDS4CCM_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=UPDATER_CONNECTOR_STUB_Export \
@@ -19,9 +19,9 @@ project(DDS_UpdaterConnector_idl_gen) : connectoridldefaults {
   }
 }
 
-project(DDS_UpdaterConnector_lem_gen) : ciaoidldefaults {
+project(DDS_UPDATER_Connector_lem_gen) : ciaoidldefaults {
   custom_only = 1
-  after += DDS_UpdaterConnector_idl_gen
+  after += DDS_UPDATER_Connector_idl_gen
   idlflags += -Wb,stub_export_macro=UPDATER_CONNECTOR_LEM_STUB_Export \
               -Wb,stub_export_include=Updater_Connector_lem_stub_export.h \
               -SS -Gxhst \
@@ -32,13 +32,13 @@ project(DDS_UpdaterConnector_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(DDS_UpdaterConnector_lem_stub) : ccm_svnt, dds4ccm_base   {
-  after += DDS_UpdaterConnector_lem_gen DDS_UpdaterConnector_stub DDS_UpdaterBase_stub DDS4CCM_lem_stub
-  libs  += DDS_UpdaterBase_stub DDS_UpdaterConnector_stub DDS4CCM_lem_stub
+project(DDS_UPDATER_Connector_lem_stub) : ccm_svnt, dds4ccm_base   {
+  after += DDS_UPDATER_Connector_lem_gen DDS_Updater_Connector_stub DDS_Updater_Base_stub DDS4CCM_lem_stub
+  libs  += DDS_Updater_Base_stub DDS_Updater_Connector_stub DDS4CCM_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  sharedname = DDS_UpdaterConnector_lem_stub
+  sharedname = DDS_UPDATER_Connector_lem_stub
   dynamicflags   = UPDATER_CONNECTOR_LEM_STUB_BUILD_DLL
 
   IDL_Files {
@@ -58,13 +58,13 @@ project(DDS_UpdaterConnector_lem_stub) : ccm_svnt, dds4ccm_base   {
   }
 }
 
-project(DDS_UpdaterConnector_stub) : ccm_stub, dds4ccm_base   {
-  after += DDS_UpdaterConnector_idl_gen DDS_UpdaterBase_stub
-  libs  += DDS_UpdaterBase_stub
+project(DDS_Updater_Connector_stub) : ccm_stub, dds4ccm_base   {
+  after += DDS_UPDATER_Connector_idl_gen DDS_Updater_Base_stub
+  libs  += DDS_Updater_Base_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  sharedname = DDS_UpdaterConnector_stub
+  sharedname = DDS_Updater_Connector_stub
   dynamicflags   = UPDATER_CONNECTOR_STUB_BUILD_DLL
 
   IDL_Files {
@@ -84,10 +84,10 @@ project(DDS_UpdaterConnector_stub) : ccm_stub, dds4ccm_base   {
   }
 }
 
-project(DDS_UpdaterConnector_exec) : ciao_executor, dds4ccm_skel, nddslib {
-  after   += DDS_UpdaterConnector_lem_stub DDS_UpdaterConnector_stub DDS4CCM_lem_stub CIAO_DDS4CCM_NDDS_Impl DDS_UpdaterBase_NDDS_TS
-  sharedname = DDS_UpdaterConnector_exec
-  libs += DDS_UpdaterConnector_stub DDS_UpdaterConnector_lem_stub DDS_UpdaterBase_stub CIAO_DDS4CCM_NDDS_Impl DDS4CCM_lem_stub DDS_UpdaterBase_NDDS_TS
+project(DDS_Updater_Connector_exec) : ciao_executor, dds4ccm_skel, nddslib {
+  after   += DDS_UPDATER_Connector_lem_stub DDS_Updater_Connector_stub DDS4CCM_lem_stub CIAO_DDS4CCM_NDDS_Impl DDS_Updater_Base_NDDS_TS
+  sharedname = DDS_Updater_Connector_exec
+  libs += DDS_Updater_Connector_stub DDS_UPDATER_Connector_lem_stub DDS_Updater_Base_stub CIAO_DDS4CCM_NDDS_Impl DDS4CCM_lem_stub DDS_Updater_Base_NDDS_TS
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -110,13 +110,13 @@ project(DDS_UpdaterConnector_exec) : ciao_executor, dds4ccm_skel, nddslib {
 }
 
 
-project(DDS_UpdaterConnector_svnt) : ciao_servant, dds4ccm_skel, nddslib {
-  after      += DDS_UpdaterConnector_lem_stub DDS_UpdaterConnector_exec DDS_UpdaterConnector_stub DDS4CCM_lem_stub
-  sharedname  = DDS_UpdaterConnector_svnt
-  libs       += DDS_UpdaterConnector_stub \
-                DDS_UpdaterConnector_lem_stub  \
-                DDS_UpdaterBase_stub \
-                DDS_UpdaterConnector_exec \
+project(DDS_Updater_Connector_svnt) : ciao_servant, dds4ccm_skel, nddslib {
+  after      += DDS_UPDATER_Connector_lem_stub DDS_Updater_Connector_exec DDS_Updater_Connector_stub DDS4CCM_lem_stub
+  sharedname  = DDS_Updater_Connector_svnt
+  libs       += DDS_Updater_Connector_stub \
+                DDS_UPDATER_Connector_lem_stub  \
+                DDS_Updater_Base_stub \
+                DDS_Updater_Connector_exec \
                 DDS4CCM_lem_stub
   libpaths += ../lib
   libout = ../lib

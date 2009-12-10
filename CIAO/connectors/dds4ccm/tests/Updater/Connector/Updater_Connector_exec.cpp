@@ -6,7 +6,7 @@
 namespace CIAO_Updater_Updater_Connector_Impl
 {
   Updater_Connector_exec_i::Updater_Connector_exec_i (void)
-    : DDS_State_Connector_T<UpdaterTest_DDS_Traits, UpdaterTest_Connector_Traits> ()
+    : DDS_State_Connector_T<TestTopic_DDS_Traits, TestTopic_Connector_Traits> ()
   {
   }
 
