@@ -93,7 +93,7 @@ namespace CIAO_Hello_Sender_Impl
     if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
                 this->ticker_,
                 0,
-                ACE_Time_Value (0, usec),
+                ACE_Time_Value (5, usec),
                 ACE_Time_Value (0, usec)) == -1)
     {
       CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
