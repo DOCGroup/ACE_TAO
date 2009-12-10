@@ -21,10 +21,10 @@ module CIAO
       oneway void shutdown ();
     };
 
-    exception InvalidComponent 
+    exception InvalidComponent
     {
     };
-    
+
     /**
      * @interface CIAO_Container
      * @brief CIAO specific extensions to the component server interface.
@@ -40,14 +40,14 @@ module CIAO
                 ::Components::Deployment::ImplEntryPointNotFound,
                 ::Components::Deployment::InstallationFailure,
                 ::Components::Deployment::InvalidConfiguration);
-  
-      /// Activate component with specified ID, if no ID provided, 
-      /// activates all components. 
+
+      /// Activate component with specified ID, if no ID provided,
+      /// activates all components.
       void activate_component (in ::Components::CCMObject comp)
         raises (InvalidComponent);
-      
-      /// Passivate component with specified ID, if no ID provided, 
-      /// passivates all components. 
+
+      /// Passivate component with specified ID, if no ID provided,
+      /// passivates all components.
       void passivate_component (in ::Components::CCMObject comp)
         raises (InvalidComponent);
 
@@ -56,22 +56,22 @@ module CIAO
       /// with an explicit home, this operation will fail.
       void remove_component (in ::Components::CCMObject cref)
         raises (::Components::RemoveFailure);
-        
+
       /// Returns a sequence of all homeless components.
       ::Components::CCMObjectSeq get_components ();
-      
+
       void connect_local_facet (in ::Components::CCMObject provider_ref,
-				in string provider_port,
-				in ::Components::CCMObject user_ref,
-				in string user_port)
-	raises (::Components::InvalidConnection,
-		::Components::AlreadyConnected);
-      
+                                in string provider_port,
+                                in ::Components::CCMObject user_ref,
+                                in string user_port)
+        raises (::Components::InvalidConnection,
+                ::Components::AlreadyConnected);
+
       void disconnect_local_facet (in ::Components::CCMObject provider_ref,
-				   in string provider_port,
-				   in ::Components::CCMObject user_ref,
-				   in string user_port)
-	raises (::Components::InvalidConnection);
+                                   in string provider_port,
+                                   in ::Components::CCMObject user_ref,
+                                   in string user_port)
+        raises (::Components::InvalidConnection);
     };
   };
 };
