@@ -1863,7 +1863,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                                                                       "Expected 2 internalenpoints.");
                               }
                           }
-                        catch (::Deployment::InvalidConnection &ex)
+                        catch (const ::Deployment::InvalidConnection &)
                           {
                             throw;
                           }
@@ -2124,7 +2124,7 @@ NodeApplication_Impl::connect_local_receptacle (Components::CCMObject_ptr facet,
 
       cont->connect_local_facet (facet, facet_name.c_str (), receptacle, recep_name.c_str ());
     }
-  catch (CORBA::Exception  &ex)
+  catch (const CORBA::Exception  &)
     { // @@todo: need better exception handling.
       DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("NodeApplication_Impl::connect_local_receptacle - ")
                     ACE_TEXT ("Caught unexpected CORBA excption while connecting port %C ")

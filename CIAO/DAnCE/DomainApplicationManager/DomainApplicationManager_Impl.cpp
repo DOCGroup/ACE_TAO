@@ -231,7 +231,8 @@ DomainApplicationManager_Impl::split_plan (const Deployment::DeploymentPlan & pl
 
   DANCE_DEBUG ((LM_DEBUG, DLINFO
                 ACE_TEXT("DomainApplicationManager_Impl::split_plan - ")
-                ACE_TEXT("First phase produced %u child plans, proceeding to second\n")));
+                ACE_TEXT("First phase produced %u child plans, proceeding to second\n"),
+                sub_plans.current_size ()));
 
   // (1) Iterate over the <instance> field of the global DeploymentPlan
   //     structure.
@@ -267,7 +268,7 @@ DomainApplicationManager_Impl::split_plan (const Deployment::DeploymentPlan & pl
       // field with a new "implementation", which is specified by the
       // <implementationRef> field of <my_instance> entry.  NOTE: The
       // <artifactRef> field needs to be changed accordingly.
-      const ::Deployment::MonolithicDeploymentDescription & my_implementation
+      ::Deployment::MonolithicDeploymentDescription const & my_implementation
         = plan.implementation[my_instance.implementationRef];
 
       CORBA::ULong index_imp = child_plan.implementation.length ();
@@ -335,14 +336,14 @@ DomainApplicationManager_Impl::split_plan (const Deployment::DeploymentPlan & pl
                   Deployment::PlanConnectionDescription * connection_copied = 0;
                   for (CORBA::ULong m = 0; m < child_plan.connection.length(); ++m)
                     {
-                      if (ACE_OS::strcmp (plan.connection[j].name, child_plan.connection[m].name) == 0)
+                      if (ACE_OS::strcmp (plan.connection[j].name.in (), child_plan.connection[m].name.in ()) == 0)
                         {
                           connection_copied = &child_plan.connection[m];
                           break;
                         }
                     }
 
-                  if (0 == connection_copied)
+                  if (!connection_copied)
                     {
                       // Copy the connection
                       CORBA::ULong const index_con = child_plan.connection.length();

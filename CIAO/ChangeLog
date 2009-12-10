@@ -1,3 +1,11 @@
+Thu Dec 10 10:00:16 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+          Fixed compiler warnings about arguments not used
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+          Fixed invalid string comparison and const improvements
+
 Thu Dec 10 09:41:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Getter/Base/Getter_Test_Base.mpc:
