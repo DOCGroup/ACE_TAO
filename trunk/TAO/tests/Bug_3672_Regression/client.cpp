@@ -25,7 +25,7 @@ ACE_RCSID (AMI,
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int nthreads = 1;
 int niterations = 1;
-int debug = 0;
+int debug = 1;
 int number_of_replies = 0;
 
 CORBA::Long in_number = 931232;
@@ -203,6 +203,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       A::AMI_AMI_TestHandler_var hello = A::AMI_AMI_TestHandler::_narrow (object2.in ());
       object2 = CORBA::Object::_nil ();
 
+      server->shutdown (); // oneway, so returns here immediately but server waits 5 sec
+
       Client client (server.in (), niterations, hello.in ());
       if (client.activate (THR_NEW_LWP | THR_JOINABLE,
                            nthreads) != 0)
@@ -234,8 +236,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
 
-      server->shutdown ();
-
       client.wait ();
 
       tv = ACE_Time_Value (1,0);
@@ -253,23 +253,24 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager = PortableServer::POAManager::_nil ();
       client.clear ();
 
-      TAO_ORB_Core* core = orb->orb_core ();
-
       orb->shutdown ();
 
       orb->destroy ();
 
-      CORBA::ULong core_count  = core->_refcnt();
-      if (core_count > 1)
-        {
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Refcount core %d\n"), core_count));
-          ++parameter_corruption;
-        }
       CORBA::ULong ref_count  = orb->_refcnt();
       if (ref_count > 1)
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Refcount orb %d\n"), ref_count));
           ++parameter_corruption;
+        }
+      else
+        {
+          TAO_ORB_Core* core = orb->orb_core ();
+          if (core != 0)
+            {
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Core <> null\n")));
+              ++parameter_corruption;
+            }
         }
       orb = CORBA::ORB::_nil ();
     }
