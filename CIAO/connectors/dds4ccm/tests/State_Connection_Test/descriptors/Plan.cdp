@@ -533,19 +533,19 @@
     <name>State_Connection_Test_Connector_exec</name>
     <source/>
     <node/>
-    <location>DDS_State_Connection_Connector_exec</location>
+    <location>DDS_SCT_Connector_exec</location>
   </artifact>
   <artifact xmi:id="State_Connection_Test_Connector_SvntArtifact">
     <name>State_Connection_Test_Connector_svnt</name>
     <source/>
     <node/>
-    <location>DDS_State_Connection_Connector_svnt</location>
+    <location>DDS_SCT_Connector_svnt</location>
   </artifact>
   <artifact xmi:id="State_Connection_Test_Connector_StubArtifact">
     <name>State_Connection_Test_Connector_stub</name>
     <source/>
     <node/>
-    <location>DDS_State_Connection_Connector_stub</location>
+    <location>DDS_SCT_Connector_stub</location>
   </artifact>
   <artifact xmi:id="Receiver_ExecArtifact">
     <name>Receiver_exec</name>

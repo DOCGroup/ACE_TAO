@@ -1,6 +1,6 @@
 // $Id$
 
-project(DDS_State_Connection_Base_idl_gen) : taoidldefaults, anytypecode {
+project(DDS_SCT_Base_idl_gen) : taoidldefaults, anytypecode {
   custom_only = 1
   idlflags -= -St -Sa
   idlflags += -SS -Gxhst \
@@ -12,9 +12,9 @@ project(DDS_State_Connection_Base_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(DDS_State_Connection_Base_ndds_ts_gen) : ndds_ts_defaults   {
+project(DDS_SCT_Base_ndds_ts_gen) : ndds_ts_defaults   {
   custom_only = 1
-  after += DDS_State_Connection_Base_idl_gen
+  after += DDS_SCT_Base_idl_gen
   ndds_ts_flags += -corba State_Connection_Test_BaseC.h -orb ACE_TAO1.7
 
   NDDSTypeSupport_Files {
@@ -22,12 +22,12 @@ project(DDS_State_Connection_Base_ndds_ts_gen) : ndds_ts_defaults   {
   }
 }
 
-project(DDS_State_Connection_Base_NDDS_TS) : nddslib, taolib {
-  after += DDS_State_Connection_Base_ndds_ts_gen DDS_State_Connection_Base_stub
-  libs += DDS_State_Connection_Base_stub
+project(DDS_SCT_Base_NDDS_TS) : nddslib, taolib {
+  after += DDS_SCT_Base_ndds_ts_gen DDS_SCT_Base_stub
+  libs += DDS_SCT_Base_stub
   libout = ../lib
   libpaths    += ../lib
-  sharedname = DDS_State_Connection_Base_NDDS_TS
+  sharedname = DDS_SCT_Base_NDDS_TS
   dynamicflags = NDDS_USER_DLL_EXPORT
 
   verbatim(gnuace, macros) {
@@ -50,11 +50,11 @@ project(DDS_State_Connection_Base_NDDS_TS) : nddslib, taolib {
   }
 }
 
-project(DDS_State_Connection_Base_stub) : ccm_stub {
-  after += DDS_State_Connection_Base_idl_gen
+project(DDS_SCT_Base_stub) : ccm_stub {
+  after += DDS_SCT_Base_idl_gen
   libout = ../lib
   libpaths += ../lib
-  sharedname = DDS_State_Connection_Base_stub
+  sharedname = DDS_SCT_Base_stub
   dynamicflags = STATE_CONNECTION_TEST_BASE_STUB_BUILD_DLL
 
   IDL_Files {
