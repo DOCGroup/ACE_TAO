@@ -1,3 +1,13 @@
+Thu Dec 10 15:42:58 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLDeadline/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLSampleRejected/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLUnexpStat/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/KeyedWriter/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/PSLDeadline/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/UnkeyedWriter/descriptors/run_test.pl:
+          Resolved some fuzz errors/warnings.
+
 Thu Dec 10 15:35:51 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLQoS/descriptors/run_test.pl:
