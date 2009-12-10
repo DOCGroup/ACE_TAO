@@ -1,3 +1,10 @@
+Thu Dec 10 16:45:24 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+        * bin/tao_orb_tests.lst:
+          
+          Tests are added to fuzz build.
+
 Thu Dec 10 15:06:28 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/examples/ImR/Combined_Service/run_test.pl:
