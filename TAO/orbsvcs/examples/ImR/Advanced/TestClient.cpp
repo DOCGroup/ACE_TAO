@@ -21,6 +21,7 @@ TestClient::TestClient (CORBA::ORB_ptr orb, int argc, ACE_TCHAR *argv[])
 , shutdownOrb_(false)
 , expectHolding_(false)
 , expectNoProfile_(false)
+, iorFile_(ACE_TEXT("imr_test.ior"))
 {
   parseCommands (argc, argv);
 }
@@ -31,7 +32,7 @@ TestClient::~TestClient()
 
 int TestClient::parseCommands (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:t:i:r:x:e:z:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:t:i:r:x:e:z:k:"));
   int c;
   while ((c = get_opts()) != -1)
   {
@@ -78,6 +79,10 @@ int TestClient::parseCommands (int argc, ACE_TCHAR *argv[])
 
     case 'z':
       pauseType_ = get_opts.opt_arg()[0];
+      break;
+
+    case 'k':
+      iorFile_ = get_opts.opt_arg();
       break;
 
     case '?':
@@ -137,9 +142,9 @@ void TestClient::run()
 // Warning: The file may contain many separate IORs separated by linefeeds.
 void TestClient::buildIORList()
 {
-  FILE* iorFile = ACE_OS::fopen ("imr_test.ior", "r");
+  FILE* iorFile = ACE_OS::fopen (iorFile_, "r");
   if ( iorFile == 0 )
-    ACE_ERROR ((LM_ERROR, "Fail to open imr_test.ior\n"));
+    ACE_ERROR ((LM_ERROR, "Fail to open %s\n", iorFile_));
 
   ACE_TString ior;
   while (getline(iorFile, ior) != EOF )

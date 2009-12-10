@@ -35,4 +35,5 @@ private:
   bool               shutdownOrb_;
   bool               expectHolding_;
   bool               expectNoProfile_;
+  const ACE_TCHAR    *iorFile_;
 };

@@ -4,6 +4,7 @@
 #include "ace/Auto_Ptr.h"
 
 #include "tao/IORTable/IORTable.h"
+#include "tao/Utils/Servant_Var.h"
 
 #include <string>
 #include <vector>
@@ -38,10 +39,12 @@ private:
   int   numObjsPerPOA_;
   int   useItLoseItSecs_;
 
+  std::string managerIor_;
+  std::string outputIor_;
   std::string baseDir_;
   std::string expectedDir_;
   std::vector<std::pair<std::string, std::string> > expectedEnv_;
-  ACE_Auto_Ptr<Messenger_i>  servant_;
+  TAO::Utils::Servant_Var<Messenger_i> servant_;
 
   CORBA::ORB_var                  orb_;
   IORTable::Table_var             iorTable_;

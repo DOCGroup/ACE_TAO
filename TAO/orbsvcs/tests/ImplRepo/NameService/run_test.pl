@@ -44,7 +44,7 @@ $ACT = $act->CreateProcess ("../../../ImplRepo_Service/ImR_Activator");
 
 $NS = $ns->CreateProcess ("../../../Naming_Service/Naming_Service");
 my $ns_cmd = $NS->Executable();
-my $ns_ns_cmd = $imr->LocalFile ($ns_cmd);
+#my $ns_ns_cmd = $imr->LocalFile ($ns_cmd);
 
 $TI = $ti->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_imr");
 # We want the tao_imr executable to be found exactly in the path
@@ -117,7 +117,7 @@ if ($act->WaitForFileTimed ($actiorfile,$act->ProcessStartWaitInterval()) == -1)
 
 $TI->Arguments("-ORBInitRef ImplRepoService=file://$ti_imriorfile"
                 . " add NameService "
-                ." -c \" $ns_ns_cmd" 
+                ." -c \" $ns_cmd" 
                 ." -ORBInitRef ImplRepoService=file://$imr_imriorfile"
                 ." -ORBUseIMR 1 .\"");
 

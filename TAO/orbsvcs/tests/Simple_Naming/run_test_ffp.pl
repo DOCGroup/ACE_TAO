@@ -5,13 +5,15 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-# This is a Perl script that runs additional Naming Service tests.  
+# This is a Perl script that runs additional Naming Service tests.
 # It runs all the tests that will *not* run with min CORBA.
 # It starts all the servers and clients as necessary.
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
+## Save the starting directory
+$status = 0;
 $quiet = 0;
 
 # check for -q flag
@@ -19,28 +21,41 @@ if ($ARGV[0] eq '-q') {
     $quiet = 1;
 }
 
+my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+
 # Variables for command-line arguments to client and server
 # executables.
-$ns_multicast_port = 10001 + PerlACE::uniqueid (); # Can not be 10000 on Chorus 4.0
-$ns_orb_port = 12000 + PerlACE::uniqueid ();
-$iorfile = PerlACE::LocalFile ("ns.ior");
-$file_persistent_ior_file = PerlACE::LocalFile ("fpns.ior");
+$ns_multicast_port = 10001 + $test->RandomPort(); # Can not be 10000 on Chorus 4.0
+$ns_orb_port = 12000 + $test->RandomPort();
 
-$status = 0;
+$iorfile = "ns.ior";
+$persistent_ior_file = "fpns.ior";
+
+
+$iorfile = "ns.ior";
+$persistent_ior_file = "pns.ior";
+
+my $test_iorfile = $test->LocalFile ($iorfile);
+my $test_persistent_ior_file = $test->LocalFile ($persistent_ior_file);
+
+$test->DeleteFile($iorfile);
+$test->DeleteFile($persistent_ior_file);
 
 sub name_server
 {
-    my $args = "-ORBNameServicePort $ns_multicast_port -o $iorfile -m 1 @_";
+    my $args = "-ORBNameServicePort $ns_multicast_port -o $test_iorfile -m 1 @_";
     my $prog = "../../Naming_Service/Naming_Service";
-    $NS = new PerlACE::Process ($prog, $args);
 
-    unlink $iorfile;
+    $SV = $test->CreateProcess ("$prog", "$args");
 
-    $NS->Spawn ();
+    $test->DeleteFile($iorfile);
 
-    if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
-        print STDERR "ERROR: cannot find IOR file <$iorfile>\n";
-        $NS->Kill (); 
+    $SV->Spawn ();
+
+    if ($test->WaitForFileTimed ($iorfile,
+                               $test->ProcessStartWaitInterval()) == -1) {
+        print STDERR "ERROR: cannot find file <$test_iorfile>\n";
+        $SV->Kill (); $SV->TimedWait (1);
         exit 1;
     }
 }
@@ -50,12 +65,12 @@ sub client
     my $args = "@_"." ";
     my $prog = "client";
 
-    $CL = new PerlACE::Process ($prog, $args);
+    $CL = $test->CreateProcess ("$prog", "$args");
 
-    $client = $CL->SpawnWaitKill (60);
+    $client_status = $CL->SpawnWaitKill ($test->ProcessStartWaitInterval() + 45);
 
-    if ($client != 0) {
-        print STDERR "ERROR: client returned $client\n";
+    if ($client_status != 0) {
+        print STDERR "ERROR: client returned $client_status\n";
         $status = 1;
     }
 }
@@ -65,13 +80,16 @@ sub client
 ## that has only been seen on Windows XP.
 
 # Options for all simple tests recognized by the 'client' program.
-@opts = ("-p $file_persistent_ior_file -ORBInitRef NameService=file://$iorfile",
-         "-c file://$file_persistent_ior_file -ORBInitRef NameService=file://$iorfile",
-         "-l file://$file_persistent_ior_file -ORBInitRef NameService=file://$iorfile");
+@opts = ("-p $test_persistent_ior_file -ORBInitRef NameService=file://$test_iorfile",
+         "-c file://$test_persistent_ior_file -ORBInitRef NameService=file://$test_iorfile",
+         "-l file://$test_persistent_ior_file -ORBInitRef NameService=file://$test_iorfile");
 
-@server_opts = ("-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -u NameService",
-                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -u NameService",
-                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -u NameService");
+$hostname = $test->HostName ();
+
+@server_opts = ("-ORBEndpoint iiop://$hostname:$ns_orb_port -u NameService",
+                "-ORBEndpoint iiop://$hostname:$ns_orb_port -u NameService",
+                "-ORBEndpoint iiop://$hostname:$ns_orb_port -u NameService"
+                );
 
 @comments = ("Flat File Persistent Test (Part 1): \n",
              "Flat File Persistent Test (Part 2): \n",
@@ -79,20 +97,21 @@ sub client
 
 $test_number = 0;
 
-unlink ($file_persistent_ior_file);
+$test->DeleteFile($test_persistent_ior_file);
 
 if ( ! -d "NameService" ) {
-  mkdir (NameService, 0777);
-  }
+    mkdir (NameService, 0777);
+}
 else {
-  chdir "NameService";
-  opendir(THISDIR, ".");
-  @allfiles = grep(!/^\.\.?$/, readdir(THISDIR));
-  closedir(THISDIR);
-  unlink @allfiles;
-  chdir "..";
-  }
-  
+    chdir "NameService";
+    opendir(THISDIR, ".");
+    @allfiles = grep(!/^\.\.?$/, readdir(THISDIR));
+    closedir(THISDIR);
+    foreach $tmp (@allfiles){
+        $test->DeleteFile ($tmp);
+    }
+    chdir "..";
+}
 
 # Run server and client for each of the tests.  Client uses ior in a
 # file to bootstrap to the server.
@@ -103,7 +122,7 @@ foreach $o (@opts) {
 
     client ($o);
 
-    $NS->Kill ();
+    $SV->Kill ();
 
     ## For some reason, only on Windows XP, we need to
     ## wait before starting another Naming_Service when
@@ -115,16 +134,17 @@ foreach $o (@opts) {
     $test_number++;
 }
 
-unlink ($file_persistent_ior_file);
-
 chdir "NameService";
 opendir(THISDIR, ".");
 @allfiles = grep(!/^\.\.?$/, readdir(THISDIR));
 closedir(THISDIR);
-unlink @allfiles;
+foreach $tmp (@allfiles){
+    $test->DeleteFile ($tmp);
+}
 chdir "..";
 rmdir "NameService";
 
-unlink $iorfile;
+$test->DeleteFile($persistent_ior_file);
+$test->DeleteFile($iorfile);
 
 exit $status;

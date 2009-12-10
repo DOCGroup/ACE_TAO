@@ -9,7 +9,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # all the servers and clients as necessary.
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 use Cwd;
 
 $startdir = getcwd();
@@ -21,14 +21,22 @@ if ($ARGV[0] eq '-q') {
     $quiet = 1;
 }
 
+my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+
+$hostname = $test->HostName ();
 # Variables for command-line arguments to client and server
 # executables.
-$ns_orb_port1 = 10001 + PerlACE::uniqueid ();
-$ns_orb_port2 = 10002 + PerlACE::uniqueid ();
-$ns_endpoint1 = "iiop://localhost:$ns_orb_port1";
-$ns_endpoint2 = "iiop://localhost:$ns_orb_port2";
-$iorfile1 = PerlACE::LocalFile ("ns1.ior");
-$iorfile2 = PerlACE::LocalFile ("ns2.ior");
+$ns_orb_port1 = 10001 + $test->RandomPort ();
+$ns_orb_port2 = 10002 + $test->RandomPort ();
+$ns_endpoint1 = "iiop://$hostname:$ns_orb_port1";
+$ns_endpoint2 = "iiop://$hostname:$ns_orb_port2";
+
+
+$iorfile1 = "ns1.ior";
+$iorfile2 = "ns2.ior";
+
+my $test_iorfile1 = $test->LocalFile ($iorfile1);
+my $test_iorfile2 = $test->LocalFile ($iorfile2);
 
 $status = 0;
 
@@ -39,11 +47,11 @@ $status = 0;
 ## directory is NFS mounted from a system that does not properly support
 ## locking.
 foreach my $possible ($ENV{TMPDIR}, $ENV{TEMP}, $ENV{TMP}) {
-  if (defined $possible && -d $possible) {
-    if (chdir($possible)) {
-      last;
+    if (defined $possible && -d $possible) {
+      if (chdir($possible)) {
+        last;
+      }
     }
-  }
 }
 
 print "INFO: Running the test in ", getcwd(), "\n";
@@ -51,46 +59,52 @@ print "INFO: Running the test in ", getcwd(), "\n";
 # Make sure that the directory to use to hold the naming contexts exists
 # and is cleaned out
 if ( ! -d "NameService" ) {
-  mkdir (NameService, 0777);
-  }
+    mkdir (NameService, 0777);
+    }
 else {
-  chdir "NameService";
-  opendir(THISDIR, ".");
-  @allfiles = grep(!/^\.\.?$/, readdir(THISDIR));
-  closedir(THISDIR);
-  unlink @allfiles;
-  chdir "..";
-  }
+    chdir "NameService";
+    opendir(THISDIR, ".");
+    @allfiles = grep(!/^\.\.?$/, readdir(THISDIR));
+    closedir(THISDIR);
+    foreach $tmp (@allfiles){
+        $test->DeleteFile ($tmp);
+    }
+    chdir "..";
+}
 
 # Run two Naming Servers in redundant mode and one client.  Client uses iors
 # in files to find the individual copies of the Naming Servers.
 
-my $args = "-ORBEndPoint $ns_endpoint1 -o $iorfile1 -m 0 -r NameService";
+my $args = "-ORBEndPoint $ns_endpoint1 -o $test_iorfile1 -m 0 -r NameService";
 my $prog = "$startdir/../../Naming_Service/Naming_Service";
-$NS1 = new PerlACE::Process ($prog, $args);
 
-unlink $iorfile1;
+$NS1 = $test->CreateProcess ("$prog", "$args");
+
+$test->DeleteFile ("iorfile1");
 
 $NS1->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile1, $PerlACE::wait_interval_for_process_creation) == -1) {
-  print STDERR "ERROR: cannot find IOR file <$iorfile1>\n";
-  $NS1->Kill ();
-  exit 1;
+if ($test->WaitForFileTimed ($iorfile1,
+                               $test->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$test_iorfile1>\n";
+    $NS1->Kill (); $NS1->TimedWait (1);
+    exit 1;
 }
 
-my $args = "-ORBEndPoint $ns_endpoint2 -o $iorfile2 -m 0 -r NameService";
-my $prog = "$startdir/../../Naming_Service/Naming_Service";
-$NS2 = new PerlACE::Process ($prog, $args);
+$args = "-ORBEndPoint $ns_endpoint2 -o $test_iorfile2 -m 0 -r NameService";
+$prog = "$startdir/../../Naming_Service/Naming_Service";
 
-unlink $iorfile2;
+$NS2 = $test->CreateProcess ("$prog", "$args");
+
+$test->DeleteFile ("iorfile2");
 
 $NS2->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile2, $PerlACE::wait_interval_for_process_creation) == -1) {
-  print STDERR "ERROR: cannot find IOR file <$iorfile>\n";
-  $NS2->Kill ();
-  exit 1;
+if ($test->WaitForFileTimed ($iorfile2,
+                               $test->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$test_iorfile2>\n";
+    $NS2->Kill (); $NS2->TimedWait (1);
+    exit 1;
 }
 
 ## Even though the ior file is present, the redundant naming service
@@ -98,22 +112,22 @@ if (PerlACE::waitforfile_timed ($iorfile2, $PerlACE::wait_interval_for_process_c
 ## allows the redundant naming service to get to a usable state.
 sleep(1);
 
-my $args = "-p file://$iorfile1 -q file://$iorfile2";
-my $prog = "$startdir/client";
+$args = "-p file://$test_iorfile1 -q file://$test_iorfile2";
+$prog = "$startdir/client";
 
-$CL = new PerlACE::Process ($prog, $args);
+$CL = $test->CreateProcess ("$prog", "$args");
 
-$client = $CL->SpawnWaitKill (12);
+$client = $CL->SpawnWaitKill ($test->ProcessStartWaitInterval());
 
 if ($client != 0) {
-  print STDERR "ERROR: client returned $client\n";
-  $status = 1;
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
 
 $NS1->Kill ();
 $NS2->Kill ();
 
-unlink $iorfile1;
-unlink $iorfile2;
+$test->DeleteFile ("iorfile1");
+$test->DeleteFile ("iorfile2");
 
 exit $status;
