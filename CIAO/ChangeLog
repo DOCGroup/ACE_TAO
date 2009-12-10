@@ -1,3 +1,9 @@
+Thu Dec 10 10:11:56 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/Hello/descriptors/run_test_without_ns.pl:
+        * examples/Null_Component/descriptors/run_test.pl:
+          Resolved fuzz errors/warnings.
+
 Thu Dec 10 10:00:16 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
