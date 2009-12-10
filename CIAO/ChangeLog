@@ -1,3 +1,8 @@
+Thu Dec 10 11:01:16 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Servant_Activator.cpp:
+          Extended logging
+
 Thu Dec 10 10:11:56 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * examples/Hello/descriptors/run_test_without_ns.pl:
