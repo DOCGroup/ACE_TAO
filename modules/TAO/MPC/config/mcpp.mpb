@@ -1,0 +1,6 @@
+// $Id$
+feature(mcpp) {
+  after += TAO_IDL_MCPP
+  includes += $(TAO_ROOT)/TAO_IDL/contrib/mcpp
+  libs += TAO_IDL_MCPP
+}

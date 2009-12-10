@@ -1,0 +1,63 @@
+// $Id$
+
+OMG Event Service
+
+
+File: DevGuideExamples/EventServices/OMG_SupplierSideEC/README
+
+
+This directory contains an example that extends the previous examples
+so that the event supplier creates its own local event channel.  All
+other code is identical to that in EventServices/OMG_Basic.
+
+  EchoEventSupplier (contains EC) ------> EchoEventConsumer
+
+By default, the supplier will create a "Native" EC.  Passing -wrapper
+will force creation of a "Wrapper" EC that will utilize a Real-Time
+Event Channel (RTEC) as the underlying implementation.
+
+-------------------------------------------------------------------------
+
+Note: To test this, you must first run the Naming Service
+
+$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -o ns.ior&
+
+-------------------------------------------------------------------------
+
+EchoEventSupplerMain.cpp
+
+  Main program for a PushSupplier.
+
+    EchoEventSupplier -ORBInitRef NameService=file://ns.ior
+  
+  It will create an event channel and publish an event to it every 
+  second.
+  Use Control-C to kill the process.
+
+-------------------------------------------------------------------------
+
+EchoEventConsumerMain.cpp
+
+  Main program for a PushConsumer.
+
+  To run it:
+
+    EchoEventConsumer -ORBInitRef NameService=file://ns.ior
+
+  Use Control-C to kill the process.
+
+-------------------------------------------------------------------------
+
+EchoEventConsumer_i.{h,cpp}
+
+  Call which implements the CosEventComm::PushConsumer interface.
+
+
+
+Exeuction via Perl Script
+-------------------------
+
+A Perl script has been created to automate the steps shown
+above.  This script can be run via the following command:
+
+./run_test.pl
