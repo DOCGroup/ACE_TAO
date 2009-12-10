@@ -105,7 +105,7 @@ namespace CIAO_Getter_Test_Sender_Impl
     CORBA::ULong last_iter_;
 
     void start_timeout_tests (void);
-    void get_many (void);
+    void write_many (void);
 
     pulse_Generator * ticker_;
   };
