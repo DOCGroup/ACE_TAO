@@ -1,3 +1,8 @@
+Thu Dec 10 20:03:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Improved error message
+
 Thu Dec 10 15:37:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ACETAOCIAO.style:
