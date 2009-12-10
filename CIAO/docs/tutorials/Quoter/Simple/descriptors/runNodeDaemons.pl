@@ -6,11 +6,14 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-$status = 0;
-$iorfile1 = PerlACE::LocalFile ("NodeApp1.ior");
-$iorfile2 = PerlACE::LocalFile ("NodeApp2.ior");
+$tg_deamons = PerlACE::TestTarget::create_target (1) || die "Create target for ns failed\n";
+
+$ior_base1 = "NodeApp1.ior";
+$ior_file1 = $tg_deamons->LocalFile ($ior_base1);
+$ior_base2 = "NodeApp2.ior";
+$ior_file2 = $tg_deamons->LocalFile ($ior_base2);
 
 #for ($iter = 0; $iter <= $#ARGV; $iter++) {
 #    if ($ARGV[$iter] eq "-h" || $ARGV[$iter] eq "-?") {
@@ -22,17 +25,16 @@ $iorfile2 = PerlACE::LocalFile ("NodeApp2.ior");
 #  }
 #}
 
-
-unlink $iorfile1;
-unlink $iorfile2;
+$ior_file1 = $tg_deamons->DeleteFile ($ior_base1);
+$ior_file2 = $tg_deamons->DeleteFile ($ior_base2);
 
 $CIAO_ROOT=$ENV{'CIAO_ROOT'};
 $DANCE_ROOT=$ENV{'DANCE_ROOT'};
 
-$SV1 = new PerlACE::Process ("$DANCE_ROOT/bin/dance_node_manager",
+$SV1 = $tg_deamons->CreateProcess ("$DANCE_ROOT/bin/dance_node_manager",
                              "-ORBEndpoint iiop://localhost:30000 -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication -d 1000");
 
-$SV2 = new PerlACE::Process ("$DANCE_ROOT/bin/dance_node_manager",
+$SV2 = $tg_deamons->CreateProcess ("$DANCE_ROOT/bin/dance_node_manager",
                              "-ORBEndpoint iiop://localhost:40000 -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication -d 1000");
 
 $SV1->Spawn ();
