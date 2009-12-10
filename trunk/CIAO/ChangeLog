@@ -1,3 +1,12 @@
+Thu Dec 10 08:06:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/State_Connection_Test/Base/State_Connection_Test_Base.mpc:
+        * connectors/dds4ccm/tests/State_Connection_Test/Connector/State_Connection_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/State_Connection_Test/Receiver/State_Connection_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/State_Connection_Test/Sender/State_Connection_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/State_Connection_Test/descriptors/Plan.cdp:
+          Shorten the names of the projects in order to solve some fuzz warnings.
+
 Wed Dec  9 19:52:16 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Deployment/Deployment_DeploymentPlan.idl
