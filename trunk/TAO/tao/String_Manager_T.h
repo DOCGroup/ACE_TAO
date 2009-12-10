@@ -129,10 +129,6 @@ public:
 private:
   /// The underlying string
   character_type *ptr_;
-  
-  /// Prevent comparison
-  bool operator != (const String_Manager_T <character_type> &s) const;
-  bool operator == (const String_Manager_T <character_type> &s) const;
 };
 
   typedef TAO::String_Manager_T<CORBA::Char> String_Manager;
