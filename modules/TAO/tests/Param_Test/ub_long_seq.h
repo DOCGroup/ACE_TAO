@@ -62,17 +62,13 @@ private:
   char *opname_;
   // operation name
 
-  CORBA::LongSeq_var in_;
-  // in parameter
+  Param_Test::UB_Long_Seq in_;
 
-  CORBA::LongSeq_var inout_;
-  // inout parameter
+  Param_Test::UB_Long_Seq inout_;
 
-  CORBA::LongSeq_var out_;
-  // out parameter
+  Param_Test::UB_Long_Seq out_;
 
-  CORBA::LongSeq_var ret_;
-  // return value
+  Param_Test::UB_Long_Seq ret_;
 };
 
 #endif /* PARAM_TEST_UNBOUNDED_LONG_SEQUENCE_H */

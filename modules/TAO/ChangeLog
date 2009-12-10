@@ -1,3 +1,36 @@
+Thu Dec 10 19:27:17 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Param_Test/param_testC.cpp:
+        * tests/Param_Test/param_testS.cpp:
+        * tests/Param_Test/param_testC.h:
+        * tests/Param_Test/param_testS.h:
+        * tests/Param_Test/param_testC.inl:
+        * tests/Param_Test/param_testS.inl:
+
+          These files, normally generated, have
+          been added to the repository since
+          the stub file have been modified by
+          hand, and can no longer be generated.
+
+        * tests/Param_Test/ub_string.h:
+        * tests/Param_Test/ub_string.cpp:
+        * tests/Param_Test/ub_long_seq.h:
+        * tests/Param_Test/ub_long_seq.cpp:
+
+          Files modified to change the unbounded
+          string and unbounded long sequence
+          tests to use std::string and
+          std::vector respectively.
+
+        * tests/Param_Test/Param_Test.mpc:
+
+          Project that processes IDL was removed.
+
+        * tests/Param_Test/README:
+
+          Description of changes added at top
+          of file.
+
 Thu Dec 10 13:45:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Oneways_Invoking_Twoways/Client_Task.cpp:
