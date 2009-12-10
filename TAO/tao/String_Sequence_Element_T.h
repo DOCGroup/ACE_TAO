@@ -135,10 +135,6 @@ private:
   // This function is not implemented
   string_sequence_element();
 
-  /// Prevent comparison
-  bool operator != (const string_sequence_element &s) const;
-  bool operator == (const string_sequence_element &s) const;
-
 private:
   value_type * element_;
   CORBA::Boolean release_;

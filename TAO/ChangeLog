@@ -1,3 +1,17 @@
+Thu Dec 10 13:03:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted change below, causes correct code to break
+
+        Thu Dec 10 11:57:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/String_Manager_T.h
+        * tao/String_Sequence_Element_T.h:
+          Added private operator != and ==, the string elements
+          just behave like char*, so != and == on them is illegal
+          and doesn't check the strings itself. If any user has
+          done this without realizing this, this change will now
+          give the user a compile error
+
 Thu Dec 10 12:42:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
 
         * tests/BiDirectional_DelayedUpcall/client.cpp:
