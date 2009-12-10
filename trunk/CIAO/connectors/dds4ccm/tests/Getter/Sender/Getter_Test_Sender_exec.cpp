@@ -102,7 +102,7 @@ namespace CIAO_Getter_Test_Sender_Impl
   }
 
   void
-  Sender_exec_i::get_many (void)
+  Sender_exec_i::write_many (void)
   {
     GetterTest_Seq write_many;
     write_many.length (this->keys_ * this->iterations_);
@@ -176,7 +176,7 @@ namespace CIAO_Getter_Test_Sender_Impl
      }
    else 
     {
-      get_many ();
+      write_many ();
       this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
     }
   }
