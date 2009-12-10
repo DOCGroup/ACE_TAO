@@ -1,3 +1,8 @@
+Thu Dec 109 17:02:57 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/Updater/Sender/Updater_Sender_exec.cpp
+          Resolved warning.
+
 Thu Dec 10 16:20:37 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/run_1_to_5.pl:
