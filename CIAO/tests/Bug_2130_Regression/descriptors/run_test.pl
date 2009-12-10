@@ -37,52 +37,51 @@ sub delete_ior_files {
 }
 
 sub kill_node_daemons {
-  for ($i = 0; $i < $daemons; ++$i) {
-    $Daemons[$i]->Kill (); $Daemons[$i]->TimedWait (1);
-  }
+    for ($i = 0; $i < $daemons; ++$i) {
+        $Daemons[$i]->Kill (); $Daemons[$i]->TimedWait (1);
+    }
 }
 
 sub kill_open_processes {
-  if ($daemons_running == 1) {
-    kill_node_daemons ();
-  }
+    if ($daemons_running == 1) {
+        kill_node_daemons ();
+    }
 
-  if ($em_running == 1) {
-    $EM->Kill ();
-    $EM->TimedWait (1);
-  }
+    if ($em_running == 1) {
+        $EM->Kill ();
+        $EM->TimedWait (1);
+    }
 }
 
 sub run_node_daemons {
-  for ($i = 0; $i < $daemons; ++$i)
-  {
-      $iorfile = $iorfiles[$i];
-      $port = $ports[$i];
+    for ($i = 0; $i < $daemons; ++$i) {
+        $iorfile = $iorfiles[$i];
+        $port = $ports[$i];
 
-      $iiop = "iiop://localhost:$port";
-      $node_app = "$CIAO_ROOT/bin/NodeApplication";
+        $iiop = "iiop://localhost:$port";
+        $node_app = "$CIAO_ROOT/bin/NodeApplication";
 
-      $d_cmd = "$DANCE_ROOT/bin/dance_node_manager";
-      $d_param = "-ORBEndpoint $iiop -s $node_app -o $iorfile -a \"-r\"";
+        $d_cmd = "$DANCE_ROOT/bin/dance_node_manager";
+        $d_param = "-ORBEndpoint $iiop -s $node_app -o $iorfile -a \"-r\"";
 
-      $Daemons[$i] = new PerlACE::Process ($d_cmd, $d_param);
+        $Daemons[$i] = new PerlACE::Process ($d_cmd, $d_param);
 
 
-      $result = $Daemons[$i]->Spawn ();
-      push(@processes, $Daemons[$i]);
+        $result = $Daemons[$i]->Spawn ();
+        push(@processes, $Daemons[$i]);
 
-      if (PerlACE::waitforfile_timed ($iorfile,
-                          $PerlACE::wait_interval_for_process_creation) == -1) {
-          print STDERR
-            "ERROR: The ior file of node daemon $i could not be found\n";
-          for (; $i > 0; --$i) {
-            $Daemons[$i]->Kill (); $Daemons[$i]->TimedWait (1);
-          }
-          return -1;
-      }
-  }
-  $daemons_running = 1;
-  return 0;
+        if (PerlACE::waitforfile_timed ($iorfile,
+                            $PerlACE::wait_interval_for_process_creation) == -1) {
+            print STDERR
+                "ERROR: The ior file of node daemon $i could not be found\n";
+            for (; $i > 0; --$i) {
+                $Daemons[$i]->Kill (); $Daemons[$i]->TimedWait (1);
+            }
+            return -1;
+        }
+    }
+    $daemons_running = 1;
+    return 0;
 }
 
 delete_ior_files ();
@@ -165,8 +164,7 @@ if ($result != 0) {
 
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";
-$E =
-  new PerlACE::Process ("$CIAO_ROOT/bin/plan_launcher",
+$E = new PerlACE::Process ("$CIAO_ROOT/bin/plan_launcher",
                         "-k file://EM.ior -i file://DAM.ior");
 $E->SpawnWaitKill (60);
 
