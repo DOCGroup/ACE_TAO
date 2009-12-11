@@ -1,3 +1,8 @@
+Fri Dec 11 08:09:25 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * performance-tests/Protocols/descriptors/run_test.pl:
+          Resolved fuzz errors/warnings.
+
 Fri Dec 11 07:44:10 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * examples/Display/descriptors/run_NodeDaemons.pl:

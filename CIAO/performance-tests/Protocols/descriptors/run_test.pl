@@ -6,37 +6,48 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     if 0;
 
 use lib "$ENV{'ACE_ROOT'}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-$ACE_ROOT = $ENV {'ACE_ROOT'};
 $CIAO_ROOT = $ENV {'CIAO_ROOT'};
 
 $ORBdebuglevel = 0;
 $protocols = "-ORBEndpoint \'iiop://\'";
-#$protocols = "-ORBEndpoint \'iiop://;diop://:5678;sciop://\'";
+$tg = PerlACE::TestTarget::create_target (1) || die "Create target for ns failed\n";
 
-$daemon_1 = new PerlACE::Process ("${CIAO_ROOT}/tools/Daemon/CIAO_Daemon",
+$ior_ambase       = "assembly_manager.ior";
+$ior_daemonbase   = "daemon.ior";
+$ior_senderbase   = "sender.ior";
+$ior_receiverbase = "receiver.ior";
+$ior_assemblybase = "assembly.ior";
+
+$ior_amfile       = $tg->LocalFile ($ior_ambase);
+$ior_daemonfile   = $tg->LocalFile ($ior_daemonbase);
+$ior_senderfile   = $tg->LocalFile ($ior_senderbase);
+$ior_receiverfile = $tg->LocalFile ($ior_receiverbase);
+$ior_assemblyfile = $tg->LocalFile ($ior_assemblybase);
+
+$daemon_1 = $tg->CreateProcess ("${CIAO_ROOT}/tools/Daemon/CIAO_Daemon",
                                   "-ORBEndpoint iiop://localhost:20000 " .
                                   "-n \"${CIAO_ROOT}/tools/RTComponentServer/RTComponentServer -ORBdebuglevel $ORBdebuglevel\"");
 
-$daemon_2 = new PerlACE::Process ("${CIAO_ROOT}/tools/Daemon/CIAO_Daemon",
+$daemon_2 = $tg->CreateProcess ("${CIAO_ROOT}/tools/Daemon/CIAO_Daemon",
                                   "-ORBEndpoint iiop://localhost:12000 " .
                                   "-n \"${CIAO_ROOT}/tools/RTComponentServer/RTComponentServer -ORBdebuglevel $ORBdebuglevel $protocols\"");
 
-$assembly_manager_args = "-o assembly_manager.ior -c test.dat";
-$assembly_manager = new PerlACE::Process ("${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Manager", "$assembly_manager_args");
+$assembly_manager_args = "-o $ior_amfile -c test.dat";
+$assembly_manager = $tg->CreateProcess ("${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Manager", "$assembly_manager_args");
 
-$assembly_deployer_args = "-k file://assembly_manager.ior -a remote.cad -o assembly";
-$assembly_deployer = new PerlACE::Process ("${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Deployer", "$assembly_deployer_args");
+$assembly_deployer_args = "-k file://$ior_amfile -a remote.cad -o assembly";
+$assembly_deployer = $tg->CreateProcess ("${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Deployer", "$assembly_deployer_args");
 
-$controller = new PerlACE::Process ("../Controller/Controller", "-x 1 -z 1");
+$controller = $tg->CreateProcess ("../Controller/Controller", "-x 1 -z 1");
 
 # Remove all ior files
-unlink "assembly_manager.ior";
-unlink "daemon.ior";
-unlink "receiver.ior";
-unlink "sender.ior";
-unlink "assembly";
+$tg->DeleteFile ($ior_ambase);
+$tg->DeleteFile ($ior_daemonbase);
+$tg->DeleteFile ($ior_senderbase);
+$tg->DeleteFile ($ior_receiverbase);
+$tg->DeleteFile ($ior_assemblybase);
 
 # Start the daemons.
 $daemon_1->Spawn ();
@@ -46,14 +57,14 @@ $daemon_2->Spawn ();
 $assembly_manager->Spawn ();
 
 # Wait till the assembly manager finishes writing the IOR
-PerlACE::waitforfile ("assembly_manager.ior");
+$tg->WaitForFileTimed($ior_ambase, $tg->ProcessStartWaitInterval ());
 
 # Start the Assembly_Deployer
 $assembly_deployer->Spawn ();
 
 # Wait till the sender and receiver to finish writing their IORs
-PerlACE::waitforfile ("sender.ior");
-PerlACE::waitforfile ("receiver.ior");
+$tg->WaitForFileTimed($ior_senderbase, $tg->ProcessStartWaitInterval ());
+$tg->WaitForFileTimed($ior_receiverbase, $tg->ProcessStartWaitInterval ());
 
 # Now start the controller
 $controller->Spawn ();
@@ -69,9 +80,8 @@ $assembly_manager->Kill ();
 $assembly_deployer->Kill ();
 
 # Remove all ior files
-unlink "assembly_manager.ior";
-unlink "daemon.ior";
-unlink "receiver.ior";
-unlink "sender.ior";
-unlink "assembly";
-
+$tg->DeleteFile ($ior_ambase);
+$tg->DeleteFile ($ior_daemonbase);
+$tg->DeleteFile ($ior_senderbase);
+$tg->DeleteFile ($ior_receiverbase);
+$tg->DeleteFile ($ior_assemblybase);
