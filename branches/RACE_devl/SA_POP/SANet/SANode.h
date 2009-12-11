@@ -162,7 +162,7 @@ namespace SANet {
      */
     virtual void print_xml (std::basic_ostream<char, std::char_traits<char> >& strm) = 0;
 
-
+	void reset_step();
 
   protected:
     /// Unique ID of node (for identification within network).

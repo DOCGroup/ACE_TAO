@@ -390,6 +390,8 @@ namespace SANet {
 	 */
 	virtual TimeValue get_duration (TaskID task_id);
 
+	void reset_step();
+
   protected:
     /// Map from ID to node pointer for all task nodes in network.
     TaskNodeMap task_nodes_;
