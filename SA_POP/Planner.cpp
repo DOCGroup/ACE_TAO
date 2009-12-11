@@ -512,22 +512,34 @@ void Planner::notify_plan_changed (void)
   }
 };
 
-void Planner::calculate_plan_utility(size_t sa_max_steps)
+double Planner::calculate_plan_utility(size_t sa_max_steps)
 {
+	sanet_->reset_step();
 	sanet_->set_nodes_state(false);
 
 	for(CLSet::iterator it = this->plan_.causal_links.begin(); it != 
 		this->plan_.causal_links.end(); it++){
-
-			this->sanet_->set_task_state((*it).first, true);
-			this->sanet_->set_task_state((*it).second, true);
+		if((*it).first != INIT_TASK_INST_ID){
+			this->sanet_->set_task_state(this->working_plan_->get_task_from_inst((*it).first), true);
+			this->sanet_->set_task_state(this->working_plan_->get_task_from_inst((*it).second), true);
 			this->sanet_->set_cond_state((*it).cond.id, true);
+		}
 	}
 
 	sanet_->update(sa_max_steps);
 
+	GoalMap goals = this->get_goals();
+
+	double conj_utils = 0;
+	for(GoalMap::iterator it = goals.begin(); it != goals.end(); it++){
+		conj_utils+=(it->second * this->get_cond_val(it->first));
+	}
+
+	std::cout<<"Plan utility: "<<conj_utils<<std::endl;
+
 	//TODO the rest
 
+	return conj_utils;
 }
 
 /// Get the Task instances in a particular set of the specified task instance

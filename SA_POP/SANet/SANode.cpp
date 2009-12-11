@@ -101,6 +101,10 @@ NodeID Node::get_ID (void)
   return ID_;
 };
 
+void Node::reset_step(){
+	step_= 0;
+}
+
 // Get pre-links (nodes with links to this node).
 const LinkMap& Node::get_pre (void)
 {
@@ -144,6 +148,7 @@ bool TaskNode::update (void)
   if(!active)
   {
     //the node should return as not changing the network
+	step_++;
     return false;
   }
 
@@ -1195,17 +1200,18 @@ bool CondNode::update (void)
     }
 
     // Get current probability info.
-    try {
+//    try {
       cur_prob = cur_node->get_prob (step_);
-    } catch (Invalid_Step e) {
-      std::cerr << "Error in condition node update:  Invalid step value.";
-      std::cerr << std::endl;
-      throw Update_Error ();
-    } catch (...) {
-      std::cerr << "Unexpected exception thrown in condition node update.";
-      std::cerr << std::endl;
-      throw Update_Error ();
-    }
+//    } catch (Invalid_Step e) {
+//      std::cerr << "Error in condition node update:  Invalid step value.";
+//      std::cerr << std::endl;
+//      throw Update_Error ();
+//    } 
+	//  catch (...) {
+ //     std::cerr << "Unexpected exception thrown in condition node update.";
+ //     std::cerr << std::endl;
+ //     throw Update_Error ();
+ //   }
 
     // Update probability based on current multiplier.
     cur_prob.probability = cur_mult * cur_prob.probability;

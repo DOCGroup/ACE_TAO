@@ -74,6 +74,18 @@ void SANet::Network::add_task (TaskID ID, std::string name, MultFactor atten_fac
   }
 };
 
+void SANet::Network::reset_step(){
+	step_ = 0;
+
+	for(CondNodeMap::iterator it = this->cond_nodes_.begin(); it != cond_nodes_.end(); it++){
+		it->second->reset_step();
+	}
+
+	for(TaskNodeMap::iterator it = this->task_nodes_.begin(); it != task_nodes_.end(); it++){
+		it->second->reset_step();
+	}
+}
+
 Probability SANet::Network::get_prior(TaskID ID)
 {
   TaskNodeMap::iterator task_iter = task_nodes_.find (ID);
