@@ -102,6 +102,37 @@ module T2
   };
 };
 
+module LocalMod
+{
+  local interface L1
+  {
+  };
+
+  local interface L2
+  {
+    L1 getL1();
+    void setL1 (in L1 x);
+  };
+
+  component CombLocal
+  {
+    provides L1 x;
+    uses L2 y;
+  };
+
+  porttype L3
+  {
+    provides L1 x;
+    uses L2 y;
+  };
+
+  component CombLocal2
+  {
+    port L3 z;
+    mirrorport L3 z2;
+  };
+};
+
 module DerivedMod
 {
   porttype CombinedPort
