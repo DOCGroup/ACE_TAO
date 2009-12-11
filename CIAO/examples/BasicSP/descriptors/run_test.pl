@@ -54,7 +54,7 @@ sub create_targets {
     $tg_naming = PerlACE::TestTarget::create_target (1) || die "Create target for ns failed\n";
     $tg_naming->AddLibPath ('../lib');
     #   daemon
-    for ($i = 0; $i < $nr_daemon; ++$i) {
+    for ($i = 0; $i < $daemons; ++$i) {
         $tg_daemons[$i] = PerlACE::TestTarget::create_target ($i+1) || die "Create target for deamon $i failed\n";
         $tg_daemons[$i]->AddLibPath ('../lib');
     }
