@@ -32,6 +32,10 @@ SANet::Network::Network (void)
   this->goals_.clear ();
 };
 
+int SANet::Network::get_step(){
+	return step_;
+}
+
 SANet::Network::~Network ()
 {
   // Deallocate task nodes.
@@ -480,6 +484,13 @@ Probability SANet::Network::get_cond_val (CondID cond_id)
     throw "SANet::Network::get_cond_val (): Unknown condition node.";
   return iter->second->get_init_prob ();
 };
+
+Probability SANet::Network::get_current_cond_val(CondID cond_id, int step){
+	CondNodeMap::iterator iter = this->cond_nodes_.find(cond_id);
+	if(iter == this->cond_nodes_.end())
+		throw "SANet::Network::get_cond_val (): Unknown condition node.";
+	return iter->second->get_prob (step).probability;
+}
 
 // Get all goals.
 const GoalMap& SANet::Network::get_goals (void)

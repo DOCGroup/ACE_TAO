@@ -164,6 +164,10 @@ namespace SANet {
 
 	void reset_step();
 
+	bool is_active(){
+		return active;
+	}
+
   protected:
     /// Unique ID of node (for identification within network).
     NodeID ID_;
