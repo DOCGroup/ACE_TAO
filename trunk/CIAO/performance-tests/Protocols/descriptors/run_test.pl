@@ -21,10 +21,10 @@ $ior_receiverbase = "receiver.ior";
 $ior_assemblybase = "assembly.ior";
 
 $ior_amfile       = $tg->LocalFile ($ior_ambase);
-$ior_daemonfile   = $tg->LocalFile ($ior_daemonbase);
-$ior_senderfile   = $tg->LocalFile ($ior_senderbase);
-$ior_receiverfile = $tg->LocalFile ($ior_receiverbase);
-$ior_assemblyfile = $tg->LocalFile ($ior_assemblybase);
+$tg->LocalFile ($ior_daemonbase);
+$tg->LocalFile ($ior_senderbase);
+$tg->LocalFile ($ior_receiverbase);
+$tg->LocalFile ($ior_assemblybase);
 
 $daemon_1 = $tg->CreateProcess ("${CIAO_ROOT}/tools/Daemon/CIAO_Daemon",
                                   "-ORBEndpoint iiop://localhost:20000 " .
