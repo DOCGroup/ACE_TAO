@@ -1,3 +1,8 @@
+Fri Dec 11 09:01:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Makefile.am:
+          BooleanSeq.pidl was listed twice
+
 Thu Dec 10 18:42:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
