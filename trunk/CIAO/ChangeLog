@@ -1,3 +1,9 @@
+Fri Dec 11 10:27:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_2130_Regression/descriptors/run_test.pl:
+        * tests/Bug_3769_Regression/descriptors/run_test.pl:
+          Resolved fuzz errors/warnings
+
 Fri Dec 11 09:44:14 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/run_1_to_5.pl:
