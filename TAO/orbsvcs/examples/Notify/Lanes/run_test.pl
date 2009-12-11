@@ -64,7 +64,7 @@ $NFS = $nfs->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/Notify_Servic
 $Notify_Args = "-ORBInitRef NameService=file://$nfs_nsiorfile -IORoutput $nfs_nfsiorfile -ORBSvcConf $nfs_nfsconf ";
 
 $SUP = $sup->CreateProcess ("Supplier");
-$Supplier_Args = "-ORBInitRef NameService=file://$sup_nsiorfile -ORBSvcConf $sup_cliconf -IORoutput $sup_supiorfile -ORBDebugLevel $debug";
+$Supplier_Args = "-ORBInitRef NameService=file://$sup_nsiorfile -ORBSvcConf $sup_cliconf -IORoutput $sup_supiorfile -ORBDebugLevel $debug_level";
 
 $CON = $sup->CreateProcess ("Consumer");
 $Consumer_Args = "-ORBInitRef NameService=file://$con_nsiorfile -ORBSvcConf $con_cliconf -LanePriority 1";

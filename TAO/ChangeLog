@@ -1,3 +1,20 @@
+Fri Dec 11 09:26:32 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/run_test.pl:
+        * orbsvcs/tests/AVStreams/Pluggable/run_test.pl:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/run_all.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/run_all.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/run_all.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/run_all.pl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/run_test.pl:
+        * orbsvcs/examples/Notify/Lanes/run_test.pl:
+        * tests/IOR_Endpoint_Hostnames/run_test.pl:
+        * tests/Optimized_Connection/run_test.pl:
+
+          Tests are converted to use new test framework
+          and added to fuzz build.
+
 Fri Dec 11 09:01:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Makefile.am:
