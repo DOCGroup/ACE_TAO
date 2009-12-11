@@ -1,3 +1,11 @@
+Fri Dec 11 11:07:13 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * performance-tests/Benchmark/RoundTripClient/run_test.pl:
+          Resolved fuzz errors/warnings
+
+        * performance-tests/Protocols/descriptors/run_test.pl:
+          Resolved fuzz warnings
+
 Fri Dec 11 10:52:33 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * performance-tests/Benchmark/Multi_Threaded/run_test.pl:
