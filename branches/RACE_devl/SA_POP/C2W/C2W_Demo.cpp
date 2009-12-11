@@ -263,7 +263,7 @@ int main (int argc, char* argv[])
 	  //planner->add_out_adapter (&screen_out);
 
     planner->plan (15, goal);
-	planner->calculate_plan_utility(115);
+	planner->calculate_plan_utility(15);
 
   //} 
   /*

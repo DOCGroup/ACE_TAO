@@ -392,6 +392,10 @@ namespace SANet {
 
 	void reset_step();
 
+	Probability get_current_cond_val(int step, CondID cond_id);
+
+	int get_step();
+
   protected:
     /// Map from ID to node pointer for all task nodes in network.
     TaskNodeMap task_nodes_;

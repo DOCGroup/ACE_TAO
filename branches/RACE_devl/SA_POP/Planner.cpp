@@ -524,15 +524,24 @@ double Planner::calculate_plan_utility(size_t sa_max_steps)
 			this->sanet_->set_task_state(this->working_plan_->get_task_from_inst((*it).second), true);
 			this->sanet_->set_cond_state((*it).cond.id, true);
 		}
+		std::cout<<(*it).cond.id<<" cond, "<<(*it).first<<" first, "<<(*it).second<<" second"<<std::endl;
+
+	}
+
+
+	GoalMap goals = this->get_goals();
+
+	for(GoalMap::iterator it = goals.begin(); it != goals.end(); it++){
+		this->sanet_->set_cond_state(it->first, true);
 	}
 
 	sanet_->update(sa_max_steps);
 
-	GoalMap goals = this->get_goals();
-
 	double conj_utils = 0;
 	for(GoalMap::iterator it = goals.begin(); it != goals.end(); it++){
-		conj_utils+=(it->second * this->get_cond_val(it->first));
+		std::cout<<it->second<<std::endl;
+		std::cout<<this->sanet_->get_current_cond_val(it->first, this->sanet_->get_step())<<std::endl;
+		conj_utils+=(it->second * this->sanet_->get_current_cond_val(it->first, this->sanet_->get_step()));
 	}
 
 	std::cout<<"Plan utility: "<<conj_utils<<std::endl;

@@ -199,6 +199,10 @@ bool TaskNode::update (void)
     cur_ID = node_iter->first;
     cur_node = (CondNode *) node_iter->second;
 
+	if(!(cur_node->is_active())){
+		continue;
+	}
+
     // Get current link info.
     link_iter = pre_links_.find(cur_ID);
     if (link_iter == pre_links_.end ()) {
@@ -302,6 +306,10 @@ bool TaskNode::update (void)
     // Get current node info.
     cur_ID = node_iter->first;
     cur_node = (CondNode *) node_iter->second;
+
+	if(!(cur_node->is_active())){
+		continue;
+	}
 
     // Update util_changed_ flag if necessary.
     if (cur_node->util_changed ()) {
@@ -1000,6 +1008,7 @@ bool CondNode::update (void)
   //Check to see if node is active before updating 
   if(!active)
   {
+	step_++;
     //the node should return as not changing the network
     return false;
   }
@@ -1047,6 +1056,10 @@ bool CondNode::update (void)
     // Get current node info.
     cur_ID = node_iter->first;
     cur_node = (TaskNode *) node_iter->second;
+
+	if(!(cur_node->is_active())){
+		continue;
+	}
 
     // Update util_changed_ flag if necessary.
     if (cur_node->util_changed ()) {
@@ -1251,6 +1264,7 @@ bool CondNode::update (void)
     }
     cur_node = (TaskNode *) temp_node_iter->second;
 
+
     // Get current link info.
     link_iter = pre_links_.find(this->false_prob_from_);
     if (link_iter == pre_links_.end ()) {
@@ -1314,6 +1328,10 @@ bool CondNode::update (void)
     cur_ID = node_iter->first;
     cur_node = (TaskNode *) node_iter->second;
 
+	if(!(cur_node->is_active())){
+		continue;
+	}
+
     // Get current link info.
     link_iter = pre_links_.find(cur_ID);
     if (link_iter == pre_links_.end ()) {
@@ -1329,17 +1347,18 @@ bool CondNode::update (void)
     }
 
     // Get current probability info.
-    try {
+    //try {
       cur_prob = cur_node->get_prob (step_);
-    } catch (Invalid_Step e) {
-      std::cerr << "Error in condition node update:  Invalid step value.";
-      std::cerr << std::endl;
-      return false;
-    } catch (...) {
-      std::cerr << "Unexpected exception thrown in condition node update.";
-      std::cerr << std::endl;
-      return false;
-    }
+    //} catch (Invalid_Step e) {
+    //  std::cerr << "Error in condition node update:  Invalid step value.";
+    //  std::cerr << std::endl;
+    //  return false;
+    //} 
+	//catch (...) {
+    //  std::cerr << "Unexpected exception thrown in condition node update.";
+    //  std::cerr << std::endl;
+    //  return false;
+    //}
 
     // Update probability based on current multiplier.
     cur_prob.probability = cur_mult * cur_prob.probability;

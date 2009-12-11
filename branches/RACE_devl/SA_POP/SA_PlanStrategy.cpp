@@ -579,7 +579,7 @@ AddTaskCmd *SA_PlanStrategy::satisfy_cond (Condition open_cond)
 	// Get add task command.
 	AddTaskCmd *add_task_cmd =
 		static_cast<AddTaskCmd *> (this->add_task_cmd_->clone ());
-	TaskChoiceList task_list = this->task_choice_->choose_task_once (open_cond);
+	TaskChoiceList task_list = this->task_choice_->choose_task_fair (open_cond);
 	add_task_cmd->set_id (this->get_next_cmd_id ());
 	add_task_cmd->set_tasks (task_list);
 
