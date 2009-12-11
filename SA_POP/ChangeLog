@@ -1,3 +1,12 @@
+Fri Dec 11 23:54:51 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
+
+        * Planner.cpp:
+
+        * SANet/SANet.h:
+        * SANet/SANet.cpp:
+
+	Fixed (hopefully) plan EU calculations
+
 Fri Dec 11 05:37:26 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * C2W/C2W_Demo.cpp:
@@ -11,8 +20,8 @@ Fri Dec 11 05:37:26 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * SA_PlanStrategy.cpp:
 
-	Update in spreading activation now only affects those conditions/tasks which are active.  Added calculate_plan_utility
-	method to planner which returns the expected utility of the current plan.
+        Update in spreading activation now only affects those conditions/tasks which are active.  Added calculate_plan_utility
+        method to planner which returns the expected utility of the current plan.
 
 Sat Dec  5 07:07:45 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 

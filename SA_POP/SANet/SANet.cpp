@@ -17,12 +17,13 @@
 #include "SANet.h"
 #include "SANode.h"
 #include "SANet_Exceptions.h"
+#include "SA_POP_Types.h"
 
 using namespace SANet;
 
 
 SANet::Network::Network (void)
-: step_ (0)
+: step_ (0), restrict_prop_to_clinks_(false)
 {
   // Clear maps.
   this->task_nodes_.clear ();
@@ -52,6 +53,10 @@ SANet::Network::~Network ()
     delete node_iter->second;
   }
 };
+
+void SANet::Network::restrict_prop_to_clinks(bool val){
+	restrict_prop_to_clinks_ = val;
+}
 
 void SANet::Network::add_task (TaskID ID, std::string name, MultFactor atten_factor,
                           TaskCost cost, Probability prior_prob)
@@ -89,6 +94,41 @@ void SANet::Network::reset_step(){
 		it->second->reset_step();
 	}
 }
+
+
+void SANet::Network::note_causal_link(SA_POP::CausalLink clink){
+	causal_links_by_first_.insert(std::pair<TaskID, SA_POP::CausalLink> (clink.first, clink));
+	causal_links_by_cond_.insert(std::pair<CondID, SA_POP::CausalLink> (clink.cond.id, clink));
+	causal_links_by_second_.insert(std::pair<TaskID, SA_POP::CausalLink> (clink.second, clink));
+}
+
+/*
+bool SANet::Network::is_clink_first_to_cond_by_first(TaskID task, CondID cond){
+
+	for(std::multimap<SANet::TaskID, SA_POP::CausalLink>::iterator it = causal_links_by_first_.lower_bound(task); 
+		it != causal_links_by_first_.upper_bound(task); it++){
+			SA_POP::CausalLink clink = it->second;
+		if(clink.cond.id == cond){
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool SANet::Network::is_clink_first_to_cond_by_cond(CondID cond, TaskID task){
+	for(std::multimap<SANet::CondID, SA_POP::CausalLink>::iterator it = causal_links_by_cond_.lower_bound(task);
+		it != causal_links_by_cond_.upper_bound(cond); it++){
+			SA_POP::CausalLink clink = it->second;
+
+			if(clink.first == task){
+				return true;
+			}
+	}
+
+	return false;
+}
+*/
 
 Probability SANet::Network::get_prior(TaskID ID)
 {

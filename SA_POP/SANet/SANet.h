@@ -20,6 +20,7 @@
 #include <stdexcept>
 #include "SANet_Types.h"
 #include "SANode.h"
+#include "SA_POP_Types.h"
 
 namespace SANet {
   /// Map from task node ID to pointer.
@@ -396,6 +397,10 @@ namespace SANet {
 
 	int get_step();
 
+	void note_causal_link(SA_POP::CausalLink clink);
+
+	void restrict_prop_to_clinks(bool val);
+
   protected:
     /// Map from ID to node pointer for all task nodes in network.
     TaskNodeMap task_nodes_;
@@ -426,6 +431,18 @@ namespace SANet {
 
     /// Current step.
     int step_;
+
+
+	//bool is_clink_first_to_cond_by_first(TaskID task, CondID cond);
+	//bool is_clink_first_to_cond_by_cond (CondID cond, TaskID task);
+	//bool is_clink_cond_to_second_by_second(TaskID task, CondID cond);
+	//bool is_clink_cond_to_second_by_cond(CondID cond, TaskiD second);
+
+	std::multimap<TaskID, SA_POP::CausalLink> causal_links_by_first_;
+	std::multimap<CondID, SA_POP::CausalLink> causal_links_by_cond_;
+	std::multimap<TaskID, SA_POP::CausalLink> causal_links_by_second_;
+
+	bool restrict_prop_to_clinks_;
   };
 };
 

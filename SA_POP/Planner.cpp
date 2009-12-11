@@ -521,9 +521,14 @@ double Planner::calculate_plan_utility(size_t sa_max_steps)
 		this->plan_.causal_links.end(); it++){
 		if((*it).first != INIT_TASK_INST_ID){
 			this->sanet_->set_task_state(this->working_plan_->get_task_from_inst((*it).first), true);
-			this->sanet_->set_task_state(this->working_plan_->get_task_from_inst((*it).second), true);
-			this->sanet_->set_cond_state((*it).cond.id, true);
 		}
+
+		this->sanet_->set_task_state(this->working_plan_->get_task_from_inst((*it).second), true);
+		this->sanet_->set_cond_state((*it).cond.id, true);
+		this->sanet_->note_causal_link(*it);
+		
+
+
 		std::cout<<(*it).cond.id<<" cond, "<<(*it).first<<" first, "<<(*it).second<<" second"<<std::endl;
 
 	}
@@ -535,7 +540,9 @@ double Planner::calculate_plan_utility(size_t sa_max_steps)
 		this->sanet_->set_cond_state(it->first, true);
 	}
 
+	sanet_->restrict_prop_to_clinks(true);
 	sanet_->update(sa_max_steps);
+	sanet_->restrict_prop_to_clinks(false);
 
 	double conj_utils = 0;
 	for(GoalMap::iterator it = goals.begin(); it != goals.end(); it++){
@@ -546,6 +553,7 @@ double Planner::calculate_plan_utility(size_t sa_max_steps)
 
 	std::cout<<"Plan utility: "<<conj_utils<<std::endl;
 
+	sanet_->set_nodes_state(true);
 	//TODO the rest
 
 	return conj_utils;
