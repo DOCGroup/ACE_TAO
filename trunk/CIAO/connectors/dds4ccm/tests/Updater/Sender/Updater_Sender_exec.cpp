@@ -52,7 +52,7 @@ namespace CIAO_Updater_Sender_Impl
       if (!CORBA::is_nil (this->updater_) ) {
         this->updater_->create_one(i);
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: create_one with instance key <%C>\n"),
-                     i.key));
+                     i.key.in()));
       }
       else
       {
@@ -63,13 +63,13 @@ namespace CIAO_Updater_Sender_Impl
     catch(CCM_DDS::AlreadyCreated &)
     {
       CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: AlreadyCreated with test updater create_one <%C>.\n"),
-                      i.key));   
+                      i.key.in()));   
       result= false;
     }
     catch (CCM_DDS::InternalError& )
     {
       CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while create_one for <%C>.\n"),
-                      i.key));   
+                      i.key.in()));   
       result=false;;
     }
     return result;
@@ -85,7 +85,7 @@ namespace CIAO_Updater_Sender_Impl
     {
       this->updater_->create_one(i);
       CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: create_one with already existing instance key <%Cs>\n"),
-                    i.key));
+                    i.key.in()));
     }
     catch(CCM_DDS::AlreadyCreated &)
     {
@@ -95,7 +95,7 @@ namespace CIAO_Updater_Sender_Impl
     catch (CCM_DDS::InternalError& )
     {
       CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while create_one for <%C>.\n"),
-                      i.key));   
+                      i.key.in()));   
       result=false;
     }
     return result;
@@ -111,18 +111,18 @@ namespace CIAO_Updater_Sender_Impl
     {
       this->updater_->update_one(i, DDS::HANDLE_NIL);
       CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: update_one with already existing instance with DDS::HANDLE_NIL, key <%C>\n"),
-                    i.key));
+                    i.key.in()));
     }
     catch(CCM_DDS::NonExistent &)
     {
       CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater update_one <%C>.\n"),
-                     i.key));   
+                     i.key.in()));   
       result =  false;
     }
     catch (CCM_DDS::InternalError& )
     {
       CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while update_one for <%C>.\n"),
-                      i.key));   
+                      i.key.in()));   
       result = false;
     }
     return result;
@@ -139,7 +139,7 @@ namespace CIAO_Updater_Sender_Impl
     {
       this->updater_->update_one(i, DDS::HANDLE_NIL);
       CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: update_one with not registerd instance, key <%C>\n"),
-                    i.key));
+                    i.key.in()));
     }
     catch(CCM_DDS::NonExistent &)
     {
@@ -149,7 +149,7 @@ namespace CIAO_Updater_Sender_Impl
     catch (CCM_DDS::InternalError& )
     {
       CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while update_one for <%C>.\n"),
-                      i.key)); 
+                      i.key.in())); 
       result = false;
     }
     return result;
@@ -164,19 +164,19 @@ namespace CIAO_Updater_Sender_Impl
     try
     {
       CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: delete_one with registerd instance with DDS::HANDLE_NIL, key <%C>\n"),
-                    i.key));
+                    i.key.in()));
       this->updater_->delete_one(i, DDS::HANDLE_NIL);
     }
     catch(CCM_DDS::NonExistent &)
     {
       CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater delete_one <%C>.\n"),
-                     i.key));   
+                     i.key.in()));   
       result = false;
     }
     catch (CCM_DDS::InternalError& )
     {
       CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while delete_one for <%C>.\n"),
-                      i.key)); 
+                      i.key.in())); 
       result = false;
     }
     return result;
@@ -191,7 +191,7 @@ namespace CIAO_Updater_Sender_Impl
     try
     {
       CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: delete_one with not registerd instance, key <%C>\n"),
-                   i.key));
+                   i.key.in()));
       this->updater_->delete_one(i, DDS::HANDLE_NIL);
     }
     catch(CCM_DDS::NonExistent &)
@@ -202,7 +202,7 @@ namespace CIAO_Updater_Sender_Impl
     catch (CCM_DDS::InternalError& )
     {
       CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while delete_one for <%C>.\n"),
-                     i.key)); 
+                     i.key.in())); 
       result = false;
     }
     return result;
@@ -221,27 +221,27 @@ namespace CIAO_Updater_Sender_Impl
       if(hnd.isValid)
       {  
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: update a new  instance after registrating instance, key <%C>\n"),
-                    i.key));
+                    i.key.in()));
         this->updater_->update_one(i, hnd);
      
       }
       else
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Error, invalid handle for <%C>.\n"),
-                      i.key)); 
+                      i.key.in())); 
         result =  false;
       }
     }
     catch(CCM_DDS::NonExistent &)
     {
        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater update_one using handle <%C>.\n"),
-                     i.key));   
+                     i.key.in()));   
        result =  false;
     }
     catch (CCM_DDS::InternalError& )
     {
       CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while update_one for <%C>.\n"),
-                      i.key)); 
+                      i.key.in())); 
       result = false;
     }
     //update an instance with an instance_handler belonging to an other instance
@@ -271,7 +271,7 @@ namespace CIAO_Updater_Sender_Impl
       {
          i = this->topic_seq_one_[2];
          CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: delete a instance with handle, key <%C>\n"),
-                    i.key));
+                    i.key.in()));
          this->updater_->delete_one(i, hnd);
       }
      
@@ -283,7 +283,7 @@ namespace CIAO_Updater_Sender_Impl
       catch (CCM_DDS::InternalError& )
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while delete_one for <%C>.\n"),
-                      i.key)); 
+                      i.key.in())); 
         result = false;
       }
     }
