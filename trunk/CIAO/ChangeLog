@@ -1,3 +1,10 @@
+Fri Dec 11 13:19:30 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/DevGuideExamples/Messenger/StaticDAnCE/run_test.pl:
+        * examples/DevGuideExamples/Messenger/descriptors/run_test.pl:
+        * examples/Display/descriptors/basicNodeDaemon.pl:
+          Resolved fuzz errors/warnings/
+
 Fri Dec 11 12:00:05 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * examples/BasicSP/descriptors/run_test.pl:
