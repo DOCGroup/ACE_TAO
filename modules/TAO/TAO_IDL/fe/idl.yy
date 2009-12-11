@@ -3901,13 +3901,19 @@ array_dim :
            * positive integers.
            */
           AST_Expression::AST_ExprValue *ev = 0;
+          AST_Param_Holder *param_holder = 0;
 
           if ($3 != 0)
             {
-              ev = $3->coerce (AST_Expression::EV_ulong);
+              param_holder =
+                $3->param_holder ();
+
+              ev =
+                $3->coerce (AST_Expression::EV_ulong);
             }
 
-          if (0 == $3 || 0 == ev)
+          if (0 == $3
+              || (ev == 0 && param_holder == 0))
             {
               idl_global->err ()->coercion_error ($3,
                                                   AST_Expression::EV_ulong);
@@ -3915,6 +3921,25 @@ array_dim :
             }
           else
             {
+              if (param_holder != 0)
+                {
+                  AST_Expression::ExprType et =
+                    param_holder->info ()->const_type_;
+                    
+                  // If the bound expression represents a
+                  // template parameter, it must be a const
+                  // and of type unsigned long.  
+                  if (et != AST_Expression::EV_ulong)
+                    {
+                      idl_global->err ()->mismatched_template_param (
+                        param_holder->info ()->name_.c_str ());
+                        
+                      delete ev;
+                      ev = 0;
+                      return 1;
+                    }
+                }
+
               $$ = $3;
             }
 

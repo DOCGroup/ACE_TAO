@@ -1,3 +1,17 @@
+Fri Dec 11 19:17:52 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/ast/ast_array.cpp:
+        * TAO_IDL/ast/ast_field.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        
+          - More error checking when using template parameter for
+            sequence element type.
+            
+          - Start on support for template parameter as array
+            bound, not yet complete.
+
 Fri Dec  4 19:23:17 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_generator.h:
