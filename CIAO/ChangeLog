@@ -1,3 +1,10 @@
+Fri Dec 11 09:30:29 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/PSLSampleLost/descriptors/run_test.pl:
+        * examples/Hello/descriptors/run_test.pl:
+        * examples/Null_Component/descriptors/run_test.pl:
+          Resolved script errors.
+
 Fri Dec 11 08:20:57 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/Updater/Sender/Updater_Sender_exec.cpp

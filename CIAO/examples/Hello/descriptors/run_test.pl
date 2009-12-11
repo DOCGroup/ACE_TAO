@@ -16,7 +16,7 @@ $daemons_running = 0;
 $em_running = 0;
 $ns_running = 0;
 
-$daemons = 2;
+$nr_daemon = 2;
 @ports = ( 60001, 60002 );
 @iorbases = ( "NodeApp1.ior", "NodeApp2.ior" );
 @iorfiles = 0;
@@ -69,7 +69,7 @@ sub create_targets {
 sub init_ior_files {
     $ior_nsfile = $tg_naming->LocalFile ($ior_nsbase);
     $ior_emfile = $tg_exe_man->LocalFile ($ior_embase);
-    for ($i = 0; $i < $daemons; ++$i) {
+    for ($i = 0; $i < $nr_daemon; ++$i) {
         $iorfiles[$i] = $tg_daemons[$i]->LocalFile ($iorbases[$i]);
     }
     delete_ior_files ();
@@ -77,7 +77,7 @@ sub init_ior_files {
 
 # Delete if there are any .ior files.
 sub delete_ior_files {
-    for ($i = 0; $i < $daemons; ++$i) {
+    for ($i = 0; $i < $nr_daemon; ++$i) {
         $tg_daemons[$i]->DeleteFile ($iorbases[$i]);
     }
     $tg_naming->DeleteFile ($ior_nsbase);
@@ -88,7 +88,7 @@ sub delete_ior_files {
 }
 
 sub kill_node_daemons {
-    for ($i = 0; $i < $daemons; ++$i) {
+    for ($i = 0; $i < $nr_daemon; ++$i) {
         $DEAMONS[$i]->Kill (); $DEAMONS[$i]->TimedWait (1);
     }
 }
@@ -110,7 +110,7 @@ sub kill_open_processes {
 }
 
 sub run_node_daemons {
-    for ($i = 0; $i < $daemons; ++$i) {
+    for ($i = 0; $i < $nr_daemon; ++$i) {
         $iorbase = $iorbases[$i];
         $iorfile = $iorfiles[$i];
         $port = $ports[$i];
@@ -197,7 +197,7 @@ $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
                         "-x $cdp_file -k file://$ior_emfile");
 $E->SpawnWaitKill (2*$tg_executor->ProcessStartWaitInterval ());
 
-for ($i = 0; $i < $$daemons; ++$i) {
+for ($i = 0; $i < $nr_daemon; ++$i) {
     if ($tg_daemons[$i]->WaitForFileTimed ($iorbases[$i],
                             $tg_daemons[$i]->ProcessStopWaitInterval ()) == -1) {
         print STDERR "ERROR: The ior file of daemon $i could not be found\n";
