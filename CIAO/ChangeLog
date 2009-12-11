@@ -1,3 +1,14 @@
+Fri Dec 11 09:44:14 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/run_1_to_5.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_5_to_1.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_5_to_5.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_receiver.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_sender.pl:
+        * connectors/dds4ccm/examples/Quoter/descriptors/run_test.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/run_test.pl:
+          Resolved fuzz errors/warnings
+
 Fri Dec 11 09:30:29 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/PSLSampleLost/descriptors/run_test.pl:
