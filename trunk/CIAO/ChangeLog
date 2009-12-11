@@ -1,3 +1,9 @@
+Fri Dec 11 07:44:10 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/Display/descriptors/run_NodeDaemons.pl:
+        * examples/Hello/descriptors/run_NodeDaemons.pl:
+          Resolved fuzz errors/warnings.
+
 Thu Dec 10 20:23:15 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/tests/CIAO/CommandlinePassage/run_test.pl:
