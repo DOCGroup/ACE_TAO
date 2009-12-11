@@ -106,7 +106,7 @@ for $protocol (@protocols) {
     $outputfile = $protocol."_output";
 
     if ($protocol eq "RTP_UDP") {
-	$protocol = "RTP/UDP";
+        $protocol = "RTP/UDP";
     }
 
     my $sv_outputfile = $sv->LocalFile ($outputfile);
