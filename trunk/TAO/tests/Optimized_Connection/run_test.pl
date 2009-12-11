@@ -23,7 +23,7 @@ my $iorbase = "oc.ior";
 my $client_iorfile = $client->LocalFile ($iorbase);
 
 $CL = $client->CreateProcess ("client", "-k file://$client_iorfile ".
-					"-orbsvcconf oc_svc.conf");
+                                        "-orbsvcconf oc_svc.conf");
 
 if ($client->WaitForFileTimed ($iorbase,
                            $client->ProcessStartWaitInterval()) == -1) {

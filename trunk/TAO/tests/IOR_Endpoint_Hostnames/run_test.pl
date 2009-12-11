@@ -20,7 +20,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 use Socket;
-use Sys::Hostname;
 
 $status = 0;
 $debug_level = '0';
