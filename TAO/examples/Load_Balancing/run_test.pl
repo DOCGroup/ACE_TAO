@@ -43,10 +43,10 @@ if ($balancer_status != 0) {
     exit 1;
 }
 
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
+if ($balancer->WaitForFileTimed ($iorbase,
+                                 $balancer->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$balancer_iorfile>\n";
+    $LB->Kill (); $LB->TimedWait (1);
     exit 1;
 }
 

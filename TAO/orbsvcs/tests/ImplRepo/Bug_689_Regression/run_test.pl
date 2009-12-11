@@ -53,10 +53,10 @@ $CLI = $cli->CreateProcess ("client",
 $SRV = $srv->CreateProcess ("server");
 
 my $server_cmd = $SRV->Executable();
-#my $srv_server_cmd = $imr->LocalFile ($server_cmd);
+my $srv_server_cmd = $imr->LocalFile ($server_cmd);
 
 $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ". 
-                "add test_server -c \" $server_cmd ".
+                "add test_server -c \"$srv_server_cmd ".
                 "-ORBInitRef ImplRepoService=file://$imr_imriorfile ".
                 "-ORBUseIMR 1 ".
                 "-o $srv_srviorfile\"");
