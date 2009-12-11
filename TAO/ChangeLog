@@ -1,3 +1,10 @@
+Fri Dec 11 16:36:58 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * tao/Valuetype/ValueBase.h:
+
+          Removed explicit type specification for indirection flag to
+          fix implicit constant conversion overflow warning.
+          
 Fri Dec 11 12:27:25 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/Bug_2285_Regression/run_test2.pl:
