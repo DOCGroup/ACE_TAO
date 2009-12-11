@@ -24,8 +24,6 @@ my $stc = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\
 my $ses = PerlACE::TestTarget::create_target (5) || die "Create target 5 failed\n";
 my $sec = PerlACE::TestTarget::create_target (6) || die "Create target 6 failed\n";
 
-$ns->AddLibPath ('../lib');
-$nfs->AddLibPath ('../lib');
 $sts->AddLibPath ('../lib');
 $stc->AddLibPath ('../lib');
 $ses->AddLibPath ('../lib');
@@ -37,28 +35,24 @@ $port = $ns->RandomPort ();
 $host = $ns->HostName ();
 $deadline = 0;
 
-$supiorfile = "supplier.ior";
+$iorbase = "supplier.ior";
 $nfsiorfile = "notify.ior";
 $nsiorfile = "naming.ior";
 $nfsconffile = "notify$PerlACE::svcconf_ext";
 
 my $ns_nsiorfile = $ns->LocalFile ($nsiorfile);
 my $nfs_nfsiorfile = $nfs->LocalFile ($nfsiorfile);
-my $sts_stsiorfile = $sts->LocalFile ($supiorfile);
-my $stc_stsiorfile = $stc->LocalFile ($supiorfile);
-my $sec_stsiorfile = $sec->LocalFile ($supiorfile);
-my $ses_sesiorfile = $ses->LocalFile ($supiorfile);
-my $sec_sesiorfile = $sec->LocalFile ($supiorfile);
-my $stc_sesiorfile = $stc->LocalFile ($supiorfile);
+my $sts_iorfile = $sts->LocalFile ($iorbase);
+my $stc_iorfile = $stc->LocalFile ($iorbase);
+my $sec_iorfile = $sec->LocalFile ($iorbase);
+my $ses_iorfile = $ses->LocalFile ($iorbase);
 my $nfs_nfsconffile = $nfs->LocalFile ($nfsconffile);
 $ns->DeleteFile ($nsiorfile);
 $nfs->DeleteFile ($nfsiorfile);
-$sts->DeleteFile ($stsiorfile);
-$stc->DeleteFile ($stsiorfile);
-$sec->DeleteFile ($stsiorfile);
-$ses->DeleteFile ($sesiorfile);
-$sec->DeleteFile ($sesiorfile);
-$stc->DeleteFile ($sesiorfile);
+$sts->DeleteFile ($iorbase);
+$stc->DeleteFile ($iorbase);
+$sec->DeleteFile ($iorbase);
+$ses->DeleteFile ($iorbase);
 
 foreach my $arg (@ARGV) {
     if ($arg eq "-d") {
@@ -72,8 +66,7 @@ foreach my $arg (@ARGV) {
 }
 
 $NS = $ns->CreateProcess ("../../../Naming_Service/Naming_Service",
-                            "-ORBEndpoint iiop://$host:$port ".
-                            "-o $ns_nsiorfile");
+                          "-ORBEndpoint iiop://$host:$port -o $ns_nsiorfile");
 
 $NFS = $nfs->CreateProcess ("../../../Notify_Service/Notify_Service",
                             "-ORBInitRef NameService=iioploc://" .
@@ -85,7 +78,7 @@ $STS = $sts->CreateProcess ("Structured_Supplier",
                             "-ORBDebugLevel $debug_level ".
                             "-ORBInitRef NameService=iioploc://".
                             "$host:$port/NameService ".
-                            "-o $sts_stsiorfile");
+                            "-o $sts_iorfile");
 
 $STC = $stc->CreateProcess ("Structured_Consumer");
 
@@ -93,13 +86,11 @@ $SES = $ses->CreateProcess ("Sequence_Supplier",
                             "-ORBDebugLevel $debug_level ".
                             "-ORBInitRef NameService=iioploc://".
                             "$host:$port/NameService ".
-                            "-o $ses_sesiorfile");
+                            "-o $ses_iorfile");
 
 $SEC = $sec->CreateProcess ("Sequence_Consumer");
 
-$CLI_args = "-ORBInitRef NameService=iioploc://".
-            "$host:$port/NameService ";
-
+$CLI_args = "-ORBInitRef NameService=iioploc://$host:$port/NameService ";
 
 
 $NS_status = $NS->Spawn ();
@@ -144,27 +135,27 @@ if ($status == 0) {
             $status = 1;
             last;
         }
-        if ($sts->WaitForFileTimed ($stsiorfile,$sts->ProcessStartWaitInterval()) == -1) {
-            print STDERR "ERROR: cannot find file <$sts_stsiorfile>\n";
-            $STS->Kill (); $STS->TimedWait (1);
-           $status = 1;
-           last;
-        }
-        if ($sts->GetFile ($stsiorfile) == -1) {
-            print STDERR "ERROR: cannot retrieve file <$sts_stsiorfile>\n";
+        if ($sts->WaitForFileTimed ($iorbase,$sts->ProcessStartWaitInterval()) == -1) {
+            print STDERR "ERROR: cannot1 find file <$sts_iorfile>\n";
             $STS->Kill (); $STS->TimedWait (1);
             $status = 1;
             last;
         }
-        if ($stc->PutFile ($stsiorfile) == -1) {
-            print STDERR "ERROR: cannot set file <$stc_stsiorfile>\n";
+        if ($sts->GetFile ($iorbase) == -1) {
+            print STDERR "ERROR: cannot retrieve file <$sts_iorfile>\n";
+            $STS->Kill (); $STS->TimedWait (1);
+            $status = 1;
+            last;
+        }
+        if ($stc->PutFile ($iorbase) == -1) {
+            print STDERR "ERROR: cannot set file <$stc_iorfile>\n";
             $STS->Kill (); $STS->TimedWait (1);
             $status = 1;
             last;
         }
         sleep 2;
 
-        $STC->Arguments($CLI_args . " -k file://$stc_stsiorfile  -d $discard_policy");
+        $STC->Arguments($CLI_args . " -k file://$stc_iorfile -d $discard_policy");
         $STC_status = $STC->SpawnWaitKill ($stc->ProcessStartWaitInterval()+5);
         if ($STC_status != 0) {
             print STDERR "ERROR: Structured Consumer returned $STC_status\n";
@@ -180,12 +171,12 @@ if ($status == 0) {
             last;
         }
 
-        $sts->DeleteFile ($stsiorfile);
-        $stc->DeleteFile ($stsiorfile);
+        $sts->DeleteFile ($iorbase);
+        $stc->DeleteFile ($iorbase);
     }
 }
-$sts->DeleteFile ($stsiorfile);
-$stc->DeleteFile ($stsiorfile);
+$sts->DeleteFile ($iorbase);
+$stc->DeleteFile ($iorbase);
 
 if ($status == 0) {
     for($i = 0; $i <= $#policies; $i++) {
@@ -200,27 +191,27 @@ if ($status == 0) {
             $status = 1;
             last;
         }
-        if ($sts->WaitForFileTimed ($stsiorfile,$sts->ProcessStartWaitInterval()) == -1) {
-             print STDERR "ERROR: cannot find file <$sts_stsiorfile>\n";
+        if ($sts->WaitForFileTimed ($iorbase,$sts->ProcessStartWaitInterval()) == -1) {
+             print STDERR "ERROR: cannot find file <$sts_iorfile>\n";
             $STS->Kill (); $STS->TimedWait (1);
             $status = 1;
             last;
         }
-        if ($sts->GetFile ($stsiorfile) == -1) {
-            print STDERR "ERROR: cannot retrieve file <$sts_stsiorfile>\n";
+        if ($sts->GetFile ($iorbase) == -1) {
+            print STDERR "ERROR: cannot retrieve file <$sts_iorfile>\n";
             $STS->Kill (); $STS->TimedWait (1);
             $status = 1;
             last;
         }
-        if ($sec->PutFile ($stsiorfile) == -1) {
-            print STDERR "ERROR: cannot set file <$sec_stsiorfile>\n";
+        if ($sec->PutFile ($iorbase) == -1) {
+            print STDERR "ERROR: cannot set file <$sec_iorfile>\n";
             $STS->Kill (); $STS->TimedWait (1);
             $status = 1;
             last;
         }
         sleep 2;
 
-        $SEC->Arguments($CLI_args . " -k file://$sec_stsiorfile -d $discard_policy");
+        $SEC->Arguments($CLI_args . " -k file://$sec_iorfile -d $discard_policy");
         $SEC_status = $SEC->SpawnWaitKill ($sec->ProcessStartWaitInterval()+5);
         if ($SEC_status != 0) {
              print STDERR "ERROR: Sequence Consumer returned $SEC_status\n";
@@ -236,12 +227,12 @@ if ($status == 0) {
             last;
         }
 
-        $sts->DeleteFile ($stsiorfile);
-        $sec->DeleteFile ($stsiorfile);
+        $sts->DeleteFile ($iorbase);
+        $sec->DeleteFile ($iorbase);
     }
 }
-$sts->DeleteFile ($stsiorfile);
-$sec->DeleteFile ($stsiorfile);
+$sts->DeleteFile ($iorbase);
+$sec->DeleteFile ($iorbase);
 
 if ($status == 0) {
     for($i = 0; $i <= $#policies; $i++) {
@@ -256,27 +247,27 @@ if ($status == 0) {
             $status = 1;
             last;
         }
-        if ($ses->WaitForFileTimed ($sesiorfile,$ses->ProcessStartWaitInterval()) == -1) {
-            print STDERR "ERROR: cannot find file <$ses_sesiorfile>\n";
+        if ($ses->WaitForFileTimed ($iorbase,$ses->ProcessStartWaitInterval()) == -1) {
+            print STDERR "ERROR: cannot find file <$ses_iorfile>\n";
             $STS->Kill (); $STS->TimedWait (1);
             $status = 1;
             last;
         }
-        if ($ses->GetFile ($sesiorfile) == -1) {
-            print STDERR "ERROR: cannot retrieve file <$ses_sesiorfile>\n";
+        if ($ses->GetFile ($iorbase) == -1) {
+            print STDERR "ERROR: cannot retrieve file <$ses_iorfile>\n";
             $STS->Kill (); $STS->TimedWait (1);
             $status = 1;
             last;
         }
-        if ($sec->PutFile ($sesiorfile) == -1) {
-            print STDERR "ERROR: cannot set file <$sec_sesiorfile>\n";
+        if ($sec->PutFile ($iorbase) == -1) {
+            print STDERR "ERROR: cannot set file <$sec_iorfile>\n";
             $STS->Kill (); $STS->TimedWait (1);
             $status = 1;
             last;
         }
         sleep 2;
 
-        $SEC->Arguments($CLI_args . " -k file://$sec_sesiorfile -d $discard_policy");
+        $SEC->Arguments($CLI_args . " -k file://$sec_iorfile -d $discard_policy");
         $SEC_status = $SEC->SpawnWaitKill ($sec->ProcessStartWaitInterval()+5);
         if ($SEC_status != 0) {
             print STDERR "ERROR: Sequence Consumer returned $SEC_status\n";
@@ -292,12 +283,12 @@ if ($status == 0) {
             last;
         }
 
-        $ses->DeleteFile ($sesiorfile);
-        $sec->DeleteFile ($sesiorfile);
+        $ses->DeleteFile ($iorbase);
+        $sec->DeleteFile ($iorbase);
     }
 }
-$ses->DeleteFile ($sesiorfile);
-$sec->DeleteFile ($sesiorfile);
+$ses->DeleteFile ($iorbase);
+$sec->DeleteFile ($iorbase);
 
 if ($status == 0) {
     for($i = 0; $i <= $#policies; $i++) {
@@ -312,27 +303,27 @@ if ($status == 0) {
             $status = 1;
             last;
         }
-        if ($ses->WaitForFileTimed ($sesiorfile,$ses->ProcessStartWaitInterval()) == -1) {
-            print STDERR "ERROR: cannot find file <$ses_sesiorfile>\n";
+        if ($ses->WaitForFileTimed ($iorbase,$ses->ProcessStartWaitInterval()) == -1) {
+            print STDERR "ERROR: cannot find file <$ses_iorfile>\n";
             $STS->Kill (); $STS->TimedWait (1);
             $status = 1;
             last;
         }
-        if ($ses->GetFile ($sesiorfile) == -1) {
-            print STDERR "ERROR: cannot retrieve file <$ses_sesiorfile>\n";
+        if ($ses->GetFile ($iorbase) == -1) {
+            print STDERR "ERROR: cannot retrieve file <$ses_iorfile>\n";
             $STS->Kill (); $STS->TimedWait (1);
             $status = 1;
             last;
         }
-        if ($stc->PutFile ($sesiorfile) == -1) {
-            print STDERR "ERROR: cannot set file <$stc_sesiorfile>\n";
+        if ($stc->PutFile ($iorbase) == -1) {
+            print STDERR "ERROR: cannot set file <$stc_iorfile>\n";
             $STS->Kill (); $STS->TimedWait (1);
             $status = 1;
             last;
         }
         sleep 2;
 
-        $STC->Arguments($CLI_args . " -k file://$stc_sesiorfile  -d $discard_policy");
+        $STC->Arguments($CLI_args . " -k file://$stc_iorfile  -d $discard_policy");
         $STC_status = $STC->SpawnWaitKill ($stc->ProcessStartWaitInterval()+5);
         if ($STC_status != 0) {
             print STDERR "ERROR: Structured Consumer returned $STC_status\n";
@@ -346,8 +337,8 @@ if ($status == 0) {
             $status = 1;
             last;
         }
-        $ses->DeleteFile ($sesiorfile);
-        $stc->DeleteFile ($sesiorfile);
+        $ses->DeleteFile ($iorbase);
+        $stc->DeleteFile ($iorbase);
     }
 }
 
@@ -365,11 +356,9 @@ if ($NS_status != 0) {
 
 $ns->DeleteFile ($nsiorfile);
 $nfs->DeleteFile ($nfsiorfile);
-$sts->DeleteFile ($stsiorfile);
-$stc->DeleteFile ($stsiorfile);
-$sec->DeleteFile ($stsiorfile);
-$ses->DeleteFile ($sesiorfile);
-$sec->DeleteFile ($sesiorfile);
-$stc->DeleteFile ($sesiorfile);
+$sts->DeleteFile ($iorbase);
+$stc->DeleteFile ($iorbase);
+$sec->DeleteFile ($iorbase);
+$ses->DeleteFile ($iorbase);
 
 exit $status;

@@ -37,7 +37,7 @@ $client->DeleteFile($iorbase);
 $SV = $server->CreateProcess ("../Hello/server",
                               "-ORBdebuglevel $debug_level " .
                               "-o $server_iorfile " .
-                              "-ORBUseSharedProfile $use_shared_profile",
+                              "-ORBUseSharedProfile $use_shared_profile ",
                               "-OrbEndPoint iiop://$hostname:$port1/hostname_in_ior=bogus.com " .
                               "-OrbEndPoint iiop://$hostname:$port2 " .
                               "-OrbEndPoint iiop://$hostname:$port3/hostname_in_ior=bogus.com");

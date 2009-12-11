@@ -1,3 +1,21 @@
+Fri Dec 11 12:27:25 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * orbsvcs/tests/Bug_2285_Regression/run_test2.pl:
+        * orbsvcs/tests/Bug_2285_Regression/server2.cpp:
+        * orbsvcs/tests/Notify/Ordering/run_test.pl:
+        * orbsvcs/tests/Notify/MC/run_test.pl:
+        * orbsvcs/tests/Notify/Discarding/run_test.pl:
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/run_test.pl:
+        * orbsvcs/tests/ImplRepo/NameService/run_test.pl:
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+        * orbsvcs/tests/Bug_2248_Regression/server.cpp:
+        * orbsvcs/tests/Bug_2248_Regression/run_test.pl:
+        * tests/AlternateIIOP/run_test.pl:
+        * examples/Load_Balancing/run_test.pl:
+
+          Tests are converted to use new test framework
+          and added to fuzz build.
+
 Fri Dec 11 09:58:33 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/run_test.pl:

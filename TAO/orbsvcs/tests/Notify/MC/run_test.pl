@@ -23,8 +23,6 @@ my $mon = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\
 my $sup = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
 my $con = PerlACE::TestTarget::create_target (5) || die "Create target 5 failed\n";
 
-$ns->AddLibPath ('../lib');
-$nfs->AddLibPath ('../lib');
 $mon->AddLibPath ('../lib');
 $sup->AddLibPath ('../lib');
 $con->AddLibPath ('../lib');
@@ -35,8 +33,7 @@ PerlACE::check_privilege_group();
 my $static_build = 0;
 my $port = $ns->RandomPort ();
 my $host = $ns->HostName ();
-my $nscorbaloc = "-ORBInitRef NameService=corbaloc:iiop:" .
-                 "$host:$port/NameService";
+my $nscorbaloc = "-ORBInitRef NameService=corbaloc:iiop:$host:$port/NameService";
 $static_build = new PerlACE::ConfigList->check_config('STATIC');
 
 my $testmonior = "test_monitor.ior";
@@ -48,8 +45,8 @@ my $notify_conf = "notify$PerlACE::svcconf_ext";
 
 my $ns_nsiorfile = $ns->LocalFile ($nsiorfile);
 my $nfs_nfsiorfile = $nfs->LocalFile ($nfsiorfile);
-my $nfs_monitorior = $nfs->LocalFile ($monitorior);
 my $nfs_notify_conf = $nfs->LocalFile ($notify_conf);
+my $nfs_monitorior = $nfs->LocalFile ($monitorior);
 my $mon_monitorior = $mon->LocalFile ($monitorior);
 my $mon_testmonior = $mon->LocalFile ($testmonior);
 my $sup_testmonior = $sup->LocalFile ($testmonior);
@@ -57,12 +54,12 @@ my $con_testmonior = $con->LocalFile ($testmonior);
 my $con_readyfile = $con->LocalFile ($readyfile);
 $ns->DeleteFile ($nsiorfile);
 $nfs->DeleteFile ($nfsiorfile);
-$nfs->DeleteFile ($monitorior);
 $nfs->DeleteFile ($notify_conf);
-$mon->DeleteFile ($monitor_ior);
-$mon->DeleteFile ($testmonitor);
-$sup->DeleteFile ($testmonitor);
-$con->DeleteFile ($testmonitor);
+$nfs->DeleteFile ($monitorior);
+$mon->DeleteFile ($monitorior);
+$mon->DeleteFile ($testmonior);
+$sup->DeleteFile ($testmonior);
+$con->DeleteFile ($testmonior);
 $con->DeleteFile ($readyfile);
 
 die "oops" if not open(FH, ">$notify_conf");
@@ -90,23 +87,20 @@ if ($nfs->PutFile ($notify_conf) == -1) {
 }
 
 my $NS = $ns->CreateProcess("../../../Naming_Service/Naming_Service",
-                              "-ORBEndpoint iiop://$host:$port " .
-                              "-o $nsiorfile");
+                            "-ORBEndpoint iiop://$host:$port -o $nsiorfile");
 my $NFS = $nfs->CreateProcess("../../../Notify_Service/Notify_Service",
                               "-ORBDebugLevel $debug_level ".
                               "$nscorbaloc " .
                               "-IORoutput $nfs_nfsiorfile " .
                               "-ORBSvcConf $nfs_notify_conf ");
 my $MON = $mon->CreateProcess("test_monitor",
-                               "-k file://$mon_monitorior ".
-                               "-o $mon_testmonior");
+                              "-k file://$mon_monitorior -o $mon_testmonior");
 my $SUP = $sup->CreateProcess("Structured_Supplier",
-                               "$nscorbaloc ".
-                               "-k file://$sup_testmonior");
+                              "$nscorbaloc ".
+                              "-k file://$sup_testmonior");
 my $CON = $con->CreateProcess("Structured_Consumer",
-                               "$nscorbaloc ".
-                               "-k file://$con_testmonior ".
-                               "-o $con_readyfile");
+                              "$nscorbaloc ".
+                              "-k file://$con_testmonior -o $con_readyfile");
 
 print $NS->CommandLine()."\n";
 $NS_status = $NS->Spawn ();
@@ -245,12 +239,12 @@ if ($NS_status != 0) {
 
 $ns->DeleteFile ($nsiorfile);
 $nfs->DeleteFile ($nfsiorfile);
-$nfs->DeleteFile ($monitorior);
 $nfs->DeleteFile ($notify_conf);
-$mon->DeleteFile ($monitor_ior);
-$mon->DeleteFile ($testmonitor);
-$sup->DeleteFile ($testmonitor);
-$con->DeleteFile ($testmonitor);
+$nfs->DeleteFile ($monitorior);
+$mon->DeleteFile ($monitorior);
+$mon->DeleteFile ($testmonior);
+$sup->DeleteFile ($testmonior);
+$con->DeleteFile ($testmonior);
 $con->DeleteFile ($readyfile);
 
 exit $status;

@@ -77,7 +77,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Panic: nil RootPOA\n"),
-                          1);
+                          -1);
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -105,12 +105,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 
       if (parse_args (argc, argv) != 0)
-        return 1;
+        return -1;
 
       Hello *hello_impl = 0;
       ACE_NEW_RETURN (hello_impl,
                       Hello (orb.in (), Test::Hello::_nil (), my_id_number),
-                      1);
+                      -1);
       PortableServer::ServantBase_var owner (hello_impl);
 
       PortableServer::ObjectId_var server_id =
@@ -131,7 +131,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s\n",
                            ior_output_file),
-                           1);
+                           -1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
@@ -146,7 +146,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Exception caught:");
-      return 1;
+      return -1;
     }
 
   return 0;

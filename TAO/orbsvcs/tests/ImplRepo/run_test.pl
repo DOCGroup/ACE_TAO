@@ -214,9 +214,8 @@ sub nt_service_test_i
     system("net start taoimractivator 2>&1");
 
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
-    $TI->Arguments ("$imr_initref add airplane_server -c \""
-                         . $imr_A_SRV_cmd.
-                         "\" -w \"$ENV{ACE_ROOT}/lib\"");
+    $TI->Arguments ("$imr_initref add airplane_server -c \"$imr_A_SRV_cmd\" ".
+                    "-w \"$ENV{ACE_ROOT}/lib\"");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0) {
         print STDERR "ERROR: tao_imr add airplane_server returned $TI_status\n";
@@ -412,9 +411,7 @@ sub airplane_ir_test
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
     # Can use update to add servers.
     $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                    "update airplane_server -c \" ".
-                    $imr_A_SRV_cmd.
-                    " -o $imr_airplaneiorfile \"");
+                    "update airplane_server -c \"$imr_A_SRV_cmd -o $imr_airplaneiorfile\"");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0) {
         print STDERR "ERROR: tao_imr returned $TI_status\n";
@@ -639,9 +636,8 @@ sub nestea_ir_test
 
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
     $TI->Arguments ("-orbobjrefstyle URL -ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                         "update nestea_server -l $imr_host -c \"".
-                         $imr_N_SRV_cmd.
-                         " -o $imr_nesteaiorfile\"");
+                    "update nestea_server -l $imr_host ".
+                    "-c \"$imr_N_SRV_cmd -o $imr_nesteaiorfile\"");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0) {
         print STDERR "ERROR: tao_imr returned $TI_status\n";
@@ -677,9 +673,7 @@ sub nestea_ir_test
 
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
     $TI->Arguments ("-orbobjrefstyle URL -ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                         "add nestea_server -c \"".
-                         $imr_N_SRV_cmd.
-                         " -o $imr_nesteaiorfile\"");
+                    "add nestea_server -c \"$imr_N_SRV_cmd -o $imr_nesteaiorfile\"");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0) {
         print STDERR "ERROR: tao_imr 1 returned $TI_status\n";
@@ -791,9 +785,8 @@ sub perclient
 
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
     $TI->Arguments ("-orbobjrefstyle URL -ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                    "add nestea_server -a PER_CLIENT -c \"".
-                    $imr_N_SRV_cmd.
-                    " -o $imr_nesteaiorfile\"");
+                    "add nestea_server -a PER_CLIENT ".
+                    "-c \"$imr_N_SRV_cmd -o $imr_nesteaiorfile\"");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0) {
         print STDERR "ERROR: tao_imr returned $TI_status\n";
@@ -1081,8 +1074,7 @@ sub persistent_ir_test
 
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
     $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                         "add airplane_server -c \"".
-                         '\"' . $imr_P_SRV_cmd. '\"' . "\" " . $refstyle);
+                    "add airplane_server -c \"\\\"$imr_P_SRV_cmd\\\" $refstyle\"");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0) {
         print STDERR "ERROR: tao_imr returned $TI_status\n";
@@ -1346,9 +1338,7 @@ sub both_ir_test
     ## may attempt to use a partially written file.
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
     $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                    "add nestea_server -c \" ".
-                    $imr_N_SRV_cmd.
-                    " $refstyle\"");
+                    "add nestea_server -c \"$imr_N_SRV_cmd $refstyle\"");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0) {
         print STDERR "ERROR: tao_imr returned $TI_status\n";
@@ -1359,9 +1349,7 @@ sub both_ir_test
 
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
     $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                    "add airplane_server -c \" ".
-                    $imr_A_SRV_cmd.
-                    " $refstyle\"");
+                    "add airplane_server -c \"$imr_A_SRV_cmd $refstyle\"");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0) {
         print STDERR "ERROR: tao_imr returned $TI_status\n";
