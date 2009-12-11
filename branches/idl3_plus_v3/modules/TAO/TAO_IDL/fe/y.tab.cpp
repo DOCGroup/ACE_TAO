@@ -6525,13 +6525,18 @@ tao_yyreduce:
            * positive integers.
            */
           AST_Expression::AST_ExprValue *ev = 0;
+          AST_Param_Holder *param_holder = 0;
 
           if ((tao_yyvsp[(3) - (5)].exval) != 0)
             {
+              param_holder =
+                (tao_yyvsp[(3) - (5)].exval)->param_holder ();
+
               ev = (tao_yyvsp[(3) - (5)].exval)->coerce (AST_Expression::EV_ulong);
             }
 
-          if (0 == (tao_yyvsp[(3) - (5)].exval) || 0 == ev)
+          if (0 == (tao_yyvsp[(3) - (5)].exval)
+              || (0 == ev && param_holder == 0))
             {
               idl_global->err ()->coercion_error ((tao_yyvsp[(3) - (5)].exval),
                                                   AST_Expression::EV_ulong);
@@ -6539,6 +6544,25 @@ tao_yyreduce:
             }
           else
             {
+              if (param_holder != 0)
+                {
+                  AST_Expression::ExprType et =
+                    param_holder->info ()->const_type_;
+                    
+                  // If the bound expression represents a
+                  // template parameter, it must be a const
+                  // and of type unsigned long.  
+                  if (et != AST_Expression::EV_ulong)
+                    {
+                      idl_global->err ()->mismatched_template_param (
+                        param_holder->info ()->name_.c_str ());
+                        
+                      delete ev;
+                      ev = 0;
+                      return 1;
+                    }
+                }
+
               (tao_yyval.exval) = (tao_yyvsp[(3) - (5)].exval);
             }
 

@@ -72,15 +72,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_array.h"
 #include "ast_expression.h"
+#include "ast_param_holder.h"
 #include "ast_visitor.h"
+
 #include "utl_exprlist.h"
 #include "utl_identifier.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
-
-ACE_RCSID (ast,
-           ast_array,
-           "$Id$")
 
 // Constructor(s) and destructor.
 
@@ -147,11 +145,21 @@ AST_Array::compute_dims (UTL_ExprList *ds,
        iter.next (), i++)
     {
       AST_Expression *orig = iter.item ();
+      AST_Param_Holder *ph = orig->param_holder ();
+      
+      AST_Expression::ExprType ex_type =
+        (ph == 0 ? orig->ev ()->et : ph->info ()->const_type_);
+        
+// ==================
+// TODO - still fails because of coercion in the constructor
+//        of 'copy'
       AST_Expression *copy = 0;
       ACE_NEW_RETURN (copy,
                       AST_Expression (orig,
-                                      orig->ev ()->et),
+                                      ex_type),
                       0);
+// ================
+                      
       result[i] = copy;
     }
 

@@ -75,9 +75,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // nodes and AST_UnionBranch nodes.
 
 #include "ast_field.h"
-#include "ast_type.h"
+#include "ast_param_holder.h"
 #include "ast_visitor.h"
+
 #include "utl_identifier.h"
+#include "utl_err.h"
+
+#include "global_extern.h"
 
 AST_Field::AST_Field (void)
   : COMMON_Base (),
@@ -107,6 +111,17 @@ AST_Field::AST_Field (AST_Type *ft,
     fnt == AST_Decl::NT_array
     || fnt == AST_Decl::NT_sequence
     || fnt == AST_Decl::NT_param_holder;
+    
+  if (fnt == AST_Decl::NT_param_holder)
+    {
+      AST_Param_Holder *ph =
+        AST_Param_Holder::narrow_from_decl (ft);
+        
+      if (ph->info ()->type_ == AST_Decl::NT_const)
+        {
+          idl_global->err ()->not_a_type (ft);
+        }
+    }
 }
 
 // To be used when constructing a node of a subclass of AST_Field.
@@ -129,6 +144,17 @@ AST_Field::AST_Field (AST_Decl::NodeType nt,
     fnt == AST_Decl::NT_array
     || fnt == AST_Decl::NT_sequence
     || fnt == AST_Decl::NT_param_holder;
+    
+  if (fnt == AST_Decl::NT_param_holder)
+    {
+      AST_Param_Holder *ph =
+        AST_Param_Holder::narrow_from_decl (ft);
+        
+      if (ph->info ()->type_ == AST_Decl::NT_const)
+        {
+          idl_global->err ()->not_a_type (ft);
+        }
+    }
 }
 
 AST_Field::~AST_Field (void)
