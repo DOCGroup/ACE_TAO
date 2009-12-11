@@ -1025,7 +1025,6 @@ nobase_include_HEADERS = \
   Block_Flushing_Strategy.h \
   Blocked_Connect_Strategy.h \
   BooleanSeq.pidl \
-  BooleanSeq.pidl \
   BooleanSeqC.h \
   BooleanSeqS.h \
   Bounded_Array_Allocation_Traits_T.h \
