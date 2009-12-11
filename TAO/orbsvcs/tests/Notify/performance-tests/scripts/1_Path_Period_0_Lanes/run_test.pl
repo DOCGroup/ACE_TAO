@@ -32,6 +32,8 @@ if ($opt_h) {
     print STDERR "-n notify.conf -s supplier.conf -c consumer.conf -o output_dir -h\n";
     exit 0;
 }
+#added to disable warning
+$opt_h = 0;
 
 $experiment_timeout = 240;
 $startup_timeout = 120;
