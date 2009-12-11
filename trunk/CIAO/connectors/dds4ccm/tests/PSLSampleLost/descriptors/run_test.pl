@@ -120,7 +120,7 @@ sub run_node_daemons {
         print "Run dance_node_manager with $d_param\n";
 
         $DEAMONS[$i] = $tg_daemons[$i]->CreateProcess ($d_cmd, $d_param);
-        = $DEAMONS[$i]->Spawn ();
+        $DEAMONS[$i]->Spawn ();
 
         if ($tg_daemons[$i]->WaitForFileTimed($iorbase,
                                         $tg_daemons[$i]->ProcessStartWaitInterval ()) == -1) {
