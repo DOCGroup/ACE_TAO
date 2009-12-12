@@ -1,3 +1,14 @@
+Sat Dec 12 15:40:13 UTC 2009  Abdul Sowayan  <sowayan@gmail.com>
+
+        * ace/config-macosx-iphone.h:
+        * include/makeinclude/platform_macosx_iphone.GNU:
+
+          First cut at supporting iPhone 3.1.2. These files need
+          some cleanup. With these files, using the iPhone simulator
+          I was able to spawn ACE Threads, print ACE Logs messages,
+          and communicate between the the iPhone simulator and a
+          Windows machine using CORBA. 
+
 Thu Dec 10 20:03:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
