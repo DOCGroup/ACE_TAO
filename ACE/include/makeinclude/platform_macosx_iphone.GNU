@@ -20,8 +20,8 @@ CC:=$(IPHONE_PLATFORM)/usr/bin/gcc
 CXX:=$(IPHONE_PLATFORM)/usr/bin/g++
 AR:=$(IPHONE_PLATFORM)/usr/bin/ar
 RANLIB:=$(IPHONE_PLATFORM)/usr/bin/ranlib
-DLD = $(CC)
-LD  = $(CC)
+DLD = $(CXX)
+LD  = $(CXX)
 CFLAGS   += -arch $(IPHONE_HARDWARE_ARCHITECTURE) -isysroot $(IPHONE_SDK)
 CXXFLAGS += -arch $(IPHONE_HARDWARE_ARCHITECTURE) -isysroot $(IPHONE_SDK)
 
