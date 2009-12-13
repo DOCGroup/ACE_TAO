@@ -1,3 +1,9 @@
+Sun Dec 13 22:38:13 UTC 2009  Abdul Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_iphone.GNU:
+
+          Changed to allow iPhone Hardware compiler to generate executables.
+
 Sun Dec 13 18:30:26 UTC 2009  Abdul Sowayan  <sowayan@gmail.com>
 
         * include/makeinclude/platform_macosx_iphone.GNU:
