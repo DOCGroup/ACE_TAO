@@ -1,3 +1,10 @@
+Sun Dec 13 18:30:26 UTC 2009  Abdul Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_iphone.GNU:
+
+          Enhanced iPhone support. Now we can build for the iPhone
+          Hardware target in addition to the simulator.
+
 Sat Dec 12 15:40:13 UTC 2009  Abdul Sowayan  <sowayan@gmail.com>
 
         * ace/config-macosx-iphone.h:
@@ -7,7 +14,7 @@ Sat Dec 12 15:40:13 UTC 2009  Abdul Sowayan  <sowayan@gmail.com>
           some cleanup. With these files, using the iPhone simulator
           I was able to spawn ACE Threads, print ACE Logs messages,
           and communicate between the the iPhone simulator and a
-          Windows machine using CORBA. 
+          Windows machine using CORBA.
 
 Thu Dec 10 20:03:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
