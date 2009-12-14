@@ -209,7 +209,7 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
             //printf("data key %s and x %ld\n",TestTopic_infos[i].key.in (),TestTopic_infos[i].x);
       }
     }
-    catch(CCM_DDS::InternalError& )
+    catch(const CCM_DDS::InternalError& )
     {
       CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("internal error or no data\n")));
     }
@@ -226,14 +226,14 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
   {
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
+    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener get_info_out_status\n")));
     return new PortStatusListener_exec_i ( this->sample_port_1_,this->sample_port_2_, 1);
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_get_status (void)
   {
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
+    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener get_info_get_status\n")));
     return new PortStatusListener_exec_i (this->sample_port_1_,this->sample_port_2_, 2);
   }
 

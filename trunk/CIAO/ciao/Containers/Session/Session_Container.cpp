@@ -262,7 +262,7 @@ namespace CIAO
         ACE_DLL executor_dll;
         if (executor_dll.open (ACE_TEXT_CHAR_TO_TCHAR (primary_artifact),
                                ACE_DEFAULT_SHLIB_MODE,
-                               0) != 0)
+                               false) != 0)
           {
             const ACE_TCHAR* error = executor_dll.error ();
             CIAO_ERROR ((LM_ERROR, CLINFO
@@ -282,7 +282,7 @@ namespace CIAO
         ACE_DLL servant_dll;
         if (servant_dll.open (ACE_TEXT_CHAR_TO_TCHAR (servant_artifact),
                               ACE_DEFAULT_SHLIB_MODE,
-                              0) != 0)
+                              false) != 0)
           {
             const ACE_TCHAR* error = servant_dll.error ();
             CIAO_ERROR ((LM_ERROR, CLINFO
@@ -626,7 +626,7 @@ namespace CIAO
           this->component_poa_->reference_to_servant (provider);
 
         CIAO_DEBUG ((LM_TRACE, CLINFO "Session_Container::connect_local_facet - "
-                     "Successfully fetched provider servant from POA\n"));
+                     "Successfully fetched provider servant [%C] from POA\n", provider_port));
 
         CIAO::Servant_Impl_Base *prov_serv =
           dynamic_cast<CIAO::Servant_Impl_Base *> (srv_tmp);
@@ -640,7 +640,7 @@ namespace CIAO
 
         srv_tmp = this->component_poa_->reference_to_servant (user);
         CIAO_DEBUG ((LM_TRACE, CLINFO "Session_Container::connect_local_facet - "
-                     "Successfully fetched user servant from POA\n"));
+                     "Successfully fetched user servant [%C] from POA\n", user_port));
 
         CIAO::Servant_Impl_Base *user_serv =
           dynamic_cast<CIAO::Servant_Impl_Base *> (srv_tmp);
@@ -657,6 +657,8 @@ namespace CIAO
         // Note:  Spec says that facet executor provided by component MAY BE NIL
         if (!::CORBA::is_nil (exec))
           {
+            CIAO_DEBUG ((LM_DEBUG, CLINFO "Session_Container::connect_local_facet - "
+                         "Create connection between [%C] and [%C]\n", user_port, provider_port));
             user_serv->connect (user_port, exec);
           }
         else
