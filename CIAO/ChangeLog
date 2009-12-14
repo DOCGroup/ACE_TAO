@@ -1,3 +1,10 @@
+Mon Dec 14 14:36:46 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/SLOneByOne/Connector/SLOneByOne_Connector.mpc:
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver.mpc:
+        * connectors/dds4ccm/tests/SLOneByOne/Sender/SL_OneByOne_Sender.mpc:
+            Solve duplicate project names
+
 Mon Dec 14 14:25:09 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/run_1_to_5.pl:
