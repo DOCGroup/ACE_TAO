@@ -1,3 +1,9 @@
+Mon Dec 14 12:56:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.cpp:
+          The deleted samples may be invalid. Therefore don't check
+          on valid_data flag.
+
 Mon Dec 14 12:18:31 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
