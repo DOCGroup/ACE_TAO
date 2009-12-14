@@ -124,6 +124,12 @@ ACE_Tokenizer_T<CHAR>::next (void)
       index_ = 0;
       return 0;
     }
+    
+  // Check if a buffer has been passed
+  if (!buffer_)
+    {
+      return 0;
+    }
 
   CHAR replacement = 0;
   int replace;

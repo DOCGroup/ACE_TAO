@@ -1135,7 +1135,7 @@ Mon Apr  8 18:17:04 1991  Doug Schmidt  (schmidt at net4.ics.uci.edu)
         * Boy, it has been a *long* time since I hacked this puppy.  Let's
           see, I'm about to add long-overdue support for case-insensitive
           string comparisons to gperf's generated output code.  We are
-          going to employ the hitherto unused option -I to indicte this!
+          going to employ the hitherto unused option -I to indicate this!
 
 Thu Jun 28 16:17:27 1990  Doug Schmidt  (schmidt at brilliant)
 
@@ -1981,7 +1981,7 @@ Sun Jan 15 15:12:09 1989  Doug Schmidt  (schmidt at crimee.ics.uci.edu)
           is now computed in Key_List::Read_Keys, and thus
           Key_List::Print_Min_Max doesn't need to bother.
 
-        * Modifed the key position iterator scheme in options.cc to
+        * Modified the key position iterator scheme in options.cc to
           eliminate the need for member function Options::Advance.
           Now, the Options::Get function performs the advancement
           automatically, obviating the need for an extra function call.

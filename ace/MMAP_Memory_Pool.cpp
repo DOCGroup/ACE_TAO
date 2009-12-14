@@ -44,7 +44,7 @@ ACE_MMAP_Memory_Pool::release (int destroy)
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
   if (destroy)
-  this->mmap_.remove ();
+    this->mmap_.remove ();
   else
     this->mmap_.close ();
   return 0;

@@ -1,3 +1,281 @@
+Mon Dec 14 14:58:05 UTC 2009  Abdul Sowayan  <sowayan@gmail.com>
+
+        * NEWS:
+
+          Updated to note iPhone/iPod Touch support.
+
+Mon Dec 14 11:21:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * html/Stats/index.shtml:
+          Updated link to PS3/IBM Cell performance graphs
+
+Mon Dec 14 10:58:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Export/run_test.pl:
+          Fixed fuzz error
+
+Sun Dec 13 22:38:13 UTC 2009  Abdul Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_iphone.GNU:
+
+          Changed to allow iPhone Hardware compiler to generate executables.
+
+Sun Dec 13 18:30:26 UTC 2009  Abdul Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_iphone.GNU:
+
+          Enhanced iPhone support. Now we can build for the iPhone
+          Hardware target in addition to the simulator.
+
+Sat Dec 12 15:40:13 UTC 2009  Abdul Sowayan  <sowayan@gmail.com>
+
+        * ace/config-macosx-iphone.h:
+        * include/makeinclude/platform_macosx_iphone.GNU:
+
+          First cut at supporting iPhone 3.1.2. These files need
+          some cleanup. With these files, using the iPhone simulator
+          I was able to spawn ACE Threads, print ACE Logs messages,
+          and communicate between the the iPhone simulator and a
+          Windows machine using CORBA.
+
+Thu Dec 10 20:03:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Improved error message
+
+Thu Dec 10 15:37:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ACETAOCIAO.style:
+          Small updates
+
+Thu Dec 10 15:10:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Check all run_*.pl files for fuzz
+
+Thu Dec 10 13:07:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+          Removed hard supported version check
+
+Wed Dec  9 10:52:26 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * bin/fuzz.pl:
+
+          Updated conditions for new framework
+
+Mon Dec  7 16:09:18 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * tests/Basic_Types_Test.cpp: Add a verification for the endianness
+          setting.
+
+Mon Dec  7 07:40:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/bmake.features:
+          Disable mcpp for bmake
+
+Fri Dec  4 23:24:21 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * bin/MakeProjectCreator/config/global.features:
+
+          Added mpc feature to optionally turn on the indirection
+          support on valuetype outgoing message. It defaults to
+          be enabled. To be compatible with previous version TAO,
+          it needs run mwc.pl with
+          "-features valuetype_out_indirection=0" to disable it.
+
+Fri Dec  4 17:25:32 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * NEWS:
+
+          Removed entry for member validation feature in LoadBalancer as it
+          should be in TAO NEWS.
+
+Fri Dec  4 13:19:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * html/Stats/index.shtml:
+          Added link for IBM Cell xampler performance stats
+
+Fri Dec  4 10:20:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/fuzz.pl:
+          Removed -v option. The information which is generated
+          by -v should always be visible.
+
+Fri Dec  4 07:30:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+          CB2010 fix
+
+Thu Dec  3 11:59:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Check CIAO_TRACE macros and put all run_*.pl files in a separate
+          list
+
+Wed Dec  2 18:17:04 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * NEWS:
+
+          Added entry for member validation feature in LoadBalancer.
+
+Wed Dec  2 13:46:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
+
+        * debianbuild/{all files containign version numbers}:
+          Updated to latest micro release.
+
+Wed Dec  2 13:30:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/make_release.py:
+          Added code to update version numbers in ACE_ROOT/debianbuild files
+          on release.
+          Changed to retrieve repo root by default from info of working copy.
+
+Wed Dec  2 07:51:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/copy-script.sh:
+          Also copy md5 files
+
+        * bin/MakeProjectCreator/config/bmake.features:
+          Enable mcpp for bmake
+
+Thu Nov 26 02:08:59 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * Gaurav Kulshreshtha is the 2300th contributor to ACE+TAO+CIAO!
+
+Mon Nov 30 19:11:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/gperf/src/Bool_Array.h:
+        * apps/gperf/src/Key_List.h:
+          C++ Builder 2010 fixes
+
+Mon Nov 30 14:02:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Process.cpp:
+        * ace/Process.h:
+          Fixed gcc warnings
+
+Mon Nov 30 12:38:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+          Started port to C++ Builder 2010, older versions of C++ Builder are
+          now deprecated
+
+        * ace/MMAP_Memory_Pool.cpp:
+          Layout change
+
+        * ace/OS_NS_sys_time.h:
+        * ace/OS_NS_sys_time.inl:
+          Removed workarounds for ancient wince versions
+
+        * ace/Process.cpp:
+        * ace/Process.h:
+          Use bool and size_t and removed some ugly casts
+
+        * ace/Trace.cpp:
+        * ace/Trace.h:
+          Use bool
+
+Mon Nov 30 10:53:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debianbuild/patches/18-fix-bswap-detection.dpatch:
+        * debianbuild/patches/22-tao_idl-64bit-fix.dpatch:
+          Removed, not needed anymore
+
+Mon Nov 30 10:08:00 UTC 2009  Martin Corino <mcorino@remedy.nl>
+
+        * include/makeinclude/platform_linux_common.GNU:
+
+          Added some rules to support cross builds.
+          Setting the environment variable (or make variable) CROSS_COMPILE
+          to the platform tool prefix will redefine the CC, CXX and AR
+          variables and add a '-Wl,-rpath-link' option to the LDFLAGS.
+          If the HOST_ROOT variable has been set as well TAO_IDLxxx variables
+          will be redefined as well.
+
+Mon Nov 30 08:58:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * bin/Download.html:
+          updated for x.7.5
+
+        * bin/make_release.py
+        * rpmbuild/ace-tao-ciao.spec
+        * rpmbuild/ace-tao.spec
+          Updated to match opensuse build service
+
+        * docs/svn/svn-prefs.reg:
+          Added idl3+
+
+        * etc/index.html:
+          Added 5.7.5
+
+Sun Nov 29 13:06:02 CST 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 5.7.5 released.
+
+Thu Nov 26 12:33:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Message_Queue_Test.cpp:
+          Fixed msvc warning
+
+Thu Nov 26 04:19:02 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/Message_Queue_Test.cpp:
+
+          Attempt to resolve warning for MSVC.
+
+Tue Nov 24 09:39:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Tokenizer_T.cpp:
+          Check if buffer_ is not nil
+
+        * bin/fuzz.pl:
+          Export files shouldn't be in the ciao repository anymore, all
+          should be generated by TAO_IDL
+
+Mon Nov 23 10:56:18 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * THANKS:
+          Added Wolfgang Pickartz.for solving a TAO_IDL compiler
+          issue.
+
+Mon Nov 23 07:53:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debianbuild/changelog:
+        * debianbuild/control:
+        * debianbuild/dsc:
+        * debianbuild/rules:
+          Imported last version from debian
+
+Thu Nov 19 20:29:57 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Log_Msg_NT_Event_Log.cpp (ACE_Log_Msg_NT_Event_Log::log):
+          Added checks to ensure that log() works properly if the msg_data
+          size is greater than ACE_Log_Record::MAXLOGMSGLEN.  Thanks to
+          Gaurav Kulshreshtha <gaurav dot kulshreshtha at onmobile dot
+          com> for contributing this fix.
+
+Fri Nov 20 08:45:52 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/Log_Msg.cpp:
+          Updated documentation for '%S' modifier.
+
+Fri Nov 20 07:06:04 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/Sig_Handler.cpp:
+          Reverted: Sun Nov  1 16:47:29 UTC 2009  Olli Savia  <ops@iki.fi>
+
+Thu Nov 19 14:08:29 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/Sig_Handler.cpp:
+          Reverted: Mon Nov  2 08:36:24 UTC 2009  Olli Savia  <ops@iki.fi>
+
+Wed Nov 19 09:45:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-WinCE.h:
+          Only define FILE_MAP_COPY when it is not defined yet
+
 Mon Nov 16 14:40:42 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_win32_interix.GNU:
