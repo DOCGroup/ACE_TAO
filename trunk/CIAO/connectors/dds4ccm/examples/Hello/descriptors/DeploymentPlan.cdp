@@ -189,8 +189,26 @@
       </value>
     </configProperty>
   </instance>
-  <instance xmi:id="Hello_ConnectorComponentInstance">
-    <name>Hello_ConnectorComponent</name>
+  <instance xmi:id="Hello_ReceiverConnectorComponentInstance">
+    <name>Hello_ReceiverConnectorComponent</name>
+    <node>ReceiverNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Hello_ConnectorComponentImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Hello</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="Hello_SenderConnectorComponentInstance">
+    <name>Hello_SenderConnectorComponent</name>
     <node>SenderNode</node>
     <!-- hostname -->
     <source/>
@@ -275,7 +293,7 @@
       <portName>supplier_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Hello_ConnectorComponentInstance" />
+      <instance xmi:idref="Hello_SenderConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
   <connection>
@@ -294,7 +312,7 @@
       <portName>push_consumer_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Hello_ConnectorComponentInstance" />
+      <instance xmi:idref="Hello_ReceiverConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
   <connection>
@@ -313,7 +331,7 @@
       <portName>push_consumer_status</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Hello_ConnectorComponentInstance" />
+      <instance xmi:idref="Hello_ReceiverConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
   <connection>
@@ -332,7 +350,7 @@
       <portName>push_consumer_data_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Hello_ConnectorComponentInstance" />
+      <instance xmi:idref="Hello_ReceiverConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
 

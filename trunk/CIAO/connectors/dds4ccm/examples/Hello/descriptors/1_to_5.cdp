@@ -524,7 +524,7 @@
 
   <instance xmi:id="Hello_SenderConnectorComponentInstance">
     <name>Hello_SenderConnectorComponent</name>
-    <node>ReceiverNode</node>
+    <node>SenderNode</node>
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="Hello_ConnectorComponentImplementation" />
