@@ -2004,12 +2004,27 @@ NodeApplication_Impl::connect_receptacle (const ::Deployment::PlanConnectionDesc
           ::Components::CCMObject_var ccm_receptacle =
              ::Components::CCMObject::_narrow (receptacle);
 
-          if (CORBA::is_nil (facet) || CORBA::is_nil (ccm_receptacle) || CORBA::is_nil (cont))
+          if (CORBA::is_nil (facet))
             {
               DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - ")
-                            ACE_TEXT ("Unable to narrow all participants for a local facet connection\n")));
+                            ACE_TEXT ("Unable to narrow facet for a local facet connection\n")));
               throw ::Deployment::InvalidConnection ("", "");
             }
+
+          if (CORBA::is_nil (ccm_receptacle))
+            {
+              DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - ")
+                            ACE_TEXT ("Unable to narrow ccm_receptacle for a local facet connection\n")));
+              throw ::Deployment::InvalidConnection ("", "");
+            }
+
+          if (CORBA::is_nil (cont))
+            {
+              DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - ")
+                            ACE_TEXT ("Unable to narrow containter for a local facet connection\n")));
+              throw ::Deployment::InvalidConnection ("", "");
+            }
+
           DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT ("NodeApplication_Impl::connect_receptacle - ")
                         ACE_TEXT ("Connecting local facet %C to receptacle %C\n"),
                         facet_name.c_str (), recep_name.c_str ()));
