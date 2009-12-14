@@ -19,7 +19,6 @@
 
 #include "NodeApplication_Export.h"
 
-#include "ace/Map_Manager.h"
 #include "ace/Containers_T.h"
 #include "tao/ORB.h"
 #include "tao/Object.h"
@@ -47,7 +46,6 @@ namespace DAnCE
     NodeApplication_Impl (CORBA::ORB_ptr orb,
                           PortableServer::POA_ptr poa,
                           const ::Deployment::DeploymentPlan& plan,
-//                          RedirectionService & redirection,
                           const ACE_CString& node_name,
                           const PROPERTY_MAP &properties);
 
@@ -198,7 +196,6 @@ namespace DAnCE
 
     const ::Deployment::DeploymentPlan& plan_;
 
-    //ComponentInstallation_Impl* installation_;
     auto_ptr<CIAO::Deployment::CIAO_ServerActivator_i>  activator_;
 
     ACE_CString node_name_;

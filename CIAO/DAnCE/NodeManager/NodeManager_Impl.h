@@ -22,18 +22,17 @@
 #include "Deployment/Deployment_common.h"
 #include "Deployment/Deployment_NodeManagerS.h"
 #include "NodeApplicationManager/NodeApplicationManager_Impl.h"
-//#include "RedirectionService/RedirectionService.h"
+#include "ace/Map_Manager.h"
 
 namespace DAnCE
 {
   class NodeManager_Export NodeManager_Impl : public virtual POA_Deployment::NodeManager
   {
   public:
-    // the fixed listener port is caused by the usage of CCM Object locator
+    /// The fixed listener port is caused by the usage of CCM Object locator
     NodeManager_Impl (CORBA::ORB_ptr orb,
                       PortableServer::POA_ptr poa,
                       const char* name,
-//                      RedirectionService& redirection,
                       const PROPERTY_MAP &options);
 
     virtual ~NodeManager_Impl();
@@ -43,7 +42,7 @@ namespace DAnCE
                              ::Deployment::Logger_ptr log,
                              ::CORBA::Long updateInterval);
 
-    virtual void leaveDomain ();
+    virtual void leaveDomain (void);
 
     virtual ::Deployment::NodeApplicationManager_ptr preparePlan (
             const ::Deployment::DeploymentPlan & plan,
@@ -51,15 +50,15 @@ namespace DAnCE
 
     virtual void destroyManager (::Deployment::NodeApplicationManager_ptr appManager);
 
-    virtual ::Deployment::Resources * getDynamicResources ();
+    virtual ::Deployment::Resources * getDynamicResources (void);
 
-    const char* getName();
+    const char* getName(void);
 
   private:
     CORBA::ORB_var orb_;
     PortableServer::POA_var poa_;
     ACE_CString name_;
-    // @todo, see if we can use a _ptr
+    /// @todo, see if we can use a _ptr
     typedef ACE_Map_Manager<ACE_CString, NodeApplicationManager_Impl*, ACE_Null_Mutex > TManagers;
     TManagers managers_;
     PROPERTY_MAP properties_;
