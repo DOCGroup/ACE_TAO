@@ -5,7 +5,7 @@
 #include "Getter_Test_Receiver_exec.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "tao/ORB_Core.h"
-#include "ace/OS_NS_time.h"
+#include "ace/Reactor.h"
 
 namespace CIAO_Getter_Test_Receiver_Impl
 {
@@ -253,7 +253,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
                                           "Expected to return no data.\n"));
           }
       }
-    catch(CCM_DDS::InternalError& )
+    catch (const CCM_DDS::InternalError& )
       {
         CIAO_ERROR ((LM_ERROR, "ERROR: TIMEOUT GET ONE: "
                                "Caught unexcepted InternalError "
@@ -295,7 +295,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
                                           "Expected to return no data.\n"));
           }
       }
-    catch(CCM_DDS::InternalError& )
+    catch (const CCM_DDS::InternalError& )
       {
         CIAO_ERROR ((LM_ERROR, "ERROR: TIMEOUT GET MANY: "
                                "Caught unexcepted InternalError "
