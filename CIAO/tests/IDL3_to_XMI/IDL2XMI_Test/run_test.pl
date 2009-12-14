@@ -52,7 +52,7 @@ foreach my $idl_file (@idls) {
         $status = 1;
     }
 
-    unlink $xmi;
+    $target->DeleteFile ($xmi);
 
     print "\n";
 }

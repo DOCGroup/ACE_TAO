@@ -12,14 +12,18 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{'ACE_ROOT'}/bin";
 use PerlACE::TestTarget;
 
+$tg = PerlACE::TestTarget::create_target (1) || die "Create target for ns failed\n";
+
 $status = 0;
-$daemon_ior = PerlACE::LocalFile ("daemon.ior");
-$am_ior = PerlACE::LocalFile ("am.ior");
+$daemon_base = "daemon.ior";
+$am_base = "am.ior";
+$daemon_ior = $tg->LocalFile ("daemon.ior");
+$am_ior = $tg->LocalFile ("am.ior");
 
 $CIAO_ROOT=$ENV{'CIAO_ROOT'};
 
-unlink $daemon_ior;
-unlink $am_ior;
+$tg->DeleteFile ($daemon_base);
+$tg->DeleteFile ($am_base);
 
 
 # CIAO Daemon command line arguments
@@ -34,7 +38,7 @@ $ad_args = " -k file://$am_ior -a RoundTripClient.cad";
 
 # CIAO daemon process definition
 $DS = $tg->CreateProcess ("$CIAO_ROOT/tools/Daemon/CIAO_Daemon",
-                            "$daemon_args");
+                            "$daemon_args1");
 
 ## Starting up the CIAO daemon
 $DS->Spawn ();
