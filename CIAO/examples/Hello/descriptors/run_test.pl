@@ -82,7 +82,7 @@ sub delete_ior_files {
     }
     $tg_naming->DeleteFile ($ior_nsbase);
     $tg_exe_man->DeleteFile ($ior_embase);
-    for ($i = 0; $i < $daemons; ++$i) {
+    for ($i = 0; $i < $nr_daemon; ++$i) {
         $iorfiles[$i] = $tg_daemons[$i]->LocalFile ($iorbases[$i]);
     }
 }
