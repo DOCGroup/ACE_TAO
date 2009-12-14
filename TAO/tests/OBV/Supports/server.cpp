@@ -79,15 +79,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       vt_graph_factory->_remove_ref ();
 
+      /* create and activate test servant */
+
       test_impl * a_test_impl;
 
       ACE_NEW_RETURN (a_test_impl, test_impl (orb.in ()), 1);
 
-      //PortableServer::ServantBase_var owner_transfer = a_test_impl;
+      PortableServer::ServantBase_var owner_transfer = a_test_impl;
 
-      Supports_Test::test_ptr a_test = a_test_impl->_this ();
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (a_test_impl);
 
-      CORBA::String_var ior = orb->object_to_string (a_test);
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
+	  Supports_Test::test_var a_test = Supports_Test::test::_narrow (object.in ());
+
+      CORBA::String_var ior = orb->object_to_string (a_test.in ());
 
       FILE * output_file = ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ior_output_file), "w");
 
@@ -99,8 +106,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_OS::fclose (output_file);
 
       poa_manager->activate ();
-
-      a_test_impl->_remove_ref ();
 
       orb->run ();
 
