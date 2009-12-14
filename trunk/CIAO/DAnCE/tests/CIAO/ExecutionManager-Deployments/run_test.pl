@@ -6,84 +6,127 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{'ACE_ROOT'}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 $CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
 $TAO_ROOT = "$ENV{'TAO_ROOT'}";
-$DAnCE = "$ENV{'DANCE_ROOT'}";
+$DANCE_ROOT = "$ENV{'DANCE_ROOT'}";
+
 $daemons_running = 0;
 $em_running = 0;
 $ns_running = 0;
-$daemons = 2;
-@ports = ( 60001, 60002 );
-@iorfiles = ( "NodeApp1.ior", "NodeApp2.ior" );
-@nodenames = ( "NodeOne", "NodeTwo" );
-$status = 0;
-$dat_file = "NodeManagerMap.dat";
 
-$nsior = PerlACE::LocalFile ("ns.ior");
+$nr_daemon = 1;
+@ports = ( 60001 );
+@iorbases = ( "NodeApp1.ior" );
+@iorfiles = 0;
+@nodenames = ( "NodeOne" );
 
-PerlACE::add_lib_path ('../Components');
+# ior files other than daemon
+$ior_nsbase = "ns.ior";
+$ior_nsfile = 0;
+$ior_embase = "EM.ior";
+$ior_emfile = 0;
 
+#  Processes
 $E = 0;
 $EM = 0;
-$retval = 0;
+$NS = 0;
+@DEAMONS = 0;
+
+# targets
+@tg_daemons = 0;
+$tg_naming = 0;
+$tg_exe_man = 0;
+$tg_executor = 0;
+
+$status = 0;
+
+$ENV{"DANCE_TRACE_ENABLE"} = 0;
+$ENV{"CIAO_TRACE_ENABLE"} = 0;
+
+sub create_targets {
+    #   naming service
+    $tg_naming = PerlACE::TestTarget::create_target (1) || die "Create target for ns failed\n";
+    $tg_naming->AddLibPath ('..');
+    #   daemon
+    for ($i = 0; $i < $nr_daemon; ++$i) {
+        $tg_daemons[$i] = PerlACE::TestTarget::create_target ($i+1) || die "Create target for deamon $i failed\n";
+        $tg_daemons[$i]->AddLibPath ('..');
+    }
+    #   execution manager
+    $tg_exe_man = PerlACE::TestTarget::create_target (1) || die "Create target for EM failed\n";
+    $tg_exe_man->AddLibPath ('..');
+    #   executor (plan_launcher)
+    $tg_executor = PerlACE::TestTarget::create_target (1) || die "Create target for executor failed\n";
+    $tg_executor->AddLibPath ('..');
+}
+
+sub init_ior_files {
+    $ior_nsfile = $tg_naming->LocalFile ($ior_nsbase);
+    $ior_emfile = $tg_exe_man->LocalFile ($ior_embase);
+    for ($i = 0; $i < $nr_daemon; ++$i) {
+        $iorfiles[$i] = $tg_daemons[$i]->LocalFile ($iorbases[$i]);
+    }
+    delete_ior_files ();
+}
 
 # Delete if there are any .ior files.
 sub delete_ior_files {
-    for ($i = 0; $i < $daemons; ++$i) {
-        unlink $iorfiles[$i];
+    for ($i = 0; $i < $nr_daemon; ++$i) {
+        $tg_daemons[$i]->DeleteFile ($iorbases[$i]);
     }
-    unlink PerlACE::LocalFile ("EM.ior");
-    unlink PerlACE::LocalFile ("Receiver.ior");
-    unlink PerlACE::LocalFile ("Sender.ior");
-    unlink PerlACE::LocalFile ("DAM.ior");
-    unlink PerlACE::LocalFile ("ns.ior");
+    $tg_naming->DeleteFile ($ior_nsbase);
+    $tg_exe_man->DeleteFile ($ior_embase);
+    for ($i = 0; $i < $nr_daemon; ++$i) {
+        $iorfiles[$i] = $tg_daemons[$i]->LocalFile ($iorbases[$i]);
+    }
 }
 
-sub kill_node_daemons {
-    for ($i = 0; $i < $daemons; ++$i) {
-        $Daemons[$i]->Kill (); $Daemons[$i]->TimedWait (1);
+sub kill_node_daemon {
+    for ($i = 0; $i < $nr_daemon; ++$i) {
+        $DEAMONS[$i]->Kill (); $DEAMONS[$i]->TimedWait (1);
     }
 }
 
 sub kill_open_processes {
     if ($daemons_running == 1) {
-        kill_node_daemons ();
+        kill_node_daemon ();
     }
 
     if ($em_running == 1) {
-        $EM->Kill ();
-        $EM->TimedWait (1);
+        $EM->Kill (); $EM->TimedWait (1);
     }
 
     if ($ns_running == 1) {
-        $NS->Kill ();
-        $NS->TimedWait (1);
+        $NS->Kill (); $NS->TimedWait (1);
     }
 }
 
+
 sub run_node_daemons {
-    for ($i = 0; $i < $daemons; ++$i) {
+    for ($i = 0; $i < $nr_daemon; ++$i) {
+        $iorbase = $iorbases[$i];
         $iorfile = $iorfiles[$i];
         $port = $ports[$i];
         $nodename = $nodenames[$i];
         $iiop = "iiop://localhost:$port";
         $node_app = "$CIAO_ROOT/bin/ciao_componentserver";
 
-        $d_cmd = "$DAnCE/bin/dance_node_manager";
+        $d_cmd = "$DANCE_ROOT/bin/dance_node_manager";
         $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30 --domain-nc corbaloc:rir:/NameService --instance-nc corbaloc:rir:/NameService";
 
-        $Daemons[$i] = new PerlACE::Process ($d_cmd, $d_param);
-        $result = $Daemons[$i]->Spawn ();
-        push(@processes, $Daemons[$i]);
+        print "Run node daemon\n";
 
-        if (PerlACE::waitforfile_timed ($iorfile,
-                                        30) == -1) {
+        $DEAMONS[$i] = $tg_daemons[$i]->CreateProcess ($d_cmd, $d_param);
+        $DEAMONS[$i]->Spawn ();
+
+        if ($tg_daemons[$i]->WaitForFileTimed($iorbase,
+                                        $tg_daemons[$i]->ProcessStartWaitInterval ()) == -1) {
             print STDERR
-                "ERROR: The ior $iorfile file of node daemon $i could not be found\n";
+              "ERROR: The ior $iorfile file of node daemon $i could not be found\n";
             for (; $i >= 0; --$i) {
-                $Daemons[$i]->Kill (); $Daemons[$i]->TimedWait (1);
+                $DEAMONS[$i]->Kill (); $DEAMONS[$i]->TimedWait (1);
             }
             return -1;
         }
@@ -95,32 +138,35 @@ if ($#ARGV == -1) {
     opendir(DIR, ".");
     @files = grep(/\.cdp$/,readdir(DIR));
     closedir(DIR);
-} 
+}
 else {
     @files = @ARGV;
 }
 
+create_targets ();
+init_ior_files ();
+
 foreach $file (@files) {
     print "Starting test for deployment $file\n";
-    delete_ior_files ();
 
     print STDERR "Starting Naming Service\n";
 
-    $NS = new PerlACE::Process ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 0 -ORBEndpoint iiop://localhost:60003 -o ns.ior");
+    $NS = $tg_naming->CreateProcess ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 0 -ORBEndpoint iiop://localhost:60003 -o $ior_nsfile");
     $NS->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($nsior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    if ($tg_naming->WaitForFileTimed ($ior_nsbase,
+                                      $tg_naming->ProcessStartWaitInterval ()) == -1) {
         print STDERR "ERROR: cannot find naming service IOR file\n";
-        $NS->Kill ();
+        $NS->Kill (); $NS->TimedWait (1);
         exit 1;
     }
-    $ns_running = 1;
 
+    $ns_running = 1;
     # Set up NamingService environment
     $ENV{"NameServiceIOR"} = "corbaloc:iiop:localhost:60003/NameService";
 
-    # Invoke node daemons.
-    print "Invoking node daemons\n";
+    # Invoke node daemon.
+    print "Invoking node daemon\n";
     $status = run_node_daemons ();
 
     if ($status != 0) {
@@ -133,14 +179,14 @@ foreach $file (@files) {
 
     # Invoke execution manager.
     print "Invoking execution manager\n";
-    $EM = new PerlACE::Process ("$DAnCE/bin/dance_execution_manager",
-                                "-eEM.ior --domain-nc corbaloc:rir:/NameService");
+    $EM = $tg_exe_man->CreateProcess ("$DANCE_ROOT/bin/dance_execution_manager",
+                                    "-e$ior_emfile --domain-nc corbaloc:rir:/NameService");
     $EM->Spawn ();
 
-    if (PerlACE::waitforfile_timed ("EM.ior",
-                                    $PerlACE::wait_interval_for_process_creation) == -1) {
+    if ($tg_exe_man->WaitForFileTimed ($ior_embase,
+                                    $tg_exe_man->ProcessStartWaitInterval ()) == -1) {
         print STDERR
-            "ERROR: The ior file of execution manager could not be found\n";
+          "ERROR: The ior file of execution manager could not be found\n";
         kill_open_processes ();
         exit 1;
     }
@@ -148,16 +194,12 @@ foreach $file (@files) {
     $em_running = 1;
 
     # Invoke executor - start the application -.
-    print "Invoking executor - start the application -\n";
-    $E = new PerlACE::Process ("simple_em_launcher",
-                               "file://EM.ior $file");
+    print "Invoking executor - launch the application -\n";
+    $E = $tg_executor->CreateProcess ("simple_em_launcher",
+                               "file://$ior_emfile $file");
 
-    $status = $E->SpawnWaitKill (60);
 
-    if ($status != 0) {
-        print "ERROR: simple_em_launcher returned an error code while deploying $file\n";
-        $retval = -1;
-    }
+    print "Executor finished.\n";
 
     delete_ior_files ();
     kill_open_processes ();
