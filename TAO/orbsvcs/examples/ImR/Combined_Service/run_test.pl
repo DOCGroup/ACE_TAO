@@ -83,8 +83,7 @@ sub cleanup
     my @pids = ();
 
     if (! open (TEST_OUTPUT, "<$output_file")) {
-        print STDERR "ERROR: Could not open $output_file\n";
-        return -1;
+        return 0;
     }
 
     my $i = 0;
