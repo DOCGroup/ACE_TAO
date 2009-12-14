@@ -1,3 +1,9 @@
+Mon Dec 14 19:23:21 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+          Resolved fuzz errors/warnings.
+
 Mon Dec 14 19:06:43 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * examples/Hello/descriptors/run_NodeDaemons.pl:

@@ -184,11 +184,10 @@ namespace CIAO
       ::DDS::PublisherListener_ptr
       RTI_Publisher_i::get_listener (void)
       {
-  //      DDSPublisherListener* pl = this->impl_->get_listener ();
-//        ::DDS::PublisherListener_var retval = new RTI_PublisherListener_i (pl);
-        //return retval._retn ();
+/*        DDSPublisherListener* pl = this->impl_->get_listener ();
+        ::DDS::PublisherListener_var retval = new RTI_PublisherListener_i (pl);
+        return retval._retn ();*/
         throw CORBA::NO_IMPLEMENT ();
-
       }
 
       ::DDS::ReturnCode_t
