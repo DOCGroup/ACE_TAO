@@ -1,3 +1,14 @@
+Mon Dec 14 15:13:30 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * orbsvcs/tests/Simple_Naming/run_test_ipv6.pl:
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+        * orbsvcs/tests/Redundant_Naming/run_test.pl:
+        * orbsvcs/tests/Bug_1437_Regression/run_test.pl:
+        * orbsvcs/examples/ImR/Combined_Service/run_test.pl:
+
+          Tests are converted to use new test framework
+          and added to fuzz build.
+
 Mon Dec 14 14:52:39 UTC 2009  Abdul Sowayan  <sowayan@gmail.com>
 
         * NEWS:
