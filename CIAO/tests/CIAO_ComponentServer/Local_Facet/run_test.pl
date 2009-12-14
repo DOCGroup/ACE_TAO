@@ -18,7 +18,7 @@ foreach $i (@ARGV) {
     }
 }
 
-my $target = PerlACE::TestTarget::create_target ($PerlACE::TestConfig);
+my $target = PerlACE::TestTarget::create_target (1);
 
 $TG = $target->CreateProcess ("client", "-s $ciao_root/bin/ciao_componentserver -d 120");
 $server_status = $TG->SpawnWaitKill ($target->ProcessStartWaitInterval ());
