@@ -34,10 +34,6 @@ namespace CIAO
           toconfig.kind = Deployment::Facet;
           break;
 
-        case CCMComponentPortKind::LocalFacet_l:
-          toconfig.kind = Deployment::LocalFacet;
-          break;
-
         case CCMComponentPortKind::SimplexReceptacle_l:
           toconfig.kind = Deployment::SimplexReceptacle;
           break;
@@ -117,10 +113,6 @@ namespace CIAO
         {
         case ::Deployment::Facet:
           cpd.kind (CCMComponentPortKind::Facet);
-          break;
-
-        case ::Deployment::LocalFacet:
-          cpd.kind (CCMComponentPortKind::LocalFacet);
           break;
 
         case ::Deployment::SimplexReceptacle:

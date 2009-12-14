@@ -5,7 +5,7 @@
                           xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
   <label>Hello_Depl_1</label>
   <UUID>Hello_Depl_1</UUID>
-  
+
   <implementation xmi:id="Hello_ReceiverComponentImplementation">
     <name>ReceiverComponentImplementation</name>
     <source/>
@@ -57,7 +57,7 @@
       </value>
     </execParameter>
   </implementation>
-  
+
   <implementation xmi:id="Hello_ConnectorComponentImplementation">
     <name>Hello_ConnectorComponentImplementation</name>
     <source/>
@@ -160,7 +160,7 @@
       </value>
     </execParameter>
   </implementation>
-  
+
   <instance xmi:id="Hello_SenderComponentInstanceOne">
     <name>Hello_SenderComponentOne</name>
     <node>SenderNode</node>
@@ -223,7 +223,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <instance xmi:id="Hello_SenderConnectorComponentInstanceOne">
     <name>Hello_SenderConnectorComponentOne</name>
     <node>SenderNode</node>
@@ -253,8 +253,8 @@
       </value>
     </configProperty>
   </instance>
-  
-  
+
+
   <instance xmi:id="Hello_SenderComponentInstanceTwo">
     <name>Hello_SenderComponentTwo</name>
     <node>SenderNode</node>
@@ -317,7 +317,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <instance xmi:id="Hello_SenderConnectorComponentInstanceTwo">
     <name>Hello_SenderConnectorComponentTwo</name>
     <node>SenderNode</node>
@@ -347,8 +347,8 @@
       </value>
     </configProperty>
   </instance>
-  
-  
+
+
   <instance xmi:id="Hello_SenderComponentInstanceThree">
     <name>Hello_SenderComponentThree</name>
     <node>SenderNode</node>
@@ -411,7 +411,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <instance xmi:id="Hello_SenderConnectorComponentInstanceThree">
     <name>Hello_SenderConnectorComponentThree</name>
     <node>SenderNode</node>
@@ -441,8 +441,8 @@
       </value>
     </configProperty>
   </instance>
-  
-  
+
+
   <instance xmi:id="Hello_SenderComponentInstanceFour">
     <name>Hello_SenderComponentFour</name>
     <node>SenderNode</node>
@@ -505,7 +505,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <instance xmi:id="Hello_SenderConnectorComponentInstanceFour">
     <name>Hello_SenderConnectorComponentFour</name>
     <node>SenderNode</node>
@@ -535,8 +535,8 @@
       </value>
     </configProperty>
   </instance>
-  
-  
+
+
   <instance xmi:id="Hello_SenderComponentInstanceFive">
     <name>Hello_SenderComponentFive</name>
     <node>SenderNode</node>
@@ -599,7 +599,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <instance xmi:id="Hello_SenderConnectorComponentInstanceFive">
     <name>Hello_SenderConnectorComponentFive</name>
     <node>SenderNode</node>
@@ -629,9 +629,9 @@
       </value>
     </configProperty>
   </instance>
-  
-  
-  
+
+
+
   <instance xmi:id="Hello_ReceiverConnectorComponentInstance">
     <name>Hello_ReceiverConnectorComponent</name>
     <node>ReceiverNode</node>
@@ -671,6 +671,10 @@
 
   <connection>
     <name>info_write_dataOne</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_in_data</portName>
       <provider>false</provider>
@@ -686,6 +690,10 @@
   </connection>
   <connection>
     <name>info_write_dataTwo</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_in_data</portName>
       <provider>false</provider>
@@ -701,6 +709,10 @@
   </connection>
   <connection>
     <name>info_write_dataThree</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_in_data</portName>
       <provider>false</provider>
@@ -716,6 +728,10 @@
   </connection>
   <connection>
     <name>info_write_dataFour</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_in_data</portName>
       <provider>false</provider>
@@ -731,6 +747,10 @@
   </connection>
   <connection>
     <name>info_write_dataFive</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_in_data</portName>
       <provider>false</provider>
@@ -744,9 +764,13 @@
       <instance xmi:idref="Hello_SenderConnectorComponentInstanceFive" />
     </internalEndpoint>
   </connection>
-  
+
   <connection>
     <name>_listenercontrol</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_data_control</portName>
       <provider>false</provider>
@@ -760,9 +784,13 @@
       <instance xmi:idref="Hello_ReceiverConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
-  
+
   <connection>
     <name>_portstatuslistener</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_status</portName>
       <provider>true</provider>
@@ -776,9 +804,13 @@
       <instance xmi:idref="Hello_ReceiverConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
-  
+
   <connection>
-    <name>_rawlistner</name>
+    <name>_listener</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_data_listener</portName>
       <provider>true</provider>
@@ -792,7 +824,7 @@
       <instance xmi:idref="Hello_ReceiverConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
-  
+
   <artifact xmi:id="Sender_ExecArtifact">
     <name>Sender_exec</name>
     <source/>

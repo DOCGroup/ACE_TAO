@@ -661,11 +661,18 @@ namespace CIAO
           }
         else
           {
-            throw ::Components::InvalidConnection ();
+//            throw ::Components::InvalidConnection ();
           }
       }
     catch (const ::Components::InvalidConnection &)
       {
+        throw;
+      }
+    catch (const ::CORBA::Exception &ex)
+      {
+        CIAO_ERROR ((LM_ERROR, CLINFO "Session_Container::connect_local_facet - "
+                     "Caught exception %C.\n",
+                     ex._info ().c_str ()));
         throw;
       }
     catch (...)
@@ -728,6 +735,13 @@ namespace CIAO
       }
     catch (const ::Components::InvalidConnection &)
       {
+        throw;
+      }
+    catch (const ::CORBA::Exception &ex)
+      {
+        CIAO_ERROR ((LM_ERROR, CLINFO "Session_Container::disconnect_local_facet - "
+                     "Caught exception %C.\n",
+                     ex._info ().c_str ()));
         throw;
       }
     catch (...)

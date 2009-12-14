@@ -1,7 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-
 // Test for OFFERED_DEADLINE_MISSED status : Writer failed to write data within the deadline time period set in the profile.
 
 #include "CSL_DeadlineTest_Sender_exec.h"
@@ -143,8 +142,6 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
     this->write();
   }
 
-
-
   void
   Sender_exec_i::ccm_passivate (void)
   {
@@ -160,7 +157,6 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
                                ACE_TEXT ("warning 'on_offered_deadline_missed' in Sender\n")
                     ));
       }
-
     else
       {
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Received the expected ")

@@ -110,7 +110,7 @@
     </execParameter>
   </implementation>
 
-    
+
   <implementation xmi:id="SenderComponentImplementation">
     <name>SenderComponentImplementation</name>
     <source/>
@@ -169,7 +169,7 @@
     <source/>
     <implementation xmi:idref="ReceiverComponentImplementation" />
   </instance>
-  
+
   <instance xmi:id="Updater_ConnectorComponentInstance">
     <name>Updater_ConnectorComponent</name>
     <node>SenderNode</node>
@@ -216,6 +216,10 @@
 
   <connection>
     <name>_listenercontrol</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_data_control</portName>
       <provider>false</provider>
@@ -231,6 +235,10 @@
   </connection>
   <connection>
     <name>_statelistener</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_data_listener</portName>
       <provider>true</provider>
@@ -246,6 +254,10 @@
   </connection>
   <connection>
     <name>_portstatuslistener</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_status</portName>
       <provider>true</provider>
@@ -260,7 +272,7 @@
     </internalEndpoint>
   </connection>
   <!--connection>
-    <name>_rawlistner</name>
+    <name>_listener</name>
     <internalEndpoint>
       <portName>info_out_data_listener</portName>
       <provider>true</provider>
@@ -276,6 +288,10 @@
   </connection-->
   <connection>
     <name>info_out_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_data</portName>
       <provider>false</provider>
@@ -317,10 +333,14 @@
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Updater_ConnectorComponentInstance" />
-    </internalEndpoint>    
+    </internalEndpoint>
   </connection-->
   <connection>
     <name>updater_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>test_topic_update_data</portName>
       <provider>false</provider>
@@ -334,7 +354,7 @@
       <instance xmi:idref="Updater_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
-  
+
 
   <artifact xmi:id="Sender_ExecArtifact">
     <name>Sender_exec</name>
@@ -373,7 +393,7 @@
     <location>DDS_Updater_Connector_stub</location>
   </artifact>
 
-    
+
   <artifact xmi:id="Receiver_ExecArtifact">
     <name>Receiver_exec</name>
     <source/>

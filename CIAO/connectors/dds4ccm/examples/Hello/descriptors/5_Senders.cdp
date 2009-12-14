@@ -580,6 +580,10 @@
 
   <connection>
     <name>info_write_dataOne</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_in_data</portName>
       <provider>false</provider>
@@ -595,6 +599,10 @@
   </connection>
   <connection>
     <name>info_write_dataTwo</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_in_data</portName>
       <provider>false</provider>
@@ -610,6 +618,10 @@
   </connection>
   <connection>
     <name>info_write_dataThree</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_in_data</portName>
       <provider>false</provider>
@@ -625,6 +637,10 @@
   </connection>
   <connection>
     <name>info_write_dataFour</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_in_data</portName>
       <provider>false</provider>
@@ -640,6 +656,10 @@
   </connection>
   <connection>
     <name>info_write_dataFive</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_in_data</portName>
       <provider>false</provider>

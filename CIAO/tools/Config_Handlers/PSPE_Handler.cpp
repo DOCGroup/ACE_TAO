@@ -62,10 +62,6 @@ namespace CIAO
           dest.kind = Deployment::Facet;
           break;
 
-        case CCMComponentPortKind::LocalFacet_l:
-          dest.kind = Deployment::LocalFacet;
-          break;
-
         case CCMComponentPortKind::SimplexReceptacle_l:
           dest.kind = Deployment::SimplexReceptacle;
           break;
@@ -106,7 +102,7 @@ namespace CIAO
 
       if (src.provider)
         prov = tval;
-      
+
       IdRef idr;
       idr.idref (idref);
 
@@ -119,10 +115,6 @@ namespace CIAO
         {
         case ::Deployment::Facet:
           pspe.kind (CCMComponentPortKind::Facet);
-          break;
-
-        case ::Deployment::LocalFacet:
-          pspe.kind (CCMComponentPortKind::LocalFacet);
           break;
 
         case ::Deployment::SimplexReceptacle:
@@ -144,7 +136,7 @@ namespace CIAO
         case ::Deployment::EventConsumer:
           pspe.kind (CCMComponentPortKind::EventConsumer);
           break;
-          
+
         default:
           ACE_ERROR ((LM_ERROR, "Invalid port kind in PSPE\n"));
         }

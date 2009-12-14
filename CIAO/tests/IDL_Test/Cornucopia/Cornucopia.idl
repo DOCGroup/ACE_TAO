@@ -120,16 +120,28 @@ module LocalMod
     uses L2 y;
   };
 
+  component CombLocal2
+  {
+    uses L1 x;
+    provides L2 y;
+  };
+
   porttype L3
   {
     provides L1 x;
     uses L2 y;
   };
 
-  component CombLocal2
+  component CombLocal4
   {
     port L3 z;
     mirrorport L3 z2;
+  };
+
+  component CombLocal3
+  {
+    mirrorport L3 z;
+    port L3 z2;
   };
 };
 

@@ -51,6 +51,7 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE>::init (
                   this->status_.in (),
                   ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
               this->data_ = ::DDS::CCM_DataReader::_narrow (reader);
+              this->dds_read_.data_reader (reader);
             }
           else
             {
@@ -62,6 +63,7 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE>::init (
                   this->status_.in (),
                   ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
               this->data_ = ::DDS::CCM_DataReader::_narrow (reader);
+              this->dds_read_.data_reader (reader);
             }
         }
     }
@@ -78,8 +80,7 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE>::get_data (void)
 {
   CIAO_TRACE ("DDS_Read_T<DDS_TYPE, CCM_TYPE>::get_data");
 
-  return new CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> (
-          this->data_.in ());
+  return &this->dds_read_;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>

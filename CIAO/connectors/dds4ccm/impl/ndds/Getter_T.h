@@ -26,7 +26,7 @@ namespace CIAO
       {
       public:
         /// Constructor
-        Getter_T (::DDS::DataReader_ptr dr);
+        Getter_T (void);
 
         /// Destructor
         virtual ~Getter_T (void);
@@ -44,6 +44,11 @@ namespace CIAO
 
         virtual ::CCM_DDS::DataNumber_t max_delivered_data (void);
         virtual void max_delivered_data (::CCM_DDS::DataNumber_t max_delivered_data);
+
+        void data_reader (::DDS::DataReader_ptr reader);
+
+        typename DDS_TYPE::data_reader * impl (void);
+
       private:
         typename DDS_TYPE::data_reader *impl_;
         DDSQueryCondition* condition_;

@@ -186,27 +186,27 @@ module DDS {
     // Listeners
     // ----------------------------------------------------------------------
 
-    interface Listener;
-    interface Entity;
-    interface TopicDescription;
-    interface Topic;
-    interface ContentFilteredTopic;
-    interface MultiTopic;
-    interface DataWriter;
-    interface DataReader;
-    interface Subscriber;
-    interface Publisher;
+    local interface Listener;
+    local interface Entity;
+    local interface TopicDescription;
+    local interface Topic;
+    local interface ContentFilteredTopic;
+    local interface MultiTopic;
+    local interface DataWriter;
+    local interface DataReader;
+    local interface Subscriber;
+    local interface Publisher;
 
     typedef sequence<DataReader> DataReaderSeq;
 
-    interface Listener {};
+    local interface Listener {};
 
-    interface TopicListener : Listener {
+    local interface TopicListener : Listener {
     void on_inconsistent_topic(in Topic the_topic,
         in InconsistentTopicStatus status);
     };
 
-    interface DataWriterListener : Listener {
+    local interface DataWriterListener : Listener {
         void on_offered_deadline_missed(
             in DataWriter writer,
             in OfferedDeadlineMissedStatus status);
@@ -221,10 +221,10 @@ module DDS {
             in PublicationMatchedStatus status);
     };
 
-    interface PublisherListener : DataWriterListener {
+    local interface PublisherListener : DataWriterListener {
     };
 
-    interface DataReaderListener : Listener {
+    local interface DataReaderListener : Listener {
         void on_requested_deadline_missed(
             in DataReader the_reader,
             in RequestedDeadlineMissedStatus status);
@@ -247,13 +247,13 @@ module DDS {
             in SampleLostStatus status);
     };
 
-    interface SubscriberListener : DataReaderListener {
+    local interface SubscriberListener : DataReaderListener {
         void on_data_on_readers(
             in Subscriber the_subscriber);
     };
 
 
-    interface DomainParticipantListener : TopicListener,
+    local interface DomainParticipantListener : TopicListener,
                                       PublisherListener,
                                       SubscriberListener {
     };
@@ -263,13 +263,13 @@ module DDS {
     // Conditions
     // ----------------------------------------------------------------------
 
-    interface Condition {
+    local interface Condition {
         boolean get_trigger_value();
     };
 
     typedef sequence<Condition> ConditionSeq;
 
-    interface WaitSet {
+    local interface WaitSet {
         ReturnCode_t wait(
             inout ConditionSeq active_conditions,
             in Duration_t timeout);
@@ -281,12 +281,12 @@ module DDS {
             inout ConditionSeq attached_conditions);
     };
 
-    interface GuardCondition : Condition {
+    local interface GuardCondition : Condition {
         ReturnCode_t set_trigger_value(
             in boolean value);
     };
 
-    interface StatusCondition : Condition {
+    local interface StatusCondition : Condition {
         StatusMask get_enabled_statuses();
         ReturnCode_t set_enabled_statuses(
             in StatusMask mask);
@@ -323,14 +323,14 @@ module DDS {
     const InstanceStateMask NOT_ALIVE_INSTANCE_STATE            = 0x006;
 
 
-    interface ReadCondition : Condition {
+    local interface ReadCondition : Condition {
         SampleStateMask     get_sample_state_mask();
         ViewStateMask       get_view_state_mask();
         InstanceStateMask   get_instance_state_mask();
         DataReader          get_datareader();
     };
 
-    interface QueryCondition : ReadCondition {
+    local interface QueryCondition : ReadCondition {
         string         get_query_expression();
         ReturnCode_t   get_query_parameters(
             inout StringSeq query_parameters);
@@ -671,7 +671,7 @@ module DDS {
     };
 
     // ----------------------------------------------------------------------
-    interface Entity {
+    local interface Entity {
     //  ReturnCode_t set_qos(
     //      in EntityQos qos);
     //  ReturnCode_t get_qos(
@@ -691,7 +691,7 @@ module DDS {
     };
 
     // ----------------------------------------------------------------------
-    interface DomainParticipant : Entity {
+    local interface DomainParticipant : Entity {
         // Factory interfaces
         Publisher create_publisher(
             in PublisherQos qos,
@@ -817,7 +817,7 @@ module DDS {
             inout Time_t current_time);
     };
 
-    interface DomainParticipantFactory {
+    local interface DomainParticipantFactory {
         DomainParticipant create_participant(
             in DomainId_t domain_id,
             in DomainParticipantQos qos,
@@ -849,7 +849,7 @@ module DDS {
             inout DomainParticipantFactoryQos qos);
     };
 
-    interface TypeSupport {
+    local interface TypeSupport {
     //     ReturnCode_t register_type(
     //         in DomainParticipant domain,
     //         in string type_name);
@@ -857,14 +857,14 @@ module DDS {
     };
 
     // ----------------------------------------------------------------------
-    interface TopicDescription {
+    local interface TopicDescription {
         string get_type_name();
         string get_name();
 
         DomainParticipant get_participant();
     };
 
-    interface Topic : Entity, TopicDescription {
+    local interface Topic : Entity, TopicDescription {
         ReturnCode_t set_qos(
             in TopicQos qos);
         ReturnCode_t get_qos(
@@ -878,7 +878,7 @@ module DDS {
             inout InconsistentTopicStatus a_status);
     };
 
-    interface ContentFilteredTopic : TopicDescription {
+    local interface ContentFilteredTopic : TopicDescription {
         string get_filter_expression();
         ReturnCode_t get_expression_parameters(
             inout StringSeq expression_parameters);
@@ -887,7 +887,7 @@ module DDS {
         Topic get_related_topic();
     };
 
-    interface MultiTopic : TopicDescription {
+    local interface MultiTopic : TopicDescription {
         string get_subscription_expression();
         ReturnCode_t get_expression_parameters(
             inout StringSeq expression_parameters);
@@ -896,7 +896,7 @@ module DDS {
     };
 
     // ----------------------------------------------------------------------
-    interface Publisher : Entity {
+    local interface Publisher : Entity {
         DataWriter create_datawriter(
             in Topic a_topic,
             in DataWriterQos qos,
@@ -946,7 +946,7 @@ module DDS {
             in TopicQos a_topic_qos);
     };
 
-    interface DataWriter : Entity {
+    local interface DataWriter : Entity {
     //  InstanceHandle_t register_instance(
     //      in Data instance_data);
     //  InstanceHandle_t register_instance_w_timestamp(
@@ -1015,7 +1015,7 @@ module DDS {
     };
 
     // ----------------------------------------------------------------------
-    interface Subscriber : Entity {
+    local interface Subscriber : Entity {
         DataReader create_datareader(
             in TopicDescription a_topic,
             in DataReaderQos qos,
@@ -1064,7 +1064,7 @@ module DDS {
             in TopicQos a_topic_qos);
     };
 
-    interface DataReader : Entity {
+    local interface DataReader : Entity {
     //  ReturnCode_t read(
     //      inout DataSeq data_values,
     //      inout SampleInfoSeq sample_infos,

@@ -55,6 +55,7 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE>::init (
                     this->data_listener_.in (),
                     ::CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
               this->data_reader_ = ::DDS::CCM_DataReader::_narrow (reader);
+              this->dds_read_.data_reader (this->data_reader_.in ());
             }
           else
             {
@@ -66,13 +67,8 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE>::init (
                     this->data_listener_.in (),
                     ::CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
               this->data_reader_ = ::DDS::CCM_DataReader::_narrow (reader);
+              this->dds_read_.data_reader (this->data_reader_.in ());
             }
-        }
-      if (CORBA::is_nil (this->dds_read_.in ()) &&
-          !CORBA::is_nil (this->data_reader_.in ()))
-        {
-          this->dds_read_ = new CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> (
-            this->data_reader_.in ());
         }
     }
   catch (...)
@@ -88,7 +84,7 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE>::get_data (void)
 {
   CIAO_TRACE ("DDS_StateListen_T<DDS_TYPE, CCM_TYPE>::get_data");
 
-  return CCM_TYPE::reader_type::_duplicate (this->dds_read_.in ());
+  return &this->dds_read_;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>

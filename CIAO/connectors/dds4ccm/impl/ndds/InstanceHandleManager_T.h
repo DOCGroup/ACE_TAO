@@ -26,7 +26,7 @@ namespace CIAO
       {
       public:
         /// Constructor
-        InstanceHandleManager_T (::DDS::DataWriter_ptr dw);
+        InstanceHandleManager_T (void);
 
         /// Destructor
         virtual ~InstanceHandleManager_T (void);
@@ -38,7 +38,11 @@ namespace CIAO
           const typename DDS_TYPE::value_type & datum,
           const ::DDS::InstanceHandle_t & instance_handle);
 
-      protected:
+        void data_writer (::DDS::DataWriter_ptr writer);
+
+        typename DDS_TYPE::data_writer * impl (void);
+
+      private:
         typename DDS_TYPE::data_writer *impl_;
       };
     }

@@ -7,7 +7,7 @@
 
   <xsd:import namespace="http://www.omg.org/XMI"
               schemaLocation="XMI.xsd" />
-  
+
   <xsd:complexType name="IdRef">
     <xsd:attributeGroup ref="xmi:LinkAttribs" />
   </xsd:complexType>
@@ -291,7 +291,6 @@
   <xsd:simpleType name="CCMComponentPortKind">
     <xsd:restriction base="xsd:NCName">
       <xsd:enumeration value="Facet"/>
-      <xsd:enumeration value="LocalFacet"/>
       <xsd:enumeration value="SimplexReceptacle"/>
       <xsd:enumeration value="MultiplexReceptacle"/>
       <xsd:enumeration value="EventEmitter"/>

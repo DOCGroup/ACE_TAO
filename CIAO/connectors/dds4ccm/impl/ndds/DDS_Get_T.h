@@ -9,6 +9,8 @@
 #define DDS_GET_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "dds4ccm/impl/ndds/Reader_T.h"
+#include "dds4ccm/impl/ndds/Getter_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 class DDS_Get_T
@@ -43,6 +45,8 @@ private:
   //@{
   ::DDS::CCM_DataReader_var data_;
   ::DDS::DataReaderListener_var status_;
+  ::CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE> dds_get_;
+  ::CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> dds_read_;
   //@}
 };
 

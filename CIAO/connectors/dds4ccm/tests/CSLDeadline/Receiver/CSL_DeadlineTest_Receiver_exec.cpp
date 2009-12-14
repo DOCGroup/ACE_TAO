@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #include "CSL_DeadlineTest_Receiver_exec.h"
@@ -8,8 +7,7 @@
 
 namespace CIAO_CSL_DeadlineTest_Receiver_Impl
 {
-
-  
+ 
 //============================================================
   // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
   //============================================================

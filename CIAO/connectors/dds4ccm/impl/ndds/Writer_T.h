@@ -26,7 +26,7 @@ namespace CIAO
       {
       public:
         /// Constructor
-        Writer_T (::DDS::DataWriter_ptr dw);
+        Writer_T (void);
 
         /// Destructor
         virtual ~Writer_T (void);

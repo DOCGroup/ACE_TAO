@@ -1630,16 +1630,26 @@ NodeApplication_Impl::getAllConnections()
                         ACE_CString const name = this->plan_.connection[i].internalEndpoint[j].portName.in();
                         if (name.compare ("supports") != 0)
                           {
-                            DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
-                                         ACE_TEXT("provide_facet for connection %C endpoint %C started\n"),
-                                         this->plan_.connection[i].name.in(),
-                                         name.c_str ()));
-                            CORBA::String_var facet_name = CORBA::string_dup (name.c_str());
-                            (*conn) [index].endpoint[0] = obj->provide_facet (facet_name.in());
-                            DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
-                                         ACE_TEXT("provide_facet for connection %C endpoint %C finished\n"),
-                                         this->plan_.connection[i].name.in(),
-                                         name.c_str ()));
+                            if (this->is_local_facet (this->plan_.connection[i]))
+                              {
+                                DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
+                                             ACE_TEXT("Found local facet for connection %C endpoint %C started\n"),
+                                             this->plan_.connection[i].name.in(),
+                                             name.c_str ()));
+                                (*conn) [index].endpoint[0] = CORBA::Object::_duplicate (obj.in());
+                              }
+                            else
+                              {
+                                DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
+                                             ACE_TEXT("provide_facet for connection %C endpoint %C started\n"),
+                                             this->plan_.connection[i].name.in(),
+                                             name.c_str ()));
+                                (*conn) [index].endpoint[0] = obj->provide_facet (name.c_str());
+                                DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
+                                             ACE_TEXT("provide_facet for connection %C endpoint %C finished\n"),
+                                             this->plan_.connection[i].name.in(),
+                                             name.c_str ()));
+                              }
                           }
                         else
                           {
@@ -1661,16 +1671,6 @@ NodeApplication_Impl::getAllConnections()
                         throw ::Deployment::InvalidProperty(this->plan_.connection[i].name.in (),
                                                             "Container returned InvalidName");
                       }
-                    break;
-                  }
-
-                case ::Deployment::LocalFacet:
-                  {
-                    DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
-                                         ACE_TEXT("Providing local facet for connection %C endpoint %C started\n"),
-                                         this->plan_.connection[i].name.in(),
-                                         this->plan_.connection[i].internalEndpoint[j].portName.in()));
-                    (*conn) [index].endpoint[0] = CORBA::Object::_duplicate (obj.in());
                     break;
                   }
 
@@ -1721,7 +1721,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
   DANCE_TRACE ("NodeApplication_Impl::finishLaunch");
 
   DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
-               ACE_TEXT("started for connections sequence with length %d and plan size &d\n"),
+               ACE_TEXT("started for connections sequence with length %d and plan size %d\n"),
                providedReference.length(),
                this->plan_.connection.length()));
 
@@ -1791,9 +1791,21 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                                     obj = Components::CCMObject::
                                       _narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->ref.in ());
 
-                                    this->connect_receptacle (obj.in (),
+                                    ::Components::CCMObject_var facet =
+                                      ::Components::CCMObject::_narrow (providedReference[i].endpoint[0].in ());
+
+                                    ::Components::CCMObject_var recep =
+                                        ::Components::CCMObject::_narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->ref.in ());
+
+                                    ::CIAO::Deployment::Container_var cont =
+                                        ::CIAO::Deployment::Container::_narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->container->ref.in ());
+
+                                    this->connect_receptacle (conn,
+                                                              facet.in (),
+                                                              conn.internalEndpoint[0].portName.in (),
+                                                              obj.in (),
                                                               conn.internalEndpoint[1].portName.in(),
-                                                              providedReference[i].endpoint[0].in());
+                                                              cont.in ());
                                   }
                                  break;
                               }
@@ -1819,58 +1831,6 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                           {
                             // @@TODO: Shouldn't this be an error?!?
                             break;
-                          }
-
-                        break;
-                      }
-
-                    case ::Deployment::LocalFacet:
-                      {
-                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - set for local facet\n")));
-
-                        try
-                          {
-                            if (conn.internalEndpoint.length () == 2)
-                              {
-                                ::Components::CCMObject_var facet =
-                                  ::Components::CCMObject::_narrow (providedReference[i].endpoint[0].in ());
-
-                                ::Components::CCMObject_var recep =
-                                    ::Components::CCMObject::_narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->ref.in ());
-
-                                ::CIAO::Deployment::Container_var cont =
-                                    ::CIAO::Deployment::Container::_narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->container->ref.in ());
-
-                                if (CORBA::is_nil (facet.in ()) ||
-                                    CORBA::is_nil (recep.in ()) ||
-                                    CORBA::is_nil (cont.in ()))
-                                  {
-                                    DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch -")
-                                                  ACE_TEXT ("Unable to narrow all participants for a local facet connection\n")));
-                                    throw ::Deployment::InvalidConnection ("", "");
-                                  }
-
-                                this->connect_local_receptacle (facet.in (),
-                                                                conn.internalEndpoint[0].portName.in (),
-                                                                recep.in (),
-                                                                conn.internalEndpoint[1].portName.in (),
-                                                                cont.in ());
-                              }
-                            else
-                              {
-                                DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch -")
-                                              ACE_TEXT ("Inappropriate endpoints for a local facet connection, expected 2 internalendpoints.\n")));
-                                throw ::Deployment::InvalidConnection(conn.name.in (),
-                                                                      "Expected 2 internalenpoints.");
-                              }
-                          }
-                        catch (const ::Deployment::InvalidConnection &)
-                          {
-                            throw;
-                          }
-                        catch (...)
-                          {
-
                           }
 
                         break;
@@ -1926,36 +1886,29 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                     case ::Deployment::SimplexReceptacle:
                       {
                         // What we should do with Cookie, returned from connect call???
-                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - set for receptacle\n")));
+                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - Set for receptacle\n")));
+                        ::Components::CCMObject_var facet =
+                           ::Components::CCMObject::_narrow (providedReference[i].endpoint[0].in ());
 
-                        if (conn.internalEndpoint.length () == 2 &&
-                            conn.internalEndpoint[1].kind == ::Deployment::LocalFacet)
+                        if (conn.internalEndpoint.length () == 2)
                           {
-                            ::Components::CCMObject_var facet =
-                              ::Components::CCMObject::_narrow (providedReference[i].endpoint[0].in ());
-
                             ::CIAO::Deployment::Container_var cont =
-                                    ::CIAO::Deployment::Container::_narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->container->ref.in ());
-
-                            if (CORBA::is_nil (facet.in ()) ||
-                                CORBA::is_nil (cont.in ()))
-                              {
-                                DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch -")
-                                              ACE_TEXT ("Unable to narrow all participants for a local facet connection\n")));
-                                throw ::Deployment::InvalidConnection ("", "");
-                              }
-
-                            this->connect_local_receptacle (facet.in (),
-                                                            conn.internalEndpoint[1].portName.in (),
-                                                            obj.in (),
-                                                            conn.internalEndpoint[0].portName.in (),
-                                                            cont.in ());
+                               ::CIAO::Deployment::Container::_narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->container->ref.in ());
+                            this->connect_receptacle (conn,
+                                                      facet.in (),
+                                                      conn.internalEndpoint[1].portName.in (),
+                                                      obj.in(),
+                                                      conn.internalEndpoint[0].portName.in(),
+                                                      cont.in ());
                           }
                         else
                           {
-                            this->connect_receptacle (obj.in(),
+                            this->connect_receptacle (conn,
+                                                      obj.in (),
+                                                      "",
+                                                      providedReference[i].endpoint[0].in(),
                                                       conn.internalEndpoint[0].portName.in(),
-                                                      providedReference[i].endpoint[0].in());
+                                                      ::CIAO::Deployment::Container::_nil());
                           }
 
                         break;
@@ -2020,18 +1973,57 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
   DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - finished\n")));
 }
 
+bool
+NodeApplication_Impl::is_local_facet (const ::Deployment::PlanConnectionDescription& conn)
+{
+  Deployment::Requirements const& deploy_req = conn.deployRequirement;
+  for (CORBA::ULong i = 0; i < deploy_req.length (); i++)
+  {
+    if (ACE_OS::strcmp (deploy_req[i].name, "edu.dre.vanderbilt.DAnCE.ConnectionType") == 0 &&
+        ACE_OS::strcmp (deploy_req[i].resourceType, "Local_Interface") == 0)
+    {
+      return true;
+    }
+  }
+  return false;
+}
+
 Components::Cookie*
-NodeApplication_Impl::connect_receptacle (Components::CCMObject_ptr inst,
-                                          const ACE_CString& port_name,
-                                          CORBA::Object_ptr facet)
+NodeApplication_Impl::connect_receptacle (const ::Deployment::PlanConnectionDescription& conn,
+                                          Components::CCMObject_ptr facet,
+                                          const ACE_CString &facet_name,
+                                          CORBA::Object_ptr receptacle,
+                                          const ACE_CString& recep_name,
+                                          CIAO::Deployment::Container_ptr cont)
 {
   Components::Cookie* res = 0;
   try
     {
-      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - ")
-                   ACE_TEXT("connect SimplexReceptacle for [%C] started\n"), port_name.c_str()));
-      res = inst->connect (port_name.c_str(), facet);
-      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - connect finished\n")));
+      if (this->is_local_facet (conn))
+        {
+          ::Components::CCMObject_var ccm_receptacle =
+             ::Components::CCMObject::_narrow (receptacle);
+
+          if (CORBA::is_nil (facet) || CORBA::is_nil (ccm_receptacle) || CORBA::is_nil (cont))
+            {
+              DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - ")
+                            ACE_TEXT ("Unable to narrow all participants for a local facet connection\n")));
+              throw ::Deployment::InvalidConnection ("", "");
+            }
+          DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT ("NodeApplication_Impl::connect_receptacle - ")
+                        ACE_TEXT ("Connecting local facet %C to receptacle %C\n"),
+                        facet_name.c_str (), recep_name.c_str ()));
+
+          cont->connect_local_facet (facet, facet_name.c_str (), ccm_receptacle, recep_name.c_str ());
+          DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - connect finished\n")));
+        }
+      else
+        {
+          DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - ")
+                       ACE_TEXT("connect SimplexReceptacle for [%C] started\n"), recep_name.c_str()));
+          res = facet->connect (recep_name.c_str(), receptacle);
+          DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - connect finished\n")));
+        }
     }
   catch (const ::Components::InvalidName& )
     {
@@ -2106,32 +2098,6 @@ NodeApplication_Impl::connect_receptacle_ext (Components::CCMObject_ptr inst,
                                             "Caught ExceededConnectionLimit while connecting external receptacle.");
     }
   return res;
-}
-
-void
-NodeApplication_Impl::connect_local_receptacle (Components::CCMObject_ptr facet,
-                                                const ACE_CString &facet_name,
-                                                Components::CCMObject_ptr receptacle,
-                                                const ACE_CString &recep_name,
-                                                CIAO::Deployment::Container_ptr cont)
-{
-  DANCE_TRACE ("NodeApplication_Impl::connect_local_receptacle");
-
-  try
-    {
-      DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT ("NodeApplication_Impl::connect_local_receptacle - ")
-                    ACE_TEXT ("Connecting local facet %C to receptacle %C\n"),
-                    facet_name.c_str (), recep_name.c_str ()));
-
-      cont->connect_local_facet (facet, facet_name.c_str (), receptacle, recep_name.c_str ());
-    }
-  catch (const CORBA::Exception  &)
-    { // @@todo: need better exception handling.
-      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("NodeApplication_Impl::connect_local_receptacle - ")
-                    ACE_TEXT ("Caught unexpected CORBA excption while connecting port %C ")
-                    ACE_TEXT ("to port %C\n"), facet_name.c_str (), recep_name.c_str ()));
-      throw ::Deployment::InvalidConnection ("", "");
-    }
 }
 
 void

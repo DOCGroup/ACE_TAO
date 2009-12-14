@@ -24,7 +24,7 @@ module CCM_DDS \
           DDS::InstanceHandle_t register_instance (in T datum); \
           void unregister_instance (in T datum, in DDS::InstanceHandle_t instance_handle); \
         }; \
-        interface Writer : InstanceHandleManager \
+        local interface Writer : InstanceHandleManager \
         { \
           void write_one (in T datum, in DDS::InstanceHandle_t instance_handle) \
             raises (InternalError); \
@@ -32,7 +32,7 @@ module CCM_DDS \
             raises (InternalError); \
           attribute boolean is_coherent_write; \
         }; \
-        interface Updater : InstanceHandleManager \
+        local interface Updater : InstanceHandleManager \
         { \
           void create_one (in T datum) \
               raises (AlreadyCreated, \
@@ -55,7 +55,7 @@ module CCM_DDS \
           readonly attribute boolean is_global_scope; \
           attribute boolean is_coherent_write; \
         }; \
-        interface Getter \
+        local interface Getter \
         { \
           boolean get_one (out T datum, out ReadInfo info) \
             raises (InternalError); \
@@ -64,7 +64,7 @@ module CCM_DDS \
           attribute DDS::Duration_t time_out; \
           attribute DataNumber_t max_delivered_data; \
         }; \
-        interface Reader \
+        local interface Reader \
         { \
           void read_last (out TSeq data, out ReadInfoSeq infos) \
             raises (InternalError); \
@@ -79,12 +79,12 @@ module CCM_DDS \
           attribute QueryFilter filter \
                 setraises (InternalError); \
         }; \
-        interface Listener \
+        local interface Listener \
         { \
           void on_one_data (in T datum, in ReadInfo info); \
           void on_many_data (in TSeq data, in ReadInfoSeq infos); \
         }; \
-        interface StateListener { \
+        local interface StateListener { \
           void on_creation (in T datum, in ReadInfo info); \
           void on_one_update (in T datum, in ReadInfo info); \
           void on_many_updates (in TSeq data, in ReadInfoSeq infos); \
