@@ -234,7 +234,7 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
   Receiver_exec_i::get_info_get_status (void)
   {
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
-    return new PortStatusListener_exec_i (this->sample_port_1_,this->sample_port_2_,2);
+    return new PortStatusListener_exec_i (this->sample_port_1_,this->sample_port_2_, 2);
   }
 
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
@@ -298,13 +298,18 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
   void
   Receiver_exec_i::ccm_remove (void)
   {
-     if(!this->sample_port_1_.value () || !this->sample_port_2_.value ())
+     if(!this->sample_port_1_.value ())
       {
-              CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
-                               ACE_TEXT (" error 'on_sample_lost' on DDS_Listen and/or DDS_GET port in Receiver")
-                    ));
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
+                         ACE_TEXT ("error 'on_sample_lost' on DDS_Listen port in Receiver\n")
+              ));
       }
-
+    else if (!this->sample_port_2_.value ())
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
+                         ACE_TEXT ("error 'on_sample_lost' on DDS_Get port in Receiver\n")
+              ));
+      }
     else
       {
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Have received the expected ")
