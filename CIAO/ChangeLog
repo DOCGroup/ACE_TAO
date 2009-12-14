@@ -1,3 +1,11 @@
+Mon Dec 14 19:06:43 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/Hello/descriptors/run_NodeDaemons.pl:
+        * examples/Hello/descriptors/run_test.pl:
+        * examples/Hello/descriptors/run_test_alias.pl:
+        * examples/Hello/descriptors/run_test_without_ns.pl:
+          Resolved fuzz errors/warnings.
+
 Mon Dec 14 14:53:13 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.h:

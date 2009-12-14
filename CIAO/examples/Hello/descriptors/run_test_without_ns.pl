@@ -9,7 +9,6 @@ use lib "$ENV{'ACE_ROOT'}/bin";
 use PerlACE::TestTarget;
 
 $CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
-$TAO_ROOT = "$ENV{'TAO_ROOT'}";
 $DANCE_ROOT = "$ENV{'DANCE_ROOT'}";
 
 $daemons_running = 0;
@@ -41,7 +40,6 @@ $EM = 0;
 $tg_exe_man = 0;
 $tg_executor = 0;
 
-PerlACE::add_lib_path ('../lib');
 $ENV{"DANCE_TRACE_ENABLE"} = 0;
 $ENV{"CIAO_TRACE_ENABLE"} = 0;
 
