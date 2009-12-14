@@ -45,6 +45,7 @@ namespace CIAO
   public:
     Servant_Impl (EXEC * exe,
                   Components::CCMHome_ptr home,
+                  const char * ins_name,
                   Home_Servant_Impl_Base *home_servant,
                   Container_ptr c);
 
@@ -75,6 +76,8 @@ namespace CIAO
 
     /// Initialized in the derived, generated servant constructor.
     CONTEXT * context_;
+
+    const char * ins_name_;
   };
 }
 

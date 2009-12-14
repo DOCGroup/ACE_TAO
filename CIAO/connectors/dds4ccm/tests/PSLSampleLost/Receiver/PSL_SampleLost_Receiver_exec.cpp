@@ -3,7 +3,7 @@
 // $Id$
 
 
-// Test for SAMPLE_LOST status of the subscriber 
+// Test for SAMPLE_LOST status of the subscriber
 
 
 #include "PSL_SampleLost_Receiver_exec.h"
@@ -15,23 +15,23 @@
 
 namespace CIAO_PSL_SampleLost_Receiver_Impl
 {
-  
+
 //============================================================
   // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
   //============================================================
-  
+
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (void)
   {
   }
-  
+
   ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
   {
-    
+
   }
-  
+
   // Operations from ::CCM_DDS::ConnectorStatusListener
   void ConnectorStatusListener_exec_i::on_inconsistent_topic(
-     ::DDS::Topic_ptr /*the_topic*/, 
+     ::DDS::Topic_ptr /*the_topic*/,
      const DDS::InconsistentTopicStatus & /*status*/){
      // printf("Receiver: ConnectorStatusListener_exec_i::on_incompatible_topic\n");
     }
@@ -41,7 +41,7 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
      //printf("ConnectorStatusListener_exec_i::on_requested_incompatible_qos, status = %dl\n",status);
     }
   void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr /*the_reader*/, 
+     ::DDS::DataReader_ptr /*the_reader*/,
      const DDS::SampleRejectedStatus & /*status*/)  {
      //printf("ConnectorStatusListener_exec_i::on_sample_rejected\n");
     }
@@ -51,7 +51,7 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
      //printf("Receiver: ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
     }
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr /*the_writer*/, 
+     ::DDS::DataWriter_ptr /*the_writer*/,
      const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
      //printf("Receiver: ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n");
     }
@@ -62,7 +62,7 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
     //printf("Receiver :ConnectorStatusListener_exec_i::on_unexpected_status #### status_kind = %d %s \n", kind, ::CIAO::DDS4CCM::translate_statuskind (kind));
 
     }
- 
+
 read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
     : pulse_callback_ (callback)
   {
@@ -138,9 +138,9 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
     ::DDS::DataReader_ptr /* the_reader */,
     const ::DDS::RequestedDeadlineMissedStatus & /* status */)
   {
-       
-    
-   
+
+
+
   }
 
   void
@@ -149,7 +149,7 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
     const ::DDS::SampleLostStatus & /* status */)
   {
     //printf("Receiver: PortStatusStatusListener_exec_i::SampleLostStatus\n");
-    if(this->port_nr_ == 1)       
+    if(this->port_nr_ == 1)
     {
       this->sample_port_1_ = true;
     }
@@ -168,7 +168,7 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
     sample_port_1_ (false),
     sample_port_2_ (false)
   {
-    this->ticker_ = new read_action_Generator (*this); 
+    this->ticker_ = new read_action_Generator (*this);
   }
 
   Receiver_exec_i::~Receiver_exec_i (void)
@@ -242,7 +242,7 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
   {
     return new ConnectorStatusListener_exec_i ();
   }
- 
+
   // Operations from Components::SessionComponent.
   void
   Receiver_exec_i::set_session_context (
@@ -255,13 +255,13 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
         throw ::CORBA::INTERNAL ();
       }
   }
-  
+
   void
   Receiver_exec_i::configuration_complete (void)
   {
     this->reader_ = this->context_->get_connection_info_out_data();
   }
-  
+
   void
   Receiver_exec_i::ccm_activate (void)
   {
@@ -299,24 +299,21 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
   Receiver_exec_i::ccm_remove (void)
   {
      if(!this->sample_port_1_.value () || !this->sample_port_2_.value ())
-      {   
-     
-         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
+      {
+              CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
                                ACE_TEXT (" error 'on_sample_lost' on DDS_Listen and/or DDS_GET port in Receiver")
-                    )); 
+                    ));
       }
-   
+
     else
       {
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Have received the expected ")
                                ACE_TEXT ("'on_sample_lost' in on DDS_Listen and DDS_GET port Receiver\n")
                     ));
       }
- 
-
   }
-  
-  
+
+
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_PSL_SampleLost_Receiver_Impl (void)
   {

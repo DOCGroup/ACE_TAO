@@ -661,7 +661,8 @@ namespace CIAO
           }
         else
           {
-//            throw ::Components::InvalidConnection ();
+            CIAO_DEBUG ((LM_DEBUG, CLINFO "Session_Container::connect_local_facet - "
+                         "Got nil facet executor for [%C]\n", provider_port));
           }
       }
     catch (const ::Components::InvalidConnection &)
