@@ -9,7 +9,6 @@
 
 #include "be_visitor_ccm_pre_proc.h"
 #include "be_visitor_context.h"
-#include "be_visitor_iface_inst.h"
 #include "be_root.h"
 #include "be_operation.h"
 #include "be_argument.h"
@@ -28,7 +27,6 @@
 #include "be_consumes.h"
 #include "be_extended_port.h"
 #include "be_porttype.h"
-#include "be_template_interface.h"
 #include "be_eventtype.h"
 #include "be_eventtype_fwd.h"
 #include "be_home.h"
@@ -77,7 +75,6 @@ be_visitor_ccm_pre_proc::be_visitor_ccm_pre_proc (
     duplicate_key_value_ (0),
     comp_ (0),
     home_ (0),
-    porttype_args_ (0),
     port_interface_ (0)
 {
 }

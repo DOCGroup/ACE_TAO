@@ -1,3 +1,35 @@
+Mon Dec 14 20:26:51 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_template_common.h:
+        * TAO_IDL/include/fe_template_interface_header.h:
+        * TAO_IDL/include/fe_template_header_common.h:
+        * TAO_IDL/include/fe_instantiated_interface_header.h:
+        * TAO_IDL/include/ast_template_interface.h:
+        * TAO_IDL/be/be_template_interface.cpp:
+        * TAO_IDL/be/be_visitor_iface_inst.cpp:
+        * TAO_IDL/ast/ast_template_common.cpp:
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/be_include/be_template_interface.h:
+        * TAO_IDL/be_include/be_visitor_iface_inst.h:
+        * TAO_IDL/fe/fe_template_header_common.cpp:
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/fe/fe_instantiated_interface_header.cpp:
+
+          Removed these files, they were part of the support
+          for the original version of IDL3+, before the
+          revisions.
+
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+        * TAO_IDL/fe/idl.ll:
+
+          Changes mandated by the removal of the above
+          files.
+
 Mon Dec 14 19:21:39 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:
