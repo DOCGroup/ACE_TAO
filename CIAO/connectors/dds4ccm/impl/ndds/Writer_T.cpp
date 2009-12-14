@@ -8,9 +8,8 @@
 
 // Implementation skeleton constructor
 template <typename DDS_TYPE, typename CCM_TYPE >
-CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE>::Writer_T (
-  ::DDS::DataWriter_ptr writer)
-  : InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, typename CCM_TYPE::writer_type> (writer),
+CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE>::Writer_T (void)
+  : InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, typename CCM_TYPE::writer_type> (),
     is_coherent_write_ (false)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Writer_T::Writer_T");
@@ -30,9 +29,11 @@ CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE>::write_i (
   const ::DDS::InstanceHandle_t& instance_handle,
   ::CCM_DDS::DataNumber_t index)
 {
+  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Writer_T::write_i");
+
   ::DDS_InstanceHandle_t handle = ::DDS_HANDLE_NIL;
   handle <<= instance_handle;
-  DDS_ReturnCode_t const retval = this->impl_->write (datum, handle);
+  DDS_ReturnCode_t const retval = this->impl ()->write (datum, handle);
 
   if (retval != DDS_RETCODE_OK)
     {
@@ -64,7 +65,7 @@ CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE>::write_many (
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Writer_T::write_many");
 
-  Coherent_Changes_Guard guard (this->impl_->get_publisher(),
+  Coherent_Changes_Guard guard (this->impl ()->get_publisher(),
                                 this->is_coherent_write_);
 
   CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO::DDS4CCM::RTI::Writer_T::write_many - "

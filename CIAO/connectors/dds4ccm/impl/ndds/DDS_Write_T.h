@@ -9,7 +9,7 @@
 #define DDS_WRITE_T_H_
 
 #include "dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.h"
-#include "dds4ccm/impl/ndds/DDS_Get_T.h"
+#include "dds4ccm/impl/ndds/Writer_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 class DDS_Write_T
@@ -41,6 +41,7 @@ private:
   //@{
   ::DDS::CCM_DataWriter_var writer_;
   ::DDS::DataWriterListener_var writer_listener_;
+  ::CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE> writer_t_;
   //@}
 };
 

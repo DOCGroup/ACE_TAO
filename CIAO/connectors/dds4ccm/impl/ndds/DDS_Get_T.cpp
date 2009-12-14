@@ -3,8 +3,6 @@
 
 #include "dds4ccm/impl/ndds/DataReaderListener_T.h"
 #include "dds4ccm/impl/ndds/DataWriterListener_T.h"
-#include "dds4ccm/impl/ndds/Writer_T.h"
-#include "dds4ccm/impl/ndds/Getter_T.h"
 #include "dds4ccm/impl/ndds/Reader_T.h"
 #include "dds4ccm/impl/ndds/DataListenerControl_T.h"
 #include "dds4ccm/impl/ndds/PortStatusListener_T.h"
@@ -52,6 +50,8 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE>::init (
                   this->status_.in (),
                   ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
               this->data_ = ::DDS::CCM_DataReader::_narrow (reader);
+              this->dds_get_.data_reader (reader);
+              this->dds_read_.data_reader (reader);
             }
           else
             {
@@ -63,6 +63,8 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE>::init (
                     this->status_.in (),
                     ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
               this->data_ = ::DDS::CCM_DataReader::_narrow (reader);
+              this->dds_get_.data_reader (reader);
+              this->dds_read_.data_reader (reader);
             }
         }
     }
@@ -79,8 +81,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE>::get_fresh_data (void)
 {
   CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE>::get_fresh_data");
 
-  return new CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE> (
-          this->data_.in ());
+  return &this->dds_get_;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -89,8 +90,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE>::get_data (void)
 {
   CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE>::get_data");
 
-  return new CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> (
-          this->data_.in ());
+  return &this->dds_read_;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>

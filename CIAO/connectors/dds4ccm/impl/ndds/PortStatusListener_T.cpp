@@ -6,7 +6,6 @@
 #include "dds4ccm/impl/ndds/DataReaderHandler_T.h"
 #include "tao/ORB_Core.h"
 
-// Implementation skeleton constructor
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::PortStatusListener_T (
       ::CCM_DDS::PortStatusListener_ptr port_status_listener)
@@ -15,7 +14,6 @@ CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::PortStatusListener
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::PortStatusListener_T::PortStatusListener_T");
 }
 
-// Implementation skeleton destructor
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::~PortStatusListener_T (void)
 {

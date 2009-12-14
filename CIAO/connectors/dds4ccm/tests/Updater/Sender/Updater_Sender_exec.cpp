@@ -90,13 +90,13 @@ namespace CIAO_Updater_Sender_Impl
     catch(CCM_DDS::AlreadyCreated &)
     {
       CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Expected : Exception AlreadyCreated test updater create_one.\n")));
-      result=true;
+      result = true;
     }
     catch (CCM_DDS::InternalError& )
     {
       CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while create_one for <%C>.\n"),
                       i.key.in()));   
-      result=false;
+      result = false;
     }
     return result;
   }
@@ -117,7 +117,7 @@ namespace CIAO_Updater_Sender_Impl
     {
       CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater update_one <%C>.\n"),
                      i.key.in()));   
-      result =  false;
+      result = false;
     }
     catch (CCM_DDS::InternalError& )
     {
@@ -141,7 +141,7 @@ namespace CIAO_Updater_Sender_Impl
       CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: update_one with not registerd instance, key <%C>\n"),
                     i.key.in()));
     }
-    catch(CCM_DDS::NonExistent &)
+    catch (CCM_DDS::NonExistent &)
     {
       CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Expected : Exception NonExistent test updater updater_one.\n")));
       result=true;
@@ -635,6 +635,7 @@ namespace CIAO_Updater_Sender_Impl
   {
     this->updater_  = this->context_->get_connection_test_topic_update_data ();
   }
+  
   void
   Sender_exec_i::ccm_activate (void)
   {

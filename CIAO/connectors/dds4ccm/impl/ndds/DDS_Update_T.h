@@ -8,6 +8,8 @@
 #ifndef DDS_UPDATE_T_H
 #define DDS_UPDATE_T_H
 
+#include "dds4ccm/impl/ndds/Updater_T.h"
+
 template <typename DDS_TYPE, typename CCM_TYPE>
 class DDS_Update_T
 {
@@ -32,7 +34,7 @@ private:
   //@{
   ::DDS::CCM_DataWriter_var data_writer_;
   ::DDS::DataWriterListener_var data_listener_;
-  typename CCM_TYPE::updater_type::_var_type dds_update_;
+  CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE> dds_update_;
   //@}
 };
 

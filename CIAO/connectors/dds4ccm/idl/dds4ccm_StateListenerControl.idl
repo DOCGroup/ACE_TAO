@@ -11,7 +11,7 @@
 
 module CCM_DDS
 {
-  interface StateListenerControl : DataListenerControl {
+  local interface StateListenerControl : DataListenerControl {
     attribute boolean is_filter_interpreted;
   };
 };

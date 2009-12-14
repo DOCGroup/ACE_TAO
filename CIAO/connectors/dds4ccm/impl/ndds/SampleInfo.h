@@ -11,6 +11,7 @@
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "Time_t.h"
+#include "InstanceHandle_t.h"
 
 inline void
 operator<<= (::CCM_DDS::AccessStatus & access_status, const ::DDS_SampleStateKind  & sample_state)

@@ -5,7 +5,7 @@
                           xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
   <label>State_Connection_Test_Depl_1</label>
   <UUID>State_Connection_Test_Depl_1</UUID>
-  
+
   <implementation xmi:id="ReceiverComponentImplementation">
     <name>ReceiverComponentImplementation</name>
     <source/>
@@ -57,7 +57,7 @@
       </value>
     </execParameter>
   </implementation>
-  
+
   <implementation xmi:id="State_Connection_Test_ConnectorComponentImplementation">
     <name>State_Connection_Test_ConnectorComponentImplementation</name>
     <source/>
@@ -210,10 +210,14 @@
     <source/>
     <implementation xmi:idref="SenderComponentImplementation" />
   </instance>
-  
+
   <!-- SENDER COMPONENT CONNECTIONS -->
   <connection>
     <name>update_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_update_data</portName>
       <provider>false</provider>
@@ -229,6 +233,10 @@
   </connection>
   <connection>
     <name>update_dds_entity</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_update_dds_entity</portName>
       <provider>false</provider>
@@ -242,11 +250,15 @@
       <instance xmi:idref="State_Connection_Test_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
-  
+
   <!-- RECEIVER COMPONENT CONNECTIONS -->
   <!--   DDS_Get port -->
   <connection>
     <name>get_data_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_get_data</portName>
       <provider>false</provider>
@@ -262,6 +274,10 @@
   </connection>
   <connection>
     <name>get_fresh_data_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_get_fresh_data</portName>
       <provider>false</provider>
@@ -277,6 +293,10 @@
   </connection>
   <connection>
     <name>get_dds_entity_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_get_dds_entity</portName>
       <provider>false</provider>
@@ -293,6 +313,10 @@
   <!--   DDS_Get mirrorport -->
   <connection>
     <name>get_status_mirrorport</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_get_status</portName>
       <provider>true</provider>
@@ -306,10 +330,14 @@
       <instance xmi:idref="State_Connection_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
-  
+
   <!--   DDS_Read port -->
   <connection>
     <name>read_data_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_read_data</portName>
       <provider>false</provider>
@@ -325,6 +353,10 @@
   </connection>
   <connection>
     <name>read_dds_entity_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_read_dds_entity</portName>
       <provider>false</provider>
@@ -341,6 +373,10 @@
   <!--   DDS_Read mirrorport -->
   <connection>
     <name>read_status_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_read_status</portName>
       <provider>true</provider>
@@ -354,10 +390,14 @@
       <instance xmi:idref="State_Connection_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
-  
+
   <!--   DDS_Listen port -->
   <connection>
     <name>listen_data_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_listen_data</portName>
       <provider>false</provider>
@@ -373,6 +413,10 @@
   </connection>
   <connection>
     <name>listen_data_control_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_listen_data_control</portName>
       <provider>false</provider>
@@ -388,6 +432,10 @@
   </connection>
   <connection>
     <name>listen_dds_entity_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_listen_dds_entity</portName>
       <provider>false</provider>
@@ -404,6 +452,10 @@
   <!--   DDS_Listen mirrorport -->
   <connection>
     <name>listen_data_listener_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_listen_data_listener</portName>
       <provider>true</provider>
@@ -419,6 +471,10 @@
   </connection>
   <connection>
     <name>listen_status_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_listen_status</portName>
       <provider>true</provider>
@@ -432,10 +488,14 @@
       <instance xmi:idref="State_Connection_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
-  
+
   <!--   DDS_StateListen port -->
   <connection>
     <name>statelisten_data_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_statelisten_data</portName>
       <provider>false</provider>
@@ -451,6 +511,10 @@
   </connection>
   <connection>
     <name>statelisten_data_control_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_statelisten_data_control</portName>
       <provider>false</provider>
@@ -466,6 +530,10 @@
   </connection>
   <connection>
     <name>statelisten_dds_entity_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_statelisten_dds_entity</portName>
       <provider>false</provider>
@@ -482,6 +550,10 @@
   <!--   DDS_Listen mirrorport -->
   <connection>
     <name>statelisten_data_listener_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_statelisten_data_listener</portName>
       <provider>true</provider>
@@ -497,6 +569,10 @@
   </connection>
   <connection>
     <name>statelisten_status_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_statelisten_status</portName>
       <provider>true</provider>
@@ -510,7 +586,7 @@
       <instance xmi:idref="State_Connection_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
-  
+
   <artifact xmi:id="Sender_ExecArtifact">
     <name>Sender_exec</name>
     <source/>

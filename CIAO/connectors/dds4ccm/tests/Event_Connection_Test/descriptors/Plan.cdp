@@ -213,6 +213,10 @@
 
   <connection>
     <name>listen_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_listen_data</portName>
       <provider>false</provider>
@@ -229,6 +233,10 @@
 
   <connection>
     <name>listen_portstatuslistener</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_listen_status</portName>
       <provider>true</provider>
@@ -245,6 +253,10 @@
 
   <connection>
     <name>listen_rawlistener</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_listen_data_listener</portName>
       <provider>true</provider>
@@ -261,6 +273,10 @@
 
   <connection>
     <name>listen_datacontrol</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_listen_data_control</portName>
       <provider>false</provider>
@@ -274,9 +290,13 @@
       <instance xmi:idref="Event_Connection_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
-  
+
   <connection>
     <name>listen_dds_reader</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_listen_dds_entity</portName>
       <provider>false</provider>
@@ -290,9 +310,13 @@
       <instance xmi:idref="Event_Connection_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
-  
+
   <connection>
     <name>getter_portstatuslistener</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_get_status</portName>
       <provider>true</provider>
@@ -306,9 +330,13 @@
       <instance xmi:idref="Event_Connection_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
-  
+
   <connection>
     <name>getter_fresh_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_get_fresh_data</portName>
       <provider>false</provider>
@@ -325,6 +353,10 @@
 
   <connection>
     <name>getter_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_get_data</portName>
       <provider>false</provider>
@@ -338,9 +370,13 @@
       <instance xmi:idref="Event_Connection_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
-  
+
   <connection>
     <name>getter_dds_reader</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_get_dds_entity</portName>
       <provider>false</provider>
@@ -357,6 +393,10 @@
 
   <connection>
     <name>connector_status_listener</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>status_listener</portName>
       <provider>true</provider>
@@ -373,6 +413,10 @@
 
   <connection>
     <name>writer_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_write_data</portName>
       <provider>false</provider>
@@ -389,6 +433,10 @@
 
   <connection>
     <name>writer_dds_writer</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_write_dds_entity</portName>
       <provider>false</provider>

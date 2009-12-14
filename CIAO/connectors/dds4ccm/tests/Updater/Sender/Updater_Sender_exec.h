@@ -4,7 +4,6 @@
 #ifndef CIAO_SENDER_EXEC_H_
 #define CIAO_SENDER_EXEC_H_
 
-
 #include "Updater_SenderEC.h"
 
 #include /**/ "Sender_exec_export.h"
@@ -78,13 +77,12 @@ namespace CIAO_Updater_Sender_Impl
     CORBA::Boolean create_many(void);
     CORBA::Boolean update_many(void);
     CORBA::Boolean delete_many(void);
- 
+
     pulse_Generator * ticker_;
      ::Updater::CCM_Sender_Context_var context_;
     CCM_DDS::TestTopic::Updater_var updater_;
     UPDATER_TEST test_nr_;
     Atomic_Boolean test_ok_;
-    //TAO_SYNCH_MUTEX mutex_;
     TestTopic_Seq topic_seq_one_;
     TestTopic_Seq topic_seq_many_;
  };

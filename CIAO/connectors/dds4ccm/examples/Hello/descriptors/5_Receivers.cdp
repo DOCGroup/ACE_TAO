@@ -635,6 +635,10 @@
 
   <connection>
     <name>_listenercontrolOne</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_data_control</portName>
       <provider>false</provider>
@@ -650,6 +654,10 @@
   </connection>
   <connection>
     <name>_listenercontrolTwo</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_data_control</portName>
       <provider>false</provider>
@@ -665,6 +673,10 @@
   </connection>
   <connection>
     <name>_listenercontrolThree</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_data_control</portName>
       <provider>false</provider>
@@ -680,6 +692,10 @@
   </connection>
   <connection>
     <name>_listenercontrolFour</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_data_control</portName>
       <provider>false</provider>
@@ -695,6 +711,10 @@
   </connection>
   <connection>
     <name>_listenercontrolFive</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_data_control</portName>
       <provider>false</provider>
@@ -714,6 +734,10 @@
 
   <connection>
     <name>_portstatuslistenerOne</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_status</portName>
       <provider>true</provider>
@@ -729,6 +753,10 @@
   </connection>
   <connection>
     <name>_portstatuslistenerTwo</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_status</portName>
       <provider>true</provider>
@@ -744,6 +772,10 @@
   </connection>
   <connection>
     <name>_portstatuslistenerThree</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_status</portName>
       <provider>true</provider>
@@ -759,6 +791,10 @@
   </connection>
   <connection>
     <name>_portstatuslistenerFour</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_status</portName>
       <provider>true</provider>
@@ -774,6 +810,10 @@
   </connection>
   <connection>
     <name>_portstatuslistenerFive</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_status</portName>
       <provider>true</provider>
@@ -792,7 +832,11 @@
 
 
   <connection>
-    <name>_rawlistnerOne</name>
+    <name>_listenerOne</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_data_listener</portName>
       <provider>true</provider>
@@ -807,7 +851,11 @@
     </internalEndpoint>
   </connection>
   <connection>
-    <name>_rawlistnerTwo</name>
+    <name>_listenerTwo</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_data_listener</portName>
       <provider>true</provider>
@@ -822,7 +870,11 @@
     </internalEndpoint>
   </connection>
   <connection>
-    <name>_rawlistnerThree</name>
+    <name>_listenerThree</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_data_listener</portName>
       <provider>true</provider>
@@ -837,7 +889,11 @@
     </internalEndpoint>
   </connection>
   <connection>
-    <name>_rawlistnerFour</name>
+    <name>_listenerFour</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_data_listener</portName>
       <provider>true</provider>
@@ -852,7 +908,11 @@
     </internalEndpoint>
   </connection>
   <connection>
-    <name>_rawlistnerFive</name>
+    <name>_listenerFive</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_data_listener</portName>
       <provider>true</provider>

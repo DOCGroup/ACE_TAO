@@ -19,7 +19,7 @@ namespace CIAO
   {
     template <typename DDS_TYPE, typename CCM_TYPE>
     class SubscriberListener_T :
-      public ::DDS::SubscriberListener,
+      public ::DDS::CCM_SubscriberListener,
       private ACE_Copy_Disabled
     {
     public:
@@ -49,6 +49,18 @@ namespace CIAO
 
       virtual void on_data_on_readers(
         ::DDS::Subscriber* subscriber);
+
+    virtual void
+    on_requested_deadline_missed (
+      ::DDS::DataReader_ptr ,
+      const ::DDS::RequestedDeadlineMissedStatus & ) {}
+    virtual void
+    on_data_available (
+      ::DDS::DataReader_ptr ) {}
+    virtual void
+    on_sample_lost (
+      ::DDS::DataReader_ptr ,
+      const ::DDS::SampleLostStatus & ) {}
 
       static ::DDS::StatusMask get_mask (void);
 

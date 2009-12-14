@@ -267,7 +267,11 @@
   </instance>
 
   <connection>
-    <name>_rawlistner</name>
+    <name>_listener</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_data_listener</portName>
       <provider>true</provider>
@@ -284,6 +288,10 @@
 
   <connection>
     <name>_datacontrol</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_data_control</portName>
       <provider>false</provider>
@@ -297,9 +305,13 @@
       <instance xmi:idref="Writer_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
-  
+
   <connection>
     <name>writer_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_write_data</portName>
       <provider>false</provider>

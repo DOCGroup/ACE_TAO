@@ -235,6 +235,10 @@
 
   <connection>
     <name>info_listen_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_listen_data_listener</portName>
       <provider>true</provider>
@@ -251,6 +255,10 @@
 
   <connection>
     <name>info_listen_data_control</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_listen_data_control</portName>
       <provider>false</provider>
@@ -267,6 +275,10 @@
 
   <connection>
     <name>writer_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_write_data</portName>
       <provider>false</provider>

@@ -5,9 +5,9 @@
                           xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
   <label>Hello_DDS_Deployment_1</label>
   <UUID>Hello_DDS_Deployment_1</UUID>
-  
+
   <!-- Implementations declarations -->
-  
+
   <!-- Home implementation -->
   <implementation xmi:id="SenderComponentImplementation">
     <name>SenderComponentImplementation</name>
@@ -60,7 +60,7 @@
       </value>
     </execParameter>
   </implementation>
-  
+
   <implementation xmi:id="Hello_ConnectorComponentImplementation">
     <name>Hello_ConnectorComponentImplementation</name>
     <source/>
@@ -137,9 +137,13 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <connection>
     <name>info_write_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_in_data</portName>
       <provider>false</provider>
@@ -191,5 +195,5 @@
     <node/>
     <location>Sender_stub</location>
   </artifact>
-  
+
 </Deployment:DeploymentPlan>

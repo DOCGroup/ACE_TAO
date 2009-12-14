@@ -11,7 +11,7 @@
 
 module CCM_DDS
 {
-  interface PortStatusListener {
+  local interface PortStatusListener {
     void on_requested_deadline_missed(in DDS::DataReader the_reader,
                                       in DDS::RequestedDeadlineMissedStatus status);
     void on_sample_lost(in DDS::DataReader the_reader,

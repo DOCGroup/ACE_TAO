@@ -3,9 +3,6 @@
 
 #include "dds4ccm/impl/ndds/DataReaderListener_T.h"
 #include "dds4ccm/impl/ndds/DataWriterListener_T.h"
-#include "dds4ccm/impl/ndds/Writer_T.h"
-#include "dds4ccm/impl/ndds/Getter_T.h"
-#include "dds4ccm/impl/ndds/Reader_T.h"
 #include "dds4ccm/impl/ndds/DataListenerControl_T.h"
 #include "dds4ccm/impl/ndds/PortStatusListener_T.h"
 
@@ -48,6 +45,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::init (
                   this->writer_listener_.in (),
                   ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
               this->writer_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
+              this->writer_t_.data_writer (dwv_tmp);
             }
             else
             {
@@ -59,6 +57,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::init (
                   this->writer_listener_.in (),
                   ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
               this->writer_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
+              this->writer_t_.data_writer (dwv_tmp);
             }
         }
     }
@@ -75,8 +74,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::get_data (void)
 {
   CIAO_TRACE ("DDS_Write_T<DDS_TYPE, CCM_TYPE>::get_data");
 
-  return new CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE>
-          (this->writer_.in ());
+  return &this->writer_t_;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>

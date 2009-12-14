@@ -1,10 +1,7 @@
 // -*- C++ -*-
-//
 // $Id$
 
-
 // Test for SAMPLE_LOST status of the subscriber 
-
 
 #include "Updater_Receiver_exec.h"
 #include "ciao/Logger/Log_Macros.h"
@@ -12,12 +9,11 @@
 #include "ace/OS_NS_time.h"
 #include "dds4ccm/impl/ndds/Utils.h"
 
-
 namespace CIAO_Updater_Receiver_Impl
 {
   
  
-read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
+  read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
     : pulse_callback_ (callback)
   {
   }

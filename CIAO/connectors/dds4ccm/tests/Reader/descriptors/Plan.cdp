@@ -257,6 +257,10 @@
 
   <connection>
     <name>info_out_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_data</portName>
       <provider>false</provider>
@@ -273,6 +277,10 @@
 
   <connection>
     <name>info_out_connector_status_rec</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_connector_status</portName>
       <provider>true</provider>
@@ -289,6 +297,10 @@
 
   <connection>
     <name>info_out_connector_status_sender</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_connector_status</portName>
       <provider>true</provider>
@@ -305,6 +317,10 @@
 
   <connection>
     <name>writer_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_write_data</portName>
       <provider>false</provider>

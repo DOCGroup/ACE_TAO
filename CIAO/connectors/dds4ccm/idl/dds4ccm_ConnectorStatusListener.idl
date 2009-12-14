@@ -12,7 +12,7 @@
 
 module CCM_DDS
 {
-  interface ConnectorStatusListener {
+  local interface ConnectorStatusListener {
     // status that are relevant system-wide
     void on_inconsistent_topic(in DDS::Topic the_topic,
                                in DDS::InconsistentTopicStatus status);

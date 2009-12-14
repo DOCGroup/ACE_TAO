@@ -110,7 +110,7 @@
     </execParameter>
   </implementation>
 
-    
+
   <implementation xmi:id="SenderComponentImplementation">
     <name>SenderComponentImplementation</name>
     <source/>
@@ -169,7 +169,7 @@
     <source/>
     <implementation xmi:idref="ReceiverComponentImplementation" />
   </instance>
-  
+
   <instance xmi:id="CSL_QoSTest_ConnectorComponentInstance">
     <name>CSL_QoSTest_ConnectorComponent</name>
     <node>SenderNode</node>
@@ -238,6 +238,10 @@
 
   <connection>
     <name>_listenercontrol</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_data_control</portName>
       <provider>false</provider>
@@ -253,6 +257,10 @@
   </connection>
   <connection>
     <name>_portstatuslistener</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_status</portName>
       <provider>true</provider>
@@ -267,7 +275,11 @@
     </internalEndpoint>
   </connection>
   <connection>
-    <name>_rawlistner</name>
+    <name>_listener</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_data_listener</portName>
       <provider>true</provider>
@@ -283,6 +295,10 @@
   </connection>
     <connection>
     <name>info_out_connector_status_receiver</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>info_out_connector_status</portName>
       <provider>true</provider>
@@ -298,6 +314,10 @@
   </connection>
   <connection>
     <name>test_topic_connector_status_sender</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>test_topic_connector_status</portName>
       <provider>true</provider>
@@ -309,9 +329,9 @@
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="CSL_QoSTest_ConnectorComponentInstance" />
-    </internalEndpoint>    
+    </internalEndpoint>
   </connection>
-  
+
 
   <artifact xmi:id="Sender_ExecArtifact">
     <name>Sender_exec</name>
@@ -350,7 +370,7 @@
     <location>DDS_CSL_QoSTest_Connector_stub</location>
   </artifact>
 
-    
+
   <artifact xmi:id="Receiver_ExecArtifact">
     <name>Receiver_exec</name>
     <source/>

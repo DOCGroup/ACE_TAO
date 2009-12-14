@@ -44,8 +44,8 @@ $tg_executor = 0;
 $status = 0;
 $cdp_file = "Plan.cdp";
 
-$ENV{"DANCE_TRACE_ENABLE"} = 0;
-$ENV{"CIAO_TRACE_ENABLE"} = 0;
+$ENV{"DANCE_TRACE_ENABLE"} = 1;
+$ENV{"CIAO_TRACE_ENABLE"} = 1;
 
 sub create_targets {
     #   naming service
