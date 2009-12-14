@@ -1,3 +1,8 @@
+Mon Dec 14 07:26:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Exposed_Policies/RT_Properties.{h,cpp}:
+          Fixed unicode runtime problems
+
 Fri Dec 11 18:27:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Makefile.am:

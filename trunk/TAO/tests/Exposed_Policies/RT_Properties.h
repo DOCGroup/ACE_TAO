@@ -45,7 +45,7 @@ private:
 
   RTCORBA::Priority priority_;
   RTCORBA::PriorityBands priority_bands_;
-  ACE_TCHAR ior_source_[256];
+  ACE_TString ior_source_;
 };
 
 #endif /* RT_PROPERTIES_H_ */

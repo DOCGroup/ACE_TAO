@@ -12,7 +12,7 @@ ACE_RCSID (ExposedPolicies, RT_Properties, "$Id$")
 RT_Properties::RT_Properties (void)
   : priority_ (10)
 {
-  ACE_OS::strcpy (ior_source_, ACE_TEXT("poa_default.ior"));
+  ior_source_ = ACE_TEXT("poa_default.ior");
 }
 
 RT_Properties::~RT_Properties (void)
@@ -62,7 +62,6 @@ RT_Properties::read_from (const ACE_TCHAR *file_name)
         }
     }
 
-
   return rt_properties;
 }
 
@@ -90,17 +89,14 @@ RT_Properties::priority_bands (void)
   return this->priority_bands_;
 }
 
-
 void
 RT_Properties::ior_source (const ACE_TCHAR *s)
 {
-  // @@ Angelo: please use strncpy() for strings like this, otherwise
-  // you could blow the buffer limits!
-  ACE_OS::strcpy (this->ior_source_, s);
+  this->ior_source_ = s;
 }
 
 const ACE_TCHAR *
 RT_Properties::ior_source (void)
 {
-  return this->ior_source_;
+  return this->ior_source_.c_str ();
 }
