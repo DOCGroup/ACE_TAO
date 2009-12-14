@@ -1,3 +1,9 @@
+Mon Dec 14 14:10:11 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test.pl:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/run_test.pl:
+          Resolved fuzz erros/warnings.
+
 Mon Dec 14 13:59:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Session/Session_Container.cpp:
