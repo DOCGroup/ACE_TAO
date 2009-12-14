@@ -45,9 +45,6 @@ $status = 0;
 $cdp_file = "1_to_5.cdp";
 
 PerlACE::add_lib_path ('../lib');
-$ENV{"DANCE_TRACE_ENABLE"} = 0;
-$ENV{"CIAO_TRACE_ENABLE"} = 0;
-
 
 sub create_targets {
     #   naming service

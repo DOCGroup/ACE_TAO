@@ -1,3 +1,15 @@
+Mon Dec 14 10:46:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/run_1_to_5.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_test.pl:
+          Don't override use trace levels
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+          Initialise all members to zero
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+          Improved logging
+
 Mon Dec 14 10:44:44 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/ListenManyByMany/*:
