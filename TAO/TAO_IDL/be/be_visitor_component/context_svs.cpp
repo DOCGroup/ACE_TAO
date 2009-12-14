@@ -44,12 +44,11 @@ be_visitor_context_svs::visit_component (be_component *node)
       << be_idt << be_idt_nl
       << "::Components::CCMHome_ptr h," << be_nl
       << "::CIAO::Container_ptr c," << be_nl
-      << lname << "_Servant * sv)" << be_uidt_nl
+      << "PortableServer::Servant sv)" << be_uidt_nl
       << ": ::CIAO::Context_Impl_Base (h, c)," << be_idt_nl
       << "::CIAO::Context_Impl<" << be_idt_nl
       << global << sname << "::CCM_"
       << lname << "_Context," << be_nl
-      << lname << "_Servant," << be_nl
       << "::" << node->full_name () << "> (h, c, sv)";
 
   if (swapping_)
@@ -147,7 +146,7 @@ be_visitor_context_svs::visit_uses (be_uses *node)
   ACE_CString prefix (this->port_prefix_);
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
-  
+
   AST_Type *obj = node->uses_type ();
   bool is_multiple = node->is_multiple ();
 
