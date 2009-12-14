@@ -150,16 +150,12 @@ AST_Array::compute_dims (UTL_ExprList *ds,
       AST_Expression::ExprType ex_type =
         (ph == 0 ? orig->ev ()->et : ph->info ()->const_type_);
         
-// ==================
-// TODO - still fails because of coercion in the constructor
-//        of 'copy'
       AST_Expression *copy = 0;
       ACE_NEW_RETURN (copy,
                       AST_Expression (orig,
                                       ex_type),
                       0);
-// ================
-                      
+
       result[i] = copy;
     }
 
@@ -239,10 +235,11 @@ void
 AST_Array::set_base_type (AST_Type *nbt)
 {
   this->pd_base_type = nbt;
-
   this->is_local_ = nbt->is_local ();
+  AST_Decl::NodeType bnt = nbt->node_type ();
 
-  if (AST_Decl::NT_sequence == nbt->node_type ())
+  if (bnt == AST_Decl::NT_sequence
+      || bnt == AST_Decl::NT_param_holder)
     {
       this->owns_base_type_ = true;
     }
