@@ -8,31 +8,26 @@
 namespace CIAO
 {
   template <typename BASE_CTX,
-            typename SVNT,
             typename COMP>
-  Context_Impl<BASE_CTX, SVNT, COMP>::Context_Impl (
+  Context_Impl<BASE_CTX, COMP>::Context_Impl (
       Components::CCMHome_ptr the_home,
       Container_ptr c,
-      SVNT *sv)
+      PortableServer::Servant sv)
     : Context_Impl_Base (the_home, c),
       servant_ (sv)
   {
   }
 
   template <typename BASE_CTX,
-            typename SVNT,
             typename COMP>
-  Context_Impl<BASE_CTX, SVNT, COMP>::~Context_Impl (void)
+  Context_Impl<BASE_CTX, COMP>::~Context_Impl (void)
   {
   }
 
-  // Operations from ::Components::SessionContext.
-
   template <typename BASE_CTX,
-            typename SVNT,
             typename COMP>
   CORBA::Object_ptr
-  Context_Impl<BASE_CTX, SVNT, COMP>::get_CCM_object (void)
+  Context_Impl<BASE_CTX, COMP>::get_CCM_object (void)
   {
     if (CORBA::is_nil (this->component_.in ()))
       {
