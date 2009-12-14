@@ -1,3 +1,8 @@
+Mon Dec 14 09:12:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+          Improved error reporting back to the end user
+
 Mon Dec 14 08:16:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/descriptors/run_test.pl:
