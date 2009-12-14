@@ -35,11 +35,6 @@ $ns_endpoint2 = "iiop://$hostname:$ns_orb_port2";
 $iorfile1 = "ns1.ior";
 $iorfile2 = "ns2.ior";
 
-my $test_iorfile1 = $test->LocalFile ($iorfile1);
-my $test_iorfile2 = $test->LocalFile ($iorfile2);
-
-$status = 0;
-
 ## Allow the user to determine where the persistent file will be located
 ## just in case the current directory is not suitable for locking.
 ## We can't change the name of the persistent file because that is not
@@ -53,6 +48,13 @@ foreach my $possible ($ENV{TMPDIR}, $ENV{TEMP}, $ENV{TMP}) {
       }
     }
 }
+
+my $test_iorfile1 = $test->LocalFile ($iorfile1);
+my $test_iorfile2 = $test->LocalFile ($iorfile2);
+
+$status = 0;
+
+
 
 print "INFO: Running the test in ", getcwd(), "\n";
 

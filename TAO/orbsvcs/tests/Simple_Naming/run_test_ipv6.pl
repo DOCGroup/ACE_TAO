@@ -38,6 +38,20 @@ $persistent_log_file = "test_log";
 
 $data_file = "test_run.data";
 
+## Allow the user to determine where the persistent file will be located
+## just in case the current directory is not suitable for locking.
+## We can't change the name of the persistent file because that is not
+## sufficient to work around locking problems for Tru64 when the current
+## directory is NFS mounted from a system that does not properly support
+## locking.
+foreach my $possible ($ENV{TMPDIR}, $ENV{TEMP}, $ENV{TMP}) {
+    if (defined $possible && -d $possible) {
+      if (chdir($possible)) {
+        last;
+      }
+    }
+}
+
 $test_log = $test->LocalFile ($data_file);
 $test->DeleteFile ($data_file);
 
@@ -120,19 +134,7 @@ $hostname = $test->HostName ();
 
 $test_number = 0;
 
-## Allow the user to determine where the persistent file will be located
-## just in case the current directory is not suitable for locking.
-## We can't change the name of the persistent file because that is not
-## sufficient to work around locking problems for Tru64 when the current
-## directory is NFS mounted from a system that does not properly support
-## locking.
-foreach my $possible ($ENV{TMPDIR}, $ENV{TEMP}, $ENV{TMP}) {
-    if (defined $possible && -d $possible) {
-      if (chdir($possible)) {
-        last;
-      }
-    }
-}
+
 
 print "INFO: Running the test in ", getcwd(), "\n";
 

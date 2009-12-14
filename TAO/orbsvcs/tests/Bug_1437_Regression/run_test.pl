@@ -47,7 +47,7 @@ $AC = $activator->CreateProcess ("../../ImplRepo_Service/ImR_Activator",
                                  "-ORBdebuglevel $debug_level -o $activator_iorfile ".
                                  "-ORBInitRef ImplRepoService=file://$activator_imr_iorfile");
 
-$TI = $tao_imr->CreateProcess ("$ENV{ACE_ROOT}/bin",
+$TI = $tao_imr->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_imr",
                                "-ORBInitRef ImplRepoService=file://$tao_imr_imr_iorfile add \"\"");
 
 sub test_body {
