@@ -4,8 +4,6 @@
 
 #include "LNE_Test_Receiver_exec.h"
 #include "ciao/Logger/Log_Macros.h"
-#include "tao/ORB_Core.h"
-#include "ace/OS_NS_time.h"
 
 namespace CIAO_LNE_Test_Receiver_Impl
 {
@@ -53,7 +51,6 @@ namespace CIAO_LNE_Test_Receiver_Impl
   {
   }
 
-  // Operations from ::CCM_DDS::ConnectorStatusListener
   void ConnectorStatusListener_exec_i::on_inconsistent_topic(
      ::DDS::Topic_ptr ,
      const DDS::InconsistentTopicStatus & )
@@ -129,7 +126,6 @@ namespace CIAO_LNE_Test_Receiver_Impl
     return new ConnectorStatusListener_exec_i (this->data_received_);
   }
 
-  // Operations from Components::SessionComponent.
   void
   Receiver_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)

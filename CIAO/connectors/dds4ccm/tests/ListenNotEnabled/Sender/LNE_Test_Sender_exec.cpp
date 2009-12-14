@@ -2,9 +2,7 @@
 // $Id$
 
 #include "LNE_Test_Sender_exec.h"
-#include "ace/Guard_T.h"
 #include "ciao/Logger/Log_Macros.h"
-#include "ace/Date_Time.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
@@ -64,7 +62,7 @@ namespace CIAO_LNE_Test_Sender_Impl
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("write_many : written <%u> samples\n"),
               write_many.length ()));
       }
-    catch (CCM_DDS::InternalError& ex)
+    catch (const CCM_DDS::InternalError& ex)
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
                     ACE_TEXT ("while write many writer info: index <%d> - retval <%d>\n"),

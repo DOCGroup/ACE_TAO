@@ -2,13 +2,13 @@
 // $Id$
 
 #include "Reader_Test_Sender_exec.h"
-#include "ace/Guard_T.h"
 #include "ciao/Logger/Log_Macros.h"
-#include "tao/ORB_Core.h"
-#include "ace/Reactor.h"
 
 namespace CIAO_Reader_Test_Sender_Impl
 {
+  //============================================================
+  // ConnectorStatusListener_exec_i
+  //============================================================
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Sender_exec_i &callback)
     : callback_ (callback)
   {
@@ -61,7 +61,6 @@ namespace CIAO_Reader_Test_Sender_Impl
   //============================================================
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
-
   Sender_exec_i::Sender_exec_i (void)
     : iterations_ (10),
       keys_ (5),
@@ -167,12 +166,12 @@ namespace CIAO_Reader_Test_Sender_Impl
       {
         ex._tao_print_exception ("Exception caught:");
         CIAO_ERROR ((LM_ERROR,
-          ACE_TEXT ("ERROR: #################### GET_CONNECTION_START_READER : Exception caught\n")));
+          ACE_TEXT ("ERROR: GET_CONNECTION_START_READER : Exception caught\n")));
       }
     catch (...)
       {
-        CIAO_ERROR ((LM_ERROR, 
-          ACE_TEXT ("ERROR: #################### GET_CONNECTION_START_READER : Unknown exception caught\n")));
+        CIAO_ERROR ((LM_ERROR,
+          ACE_TEXT ("ERROR: GET_CONNECTION_START_READER : Unknown exception caught\n")));
       }
   }
 

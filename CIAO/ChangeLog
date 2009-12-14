@@ -1,3 +1,18 @@
+Mon Dec 14 14:53:13 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Receiver/LNE_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Receiver/LNE_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Sender/LNE_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Sender/LNE_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender_exec.cpp:
+          Cleaned up code. Removed unused headers, made exception variables const
+          and outlined code.
+
 Mon Dec 14 14:36:46 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/SLOneByOne/Connector/SLOneByOne_Connector.mpc:
