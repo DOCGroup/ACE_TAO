@@ -72,7 +72,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_predefined_type.h"
 #include "ast_union_label.h"
 #include "ast_porttype.h"
-#include "ast_template_common.h"
 
 #include "fe_utils.h"
 

@@ -69,19 +69,20 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // node itself is created.
 
 #include "fe_interface_header.h"
-
 #include "ast_interface_fwd.h"
 #include "ast_valuetype.h"
 #include "ast_component.h"
 #include "ast_home.h"
 #include "ast_module.h"
-
 #include "utl_namelist.h"
 #include "utl_err.h"
-
 #include "fe_extern.h"
 #include "global_extern.h"
 #include "nr_extern.h"
+
+ACE_RCSID (fe,
+           fe_interface_header,
+           "$Id$")
 
 #undef  INCREMENT
 #define INCREMENT 512

@@ -27,7 +27,6 @@
 
 #include "be_visitor_component_scope.h"
 #include "ast_component.h"
-#include "ast_template_common.h"
 #include "utl_identifier.h"
 
 class be_valuetype;
@@ -141,14 +140,10 @@ private:
   be_component *comp_;
   be_home *home_;
   
-  // Working arglist for visit_porttype().
-  AST_Template_Common::T_ARGLIST *porttype_args_;
-  
   // Working type for provides or uses ports.
   // If the port refers to a template interface, an
   // instantiation will be created.
   AST_Type *port_interface_;
 };
-
 
 #endif // TAO_BE_VISITOR_CCM_PRE_PROC_H
