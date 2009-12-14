@@ -1,3 +1,8 @@
+Mon Dec 14 12:18:31 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added many_by_many listener test to test framework.
+
 Mon Dec 14 11:37:46 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.cpp
