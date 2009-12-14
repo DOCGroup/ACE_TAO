@@ -417,9 +417,5 @@ be_visitor_servant_svh::gen_non_type_specific (void)
       << "private:" << be_idt_nl
       << "void" << be_nl
       << "populate_port_tables (void);";
-
-  os_ << be_uidt_nl << be_nl
-      << "private:" << be_idt_nl
-      << "const char * ins_name_;";
 }
 

@@ -70,15 +70,9 @@ be_visitor_servant_svs::visit_component (be_component *node)
       << "," << be_nl
       << global << sname << "::CCM_"
       << lname << "," << be_nl
-      << lname << "_Context> (exe, h, hs, c)," << be_uidt_nl
-      << "ins_name_ (ins_name)" << be_uidt << be_uidt_nl
-      << "{" << be_idt_nl
-      << "ACE_NEW (this->context_," << be_nl
-      << "         " << lname << "_Context (h, c, this));"
-      << be_nl << be_nl
-      << "/// Set the instance id of the component on the context."
-      << be_nl
-      << "this->context_->_ciao_instance_id (this->ins_name_);";
+      << lname << "_Context> (exe, h, ins_name, hs, c)"
+      << be_uidt << be_uidt << be_uidt_nl
+      << "{" << be_idt_nl;
 
   be_visitor_obv_factory_reg ofr_visitor (this->ctx_);
 
@@ -91,16 +85,8 @@ be_visitor_servant_svs::visit_component (be_component *node)
                         -1);
     }
 
-  os_ << be_nl << be_nl
-      << "try" << be_idt_nl
+  os_ << "try" << be_idt_nl
       << "{" << be_idt_nl
-      << "::Components::SessionComponent_var scom =" << be_idt_nl
-      << "::Components::SessionComponent::_narrow (exe);"
-      << be_uidt_nl << be_nl
-      << "if (! ::CORBA::is_nil (scom.in ()))" << be_idt_nl
-      << "{" << be_idt_nl
-      << "scom->set_session_context (this->context_);" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
       << "this->populate_port_tables ();" << be_uidt_nl
       << "}" << be_uidt_nl
       << "catch (const ::CORBA::Exception &)" << be_idt_nl
@@ -1306,7 +1292,7 @@ be_visitor_connect_block::visit_uses (be_uses *node)
   const char *port_name = prefix.c_str ();
 
   const char *obj_name = node->uses_type ()->full_name ();
-  bool is_multiple = node->is_multiple ();
+  bool const is_multiple = node->is_multiple ();
 
   os_ << be_nl << be_nl
       << "if (ACE_OS::strcmp (name, \"" << port_name
@@ -1314,12 +1300,7 @@ be_visitor_connect_block::visit_uses (be_uses *node)
       << "{" << be_idt_nl
       << "::" << obj_name << "_var _ciao_conn =" << be_idt_nl
       << "::" << obj_name << "::_narrow (connection);"
-      << be_uidt_nl << be_nl
-    // @@ TODO: Spec indicates that facet references can be nil.
-      << "if ( ::CORBA::is_nil (_ciao_conn.in ()))" << be_idt_nl
-      << "{" << be_idt_nl
-      << "throw ::Components::InvalidConnection ();" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl;
+      << be_uidt_nl << be_nl;
 
   if (node->uses_type ()->is_local ())
     {
@@ -1331,6 +1312,10 @@ be_visitor_connect_block::visit_uses (be_uses *node)
     }
   else
     {
+      os_ << "if ( ::CORBA::is_nil (_ciao_conn.in ()))" << be_idt_nl
+          << "{" << be_idt_nl
+          << "throw ::Components::InvalidConnection ();" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl;
       os_ << "/// " << (is_multiple ? "Multiplex" : "Simplex")
           << " connect." << be_nl
           << (is_multiple ? "return " : "") << "this->connect_"
