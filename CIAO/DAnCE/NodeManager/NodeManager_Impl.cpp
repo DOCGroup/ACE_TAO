@@ -118,7 +118,6 @@ namespace DAnCE
                       plan.UUID.in ()));
         throw ::Deployment::PlanError();
       }
-    DANCE_DEBUG ((LM_DEBUG, ACE_TEXT("*** size of properties_:%u\n"), properties_.current_size ()));
     DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeManager_impl::preparePlan - creating NodeApplicationManager...\n")));
     NodeApplicationManager_Impl* manager = 0;
     ACE_NEW_THROW_EX (manager,

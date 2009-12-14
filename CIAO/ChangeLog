@@ -1,3 +1,17 @@
+Mon Dec 14 20:31:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Session/Session_Container.cpp:
+          Use false and extended debug statements
+
+        * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver_exec.cpp:
+          Extended debug info
+
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+          Removed not needed debug info
+
+        * ciao/Servants/Servant_Impl_T.cpp:
+          Layout change
+
 Mon Dec 14 20:07:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver_exec.cpp:
