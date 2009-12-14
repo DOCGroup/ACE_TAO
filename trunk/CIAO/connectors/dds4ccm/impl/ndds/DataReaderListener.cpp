@@ -35,6 +35,7 @@ namespace CIAO
         ::DDSDataReader* the_reader,
         const ::DDS_RequestedDeadlineMissedStatus & status)
       {
+        CIAO_TRACE ("RTI_DataReaderListener_i::on_requested_deadline_missed");
         ::DDS::RequestedDeadlineMissedStatus ddsstatus;
         ddsstatus <<= status;
         ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (the_reader);
@@ -46,6 +47,7 @@ namespace CIAO
         ::DDSDataReader* the_reader,
         const ::DDS_RequestedIncompatibleQosStatus & status)
       {
+        CIAO_TRACE ("RTI_DataReaderListener_i::on_requested_incompatible_qos");
         ::DDS::RequestedIncompatibleQosStatus ddsstatus;
         ddsstatus <<= status;
         ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (the_reader);
@@ -57,6 +59,7 @@ namespace CIAO
         ::DDSDataReader* the_reader,
         const ::DDS_SampleRejectedStatus & status)
       {
+        CIAO_TRACE ("RTI_DataReaderListener_i::on_sample_rejected");
         ::DDS::SampleRejectedStatus ddsstatus;
         ddsstatus <<= status;
         ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (the_reader);
@@ -68,6 +71,7 @@ namespace CIAO
         ::DDSDataReader* the_reader,
         const ::DDS_LivelinessChangedStatus & status)
       {
+        CIAO_TRACE ("RTI_DataReaderListener_i::on_liveliness_changed");
         ::DDS::LivelinessChangedStatus ddsstatus;
         ddsstatus <<= status;
         ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (the_reader);
@@ -77,6 +81,7 @@ namespace CIAO
       void
       RTI_DataReaderListener_i::on_data_available(::DDSDataReader *reader)
       {
+        CIAO_TRACE ("RTI_DataReaderListener_i::on_data_available");
         ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (reader);
         this->impl_->on_data_available (dds_reader.in ());
       }
@@ -86,6 +91,7 @@ namespace CIAO
         ::DDSDataReader* the_reader,
         const ::DDS_SubscriptionMatchedStatus & status)
       {
+        CIAO_TRACE ("RTI_DataReaderListener_i::on_subscription_matched");
         ::DDS::SubscriptionMatchedStatus ddsstatus;
         ddsstatus <<= status;
         ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (the_reader);
@@ -97,6 +103,7 @@ namespace CIAO
         ::DDSDataReader* the_reader,
         const ::DDS_SampleLostStatus & status)
       {
+        CIAO_TRACE ("RTI_DataReaderListener_i::on_sample_lost");
         ::DDS::SampleLostStatus ddsstatus;
         ddsstatus <<= status;
         ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (the_reader);
