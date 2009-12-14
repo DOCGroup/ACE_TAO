@@ -1,3 +1,106 @@
+Mon Dec 14 07:39:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Session/Session_Container.cpp
+        * connectors/ami4ccm/examples/Hello/descriptors/Plan.cdp
+        * connectors/dds4ccm/examples/Hello/descriptors/1_to_5.cdp
+        * connectors/dds4ccm/examples/Hello/descriptors/5_Receivers.cdp
+        * connectors/dds4ccm/examples/Hello/descriptors/5_Senders.cdp
+        * connectors/dds4ccm/examples/Hello/descriptors/5_to_1.cdp
+        * connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp
+        * connectors/dds4ccm/examples/Hello/descriptors/ReceiverOnly.cdp
+        * connectors/dds4ccm/examples/Hello/descriptors/SenderOnly.cdp
+        * connectors/dds4ccm/examples/Quoter/descriptors/Plan.cdp
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp
+        * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender_exec.h
+        * connectors/dds4ccm/idl/ccm_dds.idl
+        * connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListener.idl
+        * connectors/dds4ccm/idl/dds4ccm_DataListenerControl.idl
+        * connectors/dds4ccm/idl/dds4ccm_PortStatusListener.idl
+        * connectors/dds4ccm/idl/dds4ccm_StateListenerControl.idl
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h
+        * connectors/dds4ccm/impl/ndds/DataWriterListener_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_Get_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Get_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_Listen_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Listen_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_Read_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Read_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_StateListen_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_StateListen_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_Update_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Update_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_Write_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Write_T.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener_T.h
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp
+        * connectors/dds4ccm/impl/ndds/Getter_T.h
+        * connectors/dds4ccm/impl/ndds/InstanceHandleManager_T.cpp
+        * connectors/dds4ccm/impl/ndds/InstanceHandleManager_T.h
+        * connectors/dds4ccm/impl/ndds/PortStatusListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/PortStatusListener_T.h
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp
+        * connectors/dds4ccm/impl/ndds/Reader_T.h
+        * connectors/dds4ccm/impl/ndds/SampleInfo.h
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.h
+        * connectors/dds4ccm/impl/ndds/Updater_T.cpp
+        * connectors/dds4ccm/impl/ndds/Updater_T.h
+        * connectors/dds4ccm/impl/ndds/Writer_T.cpp
+        * connectors/dds4ccm/impl/ndds/Writer_T.h
+        * connectors/dds4ccm/tests/CSLDeadline/descriptors/Plan.cdp
+        * connectors/dds4ccm/tests/CSLDeadline/Receiver/CSL_DeadlineTest_Receiver_exec.cpp
+        * connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender_exec.cpp
+        * connectors/dds4ccm/tests/CSLQoS/descriptors/Plan.cdp
+        * connectors/dds4ccm/tests/CSLSampleRejected/descriptors/Plan.cdp
+        * connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver_exec.cpp
+        * connectors/dds4ccm/tests/CSLUnexpStat/descriptors/Plan.cdp
+        * connectors/dds4ccm/tests/Event_Connection_Test/descriptors/Plan.cdp
+        * connectors/dds4ccm/tests/Event_Connection_Test/descriptors/run_test.pl
+        * connectors/dds4ccm/tests/Getter/descriptors/Plan.cdp
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors/Plan.cdp
+        * connectors/dds4ccm/tests/KeyedWriter/descriptors/Plan.cdp
+        * connectors/dds4ccm/tests/ListenNotEnabled/descriptors/Plan.cdp
+        * connectors/dds4ccm/tests/ListenOneByOne/descriptors/Plan.cdp
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/descriptors/Plan.cdp
+        * connectors/dds4ccm/tests/PSLDeadline/descriptors/Plan.cdp
+        * connectors/dds4ccm/tests/PSLSampleLost/descriptors/Plan.cdp
+        * connectors/dds4ccm/tests/Reader/descriptors/Plan.cdp
+        * connectors/dds4ccm/tests/State_Connection_Test/descriptors/Plan.cdp
+        * connectors/dds4ccm/tests/UnkeyedSamples/descriptors/Plan.cdp
+        * connectors/dds4ccm/tests/UnkeyedWriter/descriptors/Plan.cdp
+        * connectors/dds4ccm/tests/Updater/descriptors/Plan.cdp
+        * connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver_exec.cpp
+        * connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver_exec.h
+        * connectors/dds4ccm/tests/Updater/Sender/Updater_Sender_exec.cpp
+        * connectors/dds4ccm/tests/Updater/Sender/Updater_Sender_exec.h
+        * DAnCE/Deployment/Deployment_DeploymentPlan.idl
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp
+        * DAnCE/NodeApplication/NodeApplication_Impl.h
+        * docs/schema/Basic_Deployment_Data.xsd
+        * tests/IDL_Test/Cornucopia/Cornucopia.idl
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp
+        * tools/Config_Handlers/CPD_Handler.cpp
+        * tools/Config_Handlers/DnC_Dump.cpp
+        * tools/Config_Handlers/PSPE_Handler.cpp
+          Removed LocalFacet again as connection kind, we now use a
+          deployRequirement in order to let D&C know we have a local connection.
+          Use local interfaces for everything in dds4ccm and updated
+          all deployment plans for this. This does mean the connector
+          needs to create all executors as construction time, the
+          lifecycle of the connector is now that all executors
+          are created at construction, at the moment we do a
+          ccm_activate we need to create the real dds entities.
+          When we get an invocation before ccm_activate we do a
+          BAD_INVORDER exception.
+
+          In the cdp we now use the following with a connection to
+          indicate that it has to be deployed as a local connection:
+                <deployRequirement>
+                  <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+                  <resourceType>Local_Interface</resourceType>
+                </deployRequirement>
+
 Fri Dec 11 14:03:46 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * examples/Display/descriptors/run_NodeDaemons.pl:

@@ -25,10 +25,10 @@ namespace CIAO
           private virtual ACE_Copy_Disabled
       {
       public:
-        // Constructor
-        Reader_T (::DDS::DataReader_ptr dr);
+        /// Constructor
+        Reader_T (void);
 
-        // Destructor
+        /// Destructor
         virtual ~Reader_T (void);
 
         virtual void read_last (
@@ -53,6 +53,10 @@ namespace CIAO
         virtual ::CCM_DDS::QueryFilter *filter (void);
 
         virtual void filter (const ::CCM_DDS::QueryFilter & filter);
+
+        void data_reader (::DDS::DataReader_ptr reader);
+
+        typename DDS_TYPE::data_reader * impl (void);
       private:
         typename DDS_TYPE::data_reader *impl_;
         ::DDS::DataReader_ptr reader_;

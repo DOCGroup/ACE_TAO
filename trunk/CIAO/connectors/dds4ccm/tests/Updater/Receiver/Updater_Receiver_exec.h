@@ -18,7 +18,6 @@
 
 namespace CIAO_Updater_Receiver_Impl
 {
-  //typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong > Atomic_ULong;
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
   
   class Receiver_exec_i;
@@ -86,7 +85,6 @@ namespace CIAO_Updater_Receiver_Impl
         const ::TestTopic & datum,
         const ::CCM_DDS::ReadInfo & info);
    };
-
 
   class RECEIVER_EXEC_Export Receiver_exec_i
     : public virtual Receiver_Exec,

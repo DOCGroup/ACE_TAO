@@ -212,6 +212,10 @@
 
   <connection>
     <name>run_asynch_foo_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>run_asynch_my_foo</portName>
       <provider>false</provider>
@@ -221,7 +225,7 @@
     <internalEndpoint>
       <portName>perform_asynch_my_foo</portName>
       <provider>true</provider>
-      <kind>LocalFacet</kind>
+      <kind>Facet</kind>
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
     </internalEndpoint>
   </connection>
@@ -257,7 +261,7 @@
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />
     </internalEndpoint>
   </connection>
-  
+
   <artifact xmi:id="Hello_AMI_SvntArtifact">
     <name>Hello.ImplementationArtifacts.AMIArtifacts.AMI_svnt</name>
     <source/>
@@ -275,7 +279,7 @@
       </value>
     </execParameter>
   </artifact>
-  
+
   <artifact xmi:id="Hello_AMI_ExecArtifact">
     <name>Hello.ImplementationArtifacts.AMIArtifacts.AMI_exec</name>
     <source/>

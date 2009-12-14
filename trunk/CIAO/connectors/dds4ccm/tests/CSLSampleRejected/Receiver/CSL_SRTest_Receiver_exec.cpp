@@ -212,8 +212,7 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
   }
 
   void
-  Receiver_exec_i::rate (
-    ::CORBA::ULong rate)
+  Receiver_exec_i::rate (::CORBA::ULong rate)
   {
     this->rate_ = rate;
   }

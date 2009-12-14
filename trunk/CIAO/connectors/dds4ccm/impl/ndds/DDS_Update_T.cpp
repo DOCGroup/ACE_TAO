@@ -42,8 +42,9 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::init (
                   this->data_listener_.in (),
                   ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
               this->data_writer_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
+              this->dds_update_.data_writer (dwv_tmp);
             }
-            else
+          else
             {
               ::DDS::DataWriterQos dwqos;
               ::DDS::DataWriter_var dwv_tmp = publisher->
@@ -53,13 +54,8 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::init (
                   this->data_listener_.in (),
                   ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
               this->data_writer_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
+              this->dds_update_.data_writer (dwv_tmp);
             }
-        }
-      if (CORBA::is_nil (this->dds_update_.in ()) &&
-          !CORBA::is_nil (this->data_writer_.in ()))
-        {
-          this->dds_update_ = new CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE> (
-            this->data_writer_.in ());
         }
     }
   catch (...)
@@ -73,7 +69,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 typename CCM_TYPE::updater_type::_ptr_type
 DDS_Update_T<DDS_TYPE, CCM_TYPE>::get_data (void)
 {
-  return CCM_TYPE::updater_type::_duplicate (this->dds_update_.in ());
+  return &this->dds_update_;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>

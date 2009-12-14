@@ -167,20 +167,19 @@ namespace DAnCE
 
     void store_instance_ior (Instance &inst);
 
-    Components::Cookie* connect_receptacle (Components::CCMObject_ptr inst,
-                                           const ACE_CString& port_name,
-                                           CORBA::Object_ptr facet);
+    bool is_local_facet (const ::Deployment::PlanConnectionDescription& conn);
+
+    Components::Cookie* connect_receptacle (const ::Deployment::PlanConnectionDescription& conn,
+                                            Components::CCMObject_ptr facet,
+                                            const ACE_CString &facet_name,
+                                            CORBA::Object_ptr receptacle,
+                                            const ACE_CString& receptacle_name,
+                                            CIAO::Deployment::Container_ptr cont);
 
     Components::Cookie* connect_receptacle_ext (Components::CCMObject_ptr inst,
                                               const ACE_CString& port_name,
                                               CORBA::Object_ptr facet);
-    
-    void connect_local_receptacle (Components::CCMObject_ptr facet,
-                                   const ACE_CString &facet_name,
-                                   Components::CCMObject_ptr receptacle,
-                                   const ACE_CString &recep_name,
-                                   CIAO::Deployment::Container_ptr cont);
-    
+
     void connect_emitter (Components::CCMObject_ptr inst,
                          const ACE_CString& port_name,
                          CORBA::Object_ptr consumer);
