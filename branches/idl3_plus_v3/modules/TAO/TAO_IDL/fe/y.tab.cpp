@@ -278,7 +278,6 @@
 
 #include "fe_declarator.h"
 #include "fe_interface_header.h"
-#include "fe_template_interface_header.h"
 #include "fe_obv_header.h"
 #include "fe_event_header.h"
 #include "fe_component_header.h"
@@ -343,7 +342,6 @@ typedef union TAO_YYSTYPE
   UTL_LabelList                 *llval;         /* Label list           */
   UTL_DeclList                  *dlval;         /* Declaration list     */
   FE_InterfaceHeader            *ihval;         /* Interface header     */
-  FE_Template_InterfaceHeader   *thval;         /* Template interface hdr */
   FE_OBVHeader                  *vhval;         /* Valuetype header     */
   FE_EventHeader                *ehval;         /* Event header         */
   FE_ComponentHeader            *chval;         /* Component header     */
@@ -9239,6 +9237,20 @@ tao_yyreduce:
     {
 //        IDENTIFIER
           idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeIDSeen);
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          
+          Identifier id ((tao_yyvsp[(3) - (3)].strval));
+          ACE::strdelete ((tao_yyvsp[(3) - (3)].strval));
+          (tao_yyvsp[(3) - (3)].strval) = 0;
+          
+          UTL_ScopedName sn (&id, 0);
+          AST_PortType *p =
+            idl_global->gen ()->create_porttype (&sn);
+            
+          (void) s->fe_add_porttype (p);
+          
+          // Push it on the scopes stack.
+          idl_global->scopes ().push (p);
         }
     break;
 
