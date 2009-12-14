@@ -1,3 +1,8 @@
+Mon Dec 14 10:44:44 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/ListenManyByMany/*:
+          Added test in order to test many_by_many on the listener.
+
 Mon Dec 14 09:12:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
