@@ -1,3 +1,12 @@
+Mon Dec 14 19:21:39 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        
+          Restored semantic action to create a non-template porttype,
+          removed at the beginning of revised IDL3+ template support
+          work.
+
 Mon Dec 14 18:16:17 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_expression.cpp:

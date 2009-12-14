@@ -108,7 +108,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "fe_declarator.h"
 #include "fe_interface_header.h"
-#include "fe_template_interface_header.h"
 #include "fe_obv_header.h"
 #include "fe_event_header.h"
 #include "fe_component_header.h"
@@ -156,7 +155,6 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
   UTL_LabelList                 *llval;         /* Label list           */
   UTL_DeclList                  *dlval;         /* Declaration list     */
   FE_InterfaceHeader            *ihval;         /* Interface header     */
-  FE_Template_InterfaceHeader   *thval;         /* Template interface hdr */
   FE_OBVHeader                  *vhval;         /* Valuetype header     */
   FE_EventHeader                *ehval;         /* Event header         */
   FE_ComponentHeader            *chval;         /* Component header     */
@@ -6346,6 +6344,20 @@ porttype_decl
         {
 //        IDENTIFIER
           idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeIDSeen);
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          
+          Identifier id ($3);
+          ACE::strdelete ($3);
+          $3 = 0;
+          
+          UTL_ScopedName sn (&id, 0);
+          AST_PortType *p =
+            idl_global->gen ()->create_porttype (&sn);
+            
+          (void) s->fe_add_porttype (p);
+          
+          // Push it on the scopes stack.
+          idl_global->scopes ().push (p);
         }
         '{'
         {
