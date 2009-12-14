@@ -1,0 +1,18 @@
+// $Id$
+
+/**
+ * @file LMBM_Test_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef LISTEN_MANY_BY_MANY_TEST_BASE_IDL
+#define LISTEN_MANY_BY_MANY_TEST_BASE_IDL
+
+struct ListenManyByManyTest {
+  string key;
+  long iteration;
+};
+
+typedef sequence<ListenManyByManyTest> ListenManyByManyTest_Seq;
+
+#endif
