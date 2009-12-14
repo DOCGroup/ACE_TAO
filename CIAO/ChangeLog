@@ -1,3 +1,25 @@
+Mon Dec 14 13:59:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Session/Session_Container.cpp:
+          Print debug statement when we don't get a facet
+
+        * ciao/Contexts/Context_Impl_T.cpp:
+        * ciao/Contexts/Context_Impl_T.h:
+        * ciao/Servants/Servant_Impl_T.cpp:
+        * ciao/Servants/Servant_Impl_T.h:
+          Create the context in the base instead of in the generated
+          code
+
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp:
+          Layout change
+
+        * connectors/dds4ccm/tests/PSLSampleLost/descriptors/run_test.pl:
+          Don't clear tracing flags
+
+        * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/PSLSampleLost/Sender/PSL_SampleLost_Sender_exec.cpp:
+          Layout changes
+
 Mon Dec 14 13:42:56 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/1_to_5.cdp:

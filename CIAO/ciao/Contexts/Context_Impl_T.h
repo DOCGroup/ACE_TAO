@@ -21,6 +21,7 @@
 
 #include "Context_Impl_Base.h"
 #include "tao/LocalObject.h"
+#include "tao/PortableServer/PS_ForwardC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -66,7 +67,6 @@ namespace CIAO
    * members common to all generated servants.
    */
   template <typename BASE_CTX,
-            typename SVNT,
             typename COMP>
   class Context_Impl : public virtual BASE_CTX,
                        public virtual Context_Impl_Base,
@@ -79,15 +79,12 @@ namespace CIAO
     /// Type definition of the var type for the context.
     typedef typename context_type::_var_type _var_type;
 
-    /// Type definition of the servant type.
-    typedef SVNT servant_type;
-
     /// Type definition of the component type.
     typedef COMP component_type;
 
     Context_Impl (Components::CCMHome_ptr the_home,
                   Container_ptr c,
-                  SVNT *sv);
+                  PortableServer::Servant sv);
 
     virtual ~Context_Impl (void);
 
@@ -95,8 +92,8 @@ namespace CIAO
 
     virtual CORBA::Object_ptr get_CCM_object ();
 
-  protected:
-    SVNT *servant_;
+  private:
+    PortableServer::Servant servant_;
     typename COMP::_var_type component_;
   };
 }

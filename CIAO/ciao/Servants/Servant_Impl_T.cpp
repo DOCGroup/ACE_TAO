@@ -14,14 +14,30 @@ namespace CIAO
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::Servant_Impl (
       EXEC * exe,
       Components::CCMHome_ptr home,
+      const char * ins_name,
       Home_Servant_Impl_Base *home_servant,
       Container_ptr c
     )
     : Servant_Impl_Base (home, home_servant, c),
       activated_ (false),
       configuration_completed_ (false),
-      executor_ (EXEC::_duplicate (exe))
+      executor_ (EXEC::_duplicate (exe)),
+      context_ (0),
+      ins_name_ (ins_name)
   {
+    ACE_NEW (this->context_,
+             CONTEXT (home, c, this));
+
+    /// Set the instance id of the component on the context.
+    this->context_->_ciao_instance_id (this->ins_name_);
+
+    ::Components::SessionComponent_var scom =
+      ::Components::SessionComponent::_narrow (exe);
+
+    if (! ::CORBA::is_nil (scom.in ()))
+      {
+        scom->set_session_context (this->context_);
+      }
   }
 
   template <typename BASE_SKEL,
