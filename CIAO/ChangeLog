@@ -1,3 +1,31 @@
+Mon Dec 14 10:58:46 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/SLDisabled:
+        * connectors/dds4ccm/tests/SLDisabled/Base:
+        * connectors/dds4ccm/tests/SLDisabled/Base/SL_Disabled_Base.idl:
+        * connectors/dds4ccm/tests/SLDisabled/Base/SL_Disabled_Base.mpc:
+        * connectors/dds4ccm/tests/SLDisabled/Connector:
+        * connectors/dds4ccm/tests/SLDisabled/Connector/SL_Disabled_Connector.idl:
+        * connectors/dds4ccm/tests/SLDisabled/Connector/SL_Disabled_Connector.mpc:
+        * connectors/dds4ccm/tests/SLDisabled/Connector/SL_Disabled_Connector_exec.cpp:
+        * connectors/dds4ccm/tests/SLDisabled/Connector/SL_Disabled_Connector_exec.h:
+        * connectors/dds4ccm/tests/SLDisabled/descriptors:
+        * connectors/dds4ccm/tests/SLDisabled/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/SLDisabled/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SLDisabled/Receiver:
+        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver.idl:
+        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver.mpc:
+        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.h:
+        * connectors/dds4ccm/tests/SLDisabled/Sender:
+        * connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender.idl:
+        * connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender.mpc:
+        * connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender_exec.h:
+          Added test StateListener: NOT_ENABLED .
+
+
 Mon Dec 14 10:46:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/run_1_to_5.pl:
