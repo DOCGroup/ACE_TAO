@@ -11,16 +11,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_WIN32) && defined (_WIN32_WCE)
-// Something is a bit brain-damaged here and I'm not sure what... this code
-// compiled before the OS reorg for ACE 5.4. Since then it hasn't - eVC
-// complains that the operators that return ACE_Time_Value are C-linkage
-// functions that can't return a C++ class. The only way I've found to
-// defeat this is to wrap the whole class in extern "C++".
-//    - Steve Huston, 23-Aug-2004
-extern "C++" {
-#endif
-
 ACE_INLINE ACE_Time_Value
 ACE_OS::gettimeofday (void)
 {
@@ -88,9 +78,5 @@ ACE_OS::gettimeofday (void)
     return ACE_Time_Value (tv);
 #endif // !defined (ACE_WIN32)
 }
-
-#if defined (ACE_WIN32) && defined (_WIN32_WCE)
-}
-#endif
 
 ACE_END_VERSIONED_NAMESPACE_DECL

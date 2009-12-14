@@ -109,8 +109,7 @@ ACE_Service_Type::fini (void)
       return 1; // No implementation was found.
     }
 
-  // Cast constness away when calling fini
-  int ret = const_cast<ACE_Service_Type_Impl *>(this->type_)->fini ();
+  int ret = this->type_->fini ();
 
   // Ensure that closing the DLL is done after type_->fini() as it may
   // require access to the code for the service object destructor,

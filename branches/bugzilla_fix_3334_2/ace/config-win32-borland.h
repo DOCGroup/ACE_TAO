@@ -11,10 +11,6 @@
 #error Use config-win32.h in config.h instead of this header
 #endif /* ACE_CONFIG_WIN32_H */
 
-#if (__BORLANDC__ != 0x613)
-#error This version of CodeGear C++ is not supported.
-#endif
-
 #define ACE_HAS_CUSTOM_EXPORT_MACROS
 #define ACE_Proper_Export_Flag __declspec (dllexport)
 #define ACE_Proper_Import_Flag __declspec (dllimport)
@@ -37,9 +33,13 @@
 # define ACE_CC_MINOR_VERSION (__BORLANDC__ % 0x100)
 # define ACE_CC_BETA_VERSION (0)
 
-# ifndef ACE_USING_MCPP_PREPROCESSOR
+#ifndef ACE_USING_MCPP_PREPROCESSOR
+# if (__BORLANDC__ >= 0x620)
+#  define ACE_CC_PREPROCESSOR_ARGS "-q -Sl -o%s"
+# else
 #  define ACE_CC_PREPROCESSOR_ARGS "-q -P- -o%s"
 # endif
+#endif
 
 // Automatically define WIN32 macro if the compiler tells us it is our
 // target platform.
@@ -140,10 +140,10 @@
 #if (__BORLANDC__ < 0x620)
 # define ACE_LACKS_ISBLANK
 # define ACE_LACKS_ISWBLANK
-# define ACE_LACKS_ISWCTYPE
 # define ACE_LACKS_PRAGMA_ONCE 1
 #endif
 
+#define ACE_LACKS_ISWCTYPE
 #define ACE_LACKS_ISCTYPE
 
 #if (__BORLANDC__ < 0x620)

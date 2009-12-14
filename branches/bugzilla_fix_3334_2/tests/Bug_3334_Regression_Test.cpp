@@ -15,21 +15,23 @@
 //
 // ============================================================================
 
+#undef ACE_NLOGGING
 #include "test_config.h"
+
 #include "ace/Log_Msg.h"
 #include "ace/Service_Config.h"
 
-ACE_RCSID(tests, Bug_3334_Regression_Test, "$Id$")
+ACE_RCSID (tests, Bug_3334_Regression_Test, "$Id$")
 
 int
 run_main (int, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Bug_3334_Regression_Test"));
 
-  ACE_TCHAR *_argv[3] = { argv[0],
+  ACE_TCHAR * _argv[3] = {argv[0],
                           const_cast<ACE_TCHAR*> (ACE_TEXT ("-f")),
                           const_cast<ACE_TCHAR*>
-                            (ACE_TEXT ("Bug_3334_Regression_Test.conf")) };
+                          (ACE_TEXT ("Bug_3334_Regression_Test.conf"))};
   int status;
   if ((status = ACE_Service_Config::open (3,
                                           _argv,
@@ -41,6 +43,7 @@ run_main (int, ACE_TCHAR *argv[])
                 ACE_TEXT ("open"),
                 1));
 
+  ACE_Service_Config::fini_svcs ();
   ACE_END_TEST;
   return status;
 }

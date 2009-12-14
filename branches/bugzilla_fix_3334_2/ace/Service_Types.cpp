@@ -55,7 +55,7 @@ ACE_Service_Type_Impl::~ACE_Service_Type_Impl (void)
 }
 
 int
-ACE_Service_Type_Impl::fini (void)
+ACE_Service_Type_Impl::fini (void) const
 {
   ACE_TRACE ("ACE_Service_Type_Impl::fini");
 
@@ -74,9 +74,7 @@ ACE_Service_Type_Impl::fini (void)
 
   if (ACE_BIT_ENABLED (this->flags_,
                        ACE_Service_Type::DELETE_THIS))
-  {
     delete const_cast <ACE_Service_Type_Impl *> (this);
-  }
 
   return 0;
 }
@@ -110,7 +108,7 @@ ACE_Service_Object_Type::init (int argc, ACE_TCHAR *argv[]) const
 }
 
 int
-ACE_Service_Object_Type::fini (void)
+ACE_Service_Object_Type::fini (void) const
 {
   ACE_TRACE ("ACE_Service_Object_Type::fini");
 
@@ -154,11 +152,6 @@ ACE_Service_Object_Type::info (ACE_TCHAR **str, size_t len) const
   return static_cast<ACE_Service_Object *> (this->object ())->info (str, len);
 }
 
-ACE_Module_Container::~ACE_Module_Container (void)
-{
-  ACE_TRACE ("ACE_Module_Container::~ACE_Module_Container");
-}
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Module_Type)
 
 void
@@ -172,9 +165,7 @@ ACE_Module_Type::dump (void) const
 ACE_Module_Type::ACE_Module_Type (void *m,
                                   const ACE_TCHAR *m_name,
                                   u_int f)
-  : ACE_Service_Type_Impl (m, m_name, f),
-  module_container_ (0),
-  fini_called_ (false)
+  : ACE_Service_Type_Impl (m, m_name, f)
 {
   ACE_TRACE ("ACE_Module_Type::ACE_Module_Type");
 }
@@ -236,16 +227,10 @@ ACE_Module_Type::resume (void) const
 // implementation of ACE_Module and ACE_Module::close...
 
 int
-ACE_Module_Type::fini (void)
+ACE_Module_Type::fini (void) const
 {
   ACE_TRACE ("ACE_Module_Type::fini");
-  if (this->fini_called_)
-  {
-    return 0;    
-  }
-
-  this->fini_called_ = true;
-
+#if 0
   void *obj = this->object ();
   MT_Module *mod = (MT_Module *) obj;
   MT_Task *reader = mod->reader ();
@@ -259,13 +244,9 @@ ACE_Module_Type::fini (void)
 
   // Close the module and delete the memory.
   mod->close (MT_Module::M_DELETE);
-  if (module_container_ != 0)
-  {
-    module_container_->remove (this);
-    module_container_ = 0;
-  }
-
   return ACE_Service_Type_Impl::fini ();
+#endif
+  return 0;
 }
 
 int
@@ -376,7 +357,7 @@ ACE_Stream_Type::info (ACE_TCHAR **str, size_t len) const
 }
 
 int
-ACE_Stream_Type::fini (void)
+ACE_Stream_Type::fini (void) const
 {
   ACE_TRACE ("ACE_Stream_Type::fini");
   void *obj = this->object ();
@@ -406,6 +387,7 @@ int
 ACE_Stream_Type::remove (ACE_Module_Type *mod)
 {
   ACE_TRACE ("ACE_Stream_Type::remove");
+
   ACE_Module_Type *prev = 0;
   void *obj = this->object ();
   MT_Stream *str = (MT_Stream *) obj;
@@ -451,7 +433,6 @@ ACE_Stream_Type::push (ACE_Module_Type *new_module)
   new_module->link (this->head_);
   this->head_ = new_module;
   obj = new_module->object ();
-  new_module->module_container (this);
   return str->push ((MT_Module *) obj);
 }
 

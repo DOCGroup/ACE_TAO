@@ -50,7 +50,7 @@ public:
   virtual int suspend (void) const = 0;
   virtual int resume (void) const = 0;
   virtual int init (int argc, ACE_TCHAR *argv[]) const = 0;
-  virtual int fini (void);
+  virtual int fini (void) const;
   virtual int info (ACE_TCHAR **str, size_t len) const = 0;
 
   /// The pointer to the service.
@@ -104,21 +104,12 @@ public:
   virtual int suspend (void) const;
   virtual int resume (void) const;
   virtual int init (int argc, ACE_TCHAR *argv[]) const;
-  virtual int fini (void);
+  virtual int fini (void) const;
   virtual int info (ACE_TCHAR **str, size_t len) const;
 
 private:
   /// Holds the initialization status (result of object->init())
   mutable int initialized_;
-};
-
-class ACE_Module_Type;
-
-class ACE_Export ACE_Module_Container
-{
-public:
-  virtual ~ACE_Module_Container ();
-  virtual int remove (ACE_Module_Type *module) = 0;
 };
 
 /**
@@ -141,7 +132,7 @@ public:
   virtual int suspend (void) const;
   virtual int resume (void) const;
   virtual int init (int argc, ACE_TCHAR *argv[]) const;
-  virtual int fini (void);
+  virtual int fini (void) const;
   virtual int info (ACE_TCHAR **str, size_t len) const;
 
   /// Get the link pointer.
@@ -149,12 +140,6 @@ public:
 
   /// Set the link pointer.
   void link (ACE_Module_Type *);
-
-  /// Get the link pointer.
-  ACE_Module_Container *module_container (void) const;
-
-  /// Set the module_container pointer
-  void module_container (ACE_Module_Container *);
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -165,11 +150,6 @@ public:
 private:
   /// Pointer to the next ACE_Module_Type in an ACE_Stream_Type.
   ACE_Module_Type *link_;
-
-  /// Pointer to the ACE_Module_Container
-  ACE_Module_Container *module_container_;
-
-  bool fini_called_;
 };
 
 /**
@@ -178,7 +158,7 @@ private:
  * @brief Define the methods for handling the configuration of
  * ACE_Streams.
  */
-class ACE_Export ACE_Stream_Type : public ACE_Service_Type_Impl, public ACE_Module_Container
+class ACE_Export ACE_Stream_Type : public ACE_Service_Type_Impl
 {
 public:
   // = Initialization method.
@@ -192,7 +172,7 @@ public:
   virtual int suspend (void) const;
   virtual int resume (void) const;
   virtual int init (int argc, ACE_TCHAR *argv[]) const;
-  virtual int fini (void);
+  virtual int fini (void) const;
   virtual int info (ACE_TCHAR **str, size_t len) const;
 
   /// Add a new  ACE_Module to the top of the ACE_Stream.
