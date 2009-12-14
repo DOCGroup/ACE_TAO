@@ -1,3 +1,8 @@
+Mon Dec 14 11:37:46 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.cpp
+          Solve minor bug in test
+
 Mon Dec 14 11:18:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
