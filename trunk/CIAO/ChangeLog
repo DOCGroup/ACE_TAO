@@ -1,3 +1,9 @@
+Mon Dec 14 20:35:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h:
+          Removed virtual methods that where added by accident and which broke
+          the psl
+
 Mon Dec 14 20:31:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Session/Session_Container.cpp:
