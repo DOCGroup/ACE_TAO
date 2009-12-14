@@ -295,10 +295,6 @@
 
   <connection>
     <name>reader_starter</name>
-    <deployRequirement>
-      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
-      <resourceType>Local_Interface</resourceType>
-    </deployRequirement>
     <internalEndpoint>
       <portName>invoke_getter</portName>
       <provider>false</provider>
