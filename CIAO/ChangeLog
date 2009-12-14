@@ -1,3 +1,9 @@
+Mon Dec 14 13:16:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.cpp:
+          The deleted samples may be invalid. Therefore don't check
+          on valid_data flag. Implemented this for many_by_many.
+
 Mon Dec 14 12:56:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.cpp:
