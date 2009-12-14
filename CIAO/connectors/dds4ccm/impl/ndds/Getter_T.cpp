@@ -11,7 +11,9 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::Getter_T (void) :
    impl_ (0),
    condition_(0),
    time_out_ (),
-   max_delivered_data_ (0)
+   max_delivered_data_ (0),
+   gd_ (0),
+   rd_condition_ (0)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Getter_T::Getter_T");
 }
