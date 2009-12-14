@@ -2,9 +2,7 @@
 // $Id$
 
 #include "Getter_Test_Sender_exec.h"
-#include "ace/Guard_T.h"
 #include "ciao/Logger/Log_Macros.h"
-#include "ace/Date_Time.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
@@ -13,7 +11,6 @@ namespace CIAO_Getter_Test_Sender_Impl
   //============================================================
   // Pulse generator
   //============================================================
-
   pulse_Generator::pulse_Generator (Sender_exec_i &callback)
     : pulse_callback_ (callback)
   {
@@ -27,6 +24,9 @@ namespace CIAO_Getter_Test_Sender_Impl
     return 0;
   }
 
+  //============================================================
+  // ConnectorStatusListener_exec_i
+  //============================================================
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Sender_exec_i &callback)
     : callback_ (callback)
   {
@@ -36,7 +36,6 @@ namespace CIAO_Getter_Test_Sender_Impl
   {
   }
 
-  // Operations from ::CCM_DDS::ConnectorStatusListener
   void ConnectorStatusListener_exec_i::on_inconsistent_topic(
      ::DDS::Topic_ptr ,
      const DDS::InconsistentTopicStatus & )
@@ -72,14 +71,15 @@ namespace CIAO_Getter_Test_Sender_Impl
     ::DDS::StatusKind  status_kind)
   {
     if (status_kind == ::DDS::PUBLICATION_MATCHED_STATUS)
-      this->callback_.start ();
+      {
+        this->callback_.start ();
+      }
   }
 
 
   //============================================================
-  // Component Executor Implementation Class: Sender_exec_i
+  // Sender_exec_i
   //============================================================
-
   Sender_exec_i::Sender_exec_i (void)
     : iterations_ (10),
       keys_ (5),
@@ -127,7 +127,7 @@ namespace CIAO_Getter_Test_Sender_Impl
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("write_many : written <%u> samples\n"),
               write_many.length ()));
       }
-    catch (CCM_DDS::InternalError& ex)
+    catch (const CCM_DDS::InternalError& ex)
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
                     ACE_TEXT ("while write many writer info: index <%d> - retval <%d>\n"),

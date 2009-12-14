@@ -13,7 +13,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-#include "ace/Reactor.h"
 
 #include <map>
 
@@ -21,6 +20,9 @@ namespace CIAO_Reader_Test_Receiver_Impl
 {
   class Receiver_exec_i;
 
+  //============================================================
+  // ConnectorStatusListener_exec_i
+  //============================================================
   class RECEIVER_EXEC_Export ConnectorStatusListener_exec_i
     : public virtual ::CCM_DDS::CCM_ConnectorStatusListener,
       public virtual ::CORBA::LocalObject
@@ -53,6 +55,9 @@ namespace CIAO_Reader_Test_Receiver_Impl
     bool has_run_;
   };
 
+  //============================================================
+  // Starter_exec_i
+  //============================================================
   class Starter_exec_i
     : public virtual ::CCM_ReaderStarter,
       public virtual ::CORBA::LocalObject
@@ -70,6 +75,9 @@ namespace CIAO_Reader_Test_Receiver_Impl
     Receiver_exec_i &callback_;
   };
 
+  //============================================================
+  // Receiver_exec_i
+  //============================================================
   class RECEIVER_EXEC_Export Receiver_exec_i
     : public virtual Receiver_Exec,
       public virtual ::CORBA::LocalObject

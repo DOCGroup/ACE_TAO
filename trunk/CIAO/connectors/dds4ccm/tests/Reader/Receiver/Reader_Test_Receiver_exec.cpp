@@ -4,11 +4,12 @@
 
 #include "Reader_Test_Receiver_exec.h"
 #include "ciao/Logger/Log_Macros.h"
-#include "tao/ORB_Core.h"
-#include "ace/OS_NS_time.h"
 
 namespace CIAO_Reader_Test_Receiver_Impl
 {
+  //============================================================
+  // ConnectorStatusListener_exec_i
+  //============================================================
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Receiver_exec_i &callback)
     : callback_ (callback),
       has_run_ (false)
@@ -64,7 +65,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
   }
 
   //============================================================
-  // Component Executor Implementation Class: Receiver_exec_iReaderTest_Listener_exec_i ();
+  // Starter_exec_i
   //============================================================
   Starter_exec_i::Starter_exec_i (Receiver_exec_i & callback)
     : callback_ (callback)
@@ -89,6 +90,9 @@ namespace CIAO_Reader_Test_Receiver_Impl
     this->callback_.read_no_data ();
   }
 
+  //============================================================
+  // Receiver_exec_i
+  //============================================================
   Receiver_exec_i::Receiver_exec_i (void)
     : iterations_ (10),
       keys_ (5),
@@ -117,7 +121,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
                 ::DDS::HANDLE_NIL);
         return readertest_info.iteration == this->iterations_;
       }
-    catch(...)
+    catch (...)
       {
         // no need to catch. An error is given
         // when this example didn't run at all.
@@ -163,7 +167,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
               }
           }
       }
-    catch(CCM_DDS::NonExistent& ex)
+    catch (const CCM_DDS::NonExistent& ex)
       {
         for (CORBA::ULong i = 0; i < ex.indexes.length (); ++i)
           {
@@ -172,7 +176,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
                   ex.indexes[i]));
           }
       }
-    catch(CCM_DDS::InternalError& ex)
+    catch (const CCM_DDS::InternalError& ex)
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ONE LAST: ")
               ACE_TEXT ("caught InternalError exception: retval <%u>\n"),
@@ -232,7 +236,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
               }
           }
       }
-    catch(CCM_DDS::NonExistent& ex)
+    catch (const CCM_DDS::NonExistent& ex)
       {
         for (CORBA::ULong i = 0; i < ex.indexes.length (); ++i)
           {
@@ -241,14 +245,14 @@ namespace CIAO_Reader_Test_Receiver_Impl
                   ex.indexes[i]));
           }
       }
-    catch(CCM_DDS::InternalError& ex)
+    catch (const CCM_DDS::InternalError& ex)
       {
         if (ex.error_code == 0)
           {
             CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ONE ALL: ")
                   ACE_TEXT ("caught InternalError exception: handles differ\n")));
           }
-        else 
+        else
           {
             CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ONE ALL: ")
                   ACE_TEXT ("caught InternalError exception: retval <%u>\n"),
@@ -290,7 +294,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
                 (*readertest_info_seq)[it].iteration));
           }
       }
-    catch(CCM_DDS::NonExistent& ex)
+    catch (const CCM_DDS::NonExistent& ex)
       {
         for (CORBA::ULong i = 0; i < ex.indexes.length (); ++i)
           {
@@ -299,7 +303,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
                   ex.indexes[i]));
           }
       }
-    catch(CCM_DDS::InternalError& ex)
+    catch (const CCM_DDS::InternalError& ex)
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ LAST: ")
               ACE_TEXT ("caught InternalError exception: retval <%u>\n"),
@@ -365,7 +369,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
               }
           }
       }
-    catch(CCM_DDS::NonExistent& ex)
+    catch (const CCM_DDS::NonExistent& ex)
       {
         for (CORBA::ULong i = 0; i < ex.indexes.length (); ++i)
           {
@@ -374,7 +378,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
                   ex.indexes[i]));
           }
       }
-    catch(CCM_DDS::InternalError& ex)
+    catch (const CCM_DDS::InternalError& ex)
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ALL: ")
               ACE_TEXT ("caught InternalError exception: retval <%u>\n"),
@@ -400,12 +404,12 @@ namespace CIAO_Reader_Test_Receiver_Impl
         ::CCM_DDS::ReadInfo readinfo;
         this->reader_->read_one_last (readertest_info, readinfo, ::DDS::HANDLE_NIL);
       }
-    catch(CCM_DDS::InternalError& )
+    catch (const CCM_DDS::InternalError& )
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Receiver_exec_i::test_exception: ")
                   ACE_TEXT ("Wrong exception caught while reading non existent instance\n")));
       }
-    catch(CCM_DDS::NonExistent& )
+    catch (const CCM_DDS::NonExistent& )
       {
         except_caught = true;
       }
@@ -432,13 +436,13 @@ namespace CIAO_Reader_Test_Receiver_Impl
             readinfo,
             hnd);
       }
-    catch(CCM_DDS::InternalError& )
+    catch (const CCM_DDS::InternalError& )
       {
         except_caught = true;
         CIAO_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver_exec_i::test_exception_with_handles: ")
                   ACE_TEXT ("Expected exception caught while reading non existent instance\n")));
       }
-    catch(CCM_DDS::NonExistent& )
+    catch (const CCM_DDS::NonExistent& )
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Receiver_exec_i::test_exception_with_handles: ")
                   ACE_TEXT ("Wrong exception caught while reading non existent instance\n")));
@@ -475,12 +479,12 @@ namespace CIAO_Reader_Test_Receiver_Impl
                 ACE_TEXT ("No data available.\n")));
           }
       }
-    catch(CCM_DDS::NonExistent& )
+    catch (const CCM_DDS::NonExistent& )
       {
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("ERROR: READ NO DATA: ")
               ACE_TEXT ("Caught NonExistent exception")));
       }
-    catch(CCM_DDS::InternalError& ex)
+    catch (const CCM_DDS::InternalError& ex)
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ NO DATA: ")
               ACE_TEXT ("caught InternalError exception: retval <%u>\n"),
