@@ -41,7 +41,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
         }
       catch (const Hello::InternalError& ex)
         {
-          printf ("AMI CORBA (FOO) :\tCaught the correct except type (CCM_AMI::InternalError) <%d> <%s>\n",
+          printf ("AMI CORBA (FOO) :\tCaught the correct except type <%d> <%s>\n",
                   ex.id, ex.error_string.in ());
           HandleException (ex.id, ex.error_string.in (), func);
         }
