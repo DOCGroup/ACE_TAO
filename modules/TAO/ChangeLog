@@ -1,3 +1,10 @@
+Mon Dec 14 18:16:17 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_array.cpp:
+        
+          Completed support for template parameters as array bounds.
+
 Fri Dec 11 19:17:52 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_sequence.cpp:

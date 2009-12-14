@@ -128,6 +128,7 @@ AST_Expression::AST_Expression (AST_Expression *v,
     tdef (0),
     param_holder_ (0)
 {
+  AST_Param_Holder *ph = v->param_holder_;
   this->fill_definition_details ();
 
   // If we are here because one string constant has
@@ -153,12 +154,19 @@ AST_Expression::AST_Expression (AST_Expression *v,
     }
   else
     {
-      this->pd_ev = v->coerce (t);
-
-      if (this->pd_ev == 0)
+      if (ph == 0)
         {
-          idl_global->err ()->coercion_error (v,
-                                              t);
+          this->pd_ev = v->coerce (t);
+
+          if (this->pd_ev == 0)
+            {
+              idl_global->err ()->coercion_error (v, t);
+            }
+        }
+      else
+        {
+          this->param_holder_ = ph;
+          v->param_holder_ = 0;
         }
 
       if (0 != v->pd_n)
