@@ -107,7 +107,7 @@ namespace CIAO
         if (retval != DDS_RETCODE_OK)
           {
             CIAO_ERROR ((LM_ERROR, CLINFO "RTI_DomainParticipantFactory_i::delete_participant - "
-                         "RTI delete_participant returned non-ok error code %c\n",
+                         "RTI delete_participant returned non-ok error code %C\n",
                          translate_retcode (retval)));
           }
         else CIAO_DEBUG ((LM_INFO, CLINFO "RTI_DomainParticipantFactory_i::delete_participant - "
