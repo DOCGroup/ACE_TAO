@@ -60,3 +60,4 @@ TAO/CIAO/connectors/dds4ccm/tests/ListenOneByOne/descriptors/run_test.pl: !STATI
 TAO/CIAO/connectors/dds4ccm/tests/ListenManyByMany/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
 TAO/CIAO/connectors/dds4ccm/tests/Updater/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
 TAO/CIAO/connectors/dds4ccm/tests/SLDisabled/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
+TAO/CIAO/connectors/dds4ccm/tests/SLOneByOne/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
