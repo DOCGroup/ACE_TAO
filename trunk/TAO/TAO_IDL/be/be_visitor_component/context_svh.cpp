@@ -32,7 +32,7 @@ int
 be_visitor_context_svh::visit_component (be_component *node)
 {
   node_ = node;
-  
+
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
@@ -54,7 +54,6 @@ be_visitor_context_svh::visit_component (be_component *node)
       << "Context_Impl<" << be_idt << be_idt_nl
       << global << sname << "::CCM_" << lname
       << "_Context," << be_nl
-      << lname << "_Servant," << be_nl
       << "::" << node->name () << ">" << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl;
@@ -68,19 +67,17 @@ be_visitor_context_svh::visit_component (be_component *node)
       << "::CIAO::Context_Impl<" << be_idt << be_idt_nl
       << global << sname << "::CCM_"
       << lname << "_Context," << be_nl
-      << lname << "_Servant," << be_nl
       << "::" << node->name () << ">" << be_uidt_nl
       << "base_type;" << be_uidt_nl << be_nl;
 
   os_ << "typedef base_type::context_type context_type;" << be_nl
-      << "typedef base_type::servant_type servant_type;" << be_nl
       << "typedef base_type::component_type component_type;"
       << be_nl << be_nl;
 
   os_ << lname << "_Context (" << be_idt_nl
       << "::Components::CCMHome_ptr h," << be_nl
       << "::CIAO::Container_ptr c," << be_nl
-      << lname << "_Servant *sv);" << be_uidt_nl << be_nl;
+      << "PortableServer::Servant sv);" << be_uidt_nl << be_nl;
 
   os_ << "virtual ~" << lname << "_Context (void);";
 
@@ -105,7 +102,7 @@ be_visitor_context_svh::visit_component (be_component *node)
                          ACE_TEXT ("failed\n")),
                         -1);
     }
-    
+
   if (swapping_)
     {
       os_ << be_nl << be_nl
@@ -119,7 +116,7 @@ be_visitor_context_svh::visit_component (be_component *node)
 
   os_ << be_uidt_nl
       << "};";
-    
+
   return 0;
 }
 
@@ -129,7 +126,7 @@ be_visitor_context_svh::visit_uses (be_uses *node)
   ACE_CString prefix (this->port_prefix_);
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
-  
+
   const char *obj_name = node->uses_type ()->full_name ();
   bool is_multiple = node->is_multiple ();
 

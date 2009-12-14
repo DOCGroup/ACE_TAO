@@ -1,3 +1,11 @@
+Mon Dec 14 13:58:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          Simplified generated code
+
 Mon Dec 14 07:26:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Exposed_Policies/RT_Properties.{h,cpp}:
