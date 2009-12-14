@@ -43,7 +43,6 @@ $tg_executor = 0;
 
 $status = 0;
 $cdp_file = "DeploymentPlan.cdp";
-$dat_file = "NodeMap.dat";
 
 $ENV{"DANCE_TRACE_ENABLE"} = 0;
 $ENV{"CIAO_TRACE_ENABLE"} = 0;

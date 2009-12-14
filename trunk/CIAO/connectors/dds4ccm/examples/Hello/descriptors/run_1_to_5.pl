@@ -44,8 +44,6 @@ $tg_executor = 0;
 $status = 0;
 $cdp_file = "1_to_5.cdp";
 
-PerlACE::add_lib_path ('../lib');
-
 sub create_targets {
     #   naming service
     $tg_naming = PerlACE::TestTarget::create_target (1) || die "Create target for ns failed\n";
