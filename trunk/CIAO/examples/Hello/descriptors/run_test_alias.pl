@@ -46,7 +46,6 @@ $tg_naming = 0;
 $tg_exe_man = 0;
 $tg_executor = 0;
 
-PerlACE::add_lib_path 
 $ENV{"DANCE_TRACE_ENABLE"} = 0;
 $ENV{"CIAO_TRACE_ENABLE"} = 0;
 

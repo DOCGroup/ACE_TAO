@@ -10,7 +10,6 @@ use PerlACE::TestTarget;
 
 $tg = PerlACE::TestTarget::create_target (1) || die "Create target for ns failed\n";
 
-$status = 0;
 $iorbase1 = "NodeApp1.ior";
 $iorfile1 = $tg->LocalFile ($iorbase1);
 $iorbase2 = "NodeApp2.ior";
