@@ -280,7 +280,7 @@ void
 CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::data_reader (
   ::DDS::DataReader_ptr reader)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::InstanceHandleManager_T::data_reader");
+  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Getter_T::data_reader");
 
   if (::CORBA::is_nil (reader))
     {
