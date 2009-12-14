@@ -1,3 +1,12 @@
+Mon Dec 14 14:25:09 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/run_1_to_5.pl:
+        * examples/Hello/descriptors/run_test_alias.pl:
+        * examples/Hello/descriptors/run_test_without_ns.pl:
+        * tests/Bug_3769_Regression/descriptors/run_test.pl:
+        * tests/CIAO_ComponentServer/Local_Facet/run_test.pl:
+          Resolved fuzz erros/warnings.
+
 Mon Dec 14 14:15:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/tests/MocksTest/*

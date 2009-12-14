@@ -49,11 +49,14 @@ sub create_targets {
     #   daemon
     for ($i = 0; $i < $daemons; ++$i) {
         $tg_daemons[$i] = PerlACE::TestTarget::create_target ($i+1) || die "Create target for deamon $i failed\n";
+        $tg_daemons[$i]->AddLibPath ('../lib');
     }
     #   execution manager
     $tg_exe_man = PerlACE::TestTarget::create_target (1) || die "Create target for EM failed\n";
+    $tg_exe_man->AddLibPath ('../lib');
     #   executor (plan_launcher)
     $tg_executor = PerlACE::TestTarget::create_target (1) || die "Create target for executor failed\n";
+    $tg_executor->AddLibPath ('../lib');
 }
 
 sub init_ior_files {
