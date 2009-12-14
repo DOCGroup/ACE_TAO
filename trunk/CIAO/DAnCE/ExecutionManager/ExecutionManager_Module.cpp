@@ -336,19 +336,7 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
 
           node_name = this->options_.node_managers_[i].substring (0, pos);
           nm_ior = this->options_.node_managers_[i].substring (pos + 1);
-          /*
-          CORBA::Object_var obj = orb->string_to_object (nm_ior.c_str ());
-          Deployment::NodeManager_var nm_obj =
-            Deployment::NodeManager::_narrow (obj.in ());
 
-          if (CORBA::is_nil (nm_obj))
-            {
-              DANCE_ERROR ((LM_ERROR, DLINFO "DAnCE_ExecutionManager::create_object - "
-                             "Failed to narrow the object to node manager : %C\n",
-                             this->options_.node_managers_[i].c_str()));
-              continue;
-            }
-          */
           DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("Placing node \"%C\" to EM's map.\n"), node_name.c_str()));
           this->em_impl_->add_node_manager (node_name.c_str(), nm_ior.c_str ());
         }

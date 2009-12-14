@@ -1,3 +1,21 @@
+Mon Dec 14 11:18:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+          Removed generated header
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h:
+          Use ACE_CString for subplan names
+
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp:
+          Removed commented out code
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+          Removed not needed include
+
+        * DAnCE/NodeManager/NodeManager_Impl.h
+          Added missing include
+
 Mon Dec 14 10:58:46 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * bin/ciao_tests.lst:
@@ -24,7 +42,6 @@ Mon Dec 14 10:58:46 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender_exec.cpp:
         * connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender_exec.h:
           Added test StateListener: NOT_ENABLED .
-
 
 Mon Dec 14 10:46:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
