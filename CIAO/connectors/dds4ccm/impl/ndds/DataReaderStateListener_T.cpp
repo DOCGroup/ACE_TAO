@@ -85,16 +85,19 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
         {
           for (::DDS_Long i = 0; i < data.length (); ++i)
             {
+              // sample data may not be valid anymore when 
+              // deleted so don't check the valid_data flag
+              // here.
+              if (sample_info[i].instance_state ==
+                      ::DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
+                {
+                  ::CCM_DDS::ReadInfo readinfo;
+                  readinfo <<= sample_info[i];
+                  listener_->on_deletion (data[i], readinfo);
+                }
               if (sample_info[i].valid_data)
                 {
-                  if (sample_info[i].instance_state ==
-                          ::DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
-                    {
-                      ::CCM_DDS::ReadInfo readinfo;
-                      readinfo <<= sample_info[i];
-                      listener_->on_deletion (data[i], readinfo);
-                    }
-                  else if (sample_info[i].view_state ==
+                  if (sample_info[i].view_state ==
                           ::DDS_NEW_VIEW_STATE)
                     {
                       ::CCM_DDS::ReadInfo readinfo;
@@ -159,7 +162,7 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
                         {
                           ::CCM_DDS::ReadInfo readinfo;
                           readinfo <<= sample_info[i];
-                          listener_->on_creation (data[i], readinfo);
+                          listener_->on_deletion (data[i], readinfo);
                         }
                       //clean up
                       updates.clear ();
