@@ -2007,26 +2007,29 @@ NodeApplication_Impl::connect_receptacle (const ::Deployment::PlanConnectionDesc
           if (CORBA::is_nil (facet))
             {
               DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - ")
-                            ACE_TEXT ("Unable to narrow facet for a local facet connection\n")));
+                            ACE_TEXT ("Unable to narrow facet for local facet connection [%C] to receptable [%C]\n"),
+                            facet_name.c_str (), recep_name.c_str ()));
               throw ::Deployment::InvalidConnection ("", "");
             }
 
           if (CORBA::is_nil (ccm_receptacle))
             {
               DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - ")
-                            ACE_TEXT ("Unable to narrow ccm_receptacle for a local facet connection\n")));
+                            ACE_TEXT ("Unable to narrow receptacle for local facet connection [%C] to receptable [%C]\n"),
+                            facet_name.c_str (), recep_name.c_str ()));
               throw ::Deployment::InvalidConnection ("", "");
             }
 
           if (CORBA::is_nil (cont))
             {
               DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - ")
-                            ACE_TEXT ("Unable to narrow containter for a local facet connection\n")));
+                            ACE_TEXT ("Unable to narrow container for local facet connection [%C] to receptable [%C]\n"),
+                            facet_name.c_str (), recep_name.c_str ()));
               throw ::Deployment::InvalidConnection ("", "");
             }
 
           DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT ("NodeApplication_Impl::connect_receptacle - ")
-                        ACE_TEXT ("Connecting local facet %C to receptacle %C\n"),
+                        ACE_TEXT ("Connecting local facet [%C] to receptacle [%C]\n"),
                         facet_name.c_str (), recep_name.c_str ()));
 
           cont->connect_local_facet (facet, facet_name.c_str (), ccm_receptacle, recep_name.c_str ());
