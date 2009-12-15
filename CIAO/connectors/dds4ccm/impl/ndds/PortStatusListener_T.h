@@ -39,6 +39,7 @@ namespace CIAO
         virtual void on_sample_lost (
           ::DDS::DataReader_ptr the_reader,
           const ::DDS::SampleLostStatus & status);
+
     virtual void
     on_requested_incompatible_qos (
       ::DDS::DataReader_ptr ,
