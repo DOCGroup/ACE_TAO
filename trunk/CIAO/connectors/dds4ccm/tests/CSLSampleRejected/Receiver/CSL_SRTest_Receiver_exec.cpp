@@ -2,7 +2,8 @@
 //
 // $Id$
 
-// Test for REJECTED_SAMPLE status
+// Test for ConnectorStatusListener:REJECTED_SAMPLE status through  too much instances
+// in Sender <max_instances>2</max_instances>, in Receiver <max_instances>1</max_instances>
 
 #include "CSL_SRTest_Receiver_exec.h"
 #include "ciao/Logger/Log_Macros.h"
@@ -13,11 +14,9 @@
 namespace CIAO_CSL_SRTest_Receiver_Impl
 {
 
-
 //============================================================
   // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
   //============================================================
-
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &rejected)
    : rejected_ (rejected)
   {
@@ -25,44 +24,45 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
 
   ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
   {
-
   }
 
   // Operations from ::CCM_DDS::ConnectorStatusListener
   void ConnectorStatusListener_exec_i::on_inconsistent_topic(
      ::DDS::Topic_ptr /*the_topic*/,
      const DDS::InconsistentTopicStatus & /*status*/){
-     //printf("Receiver: ConnectorStatusListener_exec_i::on_incompatible_topic\n");
     }
+
   void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
     ::DDS::DataReader_ptr /*the_reader*/,
      const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
-     //printf("ConnectorStatusListener_exec_i::on_requested_incompatible_qos, status = %dl\n",status);
     }
+
   void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::SampleRejectedStatus & /*status*/)  {
-     //  printf("Receiver:ConnectorStatusListener_exec_i::on_sample_rejected\n");
-       this->rejected_ = true;
+     ::DDS::DataReader_ptr the_reader,
+     const DDS::SampleRejectedStatus & status)  {
+     if((status.last_reason == DDS::REJECTED_BY_INSTANCES_LIMIT) &&
+          (!CORBA::is_nil(the_reader)))
+       {
+         this->rejected_ = true;
+       }
     }
+
   void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
      ::DDS::DataWriter_ptr /*the_writer*/,
      const DDS::OfferedDeadlineMissedStatus & /*status*/)  {
-     //printf("Receiver: ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
     }
+
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
      ::DDS::DataWriter_ptr /*the_writer*/,
      const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
-     //printf("Receiver: ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n");
     }
+
   void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr /*the_entity*/,
     ::DDS::StatusKind /*status_kind*/)  {
-    //CORBA::ULong kind = status_kind;
-    //printf("Sender :ConnectorStatusListener_exec_i::on_unexpected_status #### status_kind = %d %s \n", kind, ::CIAO::DDS4CCM::translate_statuskind (kind));
-
     }
-read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
+
+  read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
     : pulse_callback_ (callback)
   {
   }
@@ -115,7 +115,7 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
     const ::CCM_DDS::ReadInfo & /* info */)
   {
     ++this->received_;
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("TestTopic_Listener: ")
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TestTopic_Listener: ")
             ACE_TEXT ("received testtopic_info for <%C> at %dl\n"),
             an_instance.key.in (),
             an_instance.x));
@@ -140,7 +140,6 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
     ::DDS::DataReader_ptr /* the_reader */,
     const ::DDS::RequestedDeadlineMissedStatus & /* status */)
   {
-    /* Your code here. */
   }
 
   void
@@ -148,7 +147,6 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
     ::DDS::DataReader_ptr /* the_reader */,
     const ::DDS::SampleLostStatus & /* status */)
   {
-
   }
 
   //============================================================
@@ -186,7 +184,7 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
       {
         time_t tim = readinfoseq[i].source_timestamp.sec;
         tm* time = ACE_OS::localtime(&tim);
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
             ACE_TEXT ("-> UTC date = %02d:%02d:%02d.%d\n"),
                             time ? time->tm_hour : 0,
                             time ? time->tm_min : 0,
@@ -195,14 +193,13 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
       }
     for(CORBA::ULong i = 0; i < TestTopic_infos->length(); ++i)
       {
-         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL keyed test info : ")
+         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL keyed test info : ")
               ACE_TEXT ("Number <%d> : received TestTopic_info for <%C> at %u\n"),
             i,
             TestTopic_infos[i].key.in (),
             TestTopic_infos[i].x));
       }
   }
-
 
   // Component attributes.
   ::CORBA::ULong
@@ -247,21 +244,21 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
   ::CCM_DDS::TestTopic::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new TestTopic RAW listener\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new TestTopic RAW listener\n")));
     return new TestTopic_Listener_exec_i (this->received_);
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
   {
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
     return new PortStatusListener_exec_i ();
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_get_status (void)
   {
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
     return new PortStatusListener_exec_i ();
   }
 
@@ -301,7 +298,7 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
 
     if (CORBA::is_nil (lc.in ()))
       {
-        CIAO_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
+        ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw CORBA::INTERNAL ();
       }
     lc->mode (this->raw_listen_ ? ::CCM_DDS::ONE_BY_ONE : ::CCM_DDS::NOT_ENABLED);
@@ -314,7 +311,7 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
                                           ACE_Time_Value(0, usec),
                                           ACE_Time_Value(0, usec)) == -1)
       {
-        CIAO_ERROR ((LM_ERROR, "Unable to schedule Timer\n"));
+        ACE_ERROR ((LM_ERROR, "Unable to schedule Timer\n"));
       }
   }
 
@@ -330,14 +327,14 @@ read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
   {
      if(!this->rejected_.value ())
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
                                ACE_TEXT ("warning 'on_sample_rejected' in the Receiver\n")
                     ));
       }
 
     else
       {
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Have received the expected ")
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Have received the expected ")
                                ACE_TEXT ("'on_sample_rejected' in the Receiver\n")
                     ));
       }
