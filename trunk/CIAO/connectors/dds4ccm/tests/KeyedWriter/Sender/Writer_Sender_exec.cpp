@@ -136,7 +136,7 @@ namespace CIAO_Writer_Sender_Impl
                     this->last_key->second->iteration,
                     hnd.isValid));
           }
-        catch (CCM_DDS::InternalError& )
+        catch (const CCM_DDS::InternalError& )
           {
             exception_caught = true;
             if (this->last_key == this->ktests_.begin ())
@@ -206,7 +206,7 @@ namespace CIAO_Writer_Sender_Impl
       {
         this->writer_->write_many (write_many_seq);
       }
-    catch (CCM_DDS::InternalError& ex)
+    catch (const CCM_DDS::InternalError& ex)
       {
         if (ex.index == 0)
           {

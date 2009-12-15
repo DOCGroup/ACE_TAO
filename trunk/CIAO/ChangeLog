@@ -1,3 +1,21 @@
+Tue Dec 15 10:23:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Optimized for loop (++i in stead of i++).
+
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedWriter/Sender/Writer_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ListenManyByMany/Sender/LMBM_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ListenOneByOne/Sender/LOBO_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender_exec.cpp:
+          Catching exceptions as const.
+
+        * connectors/dds4ccm/tests/ListenManyByMany/Receiver/LMBM_Test_Receiver_exec.cpp:
+          Catching exceptions as const.
+          Extended tests on the listener callback.
+
 Tue Dec 15 09:01:46 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * bin/ciao_tests.lst:
@@ -23,8 +41,8 @@ Tue Dec 15 09:01:46 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender.mpc:
         * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender_exec.cpp:
         * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender_exec.h:
-           Add test StateListyener operations with MANY_BY_MANY option.        
-         
+           Add test StateListyener operations with MANY_BY_MANY option.
+
 Tue Dec 15 08:25:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/DomainApplicationManager/Node_Locator.cpp:

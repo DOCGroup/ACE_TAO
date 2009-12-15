@@ -32,14 +32,31 @@ namespace CIAO_LMBM_Test_Receiver_Impl
                                   const ListenManyByManyTest & /*an_instance*/,
                                   const ::CCM_DDS::ReadInfo & /*info*/)
   {
+    //just count; this value is checked on ccm_remove.
     ++this->received_one_by_one_;
   }
 
   void
   ListenManyByManyTest_Listener_exec_i::on_many_data (
                                   const ListenManyByManyTest_Seq & an_instance,
-                                  const ::CCM_DDS::ReadInfoSeq & /*info*/)
+                                  const ::CCM_DDS::ReadInfoSeq & info)
   {
+    if (an_instance.length () == 0)
+      {
+        CIAO_ERROR ((LM_ERROR, "ERROR: ListenManyByManyTest_Listener_exec_i::on_many_data:"
+                               "instance sequence length is nil\n"));
+        return;
+      }
+    for (CORBA::ULong i = 0 ; i < info.length(); ++i)
+      {
+        if (info[i].instance_handle.isValid)
+          {
+            CIAO_ERROR ((LM_ERROR, "ERROR: ListenManyByManyTest_Listener_exec_i::on_many_data:"
+                                "instance handle %d seems to be invalid\n",
+                                i));
+            return;
+          }
+      }
     this->received_many_by_many_ += an_instance.length ();
     if (!this->many_received_.value () && an_instance.length () > 1)
       {

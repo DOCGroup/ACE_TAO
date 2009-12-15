@@ -57,7 +57,7 @@ namespace CIAO_Keyed_Test_Sender_Impl
                     this->last_key->first.c_str (),
                     this->last_key->second->iteration));
           }
-        catch (CCM_DDS::InternalError& )
+        catch (const CCM_DDS::InternalError& )
           {
             printf ("Internal Error while writing KeyedTest info for <%s>.\n",
                         this->last_key->first.c_str ());

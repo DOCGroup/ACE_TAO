@@ -92,12 +92,12 @@ namespace CIAO_Keyed_Test_Receiver_Impl
             check_received_samples ();
           }
       }
-    catch(CCM_DDS::InternalError& )
+    catch(const CCM_DDS::InternalError& )
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: KeyedTest_Read: ")
                   ACE_TEXT ("Unexpected NonExistent exception received\n")));
       }
-    catch(CCM_DDS::NonExistent& )
+    catch(const CCM_DDS::NonExistent& )
       {
         //due to timing issues, this exception may occur
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("KeyedTest_Read: ")
