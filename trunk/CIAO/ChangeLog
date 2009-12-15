@@ -1,3 +1,14 @@
+Tue Dec 15 15:21:46 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLUnexpStat/Connector/CSL_USTest_Connector_exec.cpp
+        * connectors/dds4ccm/tests/CSLUnexpStat/Connector/CSL_USTest_Connector_exec.h
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.cpp
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.h
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.cpp
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.h
+          Cleanup test. Check DDS_entity.
+
+
 Tue Dec 15 15:04:46 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLSampleRejected/Connector/CSL_SRTest_Connector_exec.cpp
