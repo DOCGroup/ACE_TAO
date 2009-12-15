@@ -1,3 +1,8 @@
+Tue Dec 15 12:20:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/OBV/Supports/server.cpp:
+          Fuzz fix.
+
 Mon Dec 14 15:13:30 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/Simple_Naming/run_test_ipv6.pl:
