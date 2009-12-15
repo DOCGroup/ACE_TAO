@@ -19,10 +19,6 @@ module Hello_AMI
     // for synchronous invocation
     uses Hello::MyFoo         run_my_foo;
   };
-
-  home SenderHome manages Sender
-  {
-  };
 };
 
 #endif

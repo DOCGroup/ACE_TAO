@@ -1,3 +1,19 @@
+Tue Dec 15 15:59:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ami4ccm/examples/Hello/AMI/AMI.idl
+        * ami4ccm/examples/Hello/AMI/AMI_exec.cpp
+        * ami4ccm/examples/Hello/AMI/AMI_exec.h
+        * ami4ccm/examples/Hello/AMI/AMI_MyFoo_i.cpp
+        * ami4ccm/examples/Hello/AMI/AMI_MyFoo_i.h
+        * ami4ccm/examples/Hello/descriptors/run_test.pl
+        * ami4ccm/examples/Hello/Receiver/Hello_Receiver.idl
+        * ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp
+        * ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h
+        * ami4ccm/examples/Hello/Sender/Hello_Sender.idl
+        * ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp
+        * ami4ccm/examples/Hello/Sender/Hello_Sender_exec.h
+          Simplified this example
+
 Tue Dec 15 15:59:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/docs/TestCoverage.ods:
@@ -12,7 +28,6 @@ Tue Dec 15 15:21:46 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.cpp
         * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.h
           Cleanup test. Check DDS_entity.
-
 
 Tue Dec 15 15:04:46 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
@@ -95,8 +110,6 @@ Tue Dec 15 10:31:46 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.cpp
         * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender_exec.cpp
           Solved compile errors.
-
-
 
 Tue Dec 15 10:23:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
