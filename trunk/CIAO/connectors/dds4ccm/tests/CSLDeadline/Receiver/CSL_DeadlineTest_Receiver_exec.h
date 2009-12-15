@@ -135,7 +135,6 @@ class RECEIVER_EXEC_Export PortStatusListener_exec_i
 
   private:
     ::CSL_DeadlineTest::CCM_Receiver_Context_var context_;
-//    CORBA::Boolean raw_listen_;
     Atomic_ULong received_;
     Atomic_Boolean incompatible_;
   };

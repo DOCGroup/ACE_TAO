@@ -30,35 +30,35 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
   void ConnectorStatusListener_exec_i::on_inconsistent_topic(
     ::DDS::Topic_ptr /*the_topic*/,
      const DDS::InconsistentTopicStatus & /*status*/){
-       //printf("Sender : ConnectorStatusListener_exec_i::on_inconsistent_topic\n");
     }
+
   void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
     ::DDS::DataReader_ptr /*the_reader*/,
      const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
-     //printf("Sender:ConnectorStatusListener_exec_i::on_requested_incompatible_qos, status = %dl\n", status);
     }
+
   void ConnectorStatusListener_exec_i::on_sample_rejected(
      ::DDS::DataReader_ptr /*the_reader*/,
      const DDS::SampleRejectedStatus & /*status*/)  {
-     //printf("ConnectorStatusListener_exec_i::on_sample_rejected\n");
     }
+
   void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
-     ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedDeadlineMissedStatus & /*status*/)  {
-     //printf("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
-     this->deadline_missed_ = true;
+     ::DDS::DataWriter_ptr the_writer,
+     const DDS::OfferedDeadlineMissedStatus & status)  {
+       if(status.last_instance_handle.isValid && (!CORBA::is_nil (the_writer)))
+       {
+         this->deadline_missed_ = true;
+       }
     }
+ 
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
      ::DDS::DataWriter_ptr /*the_writer*/,
      const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
-     //printf("Sender:ConnectorStatusListener_exec_i::on_offered_incompatible_qos status = %dl\n", status);
-
     }
+
   void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr /*the_entity*/,
     ::DDS::StatusKind  /*status_kind*/)  {
-      //CORBA::ULong kind = status_kind;
-      //printf("Sender :ConnectorStatusListener_exec_i::on_unexpected_status #### status_kind = %d \n", kind);
     }
   //============================================================
   // Component Executor Implementation Class: Sender_exec_i
@@ -115,9 +115,9 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
           this->writer_->write_one(i->second,hnd);
         }
       }
-      catch (CCM_DDS::InternalError& )
+      catch (const CCM_DDS::InternalError& )
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while writing topic for <%C>.\n"),
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while writing topic for <%C>.\n"),
                         i->first.c_str ()));
       }
     }
@@ -153,13 +153,13 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
 
     if(!this->deadline_missed_.value ())
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
                                ACE_TEXT ("warning 'on_offered_deadline_missed' in Sender\n")
                     ));
       }
     else
       {
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Received the expected ")
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Received the expected ")
                                ACE_TEXT ("'on_offered_deadline_missed' in Sender\n")
                     ));
       }
@@ -179,4 +179,3 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
     return retval;
   }
 }
-
