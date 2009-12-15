@@ -4,8 +4,6 @@
 
 #include "LMBM_Test_Receiver_exec.h"
 #include "ciao/Logger/Log_Macros.h"
-#include "tao/ORB_Core.h"
-#include "ace/OS_NS_time.h"
 
 namespace CIAO_LMBM_Test_Receiver_Impl
 {
@@ -49,12 +47,27 @@ namespace CIAO_LMBM_Test_Receiver_Impl
       }
     for (CORBA::ULong i = 0 ; i < info.length(); ++i)
       {
-        if (info[i].instance_handle.isValid)
+        CIAO_DEBUG ((LM_DEBUG, "ListenManyByManyTest_Listener_exec_i::on_many_data:"
+                               "key <%C> - iteration <%d>\n",
+                               an_instance[i].key.in (),
+                               an_instance[i].iteration));
+        if (!info[i].instance_handle.isValid)
           {
             CIAO_ERROR ((LM_ERROR, "ERROR: ListenManyByManyTest_Listener_exec_i::on_many_data:"
-                                "instance handle %d seems to be invalid\n",
-                                i));
-            return;
+                                "instance handle %d seems to be invalid"
+                                "key <%C> - iteration <%d>\n",
+                                 i,
+                                 an_instance[i].key.in (),
+                                 an_instance[i].iteration));
+          }
+        if (info[i].source_timestamp.sec == 0 &&
+            info[i].source_timestamp.nanosec == 0)
+          {
+            CIAO_ERROR ((LM_ERROR, "ERROR: ListenManyByManyTest_Listener_exec_i::on_one_data: "
+                                "source timestamp seems to be invalid (nil) "
+                                "key <%C> - iteration <%d>\n",
+                                an_instance[i].key.in (),
+                                an_instance[i].iteration));
           }
       }
     this->received_many_by_many_ += an_instance.length ();

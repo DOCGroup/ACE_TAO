@@ -4,8 +4,6 @@
 
 #include "LOBO_Test_Receiver_exec.h"
 #include "ciao/Logger/Log_Macros.h"
-#include "tao/ORB_Core.h"
-#include "ace/OS_NS_time.h"
 
 namespace CIAO_LOBO_Test_Receiver_Impl
 {
@@ -26,18 +24,40 @@ namespace CIAO_LOBO_Test_Receiver_Impl
 
   void
   ListenOneByOneTest_Listener_exec_i::on_one_data (
-                                  const ListenOneByOneTest & /*an_instance*/,
-                                  const ::CCM_DDS::ReadInfo & /*info*/)
+                                  const ListenOneByOneTest & an_instance,
+                                  const ::CCM_DDS::ReadInfo & info)
   {
+    CIAO_DEBUG ((LM_DEBUG, "ListenOneByOneTest_Listener_exec_i::on_one_data: "
+                            "key <%C> - iteration <%d>\n",
+                            an_instance.key.in (),
+                            an_instance.iteration));
+    if (!info.instance_handle.isValid)
+      {
+        CIAO_ERROR ((LM_ERROR, "ERROR: ListenOneByOneTest_Listener_exec_i::on_one_data: "
+                            "instance handle seems to be invalid "
+                            "key <%C> - iteration <%d>\n",
+                            an_instance.key.in (),
+                            an_instance.iteration));
+      }
+    if (info.source_timestamp.sec == 0 &&
+        info.source_timestamp.nanosec == 0)
+      {
+        CIAO_ERROR ((LM_ERROR, "ERROR: ListenOneByOneTest_Listener_exec_i::on_one_data: "
+                            "source timestamp seems to be invalid (nil) "
+                            "key <%C> - iteration <%d>\n",
+                            an_instance.key.in (),
+                            an_instance.iteration));
+      }
     ++this->received_one_by_one_;
   }
 
   void
   ListenOneByOneTest_Listener_exec_i::on_many_data (
-                                  const ListenOneByOneTest_Seq & /*an_instance*/,
+                                  const ListenOneByOneTest_Seq & an_instance,
                                   const ::CCM_DDS::ReadInfoSeq & /*info*/)
   {
-    ++this->received_many_by_many_;
+    //just count. Is checked on ccm_remove.
+    this->received_many_by_many_ += an_instance.length ();
   }
 
   //============================================================

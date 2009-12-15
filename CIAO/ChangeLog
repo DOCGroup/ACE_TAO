@@ -1,3 +1,16 @@
+Tue Dec 15 12:46:02 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/ListenManyByMany/Base/LMBM_Test_Base.idl:
+        * connectors/dds4ccm/tests/ListenManyByMany/Receiver/LMBM_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Base/LNE_Test_Base.idl:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Receiver/LNE_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ListenOneByOne/Base/LOBO_Test_Base.idl:
+        * connectors/dds4ccm/tests/ListenOneByOne/Receiver/LOBO_Test_Receiver_exec.cpp:
+          Extended tests with checks on the received ReadInfo struct.
+
+        * connectors/dds4ccm/tests/ListenOneByOne/descriptors/run_test.pl:
+          Sleep for 30 (instead of 60) seconds.
+
 Tue Dec 15 10:31:46 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.cpp

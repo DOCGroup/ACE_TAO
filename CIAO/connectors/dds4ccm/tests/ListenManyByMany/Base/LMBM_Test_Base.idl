@@ -9,7 +9,7 @@
 #define LISTEN_MANY_BY_MANY_TEST_BASE_IDL
 
 struct ListenManyByManyTest {
-  string key;
+  string key; //@key
   long iteration;
 };
 

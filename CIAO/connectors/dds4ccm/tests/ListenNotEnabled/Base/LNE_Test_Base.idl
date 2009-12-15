@@ -9,7 +9,7 @@
 #define LISTEN_NOT_ENABLED_TEST_BASE_IDL
 
 struct ListenNotEnabledTest {
-  string key;
+  string key; //@key
   long iteration;
 };
 
