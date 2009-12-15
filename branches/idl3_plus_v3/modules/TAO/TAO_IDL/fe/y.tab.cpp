@@ -7943,6 +7943,8 @@ tao_yyreduce:
 // provides_decl : IDL_PROVIDES interface_type id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
+          AST_Decl::NodeType nt = AST_Decl::NT_type;
+          AST_Param_Holder *ph = 0;
 
           AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist),
                                            true);
@@ -7951,20 +7953,49 @@ tao_yyreduce:
               idl_global->err ()->lookup_error ((tao_yyvsp[(2) - (3)].idlist));
               so_far_so_good = false;
             }
-          else if (d->node_type () != AST_Decl::NT_interface)
+          else
             {
-              // Nothing else but CORBA::Object can have
-              // this identifier.
-              int comp_result =
-                ACE_OS::strcmp (d->local_name ()->get_string (),
-                                "Object");
-
-              // Simple provides port must use IDL interface
-              // or CORBA::Object.
-              if (comp_result != 0)
+              int compare = 0;
+              nt = d->node_type ();
+            
+              switch (nt)
                 {
-                  idl_global->err ()->interface_expected (d);
-                  so_far_so_good = false;
+                  case AST_Decl::NT_interface:
+                    break;
+                  case AST_Decl::NT_param_holder:
+                    ph = AST_Param_Holder::narrow_from_decl (d);
+                    nt = ph->info ()->type_;
+                    
+                    if (nt != AST_Decl::NT_type
+                       && nt != AST_Decl::NT_interface)
+                      {
+                        idl_global->err ()->mismatched_template_param (
+                          ph->info ()->name_.c_str ());
+                          
+                        so_far_so_good = false;
+                      }
+                      
+                    break;
+                  case AST_Decl::NT_pre_defined:
+                    // Nothing else but CORBA::Object can have
+                    // this identifier.
+                    compare =
+                      ACE_OS::strcmp (d->local_name ()->get_string (),
+                                      "Object");
+
+                    // Simple provides port must use IDL interface
+                    // or CORBA::Object.
+                    if (compare != 0)
+                      {
+                        idl_global->err ()->interface_expected (d);
+                        so_far_so_good = false;
+                      }
+                      
+                    break;
+                  default:
+                    idl_global->err ()->interface_expected (d);
+                    so_far_so_good = false;
+                    break;
                 }
             }
 
@@ -8039,6 +8070,8 @@ tao_yyreduce:
 // uses_decl : uses_opt_multiple interface_type id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
+          AST_Decl::NodeType nt = AST_Decl::NT_type;
+          AST_Param_Holder *ph = 0;
 
           AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist),
                                            true);
@@ -8047,20 +8080,49 @@ tao_yyreduce:
               idl_global->err ()->lookup_error ((tao_yyvsp[(2) - (3)].idlist));
               so_far_so_good = false;
             }
-          else if (d->node_type () != AST_Decl::NT_interface)
+          else
             {
-              // Nothing else but CORBA::Object can have
-              // this identifier.
-              int comp_result =
-                ACE_OS::strcmp (d->local_name ()->get_string (),
-                                "Object");
-
-              // Simple provides port must use IDL interface
-              // or CORBA::Object.
-              if (comp_result != 0)
+              int compare = 0;
+              nt = d->node_type ();
+            
+              switch (nt)
                 {
-                  idl_global->err ()->interface_expected (d);
-                  so_far_so_good = false;
+                  case AST_Decl::NT_interface:
+                    break;
+                  case AST_Decl::NT_param_holder:
+                    ph = AST_Param_Holder::narrow_from_decl (d);
+                    nt = ph->info ()->type_;
+                    
+                    if (nt != AST_Decl::NT_type
+                       && nt != AST_Decl::NT_interface)
+                      {
+                        idl_global->err ()->mismatched_template_param (
+                          ph->info ()->name_.c_str ());
+                          
+                        so_far_so_good = false;
+                      }
+                      
+                    break;
+                  case AST_Decl::NT_pre_defined:
+                    // Nothing else but CORBA::Object can have
+                    // this identifier.
+                    compare =
+                      ACE_OS::strcmp (d->local_name ()->get_string (),
+                                      "Object");
+
+                    // Simple provides port must use IDL interface
+                    // or CORBA::Object.
+                    if (compare != 0)
+                      {
+                        idl_global->err ()->interface_expected (d);
+                        so_far_so_good = false;
+                      }
+                      
+                    break;
+                  default:
+                    idl_global->err ()->interface_expected (d);
+                    so_far_so_good = false;
+                    break;
                 }
             }
 
@@ -8088,7 +8150,8 @@ tao_yyreduce:
               if (c != 0
                   && u->is_multiple ()
                   && !idl_global->using_ifr_backend ()
-                  && !idl_global->ignore_idl3 ())
+                  && !idl_global->ignore_idl3 ()
+                  && nt != AST_Decl::NT_param_holder)
                 {
                   // These datatypes must be created in the
                   // front end so they can be looked up
@@ -8139,6 +8202,9 @@ tao_yyreduce:
 // emits_decl : IDL_EMITS scoped_name id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
+          AST_Decl::NodeType nt = AST_Decl::NT_type;
+          AST_Param_Holder *ph = 0;
+          
           AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist),
                                            true);
 
@@ -8147,16 +8213,39 @@ tao_yyreduce:
               idl_global->err ()->lookup_error ((tao_yyvsp[(2) - (3)].idlist));
               so_far_so_good = false;
             }
-          else if (d->node_type () != AST_Decl::NT_eventtype)
+          else
             {
-              idl_global->err ()->eventtype_expected (d);
-              so_far_so_good = false;
+              nt = d->node_type ();
+            
+              switch (nt)
+                {
+                  case AST_Decl::NT_eventtype:
+                    break;
+                  case AST_Decl::NT_param_holder:
+                    ph = AST_Param_Holder::narrow_from_decl (d);
+                    nt = ph->info ()->type_;
+                    
+                    if (nt != AST_Decl::NT_type
+                       && nt != AST_Decl::NT_eventtype)
+                      {
+                        idl_global->err ()->mismatched_template_param (
+                          ph->info ()->name_.c_str ());
+                          
+                        so_far_so_good = false;
+                      }
+                      
+                    break;
+                  default:
+                    idl_global->err ()->eventtype_expected (d);
+                    so_far_so_good = false;
+                    break;
+                }
             }
 
           if (so_far_so_good)
             {
-              AST_EventType *event_type =
-                AST_EventType::narrow_from_decl (d);
+              AST_Type *event_type =
+                AST_Type::narrow_from_decl (d);
 
               // Strip off _cxx_, if any, for port name.
               idl_global->original_local_name ((tao_yyvsp[(3) - (3)].idval));
@@ -8187,6 +8276,9 @@ tao_yyreduce:
 // publishes_decl : IDL_PUBLISHES scoped_name id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
+          AST_Decl::NodeType nt = AST_Decl::NT_type;
+          AST_Param_Holder *ph = 0;
+          
           AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist),
                                            true);
 
@@ -8195,16 +8287,39 @@ tao_yyreduce:
               idl_global->err ()->lookup_error ((tao_yyvsp[(2) - (3)].idlist));
               so_far_so_good = false;
             }
-          else if (d->node_type () != AST_Decl::NT_eventtype)
+          else
             {
-              idl_global->err ()->eventtype_expected (d);
-              so_far_so_good = false;
+              nt = d->node_type ();
+            
+              switch (nt)
+                {
+                  case AST_Decl::NT_eventtype:
+                    break;
+                  case AST_Decl::NT_param_holder:
+                    ph = AST_Param_Holder::narrow_from_decl (d);
+                    nt = ph->info ()->type_;
+                    
+                    if (nt != AST_Decl::NT_type
+                       && nt != AST_Decl::NT_eventtype)
+                      {
+                        idl_global->err ()->mismatched_template_param (
+                          ph->info ()->name_.c_str ());
+                          
+                        so_far_so_good = false;
+                      }
+                      
+                    break;
+                  default:
+                    idl_global->err ()->eventtype_expected (d);
+                    so_far_so_good = false;
+                    break;
+                }
             }
 
           if (so_far_so_good)
             {
-              AST_EventType *event_type =
-                AST_EventType::narrow_from_decl (d);
+              AST_Type *event_type =
+                AST_Type::narrow_from_decl (d);
 
               // Strip off _cxx_, if any, for port name.
               idl_global->original_local_name ((tao_yyvsp[(3) - (3)].idval));
@@ -8235,6 +8350,9 @@ tao_yyreduce:
 // consumes_decl : IDL_CONSUMES scoped_name id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
+          AST_Decl::NodeType nt = AST_Decl::NT_type;
+          AST_Param_Holder *ph = 0;
+          
           AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist),
                                            true);
 
@@ -8243,16 +8361,39 @@ tao_yyreduce:
               idl_global->err ()->lookup_error ((tao_yyvsp[(2) - (3)].idlist));
               so_far_so_good = false;
             }
-          else if (d->node_type () != AST_Decl::NT_eventtype)
+          else
             {
-              idl_global->err ()->eventtype_expected (d);
-              so_far_so_good = false;
+              nt = d->node_type ();
+            
+              switch (nt)
+                {
+                  case AST_Decl::NT_eventtype:
+                    break;
+                  case AST_Decl::NT_param_holder:
+                    ph = AST_Param_Holder::narrow_from_decl (d);
+                    nt = ph->info ()->type_;
+                    
+                    if (nt != AST_Decl::NT_type
+                       && nt != AST_Decl::NT_eventtype)
+                      {
+                        idl_global->err ()->mismatched_template_param (
+                          ph->info ()->name_.c_str ());
+                          
+                        so_far_so_good = false;
+                      }
+                      
+                    break;
+                  default:
+                    idl_global->err ()->eventtype_expected (d);
+                    so_far_so_good = false;
+                    break;
+                }
             }
 
           if (so_far_so_good)
             {
-              AST_EventType *event_type =
-                AST_EventType::narrow_from_decl (d);
+              AST_Type *event_type =
+                AST_Type::narrow_from_decl (d);
 
               // Strip off _cxx_, if any, for port name.
               idl_global->original_local_name ((tao_yyvsp[(3) - (3)].idval));
