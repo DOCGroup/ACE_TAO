@@ -20,7 +20,6 @@ namespace CIAO_CSL_QoSTest_Receiver_Impl
 {
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong > Atomic_ULong;
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
-
   
   class Receiver_exec_i;
   
@@ -31,13 +30,11 @@ namespace CIAO_CSL_QoSTest_Receiver_Impl
   public:
     TestTopic_RawListener_exec_i (Atomic_ULong &);
     virtual ~TestTopic_RawListener_exec_i (void);
-
    
     virtual void
     on_one_data (
       const TestTopic & an_instance,
       const ::CCM_DDS::ReadInfo & info);
-
 
     virtual void
     on_many_data (
@@ -47,7 +44,6 @@ namespace CIAO_CSL_QoSTest_Receiver_Impl
   private:
     Atomic_ULong &received_;
   };
-  
   
 class RECEIVER_EXEC_Export ConnectorStatusListener_exec_i
     : public virtual ::CCM_DDS::CCM_ConnectorStatusListener,
@@ -67,19 +63,18 @@ class RECEIVER_EXEC_Export ConnectorStatusListener_exec_i
     void on_sample_rejected( ::DDS::DataReader_ptr the_reader, 
                              const DDS::SampleRejectedStatus & status);
     virtual
-      void on_offered_deadline_missed( ::DDS::DataWriter_ptr the_writer,
+    void on_offered_deadline_missed( ::DDS::DataWriter_ptr the_writer,
                                      const DDS::OfferedDeadlineMissedStatus & status);
     virtual
     void on_offered_incompatible_qos( ::DDS::DataWriter_ptr the_writer, 
                                       const DDS::OfferedIncompatibleQosStatus & status);
     virtual
-      void on_unexpected_status( ::DDS::Entity_ptr the_entity,
-       ::DDS::StatusKind  status_kind);
+    void on_unexpected_status( ::DDS::Entity_ptr the_entity,
+                               ::DDS::StatusKind  status_kind);
     private:
     Atomic_Boolean &incompatible_;
-  
-  };
-  
+ };
+
 class RECEIVER_EXEC_Export PortStatusListener_exec_i
     : public virtual ::CCM_DDS::CCM_PortStatusListener,
       public virtual ::CORBA::LocalObject
@@ -107,10 +102,6 @@ class RECEIVER_EXEC_Export PortStatusListener_exec_i
     Receiver_exec_i (void);
     virtual ~Receiver_exec_i (void);
 
-  //  virtual ::CORBA::Boolean raw_listen (void);
-
-  //  virtual void raw_listen (::CORBA::Boolean raw_listen);
-
     // Port operations.
     virtual ::CCM_DDS::TestTopic::CCM_Listener_ptr
     get_info_out_data_listener (void);
@@ -121,21 +112,18 @@ class RECEIVER_EXEC_Export PortStatusListener_exec_i
     virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
     get_info_out_connector_status (void);
 
-
     // Operations from Components::SessionComponent.
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);
 
     virtual void configuration_complete (void);
-
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
 
   private:
     ::CSL_QoSTest::CCM_Receiver_Context_var context_;
-//    CORBA::Boolean raw_listen_;
     Atomic_ULong received_;
     Atomic_Boolean incompatible_;
   };
@@ -145,4 +133,3 @@ class RECEIVER_EXEC_Export PortStatusListener_exec_i
 }
 
 #endif /* ifndef */
-
