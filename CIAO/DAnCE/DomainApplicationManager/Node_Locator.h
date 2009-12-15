@@ -29,20 +29,20 @@ namespace DAnCE
     Node_Locator (CORBA::ORB_ptr orb,
                   CosNaming::NamingContext_ptr nc);
 
-    ::Deployment::NodeManager_ptr locate_node (const ACE_TCHAR *name);
+    ::Deployment::NodeManager_ptr locate_node (const char *name);
 
-    bool process_node_map (const ACE_TCHAR *file);
+    bool process_node_map (const char *file);
 
-    void store_ior (const ACE_TCHAR *name, const ACE_TCHAR *ior);
+    void store_ior (const char *name, const char *ior);
 
   private:
-    ::Deployment::NodeManager_ptr resolve_ior (const ACE_TCHAR *name,
-                                               const ACE_TCHAR *ior);
+    ::Deployment::NodeManager_ptr resolve_ior (const char *name,
+                                               const char *ior);
 
-    ::Deployment::NodeManager_ptr ns_lookup (const ACE_TCHAR *name);
+    ::Deployment::NodeManager_ptr ns_lookup (const char *name);
 
-    typedef ACE_Map_Manager<ACE_TString,
-                            ACE_TString,
+    typedef ACE_Map_Manager<ACE_CString,
+                            ACE_CString,
                             ACE_Null_Mutex> NODEMAP;
 
     NODEMAP nodes_;

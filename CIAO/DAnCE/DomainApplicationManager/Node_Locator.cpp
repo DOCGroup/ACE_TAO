@@ -14,9 +14,9 @@ namespace DAnCE
   }
 
   ::Deployment::NodeManager_ptr
-  Node_Locator::locate_node (const ACE_TCHAR *name)
+  Node_Locator::locate_node (const char *name)
   {
-    ACE_TString ior;
+    ACE_CString ior;
 
     if (this->nodes_.find (name, ior) == 0)
       {
@@ -29,7 +29,7 @@ namespace DAnCE
   }
 
   bool
-  Node_Locator::process_node_map (const ACE_TCHAR *filename)
+  Node_Locator::process_node_map (const char *filename)
   {
     DANCE_TRACE ("Node_Locator::process_node_map");
 
@@ -52,21 +52,21 @@ namespace DAnCE
 
     ACE_Read_Buffer reader (inf, true);
 
-    ACE_TCHAR * string = 0;
+    char * string = 0;
     // Read from the file line by line
-    while ((string = ACE_TEXT_CHAR_TO_TCHAR (reader.read ('\n'))) != 0)
+    while ((string = reader.read ('\n')) != 0)
       {
         if (ACE_OS::strlen (string) == 0) continue;
 
         // Search from the right to the first space
-        const ACE_TCHAR* ior_start = ACE_OS::strrchr (string, ' ');
+        const char* ior_start = ACE_OS::strrchr (string, ' ');
         // Search from the left to the first space
-        const ACE_TCHAR* dest_end = ACE_OS::strchr (string, ' ');
+        const char* dest_end = ACE_OS::strchr (string, ' ');
 
         // The destination is first followed by some spaces
-        ACE_TString destination (string, dest_end - string);
+        ACE_CString destination (string, dest_end - string);
         // And then the IOR
-        ACE_TString ior (ior_start + 1,  ACE_OS::strlen (ior_start + 1));
+        ACE_CString ior (ior_start + 1,  ACE_OS::strlen (ior_start + 1));
         reader.alloc ()->free (string);
 
         DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT("Node_Locator::process_node_map - ")
@@ -79,12 +79,12 @@ namespace DAnCE
   }
 
   ::Deployment::NodeManager_ptr
-  Node_Locator::resolve_ior (const ACE_TCHAR *name, const ACE_TCHAR *ior)
+  Node_Locator::resolve_ior (const char *name, const char *ior)
   {
     DANCE_TRACE ("Node_Locator::resolve_ior");
 
     DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Node_Locator::resolve_ior - ")
-                  ACE_TEXT("Resolving ior %s for destination %s\n"),
+                  ACE_TEXT("Resolving ior %C for destination %C\n"),
                   ior, name));
 
     CORBA::Object_var obj = this->orb_->string_to_object (ior);
@@ -95,7 +95,7 @@ namespace DAnCE
       {
         DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Node_Locator::resolve_ior - ")
                       ACE_TEXT("Error: Unable to retrieve reference for destination ")
-                      ACE_TEXT("%s and ior %s\n"),
+                      ACE_TEXT("%C and ior %C\n"),
                       name, ior));
       }
 
@@ -103,21 +103,21 @@ namespace DAnCE
   }
 
   void
-  Node_Locator::store_ior (const ACE_TCHAR *name, const ACE_TCHAR *ior)
+  Node_Locator::store_ior (const char *name, const char *ior)
   {
     DANCE_TRACE ("Node_Locator::store_ior");
     this->nodes_.bind (name, ior);
   }
 
   ::Deployment::NodeManager_ptr
-  Node_Locator::ns_lookup (const ACE_TCHAR *nodename)
+  Node_Locator::ns_lookup (const char *nodename)
   {
     DANCE_TRACE ("Node_Locator::ns_lookup");
 
     if (CORBA::is_nil (this->nc_.in ()))
       {
         DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Node_Locator::ns_lookup - ")
-                      ACE_TEXT("Nameservice lookup of %s failed because there is no naming service.\n"),
+                      ACE_TEXT("Nameservice lookup of %C failed because there is no naming service.\n"),
                       nodename));
         return ::Deployment::NodeManager::_nil ();
       }
@@ -127,7 +127,7 @@ namespace DAnCE
         CosNaming::Name name;
         name.length (1);
 
-        name[0].id = ACE_TEXT_ALWAYS_CHAR (nodename);
+        name[0].id = nodename;
         name[0].kind = "NodeManager";
 
         CORBA::Object_var obj = this->nc_->resolve (name);
@@ -136,7 +136,7 @@ namespace DAnCE
         if (CORBA::is_nil (nm.in ()))
           {
             DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Node_Locator::ns_lookup - ")
-                          ACE_TEXT("Unable to narrow provided reference for node %s\n"),
+                          ACE_TEXT("Unable to narrow provided reference for node %C\n"),
                           nodename));
           }
 
@@ -145,13 +145,13 @@ namespace DAnCE
     catch (const CORBA::Exception &e)
       {
         DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Node_Locator::ns_lookup - ")
-                      ACE_TEXT("Caught CORBA exception while looking up name %s:%C\n"),
+                      ACE_TEXT("Caught CORBA exception while looking up name %C:%C\n"),
                       nodename, e._info ().c_str ()));
       }
     catch (...)
       {
         DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Node_Locator::ns_lookup - ")
-                      ACE_TEXT("Caught unexpected exception while looking up name %s\n"),
+                      ACE_TEXT("Caught unexpected exception while looking up name %C\n"),
                       nodename));
       }
 
