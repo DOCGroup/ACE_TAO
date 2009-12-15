@@ -1,3 +1,30 @@
+Tue Dec 15 09:01:46 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/SLManyByMany:
+        * connectors/dds4ccm/tests/SLManyByMany/Base:
+        * connectors/dds4ccm/tests/SLManyByMany/Base/SL_ManyByMany_Base.idl:
+        * connectors/dds4ccm/tests/SLManyByMany/Base/SL_ManyByMany_Base.mpc:
+        * connectors/dds4ccm/tests/SLManyByMany/Connector:
+        * connectors/dds4ccm/tests/SLManyByMany/Connector/SL_ManyByMany_Connector.idl:
+        * connectors/dds4ccm/tests/SLManyByMany/Connector/SL_ManyByMany_Connector.mpc:
+        * connectors/dds4ccm/tests/SLManyByMany/Connector/SL_ManyByMany_Connector_exec.cpp:
+        * connectors/dds4ccm/tests/SLManyByMany/Connector/SL_ManyByMany_Connector_exec.h:
+        * connectors/dds4ccm/tests/SLManyByMany/descriptors:
+        * connectors/dds4ccm/tests/SLManyByMany/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/SLManyByMany/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver.idl:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver.mpc:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.h:
+        * connectors/dds4ccm/tests/SLManyByMany/Sender:
+        * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender.idl:
+        * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender.mpc:
+        * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender_exec.h:
+           Add test StateListyener operations with MANY_BY_MANY option.        
+         
 Tue Dec 15 08:25:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/DomainApplicationManager/Node_Locator.cpp:
