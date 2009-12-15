@@ -1,3 +1,8 @@
+Tue Dec 15 15:59:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/docs/TestCoverage.ods:
+          Spreadsheet to keep track of test coverage.
+
 Tue Dec 15 15:21:46 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLUnexpStat/Connector/CSL_USTest_Connector_exec.cpp
