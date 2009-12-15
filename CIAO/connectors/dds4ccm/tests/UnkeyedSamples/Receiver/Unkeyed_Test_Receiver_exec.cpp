@@ -83,13 +83,31 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
   void
   UnkeyedTest_Listener_exec_i::on_one_data (
     const UnkeyedTest & an_instance ,
-    const ::CCM_DDS::ReadInfo & /* info */)
+    const ::CCM_DDS::ReadInfo & info)
   {
     ++this->received_;
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("UnkeyedTest_Listener: ")
             ACE_TEXT ("received keyed_test_info for <%C> at %u\n"),
             an_instance.key.in (),
             an_instance.iteration));
+    if (info.instance_handle.isValid)
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: UnkeyedTest_Listener::on_one_data: ")
+                ACE_TEXT ("received instance handle should be invalid ")
+                ACE_TEXT ("for unkeyed data ")
+                ACE_TEXT ("key <%C> - iteration <%u>\n"),
+                an_instance.key.in (),
+                an_instance.iteration));
+      }
+    if (info.source_timestamp.sec == 0 &&
+        info.source_timestamp.nanosec == 0)
+      {
+        CIAO_ERROR ((LM_ERROR, "ERROR: UnkeyedTest_Listener::on_one_data: "
+                            "source timestamp seems to be invalid (nil) "
+                            "key <%C> - iteration <%d>\n",
+                            an_instance.key.in (),
+                            an_instance.iteration));
+      }
   }
 
   void

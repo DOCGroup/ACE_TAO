@@ -210,6 +210,25 @@ namespace CIAO_Getter_Test_Receiver_Impl
                                           iteration,
                                           gettertest_info->iteration));
           }
+        // check readinfo struct.
+        if (readinfo.instance_handle.isValid)
+          {
+            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: GET MANY: ")
+                    ACE_TEXT ("received instance handle should be invalid ")
+                    ACE_TEXT ("for unkeyed data: ")
+                    ACE_TEXT ("key <%C> - iteration <%u>\n"),
+                    gettertest_info->key.in (),
+                    gettertest_info->iteration));
+          }
+        if (readinfo.source_timestamp.sec == 0 &&
+            readinfo.source_timestamp.nanosec == 0)
+          {
+            CIAO_ERROR ((LM_ERROR, "ERROR: READ ONE LAST: "
+                                "source timestamp seems to be invalid (nil) "
+                                "key <%C> - iteration <%d>\n",
+                                gettertest_info->key.in (),
+                                gettertest_info->iteration));
+          }
         CIAO_DEBUG ((LM_DEBUG, CLINFO "Receiver_exec_i::get_one: "
                                       "Returned data : key <%C> - iteration <%d>\n",
                                       gettertest_info->key.in (),
