@@ -1,3 +1,12 @@
+Tue Dec 15 13:39:46 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLDeadline/Connector/CSL_DeadlineTest_Connector_exec.cpp:
+        * connectors/dds4ccm/tests/CSLDeadline/Connector/CSL_DeadlineTest_Connector_exec.h:
+        * connectors/dds4ccm/tests/CSLDeadline/Receiver/CSL_DeadlineTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CSLDeadline/Receiver/CSL_DeadlineTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender_exec.cpp:
+          Cleanup test.
+
 Tue Dec 15 13:38:44 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
