@@ -389,7 +389,6 @@
     </internalEndpoint>
   </connection>
 
-
   <artifact xmi:id="Sender_ExecArtifact">
     <name>Sender_exec</name>
     <source/>
