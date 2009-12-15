@@ -1,3 +1,11 @@
+Tue Dec 15 15:04:46 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLSampleRejected/Connector/CSL_SRTest_Connector_exec.cpp
+        * connectors/dds4ccm/tests/CSLSampleRejected/Connector/CSL_SRTest_Connector_exec.h
+        * connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver_exec.cpp
+        * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender_exec.cpp
+          Cleanup test.
+
 Tue Dec 15 14:58:21 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Event_Connection_Test/Receiver/Event_Connection_Test_Receiver_exec.h:
