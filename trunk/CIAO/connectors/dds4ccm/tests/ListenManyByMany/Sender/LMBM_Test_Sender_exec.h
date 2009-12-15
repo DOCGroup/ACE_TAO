@@ -31,7 +31,6 @@ namespace CIAO_LMBM_Test_Sender_Impl
     WriteTicker (Sender_exec_i &callback);
     int handle_timeout (const ACE_Time_Value &, const void *);
   private:
-    /// Maintains a handle that actually process the event
     Sender_exec_i &callback_;
   };
 
@@ -45,7 +44,6 @@ namespace CIAO_LMBM_Test_Sender_Impl
     WriteManyHandler (Sender_exec_i &callback);
     virtual int handle_exception (ACE_HANDLE fc = ACE_INVALID_HANDLE);
   private:
-    /// Maintains a handle that actually process the event
     Sender_exec_i &callback_;
   };
 

@@ -328,7 +328,6 @@ namespace CIAO_Getter_Test_Receiver_Impl
       }
   }
 
-  // Port operations.
   ::CCM_DDS::GetterTest::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
@@ -347,7 +346,6 @@ namespace CIAO_Getter_Test_Receiver_Impl
     return new Invoker_exec_i (*this);
   }
 
-  // Operations from Components::SessionComponent.
   void
   Receiver_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
@@ -394,4 +392,3 @@ namespace CIAO_Getter_Test_Receiver_Impl
     return retval;
   }
 }
-

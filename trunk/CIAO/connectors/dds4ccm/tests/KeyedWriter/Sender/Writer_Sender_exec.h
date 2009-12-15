@@ -20,13 +20,16 @@
 namespace CIAO_Writer_Sender_Impl
 {
   class Sender_exec_i;
-  
+
   enum WRITER_ASSIGNMENT {
     WRITE_NONE,
     WRITE_KEYED,
     WRITE_MULTI
   };
 
+  //============================================================
+  // pulse_Generator
+  //============================================================
   class pulse_Generator :
     public ACE_Event_Handler
   {
@@ -40,6 +43,9 @@ namespace CIAO_Writer_Sender_Impl
     Sender_exec_i &pulse_callback_;
   };
 
+  //============================================================
+  // Sender_exec_i
+  //============================================================
   class Sender_exec_i
     : public virtual Sender_Exec,
       public virtual ::CORBA::LocalObject
@@ -95,7 +101,7 @@ namespace CIAO_Writer_Sender_Impl
     TAO_SYNCH_MUTEX mutex_;
     typedef std::map<ACE_CString, WriterTest_var> Writer_Table;
     Writer_Table ktests_;
-    
+
     typedef std::map<ACE_CString, ::DDS::InstanceHandle_t> Writer_Table_Handles;
     Writer_Table_Handles handles_;
 

@@ -15,10 +15,11 @@
 
 #include "tao/LocalObject.h"
 
-#include <map>
-
 namespace CIAO_Event_Connection_Test_Sender_Impl
 {
+  //============================================================
+  // Sender_exec_i
+  //============================================================
   class Sender_exec_i
     : public virtual Sender_Exec,
       public virtual ::CORBA::LocalObject

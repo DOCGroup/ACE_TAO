@@ -13,11 +13,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-#include "ace/Task.h"
-#include "ace/Reactor.h"
 
 namespace CIAO_Writer_Receiver_Impl
 {
+  //============================================================
+  // WriterTest_Listener_exec_i
+  //============================================================
   class RECEIVER_EXEC_Export WriterTest_Listener_exec_i
     : public virtual ::CCM_DDS::WriterTest::CCM_Listener,
       public virtual ::CORBA::LocalObject
@@ -36,6 +37,9 @@ namespace CIAO_Writer_Receiver_Impl
       const ::CCM_DDS::ReadInfoSeq & info);
   };
 
+  //============================================================
+  // Receiver_exec_i
+  //============================================================
   class RECEIVER_EXEC_Export Receiver_exec_i
     : public virtual Receiver_Exec,
       public virtual ::CORBA::LocalObject
@@ -44,16 +48,12 @@ namespace CIAO_Writer_Receiver_Impl
     Receiver_exec_i (void);
     virtual ~Receiver_exec_i (void);
 
-    // Component attributes.
-
-    // Port operations.
     virtual ::CCM_DDS::WriterTest::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_out_status (void);
 
-    // Operations from Components::SessionComponent.
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);
@@ -73,4 +73,3 @@ namespace CIAO_Writer_Receiver_Impl
 }
 
 #endif /* ifndef */
-

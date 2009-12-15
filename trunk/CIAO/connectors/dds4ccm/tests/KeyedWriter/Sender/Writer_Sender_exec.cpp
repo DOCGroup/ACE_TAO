@@ -10,9 +10,8 @@
 namespace CIAO_Writer_Sender_Impl
 {
   //============================================================
-  // Pulse generator
+  // pulse_Generator
   //============================================================
-
   pulse_Generator::pulse_Generator (Sender_exec_i &callback)
     : pulse_callback_ (callback)
   {
@@ -27,9 +26,8 @@ namespace CIAO_Writer_Sender_Impl
   }
 
   //============================================================
-  // Component Executor Implementation Class: Sender_exec_i
+  // Sender_exec_i
   //============================================================
-
   Sender_exec_i::Sender_exec_i (void)
     : rate_ (1),
       iterations_ (10),
@@ -44,7 +42,6 @@ namespace CIAO_Writer_Sender_Impl
   {
   }
 
-  // Supported operations and attributes.
   void
   Sender_exec_i::reset_iterations ()
   {
@@ -56,7 +53,6 @@ namespace CIAO_Writer_Sender_Impl
       }
   }
 
-  
   void
   Sender_exec_i::unregister_handles ()
   {
@@ -178,12 +174,12 @@ namespace CIAO_Writer_Sender_Impl
           }
       }
   }
-  
+
   void
   Sender_exec_i::write_many ()
   {
     bool expected_exception_thrown = false;
-    
+
     WriterTest_Seq write_many_seq;
     write_many_seq.length (this->keys_ * this->iterations_);
     int iter_key = 0;
@@ -249,17 +245,16 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::start (void)
   {
-    // calculate the interval time
     long usec = 1000000 / this->rate_;
     if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
                 this->ticker_,
                 0,
                 ACE_Time_Value (0, usec),
                 ACE_Time_Value (0, usec)) == -1)
-    {
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
-                             ACE_TEXT ("Error scheduling timer")));
-    }
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
+                              ACE_TEXT ("Error scheduling timer")));
+      }
   }
 
   void
@@ -371,4 +366,3 @@ namespace CIAO_Writer_Sender_Impl
     return retval;
   }
 }
-
