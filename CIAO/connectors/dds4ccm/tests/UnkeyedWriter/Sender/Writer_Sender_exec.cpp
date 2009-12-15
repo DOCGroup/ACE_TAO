@@ -91,7 +91,7 @@ namespace CIAO_Writer_Sender_Impl
                         this->last_key->second->iteration));
               }
           }
-        catch (CCM_DDS::InternalError& )
+        catch (const CCM_DDS::InternalError& )
           {
             if (this->samples_written_ > this->max_dds_samples_)
               {
@@ -149,7 +149,7 @@ namespace CIAO_Writer_Sender_Impl
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("write_many : written <%u> samples\n"),
               write_many_no_excep.length ()));
       }
-    catch (CCM_DDS::InternalError& ex)
+    catch (const CCM_DDS::InternalError& ex)
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
                     ACE_TEXT ("while write many writer info: index <%d> - retval <%d>\n"),
@@ -184,7 +184,7 @@ namespace CIAO_Writer_Sender_Impl
                       write_many_seq.length (),
                       this->max_dds_samples_));
       }
-    catch (CCM_DDS::InternalError& ex)
+    catch (const CCM_DDS::InternalError& ex)
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
                     ACE_TEXT ("while write many writer info: index <%d> - retval <%d>\n"),

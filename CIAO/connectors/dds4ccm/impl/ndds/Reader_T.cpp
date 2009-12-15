@@ -43,7 +43,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::get_nr_valid_samples (
   bool determine_last)
 {
   CORBA::ULong nr_of_samples = 0;
-  for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
+  for (::DDS_Long i = 0 ; i < sample_info.length(); ++i)
     {
       if (determine_last)
         {
@@ -113,7 +113,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_last (
   infoseq->length (nr_of_last_samples);
   inst_seq->length (nr_of_last_samples);
   // we need only the last sample of each instance
-  for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
+  for (::DDS_Long i = 0 ; i < sample_info.length(); ++i)
     {
       if((sample_info[i].sample_rank == 0) && (sample_info[i].valid_data))
         {
@@ -155,7 +155,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_all (
 
   CORBA::ULong ix = 0;
 
-  for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
+  for (::DDS_Long i = 0 ; i < sample_info.length(); ++i)
     {
         if(sample_info[i].valid_data)
           {
@@ -284,7 +284,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_all (
 
   // Copy the valid samples
   CORBA::ULong ix = 0;
-  for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
+  for (::DDS_Long i = 0 ; i < sample_info.length(); ++i)
     {
       if(sample_info[i].valid_data)
         {
