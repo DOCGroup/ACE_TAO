@@ -349,6 +349,25 @@ namespace CIAO_Reader_Test_Receiver_Impl
                     ACE_OS::strcpy (last_key, (*readertest_info_seq)[it].key.in ());
                     ++nr_keys_changed;
                   }
+                // check readinfo struct.
+                if (!(*readinfo_seq)[it].instance_handle.isValid)
+                  {
+                    CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ONE LAST: ")
+                            ACE_TEXT ("received instance handle should be valid ")
+                            ACE_TEXT ("for keyed data: ")
+                            ACE_TEXT ("key <%C> - iteration <%u>\n"),
+                            (*readertest_info_seq)[it].key.in (),
+                            (*readertest_info_seq)[it].iteration));
+                  }
+                if ((*readinfo_seq)[it].source_timestamp.sec == 0 &&
+                    (*readinfo_seq)[it].source_timestamp.nanosec == 0)
+                  {
+                    CIAO_ERROR ((LM_ERROR, "ERROR: READ ONE LAST: "
+                                        "source timestamp seems to be invalid (nil) "
+                                        "key <%C> - iteration <%d>\n",
+                                        (*readertest_info_seq)[it].key.in (),
+                                        (*readertest_info_seq)[it].iteration));
+                  }
                 ++iterations;
               }
             if (nr_keys_changed != this->keys_)
