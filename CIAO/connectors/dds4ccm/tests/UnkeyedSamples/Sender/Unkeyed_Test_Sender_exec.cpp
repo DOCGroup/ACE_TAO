@@ -57,12 +57,12 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
                     this->last_key->first.c_str (),
                     this->last_key->second->iteration));
           }
-        catch (CCM_DDS::NonExistent& )
+        catch (const CCM_DDS::NonExistent& )
           {
             CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Key info for <%s> not updated: <%s> didn't exist.\n"),
                         this->last_key->first.c_str (), this->last_key->first.c_str ()));
           }
-        catch (CCM_DDS::InternalError& )
+        catch (const CCM_DDS::InternalError& )
           {
             CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while updating key info for <%s>.\n"),
                         this->last_key->first.c_str ()));

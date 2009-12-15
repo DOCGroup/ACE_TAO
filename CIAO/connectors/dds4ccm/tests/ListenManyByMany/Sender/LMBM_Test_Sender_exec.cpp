@@ -69,7 +69,7 @@ namespace CIAO_LMBM_Test_Sender_Impl
                           this->last_key_->first.c_str (),
                           this->last_key_->second->iteration));
           }
-        catch (CCM_DDS::InternalError& )
+        catch (const CCM_DDS::InternalError& )
           {
             CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
                         ACE_TEXT ("while updating writer info for <%C>.\n"),
