@@ -95,9 +95,8 @@ namespace CIAO_LOBO_Test_Receiver_Impl
     Receiver_exec_i (void);
     virtual ~Receiver_exec_i (void);
 
-    // Supported operations and attributes.
     void start ();
-    // Component attributes.
+
     virtual ::CORBA::UShort iterations (void);
 
     virtual void iterations (::CORBA::UShort iterations);
@@ -106,7 +105,6 @@ namespace CIAO_LOBO_Test_Receiver_Impl
 
     virtual void keys (::CORBA::UShort keys);
 
-    // Port operations.
     virtual ::CCM_DDS::ListenOneByOneTest::CCM_Listener_ptr
     get_info_listen_data_listener (void);
 
@@ -116,7 +114,6 @@ namespace CIAO_LOBO_Test_Receiver_Impl
     virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
     get_info_listen_connector_status (void);
 
-    // Operations from Components::SessionComponent.
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);
@@ -143,4 +140,3 @@ namespace CIAO_LOBO_Test_Receiver_Impl
 }
 
 #endif /* ifndef */
-

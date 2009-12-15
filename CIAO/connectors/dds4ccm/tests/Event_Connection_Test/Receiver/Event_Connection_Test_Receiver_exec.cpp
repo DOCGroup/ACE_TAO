@@ -4,14 +4,12 @@
 
 #include "Event_Connection_Test_Receiver_exec.h"
 #include "ciao/Logger/Log_Macros.h"
-#include "tao/ORB_Core.h"
 
 namespace CIAO_Event_Connection_Test_Receiver_Impl
 {
   //============================================================
-  // Component Executor Implementation Class: Receiver_exec_i
+  // Receiver_exec_i
   //============================================================
-
   Receiver_exec_i::Receiver_exec_i (void)
     : //DDS_Get
       getter_ok_ (false),
@@ -63,7 +61,6 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
     this->get_status_listener_created_ = true;
     return ::CCM_DDS::CCM_ConnectorStatusListener::_nil ();
   }
-
 
   // Operations from Components::SessionComponent.
   void

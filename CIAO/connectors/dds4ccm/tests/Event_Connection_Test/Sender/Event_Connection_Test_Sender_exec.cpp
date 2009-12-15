@@ -2,17 +2,13 @@
 // $Id$
 
 #include "Event_Connection_Test_Sender_exec.h"
-#include "ace/Guard_T.h"
 #include "ciao/Logger/Log_Macros.h"
-#include "tao/ORB_Core.h"
-#include "ace/Reactor.h"
 
 namespace CIAO_Event_Connection_Test_Sender_Impl
 {
   //============================================================
-  // Component Executor Implementation Class: Sender_exec_i
+  // Sender_exec_i
   //============================================================
-
   Sender_exec_i::Sender_exec_i (void)
     : writer_ok_ (false),
       writer_dds_datawriter_ok_ (false)
@@ -22,8 +18,6 @@ namespace CIAO_Event_Connection_Test_Sender_Impl
   Sender_exec_i::~Sender_exec_i (void)
   {
   }
-
-  // Supported operations and attributes.
 
   void
   Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)

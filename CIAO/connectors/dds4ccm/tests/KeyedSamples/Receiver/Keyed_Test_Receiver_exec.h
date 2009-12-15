@@ -20,12 +20,10 @@
 namespace CIAO_Keyed_Test_Receiver_Impl
 {
   class Receiver_exec_i;
-  /**
-  * @class reader activity generator
-  *
-  * @brief an active object used by Receiver to perform a periodical read action
-  *
-  */
+
+  //============================================================
+  // read_action_Generator
+  //============================================================
   class read_action_Generator
     : public ACE_Event_Handler
   {
@@ -34,16 +32,16 @@ namespace CIAO_Keyed_Test_Receiver_Impl
 
     ~read_action_Generator ();
 
-    /// Handle the timeout.
     virtual int handle_timeout (const ACE_Time_Value &tv,
                                 const void *arg);
-
   private:
-    /// Maintains a handle that actually process the event
     Receiver_exec_i &pulse_callback_;
 
   };
 
+  //============================================================
+  // Receiver_exec_i
+  //============================================================
   class RECEIVER_EXEC_Export Receiver_exec_i
     : public virtual Receiver_Exec,
       public virtual ::CORBA::LocalObject
@@ -52,10 +50,8 @@ namespace CIAO_Keyed_Test_Receiver_Impl
     Receiver_exec_i (void);
     virtual ~Receiver_exec_i (void);
 
-    // Supported operations and attributes.
     void read (void);
 
-    // Component attributes.
     virtual ::CORBA::ULong rate (void);
 
     virtual void rate (::CORBA::ULong rate);
@@ -68,14 +64,12 @@ namespace CIAO_Keyed_Test_Receiver_Impl
 
     virtual void keys (::CORBA::UShort keys);
 
-    // Port operations.
     virtual ::CCM_DDS::KeyedTest::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_out_status (void);
 
-    // Operations from Components::SessionComponent.
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);
@@ -108,4 +102,3 @@ namespace CIAO_Keyed_Test_Receiver_Impl
 }
 
 #endif /* ifndef */
-

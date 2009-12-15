@@ -9,6 +9,9 @@
 
 namespace CIAO_Keyed_Test_Receiver_Impl
 {
+  //============================================================
+  // read_action_Generator
+  //============================================================
   read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
     : pulse_callback_ (callback)
   {
@@ -26,9 +29,8 @@ namespace CIAO_Keyed_Test_Receiver_Impl
   }
 
   //============================================================
-  // Component Executor Implementation Class: Receiver_exec_iKeyedTest_Listener_exec_i ();
+  // Receiver_exec_i
   //============================================================
-
   Receiver_exec_i::Receiver_exec_i (void)
     : rate_ (1),
       iterations_ (10),
@@ -58,7 +60,7 @@ namespace CIAO_Keyed_Test_Receiver_Impl
         this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
       }
   }
-  // Supported operations and attributes.
+
   void
   Receiver_exec_i::read (void)
   {
@@ -99,13 +101,11 @@ namespace CIAO_Keyed_Test_Receiver_Impl
       }
     catch(const CCM_DDS::NonExistent& )
       {
-        //due to timing issues, this exception may occur
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("KeyedTest_Read: ")
                   ACE_TEXT ("Expected NonExistent received\n")));
       }
   }
 
-  // Component attributes.
   ::CORBA::ULong
   Receiver_exec_i::rate (void)
   {
@@ -145,7 +145,6 @@ namespace CIAO_Keyed_Test_Receiver_Impl
     this->expected_ = this->iterations_ * this->keys_;
   }
 
-  // Port operations.
   ::CCM_DDS::KeyedTest::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
@@ -158,7 +157,6 @@ namespace CIAO_Keyed_Test_Receiver_Impl
     return 0;
   }
 
-  // Operations from Components::SessionComponent.
   void
   Receiver_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
@@ -180,7 +178,6 @@ namespace CIAO_Keyed_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
-    // calculate the interval time
     long usec = 1000000 / this->rate_;
     if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
                                           this->ticker_,
@@ -234,4 +231,3 @@ namespace CIAO_Keyed_Test_Receiver_Impl
     return retval;
   }
 }
-

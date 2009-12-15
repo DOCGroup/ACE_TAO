@@ -14,8 +14,6 @@
 
 #include "tao/LocalObject.h"
 
-#include <map>
-
 namespace CIAO_Getter_Test_Receiver_Impl
 {
   class Receiver_exec_i;
@@ -93,10 +91,6 @@ namespace CIAO_Getter_Test_Receiver_Impl
     Receiver_exec_i (void);
     virtual ~Receiver_exec_i (void);
 
-    // Supported operations and attributes.
-    // Component attributes.
-
-    // Port operations.
     virtual ::CCM_DDS::GetterTest::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
@@ -119,7 +113,6 @@ namespace CIAO_Getter_Test_Receiver_Impl
     void get_many (CORBA::Short keys,
                          CORBA::Long iterations);
 
-    // Operations from Components::SessionComponent.
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);
@@ -140,4 +133,3 @@ namespace CIAO_Getter_Test_Receiver_Impl
 }
 
 #endif /* ifndef */
-

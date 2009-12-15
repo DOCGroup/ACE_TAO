@@ -12,7 +12,6 @@ namespace CIAO_Keyed_Test_Sender_Impl
   //============================================================
   // Pulse generator
   //============================================================
-
   pulse_Generator::pulse_Generator (Sender_exec_i &callback)
     : pulse_callback_ (callback)
   {
@@ -27,9 +26,8 @@ namespace CIAO_Keyed_Test_Sender_Impl
   }
 
   //============================================================
-  // Component Executor Implementation Class: Sender_exec_i
+  // Sender_exec_i
   //============================================================
-
   Sender_exec_i::Sender_exec_i (void)
     : rate_ (1),
       iterations_ (10),
@@ -41,8 +39,6 @@ namespace CIAO_Keyed_Test_Sender_Impl
   Sender_exec_i::~Sender_exec_i (void)
   {
   }
-
-  // Supported operations and attributes.
 
   void
   Sender_exec_i::tick ()
@@ -85,17 +81,16 @@ namespace CIAO_Keyed_Test_Sender_Impl
   void
   Sender_exec_i::start (void)
   {
-    // calculate the interval time
     long usec = 1000000 / this->rate_;
     if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
                 this->ticker_,
                 0,
                 ACE_Time_Value (0, usec),
                 ACE_Time_Value (0, usec)) == -1)
-    {
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
-                             ACE_TEXT ("Error scheduling timer")));
-    }
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
+                              ACE_TEXT ("Error scheduling timer")));
+      }
   }
 
   void
@@ -164,7 +159,7 @@ namespace CIAO_Keyed_Test_Sender_Impl
   Sender_exec_i::ccm_activate (void)
   {
     this->start ();
-    
+
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
                         this->mutex_, CORBA::INTERNAL ());
 

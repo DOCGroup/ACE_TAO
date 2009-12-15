@@ -43,7 +43,7 @@ namespace CIAO_LMBM_Test_Sender_Impl
 
 
   //============================================================
-  // Component Executor Implementation Class: Sender_exec_i
+  // Sender_exec_i
   //============================================================
   Sender_exec_i::Sender_exec_i (void)
     : iterations_ (10),
