@@ -92,7 +92,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       CORBA::Object_var object = root_poa->id_to_reference (id.in ());
 
-	  Supports_Test::test_var a_test = Supports_Test::test::_narrow (object.in ());
+      Supports_Test::test_var a_test = Supports_Test::test::_narrow (object.in ());
 
       CORBA::String_var ior = orb->object_to_string (a_test.in ());
 
