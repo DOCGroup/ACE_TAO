@@ -23,10 +23,10 @@ public:
   virtual ~FE_OBVHeader (void);
 
   // Data Accessors.
-  AST_Interface **supports (void) const;
+  AST_Type **supports (void) const;
   long n_supports (void) const;
-  AST_ValueType *inherits_concrete (void) const;
-  AST_Interface *supports_concrete (void) const;
+  AST_Type *inherits_concrete (void) const;
+  AST_Type *supports_concrete (void) const;
   bool truncatable (void) const;
   
   virtual void destroy (void);
@@ -34,11 +34,11 @@ public:
 
 protected:
   // Supported interfaces.
-  AST_Interface **supports_;
+  AST_Type **supports_;
   long n_supports_;
 
-  AST_ValueType *inherits_concrete_;
-  AST_Interface *supports_concrete_;
+  AST_Type *inherits_concrete_;
+  AST_Type *supports_concrete_;
 
   // Currently ignored.
   bool truncatable_;

@@ -78,6 +78,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_component_fwd.h"
 #include "ast_home.h"
 #include "ast_porttype.h"
+#include "ast_template_module.h"
+#include "ast_template_module_ref.h"
 #include "ast_typedef.h"
 #include "ast_type.h"
 #include "ast_root.h"
@@ -181,10 +183,18 @@ iter_lookup_by_name_local (AST_Decl *d,
 
       d = td->base_type ();
     }
-
+    
   if (d == 0)
     {
       return 0;
+    }
+
+  AST_Template_Module_Ref *tmr =
+    AST_Template_Module_Ref::narrow_from_decl (d);
+    
+  if (tmr != 0)
+    {
+      d = tmr->ref ();
     }
 
   // Try to convert the AST_Decl to a UTL_Scope.
@@ -2077,8 +2087,6 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
 
       // We have found the root of the identifier in our local scope.
       first_one_found = d;
-
-      // For the possible call to look_in_inherited() below.
       s = DeclAsScope (d);
 
       // OK, start of name is defined. Now loop doing local lookups

@@ -374,7 +374,7 @@ be_visitor_home_ex_idl::gen_exception_list (
            !ei.is_done ()
            ;)
         {
-          AST_Exception *ex = ei.item ();
+          AST_Type *ex = ei.item ();
           ACE_CString ex_name =
             IdentifierHelper::orig_sn (ex->name ());
 

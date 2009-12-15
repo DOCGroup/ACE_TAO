@@ -78,11 +78,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/OS_Memory.h"
 
-ACE_RCSID (util,
-           utl_exceptlist,
-           "$Id$")
-
-UTL_ExceptList::UTL_ExceptList (AST_Exception *s,
+UTL_ExceptList::UTL_ExceptList (AST_Type *s,
                                 UTL_ExceptList *cdr)
   : UTL_List (cdr),
     pd_car_data (s)
@@ -90,7 +86,7 @@ UTL_ExceptList::UTL_ExceptList (AST_Exception *s,
 }
 
 // Get list item.
-AST_Exception *
+AST_Type *
 UTL_ExceptList::head (void)
 {
   return this->pd_car_data;
@@ -135,7 +131,7 @@ UTL_ExceptlistActiveIterator::UTL_ExceptlistActiveIterator (UTL_ExceptList *s)
 }
 
 // Get current item.
-AST_Exception *
+AST_Type *
 UTL_ExceptlistActiveIterator::item (void)
 {
   if (source == 0)

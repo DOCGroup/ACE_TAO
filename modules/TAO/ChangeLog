@@ -1,3 +1,29 @@
+Tue Dec 15 20:34:51 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/utl_exceptlist.h:
+        * TAO_IDL/include/fe_home_header.h:
+        * TAO_IDL/include/fe_interface_header.h:
+        * TAO_IDL/include/fe_obv_header.h:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/include/fe_component_header.h:
+        * TAO_IDL/be/be_visitor_home/home_ex_idl.cpp:
+        * TAO_IDL/be/be_field.cpp:
+        * TAO_IDL/ast/ast_operation.cpp:
+        * TAO_IDL/fe/fe_obv_header.cpp:
+        * TAO_IDL/fe/fe_home_header.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/fe/fe_component_header.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/util/utl_exceptlist.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          - Added support for template parameters in an
+            operation throw spec.
+
+          - Began support for template parameters as
+            base interfaces/valuetypes and supported interfaces.
+
 Mon Dec 14 20:26:51 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_template_common.h:
