@@ -160,7 +160,7 @@ namespace CIAO_SL_ManyByMany_Sender_Impl
     CORBA::Boolean result = false;
     try
       {
-        for(int i = 0; i < this->topic_seq_many_.length(); i++)
+        for(CORBA::ULong i = 0; i < this->topic_seq_many_.length(); i++)
           {
             this->topic_seq_many_[i].x= i+ 10;
           }
