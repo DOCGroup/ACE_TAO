@@ -9,7 +9,7 @@
 #define LISTEN_ONE_BY_ONE_TEST_BASE_IDL
 
 struct ListenOneByOneTest {
-  string key;
+  string key; //@key
   long iteration;
 };
 
