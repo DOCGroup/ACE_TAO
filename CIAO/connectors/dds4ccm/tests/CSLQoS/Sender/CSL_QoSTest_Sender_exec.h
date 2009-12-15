@@ -78,10 +78,6 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_CSL_QoSTest_Sender_Impl (void);
-
-
-
 }
 
 #endif /* ifndef */
-

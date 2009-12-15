@@ -5,7 +5,7 @@
 
 namespace CIAO_CSL_QoSTest_CSL_QoSTest_Connector_Impl
 {
-  CSL_QoSTest_Connector_exec_i::CSL_QoSTest_Connector_exec_i (const char * /*topic_name*/)
+  CSL_QoSTest_Connector_exec_i::CSL_QoSTest_Connector_exec_i (void)
     : DDS_Event_Connector_T<TestTopic_DDS_Traits, TestTopic_Connector_Traits> ()
   {
   }
@@ -19,12 +19,9 @@ namespace CIAO_CSL_QoSTest_CSL_QoSTest_Connector_Impl
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-
     ACE_NEW_NORETURN (
       retval,
-      CSL_QoSTest_Connector_exec_i ("Square")); //should be set by dep. plan.
-
+      CSL_QoSTest_Connector_exec_i ());
     return retval;
   }
 }
-

@@ -1,3 +1,13 @@
+Tue Dec 15 14:32:46 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLQoS/Connector/CSL_QoSTest_Connector_exec.cpp:
+        * connectors/dds4ccm/tests/CSLQoS/Connector/CSL_QoSTest_Connector_exec.h:
+        * connectors/dds4ccm/tests/CSLQoS/Receiver/CSL_QoSTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CSLQoS/Receiver/CSL_QoSTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CSLQoS/Sender/CSL_QoSTest_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/CSLQoS/Sender/CSL_QoSTest_Sender_exec.h:
+          Cleanup test.
+
 Tue Dec 15 13:39:46 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLDeadline/Connector/CSL_DeadlineTest_Connector_exec.cpp:
