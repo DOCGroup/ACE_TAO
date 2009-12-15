@@ -79,7 +79,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
                 data.key.in (),
                 data.x));
     //one of the data must have the key 'KEY_1' with x == 1
-    if((strcmp(data.key.in() ,"KEY_1") && (data.x == 1L))
+    if((strcmp(data.key.in() ,"KEY_1")==0) && (data.x == 1L))
       {        
         this->create_data_ = true;
       }
@@ -116,11 +116,11 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
                     data[i].key.in (),
                     data[i].x));
      //one of the data must have the key 'KEY_1' with x == 2
-        if(strcmp(data[i].key.in(),"KEY_1") && (data[i].x == 2))
+        if((strcmp(data[i].key,"KEY_1")==0 ) && (data[i].x == 2L))
           {
             this->update_data_ = true;
           }
-      }
+       }
   }
 
   void
@@ -166,7 +166,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
     on_deletion_(false),
     create_data_(false),
     update_data_(false),
-    reader_date_(false)
+    reader_data_(false)
   {
     this->ticker_ = new read_action_Generator (*this); 
   }
