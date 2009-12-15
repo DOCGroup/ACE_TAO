@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #ifndef CIAO_HELLO_RECEIVER_EXEC_H_
@@ -84,33 +83,6 @@ namespace CIAO_Hello_AMI_Receiver_Impl
 
   extern "C" HELLO_RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Hello_AMI_Receiver_Impl (void);
-}
-
-namespace CIAO_Hello_AMI_Receiver_Impl
-{
-  class  ReceiverHome_exec_i
-    : public virtual ReceiverHome_Exec,
-      public virtual ::CORBA::LocalObject
-  {
-  public:
-    ReceiverHome_exec_i (void);
-
-    virtual ~ReceiverHome_exec_i (void);
-
-    // All operations and attributes.
-
-    // Factory operations.
-
-    // Finder operations.
-
-    // Implicit operations.
-
-    virtual ::Components::EnterpriseComponent_ptr
-    create (void);
-  };
-
-  extern "C" HELLO_RECEIVER_EXEC_Export ::Components::HomeExecutorBase_ptr
-  create_Hello_AMI_ReceiverHome_Impl (void);
 }
 
 #endif /* ifndef */

@@ -8,102 +8,43 @@
 
 namespace CCM_CORBA_AMI_MyFoo_Impl
 {
-  //============================================================
-  // Implementation of the AMI CORBA FOO reply handler
-  //============================================================
   class AMI_MyFoo_reply_handler : public POA_Hello::AMI_MyFooHandler
   {
     public:
       AMI_MyFoo_reply_handler (
       ::Hello_AMI::AMI_MyFooCallback_ptr foo_callback);
-      ~AMI_MyFoo_reply_handler (void);
 
-      void
-      foo (
-        CORBA::Long result,
-        const char * out_str);
+      virtual ~AMI_MyFoo_reply_handler (void);
 
-      void
-      foo_excep (
+      virtual void foo (CORBA::Long result, const char * out_str);
+
+      virtual void foo_excep (::Messaging::ExceptionHolder * excep_holder);
+
+      virtual void hello (CORBA::Long answer);
+
+      virtual void hello_excep (::Messaging::ExceptionHolder * excep_holder);
+
+      virtual void get_rw_attrib (::CORBA::Short ami_return_val);
+
+      virtual void get_rw_attrib_excep (
         ::Messaging::ExceptionHolder * excep_holder);
 
       void
-      hello (
-        CORBA::Long answer);
-
-      void
-      hello_excep (
-        ::Messaging::ExceptionHolder * excep_holder);
-      
-      void 
-      get_rw_attrib (
-        ::CORBA::Short ami_return_val);
-      
-      void 
-      get_rw_attrib_excep (
-        ::Messaging::ExceptionHolder * excep_holder);
-      
-      void 
       set_rw_attrib ();
-  
-      void 
+
+      void
       set_rw_attrib_excep (
         ::Messaging::ExceptionHolder * excep_holder);
-  
-      void 
+
+      void
       get_ro_attrib (
         ::CORBA::Short ami_return_val);
-    
-      void 
+
+      void
       get_ro_attrib_excep (
         ::Messaging::ExceptionHolder * excep_holder);
     private:
       ::Hello_AMI::AMI_MyFooCallback_var foo_callback_;
-  };
-
-  class AMI_MyFoo_i : public POA_Hello::MyFoo
-  {
-  public:
-    /// ctor
-    AMI_MyFoo_i (
-      CORBA::ORB_ptr orb,
-      ::Hello::MyFoo_ptr foo_receiver);
-
-    // The AMI methods.
-    CORBA::Long
-    foo (
-      const char * in_str,
-      CORBA::String_out out_str);
-
-    void
-    hello (
-      CORBA::Long_out answer);
-  
-    CORBA::Short
-    rw_attrib (void);
-
-    void
-    rw_attrib (
-      CORBA::Short rw_attrib);
-  
-    CORBA::Short
-    ro_attrib (void);
-
-  private:
-    CORBA::ORB_var orb_;
-    ::Hello::MyFoo_var foo_receiver_;
-  };
-
-  // CORBA server which delivers the MyFoo interface
-  class CORBA_MyFoo_server : public ACE_Task_Base
-  {
-    public:
-      CORBA_MyFoo_server (
-        ::Hello::MyFoo_ptr foo_receiver);
-      virtual int svc (void);
-
-    private:
-    ::Hello::MyFoo_var foo_receiver_;
   };
 }
 #endif /* AMI_MyFoo_i_H */
