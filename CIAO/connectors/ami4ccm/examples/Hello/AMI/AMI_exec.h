@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #ifndef CIAO_AMI_EXEC_H_
@@ -17,16 +16,6 @@
 
 namespace CIAO_Hello_AMI_AMI_AMI_Impl
 {
-  class AMI_perform_work : public ACE_Task_Base
-  {
-    public:
-      AMI_perform_work (CORBA::ORB_ptr orb);
-      virtual int svc (void);
-
-    private:
-      CORBA::ORB_var orb_;
-  };
-
   class  AMI_MyFoo_exec_i
     : public virtual ::Hello_AMI::CCM_AMI_MyFoo,
       public virtual ::CORBA::LocalObject
@@ -50,10 +39,12 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
     virtual void
     sendc_get_rw_attrib (
       ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler);
+
     virtual void
     sendc_set_rw_attrib (
       ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler,
       CORBA::Short rw_attrib);
+
     virtual void
         sendc_get_ro_attrib (
       ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler);
@@ -101,33 +92,6 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
 
   extern "C" AMI_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Hello_AMI_AMI_Impl (void);
-}
-
-namespace CIAO_Hello_AMI_AMI_AMI_Impl
-{
-  class  AMIHome_exec_i
-    : public virtual AMIHome_Exec,
-      public virtual ::CORBA::LocalObject
-  {
-  public:
-    AMIHome_exec_i (void);
-
-    virtual ~AMIHome_exec_i (void);
-
-    // All operations and attributes.
-
-    // Factory operations.
-
-    // Finder operations.
-
-    // Implicit operations.
-
-    virtual ::Components::EnterpriseComponent_ptr
-    create (void);
-  };
-
-  extern "C" AMI_EXEC_Export ::Components::HomeExecutorBase_ptr
-  create_Hello_AMI_AMIHome_Impl (void);
 }
 
 #endif /* ifndef */

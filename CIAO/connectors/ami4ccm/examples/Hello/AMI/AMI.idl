@@ -13,15 +13,11 @@ module Hello_AMI_AMI
 {
   component AMI
   {
-    //provides the interface for Sender
+    /// Provides the interface for Sender
     provides Hello_AMI::AMI_MyFoo perform_asynch_my_foo;
 
-    //uses the interface of the Receiver ('server')
+    /// Uses the interface of the Receiver ('server')
     uses Hello::MyFoo my_foo_receiver;
-  };
-
-  home AMIHome manages AMI
-  {
   };
 };
 

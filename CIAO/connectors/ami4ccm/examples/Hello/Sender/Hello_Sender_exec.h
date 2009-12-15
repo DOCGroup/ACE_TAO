@@ -133,32 +133,5 @@ namespace CIAO_Hello_AMI_Sender_Impl
   create_Hello_AMI_Sender_Impl (void);
 }
 
-namespace CIAO_Hello_AMI_Sender_Impl
-{
-  class  SenderHome_exec_i
-    : public virtual SenderHome_Exec,
-      public virtual ::CORBA::LocalObject
-  {
-  public:
-    SenderHome_exec_i (void);
-
-    virtual ~SenderHome_exec_i (void);
-
-    // All operations and attributes.
-
-    // Factory operations.
-
-    // Finder operations.
-
-    // Implicit operations.
-
-    virtual ::Components::EnterpriseComponent_ptr
-    create (void);
-  };
-
-  extern "C" HELLO_SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
-  create_Hello_AMI_SenderHome_Impl (void);
-}
-
 #endif /* ifndef */
 
