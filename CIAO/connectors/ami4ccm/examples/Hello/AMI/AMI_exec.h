@@ -12,7 +12,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-#include "ace/Task.h"
 
 namespace CIAO_Hello_AMI_AMI_AMI_Impl
 {
@@ -61,16 +60,8 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
     AMI_exec_i (void);
     virtual ~AMI_exec_i (void);
 
-    // Supported operations and attributes.
-
-    // Component attributes.
-
-    // Port operations.
-
     virtual ::Hello_AMI::CCM_AMI_MyFoo_ptr
     get_perform_asynch_my_foo (void);
-
-    // Operations from Components::SessionComponent.
 
     virtual void
     set_session_context (
