@@ -10,9 +10,8 @@
 namespace CIAO_Writer_Receiver_Impl
 {
   //============================================================
-  // Facet Executor Implementation Class: WriterTest_Listener_exec_i
+  // WriterTest_Listener_exec_i
   //============================================================
-
   WriterTest_Listener_exec_i::WriterTest_Listener_exec_i ()
   {
   }
@@ -20,8 +19,6 @@ namespace CIAO_Writer_Receiver_Impl
   WriterTest_Listener_exec_i::~WriterTest_Listener_exec_i (void)
   {
   }
-
-  // Operations from ::CCM_DDS::WriterTest_Listener
 
   void
   WriterTest_Listener_exec_i::on_one_data (
@@ -47,9 +44,9 @@ namespace CIAO_Writer_Receiver_Impl
                 an_instance[i].iteration));
       }
   }
-  
+
   //============================================================
-  // Component Executor Implementation Class: Receiver_exec_iKeyedTest_Listener_exec_i ();
+  // Receiver_exec_i
   //============================================================
   Receiver_exec_i::Receiver_exec_i (void)
   {
@@ -59,7 +56,6 @@ namespace CIAO_Writer_Receiver_Impl
   {
   }
 
-  // Port operations.
   ::CCM_DDS::WriterTest::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
@@ -72,8 +68,7 @@ namespace CIAO_Writer_Receiver_Impl
   {
     return 0;
   }
-  
-  // Operations from Components::SessionComponent.
+
   void
   Receiver_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
@@ -128,4 +123,3 @@ namespace CIAO_Writer_Receiver_Impl
     return retval;
   }
 }
-

@@ -67,7 +67,7 @@ namespace CIAO_Getter_Test_Sender_Impl
   }
 
   void ConnectorStatusListener_exec_i::on_unexpected_status(
-    ::DDS::Entity_ptr /*the_entity*/,
+    ::DDS::Entity_ptr ,
     ::DDS::StatusKind  status_kind)
   {
     if (status_kind == ::DDS::PUBLICATION_MATCHED_STATUS)

@@ -12,7 +12,7 @@
 
 namespace CIAO_SL_ManyByMany_Receiver_Impl
 {
-//============================================================
+  //============================================================
   // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
   //============================================================
   read_action_Generator::read_action_Generator (Receiver_exec_i &callback)

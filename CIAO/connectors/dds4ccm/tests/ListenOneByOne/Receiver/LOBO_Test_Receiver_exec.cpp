@@ -73,7 +73,6 @@ namespace CIAO_LOBO_Test_Receiver_Impl
   {
   }
 
-  // Operations from ::CCM_DDS::ConnectorStatusListener
   void ConnectorStatusListener_exec_i::on_inconsistent_topic(
      ::DDS::Topic_ptr ,
      const DDS::InconsistentTopicStatus & )
@@ -105,7 +104,7 @@ namespace CIAO_LOBO_Test_Receiver_Impl
   }
 
   void ConnectorStatusListener_exec_i::on_unexpected_status(
-    ::DDS::Entity_ptr /*the_entity*/,
+    ::DDS::Entity_ptr ,
     ::DDS::StatusKind  status_kind)
   {
     if (status_kind == ::DDS::DATA_ON_READERS_STATUS)
@@ -123,7 +122,6 @@ namespace CIAO_LOBO_Test_Receiver_Impl
       started_ (false),
       iterations_ (10),
       keys_ (5)
-
   {
   }
 
@@ -143,7 +141,6 @@ namespace CIAO_LOBO_Test_Receiver_Impl
       }
   }
 
-  // Port operations.
   ::CCM_DDS::ListenOneByOneTest::CCM_Listener_ptr
   Receiver_exec_i::get_info_listen_data_listener (void)
   {
@@ -187,7 +184,7 @@ namespace CIAO_LOBO_Test_Receiver_Impl
   {
     this->keys_ = keys;
   }
-  // Operations from Components::SessionComponent.
+
   void
   Receiver_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
@@ -276,4 +273,3 @@ namespace CIAO_LOBO_Test_Receiver_Impl
     return retval;
   }
 }
-

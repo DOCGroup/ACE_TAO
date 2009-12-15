@@ -84,7 +84,7 @@ namespace CIAO_LNE_Test_Receiver_Impl
   }
 
   void ConnectorStatusListener_exec_i::on_unexpected_status(
-    ::DDS::Entity_ptr /*the_entity*/,
+    ::DDS::Entity_ptr ,
     ::DDS::StatusKind  status_kind)
   {
     if (status_kind == ::DDS::DATA_ON_READERS_STATUS)
@@ -107,7 +107,6 @@ namespace CIAO_LNE_Test_Receiver_Impl
   {
   }
 
-  // Port operations.
   ::CCM_DDS::ListenNotEnabledTest::CCM_Listener_ptr
   Receiver_exec_i::get_info_listen_data_listener (void)
   {
@@ -206,4 +205,3 @@ namespace CIAO_LNE_Test_Receiver_Impl
     return retval;
   }
 }
-

@@ -1,3 +1,32 @@
+Tue Dec 15 14:58:21 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Event_Connection_Test/Receiver/Event_Connection_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Event_Connection_Test/Receiver/Event_Connection_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Event_Connection_Test/Sender/Event_Connection_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/Event_Connection_Test/Sender/Event_Connection_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedWriter/Receiver/Writer_Receiver_exec.h:
+        * connectors/dds4ccm/tests/KeyedWriter/Receiver/Writer_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedWriter/Sender/Writer_Sender_exec.h:
+        * connectors/dds4ccm/tests/KeyedWriter/Sender/Writer_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ListenManyByMany/Receiver/LMBM_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ListenManyByMany/Receiver/LMBM_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ListenManyByMany/Sender/LMBM_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/ListenManyByMany/Sender/LMBM_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Receiver/LNE_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Receiver/LNE_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ListenOneByOne/Receiver/LOBO_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ListenOneByOne/Receiver/LOBO_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.cpp:
+          Optimized code. Removed unused header files, indentation, removed empty lines.
+
 Tue Dec 15 14:32:46 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLQoS/Connector/CSL_QoSTest_Connector_exec.cpp:
