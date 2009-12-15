@@ -42,13 +42,13 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     void on_sample_rejected( ::DDS::DataReader_ptr the_reader, 
                              const DDS::SampleRejectedStatus & status);
     virtual
-      void on_offered_deadline_missed( ::DDS::DataWriter_ptr the_writer,
+    void on_offered_deadline_missed( ::DDS::DataWriter_ptr the_writer,
                                      const DDS::OfferedDeadlineMissedStatus & status);
     virtual
     void on_offered_incompatible_qos( ::DDS::DataWriter_ptr the_writer, 
                                       const DDS::OfferedIncompatibleQosStatus & status);
     virtual
-      void on_unexpected_status( ::DDS::Entity_ptr the_entity,
+    void on_unexpected_status( ::DDS::Entity_ptr the_entity,
        ::DDS::StatusKind  status_kind);
      private:
     Atomic_Boolean &unexpected_matched_;
@@ -92,9 +92,6 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_CSL_USTest_Sender_Impl (void);
 
-
-
 }
 
 #endif /* ifndef */
-

@@ -12,11 +12,9 @@
 
 namespace CIAO_CSL_USTest_Sender_Impl
 {
-
   //============================================================
   // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
   //============================================================
-
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &unexpected_matched, Atomic_Boolean &unexpected_liveliness)
    : unexpected_matched_ (unexpected_matched),
      unexpected_liveliness_ (unexpected_liveliness)
@@ -25,7 +23,6 @@ namespace CIAO_CSL_USTest_Sender_Impl
 
   ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
   {
-
   }
 
   // Operations from ::CCM_DDS::ConnectorStatusListener
@@ -33,42 +30,40 @@ namespace CIAO_CSL_USTest_Sender_Impl
      ::DDS::Topic_ptr /*the_topic*/,
      const DDS::InconsistentTopicStatus & /*status*/)
     {
-     //printf("Sender : ConnectorStatusListener_exec_i::on_inconsistent_topic\n");
     }
+
   void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
     ::DDS::DataReader_ptr /*the_reader*/,
      const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
-     // printf("ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n");
-
     }
+
   void ConnectorStatusListener_exec_i::on_sample_rejected(
      ::DDS::DataReader_ptr /*the_reader*/,
      const DDS::SampleRejectedStatus & /*status*/)  {
-     //printf("ConnectorStatusListener_exec_i::on_sample_rejected\n");
     }
+
   void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
      ::DDS::DataWriter_ptr /*the_writer*/,
      const DDS::OfferedDeadlineMissedStatus & /*status*/)  {
-     // printf("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
     }
+
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
      ::DDS::DataWriter_ptr /*the_writer*/,
      const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
-     // printf("ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n");
     }
+
   void ConnectorStatusListener_exec_i::on_unexpected_status(
-    ::DDS::Entity_ptr /*the_entity*/,
+    ::DDS::Entity_ptr the_entity,
     ::DDS::StatusKind  status_kind)  {
       CORBA::ULong kind = status_kind;
-      if(kind==DDS::PUBLICATION_MATCHED_STATUS)
+      if((!CORBA::is_nil(the_entity)) && (kind==DDS::PUBLICATION_MATCHED_STATUS))
       {
         this->unexpected_matched_ = true;
       }
-      if(kind==DDS::LIVELINESS_CHANGED_STATUS)
+      if((!CORBA::is_nil(the_entity)) && (kind==DDS::LIVELINESS_CHANGED_STATUS))
       {
         this->unexpected_liveliness_ = true;
       }
-      //printf("Sender :CSL:on_unexpected_status status_kind = %d %s \n", kind, ::CIAO::DDS4CCM::translate_statuskind (kind));
     }
   //============================================================
   // Component Executor Implementation Class: Sender_exec_i
@@ -91,8 +86,6 @@ namespace CIAO_CSL_USTest_Sender_Impl
   }
 
   // Supported operations and attributes.
-
-
   void
   Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
   {
@@ -126,8 +119,6 @@ namespace CIAO_CSL_USTest_Sender_Impl
     this->add_instance_of_topic ("TWEE",2);
  }
 
-
-
   void
   Sender_exec_i::ccm_passivate (void)
   {
@@ -138,14 +129,13 @@ namespace CIAO_CSL_USTest_Sender_Impl
   {
     if(!this->unexpected_matched_.value () || !this->unexpected_liveliness_.value ())
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
                                ACE_TEXT ("states 'PUBLICATION_MATCHED_STATUS and/or LIVELINESS_CHANGED_STATUS' in Sender\n")
                     ));
       }
-
     else
       {
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Received the expected ")
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Received the expected ")
                                ACE_TEXT ("'LIVELINESS_CHANGED_STATUS' and 'PUBLICATION_MATCHED_STATUS' in Sender\n")
                     ));
       }
@@ -164,4 +154,3 @@ namespace CIAO_CSL_USTest_Sender_Impl
     return retval;
   }
 }
-
