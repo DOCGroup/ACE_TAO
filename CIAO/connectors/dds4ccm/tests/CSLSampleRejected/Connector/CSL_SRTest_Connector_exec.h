@@ -48,7 +48,7 @@ namespace CIAO_CSL_SRTest_CSL_SRTest_Connector_Impl
     public DDS_Event_Connector_T <TestTopic_DDS_Traits, TestTopic_Connector_Traits>
   {
   public:
-    CSL_SRTest_Connector_exec_i (const char * topic_name);
+    CSL_SRTest_Connector_exec_i (void);
     virtual ~CSL_SRTest_Connector_exec_i (void);
   };
 

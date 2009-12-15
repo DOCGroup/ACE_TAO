@@ -2,7 +2,8 @@
 // $Id$
 
 
-// Test for REJECTED_SAMPLE status
+// Test for ConnectorStatusListener:REJECTED_SAMPLE status through  too much instances
+// in Sender <max_instances>2</max_instances>, in Receiver <max_instances>1</max_instances>
 
 #include "CSL_SRTest_Sender_exec.h"
 #include "ace/Guard_T.h"
@@ -13,11 +14,9 @@
 
 namespace CIAO_CSL_SRTest_Sender_Impl
 {
-
   //============================================================
   // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
   //============================================================
-
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &rejected)
    : rejected_ (rejected)
   {
@@ -25,48 +24,47 @@ namespace CIAO_CSL_SRTest_Sender_Impl
 
   ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
   {
-
   }
 
   // Operations from ::CCM_DDS::ConnectorStatusListener
   void ConnectorStatusListener_exec_i::on_inconsistent_topic(
     ::DDS::Topic_ptr /*the_topic*/,
      const DDS::InconsistentTopicStatus & /*status*/){
-     //printf("Sender : ConnectorStatusListener_exec_i::on_inconsistent_topic\n");
     }
+
   void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
     ::DDS::DataReader_ptr /*the_reader*/,
      const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
-     //printf("Sender:ConnectorStatusListener_exec_i::on_requested_incompatible_qos, status = %dl\n", status);
     }
+
   void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::SampleRejectedStatus & /*status*/)  {
-     //printf("Sender: ConnectorStatusListener_exec_i::on_sample_rejected\n");
-       this->rejected_ = true;
+     ::DDS::DataReader_ptr the_reader,
+     const DDS::SampleRejectedStatus & status)  {
+       if((status.last_reason == DDS::REJECTED_BY_INSTANCES_LIMIT) &&
+          (!CORBA::is_nil(the_reader)))
+         {
+           this->rejected_ = true;
+         }
     }
+
   void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
      ::DDS::DataWriter_ptr /*the_writer*/,
      const DDS::OfferedDeadlineMissedStatus & /*status*/)  {
-     //printf("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
     }
+
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
      ::DDS::DataWriter_ptr /*the_writer*/,
      const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
-     //printf("Sender:ConnectorStatusListener_exec_i::on_offered_incompatible_qos status = %dl\n", status);
    }
+
   void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr /*the_entity*/,
     ::DDS::StatusKind  /*status_kind*/)  {
-    //CORBA::ULong kind = status_kind;
-    //printf("Sender :ConnectorStatusListener_exec_i::on_unexpected_status #### status_kind = %d %s \n", kind, ::CIAO::DDS4CCM::translate_statuskind (kind));
     }
-
 
   //============================================================
   // Pulse generator
   //============================================================
-
   pulse_Generator::pulse_Generator (Sender_exec_i &callback)
     : pulse_callback_ (callback)
   {
@@ -104,7 +102,6 @@ namespace CIAO_CSL_SRTest_Sender_Impl
   void
   Sender_exec_i::tick ()
   {
-
     for (CSL_SRTest_Table::iterator i = this->_ktests_.begin ();
         i != this->_ktests_.end ();
         ++i)
@@ -116,9 +113,9 @@ namespace CIAO_CSL_SRTest_Sender_Impl
               i->second->x++;
            }
          }
-         catch (CCM_DDS::InternalError& )
+         catch (const CCM_DDS::InternalError& )
          {
-           CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while creating topic for <%C>.\n"),
+           ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while creating topic for <%C>.\n"),
                     i->first.c_str ()));
          }
        }
@@ -136,7 +133,7 @@ namespace CIAO_CSL_SRTest_Sender_Impl
                 ACE_Time_Value (0, usec),
                 ACE_Time_Value (0, usec)) == -1)
     {
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
                              ACE_TEXT ("Error scheduling timer")));
     }
   }
@@ -145,11 +142,9 @@ namespace CIAO_CSL_SRTest_Sender_Impl
   Sender_exec_i::stop (void)
   {
     this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
     delete this->ticker_;
   }
-
-
 
   void
   Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
@@ -185,8 +180,6 @@ namespace CIAO_CSL_SRTest_Sender_Impl
     this->start ();
   }
 
-
-
   void
   Sender_exec_i::ccm_passivate (void)
   {
@@ -196,17 +189,15 @@ namespace CIAO_CSL_SRTest_Sender_Impl
   void
   Sender_exec_i::ccm_remove (void)
   {
-
     if(!this->rejected_.value ())
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
                                ACE_TEXT ("warning 'on_sample_rejected' in Sender\n")
                     ));
       }
-
     else
       {
-         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Received the expected ")
+         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Received the expected ")
                                ACE_TEXT ("'on_sample_rejected' in Sender\n")
                     ));
       }
@@ -225,4 +216,3 @@ namespace CIAO_CSL_SRTest_Sender_Impl
     return retval;
   }
 }
-
