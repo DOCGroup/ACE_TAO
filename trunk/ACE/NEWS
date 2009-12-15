@@ -9,14 +9,16 @@ USER VISIBLE CHANGES BETWEEN ACE-5.7.5 and ACE-5.7.6
   on the iPhone/iPod Touch device.
 
   IPHONE_VERSION, should be set to 3.1.2. One can set
-  the version to any future or past versions, but 
+  the version to any future or past versions, but
   only 3.1.2 has been tried.
 
   Note that one has to compile ACE/TAO statically as
   it is believed that the iPhone OS does not support
   dynamic loading of external libraries. The usual
-  procedure of cross compiling ACE/TAO applies 
+  procedure of cross compiling ACE/TAO applies
   (such as setting HOST_ROOT environment variable).
+
+. Added support for Embarcadero C++ Builder 2010
 
 USER VISIBLE CHANGES BETWEEN ACE-5.7.4 and ACE-5.7.5
 ====================================================
