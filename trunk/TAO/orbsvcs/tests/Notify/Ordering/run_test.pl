@@ -46,8 +46,6 @@ my $sts_iorfile = $sts->LocalFile ($iorbase);
 my $stc_iorfile = $stc->LocalFile ($iorbase);
 my $sec_iorfile = $sec->LocalFile ($iorbase);
 my $ses_iorfile = $ses->LocalFile ($iorbase);
-my $sec_iorfile = $sec->LocalFile ($iorbase);
-my $stc_iorfile = $stc->LocalFile ($iorbase);
 my $nfs_nfsconffile = $nfs->LocalFile ($nfsconffile);
 $ns->DeleteFile ($nsiorfile);
 $nfs->DeleteFile ($nfsiorfile);
