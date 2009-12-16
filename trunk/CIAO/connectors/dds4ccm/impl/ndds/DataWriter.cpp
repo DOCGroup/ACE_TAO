@@ -22,8 +22,8 @@ namespace CIAO
     namespace RTI
     {
       // Implementation skeleton constructor
-      RTI_DataWriter_i::RTI_DataWriter_i (DDSDataWriter * dw)
-        : impl_ (dw)
+      RTI_DataWriter_i::RTI_DataWriter_i (void)
+        : impl_ (0)
       {
       }
 
@@ -53,13 +53,13 @@ namespace CIAO
                                       ::DDS::StatusMask mask)
       {
         RTI_DataWriterListener_i* rti_impl_list = new RTI_DataWriterListener_i (a_listener);
-        return this->impl_->set_listener (rti_impl_list, mask);
+        return this->impl ()->set_listener (rti_impl_list, mask);
       }
 
       ::DDS::DataWriterListener_ptr
       RTI_DataWriter_i::get_listener (void)
       {
-        DDSDataWriterListener* wr = this->impl_->get_listener ();
+        DDSDataWriterListener* wr = this->impl ()->get_listener ();
         RTI_DataWriterListener_i *dwl = dynamic_cast< RTI_DataWriterListener_i *> (wr);
         return dwl->get_datawriterlistener ();
       }
@@ -67,7 +67,7 @@ namespace CIAO
       ::DDS::Topic_ptr
       RTI_DataWriter_i::get_topic (void)
       {
-        DDSTopic* t = this->impl_->get_topic ();
+        DDSTopic* t = this->impl ()->get_topic ();
         ::DDS::Topic_var retval = new RTI_Topic_i (t);
         return retval._retn ();
       }
@@ -75,8 +75,10 @@ namespace CIAO
       ::DDS::Publisher_ptr
       RTI_DataWriter_i::get_publisher (void)
       {
-        DDSPublisher* p = this->impl_->get_publisher ();
-        ::DDS::Publisher_var retval = new RTI_Publisher_i (p);
+        DDSPublisher* p = this->impl ()->get_publisher ();
+        ::DDS::Publisher_var retval = new RTI_Publisher_i ();
+        RTI_Publisher_i *rti_p = dynamic_cast < RTI_Publisher_i *> (retval.in ());
+        rti_p->set_impl (p);
         return retval._retn ();
       }
 
@@ -85,14 +87,14 @@ namespace CIAO
       {
        ::DDS_Duration_t rtiduration;
        rtiduration <<= max_wait;
-       return this->impl_->wait_for_acknowledgments (rtiduration);
+       return this->impl ()->wait_for_acknowledgments (rtiduration);
       }
 
       ::DDS::ReturnCode_t
       RTI_DataWriter_i::get_liveliness_lost_status (::DDS::LivelinessLostStatus & status)
       {
         ::DDS_LivelinessLostStatus rtistatus;
-        ::DDS::ReturnCode_t const retval = this->impl_->get_liveliness_lost_status (rtistatus);
+        ::DDS::ReturnCode_t const retval = this->impl ()->get_liveliness_lost_status (rtistatus);
         rtistatus >>= status;
         return retval;
       }
@@ -101,7 +103,7 @@ namespace CIAO
       RTI_DataWriter_i::get_offered_deadline_missed_status (::DDS::OfferedDeadlineMissedStatus & status)
       {
         ::DDS_OfferedDeadlineMissedStatus rtistatus;
-        ::DDS::ReturnCode_t const retval = this->impl_->get_offered_deadline_missed_status (rtistatus);
+        ::DDS::ReturnCode_t const retval = this->impl ()->get_offered_deadline_missed_status (rtistatus);
         rtistatus >>= status;
         return retval;
       }
@@ -110,7 +112,7 @@ namespace CIAO
       RTI_DataWriter_i::get_offered_incompatible_qos_status (::DDS::OfferedIncompatibleQosStatus & status)
       {
         ::DDS_OfferedIncompatibleQosStatus rtistatus;
-        ::DDS::ReturnCode_t const retval = this->impl_->get_offered_incompatible_qos_status (rtistatus);
+        ::DDS::ReturnCode_t const retval = this->impl ()->get_offered_incompatible_qos_status (rtistatus);
         rtistatus >>= status;
         return retval;
       }
@@ -119,7 +121,7 @@ namespace CIAO
       RTI_DataWriter_i::get_publication_matched_status (::DDS::PublicationMatchedStatus & status)
       {
         ::DDS_PublicationMatchedStatus rtistatus;
-        ::DDS::ReturnCode_t const retval = this->impl_->get_publication_matched_status (rtistatus);
+        ::DDS::ReturnCode_t const retval = this->impl ()->get_publication_matched_status (rtistatus);
         rtistatus >>= status;
         return retval;
       }
@@ -127,14 +129,14 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DataWriter_i::assert_liveliness (void)
       {
-        return this->impl_->assert_liveliness ();
+        return this->impl ()->assert_liveliness ();
       }
 
       ::DDS::ReturnCode_t
       RTI_DataWriter_i::get_matched_subscriptions (::DDS::InstanceHandleSeq & subscription_handles)
       {
         ::DDS_InstanceHandleSeq rtiseq;
-        ::DDS::ReturnCode_t const retval = this->impl_->get_matched_subscriptions (rtiseq);
+        ::DDS::ReturnCode_t const retval = this->impl ()->get_matched_subscriptions (rtiseq);
         rtiseq >>= subscription_handles;
         return retval;
       }
@@ -151,13 +153,13 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DataWriter_i::enable (void)
       {
-        return this->impl_->enable ();
+        return this->impl ()->enable ();
       }
 
       ::DDS::StatusCondition_ptr
       RTI_DataWriter_i::get_statuscondition (void)
       {
-        DDSStatusCondition* sc = this->impl_->get_statuscondition ();
+        DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
         ::DDS::StatusCondition_var retval = new RTI_StatusCondition_i (sc);
         return retval._retn ();
       }
@@ -165,23 +167,40 @@ namespace CIAO
       ::DDS::StatusMask
       RTI_DataWriter_i::get_status_changes (void)
       {
-        return this->impl_->get_status_changes ();
+        return this->impl ()->get_status_changes ();
       }
 
       ::DDS::InstanceHandle_t
       RTI_DataWriter_i::get_instance_handle (void)
       {
-        ::DDS_InstanceHandle_t const rtihandle = this->impl_->get_instance_handle ();
+        ::DDS_InstanceHandle_t const rtihandle = this->impl ()->get_instance_handle ();
         ::DDS::InstanceHandle_t handle;
         handle <<= rtihandle;
         return handle;
       }
 
       DDSDataWriter *
-      RTI_DataWriter_i::get_datawriter (void)
+      RTI_DataWriter_i::get_impl (void)
       {
+        return this->impl ();
+      }
+
+      void
+      RTI_DataWriter_i::set_impl (DDSDataWriter * dw)
+      {
+        this->impl_ = dw;
+      }
+
+      DDSDataWriter *
+      RTI_DataWriter_i::impl (void)
+      {
+        if (!this->impl_)
+          {
+            throw ::CORBA::BAD_INV_ORDER ();
+          }
         return this->impl_;
       }
+
     }
   }
 }

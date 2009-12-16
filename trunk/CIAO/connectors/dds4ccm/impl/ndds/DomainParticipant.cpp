@@ -69,7 +69,9 @@ namespace CIAO
                      "Successfully created a DDSPublisher\n"));
 
         rti_pub->enable ();
-        ::DDS::Publisher_var retval = new RTI_Publisher_i (rti_pub);
+        ::DDS::Publisher_var retval = new RTI_Publisher_i ();
+        RTI_Publisher_i *rti_p = dynamic_cast < RTI_Publisher_i *> (retval.in ());
+        rti_p->set_impl (rti_pub);
 
         return retval._retn ();
       }
@@ -104,7 +106,9 @@ namespace CIAO
                      "Successfully created a DDSPublisher\n"));
 
         rti_pub->enable ();
-        ::DDS::Publisher_var retval = new RTI_Publisher_i (rti_pub);
+        ::DDS::Publisher_var retval = new RTI_Publisher_i ();
+        RTI_Publisher_i *rti_p = dynamic_cast < RTI_Publisher_i *> (retval.in ());
+        rti_p->set_impl (rti_pub);
 
         return retval._retn ();
       }
@@ -124,7 +128,7 @@ namespace CIAO
         CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_DomainParticipant_i::delete_publisher - "
                      "Successfully casted provided object refence to RTI_Publisher_i\n"));
 
-        DDS_ReturnCode_t retval = this->impl_->delete_publisher (rti_pub->get_publisher ());
+        DDS_ReturnCode_t retval = this->impl_->delete_publisher (rti_pub->get_impl ());
 
         if (retval != DDS_RETCODE_OK)
           {
@@ -221,7 +225,7 @@ namespace CIAO
         CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_DomainParticipant_i::delete_subscriber - "
                      "Successfully casted provided object refence to RTI_Subscriber_i\n"));
 
-        return this->impl_->delete_subscriber (rti_sub->get_subscriber ());
+        return this->impl_->delete_subscriber (rti_sub->get_impl ());
       }
 
       ::DDS::Subscriber_ptr

@@ -33,7 +33,7 @@ namespace CIAO
       {
       public:
         // Constructor
-        RTI_Subscriber_i (DDSSubscriber *p);
+        RTI_Subscriber_i (void);
 
         // Destructor
         virtual ~RTI_Subscriber_i (void);
@@ -124,7 +124,11 @@ namespace CIAO
           ::DDS::DataReaderQos & a_datareader_qos,
           const ::DDS::TopicQos & a_impl_qos);
 
-        DDSSubscriber * get_subscriber (void);
+        DDSSubscriber * get_impl (void);
+
+        void set_impl (DDSSubscriber *p);
+
+        DDSSubscriber *impl (void);
       private:
         DDSSubscriber *impl_;
       };

@@ -36,7 +36,9 @@ namespace CIAO
       {
         CIAO_TRACE ("RTI_SubscriberListener_i::on_data_on_readers");
 
-        ::DDS::Subscriber_var sub = new RTI_Subscriber_i (the_subscriber);
+        ::DDS::Subscriber_var sub = new RTI_Subscriber_i ();
+        RTI_Subscriber_i *s = dynamic_cast < RTI_Subscriber_i *> (sub.in ());
+        s->set_impl (the_subscriber);
         this->impl_->on_data_on_readers (sub.in ());
         the_subscriber->notify_datareaders ();
       }

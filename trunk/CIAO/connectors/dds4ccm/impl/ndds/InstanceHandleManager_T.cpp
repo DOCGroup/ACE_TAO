@@ -77,7 +77,7 @@ CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::data
           throw ::CORBA::INTERNAL ();
         }
 
-      impl_ =  DDS_TYPE::data_writer::narrow (rdw->get_datawriter ());
+      impl_ =  DDS_TYPE::data_writer::narrow (rdw->get_impl ());
 
       if (!impl_)
         {

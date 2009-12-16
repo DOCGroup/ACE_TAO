@@ -20,8 +20,8 @@ namespace CIAO
     namespace RTI
     {
       // Implementation skeleton constructor
-      RTI_Subscriber_i::RTI_Subscriber_i (DDSSubscriber *s)
-        : impl_ (s)
+      RTI_Subscriber_i::RTI_Subscriber_i (void)
+        : impl_ (0)
       {
         CIAO_TRACE ("RTI_Subscriber_i::RTI_Subscriber_i");
       }
@@ -35,13 +35,13 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_Subscriber_i::enable (void)
       {
-        return this->impl_->enable ();
+        return this->impl ()->enable ();
       }
 
       ::DDS::StatusCondition_ptr
       RTI_Subscriber_i::get_statuscondition (void)
       {
-        DDSStatusCondition* sc = this->impl_->get_statuscondition ();
+        DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
         ::DDS::StatusCondition_var retval = new RTI_StatusCondition_i (sc);
         return retval._retn ();
       }
@@ -49,13 +49,13 @@ namespace CIAO
       ::DDS::StatusMask
       RTI_Subscriber_i::get_status_changes (void)
       {
-        return this->impl_->get_status_changes ();
+        return this->impl ()->get_status_changes ();
       }
 
       ::DDS::InstanceHandle_t
       RTI_Subscriber_i::get_instance_handle (void)
       {
-        ::DDS_InstanceHandle_t const rtihandle = this->impl_->get_instance_handle ();
+        ::DDS_InstanceHandle_t const rtihandle = this->impl ()->get_instance_handle ();
         ::DDS::InstanceHandle_t handle;
         handle <<= rtihandle;
         return handle;
@@ -80,7 +80,7 @@ namespace CIAO
 // todo leak
         DDS_DataReaderQos rti_qos = DDS_DATAREADER_QOS_DEFAULT;
         DDSDataReaderListener *rti_drl = new RTI_DataReaderListener_i (a_listener);
-        DDSDataReader *rti_dr = this->impl_->create_datareader (rti_topic,
+        DDSDataReader *rti_dr = this->impl ()->create_datareader (rti_topic,
                                                                 rti_qos,
                                                                 rti_drl,
                                                                 mask);
@@ -116,7 +116,7 @@ namespace CIAO
 //        DDSDataReaderListener *rti_drl = drl->get_datareaderlistener ();
 // todo leak
         DDSDataReaderListener *rti_drl = new RTI_DataReaderListener_i (a_listener);
-        DDSDataReader *rti_dr = this->impl_->create_datareader_with_profile (rti_topic,
+        DDSDataReader *rti_dr = this->impl ()->create_datareader_with_profile (rti_topic,
                                                                 library_name,
                                                                 profile_name,
                                                                 rti_drl,
@@ -149,7 +149,7 @@ namespace CIAO
         CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_Subscriber_i::delete_datareader - "
                      "Successfully casted provided object reference to servant.\n"));
 
-        DDS_ReturnCode_t retval = this->impl_->delete_datareader (top->get_datareader ());
+        DDS_ReturnCode_t retval = this->impl ()->delete_datareader (top->get_datareader ());
 
         if (retval != DDS_RETCODE_OK)
           {
@@ -166,14 +166,14 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_Subscriber_i::delete_contained_entities (void)
       {
-        return this->impl_->delete_contained_entities ();
+        return this->impl ()->delete_contained_entities ();
       }
 
       ::DDS::DataReader_ptr
       RTI_Subscriber_i::lookup_datareader (
         const char * impl_name)
       {
-        DDSDataReader* dr = this->impl_->lookup_datareader (impl_name);
+        DDSDataReader* dr = this->impl ()->lookup_datareader (impl_name);
         ::DDS::DataReader_var retval = new RTI_DataReader_i (dr);
         return retval._retn ();
       }
@@ -192,7 +192,7 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_Subscriber_i::notify_datareaders (void)
       {
-        return this->impl_->notify_datareaders ();
+        return this->impl ()->notify_datareaders ();
       }
 
       ::DDS::ReturnCode_t
@@ -204,7 +204,7 @@ namespace CIAO
         rti_impl_qos.partition = qos.partition;
         rti_impl_qos.group_data = qos.group_data;
         rti_impl_qos.entity_factory = qos.entity_factory;*/
-        return this->impl_->set_qos (rti_impl_qos);
+        return this->impl ()->set_qos (rti_impl_qos);
       }
 
       ::DDS::ReturnCode_t
@@ -212,7 +212,7 @@ namespace CIAO
         ::DDS::SubscriberQos & /*qos*/)
       {
         DDS_SubscriberQos rti_impl_qos;
-        DDS_ReturnCode_t const rti_retcode = this->impl_->get_qos (rti_impl_qos);
+        DDS_ReturnCode_t const rti_retcode = this->impl ()->get_qos (rti_impl_qos);
         /*qos.presentation = rti_impl_qos.presentation;
         qos.partition = rti_impl_qos.partition;
         qos.group_data = rti_impl_qos.group_data;
@@ -226,13 +226,13 @@ namespace CIAO
         ::DDS::StatusMask mask)
       {
         RTI_SubscriberListener_i* rti_impl_list = new RTI_SubscriberListener_i (a_listener);
-        return this->impl_->set_listener (rti_impl_list, mask);
+        return this->impl ()->set_listener (rti_impl_list, mask);
       }
 
       ::DDS::SubscriberListener_ptr
       RTI_Subscriber_i::get_listener (void)
       {
-//        DDSSubscriberListener* rti_impl_list = this->impl_->get_listener ();
+//        DDSSubscriberListener* rti_impl_list = this->impl ()->get_listener ();
 //        ::DDS::SubscriberListener_var retval = new RTI_SubscriberListener_i (rti_impl_list);
 //        return retval._retn ();
         throw CORBA::NO_IMPLEMENT ();
@@ -241,19 +241,19 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_Subscriber_i::begin_access (void)
       {
-        return this->impl_->begin_access ();
+        return this->impl ()->begin_access ();
       }
 
       ::DDS::ReturnCode_t
       RTI_Subscriber_i::end_access (void)
       {
-        return this->impl_->end_access ();
+        return this->impl ()->end_access ();
       }
 
       ::DDS::DomainParticipant_ptr
       RTI_Subscriber_i::get_participant (void)
       {
-        DDSDomainParticipant* p = this->impl_->get_participant ();
+        DDSDomainParticipant* p = this->impl ()->get_participant ();
         ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i (p);
         return retval._retn ();
       }
@@ -284,8 +284,24 @@ namespace CIAO
       }
 
       DDSSubscriber *
-      RTI_Subscriber_i::get_subscriber (void)
+      RTI_Subscriber_i::get_impl (void)
       {
+        return this->impl ();
+      }
+
+      void
+      RTI_Subscriber_i::set_impl (DDSSubscriber * dw)
+      {
+        this->impl_ = dw;
+      }
+
+      DDSSubscriber *
+      RTI_Subscriber_i::impl (void)
+      {
+        if (!this->impl ())
+          {
+            throw ::CORBA::BAD_INV_ORDER ();
+          }
         return this->impl_;
       }
     }

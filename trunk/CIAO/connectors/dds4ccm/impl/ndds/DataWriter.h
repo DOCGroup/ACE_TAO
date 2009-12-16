@@ -31,7 +31,7 @@ namespace CIAO
       {
       public:
         // Constructor
-        RTI_DataWriter_i (::DDSDataWriter *dw);
+        RTI_DataWriter_i (void);
 
         // Destructor
         virtual ~RTI_DataWriter_i (void);
@@ -92,7 +92,11 @@ namespace CIAO
         virtual
           ::DDS::InstanceHandle_t get_instance_handle (void);
 
-        DDSDataWriter * get_datawriter (void);
+        DDSDataWriter * get_impl (void);
+
+        void set_impl (DDSDataWriter * dw);
+
+        DDSDataWriter * impl (void);
 
       private:
         DDSDataWriter * impl_;
