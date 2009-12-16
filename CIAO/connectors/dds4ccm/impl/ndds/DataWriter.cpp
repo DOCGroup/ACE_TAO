@@ -68,7 +68,9 @@ namespace CIAO
       RTI_DataWriter_i::get_topic (void)
       {
         DDSTopic* t = this->impl ()->get_topic ();
-        ::DDS::Topic_var retval = new RTI_Topic_i (t);
+        ::DDS::Topic_var retval = new RTI_Topic_i ();
+        RTI_Topic_i *tp = dynamic_cast < RTI_Topic_i *> (retval.in ());
+        tp->set_impl (t);
         return retval._retn ();
       }
 

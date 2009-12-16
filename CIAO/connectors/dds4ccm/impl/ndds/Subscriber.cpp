@@ -75,7 +75,7 @@ namespace CIAO
                          "Error: Unable to cast provided topic to its servant.\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
           }
-        DDSTopic *rti_topic = topic->get_topic ();
+        DDSTopic *rti_topic = topic->get_impl ();
 //        DDSDataReaderListener *rti_drl = drl->get_datareaderlistener ();
 // todo leak
         DDS_DataReaderQos rti_qos = DDS_DATAREADER_QOS_DEFAULT;
@@ -114,7 +114,7 @@ namespace CIAO
                          "Error: Unable to cast provided topic to its servant.\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
           }
-        DDSTopic *rti_topic = topic->get_topic ();
+        DDSTopic *rti_topic = topic->get_impl ();
 //        DDSDataReaderListener *rti_drl = drl->get_datareaderlistener ();
 // todo leak
         DDSDataReaderListener *rti_drl = new RTI_DataReaderListener_i (a_listener);

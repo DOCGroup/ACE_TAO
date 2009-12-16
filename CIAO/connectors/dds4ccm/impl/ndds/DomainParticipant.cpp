@@ -289,7 +289,9 @@ namespace CIAO
                      "Successfully created topic with name %C and type %C\n",
                      impl_name, type_name));
 
-        ::DDS::Topic_var retval = new RTI_Topic_i (rti_topic);
+        ::DDS::Topic_var retval = new RTI_Topic_i ();
+        RTI_Topic_i *tp = dynamic_cast < RTI_Topic_i *> (retval.in ());
+        tp->set_impl (rti_topic);
 
         return retval._retn ();
       }
@@ -344,7 +346,9 @@ namespace CIAO
                      "Successfully created topic with name %C and type %C\n",
                      impl_name, type_name));
 
-        ::DDS::Topic_var retval = new RTI_Topic_i (rti_topic);
+        ::DDS::Topic_var retval = new RTI_Topic_i ();
+        RTI_Topic_i *tp = dynamic_cast < RTI_Topic_i *> (retval.in ());
+        tp->set_impl (rti_topic);
 
         return retval._retn ();
       }
@@ -366,7 +370,7 @@ namespace CIAO
         CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_DomainParticipant_i::delete_topic - "
                      "Successfully casted provided object reference to servant.\n"));
 
-        DDS_ReturnCode_t retval = this->impl_->delete_topic (top->get_topic ());
+        DDS_ReturnCode_t retval = this->impl_->delete_topic (top->get_impl ());
 
         if (retval != DDS_RETCODE_OK)
           {
@@ -387,7 +391,9 @@ namespace CIAO
         ::DDS_Duration_t ddstimeout;
         ddstimeout <<= timeout;
         ::DDSTopic* rti_topic = this->impl_->find_topic (impl_name, ddstimeout);
-        ::DDS::Topic_var retval = new RTI_Topic_i (rti_topic);
+        ::DDS::Topic_var retval = new RTI_Topic_i ();
+        RTI_Topic_i *tp = dynamic_cast < RTI_Topic_i *> (retval.in ());
+        tp->set_impl (rti_topic);
         return retval._retn ();
       }
 
