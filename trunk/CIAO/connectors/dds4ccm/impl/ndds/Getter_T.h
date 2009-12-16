@@ -55,11 +55,10 @@ namespace CIAO
         ::DDS::Duration_t time_out_;
         ::CCM_DDS::DataNumber_t max_delivered_data_;
         DDSGuardCondition*  gd_;
+        DDSWaitSet* ws_;
         DDSReadCondition*   rd_condition_;
 
-        bool wait (DDSWaitSet* ws,
-                   DDSConditionSeq& active_conditions);
-        void configure_waitset (DDSWaitSet* ws);
+        bool wait (DDSConditionSeq& active_conditions);
       };
     }
   }
