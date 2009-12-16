@@ -63,14 +63,14 @@ be_valuetype::be_valuetype (void)
 
 // Constructor used to build the AST.
 be_valuetype::be_valuetype (UTL_ScopedName *n,
-                            AST_Interface **inherits,
+                            AST_Type **inherits,
                             long n_inherits,
-                            AST_ValueType *inherits_concrete,
+                            AST_Type *inherits_concrete,
                             AST_Interface **inherits_flat,
                             long n_inherits_flat,
-                            AST_Interface **supports,
+                            AST_Type **supports,
                             long n_supports,
-                            AST_Interface *supports_concrete,
+                            AST_Type *supports_concrete,
                             bool abstract,
                             bool truncatable,
                             bool custom)
@@ -135,6 +135,12 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
     {
       be_interface *intf =
         be_interface::narrow_from_decl (this->pd_supports[i]);
+        
+      if (intf == 0)
+        {
+          // The item is a temploate param holder.
+          continue;
+        }
 
       if (intf->is_abstract () || intf->has_mixed_parentage ())
         {
@@ -318,7 +324,7 @@ be_valuetype::have_operation (void)
       // Now traverse inheritance tree.
       long i;  // loop index
       long n_inherits = this->n_inherits ();
-      AST_Interface **inherits = this->inherits ();
+      AST_Type **inherits = this->inherits ();
 
       for (i = 0; i < n_inherits; ++i)
         {
@@ -335,15 +341,17 @@ be_valuetype::have_operation (void)
   if (! have_operation)
     {
       // Check for operations on supported interfaces
-      AST_Interface * supported = this->supports_concrete ();
+      AST_Type * supported = this->supports_concrete ();
 
       if (supported != 0)
         {
-          be_interface *intf = be_interface::narrow_from_decl (supported);
+          be_interface *intf =
+            be_interface::narrow_from_decl (supported);
 
           if (intf != 0)
             {
-                    have_operation = be_valuetype::have_supported_op (intf);
+              have_operation =
+                be_valuetype::have_supported_op (intf);
             }
         }
     }
@@ -393,14 +401,17 @@ be_valuetype::have_supported_op (be_interface * node)
       // Now traverse inheritance tree.
       long i;  // loop index
       long n_inherits = node->n_inherits ();
-      AST_Interface **inherits = node->inherits ();
+      AST_Type **inherits = node->inherits ();
+      
       for (i = 0; i < n_inherits; ++i)
         {
-          be_interface * intf = be_interface::narrow_from_decl (inherits[i]);
+          be_interface * intf =
+            be_interface::narrow_from_decl (inherits[i]);
 
           if (intf != 0)
             {
-              have_supported_op = be_valuetype::have_supported_op (intf);
+              have_supported_op =
+                be_valuetype::have_supported_op (intf);
 
               if (have_supported_op)
                 {
@@ -424,7 +435,7 @@ be_valuetype::will_have_factory (void)
 bool
 be_valuetype::has_member (void)
 {
-  AST_ValueType *parent = this->pd_inherits_concrete;
+  AST_Type *parent = this->pd_inherits_concrete;
 
   // We're looking for inherited members too.
   if (parent != 0)
@@ -742,14 +753,15 @@ int
 be_valuetype::traverse_concrete_inheritance_graph (tao_code_emitter gen,
                                                    TAO_OutStream *os)
 {
-  AST_Interface *supported = this->supports_concrete ();
+  AST_Type *supported = this->supports_concrete ();
 
   if (supported == 0)
     {
       return 0;
     }
 
-  be_interface *concrete = be_interface::narrow_from_decl (supported);
+  be_interface *concrete =
+    be_interface::narrow_from_decl (supported);
 
   // Make sure the queues are empty.
   this->insert_queue.reset ();

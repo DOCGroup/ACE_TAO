@@ -208,7 +208,7 @@ AST_Generator::create_root (UTL_ScopedName *n)
 
 AST_Interface *
 AST_Generator::create_interface (UTL_ScopedName *n,
-                                 AST_Interface **inherits,
+                                 AST_Type **inherits,
                                  long n_inherits,
                                  AST_Interface **inherits_flat,
                                  long n_inherits_flat,
@@ -254,14 +254,14 @@ AST_Generator::create_interface_fwd (UTL_ScopedName *n,
 
 AST_ValueType *
 AST_Generator::create_valuetype (UTL_ScopedName *n,
-                                 AST_Interface **inherits,
+                                 AST_Type **inherits,
                                  long n_inherits,
-                                 AST_ValueType *inherits_concrete,
+                                 AST_Type *inherits_concrete,
                                  AST_Interface **inherits_flat,
                                  long n_inherits_flat,
-                                 AST_Interface **supports_list,
+                                 AST_Type **supports_list,
                                  long n_supports,
-                                 AST_Interface *supports_concrete,
+                                 AST_Type *supports_concrete,
                                  bool is_abstract,
                                  bool is_truncatable,
                                  bool is_custom)
@@ -322,14 +322,14 @@ AST_Generator::create_valuetype_fwd (UTL_ScopedName *n,
 
 AST_EventType *
 AST_Generator::create_eventtype (UTL_ScopedName *n,
-                                 AST_Interface **inherits,
+                                 AST_Type **inherits,
                                  long n_inherits,
-                                 AST_ValueType *inherits_concrete,
+                                 AST_Type *inherits_concrete,
                                  AST_Interface **inherits_flat,
                                  long n_inherits_flat,
-                                 AST_Interface **supports_list,
+                                 AST_Type **supports_list,
                                  long n_supports,
-                                 AST_Interface *supports_concrete,
+                                 AST_Type *supports_concrete,
                                  bool is_abstract,
                                  bool is_truncatable,
                                  bool is_custom)
@@ -391,7 +391,7 @@ AST_Generator::create_eventtype_fwd (UTL_ScopedName *n,
 AST_Component *
 AST_Generator::create_component (UTL_ScopedName *n,
                                  AST_Component *base_component,
-                                 AST_Interface **supports_list,
+                                 AST_Type **supports_list,
                                  long n_supports,
                                  AST_Interface **supports_flat,
                                  long n_supports_flat)
@@ -433,8 +433,8 @@ AST_Home *
 AST_Generator::create_home (UTL_ScopedName *n,
                             AST_Home *base_home,
                             AST_Component *managed_component,
-                            AST_ValueType *primary_key,
-                            AST_Interface **supports_list,
+                            AST_Type *primary_key,
+                            AST_Type **supports_list,
                             long n_supports,
                             AST_Interface **supports_flat,
                             long n_supports_flat)

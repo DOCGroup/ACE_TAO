@@ -62,7 +62,7 @@ public:
   // Default constructor.
 
   be_interface (UTL_ScopedName *n,
-                AST_Interface **ih,
+                AST_Type **ih,
                 long nih,
                 AST_Interface **ih_flat,
                 long nih_flat,

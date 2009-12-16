@@ -345,7 +345,7 @@ be_visitor_home_ex_idl::gen_supported (void)
 {
   os_ << be_idt;
 
-  AST_Interface **supported = node_->supports ();
+  AST_Type **supported = node_->supports ();
 
   for (long i = 0; i < node_->n_supports (); ++i)
     {

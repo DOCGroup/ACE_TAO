@@ -514,7 +514,7 @@ be_visitor_ccm_pre_proc::gen_implicit_ops (be_home *node,
                         -1);
     }
 
-  AST_ValueType *pk = node->primary_key ();
+  AST_Type *pk = node->primary_key ();
 
   if (pk == 0)
     {
@@ -1147,7 +1147,7 @@ be_visitor_ccm_pre_proc::gen_create (be_home *node,
                                 0),
                   -1);
   op->set_name (op_name);
-  AST_ValueType *pk = node->primary_key ();
+  AST_Type *pk = node->primary_key ();
   UTL_ExceptList *exceps = 0;
   ACE_NEW_RETURN (exceps,
                   UTL_ExceptList (this->create_failure_,
@@ -1209,7 +1209,7 @@ be_visitor_ccm_pre_proc::gen_find_by_primary_key (be_home *node,
                                 0),
                   -1);
   op->set_name (op_name);
-  AST_ValueType *pk = node->primary_key ();
+  AST_Type *pk = node->primary_key ();
   Identifier arg_id ("key");
   UTL_ScopedName arg_name (&arg_id,
                            0);
@@ -1265,7 +1265,7 @@ be_visitor_ccm_pre_proc::gen_remove (be_home *node,
                                 0),
                   -1);
   op->set_name (op_name);
-  AST_ValueType *pk = node->primary_key ();
+  AST_Type *pk = node->primary_key ();
   Identifier arg_id ("key");
   UTL_ScopedName arg_name (&arg_id,
                            0);
