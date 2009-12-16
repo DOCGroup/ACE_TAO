@@ -154,7 +154,7 @@ namespace CIAO_SL_Disabled_Receiver_Impl
           }
       
       }
-    catch(CCM_DDS::InternalError& )
+    catch (const CCM_DDS::InternalError& )
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("internal error or no data\n")));
       }

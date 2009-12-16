@@ -58,13 +58,13 @@ namespace CIAO_SL_ManyByMany_Sender_Impl
             result = false;
           }
       }
-    catch(CCM_DDS::AlreadyCreated &)
+    catch (const CCM_DDS::AlreadyCreated &)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: AlreadyCreated with test updater create_one <%C>.\n"),
                       i.key.in()));   
         result = false;
       }
-    catch(CCM_DDS::InternalError& )
+    catch (const CCM_DDS::InternalError& )
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while create_one for <%C>.\n"),
                       i.key.in()));   
@@ -86,13 +86,13 @@ namespace CIAO_SL_ManyByMany_Sender_Impl
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: update_one with already existing instance with DDS::HANDLE_NIL, key <%C>\n"),
                       i.key.in()));
       }
-    catch(CCM_DDS::NonExistent &)
+    catch (const CCM_DDS::NonExistent &)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater update_one <%C>.\n"),
                        i.key.in()));   
         result = false;
       }
-    catch(CCM_DDS::InternalError& )
+    catch (const CCM_DDS::InternalError& )
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while update_one for <%C>.\n"),
                         i.key.in()));   
@@ -113,13 +113,13 @@ namespace CIAO_SL_ManyByMany_Sender_Impl
                       i.key.in()));
         this->updater_->delete_one(i, DDS::HANDLE_NIL);
       }
-    catch(CCM_DDS::NonExistent &)
+    catch (const CCM_DDS::NonExistent &)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater delete_one <%C>.\n"),
                        i.key.in()));   
         result = false;
       }
-    catch(CCM_DDS::InternalError& )
+    catch (const CCM_DDS::InternalError& )
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while delete_one for <%C>.\n"),
                         i.key.in())); 
@@ -140,11 +140,11 @@ namespace CIAO_SL_ManyByMany_Sender_Impl
         this->updater_->create_many (this->topic_seq_many_);
         result = true;
       }
-    catch(CCM_DDS::NonExistent& )
+    catch (const CCM_DDS::NonExistent& )
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater create_many\n")));   
       }
-    catch(CCM_DDS::InternalError& ex)
+    catch (const CCM_DDS::InternalError& ex)
       {
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
                      ACE_TEXT ("in updater: create_many: index <%d> - retval <%d>\n"),
@@ -169,12 +169,12 @@ namespace CIAO_SL_ManyByMany_Sender_Impl
                    this->topic_seq_many_.length ()));
         result = true;
       }
-    catch(CCM_DDS::NonExistent& )
+    catch (const CCM_DDS::NonExistent& )
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater update_many.\n")));   
         result = false;
       }
-    catch(CCM_DDS::InternalError& ex)
+    catch (const CCM_DDS::InternalError& ex)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
                      ACE_TEXT ("with update_many: index <%d> - retval <%d>\n"),
@@ -196,12 +196,12 @@ namespace CIAO_SL_ManyByMany_Sender_Impl
         this->updater_->delete_many (this->topic_seq_many_);
         result = true;
       }
-    catch(CCM_DDS::NonExistent& )
+    catch (const CCM_DDS::NonExistent& )
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater delete_many\n")));   
         result = false;
       }
-    catch(CCM_DDS::InternalError& ex)
+    catch (const CCM_DDS::InternalError& ex)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
                    ACE_TEXT ("with test updater delete_many: index <%d> - retval <%d>\n"),

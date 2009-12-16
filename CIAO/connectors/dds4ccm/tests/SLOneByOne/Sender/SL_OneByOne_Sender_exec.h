@@ -81,9 +81,6 @@ namespace CIAO_SL_OneByOne_Sender_Impl
  };
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_SL_OneByOne_Sender_Impl (void);
-
-
-
 }
 
 #endif /* ifndef */
