@@ -93,7 +93,7 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
                 {
                   ::CCM_DDS::ReadInfo readinfo;
                   readinfo <<= sample_info[i];
-                  listener_->on_deletion (data[i], readinfo);
+                  this->listener_->on_deletion (data[i], readinfo);
                 }
               if (sample_info[i].valid_data)
                 {
@@ -102,13 +102,13 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
                     {
                       ::CCM_DDS::ReadInfo readinfo;
                       readinfo <<= sample_info[i];
-                      listener_->on_creation (data[i], readinfo);
+                      this->listener_->on_creation (data[i], readinfo);
                     }
                   else
                     {
                       ::CCM_DDS::ReadInfo info;
                       info <<= sample_info[i];
-                      listener_->on_one_update (data[i], info);
+                      this->listener_->on_one_update (data[i], info);
                     }
                 }
             }
@@ -142,20 +142,20 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
                       inst_seq[ix] = data[*iter];
                       ++ix;
                     }
-                  listener_->on_many_updates (inst_seq, infoseq);
+                  this->listener_->on_many_updates (inst_seq, infoseq);
                   // now invoke on_creation or on_deletion
                   if (sample_info[i].valid_data &&
                       sample_info[i].view_state == ::DDS_NEW_VIEW_STATE)
                     {
                       ::CCM_DDS::ReadInfo readinfo;
                       readinfo <<= sample_info[i];
-                      listener_->on_creation (data[i], readinfo);
+                      this->listener_->on_creation (data[i], readinfo);
                     }
                   else if (sample_info[i].instance_state == ::DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
                     {
                       ::CCM_DDS::ReadInfo readinfo;
                       readinfo <<= sample_info[i];
-                      listener_->on_deletion (data[i], readinfo);
+                      this->listener_->on_deletion (data[i], readinfo);
                     }
                   //clean up
                   updates.clear ();
@@ -184,7 +184,7 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
                   inst_seq[ix] = data[*iter];
                   ++ix;
                 }
-              listener_->on_many_updates (inst_seq, infoseq);
+              this->listener_->on_many_updates (inst_seq, infoseq);
             }
           // Return the loan
           reader->return_loan(data, sample_info);

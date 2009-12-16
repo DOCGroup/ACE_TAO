@@ -1,3 +1,11 @@
+Wed Dec 16 08:55:31 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.cpp:
+          Using this when using members.
+
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.cpp:
+          Added newline.
+
 Wed Dec 16 08:27:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
