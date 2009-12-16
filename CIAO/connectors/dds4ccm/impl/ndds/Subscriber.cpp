@@ -92,7 +92,9 @@ namespace CIAO
           }
 
         rti_dr->enable ();
-        ::DDS::DataReader_var retval = new RTI_DataReader_i (rti_dr);
+        ::DDS::DataReader_var retval = new RTI_DataReader_i ();
+        RTI_DataReader_i *dr = dynamic_cast < RTI_DataReader_i *>(retval.in ());
+        dr->set_impl (rti_dr);
 
         return retval._retn ();
       }
@@ -129,7 +131,9 @@ namespace CIAO
           }
 
         rti_dr->enable ();
-        ::DDS::DataReader_var retval = new RTI_DataReader_i (rti_dr);
+        ::DDS::DataReader_var retval = new RTI_DataReader_i ();
+        RTI_DataReader_i *dr = dynamic_cast < RTI_DataReader_i *>(retval.in ());
+        dr->set_impl (rti_dr);
 
         return retval._retn ();
       }
@@ -149,7 +153,7 @@ namespace CIAO
         CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_Subscriber_i::delete_datareader - "
                      "Successfully casted provided object reference to servant.\n"));
 
-        DDS_ReturnCode_t retval = this->impl ()->delete_datareader (top->get_datareader ());
+        DDS_ReturnCode_t retval = this->impl ()->delete_datareader (top->get_impl ());
 
         if (retval != DDS_RETCODE_OK)
           {
@@ -174,7 +178,9 @@ namespace CIAO
         const char * impl_name)
       {
         DDSDataReader* dr = this->impl ()->lookup_datareader (impl_name);
-        ::DDS::DataReader_var retval = new RTI_DataReader_i (dr);
+        ::DDS::DataReader_var retval = new RTI_DataReader_i ();
+        RTI_DataReader_i *rti_dr = dynamic_cast < RTI_DataReader_i *>(retval.in ());
+        rti_dr->set_impl (dr);
         return retval._retn ();
       }
 
