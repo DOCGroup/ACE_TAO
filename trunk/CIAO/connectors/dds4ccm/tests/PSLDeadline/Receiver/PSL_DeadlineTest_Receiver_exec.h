@@ -18,7 +18,6 @@
 
 namespace CIAO_PSL_DeadlineTest_Receiver_Impl
 {
-  //typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong > Atomic_ULong;
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
   
   class Receiver_exec_i;
@@ -31,19 +30,16 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
     TestTopic_RawListener_exec_i (void);
     virtual ~TestTopic_RawListener_exec_i (void);
 
-
     virtual void
     on_one_data (
       const TestTopic & an_instance,
       const ::CCM_DDS::ReadInfo & info);
-
 
     virtual void
     on_many_data (
       const ::TestTopic_Seq & data,
       const ::CCM_DDS::ReadInfoSeq & info );
   };
-
 
   class RECEIVER_EXEC_Export ConnectorStatusListener_exec_i
     : public virtual ::CCM_DDS::CCM_ConnectorStatusListener,
@@ -106,11 +102,11 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
     on_sample_lost (
       ::DDS::DataReader_ptr the_reader,
       const ::DDS::SampleLostStatus & status);
+
   private:
     Atomic_Boolean &deadline_port_1_;
     Atomic_Boolean &deadline_port_2_;
     int port_nr_;
-
   };
 
   class RECEIVER_EXEC_Export Receiver_exec_i
@@ -140,7 +136,6 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
       ::Components::SessionContext_ptr ctx);
 
     virtual void configuration_complete (void);
-
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
