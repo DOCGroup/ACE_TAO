@@ -15,7 +15,7 @@
 
 namespace CIAO_Hello_Receiver_Impl
 {
-  class  MyFoo_exec_i
+  class MyFoo_exec_i
     : public virtual ::Hello::CCM_MyFoo,
       public virtual ::CORBA::LocalObject
   {

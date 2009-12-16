@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #include "Hello_Receiver_exec.h"
@@ -55,16 +54,16 @@ namespace CIAO_Hello_Receiver_Impl
   MyFoo_exec_i::rw_attrib (::CORBA::Short new_value)
   {
     if (new_value == 0)
-    {
-      printf ("Receiver (RW_ATTRIB) :\tnew_value == 0 -> THROW empty exception\n");
-      Hello::InternalError ex;
-      throw ex;
-    }
+      {
+        printf ("Receiver (RW_ATTRIB) :\tnew_value == 0 -> THROW empty exception\n");
+        Hello::InternalError ex;
+        throw ex;
+      }
     else
-    {
-      printf ("Receiver (RW_ATTRIB) :\tSet <%d>\n", new_value);
-      ACE_OS::sleep (ACE_OS::rand () % 2);
-    }
+      {
+        printf ("Receiver (RW_ATTRIB) :\tSet <%d>\n", new_value);
+        ACE_OS::sleep (ACE_OS::rand () % 2);
+      }
   }
 
   CORBA::Short
@@ -93,8 +92,7 @@ namespace CIAO_Hello_Receiver_Impl
   Receiver_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
-    this->context_ =
-      ::Hello::CCM_Receiver_Context::_narrow (ctx);
+    this->context_ = ::Hello::CCM_Receiver_Context::_narrow (ctx);
 
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
