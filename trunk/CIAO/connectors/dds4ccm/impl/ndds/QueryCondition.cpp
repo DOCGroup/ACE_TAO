@@ -53,7 +53,10 @@ namespace CIAO
       RTI_QueryCondition_i::get_datareader (void)
       {
         ::DDSDataReader* reader = this->impl_->get_datareader ();
-        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (reader);
+        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i ();
+        RTI_DataReader_i *rti_dr = dynamic_cast < RTI_DataReader_i *>(dds_reader.in ());
+        rti_dr->set_impl (reader);
+
         return dds_reader._retn ();
       }
 

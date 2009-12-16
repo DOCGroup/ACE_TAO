@@ -173,7 +173,9 @@ namespace CIAO
                      "Successfully created a DDSSubscriber\n"));
 
         rti_sub->enable ();
-        ::DDS::Subscriber_var retval = new RTI_Subscriber_i (rti_sub);
+        ::DDS::Subscriber_var retval = new RTI_Subscriber_i ();
+        RTI_Subscriber_i *rti_s = dynamic_cast < RTI_Subscriber_i *> (retval.in ());
+        rti_s->set_impl (rti_sub);
 
         return retval._retn ();
       }
@@ -205,7 +207,9 @@ namespace CIAO
                      "Successfully created a DDSSubscriber\n"));
 
         rti_sub->enable ();
-        ::DDS::Subscriber_var retval = new RTI_Subscriber_i (rti_sub);
+        ::DDS::Subscriber_var retval = new RTI_Subscriber_i ();
+        RTI_Subscriber_i *rti_s = dynamic_cast < RTI_Subscriber_i *> (retval.in ());
+        rti_s->set_impl (rti_sub);
 
         return retval._retn ();
       }
@@ -232,7 +236,9 @@ namespace CIAO
       RTI_DomainParticipant_i::get_builtin_subscriber (void)
       {
         DDSSubscriber* rti_sub = this->impl_->get_builtin_subscriber ();
-        ::DDS::Subscriber_var retval = new RTI_Subscriber_i (rti_sub);
+        ::DDS::Subscriber_var retval = new RTI_Subscriber_i ();
+        RTI_Subscriber_i *rti_s = dynamic_cast < RTI_Subscriber_i *> (retval.in ());
+        rti_s->set_impl (rti_sub);
         return retval._retn ();
       }
 

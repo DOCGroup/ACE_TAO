@@ -1,3 +1,18 @@
+Wed Dec 16 19:42:36 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReader.h:
+        * connectors/dds4ccm/impl/ndds/DataReader.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+        * connectors/dds4ccm/impl/ndds/QueryCondition.cpp:
+        * connectors/dds4ccm/impl/ndds/ReadCondition.cpp:
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener.cpp:
+          Reworked this in order to separate the dds lifecycle from
+          the ccm lifecycle. The DDS entity is not passed in the
+          constructor but can be passed using the set_impl method.
+          Reworked the DataReader.
+
 Wed Dec 16 19:16:59 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataWriter.h:

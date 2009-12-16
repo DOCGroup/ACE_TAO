@@ -31,7 +31,7 @@ namespace CIAO
       {
       public:
         // Constructor
-        RTI_DataReader_i (DDSDataReader *dr);
+        RTI_DataReader_i (void);
 
         // Destructor
         virtual ~RTI_DataReader_i (void);
@@ -128,7 +128,11 @@ namespace CIAO
           ::DDS::PublicationBuiltinTopicData & publication_data,
           const ::DDS::InstanceHandle_t & publication_handle);
 
-        DDSDataReader * get_datareader (void);
+        DDSDataReader * get_impl (void);
+
+        void set_impl (DDSDataReader * dw);
+
+        DDSDataReader * impl (void);
 
       private:
         DDSDataReader * impl_;
