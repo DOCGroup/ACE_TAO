@@ -1,3 +1,8 @@
+Wed Dec 16 08:27:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+          Unicode fix
+
 Wed Dec 16 08:09:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/AMI/AMI.idl
