@@ -2423,6 +2423,22 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
                 size_t date_and_timelen,
                 bool return_pointer_to_first_digit)
 {
+  return ACE::timestamp (ACE_Time_Value::zero,
+                         date_and_time,
+                         date_and_timelen,
+                         return_pointer_to_first_digit);
+}
+
+// Returns the given timestamp in the form
+// "hour:minute:second:microsecond."  The month, day, and year are
+// also stored in the beginning of the date_and_time array.
+
+ACE_TCHAR *
+ACE::timestamp (const ACE_Time_Value& time_value,
+                ACE_TCHAR date_and_time[],
+                size_t date_and_timelen,
+                bool return_pointer_to_first_digit)
+{
   //ACE_TRACE ("ACE::timestamp");
 
   if (date_and_timelen < 35)
@@ -2432,52 +2448,57 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
     }
 
 #if defined (WIN32)
-  // Emulate Unix.  Win32 does NOT support all the UNIX versions
-  // below, so DO we need this ifdef.
-  static const ACE_TCHAR *day_of_week_name[] =
-    {
-      ACE_TEXT ("Sun"),
-      ACE_TEXT ("Mon"),
-      ACE_TEXT ("Tue"),
-      ACE_TEXT ("Wed"),
-      ACE_TEXT ("Thu"),
-      ACE_TEXT ("Fri"),
-      ACE_TEXT ("Sat")
-    };
-
-  static const ACE_TCHAR *month_name[] =
-    {
-      ACE_TEXT ("Jan"),
-      ACE_TEXT ("Feb"),
-      ACE_TEXT ("Mar"),
-      ACE_TEXT ("Apr"),
-      ACE_TEXT ("May"),
-      ACE_TEXT ("Jun"),
-      ACE_TEXT ("Jul"),
-      ACE_TEXT ("Aug"),
-      ACE_TEXT ("Sep"),
-      ACE_TEXT ("Oct"),
-      ACE_TEXT ("Nov"),
-      ACE_TEXT ("Dec")
-    };
-
-  SYSTEMTIME local;
-  ::GetLocalTime (&local);
-
-  ACE_OS::sprintf (date_and_time,
-                   ACE_TEXT ("%3s %3s %2d %04d %02d:%02d:%02d.%06d"),
-                   day_of_week_name[local.wDayOfWeek],
-                   month_name[local.wMonth - 1],
-                   (int) local.wDay,
-                   (int) local.wYear,
-                   (int) local.wHour,
-                   (int) local.wMinute,
-                   (int) local.wSecond,
-                   (int) (local.wMilliseconds * 1000));
-  return &date_and_time[15 + (return_pointer_to_first_digit != 0)];
-#else  /* UNIX */
+  if (time_value == ACE_Time_Value::zero)
+  {
+    // Emulate Unix.  Win32 does NOT support all the UNIX versions
+    // below, so DO we need this ifdef.
+    static const ACE_TCHAR *day_of_week_name[] =
+      {
+        ACE_TEXT ("Sun"),
+        ACE_TEXT ("Mon"),
+        ACE_TEXT ("Tue"),
+        ACE_TEXT ("Wed"),
+        ACE_TEXT ("Thu"),
+        ACE_TEXT ("Fri"),
+        ACE_TEXT ("Sat")
+      };
+  
+    static const ACE_TCHAR *month_name[] =
+      {
+        ACE_TEXT ("Jan"),
+        ACE_TEXT ("Feb"),
+        ACE_TEXT ("Mar"),
+        ACE_TEXT ("Apr"),
+        ACE_TEXT ("May"),
+        ACE_TEXT ("Jun"),
+        ACE_TEXT ("Jul"),
+        ACE_TEXT ("Aug"),
+        ACE_TEXT ("Sep"),
+        ACE_TEXT ("Oct"),
+        ACE_TEXT ("Nov"),
+        ACE_TEXT ("Dec")
+      };
+  
+    SYSTEMTIME local;
+    ::GetLocalTime (&local);
+  
+    ACE_OS::sprintf (date_and_time,
+                    ACE_TEXT ("%3s %3s %2d %04d %02d:%02d:%02d.%06d"),
+                    day_of_week_name[local.wDayOfWeek],
+                    month_name[local.wMonth - 1],
+                    (int) local.wDay,
+                    (int) local.wYear,
+                    (int) local.wHour,
+                    (int) local.wMinute,
+                    (int) local.wSecond,
+                    (int) (local.wMilliseconds * 1000));
+    return &date_and_time[15 + (return_pointer_to_first_digit != 0)];
+  }
+#endif  /* WIN32 */
   ACE_TCHAR timebuf[26]; // This magic number is based on the ctime(3c) man page.
-  ACE_Time_Value cur_time = ACE_OS::gettimeofday ();
+  ACE_Time_Value cur_time = 
+    (time_value == ACE_Time_Value::zero) ? 
+        ACE_Time_Value (ACE_OS::gettimeofday ()) : time_value;
   time_t secs = cur_time.sec ();
 
   ACE_OS::ctime_r (&secs,
@@ -2506,7 +2527,6 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
                    cur_time.usec ());
   date_and_time[33] = '\0';
   return &date_and_time[15 + (return_pointer_to_first_digit != 0)];
-#endif /* WIN32 */
 }
 
 // This function rounds the request to a multiple of the page size.

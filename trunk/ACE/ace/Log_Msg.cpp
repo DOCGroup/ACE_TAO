@@ -1649,8 +1649,19 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                           // Weekday Month day year hour:minute:sec.usec
                   {
                     ACE_TCHAR day_and_time[35];
-                    ACE::timestamp (day_and_time,
-                                    sizeof day_and_time / sizeof (ACE_TCHAR));
+                    // Did we find the flag indicating a time value argument 
+                    if (format[1] == ACE_TEXT('#'))
+                    {
+                      ACE_Time_Value* time_value = va_arg (argp, ACE_Time_Value*);
+                      ACE::timestamp (*time_value,
+                                      day_and_time,
+                                      sizeof day_and_time / sizeof (ACE_TCHAR));
+                    }
+                    else
+                    {
+                      ACE::timestamp (day_and_time,
+                                      sizeof day_and_time / sizeof (ACE_TCHAR));
+                    }
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
                     ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
 #else
@@ -1674,14 +1685,33 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #else
                     ACE_OS::strcpy (fp, ACE_TEXT ("s"));
 #endif
-                    if (can_check)
-                      this_len = ACE_OS::snprintf
-                        (bp, bspace, format,
-                         ACE::timestamp (day_and_time, sizeof day_and_time / sizeof (ACE_TCHAR)));
+                    // Did we find the flag indicating a time value argument 
+                    if (format[1] == ACE_TEXT('#'))
+                    {
+                      ACE_Time_Value* time_value = va_arg (argp, ACE_Time_Value*);
+                      if (can_check)
+                        this_len = ACE_OS::snprintf
+                          (bp, bspace, format,
+                          ACE::timestamp (*time_value, 
+                                         day_and_time, 
+                                         sizeof day_and_time / sizeof (ACE_TCHAR)));
+                      else
+                        this_len = ACE_OS::sprintf
+                          (bp, format, ACE::timestamp (*time_value,
+                                                      day_and_time,
+                                                      sizeof day_and_time / sizeof (ACE_TCHAR)));
+                    }
                     else
-                      this_len = ACE_OS::sprintf
-                        (bp, format, ACE::timestamp (day_and_time,
-                                                     sizeof day_and_time / sizeof (ACE_TCHAR)));
+                    {
+                      if (can_check)
+                        this_len = ACE_OS::snprintf
+                          (bp, bspace, format,
+                          ACE::timestamp (day_and_time, sizeof day_and_time / sizeof (ACE_TCHAR)));
+                      else
+                        this_len = ACE_OS::sprintf
+                          (bp, format, ACE::timestamp (day_and_time,
+                                                      sizeof day_and_time / sizeof (ACE_TCHAR)));
+                    }
                     ACE_UPDATE_COUNT (bspace, this_len);
                     break;
                   }
