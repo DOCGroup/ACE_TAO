@@ -1,3 +1,10 @@
+Wed Dec 16 11:12:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver.idl:
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h:
+          Simplified receiver
+
 Wed Dec 16 11:02:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/AMI:
