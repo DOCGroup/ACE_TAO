@@ -25,7 +25,6 @@ my $nfs = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\
 my $sup = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 my $con = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
 
-$nfs->AddLibPath ('../lib');
 $sup->AddLibPath ('../lib');
 $con->AddLibPath ('../lib');
 
