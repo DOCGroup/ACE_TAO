@@ -5,7 +5,7 @@
 
 namespace CIAO_PSL_DeadlineTest_PSL_DeadlineTest_Connector_Impl
 {
-  PSL_DeadlineTest_Connector_exec_i::PSL_DeadlineTest_Connector_exec_i (const char * /*topic_name*/)
+  PSL_DeadlineTest_Connector_exec_i::PSL_DeadlineTest_Connector_exec_i (void)
     : DDS_Event_Connector_T<TestTopic_DDS_Traits, TestTopic_Connector_Traits> ()
   {
   }
@@ -22,7 +22,7 @@ namespace CIAO_PSL_DeadlineTest_PSL_DeadlineTest_Connector_Impl
 
     ACE_NEW_NORETURN (
       retval,
-      PSL_DeadlineTest_Connector_exec_i ("Square")); //should be set by dep. plan.
+      PSL_DeadlineTest_Connector_exec_i ());
 
     return retval;
   }

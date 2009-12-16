@@ -1,8 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-
-
 #include "PSL_SampleLost_Sender_exec.h"
 #include "ace/Guard_T.h"
 #include "ciao/Logger/Log_Macros.h"
@@ -15,53 +13,48 @@ namespace CIAO_PSL_SampleLost_Sender_Impl
   ///============================================================
   // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
   //============================================================
-
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i ()
   {
   }
 
   ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
   {
-
   }
 
   // Operations from ::CCM_DDS::ConnectorStatusListener
   void ConnectorStatusListener_exec_i::on_inconsistent_topic(
     ::DDS::Topic_ptr /*the_topic*/,
      const DDS::InconsistentTopicStatus & /*status*/){
-     //printf("Sender : ConnectorStatusListener_exec_i::on_inconsistent_topic\n");
     }
+
   void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
     ::DDS::DataReader_ptr /*the_reader*/,
      const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
-     //printf("Sender:ConnectorStatusListener_exec_i::on_requested_incompatible_qos, status = %dl\n", status);
     }
+
   void ConnectorStatusListener_exec_i::on_sample_rejected(
      ::DDS::DataReader_ptr /*the_reader*/,
      const DDS::SampleRejectedStatus & /*status*/)  {
-     //printf("ConnectorStatusListener_exec_i::on_sample_rejected\n");
     }
+
   void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
      ::DDS::DataWriter_ptr /*the_writer*/,
      const DDS::OfferedDeadlineMissedStatus & /*status*/)  {
-     //printf("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
     }
+
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
      ::DDS::DataWriter_ptr /*the_writer*/,
      const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
-     //printf("Sender:ConnectorStatusListener_exec_i::on_offered_incompatible_qos status = %dl\n", status);
-   }
+    }
+
   void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr /*the_entity*/,
     ::DDS::StatusKind  /*status_kind*/)  {
-    //CORBA::ULong kind = status_kind;
-    //printf("Sender :ConnectorStatusListener_exec_i::on_unexpected_status #### status_kind = %d \n", kind);
     }
 
   //============================================================
   // Pulse generator
   //============================================================
-
   pulse_Generator::pulse_Generator (Sender_exec_i &callback)
     : pulse_callback_ (callback)
   {
@@ -77,7 +70,6 @@ namespace CIAO_PSL_SampleLost_Sender_Impl
   //============================================================
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
-
   Sender_exec_i::Sender_exec_i (void)
   {
     this->ticker_ = new pulse_Generator (*this);
@@ -123,13 +115,12 @@ namespace CIAO_PSL_SampleLost_Sender_Impl
          {
            if (!CORBA::is_nil (this->writer_) ) {
               this->writer_->write_one(i->second,::DDS::HANDLE_NIL);
-              //printf("wrote x = %ld\n", i->second->x++);
               i->second->x++;
            }
          }
-         catch (CCM_DDS::InternalError& )
+         catch (const CCM_DDS::InternalError& )
          {
-           CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while creating topic for <%C>.\n"),
+           ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while creating topic for <%C>.\n"),
                     i->first.c_str ()));
          }
        }
@@ -146,7 +137,7 @@ namespace CIAO_PSL_SampleLost_Sender_Impl
                 ACE_Time_Value (sec, usec),
                 ACE_Time_Value (sec, usec)) == -1)
     {
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
                              ACE_TEXT ("Error scheduling timer")));
     }
   }
@@ -155,10 +146,9 @@ namespace CIAO_PSL_SampleLost_Sender_Impl
   Sender_exec_i::stop (void)
   {
     this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
     delete this->ticker_;
   }
-
 
  void
   Sender_exec_i::add_instance_of_topic (const char * key, int x)
@@ -174,8 +164,7 @@ namespace CIAO_PSL_SampleLost_Sender_Impl
     //add 2 different instances of topic
     this->add_instance_of_topic ("EEN",1);
     this->add_instance_of_topic ("TWEE",2);
-
-     this->start ();
+    this->start ();
   }
 
   void
@@ -188,7 +177,6 @@ namespace CIAO_PSL_SampleLost_Sender_Impl
   Sender_exec_i::ccm_remove (void)
   {
   }
-
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_PSL_SampleLost_Sender_Impl (void)
@@ -203,4 +191,3 @@ namespace CIAO_PSL_SampleLost_Sender_Impl
     return retval;
   }
 }
-
