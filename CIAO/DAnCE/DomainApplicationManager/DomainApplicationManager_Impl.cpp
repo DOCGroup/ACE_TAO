@@ -409,7 +409,7 @@ DomainApplicationManager_Impl::preparePlan()
                             ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
                             ACE_TEXT("Deployment::StartError exception. NodeManager %C cannot be found\n"),
                             (*iter_plans).ext_id_.c_str()));
-              throw Deployment::StartError ( ACE_TEXT_ALWAYS_CHAR ((*iter_plans).ext_id_.c_str()),
+              throw Deployment::StartError ( (*iter_plans).ext_id_.c_str(),
                                              "NodeManager not found");
             }
 
