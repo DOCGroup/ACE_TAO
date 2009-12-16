@@ -6,10 +6,9 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
 use PerlACE::TestTarget;
 
-my $target = PerlACE::TestTarget::create_target ($PerlACE::TestConfig);
+my $target = PerlACE::TestTarget::create_target (1);
 
 $brace="\#\#\#\#\#";
 %tests = ("basic_types" => "-n 256 -l 10",
@@ -26,10 +25,10 @@ while (($test,$args) = each %tests) {
     print STDERR "\n$brace $test $args test BEGUN\n";
     $TST = $target->CreateProcess ($test, $args);
     print STDERR "\tRUNNING $test\n";
-    
-    $retval = $TST->SpawnWaitKill (90);
 
-    if ($retval != 0) { 
+    $retval = $TST->SpawnWaitKill ($target->ProcessStopWaitInterval() + 60);
+
+    if ($retval != 0) {
         print STDERR "ERROR $brace $test $args, exit value $retval\n";
         $status = 1;
     }
