@@ -1,3 +1,8 @@
+Wed Dec 16 09:32:33 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/descriptors/Plan.cdp:
+          Resolved errors due to renaming namespaces.
+
 Wed Dec 16 09:04:31 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         *connectors/dds4ccm/tests/PSLDeadline/Connector/PSL_DeadlineTest_Connector_exec.cpp:
