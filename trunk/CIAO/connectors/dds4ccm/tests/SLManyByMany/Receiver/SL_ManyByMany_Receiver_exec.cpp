@@ -99,6 +99,14 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
     this->on_many_update_ = true;
     for(CORBA::ULong i = 0; i < readinfoseq.length(); ++i)
       {
+        if( readinfoseq[i].instance_status != CCM_DDS::INSTANCE_UPDATED)
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected info.instance_status ")
+                                  ACE_TEXT ("'CCM_DDS::INSTANCE_UPDATED'")
+                                  ACE_TEXT ("  with operation 'on_many_updates' from StateListener in Receiver")
+                        )); 
+
+          }
         time_t tim = readinfoseq[i].source_timestamp.sec;
         tm* time = ACE_OS::localtime(&tim);
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
@@ -124,10 +132,21 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
   }
 
   void
-  StateListener_exec_i::on_deletion (const ::TestTopic & /*datum*/,
-                                    const ::CCM_DDS::ReadInfo & /*info*/)
+  StateListener_exec_i::on_deletion (const ::TestTopic & datum,
+                                    const ::CCM_DDS::ReadInfo & info)
   {
-    this->on_deletion_ = true;
+    if(info.instance_status != CCM_DDS::INSTANCE_DELETED)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected info.instance_status ")
+                              ACE_TEXT ("'CCM_DDS::INSTANCE_DELETED'")
+                              ACE_TEXT ("  with operation 'on_deletion' from StateListener in Receiver")
+                    )); 
+
+      }
+    if((!datum.key.in()==0) && (info.instance_status == CCM_DDS::INSTANCE_UPDATED))
+      { 
+        this->on_deletion_ = true;
+      }
   }
   //============================================================
   // Facet Executor Implementation Class: PortStatusListener_exec_i
@@ -209,7 +228,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
                         TestTopic_infos[i].x));
           }
       }
-    catch(CCM_DDS::InternalError& )
+    catch (const CCM_DDS::InternalError& )
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("internal error or no data\n")));
       }

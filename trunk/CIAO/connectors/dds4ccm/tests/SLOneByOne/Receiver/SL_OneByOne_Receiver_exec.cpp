@@ -57,17 +57,31 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
 
   // Operations from ::CCM_DDS::StateListener
   void
-  StateListener_exec_i::on_creation (const ::TestTopic & /*datum*/,
-                                     const ::CCM_DDS::ReadInfo & /*info*/)
+  StateListener_exec_i::on_creation (const ::TestTopic & datum,
+                                     const ::CCM_DDS::ReadInfo & info)
   {
-    this->on_creation_ = true;
+    if((!datum.key.in()==0) && (info.instance_status == CCM_DDS::INSTANCE_CREATED))
+      { 
+        this->on_creation_ = true;
+      }
   }
 
   void
-  StateListener_exec_i::on_one_update (const ::TestTopic & /*datum*/,
-                                       const ::CCM_DDS::ReadInfo & /*info*/)
+  StateListener_exec_i::on_one_update (const ::TestTopic & datum,
+                                       const ::CCM_DDS::ReadInfo & info)
   {
-    this->on_one_update_ = true;
+    if(info.instance_status != CCM_DDS::INSTANCE_UPDATED)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected info.status ")
+                              ACE_TEXT ("'CCM_DDS::INSTANCE_UPDATED'")
+                              ACE_TEXT ("  with operation 'on_one_update' from StateListener in Receiver")
+                    )); 
+
+      }
+    if((!datum.key.in()==0) && (info.instance_status == CCM_DDS::INSTANCE_UPDATED))
+      { 
+        this->on_one_update_ = true;
+      }
   }
 
   void
@@ -78,10 +92,21 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
   }
 
   void
-  StateListener_exec_i::on_deletion (const ::TestTopic & /*datum*/,
-                                    const ::CCM_DDS::ReadInfo & /*info*/)
+  StateListener_exec_i::on_deletion (const ::TestTopic & datum,
+                                    const ::CCM_DDS::ReadInfo & info)
   {
-    this->on_deletion_ = true;
+     if(info.instance_status != CCM_DDS::INSTANCE_DELETED)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected info.status ")
+                              ACE_TEXT ("'CCM_DDS::INSTANCE_DELETED'")
+                              ACE_TEXT ("  with operation 'on_deletion' from StateListener in Receiver")
+                    )); 
+
+      }
+     if((!datum.key.in()==0) && (info.instance_status == CCM_DDS::INSTANCE_DELETED))
+       {
+         this->on_deletion_ = true;
+       }
   }
   //============================================================
   // Facet Executor Implementation Class: PortStatusListener_exec_i
@@ -163,7 +188,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
           }
       
       }
-    catch(CCM_DDS::InternalError& )
+    catch (const CCM_DDS::InternalError& )
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("internal error or no data\n")));
       }
