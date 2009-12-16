@@ -30,8 +30,10 @@ namespace CIAO
       {
         ::DDS::InconsistentTopicStatus ddsstatus;
         ddsstatus <<= status;
-        ::DDS::Topic_var dds_reader = new RTI_Topic_i (the_topic);
-        this->impl_->on_inconsistent_topic (dds_reader.in (), ddsstatus);
+        ::DDS::Topic_var dds_topic = new RTI_Topic_i ();
+        RTI_Topic_i *tp = dynamic_cast < RTI_Topic_i *> (dds_topic.in ());
+        tp->set_impl (the_topic);
+        this->impl_->on_inconsistent_topic (dds_topic.in (), ddsstatus);
       }
 
       ::DDS::TopicListener_ptr
