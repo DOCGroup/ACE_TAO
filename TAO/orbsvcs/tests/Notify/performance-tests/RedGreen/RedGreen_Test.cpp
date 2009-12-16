@@ -133,6 +133,7 @@ RedGreen_Test::run (void)
       this->orb_->run(tv);
     }
 
+    this->destroy_ec ();
     this->orb_->shutdown (0);
   }
   catch (const CORBA::Exception& ex)

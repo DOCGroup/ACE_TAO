@@ -1,3 +1,11 @@
+Wed Dec 16 13:03:30 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/main.cpp:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/run_test.pl:
+          Changed the test so that event channel is destroyed before
+          orb is shutdown. Removed unnecessary lib pathes from perl script.
+
 Wed Dec 16 11:26:30 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/Notify/Ordering/run_test.pl:
