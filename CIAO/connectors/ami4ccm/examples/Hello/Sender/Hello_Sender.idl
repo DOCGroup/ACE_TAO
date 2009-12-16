@@ -9,14 +9,14 @@
 #include "Hello_Base/HelloE.idl"
 #include "Hello_Base/Hello_BaseE.idl"
 
-module Hello_AMI
+module Hello
 {
   component Sender
   {
-    // for asynch invocation. @@implied
-    uses Hello_AMI::AMI_MyFoo       run_asynch_my_foo;
+    /// For asynch invocation. @@implied
+    uses Hello::AMI_MyFoo       run_asynch_my_foo;
 
-    // for synchronous invocation
+    /// For synchronous invocation
     uses Hello::MyFoo         run_my_foo;
   };
 };

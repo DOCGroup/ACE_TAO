@@ -5,7 +5,7 @@
 #include "ciao/Logger/Log_Macros.h"
 #include "AMI_MyFoo_i.h"
 
-namespace CIAO_Hello_AMI_AMI_AMI_Impl
+namespace CIAO_Hello_AMI_Receiver_Impl
 {
   AMI_MyFoo_exec_i::AMI_MyFoo_exec_i ()
   {
@@ -23,7 +23,7 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
 
   void
   AMI_MyFoo_exec_i::sendc_foo (
-    ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler,
+    ::Hello::AMI_MyFooCallback_ptr ami_handler,
     const char * in_str)
   {
     printf ("AMI (FOO) :\tsendc_foo <%s>\n", in_str);
@@ -44,7 +44,7 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
 
   void
   AMI_MyFoo_exec_i::sendc_hello (
-    ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler)
+    ::Hello::AMI_MyFooCallback_ptr ami_handler)
   {
     printf ("AMI (FOO) :\tsendc_hello\n");
     if (!::CORBA::is_nil (this->ami_foo_server_.in ()))
@@ -65,7 +65,7 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
 
   void
   AMI_MyFoo_exec_i::sendc_get_rw_attrib (
-    ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler)
+    ::Hello::AMI_MyFooCallback_ptr ami_handler)
   {
     printf ("AMI (FOO) :\tsendc_get_rw_attrib\n");
     if (!::CORBA::is_nil (this->ami_foo_server_.in ()))
@@ -84,7 +84,7 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
 
   void
   AMI_MyFoo_exec_i::sendc_set_rw_attrib (
-    ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler,
+    ::Hello::AMI_MyFooCallback_ptr ami_handler,
   CORBA::Short rw_attrib)
   {
     printf ("AMI (FOO) :\tsendc_set_rw_attrib\n");
@@ -105,7 +105,7 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
 
   void
   AMI_MyFoo_exec_i::sendc_get_ro_attrib (
-    ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler)
+    ::Hello::AMI_MyFooCallback_ptr ami_handler)
   {
     printf ("AMI (FOO) :\tsendc_get_ro_attrib\n");
     if (!::CORBA::is_nil (this->ami_foo_server_.in ()))
@@ -141,7 +141,7 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
 
   // Port operations.
 
-  ::Hello_AMI::CCM_AMI_MyFoo_ptr
+  ::Hello::CCM_AMI_MyFoo_ptr
   AMI_exec_i::get_perform_asynch_my_foo (void)
   {
     this->myfoo_ = new AMI_MyFoo_exec_i ();
@@ -154,7 +154,7 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
     ::Components::SessionContext_ptr ctx)
   {
     this->context_ =
-      ::Hello_AMI_AMI::CCM_AMI_Context::_narrow (ctx);
+      ::Hello::CCM_AMI_Receiver_Context::_narrow (ctx);
 
     if ( ::CORBA::is_nil (this->context_.in ()))
       {

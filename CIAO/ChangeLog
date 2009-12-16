@@ -1,3 +1,20 @@
+Wed Dec 16 08:09:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/AMI/AMI.idl
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.cpp
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.h
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_MyFoo_i.cpp
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_MyFoo_i.h
+        * connectors/ami4ccm/examples/Hello/Hello_Base/Hello_Base.idl
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver.idl
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender.idl
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.h
+          Improved naming, everything is now in the Hello module and
+          everything related to AMI has a AMI_ prefix
+
 Tue Dec 15 18:12:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ami4ccm/examples/Hello/AMI/AMI_exec.cpp:
