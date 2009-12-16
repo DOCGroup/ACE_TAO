@@ -21,7 +21,6 @@ my $server1 = PerlACE::TestTarget::create_target (1) || die "Create target 1 fai
 my $server2 = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 my $client = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
 
-$server1->AddLibPath ('../lib');
 $server2->AddLibPath ('../lib');
 $client->AddLibPath ('../lib');
 
