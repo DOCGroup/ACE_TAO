@@ -23,8 +23,6 @@ my $sup = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\
 my $con1 = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
 my $con2 = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
 
-$ns->AddLibPath ('../lib');
-$nfs->AddLibPath ('../lib');
 $sup->AddLibPath ('../lib');
 $con1->AddLibPath ('../lib');
 $con2->AddLibPath ('../lib');
