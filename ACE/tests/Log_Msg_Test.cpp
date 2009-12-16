@@ -33,6 +33,9 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_Memory.h"
+#include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_time.h"
+#include "ace/Time_Value.h"
 
 ACE_RCSID(tests, Log_Msg_Test, "$Id$")
 
@@ -626,6 +629,12 @@ test_format_specs (void)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%m %p\n"), ACE_TEXT("perror")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%S\n"), SIGINT));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%S\n"), ACE_NSIG));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%D\n")));
+  ACE_Time_Value tv = ACE_OS::gettimeofday ();
+  tv += ACE_Time_Value (25*60*60); // + 25 hours
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%#D\n"), &tv));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%T\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%#T\n"), &tv));
 
   Log_Spec_Verify  verifier;
 

@@ -1,3 +1,20 @@
+Wed Dec 16 09:09:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
+
+        * ACE_wrappers/ace/ACE.h:
+        * ACE_wrappers/ace/ACE.cpp:
+        * ACE_wrappers/ace/Log_Msg.cpp:
+          Added option to print a given ACE_Time_Value in the log 
+          message instead of system supplied timestamp as in %T
+          and %D.
+          The option is implemented as a variant of the %D/%T 
+          options by using the '#' flag character like '%#D' or 
+          '%#T'. When using this flag an ACE_Time_Value pointer is 
+          expected in the argument list supplied with the log message.
+          This fixed Bugzilla #3221.
+        
+        * ACE_wrappers/tests/Log_Msg_Test.cpp:
+          Added some testlines for this option.
+
 Mon Dec 14 14:58:05 UTC 2009  Abdul Sowayan  <sowayan@gmail.com>
 
         * NEWS:
