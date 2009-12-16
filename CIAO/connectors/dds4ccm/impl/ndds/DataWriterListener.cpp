@@ -31,7 +31,9 @@ namespace CIAO
       {
         ::DDS::OfferedDeadlineMissedStatus ddsstatus;
         ddsstatus <<= status;
-        ::DDS::DataWriter_var dds_writer = new RTI_DataWriter_i (the_writer);
+        ::DDS::DataWriter_var dds_writer = new RTI_DataWriter_i ();
+        RTI_DataWriter_i *dw = dynamic_cast< RTI_DataWriter_i * > (dds_writer.in ());
+        dw->set_impl (the_writer);
         this->impl_->on_offered_deadline_missed (dds_writer.in (), ddsstatus);
       }
 
@@ -42,7 +44,9 @@ namespace CIAO
       {
         ::DDS::OfferedIncompatibleQosStatus ddsstatus;
         ddsstatus <<= status;
-        ::DDS::DataWriter_var dds_writer = new RTI_DataWriter_i (the_writer);
+        ::DDS::DataWriter_var dds_writer = new RTI_DataWriter_i ();
+        RTI_DataWriter_i *dw = dynamic_cast< RTI_DataWriter_i * > (dds_writer.in ());
+        dw->set_impl (the_writer);
         this->impl_->on_offered_incompatible_qos (dds_writer.in (), ddsstatus);
       }
 
@@ -53,7 +57,9 @@ namespace CIAO
       {
         ::DDS::LivelinessLostStatus ddsstatus;
         ddsstatus <<= status;
-        ::DDS::DataWriter_var dds_writer = new RTI_DataWriter_i (the_writer);
+        ::DDS::DataWriter_var dds_writer = new RTI_DataWriter_i ();
+        RTI_DataWriter_i *dw = dynamic_cast< RTI_DataWriter_i * > (dds_writer.in ());
+        dw->set_impl (the_writer);
         this->impl_->on_liveliness_lost (dds_writer.in (), ddsstatus);
       }
 
@@ -64,7 +70,9 @@ namespace CIAO
       {
         ::DDS::PublicationMatchedStatus ddsstatus;
         ddsstatus <<= status;
-        ::DDS::DataWriter_var dds_writer = new RTI_DataWriter_i (the_writer);
+        ::DDS::DataWriter_var dds_writer = new RTI_DataWriter_i ();
+        RTI_DataWriter_i *dw = dynamic_cast< RTI_DataWriter_i * > (dds_writer.in ());
+        dw->set_impl (the_writer);
         this->impl_->on_publication_matched (dds_writer.in (), ddsstatus);
       }
 
