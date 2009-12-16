@@ -17,9 +17,7 @@ my $nm_service = PerlACE::TestTarget::create_target (1) || die "Create target 1 
 my $test = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 my $nt_service = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
 
-$nm_service->AddLibPath ('../../lib');
 $test->AddLibPath ('../../lib');
-$nt_service->AddLibPath ('../../lib');
 
 my $notify_ior = "notify.ior";
 my $naming_ior = "naming.ior";
