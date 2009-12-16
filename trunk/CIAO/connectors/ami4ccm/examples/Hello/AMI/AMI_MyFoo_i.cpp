@@ -9,8 +9,8 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
   //============================================================
   // Implementation of the AMI CORBA FOO reply handler
   //============================================================
-  AMI_MyFoo_reply_handler::AMI_MyFoo_reply_handler (::Hello_AMI::AMI_MyFooCallback_ptr foo_callback)
-  : foo_callback_ (::Hello_AMI::AMI_MyFooCallback::_duplicate (foo_callback))
+  AMI_MyFoo_reply_handler::AMI_MyFoo_reply_handler (::Hello::AMI_MyFooCallback_ptr foo_callback)
+  : foo_callback_ (::Hello::AMI_MyFooCallback::_duplicate (foo_callback))
   {
   }
 
@@ -25,7 +25,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
     const char * out_str)
   {
     printf ("AMI CORBA (FOO) :\tMyFoo Foo Reply Handler::foo\n");
-    foo_callback_->foo (result, CORBA::string_dup (out_str));
+    this->foo_callback_->foo (result, CORBA::string_dup (out_str));
     this->_remove_ref ();
   }
 
@@ -34,7 +34,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
     ::Messaging::ExceptionHolder * excep_holder)
   {
     printf ("AMI CORBA (FOO) :\tMyFoo Foo Reply Handler::foo_excep\n");
-    foo_callback_->foo_excep (excep_holder);
+    this->foo_callback_->foo_excep (excep_holder);
     this->_remove_ref ();
   }
 
@@ -44,7 +44,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
     CORBA::Long answer)
   {
     printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::hello\n");
-    foo_callback_->hello (answer);
+    this->foo_callback_->hello (answer);
     this->_remove_ref ();
   }
 
@@ -53,7 +53,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
     ::Messaging::ExceptionHolder * excep_holder)
   {
     printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::hello_excep\n");
-    foo_callback_->hello_excep (excep_holder);
+    this->foo_callback_->hello_excep (excep_holder);
     this->_remove_ref ();
   }
 
@@ -63,7 +63,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
     ::CORBA::Short ami_return_val)
   {
     printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::get_rw_atrrib\n");
-    foo_callback_->get_rw_attrib (ami_return_val);
+    this->foo_callback_->get_rw_attrib (ami_return_val);
     this->_remove_ref ();
   }
 
@@ -72,7 +72,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
     ::Messaging::ExceptionHolder * excep_holder)
   {
     printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::get_rw_attrib_excep\n");
-    foo_callback_->get_rw_attrib_excep (excep_holder);
+    this->foo_callback_->get_rw_attrib_excep (excep_holder);
     this->_remove_ref ();
   }
 
@@ -81,7 +81,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
   AMI_MyFoo_reply_handler::set_rw_attrib ()
   {
     printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::set_rw_attrib\n");
-    foo_callback_->set_rw_attrib ();
+    this->foo_callback_->set_rw_attrib ();
     this->_remove_ref ();
   }
 
@@ -90,7 +90,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
     ::Messaging::ExceptionHolder * excep_holder)
   {
     printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::set_rw_attrib_excep\n");
-    foo_callback_->set_rw_attrib_excep (excep_holder);
+    this->foo_callback_->set_rw_attrib_excep (excep_holder);
     this->_remove_ref ();
   }
 
@@ -100,7 +100,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
     ::CORBA::Short ami_return_val)
   {
     printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::get_ro_attrib\n");
-    foo_callback_->get_ro_attrib (ami_return_val);
+    this->foo_callback_->get_ro_attrib (ami_return_val);
     this->_remove_ref ();
   }
 
@@ -108,8 +108,8 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
   AMI_MyFoo_reply_handler::get_ro_attrib_excep (
     ::Messaging::ExceptionHolder * excep_holder)
   {
-    printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::get_ro_atrrib_excep\n");
-    foo_callback_->get_ro_attrib_excep (excep_holder);
+    printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::get_ro_attrib_excep\n");
+    this->foo_callback_->get_ro_attrib_excep (excep_holder);
     this->_remove_ref ();
   }
 }

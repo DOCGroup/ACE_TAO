@@ -16,9 +16,9 @@
 #include "ace/Task.h"
 
 
-namespace CIAO_Hello_AMI_Sender_Impl
+namespace CIAO_Hello_Sender_Impl
 {
-  //common excepti handlers
+  // common exception handlers
   void HandleException (
       long id,
       const char* error_string,
@@ -32,12 +32,12 @@ namespace CIAO_Hello_AMI_Sender_Impl
   class asynch_foo_generator : public virtual ACE_Task_Base
   {
   public:
-    asynch_foo_generator (::Hello_AMI::AMI_MyFoo_ptr my_foo_ami);
+    asynch_foo_generator (::Hello::AMI_MyFoo_ptr my_foo_ami);
 
     virtual int svc (void);
 
   private:
-    ::Hello_AMI::AMI_MyFoo_var my_foo_ami_;
+    ::Hello::AMI_MyFoo_var my_foo_ami_;
   };
 
   // Worker thread for synchronous invocations
@@ -53,34 +53,21 @@ namespace CIAO_Hello_AMI_Sender_Impl
   };
 
   class  MyFoo_callback_exec_i
-    : public virtual ::Hello_AMI::CCM_AMI_MyFooCallback,
+    : public virtual ::Hello::CCM_AMI_MyFooCallback,
       public virtual ::CORBA::LocalObject
   {
   public:
     MyFoo_callback_exec_i (void);
     virtual ~MyFoo_callback_exec_i (void);
 
-    // Operations and attributes from ::CCM_AMI::MyFoo_callback
+    virtual void foo (::CORBA::Long ami_return_val, const char * answer);
 
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    // FOO Reply Handler
-    virtual void
-      foo (
-      ::CORBA::Long ami_return_val,
-        const char * answer);
-
-    virtual void
-      foo_excep (
-        ::Messaging::ExceptionHolder * excep_holder);
+    virtual void foo_excep (::Messaging::ExceptionHolder * excep_holder);
 
     // Hello Reply Handler
-    virtual void
-      hello (
-        ::CORBA::Long answer);
-    virtual void
-      hello_excep (
-        ::Messaging::ExceptionHolder * excep_holder);
+    virtual void hello (::CORBA::Long answer);
+
+    virtual void hello_excep (::Messaging::ExceptionHolder * excep_holder);
 
     //GET rw_attrib Reply Handler
     virtual void get_rw_attrib (
@@ -108,12 +95,6 @@ namespace CIAO_Hello_AMI_Sender_Impl
     Sender_exec_i (void);
     virtual ~Sender_exec_i (void);
 
-    // Supported operations and attributes.
-
-    // Component attributes.
-
-    // Port operations.
-
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);
@@ -125,7 +106,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
     virtual void ccm_remove (void);
 
   private:
-    ::Hello_AMI::CCM_Sender_Context_var context_;
+    ::Hello::CCM_Sender_Context_var context_;
     MyFoo_callback_exec_i* global_foo_callback_;
   };
 

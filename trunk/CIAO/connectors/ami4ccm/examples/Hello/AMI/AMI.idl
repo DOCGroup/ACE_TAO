@@ -9,12 +9,14 @@
 #include "Hello_Base/Hello_BaseE.idl"
 #include "Hello_Base/HelloE.idl"
 
-module Hello_AMI_AMI
+#define connector component
+
+module Hello
 {
-  component AMI
+  connector AMI_Receiver
   {
     /// Provides the interface for Sender
-    provides Hello_AMI::AMI_MyFoo perform_asynch_my_foo;
+    provides Hello::AMI_MyFoo perform_asynch_my_foo;
 
     /// Uses the interface of the Receiver ('server')
     uses Hello::MyFoo my_foo_receiver;
