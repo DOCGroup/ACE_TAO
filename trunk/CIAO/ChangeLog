@@ -1,3 +1,8 @@
+Wed Dec 16 11:02:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/AMI:
+          Renamed directory to connector
+
 Wed Dec 16 10:36:31 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.cpp:
