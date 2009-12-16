@@ -48,7 +48,7 @@ namespace CIAO_PSL_DeadlineTest_PSL_DeadlineTest_Connector_Impl
     public DDS_Event_Connector_T <TestTopic_DDS_Traits, TestTopic_Connector_Traits>
   {
   public:
-    PSL_DeadlineTest_Connector_exec_i (const char * topic_name);
+    PSL_DeadlineTest_Connector_exec_i (void);
     virtual ~PSL_DeadlineTest_Connector_exec_i (void);
   };
 

@@ -18,7 +18,6 @@
 
 namespace CIAO_PSL_SampleLost_Receiver_Impl
 {
-  //typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong > Atomic_ULong;
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
   
   class Receiver_exec_i;
@@ -106,6 +105,7 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
     on_sample_lost (
       ::DDS::DataReader_ptr the_reader,
       const ::DDS::SampleLostStatus & status);
+
   private:
     Atomic_Boolean &sample_port_1_;
     Atomic_Boolean &sample_port_2_;
@@ -140,7 +140,6 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
       ::Components::SessionContext_ptr ctx);
 
     virtual void configuration_complete (void);
-
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);

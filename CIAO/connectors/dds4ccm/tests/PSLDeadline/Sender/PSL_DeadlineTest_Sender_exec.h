@@ -54,13 +54,13 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     void on_sample_rejected( ::DDS::DataReader_ptr the_reader, 
                              const DDS::SampleRejectedStatus & status);
     virtual
-      void on_offered_deadline_missed( ::DDS::DataWriter_ptr the_writer,
+    void on_offered_deadline_missed( ::DDS::DataWriter_ptr the_writer,
                                      const DDS::OfferedDeadlineMissedStatus & status);
     virtual
     void on_offered_incompatible_qos( ::DDS::DataWriter_ptr the_writer, 
                                       const DDS::OfferedIncompatibleQosStatus & status);
     virtual
-      void on_unexpected_status( ::DDS::Entity_ptr the_entity,
+    void on_unexpected_status( ::DDS::Entity_ptr the_entity,
        ::DDS::StatusKind  status_kind);
   
   };
@@ -88,8 +88,6 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     void start (void);
     void stop (void);
     pulse_Generator * ticker_;
- 
- 
     ::PSL_DeadlineTest::CCM_Sender_Context_var context_;
     CCM_DDS::TestTopic::Writer_var writer_;
     TAO_SYNCH_MUTEX mutex_;
