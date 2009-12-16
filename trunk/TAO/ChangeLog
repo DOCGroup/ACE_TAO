@@ -1,3 +1,9 @@
+Wed Dec 16 15:19:22 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl:
+
+          Fuzz fix.
+
 Wed Dec 16 14:18:03 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/Notify/Timeout/run_test.pl:
