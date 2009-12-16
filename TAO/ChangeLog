@@ -1,3 +1,8 @@
+Wed Dec 16 19:22:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CDR/run_test.pl:
+          Fuzz fix.
+
 Wed Dec 16 15:19:22 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl:
@@ -23,7 +28,7 @@ Wed Dec 16 14:18:03 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
         * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/run_test.pl:
         * orbsvcs/tests/Notify/Lanes/run_test.pl:
         * orbsvcs/tests/Notify/Structured_Filter/run_test.pl:
-          
+
           Removed AddLibPath where it isn't needed.
 
 Wed Dec 16 13:03:30 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
