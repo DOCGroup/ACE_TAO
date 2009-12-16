@@ -97,24 +97,27 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(
             }
         }
 
-      typename CCM_TYPE::seq_type::_var_type inst_seq = new typename CCM_TYPE::seq_type;
-      ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;
-
-      infoseq->length (nr_of_samples);
-      inst_seq->length (nr_of_samples);
-
-      // Copy the valid samples
-      CORBA::ULong ix = 0;
-      for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
+      if (nr_of_samples > 0)
         {
-          if(sample_info[i].valid_data)
+          typename CCM_TYPE::seq_type::_var_type inst_seq = new typename CCM_TYPE::seq_type;
+          ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;
+
+          infoseq->length (nr_of_samples);
+          inst_seq->length (nr_of_samples);
+
+          // Copy the valid samples
+          CORBA::ULong ix = 0;
+          for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
             {
-              infoseq[ix] <<= sample_info[i];
-              inst_seq[ix] = data[i];
-              ++ix;
+              if(sample_info[i].valid_data)
+                {
+                  infoseq[ix] <<= sample_info[i];
+                  inst_seq[ix] = data[i];
+                  ++ix;
+                }
             }
+          listener_->on_many_data (inst_seq, infoseq);
         }
-      listener_->on_many_data (inst_seq, infoseq);
     }
   // Return the loan
   reader->return_loan(data, sample_info);
