@@ -13,7 +13,7 @@
 #include "tao/LocalObject.h"
 #include "Hello_Receiver_exec_export.h"
 
-namespace CIAO_Hello_AMI_Receiver_Impl
+namespace CIAO_Hello_Receiver_Impl
 {
   class  MyFoo_exec_i
     : public virtual ::Hello::CCM_MyFoo,
@@ -23,29 +23,15 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     MyFoo_exec_i (void);
     virtual ~MyFoo_exec_i (void);
 
-    // Operations and attributes from ::CCM_AMI::MyFoo
+    virtual ::CORBA::Long foo (const char * in_str, ::CORBA::String_out answer);
 
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    virtual void hello (::CORBA::Long_out answer);
 
-    virtual ::CORBA::Long
-    foo (
-      const char * in_str,
-      ::CORBA::String_out answer);
+    virtual ::CORBA::Short rw_attrib ();
 
-    virtual void
-    hello (
-      CORBA::Long_out answer);
+    virtual void rw_attrib (::CORBA::Short new_value);
 
-    virtual CORBA::Short
-    rw_attrib ();
-
-    virtual void
-    rw_attrib (
-      CORBA::Short new_value);
-
-    virtual CORBA::Short
-        ro_attrib ();
+    virtual CORBA::Short ro_attrib ();
   };
 
   class  Receiver_exec_i
@@ -56,20 +42,9 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     Receiver_exec_i (void);
     virtual ~Receiver_exec_i (void);
 
-    // Supported operations and attributes.
+    virtual ::Hello::CCM_MyFoo_ptr get_do_my_foo (void);
 
-    // Component attributes.
-
-    // Port operations.
-
-    virtual ::Hello::CCM_MyFoo_ptr
-    get_do_my_foo (void);
-
-    // Operations from Components::SessionComponent.
-
-    virtual void
-    set_session_context (
-      ::Components::SessionContext_ptr ctx);
+    virtual void set_session_context (::Components::SessionContext_ptr ctx);
 
     virtual void configuration_complete (void);
 
@@ -78,7 +53,7 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     virtual void ccm_remove (void);
 
   private:
-    ::Hello_AMI::CCM_Receiver_Context_var context_;
+    ::Hello::CCM_Receiver_Context_var context_;
   };
 
   extern "C" HELLO_RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

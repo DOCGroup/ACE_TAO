@@ -12,7 +12,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
   {
     public:
       AMI_MyFoo_reply_handler (
-      ::Hello_AMI::AMI_MyFooCallback_ptr foo_callback);
+      ::Hello::AMI_MyFooCallback_ptr foo_callback);
 
       virtual ~AMI_MyFoo_reply_handler (void);
 
@@ -29,22 +29,17 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
       virtual void get_rw_attrib_excep (
         ::Messaging::ExceptionHolder * excep_holder);
 
-      void
-      set_rw_attrib ();
+      virtual void set_rw_attrib ();
 
-      void
-      set_rw_attrib_excep (
+      virtual void set_rw_attrib_excep (
         ::Messaging::ExceptionHolder * excep_holder);
 
-      void
-      get_ro_attrib (
-        ::CORBA::Short ami_return_val);
+      virtual void get_ro_attrib (::CORBA::Short ami_return_val);
 
-      void
-      get_ro_attrib_excep (
+      virtual void get_ro_attrib_excep (
         ::Messaging::ExceptionHolder * excep_holder);
     private:
-      ::Hello_AMI::AMI_MyFooCallback_var foo_callback_;
+      ::Hello::AMI_MyFooCallback_var foo_callback_;
   };
 }
 #endif /* AMI_MyFoo_i_H */

@@ -6,7 +6,7 @@
 #include "Hello_Base/Hello.idl"
 #include "tao/Messaging/Messaging.pidl"
 
-module Hello_AMI
+module Hello
 {
   // callback interface from AMI-component to Sender component
   local interface AMI_MyFooCallback : ::Messaging::ReplyHandler
@@ -16,13 +16,13 @@ module Hello_AMI
 
     void hello (in long ami_return_val);
     void hello_excep   (in Messaging::ExceptionHolder excep_holder);
-      
+
     void get_rw_attrib (in short ami_return_val);
     void get_rw_attrib_excep (in Messaging::ExceptionHolder excep_holder);
-      
+
     void set_rw_attrib ();
     void set_rw_attrib_excep (in Messaging::ExceptionHolder excep_holder);
-      
+
     void get_ro_attrib (in short ami_return_val);
     void get_ro_attrib_excep (in Messaging::ExceptionHolder excep_holder);
   };
@@ -34,7 +34,7 @@ module Hello_AMI
   {
     void sendc_foo (in AMI_MyFooCallback ami_handler, in string in_str);
     void sendc_hello (in AMI_MyFooCallback ami_handler);
-      
+
     //asynch method for handling attributes
     void sendc_get_rw_attrib (in AMI_MyFooCallback ami_handler);
     void sendc_set_rw_attrib (in AMI_MyFooCallback ami_handler, in short rw_attrib);

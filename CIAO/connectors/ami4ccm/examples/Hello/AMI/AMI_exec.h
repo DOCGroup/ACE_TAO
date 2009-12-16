@@ -13,10 +13,10 @@
 
 #include "tao/LocalObject.h"
 
-namespace CIAO_Hello_AMI_AMI_AMI_Impl
+namespace CIAO_Hello_AMI_Receiver_Impl
 {
   class  AMI_MyFoo_exec_i
-    : public virtual ::Hello_AMI::CCM_AMI_MyFoo,
+    : public virtual ::Hello::CCM_AMI_MyFoo,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -28,39 +28,39 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
 
     virtual void
     sendc_foo (
-      ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler,
+      ::Hello::AMI_MyFooCallback_ptr ami_handler,
       const char * in_str);
 
     virtual void
     sendc_hello (
-      ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler);
+      ::Hello::AMI_MyFooCallback_ptr ami_handler);
 
     virtual void
     sendc_get_rw_attrib (
-      ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler);
+      ::Hello::AMI_MyFooCallback_ptr ami_handler);
 
     virtual void
     sendc_set_rw_attrib (
-      ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler,
+      ::Hello::AMI_MyFooCallback_ptr ami_handler,
       CORBA::Short rw_attrib);
 
     virtual void
         sendc_get_ro_attrib (
-      ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler);
+      ::Hello::AMI_MyFooCallback_ptr ami_handler);
 
   private:
     Hello::MyFoo_var ami_foo_server_;
   };
 
   class  AMI_exec_i
-    : public virtual AMI_Exec,
+    : public virtual AMI_Receiver_Exec,
       public virtual ::CORBA::LocalObject
   {
   public:
     AMI_exec_i (void);
     virtual ~AMI_exec_i (void);
 
-    virtual ::Hello_AMI::CCM_AMI_MyFoo_ptr
+    virtual ::Hello::CCM_AMI_MyFoo_ptr
     get_perform_asynch_my_foo (void);
 
     virtual void
@@ -74,8 +74,8 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
     virtual void ccm_remove (void);
 
   private:
-    ::Hello_AMI_AMI::CCM_AMI_Context_var  context_;
-    ::Hello_AMI::AMI_MyFooCallback_var callback_foo_;
+    ::Hello::CCM_AMI_Receiver_Context_var context_;
+    ::Hello::AMI_MyFooCallback_var callback_foo_;
     ::Hello::MyFoo_var receiver_foo_;
 
     AMI_MyFoo_exec_i *myfoo_;
