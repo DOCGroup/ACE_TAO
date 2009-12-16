@@ -1,3 +1,12 @@
+Wed Dec 16 12:26:24 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+          Only invoke the listeners when there are valid samples.
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.h:
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+          Made the waitset a class variable again.
+
 Wed Dec 16 11:12:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver.idl:
