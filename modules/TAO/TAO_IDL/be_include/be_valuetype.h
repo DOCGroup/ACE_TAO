@@ -39,14 +39,14 @@ public:
   // Default constructor.
 
   be_valuetype (UTL_ScopedName *n,
-                AST_Interface **inherits,
+                AST_Type **inherits,
                 long n_inherits,
-                AST_ValueType *inherits_concrete,
+                AST_Type *inherits_concrete,
                 AST_Interface **inherits_flat,
                 long n_inherits_flat,
-                AST_Interface **supports,
+                AST_Type **supports,
                 long n_supports,
-                AST_Interface *supports_concrete,
+                AST_Type *supports_concrete,
                 bool abstract,
                 bool truncatable,
                 bool custom);

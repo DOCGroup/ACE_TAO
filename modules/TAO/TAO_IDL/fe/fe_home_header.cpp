@@ -170,7 +170,7 @@ FE_HomeHeader::compile_primary_key (UTL_ScopedName *primary_key)
               nt = ph->info ()->type_;
               
               if (nt != AST_Decl::NT_type
-                  && nt != AST_Decl::NT_except)
+                  && nt != AST_Decl::NT_valuetype)
                 {
                   idl_global->err ()->mismatched_template_param (
                     ph->info ()->name_.c_str ());

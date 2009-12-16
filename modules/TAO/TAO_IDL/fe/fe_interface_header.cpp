@@ -227,7 +227,7 @@ FE_InterfaceHeader::compile_one_inheritance (AST_Type *i)
         }
     
       // Add i's parents to the flat list.
-      AST_Type **parents = iface->inherits_flat ();
+      AST_Interface **parents = iface->inherits_flat ();
       long num_parents = iface->n_inherits_flat ();
 
       for (long j = 0; j < num_parents; ++j)

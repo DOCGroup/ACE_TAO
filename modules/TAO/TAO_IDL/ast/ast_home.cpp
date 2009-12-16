@@ -3,16 +3,14 @@
 #include "ast_home.h"
 #include "ast_component.h"
 #include "ast_valuetype.h"
+#include "ast_param_holder.h"
 #include "ast_operation.h"
 #include "ast_visitor.h"
+
 #include "utl_identifier.h"
 #include "utl_indenter.h"
 #include "utl_err.h"
 #include "global_extern.h"
-
-ACE_RCSID (ast,
-           ast_home,
-           "$Id$")
 
 AST_Home::AST_Home (void)
   : COMMON_Base (),
@@ -29,8 +27,8 @@ AST_Home::AST_Home (void)
 AST_Home::AST_Home (UTL_ScopedName *n,
                     AST_Home *base_home,
                     AST_Component *managed_component,
-                    AST_ValueType *primary_key,
-                    AST_Interface **supports,
+                    AST_Type *primary_key,
+                    AST_Type **supports,
                     long n_supports,
                     AST_Interface **supports_flat,
                     long n_supports_flat)
@@ -50,11 +48,20 @@ AST_Home::AST_Home (UTL_ScopedName *n,
                    false),
     pd_base_home (base_home),
     pd_managed_component (managed_component),
-    pd_primary_key (primary_key)
+    pd_primary_key (primary_key),
+    owns_primary_key_ (false)
 {
-  if (primary_key != 0)
+  AST_ValueType *pk =
+    AST_ValueType::narrow_from_decl (primary_key);
+    
+  if (pk != 0)
     {
-      idl_global->primary_keys ().enqueue_tail (primary_key);
+      idl_global->primary_keys ().enqueue_tail (pk);
+    }
+  else if (primary_key != 0)
+    {
+      // If we are here, it's a param holder and we must destroy it.
+      this->owns_primary_key_ = true;
     }
 }
 
@@ -82,7 +89,7 @@ AST_Home::look_in_supported (UTL_ScopedName *e,
                              bool treat_as_ref)
 {
   AST_Decl *d = 0;
-  AST_Interface **is = 0;
+  AST_Type **is = 0;
   long nis = -1;
 
   // Can't look in an interface which was not yet defined.
@@ -102,9 +109,18 @@ AST_Home::look_in_supported (UTL_ScopedName *e,
        nis > 0;
        nis--, is++)
     {
-      d = (*is)->lookup_by_name (e,
-                                 treat_as_ref,
-                                 0 /* not in parent */);
+      if ((*is)->node_type () == AST_Decl::NT_param_holder)
+        {
+          continue;
+        }
+        
+      AST_Interface *i =
+        AST_Interface::narrow_from_decl (*is);
+        
+      d = (i)->lookup_by_name (e,
+                               treat_as_ref,
+                               0 /* not in parent */);
+                               
       if (d != 0)
         {
           break;
@@ -123,7 +139,7 @@ AST_Home::base_home (void) const
 // These next two look ugly, but it is to keep from having to
 // create separate visitors for homes in the back end.
 
-AST_Interface **
+AST_Type **
 AST_Home::supports (void) const
 {
   return
@@ -144,7 +160,7 @@ AST_Home::managed_component (void) const
   return this->pd_managed_component;
 }
 
-AST_ValueType *
+AST_Type *
 AST_Home::primary_key (void) const
 {
   return this->pd_primary_key;
@@ -165,6 +181,14 @@ AST_Home::finders (void)
 void
 AST_Home::destroy (void)
 {
+  // If it's a param holder, it was created on the fly.
+  if (owns_primary_key_)
+    {
+      this->pd_primary_key->destroy ();
+      delete this->pd_primary_key;
+      this->pd_primary_key = 0;
+    }
+
   // We have to go through these conniptions to destroy
   // a home because its decls (for which there are no
   // copy constructors) are assigned to the scope

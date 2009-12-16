@@ -14,10 +14,6 @@
 #include "utl_err.h"
 #include "global_extern.h"
 
-ACE_RCSID (ast,
-           ast_component,
-           "$Id$")
-
 AST_Component::AST_Component (void)
   : COMMON_Base (),
     AST_Decl (),
@@ -30,7 +26,7 @@ AST_Component::AST_Component (void)
 
 AST_Component::AST_Component (UTL_ScopedName *n,
                               AST_Component *base_component,
-                              AST_Interface **supports,
+                              AST_Type **supports,
                               long n_supports,
                               AST_Interface **supports_flat,
                               long n_supports_flat)
@@ -98,7 +94,7 @@ AST_Component::look_in_supported (UTL_ScopedName *e,
                                   bool treat_as_ref)
 {
   AST_Decl *d = 0;
-  AST_Interface **is = 0;
+  AST_Type **is = 0;
   long nis = -1;
 
   // Can't look in an interface which was not yet defined.
@@ -118,9 +114,18 @@ AST_Component::look_in_supported (UTL_ScopedName *e,
        nis > 0;
        nis--, is++)
     {
-      d = (*is)->lookup_by_name (e,
-                                 treat_as_ref,
-                                 0 /* not in parent */);
+      if ((*is)->node_type () == AST_Decl::NT_param_holder)
+        {
+          continue;
+        }
+        
+      AST_Interface *i =
+        AST_Interface::narrow_from_decl (*is);
+        
+      d = (i)->lookup_by_name (e,
+                               treat_as_ref,
+                               0 /* not in parent */);
+                               
       if (d != 0)
         {
           break;
@@ -136,7 +141,7 @@ AST_Component::base_component (void) const
   return this->pd_base_component;
 }
 
-AST_Interface **
+AST_Type **
 AST_Component::supports (void) const
 {
   return this->inherits ();

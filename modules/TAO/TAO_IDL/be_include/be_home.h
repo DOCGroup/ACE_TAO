@@ -38,8 +38,8 @@ public:
   be_home (UTL_ScopedName *n,
            AST_Home *base_home,
            AST_Component *managed_component,
-           AST_ValueType *primary_key,
-           AST_Interface **supports,
+           AST_Type *primary_key,
+           AST_Type **supports,
            long n_supports,
            AST_Interface **supports_flat,
            long n_supports_flat);

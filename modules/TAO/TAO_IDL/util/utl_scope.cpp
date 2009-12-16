@@ -1811,7 +1811,8 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
   // look in previous openings, if any.
   AST_Decl *last_chance = ScopeAsDecl (this);
 
-  if (0 == index && last_chance->node_type () == AST_Decl::NT_module)
+  if (0 == index
+      && last_chance->node_type () == AST_Decl::NT_module)
     {
       // Check the result using the full_def_only constraint.
       AST_Module *m = AST_Module::narrow_from_decl (last_chance);

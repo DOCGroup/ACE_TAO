@@ -70,6 +70,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_eventtype.h"
 #include "ast_component.h"
 #include "ast_porttype.h"
+#include "ast_connector.h"
 #include "ast_home.h"
 #include "ast_operation.h"
 #include "ast_factory.h"
@@ -106,6 +107,8 @@ ScopeAsDecl (UTL_Scope *s)
       return AST_Component::narrow_from_scope (s);
     case AST_Decl::NT_porttype:
       return AST_PortType::narrow_from_scope (s);
+    case AST_Decl::NT_connector:
+      return AST_Connector::narrow_from_scope (s);
     case AST_Decl::NT_home:
       return AST_Home::narrow_from_scope (s);
     case AST_Decl::NT_op:

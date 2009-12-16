@@ -73,7 +73,7 @@ be_interface::be_interface (void)
 
 // Constructor used to build the AST.
 be_interface::be_interface (UTL_ScopedName *n,
-                            AST_Interface **ih,
+                            AST_Type **ih,
                             long nih,
                             AST_Interface **ih_flat,
                             long nih_flat,
@@ -1384,8 +1384,15 @@ be_interface::analyze_parentage (void)
     {
       be_interface *parent =
         be_interface::narrow_from_decl (this->pd_inherits[i]);
+        
+      if (parent == 0)
+        {
+          // The item is a template param holder.
+          continue;
+        }
 
-      if (parent->is_abstract () || parent->has_mixed_parentage ())
+      if (parent->is_abstract ()
+          || parent->has_mixed_parentage ())
         {
           this->has_mixed_parentage_ = 1;
           break;
@@ -1466,7 +1473,7 @@ be_interface::traverse_inheritance_graph (
   bool abstract_paths_only,
   bool add_ccm_object)
 {
-  AST_Interface *intf = 0;  // element inside the queue
+  AST_Type *intf = 0;  // element inside the queue
 
   if (!this->insert_queue.is_empty ())
     {
@@ -1507,7 +1514,7 @@ be_interface::traverse_inheritance_graph (
               (void) this->insert_non_dup (base);
 
               long const n_supports = base->n_supports ();
-              AST_Interface **supports = base->supports ();
+              AST_Type **supports = base->supports ();
 
               for (long j = 0; j < n_supports; ++j)
                 {

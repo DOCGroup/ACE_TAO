@@ -178,6 +178,26 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
       if (nt == AST_Decl::NT_interface)
         {
           iface = AST_Interface::narrow_from_decl (d);
+
+          // Undefined interface?
+          if (!iface->is_defined ())
+            {
+              idl_global->err ()->inheritance_fwd_error (
+                this->interface_name_,
+                iface);
+                
+              continue;
+            }
+
+          // Local interface? (illegal for components to support).
+          if (iface->is_local ())
+            {
+              idl_global->err ()->unconstrained_interface_expected (
+                this->name (),
+                iface->name ());
+                
+              continue;
+           }
         }
       else if (nt == AST_Decl::NT_param_holder)
         {
@@ -200,22 +220,6 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
           idl_global->err ()->interface_expected (d);
           continue;
         }
-
-      // Undefined interface?
-      if (iface != 0 && !iface->is_defined ())
-        {
-          idl_global->err ()->inheritance_fwd_error (this->interface_name_,
-                                                     iface);
-          continue;
-        }
-
-      // Local interface? (illegal for components to support).
-      if (iface->is_local ())
-        {
-          idl_global->err ()->unconstrained_interface_expected (this->name (),
-                                                                iface->name ());
-          continue;
-       }
 
       // OK, see if we have to add this to the list of interfaces
       // inherited from.
