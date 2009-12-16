@@ -528,8 +528,13 @@ public:
    *  - 'S': print out the appropriate signal message corresponding
    *         to var-argument, e.g., as done by strsignal()
    *  - 's': prints a ACE_TCHAR* character string (also see C and W)
-   *  - 'T': print timestamp in hour:minute:sec:usec format.
+   *  - 'T': print timestamp in hour:minute:sec:usec format (plain option, 
+   *         i.e. without any flags, prints system supplied timestamp; 
+   *         with '#' flag added expects ACE_Time_Value* in argument list)
    *  - 'D': print timestamp as Weekday Month day year hour:minute:sec.usec
+   *         (plain option, i.e. without any flags, prints system supplied 
+   *         timestamp; with '#' flag added expects ACE_Time_Value* in 
+   *         argument list)
    *  - 't': print thread id (1 if single-threaded)
    *  - 'u': print as unsigned int
    *  - 'w': prints a wide character
