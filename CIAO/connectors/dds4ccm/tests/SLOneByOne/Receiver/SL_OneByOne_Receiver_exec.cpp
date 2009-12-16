@@ -274,7 +274,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
     if(no_error==true)
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Have received the  expected ")
-                               ACE_TEXT (" operations for ONE_BY_ONE from StateListener in Receiver")
+                               ACE_TEXT (" operations for ONE_BY_ONE from StateListener in Receiver\n")
                    ));
       }
   }
