@@ -51,7 +51,7 @@ namespace CIAO
             throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
           }
 
-        DDSTopic *rti_topic = topic->get_topic ();
+        DDSTopic *rti_topic = topic->get_impl ();
         DDSDataWriterListener *rti_drl = new RTI_DataWriterListener_i (a_listener);
         DDS_DataWriterQos rti_qos = DDS_DATAWRITER_QOS_DEFAULT;
 //        rti_qos <<= qos;
@@ -93,7 +93,7 @@ namespace CIAO
             throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
           }
 
-        DDSTopic *rti_topic = topic->get_topic ();
+        DDSTopic *rti_topic = topic->get_impl ();
         DDSDataWriterListener *rti_drl = new RTI_DataWriterListener_i (a_listener);
         DDSDataWriter *rti_dw = this->impl ()->create_datawriter_with_profile (rti_topic,
                                                                 library_name,
