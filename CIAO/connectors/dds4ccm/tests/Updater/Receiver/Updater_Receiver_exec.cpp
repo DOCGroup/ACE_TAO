@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-// Test for SAMPLE_LOST status of the subscriber 
+// Test for UPDATER 
 
 #include "Updater_Receiver_exec.h"
 #include "ciao/Logger/Log_Macros.h"
@@ -11,7 +11,6 @@
 
 namespace CIAO_Updater_Receiver_Impl
 {
-  
  
   read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
     : pulse_callback_ (callback)
@@ -38,7 +37,6 @@ namespace CIAO_Updater_Receiver_Impl
   //============================================================
   // Facet Executor Implementation Class: StateListener_exec_i
   //============================================================
-
   StateListener_exec_i::StateListener_exec_i (void)
   {
   }
@@ -52,7 +50,7 @@ namespace CIAO_Updater_Receiver_Impl
       StateListener_exec_i::on_creation (const ::TestTopic & /*datum*/,
         const ::CCM_DDS::ReadInfo & /*info*/)
   {}
-   
+  
    void
       StateListener_exec_i::on_one_update (
         const ::TestTopic & /*datum*/,
@@ -122,28 +120,28 @@ namespace CIAO_Updater_Receiver_Impl
     try{
       this->reader_->read_all(TestTopic_infos.out(), readinfoseq.out());
       for(CORBA::ULong i = 0; i < readinfoseq->length(); ++i)
-      {
-        time_t tim = readinfoseq[i].source_timestamp.sec;
-        tm* time = ACE_OS::localtime(&tim);
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
-            ACE_TEXT ("-> UTC date = %02d:%02d:%02d.%d\n"),
-                            time ? time->tm_hour : 0,
-                            time ? time->tm_min : 0,
-                            time ? time->tm_sec : 0,
-                            readinfoseq[i].source_timestamp.nanosec));
-      }
+        {
+          time_t tim = readinfoseq[i].source_timestamp.sec;
+          tm* time = ACE_OS::localtime(&tim);
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
+              ACE_TEXT ("-> UTC date = %02d:%02d:%02d.%d\n"),
+                              time ? time->tm_hour : 0,
+                              time ? time->tm_min : 0,
+                              time ? time->tm_sec : 0,
+                              readinfoseq[i].source_timestamp.nanosec));
+        }
       for(CORBA::ULong i = 0; i < TestTopic_infos->length(); ++i)
-      {
-         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL keyed test info : ")
-              ACE_TEXT ("Number <%d> : received TestTopic_info for <%C> at %u\n"),
-            i,
-            TestTopic_infos[i].key.in (),
-            TestTopic_infos[i].x));
-      }
+        {
+           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL keyed test info : ")
+                ACE_TEXT ("Number <%d> : received TestTopic_info for <%C> at %u\n"),
+              i,
+              TestTopic_infos[i].key.in (),
+              TestTopic_infos[i].x));
+        }
     }
-    catch(CCM_DDS::InternalError& )
+    catch( const CCM_DDS::InternalError& )
     {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("internal error or no data\n")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("internal error or no data\n")));
     }
   }
   // Component attributes.
@@ -152,7 +150,7 @@ namespace CIAO_Updater_Receiver_Impl
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
   {
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
     return new PortStatusListener_exec_i ();
   }
 
@@ -161,8 +159,7 @@ namespace CIAO_Updater_Receiver_Impl
   {
     return new StateListener_exec_i();
   }
-  
-  
+
   // Operations from Components::SessionComponent.
   void
   Receiver_exec_i::set_session_context (
@@ -175,13 +172,13 @@ namespace CIAO_Updater_Receiver_Impl
         throw ::CORBA::INTERNAL ();
       }
   }
-  
+
   void
   Receiver_exec_i::configuration_complete (void)
   {
     this->reader_ = this->context_->get_connection_info_out_data();
   }
- 
+
   void
   Receiver_exec_i::ccm_activate (void)
   {
@@ -190,7 +187,7 @@ namespace CIAO_Updater_Receiver_Impl
 
      if (CORBA::is_nil (lc.in ()))
       {
-         CIAO_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
+         ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw CORBA::INTERNAL ();
       }
     
@@ -203,7 +200,7 @@ namespace CIAO_Updater_Receiver_Impl
                                           ACE_Time_Value(3, usec),
                                           ACE_Time_Value(3, usec)) == -1)
       {
-        CIAO_ERROR ((LM_ERROR, "Unable to schedule Timer\n"));
+        ACE_ERROR ((LM_ERROR, "Unable to schedule Timer\n"));
       }
   }
 
@@ -218,7 +215,7 @@ namespace CIAO_Updater_Receiver_Impl
   Receiver_exec_i::ccm_remove (void)
   {
   }
-  
+
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Updater_Receiver_Impl (void)
   {
@@ -232,4 +229,3 @@ namespace CIAO_Updater_Receiver_Impl
     return retval;
   }
 }
-

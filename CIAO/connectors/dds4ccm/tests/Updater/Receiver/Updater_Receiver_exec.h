@@ -65,21 +65,21 @@ namespace CIAO_Updater_Receiver_Impl
     StateListener_exec_i (void);
     virtual ~StateListener_exec_i (void);
     
-    
     virtual void
       on_creation (
         const ::TestTopic & datum,
         const ::CCM_DDS::ReadInfo & info);
-   
+
     virtual void
       on_one_update (
         const ::TestTopic & datum,
         const ::CCM_DDS::ReadInfo & info);
-      
-     virtual void
+
+    virtual void
       on_many_updates (
         const ::TestTopic_Seq & data,
         const ::CCM_DDS::ReadInfoSeq & infos);
+
     virtual void
       on_deletion (
         const ::TestTopic & datum,
@@ -125,4 +125,3 @@ namespace CIAO_Updater_Receiver_Impl
 }
 
 #endif /* ifndef */
-
