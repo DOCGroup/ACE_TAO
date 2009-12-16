@@ -32,7 +32,7 @@ namespace CIAO
       {
       public:
         // Constructor
-        RTI_Publisher_i (DDSPublisher *p);
+        RTI_Publisher_i (void);
 
         // Destructor
         virtual ~RTI_Publisher_i (void);
@@ -112,7 +112,11 @@ namespace CIAO
         virtual
           ::DDS::InstanceHandle_t get_instance_handle (void);
 
-        DDSPublisher * get_publisher (void);
+        DDSPublisher * get_impl (void);
+
+        void set_impl (DDSPublisher *p);
+
+        DDSPublisher *impl (void);
       private:
         DDSPublisher *impl_;
       };
