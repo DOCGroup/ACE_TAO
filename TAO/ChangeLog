@@ -1,3 +1,10 @@
+Thu Dec 17 13:03:32 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * interop-tests/wchar/run_test.pl:
+
+          Test is converted to use new test framework
+          and added to fuzz build.
+
 Thu Dec 17 12:42:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RTCORBA/Dynamic_Thread_Pool/run_test.pl:
