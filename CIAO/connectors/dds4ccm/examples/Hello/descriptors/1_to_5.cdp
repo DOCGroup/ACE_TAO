@@ -230,6 +230,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HelloTest_Library#Hello_Profile</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
 
@@ -299,6 +310,17 @@
         </type>
         <value>
           <string>ReceiverConnectorTwo</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HelloTest_Library#Hello_Profile</string>
         </value>
       </value>
     </configProperty>
@@ -374,6 +396,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HelloTest_Library#Hello_Profile</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
 
@@ -416,6 +449,7 @@
         </value>
       </value>
     </configProperty>
+    
   </instance>
 
   <instance xmi:id="Hello_ReceiverConnectorComponentInstanceFour">
@@ -488,7 +522,7 @@
         </value>
       </value>
     </configProperty>
-  </instance>
+   </instance>
 
   <instance xmi:id="Hello_ReceiverConnectorComponentInstanceFive">
     <name>Hello_ReceiverConnectorComponentFive</name>
@@ -518,6 +552,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HelloTest_Library#Hello_Profile</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
 
@@ -536,6 +581,17 @@
         </type>
         <value>
           <string>DDS_Hello</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HelloTest_Library#Hello_Profile</string>
         </value>
       </value>
     </configProperty>
@@ -611,7 +667,25 @@
       <instance xmi:idref="Hello_SenderConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
-
+  <connection>
+  <name>connector_status_sender</name>
+  <deployRequirement>
+    <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+    <resourceType>Local_Interface</resourceType>
+  </deployRequirement>
+  <internalEndpoint>
+    <portName>connector_status</portName>
+    <provider>true</provider>
+    <kind>Facet</kind>
+    <instance xmi:idref="SenderComponentInstance" />
+  </internalEndpoint>
+  <internalEndpoint>
+    <portName>error_listener</portName>
+    <provider>false</provider>
+    <kind>SimplexReceptacle</kind>
+    <instance xmi:idref="Hello_SenderConnectorComponentInstance" />
+  </internalEndpoint>
+  </connection>
   <connection>
     <name>_listenercontrolOne</name>
     <deployRequirement>

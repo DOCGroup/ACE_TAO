@@ -1,3 +1,17 @@
+Thu Dec 17 12:21:31 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/1_to_5.cdp
+        * connectors/dds4ccm/examples/Hello/descriptors/5_Receivers.cdp
+        * connectors/dds4ccm/examples/Hello/descriptors/5_Senders.cdp
+        * connectors/dds4ccm/examples/Hello/descriptors/5_to_1.cdp
+        * connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.idl
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.h
+          Change DURABILITY from VOLATILE to TRANSIENT through QoS file.
+          Add ConectorStatusListener to check on PUBLICATION_MATCHED status.
+
 Thu Dec 17 09:13:11 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/Base

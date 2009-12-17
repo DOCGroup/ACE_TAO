@@ -10,6 +10,57 @@
 
 namespace CIAO_Hello_Sender_Impl
 {
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &ready_to_start)
+    :ready_to_start_(ready_to_start)
+  {
+  }
+  ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
+  {
+  }
+
+  // Operations from ::CCM_DDS::ConnectorStatusListener
+  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
+     ::DDS::Topic_ptr /*the_topic*/,
+     const DDS::InconsistentTopicStatus & /*status*/)
+    {
+    }
+
+  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
+    ::DDS::DataReader_ptr /*the_reader*/,
+     const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
+    }
+
+  void ConnectorStatusListener_exec_i::on_sample_rejected(
+     ::DDS::DataReader_ptr /*the_reader*/,
+     const DDS::SampleRejectedStatus & /*status*/)  {
+    }
+
+  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
+     ::DDS::DataWriter_ptr /*the_writer*/,
+     const DDS::OfferedDeadlineMissedStatus & /*status*/)  {
+    }
+
+  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
+     ::DDS::DataWriter_ptr /*the_writer*/,
+     const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
+    }
+
+  void ConnectorStatusListener_exec_i::on_unexpected_status(
+    ::DDS::Entity_ptr the_entity,
+    ::DDS::StatusKind  status_kind)
+  {
+    CORBA::ULong kind = status_kind;
+    if(!this->ready_to_start_.value())
+      {
+        if((!CORBA::is_nil(the_entity)) && (kind==DDS::PUBLICATION_MATCHED_STATUS))
+          {  
+            //DataWriter find a DataReader that Matched the Topic
+            this->ready_to_start_ = true;
+          }
+      }
+  }
+ 
+    
   //============================================================
   // Pulse generator
   //============================================================
@@ -41,7 +92,8 @@ namespace CIAO_Hello_Sender_Impl
       iteration_ (0),
       iterations_ (1000),
       log_time_ (false),
-      msg_ ("Hello World!")
+      msg_ ("Hello World!"),
+      ready_to_start_(false)
   {
     this->ticker_ = new pulse_Generator (*this);
   }
@@ -51,6 +103,12 @@ namespace CIAO_Hello_Sender_Impl
   }
 
   // Supported operations and attributes.
+  ::CCM_DDS::CCM_ConnectorStatusListener_ptr
+    Sender_exec_i::get_connector_status (void)
+  {
+    return new ConnectorStatusListener_exec_i (this->ready_to_start_);
+  }
+  
   ACE_CString Sender_exec_i::create_message (const ACE_CString &msg)
   {
     if (!this->log_time_)
@@ -70,18 +128,26 @@ namespace CIAO_Hello_Sender_Impl
   Sender_exec_i::tick ()
   {
     if (this->iteration_ == 0)
-      ACE_OS::sleep (1);
-    if (this->iteration_ < this->iterations_)
+    ACE_OS::sleep (1);
+
+    // Start writing after DataWriter find first DataReader that matched the Topic
+    // It is stll possible that other Readers aren't yet ready to recieve data, for that case in the 
+    // profile the durability is set to TRANSIENT_DURABILITY_QOS, so each Raeder should receive each message.
+    //
+    if(this->ready_to_start_.value())
       {
-        DDSHello * new_msg = new DDSHello();
-        ACE_CString msg = create_message (this->msg_);
-        new_msg->hello = msg.c_str ();
-        new_msg->iterator = ++this->iteration_;
-        this->writer_->write_one (*new_msg, ::DDS::HANDLE_NIL);
-      }
-    else
-      { //we're done
-        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
+        if (this->iteration_ < this->iterations_)
+          {
+            DDSHello * new_msg = new DDSHello();
+            ACE_CString msg = create_message (this->msg_);
+            new_msg->hello = msg.c_str ();
+            new_msg->iterator = ++this->iteration_;
+            this->writer_->write_one (*new_msg, ::DDS::HANDLE_NIL);
+          }
+        else
+          { //we're done
+            this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
+          }
       }
   }
 
