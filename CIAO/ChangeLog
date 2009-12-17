@@ -1,3 +1,24 @@
+Thu Dec 17 09:13:11 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/Base
+        * connectors/ami4ccm/examples/Hello/Base/Hello.mpc
+        * connectors/ami4ccm/examples/Hello/Base/Hello_Base.idl
+        * connectors/ami4ccm/examples/Hello/Base/Hello_Base.mpc
+        * connectors/ami4ccm/examples/Hello/Connector/AMI.idl
+        * connectors/ami4ccm/examples/Hello/Connector/AMI.mpc
+        * connectors/ami4ccm/examples/Hello/Connector/AMI_MyFoo_i.h
+        * connectors/ami4ccm/examples/Hello/Connector/Hello_Base.idl
+        * connectors/ami4ccm/examples/Hello/Hello_Base
+        * connectors/ami4ccm/examples/Hello/Hello_Base/Hello.idl
+        * connectors/ami4ccm/examples/Hello/Hello_Base/Hello_Base.idl
+        * connectors/ami4ccm/examples/Hello/Hello_Base/Hello_Base.mpc
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver.idl
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver.mpc
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender.idl
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender.mpc
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.h
+          Moved all connector idl into the connector directory
+
 Thu Dec 17 08:11:11 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
