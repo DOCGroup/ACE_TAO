@@ -15,10 +15,9 @@
 #include "tao/LocalObject.h"
 #include "ace/Task.h"
 
-
 namespace CIAO_Hello_Sender_Impl
 {
-  // common exception handlers
+  /// Common exception handlers
   void HandleException (
       long id,
       const char* error_string,
@@ -52,7 +51,7 @@ namespace CIAO_Hello_Sender_Impl
     ::Hello::MyFoo_var my_foo_ami_;
   };
 
-  class  MyFoo_callback_exec_i
+  class MyFoo_callback_exec_i
     : public virtual ::Hello::CCM_AMI_MyFooCallback,
       public virtual ::CORBA::LocalObject
   {
@@ -87,7 +86,7 @@ namespace CIAO_Hello_Sender_Impl
       ::Messaging::ExceptionHolder * excep_holder);
   };
 
-  class  Sender_exec_i
+  class Sender_exec_i
     : public virtual Sender_Exec,
       public virtual ::CORBA::LocalObject
   {
