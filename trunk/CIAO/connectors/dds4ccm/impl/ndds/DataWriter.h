@@ -96,10 +96,10 @@ namespace CIAO
 
         void set_impl (DDSDataWriter * dw);
 
-        DDSDataWriter * impl (void);
-
       private:
         DDSDataWriter * impl_;
+
+        DDSDataWriter * impl (void);
       };
     }
   }

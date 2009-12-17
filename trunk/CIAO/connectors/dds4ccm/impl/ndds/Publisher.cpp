@@ -303,7 +303,7 @@ namespace CIAO
       DDSPublisher *
       RTI_Publisher_i::impl (void)
       {
-        if (!this->impl ())
+        if (!this->impl_)
           {
             throw ::CORBA::BAD_INV_ORDER ();
           }
