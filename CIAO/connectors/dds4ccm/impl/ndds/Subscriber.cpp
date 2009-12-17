@@ -306,7 +306,6 @@ namespace CIAO
       {
         if (!this->impl_)
           {
-            CIAO_ERROR ((LM_ERROR, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11\n"));
             throw ::CORBA::BAD_INV_ORDER ();
           }
         return this->impl_;

@@ -6,6 +6,7 @@
 #include "dds4ccm/impl/ndds/Writer_T.h"
 #include "dds4ccm/impl/ndds/Getter_T.h"
 #include "dds4ccm/impl/ndds/Reader_T.h"
+#include "dds4ccm/impl/ndds/DataReader.h"
 #include "dds4ccm/impl/ndds/DataListenerControl_T.h"
 #include "dds4ccm/impl/ndds/PortStatusListener_T.h"
 
@@ -69,6 +70,8 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE>::init (
                     drqos,
                     this->data_listener_.in (),
                     ::CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+              DDSDataReader *rd = dynamic_cast < DDSDataReader *> (reader.in ());
+              this->rti_reader_.set_impl (rd);
               this->data_reader_ = ::DDS::CCM_DataReader::_narrow (reader);
               this->dds_read_.data_reader (this->data_reader_.in ());
             }
