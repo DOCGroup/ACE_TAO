@@ -87,7 +87,7 @@ idl3_to_idl2_visitor::visit_interface (AST_Interface *node)
   *os << "interface "
       << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
 
-  AST_Interface **parents = node->inherits ();
+  AST_Type **parents = node->inherits ();
 
   for (long i = 0; i < node->n_inherits (); ++i)
     {
@@ -370,7 +370,7 @@ idl3_to_idl2_visitor::visit_eventtype (AST_EventType *node)
   *os << be_nl << be_nl
       << "interface " << node->original_local_name () << "Consumer : ";
 
-  AST_Interface *parent = 0;
+  AST_Type *parent = 0;
   AST_Decl::NodeType nt = AST_Decl::NT_native;
 
   if (node->n_inherits () > 0)
@@ -485,7 +485,7 @@ idl3_to_idl2_visitor::visit_home (AST_Home *node)
   delete sn;
   sn = 0;
 
-  AST_ValueType *key = node->primary_key ();
+  AST_Type *key = node->primary_key ();
   ACE_CString mng_name =
     IdentifierHelper::orig_sn (node->managed_component ()->name ());
   ACE_CString key_name;
