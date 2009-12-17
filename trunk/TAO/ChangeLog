@@ -1,3 +1,8 @@
+Thu Dec 17 12:42:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTCORBA/Dynamic_Thread_Pool/run_test.pl:
+          Fix fuzz
+
 Thu Dec 17 11:45:30 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/InterfaceRepo/IDL_Test/run_test.pl:
@@ -14,7 +19,7 @@ Thu Dec 17 11:45:30 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 Thu Dec 17 10:22:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
 
         * tao/GIOP_Message_Base.cpp:
-          Fixed missing request id in logging of LocateRequest/LocateReply & 
+          Fixed missing request id in logging of LocateRequest/LocateReply &
           CancelRequest.
           This fixed Bugzilla #2898.
 
