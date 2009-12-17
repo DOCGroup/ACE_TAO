@@ -9,8 +9,6 @@ use lib "$ENV{ACE_ROOT}/bin";
 use Config;
 use PerlACE::TestTarget;
 
-PerlACE::add_lib_path ('../lib');
-
 my $status = 0;
 my $confmod = "";
 
@@ -27,6 +25,9 @@ else {
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+
+$server->AddLibPath ('../lib');
+$client->AddLibPath ('../lib');
 
 my $iorbase = "server.ior";
 my $server_iorfile = $server->LocalFile ($iorbase);

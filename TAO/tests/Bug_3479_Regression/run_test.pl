@@ -6,7 +6,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
 use PerlACE::TestTarget;
 
 $status = 0;
@@ -18,10 +17,9 @@ foreach $i (@ARGV) {
     }
 }
 
-#my $target = PerlACE::TestTarget::create_target ($PerlACE::TestConfig);
-my $server = PerlACE::TestTarget::create_target (1);
-#my $client = new PerlACE::TestTarget;
-my $client = PerlACE::TestTarget::create_target (2);
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+
 if (!defined $server || !defined $client) {
     exit 1;
 }
@@ -32,12 +30,8 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-ORBDebuglevel $debug_level -o $iorbase");
-}
-else {
-    $SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
-}
+$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
+
 $CL = $client->CreateProcess ("valgrind client", "-k file://$client_iorfile");
 
 $server_status = $SV->Spawn ();
@@ -65,7 +59,7 @@ if ($client->PutFile ($iorbase, $client_iorfile) == -1) {
     exit 1;
 }
 
-$client_status = $CL->SpawnWaitKill (300);
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 285 );
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
