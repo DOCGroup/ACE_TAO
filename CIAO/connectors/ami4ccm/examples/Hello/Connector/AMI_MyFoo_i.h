@@ -3,7 +3,8 @@
 #ifndef AMI_MyFoo_i_H
 #define AMI_MyFoo_i_H
 
-#include "AMIS.h"
+#include "Base/HelloS.h"
+#include "Hello_BaseC.h"
 #include "ace/Task.h"
 
 namespace CCM_CORBA_AMI_MyFoo_Impl

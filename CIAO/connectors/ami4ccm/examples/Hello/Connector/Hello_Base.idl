@@ -3,12 +3,12 @@
 #ifndef HELLO_BASE_IDL
 #define HELLO_BASE_IDL
 
-#include "Hello_Base/Hello.idl"
+#include "Base/Hello.idl"
 #include "tao/Messaging/Messaging.pidl"
 
 module Hello
 {
-  // callback interface from AMI-component to Sender component
+  // Callback interface from AMI-component to Sender component
   local interface AMI_MyFooCallback : ::Messaging::ReplyHandler
   {
     void foo (in long ami_return_val, in string answer);

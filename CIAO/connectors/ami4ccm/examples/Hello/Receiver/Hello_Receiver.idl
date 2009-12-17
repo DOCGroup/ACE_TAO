@@ -5,14 +5,14 @@
 
 #include <Components.idl>
 
-#include "Hello_Base/Hello.idl"
-#include "Hello_Base/HelloE.idl"
+#include "Base/Hello.idl"
+#include "Base/HelloE.idl"
 
 module Hello
 {
   component Receiver
   {
-    // provides
+    /// Provides
     provides Hello::MyFoo do_my_foo;
   };
 };
