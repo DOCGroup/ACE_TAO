@@ -184,6 +184,9 @@ public:
   /// Called when we are out of leaders.
   void no_leaders_available (void);
 
+  /// Set the new leader generator.
+  void set_new_leader_generator(TAO_New_Leader_Generator *new_leader_generator);
+
 private:
   /// Shortcut to obtain the TSS resources of the orb core.
   TAO_ORB_Core_TSS_Resources *get_tss_resources (void) const;

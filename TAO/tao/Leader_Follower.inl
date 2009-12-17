@@ -196,6 +196,12 @@ TAO_Leader_Follower::has_clients (void) const
   return this->clients_;
 }
 
+ACE_INLINE void
+TAO_Leader_Follower::set_new_leader_generator(TAO_New_Leader_Generator *new_leader_generator)
+{
+  this->new_leader_generator_ = new_leader_generator;
+}
+
 // ****************************************************************
 
 ACE_INLINE
