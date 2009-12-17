@@ -244,6 +244,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HelloTest_Library#Hello_Profile</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <instance xmi:id="Hello_SenderComponentInstanceTwo">
@@ -323,6 +334,17 @@
         </type>
         <value>
           <string>hello</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HelloTest_Library#Hello_Profile</string>
         </value>
       </value>
     </configProperty>
@@ -406,6 +428,17 @@
         </type>
         <value>
           <string>hello</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HelloTest_Library#Hello_Profile</string>
         </value>
       </value>
     </configProperty>
@@ -493,6 +526,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HelloTest_Library#Hello_Profile</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
 
@@ -576,6 +620,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HelloTest_Library#Hello_Profile</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <connection>
@@ -594,6 +649,25 @@
       <portName>supplier_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
+      <instance xmi:idref="Hello_SenderConnectorComponentInstanceOne" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>connector_status_senderOne</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>connector_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Hello_SenderComponentInstanceOne" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>error_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello_SenderConnectorComponentInstanceOne" />
     </internalEndpoint>
   </connection>
@@ -617,6 +691,25 @@
     </internalEndpoint>
   </connection>
   <connection>
+    <name>connector_status_senderTwo</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>connector_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Hello_SenderComponentInstanceTwo" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>error_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Hello_SenderConnectorComponentInstanceTwo" />
+    </internalEndpoint>
+  </connection>
+  <connection>
     <name>info_write_dataThree</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
@@ -632,6 +725,25 @@
       <portName>supplier_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
+      <instance xmi:idref="Hello_SenderConnectorComponentInstanceThree" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>connector_status_senderThree</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>connector_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Hello_SenderComponentInstanceThree" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>error_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello_SenderConnectorComponentInstanceThree" />
     </internalEndpoint>
   </connection>
@@ -655,6 +767,25 @@
     </internalEndpoint>
   </connection>
   <connection>
+    <name>connector_status_senderFour</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>connector_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Hello_SenderComponentInstanceFour" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>error_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Hello_SenderConnectorComponentInstanceFour" />
+    </internalEndpoint>
+  </connection>
+  <connection>
     <name>info_write_dataFive</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
@@ -670,6 +801,25 @@
       <portName>supplier_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
+      <instance xmi:idref="Hello_SenderConnectorComponentInstanceFive" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>connector_status_senderFive</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>connector_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Hello_SenderComponentInstanceFive" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>error_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello_SenderConnectorComponentInstanceFive" />
     </internalEndpoint>
   </connection>

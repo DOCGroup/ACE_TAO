@@ -22,6 +22,7 @@ module Hello
     attribute unsigned long iterations;
     attribute string message;
     attribute boolean log_time;
+    provides CCM_DDS::ConnectorStatusListener connector_status; 
   };
 };
 
