@@ -1,3 +1,16 @@
+Thu Dec 17 11:45:30 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * orbsvcs/tests/InterfaceRepo/IDL_Test/run_test.pl:
+        * tests/Bug_3479_Regression/run_test.pl:
+        * tests/TransportCurrent/IIOP/run_test.pl:
+        * tests/TransportCurrent/Framework/run_test.pl:
+        * tests/Client_Leaks/run_test.pl:
+        * tests/ZIOP/run_test.pl:
+        * tests/RTCORBA/Bug_3382_Regression/run_test.pl:
+
+          Tests are converted to use new test framework
+          and added to fuzz build.
+
 Thu Dec 17 10:22:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
 
         * tao/GIOP_Message_Base.cpp:
