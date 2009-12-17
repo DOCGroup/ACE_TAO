@@ -103,7 +103,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected info.instance_status ")
                                   ACE_TEXT ("'CCM_DDS::INSTANCE_UPDATED'")
-                                  ACE_TEXT ("  with operation 'on_many_updates' from StateListener in Receiver")
+                                  ACE_TEXT ("  with operation 'on_many_updates' from StateListener in Receiver\n")
                         )); 
 
           }
@@ -139,7 +139,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected info.instance_status ")
                               ACE_TEXT ("'CCM_DDS::INSTANCE_DELETED'")
-                              ACE_TEXT ("  with operation 'on_deletion' from StateListener in Receiver")
+                              ACE_TEXT ("  with operation 'on_deletion' from StateListener in Receiver\n")
                     )); 
 
       }
@@ -313,55 +313,55 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
       {   
          no_error = false;
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did receive an unexpected ")
-                               ACE_TEXT (" operation 'on_one_update' from StateListener in Receiver")
+                               ACE_TEXT (" operation 'on_one_update' from StateListener in Receiver\n")
                     )); 
       }
     if(!this->on_creation_ .value ())
       {   
          no_error = false;
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: didn't receive the expected ")
-                               ACE_TEXT (" operation 'on_creation' from StateListener in Receiver")
+                               ACE_TEXT (" operation 'on_creation' from StateListener in Receiver\n")
                     )); 
       }
     if(!this->create_data_ .value ())
       {   
          no_error = false;
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: didn't receive the expected ")
-                               ACE_TEXT (" data with 'on_creation' from StateListener in Receiver")
+                               ACE_TEXT (" data with 'on_creation' from StateListener in Receiver\n")
                     )); 
       }
     if(!this->on_many_update_.value  ())
       {   
          no_error = false;
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR:didn't receive the expected ")
-                               ACE_TEXT (" operation 'on_many_updates' from StateListener in Receiver")
+                               ACE_TEXT (" operation 'on_many_updates' from StateListener in Receiver\n")
                     )); 
       }
     if(!this->update_data_.value  ())
       {   
          no_error = false;
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR:didn't receive the expected ")
-                               ACE_TEXT (" data with 'on_many_updates' from StateListener in Receiver")
+                               ACE_TEXT (" data with 'on_many_updates' from StateListener in Receiver\n")
                     )); 
       }
     if(!this->on_deletion_.value ())
       {   
          no_error = false;
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: didn't receive the expected ")
-                               ACE_TEXT (" operation 'on_deletion' from StateListener in Receiver")
+                               ACE_TEXT (" operation 'on_deletion' from StateListener in Receiver\n")
                     )); 
       }
       if(this->reader_data_.value ())
       {   
          no_error = false;
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did receive unexpected ")
-                               ACE_TEXT (" data on the Reader in combination with StateListener in Receiver")
+                               ACE_TEXT (" data on the Reader in combination with StateListener in Receiver\n")
                     )); 
       }
     if(no_error==true)
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Have received the  expected ")
-                               ACE_TEXT (" operations for MANY_BY_MANY from StateListener in Receiver")
+                               ACE_TEXT (" operations for MANY_BY_MANY from StateListener in Receiver\n")
                    ));
       }
   }
