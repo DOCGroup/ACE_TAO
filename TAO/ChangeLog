@@ -1,3 +1,16 @@
+Thu Dec 17 09:52:52 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_3790_Regression/simple_test.idl:
+        * tests/Bug_3790_Regression/simple_test_i.cpp:
+        * tests/Bug_3790_Regression/simple_test_i.h:
+        * tests/Bug_3790_Regression/server.cpp:
+        * tests/Bug_3790_Regression/server2.cpp:
+        * tests/Bug_3790_Regression/run_test.pl:
+        * tests/Bug_3790_Regression/README:
+        * tests/Bug_3790_Regression/Bug_3790_Regression.mpc:
+        * bin/tao_orb_tests.lst:
+          Added a test for bug#3790 and scheduled it for run as not fixed.
+
 Wed Dec 16 19:22:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CDR/run_test.pl:
