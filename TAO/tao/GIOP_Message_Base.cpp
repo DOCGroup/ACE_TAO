@@ -1556,18 +1556,36 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
             tmp_id = (char * ) (ptr + TAO_GIOP_MESSAGE_HEADER_LEN);
           }
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
-      if (byte_order == TAO_ENCAP_BYTE_ORDER)
-        {
-          id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
-        }
-      else
-        {
-          ACE_CDR::swap_4 (tmp_id, reinterpret_cast <char*> (id));
-        }
+        if (byte_order == TAO_ENCAP_BYTE_ORDER)
+          {
+            id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
+          }
+        else
+          {
+            ACE_CDR::swap_4 (tmp_id, reinterpret_cast <char*> (id));
+          }
 #else
-      id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
+        id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
 #endif /* ACE_DISABLE_SWAP_ON_READ */
 
+      }
+    else if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::CancelRequest ||
+             ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::LocateRequest ||
+             ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::LocateReply)
+      {
+        tmp_id = (char * ) (ptr + TAO_GIOP_MESSAGE_HEADER_LEN);
+#if !defined (ACE_DISABLE_SWAP_ON_READ)
+        if (byte_order == TAO_ENCAP_BYTE_ORDER)
+          {
+            id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
+          }
+        else
+          {
+            ACE_CDR::swap_4 (tmp_id, reinterpret_cast <char*> (id));
+          }
+#else
+        id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
+#endif /* ACE_DISABLE_SWAP_ON_READ */
       }
 
     // Print.
