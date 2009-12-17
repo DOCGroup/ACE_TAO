@@ -1,3 +1,15 @@
+Thu Dec 17 21:37:10 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/Cornucopia/README:
+        
+          Updated this file with info about the non-template
+          IDL3+ constructs added to the test IDL.
+          
+        * tests/IDL_Test/IDL3_Plus/README:
+        
+          New file, containing info about the new test in this
+          directory.
+
 Thu Dec 17 21:15:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.h:
