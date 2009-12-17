@@ -1,7 +1,17 @@
+Thu Dec 17 13:08:14 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_Listen_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_Listen_T.cpp:
+          Reworked Topic in order to separate the DDS lifecycle
+          from the ccm lifecycle.
+
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+          Removed unnecessary comments.
+
 Thu Dec 17 12:56:31 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/USER_QOS_PROFILES.xml
-	  Forgotten profile Hello example.
+          Forgotten profile Hello example.
 
 Thu Dec 17 12:35:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
