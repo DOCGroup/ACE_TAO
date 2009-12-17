@@ -1,3 +1,8 @@
+Thu Dec 17 12:56:31 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/USER_QOS_PROFILES.xml
+	  Forgotten profile Hello example.
+
 Thu Dec 17 12:35:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReader.h:
@@ -14,7 +19,6 @@ Thu Dec 17 12:29:31 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.cpp
         * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.cpp
           add '\n' in debug and error messages
-
 
 Thu Dec 17 12:21:31 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
