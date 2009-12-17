@@ -116,9 +116,10 @@ namespace CIAO
 
         void set_impl (DDSPublisher *p);
 
-        DDSPublisher *impl (void);
       private:
         DDSPublisher *impl_;
+
+        DDSPublisher *impl (void);
       };
     }
   }

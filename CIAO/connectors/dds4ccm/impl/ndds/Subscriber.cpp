@@ -304,8 +304,9 @@ namespace CIAO
       DDSSubscriber *
       RTI_Subscriber_i::impl (void)
       {
-        if (!this->impl ())
+        if (!this->impl_)
           {
+            CIAO_ERROR ((LM_ERROR, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11\n"));
             throw ::CORBA::BAD_INV_ORDER ();
           }
         return this->impl_;
