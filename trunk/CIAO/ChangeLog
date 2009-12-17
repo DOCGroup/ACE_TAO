@@ -1,3 +1,8 @@
+Thu Dec 17 20:43:31 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp
+	  Change cdp for test. 	
+
 Thu Dec 17 18:42:31 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/1_to_5.cdp
