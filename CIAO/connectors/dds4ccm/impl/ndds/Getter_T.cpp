@@ -270,7 +270,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::data_reader (
           throw CORBA::INTERNAL ();
         }
 
-      this->impl_ =  DDS_TYPE::data_reader::narrow (rdr->get_datareader ());
+      this->impl_ =  DDS_TYPE::data_reader::narrow (rdr->get_impl ());
 
       if (!this->impl_)
         {
