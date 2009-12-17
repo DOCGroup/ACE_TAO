@@ -1,3 +1,14 @@
+Thu Dec 17 20:35:28 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        
+          Changes to TAO IFR loader required by changes to TAO_IDL
+          front end in
+          
+          Wed Dec 16 20:20:13 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Wed Dec 16 20:20:13 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_generator.h:
