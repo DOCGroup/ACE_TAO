@@ -45,7 +45,7 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(
     }
 
   typename DDS_TYPE::data_reader * reader =
-      dynamic_cast< typename DDS_TYPE::data_reader * > ((rd->get_datareader ()));
+      dynamic_cast< typename DDS_TYPE::data_reader * > ((rd->get_impl ()));
 
   if (!reader)
     {
