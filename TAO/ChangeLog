@@ -1,3 +1,10 @@
+Thu Dec 17 13:12:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/Leader_Follower.h:
+        * tao/Leader_Follower.inl:
+          Added method set_new_leader_generator().
+          This resolves Bugzilla #3772.
+
 Thu Dec 17 13:03:32 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * interop-tests/wchar/run_test.pl:
