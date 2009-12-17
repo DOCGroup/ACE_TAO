@@ -1,3 +1,14 @@
+Thu Dec 17 19:37:41 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.mpc:
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
+        
+          New test in new directory (IDL3_Plus) to test IDL3+
+          constructs, specifically template-related ones.
+          TAO_IDL supports IDL3+ only in the front
+          end currently, this test will be more meaningful as
+          back end support is added.
+
 Mon Nov 23 20:39:24 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/checking_visitor.h:
