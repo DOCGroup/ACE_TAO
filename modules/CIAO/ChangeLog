@@ -1,3 +1,13 @@
+Thu Dec 17 21:15:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.h:
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.cpp:
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.h:
+        
+          Changes needed to this back end required by front end
+          changes made to support IDL3+ grammar changes.
+
 Thu Dec 17 19:52:18 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/basic_visitor.cpp:
