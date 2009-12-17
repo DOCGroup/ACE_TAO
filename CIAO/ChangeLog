@@ -1,3 +1,8 @@
+Thu Dec 17 18:42:31 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/1_to_5.cdp
+	  Add profile to connectorFour.		
+
 Thu Dec 17 13:08:14 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDS_Listen_T.h:
