@@ -142,7 +142,7 @@ protected:
                                   AST_Interface *node);
 
   void fill_interfaces (CORBA::InterfaceDefSeq &result,
-                        AST_Interface **list,
+                        AST_Type **list,
                         CORBA::Long length);
 
   void fill_initializers (CORBA::ExtInitializerSeq &result,
