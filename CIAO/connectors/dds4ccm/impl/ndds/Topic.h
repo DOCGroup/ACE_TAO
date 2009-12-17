@@ -73,10 +73,10 @@ namespace CIAO
 
         void set_impl (DDSTopic * dw);
 
-        DDSTopic * impl (void);
-
       private:
         DDSTopic * impl_;
+
+        DDSTopic * impl (void);
       };
     }
   }
