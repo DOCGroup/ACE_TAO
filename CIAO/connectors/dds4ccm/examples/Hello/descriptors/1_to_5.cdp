@@ -480,6 +480,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HelloTest_Library#Hello_Profile</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
 
