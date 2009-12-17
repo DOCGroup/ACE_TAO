@@ -62,9 +62,11 @@ namespace CIAO
       virtual int visit_type (AST_Type *node);
       virtual int visit_predefined_type (AST_PredefinedType *node);
       virtual int visit_module (AST_Module *node);
+      virtual int visit_template_module (AST_Template_Module *node);
+      virtual int visit_template_module_inst (AST_Template_Module_Inst *node);
+      virtual int visit_template_module_ref (AST_Template_Module_Ref *node);
       virtual int visit_interface (AST_Interface *node);
       virtual int visit_interface_fwd (AST_InterfaceFwd *node);
-      virtual int visit_template_interface (AST_Template_Interface *node);
       virtual int visit_valuebox (AST_ValueBox *node);
       virtual int visit_valuetype (AST_ValueType *node);
       virtual int visit_valuetype_fwd (AST_ValueTypeFwd *node);
@@ -81,11 +83,6 @@ namespace CIAO
       virtual int visit_extended_port (AST_Extended_Port *node);
       virtual int visit_mirror_port (AST_Mirror_Port *node);
       virtual int visit_connector (AST_Connector *node);
-      virtual int visit_instantiated_connector (
-        AST_Instantiated_Connector *node);
-      virtual int visit_tmpl_port (AST_Tmpl_Port *node);
-      virtual int visit_tmpl_mirror_port (
-        AST_Tmpl_Mirror_Port *node);
       virtual int visit_home (AST_Home *node);
       virtual int visit_factory (AST_Factory *node);
       virtual int visit_structure (AST_Structure *node);

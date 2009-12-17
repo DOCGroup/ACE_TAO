@@ -27,6 +27,10 @@
 #include "ast_sequence.h"
 #include "ast_string.h"
 #include "ast_structure_fwd.h"
+#include "ast_template_module.h"
+#include "ast_template_module_inst.h"
+#include "ast_template_module_ref.h"
+#include "ast_typedef.h"
 #include "ast_union.h"
 #include "ast_union_branch.h"
 #include "ast_union_fwd.h"
@@ -184,6 +188,27 @@ namespace CIAO
     }
 
     int
+    ir_simulator_visitor::visit_template_module (
+      AST_Template_Module *)
+    {
+      return 0;
+    }
+
+    int
+    ir_simulator_visitor::visit_template_module_inst (
+      AST_Template_Module_Inst *)
+    {
+      return 0;
+    }
+
+    int
+    ir_simulator_visitor::visit_template_module_ref(
+      AST_Template_Module_Ref *)
+    {
+      return 0;
+    }
+
+    int
     ir_simulator_visitor::visit_interface (AST_Interface *node)
     {
       XMI_TRACE ("interface");
@@ -219,7 +244,7 @@ namespace CIAO
           // Inheritance
           for (long i = 0; i < node->n_inherits (); ++i)
             {
-              this->visit_interface (node->inherits ()[i]);
+              node->inherits ()[i]->ast_accept (this);
             }
 
           if (this->visit_scope (node) != 0)
@@ -247,13 +272,6 @@ namespace CIAO
       // won't hurt to import the fwd interface
       node->set_imported (false);
 
-      return 0;
-    }
-
-    int
-    ir_simulator_visitor::visit_template_interface (
-      AST_Template_Interface *)
-    {
       return 0;
     }
 
@@ -344,13 +362,17 @@ namespace CIAO
 
       try
         {
-          if (node->inherits_concrete () != 0)
+          AST_Type *t = node->inherits_concrete ();
+          AST_ValueType *v =
+            AST_ValueType::narrow_from_decl (t);
+            
+          if (v != 0)
             {
-              this->visit_valuetype_impl (node->inherits_concrete ());
+              this->visit_valuetype_impl (v);
             }
 
           long lim = node->n_supports ();
-          AST_Interface **sppts = node->supports ();
+          AST_Type **sppts = node->supports ();
 
           for (long i = 0; i < lim; ++i)
             {
@@ -423,7 +445,7 @@ namespace CIAO
             }
 
           long len = node->n_supports ();
-          AST_Interface **sppts = node->supports ();
+          AST_Type **sppts = node->supports ();
 
           for (long i = 0; i < len; ++i)
             {
@@ -513,26 +535,6 @@ namespace CIAO
     }
 
     int
-    ir_simulator_visitor::visit_instantiated_connector (
-      AST_Instantiated_Connector *)
-    {
-      return 0;
-    }
-
-    int
-    ir_simulator_visitor::visit_tmpl_port (AST_Tmpl_Port *)
-    {
-      return 0;
-    }
-
-    int
-    ir_simulator_visitor::visit_tmpl_mirror_port (
-      AST_Tmpl_Mirror_Port *)
-    {
-      return 0;
-    }
-
-    int
     ir_simulator_visitor::visit_eventtype (AST_EventType *node)
     {
       XMI_TRACE ("eventtype");
@@ -594,7 +596,7 @@ namespace CIAO
         {
           // **** supported interfaces
           long len = node->n_supports ();
-          AST_Interface **sppts = node->supports ();
+          AST_Type **sppts = node->supports ();
 
           for (long i = 0; i < len; ++i)
             {
