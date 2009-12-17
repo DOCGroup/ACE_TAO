@@ -1,3 +1,15 @@
+Thu Dec 17 12:29:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/INET_Addr.inl:
+          Fixed bug in ::is_multicast() for little-endian platforms.
+          This fixes Bugzilla #3729.
+          
+        * tests/Bug_3729_Regression_Test.cpp:
+          Fixed typo in logfile name.
+          
+        * tests/run_test.lst:
+          Removed !FIXED_BUGS_ONLY for Bug_3729_Regression_Test.
+          
 Wed Dec 16 11:24:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
 
         * ACE_wrappers/ace/Log_Msg.h:

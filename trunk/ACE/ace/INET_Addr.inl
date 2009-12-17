@@ -216,8 +216,8 @@ ACE_INET_Addr::is_multicast (void) const
     return this->inet_addr_.in6_.sin6_addr.s6_addr[0] == 0xFF;
 #endif /* ACE_HAS_IPV6 */
   return
-    this->inet_addr_.in4_.sin_addr.s_addr >= 0xE0000000 &&  // 224.0.0.0
-    this->inet_addr_.in4_.sin_addr.s_addr <= 0xEFFFFFFF; // 239.255.255.255
+    (*static_cast<const unsigned char*> (
+        static_cast<const void*> (&this->inet_addr_.in4_.sin_addr.s_addr)) & 0xf0) == 0xe0;
 }
 
 #if defined (ACE_HAS_IPV6)
