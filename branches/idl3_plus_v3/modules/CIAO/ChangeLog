@@ -1,3 +1,13 @@
+Thu Dec 17 19:52:18 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/basic_visitor.cpp:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+        
+          Changes needed to this back end required by front end
+          changes made to support IDL template parameters as
+          base interfaces/valuetypes, supported interfaces, and
+          primary keys.
+
 Thu Dec 17 19:37:41 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/IDL3_Plus/KitchenSink.mpc:
