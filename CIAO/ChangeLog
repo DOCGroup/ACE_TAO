@@ -1,3 +1,63 @@
+Fri Dec 18 18:58:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Merge changes from Jeff Parsons related to templated modules
+
+        Thu Dec 17 21:37:10 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/Cornucopia/README:
+
+          Updated this file with info about the non-template
+          IDL3+ constructs added to the test IDL.
+
+        * tests/IDL_Test/IDL3_Plus/README:
+
+          New file, containing info about the new test in this
+          directory.
+
+        Thu Dec 17 21:15:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.h:
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.cpp:
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.h:
+
+          Changes needed to this back end required by front end
+          changes made to support IDL3+ grammar changes.
+
+        Thu Dec 17 19:52:18 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/basic_visitor.cpp:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+
+          Changes needed to this back end required by front end
+          changes made to support IDL template parameters as
+          base interfaces/valuetypes, supported interfaces, and
+          primary keys.
+
+        Thu Dec 17 19:37:41 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.mpc:
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
+
+          New test in new directory (IDL3_Plus) to test IDL3+
+          constructs, specifically template-related ones.
+          TAO_IDL supports IDL3+ only in the front
+          end currently, this test will be more meaningful as
+          back end support is added.
+
+        Mon Nov 23 20:39:24 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/checking_visitor.h:
+        * tools/IDL3_to_IDL2/basic_visitor.cpp:
+        * tools/IDL3_to_IDL2/basic_visitor.h:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+        * tools/IDL3_to_IDL2/checking_visitor.cpp:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.h:
+
+          Updated visit_* methods. New visit_* methods corresponding
+          to the revised IDL3+ grammar types, have not yet been
+          implemented.
+
 Fri Dec 18 15:28:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReader.cpp:
@@ -13,7 +73,6 @@ Fri Dec 18 14:49:31 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.cpp
           Solve bug in test on_deletion
-
 
 Fri Dec 18 14:17:47 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
