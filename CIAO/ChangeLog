@@ -1,3 +1,14 @@
+Fri Dec 18 15:28:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReader.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+        * connectors/dds4ccm/impl/ndds/ReadCondition.h:
+        * connectors/dds4ccm/impl/ndds/ReadCondition.cpp:
+        * connectors/dds4ccm/impl/ndds/TopicDescription.h:
+        * connectors/dds4ccm/impl/ndds/TopicDescription.cpp:
+          Two other classes converted. Implemented getter and
+          setter for variable impl_.
+
 Fri Dec 18 14:49:31 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.cpp

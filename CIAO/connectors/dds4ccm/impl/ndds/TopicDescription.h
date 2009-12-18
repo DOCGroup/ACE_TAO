@@ -32,7 +32,7 @@ namespace CIAO
       {
       public:
         // Constructor
-        RTI_TopicDescription_i (DDSTopicDescription *td);
+        RTI_TopicDescription_i (void);
 
         // Destructor
         virtual ~RTI_TopicDescription_i (void);
@@ -46,9 +46,14 @@ namespace CIAO
         virtual ::DDS::DomainParticipant_ptr
           get_participant (void);
 
-        DDSTopicDescription * get_topicdescription (void);
+        DDSTopicDescription * get_impl (void);
+
+        void set_impl (DDSTopicDescription * rc);
+
       private:
-        DDSTopicDescription *impl_;
+        DDSTopicDescription * impl_;
+
+        DDSTopicDescription * impl (void);
       };
     }
   }

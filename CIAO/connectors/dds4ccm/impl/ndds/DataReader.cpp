@@ -72,7 +72,9 @@ namespace CIAO
         ::DDS::InstanceStateMask instance_states)
       {
         DDSReadCondition* rc = this->impl ()->create_readcondition (sample_states, view_states, instance_states);
-        ::DDS::ReadCondition_var retval = new RTI_ReadCondition_i (rc);
+        ::DDS::ReadCondition_var retval = new RTI_ReadCondition_i ();
+        RTI_ReadCondition_i *rti_rc = dynamic_cast < RTI_ReadCondition_i *>(retval.in ());
+        rti_rc->set_impl (rc);
         return retval._retn ();
       }
 
@@ -98,7 +100,7 @@ namespace CIAO
           {
             return ::DDS::RETCODE_BAD_PARAMETER;
           }
-        return this->impl ()->delete_readcondition (rc->get_readcondition ());
+        return this->impl ()->delete_readcondition (rc->get_impl ());
       }
 
       ::DDS::ReturnCode_t
@@ -147,8 +149,10 @@ namespace CIAO
       ::DDS::TopicDescription_ptr
       RTI_DataReader_i::get_topicdescription (void)
       {
-        ::DDSTopicDescription* reader = this->impl ()->get_topicdescription ();
-        ::DDS::TopicDescription_var dds_td = new RTI_TopicDescription_i (reader);
+        ::DDSTopicDescription* td = this->impl ()->get_topicdescription ();
+        ::DDS::TopicDescription_var dds_td = new RTI_TopicDescription_i ();
+        RTI_TopicDescription_i *rti_td = dynamic_cast < RTI_TopicDescription_i *>(dds_td.in ());
+        rti_td->set_impl (td);
         return dds_td._retn ();
       }
 
