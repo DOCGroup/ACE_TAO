@@ -16,9 +16,13 @@ $iorbase2 = "test2.ior";
 
 $client_iorfile1 = $client->LocalFile ($iorbase1);
 $client_iorfile2 = $client->LocalFile ($iorbase2);
+$server_iorfile1 = $server->LocalFile ($iorbase1);
+$server_iorfile2 = $server->LocalFile ($iorbase2);
 
 $client->DeleteFile ($iorbase1);
 $client->DeleteFile ($iorbase2);
+$server->DeleteFile ($iorbase1);
+$server->DeleteFile ($iorbase2);
 
 $status = 0;
 
@@ -47,14 +51,19 @@ else {
         "-b bands.unix";
 }
 
-$SV = $server->CreateProcess ("server", $server_args),
+$SV = $server->CreateProcess ("server", $server_args . " -n $server_iorfile1 -o $server_iorfile1"),
 
 $CL = $client->CreateProcess ("client", "-n file://$client_iorfile1 -o file://$client_iorfile2");
 
-$SV->Spawn();
+$server_status = $SV->Spawn();
 
-if ($client->WaitForFileTimed ($iorbase2,
-                               $client->ProcessStartWaitInterval()) == -1) {
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    exit 1;
+}
+
+if ($server->WaitForFileTimed ($iorbase2,
+                               $server->ProcessStartWaitInterval()) == -1) {
     $server_status = $SV->TimedWait (1);
     if ($server_status == 2) {
         # Mark as no longer running to avoid errors on exit.
@@ -84,6 +93,8 @@ if ($server_status != 0) {
 
 $client->DeleteFile ($iorbase1);
 $client->DeleteFile ($iorbase2);
+$server->DeleteFile ($iorbase1);
+$server->DeleteFile ($iorbase2);
 
 # Clean up SHMIOP files
 PerlACE::check_n_cleanup_files ("server_shmiop_*");
