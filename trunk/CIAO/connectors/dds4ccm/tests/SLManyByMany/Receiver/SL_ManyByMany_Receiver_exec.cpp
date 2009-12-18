@@ -143,7 +143,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
                     )); 
 
       }
-    if((!datum.key.in()==0) && (info.instance_status == CCM_DDS::INSTANCE_UPDATED))
+    if((!datum.key.in()==0) && (info.instance_status == CCM_DDS::INSTANCE_DELETED))
       { 
         this->on_deletion_ = true;
       }
