@@ -42,6 +42,7 @@ private:
   ::DDS::CCM_DataWriter_var writer_;
   ::DDS::DataWriterListener_var writer_listener_;
   ::CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE> writer_t_;
+  ::CIAO::DDS4CCM::RTI::RTI_DataWriter_i rti_writer_;
   //@}
 };
 

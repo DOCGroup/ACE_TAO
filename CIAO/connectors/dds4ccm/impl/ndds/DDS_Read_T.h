@@ -41,7 +41,8 @@ private:
   //@{
   ::DDS::CCM_DataReader_var data_;
   ::DDS::DataReaderListener_var status_;
-  CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> dds_read_;
+  ::CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> dds_read_;
+  ::CIAO::DDS4CCM::RTI::RTI_DataReader_i rti_reader_;
   //@}
 };
 

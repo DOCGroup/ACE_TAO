@@ -253,7 +253,7 @@ namespace CIAO
       DDSDataReader *
       RTI_DataReader_i::get_impl (void)
       {
-        return this->impl ();
+        return this->impl_;
       }
 
       void

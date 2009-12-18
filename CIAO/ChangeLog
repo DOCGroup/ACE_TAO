@@ -1,12 +1,41 @@
+Fri Dec 18 08:32:09 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_Get_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Listen_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Read_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_Read_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_StateListen_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Update_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Write_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_Write_T.cpp:
+          Added a datareader/writer in order to separate the
+          dds lifecycle from the ccm lifecycle.
+
+        * connectors/dds4ccm/impl/ndds/DataReader.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriter.cpp:
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+        * connectors/dds4ccm/impl/ndds/SampleInfo.h:
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+        * connectors/dds4ccm/impl/ndds/Topic.cpp:
+          Don't call impl () recursive. Use impl_ to check
+          for nil.
+
+        * connectors/dds4ccm/tests/Event_Connection_Test/descriptors/run_test.pl:
+          Turned off CIAO en DAnCE trace.
+
 Thu Dec 17 20:43:31 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp
-	  Change cdp for test. 	
+          Change cdp for test.
 
 Thu Dec 17 18:42:31 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/1_to_5.cdp
-	  Add profile to connectorFour.		
+          Add profile to connectorFour.
 
 Thu Dec 17 13:08:14 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
