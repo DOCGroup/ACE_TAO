@@ -27,7 +27,8 @@ $server->DeleteFile($iorbase);
 
 $SV = $server->CreateProcess ("server",
                               "-ORBEndpoint iiop://$hostname:$port " .
-                              "-ORBDebugLevel $debug_level");
+                              "-ORBDebugLevel $debug_level " .
+                              "-o $server_iorfile");
 
 $server_status = $SV->Spawn ();
 
