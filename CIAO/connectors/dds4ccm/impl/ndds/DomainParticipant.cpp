@@ -401,7 +401,9 @@ namespace CIAO
       RTI_DomainParticipant_i::lookup_topicdescription (const char * name)
       {
         ::DDSTopicDescription* rti_topic = this->impl_->lookup_topicdescription (name);
-        ::DDS::TopicDescription_var retval = new RTI_TopicDescription_i (rti_topic);
+        ::DDS::TopicDescription_var retval = new RTI_TopicDescription_i ();
+        RTI_TopicDescription_i *rti_td = dynamic_cast < RTI_TopicDescription_i *>(retval.in ());
+        rti_td->set_impl (rti_topic);
         return retval._retn ();
       }
 
