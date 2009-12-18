@@ -104,14 +104,14 @@ FE_Utils::T_ARGLIST::destroy (void)
 {
   AST_Decl **d = 0;
   AST_Decl *tmp = 0;
-  
+
   for (T_ARGLIST::ITERATOR i (this->begin ());
        !i.done ();
        i.advance ())
     {
       i.next (d);
       tmp = *d;
-      
+
       // These were created on the fly and not part of any scope
       // so we manage their lifetime here.
       if (tmp->node_type () == AST_Decl::NT_const)
@@ -122,3 +122,4 @@ FE_Utils::T_ARGLIST::destroy (void)
         }
     }
 }
+
