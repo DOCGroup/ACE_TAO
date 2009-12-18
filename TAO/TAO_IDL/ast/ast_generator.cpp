@@ -79,11 +79,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_component.h"
 #include "ast_component_fwd.h"
 #include "ast_home.h"
-#include "ast_template_interface.h"
 #include "ast_mirror_port.h"
 #include "ast_connector.h"
-#include "ast_instantiated_connector.h"
-#include "ast_tmpl_mirror_port.h"
+#include "ast_template_module.h"
+#include "ast_template_module_inst.h"
+#include "ast_template_module_ref.h"
+#include "ast_param_holder.h"
 #include "ast_provides.h"
 #include "ast_uses.h"
 #include "ast_publishes.h"
@@ -100,17 +101,16 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_sequence.h"
 #include "ast_string.h"
 #include "ast_structure_fwd.h"
+#include "ast_typedef.h"
 #include "ast_native.h"
 #include "ast_factory.h"
+
 #include "utl_identifier.h"
+
 #include "nr_extern.h"
 #include "ace/OS_NS_wchar.h"
 
 #include "ast_generator.h"
-
-ACE_RCSID (ast,
-           ast_generator,
-           "$Id$")
 
 AST_PredefinedType *
 AST_Generator::create_predefined_type (AST_PredefinedType::PredefinedType t,
@@ -208,7 +208,7 @@ AST_Generator::create_root (UTL_ScopedName *n)
 
 AST_Interface *
 AST_Generator::create_interface (UTL_ScopedName *n,
-                                 AST_Interface **inherits,
+                                 AST_Type **inherits,
                                  long n_inherits,
                                  AST_Interface **inherits_flat,
                                  long n_inherits_flat,
@@ -254,14 +254,14 @@ AST_Generator::create_interface_fwd (UTL_ScopedName *n,
 
 AST_ValueType *
 AST_Generator::create_valuetype (UTL_ScopedName *n,
-                                 AST_Interface **inherits,
+                                 AST_Type **inherits,
                                  long n_inherits,
-                                 AST_ValueType *inherits_concrete,
+                                 AST_Type *inherits_concrete,
                                  AST_Interface **inherits_flat,
                                  long n_inherits_flat,
-                                 AST_Interface **supports_list,
+                                 AST_Type **supports_list,
                                  long n_supports,
-                                 AST_Interface *supports_concrete,
+                                 AST_Type *supports_concrete,
                                  bool is_abstract,
                                  bool is_truncatable,
                                  bool is_custom)
@@ -322,14 +322,14 @@ AST_Generator::create_valuetype_fwd (UTL_ScopedName *n,
 
 AST_EventType *
 AST_Generator::create_eventtype (UTL_ScopedName *n,
-                                 AST_Interface **inherits,
+                                 AST_Type **inherits,
                                  long n_inherits,
-                                 AST_ValueType *inherits_concrete,
+                                 AST_Type *inherits_concrete,
                                  AST_Interface **inherits_flat,
                                  long n_inherits_flat,
-                                 AST_Interface **supports_list,
+                                 AST_Type **supports_list,
                                  long n_supports,
-                                 AST_Interface *supports_concrete,
+                                 AST_Type *supports_concrete,
                                  bool is_abstract,
                                  bool is_truncatable,
                                  bool is_custom)
@@ -391,7 +391,7 @@ AST_Generator::create_eventtype_fwd (UTL_ScopedName *n,
 AST_Component *
 AST_Generator::create_component (UTL_ScopedName *n,
                                  AST_Component *base_component,
-                                 AST_Interface **supports_list,
+                                 AST_Type **supports_list,
                                  long n_supports,
                                  AST_Interface **supports_flat,
                                  long n_supports_flat)
@@ -433,8 +433,8 @@ AST_Home *
 AST_Generator::create_home (UTL_ScopedName *n,
                             AST_Home *base_home,
                             AST_Component *managed_component,
-                            AST_ValueType *primary_key,
-                            AST_Interface **supports_list,
+                            AST_Type *primary_key,
+                            AST_Type **supports_list,
                             long n_supports,
                             AST_Interface **supports_flat,
                             long n_supports_flat)
@@ -931,37 +931,12 @@ AST_Generator::create_valuebox (UTL_ScopedName *n,
   return retval;
 }
 
-AST_Template_Interface *
-AST_Generator::create_template_interface (
-  UTL_ScopedName *n,
-  AST_Interface **ih,
-  long nih,
-  AST_Interface **ih_flat,
-  long nih_flat,
-  FE_Utils::T_PARAMLIST_INFO *template_params)
-{
-  AST_Template_Interface *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  AST_Template_Interface (n,
-                                          ih,
-                                          nih,
-                                          ih_flat,
-                                          nih_flat,
-                                          template_params),
-                  0);
-
-  return retval;
-}
-
 AST_PortType *
-AST_Generator::create_porttype (
-  UTL_ScopedName *n,
-  FE_Utils::T_PARAMLIST_INFO *template_params)
+AST_Generator::create_porttype (UTL_ScopedName *n)
 {
   AST_PortType *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_PortType (n,
-                                template_params),
+                  AST_PortType (n),
                   0);
 
   return retval;
@@ -997,7 +972,7 @@ AST_Generator::create_uses (UTL_ScopedName *n,
 
 AST_Publishes *
 AST_Generator::create_publishes (UTL_ScopedName *n,
-                                 AST_EventType *publishes_type)
+                                 AST_Type *publishes_type)
 {
   AST_Publishes *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -1010,7 +985,7 @@ AST_Generator::create_publishes (UTL_ScopedName *n,
 
 AST_Emits *
 AST_Generator::create_emits (UTL_ScopedName *n,
-                             AST_EventType *emits_type)
+                             AST_Type *emits_type)
 {
   AST_Emits *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -1022,7 +997,7 @@ AST_Generator::create_emits (UTL_ScopedName *n,
 }
 AST_Consumes *
 AST_Generator::create_consumes (UTL_ScopedName *n,
-                                AST_EventType *consumes_type)
+                                AST_Type *consumes_type)
 {
   AST_Consumes *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -1036,14 +1011,12 @@ AST_Generator::create_consumes (UTL_ScopedName *n,
 AST_Extended_Port *
 AST_Generator::create_extended_port (
   UTL_ScopedName *n,
-  AST_PortType *porttype_ref,
-  AST_PortType::T_ARGLIST *template_args)
+  AST_PortType *porttype_ref)
 {
   AST_Extended_Port *retval = 0;
   ACE_NEW_RETURN (retval,
                   AST_Extended_Port (n,
-                                     porttype_ref,
-                                     template_args),
+                                     porttype_ref),
                   0);
                   
   return retval;              
@@ -1052,14 +1025,12 @@ AST_Generator::create_extended_port (
 AST_Mirror_Port *
 AST_Generator::create_mirror_port (
   UTL_ScopedName *n,
-  AST_PortType *porttype_ref,
-  AST_PortType::T_ARGLIST *template_args)
+  AST_PortType *porttype_ref)
 {
   AST_Mirror_Port *retval = 0;
   ACE_NEW_RETURN (retval,
                   AST_Mirror_Port (n,
-                                   porttype_ref,
-                                   template_args),
+                                   porttype_ref),
                   0);
                   
   return retval;              
@@ -1068,67 +1039,72 @@ AST_Generator::create_mirror_port (
 AST_Connector *
 AST_Generator::create_connector (
   UTL_ScopedName *n,
-  AST_Connector *base_connector,
-  FE_Utils::T_PARAMLIST_INFO *template_params)
+  AST_Connector *base_connector)
 {
   AST_Connector *retval = 0;
   ACE_NEW_RETURN (retval,
                   AST_Connector (n,
-                                 base_connector,
-                                 template_params),
+                                 base_connector),
                   0);
                   
   return retval;              
 }
 
-AST_Tmpl_Port *
-AST_Generator::create_tmpl_port (UTL_ScopedName *n,
-                                 AST_PortType *porttype_ref)
-{
-  AST_Tmpl_Port *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  AST_Tmpl_Port (n,
-                                 porttype_ref),
-                  0);
-                  
-  return retval;
-}
-
-AST_Tmpl_Mirror_Port *
-AST_Generator::create_tmpl_mirror_port (UTL_ScopedName *n,
-                                        AST_PortType *porttype_ref)
-{
-  AST_Tmpl_Mirror_Port *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  AST_Tmpl_Mirror_Port (n,
-                                        porttype_ref),
-                  0);
-                  
-  return retval;
-}
-
-AST_Instantiated_Connector *
-AST_Generator::create_instantiated_connector (
+AST_Template_Module *
+AST_Generator::create_template_module (
   UTL_ScopedName *n,
-  AST_Connector *connector_type,
-  AST_Template_Common::T_ARGLIST *template_args)
+  FE_Utils::T_PARAMLIST_INFO *template_params)
 {
-  AST_Instantiated_Connector *retval = 0;
+  AST_Template_Module *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_Instantiated_Connector (n,
-                                              connector_type,
-                                              template_args),
+                  AST_Template_Module (n,
+                                       template_params),
                   0);
                   
   return retval;
 }
-
-AST_Type *
-AST_Generator::create_placeholder (UTL_ScopedName *n)
+  
+AST_Template_Module_Inst *
+AST_Generator::create_template_module_inst (
+  UTL_ScopedName *n,
+  AST_Template_Module *ref,
+  FE_Utils::T_ARGLIST *template_args)
 {
-  AST_Type *retval = 0;
+  AST_Template_Module_Inst *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_Type (AST_Decl::NT_type, n),
+                  AST_Template_Module_Inst (n,
+                                            ref,
+                                            template_args),
+                  0);
+                  
+  return retval;
+}
+  
+AST_Template_Module_Ref *
+AST_Generator::create_template_module_ref (
+  UTL_ScopedName *n,
+  AST_Template_Module *ref,
+  UTL_StrList *param_refs)
+{
+  AST_Template_Module_Ref *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Template_Module_Ref (n,
+                                           ref,
+                                           param_refs),
+                  0);
+                  
+  return retval;
+}
+    
+AST_Param_Holder *
+AST_Generator::create_param_holder (
+  UTL_ScopedName *parameter_name,
+  FE_Utils::T_Param_Info *info)
+{
+  AST_Param_Holder *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Param_Holder (parameter_name,
+                                    info),
                   0);
                   
   return retval;

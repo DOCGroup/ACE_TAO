@@ -91,7 +91,7 @@ public:
                                      UTL_ScopedName *n);
 
   virtual AST_Interface *create_interface (UTL_ScopedName *n,
-                                           AST_Interface **ih,
+                                           AST_Type **ih,
                                            long nih,
                                            AST_Interface **ih_flat,
                                            long nih_flat,
@@ -107,14 +107,14 @@ public:
                                          AST_Type *boxed_type);
 
   virtual AST_ValueType *create_valuetype (UTL_ScopedName *n,
-                                           AST_Interface **inherits,
+                                           AST_Type **inherits,
                                            long n_inherits,
-                                           AST_ValueType *inherits_concrete,
+                                           AST_Type *inherits_concrete,
                                            AST_Interface **inherits_flat,
                                            long n_inherits_flat,
-                                           AST_Interface **supports_list,
+                                           AST_Type **supports_list,
                                            long n_supports,
-                                           AST_Interface *supports_concrete,
+                                           AST_Type *supports_concrete,
                                            bool is_abstract,
                                            bool is_truncatable,
                                            bool is_custom);
@@ -123,14 +123,14 @@ public:
                                                   bool abstract);
 
   virtual AST_EventType *create_eventtype (UTL_ScopedName *n,
-                                           AST_Interface **inherits,
+                                           AST_Type **inherits,
                                            long n_inherits,
-                                           AST_ValueType *inherits_concrete,
+                                           AST_Type *inherits_concrete,
                                            AST_Interface **inherits_flat,
                                            long n_inherits_flat,
-                                           AST_Interface **supports_list,
+                                           AST_Type **supports_list,
                                            long n_supports,
-                                           AST_Interface *supports_concrete,
+                                           AST_Type *supports_concrete,
                                            bool is_abstract,
                                            bool is_truncatable,
                                            bool is_custom);
@@ -140,7 +140,7 @@ public:
 
   virtual AST_Component *create_component (UTL_ScopedName *n,
                                            AST_Component *base_component,
-                                           AST_Interface **supports_list,
+                                           AST_Type **supports_list,
                                            long n_supports,
                                            AST_Interface **supports_flat,
                                            long n_supports_flat);
@@ -150,8 +150,8 @@ public:
   virtual AST_Home *create_home (UTL_ScopedName *n,
                                  AST_Home *base_home,
                                  AST_Component *managed_component,
-                                 AST_ValueType *primary_key,
-                                 AST_Interface **supports_list,
+                                 AST_Type *primary_key,
+                                 AST_Type **supports_list,
                                  long n_supports,
                                  AST_Interface **supports_flat,
                                  long n_supports_flat);
@@ -266,18 +266,7 @@ public:
   virtual AST_Factory *create_factory (UTL_ScopedName *n);
 
   virtual
-  AST_Template_Interface *create_template_interface (
-    UTL_ScopedName *n,
-    AST_Interface **ih,
-    long nih,
-    AST_Interface **ih_flat,
-    long nih_flat,
-    FE_Utils::T_PARAMLIST_INFO *template_params);
-
-  virtual
-  AST_PortType *create_porttype (
-    UTL_ScopedName *n,
-    FE_Utils::T_PARAMLIST_INFO *template_params);
+  AST_PortType *create_porttype (UTL_ScopedName *n);
     
   virtual
   AST_Provides *create_provides (UTL_ScopedName *n,
@@ -290,51 +279,51 @@ public:
     
   virtual
   AST_Publishes *create_publishes (UTL_ScopedName *n,
-                                   AST_EventType *publishes_type);
+                                   AST_Type *publishes_type);
     
   virtual
   AST_Emits *create_emits (UTL_ScopedName *n,
-                           AST_EventType *emits_type);
+                           AST_Type *emits_type);
     
   virtual
   AST_Consumes *create_consumes (UTL_ScopedName *n,
-                                 AST_EventType *consumes_type);
+                                 AST_Type *consumes_type);
   virtual
   AST_Extended_Port *create_extended_port (
     UTL_ScopedName *n,
-    AST_PortType *porttype_ref,
-    AST_PortType::T_ARGLIST *template_args);
+    AST_PortType *porttype_ref);
     
   virtual
   AST_Mirror_Port *create_mirror_port (
     UTL_ScopedName *n,
-    AST_PortType *porttype_ref,
-    AST_PortType::T_ARGLIST *template_args);
+    AST_PortType *porttype_ref);
     
   virtual
   AST_Connector *create_connector (
     UTL_ScopedName *n,
-    AST_Connector *base_connector,
+    AST_Connector *base_connector);
+    
+  virtual
+  AST_Template_Module *create_template_module (
+    UTL_ScopedName *n,
     FE_Utils::T_PARAMLIST_INFO *template_params);
     
   virtual
-  AST_Tmpl_Port *create_tmpl_port (
+  AST_Template_Module_Inst *create_template_module_inst (
     UTL_ScopedName *n,
-    AST_PortType *porttype_ref);
+    AST_Template_Module *ref,
+    FE_Utils::T_ARGLIST *template_args);
     
   virtual
-  AST_Tmpl_Mirror_Port *create_tmpl_mirror_port (
+  AST_Template_Module_Ref *create_template_module_ref (
     UTL_ScopedName *n,
-    AST_PortType *porttype_ref);
+    AST_Template_Module *ref,
+    UTL_StrList *param_refs);
     
   virtual
-  AST_Instantiated_Connector *create_instantiated_connector (
-    UTL_ScopedName *n,
-    AST_Connector *connector_type,
-    AST_Template_Common::T_ARGLIST *template_args);
-    
-  virtual
-  AST_Type *create_placeholder (UTL_ScopedName *n);
+  AST_Param_Holder *create_param_holder (
+    UTL_ScopedName *parameter_name,
+    FE_Utils::T_Param_Info *info);
 };
 
 #endif           // _BE_GENERATOR_BE_GENERATOR_HH

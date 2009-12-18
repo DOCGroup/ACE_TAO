@@ -62,7 +62,7 @@ public:
   // Default constructor.
 
   be_interface (UTL_ScopedName *n,
-                AST_Interface **ih,
+                AST_Type **ih,
                 long nih,
                 AST_Interface **ih_flat,
                 long nih_flat,
@@ -288,7 +288,7 @@ public:
   static int op_attr_decl_helper (be_interface *node,
                                   be_interface *base,
                                   TAO_OutStream *os);
-                     
+
   int gen_operation_table (const char *flat_name,
                            const char *skeleton_class_name);
   // Generate the operation table including entries for inherited interfaces.
@@ -352,7 +352,7 @@ public:
 
   bool is_event_consumer (void);
   // Is EventConsumerBase our parent?
-  
+
   void gen_facet_idl (TAO_OutStream &os);
   int gen_facet_svnt_hdr (be_visitor *visitor,
                           TAO_OutStream &os);
@@ -361,7 +361,7 @@ public:
   // Common code for facet generation, whether we are
   // navigating from the component port or forcing
   // facet generation for all interfaces.
-  
+
   void gen_nesting_open (TAO_OutStream &os);
   void gen_nesting_close (TAO_OutStream &os);
   // Helper function called from visitors and used internally.
@@ -400,14 +400,6 @@ private:
 
   void gen_linear_search_instance (const char *flat_name);
   // Create an instance of the linear search optable.
-  
-  void enqueue_base_component_r (AST_Component *node);
-  void enqueue_base_home_r (AST_Home *node);
-  // Called from traverse_inheritance_graph(), since base
-  // components and base homes are inserted before the actual
-  // traversal, it must be done tail-recursively to get the
-  // chain of parents in the correct order when generating
-  // copy constructors etc.
 
 protected:
   int var_out_seq_decls_gen_;

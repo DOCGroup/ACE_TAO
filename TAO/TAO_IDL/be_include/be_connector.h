@@ -13,8 +13,7 @@ class be_connector
 {
 public:
   be_connector (UTL_ScopedName *n,
-                AST_Connector *base_connector,
-                FE_Utils::T_PARAMLIST_INFO *template_params);
+                AST_Connector *base_connector);
 
   virtual ~be_connector (void);
   

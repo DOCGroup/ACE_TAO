@@ -29,12 +29,12 @@ public:
   // Data Accessors.
   AST_Home *base_home (void) const;
   AST_Component *managed_component (void) const;
-  AST_ValueType *primary_key (void) const;
+  AST_Type *primary_key (void) const;
 
 protected:
   AST_Home *base_home_;
   AST_Component *managed_component_;
-  AST_ValueType *primary_key_;
+  AST_Type *primary_key_;
 
 protected:
   void compile_inheritance (UTL_ScopedName *base_home);

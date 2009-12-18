@@ -27,7 +27,6 @@
 
 #include "be_visitor_component_scope.h"
 #include "ast_component.h"
-#include "ast_template_common.h"
 #include "utl_identifier.h"
 
 class be_valuetype;
@@ -120,13 +119,6 @@ private:
   // involve creation of instantiated template interface.
   int store_port_interface (AST_Type *i);
   
-  // Use template interface and template arg flat names.
-  ACE_CString create_inst_name (AST_Template_Interface *ti);
-  
-  // Instantiate a template interface.
-  int create_inst_interface (be_template_interface *ti,
-                             ACE_CString &inst_name);
-
 private:
   // These are created for operations implied by 'uses multiple' declarations.
   Identifier module_id_;
@@ -148,14 +140,10 @@ private:
   be_component *comp_;
   be_home *home_;
   
-  // Working arglist for visit_porttype().
-  AST_Template_Common::T_ARGLIST *porttype_args_;
-  
   // Working type for provides or uses ports.
   // If the port refers to a template interface, an
   // instantiation will be created.
   AST_Type *port_interface_;
 };
-
 
 #endif // TAO_BE_VISITOR_CCM_PRE_PROC_H

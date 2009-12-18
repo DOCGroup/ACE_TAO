@@ -101,7 +101,7 @@ public:
   virtual void destroy (void);
   // Cleanup function.
 
-  UTL_List *copy (void);
+  virtual UTL_IdList *copy (void);
   // Copy the list.
 
   Identifier *head (void);

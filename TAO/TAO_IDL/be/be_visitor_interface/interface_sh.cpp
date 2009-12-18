@@ -108,8 +108,8 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << " " << class_name.c_str () << be_idt_nl << ": " << be_idt;
 
   long n_parents = node->n_inherits ();
-  AST_Interface *parent = 0;
-  int has_concrete_parent = 0;
+  AST_Type *parent = 0;
+  bool has_concrete_parent = false;
 
   for (int i = 0; i < n_parents; ++i)
     {
@@ -120,7 +120,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
           continue;
         }
 
-      if (has_concrete_parent == 1)
+      if (has_concrete_parent)
         {
           *os << "," << be_nl;
         }
@@ -128,10 +128,10 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       *os << "public virtual " << "POA_"
           << parent->name ();
 
-      has_concrete_parent = 1;
+      has_concrete_parent = true;
     }
 
-  if (has_concrete_parent == 0)
+  if (! has_concrete_parent)
     {
       // We don't inherit from another user defined object, hence our
       // base class is the ServantBase class.

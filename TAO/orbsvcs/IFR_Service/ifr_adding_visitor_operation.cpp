@@ -83,7 +83,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
       CORBA::ExceptionDefSeq exceptions (length);
       exceptions.length (length);
 
-      AST_Exception *ex = 0;
+      AST_Type *ex = 0;
       CORBA::ULong i = 0;
 
       for (UTL_ExceptlistActiveIterator ex_iter (excepts);

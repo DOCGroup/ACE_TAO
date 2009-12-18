@@ -37,7 +37,7 @@ public:
 
   be_component (UTL_ScopedName *n,
                 AST_Component *base_component,
-                AST_Interface **supports,
+                AST_Type **supports,
                 long n_supports,
                 AST_Interface **supports_flat,
                 long n_supports_flat);

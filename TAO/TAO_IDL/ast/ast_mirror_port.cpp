@@ -8,14 +8,9 @@
 #include "utl_indenter.h"
 #include "global_extern.h"
 
-ACE_RCSID (ast,
-           ast_mirror_port,
-           "$Id$")
-
 AST_Mirror_Port::AST_Mirror_Port (
     UTL_ScopedName *n,
-    AST_PortType *porttype_ref,
-    AST_Template_Common::T_ARGLIST *template_args)
+    AST_PortType *porttype_ref)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_mirror_port,
@@ -24,8 +19,7 @@ AST_Mirror_Port::AST_Mirror_Port (
                porttype_ref,
                n),
     AST_Extended_Port (n,
-                       porttype_ref,
-                       template_args)
+                       porttype_ref)
 {
 }
 
@@ -45,8 +39,6 @@ AST_Mirror_Port::dump (ACE_OSTREAM_TYPE &o)
   this->dump_i (o, "port ");
 
   this->local_name ()->dump (o);
-  
-  // TODO - template args
 }
 
 int

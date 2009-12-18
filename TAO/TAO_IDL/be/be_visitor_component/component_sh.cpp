@@ -124,8 +124,8 @@ be_visitor_component_sh::visit_component (be_component *node)
     }
 
   long nsupports = node->n_inherits ();
-  AST_Interface **supports = node->supports ();
-  AST_Interface *supported = 0;
+  AST_Type **supports = node->supports ();
+  AST_Type *supported = 0;
 
   for (long i = 0; i < nsupports; ++i)
     {

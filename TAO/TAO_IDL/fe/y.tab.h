@@ -105,24 +105,23 @@
      IDL_USES = 320,
      IDL_MANAGES = 321,
      IDL_TYPENAME = 322,
-     IDL_PRIMITIVE = 323,
-     IDL_PORT = 324,
-     IDL_MIRRORPORT = 325,
-     IDL_PORTTYPE = 326,
-     IDL_CONNECTOR = 327,
-     IDL_CONCAT = 328,
-     IDL_INTEGER_LITERAL = 329,
-     IDL_UINTEGER_LITERAL = 330,
-     IDL_STRING_LITERAL = 331,
-     IDL_CHARACTER_LITERAL = 332,
-     IDL_FLOATING_PT_LITERAL = 333,
-     IDL_TRUETOK = 334,
-     IDL_FALSETOK = 335,
-     IDL_SCOPE_DELIMITOR = 336,
-     IDL_LEFT_SHIFT = 337,
-     IDL_RIGHT_SHIFT = 338,
-     IDL_WCHAR_LITERAL = 339,
-     IDL_WSTRING_LITERAL = 340
+     IDL_PORT = 323,
+     IDL_MIRRORPORT = 324,
+     IDL_PORTTYPE = 325,
+     IDL_CONNECTOR = 326,
+     IDL_ALIAS = 327,
+     IDL_INTEGER_LITERAL = 328,
+     IDL_UINTEGER_LITERAL = 329,
+     IDL_STRING_LITERAL = 330,
+     IDL_CHARACTER_LITERAL = 331,
+     IDL_FLOATING_PT_LITERAL = 332,
+     IDL_TRUETOK = 333,
+     IDL_FALSETOK = 334,
+     IDL_SCOPE_DELIMITOR = 335,
+     IDL_LEFT_SHIFT = 336,
+     IDL_RIGHT_SHIFT = 337,
+     IDL_WCHAR_LITERAL = 338,
+     IDL_WSTRING_LITERAL = 339
    };
 #endif
 /* Tokens.  */
@@ -191,24 +190,23 @@
 #define IDL_USES 320
 #define IDL_MANAGES 321
 #define IDL_TYPENAME 322
-#define IDL_PRIMITIVE 323
-#define IDL_PORT 324
-#define IDL_MIRRORPORT 325
-#define IDL_PORTTYPE 326
-#define IDL_CONNECTOR 327
-#define IDL_CONCAT 328
-#define IDL_INTEGER_LITERAL 329
-#define IDL_UINTEGER_LITERAL 330
-#define IDL_STRING_LITERAL 331
-#define IDL_CHARACTER_LITERAL 332
-#define IDL_FLOATING_PT_LITERAL 333
-#define IDL_TRUETOK 334
-#define IDL_FALSETOK 335
-#define IDL_SCOPE_DELIMITOR 336
-#define IDL_LEFT_SHIFT 337
-#define IDL_RIGHT_SHIFT 338
-#define IDL_WCHAR_LITERAL 339
-#define IDL_WSTRING_LITERAL 340
+#define IDL_PORT 323
+#define IDL_MIRRORPORT 324
+#define IDL_PORTTYPE 325
+#define IDL_CONNECTOR 326
+#define IDL_ALIAS 327
+#define IDL_INTEGER_LITERAL 328
+#define IDL_UINTEGER_LITERAL 329
+#define IDL_STRING_LITERAL 330
+#define IDL_CHARACTER_LITERAL 331
+#define IDL_FLOATING_PT_LITERAL 332
+#define IDL_TRUETOK 333
+#define IDL_FALSETOK 334
+#define IDL_SCOPE_DELIMITOR 335
+#define IDL_LEFT_SHIFT 336
+#define IDL_RIGHT_SHIFT 337
+#define IDL_WCHAR_LITERAL 338
+#define IDL_WSTRING_LITERAL 339
 
 
 
@@ -224,7 +222,6 @@ typedef union TAO_YYSTYPE
   UTL_LabelList                 *llval;         /* Label list           */
   UTL_DeclList                  *dlval;         /* Declaration list     */
   FE_InterfaceHeader            *ihval;         /* Interface header     */
-  FE_Template_InterfaceHeader   *thval;         /* Template interface hdr */
   FE_OBVHeader                  *vhval;         /* Valuetype header     */
   FE_EventHeader                *ehval;         /* Event header         */
   FE_ComponentHeader            *chval;         /* Component header     */
@@ -256,10 +253,11 @@ typedef union TAO_YYSTYPE
   FE_Utils::T_REFLIST_INFO      *rlval;         /* List of above structs */
   FE_Utils::T_Inst_Info         *tival;         /* Template instantiation */
   FE_Utils::T_Port_Info         *ptval;         /* Porttype reference */
+  FE_Utils::T_ARGLIST           *alval;         /* List of template args */
 }
 /* Line 1489 of yacc.c.  */
 
-  TAO_YYSTYPE;
+	TAO_YYSTYPE;
 # define tao_yystype TAO_YYSTYPE /* obsolescent; will be withdrawn */
 # define TAO_YYSTYPE_IS_DECLARED 1
 # define TAO_YYSTYPE_IS_TRIVIAL 1

@@ -77,10 +77,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_generator.h"
 #include "nr_extern.h"
 
-ACE_RCSID (ast,
-           ast_constant,
-           "$Id$")
-
 // Static functions.
 
 // Convert a value from the enum AST_Expression::ExprType to a char *.

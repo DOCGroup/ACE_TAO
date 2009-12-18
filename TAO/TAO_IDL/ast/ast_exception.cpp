@@ -73,14 +73,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_union.h"
 #include "ast_enum.h"
 #include "ast_enum_val.h"
+#include "ast_typedef.h"
 #include "ast_visitor.h"
+
 #include "utl_err.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
-
-ACE_RCSID (ast,
-           ast_exception,
-           "$Id$")
 
 AST_Exception::AST_Exception (void)
   : COMMON_Base (),

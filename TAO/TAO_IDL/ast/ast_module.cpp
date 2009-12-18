@@ -69,6 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // of UTL_Scope.
 
 #include "ast_module.h"
+#include "ast_template_module_inst.h"
 #include "ast_predefined_type.h"
 #include "ast_valuebox.h"
 #include "ast_valuetype.h"
@@ -79,7 +80,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_component_fwd.h"
 #include "ast_porttype.h"
 #include "ast_connector.h"
-#include "ast_instantiated_connector.h"
 #include "ast_home.h"
 #include "ast_constant.h"
 #include "ast_exception.h"
@@ -88,19 +88,18 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_structure_fwd.h"
 #include "ast_enum.h"
 #include "ast_enum_val.h"
+#include "ast_typedef.h"
 #include "ast_native.h"
 #include "ast_generator.h"
 #include "ast_visitor.h"
 #include "ast_extern.h"
+
 #include "utl_err.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
+
 #include "global_extern.h"
 #include "nr_extern.h"
-
-ACE_RCSID (ast,
-           ast_module,
-           "$Id$")
 
 AST_Module::AST_Module (void)
  : AST_Decl (),
@@ -266,6 +265,54 @@ AST_Module::fe_add_module (AST_Module *t)
     }
 
   return t;
+}
+
+AST_Template_Module_Inst *
+AST_Module::fe_add_template_module_inst (AST_Template_Module_Inst *m)
+{
+  AST_Decl *d = 0;
+
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = this->lookup_for_add (m, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      m,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, m->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      m,
+                                      this,
+                                      d);
+          return 0;
+        }
+    }
+
+  // Add it to scope.
+  this->add_to_scope (m);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (m,
+                           false,
+                           m->local_name ());
+
+  AST_Type *ft = m->field_type ();
+  UTL_ScopedName *mru = ft->last_referenced_as ();
+
+  if (mru != 0)
+    {
+      this->add_to_referenced (ft,
+                               false,
+                               mru->first_component ());
+    }
+
+  return m;
 }
 
 // Add this AST_Interface node (an interface declaration) to this scope.
@@ -1636,7 +1683,7 @@ AST_Module::fe_add_typedef (AST_Typedef *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add(t, false)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -1767,45 +1814,6 @@ AST_Module::fe_add_porttype (AST_PortType *pt)
                            pt->local_name ());
 
   return pt;
-}
-
-AST_Instantiated_Connector *
-AST_Module::fe_add_instantiated_connector (
-  AST_Instantiated_Connector *ic)
-{
-  AST_Decl *d = 0;
-
-  // Already defined? Or already used?
-  if ((d = this->lookup_for_add (ic, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      ic,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, ic->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      ic,
-                                      this,
-                                      d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (ic);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (ic,
-                           false,
-                           ic->local_name ());
-
-  return ic;
 }
 
 // Dump this AST_Module node to the ostream o.

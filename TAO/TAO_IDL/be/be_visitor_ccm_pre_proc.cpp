@@ -9,7 +9,6 @@
 
 #include "be_visitor_ccm_pre_proc.h"
 #include "be_visitor_context.h"
-#include "be_visitor_iface_inst.h"
 #include "be_root.h"
 #include "be_operation.h"
 #include "be_argument.h"
@@ -28,7 +27,6 @@
 #include "be_consumes.h"
 #include "be_extended_port.h"
 #include "be_porttype.h"
-#include "be_template_interface.h"
 #include "be_eventtype.h"
 #include "be_eventtype_fwd.h"
 #include "be_home.h"
@@ -77,7 +75,6 @@ be_visitor_ccm_pre_proc::be_visitor_ccm_pre_proc (
     duplicate_key_value_ (0),
     comp_ (0),
     home_ (0),
-    porttype_args_ (0),
     port_interface_ (0)
 {
 }
@@ -527,7 +524,7 @@ be_visitor_ccm_pre_proc::gen_implicit_ops (be_home *node,
                         -1);
     }
 
-  AST_ValueType *pk = node->primary_key ();
+  AST_Type *pk = node->primary_key ();
 
   if (pk == 0)
     {
@@ -1160,7 +1157,7 @@ be_visitor_ccm_pre_proc::gen_create (be_home *node,
                                 0),
                   -1);
   op->set_name (op_name);
-  AST_ValueType *pk = node->primary_key ();
+  AST_Type *pk = node->primary_key ();
   UTL_ExceptList *exceps = 0;
   ACE_NEW_RETURN (exceps,
                   UTL_ExceptList (this->create_failure_,
@@ -1222,7 +1219,7 @@ be_visitor_ccm_pre_proc::gen_find_by_primary_key (be_home *node,
                                 0),
                   -1);
   op->set_name (op_name);
-  AST_ValueType *pk = node->primary_key ();
+  AST_Type *pk = node->primary_key ();
   Identifier arg_id ("key");
   UTL_ScopedName arg_name (&arg_id,
                            0);
@@ -1278,7 +1275,7 @@ be_visitor_ccm_pre_proc::gen_remove (be_home *node,
                                 0),
                   -1);
   op->set_name (op_name);
-  AST_ValueType *pk = node->primary_key ();
+  AST_Type *pk = node->primary_key ();
   Identifier arg_id ("key");
   UTL_ScopedName arg_name (&arg_id,
                            0);
@@ -1854,97 +1851,9 @@ be_visitor_ccm_pre_proc::compute_inheritance (be_home *node)
 int
 be_visitor_ccm_pre_proc::store_port_interface (AST_Type *i)
 {
-  be_template_interface *ti =
-    be_template_interface::narrow_from_decl (i);
-    
-  if (ti == 0)
-    {
-      this->port_interface_ = i;
-    }
-  else
-    {
-      ACE_CString inst_name = this->create_inst_name (ti);
-      Identifier inst_id (inst_name.c_str ());
-      AST_Decl *d =
-        this->comp_->lookup_by_name_local (&inst_id, 0);
-      
-      if (d != 0)
-        {
-          // Already instantiated.
-          this->port_interface_ =
-            AST_Interface::narrow_from_decl (d);
-            
-          inst_id.destroy ();
-            
-          return 0;
-        }
-      else
-        {
-          return this->create_inst_interface (ti, inst_name);
-        }
-    }
-    
+  // This is trivial now without template interfaces, needs
+  // to be factored out.
+  this->port_interface_ = i;
   return 0;
 }
 
-ACE_CString
-be_visitor_ccm_pre_proc::create_inst_name (
-  AST_Template_Interface *ti)
-{
-  ACE_CString retval (ti->flat_name ());
-  AST_Decl **item = 0;
-  
-  for (AST_Template_Common::T_ARGLIST::ITERATOR i =
-         this->porttype_args_->begin ();
-       !i.done ();
-       i.advance ())
-    {
-      retval += '_';
-      
-      i.next (item);
-      
-      retval += (*item)->flat_name ();
-    }
-    
-  return retval;
-}
-
-int
-be_visitor_ccm_pre_proc::create_inst_interface (
-  be_template_interface *ti,
-  ACE_CString &inst_name)
-{
-  // We're at global scope here so we need to fool the scope stack
-  // for a minute so the correct repo id can be calculated at
-  // interface construction time.
-  idl_global->scopes ().push (this->comp_);
-
-  be_interface *inst = 0;
-  ACE_NEW_RETURN (inst,
-                  be_interface (0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                false,
-                                false),
-                  -1);
-                  
-  UTL_ScopedName *n =
-    this->create_scoped_name (0,
-                              inst_name.c_str (),
-                              0,
-                              this->comp_);
-                              
-  inst->set_defined_in (this->comp_);
-  inst->set_name (n);
-  this->comp_->add_to_scope (inst);
-  
-  idl_global->scopes ().pop ();
-  
-  be_visitor_iface_inst v (this->ctx_,
-                           inst,
-                           this->porttype_args_);
-  
-  return v.visit_scope (ti);
-}

@@ -778,7 +778,7 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
                                                      unsigned long &index)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  AST_ValueType *parent = node->inherits_concrete ();
+  AST_Type *parent = node->inherits_concrete ();
 
   // Generate for inherited members first.
   if (parent != 0)

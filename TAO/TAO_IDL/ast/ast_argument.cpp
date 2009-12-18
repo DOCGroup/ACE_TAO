@@ -73,10 +73,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_argument.h"
 #include "ast_visitor.h"
 
-ACE_RCSID (ast,
-           ast_argument,
-           "$Id$")
-
 // Static functions.
 
 // Convert an enum Direction value to a char *.

@@ -71,6 +71,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scope.h"
 
 class UTL_ExceptList;
+class AST_Type;
 
 class TAO_IDL_FE_Export AST_Operation : public virtual AST_Decl,
                                         public virtual UTL_Scope

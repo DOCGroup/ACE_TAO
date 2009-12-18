@@ -26,7 +26,7 @@ public:
 
   // Data Accessors.
   AST_Component *base_component (void) const;
-  AST_Interface **supports (void) const;
+  AST_Type **supports (void) const;
   long n_supports (void) const;
   AST_Interface **supports_flat (void) const;
   long n_supports_flat (void) const;
