@@ -37,9 +37,9 @@ impl_choice_ (0),
 plan_strat_ (0),
 sched_strat_ (0),
 working_plan_ (0),
-task_map_ (0)
+task_map_ (0),
+is_init_ (false)
 {
-  this->init ();
 };
 
 // Destructor.
@@ -50,9 +50,12 @@ SA_Builder::~SA_Builder (void)
 };
 
 // Reset for building a new set of SA-POP objects.
+// WARNING: Assumes that planner has been handed off and will be
+// deleted by someone else.
 void SA_Builder::reset (void)
 {
   // Reset planning object pointers to null.
+  this->is_init_ = false;
   this->planner_ = 0;
   this->sanet_ = 0;
   this->cond_choice_ = 0;
@@ -70,6 +73,8 @@ void SA_Builder::reset (void)
 // Get Planner object.
 Planner *SA_Builder::get_planner (void)
 {
+  if (!this->is_init_)
+    this->init ();
   return this->planner_;
 };
 
@@ -77,6 +82,8 @@ Planner *SA_Builder::get_planner (void)
 void SA_Builder::add_task (TaskID id, double prior_prob,
 std::string name)
 {
+  if (!this->is_init_)
+    this->init ();
   this->sanet_->add_task (id, name, 1, 0, prior_prob);
 };
 
@@ -84,6 +91,8 @@ std::string name)
 void SA_Builder::add_cond (CondID id, Utility utility,
 double init_prob_true, std::string name, CondKind cond_kind)
 {
+  if (!this->is_init_)
+    this->init ();
   this->sanet_->add_cond (id, name, 1,
     init_prob_true, 1.0 - init_prob_true, utility, cond_kind);
 };
@@ -92,6 +101,8 @@ double init_prob_true, std::string name, CondKind cond_kind)
 void SA_Builder::set_precond (CondID cond_id, TaskID task_id,
 PortID port, double true_prob, double false_prob)
 {
+  if (!this->is_init_)
+    this->init ();
   this->sanet_->add_precond_link (cond_id, task_id,
     true_prob, false_prob, port);
 };
@@ -100,18 +111,24 @@ PortID port, double true_prob, double false_prob)
 void SA_Builder::set_effect (TaskID task_id, CondID cond_id,
 PortID port, double weight)
 {
+  if (!this->is_init_)
+    this->init ();
   this->sanet_->add_effect_link (task_id, cond_id, weight, port);
 };
 
 // Add a resource.
 void SA_Builder::add_resource (Resource resource)
 {
+  if (!this->is_init_)
+    this->init ();
   this->task_map_->add_resource (resource);
 };
 
 // Add an implementation.
 void SA_Builder::add_task_impl (TaskImpl *task_impl)
 {
+  if (!this->is_init_)
+    this->init ();
   this->task_map_->add_task_impl (task_impl);
 };
 
@@ -119,6 +136,8 @@ void SA_Builder::add_task_impl (TaskImpl *task_impl)
 void SA_Builder::assoc_task_with_impl (TaskID task_id, TaskImplID task_impl_id,
                                        TimeValue duration)
 {
+  if (!this->is_init_)
+    this->init ();
   this->task_map_->assoc_task_with_impl (task_id, task_impl_id, duration);
 };
 
@@ -126,6 +145,8 @@ void SA_Builder::assoc_task_with_impl (TaskID task_id, TaskImplID task_impl_id,
 void SA_Builder::assoc_impl_with_resource (TaskImplID impl_id,
 ResourceID resource_id, ResourceValue resource_usage)
 {
+  if (!this->is_init_)
+    this->init ();
   this->task_map_->assoc_impl_with_resource (impl_id, resource_id,
     resource_usage);
 };
@@ -133,6 +154,9 @@ ResourceID resource_id, ResourceValue resource_usage)
 // Create SA-POP objects.
 void SA_Builder::init (void)
 {
+  // Set init flag.
+  this->is_init_ = true;
+
   // Create objects.
   this->planner_ = new Planner ();
   this->sanet_ = new SANet::Network ();

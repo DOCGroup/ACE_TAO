@@ -1,0 +1,112 @@
+project(SAPOP_Exp_EU) : xerces, aceexe, sapop_xml {
+  exename = SAPOP_Exp_EU
+
+   includes += $(SAPOP_ROOT)
+
+   macros = SA_POP_HAS_ACE ACE_AS_STATIC_LIBS
+
+
+  Source_Files {
+    SAPOP_Exp_EU.cpp
+    UserInput.cpp
+  }
+
+  Inline_Files {
+  }
+
+  Header_Files {
+    UserInput.h
+  }
+
+  Documentation_Files {
+    readme.txt
+  }
+
+
+
+
+   Header_Files {
+      Exp_Core/Exp_EU_Builder.h
+      Exp_Core/Exp_EU_SchedStrategy.h
+
+
+      $(SAPOP_ROOT)/SA_POP_Types.h
+      $(SAPOP_ROOT)/SA_POP_Exceptions.h
+
+      $(SAPOP_ROOT)/SA_POP_Utils.h
+
+      $(SAPOP_ROOT)/Builder.h
+      $(SAPOP_ROOT)/SA_Builder.h
+
+      $(SAPOP_ROOT)/Planner.h
+
+      $(SAPOP_ROOT)/TaskMap.h
+      $(SAPOP_ROOT)/TaskImpl.h
+
+      $(SAPOP_ROOT)/WorkingPlan.h
+      $(SAPOP_ROOT)/SA_WorkingPlan.h
+
+      $(SAPOP_ROOT)/SchedStrategy.h
+      $(SAPOP_ROOT)/SA_SchedStrategy.h
+
+      $(SAPOP_ROOT)/PlanStrategy.h
+      $(SAPOP_ROOT)/SA_PlanStrategy.h
+      $(SAPOP_ROOT)/PlanHeuristics.h
+      $(SAPOP_ROOT)/SA_PlanHeuristics.h
+      $(SAPOP_ROOT)/PlanCommands.h
+      $(SAPOP_ROOT)/SA_PlanCommands.h
+
+      $(SAPOP_ROOT)/SANet/SANet_Types.h
+      $(SAPOP_ROOT)/SANet/SANet.h
+      $(SAPOP_ROOT)/SANet/SANode.h
+      $(SAPOP_ROOT)/SANet/SANet_Exceptions.h
+
+      $(SAPOP_ROOT)/OutAdapter.h
+      $(SAPOP_ROOT)/LogScreenOut.h
+      $(SAPOP_ROOT)/LogFileOut.h
+      $(SAPOP_ROOT)/LogGraphOut.h
+
+      $(SAPOP_ROOT)/SA_POP_XML_Typedefs.h
+      $(SAPOP_ROOT)/SANet/SANetFileIn.h
+      $(SAPOP_ROOT)/TaskMapFileIn.h
+   }
+
+   Source_Files {
+      Exp_Core/Exp_EU_Builder.cpp
+      Exp_Core/Exp_EU_SchedStrategy.cpp
+
+
+      $(SAPOP_ROOT)/SA_POP_Exceptions.cpp
+
+      $(SAPOP_ROOT)/SA_POP_Utils.cpp
+
+      $(SAPOP_ROOT)/SA_Builder.cpp
+      $(SAPOP_ROOT)/Planner.cpp
+
+      $(SAPOP_ROOT)/TaskMap.cpp
+      $(SAPOP_ROOT)/TaskImpl.cpp
+
+      $(SAPOP_ROOT)/SA_WorkingPlan.cpp
+
+      $(SAPOP_ROOT)/SA_SchedStrategy.cpp
+
+      $(SAPOP_ROOT)/SA_PlanStrategy.cpp
+      $(SAPOP_ROOT)/SA_PlanHeuristics.cpp
+      $(SAPOP_ROOT)/SA_PlanCommands.cpp
+
+      $(SAPOP_ROOT)/SANet/SANet.cpp
+      $(SAPOP_ROOT)/SANet/SANode.cpp
+      $(SAPOP_ROOT)/SANet/SANet_Exceptions.cpp
+
+      $(SAPOP_ROOT)/LogScreenOut.cpp
+      $(SAPOP_ROOT)/LogFileOut.cpp
+      $(SAPOP_ROOT)/LogGraphOut.cpp
+
+      $(SAPOP_ROOT)/SA_POP_XML_Typedefs.cpp
+      $(SAPOP_ROOT)/SANet/SANetFileIn.cpp
+      $(SAPOP_ROOT)/SANet/XML_SANet.cpp
+      $(SAPOP_ROOT)/TaskMapFileIn.cpp
+      $(SAPOP_ROOT)/XML_TaskMap.cpp
+   }
+
+}

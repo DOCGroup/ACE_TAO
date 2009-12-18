@@ -51,6 +51,10 @@ namespace SA_POP {
     virtual ~SA_Builder (void);
 
     /// Reset for building a new set of SA-POP objects.
+    /**
+     * WARNING: Assumes that planner has been handed off and will be
+     * deleted by someone else.
+     */
     virtual void reset (void);
 
     /// Get Planner object.
@@ -170,6 +174,9 @@ namespace SA_POP {
       ResourceID resource_id, ResourceValue resource_usage);
 
   protected:
+    /// Is the builder initialized?
+    bool is_init_;
+
     /// Planner object to centralize/mediate planning.
     Planner *planner_;
 
