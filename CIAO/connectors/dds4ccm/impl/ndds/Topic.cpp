@@ -116,7 +116,7 @@ namespace CIAO
       DDSTopic *
       RTI_Topic_i::get_impl (void)
       {
-        return this->impl ();
+        return this->impl_;
       }
 
       void

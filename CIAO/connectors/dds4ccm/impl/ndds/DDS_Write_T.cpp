@@ -44,6 +44,8 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::init (
                   profile_name,
                   this->writer_listener_.in (),
                   ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+              DDSDataWriter *rw = dynamic_cast < DDSDataWriter *> (dwv_tmp.in ());
+              this->rti_writer_.set_impl (rw);
               this->writer_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
               this->writer_t_.data_writer (dwv_tmp);
             }
@@ -56,6 +58,8 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::init (
                   dwqos,
                   this->writer_listener_.in (),
                   ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+              DDSDataWriter *rw = dynamic_cast < DDSDataWriter *> (dwv_tmp.in ());
+              this->rti_writer_.set_impl (rw);
               this->writer_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
               this->writer_t_.data_writer (dwv_tmp);
             }

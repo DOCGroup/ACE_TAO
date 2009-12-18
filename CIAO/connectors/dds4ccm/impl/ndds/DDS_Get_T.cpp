@@ -49,6 +49,8 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE>::init (
                   profile_name,
                   this->status_.in (),
                   ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+              DDSDataReader *rd = dynamic_cast < DDSDataReader *> (reader.in ());
+              this->rti_reader_.set_impl (rd);
               this->data_ = ::DDS::CCM_DataReader::_narrow (reader);
               this->dds_get_.data_reader (reader);
               this->dds_read_.data_reader (reader);
@@ -62,6 +64,8 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE>::init (
                     drqos,
                     this->status_.in (),
                     ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+              DDSDataReader *rd = dynamic_cast < DDSDataReader *> (reader.in ());
+              this->rti_reader_.set_impl (rd);
               this->data_ = ::DDS::CCM_DataReader::_narrow (reader);
               this->dds_get_.data_reader (reader);
               this->dds_read_.data_reader (reader);
@@ -98,7 +102,13 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_Get_T<DDS_TYPE, CCM_TYPE>::get_dds_entity (void)
 {
   CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE>::get_dds_entity");
-
-  return this->data_.in ();
+  if (this->rti_reader_.get_impl ())
+    {
+      return dynamic_cast < ::DDS::CCM_DataReader *> (this->rti_reader_.get_impl ());
+    }
+  else
+    {
+      return 0;
+    }
 }
 

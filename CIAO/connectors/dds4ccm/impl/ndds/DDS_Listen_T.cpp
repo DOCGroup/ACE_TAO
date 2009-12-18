@@ -58,6 +58,8 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE>::init (
                     profile_name,
                     this->data_listener_.in (),
                     ::CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+              DDSDataReader *rd = dynamic_cast < DDSDataReader *> (reader.in ());
+              this->rti_reader_.set_impl (rd);
               this->data_reader_ = ::DDS::CCM_DataReader::_narrow (reader);
               this->dds_read_.data_reader (this->data_reader_.in ());
             }

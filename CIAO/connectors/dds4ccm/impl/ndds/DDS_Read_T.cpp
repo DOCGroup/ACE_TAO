@@ -50,6 +50,8 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE>::init (
                   profile_name,
                   this->status_.in (),
                   ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+              DDSDataReader *rd = dynamic_cast < DDSDataReader *> (reader.in ());
+              this->rti_reader_.set_impl (rd);
               this->data_ = ::DDS::CCM_DataReader::_narrow (reader);
               this->dds_read_.data_reader (reader);
             }
@@ -62,6 +64,8 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE>::init (
                   drqos,
                   this->status_.in (),
                   ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+              DDSDataReader *rd = dynamic_cast < DDSDataReader *> (reader.in ());
+              this->rti_reader_.set_impl (rd);
               this->data_ = ::DDS::CCM_DataReader::_narrow (reader);
               this->dds_read_.data_reader (reader);
             }
