@@ -16,7 +16,7 @@ public:
                     FE_Utils::T_Param_Info *info);
 
   virtual ~AST_Param_Holder (void);
-  
+
   FE_Utils::T_Param_Info const *info (void) const;
 
   // Narrowing.
@@ -30,9 +30,10 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-  
+
 private:
   FE_Utils::T_Param_Info *info_;
 };
 
 #endif // AST_PARAM_HOLDER_H
+
