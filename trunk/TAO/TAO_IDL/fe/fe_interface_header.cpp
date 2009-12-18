@@ -184,7 +184,7 @@ FE_InterfaceHeader::destroy (void)
       delete this->interface_name_;
       this->interface_name_ = 0;
     }
-    
+
   delete [] this->iseen_;
   delete [] this->iseen_flat_;
 }
@@ -207,7 +207,7 @@ FE_InterfaceHeader::compile_one_inheritance (AST_Type *i)
 
   // OK, add i to the list of inherited interfaces.
   this->add_inheritance (i);
-  
+
   AST_Interface *iface =
     AST_Interface::narrow_from_decl (i);
 
@@ -225,7 +225,7 @@ FE_InterfaceHeader::compile_one_inheritance (AST_Type *i)
         {
           this->add_inheritance_flat (iface);
         }
-    
+
       // Add i's parents to the flat list.
       AST_Interface **parents = iface->inherits_flat ();
       long num_parents = iface->n_inherits_flat ();
@@ -335,7 +335,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
           // We will crash if we continue from here.
           throw Bailout ();
         }
-        
+
       AST_Decl::NodeType nt = d->node_type ();
 
       // Not an appropriate interface?
@@ -367,19 +367,19 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
         {
           AST_Param_Holder *ph =
             AST_Param_Holder::narrow_from_decl (d);
-            
+
           nt = ph->info ()->type_;
-          
+
           bool ok_param =
             nt == AST_Decl::NT_type
             || (nt == AST_Decl::NT_interface && !for_valuetype)
             || (nt == AST_Decl::NT_valuetype && for_valuetype);
-          
+
           if (!ok_param)
             {
               idl_global->err ()->mismatched_template_param (
                 ph->info ()->name_.c_str ());
-                
+
               break;
             }
         }
@@ -507,7 +507,7 @@ FE_InterfaceHeader::already_seen (AST_Type *ip)
     {
       AST_Param_Holder *tmp =
         AST_Param_Holder::narrow_from_decl (this->iseen_[i]);
-        
+
       if (ph != 0 && tmp != 0)
         {
           if (ph->info ()->name_ == tmp->info ()->name_)
@@ -621,3 +621,4 @@ FE_InterfaceHeader::destroy_flat_arrays (void)
   this->iallocated_flat_ = 0;
   this->iused_flat_ = 0;
 }
+
