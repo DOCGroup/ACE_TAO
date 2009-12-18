@@ -50,6 +50,7 @@ sub new
 
     $self->{RUNNING} = 0;
     $self->{IGNOREEXESUBDIR} = 1;
+    $self->{IGNOREHOSTROOT} = 0;
     $self->{PROCESS} = undef;
     $self->{EXECUTABLE} = shift;
     $self->{ARGUMENTS} = shift;
@@ -465,6 +466,17 @@ sub TimedWait ($)
     $PerlACE::ProcessVX::DoVxInit = 1; # force reboot on next run
 
     return -1;
+}
+
+sub IgnoreHostRoot
+{
+    my $self = shift;
+
+    if (@_ != 0) {
+        $self->{IGNOREHOSTROOT} = shift;
+    }
+
+    return $self->{IGNOREHOSTROOT};
 }
 
 
