@@ -14,7 +14,7 @@ my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 fail
 ## First test that the -ORBSvcConfDirective works with good options.
 my $SV = $server->CreateProcess ("server", "-s");
 
-$server_status = $SV->Spawn ();
+$server_status = $SV->Spawn ($server->ProcessStartWaitInterval());
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
@@ -38,7 +38,7 @@ $SV = $server->CreateProcess ("server", "-f");
 open(STDOUT, '>' . File::Spec->devnull());
 open(STDERR, ">&STDOUT");
 
-$server_status = $SV->Spawn ();
+$server_status = $SV->Spawn ($server->ProcessStartWaitInterval());
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
