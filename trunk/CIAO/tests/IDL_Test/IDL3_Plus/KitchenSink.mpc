@@ -78,7 +78,6 @@ project(KitchenSink_exec) : ciao_executor {
   }
 }
 
-
 project(KitchenSink_svnt) : ciao_servant {
   after      += KitchenSink_exec
   sharedname  = KitchenSink_svnt
