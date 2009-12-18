@@ -81,7 +81,7 @@ public:
   AST_Interface (void);
 
   AST_Interface (UTL_ScopedName *n,
-                 AST_Interface **ih,
+                 AST_Type **ih,
                  long nih,
                  AST_Interface **ih_flat,
                  long nih_flat,
@@ -97,7 +97,7 @@ public:
   // Overridden for valuetypes, components, and eventtypes.
   virtual void redefine (AST_Interface *from);
 
-  AST_Interface **inherits (void) const;
+  AST_Type **inherits (void) const;
 
   long n_inherits (void) const;
 
@@ -105,8 +105,8 @@ public:
 
   long n_inherits_flat (void) const;
 
-  ACE_Unbounded_Queue<AST_Interface *> &get_insert_queue (void);
-  ACE_Unbounded_Queue<AST_Interface *> &get_del_queue (void);
+  ACE_Unbounded_Queue<AST_Type *> &get_insert_queue (void);
+  ACE_Unbounded_Queue<AST_Type *> &get_del_queue (void);
 
   AST_Operation *be_add_operation (AST_Operation *);
 
@@ -157,7 +157,7 @@ protected:
   // Data.
 
   // Immediate ancestors.
-  AST_Interface **pd_inherits;
+  AST_Type **pd_inherits;
   long pd_n_inherits;
 
   // All ancestors.
@@ -166,7 +166,7 @@ protected:
 
   // Queue data structure needed for breadth-first traversal of
   // inheritance tree.
-  ACE_Unbounded_Queue<AST_Interface *> insert_queue;
+  ACE_Unbounded_Queue<AST_Type *> insert_queue;
 
   // For a special case of a deeply nested inheritance graph and one specific
   // way of inheritance in which a node that was already visited,
@@ -177,13 +177,20 @@ protected:
   // parent turns out to be a child of the first .
 
   // Queue of dequeued nodes to be searched for the above case.
-  ACE_Unbounded_Queue<AST_Interface *> del_queue;
+  ACE_Unbounded_Queue<AST_Type *> del_queue;
 
   // Are we the equivalent interface of a home?
   bool home_equiv_;
   
   // The forward declaration we may have been created from.
   AST_InterfaceFwd *fwd_decl_;
+  
+  // Must keep these base interface placeholders in a separate
+  // container, so they can be destroyed. Iterating over 
+  // pd_inherits won't work because the real interfaces will
+  // probably already be destroyed and the pointers will be
+  // garbage.
+  ACE_Unbounded_Queue<AST_Type *> param_holders_;
 
 protected:
   // Scope Management Protocol.
@@ -221,12 +228,12 @@ protected:
   AST_Decl *lookup_for_add (AST_Decl *d,
                             bool treat_as_ref);
 
-  void redef_clash_populate_r (AST_Interface *t);
+  void redef_clash_populate_r (AST_Type *t);
   // Populate the insert queue with our parents, and, if we are a
   // valuetype, with our supported interface and our parents'
   // supported interfaces.
 
-  int insert_non_dup (AST_Interface *t,
+  int insert_non_dup (AST_Type *t,
                       bool abstract_paths_only = false);
   // Do non-duplicating insert of bi, by searching both the
   // insert queue and the delete queue.

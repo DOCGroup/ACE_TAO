@@ -46,7 +46,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
       return 0;
     }
 
-  AST_Interface *concrete = node->supports_concrete ();
+  AST_Type *concrete = node->supports_concrete ();
 
   // We generate a skeleton class only if the valuetype supports a
   // non-abstract interface.

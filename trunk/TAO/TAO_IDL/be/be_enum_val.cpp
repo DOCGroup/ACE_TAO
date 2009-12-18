@@ -22,10 +22,6 @@
 #include "be_enum_val.h"
 #include "be_visitor.h"
 
-ACE_RCSID (be, 
-           be_enum_val, 
-           "$Id$")
-
 be_enum_val::be_enum_val (void)
   : COMMON_Base (),
     AST_Decl (),
@@ -64,6 +60,5 @@ be_enum_val::destroy (void)
   this->be_decl::destroy ();
 }
 
-
-
 IMPL_NARROW_FROM_DECL (be_enum_val)
+

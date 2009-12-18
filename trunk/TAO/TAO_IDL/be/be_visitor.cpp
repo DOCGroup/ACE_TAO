@@ -24,10 +24,6 @@
 #include "be_visitor.h"
 #include "ace/config-all.h"
 
-ACE_RCSID (be, 
-           be_visitor, 
-           "$Id$")
-
 be_visitor::be_visitor (void)
 {
 }
@@ -78,12 +74,6 @@ be_visitor::visit_interface_fwd (be_interface_fwd *)
 }
 
 int
-be_visitor::visit_template_interface (be_template_interface *)
-{
-  return 0;
-}
-
-int
 be_visitor::visit_valuebox (be_valuebox *)
 {
   return 0;
@@ -121,6 +111,24 @@ be_visitor::visit_component (be_component *)
 
 int
 be_visitor::visit_component_fwd (be_component_fwd *)
+{
+  return 0;
+}
+
+int
+be_visitor::visit_template_module (be_template_module *)
+{
+  return 0;
+}
+
+int
+be_visitor::visit_template_module_inst (be_template_module_inst *)
+{
+  return 0;
+}
+
+int
+be_visitor::visit_template_module_ref (be_template_module_ref *)
 {
   return 0;
 }
@@ -175,25 +183,6 @@ be_visitor::visit_mirror_port (be_mirror_port *)
 
 int
 be_visitor::visit_connector (be_connector *)
-{
-  return 0;
-}
-
-int
-be_visitor::visit_instantiated_connector (
-  be_instantiated_connector *)
-{
-  return 0;
-}
-
-int
-be_visitor::visit_tmpl_port (be_tmpl_port *)
-{
-  return 0;
-}
-
-int
-be_visitor::visit_tmpl_mirror_port (be_tmpl_mirror_port *)
 {
   return 0;
 }

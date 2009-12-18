@@ -69,20 +69,20 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // node itself is created.
 
 #include "fe_interface_header.h"
+
 #include "ast_interface_fwd.h"
 #include "ast_valuetype.h"
 #include "ast_component.h"
 #include "ast_home.h"
 #include "ast_module.h"
+#include "ast_param_holder.h"
+
 #include "utl_namelist.h"
 #include "utl_err.h"
+
 #include "fe_extern.h"
 #include "global_extern.h"
 #include "nr_extern.h"
-
-ACE_RCSID (fe,
-           fe_interface_header,
-           "$Id$")
 
 #undef  INCREMENT
 #define INCREMENT 512
@@ -138,6 +138,7 @@ FE_InterfaceHeader::FE_InterfaceHeader (UTL_ScopedName *n,
                                         bool is_abstract,
                                         bool compile_now)
   : interface_name_ (n),
+    has_template_parent_ (false),
     inherits_ (0),
     n_inherits_ (0),
     inherits_flat_ (0),
@@ -190,7 +191,7 @@ FE_InterfaceHeader::destroy (void)
 
 // Add this interface to the list of inherited if not already there.
 void
-FE_InterfaceHeader::compile_one_inheritance (AST_Interface *i)
+FE_InterfaceHeader::compile_one_inheritance (AST_Type *i)
 {
   // Check for badly formed interface.
   if (i == 0)
@@ -206,27 +207,52 @@ FE_InterfaceHeader::compile_one_inheritance (AST_Interface *i)
 
   // OK, add i to the list of inherited interfaces.
   this->add_inheritance (i);
+  
+  AST_Interface *iface =
+    AST_Interface::narrow_from_decl (i);
 
-  // And add i to the flat list as well.
-  if (!this->already_seen_flat (i))
+  if (iface == 0)
     {
-      this->add_inheritance_flat (i);
+      // If a template parameter as parent appears at any time,
+      // we bag the flat list until instantiation time.
+      this->has_template_parent_ = true;
+      this->destroy_flat_arrays ();
     }
-
-  // Add i's parents to the flat list.
-  AST_Interface **parents = i->inherits_flat ();
-  long num_parents = i->n_inherits_flat ();
-
-  for (long j = 0; j < num_parents; ++j)
+  else if (! this->has_template_parent_)
     {
-      AST_Interface *tmp = parents[j];
-
-      if (this->already_seen_flat (tmp))
+      // And add i to the flat list as well.
+      if (!this->already_seen_flat (iface))
         {
-          continue;
+          this->add_inheritance_flat (iface);
         }
+    
+      // Add i's parents to the flat list.
+      AST_Interface **parents = iface->inherits_flat ();
+      long num_parents = iface->n_inherits_flat ();
 
-      this->add_inheritance_flat (tmp);
+      for (long j = 0; j < num_parents; ++j)
+        {
+          AST_Interface *tmp =
+            AST_Interface::narrow_from_decl (parents[j]);
+
+          if (tmp == 0)
+            {
+              // If a template parameter as parent appears at any time,
+              // we bag the flat list until instantiation time.
+              this->has_template_parent_ = true;
+              this->destroy_flat_arrays ();
+              break;
+            }
+          else if (! this->has_template_parent_)
+            {
+              if (this->already_seen_flat (tmp))
+                {
+                  continue;
+                }
+
+              this->add_inheritance_flat (tmp);
+            }
+        }
     }
 }
 
@@ -243,12 +269,13 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
   AST_Decl *d = 0;
   UTL_ScopedName *item = 0;;
   AST_Interface *i = 0;
-  int inh_err = 0;
 
   // Compute expanded flattened non-repeating list of interfaces
   // which this one inherits from.
 
-  for (UTL_NamelistActiveIterator l (ifaces); !l.is_done (); l.next ())
+  for (UTL_NamelistActiveIterator l (ifaces);
+       !l.is_done ();
+       l.next ())
     {
       item = l.item ();
 
@@ -308,9 +335,11 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
           // We will crash if we continue from here.
           throw Bailout ();
         }
+        
+      AST_Decl::NodeType nt = d->node_type ();
 
       // Not an appropriate interface?
-      if (d->node_type () == AST_Decl::NT_typedef)
+      if (nt == AST_Decl::NT_typedef)
         {
           d = AST_Typedef::narrow_from_decl (d)->primitive_base_type ();
         }
@@ -319,29 +348,51 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
 
       if (i != 0)
         {
-          inh_err = this->check_inherit (i,
-                                         for_valuetype);
+          if (this->check_inherit (i, for_valuetype) == -1)
+            {
+              idl_global->err ()->interface_expected (d);
+              break;
+            }
+          else if (!for_valuetype
+                   && this->is_abstract_
+                   && !i->is_abstract ())
+            {
+              idl_global->err ()->abstract_inheritance_error (
+                this->name (),
+                i->name ());
+              break;
+            }
+        }
+      else if (nt == AST_Decl::NT_param_holder)
+        {
+          AST_Param_Holder *ph =
+            AST_Param_Holder::narrow_from_decl (d);
+            
+          nt = ph->info ()->type_;
+          
+          bool ok_param =
+            nt == AST_Decl::NT_type
+            || (nt == AST_Decl::NT_interface && !for_valuetype)
+            || (nt == AST_Decl::NT_valuetype && for_valuetype);
+          
+          if (!ok_param)
+            {
+              idl_global->err ()->mismatched_template_param (
+                ph->info ()->name_.c_str ());
+                
+              break;
+            }
         }
       else
-        {
-          inh_err = -1;
-        }
-
-      if (inh_err == -1)
         {
           idl_global->err ()->interface_expected (d);
           break;
         }
 
-      if (!for_valuetype && this->is_abstract_ && !i->is_abstract ())
-        {
-          idl_global->err ()->abstract_inheritance_error (this->name (),
-                                                          i->name ());
-        }
-
       // OK, see if we have to add this to the list of interfaces
       // inherited from.
-      this->compile_one_inheritance (i);
+      this->compile_one_inheritance (
+        AST_Type::narrow_from_decl (d));
     }
 
   // OK, install in interface header.
@@ -373,9 +424,9 @@ FE_InterfaceHeader::check_inherit (AST_Interface *i,
 
 // Add an interface to an inheritance spec.
 void
-FE_InterfaceHeader::add_inheritance (AST_Interface *i)
+FE_InterfaceHeader::add_inheritance (AST_Type *i)
 {
-  AST_Interface  **oiseen;
+  AST_Type  **oiseen;
 
   // Make sure there's space for one more.
   if (this->iallocated_ == this->iused_)
@@ -385,7 +436,7 @@ FE_InterfaceHeader::add_inheritance (AST_Interface *i)
           this->iallocated_ = INCREMENT;
 
           ACE_NEW (this->iseen_,
-                   AST_Interface *[this->iallocated_]);
+                   AST_Type *[this->iallocated_]);
         }
       else
         {
@@ -393,7 +444,7 @@ FE_InterfaceHeader::add_inheritance (AST_Interface *i)
           this->iallocated_ += INCREMENT;
 
           ACE_NEW (this->iseen_,
-                   AST_Interface *[this->iallocated_]);
+                   AST_Type *[this->iallocated_]);
 
           for (long k = 0; k < this->iused_; ++k)
             {
@@ -447,11 +498,28 @@ FE_InterfaceHeader::add_inheritance_flat (AST_Interface *i)
 
 // Have we already seen this interface?
 bool
-FE_InterfaceHeader::already_seen (AST_Interface *ip)
+FE_InterfaceHeader::already_seen (AST_Type *ip)
 {
+  AST_Param_Holder *ph =
+    AST_Param_Holder::narrow_from_decl (ip);
+
   for (long i = 0; i < this->iused_; ++i)
     {
-      if (this->iseen_[i] == ip)
+      AST_Param_Holder *tmp =
+        AST_Param_Holder::narrow_from_decl (this->iseen_[i]);
+        
+      if (ph != 0 && tmp != 0)
+        {
+          if (ph->info ()->name_ == tmp->info ()->name_)
+            {
+              idl_global->err ()->duplicate_param_id (ph->name ());
+              ph->destroy ();
+              delete ph;
+              ph = 0;
+              return true;
+            }
+        }
+      else if (this->iseen_[i] == ip)
         {
           return true;
         }
@@ -499,7 +567,7 @@ FE_InterfaceHeader::install_in_header (void)
   if (this->iused_ > 0)
     {
       ACE_NEW (this->inherits_,
-               AST_Interface *[this->iused_]);
+               AST_Type *[this->iused_]);
 
       for (k = 0; k < this->iused_; ++k)
         {
@@ -518,7 +586,7 @@ FE_InterfaceHeader::name (void) const
   return this->interface_name_;
 }
 
-AST_Interface **
+AST_Type **
 FE_InterfaceHeader::inherits (void) const
 {
   return this->inherits_;
@@ -542,3 +610,14 @@ FE_InterfaceHeader::n_inherits_flat (void) const
   return this->n_inherits_flat_;
 }
 
+void
+FE_InterfaceHeader::destroy_flat_arrays (void)
+{
+  delete [] this->inherits_flat_;
+  this->inherits_flat_ = 0;
+  delete [] this->iseen_flat_;
+  this->iseen_flat_ = 0;
+  this->n_inherits_flat_ = 0;
+  this->iallocated_flat_ = 0;
+  this->iused_flat_ = 0;
+}

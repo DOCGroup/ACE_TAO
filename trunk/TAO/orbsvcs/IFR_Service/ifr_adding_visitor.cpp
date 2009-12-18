@@ -30,6 +30,7 @@
 #include "ast_sequence.h"
 #include "ast_string.h"
 #include "ast_structure.h"
+#include "ast_typedef.h"
 #include "ast_union.h"
 #include "ast_union_fwd.h"
 #include "ast_valuebox.h"
@@ -326,7 +327,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
               bases.length (n_parents);
               CORBA::Contained_var result;
 
-              AST_Interface **parents = node->inherits ();
+              AST_Type **parents = node->inherits ();
 
               // Construct a list of the parents.
               for (CORBA::ULong i = 0; i < n_parents; ++i)
@@ -2740,7 +2741,7 @@ int
 ifr_adding_visitor::create_interface_def (AST_Interface *node)
 {
   CORBA::ULong n_parents = static_cast<CORBA::ULong> (node->n_inherits ());
-  AST_Interface **parents = node->inherits ();
+  AST_Type **parents = node->inherits ();
   CORBA::Contained_var result;
   CORBA::AbstractInterfaceDefSeq abs_bases;
   CORBA::InterfaceDefSeq bases;
@@ -2752,25 +2753,37 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
       // Construct a list of the parents.
       for (CORBA::ULong i = 0; i < n_parents; ++i)
         {
+          AST_Interface *intf =
+            AST_Interface::narrow_from_decl (parents[i]);
+            
+          if (intf == 0)
+            {
+              ACE_ERROR_RETURN ((
+                 LM_ERROR,
+                 ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                 ACE_TEXT ("create_interface_def -")
+                 ACE_TEXT (" parent %s is not an interface\n"),
+                 parents[i]->full_name ()),
+                -1);
+            }
+        
           result =
-            be_global->repository ()->lookup_id (parents[i]->repoID ());
+            be_global->repository ()->lookup_id (intf->repoID ());
 
           // If we got to visit_interface() from a forward declared interface,
           // this node may not yet be in the repository.
           if (CORBA::is_nil (result.in ()))
             {
-              int status = this->create_interface_def (parents[i]);
+              int status = this->create_interface_def (intf);
 
               if (status != 0)
                 {
                   ACE_ERROR_RETURN ((
-                      LM_ERROR,
-                      ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
-                      ACE_TEXT ("create_interface_def -")
-                      ACE_TEXT (" parent interfacedef creation failed\n")
-                    ),
-                    -1
-                  );
+                     LM_ERROR,
+                     ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                     ACE_TEXT ("create_interface_def -")
+                     ACE_TEXT (" parent interfacedef creation failed\n")),
+                    -1);
                 }
 
               bases[i] =
@@ -2802,14 +2815,28 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
       // Construct a list of the parents.
       for (CORBA::ULong i = 0; i < n_parents; ++i)
         {
+          AST_Interface *intf =
+            AST_Interface::narrow_from_decl (parents[i]);
+            
+          if (intf == 0)
+            {
+              ACE_ERROR_RETURN ((
+                 LM_ERROR,
+                 ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                 ACE_TEXT ("create_interface_def -")
+                 ACE_TEXT (" parent %s is not an interface\n"),
+                 parents[i]->full_name ()),
+                -1);
+            }
+        
           result =
-            be_global->repository ()->lookup_id (parents[i]->repoID ());
+            be_global->repository ()->lookup_id (intf->repoID ());
 
           // If we got to visit_interface() from a forward declared interface,
           // this node may not yet be in the repository.
           if (CORBA::is_nil (result.in ()))
             {
-              int status = this->create_interface_def (parents[i]);
+              int status = this->create_interface_def (intf);
 
               if (status != 0)
                 {
@@ -3513,7 +3540,7 @@ ifr_adding_visitor::fill_base_value (CORBA::ValueDef_ptr &result,
                                      AST_ValueType *node)
 {
   result = CORBA::ValueDef::_nil ();
-  AST_ValueType *base_value = node->inherits_concrete ();
+  AST_Type *base_value = node->inherits_concrete ();
 
   if (base_value == 0)
     {
@@ -3627,7 +3654,7 @@ ifr_adding_visitor::fill_primary_key (CORBA::ValueDef_ptr &result,
                                       AST_Home *node)
 {
   result = CORBA::ValueDef::_nil ();
-  AST_ValueType *primary_key = node->primary_key ();
+  AST_Type *primary_key = node->primary_key ();
 
   if (primary_key == 0)
     {
@@ -3664,7 +3691,7 @@ ifr_adding_visitor::fill_abstract_base_values (CORBA::ValueDefSeq &result,
   // existing entries, if any,  from the repository.
   if (s_length > 0)
     {
-      AST_Interface **list = node->inherits ();
+      AST_Type **list = node->inherits ();
       CORBA::ULong u_length = static_cast<CORBA::ULong> (s_length);
       bool first_abs = list[0]->is_abstract ();
       result.length (first_abs ? u_length : u_length - 1);
@@ -3701,7 +3728,7 @@ ifr_adding_visitor::fill_supported_interfaces (CORBA::InterfaceDefSeq &result,
 {
   result.length (0);
   CORBA::Long s_length = 0;
-  AST_Interface **list = 0;
+  AST_Type **list = 0;
 
   switch (node->node_type ())
     {
@@ -3738,7 +3765,7 @@ ifr_adding_visitor::fill_supported_interfaces (CORBA::InterfaceDefSeq &result,
 
 void
 ifr_adding_visitor::fill_interfaces (CORBA::InterfaceDefSeq &result,
-                                     AST_Interface **list,
+                                     AST_Type **list,
                                      CORBA::Long length)
 {
   // Not sure if this could be negative in some default case or

@@ -1,17 +1,17 @@
 // $Id$
 
 #include "fe_obv_header.h"
+
 #include "ast_valuetype.h"
 #include "ast_module.h"
-#include "global_extern.h"
+#include "ast_param_holder.h"
+
 #include "utl_err.h"
 #include "utl_namelist.h"
+
 #include "fe_extern.h"
 #include "nr_extern.h"
-
-ACE_RCSID (fe,
-           fe_obv_header,
-           "$Id$")
+#include "global_extern.h"
 
 // @@@ (JP) Here are the rules for interface inheritance and
 // value type inheritance and supports, straight from Jonathan
@@ -87,7 +87,7 @@ FE_OBVHeader::~FE_OBVHeader (void)
 {
 }
 
-AST_Interface **
+AST_Type **
 FE_OBVHeader::supports (void) const
 {
   return this->supports_;
@@ -99,13 +99,13 @@ FE_OBVHeader::n_supports (void) const
   return this->n_supports_;
 }
 
-AST_ValueType *
+AST_Type *
 FE_OBVHeader::inherits_concrete (void) const
 {
   return this->inherits_concrete_;
 }
 
-AST_Interface *
+AST_Type *
 FE_OBVHeader::supports_concrete (void) const
 {
   return this->supports_concrete_;
@@ -132,8 +132,8 @@ FE_OBVHeader::compile_inheritance (UTL_NameList *vtypes,
 
   if (this->n_inherits_ > 0)
     {
-      AST_Interface *iface = this->inherits_[0];
-      AST_ValueType *vt = AST_ValueType::narrow_from_decl (iface);
+      AST_Type *t = this->inherits_[0];
+      AST_ValueType *vt = AST_ValueType::narrow_from_decl (t);
 
       if (vt != 0
           && vt->is_abstract () == false)
@@ -149,17 +149,17 @@ FE_OBVHeader::compile_inheritance (UTL_NameList *vtypes,
 
       for (long i = 1; i < this->n_inherits_; ++i)
         {
-          iface = this->inherits_[i];
+          t = this->inherits_[i];
 
-          if (!iface->is_abstract ())
+          if (!t->is_abstract ())
             {
-              idl_global->err ()->abstract_expected (iface);
+              idl_global->err ()->abstract_expected (t);
             }
 
           if (! is_eventtype
-              && iface->node_type () == AST_Decl::NT_eventtype)
+              && t->node_type () == AST_Decl::NT_eventtype)
             {
-              idl_global->err ()->valuetype_expected (iface);
+              idl_global->err ()->valuetype_expected (t);
             }
         }
     }
@@ -177,12 +177,14 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
 
   long length = supports->length ();
   this->n_supports_ = length;
+  
   ACE_NEW (this->supports_,
-           AST_Interface *[length]);
+           AST_Type *[length]);
 
   AST_Decl *d = 0;
   UTL_ScopedName *item = 0;;
   AST_Interface *iface = 0;
+  AST_Type *t = 0;
   int i = 0;
 
   for (UTL_NamelistActiveIterator l (supports); !l.is_done (); l.next ())
@@ -202,8 +204,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
       // Look it up.
       UTL_Scope *s = idl_global->scopes ().top ();
 
-      d = s->lookup_by_name  (item,
-                              true);
+      d = s->lookup_by_name  (item, true);
 
       if (d == 0)
         {
@@ -232,10 +233,29 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
         {
           d = AST_Typedef::narrow_from_decl (d)->primitive_base_type ();
         }
+        
+      AST_Decl::NodeType nt = d->node_type ();
+      t = AST_Type::narrow_from_decl (d);
 
-      if (d->node_type () == AST_Decl::NT_interface)
+      if (nt == AST_Decl::NT_interface)
         {
           iface = AST_Interface::narrow_from_decl (d);
+        }
+      else if (nt == AST_Decl::NT_param_holder)
+        {
+          AST_Param_Holder *ph =
+            AST_Param_Holder::narrow_from_decl (d);
+            
+          nt = ph->info ()->type_;
+          
+          if (nt != AST_Decl::NT_type
+              && nt != AST_Decl::NT_interface)
+            {
+              idl_global->err ()->mismatched_template_param (
+                ph->info ()->name_.c_str ());
+                
+              continue;
+            }
         }
       else
         {
@@ -245,14 +265,14 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
         }
 
       // Forward declared interface?
-      if (!iface->is_defined ())
+      if (iface != 0 && !iface->is_defined ())
         {
           idl_global->err ()->supports_fwd_error (this->interface_name_,
                                                   iface);
           continue;
         }
 
-      if (!iface->is_abstract ())
+      if (iface != 0 && !iface->is_abstract ())
         {
           if (i == 0)
             {
@@ -273,7 +293,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
             }
         }
 
-      this->supports_[i++] = iface;
+      this->supports_[i++] = t;
     }
 }
 
@@ -286,7 +306,7 @@ FE_OBVHeader::check_concrete_supported_inheritance (AST_Interface *d)
     }
 
   AST_ValueType *vt = 0;
-  AST_Interface *concrete = 0;
+  AST_Type *concrete = 0;
   AST_Interface *ancestor = 0;
 
   for (long i = 0; i < this->n_inherits_; ++i)

@@ -16,7 +16,7 @@ class be_emits : public virtual AST_Emits,
 {
 public:
   be_emits (UTL_ScopedName *n,
-            AST_EventType *emits_type);
+            AST_Type *emits_type);
             
   virtual ~be_emits (void);
   

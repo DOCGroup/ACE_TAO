@@ -145,7 +145,7 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
      << (node->is_abstract () ? "VM_ABSTRACT" : "VM_NONE") << "," << be_nl;
 
   // Concrete base type.
-  AST_ValueType * const concrete_base =
+  AST_Type * const concrete_base =
     node->inherits_concrete ();
 
   if (concrete_base)

@@ -12,14 +12,14 @@ public:
   AST_ValueType (void);
 
   AST_ValueType (UTL_ScopedName *n,
-                 AST_Interface **inherits,
+                 AST_Type **inherits,
                  long n_inherits,
-                 AST_ValueType *inherits_concrete,
+                 AST_Type *inherits_concrete,
                  AST_Interface **inherits_flat,
                  long n_inherits_flat,
-                 AST_Interface **supports,
+                 AST_Type **supports,
                  long n_supports,
-                 AST_Interface *supports_concrete,
+                 AST_Type *supports_concrete,
                  bool abstract,
                  bool truncatable,
                  bool custom);
@@ -32,13 +32,13 @@ public:
   // This also calls the base class version.
   virtual void redefine (AST_Interface *from);
 
-  AST_Interface **supports (void) const;
+  AST_Type **supports (void) const;
 
   long n_supports (void) const;
 
-  AST_ValueType *inherits_concrete (void) const;
+  AST_Type *inherits_concrete (void) const;
 
-  AST_Interface *supports_concrete (void) const;
+  AST_Type *supports_concrete (void) const;
 
   bool truncatable (void) const;
   bool custom (void) const;
@@ -70,10 +70,10 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
 protected:
-  AST_Interface **pd_supports;
+  AST_Type **pd_supports;
   long pd_n_supports;
-  AST_ValueType *pd_inherits_concrete;
-  AST_Interface *pd_supports_concrete;
+  AST_Type *pd_inherits_concrete;
+  AST_Type *pd_supports_concrete;
 
   bool pd_truncatable;
   bool pd_custom;

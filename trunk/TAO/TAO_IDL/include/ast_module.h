@@ -144,6 +144,10 @@ private:
   AST_Module *fe_add_module (AST_Module *m);
 
   virtual
+  AST_Template_Module_Inst *fe_add_template_module_inst (
+    AST_Template_Module_Inst *m);
+
+  virtual
   AST_Interface *fe_add_interface (AST_Interface *i);
 
   virtual
@@ -209,10 +213,6 @@ private:
   virtual
   AST_PortType *fe_add_porttype (AST_PortType *pt);
   
-  virtual
-  AST_Instantiated_Connector *fe_add_instantiated_connector (
-    AST_Instantiated_Connector *ic);
-
   bool pd_has_nested_valuetype;
 
   ACE_Unbounded_Set<AST_Decl *> previous_;

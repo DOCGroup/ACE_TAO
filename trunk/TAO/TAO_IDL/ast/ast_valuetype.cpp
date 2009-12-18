@@ -2,22 +2,22 @@
 // $Id$
 
 #include "ast_valuetype.h"
+#include "ast_typedef.h"
 #include "ast_factory.h"
 #include "ast_visitor.h"
 #include "ast_extern.h"
 #include "ast_field.h"
+#include "ast_param_holder.h"
+
 #include "utl_err.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
 #include "utl_string.h"
+
 #include "global_extern.h"
 #include "nr_extern.h"
 
 #include "ace/streams.h"
-
-ACE_RCSID (ast,
-           ast_valuetype,
-           "$Id$")
 
 AST_ValueType::AST_ValueType (void)
   : COMMON_Base (),
@@ -35,14 +35,14 @@ AST_ValueType::AST_ValueType (void)
 }
 
 AST_ValueType::AST_ValueType (UTL_ScopedName *n,
-                              AST_Interface **inherits,
+                              AST_Type **inherits,
                               long n_inherits,
-                              AST_ValueType *inherits_concrete,
+                              AST_Type *inherits_concrete,
                               AST_Interface **inherits_flat,
                               long n_inherits_flat,
-                              AST_Interface **supports,
+                              AST_Type **supports,
                               long n_supports,
-                              AST_Interface *supports_concrete,
+                              AST_Type *supports_concrete,
                               bool abstract,
                               bool truncatable,
                               bool custom)
@@ -67,6 +67,24 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
     pd_truncatable (truncatable),
     pd_custom (custom)
 {
+  // Enqueue the param holders (if any) for later destruction.
+  // By the time our destroy() is called, it will be too late
+  // to iterate over pd_inherits.
+  for (long i = 0; i < n_supports; ++i)
+    {
+      if (supports[i]->node_type () == AST_Decl::NT_param_holder)
+        {
+          this->param_holders_.enqueue_tail (supports[i]);
+        }
+    }
+   
+  if (inherits_concrete != 0)
+    {  
+      if (inherits_concrete->node_type () == AST_Decl::NT_param_holder)
+        {
+          this->param_holders_.enqueue_tail (inherits_concrete);
+        }
+    }
 }
 
 AST_ValueType::~AST_ValueType (void)
@@ -178,7 +196,7 @@ AST_ValueType::redefine (AST_Interface *from)
   this->pd_truncatable = vt->pd_truncatable;
 }
 
-AST_Interface **
+AST_Type **
 AST_ValueType::supports (void) const
 {
   return this->pd_supports;
@@ -190,13 +208,13 @@ AST_ValueType::n_supports (void) const
   return this->pd_n_supports;
 }
 
-AST_ValueType *
+AST_Type *
 AST_ValueType::inherits_concrete (void) const
 {
   return this->pd_inherits_concrete;
 }
 
-AST_Interface *
+AST_Type *
 AST_ValueType::supports_concrete (void) const
 {
   return this->pd_supports_concrete;
@@ -227,7 +245,7 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
 {
   AST_Decl *d = 0;
   AST_Decl *d_before = 0;
-  AST_Interface **is = 0;
+  AST_Type **is = 0;
   long nis = -1;
 
   // Can't look in an interface which was not yet defined.
@@ -247,9 +265,18 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
        nis > 0;
        nis--, is++)
     {
-      d = (*is)->lookup_by_name (e,
-                                 treat_as_ref,
-                                 0 /* not in parent */);
+      if ((*is)->node_type () == AST_Decl::NT_param_holder)
+        {
+          continue;
+        }
+        
+      AST_Interface *i =
+        AST_Interface::narrow_from_decl (*is);
+        
+      d = (i)->lookup_by_name (e,
+                               treat_as_ref,
+                               0 /* not in parent */);
+                               
       if (d != 0)
         {
           if (d_before == 0)
@@ -353,11 +380,11 @@ AST_ValueType::legal_for_primary_key (void) const
 void
 AST_ValueType::destroy (void)
 {
+  this->AST_Interface::destroy ();
+  
   delete [] this->pd_supports;
   this->pd_supports = 0;
   this->pd_n_supports = 0;
-
-  this->AST_Interface::destroy ();
 }
 
 void
@@ -491,14 +518,15 @@ AST_ValueType::derived_from_primary_key_base (const AST_ValueType *node,
       return true;
     }
 
-  AST_ValueType *concrete_parent = node->inherits_concrete ();
+  AST_ValueType *concrete_parent =
+    AST_ValueType::narrow_from_decl (node->inherits_concrete ());
 
   if (this->derived_from_primary_key_base (concrete_parent, pk_base))
     {
       return true;
     }
 
-  AST_Interface **v = node->pd_inherits;
+  AST_Type **v = node->pd_inherits;
 
   for (long i = 0; i < node->pd_n_inherits; ++i)
     {

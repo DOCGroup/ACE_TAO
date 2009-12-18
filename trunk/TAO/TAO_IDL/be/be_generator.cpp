@@ -81,13 +81,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_component.h"
 #include "be_component_fwd.h"
 #include "be_home.h"
-#include "be_template_interface.h"
 #include "be_porttype.h"
 #include "be_mirror_port.h"
 #include "be_connector.h"
-#include "be_instantiated_connector.h"
-#include "be_tmpl_port.h"
-#include "be_tmpl_mirror_port.h"
+#include "be_template_module.h"
+#include "be_template_module_inst.h"
+#include "be_template_module_ref.h"
+#include "be_param_holder.h"
 #include "be_provides.h"
 #include "be_uses.h"
 #include "be_publishes.h"
@@ -214,7 +214,7 @@ be_generator::create_module (UTL_Scope *s,
 
 AST_Interface *
 be_generator::create_interface (UTL_ScopedName *n,
-                                AST_Interface **ih,
+                                AST_Type **ih,
                                 long nih,
                                 AST_Interface **ih_flat,
                                 long nih_flat,
@@ -273,14 +273,14 @@ be_generator::create_valuebox (UTL_ScopedName *n,
 
 AST_ValueType *
 be_generator::create_valuetype (UTL_ScopedName *n,
-                                AST_Interface **inherits,
+                                AST_Type **inherits,
                                 long n_inherits,
-                                AST_ValueType *inherits_concrete,
+                                AST_Type *inherits_concrete,
                                 AST_Interface **inherits_flat,
                                 long n_inherits_flat,
-                                AST_Interface **supports_list,
+                                AST_Type **supports_list,
                                 long n_supports,
-                                AST_Interface *supports_concrete,
+                                AST_Type *supports_concrete,
                                 bool is_abstract,
                                 bool is_truncatable,
                                 bool is_custom)
@@ -333,14 +333,14 @@ be_generator::create_valuetype_fwd (UTL_ScopedName *n,
 
 AST_EventType *
 be_generator::create_eventtype (UTL_ScopedName *n,
-                                AST_Interface **inherits,
+                                AST_Type **inherits,
                                 long n_inherits,
-                                AST_ValueType *inherits_concrete,
+                                AST_Type *inherits_concrete,
                                 AST_Interface **inherits_flat,
                                 long n_inherits_flat,
-                                AST_Interface **supports_list,
+                                AST_Type **supports_list,
                                 long n_supports,
-                                AST_Interface *supports_concrete,
+                                AST_Type *supports_concrete,
                                 bool is_abstract,
                                 bool is_truncatable,
                                 bool is_custom)
@@ -394,7 +394,7 @@ be_generator::create_eventtype_fwd (UTL_ScopedName *n,
 AST_Component *
 be_generator::create_component (UTL_ScopedName *n,
                                 AST_Component *base_component,
-                                AST_Interface **supports_list,
+                                AST_Type **supports_list,
                                 long n_supports,
                                 AST_Interface **supports_flat,
                                 long n_supports_flat)
@@ -436,8 +436,8 @@ AST_Home *
 be_generator::create_home (UTL_ScopedName *n,
                            AST_Home *base_home,
                            AST_Component *managed_component,
-                           AST_ValueType *primary_key,
-                           AST_Interface **supports_list,
+                           AST_Type *primary_key,
+                           AST_Type **supports_list,
                            long n_supports,
                            AST_Interface **supports_flat,
                            long n_supports_flat)
@@ -924,37 +924,12 @@ be_generator::create_factory (UTL_ScopedName *n)
   return retval;
 }
 
-AST_Template_Interface *
-be_generator::create_template_interface (
-  UTL_ScopedName *n,
-  AST_Interface **ih,
-  long nih,
-  AST_Interface **ih_flat,
-  long nih_flat,
-  FE_Utils::T_PARAMLIST_INFO *template_params)
-{
-  be_template_interface *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  be_template_interface (n,
-                                         ih,
-                                         nih,
-                                         ih_flat,
-                                         nih_flat,
-                                         template_params),
-                  0);
-
-  return retval;
-}
-
 AST_PortType *
-be_generator::create_porttype (
-  UTL_ScopedName *n,
-  FE_Utils::T_PARAMLIST_INFO *template_params)
+be_generator::create_porttype (UTL_ScopedName *n)
 {
   be_porttype *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_porttype (n,
-                               template_params),
+                  be_porttype (n),
                   0);
 
   return retval;
@@ -990,7 +965,7 @@ be_generator::create_uses (UTL_ScopedName *n,
 
 AST_Publishes *
 be_generator::create_publishes (UTL_ScopedName *n,
-                                AST_EventType *publishes_type)
+                                AST_Type *publishes_type)
 {
   be_publishes *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -1003,7 +978,7 @@ be_generator::create_publishes (UTL_ScopedName *n,
 
 AST_Emits *
 be_generator::create_emits (UTL_ScopedName *n,
-                            AST_EventType *emits_type)
+                            AST_Type *emits_type)
 {
   be_emits *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -1015,7 +990,7 @@ be_generator::create_emits (UTL_ScopedName *n,
 }
 AST_Consumes *
 be_generator::create_consumes (UTL_ScopedName *n,
-                               AST_EventType *consumes_type)
+                               AST_Type *consumes_type)
 {
   be_consumes *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -1029,14 +1004,12 @@ be_generator::create_consumes (UTL_ScopedName *n,
 AST_Extended_Port *
 be_generator::create_extended_port (
   UTL_ScopedName *n,
-  AST_PortType *porttype_ref,
-  AST_PortType::T_ARGLIST *template_args)
+  AST_PortType *porttype_ref)
 {
   be_extended_port *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_extended_port (n,
-                                    porttype_ref,
-                                    template_args),
+                                    porttype_ref),
                   0);
                   
   return retval;              
@@ -1045,14 +1018,12 @@ be_generator::create_extended_port (
 AST_Mirror_Port *
 be_generator::create_mirror_port (
   UTL_ScopedName *n,
-  AST_PortType *porttype_ref,
-  AST_PortType::T_ARGLIST *template_args)
+  AST_PortType *porttype_ref)
 {
   be_mirror_port *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_mirror_port (n,
-                                  porttype_ref,
-                                  template_args),
+                                  porttype_ref),
                   0);
                   
   return retval;              
@@ -1061,70 +1032,74 @@ be_generator::create_mirror_port (
 AST_Connector *
 be_generator::create_connector (
   UTL_ScopedName *n,
-  AST_Connector *base_connector,
-  FE_Utils::T_PARAMLIST_INFO *template_params)
+  AST_Connector *base_connector)
 {
   be_connector *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_connector (n,
-                                base_connector,
-                                template_params),
+                                base_connector),
                   0);
                   
   return retval;
 }
 
-AST_Tmpl_Port *
-be_generator::create_tmpl_port (UTL_ScopedName *n,
-                                AST_PortType *porttype_ref)
-{
-  be_tmpl_port *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  be_tmpl_port (n,
-                                porttype_ref),
-                  0);
-                  
-  return retval;
-}
-
-AST_Tmpl_Mirror_Port *
-be_generator::create_tmpl_mirror_port (UTL_ScopedName *n,
-                                       AST_PortType *porttype_ref)
-{
-  be_tmpl_mirror_port *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  be_tmpl_mirror_port (n,
-                                       porttype_ref),
-                  0);
-                  
-  return retval;
-}
-
-AST_Instantiated_Connector *
-be_generator::create_instantiated_connector (
+AST_Template_Module *
+be_generator::create_template_module (
   UTL_ScopedName *n,
-  AST_Connector *connector_type,
-  AST_Template_Common::T_ARGLIST *template_args)
+  FE_Utils::T_PARAMLIST_INFO *template_params)
 {
-  be_instantiated_connector *retval = 0;
+  be_template_module *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_instantiated_connector (n,
-                                             connector_type,
-                                             template_args),
+                  be_template_module (n,
+                                      template_params),
                   0);
                   
   return retval;
 }
-
-AST_Type *
-be_generator::create_placeholder (UTL_ScopedName *n)
+  
+AST_Template_Module_Inst *
+be_generator::create_template_module_inst (
+  UTL_ScopedName *n,
+  AST_Template_Module *ref,
+  FE_Utils::T_ARGLIST *template_args)
 {
-  be_type *retval = 0;
+  be_template_module_inst *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_type (AST_Decl::NT_type, n),
+                  be_template_module_inst (n,
+                                           ref,
+                                           template_args),
                   0);
                   
   return retval;
 }
-
+  
+AST_Template_Module_Ref *
+be_generator::create_template_module_ref (
+  UTL_ScopedName *n,
+  AST_Template_Module *ref,
+  UTL_StrList *param_refs)
+{
+  be_template_module_ref *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_template_module_ref (n,
+                                          ref,
+                                          param_refs),
+                  0);
+                  
+  return retval;
+}
+    
+AST_Param_Holder *
+be_generator::create_param_holder (
+  UTL_ScopedName *parameter_name,
+  FE_Utils::T_Param_Info *info)
+{
+  be_param_holder *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_param_holder (parameter_name,
+                                   info),
+                  0);
+                  
+  return retval;
+}
 

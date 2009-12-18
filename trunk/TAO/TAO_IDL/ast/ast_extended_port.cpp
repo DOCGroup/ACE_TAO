@@ -7,22 +7,16 @@
 #include "utl_indenter.h"
 #include "global_extern.h"
 
-ACE_RCSID (ast,
-           ast_extended_port,
-           "$Id$")
-
 AST_Extended_Port::AST_Extended_Port (
     UTL_ScopedName *n,
-    AST_PortType *porttype_ref,
-    AST_Template_Common::T_ARGLIST *template_args)
+    AST_PortType *porttype_ref)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_ext_port,
               n),
     AST_Field (AST_Decl::NT_ext_port,
                porttype_ref,
-               n),
-    template_args_ (template_args)
+               n)
 {
 }
 
@@ -36,18 +30,9 @@ AST_Extended_Port::port_type (void) const
   return AST_PortType::narrow_from_decl (this->field_type ());
 }
 
-AST_Template_Common::T_ARGLIST *
-AST_Extended_Port::template_args (void) const
-{
-  return this->template_args_;
-}
-
 void
 AST_Extended_Port::destroy (void)
 {
-  delete this->template_args_;
-  this->template_args_ = 0;
-
   this->AST_Field::destroy ();
 }
 
@@ -57,8 +42,6 @@ AST_Extended_Port::dump (ACE_OSTREAM_TYPE &o)
   this->dump_i (o, "port ");
 
   this->local_name ()->dump (o);
-
-  // TODO - template args
 }
 
 int

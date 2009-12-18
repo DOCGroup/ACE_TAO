@@ -359,7 +359,8 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
                                            );
 
   long n_parents = 0;
-  AST_Interface **p_intf = this->create_inheritance_list (node, n_parents);
+  AST_Type **p_intf =
+    this->create_inheritance_list (node, n_parents);
 
   be_interface *reply_handler = 0;
   ACE_NEW_RETURN (reply_handler,
@@ -1182,15 +1183,15 @@ be_visitor_ami_pre_proc::generate_set_operation (be_attribute *node)
   return operation;
 }
 
-AST_Interface **
+AST_Type **
 be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
                                                   long &n_rh_parents)
 {
-  AST_Interface **retval = 0;
+  AST_Type **retval = 0;
 
   long n_parents = node->n_inherits ();
-  AST_Interface **parents = node->inherits ();
-  AST_Interface *parent = 0;
+  AST_Type **parents = node->inherits ();
+  AST_Type *parent = 0;
 
   for (long i = 0; i < n_parents; ++i)
     {
@@ -1209,7 +1210,7 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
       be_interface *inherit_intf = be_global->messaging_replyhandler ();
 
       ACE_NEW_RETURN (retval,
-                      AST_Interface *[1],
+                      AST_Type *[1],
                       0);
 
       retval[0] = inherit_intf;
@@ -1218,7 +1219,7 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
   else
     {
       ACE_NEW_RETURN (retval,
-                      AST_Interface *[n_rh_parents],
+                      AST_Type *[n_rh_parents],
                       0);
 
       ACE_CString prefix ("AMI_");

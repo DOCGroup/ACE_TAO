@@ -5,7 +5,7 @@
 #include "ast_visitor.h"
 
 AST_Emits::AST_Emits (UTL_ScopedName *n,
-                      AST_EventType *emits_type)
+                      AST_Type *emits_type)
   : COMMON_Base (),
     AST_Decl (AST_Decl::NT_emits,
               n),

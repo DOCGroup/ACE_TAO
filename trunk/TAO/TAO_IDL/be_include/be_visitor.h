@@ -32,7 +32,6 @@ class be_predefined_type;
 class be_module;
 class be_interface;
 class be_interface_fwd;
-class be_template_interface;
 class be_valuebox;
 class be_valuetype;
 class be_valuetype_fwd;
@@ -40,6 +39,9 @@ class be_eventtype;
 class be_eventtype_fwd;
 class be_component;
 class be_component_fwd;
+class be_template_module;
+class be_template_module_inst;
+class be_template_module_ref;
 class be_porttype;
 class be_provides;
 class be_uses;
@@ -49,9 +51,6 @@ class be_consumes;
 class be_extended_port;
 class be_mirror_port;
 class be_connector;
-class be_tmpl_port;
-class be_tmpl_mirror_port;
-class be_instantiated_connector;
 class be_home;
 class be_factory;
 class be_structure;
@@ -101,8 +100,6 @@ public:
   virtual int visit_module (be_module *node);
   virtual int visit_interface (be_interface *node);
   virtual int visit_interface_fwd (be_interface_fwd *node);
-  virtual int visit_template_interface (
-    be_template_interface *node);
   virtual int visit_valuebox (be_valuebox *node);
   virtual int visit_valuetype (be_valuetype *node);
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
@@ -110,6 +107,9 @@ public:
   virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
   virtual int visit_component (be_component *node);
   virtual int visit_component_fwd (be_component_fwd *node);
+  virtual int visit_template_module (be_template_module *node);
+  virtual int visit_template_module_inst (be_template_module_inst *node);
+  virtual int visit_template_module_ref (be_template_module_ref *node);
   virtual int visit_porttype (be_porttype *node);
   virtual int visit_provides (be_provides *node);
   virtual int visit_uses (be_uses *node);
@@ -119,10 +119,6 @@ public:
   virtual int visit_extended_port (be_extended_port *node);
   virtual int visit_mirror_port (be_mirror_port *node);
   virtual int visit_connector (be_connector *node);
-  virtual int visit_instantiated_connector (
-    be_instantiated_connector *node);
-  virtual int visit_tmpl_port (be_tmpl_port *node);
-  virtual int visit_tmpl_mirror_port (be_tmpl_mirror_port *node);
   virtual int visit_home (be_home *node);
   virtual int visit_factory (be_factory *node);
   virtual int visit_structure (be_structure *node);

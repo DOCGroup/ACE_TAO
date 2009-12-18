@@ -1,17 +1,17 @@
 // $Id$
 
 #include "fe_component_header.h"
+
 #include "ast_component.h"
 #include "ast_module.h"
+#include "ast_param_holder.h"
+
 #include "utl_err.h"
 #include "utl_namelist.h"
+
 #include "fe_extern.h"
 #include "global_extern.h"
 #include "nr_extern.h"
-
-ACE_RCSID (fe,
-           fe_component_header,
-           "$Id$")
 
 FE_ComponentHeader::FE_ComponentHeader (UTL_ScopedName *n,
                                         UTL_ScopedName *base_component,
@@ -38,7 +38,7 @@ FE_ComponentHeader::base_component (void) const
   return this->base_component_;
 }
 
-AST_Interface **
+AST_Type **
 FE_ComponentHeader::supports (void) const
 {
   return this->inherits_;
@@ -117,7 +117,8 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
 
   AST_Decl *d = 0;
   UTL_ScopedName *item = 0;;
-  AST_Interface *i = 0;
+  AST_Interface *iface = 0;
+  AST_Type *t = 0;
   long j = 0;
   long k = 0;
 
@@ -141,8 +142,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
       // Look it up.
       UTL_Scope *s = idl_global->scopes ().top ();
 
-      d = s->lookup_by_name  (item,
-                              true);
+      d = s->lookup_by_name  (item, true);
 
       if (d == 0)
         {
@@ -166,40 +166,64 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
           throw Bailout ();
         }
 
-      // Not an appropriate interface?
+      // Remove typedefs, if any.
       if (d->node_type () == AST_Decl::NT_typedef)
         {
           d = AST_Typedef::narrow_from_decl (d)->primitive_base_type ();
         }
 
-      i = AST_Interface::narrow_from_decl (d);
+      AST_Decl::NodeType nt = d->node_type ();
+      t = AST_Type::narrow_from_decl (d);
 
-      // Not an interface?
-      if (i == 0 || i->node_type () != AST_Decl::NT_interface)
+      if (nt == AST_Decl::NT_interface)
+        {
+          iface = AST_Interface::narrow_from_decl (d);
+
+          // Undefined interface?
+          if (!iface->is_defined ())
+            {
+              idl_global->err ()->inheritance_fwd_error (
+                this->interface_name_,
+                iface);
+                
+              continue;
+            }
+
+          // Local interface? (illegal for components to support).
+          if (iface->is_local ())
+            {
+              idl_global->err ()->unconstrained_interface_expected (
+                this->name (),
+                iface->name ());
+                
+              continue;
+           }
+        }
+      else if (nt == AST_Decl::NT_param_holder)
+        {
+          AST_Param_Holder *ph =
+            AST_Param_Holder::narrow_from_decl (d);
+            
+          nt = ph->info ()->type_;
+          
+          if (nt != AST_Decl::NT_type
+              && nt != AST_Decl::NT_interface)
+            {
+              idl_global->err ()->mismatched_template_param (
+                ph->info ()->name_.c_str ());
+                
+              continue;
+            }
+        }
+      else
         {
           idl_global->err ()->interface_expected (d);
           continue;
         }
 
-      // Undefined interface?
-      if (!i->is_defined ())
-        {
-          idl_global->err ()->inheritance_fwd_error (this->interface_name_,
-                                                     i);
-          continue;
-        }
-
-      // Local interface? (illegal for components to support).
-      if (i->is_local ())
-        {
-          idl_global->err ()->unconstrained_interface_expected (this->name (),
-                                                                i->name ());
-          continue;
-       }
-
       // OK, see if we have to add this to the list of interfaces
       // inherited from.
-      this->compile_one_inheritance (i);
+      this->compile_one_inheritance (t);
     }
 
   // OK, install in interface header.
@@ -221,7 +245,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
   if (this->iused_ > 0)
     {
       ACE_NEW (this->inherits_,
-               AST_Interface *[this->iused_]);
+               AST_Type *[this->iused_]);
 
       for (k = 0; k < this->iused_; ++k)
         {

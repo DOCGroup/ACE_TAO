@@ -29,7 +29,6 @@ class AST_PredefinedType;
 class AST_Module;
 class AST_Interface;
 class AST_InterfaceFwd;
-class AST_Template_Interface;
 class AST_ValueBox;
 class AST_ValueType;
 class AST_ValueTypeFwd;
@@ -41,12 +40,12 @@ class AST_Uses;
 class AST_Publishes;
 class AST_Emits;
 class AST_Consumes;
+class AST_Template_Module;
+class AST_Template_Module_Inst;
+class AST_Template_Module_Ref;
 class AST_Extended_Port;
 class AST_Mirror_Port;
-class AST_Tmpl_Port;
-class AST_Tmpl_Mirror_Port;
 class AST_Connector;
-class AST_Instantiated_Connector;
 class AST_EventType;
 class AST_EventTypeFwd;
 class AST_Home;
@@ -97,13 +96,14 @@ public:
   virtual int visit_module (AST_Module *node) = 0;
   virtual int visit_interface (AST_Interface *node) = 0;
   virtual int visit_interface_fwd (AST_InterfaceFwd *node) = 0;
-  virtual int visit_template_interface (
-    AST_Template_Interface *node) = 0;
   virtual int visit_valuetype (AST_ValueType *node) = 0;
   virtual int visit_valuetype_fwd (AST_ValueTypeFwd *node) = 0;
   virtual int visit_component (AST_Component *node) = 0;
   virtual int visit_home (AST_Home *node) = 0;
   virtual int visit_component_fwd (AST_ComponentFwd *node) = 0;
+  virtual int visit_template_module (AST_Template_Module *node) = 0;
+  virtual int visit_template_module_inst (AST_Template_Module_Inst *node) = 0;
+  virtual int visit_template_module_ref (AST_Template_Module_Ref *node) = 0;
   virtual int visit_porttype (AST_PortType *node) = 0;
   virtual int visit_provides (AST_Provides *node) = 0;
   virtual int visit_uses (AST_Uses *node) = 0;
@@ -113,11 +113,6 @@ public:
   virtual int visit_extended_port (AST_Extended_Port *node) = 0;
   virtual int visit_mirror_port (AST_Mirror_Port *node) = 0;
   virtual int visit_connector (AST_Connector *node) = 0;
-  virtual int visit_instantiated_connector (
-    AST_Instantiated_Connector *node) = 0;
-  virtual int visit_tmpl_port (AST_Tmpl_Port *node) = 0;
-  virtual int visit_tmpl_mirror_port (
-    AST_Tmpl_Mirror_Port *node) = 0;
   virtual int visit_eventtype (AST_EventType *node) = 0;
   virtual int visit_eventtype_fwd (AST_EventTypeFwd *node) = 0;
   virtual int visit_factory (AST_Factory *node) = 0;

@@ -7,13 +7,12 @@
 #include "ast_field.h"
 
 class AST_EventType;
-class AST_Visitor;
 
 class TAO_IDL_FE_Export AST_Emits : public virtual AST_Field
 {
 public:
   AST_Emits (UTL_ScopedName *n,
-             AST_EventType *emits_type);
+             AST_Type *emits_type);
             
   virtual ~AST_Emits (void);
   

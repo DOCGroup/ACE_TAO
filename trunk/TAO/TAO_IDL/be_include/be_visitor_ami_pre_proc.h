@@ -28,7 +28,7 @@
 #include "be_visitor_scope.h"
 #include "ace/SString.h"
 
-class AST_Interface;
+class AST_Type;
 
 class be_visitor_ami_pre_proc : public be_visitor_scope
 {
@@ -114,8 +114,8 @@ private:
   be_operation *generate_set_operation (be_attribute *node);
   // generate a set operation out of the attribute.
 
-  AST_Interface **create_inheritance_list (be_interface *node,
-                                           long &n_parents);
+  AST_Type **create_inheritance_list (be_interface *node,
+                                      long &n_parents);
   // Create an inheritance list for the reply handler.
 };
 

@@ -78,6 +78,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_component_fwd.h"
 #include "ast_home.h"
 #include "ast_porttype.h"
+#include "ast_template_module.h"
+#include "ast_template_module_ref.h"
 #include "ast_typedef.h"
 #include "ast_type.h"
 #include "ast_root.h"
@@ -92,6 +94,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_attribute.h"
 #include "ast_operation.h"
 #include "ast_argument.h"
+#include "ast_param_holder.h"
 #include "ast_union.h"
 #include "ast_union_fwd.h"
 #include "ast_union_branch.h"
@@ -100,9 +103,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_native.h"
 #include "ast_factory.h"
 #include "ast_visitor.h"
+#include "ast_generator.h"
+
 #include "nr_extern.h"
 #include "fe_extern.h"
 #include "global_extern.h"
+
 #include "ace/OS_NS_strings.h"
 
 // FUZZ: disable check_for_streams_include
@@ -177,10 +183,18 @@ iter_lookup_by_name_local (AST_Decl *d,
 
       d = td->base_type ();
     }
-
+    
   if (d == 0)
     {
       return 0;
+    }
+
+  AST_Template_Module_Ref *tmr =
+    AST_Template_Module_Ref::narrow_from_decl (d);
+    
+  if (tmr != 0)
+    {
+      d = tmr->ref ();
     }
 
   // Try to convert the AST_Decl to a UTL_Scope.
@@ -570,6 +584,33 @@ UTL_Scope::check_for_predef_seq (AST_Decl *d)
       default:
         break;
     }
+}
+
+AST_Param_Holder *
+UTL_Scope::match_param (
+  UTL_ScopedName *e,
+  FE_Utils::T_PARAMLIST_INFO const *params)
+{
+  const char *name = e->first_component ()->get_string ();
+  AST_Param_Holder *retval = 0;
+  
+  for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (*params);
+       !i.done ();
+       i.advance ())
+    {
+      FE_Utils::T_Param_Info *param = 0;
+      i.next (param);
+      
+      if (param->name_ == name)
+        {
+          retval =
+            idl_global->gen ()->create_param_holder (e, param);
+            
+          break;
+        }
+    }
+    
+  return retval;
 }
 
 // Public operations.
@@ -1047,6 +1088,18 @@ UTL_Scope::fe_add_module (AST_Module *)
   return 0;
 }
 
+AST_Template_Module_Inst *
+UTL_Scope::fe_add_template_module_inst (AST_Template_Module_Inst *)
+{
+  return 0;
+}
+
+AST_Template_Module_Ref *
+UTL_Scope::fe_add_template_module_ref (AST_Template_Module_Ref *)
+{
+  return 0;
+}
+
 AST_Interface *
 UTL_Scope::fe_add_interface (AST_Interface *)
 {
@@ -1283,25 +1336,6 @@ UTL_Scope::fe_add_mirror_port (AST_Mirror_Port *)
 
 AST_Connector *
 UTL_Scope::fe_add_connector (AST_Connector *)
-{
-  return 0;
-}
-
-AST_Tmpl_Port *
-UTL_Scope::fe_add_tmpl_port (AST_Tmpl_Port *)
-{
-  return 0;
-}
-
-AST_Tmpl_Mirror_Port *
-UTL_Scope::fe_add_tmpl_mirror_port (AST_Tmpl_Mirror_Port *)
-{
-  return 0;
-}
-
-AST_Instantiated_Connector *
-UTL_Scope::fe_add_instantiated_connector (
-    AST_Instantiated_Connector *)
 {
   return 0;
 }
@@ -1777,7 +1811,8 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
   // look in previous openings, if any.
   AST_Decl *last_chance = ScopeAsDecl (this);
 
-  if (0 == index && last_chance->node_type () == AST_Decl::NT_module)
+  if (0 == index
+      && last_chance->node_type () == AST_Decl::NT_module)
     {
       // Check the result using the full_def_only constraint.
       AST_Module *m = AST_Module::narrow_from_decl (last_chance);
@@ -1812,6 +1847,28 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
   if (e == 0)
     {
       return 0;
+    }
+    
+  // If this call returns a non-zero value, we are in the scope
+  // of a template module.  
+  FE_Utils::T_PARAMLIST_INFO const *params =
+    idl_global->current_params ();
+      
+  if (e->length () == 1 && params != 0)
+    {
+      AST_Param_Holder *param_holder =
+        this->match_param (e, params);
+        
+      // Since we are inside the scope of a template module, any
+      // single-segment scoped name that matches a template
+      // parameter name has to be a reference to that parameter,
+      // so we return the created placeholder. If there's no
+      // match, 0 is returned, and we proceed with the regular
+      // lookup.  
+      if (param_holder != 0)
+        {
+          return param_holder;
+        }
     }
 
   // If name starts with "::" or "" start lookup in global scope.
@@ -1915,57 +1972,71 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                   // Since we have actually seen a match in local scope (even though that
                   // went nowhere) the full identifier is actually undefined as we are not
                   // allowed to follow down the parent scope chain. (The above is still
-                  // useful to identify possiable user scoping mistakes however for the
+                  // useful to identify possible user scoping mistakes however for the
                   // following diagnostic.)
 
                   if (0 != d)
                     {
-                      ACE_ERROR (( LM_ERROR,
-                        ACE_TEXT ("%C: \"%C\", line %d: Did you mean \"::%C\"\n")
+                      ACE_ERROR ((
+                        LM_ERROR,
+                        ACE_TEXT ("%C: \"%C\", line %d: ")
+                        ACE_TEXT ("Did you mean \"::%C\"\n")
                         ACE_TEXT ("   declared at "),
                         idl_global->prog_name (),
                         idl_global->filename ()->get_string (),
                         idl_global->lineno (),
-                        d->full_name () ));
-                      const bool same_file=
+                        d->full_name ()));
+                        
+                      const bool same_file =
                         (0 == ACE_OS::strcmp (
                                 idl_global->filename ()->get_string (),
                                 d->file_name ().c_str ()) );
+                                
                       if (!same_file)
                         {
                           ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("%C "),
-                            d->file_name ().c_str () ));
+                                      ACE_TEXT ("%C "),
+                                      d->file_name ().c_str () ));
                         }
-                      ACE_ERROR ((LM_ERROR,
+                        
+                      ACE_ERROR ((
+                        LM_ERROR,
                         ACE_TEXT ("line %d but hidden by local \""),
                         d->line () ));
+                        
                       if (ScopeAsDecl (this)->full_name ()[0])
                         {
-                          ACE_ERROR ((LM_ERROR, ACE_TEXT ("::%C"),
-                            ScopeAsDecl (this)->full_name () ));
+                          ACE_ERROR ((LM_ERROR,
+                                      ACE_TEXT ("::%C"),
+                                      ScopeAsDecl (this)->full_name () ));
                         }
+                        
                       ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("::%C\""),
-                        e->head ()->get_string () ));
-                      const bool same_file_again=
+                                  ACE_TEXT ("::%C\""),
+                                  e->head ()->get_string () ));
+                        
+                      const bool same_file_again =
                         (same_file &&
                          0 == ACE_OS::strcmp (
                                 idl_global->filename ()->get_string (),
                                 first_one_found->file_name ().c_str ()) );
+                      
                       if (!same_file_again)
                         {
-                          ACE_ERROR ((LM_ERROR,
+                          ACE_ERROR ((
+                            LM_ERROR,
                             ACE_TEXT ("\n")
                             ACE_TEXT ("   declared at %C "),
-                            first_one_found->file_name ().c_str () ));
+                            first_one_found->file_name ().c_str ()));
                         }
                       else
                         {
                           ACE_ERROR ((LM_ERROR, ACE_TEXT (" at ") ));
                         }
-                      ACE_ERROR ((LM_ERROR, ACE_TEXT ("line %d ?\n"),
-                        first_one_found->line () ));
+                        
+                      ACE_ERROR ((LM_ERROR,
+                                  ACE_TEXT ("line %d ?\n"),
+                                  first_one_found->line () ));
                     }
                   return 0;
                 }
@@ -2016,9 +2087,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
         }
 
       // We have found the root of the identifier in our local scope.
-      first_one_found= d;
-
-      // For the possible call to look_in_inherited() below.
+      first_one_found = d;
       s = DeclAsScope (d);
 
       // OK, start of name is defined. Now loop doing local lookups
