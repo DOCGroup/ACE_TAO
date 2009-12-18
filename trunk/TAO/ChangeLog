@@ -1,3 +1,8 @@
+Fri Dec 18 13:44:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
+
+        * NEWS:
+          Updated with fixed bugzilla entries.
+
 Fri Dec 18 09:23:37 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Bug_3790_Regression/server2.cpp:
