@@ -127,7 +127,6 @@ void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
 {
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate ();
-
   this->observable_.init (
     this->topic_.in (),
     this->publisher_.in (),

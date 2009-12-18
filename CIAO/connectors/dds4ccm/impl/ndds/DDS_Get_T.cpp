@@ -102,13 +102,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_Get_T<DDS_TYPE, CCM_TYPE>::get_dds_entity (void)
 {
   CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE>::get_dds_entity");
-  if (this->rti_reader_.get_impl ())
-    {
-      return dynamic_cast < ::DDS::CCM_DataReader *> (this->rti_reader_.get_impl ());
-    }
-  else
-    {
-      return 0;
-    }
+
+  return &this->rti_reader_;
 }
 

@@ -101,7 +101,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE>::get_dds_entity (void)
 {
   CIAO_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE>::get_dds_entity");
 
-  return ::DDS::CCM_DataReader::_duplicate (this->data_reader_.in ());
+  return &this->rti_reader_;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
