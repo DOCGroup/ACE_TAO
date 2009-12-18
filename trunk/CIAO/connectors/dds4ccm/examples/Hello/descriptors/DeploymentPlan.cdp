@@ -206,6 +206,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HelloTest_Library#Hello_Profile</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
   <instance xmi:id="Hello_SenderConnectorComponentInstance">
     <name>Hello_SenderConnectorComponent</name>
