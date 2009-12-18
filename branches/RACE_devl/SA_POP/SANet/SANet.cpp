@@ -23,14 +23,22 @@ using namespace SANet;
 
 
 SANet::Network::Network (void)
-: step_ (0), restrict_prop_to_clinks_(false)
+: step_ (0)
+//, restrict_prop_to_clinks_(false)
 {
-  // Clear maps.
+  // Clear maps & sets.
   this->task_nodes_.clear ();
   this->cond_nodes_.clear ();
   this->precond_links_.clear ();
   this->effect_links_.clear ();
   this->goals_.clear ();
+  this->active_tasks_.clear ();
+  this->disabled_tasks_.clear ();
+  this->active_conds_.clear ();
+  this->disabled_conds_.clear ();
+//  this->causal_links_by_first_.clear ();
+//  this->causal_links_by_cond_.clear ();
+//  this->causal_links_by_second_.clear ();
 };
 
 int SANet::Network::get_step(){
@@ -54,9 +62,9 @@ SANet::Network::~Network ()
   }
 };
 
-void SANet::Network::restrict_prop_to_clinks(bool val){
-	restrict_prop_to_clinks_ = val;
-}
+//void SANet::Network::restrict_prop_to_clinks(bool val){
+//	restrict_prop_to_clinks_ = val;
+//};
 
 void SANet::Network::add_task (TaskID ID, std::string name, MultFactor atten_factor,
                           TaskCost cost, Probability prior_prob)
@@ -73,7 +81,7 @@ void SANet::Network::add_task (TaskID ID, std::string name, MultFactor atten_fac
   TaskNode *node;
 
   // Set initially to active
-  active_tasks.insert(ID);
+  this->active_tasks_.insert(ID);
 
   // Add task node, throwing exception if insertion fails.
   node = new TaskNode (ID, name, atten_factor, cost, prior_prob);
@@ -96,13 +104,13 @@ void SANet::Network::reset_step(){
 }
 
 
+/*
 void SANet::Network::note_causal_link(SA_POP::CausalLink clink){
 	causal_links_by_first_.insert(std::pair<TaskID, SA_POP::CausalLink> (clink.first, clink));
 	causal_links_by_cond_.insert(std::pair<CondID, SA_POP::CausalLink> (clink.cond.id, clink));
 	causal_links_by_second_.insert(std::pair<TaskID, SA_POP::CausalLink> (clink.second, clink));
 }
 
-/*
 bool SANet::Network::is_clink_first_to_cond_by_first(TaskID task, CondID cond){
 
 	for(std::multimap<SANet::TaskID, SA_POP::CausalLink>::iterator it = causal_links_by_first_.lower_bound(task); 
@@ -142,9 +150,9 @@ Probability SANet::Network::get_prior(TaskID ID)
 
 }
 
-LinkWeight SANet::Network::get_link(TaskID ID, CondID cond_ID)
+LinkWeight SANet::Network::get_link(TaskID task_ID, CondID cond_ID)
 {
-  TaskNodeMap::iterator task_iter = task_nodes_.find (ID);
+  TaskNodeMap::iterator task_iter = task_nodes_.find (task_ID);
   if (task_iter == task_nodes_.end ()) {
     throw UnknownNode ();
   }
@@ -189,7 +197,7 @@ void SANet::Network::add_cond (CondID ID, std::string name, MultFactor atten_fac
   CondNode *node;
 
   // Set initially to active
-  active_conds.insert(ID);
+  this->active_conds_.insert(ID);
 
   // Add condition node, throwing exception if insertion fails.
   node = new CondNode (ID, name, atten_factor,
@@ -433,6 +441,9 @@ void SANet::Network::print_link_ports (std::basic_ostream<char,
 
 void SANet::Network::update (int max_steps)
 {
+  // Reset network and nodes to initial step.
+  this->reset_step ();
+
   // Flag for whether network changed on last step, initially true.
   bool net_changed = true;
 
@@ -450,8 +461,8 @@ void SANet::Network::update (int max_steps)
     // Update all active task nodes.
     //for (TaskNodeMap::iterator node_iter = task_nodes_.begin ();
     //  node_iter != task_nodes_.end (); node_iter++)
-    for(std::set<TaskID>::iterator node_iter = active_tasks.begin();
-      node_iter != active_tasks.end(); node_iter++)
+    for(std::set<TaskID>::iterator node_iter = this->active_tasks_.begin();
+      node_iter != this->active_tasks_.end(); node_iter++)
     {
       // Update node, setting net_changed flag if node changed.
       if (task_nodes_.find(*node_iter)->second->update ()) {
@@ -462,8 +473,8 @@ void SANet::Network::update (int max_steps)
     // Update all active condition nodes.
     //for (CondNodeMap::iterator node_iter = cond_nodes_.begin ();
     //  node_iter != cond_nodes_.end (); node_iter++)
-    for(std::set<CondID>::iterator node_iter = active_conds.begin();
-      node_iter != active_conds.end(); node_iter++)
+    for(std::set<CondID>::iterator node_iter = this->active_conds_.begin();
+      node_iter != this->active_conds_.end(); node_iter++)
     {
       // Update node, setting net_changed flag if node changed.
       if (cond_nodes_.find(*node_iter)->second->update ()) {
@@ -525,7 +536,7 @@ Probability SANet::Network::get_cond_val (CondID cond_id)
   return iter->second->get_init_prob ();
 };
 
-Probability SANet::Network::get_current_cond_val(CondID cond_id, int step){
+Probability SANet::Network::get_cond_future_val(CondID cond_id, int step){
 	CondNodeMap::iterator iter = this->cond_nodes_.find(cond_id);
 	if(iter == this->cond_nodes_.end())
 		throw "SANet::Network::get_cond_val (): Unknown condition node.";
@@ -725,7 +736,7 @@ LinkPorts SANet::Network::get_clink_ports (TaskID task1_id, CondID cond_id,
     this->get_precond_port (cond_id, task2_id));
 };
 
-/// Set Task State.
+// Set Task State.
 void SANet::Network::set_task_state(TaskID task_ID, bool state)
 {
 
@@ -734,22 +745,22 @@ void SANet::Network::set_task_state(TaskID task_ID, bool state)
     if(state)
     {
       //insetr into active, remove from disabled
-      active_tasks.insert(task_ID);
+      this->active_tasks_.insert(task_ID);
 
-      disabled_tasks.erase(task_ID);
+      this->disabled_tasks_.erase(task_ID);
 
     }
     else
     {
       //remove from active, insert into disabled
 
-      active_tasks.erase(task_ID);
+      this->active_tasks_.erase(task_ID);
 
-      disabled_tasks.insert(task_ID);
+      this->disabled_tasks_.insert(task_ID);
     }
-}
+};
 
-/// Set Cond State.
+// Set Cond State.
 void SANet::Network::set_cond_state(CondID cond_ID, bool state)
 {
     
@@ -757,24 +768,24 @@ void SANet::Network::set_cond_state(CondID cond_ID, bool state)
     if(state)
     {
       //insetr into active, remove from disabled
-      active_conds.insert(cond_ID);
+      this->active_conds_.insert(cond_ID);
 
 
-      disabled_conds.erase(cond_ID);
+      this->disabled_conds_.erase(cond_ID);
 
     }
     else
     {
       //remove from active, insert into disabled
 
-      active_conds.erase(cond_ID);
+      this->active_conds_.erase(cond_ID);
 
-      disabled_conds.insert(cond_ID);
+      this->disabled_conds_.insert(cond_ID);
     }
 
-}
+};
 
-/// Set All nodes to State.
+// Set All nodes to State.
 void SANet::Network::set_nodes_state(bool state)
 {
     if(state)
@@ -785,18 +796,18 @@ void SANet::Network::set_nodes_state(bool state)
       node_iter != task_nodes_.end (); node_iter++)
       {
         node_iter->second->set_activity(state);
-        active_tasks.insert(node_iter->first);
+        this->active_tasks_.insert(node_iter->first);
 
-        disabled_tasks.erase(node_iter->first);
+        this->disabled_tasks_.erase(node_iter->first);
       }
 
       for (CondNodeMap::iterator node_iter = cond_nodes_.begin ();
       node_iter != cond_nodes_.end (); node_iter++)
       {
         node_iter->second->set_activity(state);
-        active_conds.insert(node_iter->first);
+        this->active_conds_.insert(node_iter->first);
 
-        disabled_conds.erase(node_iter->first);
+        this->disabled_conds_.erase(node_iter->first);
       }
     }
     else
@@ -807,19 +818,19 @@ void SANet::Network::set_nodes_state(bool state)
       node_iter != task_nodes_.end (); node_iter++)
       {
         node_iter->second->set_activity(state);
-        active_tasks.erase(node_iter->first);
+        this->active_tasks_.erase(node_iter->first);
 
-        disabled_tasks.insert(node_iter->first);
+        this->disabled_tasks_.insert(node_iter->first);
       }
 
       for (CondNodeMap::iterator node_iter = cond_nodes_.begin ();
       node_iter != cond_nodes_.end (); node_iter++)
       {
         node_iter->second->set_activity(state);
-        active_conds.erase(node_iter->first);
+        this->active_conds_.erase(node_iter->first);
 
-        disabled_conds.insert(node_iter->first);
+        this->disabled_conds_.insert(node_iter->first);
       }
     }
 
-}
+};

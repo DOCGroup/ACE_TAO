@@ -1,3 +1,22 @@
+Fri Dec 18 20:28:36 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * SA_POP_Types.h:
+        * Planner.cpp:
+        * SA_WorkingPlan.cpp:
+        * experiments/EU_Performance/Exp_Core/Exp_EU_SchedStrategy.cpp:
+
+          Cleaned up SA-POP Debug statements & debug levels.
+
+
+        * Planner.cpp:
+        * SANet/SANet.h:
+        * SANet/SANet.cpp:
+        * SANet/SANode.h:
+        * SANet/SANode.cpp:
+
+          Removed SANet cruft (including non-functional methods called from the planner in SA-POP).
+          Also cleaned up some of the SANet & SANode commenting and constructors.
+
 Fri Dec 18 01:00:33 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * SA_Builder.h:

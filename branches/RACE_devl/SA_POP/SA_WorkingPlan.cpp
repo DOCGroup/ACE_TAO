@@ -357,7 +357,7 @@ void SA_WorkingPlan::generate_all_threats(void)
 		debug_text <<"  Task (" <<threat_possibility_taskid << ")"<< ": Inst (" <<iterator->first << ")" << std::endl;
 	}
 	debug_text<<std::endl;
-	SA_POP_DEBUG_STR (SA_POP_DEBUG_MINIMAL, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_QUIET, debug_text.str ());
 	debug_text.str("");
 
 	debug_text << "SA_WorkingPlan::generate_all_threats:  All Causal Threats: " << std::endl;

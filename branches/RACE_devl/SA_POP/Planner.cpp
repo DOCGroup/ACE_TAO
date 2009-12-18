@@ -514,7 +514,7 @@ void Planner::notify_plan_changed (void)
 
 double Planner::calculate_plan_utility(size_t sa_max_steps)
 {
-	sanet_->reset_step();
+//	sanet_->reset_step();
 	sanet_->set_nodes_state(false);
 
 	for(CLSet::iterator it = this->plan_.causal_links.begin(); it != 
@@ -525,7 +525,7 @@ double Planner::calculate_plan_utility(size_t sa_max_steps)
 
 		this->sanet_->set_task_state(this->working_plan_->get_task_from_inst((*it).second), true);
 		this->sanet_->set_cond_state((*it).cond.id, true);
-		this->sanet_->note_causal_link(*it);
+//		this->sanet_->note_causal_link(*it);
 		
 
 
@@ -540,15 +540,15 @@ double Planner::calculate_plan_utility(size_t sa_max_steps)
 		this->sanet_->set_cond_state(it->first, true);
 	}
 
-	sanet_->restrict_prop_to_clinks(true);
+//	sanet_->restrict_prop_to_clinks(true);
 	sanet_->update(sa_max_steps);
-	sanet_->restrict_prop_to_clinks(false);
+//	sanet_->restrict_prop_to_clinks(false);
 
 	double conj_utils = 0;
 	for(GoalMap::iterator it = goals.begin(); it != goals.end(); it++){
 		std::cout<<it->second<<std::endl;
-		std::cout<<this->sanet_->get_current_cond_val(it->first, this->sanet_->get_step())<<std::endl;
-		conj_utils+=(it->second * this->sanet_->get_current_cond_val(it->first, this->sanet_->get_step()));
+		std::cout<<this->sanet_->get_cond_future_val(it->first, this->sanet_->get_step())<<std::endl;
+		conj_utils+=(it->second * this->sanet_->get_cond_future_val(it->first, this->sanet_->get_step()));
 	}
 
 	std::cout<<"Plan utility: "<<conj_utils<<std::endl;
