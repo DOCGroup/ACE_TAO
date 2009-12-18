@@ -1,7 +1,26 @@
+Fri Dec 18 10:48:14 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Read_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Write_T.cpp:
+          Continued working on separating dds lifecycle from
+          ccm lifecycle. The DDS entities are now created at
+          connection time.
+
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
+          Logging time difference of get_one.
+
+        * connectors/dds4ccm/tests/State_Connection_Test/Sender/State_Connection_Test_Sender_exec.cpp:
+          Some debug statements were logged as error messages.
+
 Fri Dec 18 08:36:31 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp
-	  Change cdp for test.
+          Change cdp for test.
 
 Fri Dec 18 08:32:09 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 

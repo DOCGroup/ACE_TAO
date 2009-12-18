@@ -81,6 +81,6 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::CCM_DataWriter_ptr
 DDS_Update_T<DDS_TYPE, CCM_TYPE>::get_dds_entity (void)
 {
-  return ::DDS::CCM_DataWriter::_duplicate (this->data_writer_.in ());
+  return &this->rti_writer_;
 }
 

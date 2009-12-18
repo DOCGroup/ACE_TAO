@@ -93,6 +93,6 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE>::get_dds_entity (void)
 {
   CIAO_TRACE ("DDS_Read_T<DDS_TYPE, CCM_TYPE>::get_dds_entity");
 
-  return this->data_.in ();
+  return &this->rti_reader_;
 }
 

@@ -189,9 +189,14 @@ namespace CIAO_Getter_Test_Receiver_Impl
                                   this->getter_->time_out ().nanosec));
     GetterTest *gettertest_info = new GetterTest;
     ::CCM_DDS::ReadInfo readinfo;
+    ACE_Time_Value tv = ACE_OS::gettimeofday ();
     bool result = this->getter_->get_one (gettertest_info, readinfo);
     if (result)
       {
+        ACE_Time_Value dur = ACE_OS::gettimeofday () - tv;
+        CIAO_DEBUG ((LM_DEBUG, "Receiver_exec_i::get_one: "
+                               "get_one took <%#T>\n",
+                               &dur));
         if (ACE_OS::strcmp (gettertest_info->key, key) != 0)
           {
             CIAO_ERROR ((LM_ERROR, CLINFO "ERROR: GET ONE: "
