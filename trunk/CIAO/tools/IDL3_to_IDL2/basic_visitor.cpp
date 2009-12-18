@@ -19,6 +19,7 @@
 #include "ast_sequence.h"
 #include "ast_string.h"
 #include "ast_structure_fwd.h"
+#include "ast_typedef.h"
 #include "ast_union.h"
 #include "ast_union_branch.h"
 #include "ast_union_fwd.h"
@@ -130,12 +131,6 @@ basic_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
 }
 
 int
-basic_visitor::visit_template_interface (AST_Template_Interface *)
-{
-  return 0;
-}
-
-int
 basic_visitor::visit_valuebox (AST_ValueBox *node)
 {
   if (node->imported ())
@@ -191,7 +186,7 @@ basic_visitor::visit_valuetype (AST_ValueType *node)
       << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
 
   AST_Decl::NodeType nt = node->node_type ();
-  AST_Interface **parents = node->inherits ();
+  AST_Type **parents = node->inherits ();
   long ninherits = node->n_inherits ();
 
   long i = 0;
@@ -215,7 +210,7 @@ basic_visitor::visit_valuetype (AST_ValueType *node)
           << "Components::EventBase";
     }
 
-  AST_Interface **supports = node->supports ();
+  AST_Type **supports = node->supports ();
 
   for (i = 0; i < node->n_supports (); ++i)
     {
@@ -233,7 +228,7 @@ basic_visitor::visit_valuetype (AST_ValueType *node)
           supports[i] = node->supports_concrete ();
         }
 
-      AST_Interface *supported = supports[i];
+      AST_Type *supported = supports[i];
           
       *os << IdentifierHelper::orig_sn (supported->name ()).c_str ();
     }
@@ -279,6 +274,24 @@ basic_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *node)
       << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
       << ";";
 
+  return 0;
+}
+
+int
+basic_visitor::visit_template_module (AST_Template_Module *node)
+{
+  return 0;
+}
+
+int
+basic_visitor::visit_template_module_inst (AST_Template_Module_Inst *node)
+{
+  return 0;
+}
+
+int
+basic_visitor::visit_template_module_ref (AST_Template_Module_Ref *node)
+{
   return 0;
 }
 

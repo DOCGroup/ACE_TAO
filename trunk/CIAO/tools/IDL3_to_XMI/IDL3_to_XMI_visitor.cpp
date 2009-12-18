@@ -28,6 +28,10 @@
 #include "ast_sequence.h"
 #include "ast_string.h"
 #include "ast_structure_fwd.h"
+#include "ast_template_module.h"
+#include "ast_template_module_inst.h"
+#include "ast_template_module_ref.h"
+#include "ast_typedef.h"
 #include "ast_union.h"
 #include "ast_union_branch.h"
 #include "ast_union_fwd.h"
@@ -270,6 +274,27 @@ namespace CIAO
     }
 
     int
+    idl3_to_xmi_visitor::visit_template_module (
+      AST_Template_Module *)
+    {
+      return 0;
+    }
+
+    int
+    idl3_to_xmi_visitor::visit_template_module_inst (
+      AST_Template_Module_Inst *)
+    {
+      return 0;
+    }
+
+    int
+    idl3_to_xmi_visitor::visit_template_module_ref(
+      AST_Template_Module_Ref *)
+    {
+      return 0;
+    }
+
+    int
     idl3_to_xmi_visitor::visit_interface (AST_Interface *node)
     {
       XMI_TRACE ("interface");
@@ -348,13 +373,6 @@ namespace CIAO
           throw;
         }
 
-      return 0;
-    }
-
-    int
-    idl3_to_xmi_visitor::visit_template_interface (
-      AST_Template_Interface *)
-    {
       return 0;
     }
 
@@ -716,26 +734,6 @@ namespace CIAO
 
     int
     idl3_to_xmi_visitor::visit_connector (AST_Connector *)
-    {
-      return 0;
-    }
-
-    int
-    idl3_to_xmi_visitor::visit_instantiated_connector (
-      AST_Instantiated_Connector *)
-    {
-      return 0;
-    }
-
-    int
-    idl3_to_xmi_visitor::visit_tmpl_port (AST_Tmpl_Port *)
-    {
-      return 0;
-    }
-
-    int
-    idl3_to_xmi_visitor::visit_tmpl_mirror_port (
-      AST_Tmpl_Mirror_Port *)
     {
       return 0;
     }

@@ -6,8 +6,17 @@ This test is for correct code generation, the various
 artifacts compile and link, but there is no executable.
 
 The IDL file in this directory was put together to have
-a wide variety of IDL3 constructs, and some features
+a wide variety of IDL3 and non-template IDL3+
+constructs, and some features
 not yet present in other CIAO tests and examples:
+
+            Non-template IDL3+
+            
+- porttype
+- port
+- mirrorport
+
+            IDL3
 
 - inheritance of operations and attributes in:
   - facet interfaces
@@ -27,4 +36,4 @@ not yet present in other CIAO tests and examples:
   
   
 Jeff Parsons
-June 16, 2009
+December 17, 2009
