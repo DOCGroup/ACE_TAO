@@ -602,7 +602,7 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
   idl_global->valuefactory_seen_ = true;
 
   const int inherit_count = 0;
-  AST_Interface **p_intf = 0;
+  AST_Type **p_intf = 0;
 
   UTL_ScopedName *excep_holder_name =
     node->compute_name ("AMH_",

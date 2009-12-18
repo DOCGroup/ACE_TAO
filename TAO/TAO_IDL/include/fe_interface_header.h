@@ -69,6 +69,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_scoped_name.h"
 
+#include "ast_typedef.h"
+
 class UTL_NameList;
 class AST_Interface;
 
@@ -88,7 +90,7 @@ public:
 
   // Data Accessors.
   UTL_ScopedName *name (void) const;
-  AST_Interface **inherits (void) const;
+  AST_Type **inherits (void) const;
   long n_inherits (void) const;
   AST_Interface **inherits_flat (void) const;
   long n_inherits_flat (void) const;
@@ -110,25 +112,28 @@ protected:
   void compile_inheritance (UTL_NameList *ifaces,
                             bool for_valuetype);
 
-  void compile_one_inheritance (AST_Interface *i);
+  void compile_one_inheritance (AST_Type *i);
 
   // Called from compile_inheritance().
   int check_inherit (AST_Interface *i,
                      bool for_valuetype);
 
-  void add_inheritance (AST_Interface *i);
+  void add_inheritance (AST_Type *i);
   void add_inheritance_flat (AST_Interface *i);
-  bool already_seen (AST_Interface *ip);
+  bool already_seen (AST_Type *ip);
   bool already_seen_flat (AST_Interface *ip);
   
   void install_in_header (void);
+  
+  void destroy_flat_arrays (void);
 
   // Data.
 protected:
   UTL_ScopedName *interface_name_;
+  bool has_template_parent_;
 
   // Inherited interfaces.
-  AST_Interface **inherits_;
+  AST_Type **inherits_;
   long n_inherits_;
 
   // Used for name clash checking.
@@ -138,7 +143,7 @@ protected:
   bool is_local_;
   bool is_abstract_;
 
-  AST_Interface **iseen_;
+  AST_Type **iseen_;
   AST_Interface **iseen_flat_;
   long iallocated_;
   long iused_;

@@ -23,20 +23,6 @@
 #include "be_visitor.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (be,
-           be_typedef,
-           "$Id$")
-
-be_typedef::be_typedef (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_Typedef (),
-    be_decl (),
-    be_type ()
-{
-}
-
 be_typedef::be_typedef (AST_Type *bt,
                         UTL_ScopedName *n,
                         bool local,
@@ -47,6 +33,9 @@ be_typedef::be_typedef (AST_Type *bt,
               n),
     AST_Type (AST_Decl::NT_typedef,
               n),
+    AST_Field (AST_Decl::NT_typedef,
+               bt,
+               n),
     AST_Typedef (bt,
                  n,
                  bt->is_local () || local,

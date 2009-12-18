@@ -78,7 +78,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_expression.h"
 #include "ast_operation.h"
 #include "ast_generator.h"
-#include "ast_module.h"
+#include "ast_template_module.h"
+#include "ast_template_module_inst.h"
+#include "ast_template_module_ref.h"
+#include "ast_typedef.h"
 #include "ast_valuebox.h"
 #include "ast_valuetype.h"
 #include "ast_valuetype_fwd.h"
@@ -87,10 +90,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_component.h"
 #include "ast_component_fwd.h"
 #include "ast_home.h"
-#include "ast_template_interface.h"
 #include "ast_porttype.h"
 #include "ast_connector.h"
-#include "ast_instantiated_connector.h"
 #include "ast_uses.h"
 #include "ast_constant.h"
 #include "ast_union.h"
@@ -103,14 +104,16 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_string.h"
 #include "ast_factory.h"
 #include "ast_exception.h"
+#include "ast_param_holder.h"
+
 #include "fe_declarator.h"
 #include "fe_interface_header.h"
-#include "fe_template_interface_header.h"
 #include "fe_obv_header.h"
 #include "fe_event_header.h"
 #include "fe_component_header.h"
 #include "fe_home_header.h"
 #include "fe_utils.h"
+
 #include "utl_identifier.h"
 #include "utl_err.h"
 #include "utl_string.h"
@@ -119,6 +122,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_exprlist.h"
 #include "utl_labellist.h"
 #include "utl_decllist.h"
+
 #include "global_extern.h"
 #include "nr_extern.h"
 
@@ -132,7 +136,8 @@ int yylex (void);
 extern "C" int yywrap (void);
 extern char yytext[];
 extern int yyleng;
-AST_Decl *tao_enum_constant_decl = 0;
+AST_Enum *tao_enum_constant_decl = 0;
+AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 #define YYDEBUG_LEXER_TEXT (yytext[yyleng] = '\0', yytext)
 // Force the pretty debugging code to compile.
 #define YYDEBUG 1
@@ -150,7 +155,6 @@ AST_Decl *tao_enum_constant_decl = 0;
   UTL_LabelList                 *llval;         /* Label list           */
   UTL_DeclList                  *dlval;         /* Declaration list     */
   FE_InterfaceHeader            *ihval;         /* Interface header     */
-  FE_Template_InterfaceHeader   *thval;         /* Template interface hdr */
   FE_OBVHeader                  *vhval;         /* Valuetype header     */
   FE_EventHeader                *ehval;         /* Event header         */
   FE_ComponentHeader            *chval;         /* Component header     */
@@ -182,6 +186,7 @@ AST_Decl *tao_enum_constant_decl = 0;
   FE_Utils::T_REFLIST_INFO      *rlval;         /* List of above structs */
   FE_Utils::T_Inst_Info         *tival;         /* Template instantiation */
   FE_Utils::T_Port_Info         *ptval;         /* Porttype reference */
+  FE_Utils::T_ARGLIST           *alval;         /* List of template args */
 }
 
 /*
@@ -257,12 +262,11 @@ AST_Decl *tao_enum_constant_decl = 0;
 %token          IDL_MANAGES
                 /* Extended ports tokens  */
 %token          IDL_TYPENAME
-%token          IDL_PRIMITIVE
 %token          IDL_PORT
 %token          IDL_MIRRORPORT
 %token          IDL_PORTTYPE
 %token          IDL_CONNECTOR
-%token          IDL_CONCAT
+%token          IDL_ALIAS
 
 %token <ival>   IDL_INTEGER_LITERAL
 %token <uival>  IDL_UINTEGER_LITERAL
@@ -286,14 +290,15 @@ AST_Decl *tao_enum_constant_decl = 0;
 %type <dcval>   template_type_spec sequence_type_spec string_type_spec
 %type <dcval>   struct_type enum_type switch_type_spec union_type
 %type <dcval>   array_declarator op_type_spec seq_head wstring_type_spec
-%type <dcval>   param_type_spec connector_inst_spec type_dcl type_declarator
+%type <dcval>   param_type_spec type_dcl type_declarator actual_parameter
 
 %type <idlist>  scoped_name interface_type component_inheritance_spec
-%type <idlist>  home_inheritance_spec primary_key_spec
+%type <idlist>  home_inheritance_spec primary_key_spec module_header
+%type <idlist>  template_module_header
 
 %type <slval>   opt_context at_least_one_string_literal
-%type <slval>   string_literals template_param_refs
-%type <slval>   at_least_one_template_param_ref
+%type <slval>   string_literals formal_parameter_names
+%type <slval>   at_least_one_formal_parameter_name
 
 %type <nlval>   at_least_one_scoped_name scoped_names inheritance_spec
 %type <nlval>   opt_raises opt_getraises opt_setraises supports_spec
@@ -339,25 +344,15 @@ AST_Decl *tao_enum_constant_decl = 0;
 %type <idval>   event_header event_plain_header event_custom_header
 %type <idval>   event_abs_header
 
-%type <ntval>   type_classifier
+%type <ntval>   formal_parameter_type
 
-%type <pival>   template_param
+%type <pival>   formal_parameter
 
-%type <plval>   template_params at_least_one_template_param
-%type <plval>   opt_template_params
+%type <plval>   formal_parameters at_least_one_formal_parameter
 
-%type <sval>    template_param_ref
+%type <sval>    formal_parameter_name
 
-%type <trval>   template_ref
-
-%type <rlval>   template_refs at_least_one_template_ref
-%type <rlval>   template_inheritance_spec
-
-%type <thval>   template_interface_header
-
-%type <tival>   template_inst
-
-%type <ptval>   template_ref_decl
+%type <alval>   actual_parameters at_least_one_actual_parameter
 %%
 
 /*
@@ -371,9 +366,30 @@ definitions
         ;
 
 definition
+        : fixed_definition
+        {
+        }
+        | template_module ';'
+        {
+        }
+        | template_module_inst ';'
+        {
+        }
+        ;
+
+at_least_one_fixed_definition
+        : fixed_definitions fixed_definition
+        ;
+
+fixed_definitions
+        : fixed_definitions fixed_definition
+        | /* EMPTY */
+        ;
+
+fixed_definition
         : type_dcl
         {
-// definition : type_dcl
+// fixed_definition : type_dcl
           idl_global->set_parse_state (IDL_GlobalData::PS_TypeDeclSeen);
         }
           ';'
@@ -431,19 +447,9 @@ definition
 //      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
-        | template_interface_def
+        | fixed_module
         {
-//      | template_interface_def
-          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceDeclSeen);
-        }
-          ';'
-        {
-//      ';'
-          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
-        }
-        | module
-        {
-//      | module
+//      | fixed_module
           idl_global->set_parse_state (IDL_GlobalData::PS_ModuleDeclSeen);
         }
           ';'
@@ -524,57 +530,295 @@ definition
         }
         ;
 
-module  : IDL_MODULE
-          {
-// module  : IDL_MODULE
-            idl_global->set_parse_state (IDL_GlobalData::PS_ModuleSeen);
-          }
-          IDENTIFIER
-          {
-//        IDENTIFIER
-            Identifier id ($3);
-            ACE::strdelete ($3);
-            $3 = 0;
-            UTL_ScopedName n (&id,
-                              0);
-            AST_Module *m = 0;
-            UTL_Scope *s = idl_global->scopes ().top_non_null ();
+module_header
+        : IDL_MODULE
+        {
+// module_header  : IDL_MODULE
+          idl_global->set_parse_state (IDL_GlobalData::PS_ModuleSeen);
+        }
+        scoped_name
+        {
+          $<idlist>$ = $3;
+        }
+        ;
 
-            idl_global->set_parse_state (IDL_GlobalData::PS_ModuleIDSeen);
-            /*
-             * Make a new module and add it to the enclosing scope
-             */
-            if (s != 0)
-              {
-                m = idl_global->gen ()->create_module (s,
-                                                       &n);
-                (void) s->fe_add_module (m);
-              }
-            /*
-             * Push it on the stack
-             */
-            idl_global->scopes ().push (m);
-          }
-          '{'
-          {
-//        '{'
-            idl_global->set_parse_state (IDL_GlobalData::PS_ModuleSqSeen);
-          }
-          definitions
-          {
-//        definitions
-            idl_global->set_parse_state (IDL_GlobalData::PS_ModuleBodySeen);
-          }
-          '}'
-          {
-//        '}'
-            idl_global->set_parse_state (IDL_GlobalData::PS_ModuleQsSeen);
-            /*
-             * Finished with this module - pop it from the scope stack.
-             */
-            idl_global->scopes ().pop ();
-          }
-          ;
+fixed_module
+        : module_header
+        {
+// fixed_module : module_header
+          idl_global->set_parse_state (IDL_GlobalData::PS_ModuleIDSeen);
+
+          // The module_header rule is common to template module, fixed
+          // module and instantiated template module. In the last
+          // case, a fully scoped name is allowed, but here we
+          // allow only an identifier (a scoped name of length
+          // 1). If not satisfied, we output a parse error with
+          // the appropriate message.
+          if ($1->length () != 1)
+            {
+              idl_global->err ()->syntax_error (
+                IDL_GlobalData::PS_ModuleIDSeen);
+            }
+
+          AST_Module *m = 0;
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+
+          /*
+           * Make a new module and add it to the enclosing scope
+           */
+          if (s != 0)
+            {
+              m = idl_global->gen ()->create_module (s,
+                                                     $1);
+              (void) s->fe_add_module (m);
+            }
+
+          /*
+           * Push it on the stack
+           */
+          idl_global->scopes ().push (m);
+        }
+        '{'
+        {
+//      '{'
+        idl_global->set_parse_state (IDL_GlobalData::PS_ModuleSqSeen);
+        }
+        at_least_one_fixed_definition
+        {
+//      at_least_one_fixed_definition
+          idl_global->set_parse_state (IDL_GlobalData::PS_ModuleBodySeen);
+        }
+        '}'
+        {
+//      '}'
+          idl_global->set_parse_state (IDL_GlobalData::PS_ModuleQsSeen);
+          /*
+           * Finished with this module - pop it from the scope stack.
+           */
+          idl_global->scopes ().pop ();
+        }
+        ;
+
+template_module_header
+        : module_header '<'
+        {
+          idl_global->set_parse_state (IDL_GlobalData::PS_TmplModuleIDSeen);
+        }
+        ;
+
+template_module
+        : template_module_header
+        {
+// template_module : template_module_header
+          // The module_header rule is common to template module, fixed
+          // module and instantiated template module. In the last
+          // case, a fully scoped name is allowed, but here we
+          // allow only an identifier (a scoped name of length
+          // 1). If not satisfied, we output a syntax error with
+          // the appropriate message.
+          if ($1->length () != 1)
+            {
+              idl_global->err ()->syntax_error (
+                IDL_GlobalData::PS_ModuleIDSeen);
+            }
+        }
+        at_least_one_formal_parameter
+        {
+          if (FE_Utils::duplicate_param_id ($3))
+            {
+              idl_global->err ()->duplicate_param_id (
+                $1);
+                
+              return 1;
+            }
+        }
+        '>'
+        {
+//        '>'
+          idl_global->set_parse_state (IDL_GlobalData::PS_TmplModuleParamsSeen);
+
+          AST_Template_Module *tm =
+            idl_global->gen ()->create_template_module ($1,
+                                                        $3);
+
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+
+          (void) s->fe_add_module (tm);
+
+          /*
+           * Push it on the stack
+           */
+          idl_global->scopes ().push (tm);
+          
+          // Store these for reference as we parse the scope 
+          // of the template module.
+          idl_global->current_params ($3);
+        }
+        '{'
+        {
+          idl_global->set_parse_state (IDL_GlobalData::PS_TmplModuleSqSeen);
+        }
+        at_least_one_tpl_definition
+        {
+          idl_global->set_parse_state (IDL_GlobalData::PS_TmplModuleBodySeen);
+        }
+        '}'
+        {
+          idl_global->set_parse_state (IDL_GlobalData::PS_TmplModuleQsSeen);
+
+          /*
+           * Finished with this module - pop it from the scope stack.
+           */
+          idl_global->scopes ().pop ();
+          
+          // Clear the pointer so scoped name lookup will know
+          // that we are no longer in a template module scope.
+          idl_global->current_params (0);
+        }
+        ;
+
+at_least_one_tpl_definition
+        : tpl_definition tpl_definitions
+        ;
+
+tpl_definitions
+        : tpl_definitions tpl_definition
+        | /* EMPTY */
+        ;
+
+tpl_definition
+        : fixed_definition
+        | template_module_ref ';'
+        ;
+
+template_module_ref
+        : IDL_ALIAS scoped_name
+        {
+// template_module_ref : IDL_ALIAS scoped_name
+          idl_global->set_parse_state (
+            IDL_GlobalData::PS_ModuleRefSeen);
+        }
+        '<' at_least_one_formal_parameter_name '>'
+        {
+//        '<' at_least_one_formal_parameter_name '>'
+          idl_global->set_parse_state (
+            IDL_GlobalData::PS_ModuleRefParamsSeen);
+        }
+        id
+        {
+//        id
+          idl_global->set_parse_state (
+            IDL_GlobalData::PS_ModuleRefIDSeen);
+
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Decl *d = s->lookup_by_name ($2, true);
+
+          if (d == 0)
+            {
+              idl_global->err ()->lookup_error ($2);
+              return 1;
+            }
+
+          AST_Template_Module *ref =
+            AST_Template_Module::narrow_from_decl (d);
+
+          if (ref == 0)
+            {
+              idl_global->err ()->template_module_expected (d);
+              return 1;
+            }
+
+          bool refs_match =
+            ref->match_param_refs ($5,
+                                   s);
+
+          if (! refs_match)
+            {
+              // Error message is already output.
+              return 1;
+            }
+
+          UTL_ScopedName sn ($8, 0);
+
+          AST_Template_Module_Ref *tmr =
+            idl_global->gen ()->create_template_module_ref (
+              &sn,
+              ref,
+              $5);
+
+           (void) s->fe_add_template_module_ref (tmr);
+
+           sn.destroy ();
+           $2->destroy ();
+           delete $2;
+           $2 = 0;
+        }
+        ;
+
+template_module_inst
+        : template_module_header
+        {
+// template_module_inst : template_module_header
+          idl_global->set_parse_state (
+            IDL_GlobalData::PS_InstModuleSeen);
+        }
+        at_least_one_actual_parameter '>'
+        {
+//        at_least_one_actual_parameter '>'
+          idl_global->set_parse_state (
+            IDL_GlobalData::PS_InstModuleArgsSeen);
+        }
+        id
+        {
+//        id
+          idl_global->set_parse_state (
+            IDL_GlobalData::PS_InstModuleIDSeen);
+
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          UTL_ScopedName *sn = $1;
+          AST_Template_Module *ref = 0;
+          AST_Decl *d = s->lookup_by_name (sn, true);
+
+          if (d == 0)
+            {
+              idl_global->err ()->lookup_error (sn);
+              return 1;
+            }
+          else
+            {
+              ref = AST_Template_Module::narrow_from_decl (d);
+
+              if (ref == 0)
+                {
+                  idl_global->err ()->template_module_expected (d);
+                  return 1;
+                }
+            }
+
+          sn->destroy ();
+          delete sn;
+          sn = 0;
+          $1 = 0;
+
+          if (! ref->match_arg_names ($3))
+            {
+              return 1;
+            }
+
+          ACE_NEW_RETURN (sn,
+                          UTL_ScopedName ($6,
+                                           0),
+                          1);
+
+          AST_Template_Module_Inst *tmi =
+            idl_global->gen ()->create_template_module_inst (
+              sn,
+              ref,
+              $3);
+
+          (void) s->fe_add_template_module_inst (tmi);
+        }
+        ;
 
 interface_def
         : interface
@@ -1260,7 +1504,7 @@ at_least_one_scoped_name :
         scoped_name scoped_names
         {
 // at_least_one_scoped_name : scoped_name scoped_names
-          ACE_NEW_RETURN ($$,
+          ACE_NEW_RETURN ($<nlval>$,
                           UTL_NameList ($1,
                                         $2),
                           1);
@@ -1279,28 +1523,26 @@ scoped_names
 //      scoped_name
           idl_global->set_parse_state (IDL_GlobalData::PS_ScopedNameSeen);
 
+          UTL_NameList *nl = 0;
+          ACE_NEW_RETURN (nl,
+                          UTL_NameList ($4,
+                                        0),
+                          1);
+
           if ($1 == 0)
             {
-              ACE_NEW_RETURN ($$,
-                              UTL_NameList ($4,
-                                            0),
-                              1);
+              $<nlval>$ = nl;
             }
           else
             {
-              UTL_NameList *nl = 0;
-              ACE_NEW_RETURN (nl,
-                              UTL_NameList ($4,
-                                            0),
-                              1);
               $1->nconc (nl);
-              $$ = $1;
+              $<nlval>$ = $1;
             }
         }
         | /* EMPTY */
         {
 /*      |  EMPTY */
-          $$ = 0;
+          $<nlval>$ = 0;
         }
         ;
 
@@ -1336,7 +1578,7 @@ scoped_name
                           UTL_IdList ($3,
                                       0),
                           1);
-          ACE_NEW_RETURN ($$,
+          ACE_NEW_RETURN ($<idlist>$,
                           UTL_IdList (id,
                                       sn),
                           1);
@@ -1364,7 +1606,7 @@ scoped_name
                                       0),
                           1);
           $1->nconc (sn);
-          $$ = $1;
+          $<idlist>$ = $1;
         }
         ;
 
@@ -1519,12 +1761,17 @@ const_dcl :
            */
           if ($9 != 0 && s != 0)
             {
+              AST_Param_Holder *param_holder =
+                $9->param_holder ();
+
               AST_Expression::AST_ExprValue *result =
                 $9->check_and_coerce ($3,
                                       tao_enum_constant_decl);
               tao_enum_constant_decl = 0;
 
-              if (result == 0)
+              // If the expression is a template parameter place
+              // holder, 'result' will be 0, but it's ok.
+              if (result == 0 && param_holder == 0)
                 {
                   idl_global->err ()->coercion_error ($9,
                                                       $3);
@@ -1534,20 +1781,33 @@ const_dcl :
                 }
               else
                 {
-                  c =
-                    idl_global->gen ()->create_constant (
-                                            $3,
-                                            $9,
-                                            &n
-                                          );
-                  (void) s->fe_add_constant (c);
-                  delete result;
-                  result = 0;
+                  AST_Expression::ExprType et =
+                    $3;
+                    
+                  if (param_holder != 0
+                      && et != param_holder->info ()->const_type_)
+                    {
+                      idl_global->err ()->mismatched_template_param (
+                        param_holder->info ()->name_.c_str ());
+                    }
+                  else
+                    {                    
+                      c =
+                        idl_global->gen ()->create_constant (
+                          $3,
+                          $9,
+                          &n);
+                          
+                      (void) s->fe_add_constant (c);
+                    }
                 }
 
               $5->destroy ();
               delete $5;
               $5 = 0;
+              
+              delete result;
+              result = 0;
             }
         }
         ;
@@ -1582,23 +1842,17 @@ const_type
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_PredefinedType *c = 0;
           AST_Typedef *t = 0;
+          UTL_ScopedName *sn = $1;
 
           /*
            * If the constant's type is a scoped name, it must resolve
            * to a scalar constant type
            */
           AST_Decl *d =
-            s->lookup_by_name ($1,
-                               true);
+            s->lookup_by_name (sn, true);
 
-          $1->destroy ();
-          delete $1;
-          $1 = 0;
-
-          if (s != 0  && d != 0)
+          if (s != 0 && d != 0)
             {
-              tao_enum_constant_decl = d;
-
               /*
                * Look through typedefs.
                */
@@ -1614,40 +1868,40 @@ const_type
                   d = t->base_type ();
                 }
 
-              if (d == 0)
-                {
-                  $$ = AST_Expression::EV_enum;
-                }
-              else if (d->node_type () == AST_Decl::NT_pre_defined)
+              if (d->node_type () == AST_Decl::NT_pre_defined)
                 {
                   c = AST_PredefinedType::narrow_from_decl (d);
 
-                  if (c != 0)
-                    {
-                      $$ = idl_global->PredefinedTypeToExprType (c->pt ());
-                    }
-                  else
-                    {
-                      $$ = AST_Expression::EV_enum;
-                    }
+                  $<etval>$ = idl_global->PredefinedTypeToExprType (c->pt ());
                 }
               else if (d->node_type () == AST_Decl::NT_string)
                 {
-                  $$ = AST_Expression::EV_string;
+                  $<etval>$ = AST_Expression::EV_string;
                 }
               else if (d->node_type () == AST_Decl::NT_wstring)
                 {
-                  $$ = AST_Expression::EV_wstring;
+                  $<etval>$ = AST_Expression::EV_wstring;
+                }
+              else if (d->node_type () == AST_Decl::NT_enum)
+                {
+                  $<etval>$ = AST_Expression::EV_enum;
+                  tao_enum_constant_decl =
+                    AST_Enum::narrow_from_decl (d);
                 }
               else
                 {
-                  $$ = AST_Expression::EV_enum;
+                  idl_global->err ()->constant_expected (sn, d);
                 }
             }
           else
             {
-              $$ = AST_Expression::EV_enum;
+              idl_global->err ()->lookup_error (sn);
             }
+ 
+          sn->destroy ();
+          delete sn;
+          sn = 0;
+          $1 = 0;
         }
         ;
 
@@ -1827,28 +2081,44 @@ primary_expr
           AST_Decl *d = s->lookup_by_name ($1,
                                            true);
 
-          /*
-           * If the scoped name is an IDL constant, it may be used in an
-           * array dim, a string bound, or a sequence bound. If so, it
-           * must be unsigned and > 0. We assign the constant's value
-           * and type to the expression created here so we can check
-           * them later.
-           */
-          if (d != 0 && d->node_type () == AST_Decl::NT_const)
+          if (d == 0)
             {
-              AST_Constant *c = AST_Constant::narrow_from_decl (d);
-              $$ =
-                idl_global->gen ()->create_expr (c->constant_value (),
-                                                 c->et ());
+              idl_global->err ()->lookup_error ($1);
+              return 1;
+            }
+          else if (d->node_type () == AST_Decl::NT_const)
+            {
+              /*
+               * If the scoped name is an IDL constant, it
+               * may be used in an array dim, a string
+               * bound, or a sequence bound. If so, it
+               * must be unsigned and > 0. We assign the
+               * constant's value and type to the
+               * expression created here so we can check
+               * them later.
+               */
+              AST_Constant *c =
+                AST_Constant::narrow_from_decl (d);
 
-              $1->destroy ();
-              delete $1;
-              $1 = 0;
+              $<exval>$ =
+                idl_global->gen ()->create_expr (
+                  c->constant_value (),
+                  c->et ());
             }
           else
             {
-              $$ = idl_global->gen ()->create_expr ($1);
+              // An AST_Expression owns the scoped name
+              // passed in this constructor, so we copy it
+              // and destroy it below no matter which case
+              // is followed.
+              $<exval>$ =
+                idl_global->gen ()->create_expr (
+                  $1->copy ());
             }
+
+          $1->destroy ();
+          delete $1;
+          $1 = 0;
         }
         | literal
         | '(' const_expr ')'
@@ -2172,7 +2442,6 @@ template_type_spec
         : sequence_type_spec
         | string_type_spec
         | wstring_type_spec
-        | connector_inst_spec
         ;
 
 constructed_type_spec
@@ -2209,28 +2478,26 @@ declarators
 //      declarator
           idl_global->set_parse_state (IDL_GlobalData::PS_DeclsDeclSeen);
 
+          UTL_DeclList *dl = 0;
+          ACE_NEW_RETURN (dl,
+                          UTL_DeclList ($4,
+                                        0),
+                          1);
+
           if ($1 == 0)
             {
-              ACE_NEW_RETURN ($$,
-                              UTL_DeclList ($4,
-                                            0),
-                              1);
+              $<dlval>$ = dl;
             }
           else
             {
-              UTL_DeclList *dl = 0;
-              ACE_NEW_RETURN (dl,
-                              UTL_DeclList ($4,
-                                            0),
-                              1);
               $1->nconc (dl);
-              $$ = $1;
+              $<dlval>$ = $1;
             }
         }
         | /* EMPTY */
         {
 /*      |  EMPTY */
-          $$ = 0;
+          $<dlval>$ = 0;
         }
         ;
 
@@ -2243,7 +2510,7 @@ at_least_one_simple_declarator :
         simple_declarator simple_declarators
         {
 // at_least_one_simple_declarator : simple_declarator simple_declarators
-          ACE_NEW_RETURN ($$,
+          ACE_NEW_RETURN ($<dlval>$,
                           UTL_DeclList ($1,
                                         $2),
                           1);
@@ -2262,28 +2529,26 @@ simple_declarators
 //      simple_declarator
           idl_global->set_parse_state (IDL_GlobalData::PS_DeclsDeclSeen);
 
+          UTL_DeclList *dl = 0;
+          ACE_NEW_RETURN (dl,
+                          UTL_DeclList ($4,
+                                        0),
+                          1);
+
           if ($1 == 0)
             {
-              ACE_NEW_RETURN ($$,
-                              UTL_DeclList ($4,
-                                            0),
-                              1);
+              $<dlval>$ = dl;
             }
           else
             {
-              UTL_DeclList *dl = 0;
-              ACE_NEW_RETURN (dl,
-                              UTL_DeclList ($4,
-                                            0),
-                              1);
               $1->nconc (dl);
-              $$ = $1;
+              $<dlval>$ = $1;
             }
         }
         | /* EMPTY */
         {
 /*      |  EMPTY */
-          $$ = 0;
+          $<dlval>$ = 0;
         }
         ;
 
@@ -2296,7 +2561,7 @@ simple_declarator :
                           UTL_ScopedName ($1,
                                           0),
                           1);
-          ACE_NEW_RETURN ($$,
+          ACE_NEW_RETURN ($<deval>$,
                           FE_Declarator (sn,
                                          FE_Declarator::FD_simple,
                                          0),
@@ -2315,7 +2580,7 @@ complex_declarator :
                               0
                             ),
                           1);
-          ACE_NEW_RETURN ($$,
+          ACE_NEW_RETURN ($<deval>$,
                           FE_Declarator (sn,
                                          FE_Declarator::FD_complex,
                                          $1),
@@ -2936,7 +3201,7 @@ at_least_one_case_label :
         case_label case_labels
         {
 // at_least_one_case_label : case_label case_labels
-          ACE_NEW_RETURN ($$,
+          ACE_NEW_RETURN ($<llval>$,
                           UTL_LabelList ($1,
                                          $2),
                           1);
@@ -2947,28 +3212,26 @@ case_labels
         : case_labels case_label
         {
 // case_labels : case_labels case_label
+          UTL_LabelList *ll = 0;
+          ACE_NEW_RETURN (ll,
+                          UTL_LabelList ($2,
+                                         0),
+                          1);
+
           if ($1 == 0)
             {
-              ACE_NEW_RETURN ($$,
-                              UTL_LabelList ($2,
-                                             0),
-                              1);
+              $<llval>$ = ll;
             }
           else
             {
-              UTL_LabelList *ll = 0;
-              ACE_NEW_RETURN (ll,
-                              UTL_LabelList ($2,
-                                             0),
-                              1);
               $1->nconc (ll);
-              $$ = $1;
+              $<llval>$ = $1;
             }
         }
         | /* EMPTY */
         {
 /*      |  EMPTY */
-          $$ = 0;
+          $<llval>$ = 0;
         }
         ;
 
@@ -3260,21 +3523,29 @@ sequence_type_spec
            * Create a node representing a sequence
            */
           AST_Expression::AST_ExprValue *ev = 0;
+          AST_Param_Holder *param_holder = 0;
 
           if ($4 != 0)
             {
+              param_holder =
+                $4->param_holder ();
+                
               ev = $4->coerce (AST_Expression::EV_ulong);
             }
 
-          if (0 == $4 || 0 == ev)
+          // If the expression corresponds to a template parameter,
+          // it's ok for the coercion to fail at this point. We check
+          // for a type mismatch below.
+          if (0 == $4
+              || (0 == ev && 0 == param_holder))
             {
               idl_global->err ()->coercion_error ($4,
                                                   AST_Expression::EV_ulong);
-              $$ = 0;
+              $<dcval>$ = 0;
             }
           else if (0 == $1)
             {
-              $$ = 0;
+              $<dcval>$ = 0;
             }
           else
             {
@@ -3573,7 +3844,7 @@ at_least_one_array_dim :
         array_dim array_dims
         {
 // at_least_one_array_dim : array_dim array_dims
-          ACE_NEW_RETURN ($$,
+          ACE_NEW_RETURN ($<elval>$,
                           UTL_ExprList ($1,
                                         $2),
                           1);
@@ -3584,28 +3855,26 @@ array_dims
         : array_dims array_dim
         {
 // array_dims : array_dims array_dim
+          UTL_ExprList *el = 0;
+          ACE_NEW_RETURN (el,
+                          UTL_ExprList ($2,
+                                        0),
+                          1);
+
           if ($1 == 0)
             {
-              ACE_NEW_RETURN ($$,
-                              UTL_ExprList ($2,
-                                            0),
-                              1);
+              $<elval>$ = el;
             }
           else
             {
-              UTL_ExprList *el = 0;
-              ACE_NEW_RETURN (el,
-                              UTL_ExprList ($2,
-                                            0),
-                              1);
               $1->nconc (el);
-              $$ = $1;
+              $<elval>$ = $1;
             }
         }
         | /* EMPTY */
         {
 /*      |  EMPTY */
-          $$ = 0;
+          $<elval>$ = 0;
         }
         ;
 
@@ -3630,13 +3899,19 @@ array_dim :
            * positive integers.
            */
           AST_Expression::AST_ExprValue *ev = 0;
+          AST_Param_Holder *param_holder = 0;
 
           if ($3 != 0)
             {
-              ev = $3->coerce (AST_Expression::EV_ulong);
+              param_holder =
+                $3->param_holder ();
+
+              ev =
+                $3->coerce (AST_Expression::EV_ulong);
             }
 
-          if (0 == $3 || 0 == ev)
+          if (0 == $3
+              || (ev == 0 && param_holder == 0))
             {
               idl_global->err ()->coercion_error ($3,
                                                   AST_Expression::EV_ulong);
@@ -3644,6 +3919,25 @@ array_dim :
             }
           else
             {
+              if (param_holder != 0)
+                {
+                  AST_Expression::ExprType et =
+                    param_holder->info ()->const_type_;
+                    
+                  // If the bound expression represents a
+                  // template parameter, it must be a const
+                  // and of type unsigned long.  
+                  if (et != AST_Expression::EV_ulong)
+                    {
+                      idl_global->err ()->mismatched_template_param (
+                        param_holder->info ()->name_.c_str ());
+                        
+                      delete ev;
+                      ev = 0;
+                      return 1;
+                    }
+                }
+
               $$ = $3;
             }
 
@@ -4296,29 +4590,14 @@ param_type_spec
           if (d == 0)
             {
               bool so_far_so_good = false;
-              
+
               // We're looking for a template parameter ref, so
               // the scoped name would just be a simple identifier.
               if (n->length () == 1)
-                {  
-                  AST_Template_Interface *ti =
-                    AST_Template_Interface::narrow_from_scope (
-                      ScopeAsDecl (s)->defined_in ());
-                      
-                  if (ti != 0)
-                    {
-                      so_far_so_good =
-                        ti->find_param (n->head ()->get_string ());
-                    
-                      if (so_far_so_good)
-                        {
-                          d =
-                            idl_global->gen ()->create_placeholder (n);
-                          s->add_to_scope (d);
-                        }
-                    }
+                {
+                  // TODO
                 }
-                 
+
               if (!so_far_so_good)
                 {    
                   idl_global->err ()->lookup_error (n);
@@ -4520,7 +4799,7 @@ at_least_one_string_literal :
         IDL_STRING_LITERAL string_literals
         {
 // at_least_one_string_literal : IDL_STRING_LITERAL string_literals
-          ACE_NEW_RETURN ($$,
+          ACE_NEW_RETURN ($<slval>$,
                           UTL_StrList ($1,
                                        $2),
                           1);
@@ -4537,22 +4816,20 @@ string_literals
         IDL_STRING_LITERAL
         {
 //      IDL_STRING_LITERAL
+          UTL_StrList *sl = 0;
+          ACE_NEW_RETURN (sl,
+                          UTL_StrList ($4,
+                                       0),
+                          1);
+
           if ($1 == 0)
             {
-              ACE_NEW_RETURN ($$,
-                              UTL_StrList ($4,
-                                           0),
-                              1);
+              $<slval>$ = sl;
             }
           else
             {
-              UTL_StrList *sl = 0;
-              ACE_NEW_RETURN (sl,
-                              UTL_StrList ($4,
-                                           0),
-                              1);
               $1->nconc (sl);
-              $$ = $1;
+              $<slval>$ = $1;
             }
         }
         | /* EMPTY */
@@ -4749,9 +5026,10 @@ component_header :
            */
           UTL_ScopedName *n = 0;
           ACE_NEW_RETURN (n,
-                          UTL_ScopedName ($2, 0),
+                          UTL_ScopedName ($2,
+                                          0),
                           1);
-          ACE_NEW_RETURN ($$,
+          ACE_NEW_RETURN ($<chval>$,
                           FE_ComponentHeader (n,
                                               $4,
                                               $6,
@@ -4783,7 +5061,7 @@ component_inheritance_spec
           scoped_name
         {
 //      scoped_name
-          $$ = $3;
+          $<idlist>$ = $3;
         }
         | /* EMPTY */
         {
@@ -4875,6 +5153,8 @@ provides_decl : IDL_PROVIDES interface_type id
 // provides_decl : IDL_PROVIDES interface_type id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
+          AST_Decl::NodeType nt = AST_Decl::NT_type;
+          AST_Param_Holder *ph = 0;
 
           AST_Decl *d = s->lookup_by_name ($2,
                                            true);
@@ -4883,20 +5163,49 @@ provides_decl : IDL_PROVIDES interface_type id
               idl_global->err ()->lookup_error ($2);
               so_far_so_good = false;
             }
-          else if (d->node_type () != AST_Decl::NT_interface)
+          else
             {
-              // Nothing else but CORBA::Object can have
-              // this identifier.
-              int comp_result =
-                ACE_OS::strcmp (d->local_name ()->get_string (),
-                                "Object");
-
-              // Simple provides port must use IDL interface
-              // or CORBA::Object.
-              if (comp_result != 0)
+              int compare = 0;
+              nt = d->node_type ();
+            
+              switch (nt)
                 {
-                  idl_global->err ()->interface_expected (d);
-                  so_far_so_good = false;
+                  case AST_Decl::NT_interface:
+                    break;
+                  case AST_Decl::NT_param_holder:
+                    ph = AST_Param_Holder::narrow_from_decl (d);
+                    nt = ph->info ()->type_;
+                    
+                    if (nt != AST_Decl::NT_type
+                       && nt != AST_Decl::NT_interface)
+                      {
+                        idl_global->err ()->mismatched_template_param (
+                          ph->info ()->name_.c_str ());
+                          
+                        so_far_so_good = false;
+                      }
+                      
+                    break;
+                  case AST_Decl::NT_pre_defined:
+                    // Nothing else but CORBA::Object can have
+                    // this identifier.
+                    compare =
+                      ACE_OS::strcmp (d->local_name ()->get_string (),
+                                      "Object");
+
+                    // Simple provides port must use IDL interface
+                    // or CORBA::Object.
+                    if (compare != 0)
+                      {
+                        idl_global->err ()->interface_expected (d);
+                        so_far_so_good = false;
+                      }
+                      
+                    break;
+                  default:
+                    idl_global->err ()->interface_expected (d);
+                    so_far_so_good = false;
+                    break;
                 }
             }
 
@@ -4940,23 +5249,25 @@ interface_type
         {
 //      | IDL_OBJECT
           Identifier *corba_id = 0;
+          
           ACE_NEW_RETURN (corba_id,
                           Identifier ("Object"),
                           1);
+                          
           UTL_IdList *conc_name = 0;
           ACE_NEW_RETURN (conc_name,
                           UTL_IdList (corba_id,
                                       0),
                           1);
+                          
           ACE_NEW_RETURN (corba_id,
                           Identifier ("CORBA"),
                           1);
-          UTL_IdList *corba_name = 0;
-          ACE_NEW_RETURN (corba_name,
+                          
+          ACE_NEW_RETURN ($<idlist>$,
                           UTL_IdList (corba_id,
                                       conc_name),
                           1);
-          $$ = corba_name;
         }
         ;
 
@@ -4965,6 +5276,8 @@ uses_decl : uses_opt_multiple interface_type id
 // uses_decl : uses_opt_multiple interface_type id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
+          AST_Decl::NodeType nt = AST_Decl::NT_type;
+          AST_Param_Holder *ph = 0;
 
           AST_Decl *d = s->lookup_by_name ($2,
                                            true);
@@ -4973,20 +5286,49 @@ uses_decl : uses_opt_multiple interface_type id
               idl_global->err ()->lookup_error ($2);
               so_far_so_good = false;
             }
-          else if (d->node_type () != AST_Decl::NT_interface)
+          else
             {
-              // Nothing else but CORBA::Object can have
-              // this identifier.
-              int comp_result =
-                ACE_OS::strcmp (d->local_name ()->get_string (),
-                                "Object");
-
-              // Simple provides port must use IDL interface
-              // or CORBA::Object.
-              if (comp_result != 0)
+              int compare = 0;
+              nt = d->node_type ();
+            
+              switch (nt)
                 {
-                  idl_global->err ()->interface_expected (d);
-                  so_far_so_good = false;
+                  case AST_Decl::NT_interface:
+                    break;
+                  case AST_Decl::NT_param_holder:
+                    ph = AST_Param_Holder::narrow_from_decl (d);
+                    nt = ph->info ()->type_;
+                    
+                    if (nt != AST_Decl::NT_type
+                       && nt != AST_Decl::NT_interface)
+                      {
+                        idl_global->err ()->mismatched_template_param (
+                          ph->info ()->name_.c_str ());
+                          
+                        so_far_so_good = false;
+                      }
+                      
+                    break;
+                  case AST_Decl::NT_pre_defined:
+                    // Nothing else but CORBA::Object can have
+                    // this identifier.
+                    compare =
+                      ACE_OS::strcmp (d->local_name ()->get_string (),
+                                      "Object");
+
+                    // Simple provides port must use IDL interface
+                    // or CORBA::Object.
+                    if (compare != 0)
+                      {
+                        idl_global->err ()->interface_expected (d);
+                        so_far_so_good = false;
+                      }
+                      
+                    break;
+                  default:
+                    idl_global->err ()->interface_expected (d);
+                    so_far_so_good = false;
+                    break;
                 }
             }
 
@@ -5014,7 +5356,8 @@ uses_decl : uses_opt_multiple interface_type id
               if (c != 0
                   && u->is_multiple ()
                   && !idl_global->using_ifr_backend ()
-                  && !idl_global->ignore_idl3 ())
+                  && !idl_global->ignore_idl3 ()
+                  && nt != AST_Decl::NT_param_holder)
                 {
                   // These datatypes must be created in the
                   // front end so they can be looked up
@@ -5069,16 +5412,39 @@ emits_decl : IDL_EMITS scoped_name id
               idl_global->err ()->lookup_error ($2);
               so_far_so_good = false;
             }
-          else if (d->node_type () != AST_Decl::NT_eventtype)
+          else
             {
-              idl_global->err ()->eventtype_expected (d);
-              so_far_so_good = false;
+              nt = d->node_type ();
+            
+              switch (nt)
+                {
+                  case AST_Decl::NT_eventtype:
+                    break;
+                  case AST_Decl::NT_param_holder:
+                    ph = AST_Param_Holder::narrow_from_decl (d);
+                    nt = ph->info ()->type_;
+                    
+                    if (nt != AST_Decl::NT_type
+                       && nt != AST_Decl::NT_eventtype)
+                      {
+                        idl_global->err ()->mismatched_template_param (
+                          ph->info ()->name_.c_str ());
+                          
+                        so_far_so_good = false;
+                      }
+                      
+                    break;
+                  default:
+                    idl_global->err ()->eventtype_expected (d);
+                    so_far_so_good = false;
+                    break;
+                }
             }
 
           if (so_far_so_good)
             {
-              AST_EventType *event_type =
-                AST_EventType::narrow_from_decl (d);
+              AST_Type *event_type =
+                AST_Type::narrow_from_decl (d);
 
               // Strip off _cxx_, if any, for port name.
               idl_global->original_local_name ($3);
@@ -5108,6 +5474,9 @@ publishes_decl : IDL_PUBLISHES scoped_name id
 // publishes_decl : IDL_PUBLISHES scoped_name id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
+          AST_Decl::NodeType nt = AST_Decl::NT_type;
+          AST_Param_Holder *ph = 0;
+          
           AST_Decl *d = s->lookup_by_name ($2,
                                            true);
 
@@ -5116,16 +5485,39 @@ publishes_decl : IDL_PUBLISHES scoped_name id
               idl_global->err ()->lookup_error ($2);
               so_far_so_good = false;
             }
-          else if (d->node_type () != AST_Decl::NT_eventtype)
+          else
             {
-              idl_global->err ()->eventtype_expected (d);
-              so_far_so_good = false;
+              nt = d->node_type ();
+            
+              switch (nt)
+                {
+                  case AST_Decl::NT_eventtype:
+                    break;
+                  case AST_Decl::NT_param_holder:
+                    ph = AST_Param_Holder::narrow_from_decl (d);
+                    nt = ph->info ()->type_;
+                    
+                    if (nt != AST_Decl::NT_type
+                       && nt != AST_Decl::NT_eventtype)
+                      {
+                        idl_global->err ()->mismatched_template_param (
+                          ph->info ()->name_.c_str ());
+                          
+                        so_far_so_good = false;
+                      }
+                      
+                    break;
+                  default:
+                    idl_global->err ()->eventtype_expected (d);
+                    so_far_so_good = false;
+                    break;
+                }
             }
 
           if (so_far_so_good)
             {
-              AST_EventType *event_type =
-                AST_EventType::narrow_from_decl (d);
+              AST_Type *event_type =
+                AST_Type::narrow_from_decl (d);
 
               // Strip off _cxx_, if any, for port name.
               idl_global->original_local_name ($3);
@@ -5155,6 +5547,9 @@ consumes_decl : IDL_CONSUMES scoped_name id
 // consumes_decl : IDL_CONSUMES scoped_name id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
+          AST_Decl::NodeType nt = AST_Decl::NT_type;
+          AST_Param_Holder *ph = 0;
+          
           AST_Decl *d = s->lookup_by_name ($2,
                                            true);
 
@@ -5163,16 +5558,39 @@ consumes_decl : IDL_CONSUMES scoped_name id
               idl_global->err ()->lookup_error ($2);
               so_far_so_good = false;
             }
-          else if (d->node_type () != AST_Decl::NT_eventtype)
+          else
             {
-              idl_global->err ()->eventtype_expected (d);
-              so_far_so_good = false;
+              nt = d->node_type ();
+            
+              switch (nt)
+                {
+                  case AST_Decl::NT_eventtype:
+                    break;
+                  case AST_Decl::NT_param_holder:
+                    ph = AST_Param_Holder::narrow_from_decl (d);
+                    nt = ph->info ()->type_;
+                    
+                    if (nt != AST_Decl::NT_type
+                       && nt != AST_Decl::NT_eventtype)
+                      {
+                        idl_global->err ()->mismatched_template_param (
+                          ph->info ()->name_.c_str ());
+                          
+                        so_far_so_good = false;
+                      }
+                      
+                    break;
+                  default:
+                    idl_global->err ()->eventtype_expected (d);
+                    so_far_so_good = false;
+                    break;
+                }
             }
 
           if (so_far_so_good)
             {
-              AST_EventType *event_type =
-                AST_EventType::narrow_from_decl (d);
+              AST_Type *event_type =
+                AST_Type::narrow_from_decl (d);
 
               // Strip off _cxx_, if any, for port name.
               idl_global->original_local_name ($3);
@@ -5290,7 +5708,8 @@ home_header :
           ACE_NEW_RETURN (n,
                           UTL_ScopedName ($3, 0),
                           1);
-          ACE_NEW_RETURN ($$,
+                          
+          ACE_NEW_RETURN ($<hhval>$,
                           FE_HomeHeader (n,
                                          $5,
                                          $7,
@@ -5334,7 +5753,7 @@ home_inheritance_spec
           scoped_name
         {
 //      scoped_name
-          $$ = $3;
+          $<idlist>$ = $3;
         }
         | /* EMPTY */
         {
@@ -5732,7 +6151,7 @@ event_rest_of_header :
 //      supports_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_SupportSpecSeen);
 
-          ACE_NEW_RETURN ($$,
+          ACE_NEW_RETURN ($<ehval>$,
                           FE_EventHeader (
                               0,
                               $1,
@@ -5846,10 +6265,10 @@ event_header
         }
         ;
 
-type_classifier
+formal_parameter_type
         : IDL_TYPENAME
         {
-// type_classifier : IDL_TYPENAME
+// formal_parameter_type : IDL_TYPENAME
           $<ntval>$ = AST_Decl::NT_type;
         }
         | IDL_STRUCT
@@ -5857,28 +6276,15 @@ type_classifier
 //        IDL_STRUCT
           $<ntval>$ = AST_Decl::NT_struct;
         }
+        | IDL_UNION
+        {
+//        IDL_UNION
+          $<ntval>$ = AST_Decl::NT_union;
+        }
         | IDL_EVENTTYPE
         {
 //        IDL_EVENTTYPE
           $<ntval>$ = AST_Decl::NT_eventtype;
-        }
-        | IDL_PRIMITIVE
-        {
-//        IDL_PRIMITIVE
-          $<ntval>$ = AST_Decl::NT_pre_defined;
-        }
-        | IDL_FIXED
-        {
-//        IDL_FIXED
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("error in %C line %d:\n")
-                      ACE_TEXT ("Fixed types not supported ")
-                      ACE_TEXT ("in TAO.\n"),
-                      idl_global->filename ()->get_string (),
-                      idl_global->lineno ()));
-
-          // Caught and handled later.
-          $<ntval>$ = AST_Decl::NT_fixed;
         }
         | IDL_SEQUENCE
         {
@@ -5895,108 +6301,67 @@ type_classifier
 //        IDL_VALUETYPE
           $<ntval>$ = AST_Decl::NT_valuetype;
         }
-        ;
-
-template_interface_def
-        : template_interface_header
+        | IDL_ENUM
         {
-// template_interface_def : template_interface_header
-          UTL_Scope *s = idl_global->scopes ().top_non_null ();
-
-          AST_Template_Interface *i =
-            idl_global->gen ()->create_template_interface (
-              $1->name (),
-              $1->inherits (),
-              $1->n_inherits (),
-              $1->inherits_flat (),
-              $1->n_inherits_flat (),
-              $1->param_info ());
-
-          (void) s->fe_add_interface (i);
-
-          $1->destroy ();
-          delete $1;
-          $1 = 0;
-
-          idl_global->scopes ().push (i);
+//        IDL_ENUM
+          $<ntval>$ = AST_Decl::NT_enum;
         }
-        '{'
+        | IDL_EXCEPTION
         {
-//      '{'
-          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceSqSeen);
+//        IDL_EXCEPTION
+          $<ntval>$ = AST_Decl::NT_except;
         }
-        exports
+        | IDL_CONST const_type
         {
-//      exports
-//        TODO - concatenated identifiers, if they remain in the IDL3+ spec.
-          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceBodySeen);
-        }
-        '}'
-        {
-//      '}'
-          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceQsSeen);
-
-          /*
-           * Done with this interface - pop it off the scopes stack
-           */
-          idl_global->scopes ().pop ();
+//        IDL_CONST const_type
+          $<ntval>$ = AST_Decl::NT_const;
+          t_param_const_type = $2;
         }
         ;
 
-template_interface_header
-        : interface_decl at_least_one_template_param template_inheritance_spec
+at_least_one_formal_parameter
+        : formal_parameter formal_parameters
         {
-// template_interface_header : interface_decl at_least_one_template_param template_inheritance_spec
-          UTL_ScopedName *n = 0;
-          ACE_NEW_RETURN (n,
-                          UTL_ScopedName ($1, 0),
-                          1);
-
-          ACE_NEW_RETURN ($$,
-                          FE_Template_InterfaceHeader (n,
-                                                       $2,
-                                                       $3),
-                          1);
-        }
-        ;
-
-at_least_one_template_param
-        : '<'
-        {
-// at_least_one_template_param : '<'
-          idl_global->set_parse_state (IDL_GlobalData::PS_TmplInterfaceSqSeen);
-        }
-        template_param template_params
-        {
-//        template_param template_params
-          if ($4 == 0)
+// at_least_one_formal_parameter : formal_parameter formal_parameters
+          if ($2 == 0)
             {
-              ACE_NEW_RETURN ($4,
+              ACE_NEW_RETURN ($2,
                               FE_Utils::T_PARAMLIST_INFO,
                               1);
             }
 
-          $4->enqueue_head (*$3);
-          delete $3;
-          $3 = 0;
-        }
-        '>'
-        {
-//        '>'
-          idl_global->set_parse_state (IDL_GlobalData::PS_TmplInterfaceQsSeen);
-          $<plval>$ = $4;
+          $2->enqueue_head (*$1);
+          delete $1;
+          $1 = 0;
+
+          // The param added above is always the last one parsed,
+          // so we check for matches between sequence<T> & T here.
+          ACE_CString bad_id =
+            idl_global->check_for_seq_of_param (
+              $2);
+
+          if (!bad_id.empty ())
+            {
+              delete $2;
+              $2 = 0;
+
+              idl_global->err ()->mismatch_seq_of_param (bad_id.c_str ());
+              return 1;
+            }
+
+          $<plval>$ = $2;
         }
         ;
 
-template_params
-        : template_params ','
+formal_parameters
+        : formal_parameters ','
         {
-// template_params : template_params ','
+// formal_parameters : formal_parameters ','
           // Maybe add a new parse state to set here.
         }
-        template_param
+        formal_parameter
         {
-//        template_param
+//        formal_parameter
           if ($1 == 0)
             {
               ACE_NEW_RETURN ($1,
@@ -6005,10 +6370,10 @@ template_params
             }
 
           $1->enqueue_tail (*$4);
+          $<plval>$ = $1;
+
           delete $4;
           $4 = 0;
-
-          $$ = $1;
         }
         | /* EMPTY */
         {
@@ -6017,120 +6382,78 @@ template_params
         }
         ;
 
-template_param
-        : type_classifier IDENTIFIER
+formal_parameter
+        : formal_parameter_type IDENTIFIER
         {
-// template_param : type_classifier IDENTIFIER
+// formal_parameter : formal_parameter_type IDENTIFIER
 
-          ACE_NEW_RETURN ($$,
+          ACE_NEW_RETURN ($<pival>$,
                           FE_Utils::T_Param_Info,
                           1);
 
-          $<pival>$->type_ = $1;
+          AST_Decl::NodeType nt = $1;
+
+          $<pival>$->type_ = nt;
           $<pival>$->name_ = $2;
-        }
-        ;
 
-template_inheritance_spec
-        : ':' at_least_one_template_ref
-        {
-// template_inheritance_spec : ':' at_least_one_template_ref
-          $<rlval>$ = $2;
-        }
-        | /* EMPTY */
-        {
-//        /* EMPTY */
-          $<rlval>$ = 0;
-        }
-        ;
-
-at_least_one_template_ref
-        : template_ref template_refs
-        {
-// at_least_one_template_ref : template_ref template_refs
-          if ($2 == 0)
+          if (nt == AST_Decl::NT_const)
             {
-              ACE_NEW_RETURN ($2,
-                              FE_Utils::T_REFLIST_INFO,
-                              1);
-            }
-
-          $2->enqueue_head (*$1);
-          delete $1;
-          $1 = 0;
-
-          $<rlval>$ = $2;
-        }
-        ;
-
-template_refs
-        : template_refs ',' template_ref
-        {
-// template_refs : template_refs ',' template_ref
-          if ($1 == 0)
-            {
-              ACE_NEW_RETURN ($1,
-                              FE_Utils::T_REFLIST_INFO,
-                              1);
-
-              $1->enqueue_tail (*$3);
-              delete $3;
-              $3 = 0;
-
-              $<rlval>$ = $1;
+              $<pival>$->const_type_ = t_param_const_type;
+              $<pival>$->enum_const_type_decl_ =
+                tao_enum_constant_decl;
+ 
+              // Reset these values.  
+              t_param_const_type = AST_Expression::EV_none;
+              tao_enum_constant_decl = 0;
             }
         }
-        | /* EMPTY */
+        | IDL_SEQUENCE '<' IDENTIFIER '>' IDENTIFIER
         {
-//        /* EMPTY */
-          $<rlval>$ = 0;
-        }
-        ;
-
-template_ref
-        : scoped_name '<' at_least_one_template_param_ref '>'
-        {
-// template_ref : scoped_name '<' at_least_one_template_param_ref '>'
-          ACE_NEW_RETURN ($$,
-                          FE_Utils::T_Ref_Info ($1, $3),
+          ACE_NEW_RETURN ($<pival>$,
+                          FE_Utils::T_Param_Info,
                           1);
+
+          $<pival>$->type_ = AST_Decl::NT_sequence;
+          $<pival>$->seq_param_ref_  = $3;
+          $<pival>$->name_ += $5;
+
+          ACE::strdelete ($3);
+          $3 = 0;
+          ACE::strdelete ($5);
+          $5 = 0;
         }
         ;
 
-at_least_one_template_param_ref
-        : template_param_ref template_param_refs
+at_least_one_formal_parameter_name
+        : formal_parameter_name formal_parameter_names
         {
-// at_least_one_template_param_ref : template_param_ref template_param_refs
-          ACE_NEW_RETURN ($$,
+// at_least_one_formal_parameter_name : formal_parameter_name formal_parameter_names
+          ACE_NEW_RETURN ($<slval>$,
                           UTL_StrList ($1,
                                        $2),
                           1);
         }
         ;
 
-template_param_refs
-        : template_param_refs ',' template_param_ref
+formal_parameter_names
+        : formal_parameter_names ',' formal_parameter_name
         {
-// template_param_refs : template_param_refs ',' template_param_ref
+// formal_parameter_names : formal_parameter_names ',' formal_parameter_name
+          UTL_StrList *sl = 0;
+          ACE_NEW_RETURN (sl,
+                          UTL_StrList ($3,
+                                       0),
+                          1);
+
           if ($1 == 0)
             {
-              ACE_NEW_RETURN ($1,
-                              UTL_StrList ($3,
-                                           0),
-                              1);
+              $<slval>$ = sl;
             }
           else
             {
-              UTL_StrList *l = 0;
-              ACE_NEW_RETURN (l,
-                              UTL_StrList ($3,
-                                           0),
-                              1);
-
-              $1->nconc (l);
+              $1->nconc (sl);
+              $<slval>$ = $1;
             }
-
-          $<slval>$ = $1;
         }
         | /* EMPTY */
         {
@@ -6139,10 +6462,10 @@ template_param_refs
         }
         ;
 
-template_param_ref
+formal_parameter_name
         : IDENTIFIER
         {
-// template_param_ref : IDENTIFIER
+// formal_parameter_name : IDENTIFIER
           ACE_NEW_RETURN ($$,
                           UTL_String ($1),
                           1);
@@ -6159,25 +6482,18 @@ porttype_decl
         {
 //        IDENTIFIER
           idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeIDSeen);
-        }
-        opt_template_params
-        {
-//        opt_template_params
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-
+          
           Identifier id ($3);
           ACE::strdelete ($3);
           $3 = 0;
-
-          UTL_ScopedName sn (&id,
-                             0);
-
+          
+          UTL_ScopedName sn (&id, 0);
           AST_PortType *p =
-            idl_global->gen ()->create_porttype (&sn,
-                                                 $5);
-
+            idl_global->gen ()->create_porttype (&sn);
+            
           (void) s->fe_add_porttype (p);
-
+          
           // Push it on the scopes stack.
           idl_global->scopes ().push (p);
         }
@@ -6201,19 +6517,6 @@ porttype_decl
         }
         ;
 
-opt_template_params
-        : at_least_one_template_param
-        {
-// opt_template_params : at_least_one_template_param
-          $$ = $1;
-        }
-        | /* EMPTY */
-        {
-//        | /* EMPTY */
-          $$ = 0;
-        }
-        ;
-
 at_least_one_port_export
         : port_export port_exports
         {
@@ -6233,270 +6536,28 @@ port_exports
         ;
 
 port_export
-        : extended_provides_decl
-        {
-// port_export : extended_provides_decl
-        }
-        ';'
-        {
-//        ';'
-        }
-        | extended_uses_decl
-        {
-//        | extended_uses_decl
-        }
-        ';'
-        {
-//        ';'
-        }
-        ;
-
-extended_provides_decl
         : provides_decl
         {
-// extended_provides_decl : provides_decl
-          idl_global->set_parse_state (IDL_GlobalData::PS_ProvidesDeclSeen);
+// port_export : provides_decl
         }
-        | IDL_PROVIDES template_ref IDENTIFIER
+        ';'
         {
-//        | IDL_PROVIDES template_ref IDENTIFIER
-          idl_global->set_parse_state (IDL_GlobalData::PS_ExtProvidesDeclSeen);
-          bool so_far_so_good =  true;
-          AST_Template_Interface *i = 0;
-          UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = s->lookup_by_name ($2->name_,
-                                           true);
-
-          if (d == 0)
-            {
-              idl_global->err ()->lookup_error ($2->name_);
-              so_far_so_good = false;
-            }
-          else
-            {
-              i = AST_Template_Interface::narrow_from_decl (d);
-
-              if (i == 0)
-                {
-                  idl_global->err ()->error1 (
-                    UTL_Error::EIDL_TMPL_IFACE_EXPECTED,
-                    d);
-                  so_far_so_good = false;
-                }
-              else if (! i->match_param_names ($2->params_))
-                {
-                  idl_global->err ()->mismatched_template_param ($2->name_);
-                  so_far_so_good = false;
-                }
-            }
-
-          if (so_far_so_good)
-            {
-              Identifier id ($3);
-              UTL_ScopedName sn (&id, 0);
-
-              AST_Provides *p =
-                idl_global->gen ()->create_provides (&sn, i);
-
-              (void) s->fe_add_provides (p);
-            }
-
-          $2->destroy ();
-          delete $2;
-          $2 = 0;
-
-          ACE::strdelete ($3);
-          $3 = 0;
+//        ';'
         }
-        ;
-
-extended_uses_decl
-        : uses_decl
+        | uses_decl
         {
-// extended_uses_decl : uses_decl
-          idl_global->set_parse_state (IDL_GlobalData::PS_UsesDeclSeen);
+//        | uses_decl
         }
-        | uses_opt_multiple template_ref IDENTIFIER
+        ';'
         {
-//        | uses_opt_multiple template_ref IDENTIFIER
-          idl_global->set_parse_state (IDL_GlobalData::PS_ExtUsesDeclSeen);
-          bool so_far_so_good =  true;
-          AST_Template_Interface *i = 0;
-          UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = s->lookup_by_name ($2->name_,
-                                           true);
-
-          if (d == 0)
-            {
-              idl_global->err ()->lookup_error ($2->name_);
-              so_far_so_good = false;
-            }
-          else
-            {
-              i = AST_Template_Interface::narrow_from_decl (d);
-
-              if (i == 0)
-                {
-                  idl_global->err ()->error1 (
-                    UTL_Error::EIDL_TMPL_IFACE_EXPECTED,
-                    d);
-                  so_far_so_good = false;
-                }
-              else if (! i->match_param_names ($2->params_))
-                {
-                  idl_global->err ()->mismatched_template_param ($2->name_);
-                  so_far_so_good = false;
-                }
-            }
-
-          if (so_far_so_good)
-            {
-              Identifier id ($3);
-              UTL_ScopedName sn (&id, 0);
-
-              AST_Uses *u =
-                idl_global->gen ()->create_uses (&sn, i, $1);
-
-              (void) s->fe_add_uses (u);
-            }
-
-          $2->destroy ();
-          delete $2;
-          $2 = 0;
-
-          ACE::strdelete ($3);
-          $3 = 0;
+//        ';'
         }
         ;
 
 extended_port_decl
-        : template_port_decl
-        | non_template_port_decl
-        ;
-
-template_port_decl
-        : IDL_PORT template_inst IDENTIFIER
-        {
-// template_port_decl : IDL_PORT template_inst IDENTIFIER
-          idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
-          UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = s->lookup_by_name ($2->name_, true);
-          AST_PortType *pt = 0;
-          AST_PortType::T_ARGLIST *args = 0;
-          bool so_far_so_good = true;
-
-          if (d == 0)
-            {
-              idl_global->err ()->lookup_error ($2->name_);
-              so_far_so_good = false;
-            }
-           else
-             {
-               pt = AST_PortType::narrow_from_decl (d);
-
-               if (pt == 0)
-                 {
-                   idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
-                                               d);
-                   so_far_so_good = false;
-                 }
-               else
-                 {
-                   args =
-                     pt->match_arg_names ($2->args_);
-
-                   if (args == 0)
-                     {
-                       so_far_so_good = false;
-                     }
-                 }
-             }
-
-          if (so_far_so_good)
-            {
-              Identifier id ($3);
-              ACE::strdelete ($3);
-              $3 = 0;
-
-              UTL_ScopedName sn (&id,
-                                 0);
-
-              AST_Extended_Port *ep =
-                idl_global->gen ()->create_extended_port (&sn,
-                                                          pt,
-                                                          args);
-
-              (void) s->fe_add_extended_port (ep);
-            }
-
-          $2->destroy ();
-          delete $2;
-          $2 = 0;
-        }
-        | IDL_MIRRORPORT template_inst IDENTIFIER
-        {
-//        | IDL_MIRRORPORT template_inst IDENTIFIER
-          idl_global->set_parse_state (IDL_GlobalData::PS_MirrorPortDeclSeen);
-          UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = s->lookup_by_name ($2->name_, true);
-          AST_PortType *pt = 0;
-          AST_PortType::T_ARGLIST *args = 0;
-          bool so_far_so_good = true;
-
-          if (d == 0)
-            {
-              idl_global->err ()->lookup_error ($2->name_);
-              so_far_so_good = false;
-            }
-           else
-             {
-               pt = AST_PortType::narrow_from_decl (d);
-
-               if (pt == 0)
-                 {
-                   idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
-                                               d);
-                   so_far_so_good = false;
-                 }
-               else
-                 {
-                   args =
-                     pt->match_arg_names ($2->args_);
-
-                   if (args == 0)
-                     {
-                       so_far_so_good = false;
-                     }
-                 }
-             }
-
-          if (so_far_so_good)
-            {
-              Identifier id ($3);
-              ACE::strdelete ($3);
-              $3 = 0;
-
-              UTL_ScopedName sn (&id,
-                                 0);
-
-              AST_Mirror_Port *mp =
-                idl_global->gen ()->create_mirror_port (&sn,
-                                                        pt,
-                                                        args);
-
-              (void) s->fe_add_mirror_port (mp);
-            }
-
-          $2->destroy ();
-          delete $2;
-          $2 = 0;
-        }
-        ;
-
-non_template_port_decl
         : IDL_PORT scoped_name IDENTIFIER
         {
-// non_template_port_decl : IDL_PORT scoped_name IDENTIFIER
+// extended_port_decl : IDL_PORT scoped_name IDENTIFIER
           idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d = s->lookup_by_name ($2, true);
@@ -6518,18 +6579,6 @@ non_template_port_decl
                                               d);
                   so_far_so_good = false;
                 }
-              else
-                {
-                  FE_Utils::T_PARAMLIST_INFO *p_list =
-                    pt->template_params ();
-
-                  if (p_list != 0 && p_list->size () != 0)
-                    {
-                      idl_global->err ()->error0 (
-                        UTL_Error::EIDL_T_ARG_LENGTH);
-                      so_far_so_good = false;  
-                    }
-                }
             }
 
           if (so_far_so_good)
@@ -6544,11 +6593,10 @@ non_template_port_decl
               AST_Extended_Port *ep =
                 idl_global->gen ()->create_extended_port (
                   &sn,
-                  pt,
-                  0);
+                  pt);
 
               (void) s->fe_add_extended_port (ep);
-              
+
               // Create (in the AST) the struct(s) and sequence(s)
               // needed for multiplex uses ports, if any.
               for (UTL_ScopeActiveIterator i (pt, UTL_Scope::IK_decls);
@@ -6556,14 +6604,14 @@ non_template_port_decl
                    i.next ())
                 {
                   d = i.item ();
-                  
+
                   AST_Uses *u = AST_Uses::narrow_from_decl (d);
-                  
+
                   if (u != 0 && u->is_multiple ())
                     {
                       AST_Component *c =
                         AST_Component::narrow_from_scope (s);
-                        
+
                       idl_global->create_uses_multiple_stuff (
                         c,
                         u,
@@ -6600,18 +6648,6 @@ non_template_port_decl
                                                d);
                    so_far_so_good = false;
                  }
-               else
-                 {
-                   FE_Utils::T_PARAMLIST_INFO *p_list =
-                     pt->template_params ();
-
-                   if (p_list != 0 && p_list->size () != 0)
-                     {
-                       idl_global->err ()->error0 (
-                         UTL_Error::EIDL_T_ARG_LENGTH);
-                       so_far_so_good = false;  
-                     }
-                 }
              }
 
           if (so_far_so_good)
@@ -6626,8 +6662,7 @@ non_template_port_decl
               AST_Mirror_Port *mp =
                 idl_global->gen ()->create_mirror_port (
                   &sn,
-                  pt,
-                  0);
+                  pt);
 
               (void) s->fe_add_mirror_port (mp);
             }
@@ -6638,14 +6673,100 @@ non_template_port_decl
         }
         ;
 
-template_inst
-        : scoped_name '<' at_least_one_scoped_name '>'
+at_least_one_actual_parameter
+        : actual_parameter actual_parameters
         {
-// template_inst : scoped_name '<' at_least_one_scoped_name '>'
-          ACE_NEW_RETURN ($<tival>$,
-                          FE_Utils::T_Inst_Info ($1,
-                                                 $3),
-                          1);
+// at_least_one_actual_parameter : actual_parameter actual_parameters
+          if ($2 == 0)
+            {
+              ACE_NEW_RETURN ($2,
+                              FE_Utils::T_ARGLIST,
+                              1);
+            }
+
+          $2->enqueue_head ($1);
+          $<alval>$ = $2;
+        }
+        ;
+
+actual_parameters
+        : actual_parameters ',' actual_parameter
+        {
+// actual_parameters : actual_parameters ',' actual_parameter
+          if ($1 == 0)
+            {
+              ACE_NEW_RETURN ($1,
+                              FE_Utils::T_ARGLIST,
+                              1);
+            }
+
+          $1->enqueue_tail ($3);
+          $<alval>$ = $1;
+        }
+        | /* EMPTY */
+        {
+//         | /* EMPTY */
+          $<alval>$ = 0;
+        }
+        ;
+
+actual_parameter
+        : expression
+        {
+// actual_parameter : expression
+          // To avoid grammar conflicts with this LALR(1) parser,
+          // we take advantage of the fact that an expression can
+          // be a scoped name. At that lower level, we create an
+          // expression containing the scoped name, and at a
+          // higher lever, deduce that it's not supposed to be
+          // a constant and look up the type to add to the template
+          // arg list.
+          AST_Expression *ex = $1;
+          UTL_ScopedName *sn = ex->n ();
+          AST_Decl *d = 0;
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          
+          if (sn != 0)
+            {
+              d = s->lookup_by_name (sn, true);
+              
+              if (d == 0)
+                {
+                  idl_global->err ()->lookup_error (sn);
+                  return 1;
+                }
+              else
+                {
+                  AST_Decl::NodeType nt = d->node_type ();
+                  
+                  if (nt == AST_Decl::NT_enum_val)
+                    {
+                      $1->evaluate (
+                        AST_Expression::EK_const);
+                
+                      $<dcval>$ =
+                        idl_global->gen ()->create_constant (
+                          $1->ev ()->et,
+                          $1,
+                          sn);
+                    }
+                  else
+                    {
+                      $<dcval>$ = d;
+                    }
+                }
+            }
+          else
+            {
+              $1->evaluate (
+                AST_Expression::EK_const);
+                
+              $<dcval>$ =
+                idl_global->gen ()->create_constant (
+                  $1->ev ()->et,
+                  $1,
+                  0);
+            }
         }
         ;
 
@@ -6664,10 +6785,6 @@ connector_header
 //        IDENTIFIER
           idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorIDSeen);
         }
-          opt_template_params
-        {
-//        opt_template_params
-        }
         component_inheritance_spec
         {
 //        component_inheritance_spec
@@ -6681,13 +6798,13 @@ connector_header
 
           UTL_ScopedName sn (&id, 0);
 
-          if ($7 != 0)
+          if ($5 != 0)
             {
-              AST_Decl *d = s->lookup_by_name ($7, true);
+              AST_Decl *d = s->lookup_by_name ($5, true);
 
               if (d == 0)
                 {
-                  idl_global->err ()->lookup_error ($7);
+                  idl_global->err ()->lookup_error ($5);
                   so_far_so_good = false;
                 }
 
@@ -6703,17 +6820,16 @@ connector_header
                   so_far_so_good = false;
                 }
 
-              $7->destroy ();
-              delete $7;
-              $7 = 0;
+              $5->destroy ();
+              delete $5;
+              $5 = 0;
             }
 
           if (so_far_so_good)
             {
               AST_Connector *c =
                 idl_global->gen ()->create_connector (&sn,
-                                                      parent,
-                                                      $5);
+                                                      parent);
 
               (void) s->fe_add_connector (c);
 
@@ -6784,9 +6900,9 @@ connector_export
 //        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
-        | non_template_port_decl
+        | extended_port_decl
         {
-//      | non_template_port_decl
+//      | extended_port_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
         }
           ';'
@@ -6794,154 +6910,6 @@ connector_export
 //        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
-        | template_extended_port_decl
-        {
-//      | template_extended_port_decl
-          idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
-        }
-          ';'
-        {
-//        ';'
-          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
-        }
-/*
-If this is also legal, there will be conflicts to be resolved
-        | extended_port_decl ';'
-*/
-        ;
-
-template_extended_port_decl
-        : IDL_PORT template_ref_decl
-        {
-// template_extended_port_decl : IDL_PORT template_ref_decl
-          UTL_Scope *s = idl_global->scopes ().top_non_null ();
-
-          if ($2 != 0)
-            {
-              Identifier id ($2->name_.c_str ());
-              UTL_ScopedName sn (&id, 0);
-
-              AST_Tmpl_Port *pt =
-                idl_global->gen ()->create_tmpl_port (
-                  &sn,
-                  $2->type_);
-
-              (void) s->fe_add_tmpl_port (pt);
-
-              delete $2;
-              $2 = 0;
-            }
-        }
-        | IDL_MIRRORPORT template_ref_decl
-        {
-//      | IDL_MIRRORPORT template_ref_decl
-          UTL_Scope *s = idl_global->scopes ().top_non_null ();
-
-          if ($2 != 0)
-            {
-              Identifier id ($2->name_.c_str ());
-              UTL_ScopedName sn (&id, 0);
-
-              AST_Tmpl_Mirror_Port *pt =
-                idl_global->gen ()->create_tmpl_mirror_port (
-                  &sn,
-                  $2->type_);
-
-              (void) s->fe_add_tmpl_mirror_port (pt);
-
-              delete $2;
-              $2 = 0;
-            }
-        }
-        ;
-
-template_ref_decl
-        : template_ref IDENTIFIER
-        {
-// template_ref_decl : template_ref IDENTIFIER
-          $$ = 0;
-          UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = s->lookup_by_name ($1->name_,
-                                           true);
-
-          if (d == 0)
-            {
-              idl_global->err ()->lookup_error ($1->name_);
-            }
-          else
-            {
-              AST_PortType *pt = AST_PortType::narrow_from_decl (d);
-
-              if (pt == 0)
-                {
-                  idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
-                                              d);
-                }
-              else
-                {
-                  ACE_NEW_RETURN ($$,
-                                  FE_Utils::T_Port_Info ($2,
-                                                         pt),
-                                  1);
-                }
-            }
-
-          $1->destroy ();
-          delete $1;
-          $1 = 0;
-
-          ACE::strdelete ($2);
-          $2 = 0;
-        }
-        ;
-
-connector_inst_spec
-        : template_inst
-        {
-// connector_inst_spec : template_inst
-          UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          $$ = 0;
-
-          AST_Decl *d =
-            s->lookup_by_name ($1->name_, true);  
-
-          if (d == 0)
-            {
-              idl_global->err ()->lookup_error ($1->name_);
-            }
-          else
-            {
-              AST_Connector *c = AST_Connector::narrow_from_decl (d);
-
-              if (c == 0)
-                {
-                  idl_global->err ()->error1 (
-                    UTL_Error::EIDL_CONNECTOR_EXPECTED,
-                    d);
-                }
-              else
-                {
-                  AST_Template_Common::T_ARGLIST *args =
-                    c->match_arg_names ($1->args_);
-
-                  if (args != 0)
-                    {
-                      Identifier id ("connector");
-                      UTL_ScopedName sn (&id, 0);
-
-                      $$ =
-                        idl_global->gen ()->create_instantiated_connector (
-                          &sn,
-                          c,
-                          args);
-                    }
-                }
-            }
-
-          $1->destroy ();
-          delete $1;
-          $1 = 0;
-        } 
         ;
 
 %%

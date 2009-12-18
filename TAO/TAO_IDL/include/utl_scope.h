@@ -81,16 +81,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // the responsibility of those functions then to call the add()
 // function defined in the parent "AST_" class.
 
-#include "ast_decl.h"
-#include "ast_expression.h"
-#include "ast_typedef.h"
-#include "utl_scoped_name.h"
+#include "fe_utils.h"
 
 // This is for AIX w/IBM C++.
 class Identifier;
 
 class AST_PredefinedType;
 class AST_Module;
+class AST_Template_Module_Inst;
+class AST_Template_Module_Ref;
 class AST_Interface;
 class AST_InterfaceFwd;
 class AST_ValueBox;
@@ -106,6 +105,7 @@ class AST_Exception;
 class AST_Attribute;
 class AST_Operation;
 class AST_Argument;
+class AST_Param_Holder;
 class AST_Union;
 class AST_UnionFwd;
 class AST_UnionBranch;
@@ -116,6 +116,7 @@ class AST_Enum;
 class AST_EnumVal;
 class AST_Sequence;
 class AST_String;
+class AST_Typedef;
 class AST_Array;
 class AST_Native;
 class AST_Factory;
@@ -128,9 +129,6 @@ class AST_Consumes;
 class AST_Extended_Port;
 class AST_Mirror_Port;
 class AST_Connector;
-class AST_Instantiated_Connector;
-class AST_Tmpl_Port;
-class AST_Tmpl_Mirror_Port;
 class UTL_StrList;
 class UTL_NameList;
 
@@ -339,7 +337,15 @@ protected:
   void check_for_predef_seq (AST_Decl *d);
   // Set the appropriate *_seen_ flag if we are seeing a spec-defined
   // sequence of a basic type.
-
+  
+  AST_Param_Holder *match_param (
+    UTL_ScopedName *e,
+    FE_Utils::T_PARAMLIST_INFO const *params);
+  // If the Identifier string (from the scoped name which has been
+  // already determined to be of length 1) matches a param,
+  // create and return a param holder AST node, otherwise 
+  // return 0.
+  
 protected:
   // Data.
 
@@ -386,8 +392,16 @@ private:
 
   virtual
   AST_Module *fe_add_module (AST_Module *m);
-
+  
   virtual
+  AST_Template_Module_Inst *fe_add_template_module_inst (
+    AST_Template_Module_Inst *m);
+
+    virtual
+  AST_Template_Module_Ref *fe_add_template_module_ref (
+    AST_Template_Module_Ref *m);
+
+virtual
   AST_Interface *fe_add_interface (AST_Interface *i);
 
   virtual
@@ -506,17 +520,6 @@ private:
 
   virtual
   AST_Mirror_Port *fe_add_mirror_port (AST_Mirror_Port *mp);
-  
-  virtual
-  AST_Tmpl_Port *fe_add_tmpl_port (AST_Tmpl_Port *p);
-  
-  virtual
-  AST_Tmpl_Mirror_Port *fe_add_tmpl_mirror_port (
-    AST_Tmpl_Mirror_Port *p);
-  
-  virtual
-  AST_Instantiated_Connector *fe_add_instantiated_connector (
-    AST_Instantiated_Connector *ic);
 };
 
 // Active iterator for a UTL_Scope node

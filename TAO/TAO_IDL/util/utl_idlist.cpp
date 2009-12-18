@@ -80,10 +80,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-ACE_RCSID (util,
-           utl_idlist,
-           "$Id$")
-
 // Constructor
 UTL_IdList::UTL_IdList (Identifier *s,
                         UTL_IdList *cdr)
@@ -95,7 +91,7 @@ UTL_IdList::UTL_IdList (Identifier *s,
 // Public operations
 
 // Copy a list.
-UTL_List *
+UTL_IdList *
 UTL_IdList::copy (void)
 {
   UTL_IdList *retval = 0;
@@ -115,7 +111,7 @@ UTL_IdList::copy (void)
                       0);
     }
 
-  return (UTL_List *) retval;
+  return retval;
 }
 
 // Get list item.

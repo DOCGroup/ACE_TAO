@@ -84,7 +84,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_event_header.h"
 #include "fe_component_header.h"
 #include "fe_home_header.h"
-#include "fe_template_interface_header.h"
 #include "global_extern.h"
 #include "fe_private.h"
 #include "fe_extern.h"
@@ -181,12 +180,11 @@ uses            return IDL_USES;
 manages         return IDL_MANAGES;
 
 typename        return IDL_TYPENAME;
-primitive       return IDL_PRIMITIVE;
 port            return IDL_PORT;
 mirrorport      return IDL_MIRRORPORT;
 porttype        return IDL_PORTTYPE;
 connector       return IDL_CONNECTOR;
-\$              return IDL_CONCAT;
+alias           return IDL_ALIAS;
 
 TRUE            return IDL_TRUETOK;
 FALSE           return IDL_FALSETOK;
@@ -658,7 +656,7 @@ idl_store_pragma (char *buf)
             {
               idl_global->root ()->prefix (new_prefix);
             }
-                
+
           if (idl_global->in_main_file ())
             {
               idl_global->root ()->set_imported (false);

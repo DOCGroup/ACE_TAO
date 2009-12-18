@@ -121,7 +121,7 @@ public:
 
   // Narrowing.
 
-  DEF_NARROW_FROM_DECL(AST_Field);
+  DEF_NARROW_FROM_DECL (AST_Field);
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -132,7 +132,7 @@ public:
   // Cleanup.
   virtual void destroy (void);
 
-private:
+protected:
   // Data.
 
   AST_Type *ref_type_;
@@ -141,7 +141,7 @@ private:
   Visibility visibility_;
   // Used with valuetype and eventtype fields.
   
-  bool anonymous_type_;
+  bool owns_base_type_;
   // If our field type is anonymous array or sequence, we're
   // responsible for destroying it.
 };

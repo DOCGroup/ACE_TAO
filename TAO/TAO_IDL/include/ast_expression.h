@@ -74,6 +74,7 @@ class UTL_String;
 class UTL_Scope;
 class ast_visitor;
 class AST_Decl;
+class AST_Param_Holder;
 
 // Representation of expression values.
 
@@ -279,10 +280,13 @@ public:
   // Compare two AST_Expressions.
 
   bool operator== (AST_Expression *vc);
-
   long compare (AST_Expression *vc);
 
+  // Accessor for the member.
   AST_Decl *get_tdef (void) const;
+  
+  // Accessor for the member.
+  AST_Param_Holder *param_holder (void) const;
 
 protected:
   // Evaluate different sets of operators.
@@ -325,6 +329,10 @@ private:
 
   AST_Decl *tdef;
   // Propagates aliased constant type.
+  
+  AST_Param_Holder *param_holder_;
+  // Non-zero if we were created from a reference template param.
+  
 private:
   // Fill out the lineno, filename and definition scope details.
   void fill_definition_details (void);

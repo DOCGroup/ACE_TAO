@@ -16,7 +16,7 @@ class be_publishes : public virtual AST_Publishes,
 {
 public:
   be_publishes (UTL_ScopedName *n,
-                AST_EventType *publishes_type);
+                AST_Type *publishes_type);
             
   virtual ~be_publishes (void);
   

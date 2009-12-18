@@ -5,14 +5,9 @@
 
 #include "ast_porttype.h"
 
-ACE_RCSID (be,
-           be_mirror_port,
-           "$Id$")
-
 be_mirror_port::be_mirror_port (
       UTL_ScopedName *n,
-      AST_PortType *porttype_ref,
-      AST_PortType::T_ARGLIST *template_args)
+      AST_PortType *porttype_ref)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_mirror_port,
@@ -21,16 +16,13 @@ be_mirror_port::be_mirror_port (
                porttype_ref,
                n),
     AST_Extended_Port (n,
-                       porttype_ref,
-                       template_args),
+                       porttype_ref),
     AST_Mirror_Port (n,
-                     porttype_ref,
-                     template_args),
+                     porttype_ref),
     be_field (porttype_ref,
               n),
     be_extended_port (n,
-                      porttype_ref,
-                      template_args)
+                      porttype_ref)
 {
 }
 

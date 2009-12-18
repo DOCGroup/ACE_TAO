@@ -78,18 +78,18 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_predefined_type.h"
 #include "ast_argument.h"
 #include "ast_exception.h"
+#include "ast_param_holder.h"
+#include "ast_typedef.h"
 #include "ast_visitor.h"
+
 #include "utl_err.h"
 #include "utl_namelist.h"
 #include "utl_exceptlist.h"
 #include "utl_identifier.h"
 #include "utl_string.h"
 #include "utl_strlist.h"
-#include "global_extern.h"
 
-ACE_RCSID (ast,
-           ast_operation,
-           "$Id$")
+#include "global_extern.h"
 
 AST_Operation::AST_Operation (void)
   : COMMON_Base (),
@@ -335,7 +335,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
     }
     
   UTL_ScopedName *nl_n = 0;
-  AST_Exception *fe = 0;
+  AST_Type *fe = 0;
   AST_Decl *d = 0;
 
   this->pd_exceptions = 0;
@@ -350,9 +350,57 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
           idl_global->err ()->lookup_error (nl_n);
           return 0;
         }
+        
+      AST_Decl::NodeType nt = d->node_type ();
+        
+      switch (nt)
+        {
+          case AST_Decl::NT_except:
+            break;
+          case AST_Decl::NT_param_holder:
+            {
+              AST_Param_Holder *ph =
+                AST_Param_Holder::narrow_from_decl (d);
+                
+              nt = ph->info ()->type_;
+                
+              if (nt != AST_Decl::NT_except
+                  && nt != AST_Decl::NT_type)
+                {
+                  idl_global->err ()->mismatched_template_param (
+                    ph->info ()->name_.c_str ());
+                }
+                
+              break;
+            }
+          case AST_Decl::NT_typedef:
+            {
+              AST_Typedef *td =
+                AST_Typedef::narrow_from_decl (d);
+                
+              nt = td->primitive_base_type ()->node_type ();
+              
+              if (nt != AST_Decl::NT_except)
+                {
+                  idl_global->err ()->error1 (
+                    UTL_Error::EIDL_ILLEGAL_RAISES,
+                    this);
+                }
+                
+              break;
+            }
+          default:
+            idl_global->err ()->error1 (
+              UTL_Error::EIDL_ILLEGAL_RAISES,
+              this);
+              
+            break;
+        };
 
-      bool oneway_op = (this->flags () == AST_Operation::OP_oneway);
-      fe = AST_Exception::narrow_from_decl (d);
+      bool oneway_op =
+        (this->flags () == AST_Operation::OP_oneway);
+        
+      fe = AST_Type::narrow_from_decl (d);
 
       if (oneway_op && fe != 0)
         {
@@ -476,7 +524,7 @@ void
 AST_Operation::dump (ACE_OSTREAM_TYPE &o)
 {
   AST_Decl *d = 0;
-  AST_Exception *e = 0;
+  AST_Type *e = 0;
   UTL_String *s = 0;
 
   if (this->pd_flags == OP_oneway)

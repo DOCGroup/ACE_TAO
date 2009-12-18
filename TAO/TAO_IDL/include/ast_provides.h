@@ -6,9 +6,6 @@
 
 #include "ast_field.h"
 
-class AST_Interface;
-class AST_Visitor;
-
 class TAO_IDL_FE_Export AST_Provides : public virtual AST_Field
 {
 public:

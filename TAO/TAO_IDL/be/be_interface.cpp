@@ -46,6 +46,10 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 
+ACE_RCSID (be,
+           be_interface,
+           "$Id$")
+
 // Default constructor.
 be_interface::be_interface (void)
   : COMMON_Base (),
@@ -69,7 +73,7 @@ be_interface::be_interface (void)
 
 // Constructor used to build the AST.
 be_interface::be_interface (UTL_ScopedName *n,
-                            AST_Interface **ih,
+                            AST_Type **ih,
                             long nih,
                             AST_Interface **ih_flat,
                             long nih_flat,
@@ -763,9 +767,8 @@ Pure_Virtual_Regenerator::emit (be_interface *derived_interface,
        si.next ())
     {
       d = be_decl::narrow_from_decl (si.item ());
-      AST_Decl::NodeType nt = d->node_type ();
 
-      if (nt == AST_Decl::NT_op || nt == AST_Decl::NT_attr)
+      if (d->node_type () == AST_Decl::NT_op)
         {
           // Hack to force the generation of the pure virtual ' = 0'
           // at the end of the operation declaration.
@@ -1381,8 +1384,15 @@ be_interface::analyze_parentage (void)
     {
       be_interface *parent =
         be_interface::narrow_from_decl (this->pd_inherits[i]);
+        
+      if (parent == 0)
+        {
+          // The item is a template param holder.
+          continue;
+        }
 
-      if (parent->is_abstract () || parent->has_mixed_parentage ())
+      if (parent->is_abstract ()
+          || parent->has_mixed_parentage ())
         {
           this->has_mixed_parentage_ = 1;
           break;
@@ -1463,7 +1473,7 @@ be_interface::traverse_inheritance_graph (
   bool abstract_paths_only,
   bool add_ccm_object)
 {
-  AST_Interface *intf = 0;  // element inside the queue
+  AST_Type *intf = 0;  // element inside the queue
 
   if (!this->insert_queue.is_empty ())
     {
@@ -1476,21 +1486,42 @@ be_interface::traverse_inheritance_graph (
                             -1);
         }
 
-      // If we are doing a home or component, we check for a parent.
+      // If we are doing a home, we check for a parent.
       if (intf->node_type () == AST_Decl::NT_home)
         {
-          this->enqueue_base_home_r (
-            AST_Home::narrow_from_decl (intf));
+          AST_Home *base =
+            AST_Home::narrow_from_decl (intf)->base_home ();
+
+          if (base != 0)
+            {
+              (void) this->insert_non_dup (base);
+            }
         }
-      else if (intf->node_type () == AST_Decl::NT_component)
+
+      // If we are doing a component, we check for a parent.
+      if (intf->node_type () == AST_Decl::NT_component)
         {
           if (add_ccm_object)
             {
               (void) this->insert_non_dup (be_global->ccmobject ());
             }
 
-          this->enqueue_base_component_r (
-            AST_Component::narrow_from_decl (intf));
+          AST_Component *base =
+            AST_Component::narrow_from_decl (intf)->base_component ();
+
+          if (base != 0)
+            {
+              (void) this->insert_non_dup (base);
+
+              long const n_supports = base->n_supports ();
+              AST_Type **supports = base->supports ();
+
+              for (long j = 0; j < n_supports; ++j)
+                {
+                  (void) this->insert_non_dup (supports[j],
+                                               abstract_paths_only);
+                }
+            }
         }
 
       (void) this->insert_non_dup (intf, abstract_paths_only);
@@ -2666,52 +2697,6 @@ be_interface::gen_facet_idl (TAO_OutStream &os)
   this->gen_nesting_close (os);
 
   this->ex_idl_facet_gen (true);
-}
-
-void
-be_interface::enqueue_base_component_r (AST_Component *node)
-{
-  AST_Component *base = node->base_component ();
-    
-  if (base == 0)
-    {
-      return;
-    }
-    
-  this->enqueue_base_component_r (base);
-
-  (void) this->insert_non_dup (base);
-
-  long const n_supports = base->n_supports ();
-  AST_Interface **supports = base->supports ();
-
-  for (long j = 0; j < n_supports; ++j)
-    {
-      (void) this->insert_non_dup (supports[j]);
-    }
-}
-
-void
-be_interface::enqueue_base_home_r (AST_Home *node)
-{
-  AST_Home *base = node->base_home ();
-    
-  if (base == 0)
-    {
-      return;
-    }
-    
-  this->enqueue_base_home_r (base);
-
-  (void) this->insert_non_dup (base);
-  
-  long const n_supports = base->n_supports ();
-  AST_Interface **supports = base->supports ();
-
-  for (long j = 0; j < n_supports; ++j)
-    {
-      (void) this->insert_non_dup (supports[j]);
-    }
 }
 
 // =================================================================

@@ -44,7 +44,7 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
 
   if (node->n_inherits () > 0)
     {
-      AST_Interface *parent = 0;
+      AST_Type *parent = 0;
 
       for (int i = 0; i < node->n_inherits (); ++i)
         {

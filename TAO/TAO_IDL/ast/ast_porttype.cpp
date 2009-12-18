@@ -12,23 +12,14 @@
 #include "utl_indenter.h"
 #include "global_extern.h"
 
-ACE_RCSID (ast,
-           ast_porttype,
-           "$Id$")
-
-AST_PortType::AST_PortType (
-      UTL_ScopedName *n,
-      FE_Utils::T_PARAMLIST_INFO *template_params)
+AST_PortType::AST_PortType (UTL_ScopedName *n)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_porttype,
               n),
     AST_Type (AST_Decl::NT_porttype,
               n),
-    UTL_Scope (AST_Decl::NT_porttype),
-    AST_Template_Common (AST_Decl::NT_porttype,
-                         n,
-                         template_params)
+    UTL_Scope (AST_Decl::NT_porttype)
 {
 }
 
@@ -39,8 +30,8 @@ AST_PortType::~AST_PortType (void)
 void
 AST_PortType::destroy (void)
 {
+  this->UTL_Scope::destroy ();
   this->AST_Type::destroy ();
-  this->AST_Template_Common::destroy ();
 }
 
 void

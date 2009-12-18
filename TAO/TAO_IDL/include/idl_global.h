@@ -78,6 +78,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_predefined_type.h"
 #include "ast_component.h"
 #include "utl_stack.h"
+#include "fe_utils.h"
 
 class AST_Root;
 class AST_Generator;
@@ -105,7 +106,6 @@ public:
     , PS_ConstDeclSeen          // Seen complete const declaration
     , PS_ExceptDeclSeen         // Seen complete exception declaration
     , PS_InterfaceDeclSeen      // Seen complete interface declaration
-    , PS_TmplInterfaceDeclSeen  // Seen complete template interface declaration
     , PS_ModuleDeclSeen         // Seen complete module declaration
     , PS_ValueTypeDeclSeen      // Seen complete valuetype declaration
     , PS_ComponentDeclSeen      // Seen complete component declaration
@@ -143,9 +143,17 @@ public:
     , PS_InterfaceSqSeen        // '{' seen for interface
     , PS_InterfaceQsSeen        // '}' seen for interface
     , PS_InterfaceBodySeen      // Seen an interface body
-    , PS_TmplInterfaceSqSeen    // '{' seen for template interface
-    , PS_TmplInterfaceQsSeen    // '}' seen for template interface
-    , PS_TmplInterfaceBodySeen  // Seen a template interface body
+    , PS_TmplModuleIDSeen       // Seen the template module ID
+    , PS_TmplModuleParamsSeen   // Seen template module params
+    , PS_TmplModuleSqSeen       // '{' seen for template module
+    , PS_TmplModuleQsSeen       // '}' seen for template module
+    , PS_TmplModuleBodySeen     // Seen a template module body
+    , PS_InstModuleSeen         // Seen MODULE keyword + reference
+    , PS_InstModuleArgsSeen     // Seen template args 
+    , PS_InstModuleIDSeen       // Seen instantiated module ID
+    , PS_ModuleRefSeen          // Seen ALIAS keyword + reference
+    , PS_ModuleRefParamsSeen    // Seen the subset of params used
+    , PS_ModuleRefIDSeen        // Seen referenced module ID
     , PS_ValueTypeSeen          // Seen a VALUETYPE keyword
     , PS_ValueTypeForwardSeen   // Forward valuetype decl seen
     , PS_ValueTypeIDSeen        // Seen the valuetype ID
@@ -643,9 +651,22 @@ public:
   
   const char *big_file_name (void) const;
   // Just get the const string.
+  
+  FE_Utils::T_PARAMLIST_INFO const *current_params (void) const;
+  void current_params (FE_Utils::T_PARAMLIST_INFO *params);
+  // Accessors for the member. If UTL_Scope::lookup_by_name()
+  // has a 0 result, it will check this param list (if it is not
+  // 0, meaning we are in the scope of a template module) for a
+  // match before returning, in case it is processing a 
+  // referenced template parameter of the eclosing template
+  // module.
 
   UTL_String *utl_string_factory (const char *str);
   // Utility function to create UTL_String classes on the FE heap.
+
+  ACE_CString check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list);
+  // Check if 'param' is a sequence of a previous param, and if
+  // so, if the previous param exists.
 
 #if defined (ACE_OPENVMS)
   static char* translateName(const char* name, char *name_buf);
@@ -656,6 +677,11 @@ public:
 
   void original_local_name (Identifier *local_name);
   // Strips _cxx_ prefix for use in port names.
+  
+private:
+  bool check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
+                               ACE_CString &param_id,
+                               size_t index);
 
 private:
   // Data
@@ -780,6 +806,10 @@ private:
   
   const char *big_file_name_;
   // Used if the above flag is set.
+  
+  FE_Utils::T_PARAMLIST_INFO *current_params_;
+  // Stored if we are parsing the scope of a template module,
+  // 0 otherwise.
 };
 
 

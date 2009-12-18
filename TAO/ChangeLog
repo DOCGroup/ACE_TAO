@@ -1,3 +1,700 @@
+Fri Dec 18 18:58:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Merged changes for templated modules in the TAO_IDL front end to svn head
+
+        Thu Dec 17 20:35:28 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+
+          Changes to TAO IFR loader required by changes to TAO_IDL
+          front end in
+
+          Wed Dec 16 20:20:13 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        Wed Dec 16 20:20:13 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_valuetype.h:
+        * TAO_IDL/include/ast_eventtype.h:
+        * TAO_IDL/include/ast_home.h:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/be/be_visitor_typecode/value_typecode.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_home/home_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_home.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_sh.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ss.cpp:
+        * TAO_IDL/be/be_component.cpp:
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/component_sh.cpp:
+        * TAO_IDL/be/be_eventtype.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/ast/ast_home.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_component.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/ast/ast_eventtype.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_component.h:
+        * TAO_IDL/be_include/be_eventtype.h:
+        * TAO_IDL/be_include/be_home.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_valuetype.h:
+        * TAO_IDL/be_include/be_visitor_ami_pre_proc.h:
+        * TAO_IDL/fe/fe_obv_header.cpp:
+        * TAO_IDL/fe/fe_home_header.cpp:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/fe/fe_component_header.cpp:
+        * TAO_IDL/narrow/narrow.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Changes to support template parameters as base
+          interfaces/valuetypes, supported interfaces,
+          primary keys, and members of a throw spec list.
+          Several internal container types were widened to AST_Type
+          from whatever they were originally, to enable
+          them to also contain AST_Param_Holder. This
+          change precipitated many small mods, to the
+          backend as well as the frontend.
+
+        Tue Dec 15 20:34:51 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/utl_exceptlist.h:
+        * TAO_IDL/include/fe_home_header.h:
+        * TAO_IDL/include/fe_interface_header.h:
+        * TAO_IDL/include/fe_obv_header.h:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/include/fe_component_header.h:
+        * TAO_IDL/be/be_visitor_home/home_ex_idl.cpp:
+        * TAO_IDL/be/be_field.cpp:
+        * TAO_IDL/ast/ast_operation.cpp:
+        * TAO_IDL/fe/fe_obv_header.cpp:
+        * TAO_IDL/fe/fe_home_header.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/fe/fe_component_header.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/util/utl_exceptlist.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          - Added support for template parameters in an
+            operation throw spec.
+
+          - Began support for template parameters as
+            base interfaces/valuetypes and supported interfaces.
+
+        Mon Dec 14 20:26:51 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_template_common.h:
+        * TAO_IDL/include/fe_template_interface_header.h:
+        * TAO_IDL/include/fe_template_header_common.h:
+        * TAO_IDL/include/fe_instantiated_interface_header.h:
+        * TAO_IDL/include/ast_template_interface.h:
+        * TAO_IDL/be/be_template_interface.cpp:
+        * TAO_IDL/be/be_visitor_iface_inst.cpp:
+        * TAO_IDL/ast/ast_template_common.cpp:
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/be_include/be_template_interface.h:
+        * TAO_IDL/be_include/be_visitor_iface_inst.h:
+        * TAO_IDL/fe/fe_template_header_common.cpp:
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/fe/fe_instantiated_interface_header.cpp:
+
+          Removed these files, they were part of the support
+          for the original version of IDL3+, before the
+          revisions.
+
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+        * TAO_IDL/fe/idl.ll:
+
+          Changes mandated by the removal of the above
+          files.
+
+        Mon Dec 14 19:21:39 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Restored semantic action to create a non-template porttype,
+          removed at the beginning of revised IDL3+ template support
+          work.
+
+        Mon Dec 14 18:16:17 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_array.cpp:
+
+          Completed support for template parameters as array bounds.
+
+        Fri Dec 11 19:17:52 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/ast/ast_array.cpp:
+        * TAO_IDL/ast/ast_field.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+
+          - More error checking when using template parameter for
+            sequence element type.
+
+          - Start on support for template parameter as array
+            bound, not yet complete.
+
+        Fri Dec  4 19:23:17 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_param_holder.h:
+        * TAO_IDL/include/ast_expression.h:
+        * TAO_IDL/be/be_param_holder.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_param_holder.cpp:
+        * TAO_IDL/be_include/be_param_holder.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/fe_declarator.cpp:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Support for template parameter as sequence
+          bound, and additional error checking for
+          template parameter as const type, sequence
+          type and sequence bound.
+
+        Thu Dec  3 20:39:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_expression.h:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+
+          Added check to see if an expression has been created as the
+          rhs of a constant declaration that is a reference to a
+          template module parameter. If so, we can skip the coercion
+          and some of the evaluation until instantiation time.
+
+        Thu Dec  3 19:15:15 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+        * TAO_IDL/include/fe_utils.h:
+
+        Thu Dec  3 18:52:22 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_field.cpp:
+
+          Added check for AST_Param_Holder as field type, and
+          made this type (along with sequence and array) one
+          whose lifetime is tied to the field node.
+
+        * TAO_IDL/util/utl_global.cpp:
+
+          Added initialization in the constuctor for the new
+          member that stores a template param list.
+
+        Wed Dec  2 21:21:24 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_param_holder.h:
+        * TAO_IDL/include/fe_utils.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/fe_interface_header.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/include/ast_consumes.h:
+        * TAO_IDL/include/ast_publishes.h:
+        * TAO_IDL/include/ast_operation.h:
+        * TAO_IDL/include/ast_emits.h:
+        * TAO_IDL/be/be_param_holder.cpp:
+        * TAO_IDL/be/be_publishes.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_consumes.cpp:
+        * TAO_IDL/be/be_emits.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/ast/ast_consumes.cpp:
+        * TAO_IDL/ast/ast_publishes.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_template_module.cpp:
+        * TAO_IDL/ast/ast_emits.cpp:
+        * TAO_IDL/ast/ast_template_common.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDL/ast/ast_param_holder.cpp:
+        * TAO_IDL/ast/ast_exception.cpp:
+        * TAO_IDL/ast/ast_structure.cpp:
+        * TAO_IDL/ast/ast_attribute.cpp:
+        * TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/ast/ast_argument.cpp:
+        * TAO_IDL/be_include/be_publishes.h:
+        * TAO_IDL/be_include/be_param_holder.h:
+        * TAO_IDL/be_include/be_emits.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_consumes.h:
+        * TAO_IDL/fe/fe_utils.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          - Added code to UTL_Scope::lookup_by_name() that can
+            match an input to a template parameter, if any, of the
+            enclosing scope.
+
+          - Changed constructor and IDL compiler factory function
+            signatures for publishes, emits and consumes nodes to
+            take AST_Type rather than AST_EventType, allowing a
+            template parameter placeholder to be accepted if that
+            particular IDL construct is parameterized.
+
+          - Removed #include of ast_typedef.h from utl_scope.h and
+            added it to the necessary .cpp files.
+
+          - Added check for duplicate names in a formal template
+            parameter list.
+
+        Tue Dec  1 18:00:15 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Fixed typo and regenerated/recompiled.
+
+        Tue Dec  1 17:39:09 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_template_module.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/ast/ast_template_module.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          - Finished matching/error checking code for template
+            parameter references
+          - Finished semantic actions for template module aliases
+            and the associated template parameter references
+          - Factored ACE_NEW_RETURN macro out of both paths of an
+            IF block in several production rules dealing with
+            comma-separated lists
+
+        Tue Dec  1 14:46:26 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Regenrerated and recompiled.
+
+        Mon Nov 30 23:14:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/ast_template_module.h:
+        * TAO_IDL/ast/ast_template_module.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/util/utl_err.cpp:
+
+          Added parse state flags & associated error messages
+          for aliased modules. Also added error-checking code
+          for aliases to AST_Template_Module, and some semantic
+          action code for aliased modules.
+
+        Mon Nov 30 21:46:22 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_template_module.cpp:
+        * TAO_IDL/ast/ast_template_common.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Finished semantic actions and added diagnostics
+          for template module instantiations.
+
+        Mon Nov 30 20:11:27 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Fixed typo and regenerated.
+
+        Mon Nov 30 20:04:13 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/includ/idl_global.h:
+        * TAO_IDL/util/utl_err.cpp:
+
+          Added new parse states for instantiated template modules,
+          with corresponding error messages.
+
+        * TAO_IDL/include/ast_template_module.h:
+        * TAO_IDL/ast/ast_template_module.cpp:
+
+          Added methods to check the arglist of an instantiated
+          template modules against the formal parameters.
+
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+
+          Added semantic actions for creation of instantiated
+          template module.
+
+        Mon Nov 30 17:30:44 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Added overlooked case IDL_ENUM to <formal_parameter_type>
+          and regenerated.
+
+        Mon Nov 30 16:56:21 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Removed check for illegal const type added in
+
+          Fri Nov 27 23:13:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          since it turned out to be unnecessary, the check is made elswhere.
+
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+
+          Added semantic action for single template arg.
+
+        Fri Nov 27 23:13:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/utl_list.h:
+        * TAO_IDL/include/utl_idlist.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/util/utl_exprlist.cpp:
+        * TAO_IDL/util/utl_list.cpp:
+        * TAO_IDL/util/utl_exceptlist.cpp:
+        * TAO_IDL/util/utl_idlist.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+
+          - Cosmetic changes to list classes
+          - Check for illegal const type in expression with scoped name
+          - Minor modifications of <primary_expr> production rule code
+
+        Fri Nov 27 19:03:58 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_constant.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+
+          Cosmetic changes.
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Added semantic actions for template argument list.
+
+        Fri Nov 27 16:53:09 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+
+          Minor change to avoid compilation error. This file will
+          eventually be removed once some of its code has been
+          relocated.
+
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+
+          Cleaned up semantic action for <primary_expr> and tested
+          lookup and narrowing of template module referenced in a
+          template module instantiation.
+
+        Wed Nov 25 20:19:10 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+
+          Start of semantic actions for instantiated template modules,
+          and related error messages.
+
+        Wed Nov 25 18:52:19 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Fixed typos and some discrepancies between idl.yy and a
+          hand-crafted y.tab.cpp, and regenerated.
+
+        Wed Nov 25 17:58:50 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/fe_utils.h:
+        * TAO_IDL/fe/fe_utils.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+
+          Added support for the 'const' formal template parameter type.
+
+        Wed Nov 25 01:35:38 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+
+          Fixed bugs in 'sequence<xxx>' template param checking.
+
+        Tue Nov 24 21:20:55 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Regenerated parsing code and recompiled.
+
+        Tue Nov 24 20:54:20 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+
+          - Added check for mismatched 'sequence<xxx>' template param
+          - Updated parse state values
+          - Updated semantic action that creates a fixed module
+          - Added semantic action to create a template module
+
+        Tue Nov 24 18:32:54 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_param_holder.cpp:
+        * TAO_IDL/ast/ast_template_module.cpp:
+        * TAO_IDL/ast/ast_template_module_inst.cpp:
+        * TAO_IDL/ast/ast_template_module_ref.cpp:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_param_holder.h:
+        * TAO_IDL/include/ast_template_module.h:
+        * TAO_IDL/include/ast_template_module_inst.h:
+        * TAO_IDL/include/ast_template_module_ref.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Fixed compile warnings and added semantic actions for
+          formal template parameters.
+
+        Mon Nov 23 20:37:29 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_template_module_ref.h:
+        * TAO_IDL/ast/ast_template_module_ref.cpp:
+        * TAO_IDL/be_include/be_template_module_ref.h:
+        * TAO_IDL/be/be_template_module_ref.cpp:
+
+          New files, containing the AST node type
+          representing a reference to an IDL template
+          module denoted by the IDL keyword 'alias'.
+
+        * TAO_IDL/include/ast_visitor.h:
+        * TAO_IDL/be/be_template_interface.cpp:
+        * TAO_IDL/be/be_typedef.cpp:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/be_include/be_visitor.h:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+
+          - Removed methods and code blocks referencing
+            AST node types that have been removed.
+
+          - Updated visit_* methods to frontend and backend
+            visitor classes.
+
+          - Updated create_* methods in generator classes.
+
+        * orbsvcs/IFR_Service/ifr_visitor.h:
+        * orbsvcs/IFR_Service/ifr_visitor.cpp:
+
+          Update visit_* methods in base class visitor so
+          backend IFR loader library will comple. New visit_*
+          methods are not yet implemented.
+
+        Fri Nov 20 20:22:23 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/ast_connector.h:
+        * TAO_IDL/ast/ast_connector.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+
+          Removed more operations and includes that were caught
+          by a build from scratch.
+
+        Fri Nov 20 20:09:59 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_instantiated_connector.h:
+        * TAO_IDL/include/ast_tmpl_port.h:
+        * TAO_IDL/include/ast_tmpl_mirror_port.h:
+        * TAO_IDL/ast/ast_instantiated_connector.cpp:
+        * TAO_IDL/ast/ast_tmpl_mirror_port.cpp:
+        * TAO_IDL/ast/ast_tmpl_port.cpp:
+        * TAO_IDL/be_include/be_tmpl_port.h:
+        * TAO_IDL/be_include/be_instantiated_connector.h:
+        * TAO_IDL/be_include/be_tmpl_mirror_port.h:
+        * TAO_IDL/be/be_tmpl_mirror_port.cpp:
+        * TAO_IDL/be/be_tmpl_port.cpp:
+        * TAO_IDL/be/be_instantiated_connector.cpp:
+
+          Removed these files, the AST node types they contain
+          are not relevant to the updated IDL3+ spec.
+
+        * TAO_IDL/include/ast_template_module_inst.h:
+        * TAO_IDL/ast/ast_template_module_inst.cpp:
+        * TAO_IDL/be/be_template_module_inst.cpp:
+        * TAO_IDL/be_include/be_template_module_inst.h:
+
+          New files, containing the AST node type corresponding
+          to an IDL template module declaration.
+
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/fe_utils.h:
+        * TAO_IDL/include/ast_mirror_port.h:
+        * TAO_IDL/include/ast_provides.h:
+        * TAO_IDL/include/ast_template_module.h:
+        * TAO_IDL/include/ast_extended_port.h:
+        * TAO_IDL/include/ast_uses.h:
+        * TAO_IDL/include/ast_porttype.h:
+        * TAO_IDL/include/ast_consumes.h:
+        * TAO_IDL/include/ast_publishes.h:
+        * TAO_IDL/include/ast_emits.h:
+        * TAO_IDL/be/be_mirror_port.cpp:
+        * TAO_IDL/be/be_extended_port.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_porttype.cpp:
+        * TAO_IDL/ast/ast_template_module.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_extended_port.cpp:
+        * TAO_IDL/ast/ast_mirror_port.cpp:
+        * TAO_IDL/ast/ast_porttype.cpp:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_porttype.h:
+        * TAO_IDL/be_include/be_extended_port.h:
+        * TAO_IDL/be_include/be_mirror_port.h:
+        * TAO_IDL/fe/fe_utils.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+
+          Removed operations, args and blocks of code that are
+          not relelvant to the updated IDL3+ spec.
+
+        Thu Nov 19 20:47:43 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_param_holder.h:
+        * TAO_IDL/include/ast_template_module.h:
+        * TAO_IDL/be/be_param_holder.cpp:
+        * TAO_IDL/be/be_template_module.cpp:
+        * TAO_IDL/ast/ast_template_module.cpp:
+        * TAO_IDL/ast/ast_param_holder.cpp:
+        * TAO_IDL/be_include/be_template_module.h:
+        * TAO_IDL/be_include/be_param_holder.h:
+
+          New files, containing new AST node types
+          corresponding to updates in the IDL3+ grammar.
+
+        * TAO_IDL/be/be_visitor_component/context_ex_idl.cpp:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_connector.h:
+        * TAO_IDL/be/be_enum_val.cpp:
+        * TAO_IDL/be/be_template_interface.cpp:
+        * TAO_IDL/be/be_connector.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/ast/ast_connector.cpp:
+        * TAO_IDL/ast/ast_template_common.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/be_include/be_connector.h:
+        * TAO_IDL/be_include/be_generator.h:
+
+          Cosmetic changes.
+
+        * TAO_IDL/be_include/be_typedef.h:
+        * TAO_IDL/include/ast_typedef.h:
+        * TAO_IDL/ast/ast_typedef.cpp:
+        * TAO_IDL/be/be_typedef.cpp:
+        * TAO_IDL/ast/ast_field.cpp:
+        * TAO_IDL/include/ast_field.h:
+
+          Made typedef nodes subclasses of field
+          nodes, similar to argument, attribute,
+          port, etc. so the case when these nodes
+          refer to IDL template parameters can be
+          handled in a consistent manner.
+
+        Thu Nov 19 14:43:01 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Fixed typos in generated file.
+
+        Thu Nov 19 14:23:09 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_expression.cpp:
+
+          Cosmetic changes.
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Finished first cut of production rules for revised IDL3+ grammar.
+
+        Mon Nov 16 20:22:50 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Started adding new production rules for template modules.
+
+        Mon Nov 16 15:28:01 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Removed '$' as keyword and added keyword 'alias'. Regenerated flex and
+          bison files.
+
 Fri Dec 18 14:02:52 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * tests/GIOP_Fragments/PMB_With_Fragments/run_test.pl:

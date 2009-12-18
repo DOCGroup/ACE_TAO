@@ -19,8 +19,8 @@ public:
   AST_Home (UTL_ScopedName *n,
             AST_Home *base_home,
             AST_Component *managed_component,
-            AST_ValueType *primary_key,
-            AST_Interface **supports,
+            AST_Type *primary_key,
+            AST_Type **supports,
             long n_supports,
             AST_Interface **supports_flat,
             long n_supports_flat);
@@ -39,13 +39,13 @@ public:
 
   AST_Home *base_home (void) const;
 
-  AST_Interface **supports (void) const;
+  AST_Type **supports (void) const;
 
   long n_supports (void) const;
 
   AST_Component *managed_component (void) const;
 
-  AST_ValueType *primary_key (void) const;
+  AST_Type *primary_key (void) const;
   
   typedef ACE_Unbounded_Queue<AST_Operation *> INIT_LIST;
 
@@ -70,9 +70,10 @@ public:
 private:
   AST_Home *pd_base_home;
   AST_Component *pd_managed_component;
-  AST_ValueType *pd_primary_key;
+  AST_Type *pd_primary_key;
   INIT_LIST pd_factories;
   INIT_LIST pd_finders;
+  bool owns_primary_key_;
 };
 
 #endif // _AST_HOME_AST_HOME_HH

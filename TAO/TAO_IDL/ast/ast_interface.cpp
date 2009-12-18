@@ -85,21 +85,20 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_union.h"
 #include "ast_union_fwd.h"
 #include "ast_structure_fwd.h"
+#include "ast_typedef.h"
 #include "ast_native.h"
 #include "ast_visitor.h"
 #include "ast_extern.h"
+
 #include "utl_err.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
 #include "utl_string.h"
+
 #include "global_extern.h"
 #include "nr_extern.h"
 
 #include "ace/streams.h"
-
-ACE_RCSID (ast,
-           ast_interface,
-           "$Id$")
 
 AST_Interface::AST_Interface (void)
   : COMMON_Base (),
@@ -118,7 +117,7 @@ AST_Interface::AST_Interface (void)
 }
 
 AST_Interface::AST_Interface (UTL_ScopedName *n,
-                              AST_Interface **ih,
+                              AST_Type **ih,
                               long nih,
                               AST_Interface **ih_flat,
                               long nih_flat,
@@ -140,6 +139,17 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
 {
   this->size_type (AST_Type::VARIABLE); // always the case
   this->has_constructor (true);      // always the case
+  
+  // Enqueue the param holders (if any) for later destruction.
+  // By the time our destroy() is called, it will be too late
+  // to iterate over pd_inherits.
+  for (long i = 0; i < nih; ++i)
+    {
+      if (ih[i]->node_type () == AST_Decl::NT_param_holder)
+        {
+          this->param_holders_.enqueue_tail (ih[i]);
+        }
+    }
 }
 
 AST_Interface::~AST_Interface (void)
@@ -1183,44 +1193,50 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
 }
 
 void
-AST_Interface::redef_clash_populate_r (AST_Interface *t)
+AST_Interface::redef_clash_populate_r (AST_Type *t)
 {
   if (this->insert_non_dup (t, 0) == 0)
     {
       return;
     }
 
-  AST_Interface **parents = t->inherits ();
-  long n_parents = t->n_inherits ();
-  long i;
-
-  for (i = 0; i < n_parents; ++i)
-    {
-      this->redef_clash_populate_r (parents[i]);
-    }
-
   AST_Decl::NodeType nt = t->node_type ();
+  long n = 0;
+  
+  if (nt != AST_Decl::NT_param_holder)
+    {
+      AST_Interface *i =
+        AST_Interface::narrow_from_decl (t);
+        
+      AST_Type **parents = i->inherits ();
+      long n_parents = i->n_inherits ();
+
+      for (n = 0; n < n_parents; ++n)
+        {
+          this->redef_clash_populate_r (parents[n]);
+        }
+    }
 
   if (nt == AST_Decl::NT_valuetype || nt == AST_Decl::NT_eventtype)
     {
       AST_ValueType *v = AST_ValueType::narrow_from_decl (t);
-      AST_Interface **supports = v->supports ();
+      AST_Type **supports = v->supports ();
       long n_supports = v->n_supports ();
 
-      for (i = 0; i < n_supports; ++i)
+      for (n = 0; n < n_supports; ++n)
         {
-          this->redef_clash_populate_r (supports[i]);
+          this->redef_clash_populate_r (supports[n]);
         }
     }
   else if (nt == AST_Decl::NT_component)
     {
       AST_Component *c = AST_Component::narrow_from_decl (t);
-      AST_Interface **supports = c->supports ();
+      AST_Type **supports = c->supports ();
       long n_supports = c->n_supports ();
 
-      for (i = 0; i < n_supports; ++i)
+      for (n = 0; n < n_supports; ++n)
         {
-          this->redef_clash_populate_r (supports[i]);
+          this->redef_clash_populate_r (supports[n]);
         }
     }
 }
@@ -1250,37 +1266,45 @@ AST_Interface::fwd_decl (AST_InterfaceFwd *node)
 }
 
 int
-AST_Interface::insert_non_dup (AST_Interface *t,
+AST_Interface::insert_non_dup (AST_Type *t,
                                bool abstract_paths_only)
 {
+  AST_Interface *f =
+    AST_Interface::narrow_from_decl (t);
+    
   // Now check if the dequeued element has any ancestors. If yes, insert
   // them inside the queue making sure that there are no duplicates.
   // If we are doing a component, the inheritance list is actually a
   // supports list.
-  for (long i = 0; i < t->n_inherits (); ++i)
+  if (f != 0)
     {
-      // Retrieve the next parent from which the dequeued element inherits.
-      AST_Interface *parent = t->inherits ()[i];
-
-      if (abstract_paths_only && ! parent->is_abstract ())
+      for (long i = 0; i < f->n_inherits (); ++i)
         {
-          continue;
-        }
+          // Retrieve the next parent from which 
+          // the dequeued element inherits.
+          AST_Type *parent = f->inherits ()[i];
 
-      (void) this->insert_non_dup (parent, abstract_paths_only);
-    } // end of for loop
+          if (abstract_paths_only && ! parent->is_abstract ())
+            {
+              continue;
+            }
+
+          (void) this->insert_non_dup (parent,
+                                       abstract_paths_only);
+        }
+    }
 
   const char *full_name = t->full_name ();
 
   // Initialize an iterator to search the queue for duplicates.
-  for (ACE_Unbounded_Queue_Iterator<AST_Interface *> q_iter (
+  for (ACE_Unbounded_Queue_Iterator<AST_Type *> q_iter (
            this->insert_queue
          );
        !q_iter.done ();
        (void) q_iter.advance ())
     {
       // Queue element.
-      AST_Interface **temp = 0;
+      AST_Type **temp = 0;
 
       (void) q_iter.next (temp);
 
@@ -1293,14 +1317,14 @@ AST_Interface::insert_non_dup (AST_Interface *t,
     }
 
   // Initialize an iterator to search the del_queue for duplicates.
-  for (ACE_Unbounded_Queue_Iterator<AST_Interface *> del_q_iter (
+  for (ACE_Unbounded_Queue_Iterator<AST_Type *> del_q_iter (
            this->del_queue
          );
        !del_q_iter.done ();
        (void) del_q_iter.advance ())
     {
       // Queue element.
-      AST_Interface **temp = 0;
+      AST_Type **temp = 0;
 
       (void) del_q_iter.next (temp);
 
@@ -1340,7 +1364,7 @@ AST_Interface::redefine (AST_Interface *from)
   unsigned long array_size =
     static_cast<unsigned long> (from->pd_n_inherits);
   ACE_NEW (this->pd_inherits,
-           AST_Interface *[array_size]);
+           AST_Type *[array_size]);
 
   for (i = 0; i < array_size; ++i)
     {
@@ -1373,7 +1397,7 @@ AST_Interface::redefine (AST_Interface *from)
 
 // Data accessors.
 
-AST_Interface **
+AST_Type **
 AST_Interface::inherits (void) const
 {
   return this->pd_inherits;
@@ -1397,13 +1421,13 @@ AST_Interface::n_inherits_flat (void) const
   return pd_n_inherits_flat;
 }
 
-ACE_Unbounded_Queue<AST_Interface *> &
+ACE_Unbounded_Queue<AST_Type *> &
 AST_Interface::get_insert_queue (void)
 {
   return this->insert_queue;
 }
 
-ACE_Unbounded_Queue<AST_Interface *> &
+ACE_Unbounded_Queue<AST_Type *> &
 AST_Interface::get_del_queue (void)
 {
   return this->del_queue;
@@ -1415,15 +1439,15 @@ AST_Interface::redef_clash (void)
   this->insert_queue.reset ();
   this->redef_clash_populate_r (this);
 
-  AST_Interface **group1_member = 0;
-  AST_Interface **group2_member = 0;
+  AST_Type **group1_member = 0;
+  AST_Type **group2_member = 0;
   AST_Decl *group1_member_item = 0;
   AST_Decl *group2_member_item = 0;
 
   int i = 1;
 
   // Now compare all pairs.
-  for (ACE_Unbounded_Queue_Iterator<AST_Interface *> group1_iter (
+  for (ACE_Unbounded_Queue_Iterator<AST_Type *> group1_iter (
            this->insert_queue
          );
        !group1_iter.done ();
@@ -1431,102 +1455,113 @@ AST_Interface::redef_clash (void)
     {
       // Queue element.
       (void) group1_iter.next (group1_member);
+      UTL_Scope *s = DeclAsScope (*group1_member);
 
-      for (UTL_ScopeActiveIterator group1_member_items (
-               DeclAsScope (*group1_member),
-               UTL_Scope::IK_decls
-             );
-           !group1_member_items.is_done ();
-           group1_member_items.next ())
+      if (s != 0)
         {
-          group1_member_item = group1_member_items.item ();
-          AST_Decl::NodeType nt1 = group1_member_item->node_type ();
-
-          // Only these member types may cause a clash because
-          // they can't be redefined.
-          if (nt1 != AST_Decl::NT_op && nt1 != AST_Decl::NT_attr)
+          for (UTL_ScopeActiveIterator group1_member_items (
+                 s,
+                 UTL_Scope::IK_decls);
+               !group1_member_items.is_done ();
+               group1_member_items.next ())
             {
-              continue;
-            }
+              group1_member_item = group1_member_items.item ();
+              AST_Decl::NodeType nt1 =
+                group1_member_item->node_type ();
 
-          Identifier *pid1 = group1_member_item->local_name ();
-          int j = 0;
-
-          for (ACE_Unbounded_Queue_Iterator<AST_Interface *> group2_iter (
-                   this->insert_queue
-                 );
-               !group2_iter.done ();
-               (void) group2_iter.advance ())
-            {
-              // Since group1 and group2 are the same list, we can start this
-              // iterator from where the outer one is.
-              while (j++ < i)
+              // Only these member types may cause a clash because
+              // they can't be redefined.
+              if (nt1 != AST_Decl::NT_op
+                  && nt1 != AST_Decl::NT_attr)
                 {
-                  group2_iter.advance ();
+                  continue;
                 }
 
-              if (group2_iter.done ())
+              Identifier *pid1 = group1_member_item->local_name ();
+              int j = 0;
+
+              for (ACE_Unbounded_Queue_Iterator<AST_Type *> group2_iter (
+                     this->insert_queue);
+                   !group2_iter.done ();
+                   (void) group2_iter.advance ())
                 {
-                  break;
-                }
-
-              // Queue element.
-              (void) group2_iter.next (group2_member);
-
-              for (UTL_ScopeActiveIterator group2_member_items (
-                       DeclAsScope (*group2_member),
-                       UTL_Scope::IK_decls
-                     );
-                   !group2_member_items.is_done ();
-                   group2_member_items.next ())
-                {
-                  group2_member_item = group2_member_items.item ();
-                  AST_Decl::NodeType nt2 = group2_member_item->node_type ();
-
-                  // Only these member types may cause a clash
-                  // with other parents' member of the same type.
-                  if (nt2 != AST_Decl::NT_op && nt2 != AST_Decl::NT_attr)
+                  // Since group1 and group2 are the same list, we can start this
+                  // iterator from where the outer one is.
+                  while (j++ < i)
                     {
-                      continue;
+                      group2_iter.advance ();
                     }
 
-                  Identifier *pid2 = group2_member_item->local_name ();
-
-                  if (pid1->compare (pid2) == true)
+                  if (group2_iter.done ())
                     {
-                      idl_global->err ()->error3 (
-                                              UTL_Error::EIDL_REDEF,
-                                              *group1_member,
-                                              *group2_member,
-                                              group2_member_item
-                                            );
-                      return true;
+                      break;
                     }
-                  else if (pid1->case_compare_quiet (pid2) == true)
+
+                  // Queue element.
+                  (void) group2_iter.next (group2_member);
+                  UTL_Scope *ss = DeclAsScope (*group2_member);
+
+                  if (ss != 0)
                     {
-                      if (idl_global->case_diff_error ())
+                      for (UTL_ScopeActiveIterator group2_member_items (
+                             ss,
+                             UTL_Scope::IK_decls);
+                           !group2_member_items.is_done ();
+                           group2_member_items.next ())
                         {
-                          idl_global->err ()->error3 (
-                              UTL_Error::EIDL_NAME_CASE_ERROR,
-                              *group1_member,
-                              group1_member_item,
-                              group2_member_item
-                            );
-                          return true;
-                        }
-                      else
-                        {
-                          idl_global->err ()->warning3 (
-                              UTL_Error::EIDL_NAME_CASE_WARNING,
-                              *group1_member,
-                              group1_member_item,
-                              group2_member_item
-                            );
-                        }
-                    }
-                } // end of FOR (group2_member_items)
-            } // end of FOR (group2_iter)
-        } // end of FOR (group1_member_items)
+                          group2_member_item =
+                            group2_member_items.item ();
+                            
+                          AST_Decl::NodeType nt2 =
+                            group2_member_item->node_type ();
+
+                          // Only these member types may cause a clash
+                          // with other parents' member of the same type.
+                          if (nt2 != AST_Decl::NT_op
+                              && nt2 != AST_Decl::NT_attr)
+                            {
+                              continue;
+                            }
+
+                          Identifier *pid2 =
+                            group2_member_item->local_name ();
+
+                          if (pid1->compare (pid2) == true)
+                            {
+                              idl_global->err ()->error3 (
+                                UTL_Error::EIDL_REDEF,
+                                *group1_member,
+                                *group2_member,
+                                group2_member_item);
+                                
+                              return true;
+                            }
+                          else if (pid1->case_compare_quiet (pid2))
+                            {
+                              if (idl_global->case_diff_error ())
+                                {
+                                  idl_global->err ()->error3 (
+                                    UTL_Error::EIDL_NAME_CASE_ERROR,
+                                    *group1_member,
+                                    group1_member_item,
+                                    group2_member_item);
+                                    
+                                  return true;
+                                }
+                              else
+                                {
+                                  idl_global->err ()->warning3 (
+                                    UTL_Error::EIDL_NAME_CASE_WARNING,
+                                    *group1_member,
+                                    group1_member_item,
+                                    group2_member_item);
+                                }
+                            }
+                        } // end of FOR (group2_member_items)
+                    } // end of IF ss != 0
+                } // end of FOR (group2_iter)
+            } // end of FOR (group1_member_items)
+        } // end of IF s != 0
     } // end of FOR (group1_iter)
 
   return false;
@@ -1539,7 +1574,7 @@ AST_Interface::look_in_inherited (UTL_ScopedName *e,
 {
   AST_Decl *d = 0;
   AST_Decl *d_before = 0;
-  AST_Interface **is = 0;
+  AST_Type **is = 0;
   long nis = -1;
 
   // Can't look in an interface which was not yet defined.
@@ -1557,9 +1592,17 @@ AST_Interface::look_in_inherited (UTL_ScopedName *e,
        nis > 0;
        nis--, is++)
     {
-      d = (*is)->lookup_by_name (e,
-                                 treat_as_ref,
-                                 0 /* not in parent */);
+      AST_Interface *i = 
+        AST_Interface::narrow_from_decl (*is);
+        
+      if (i == 0)
+        {
+          continue;
+        }
+        
+      d = (i)->lookup_by_name (e,
+                               treat_as_ref,
+                               0 /* not in parent */);
       if (d != 0)
         {
           if (d_before == 0)
@@ -1663,6 +1706,24 @@ AST_Interface::legal_for_primary_key (void) const
 void
 AST_Interface::destroy (void)
 {
+  for (ACE_Unbounded_Queue_Iterator<AST_Type *> i (
+         this->param_holders_);
+       !i.done ();
+       (void) i.advance ())
+    {
+      AST_Type **tt = 0;
+      i.next (tt);
+      AST_Type *t = *tt;
+      t->destroy ();
+      delete t;
+      t = 0;
+    }
+    
+  // The destroy() we are in gets called twice if we start from
+  // be_valuetype or be_eventtype. This line keeps us from
+  // iterating over null pointers the 2nd time.  
+  this->param_holders_.reset ();
+    
   delete [] this->pd_inherits;
   this->pd_inherits = 0;
   this->pd_n_inherits = 0;

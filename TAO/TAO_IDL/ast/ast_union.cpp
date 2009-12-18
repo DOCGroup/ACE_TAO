@@ -80,6 +80,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_predefined_type.h"
 #include "ast_enum.h"
 #include "ast_enum_val.h"
+#include "ast_typedef.h"
 #include "ast_visitor.h"
 #include "utl_err.h"
 #include "utl_identifier.h"
@@ -88,10 +89,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
-
-ACE_RCSID (ast,
-           ast_union,
-           "$Id$")
 
 AST_Union::AST_Union (void)
   : COMMON_Base (),

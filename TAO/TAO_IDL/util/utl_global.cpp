@@ -86,10 +86,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_ctype.h"
 #include "ace/Env_Value_T.h"
 
-ACE_RCSID (util,
-           utl_global,
-           "$Id$")
-
 // Define an increment for the size of the array used to store names of
 // included files.
 #undef INCREMENT
@@ -153,7 +149,8 @@ IDL_GlobalData::IDL_GlobalData (void)
     dcps_gen_zero_copy_read_ (false),
     recursion_start_ (0),
     multi_file_input_ (false),
-    big_file_name_ ("PICML_IDL_file_bag")
+    big_file_name_ ("PICML_IDL_file_bag"),
+    current_params_ (0)
 {
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
@@ -1779,10 +1776,56 @@ IDL_GlobalData::big_file_name (void) const
   return this->big_file_name_;
 }
 
+FE_Utils::T_PARAMLIST_INFO const *
+IDL_GlobalData::current_params (void) const
+{
+  return this->current_params_;
+}
+
+void
+IDL_GlobalData::current_params (FE_Utils::T_PARAMLIST_INFO *params)
+{
+  this->current_params_ = params;
+}
+
 UTL_String *
 IDL_GlobalData::utl_string_factory (const char *str)
 {
   return new UTL_String (str);
+}
+
+ACE_CString
+IDL_GlobalData::check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list)
+{
+  ACE_CString id, retval;
+  const char *pattern = "sequence<";
+  size_t len = ACE_OS::strlen (pattern);
+  size_t index = 0;
+  
+  
+  for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (*list);
+       !i.done ();
+       i.advance (), ++index)
+    {
+      FE_Utils::T_Param_Info *param = 0;
+      i.next (param);
+      
+      if (param->name_.find (pattern) == 0)
+        {
+          // Get the substring of what's between the brackets.
+          // It will have to match a previous param in the list.
+          id = param->name_.substr (len,
+                                    param->name_.length () - (len + 1));
+        
+          if (!this->check_one_seq_of_param (list, id, index))
+            {
+              retval = id;
+              break;
+            }
+        }
+    }
+
+  return retval;
 }
 
 void
@@ -2020,4 +2063,33 @@ IDL_GlobalData::original_local_name (Identifier *local_name)
         }
     }
 }
+
+bool
+IDL_GlobalData::check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
+                                        ACE_CString &param_id,
+                                        size_t index)
+{
+  size_t local_index = 0;
+
+  for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (*list);
+       !i.done ();
+       i.advance (), ++local_index)
+    {
+      if (local_index == index)
+        {
+          break;
+        }
+    
+      FE_Utils::T_Param_Info *info = 0;
+      i.next (info);
+      
+      if (info->name_ == param_id)
+        {
+          return true;
+        }
+    }
+    
+  return false;
+}
+
 

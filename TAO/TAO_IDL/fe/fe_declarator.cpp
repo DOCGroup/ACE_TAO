@@ -65,16 +65,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 */
 
 #include "fe_declarator.h"
+
 #include "ast_array.h"
-#include "ast_type.h"
+#include "ast_param_holder.h"
+
 #include "utl_err.h"
 #include "global_extern.h"
 #include "nr_extern.h"
-#include "ace/config-all.h"
 
-ACE_RCSID (fe,
-           fe_declarator,
-           "$Id$")
+#include "ace/config-all.h"
 
 FE_Declarator::FE_Declarator (UTL_ScopedName *n,
                               DeclaratorType dt,
@@ -96,6 +95,18 @@ FE_Declarator::compose (AST_Decl *d)
     {
       idl_global->err ()->not_a_type (d);
       return 0;
+    }
+  else if (ct->node_type () == AST_Decl::NT_param_holder)
+    {
+      AST_Param_Holder *ph =
+        AST_Param_Holder::narrow_from_decl (ct);
+        
+      // Every other template parameter kind is legal.
+      if (ph->info ()->type_ == AST_Decl::NT_const)
+        {
+          idl_global->err ()->not_a_type (d);
+          return 0;
+        }
     }
 
   AST_Decl::NodeType nt = d->node_type ();

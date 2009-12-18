@@ -7,13 +7,12 @@
 #include "ast_field.h"
 
 class AST_EventType;
-class AST_Visitor;
 
 class TAO_IDL_FE_Export AST_Publishes : public virtual AST_Field
 {
 public:
   AST_Publishes (UTL_ScopedName *n,
-                 AST_EventType *publishes_type);
+                 AST_Type *publishes_type);
             
   virtual ~AST_Publishes (void);
   
