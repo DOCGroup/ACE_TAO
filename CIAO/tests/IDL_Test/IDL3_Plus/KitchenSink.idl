@@ -27,6 +27,32 @@ eventtype ev
 {
 };
 
+module GlobalTyped<typename A, typename B>
+{
+  typedef short x;
+};
+
+module A
+{
+  local interface B 
+  {
+  };
+/*  
+  Jeff, can you check this one
+  module Nested<typename T, sequence <T> TSeq>
+  {
+    typedef short y;
+  };
+*/
+};
+
+/*
+Jeff can you check this one?
+module EmptyTyped<typename S, typename Z>
+{
+};
+*/
+ 
 typedef sequence<iface> ifaceSeq;
 
 module second<exception X, typename W>

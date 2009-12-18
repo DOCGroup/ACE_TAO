@@ -1,3 +1,8 @@
+Fri Dec 18 20:11:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * testsIDL_Test/IDL3_Plus/KitchenSink.idl:
+          Extended test idl
+
 Fri Dec 18 18:58:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Merge changes from Jeff Parsons related to templated modules
