@@ -59,7 +59,7 @@ bool Exp_EU_SchedStrategy::satisfy_sched (TaskInstID task_inst)
 	CommandID cur_cmd_id = this->planner_->cur_command_id();
 	this->cur_seq_num_=1;
 
-  SA_POP_DEBUG (SA_POP_DEBUG_MINIMAL, "NO SCHEDULING with ROADBLOCK SCHEDULER");
+  SA_POP_DEBUG (SA_POP_DEBUG_NORMAL, "NO SCHEDULING with ROADBLOCK SCHEDULER");
   // Don't do any propagation for roadblock scheduler.
 /*
   // Do the energy propogation for this task instance

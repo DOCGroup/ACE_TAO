@@ -451,7 +451,7 @@ namespace SANet {
      */
     virtual void add_pre_link (TaskID ID, TaskNode *node, LinkWeight weight);
 
-    /// update pre-link.
+    /// Update pre-link.
     /**
      * @param ID  Node ID.
      *

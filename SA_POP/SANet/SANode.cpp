@@ -449,11 +449,6 @@ bool TaskNode::update (void)
   // Update step (at end of step for task node).
   step_++;
 
-//  if(this->ID_ == 20){
-//	  this->pos_util_.utility = 100;
-//  }
-
-
   // Return boolean changed value based on change flags.
   return (prob_changed_ || util_changed_);
 
