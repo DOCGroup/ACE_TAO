@@ -1,3 +1,38 @@
+Fri Dec 18 01:00:33 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * SA_Builder.h:
+        * SA_Builder.cpp:
+
+          Updated initialization of SA_Builder so overridden init()
+          method will work correctly.
+
+
+        * SAPOP_Exp_EU.mwc:
+        * experiments/EU_Performance:
+        * experiments/EU_Performance/Exp_Core:
+        * experiments/EU_Performance/Exp_Core/Exp_EU_Builder.h:
+        * experiments/EU_Performance/Exp_Core/Exp_EU_Builder.cpp:
+        * experiments/EU_Performance/Exp_Core/Exp_EU_SchedStrategy.h:
+        * experiments/EU_Performance/Exp_Core/Exp_EU_SchedStrategy.cpp:
+        * experiments/EU_Performance/SAPOP_Exp_EU.cpp:
+        * experiments/EU_Performance/SAPOP_Exp_EU.mpc:
+        * experiments/EU_Performance/UserInput.h:
+        * experiments/EU_Performance/UserInput.cpp:
+        * experiments/EU_Performance/readme.txt:
+
+          Added EU performance experiment skeleton.
+
+
+
+        * experiments/EU_Test:
+        * experiments/EU_Test/EU_Test.mpc:
+        * experiments/EU_Test/EU_Test.cpp:
+        * experiments/EU_Test/Histogram.h:
+        * experiments/EU_Test/RandomGenerator.h:
+        * experiments/EU_Test/RandomGenerator.cpp:
+
+          Removed these files (old EU experiment skeleton).
+
 Fri Dec 11 23:54:51 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * Planner.cpp:
@@ -5,7 +40,7 @@ Fri Dec 11 23:54:51 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
         * SANet/SANet.h:
         * SANet/SANet.cpp:
 
-	Fixed (hopefully) plan EU calculations
+        Fixed (hopefully) plan EU calculations
 
 Fri Dec 11 05:37:26 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
