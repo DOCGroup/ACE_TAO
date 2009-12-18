@@ -1,3 +1,9 @@
+Fri Dec 18 14:49:31 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.cpp
+          Solve bug in test on_deletion
+
+
 Fri Dec 18 14:17:47 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
