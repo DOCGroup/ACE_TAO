@@ -32,7 +32,7 @@ namespace CIAO
       {
       public:
         // Constructor
-        RTI_ReadCondition_i (DDSReadCondition *rc);
+        RTI_ReadCondition_i (void);
 
         // Destructor
         virtual ~RTI_ReadCondition_i (void);
@@ -52,9 +52,14 @@ namespace CIAO
         virtual ::DDS::DataReader_ptr
         get_datareader (void);
 
-        DDSReadCondition * get_readcondition (void);
+        DDSReadCondition * get_impl (void);
+
+        void set_impl (DDSReadCondition * rc);
+
       private:
         DDSReadCondition *impl_;
+
+        DDSReadCondition * impl (void);
       };
     }
   }

@@ -14,8 +14,8 @@ namespace CIAO
     namespace RTI
     {
       // Implementation skeleton constructor
-      RTI_TopicDescription_i::RTI_TopicDescription_i (DDSTopicDescription *td)
-        : impl_ (td)
+      RTI_TopicDescription_i::RTI_TopicDescription_i (void)
+        : impl_ (0)
       {
       }
 
@@ -27,28 +27,45 @@ namespace CIAO
       char *
       RTI_TopicDescription_i::get_type_name (void)
       {
-        return CORBA::string_dup (this->impl_->get_type_name ());
+        return CORBA::string_dup (this->impl ()->get_type_name ());
       }
 
       char *
       RTI_TopicDescription_i::get_name (void)
       {
-        return CORBA::string_dup (this->impl_->get_name ());
+        return CORBA::string_dup (this->impl ()->get_name ());
       }
 
       ::DDS::DomainParticipant_ptr
       RTI_TopicDescription_i::get_participant (void)
       {
-        DDSDomainParticipant* p = this->impl_->get_participant ();
+        DDSDomainParticipant* p = this->impl ()->get_participant ();
         ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i (p);
         return retval._retn ();
       }
 
       DDSTopicDescription *
-      RTI_TopicDescription_i::get_topicdescription (void)
+      RTI_TopicDescription_i::get_impl (void)
       {
         return this->impl_;
       }
+
+      void
+      RTI_TopicDescription_i::set_impl (DDSTopicDescription * rc)
+      {
+        this->impl_ = rc;
+      }
+
+      DDSTopicDescription *
+      RTI_TopicDescription_i::impl (void)
+      {
+        if (!this->impl_)
+          {
+            throw ::CORBA::BAD_INV_ORDER ();
+          }
+        return this->impl_;
+      }
+
     }
   }
 }
