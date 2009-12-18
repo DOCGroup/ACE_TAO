@@ -87,6 +87,6 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::get_dds_entity (void)
 {
   CIAO_TRACE ("DDS_Write_T<DDS_TYPE, CCM_TYPE>::get_dds_entity");
 
-  return this->writer_.in ();
+  return &this->rti_writer_;
 }
 
