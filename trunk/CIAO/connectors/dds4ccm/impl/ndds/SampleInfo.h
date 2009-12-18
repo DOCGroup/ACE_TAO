@@ -23,23 +23,30 @@ operator<<= (::CCM_DDS::AccessStatus & access_status, const ::DDS_SampleStateKin
 }
 
 inline void
-operator<<= (::CCM_DDS::InstanceStatus & instance_status, const ::DDS_InstanceStateKind  & instance_state)
-{
-  if (instance_state == DDS_ALIVE_INSTANCE_STATE)
-    instance_status = ::CCM_DDS::INSTANCE_CREATED;
-  else if (instance_state == DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
-    instance_status = ::CCM_DDS::INSTANCE_DELETED;
-  else if (instance_state == DDS_NOT_ALIVE_NO_WRITERS_INSTANCE_STATE)
-    instance_status = ::CCM_DDS::INSTANCE_UPDATED;
-}
-
-inline void
 operator<<= (::CCM_DDS::ReadInfo& ccm_dds_readinfo, const ::DDS_SampleInfo& sample_info)
 {
   ccm_dds_readinfo.source_timestamp <<= sample_info.source_timestamp;
   ccm_dds_readinfo.access_status <<= sample_info.sample_state;
-  ccm_dds_readinfo.instance_status <<= sample_info.instance_state;
   ccm_dds_readinfo.instance_handle <<= sample_info.instance_handle;
+
+  //instance_status new
+  if (sample_info.instance_state == DDS_ALIVE_INSTANCE_STATE && 
+      sample_info.view_state == DDS_NEW_VIEW_STATE)
+    {
+      ccm_dds_readinfo.instance_status = ::CCM_DDS::INSTANCE_CREATED;
+    }
+  //instance_status deleted
+  else if (sample_info.instance_state == DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
+    {
+      ccm_dds_readinfo.instance_status = ::CCM_DDS::INSTANCE_DELETED;
+    }
+  //instance_status updated
+  else if ((sample_info.instance_state == DDS_ALIVE_INSTANCE_STATE &&
+            sample_info.view_state == DDS_NOT_NEW_VIEW_STATE)          ||
+           sample_info.instance_state == DDS_NOT_ALIVE_NO_WRITERS_INSTANCE_STATE)
+    {
+      ccm_dds_readinfo.instance_status = ::CCM_DDS::INSTANCE_UPDATED;
+    }
 }
 
 #endif

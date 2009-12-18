@@ -291,7 +291,7 @@ namespace CIAO
       DDSPublisher *
       RTI_Publisher_i::get_impl (void)
       {
-        return this->impl ();
+        return this->impl_;
       }
 
       void

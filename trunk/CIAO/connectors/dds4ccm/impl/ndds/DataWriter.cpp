@@ -184,7 +184,7 @@ namespace CIAO
       DDSDataWriter *
       RTI_DataWriter_i::get_impl (void)
       {
-        return this->impl ();
+        return this->impl_;
       }
 
       void

@@ -292,7 +292,7 @@ namespace CIAO
       DDSSubscriber *
       RTI_Subscriber_i::get_impl (void)
       {
-        return this->impl ();
+        return this->impl_;
       }
 
       void

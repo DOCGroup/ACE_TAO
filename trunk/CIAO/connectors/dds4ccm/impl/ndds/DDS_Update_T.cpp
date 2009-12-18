@@ -4,6 +4,7 @@
 #include "dds4ccm/impl/ndds/DataReaderStateListener_T.h"
 #include "dds4ccm/impl/ndds/DataWriterListener_T.h"
 #include "dds4ccm/impl/ndds/Updater_T.h"
+#include "dds4ccm/impl/ndds/DataWriter.h"
 
 #include "ciao/Logger/Log_Macros.h"
 
@@ -41,6 +42,8 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::init (
                   profile_name,
                   this->data_listener_.in (),
                   ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+              DDSDataWriter *rw = dynamic_cast < DDSDataWriter *> (dwv_tmp.in ());
+              this->rti_writer_.set_impl (rw);
               this->data_writer_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
               this->dds_update_.data_writer (dwv_tmp);
             }
@@ -53,6 +56,8 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::init (
                   dwqos,
                   this->data_listener_.in (),
                   ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+              DDSDataWriter *rw = dynamic_cast < DDSDataWriter *> (dwv_tmp.in ());
+              this->rti_writer_.set_impl (rw);
               this->data_writer_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
               this->dds_update_.data_writer (dwv_tmp);
             }
