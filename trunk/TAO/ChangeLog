@@ -1,3 +1,9 @@
+Fri Dec 18 14:02:52 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * tests/GIOP_Fragments/PMB_With_Fragments/run_test.pl:
+
+          Added started argument for server.
+
 Fri Dec 18 13:44:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
 
         * NEWS:
