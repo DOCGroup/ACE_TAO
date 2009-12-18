@@ -1,3 +1,9 @@
+Fri Dec 18 17:40:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Added IgnoreHostRoot
+
 Fri Dec 18 12:55:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
 
         * NEWS:
@@ -8,33 +14,33 @@ Thu Dec 17 12:29:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
         * ace/INET_Addr.inl:
           Fixed bug in ::is_multicast() for little-endian platforms.
           This fixes Bugzilla #3729.
-          
+
         * tests/Bug_3729_Regression_Test.cpp:
           Fixed typo in logfile name.
-          
+
         * tests/run_test.lst:
           Removed !FIXED_BUGS_ONLY for Bug_3729_Regression_Test.
-          
+
 Wed Dec 16 11:24:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
 
         * ACE_wrappers/ace/Log_Msg.h:
           Updated doxygen docu regarding additions to %D and %T
           options.
-          
+
 Wed Dec 16 09:09:00 UTC 2009  Martin Corino  <mcorino@remedy.nl>
 
         * ACE_wrappers/ace/ACE.h:
         * ACE_wrappers/ace/ACE.cpp:
         * ACE_wrappers/ace/Log_Msg.cpp:
-          Added option to print a given ACE_Time_Value in the log 
+          Added option to print a given ACE_Time_Value in the log
           message instead of system supplied timestamp as in %T
           and %D.
-          The option is implemented as a variant of the %D/%T 
-          options by using the '#' flag character like '%#D' or 
-          '%#T'. When using this flag an ACE_Time_Value pointer is 
+          The option is implemented as a variant of the %D/%T
+          options by using the '#' flag character like '%#D' or
+          '%#T'. When using this flag an ACE_Time_Value pointer is
           expected in the argument list supplied with the log message.
           This fixed Bugzilla #3221.
-        
+
         * ACE_wrappers/tests/Log_Msg_Test.cpp:
           Added some testlines for this option.
 
