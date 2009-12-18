@@ -1,3 +1,8 @@
+Fri Dec 18 14:17:47 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
+          Resolved compiler errors on linux.
+
 Fri Dec 18 10:48:14 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDS_Get_T.cpp:

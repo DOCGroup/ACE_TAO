@@ -6,6 +6,7 @@
 #include "ciao/Logger/Log_Macros.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
+#include "ace/OS_NS_sys_time.h"
 
 namespace CIAO_Getter_Test_Receiver_Impl
 {
