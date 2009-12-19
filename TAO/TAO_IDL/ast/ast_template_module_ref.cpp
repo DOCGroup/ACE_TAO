@@ -49,7 +49,7 @@ AST_Template_Module_Ref::destroy (void)
   this->param_refs_->destroy ();
   delete this->param_refs_;
   this->param_refs_ = 0;
-  
+
   this->AST_Field::destroy ();
 }
 
@@ -59,5 +59,5 @@ AST_Template_Module_Ref::ast_accept (ast_visitor *)
   return 0;//visitor->visit_template_module_ref (this);
 }
 
-IMPL_NARROW_FROM_DECL (AST_Template_Module_Ref);
+IMPL_NARROW_FROM_DECL (AST_Template_Module_Ref)
 
