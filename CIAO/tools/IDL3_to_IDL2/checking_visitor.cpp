@@ -88,7 +88,7 @@ checking_visitor::visit_module (AST_Module *node)
                          "codegen for scope failed\n"),
                         -1);
     }
-    
+
   return 0;
 }
 
@@ -139,19 +139,19 @@ checking_visitor::visit_component_fwd (AST_ComponentFwd *node)
 }
 
 int
-checking_visitor::visit_template_module (AST_Template_Module *node)
+checking_visitor::visit_template_module (AST_Template_Module *)
 {
   return 0;
 }
 
 int
-checking_visitor::visit_template_module_inst (AST_Template_Module_Inst *node)
+checking_visitor::visit_template_module_inst (AST_Template_Module_Inst *)
 {
   return 0;
 }
 
 int
-checking_visitor::visit_template_module_ref (AST_Template_Module_Ref *node)
+checking_visitor::visit_template_module_ref (AST_Template_Module_Ref *)
 {
   return 0;
 }
