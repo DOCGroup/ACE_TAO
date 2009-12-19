@@ -1384,7 +1384,7 @@ be_interface::analyze_parentage (void)
     {
       be_interface *parent =
         be_interface::narrow_from_decl (this->pd_inherits[i]);
-        
+
       if (parent == 0)
         {
           // The item is a template param holder.
@@ -1489,13 +1489,8 @@ be_interface::traverse_inheritance_graph (
       // If we are doing a home, we check for a parent.
       if (intf->node_type () == AST_Decl::NT_home)
         {
-          AST_Home *base =
-            AST_Home::narrow_from_decl (intf)->base_home ();
-
-          if (base != 0)
-            {
-              (void) this->insert_non_dup (base);
-            }
+          this->enqueue_base_home_r (
+            AST_Home::narrow_from_decl (intf));
         }
 
       // If we are doing a component, we check for a parent.
@@ -1506,22 +1501,8 @@ be_interface::traverse_inheritance_graph (
               (void) this->insert_non_dup (be_global->ccmobject ());
             }
 
-          AST_Component *base =
-            AST_Component::narrow_from_decl (intf)->base_component ();
-
-          if (base != 0)
-            {
-              (void) this->insert_non_dup (base);
-
-              long const n_supports = base->n_supports ();
-              AST_Type **supports = base->supports ();
-
-              for (long j = 0; j < n_supports; ++j)
-                {
-                  (void) this->insert_non_dup (supports[j],
-                                               abstract_paths_only);
-                }
-            }
+          this->enqueue_base_component_r (
+            AST_Component::narrow_from_decl (intf));
         }
 
       (void) this->insert_non_dup (intf, abstract_paths_only);
@@ -2516,7 +2497,7 @@ be_interface::op_attr_decl_helper (be_interface * /*derived */,
         {
           be_operation *op = be_operation::narrow_from_decl (d);
           be_visitor_operation_ch v (&ctx);
-          
+
           if (v.visit_operation (op) == -1)
             {
             }
@@ -2525,7 +2506,7 @@ be_interface::op_attr_decl_helper (be_interface * /*derived */,
         {
           be_attribute *attr = be_attribute::narrow_from_decl (d);
           be_visitor_attribute v (&ctx);
-          
+
           if (v.visit_attribute (attr) == -1)
             {
             }
@@ -2697,6 +2678,52 @@ be_interface::gen_facet_idl (TAO_OutStream &os)
   this->gen_nesting_close (os);
 
   this->ex_idl_facet_gen (true);
+}
+
+void
+be_interface::enqueue_base_component_r (AST_Component *node)
+{
+  AST_Component *base = node->base_component ();
+
+  if (base == 0)
+    {
+      return;
+    }
+
+  this->enqueue_base_component_r (base);
+
+  (void) this->insert_non_dup (base);
+
+  long const n_supports = base->n_supports ();
+  AST_Type **supports = base->supports ();
+
+  for (long j = 0; j < n_supports; ++j)
+    {
+      (void) this->insert_non_dup (supports[j]);
+    }
+}
+
+void
+be_interface::enqueue_base_home_r (AST_Home *node)
+{
+  AST_Home *base = node->base_home ();
+
+  if (base == 0)
+    {
+      return;
+    }
+
+  this->enqueue_base_home_r (base);
+
+  (void) this->insert_non_dup (base);
+
+  long const n_supports = base->n_supports ();
+  AST_Type **supports = base->supports ();
+
+  for (long j = 0; j < n_supports; ++j)
+    {
+      (void) this->insert_non_dup (supports[j]);
+    }
 }
 
 // =================================================================

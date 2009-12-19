@@ -401,6 +401,14 @@ private:
   void gen_linear_search_instance (const char *flat_name);
   // Create an instance of the linear search optable.
 
+  void enqueue_base_component_r (AST_Component *node);
+  void enqueue_base_home_r (AST_Home *node);
+  // Called from traverse_inheritance_graph(), since base
+  // components and base homes are inserted before the actual
+  // traversal, it must be done tail-recursively to get the
+  // chain of parents in the correct order when generating
+  // copy constructors etc.
+
 protected:
   int var_out_seq_decls_gen_;
   // Have these been done already?
