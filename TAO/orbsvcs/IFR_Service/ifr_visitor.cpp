@@ -27,64 +27,64 @@ ifr_visitor::~ifr_visitor (void)
   delete this->lock_;
 }
 
-// All the visit methods. Each concrete ifr visitors will 
+// All the visit methods. Each concrete ifr visitors will
 // override some subset of these.
 
-int 
+int
 ifr_visitor::visit_decl (AST_Decl *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_scope (UTL_Scope *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_type (AST_Type *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_predefined_type (AST_PredefinedType *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_module (AST_Module *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_interface (AST_Interface *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_interface_fwd (AST_InterfaceFwd *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_valuebox (AST_ValueBox *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_valuetype (AST_ValueType *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *)
 {
   return 0;
@@ -96,26 +96,26 @@ ifr_visitor::visit_component (AST_Component *)
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_component_fwd (AST_ComponentFwd *)
 {
   return 0;
 }
 
 int
-ifr_visitor::visit_template_module (AST_Template_Module *node)
+ifr_visitor::visit_template_module (AST_Template_Module *)
 {
   return 0;
 }
 
 int
-ifr_visitor::visit_template_module_inst (AST_Template_Module_Inst *node)
+ifr_visitor::visit_template_module_inst (AST_Template_Module_Inst *)
 {
   return 0;
 }
 
 int
-ifr_visitor::visit_template_module_ref (AST_Template_Module_Ref *node)
+ifr_visitor::visit_template_module_ref (AST_Template_Module_Ref *)
 {
   return 0;
 }
@@ -173,13 +173,13 @@ ifr_visitor::visit_connector (AST_Connector *)
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_eventtype (AST_EventType *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_eventtype_fwd (AST_EventTypeFwd *)
 {
   return 0;
@@ -191,13 +191,13 @@ ifr_visitor::visit_home (AST_Home *)
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_factory (AST_Factory *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_structure (AST_Structure *)
 {
   return 0;
