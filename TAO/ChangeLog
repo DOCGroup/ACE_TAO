@@ -1,3 +1,9 @@
+Sat Dec 19 06:59:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp
+        * TAO_IDL/be_include/be_interface.h
+          Merged changes back in that I reverted by accident
+
 Fri Dec 18 18:58:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Merged changes for templated modules in the TAO_IDL front end to svn head
@@ -2125,7 +2131,6 @@ Mon Nov 23 09:38:57 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
         * examples/AMH/Sink_Server/run_test.pl:
 
           Tests are converted to use new test framework and added to fuzz build.
-
 
 Sat Nov 21 14:20:19 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
 
