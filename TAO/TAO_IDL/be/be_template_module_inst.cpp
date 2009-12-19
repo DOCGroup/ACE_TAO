@@ -31,11 +31,11 @@ be_template_module_inst::~be_template_module_inst (void)
 void
 be_template_module_inst::destroy (void)
 {
-  this->AST_Template_Module_Inst::destroy (); 
+  this->AST_Template_Module_Inst::destroy ();
 }
 
 int
-be_template_module_inst::accept (be_visitor *visitor)
+be_template_module_inst::accept (be_visitor *)
 {
   return 0;//visitor->visit_template_module_inst (this);
 }
