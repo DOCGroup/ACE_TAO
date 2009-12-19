@@ -64,7 +64,7 @@ basic_visitor::visit_scope (UTL_Scope *node)
         {
           continue;
         }
-        
+
       AST_Decl::NodeType nt = d->node_type ();
 
       // Want to skip the uses_xxxConnection structs added by uses
@@ -222,14 +222,14 @@ basic_visitor::visit_valuetype (AST_ValueType *node)
         {
           *os << ", ";
         }
-        
+
       if (i == 0 && node->supports_concrete () != 0)
         {
           supports[i] = node->supports_concrete ();
         }
 
       AST_Type *supported = supports[i];
-          
+
       *os << IdentifierHelper::orig_sn (supported->name ()).c_str ();
     }
 
@@ -278,19 +278,19 @@ basic_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *node)
 }
 
 int
-basic_visitor::visit_template_module (AST_Template_Module *node)
+basic_visitor::visit_template_module (AST_Template_Module *)
 {
   return 0;
 }
 
 int
-basic_visitor::visit_template_module_inst (AST_Template_Module_Inst *node)
+basic_visitor::visit_template_module_inst (AST_Template_Module_Inst *)
 {
   return 0;
 }
 
 int
-basic_visitor::visit_template_module_ref (AST_Template_Module_Ref *node)
+basic_visitor::visit_template_module_ref (AST_Template_Module_Ref *)
 {
   return 0;
 }
