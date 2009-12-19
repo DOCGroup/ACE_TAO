@@ -47,7 +47,7 @@ AST_Template_Module_Inst::destroy (void)
   this->template_args_->destroy ();
   delete this->template_args_;
   this->template_args_ = 0;
-  
+
   this->AST_Field::destroy ();
 }
 
@@ -57,5 +57,5 @@ AST_Template_Module_Inst::ast_accept (ast_visitor *)
   return 0;//visitor->visit_template_module_inst (this);
 }
 
-IMPL_NARROW_FROM_DECL (AST_Template_Module_Inst);
+IMPL_NARROW_FROM_DECL (AST_Template_Module_Inst)
 
