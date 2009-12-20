@@ -1,4 +1,4 @@
-// $Id$
+// $Id$
 
 #include "be_template_module_ref.h"
 
@@ -37,7 +37,7 @@ be_template_module_ref::destroy (void)
 }
 
 int
-be_template_module_ref::ast_accept (be_visitor *visitor)
+be_template_module_ref::ast_accept (be_visitor *)
 {
   return 0;//visitor->visit_template_module_ref (this);
 }
