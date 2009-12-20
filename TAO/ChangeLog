@@ -1,3 +1,8 @@
+Sun Dec 20 15:57:15 UTC 2009  Abdul Sowayan  <sowayan@gmail.com>
+
+        * TAO_IDL/be/be_template_module_ref.cpp:
+          Removed a stray charachter that was causing a compile time error.
+
 Sat Dec 19 06:59:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp
