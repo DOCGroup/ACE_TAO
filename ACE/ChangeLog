@@ -1,3 +1,11 @@
+Sun Dec 20 07:58:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/checked_iterator.h:
+          stl port doesn't have a checked iterator. This fixes bugzilla
+          3799 and 3420. Thanks to <sailzeng at tencent dot com> and
+          Mark Hebbel <Mark dot Hebbel at baslerweb dot com> for
+          reporting this
+
 Fri Dec 18 17:40:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX_Unix.pm:
