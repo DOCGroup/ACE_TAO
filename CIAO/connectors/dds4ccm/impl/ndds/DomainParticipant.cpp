@@ -644,7 +644,9 @@ namespace CIAO
       RTI_DomainParticipant_i::get_statuscondition (void)
       {
         DDSStatusCondition* sc = this->impl_->get_statuscondition ();
-        ::DDS::StatusCondition_var retval = new RTI_StatusCondition_i (sc);
+        ::DDS::StatusCondition_var retval = new RTI_StatusCondition_i ();
+        RTI_StatusCondition_i *rti_sc = dynamic_cast < RTI_StatusCondition_i *> (retval.in ());
+        rti_sc->set_impl (sc);
         return retval._retn ();
       }
 

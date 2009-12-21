@@ -32,7 +32,7 @@ namespace CIAO
       {
       public:
         // Constructor
-        RTI_StatusCondition_i (DDSStatusCondition *sc);
+        RTI_StatusCondition_i (void);
 
         // Destructor
         virtual ~RTI_StatusCondition_i (void);
@@ -50,9 +50,14 @@ namespace CIAO
         virtual ::DDS::Entity_ptr
         get_entity (void);
 
-        DDSStatusCondition * get_status_condition (void);
+        DDSStatusCondition * get_impl (void);
+
+        void set_impl (DDSStatusCondition * sc);
+
       private:
-        DDSStatusCondition *impl_;
+        DDSStatusCondition * impl_;
+
+        DDSStatusCondition * impl (void);
       };
     }
   }
