@@ -1,3 +1,22 @@
+Mon Dec 21 15:13:57 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * orbsvcs/tests/EC_Mcast/run_test.pl:
+        * performance-tests/Throughput/run_test.pl:
+        * tests/AMI_Buffering/run_timeout.pl:
+        * tests/AMI_Buffering/run_message_count.pl:
+        * tests/AMI_Buffering/run_buffer_size.pl:
+        * tests/AMI_Buffering/run_timeout_reactive.pl:
+        * tests/AMI_Buffering/run_test.pl:
+        * tests/CodeSets/simple/run_test.pl:
+        * tests/Oneway_Buffering/run_timeout.pl:
+        * tests/Oneway_Buffering/run_message_count.pl:
+        * tests/Oneway_Buffering/run_buffer_size.pl:
+        * tests/Oneway_Buffering/run_timeout_reactive.pl:
+        * tests/Oneway_Buffering/run_test.pl:
+
+          Tests are converted to use new test framework
+          and added to fuzz build.
+
 Mon Dec 21 13:09:35 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * DevGuideExamples/Multithreading/ThreadPerConnection/MessengerServer.cpp:

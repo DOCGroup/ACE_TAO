@@ -11,7 +11,6 @@ use PerlACE::TestTarget;
 $status = 0;
 $debug_level = '0';
 
-$conf = $PerlACE::svcconf_ext;
 $event_count = '100';
 $event_period = '50000';
 $federation = 'Set02';
@@ -29,9 +28,12 @@ my $config_base = "sample.cfg";
 my $server_config = $server->LocalFile ($config_base);
 my $client_config = $client->LocalFile ($config_base);
 
+my $server_svc = $server->LocalFile ("svc" . "$PerlACE::svcconf_ext");
+my $client_svc = $client->LocalFile ("svc" . "$PerlACE::svcconf_ext");
+
 $SV = $server->CreateProcess ("EC_Mcast",
                               "-ORBdebuglevel $debug_level " .
-                              "-ORBSvcConf svc$conf " .
+                              "-ORBSvcConf $server_svc " .
                               "-c $server_config " .
                               "-n $event_count " .
                               "-t $event_period " .
@@ -39,7 +41,7 @@ $SV = $server->CreateProcess ("EC_Mcast",
 
 $CL = $client->CreateProcess ("EC_Mcast",
                               "-ORBdebuglevel $debug_level " .
-                              "-ORBSvcConf svc$conf " .
+                              "-ORBSvcConf $client_svc " .
                               "-c $client_config " .
                               "-n $event_count " .
                               "-t $event_period " .
