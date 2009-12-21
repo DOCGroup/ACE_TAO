@@ -1,3 +1,11 @@
+Mon Dec 21 20:11:42 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_operation.cpp(fe_add_exception):
+        
+          In adding support for template param holders in a raises clause,
+          inadvertently exluded the use case for Messaging::UserExceptionBase,
+          which is native. This fix restores the handling of that use case.
+
 Mon Dec 21 15:13:57 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/EC_Mcast/run_test.pl:
