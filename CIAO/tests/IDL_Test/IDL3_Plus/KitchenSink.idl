@@ -34,7 +34,7 @@ module GlobalTyped<typename A, typename B>
 
 module A
 {
-  local interface B 
+  local interface C 
   {
   };
 /*  
@@ -42,6 +42,9 @@ module A
   module Nested<typename T, sequence <T> TSeq>
   {
     typedef short y;
+    interface XX 
+    {
+    }
   };
 */
 };
@@ -57,6 +60,20 @@ module second<exception X, typename W>
     public long id_key;
   };
 };
+
+/*
+module B 
+{
+  module second_B<typename T, sequence <T> TSeq> 
+  {
+    alias A::Nested<T, TSeq> NestedA
+    
+    interface do : NestedA::XX
+    {
+    };
+  };
+};
+*/
 
 module Ast<typename T,
            eventtype E,
