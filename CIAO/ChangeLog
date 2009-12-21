@@ -1,30 +1,3 @@
-Mon Dec 21 13:23:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * DAnCE/tests/CIAO/CommandlinePassage/CommandlinePassage_exec.cpp
-        * DAnCE/tests/CIAO/Components/ProcessColocation_exec.cpp
-        * DAnCE/tests/CIAO/Components/SimpleAttribute_exec.cpp
-        * DAnCE/tests/CIAO/Components/SimpleConsumer_exec.cpp
-        * DAnCE/tests/CIAO/Components/SimpleMultipleUser_exec.cpp
-        * DAnCE/tests/CIAO/Components/SimpleNilFacetProvider_exec.cpp
-        * DAnCE/tests/CIAO/Components/SimpleNilFacetUser_exec.cpp
-        * DAnCE/tests/CIAO/Components/SimpleNull_exec.cpp
-        * DAnCE/tests/CIAO/Components/SimpleProvider_exec.cpp
-        * DAnCE/tests/CIAO/Components/SimpleUser_exec.cpp
-        * DAnCE/tests/CIAO/ExecutionManager-Deployments/simple_em_launcher.cpp
-        * DAnCE/tests/CIAO/NodeManager-Deployments/simple_nm_launcher.cpp
-        * DAnCE/tests/DeploymentPlanDump/test.cpp
-        * DAnCE/tests/eploymentPlanTestReferences/test.cpp
-        * DAnCE/tests/eploymentTest1/test.cpp
-        * DAnCE/tests/NameServiceTest/clt_main.cpp
-        * DAnCE/tests/NameServiceTest/srv_main.cpp
-        * DAnCE/tests/NodeApplicationManager-NodeApplication/test.cpp
-        * DAnCE/tests/NodeManager-NodeApplicationManager/test.cpp
-        * DAnCE/tests/ObjectLocatorTest/clt_main.cpp
-        * DAnCE/tests/ObjectLocatorTest/srv_main.cpp
-        * DAnCE/tests/RedirectionServiceTest/clt_main.cpp
-        * DAnCE/tests/RedirectionServiceTest/srv_main.cpp
-          Use ACE_DEBUG/ACE_ERROR in test code
-
 Mon Dec 21 12:52:38 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/docs/TestCoverage.ods:
