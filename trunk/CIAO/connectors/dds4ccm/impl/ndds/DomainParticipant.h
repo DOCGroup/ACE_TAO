@@ -33,7 +33,7 @@ namespace CIAO
       {
       public:
         // Constructor
-        RTI_DomainParticipant_i (DDSDomainParticipant *p);
+        RTI_DomainParticipant_i (void);
 
         // Destructor
         virtual ~RTI_DomainParticipant_i (void);
@@ -184,10 +184,14 @@ namespace CIAO
 
         virtual ::DDS::InstanceHandle_t get_instance_handle (void);
 
-        DDSDomainParticipant * get_participant (void);
+        DDSDomainParticipant * get_impl (void);
+
+        void set_impl (DDSDomainParticipant * dp);
 
       protected:
         DDSDomainParticipant *impl_;
+
+        DDSDomainParticipant * impl (void);
       };
     }
   }
