@@ -22,8 +22,11 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
+my $client_conf = $client->LocalFile ("cs_test.conf");
+my $server_conf = $server->LocalFile ("cs_test.conf");
+
 $SV = $server->CreateProcess ("server", " -ORBDottedDecimalAddresses 1");
-$CL = $client->CreateProcess ("client", " -ORBSvcConf cs_test.conf");
+$CL = $client->CreateProcess ("client", " -ORBSvcConf $client_conf");
 
 $status = 0;
 
@@ -58,7 +61,7 @@ $client->DeleteFile($iorbase);
 
 print STDOUT "\nServer using char translator\n\n";
 
-$SV2 = $server->CreateProcess ("server", " -ORBDottedDecimalAddresses 1 -ORBSvcConf cs_test.conf");
+$SV2 = $server->CreateProcess ("server", " -ORBDottedDecimalAddresses 1 -ORBSvcConf $server_conf");
 $CL2 = $client->CreateProcess ("client");
 
 $server_status = $SV2->Spawn ();
