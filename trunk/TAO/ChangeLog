@@ -1,3 +1,11 @@
+Mon Dec 21 12:39:29 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+        * tao/ORB_Core.cpp:
+          Fixed bug#3790 and marked corresponding test as fixed in lst.
+          Now when object is reinitialized and it's not collocated then
+          it's explicitly marked as remote one.
+
 Sun Dec 20 15:57:15 UTC 2009  Abdul Sowayan  <sowayan@gmail.com>
 
         * TAO_IDL/be/be_template_module_ref.cpp:

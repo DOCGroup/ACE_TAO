@@ -2085,6 +2085,10 @@ TAO_ORB_Core::initialize_object_i (TAO_Stub *stub, const TAO_MProfile &mprofile)
     {
       retval = collocated_orb_core.get ()->adapter_registry ().initialize_collocated_object (stub);
     }
+  else
+    {
+      stub->is_collocated (false);
+    }
 
   return retval;
 }
