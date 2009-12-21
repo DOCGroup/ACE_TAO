@@ -72,7 +72,7 @@ CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::data
 
       if (rdw == 0)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::InstanceHandleManager_T::data_writer - "
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::InstanceHandleManager_T::data_writer - "
                        "Unable to cast provided DataWriter to servant\n"));
           throw ::CORBA::INTERNAL ();
         }
@@ -81,7 +81,7 @@ CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::data
 
       if (!impl_)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::InstanceHandleManager_T::data_writer - "
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::InstanceHandleManager_T::data_writer - "
                        "Unable to narrow the provided writer entity to the specific "
                        "type necessary to publish messages\n"));
           throw ::CORBA::INTERNAL ();

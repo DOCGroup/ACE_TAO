@@ -26,7 +26,7 @@ namespace CIAO
       executor_ (EXEC::_duplicate (exe)),
       serial_number_ (0)
   {
-    CIAO_DEBUG ((LM_TRACE, CLINFO "Home_Servant_Impl<>::Home_Servant_Impl - "
+    CIAO_DEBUG (9, (LM_TRACE, CLINFO "Home_Servant_Impl<>::Home_Servant_Impl - "
                  "Creating servant for home with ID %C\n",
                  ins_name));
   }
@@ -69,7 +69,7 @@ namespace CIAO
     Components::CCMObject_var ccm_obj_var = Components::CCMObject::_nil ();
     if (objref_map_.find (oid.in (), ccm_obj_var) != 0)
       {
-        CIAO_ERROR ((LM_WARNING, CLINFO "Home_Servant_Impl<>::remove_component - Invalid component object reference\n"));
+        CIAO_ERROR (1, (LM_WARNING, CLINFO "Home_Servant_Impl<>::remove_component - Invalid component object reference\n"));
         throw Components::RemoveFailure ();
       }
 
@@ -86,7 +86,7 @@ namespace CIAO
         _ciao_comp->remove ();
       }
 
-    CIAO_DEBUG ((LM_INFO, CLINFO "Home_Servant_Impl<>::remove_component - Removed the component\n"));
+    CIAO_DEBUG (6, (LM_INFO, CLINFO "Home_Servant_Impl<>::remove_component - Removed the component\n"));
   }
 
   template <typename BASE_SKEL,
@@ -103,7 +103,7 @@ namespace CIAO
     Components::CCMObject_var ccm_obj_ptr;
     if (objref_map_.unbind (oid, ccm_obj_ptr) != 0)
       {
-        CIAO_ERROR ((LM_ERROR, CLINFO "Home_Servant_Impl<>::update_component_map - "
+        CIAO_ERROR (1, (LM_ERROR, CLINFO "Home_Servant_Impl<>::update_component_map - "
                      "Invalid component object reference\n"));
       }
   }
@@ -137,7 +137,7 @@ namespace CIAO
 
     if (::CORBA::is_nil (this->executor_.in ()))
       {
-        CIAO_ERROR ((LM_ERROR, CLINFO "Home_Servant_Impl<>:create - nil executor reference\n"));
+        CIAO_ERROR (1, (LM_ERROR, CLINFO "Home_Servant_Impl<>:create - nil executor reference\n"));
         throw CORBA::INTERNAL ();
       }
 

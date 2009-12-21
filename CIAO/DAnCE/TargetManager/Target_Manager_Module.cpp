@@ -97,21 +97,21 @@ DAnCE_TargetManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
       switch (c)
         {
         case 'd':
-          DANCE_DEBUG ((LM_DEBUG, DLINFO "Repository_Manager_Module::parse_args - "
+          DANCE_DEBUG (6, (LM_DEBUG, DLINFO "Repository_Manager_Module::parse_args - "
                         "Binding to provided Domain Naming Context: '%s'\n",
                         get_opts.opt_arg ()));
           this->options_.domain_nc_ = get_opts.opt_arg ();
           break;
 
         case 'f':
-          DANCE_DEBUG ((LM_DEBUG, DLINFO "Repository_Manager_Module::parse_args - "
-                        "Output filename for IOR is %C\n",
+          DANCE_DEBUG (6, (LM_DEBUG, DLINFO "Repository_Manager_Module::parse_args - "
+                        "Output filename for IOR is %s\n",
                         get_opts.opt_arg ()));
           this->options_.ior_file_ = get_opts.opt_arg ();
           break;
 
         case 'i':
-          DANCE_DEBUG ((LM_DEBUG, DLINFO "Repository_Manager_Module::parse_args - "
+          DANCE_DEBUG (6, (LM_DEBUG, DLINFO "Repository_Manager_Module::parse_args - "
                         "Initial domain file %s\n",
                         get_opts.opt_arg ()));
           this->options_.domain_descr_ = get_opts.opt_arg ();
@@ -119,7 +119,7 @@ DAnCE_TargetManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
 
         case 'h':
         case '?': // Display help for use of the server.
-          DANCE_ERROR_RETURN ( (LM_ERROR,
+          DANCE_ERROR_RETURN (1, (LM_ERROR,
                                 this->usage (),
                                 argv [0], c),
                                false);
@@ -127,15 +127,15 @@ DAnCE_TargetManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
 
         case 0:
             {
-              DANCE_ERROR ((LM_ERROR, DLINFO "Repository_Manager_Module::parse_args - "
-                            "ERROR: unknown long option %C\n",
+              DANCE_ERROR (1, (LM_ERROR, DLINFO "Repository_Manager_Module::parse_args - "
+                            "ERROR: unknown long option %s\n",
                             get_opts.long_option ()));
             }
 
           break;
 
         default:
-          DANCE_DEBUG ((LM_TRACE, DLINFO "Repository_Manager_Module::parse_args - ignoring unknown option %c:%C\n",
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO "Repository_Manager_Module::parse_args - ignoring unknown option %c:%C\n",
                         c, get_opts.opt_arg ()));
         }
 
@@ -155,7 +155,7 @@ DAnCE_TargetManager_Module::create_object (CORBA::ORB_ptr orb,
     {
       if (CORBA::is_nil(orb))
         {
-          DANCE_ERROR((LM_ERROR, DLINFO "DAnCE_TargetManager_Module::create_object - "
+          DANCE_ERROR (1, (LM_ERROR, DLINFO "DAnCE_TargetManager_Module::create_object - "
                        "Attempted to create Target Manager with a nil orb.\n"));
           return CORBA::Object::_nil();
         }
@@ -166,7 +166,7 @@ DAnCE_TargetManager_Module::create_object (CORBA::ORB_ptr orb,
 
       if (ACE_OS::strcmp(orb->id(), this->orb_->id()) != 0)
         {
-          DANCE_DEBUG((LM_TRACE, DLINFO "DAnCE_TargetManager_Module::create_object - "
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO "DAnCE_TargetManager_Module::create_object - "
                        "Resetting TM's orb.\n"));
           this->orb_ = CORBA::ORB::_duplicate (orb);
           this->domain_nc_ = CosNaming::NamingContext::_nil();
@@ -183,7 +183,7 @@ DAnCE_TargetManager_Module::create_object (CORBA::ORB_ptr orb,
         {
           try
             {
-              DANCE_DEBUG((LM_TRACE, DLINFO "DAnCE_TargetManager_Module::create_object - "
+              DANCE_DEBUG (9, (LM_TRACE, DLINFO "DAnCE_TargetManager_Module::create_object - "
                            "Resolving DomainNC.\n"));
               CORBA::Object_var domain_obj = this->orb_->string_to_object (this->options_.domain_nc_);
               if (!CORBA::is_nil (domain_obj.in ()))
@@ -191,7 +191,7 @@ DAnCE_TargetManager_Module::create_object (CORBA::ORB_ptr orb,
                   this->domain_nc_ = CosNaming::NamingContext::_narrow (domain_obj.in());
                   if (CORBA::is_nil (this->domain_nc_.in ()))
                     {
-                      DANCE_ERROR ((LM_ERROR,DLINFO "DAnCE_TargetManager_Module::create_object - "
+                      DANCE_ERROR (1, (LM_ERROR,DLINFO "DAnCE_TargetManager_Module::create_object - "
                                     "Narrow to NamingContext return nil for DomainNC.\n"));
                       return CORBA::Object::_nil ();
                     }
@@ -199,13 +199,13 @@ DAnCE_TargetManager_Module::create_object (CORBA::ORB_ptr orb,
             }
           catch (CORBA::Exception&)
             {
-              DANCE_DEBUG  ((LM_WARNING, DLINFO "DAnCE_TargetManager_Module::create_object - "
+              DANCE_DEBUG (6, (LM_WARNING, DLINFO "DAnCE_TargetManager_Module::create_object - "
                              "DomainNC context not found!\n"));
             }
         }
 
 
-      DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_TargetManager_Module::create_object - "
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO "DAnCE_TargetManager_Module::create_object - "
                     "Initializing the IOR Table\n"));
       // Initialize IOR table
       CORBA::Object_var table_object = orb->resolve_initial_references ("IORTable");
@@ -214,7 +214,7 @@ DAnCE_TargetManager_Module::create_object (CORBA::ORB_ptr orb,
 
       if (CORBA::is_nil (adapter.in ()))
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "DAnCE_TargetManager_Module::create_object - "
+          DANCE_ERROR (1, (LM_ERROR, DLINFO "DAnCE_TargetManager_Module::create_object - "
                          "Unable to RIR the IORTable.\n"));
           return CORBA::Object::_nil ();
         }
@@ -228,7 +228,9 @@ DAnCE_TargetManager_Module::create_object (CORBA::ORB_ptr orb,
       ACE_CString repository_manager_oid;
 
       if (this->options_.name_ == 0)
-        repository_manager_oid = "TargetManager";
+        {
+          repository_manager_oid = "TargetManager";
+        }
       else
         {
           repository_manager_oid = ACE_TEXT_ALWAYS_CHAR (this->options_.name_);
@@ -252,10 +254,15 @@ DAnCE_TargetManager_Module::create_object (CORBA::ORB_ptr orb,
         {
           ACE_CString ns_name;
           if (this->options_.name_ == 0)
-            ns_name = "TargetManager";
-          else ns_name = ACE_TEXT_ALWAYS_CHAR (this->options_.name_);
+            {
+              ns_name = "TargetManager";
+            }
+          else
+            {
+              ns_name = ACE_TEXT_ALWAYS_CHAR (this->options_.name_);
+            }
 
-          DANCE_DEBUG((LM_TRACE, DLINFO "DAnCE_TargetManager_Module::create_object - "
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO "DAnCE_TargetManager_Module::create_object - "
                        "Registering NM in NC as \"%C\".\n", ns_name.c_str ()));
           CosNaming::Name name (1);
           name.length (1);
@@ -267,10 +274,10 @@ DAnCE_TargetManager_Module::create_object (CORBA::ORB_ptr orb,
       // Writing ior to file
       if (0 != this->options_.ior_file_)
         {
-          DANCE_DEBUG ((LM_TRACE,  DLINFO "DAnCE_TargetManager_Module::create_object - "
+          DANCE_DEBUG (9, (LM_TRACE,  DLINFO "DAnCE_TargetManager_Module::create_object - "
                         "Writing RM IOR %C to file %C.\n", this->options_.ior_file_, ior.in ()));
           if (!DAnCE::Target_Manager::write_IOR (this->options_.ior_file_, ior.in ()))
-            DANCE_ERROR ((LM_ERROR, DLINFO "DAnCE_TargetManager_Module::create_object - "
+            DANCE_ERROR (1, (LM_ERROR, DLINFO "DAnCE_TargetManager_Module::create_object - "
                           "Error: Unable to write IOR to file %C\n",
                           this->options_.ior_file_));
         }
@@ -280,10 +287,10 @@ DAnCE_TargetManager_Module::create_object (CORBA::ORB_ptr orb,
       mgr->activate ();
 
       // Finishing Deployment part
-      DANCE_DEBUG ((LM_NOTICE, DLINFO "DAnCE_TargetManager_Module::create_object - "
+      DANCE_DEBUG (6, (LM_NOTICE, DLINFO "DAnCE_TargetManager_Module::create_object - "
                     "DAnCE_TargetManager is running...\n"));
 
-      DANCE_DEBUG ((LM_DEBUG, DLINFO "DAnCE_TargetManager_Module::create_object - "
+      DANCE_DEBUG (6, (LM_DEBUG, DLINFO "DAnCE_TargetManager_Module::create_object - "
                     "TargetManager IOR: %s\n", ior.in ()));
 
       return nm_obj._retn ();
@@ -300,13 +307,13 @@ DAnCE_TargetManager_Module::create_poas (void)
 {
   DANCE_TRACE("DAnCE_Repository_Manager_Module::create_poas");
   // Get reference to Root POA.
-  DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_TargetManager_Module::create_poas - "
+  DANCE_DEBUG (9, (LM_TRACE, DLINFO "DAnCE_TargetManager_Module::create_poas - "
                 "Resolving root POA\n"));
   CORBA::Object_var obj = this->orb_->resolve_initial_references ("RootPOA");
 
   this->root_poa_ = PortableServer::POA::_narrow (obj.in ());
 
-  DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_TargetManager_Module::create_poas - "
+  DANCE_DEBUG (9, (LM_TRACE, DLINFO "DAnCE_TargetManager_Module::create_poas - "
                 "Obtaining the POAManager\n"));
   PortableServer::POAManager_var mgr = this->root_poa_->the_POAManager ();
 
@@ -315,7 +322,7 @@ DAnCE_TargetManager_Module::create_poas (void)
 
   try
     {
-      DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_TargetManager_Module::create_poas - "
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO "DAnCE_TargetManager_Module::create_poas - "
                     "DAnCE_TargetManager_Module::create_poas - "
                     "Creating the \"Repository\" POA.\n"));
 
@@ -327,7 +334,7 @@ DAnCE_TargetManager_Module::create_poas (void)
     }
   catch (const PortableServer::POA::AdapterAlreadyExists &)
     {
-      DANCE_DEBUG ((LM_INFO, DLINFO "DAnCE_TargetManager_Module::create_poas - "
+      DANCE_DEBUG (8, (LM_INFO, DLINFO "DAnCE_TargetManager_Module::create_poas - "
                     "Using existing \"Repository\" POA\n"));
       this->rm_poa_ = this->root_poa_->find_POA ("Repository", 0);
     }

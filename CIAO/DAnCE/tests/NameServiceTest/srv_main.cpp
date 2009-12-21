@@ -65,7 +65,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
     }
   catch (...)
     {
-      DANCE_ERROR((LM_ERROR, "[%M] An error has occured."));
+      ACE_ERROR ((LM_ERROR, "An error has occured."));
     }
   return 0;
 }

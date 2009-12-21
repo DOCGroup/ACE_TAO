@@ -73,7 +73,7 @@ namespace CIAO
         RTI_Topic_i * topic = dynamic_cast < RTI_Topic_i * > (a_topic);
         if (!topic)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader - "
                          "Error: Unable to cast provided topic to its servant.\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
           }
@@ -88,7 +88,7 @@ namespace CIAO
                                                                 mask);
         if (!rti_dr)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader - "
                          "Error: RTI Topic returned a nil datareader.\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
@@ -112,7 +112,7 @@ namespace CIAO
         RTI_Topic_i * topic = dynamic_cast < RTI_Topic_i * > (a_topic);
         if (!topic)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
                          "Error: Unable to cast provided topic to its servant.\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
           }
@@ -127,7 +127,7 @@ namespace CIAO
                                                                 mask);
         if (!rti_dr)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
                          "Error: RTI Topic returned a nil datareader.\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
@@ -147,23 +147,23 @@ namespace CIAO
         RTI_DataReader_i *top = dynamic_cast< RTI_DataReader_i *> (a_datareader);
         if (!top)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Subscriber_i::delete_datareader - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::delete_datareader - "
                          "Unable to cast provided object reference to servant.\n"));
             return ::DDS::RETCODE_BAD_PARAMETER;
           }
 
-        CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_Subscriber_i::delete_datareader - "
+        CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_Subscriber_i::delete_datareader - "
                      "Successfully casted provided object reference to servant.\n"));
 
         DDS_ReturnCode_t retval = this->impl ()->delete_datareader (top->get_impl ());
 
         if (retval != DDS_RETCODE_OK)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Subscriber_i::delete_datareader - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::delete_datareader - "
                          "Error: Returned non-ok error code %c\n",
                          translate_retcode (retval)));
           }
-        else CIAO_DEBUG ((LM_INFO, CLINFO "RTI_Subscriber_i::delete_datareader - "
+        else CIAO_DEBUG (6, (LM_INFO, CLINFO "RTI_Subscriber_i::delete_datareader - "
                           "Successfully deleted\n"));
 
         return retval;

@@ -15,7 +15,7 @@ namespace CIAO
     {
     public:
       LoggerError (const char * msg)
-          : errmsg_ (msg) {};
+        : errmsg_ (msg) {};
       ACE_CString errmsg_;
     };
 

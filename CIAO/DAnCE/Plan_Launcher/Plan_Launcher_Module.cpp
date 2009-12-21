@@ -23,7 +23,7 @@ DAnCE_Plan_Launcher_Module::create_object (CORBA::ORB_ptr orb,
 {
   try
     {
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DAnCE_Plan_Launcher_Module::create_object - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_Plan_Launcher_Module::create_object - ")
                     ACE_TEXT("Creating Plan Launcher object.\n")));
 
       Plan_Launcher_Impl pl (orb, argc, argv);
@@ -34,20 +34,20 @@ DAnCE_Plan_Launcher_Module::create_object (CORBA::ORB_ptr orb,
     }
   catch (const Plan_Launcher_Base_Impl::Deployment_Failure& e)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO
+      DANCE_ERROR (1, (LM_ERROR, DLINFO
                     ACE_TEXT("DAnCE_Plan_Launcher_Module::create_object - ")
                     ACE_TEXT("Error : %C.\n"), e.error_.c_str()));
     }
   catch (const CORBA::Exception& ex)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO
+      DANCE_ERROR (1, (LM_ERROR, DLINFO
                     ACE_TEXT("DAnCE_Plan_Launcher_Module::create_object - ")
                     ACE_TEXT("Caught CORBA Exception %C\n"),
                     ex._info ().c_str ()));
     }
   catch (...)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO
+      DANCE_ERROR (1, (LM_ERROR, DLINFO
                     ACE_TEXT("DAnCE_Plan_Launcher_Module::create_object - ")
                     ACE_TEXT("Unknown exception.\n")));
     }

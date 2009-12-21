@@ -35,7 +35,7 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
   ::CCM_DDS::Event_ConnectionTest::CCM_Listener_ptr
   Receiver_exec_i::get_info_listen_data_listener (void)
   {
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new Event_ConnectionTest RAW listener\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new Event_ConnectionTest RAW listener\n")));
     this->raw_listener_created_ = true;
     return ::CCM_DDS::Event_ConnectionTest::CCM_Listener::_nil ();
   }
@@ -43,7 +43,7 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_listen_status (void)
   {
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener for DDS_Listen\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener for DDS_Listen\n")));
     this->listen_port_status_created_ = true;
     return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
@@ -135,85 +135,85 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
     //DDS_Get
     if (!this->getter_ok_)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : get getter failed\n")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : get getter failed\n")));
       }
     else
       {
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get getter passed\n")));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get getter passed\n")));
       }
     if (!this->getter_dds_data_reader_ok_)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : get DDS reader of DDS_Get failed\n")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : get DDS reader of DDS_Get failed\n")));
       }
     else
       {
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get DDS reader of DDS_Get passed\n")));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get DDS reader of DDS_Get passed\n")));
       }
     if (!this->getter_reader_ok_)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : get reader of DDS_Get failed\n")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : get reader of DDS_Get failed\n")));
       }
     else
       {
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get reader of DDS_Get passed\n")));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get reader of DDS_Get passed\n")));
       }
     //DDS_Listen
     if (!this->listen_data_control_ok_)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : get data listen control of DDS_Listen failed\n")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : get data listen control of DDS_Listen failed\n")));
       }
     else
       {
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get data listen control of DDS_Listen passed\n")));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get data listen control of DDS_Listen passed\n")));
       }
     if (!this->listen_reader_ok_)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : get reader of DDS_Listen failed\n")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : get reader of DDS_Listen failed\n")));
       }
     else
       {
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get reader of DDS_Listen passed\n")));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get reader of DDS_Listen passed\n")));
       }
     if (!this->listen_dds_data_reader_ok_)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : get dds reader of DDS_Listen failed\n")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : get dds reader of DDS_Listen failed\n")));
       }
     else
       {
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get dds reader of DDS_Listen passed\n")));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get dds reader of DDS_Listen passed\n")));
       }
     //Provides
     if (!this->raw_listener_created_)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : listener not created\n")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : listener not created\n")));
       }
     else
       {
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Listener was created\n")));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Listener was created\n")));
       }
     if (!this->listen_port_status_created_)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : PortStatusListener of DDS_Listen not created\n")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : PortStatusListener of DDS_Listen not created\n")));
       }
     else
       {
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : PortStatusListener of DDS_Listen was created\n")));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : PortStatusListener of DDS_Listen was created\n")));
       }
     if (!this->get_port_status_created_)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : PortStatusListener of DDS_Get not created\n")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : PortStatusListener of DDS_Get not created\n")));
       }
     else
       {
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : PortStatusListener of DDS_Get was created\n")));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : PortStatusListener of DDS_Get was created\n")));
       }
     if (!this->get_status_listener_created_)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : ConnectorStatusListener not created\n")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : ConnectorStatusListener not created\n")));
       }
     else
       {
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : ConnectorStatusListener was created\n")));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : ConnectorStatusListener was created\n")));
       }
   }
 

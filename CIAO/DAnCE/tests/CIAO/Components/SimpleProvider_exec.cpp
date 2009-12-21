@@ -27,7 +27,7 @@ namespace CIAO_Simple_SimpleProvider_Impl
   {
     CIAO_TRACE ("Trigger_exec_i::hello ()");
     // Your code here.
-    CIAO_DEBUG ((LM_EMERGENCY, "Trigger_exec_i::hello - "
+    ACE_DEBUG ((LM_EMERGENCY, "Trigger_exec_i::hello - "
                  "Got the following information from trig port: %C\n",
                  hello));
   }

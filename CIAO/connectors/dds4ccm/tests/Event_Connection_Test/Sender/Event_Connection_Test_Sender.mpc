@@ -31,7 +31,7 @@ project(DDS_ECT_Sender_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(DDS_ECT_Sender_lem_stub) : ccm_svnt, dds4ccm_base   {
+project(DDS_ECT_Sender_lem_stub) : ccm_svnt, dds4ccm_base {
   after += DDS_ECT_Sender_lem_gen DDS_ECT_Sender_stub DDS_ECT_Base_stub
   libs  += DDS_ECT_Base_stub Sender_stub
   libpaths += ../lib
@@ -57,7 +57,7 @@ project(DDS_ECT_Sender_lem_stub) : ccm_svnt, dds4ccm_base   {
   }
 }
 
-project(DDS_ECT_Sender_stub) : ccm_stub, dds4ccm_base   {
+project(DDS_ECT_Sender_stub) : ccm_stub, dds4ccm_base {
   after += DDS_ECT_Sender_idl_gen DDS_ECT_Base_stub DDS_ECT_Connector_stub
   libs  += DDS_ECT_Base_stub DDS_ECT_Connector_stub
   includes += ..
@@ -83,7 +83,7 @@ project(DDS_ECT_Sender_stub) : ccm_stub, dds4ccm_base   {
   }
 }
 
-project(DDS_ECT_Sender_exec) : ciao_executor, dds4ccm_base   {
+project(DDS_ECT_Sender_exec) : ciao_executor, dds4ccm_base {
   after   += DDS_ECT_Sender_lem_stub DDS_ECT_Sender_stub DDS_ECT_Connector_lem_stub DDS_ECT_Connector_stub
   sharedname = Sender_exec
   libs += Sender_stub Sender_lem_stub DDS_ECT_Base_stub DDS_ECT_Connector_lem_stub DDS_ECT_Connector_stub

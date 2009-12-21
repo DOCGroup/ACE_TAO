@@ -10,8 +10,7 @@ namespace DAnCE
   {
   Logger_Service::Logger_Service (void)
     : filename_ (ACE_TEXT("")),
-      trace_ (false),
-      log_level_ (5)
+      trace_ (false)
   {
   }
 
@@ -20,9 +19,8 @@ namespace DAnCE
   {
     // Get prospective values from the environment first, those given on
     // command line can override
-    ACE_Env_Value<int> log (ACE_TEXT("DANCE_LOG_LEVEL"), this->log_level_);
-
-    this->log_level_ = log;
+    ACE_Env_Value<int> log (ACE_TEXT("DANCE_LOG_LEVEL"), DAnCE_debug_level);
+    DAnCE_debug_level = log;
 
     ACE_Env_Value<int> trace (ACE_TEXT("DANCE_TRACE_ENABLE"), this->trace_);
     this->trace_ = trace;
@@ -31,8 +29,6 @@ namespace DAnCE
     this->filename_ = filename;
 
     this->parse_args (argc, argv);
-
-    this->set_levels ();
 
     return 0;
   }
@@ -64,10 +60,12 @@ namespace DAnCE
           {
             if ((i + 1) < argc && *argv[i + 1] != '-')
               {
-                int level = ACE_OS::atoi (argv[i + 1]);
+                int const level = ACE_OS::atoi (argv[i + 1]);
 
                 if (level != 0)
-                  this->log_level_ = level;
+                  {
+                    DAnCE_debug_level = level;
+                  }
               }
           }
 
@@ -80,62 +78,6 @@ namespace DAnCE
               }
           }
       }
-  }
-
-  void
-  Logger_Service::set_levels (void)
-  {
-    if (this->trace_)
-      {
-        DANCE_ENABLE_TRACE ();
-        this->log_level_ = 10;
-      }
-    else
-      {
-        DANCE_DISABLE_TRACE ();
-      }
-
-    u_long new_mask = 0;
-
-    if (this->log_level_ >= 9)
-      {
-        new_mask |= LM_TRACE;
-      }
-    if (this->log_level_ >= 8)
-      {
-        new_mask |= LM_DEBUG;
-      }
-    if (this->log_level_ >= 7)
-      {
-        new_mask |= LM_INFO;
-      }
-    if (this->log_level_ >= 6)
-      {
-        new_mask |= LM_NOTICE;
-      }
-    if (this->log_level_ >= 5)
-      {
-        new_mask |= LM_WARNING;
-      }
-    if (this->log_level_ >= 4)
-      {
-        new_mask |= LM_ERROR;
-      }
-    if (this->log_level_ >= 3)
-      {
-        new_mask |= LM_CRITICAL;
-      }
-    if (this->log_level_ >= 2)
-      {
-        new_mask |= LM_ALERT;
-      }
-    if (this->log_level_ >= 1)
-      {
-        new_mask |= LM_EMERGENCY;
-      }
-
-    ACE_Log_Msg::instance()->priority_mask(new_mask, ACE_Log_Msg::PROCESS);
-    DANCE_DEBUG ( (LM_TRACE, DLINFO ACE_TEXT("Logging level is set to %i\n"), this->log_level_));
   }
 
   ACE_Log_Msg_Backend *

@@ -25,7 +25,7 @@ NodeApplicationManager_Impl::NodeApplicationManager_Impl (CORBA::ORB_ptr orb,
 {
   DANCE_TRACE ("NodeApplicationManager_Impl::NodeApplicationManager_Impl");
 
-  DANCE_DEBUG((LM_DEBUG, DLINFO
+  DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                ACE_TEXT(" NodeApplicationManager_Impl::NodeApplicationManager_Impl - ")
                ACE_TEXT("Initializing for node '%C' and plan '%C' starting...\n"),
                node_name.c_str(),
@@ -34,7 +34,7 @@ NodeApplicationManager_Impl::NodeApplicationManager_Impl (CORBA::ORB_ptr orb,
   PROPERTY_MAP::const_iterator i = properties.begin ();
   while (!i.done ())
     {
-      DANCE_DEBUG ((LM_DEBUG, DLINFO
+      DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                     ACE_TEXT("NodeApplicationManager_Impl::NodeApplicationManager_Impl - ")
                     ACE_TEXT("Binding value for property %C\n"), i->key ().c_str ()));
       this->properties_.bind (i->key (), i->item ());
@@ -61,7 +61,7 @@ NodeApplicationManager_Impl::~NodeApplicationManager_Impl()
     }
   catch (...)
     {
-      DANCE_ERROR ((LM_WARNING, DLINFO
+      DANCE_ERROR (1, (LM_WARNING, DLINFO
                     ACE_TEXT("NodeApplicationManager_Impl::~NodeApplicationManager_Impl - ")
                     ACE_TEXT("Caught exception in NodeApplicationManager destructor\n")));
     }
@@ -74,7 +74,7 @@ NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &,
   DANCE_TRACE ("NodeApplicationManager_Impl::startLaunch");
 
   // Creating NodeApplication object
-  DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
+  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
                ACE_TEXT("Initializing NodeApplication\n")));
   ACE_NEW_THROW_EX (this->application_,
                     NodeApplication_Impl (this->orb_.in(),
@@ -84,19 +84,19 @@ NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &,
                                           this->properties_),
                     CORBA::NO_MEMORY ());
 
-  DANCE_DEBUG((LM_TRACE, DLINFO
+  DANCE_DEBUG (9, (LM_TRACE, DLINFO
                 ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
                ACE_TEXT("Instructing NodeApplication to initialize components.\n")));
 
   this->application_->init_components();
 
-  DANCE_DEBUG((LM_TRACE, DLINFO
+  DANCE_DEBUG (9, (LM_TRACE, DLINFO
                ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
                ACE_TEXT("Collecting connection references\n")));
 
   providedReference = this->application_->getAllConnections();
 
-  DANCE_DEBUG((LM_DEBUG, DLINFO
+  DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
                ACE_TEXT("Activating NodeApplication servant\n")));
 
@@ -118,7 +118,7 @@ NodeApplicationManager_Impl::destroyApplication (Deployment::Application_ptr app
   {
     if (!application->_is_equivalent (this->poa_->servant_to_reference (this->application_)))
       {
-        DANCE_ERROR((LM_ERROR, DLINFO
+        DANCE_ERROR (1, (LM_ERROR, DLINFO
                      ACE_TEXT("NodeApplicationManager_Impl::destroyApplication - ")
                      ACE_TEXT("application is equivalent to current application\n")));
         throw ::Deployment::StopError();
@@ -128,7 +128,7 @@ NodeApplicationManager_Impl::destroyApplication (Deployment::Application_ptr app
 
     if (this->properties_.find (DAnCE::STANDALONE_NM, val) == 0)
       {
-        DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplicationManager_Impl::destroyApplication - ")
+        DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplicationManager_Impl::destroyApplication - ")
                       ACE_TEXT("Found STANDALONE_NM property\n")));
 
         CORBA::Boolean standalone = false;
@@ -155,14 +155,14 @@ NodeApplicationManager_Impl::destroyApplication (Deployment::Application_ptr app
   }
   catch (const CORBA::UserException &e)
   {
-    DANCE_ERROR((LM_ERROR, DLINFO
+    DANCE_ERROR (1, (LM_ERROR, DLINFO
                  ACE_TEXT("NodeApplicationManager_Impl::destroyApplication failed with UserException %C(%C) \"%C\"\n"),
                  e._name(), e._rep_id(), e._info().c_str()));
     throw Deployment::StopError(e._name(), e._info().c_str());
   }
   catch (...)
   {
-    DANCE_ERROR((LM_ERROR, DLINFO
+    DANCE_ERROR (1, (LM_ERROR, DLINFO
                 ACE_TEXT("NodeApplicationManager_Impl::destroyApplication failed with unknown exception.\n")));
     throw Deployment::StopError();
   }

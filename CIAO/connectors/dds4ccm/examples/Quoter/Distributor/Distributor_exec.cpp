@@ -147,7 +147,7 @@ namespace CIAO_Quoter_Distributor_Impl
                 {
                   this->writer_->write_one (i->second, ::DDS::HANDLE_NIL);
                 }
-              catch (CCM_DDS::InternalError& )
+              catch (const CCM_DDS::InternalError& )
                 {
                   printf ("Internal Error while writing Stock_info for <%s>.\n",
                                 i->first.c_str ());

@@ -23,26 +23,26 @@ namespace CIAO_NonChangeable_NonChangeable_Connector_Impl
         DDS::DomainId_t id = 0;
         this->domain_id (id);
       }
-    catch (CCM_DDS::NonChangeable)
+    catch (const CCM_DDS::NonChangeable)
       {
-        CIAO_DEBUG ((LM_DEBUG,
+        ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("test_domain_id : Expected exception caught\n")));
         nonchangeable_caught = true;
       }
     catch (const CORBA::Exception& ex)
       {
         ex._tao_print_exception ("Exception caught:");
-        CIAO_ERROR ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: test_domain_id : Exception caught\n")));
       }
     catch (...)
       {
-        CIAO_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: test_domain_id : Unknown exception caught\n")));
       }
     if (!nonchangeable_caught)
       {
-        CIAO_ERROR ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: test_domain_id : No NonChangeable exception caught\n")));
       }
   }
@@ -55,26 +55,26 @@ namespace CIAO_NonChangeable_NonChangeable_Connector_Impl
       {
         this->qos_profile ("test");
       }
-    catch (CCM_DDS::NonChangeable)
+    catch (const CCM_DDS::NonChangeable)
       {
-        CIAO_DEBUG ((LM_DEBUG,
+        ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("test_qos_profile : Expected exception caught\n")));
         nonchangeable_caught = true;
       }
     catch (const CORBA::Exception& ex)
       {
         ex._tao_print_exception ("Exception caught:");
-        CIAO_ERROR ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: test_qos_profile : Exception caught\n")));
       }
     catch (...)
       {
-        CIAO_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: test_qos_profile : Unknown exception caught\n")));
       }
     if (!nonchangeable_caught)
       {
-        CIAO_ERROR ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: test_qos_profile : No NonChangeable exception caught\n")));
       }
   }
@@ -87,26 +87,26 @@ namespace CIAO_NonChangeable_NonChangeable_Connector_Impl
       {
         this->topic_name ("test");
       }
-    catch (CCM_DDS::NonChangeable)
+    catch (const CCM_DDS::NonChangeable)
       {
-        CIAO_DEBUG ((LM_DEBUG,
+        ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("test_topic_name : Expected exception caught\n")));
         nonchangeable_caught = true;
       }
     catch (const CORBA::Exception& ex)
       {
         ex._tao_print_exception ("Exception caught:");
-        CIAO_ERROR ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: test_topic_name : Exception caught\n")));
       }
     catch (...)
       {
-        CIAO_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: test_topic_name : Unknown exception caught\n")));
       }
     if (!nonchangeable_caught)
       {
-        CIAO_ERROR ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: test_topic_name : No NonChangeable exception caught\n")));
       }
   }
@@ -120,30 +120,30 @@ namespace CIAO_NonChangeable_NonChangeable_Connector_Impl
         DDS::StringSeq key_fields;
         this->key_fields (key_fields);
       }
-    catch (CCM_DDS::NonChangeable)
+    catch (const CCM_DDS::NonChangeable)
       {
-        CIAO_DEBUG ((LM_DEBUG,
+        ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("test_key_fields : Expected exception caught\n")));
         nonchangeable_caught = true;
       }
     catch (const CORBA::Exception& ex)
       {
         ex._tao_print_exception ("Exception caught:");
-        CIAO_ERROR ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: test_key_fields : Exception caught\n")));
       }
     catch (...)
       {
-        CIAO_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: test_key_fields : Unknown exception caught\n")));
       }
     if (!nonchangeable_caught)
       {
-        CIAO_ERROR ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: test_key_fields : No NonChangeable exception caught\n")));
       }
   }
-  
+
 
   void
   NonChangeable_Connector_exec_i::ccm_activate ()
@@ -153,7 +153,7 @@ namespace CIAO_NonChangeable_NonChangeable_Connector_Impl
     test_topic_name ();
     test_key_fields ();
   }
-  
+
   extern "C" NONCHANGEABLE_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_NonChangeable_NonChangeable_Connector_Impl (void)
   {

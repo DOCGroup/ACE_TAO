@@ -33,7 +33,7 @@ project(DDS_Hello_Connector_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(DDS_Hello_Connector_lem_stub) : ccm_svnt, dds4ccm_base   {
+project(DDS_Hello_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
   avoids += ace_for_tao
   after  += DDS_Hello_Connector_lem_gen DDS_Hello_Connector_stub DDS_Hello_Base_stub DDS4CCM_lem_stub
   libs   += DDS_Hello_Base_stub DDS_Hello_Connector_stub DDS4CCM_lem_stub
@@ -60,7 +60,7 @@ project(DDS_Hello_Connector_lem_stub) : ccm_svnt, dds4ccm_base   {
   }
 }
 
-project(DDS_Hello_Connector_stub) : ccm_stub, dds4ccm_base   {
+project(DDS_Hello_Connector_stub) : ccm_stub, dds4ccm_base {
   avoids += ace_for_tao
   after  += DDS_Hello_Connector_idl_gen DDS_Hello_Base_stub
   libs   += DDS_Hello_Base_stub
@@ -87,11 +87,11 @@ project(DDS_Hello_Connector_stub) : ccm_stub, dds4ccm_base   {
   }
 }
 
-project(DDS_Hello_Connector_exec) : ciao_executor, dds4ccm_skel, nddslib {
+project(DDS_Hello_Connector_exec) : ciao_executor, dds4ccm_impl {
   avoids += ace_for_tao
-  after  += DDS_Hello_Connector_lem_stub DDS_Hello_Connector_stub DDS4CCM_lem_stub CIAO_DDS4CCM_NDDS_Impl DDS_Hello_Base_NDDS_TS
+  after  += DDS_Hello_Connector_lem_stub DDS_Hello_Connector_stub DDS4CCM_lem_stub DDS_Hello_Base_NDDS_TS
   sharedname = DDS_Hello_Connector_exec
-  libs += DDS_Hello_Connector_stub DDS_Hello_Connector_lem_stub DDS_Hello_Base_stub CIAO_DDS4CCM_NDDS_Impl DDS4CCM_lem_stub DDS_Hello_Base_NDDS_TS
+  libs += DDS_Hello_Connector_stub DDS_Hello_Connector_lem_stub DDS_Hello_Base_stub DDS4CCM_lem_stub DDS_Hello_Base_NDDS_TS
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -114,7 +114,7 @@ project(DDS_Hello_Connector_exec) : ciao_executor, dds4ccm_skel, nddslib {
 }
 
 
-project(DDS_Hello_Connector_svnt) : ciao_servant, dds4ccm_skel, nddslib {
+project(DDS_Hello_Connector_svnt) : ciao_servant, dds4ccm_impl {
   avoids     += ace_for_tao
   after      += DDS_Hello_Connector_lem_stub DDS_Hello_Connector_exec DDS_Hello_Connector_stub DDS4CCM_lem_stub
   sharedname  = DDS_Hello_Connector_svnt

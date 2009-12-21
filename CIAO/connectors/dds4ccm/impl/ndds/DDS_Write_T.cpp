@@ -67,7 +67,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::init (
     }
   catch (...)
     {
-      CIAO_ERROR ((LM_ERROR, "Caught unknown C++ exception while configuring port info_in_\n"));
+      CIAO_ERROR (1, (LM_ERROR, "Caught unknown C++ exception while configuring port info_in_\n"));
       throw CORBA::INTERNAL ();
     }
 }

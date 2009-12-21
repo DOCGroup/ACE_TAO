@@ -23,7 +23,7 @@ set_priority ()
     {
       if (ACE_OS::last_error () == EPERM)
         {
-          CIAO_DEBUG ((LM_WARNING, CLINFO
+          ACE_DEBUG ((LM_WARNING, CLINFO
                       "client (%P|%t): user is not superuser, "
                       "test runs in time-shared class\n"));
         }
@@ -62,7 +62,7 @@ void
 MyImpl::RoundTrip_exec_i::set_session_context (
     Components::SessionContext_ptr ctx)
 {
-  CIAO_DEBUG ((LM_TRACE, CLINFO "MyImpl::RoundTrip_exec_i::set_session_context\n"));
+  ACE_DEBUG ((LM_TRACE, CLINFO "MyImpl::RoundTrip_exec_i::set_session_context\n"));
   //cout << "MyImpl::RoundTrip_exec_i::set_session_context\n" << endl;
 
   this->context_ =
@@ -81,7 +81,7 @@ MyImpl::RoundTrip_exec_i::configuration_complete ()
 void
 MyImpl::RoundTrip_exec_i::ccm_activate ()
 {
-  CIAO_DEBUG ((LM_TRACE, CLINFO "MyImpl::RoundTrip_exec_i::ccm_activate\n"));
+  ACE_DEBUG ((LM_TRACE, CLINFO "MyImpl::RoundTrip_exec_i::ccm_activate\n"));
   //cout << "MyImpl::RoundTrip_exec_i::ccm_activate\n";
 
   // Starting method!
@@ -91,13 +91,13 @@ MyImpl::RoundTrip_exec_i::ccm_activate ()
 void
 MyImpl::RoundTrip_exec_i::ccm_passivate ()
 {
-  CIAO_DEBUG ((LM_TRACE, CLINFO "MyImpl::RoundTrip_exec_i::ccm_passivate\n"));
+  ACE_DEBUG ((LM_TRACE, CLINFO "MyImpl::RoundTrip_exec_i::ccm_passivate\n"));
 }
 
 void
 MyImpl::RoundTrip_exec_i::ccm_remove ()
 {
-  CIAO_DEBUG ((LM_INFO, CLINFO "MyImpl::RoundTrip_exec_i::ccm_remove\n"));
+  ACE_DEBUG ((LM_INFO, CLINFO "MyImpl::RoundTrip_exec_i::ccm_remove\n"));
 }
 
 

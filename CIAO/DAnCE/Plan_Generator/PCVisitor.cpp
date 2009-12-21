@@ -65,7 +65,7 @@ void PCVisitor::Visit (Deployment::PackageConfiguration &pc)
     Accept (*this, pc.basePackage);
   }
   else
-    DANCE_DEBUG ((LM_WARNING,
+    DANCE_DEBUG (6, (LM_WARNING,
     "[PCVisitor - PackageConfiguration] We currently "
     "do NOT support package references, specializedConfigs",
     "or imports!\n"));
@@ -120,7 +120,7 @@ void PCVisitor::Visit (Deployment::SubcomponentInstantiationDescription &sid)
     Accept (*this, sid.basePackage);
   }
   else
-    DANCE_DEBUG ((LM_WARNING,
+    DANCE_DEBUG (6, (LM_WARNING,
     "[PCVisitor - SubcomponentInstantiationDescription] ",
     "We currently do NOT support package references, ",
     "specializedConfigs or imports!\n"));

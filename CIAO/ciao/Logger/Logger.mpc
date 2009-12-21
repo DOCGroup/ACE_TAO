@@ -7,12 +7,11 @@ project(CIAO_Logger): ciao_lib, messaging {
 
   Source_Files {
     File_Logger_Backend.cpp
-    Logger_Service.cpp  
-  }
-  Header_Files {
+    Logger_Service.cpp
+    Log_Macros.cpp
   }
 }
 
-    
+
 
 

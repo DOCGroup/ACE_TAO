@@ -79,7 +79,7 @@ namespace CIAO
 
       this->logger_->init (argc, argv);
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO
+      CIAO_DEBUG (9, (LM_TRACE, CLINFO
                    "CIAO_RTComponentServer_Task::CIAO_RTComponentServer_Task - "
                    "Creating ORB\n"));
 
@@ -91,7 +91,7 @@ namespace CIAO
 
       CIAO::Server_init (this->orb_.in ());
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO
+      CIAO_DEBUG (9, (LM_TRACE, CLINFO
                    "CIAO_RTComponentServer_Task::CIAO_RTComponentServer_Task - "
                    "CIAO_ComponentServer object created.\n"));
     }
@@ -101,7 +101,7 @@ namespace CIAO
     {
       CIAO_TRACE ("RTComponentServer_Task::svc");
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO
+      CIAO_DEBUG (9, (LM_TRACE, CLINFO
                    "RTComponentServer_Task::svc - "
                    "Activating the root POA\n"));
 
@@ -126,7 +126,7 @@ namespace CIAO
       CORBA::ULong max_buffered_requests = 0;
       CORBA::ULong max_request_buffer_size = 0;
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO
+      CIAO_DEBUG (9, (LM_TRACE, CLINFO
                    "RTComponentServer_Task::svc - "
                    "Creating server implementation object\n"));
 
@@ -186,7 +186,7 @@ namespace CIAO
 
       if (ci_srv == 0)
         {
-          CIAO_ERROR ((LM_CRITICAL,
+          CIAO_ERROR (1, (LM_CRITICAL,
                        "RTComponentServer_Task::run - "
                        "Out of memory error while allocating servant."));
           throw Error ("Out of memory whilst allocating servant.");
@@ -209,7 +209,7 @@ namespace CIAO
 
       if (this->callback_ior_str_ != ACE_TEXT(""))
         {
-          CIAO_DEBUG ((LM_TRACE, CLINFO "RTComponentServer_Task::run - "
+          CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTComponentServer_Task::run - "
                       "Resolving callback IOR\n"));
           CORBA::Object_ptr obj =
             this->orb_->string_to_object (this->callback_ior_str_.c_str ());
@@ -217,7 +217,7 @@ namespace CIAO
 
           if (CORBA::is_nil (sa.in ()))
             {
-              CIAO_DEBUG ((LM_ERROR, CLINFO
+              CIAO_DEBUG (6, (LM_ERROR, CLINFO
                            "RTComponentServer_Task::svc - "
                            "Failed to narrow callback IOR\n"));
               throw Error ("Failed to narrow callback IOR");
@@ -230,7 +230,7 @@ namespace CIAO
 
             if  (cf == 0)
               {
-                CIAO_ERROR ((LM_CRITICAL, "RTComponentServer_Task::run - "
+                CIAO_ERROR (1, (LM_CRITICAL, "RTComponentServer_Task::run - "
                              "Out of memory error while allocating config values."));
               }
             else
@@ -240,7 +240,7 @@ namespace CIAO
           }
 
           // Make callback.
-          CIAO_DEBUG ((LM_TRACE, CLINFO
+          CIAO_DEBUG (9, (LM_TRACE, CLINFO
                        "RTComponentServer_Task::svc - "
                        "Making callback on my ServerActivator\n"));
 
@@ -251,13 +251,13 @@ namespace CIAO
                                              this->uuid_.c_str (),
                                              config.out ());
 
-              CIAO_DEBUG ((LM_TRACE, CLINFO "RTComponentServer_Task::svc - "
+              CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTComponentServer_Task::svc - "
                            "Configuration received\n"));
               // @@WO: Probably need to do something with these config values.
 
               ci_srv->init (sa.in (), config._retn ());
 
-              CIAO_DEBUG ((LM_NOTICE, CLINFO "RTComponentServer_Task::svc - "
+              CIAO_DEBUG (6, (LM_NOTICE, CLINFO "RTComponentServer_Task::svc - "
                            "Configuration complete for component server %C\n",
                            this->uuid_.c_str ()));
 
@@ -265,14 +265,14 @@ namespace CIAO
             }
           catch (const CORBA::BAD_PARAM &)
             {
-              CIAO_ERROR ((LM_ERROR, CLINFO "RTComponentServer_Task::svc - "
+              CIAO_ERROR (1, (LM_ERROR, CLINFO "RTComponentServer_Task::svc - "
                            "The Callback IOR provided pointed to the "
                            "wrong ServerActivator\n"));
               throw Error ("Bad callback IOR");
             }
           catch (...)
             {
-              CIAO_ERROR ((LM_ERROR, CLINFO "RTComponentServer_Task::svc - "
+              CIAO_ERROR (1, (LM_ERROR, CLINFO "RTComponentServer_Task::svc - "
                            "Caught exception while calling back\n"));
               throw Error ("Caught exception while calling back");
             }
@@ -280,7 +280,7 @@ namespace CIAO
         }
       else
         {
-          CIAO_DEBUG ((LM_TRACE, CLINFO "RTComponentServer_Task::svc - "
+          CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTComponentServer_Task::svc - "
                        "Initializing ComponentServer without ServantActivator "
                        "callback\n"));
           ci_srv->init (0, 0);
@@ -288,7 +288,7 @@ namespace CIAO
 
       this->orb_->run ();
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO "RTComponentServer_Task::svc - "
+      CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTComponentServer_Task::svc - "
                    "ORB Event loop completed.\n"));
 
       root_poa->destroy (1, 1);
@@ -303,9 +303,9 @@ namespace CIAO
     {
       CIAO_TRACE ("RTComponentServer_Task::run");
 
-      CIAO_DEBUG ((LM_DEBUG, CLINFO "RTComponentServer_Task::run - Starting ORB\n"));
+      CIAO_DEBUG (6, (LM_DEBUG, CLINFO "RTComponentServer_Task::run - Starting ORB\n"));
       this->svc ();
-      CIAO_DEBUG ((LM_INFO,
+      CIAO_DEBUG (6, (LM_INFO,
                   CLINFO "RTComponentServer_Task::run - ORB has "
                   "shutdown, terminating ComponentServer\n"));
     }
@@ -315,7 +315,7 @@ namespace CIAO
     {
       CIAO_TRACE ("RTComponentServer_Task::parse_args");
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO "RTComponentServer_Task::parse_args - "
+      CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTComponentServer_Task::parse_args - "
                     "parsing arguments...\n"));
 
       ACE_Get_Opt opts (argc, argv, ACE_TEXT("hu:c:s:d:"), 1, 0,
@@ -332,7 +332,7 @@ namespace CIAO
       int c = 0;
       while ((c = opts ()) != -1)
         {
-          CIAO_DEBUG ((LM_TRACE, CLINFO "RTComponentServer_Task::parse_args - "
+          CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTComponentServer_Task::parse_args - "
                        "Found option: \"%s\" with argument \"%s\"\n",
                        opts.last_option (), opts.opt_arg ()));
 
@@ -340,27 +340,27 @@ namespace CIAO
             {
             case 's':
               this->static_threads_ = ACE_OS::atoi (opts.opt_arg ());
-              CIAO_DEBUG ((LM_DEBUG, CLINFO "RTComponentServer_Task::parse_args - "
+              CIAO_DEBUG (6, (LM_DEBUG, CLINFO "RTComponentServer_Task::parse_args - "
                            "Using %d static threads\n",
                            this->static_threads_));
               break;
 
             case 'd':
               this->dynamic_threads_ = ACE_OS::atoi (opts.opt_arg ());
-              CIAO_DEBUG ((LM_DEBUG, CLINFO "RTComponentServer_Task::parse_args - "
+              CIAO_DEBUG (6, (LM_DEBUG, CLINFO "RTComponentServer_Task::parse_args - "
                            "Using %d dynamic threads\n",
                            this->dynamic_threads_));
               break;
 
             case 'u':
-              CIAO_DEBUG ((LM_DEBUG, CLINFO "RTComponentServer_Task::parse_args - "
+              CIAO_DEBUG (6, (LM_DEBUG, CLINFO "RTComponentServer_Task::parse_args - "
                            "uuid is %s\n",
                            opts.opt_arg ()));
               this->uuid_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
               break;
 
             case 'c':
-              CIAO_DEBUG ((LM_DEBUG, CLINFO "RTComponentServer_Task::parse_args - "
+              CIAO_DEBUG (6, (LM_DEBUG, CLINFO "RTComponentServer_Task::parse_args - "
                            "callback ior is %s\n",
                           opts.opt_arg ()));
               this->callback_ior_str_ = opts.opt_arg ();
@@ -375,7 +375,7 @@ namespace CIAO
               continue; // already taken care of
 
             case 'o':
-              CIAO_DEBUG ((LM_DEBUG, CLINFO "RTComponentServer_Task::parse_args - "
+              CIAO_DEBUG (6, (LM_DEBUG, CLINFO "RTComponentServer_Task::parse_args - "
                            "IOR Output file: %s\n",
                            opts.opt_arg ()));
               this->output_file_ = opts.opt_arg ();
@@ -386,7 +386,7 @@ namespace CIAO
               throw Error ("Command line help requested, bailing out....");
 
             default:
-              CIAO_ERROR ((LM_ERROR, CLINFO " Unknown option: %s\n",
+              CIAO_ERROR (1, (LM_ERROR, CLINFO " Unknown option: %s\n",
                           opts.last_option ()));
               this->usage ();
               ACE_CString err ("Unknown option ");
@@ -400,7 +400,7 @@ namespace CIAO
         throw Error ("Option required: -u|--uuid");
       if (this->callback_ior_str_ == ACE_TEXT(""))
         {
-          CIAO_ERROR ((LM_WARNING, CLINFO
+          CIAO_ERROR (1, (LM_WARNING, CLINFO
                        "RTComponentServer_Task::parse_args - Starting ComponentServer without a callback IOR\n"));
         }
     }
@@ -430,7 +430,7 @@ namespace CIAO
         *clf = ACE_Dynamic_Service<Logger_Service>::instance ("CIAO_Logger_Backend_Factory");
       if (clf)
         {
-          CIAO_DEBUG ((LM_TRACE, CLINFO "RTComponentServer_Task::configure_logging_backend - "
+          CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTComponentServer_Task::configure_logging_backend - "
                        "Replacing logger backend\n"));
           ACE_Log_Msg_Backend * backend = clf->get_logger_backend(this->orb_);
           backend->open(0);

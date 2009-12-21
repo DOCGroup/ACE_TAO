@@ -92,21 +92,21 @@ namespace CIAO_Shapes_Sender_Impl
     try
       {
         this->writer_->write_one (*square_, this->instance_handle_);
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("UPDATED Shape_info for <%C> %u:%u:%u\n"),
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("UPDATED Shape_info for <%C> %u:%u:%u\n"),
                   square_->color.in (),
                   square_->x,
                   square_->y,
                   square_->shapesize));
       }
-    catch (CCM_DDS::NonExistent& )
+    catch (const CCM_DDS::NonExistent& )
       {
-        CIAO_ERROR ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Shape_info for <%C> not updated: <%C> didn't exist.\n"),
                     square_->color.in (), square_->color.in ()));
       }
-    catch (CCM_DDS::InternalError& )
+    catch (const CCM_DDS::InternalError& )
       {
-        CIAO_ERROR ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Internal Error while updating Shape_info for <%C>.\n"),
                     square_->color.in ()));
       }
@@ -123,7 +123,7 @@ namespace CIAO_Shapes_Sender_Impl
                 ACE_Time_Value (0, usec),
                 ACE_Time_Value (0, usec)) == -1)
     {
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
                              ACE_TEXT ("Error scheduling timer")));
     }
   }
@@ -132,20 +132,20 @@ namespace CIAO_Shapes_Sender_Impl
   Sender_exec_i::stop (void)
   {
     this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
     try
       {
         this->writer_->unregister_instance (*this->square_, this->instance_handle_);
       }
-    catch (CCM_DDS::NonExistent& )
+    catch (const CCM_DDS::NonExistent& )
       {
-        CIAO_ERROR ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Shape_info for <%C> not deleted: <%C> didn't exist.\n"),
                     square_->color.in (), square_->color.in ()));
       }
-    catch (CCM_DDS::InternalError& )
+    catch (const CCM_DDS::InternalError& )
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while deleting Shape_info for <%C>.\n"),
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while deleting Shape_info for <%C>.\n"),
                     square_->color.in ()));
       }
     delete this->ticker_;
@@ -240,7 +240,7 @@ namespace CIAO_Shapes_Sender_Impl
     square_->color = CORBA::string_dup("GREEN");
 
     //Register shape with dds.
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("REGISTER Shape_info for <%C> %u:%u:%u\n"),
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("REGISTER Shape_info for <%C> %u:%u:%u\n"),
                   square_->color.in (),
                   square_->x,
                   square_->y,
@@ -249,14 +249,14 @@ namespace CIAO_Shapes_Sender_Impl
       {
         this->instance_handle_ = this->writer_->register_instance (*square_);
       }
-    catch (CCM_DDS::AlreadyCreated& )
+    catch (const CCM_DDS::AlreadyCreated& )
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Shape_info for <%C> already created.\n"),
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Shape_info for <%C> already created.\n"),
                     square_->color.in ()));
       }
-    catch (CCM_DDS::InternalError& )
+    catch (const CCM_DDS::InternalError& )
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while creating Shape_info for <%C>.\n"),
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while creating Shape_info for <%C>.\n"),
                       square_->color.in ()));
       }
   }

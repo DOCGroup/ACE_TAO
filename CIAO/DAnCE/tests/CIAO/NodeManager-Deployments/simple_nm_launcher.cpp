@@ -16,7 +16,7 @@
 
 int usage ()
 {
-  DANCE_ERROR ((LM_ERROR, "simple_nm_launcher <nm_url> <plan>\n"));
+  ACE_ERROR ((LM_ERROR, "simple_nm_launcher <nm_url> <plan>\n"));
   return -1;
 }
 
@@ -44,7 +44,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   try
     {
-      DANCE_DEBUG ((LM_DEBUG,ACE_TEXT ("*** simple_nm_launcher: parsing XML\n")));
+      ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("*** simple_nm_launcher: parsing XML\n")));
       // Parse plan
       CIAO::Config_Handlers::XML_File_Intf xml (argv[2]);
       xml.add_search_path (ACE_TEXT ("CIAO_ROOT"), ACE_TEXT ("/docs/schema/"));
@@ -53,66 +53,66 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (plan.get () == 0)
         {
-          DANCE_ERROR ((LM_ERROR,ACE_TEXT ("*** error parsing XML document\n")));
+          ACE_ERROR ((LM_ERROR,ACE_TEXT ("*** error parsing XML document\n")));
           throw 1;
         }
 
 
-      DANCE_DEBUG ((LM_DEBUG,ACE_TEXT ("*** simple_nm_launcher: resoling node manager reference.\n")));
+      ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("*** simple_nm_launcher: resolving node manager reference.\n")));
       CORBA::Object_var obj = orb->string_to_object (argv[1]);
       Deployment::NodeManager_var nm = Deployment::NodeManager::_narrow (obj.in ());
 
       if (CORBA::is_nil (nm.in ()))
         {
-          DANCE_ERROR ((LM_ERROR,ACE_TEXT ("*** simple_nm_launcher: NodeManager reference is nil.")));
+          ACE_ERROR ((LM_ERROR,ACE_TEXT ("*** simple_nm_launcher: NodeManager reference is nil.")));
           throw 1;
         }
 
-      DANCE_DEBUG ((LM_DEBUG,ACE_TEXT ("*** simple_nm_launcher: calling prepareplan.\n")));
+      ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("*** simple_nm_launcher: calling prepareplan.\n")));
       Deployment::NodeApplicationManager_var nam = nm->preparePlan (*plan,
                                                                     Deployment::ResourceCommitmentManager::_nil ());
 
-      DANCE_DEBUG ((LM_DEBUG,ACE_TEXT ("*** simple_nm_launcher: calling startLaunch\n")));
+      ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("*** simple_nm_launcher: calling startLaunch\n")));
       Deployment::Connections_var conns;
       Deployment::Properties props;
       Deployment::Application_var app = nam->startLaunch (props, conns.out ());
       Deployment::NodeApplication_var na = Deployment::NodeApplication::_narrow (app.in ());
 
-      DANCE_DEBUG ((LM_DEBUG,ACE_TEXT ("*** simple_nm_launcher: calling finishLaunch\n")));
+      ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("*** simple_nm_launcher: calling finishLaunch\n")));
       na->finishLaunch (conns.in (), false);
 
-      DANCE_DEBUG ((LM_DEBUG,ACE_TEXT ("*** simple_nm_launcher: calling start\n")));
+      ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("*** simple_nm_launcher: calling start\n")));
       na->start ();
 
-      DANCE_DEBUG ((LM_DEBUG,ACE_TEXT ("*** simple_nm_launcher: start finished, sleeping 5 seconds.\n")));
+      ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("*** simple_nm_launcher: start finished, sleeping 5 seconds.\n")));
       ACE_OS::sleep (5);
-      DANCE_DEBUG ((LM_DEBUG,ACE_TEXT ("*** simple_nm_launcher: waking up from sleep, calling destroyApplication\n")));
+      ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("*** simple_nm_launcher: waking up from sleep, calling destroyApplication\n")));
 
       nam->destroyApplication (na.in ());
 
-      DANCE_DEBUG ((LM_DEBUG,ACE_TEXT ("*** simple_nm_launcher: calling destroyManager\n")));
+      ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("*** simple_nm_launcher: calling destroyManager\n")));
 
       nm->destroyManager (nam.in ());
 
-      DANCE_DEBUG ((LM_DEBUG,ACE_TEXT ("*** simple_nm_launcher: destroyManager completed.\n")));
+      ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("*** simple_nm_launcher: destroyManager completed.\n")));
 
       orb->destroy ();
     }
   catch (Deployment::StopError &ex)
     {
-      DANCE_ERROR ((LM_ERROR,ACE_TEXT ("*** Caught StopError exception with name %C and reason %C\n"),
+      ACE_ERROR ((LM_ERROR,ACE_TEXT ("*** Caught StopError exception with name %C and reason %C\n"),
                   ex.name.in (), ex.reason.in ()));
       return -1;
     }
   catch (Deployment::StartError &ex)
     {
-      DANCE_ERROR ((LM_ERROR,ACE_TEXT ("*** Caught StartError exception with name %C and reason %C\n"),
+      ACE_ERROR ((LM_ERROR,ACE_TEXT ("*** Caught StartError exception with name %C and reason %C\n"),
                   ex.name.in (), ex.reason.in ()));
       return -1;
     }
   catch (CORBA::Exception &ex)
     {
-      DANCE_ERROR ((LM_ERROR,ACE_TEXT ("*** Caught CORBA exception: %C\n"),
+      ACE_ERROR ((LM_ERROR,ACE_TEXT ("*** Caught CORBA exception: %C\n"),
                   ex._info ().c_str ()));
       return -1;
 
@@ -120,7 +120,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (...)
     {
       orb->destroy ();
-      DANCE_ERROR ((LM_ERROR,ACE_TEXT ("*** Caught unknown exception\n")));
+      ACE_ERROR ((LM_ERROR,ACE_TEXT ("*** Caught unknown exception\n")));
       return -1;
     }
   return 0;

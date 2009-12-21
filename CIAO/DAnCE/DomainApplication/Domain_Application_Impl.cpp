@@ -35,14 +35,14 @@ namespace DAnCE
       }
     catch (CORBA::Exception &e)
       {
-        DANCE_ERROR((LM_ERROR, DLINFO
+        DANCE_ERROR (1, (LM_ERROR, DLINFO
                     ACE_TEXT("DomainApplication_Impl::~DomainApplication_Impl - ")
                     ACE_TEXT("caught a CORBA exception %C(%C) \"%C\"\n"),
                     e._name(), e._rep_id(), e._info().c_str()));
       }
     catch(...)
       {
-        DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT("DomainApplication_Impl::~DomainApplication_Impl - ")
+        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("DomainApplication_Impl::~DomainApplication_Impl - ")
                      ACE_TEXT("caught an unknown exception.\n")));
       }
   }
@@ -52,7 +52,7 @@ namespace DAnCE
                                         CORBA::Boolean start)
   {
     DANCE_TRACE ("DomainApplication_Impl::finishLaunch");
-    DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("DomainApplication_impl::finishLaunch - ")
+    DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("DomainApplication_impl::finishLaunch - ")
                   ACE_TEXT("connections length is %d\n"), connections.length()));
     for (TApp2Mgr::iterator iter = this->node_applications_.begin();
          iter != this->node_applications_.end();
@@ -84,19 +84,19 @@ namespace DAnCE
          iter != this->nams_.end();
          ++iter)
       {
-        DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::startLaunch - ")
+        DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::startLaunch - ")
                       ACE_TEXT("Invoking startLaunch on an application\n")));
         ::Deployment::Connections_var conn;
         Deployment::Application_ptr na = (*iter).ext_id_->startLaunch (configProperty, conn.out());
         //Deployment::NodeApplication_ptr na = Deployment::NodeApplication::_narrow (a);
         if (CORBA::is_nil (na))
           {
-            DANCE_ERROR ((LM_ERROR, DLINFO
+            DANCE_ERROR (1, (LM_ERROR, DLINFO
                          ACE_TEXT("DomainApplication_Impl::startLaunch -")
                          ACE_TEXT("Received nil object reference from  startLaunch on node managers.\n")));
             throw Deployment::StartError();
           }
-        DANCE_DEBUG ((LM_TRACE, DLINFO
+        DANCE_DEBUG (9, (LM_TRACE, DLINFO
                       ACE_TEXT("DomainApplication_Impl::startLaunch - ")
                       ACE_TEXT("Application startLaunch succeeded, received %u connections\n"),
                       conn->length ()));
@@ -111,7 +111,7 @@ namespace DAnCE
           }
       }
 
-    DANCE_DEBUG ((LM_DEBUG, DLINFO
+    DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                   ACE_TEXT("DomainApplication_Impl::startLaunch - ")
                   ACE_TEXT("Received %u connections from applications\n"),
                   this->connections_.length ()));

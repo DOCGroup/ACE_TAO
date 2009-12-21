@@ -56,7 +56,7 @@ namespace CIAO_Keyed_Test_Receiver_Impl
       }
     if (all_received)
       {
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("All samples received. Stop the timer\n")));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("All samples received. Stop the timer\n")));
         this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
       }
   }
@@ -80,13 +80,13 @@ namespace CIAO_Keyed_Test_Receiver_Impl
             this->reader_->read_one_last (keyedtest_info, readinfo, ::DDS::HANDLE_NIL);
             time_t tim = readinfo.source_timestamp.sec;
             tm* time = ACE_OS::localtime(&tim);
-            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ONE Read_Info ")
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ONE Read_Info ")
                       ACE_TEXT (" -> date = %02d:%02d:%02d.%d\n"),
                                 time ? time->tm_hour : 0,
                                 time ? time->tm_min : 0,
                                 time ? time->tm_sec : 0,
                                 readinfo.source_timestamp.nanosec));
-            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ONE keyed test info : ")
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ONE keyed test info : ")
                 ACE_TEXT ("received keyedtest_info for <%C> at %u\n"),
                 keyedtest_info.key.in (),
                 keyedtest_info.iteration));
@@ -96,12 +96,12 @@ namespace CIAO_Keyed_Test_Receiver_Impl
       }
     catch(const CCM_DDS::InternalError& )
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: KeyedTest_Read: ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: KeyedTest_Read: ")
                   ACE_TEXT ("Unexpected NonExistent exception received\n")));
       }
     catch(const CCM_DDS::NonExistent& )
       {
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("KeyedTest_Read: ")
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("KeyedTest_Read: ")
                   ACE_TEXT ("Expected NonExistent received\n")));
       }
   }
@@ -185,7 +185,7 @@ namespace CIAO_Keyed_Test_Receiver_Impl
                                           ACE_Time_Value(0, usec),
                                           ACE_Time_Value(0, usec)) == -1)
       {
-        CIAO_ERROR ((LM_ERROR, "Unable to schedule Timer\n"));
+        ACE_ERROR ((LM_ERROR, "Unable to schedule Timer\n"));
       }
   }
 
@@ -204,7 +204,7 @@ namespace CIAO_Keyed_Test_Receiver_Impl
          iter != this->last_iters_.end ();
          ++iter)
       {
-        CIAO_DEBUG ((LM_INFO, "Receiver_exec_i summary for <%C>: last sample <%u> - expected <%u>\n",
+        ACE_DEBUG ((LM_INFO, "Receiver_exec_i summary for <%C>: last sample <%u> - expected <%u>\n",
                       iter->first.c_str(),
                       iter->second,
                       this->iterations_));
@@ -213,7 +213,7 @@ namespace CIAO_Keyed_Test_Receiver_Impl
 
     if (received_ < this->expected_)
       {
-        CIAO_ERROR ((LM_ERROR, "ERROR : Expected to receive %u samples, actually got %u\n",
+        ACE_ERROR ((LM_ERROR, "ERROR : Expected to receive %u samples, actually got %u\n",
             this->expected_, received_));
       }
   }

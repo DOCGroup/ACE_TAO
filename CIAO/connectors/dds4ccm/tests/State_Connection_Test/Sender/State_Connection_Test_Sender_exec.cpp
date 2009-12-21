@@ -40,13 +40,13 @@ namespace CIAO_State_Connection_Test_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
-    this->updater_ = 
+    this->updater_ =
         this->context_->get_connection_info_update_data ();
     if (!CORBA::is_nil (this->updater_))
       {
         this->updater_ok_ = true;
       }
-    this->updater_dds_datawriter_ = 
+    this->updater_dds_datawriter_ =
         this->context_->get_connection_info_update_dds_entity ();
     if (!CORBA::is_nil (this->updater_dds_datawriter_))
       {
@@ -69,19 +69,19 @@ namespace CIAO_State_Connection_Test_Sender_Impl
   {
     if (!this->updater_ok_)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Sender : get updater failed\n")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Sender : get updater failed\n")));
       }
     else
       {
-        CIAO_ERROR ((LM_DEBUG, ACE_TEXT ("Sender : Get updater passed\n")));
+        ACE_ERROR ((LM_DEBUG, ACE_TEXT ("Sender : Get updater passed\n")));
       }
     if (!this->updater_dds_datawriter_ok_)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Sender : Get dds writer for DDS_Updater failed\n")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Sender : Get dds writer for DDS_Updater failed\n")));
       }
     else
       {
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender : Get dds writer for DDS_Updater passed\n")));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender : Get dds writer for DDS_Updater passed\n")));
       }
   }
 

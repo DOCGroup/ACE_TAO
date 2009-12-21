@@ -77,7 +77,7 @@ namespace CIAO_Writer_Sender_Impl
             this->writer_->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
             if (this->samples_written_ > this->max_dds_samples_)
               {
-                CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: No InternalError ")
+                ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: No InternalError ")
                             ACE_TEXT ("caught while writing more samples than ")
                             ACE_TEXT ("DDS can hold: max samples in DDS <%d> - ")
                             ACE_TEXT ("samples written until now <%u>.\n"),
@@ -95,12 +95,12 @@ namespace CIAO_Writer_Sender_Impl
           {
             if (this->samples_written_ > this->max_dds_samples_)
               {
-                CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::write_unkeyed: ")
+                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::write_unkeyed: ")
                             ACE_TEXT ("Expected InternalError received")));
               }
             else
               {
-                CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
+                ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
                             ACE_TEXT ("while updating writer info for <%C>.\n"),
                               this->last_key->first.c_str ()));
               }
@@ -129,7 +129,7 @@ namespace CIAO_Writer_Sender_Impl
           }
       }
   }
-  
+
   void
   Sender_exec_i::write_many ()
   {
@@ -146,12 +146,12 @@ namespace CIAO_Writer_Sender_Impl
     try
       {
         this->writer_->write_many (write_many_no_excep);
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("write_many : written <%u> samples\n"),
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("write_many : written <%u> samples\n"),
               write_many_no_excep.length ()));
       }
     catch (const CCM_DDS::InternalError& ex)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
                     ACE_TEXT ("while write many writer info: index <%d> - retval <%d>\n"),
                       ex.index, ex.error_code));
       }
@@ -178,7 +178,7 @@ namespace CIAO_Writer_Sender_Impl
     try
       {
         this->writer_->write_many (write_many_seq);
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: no exception ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: no exception ")
                     ACE_TEXT ("while writing too many samples : ")
                     ACE_TEXT ("written <%u> - max <%u>\n"),
                       write_many_seq.length (),
@@ -186,7 +186,7 @@ namespace CIAO_Writer_Sender_Impl
       }
     catch (const CCM_DDS::InternalError& ex)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
                     ACE_TEXT ("while write many writer info: index <%d> - retval <%d>\n"),
                       ex.index, ex.error_code));
       }
@@ -219,7 +219,7 @@ namespace CIAO_Writer_Sender_Impl
                 ACE_Time_Value (0, usec),
                 ACE_Time_Value (0, usec)) == -1)
     {
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
                              ACE_TEXT ("Error scheduling timer")));
     }
   }
@@ -228,7 +228,7 @@ namespace CIAO_Writer_Sender_Impl
   Sender_exec_i::stop (void)
   {
     this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
     delete this->ticker_;
   }
 

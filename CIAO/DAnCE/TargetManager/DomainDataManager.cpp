@@ -20,20 +20,20 @@ DAnCE::DomainDataManager::init (CORBA::ORB_ptr orb,
   this->orb_ = CORBA::ORB::_duplicate (orb);
   this->target_mgr_ = ::Deployment::TargetManager::_duplicate(target);
 
-  DANCE_DEBUG ((LM_DEBUG, DLINFO "DAnCE::DomainDataManager::init - "
+  DANCE_DEBUG (6, (LM_DEBUG, DLINFO "DAnCE::DomainDataManager::init - "
                 "Parsing initial domain from file %s\n",
                 domain_name));
 
   CIAO::Config_Handlers::DD_Handler dd (domain_name);
   ::Deployment::Domain* dmn = dd.domain_idl ();
 
-  DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE::DomainDataManager::init - "
+  DANCE_DEBUG (9, (LM_TRACE, DLINFO "DAnCE::DomainDataManager::init - "
                 "Initial domain successfully parsed\n"));
 #ifdef GEN_OSTREAM_OPS
   std::ostringstream _stream;
   _stream << *dmn << std::endl;
 
-  DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE::DomainDataManager::init - "
+  DANCE_DEBUG (9, (LM_TRACE, DLINFO "DAnCE::DomainDataManager::init - "
                 "Contents of Domain:%s\n",
                 _stream.str ().c_str ()));
 #endif
@@ -132,7 +132,7 @@ int DAnCE::DomainDataManager::call_all_node_managers ()
 
 /*  if ( this->deployment_config_.init ("NodeDetails.dat") == -1 )
     {
-      DANCE_ERROR ((LM_ERROR,
+      DANCE_ERROR (1, (LM_ERROR,
                   "TargetM (%P|%t) DomainDataManager.cpp -"
                   "DAnCE::DomainDataManager::call_all_node_managers -"
                   "ERROR while trying to initialize after reading "
@@ -155,7 +155,7 @@ int DAnCE::DomainDataManager::call_all_node_managers ()
         }
       catch (CORBA::Exception&)
         {
-          DANCE_ERROR ((LM_ERROR, "DANCE::TM (%P|%t) DomainDataManager.cpp: "
+          DANCE_ERROR (1, (LM_ERROR, "DANCE::TM (%P|%t) DomainDataManager.cpp: "
                       "Error trying to contact NodeManager %s\n",
                       initial_domain_.node[i].name.in ()));
           continue;
@@ -183,7 +183,7 @@ int DAnCE::DomainDataManager::call_all_node_managers ()
             }
           catch (CORBA::Exception& ex)
             {
-              DANCE_ERROR ((LM_ERROR , "TM::Error in calling Join Domain==\n"));
+              DANCE_ERROR (1, (LM_ERROR , "TM::Error in calling Join Domain==\n"));
               ex._tao_print_exception (
                 "Exception caught in ""DomainDataManager::joinDomain");
             }
@@ -199,7 +199,7 @@ int DAnCE::DomainDataManager::call_all_node_managers ()
 ::commitResources (const ::Deployment::ResourceAllocations &)
 {
   DANCE_TRACE ("DAnCE::DomainDataManager::commitResources");
-  
+
 /*
   // commit the resources
   // parse into the plan and commit resources ...
@@ -243,7 +243,7 @@ void DAnCE::DomainDataManager::
 releaseResources (const ::Deployment::ResourceCommitmentManager_ptr)
 {
   DANCE_TRACE ("DAnCE::DomainDataManager::releaseResources");
-  
+
   // release the resources
 /*
 
@@ -273,7 +273,7 @@ void DAnCE::DomainDataManager::match_requirement_resource (
       ::Deployment::Resources & available)
 {
   DANCE_TRACE ("DAnCE::DomainDataManager::match_requirement_resource");
-  
+
   // here match the deployed to the available
 
   for (CORBA::ULong i = 0;i < deployed.length ();i++)
@@ -312,7 +312,7 @@ void DAnCE::DomainDataManager::match_properties (
       ::Deployment::SatisfierProperties & available)
 {
   DANCE_TRACE ("DAnCE::DomainDataManager::match_properties");
-  
+
   bool property_found;
 
   for (CORBA::ULong i = 0;i < deployed.length ();i++)
@@ -354,19 +354,19 @@ void DAnCE::DomainDataManager::commit_release_resource (
            ::Deployment::SatisfierProperty & available)
 {
   DANCE_TRACE ("DAnCE::DomainDataManager::commit_release_resource");
-  
+
   if (current_action_ == commit)
     {
 
       CORBA::Long required_d;
 
       if ((deployed.value >>= required_d) == false)
-        DANCE_ERROR ((LM_ERROR, "Failed to extract required amount\n"));
+        DANCE_ERROR (1, (LM_ERROR, "Failed to extract required amount\n"));
 
       CORBA::Long available_d;
 
       if ((available.value >>= available_d) == false)
-        DANCE_ERROR ((LM_ERROR, "failed to extract available amount\n"));
+        DANCE_ERROR (1, (LM_ERROR, "failed to extract available amount\n"));
 
       if (available_d >= required_d)
         {
@@ -406,7 +406,7 @@ void DAnCE::DomainDataManager::commit_release_resource (
 void DAnCE::DomainDataManager::stop_monitors ()
 {
   DANCE_TRACE ("DAnCE::DomainDataManager::stop_monitors");
-  
+
   CORBA::ULong const length = initial_domain_.node.length ();
 
   for (CORBA::ULong i=0;i < length;i++)
@@ -421,7 +421,7 @@ void DAnCE::DomainDataManager::stop_monitors ()
         }
       catch (const CORBA::Exception&)
         {
-          DANCE_ERROR ((LM_ERROR, "DANCE::TM (%P|%t) DomainDataManager.cpp: "
+          DANCE_ERROR (1, (LM_ERROR, "DANCE::TM (%P|%t) DomainDataManager.cpp: "
                       "Error in get Node Manager from Deployment Config %s\n",
                       initial_domain_.node[i].name.in ()));
           continue;
@@ -435,7 +435,7 @@ void DAnCE::DomainDataManager::stop_monitors ()
             }
           catch (CORBA::Exception& ex)
             {
-              DANCE_ERROR ((LM_ERROR , "TM::Error in calling Leave Domain\n"));
+              DANCE_ERROR (1, (LM_ERROR , "TM::Error in calling Leave Domain\n"));
               ex._tao_print_exception (
                 "Exception caught in ""DomainDataManager::leaveDomain");
             }
@@ -449,7 +449,7 @@ int DAnCE::DomainDataManager::add_to_domain (
     const ::Deployment::Domain& domain)
 {
   DANCE_TRACE ("DAnCE::DomainDataManager::add_to_domain");
-  
+
   // here add the domain to the Domain
   // right now use only a node
 
@@ -488,7 +488,7 @@ bool DAnCE::DomainDataManager::find_in_initial_domain (const char* node_name,
                         ::Deployment::Node& node)
 {
   DANCE_TRACE ("DAnCE::DomainDataManager::find_in_initial_domain");
-  
+
   for (CORBA::ULong i =0;
       i < this->initial_domain_.node.length ();
       i++)
@@ -509,7 +509,7 @@ bool DAnCE::DomainDataManager::find_in_provisioned_domain (const char* node_name
                         ::Deployment::Node& node)
 {
   DANCE_TRACE ("DAnCE::DomainDataManager::find_in_provisioned_domain");
-  
+
   for (CORBA::ULong i =0;
       i < this->provisioned_data_.node.length ();
       i++)
@@ -529,7 +529,7 @@ int DAnCE::DomainDataManager::delete_from_domain (
     const ::Deployment::Domain& domain)
 {
   DANCE_TRACE ("DAnCE::DomainDataManager::delete_from_domain");
-  
+
   // validate input
   if (domain.node.length () == 0)
     return 1;
@@ -584,7 +584,7 @@ int DAnCE::DomainDataManager::intimate_planner (
     const ::Deployment::Domain& domain)
 {
   DANCE_TRACE ("DAnCE::DomainDataManager::intimate_planner");
-  
+
  // use the connection with the planner and get a reference to the planner
  // make a call top the planner
   Deployment::Domain d = domain;
@@ -595,7 +595,7 @@ int DAnCE::DomainDataManager::intimate_planner (
 bool DAnCE::DomainDataManager::update_node_status ()
 {
   DANCE_TRACE ("DAnCE::DomainDataManager::update_node_status");
-  
+
   // update the node status here ...
   return 0;
 }
@@ -604,7 +604,7 @@ void DAnCE::DomainDataManager::commitResourceAllocation (
           const ::Deployment::ResourceAllocations & resources)
 {
   DANCE_TRACE ("DAnCE::DomainDataManager::commitResourceAllocation");
-  
+
   // commit the resources
   // parse into the plan and commit resources ...
 
@@ -618,7 +618,7 @@ void DAnCE::DomainDataManager::releaseResourceAllocation (
     const ::Deployment::ResourceAllocations & resources)
 {
   DANCE_TRACE ("DAnCE::DomainDataManager::releaseResourceAllocation");
-  
+
   // set the action value
   current_action_ = release;
 
@@ -629,7 +629,7 @@ void DAnCE::DomainDataManager::releaseResourceAllocation (
 int DAnCE::DomainDataManager::commit_release_RA (const ::Deployment::ResourceAllocations& resources)
 {
   DANCE_TRACE ("DAnCE::DomainDataManager::commit_release_RA");
-  
+
   // temporary used to guard against exceptions
   temp_provisioned_data_ = provisioned_data_;
 
@@ -645,7 +645,7 @@ int DAnCE::DomainDataManager::commit_release_RA (const ::Deployment::ResourceAll
     catch (::Deployment::ResourceCommitmentFailure& ex)
     {
       // catch the exception and add parameters
-      DANCE_ERROR ((LM_ERROR, "Caught the Exception in releaseResourceAllocation\n"));
+      DANCE_ERROR (1, (LM_ERROR, "Caught the Exception in releaseResourceAllocation\n"));
       ex.index = i;
       throw ex;
     }
@@ -662,7 +662,7 @@ DAnCE::DomainDataManager::find_resource (
     const ::Deployment::ResourceAllocation& resource)
 {
   DANCE_TRACE ("DAnCE::DomainDataManager::find_resource");
-  
+
   // for now search the resource in the Node sequence; Later need
   // to add it to the Bridges and Interconnects too according to the
   // spec

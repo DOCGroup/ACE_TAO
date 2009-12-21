@@ -56,7 +56,7 @@ ComponentAttributesSetter::SetComponentAttributes (ACE_CString /*componentName*/
         {
           continue;
         }
-      DANCE_DEBUG ((LM_DEBUG, DLINFO
+      DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                     ACE_TEXT("ComponentAttributesSetter::SetComponentAttributes - ")
                     ACE_TEXT("Populating attribute name %C\n"), name.c_str()));
       ACE_CString method = "_set_";
@@ -73,7 +73,7 @@ ComponentAttributesSetter::SetComponentAttributes (ACE_CString /*componentName*/
         }
       catch (const CORBA::BAD_OPERATION &)
         {
-          DANCE_ERROR ((LM_WARNING, DLINFO
+          DANCE_ERROR (1, (LM_WARNING, DLINFO
                         ACE_TEXT("ComponentAttributesSetter::SetComponentAttributes - ")
                         ACE_TEXT("ERROR: BAD_OPERATION while trying to set attribute %C\n"),
                         name.c_str ()));

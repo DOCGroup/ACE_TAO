@@ -49,7 +49,7 @@ namespace CIAO_Keyed_Test_Sender_Impl
           {
             ++this->last_key->second->iteration;
             this->writer_->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
-            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Written key <%C> with <%d>\n"),
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written key <%C> with <%d>\n"),
                     this->last_key->first.c_str (),
                     this->last_key->second->iteration));
           }
@@ -88,7 +88,7 @@ namespace CIAO_Keyed_Test_Sender_Impl
                 ACE_Time_Value (0, usec),
                 ACE_Time_Value (0, usec)) == -1)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
                               ACE_TEXT ("Error scheduling timer")));
       }
   }
@@ -97,7 +97,7 @@ namespace CIAO_Keyed_Test_Sender_Impl
   Sender_exec_i::stop (void)
   {
     this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
     delete this->ticker_;
   }
 
@@ -136,7 +136,7 @@ namespace CIAO_Keyed_Test_Sender_Impl
   {
     this->keys_ = keys;
   }
-  
+
   void
   Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
   {

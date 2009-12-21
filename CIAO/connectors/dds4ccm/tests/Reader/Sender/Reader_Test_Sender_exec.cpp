@@ -87,7 +87,7 @@ namespace CIAO_Reader_Test_Sender_Impl
           }
         else
           {
-            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unable to start the reader\n")));
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unable to start the reader\n")));
           }
         for (CORBA::UShort iter_key = 1; iter_key < this->keys_ + 1; ++iter_key)
           {
@@ -99,7 +99,7 @@ namespace CIAO_Reader_Test_Sender_Impl
               {
                 new_key->iteration = iter;
                 this->writer_->write_one (*new_key, ::DDS::HANDLE_NIL);
-                CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Written key <%C> with <%d>\n"),
+                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written key <%C> with <%d>\n"),
                             key, iter));
               }
           }
@@ -165,12 +165,12 @@ namespace CIAO_Reader_Test_Sender_Impl
     catch (const CORBA::Exception& ex)
       {
         ex._tao_print_exception ("Exception caught:");
-        CIAO_ERROR ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: GET_CONNECTION_START_READER : Exception caught\n")));
       }
     catch (...)
       {
-        CIAO_ERROR ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: GET_CONNECTION_START_READER : Unknown exception caught\n")));
       }
   }

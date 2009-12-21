@@ -162,7 +162,7 @@ namespace CIAO_LNE_Test_Receiver_Impl
   {
     if (this->received_one_by_one_.value () > 0)
       {
-        CIAO_ERROR ((LM_ERROR, "ERROR: NOT ENABLED: "
+        ACE_ERROR ((LM_ERROR, "ERROR: NOT ENABLED: "
                                "Received samples on one_by_one "
                                "callback while mode is NOT_ENABLED "
                                "expected <0> - received <%u>\n",
@@ -170,7 +170,7 @@ namespace CIAO_LNE_Test_Receiver_Impl
       }
     if (this->received_many_by_many_.value () > 0)
       {
-        CIAO_ERROR ((LM_ERROR, "ERROR: NOT ENABLED: "
+        ACE_ERROR ((LM_ERROR, "ERROR: NOT ENABLED: "
                                "Received samples on many_by_many "
                                "callback while mode is NOT_ENABLED "
                                "expected <0> - received <%u>\n",
@@ -178,7 +178,7 @@ namespace CIAO_LNE_Test_Receiver_Impl
       }
     if (this->data_received_.value ())
       {
-        CIAO_ERROR ((LM_ERROR, "ERROR: NOT ENABLED: "
+        ACE_ERROR ((LM_ERROR, "ERROR: NOT ENABLED: "
                                "Received DATA_ON_READERS_STATUS on "
                                "ConnectorStatusListener\n"));
       }
@@ -186,7 +186,7 @@ namespace CIAO_LNE_Test_Receiver_Impl
         this->received_many_by_many_.value () == 0 &&
         !this->data_received_.value ())
       {
-        CIAO_DEBUG ((LM_DEBUG, "NOT ENABLED: "
+        ACE_DEBUG ((LM_DEBUG, "NOT ENABLED: "
                                "Received no data at all."
                                "Test passed!\n"));
       }
