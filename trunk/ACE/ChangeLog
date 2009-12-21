@@ -1,3 +1,8 @@
+Mon Dec 21 11:26:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/bootstrap:
+          Invoke autoupdate as part of this script
+
 Sun Dec 20 07:58:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/checked_iterator.h:
