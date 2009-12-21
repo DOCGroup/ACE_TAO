@@ -1,3 +1,15 @@
+Mon Dec 21 10:59:04 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+        * connectors/dds4ccm/impl/ndds/Topic.cpp:
+        * connectors/dds4ccm/impl/ndds/TopicDescription.cpp:
+          Using set_impl and get_impl on DomainParticipant.
+
 Mon Dec 21 10:25:22 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReader.cpp:

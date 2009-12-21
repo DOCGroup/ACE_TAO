@@ -27,8 +27,8 @@ namespace CIAO
     namespace RTI
     {
       // Implementation skeleton constructor
-      RTI_DomainParticipant_i::RTI_DomainParticipant_i (DDSDomainParticipant *part)
-        : impl_ (part)
+      RTI_DomainParticipant_i::RTI_DomainParticipant_i (void)
+        : impl_ (0)
       {
         CIAO_TRACE ("RTI_DomainParticipant_i::RTI_DomainParticipant_i");
       }
@@ -666,10 +666,27 @@ namespace CIAO
       }
 
       DDSDomainParticipant *
-      RTI_DomainParticipant_i::get_participant (void)
+      RTI_DomainParticipant_i::get_impl (void)
       {
         return this->impl_;
       }
+
+      void
+      RTI_DomainParticipant_i::set_impl (DDSDomainParticipant * dw)
+      {
+        this->impl_ = dw;
+      }
+
+      DDSDomainParticipant *
+      RTI_DomainParticipant_i::impl (void)
+      {
+        if (!this->impl_)
+          {
+            throw ::CORBA::BAD_INV_ORDER ();
+          }
+        return this->impl_;
+      }
+
     }
   }
 }

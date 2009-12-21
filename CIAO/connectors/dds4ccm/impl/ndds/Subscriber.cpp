@@ -262,7 +262,9 @@ namespace CIAO
       RTI_Subscriber_i::get_participant (void)
       {
         DDSDomainParticipant* p = this->impl ()->get_participant ();
-        ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i (p);
+        ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i ();
+        RTI_DomainParticipant_i *rti_dp = dynamic_cast < RTI_DomainParticipant_i *> (retval.in ());
+        rti_dp->set_impl (p);
         return retval._retn ();
       }
 
