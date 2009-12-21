@@ -263,7 +263,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::data_reader (
   else
     {
       RTI_DataReader_i *rdr = dynamic_cast <RTI_DataReader_i *> (reader);
-      if (rdr == 0)
+      if (!rdr)
         {
           CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Getter_T::data_reader - "
                        "Unable to cast provided DataReader to servant\n"));
