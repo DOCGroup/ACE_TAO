@@ -47,7 +47,9 @@ namespace CIAO
           }
 
         part->enable ();
-        ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i (part);
+        ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i ();
+        RTI_DomainParticipant_i *rti_dp = dynamic_cast < RTI_DomainParticipant_i *> (retval.in ());
+        rti_dp->set_impl (part);
 
         return retval._retn ();
       }
@@ -80,7 +82,9 @@ namespace CIAO
           }
 
         part->enable ();
-        ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i (part);
+        ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i ();
+        RTI_DomainParticipant_i *rti_dp = dynamic_cast < RTI_DomainParticipant_i *> (retval.in ());
+        rti_dp->set_impl (part);
 
         return retval._retn ();
       }
@@ -102,7 +106,7 @@ namespace CIAO
                      "Successfully casted provided object reference to servant type.\n"));
 
         DDS_ReturnCode_t retval = DDSDomainParticipantFactory::get_instance ()->
-            delete_participant (part->get_participant ());
+            delete_participant (part->get_impl ());
 
         if (retval != DDS_RETCODE_OK)
           {
@@ -120,7 +124,9 @@ namespace CIAO
       RTI_DomainParticipantFactory_i::lookup_participant (::DDS::DomainId_t domain_id)
       {
         DDSDomainParticipant* dp = DDSDomainParticipantFactory::get_instance ()->lookup_participant (domain_id);
-        ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i (dp);
+        ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i ();
+        RTI_DomainParticipant_i *rti_dp = dynamic_cast < RTI_DomainParticipant_i *> (retval.in ());
+        rti_dp->set_impl (dp);
         return retval._retn ();
       }
 
