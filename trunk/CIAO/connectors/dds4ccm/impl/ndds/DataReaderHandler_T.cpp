@@ -37,12 +37,12 @@ CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::handle_exception (A
               break;
           else if (result != DDS_RETCODE_OK)
             {
-              CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unable to take data from data reader, error %d.\n"), result));
+              CIAO_ERROR (1, (LM_ERROR, ACE_TEXT ("Unable to take data from data reader, error %d.\n"), result));
               return 1;
             }
           if (sampleinfo.valid_data)
             {
-              CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataReaderHandler_T : found valid data\n")));
+              CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("DataReaderHandler_T : found valid data\n")));
               ::CCM_DDS::ReadInfo readinfo;
               readinfo <<= sampleinfo;
               listener_->on_one_data (instance, readinfo);

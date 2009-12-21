@@ -63,7 +63,7 @@ namespace CIAO_Simple_ProcessColocation_Impl
   ProcessColocation_exec_i::process_name (
     const char * process_name )
   {
-    CIAO_DEBUG ((LM_EMERGENCY, "Setting attr process name:%C\n",
+    ACE_DEBUG ((LM_EMERGENCY, "Setting attr process name:%C\n",
                  process_name));
 
     this->process_name_ = process_name;
@@ -100,7 +100,7 @@ namespace CIAO_Simple_ProcessColocation_Impl
 
     if (this->process_name_ != value)
       {
-        CIAO_DEBUG ((LM_EMERGENCY, "ProcessColocation_exec_i::ccm_activate - "
+        ACE_DEBUG ((LM_EMERGENCY, "ProcessColocation_exec_i::ccm_activate - "
                      "Error: I am colocated with someone I shouldn't be.  "
                      "My process value is %C, expected %C\n",
                      value.c_str (),

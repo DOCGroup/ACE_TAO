@@ -47,7 +47,7 @@ namespace CIAO
     {
       CIAO_TRACE("CIAO_ServerActivator_i::component_server_callback");
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO
+      CIAO_DEBUG (9, (LM_TRACE, CLINFO
                    "CIAO_ServerActivator_i::component_server_callback - "
                    "Received callback from ComponentServer %C\n",
                    server_UUID));
@@ -57,7 +57,7 @@ namespace CIAO
       for (SERVER_INFOS::iterator i (this->server_infos_.begin ());
            !i.done (); ++i)
         {
-          CIAO_DEBUG ((LM_TRACE, CLINFO
+          CIAO_DEBUG (9, (LM_TRACE, CLINFO
                       "CIAO_ServerActivator_i::component_server_callback - "
                       "Comparing %C with %C\n", (*i)->uuid_.c_str (), server_UUID));
           if ((*i)->uuid_ == server_UUID)
@@ -68,7 +68,7 @@ namespace CIAO
 
       if (!info)
         {
-          CIAO_ERROR ((LM_WARNING, CLINFO
+          CIAO_ERROR (1, (LM_WARNING, CLINFO
                       "CIAO_ServerActivator_i::component_server_callback - "
                       "Received callback from ComponentServer %C, which doesn't belong to me.\n",
                       server_UUID));
@@ -77,7 +77,7 @@ namespace CIAO
 
       if (info->activated_)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO
+          CIAO_ERROR (1, (LM_ERROR, CLINFO
                        "CIAO_ServerActivator_i::component_server_callback - "
                        "Received callback from ComponentServer %C, which has already been configured.\n",
                        server_UUID));
@@ -86,14 +86,14 @@ namespace CIAO
 
       if (!CORBA::is_nil (info->ref_))
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO
+          CIAO_ERROR (1, (LM_ERROR, CLINFO
                        "CIAO_ServerActivator_i::component_server_callback - "
                        "Received callback from ComponentServer %C, which has already called back.\n",
                        server_UUID));
           throw CORBA::BAD_INV_ORDER ();
         }
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO
+      CIAO_DEBUG (9, (LM_TRACE, CLINFO
                    "CIAO_ServerActivator_i::component_server_callback - "
                    "Received callback from ComponentServer %C\n",
                    server_UUID));
@@ -103,7 +103,7 @@ namespace CIAO
       this->create_component_server_config_values (*info, config);
 
       // @@TODO: May want to print out configvalues here.
-      CIAO_DEBUG ((LM_DEBUG, CLINFO
+      CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                    "CIAO_ServerActivator_i::component_server_callback - "
                    "Generated %u ConfigValues for ComponentServer %C\n",
                    config->length (), server_UUID));
@@ -114,7 +114,7 @@ namespace CIAO
     {
       CIAO_TRACE ("CIAO_ServerActivator_i::configuration_complete");
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO
+      CIAO_DEBUG (9, (LM_TRACE, CLINFO
                    "CIAO_ServerActivator_i::configuration_complete - "
                    "Received configuration_complete from ComponentServer %C\n",
                    server_UUID));
@@ -134,7 +134,7 @@ namespace CIAO
 
           if (!info)
             {
-              CIAO_ERROR ((LM_WARNING, CLINFO
+              CIAO_ERROR (1, (LM_WARNING, CLINFO
                            "CIAO_ServerActivator_i::configuration_complete - "
                            "Received configuration_complete from ComponentServer %C, which doesn't belong to me.\n",
                            server_UUID));
@@ -143,7 +143,7 @@ namespace CIAO
 
           if (info->activated_)
             {
-              CIAO_ERROR ((LM_ERROR, CLINFO
+              CIAO_ERROR (1, (LM_ERROR, CLINFO
                            "CIAO_ServerActivator_i::configuration_complete - "
                            "Received configuration_complete from ComponentServer %C, which has already been completed.\n",
                            server_UUID));
@@ -152,7 +152,7 @@ namespace CIAO
 
           if (CORBA::is_nil (info->ref_.in ()))
             {
-              CIAO_ERROR ((LM_ERROR, CLINFO
+              CIAO_ERROR (1, (LM_ERROR, CLINFO
                            "CIAO_ServerActivator_i::configuration_complete - "
                            "Received configuration_complete from ComponentServer %C, which has not called back.\n",
                            server_UUID));
@@ -163,7 +163,7 @@ namespace CIAO
         }
       catch (...)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO
+          CIAO_ERROR (1, (LM_ERROR, CLINFO
                        "CIAO_ServerActivator_i::configuration_complete - "
                        "Caught unknown exception while processing configuration_complete\n"));
           throw;
@@ -181,13 +181,13 @@ namespace CIAO
 
       ACE_CString cmd_options = this->construct_command_line (*server);
 
-      CIAO_DEBUG ((LM_DEBUG, CLINFO
+      CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                    "CIAO_ServerActivator_i::create_component_server - ComponentServer arguments: %C\n",
                    cmd_options.c_str ()));
 
       server_infos_.insert_tail (server);
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO
+      CIAO_DEBUG (9, (LM_TRACE, CLINFO
                    "CIAO_ServerActivator_i::create_component_server - "
                    "Attempting to spawn ComponentServer with UUID %C\n",
                    server->uuid_.c_str ()));
@@ -205,13 +205,13 @@ namespace CIAO
           CORBA::ULong t;
           if (val >>= t)
             {
-              CIAO_DEBUG ((LM_DEBUG, CLINFO "CIAO_ServerActivator_i::create_component_server - "
+              CIAO_DEBUG (6, (LM_DEBUG, CLINFO "CIAO_ServerActivator_i::create_component_server - "
                            "Using provided non-default server timeout of %u\n", t));
               timeout = ACE_Time_Value (t);
             }
           else
             {
-              CIAO_ERROR ((LM_WARNING, CLINFO "CIAO_ServerActivator_i::create_component_server - "
+              CIAO_ERROR (1, (LM_WARNING, CLINFO "CIAO_ServerActivator_i::create_component_server - "
                            "Failed to extract provided non-default server timeout from property '%C', "
                            "falling back to default timeout of %u\n",
                            this->spawn_delay_));
@@ -223,7 +223,7 @@ namespace CIAO
       else
         this->single_threaded_wait_for_callback (*server, timeout/*, pid*/);
 
-      CIAO_DEBUG ((LM_DEBUG, CLINFO
+      CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                    "CIAO_ServerActivator_i::create_component_server - "
                    "ComponentServer %C successfully spawned and configured!\n",
                    server->uuid_.c_str ()));
@@ -244,7 +244,7 @@ namespace CIAO
       if (server.cmap_->find (SERVER_UUID, val) == 0)
         {
           // Nodeapplication has requested a custom uuid
-          CIAO_DEBUG ((LM_TRACE, CLINFO
+          CIAO_DEBUG (9, (LM_TRACE, CLINFO
                        "CIAO_ServerActivator_i::construct_command_line - Using provided UUID\n"));
           const char *uuid = 0;
           val >>= uuid;
@@ -252,7 +252,7 @@ namespace CIAO
         }
       else
         {
-          CIAO_DEBUG ((LM_TRACE, CLINFO
+          CIAO_DEBUG (9, (LM_TRACE, CLINFO
                        "CIAO_ServerActivator_i::construct_command_line - Using generated UUID\n"));
           ACE_Utils::UUID uuid;
           ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
@@ -264,7 +264,7 @@ namespace CIAO
           const char *args = 0;
           val >>= args;
 
-          CIAO_DEBUG ((LM_TRACE, CLINFO
+          CIAO_DEBUG (9, (LM_TRACE, CLINFO
                  "CIAO_ServerActivator_i::construct_command_line - "
                  "Adding provided server arguments %C\n", args));
 
@@ -273,7 +273,7 @@ namespace CIAO
           cmd_options += ' ';
         }
 
-      CIAO_DEBUG ((LM_DEBUG, CLINFO
+      CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                    "CIAO_ServerActivator_i::construct_command_line - Creating component server"
                    " with UUID %C\n", server.uuid_.c_str ()));
 
@@ -299,12 +299,12 @@ namespace CIAO
       if (si.cmap_->find (SERVER_EXECUTABLE, val) == 0)
         {
           val >>= path;
-          CIAO_DEBUG ((LM_DEBUG, CLINFO "CIAO_ServerActivator_i::spawn_component_server - "
+          CIAO_DEBUG (6, (LM_DEBUG, CLINFO "CIAO_ServerActivator_i::spawn_component_server - "
                        "Using provided component server executable: %C\n", path));
         }
       else
         {
-          CIAO_DEBUG ((LM_DEBUG, CLINFO "CIAO_ServerActivator_i::spawn_component_server - "
+          CIAO_DEBUG (6, (LM_DEBUG, CLINFO "CIAO_ServerActivator_i::spawn_component_server - "
           "Using default component server executable\n"));
         }
 
@@ -315,14 +315,14 @@ namespace CIAO
                                 cmd_line.c_str (),
                                 ior.in ()) != 0)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO
+          CIAO_ERROR (1, (LM_ERROR, CLINFO
                        "Failed to create commandline\n"));
           throw Components::CreateFailure (CIAO::SERVER_SPAWN_FAILURE);
         }
 
       options.avoid_zombies (0);
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO
+      CIAO_DEBUG (9, (LM_TRACE, CLINFO
                    "CIAO_ServerActivator_i::spawn_component_server - Spawning process, command line is %s\n",
                    options.command_line_buf ()));
 
@@ -331,12 +331,12 @@ namespace CIAO
 
       if (pid == ACE_INVALID_PID)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO
+          CIAO_ERROR (1, (LM_ERROR, CLINFO
                        "Failed to spawn a ComponentServer process\n"));
           throw Components::CreateFailure (CIAO::SERVER_SPAWN_FAILURE);
         }
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO
+      CIAO_DEBUG (9, (LM_TRACE, CLINFO
                    "CIAO_ServerActivator_i::spawn_component_server - Process successfully spawned with pid %u\n",
                    pid));
       return pid;
@@ -361,7 +361,7 @@ namespace CIAO
 
           if (timeout == ACE_Time_Value::zero)
             {
-              CIAO_ERROR ((LM_ERROR, CLINFO
+              CIAO_ERROR (1, (LM_ERROR, CLINFO
                            "CIAO_ServerActivator_i::single_threaded_wait_for_callback - "
                            "Timed out while waiting for ComponentServer %C to call back.\n",
                            si.uuid_.c_str ()));
@@ -391,7 +391,7 @@ namespace CIAO
       while (! si.activated_ )
         if (this->condition_.wait (&timeout) == -1)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO
+            CIAO_ERROR (1, (LM_ERROR, CLINFO
                          "CIAO_ServerActivator_i::multi_threaded_wait_for_callback - "
                          "Timed out while waiting for ComponentServer %C to call back.\n",
                          si.uuid_.c_str ()));
@@ -417,7 +417,7 @@ namespace CIAO
 
       if (!info)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO
+          CIAO_ERROR (1, (LM_ERROR, CLINFO
                        "CIAO_ServerActivator_i::remove_component_server - "
                        "Failed to find equivalent ComponentServer under my management.\n"));
           throw ::Components::RemoveFailure ();
@@ -425,7 +425,7 @@ namespace CIAO
 
       try
         {
-          CIAO_DEBUG ((LM_TRACE, CLINFO
+          CIAO_DEBUG (9, (LM_TRACE, CLINFO
                        "CIAO_ServerActivator_i::remove_component_server - "
                        "Calling remove () on ComponentServer %C\n",
                        info->uuid_.c_str ()));
@@ -433,7 +433,7 @@ namespace CIAO
         }
       catch (::Components::RemoveFailure &)
         {
-          CIAO_ERROR ((LM_WARNING, CLINFO
+          CIAO_ERROR (1, (LM_WARNING, CLINFO
                        "CIAO_ServerActivator_i::remove_component_server - "
                        "Received RemoveFailure exception from ComponentServer %C\n",
                        info->uuid_.c_str ()));
@@ -444,19 +444,19 @@ namespace CIAO
         CIAO::Deployment::ComponentServer::_narrow (server);
       if (!CORBA::is_nil (ccs))
         {
-          CIAO_DEBUG ((LM_TRACE, CLINFO
+          CIAO_DEBUG (9, (LM_TRACE, CLINFO
                        "CIAO_ServerActivator_i::remove_component_server - "
                        "Calling shutdown () on ComponentServer %C\n",
                        info->uuid_.c_str ()));
           ccs->shutdown ();
         }
       else
-        CIAO_DEBUG ((LM_TRACE, CLINFO
+        CIAO_DEBUG (9, (LM_TRACE, CLINFO
                      "CIAO_ServerActivator_i::remove_component_server - "
                      "ComponentServer %C is not a CIAO_ComponentServer, not calling shutdown.\n",
                      info->uuid_.c_str ()));
 
-      CIAO_DEBUG ((LM_INFO, CLINFO
+      CIAO_DEBUG (6, (LM_INFO, CLINFO
                    "CIAO_ServerActivator_i::remove_component_server - "
                    "ComponentServer %C successfully shut down.\n",
                    info->uuid_.c_str ()));

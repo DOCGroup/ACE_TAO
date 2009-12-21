@@ -37,13 +37,13 @@ namespace CIAO
         {
           if (this->static_entrypts_maps_ == 0)
             {
-              CIAO_DEBUG((LM_DEBUG, CLINFO "CIAO_Container_i: creating Session container with dynamic linkage\n"));
+              CIAO_DEBUG (6, (LM_DEBUG, CLINFO "CIAO_Container_i: creating Session container with dynamic linkage\n"));
               this->container_ = new CIAO::Session_Container (this->orb_.in (), this->poa_.in (), this, false,
                                                               0, name, policies);
             }
           else
             {
-              CIAO_DEBUG((LM_DEBUG, CLINFO "CIAO_Container_i: creating Session container with static linkage\n"));
+              CIAO_DEBUG (6, (LM_DEBUG, CLINFO "CIAO_Container_i: creating Session container with static linkage\n"));
               this->container_ = new CIAO::Session_Container (this->orb_.in (), this->poa_.in (), this, true,
                                                               this->static_entrypts_maps_,
                                                               name, policies);
@@ -51,7 +51,7 @@ namespace CIAO
         }
       catch (...)
         {
-          CIAO_ERROR((LM_ERROR, CLINFO "CIAO_Container_i::CIAO_Container_i - "
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO_Container_i::CIAO_Container_i - "
                       "Caught exception while allocating container implementation\n"));
           throw;
         }
@@ -73,7 +73,7 @@ namespace CIAO
 
       if (!id)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_component - "
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO_Container_i::install_component - "
                        "No home ID provided\n"));
           throw ::Components::Deployment::InvalidConfiguration ();
         }
@@ -82,7 +82,7 @@ namespace CIAO
 
       if (this->component_map_.find (id, comp) == 0)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_component - "
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO_Container_i::install_component - "
                        "Component with id %C already installed, aborting\n",
                        id));
           throw Components::CreateFailure ();
@@ -90,16 +90,16 @@ namespace CIAO
 
       if (!entrypt)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_component - "
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO_Container_i::install_component - "
                       "No executor entrypoint found.\n"));
           throw ::Components::Deployment::InvalidConfiguration ();
         }
 
-      CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_Container_i::install_component - "
+      CIAO_DEBUG (6, (LM_INFO, CLINFO "CIAO_Container_i::install_component - "
                    "Attempting to install home with id [%C]\n",
                    id));
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO
+      CIAO_DEBUG (9, (LM_TRACE, CLINFO
                   "CIAO_Container_i::install_component - "
                   "Extracting ConfigValues from sequence of length [%u]\n",
                   config.length ()));
@@ -115,13 +115,13 @@ namespace CIAO
         {
           val >>= tmp;
           svnt_entry = tmp;
-          CIAO_DEBUG ((LM_TRACE, CLINFO
+          CIAO_DEBUG (9, (LM_TRACE, CLINFO
                        "CIAO_Container_i::install_component - "
                        "Found Servant entrypoint %C\n", svnt_entry.in ()));
         }
       else
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO
+          CIAO_ERROR (1, (LM_ERROR, CLINFO
                        "CIAO_Container_i::install_component - "
                        "Error: No Servant entrypoint provided, aborting installation\n"));
           throw Components::InvalidConfiguration ();
@@ -131,13 +131,13 @@ namespace CIAO
         {
           val >>= tmp;
           svnt_art = this->ci_->get_implementation (tmp);
-          CIAO_DEBUG ((LM_TRACE, CLINFO
+          CIAO_DEBUG (9, (LM_TRACE, CLINFO
                        "CIAO_Container_i::install_component - "
                        "Found Servant artifact %C\n", svnt_art.in ()));
         }
       else
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO
+          CIAO_ERROR (1, (LM_ERROR, CLINFO
                        "CIAO_Container_i::install_component - "
                        "Error: No Servant artifact provided, aborting installation\n"));
           throw Components::InvalidConfiguration ();
@@ -148,18 +148,18 @@ namespace CIAO
         {
           val >>= tmp;
           exec_art = this->ci_->get_implementation (tmp);
-          CIAO_DEBUG ((LM_TRACE, CLINFO
+          CIAO_DEBUG (9, (LM_TRACE, CLINFO
                        "CIAO_Container_i::install_component - "
                        "Found executor artifact: %C\n", exec_art.in ()));
         }
       else
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO
+          CIAO_ERROR (1, (LM_ERROR, CLINFO
                        "CIAO_Container_i::install_component - "
                        "Error: No Executor artifact provided, aborting installation\n"));
         }
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO
+      CIAO_DEBUG (9, (LM_TRACE, CLINFO
                   "CIAO_Container_i::install_component - "
                   "Extraction resulted in map of [%u] values\n", cm.current_size ()));
 
@@ -172,7 +172,7 @@ namespace CIAO
       if (this->component_map_.bind (id,
                                      Components::CCMObject::_duplicate (comp.in ())) == -1)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO
+          CIAO_ERROR (1, (LM_ERROR, CLINFO
                        "CIAO_Container_i::install_component - "
                        "Unable to bind componnet into component map\n"));
         }
@@ -190,7 +190,7 @@ namespace CIAO
         {
           if (i->item ()->_is_equivalent (cref))
             {
-              CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_Container_i::remove_component - "
+              CIAO_DEBUG (9, (LM_TRACE, CLINFO "CIAO_Container_i::remove_component - "
                            "Successfully found matching component\n"));
               break;
             }
@@ -199,25 +199,25 @@ namespace CIAO
 
       if (i.done ())
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::remove_component - "
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO_Container_i::remove_component - "
                        "Unable to find matching component managed by this container, throwing RemoveFailure\n"));
           throw Components::RemoveFailure ();
         }
 
       if (!CORBA::is_nil (this->container_.in ()))
         {
-          CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_Container_i::remove_component - "
+          CIAO_DEBUG (9, (LM_TRACE, CLINFO "CIAO_Container_i::remove_component - "
                        "Invoking remove on the container impl for component %C.\n",
                        i->key ().c_str ()));
           this->container_->uninstall_component (cref);
-          CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_Container_i::remove_component - "
+          CIAO_DEBUG (6, (LM_INFO, CLINFO "CIAO_Container_i::remove_component - "
                        "Successfully removed component %C\n",
                        i->key ().c_str ()));
         }
 
       if (this->component_map_.unbind (i->key ()) != 0)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::remove_component - "
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO_Container_i::remove_component - "
                        "Unable to unbind removed component with id %C from component map\n",
                        i->key ().c_str ()));
         }
@@ -253,7 +253,7 @@ namespace CIAO
 
       if (!id)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_home - "
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO_Container_i::install_home - "
                       "No home ID provided\n"));
           throw ::Components::Deployment::InvalidConfiguration ();
         }
@@ -262,7 +262,7 @@ namespace CIAO
 
       if (this->home_map_.find (id, home) == 0)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_home - "
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO_Container_i::install_home - "
                        "Home with id %C already installed, aborting\n",
                        id));
           throw Components::CreateFailure ();
@@ -270,15 +270,15 @@ namespace CIAO
 
       if (!entrypt)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_home - "
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO_Container_i::install_home - "
                       "No executor entrypoint found.\n"));
           throw ::Components::Deployment::InvalidConfiguration ();
         }
 
-      CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_Container_i::install_home - "
+      CIAO_DEBUG (6, (LM_INFO, CLINFO "CIAO_Container_i::install_home - "
       "Attempting to install home with id [%C]\n", id));
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO
+      CIAO_DEBUG (9, (LM_TRACE, CLINFO
                   "CIAO_Container_i::install_home - "
                   "Extracting ConfigValues from sequence of length [%u]\n",
                   config.length ()));
@@ -293,13 +293,13 @@ namespace CIAO
         {
           val >>= tmp;
           svnt_entry = tmp;
-          CIAO_DEBUG ((LM_TRACE, CLINFO
+          CIAO_DEBUG (9, (LM_TRACE, CLINFO
                        "CIAO_Container_i::install_home - "
                        "Found Servant entrypoint %C\n", svnt_entry.in ()));
         }
       else
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO
+          CIAO_ERROR (1, (LM_ERROR, CLINFO
                        "CIAO_Container_i::install_home - "
                        "Error: No Servant entrypoint provided, aborting installation\n"));
           throw Components::InvalidConfiguration ();
@@ -309,13 +309,13 @@ namespace CIAO
         {
           val >>= tmp;
           svnt_art = this->ci_->get_implementation (tmp);
-          CIAO_DEBUG ((LM_TRACE, CLINFO
+          CIAO_DEBUG (9, (LM_TRACE, CLINFO
                        "CIAO_Container_i::install_home - "
                        "Found Servant artifact %C\n", svnt_art.in ()));
         }
       else
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO
+          CIAO_ERROR (1, (LM_ERROR, CLINFO
                        "CIAO_Container_i::install_home - "
                        "Error: No Servant artifact provided, aborting installation\n"));
           throw Components::InvalidConfiguration ();
@@ -326,25 +326,25 @@ namespace CIAO
         {
           val >>= tmp;
           exec_art = this->ci_->get_implementation (tmp);
-          CIAO_DEBUG ((LM_TRACE, CLINFO
+          CIAO_DEBUG (9, (LM_TRACE, CLINFO
                        "CIAO_Container_i::install_home - "
                        "Found executor artifact: %C\n", exec_art.in ()));
         }
       else
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO
+          CIAO_ERROR (1, (LM_ERROR, CLINFO
                        "CIAO_Container_i::install_home - "
                        "Error: No Executor artifact provided, aborting installation\n"));
         }
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO
+      CIAO_DEBUG (9, (LM_TRACE, CLINFO
                   "CIAO_Container_i::install_home - "
                   "Extraction resulted in map of [%u] values", cm.current_size ()));
 
 
       // extract config values here...
 
-      //CIAO_DEBUG ((LM_DEBUG, CLINFO "CIAO_Container_i::install_home - ",
+      //CIAO_DEBUG (6, (LM_DEBUG, CLINFO "CIAO_Container_i::install_home - ",
       //"Executor entrypoint [%C], servant entrypoint [%C], servant library [%C]\n",
       //entrypt, svnt_entrypt.in (), svnt_library.in ()));
 
@@ -357,7 +357,7 @@ namespace CIAO
       if (this->home_map_.bind (id,
                                 Components::CCMHome::_duplicate (home.in ())) == -1)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO
+          CIAO_ERROR (1, (LM_ERROR, CLINFO
                        "CIAO_Container_i::install_home - "
                        "Unable to bind home into home map\n"));
         }
@@ -375,7 +375,7 @@ namespace CIAO
         {
           if (i->item ()->_is_equivalent (href))
             {
-              CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_Container_i::remove_home - "
+              CIAO_DEBUG (9, (LM_TRACE, CLINFO "CIAO_Container_i::remove_home - "
                            "Successfully found matching home\n"));
               break;
             }
@@ -384,22 +384,22 @@ namespace CIAO
 
       if (i.done ())
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::remove_home - "
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO_Container_i::remove_home - "
                        "Unable to find matching home managed by this container, throwing RemoveFailure\n"));
           throw Components::RemoveFailure ();
         }
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_Container_i::remove_home - "
+      CIAO_DEBUG (9, (LM_TRACE, CLINFO "CIAO_Container_i::remove_home - "
                    "Invoking remove on the container impl for home %C.\n",
                    i->key ().c_str ()));
       this->container_->uninstall_home (href);
-      CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_Container_i::remove_home - "
+      CIAO_DEBUG (6, (LM_INFO, CLINFO "CIAO_Container_i::remove_home - "
                    "Successfully removed home %C\n",
                    i->key ().c_str ()));
 
       if (this->home_map_.unbind (i->key ()) != 0)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::remove_home - "
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO_Container_i::remove_home - "
                        "Unable to unbind removed home with id %C from home map\n",
                        i->key ().c_str ()));
         }
@@ -437,7 +437,7 @@ namespace CIAO
       if (this->home_map_.current_size () != 0 ||
           this->component_map_.current_size () != 0)
         {
-          CIAO_ERROR ((LM_WARNING, CLINFO "CIAO_Container_i::remove - "
+          CIAO_ERROR (1, (LM_WARNING, CLINFO "CIAO_Container_i::remove - "
                        "Attempting to remove container that still has %u homes and %u components installed\n",
                        this->home_map_.current_size (),
                        this->component_map_.current_size ()));
@@ -467,7 +467,7 @@ namespace CIAO
       CIAO_TRACE ("CIAO_Container_i::_default_POA");
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-    
+
     void CIAO_Container_i::connect_local_facet (::Components::CCMObject_ptr provider,
                                                 const char * provider_port,
                                                 ::Components::CCMObject_ptr user,
@@ -475,9 +475,9 @@ namespace CIAO
     {
       CIAO_TRACE ("CIAO_Container_i::connect_local_facet");
       this->container_->connect_local_facet (provider, provider_port, user, user_port);
-      
+
     }
-    
+
     void CIAO_Container_i::disconnect_local_facet (::Components::CCMObject_ptr provider,
                                                    const char * provider_port,
                                                    ::Components::CCMObject_ptr user,

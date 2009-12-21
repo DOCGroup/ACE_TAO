@@ -11,7 +11,7 @@ namespace DAnCE
   CCMObjectLocator::CCMObjectLocator (CORBA::ORB_ptr orb, PortableServer::POA_ptr parent_poa, const char * poa_name)
       : orb_ (CORBA::ORB::_duplicate (orb))
   {
-    DANCE_DEBUG ( (LM_DEBUG, "[%M] CCMObjectLocator::CCMObjectLocator - started\n"));
+    DANCE_DEBUG (6, (LM_DEBUG, "CCMObjectLocator::CCMObjectLocator - started\n"));
     CORBA::PolicyList policies (4);
     policies.length (4);
     policies[0] = parent_poa->create_id_assignment_policy (PortableServer::USER_ID);
@@ -19,19 +19,19 @@ namespace DAnCE
     policies[2] = parent_poa->create_servant_retention_policy (PortableServer::NON_RETAIN);
     policies[3] = parent_poa->create_lifespan_policy (PortableServer::PERSISTENT);
     PortableServer::POAManager_var mgr = parent_poa->the_POAManager ();
-    DANCE_DEBUG ( (LM_DEBUG, "[%M] CCMObjectLocator::CCMObjectLocator - before create_POA\n"));
+    DANCE_DEBUG (6, (LM_DEBUG, "CCMObjectLocator::CCMObjectLocator - before create_POA\n"));
     this->myPOA_ = parent_poa->create_POA (poa_name
                                            , mgr.in()
                                            , policies);
-    DANCE_DEBUG ( (LM_DEBUG, "[%M] CCMObjectLocator::CCMObjectLocator - after create_POA\n"));
-        for (CORBA::ULong i = 0; i < policies.length(); ++i)
+    DANCE_DEBUG (6, (LM_DEBUG, "CCMObjectLocator::CCMObjectLocator - after create_POA\n"));
+    for (CORBA::ULong i = 0; i < policies.length(); ++i)
       {
         policies[i]->destroy();
       }
 
-    DANCE_DEBUG ( (LM_DEBUG, "[%M] CCMObjectLocator::CCMObjectLocator - before set_servant_manager\n"));
+    DANCE_DEBUG (6, (LM_DEBUG, "CCMObjectLocator::CCMObjectLocator - before set_servant_manager\n"));
     this->myPOA_->set_servant_manager (this);
-    DANCE_DEBUG ( (LM_DEBUG, "[%M] CCMObjectLocator::CCMObjectLocator - CCMObjectLocator started on POA \"%s\"\n"
+    DANCE_DEBUG (6, (LM_DEBUG, "CCMObjectLocator::CCMObjectLocator - CCMObjectLocator started on POA \"%C\"\n"
                  ,  poa_name));
   }
 
@@ -89,7 +89,7 @@ namespace DAnCE
       }
     else
       {
-        DANCE_ERROR ( (LM_ERROR, "[%M] CCMObjectLocator::start_register - transaction for plan \"%s\" alreday started!\n"
+        DANCE_ERROR (1, (LM_ERROR, "CCMObjectLocator::start_register - transaction for plan \"%C\" alreday started!\n"
                      , plan.c_str()));
         ///TODO Deside correcet processing of this error - probably finish_register should be called
         delete tree;
@@ -124,18 +124,18 @@ namespace DAnCE
       }
     else
       {
-        DANCE_DEBUG ( (LM_DEBUG, "[%M] CCMObjectLocator::register_object - transaction record for \"%s\" doesn't exist.\n"
+        DANCE_DEBUG (6, (LM_DEBUG, "CCMObjectLocator::register_object - transaction record for \"%C\" doesn't exist.\n"
                      , plan.c_str()));
 
-        DANCE_DEBUG ( (LM_DEBUG, "[%M] CCMObjectLocator::register_object - registering \"%s\"\n"
+        DANCE_DEBUG (6, (LM_DEBUG, "CCMObjectLocator::register_object - registering \"%C\"\n"
                      , s.c_str()));
         this->db_.addChild (s.c_str(), obj);
       }
 
     PortableServer::ObjectId_var oid = PortableServer::string_to_ObjectId (s.c_str());
-    DANCE_DEBUG ( (LM_DEBUG, "[%M] CCMObjectLocator::register_object obj id : \"%s\"\n", PortableServer::ObjectId_to_string (oid.in())));
+    DANCE_DEBUG (6, (LM_DEBUG, "CCMObjectLocator::register_object obj id : \"%C\"\n", PortableServer::ObjectId_to_string (oid.in())));
     CORBA::Object_var o = this->myPOA_->create_reference_with_id (oid.in(), "IDL:omg.org/CORBA/Object:1.0");
-    DANCE_DEBUG ( (LM_DEBUG, "[%M] CCMObjectLocator::register_object url : \"%s\"\n", this->orb_->object_to_string (o)));
+    DANCE_DEBUG (6, (LM_DEBUG, "CCMObjectLocator::register_object url : \"%C\"\n", this->orb_->object_to_string (o)));
 
     //--------------- Temporal workaround
 //    CORBA::Object_var table_object =
@@ -169,7 +169,7 @@ namespace DAnCE
     TreeNode* tree = 0;
     if (0 != this->transactions_.find (plan, tree))
       {
-        DANCE_DEBUG ( (LM_DEBUG, "[%M] CCMObjectLocator::finish_register - can't find \"%s\" record for register\n", plan.c_str()));
+        DANCE_DEBUG (6, (LM_DEBUG, "CCMObjectLocator::finish_register - can't find \"%C\" record for register\n", plan.c_str()));
         return;
       }
     this->register_objects (plan.c_str(), *tree);
@@ -193,7 +193,7 @@ namespace DAnCE
           }
       }
     this->db_.removeChild (s.c_str());
-    DANCE_DEBUG ( (LM_DEBUG, "[%M] CCMObjectLocator::unregister_object - unregistering \"%s\"\n"
+    DANCE_DEBUG (6, (LM_DEBUG, "CCMObjectLocator::unregister_object - unregistering \"%C\"\n"
                  , s.c_str()));
   }
 
@@ -275,7 +275,7 @@ namespace DAnCE
         }
       else
         {
-          DANCE_DEBUG ( (LM_DEBUG, "[%M] CCMObjectLocator::TreeNode::getChild - Node \"%s\" not found.\n"
+          DANCE_DEBUG (6, (LM_DEBUG, "CCMObjectLocator::TreeNode::getChild - Node \"%C\" not found.\n"
                        , s.c_str()));
           return 0;
         }
@@ -288,17 +288,17 @@ namespace DAnCE
     ACE_CString child = splitPath (path_loc);
 
     TreeNode * p = 0;
-//    DANCE_DEBUG((LM_DEBUG, "[%M] CCMObjectLocator::TreeNode::addChild looking for %C in map with %i.\n"
+//    DANCE_DEBUG (6, (LM_DEBUG, "CCMObjectLocator::TreeNode::addChild looking for %C in map with %i.\n"
 //            , child.c_str()
 //            , this->children_.current_size()));
 
     if (0 != this->children_.find (child, p))
       {
-        DANCE_DEBUG ( (LM_DEBUG, "[%M] CCMObjectLocator::TreeNode::addChild - create new Node.\n"));
+        DANCE_DEBUG (6, (LM_DEBUG, "CCMObjectLocator::TreeNode::addChild - create new Node.\n"));
         p = new TreeNode;
         this->children_.bind (child, p);
       }
-//    DANCE_DEBUG((LM_DEBUG, "[%M] CCMObjectLocator::TreeNode::addChild - Check for path."));
+//    DANCE_DEBUG (6, (LM_DEBUG, "CCMObjectLocator::TreeNode::addChild - Check for path."));
     if (0 == path_loc.length())   // i.e. empty
       {
         p->setValue (obj);
@@ -318,7 +318,7 @@ namespace DAnCE
     TreeNode * p = 0;
     if (0 != this->children_.find (child, p))
       {
-        DANCE_ERROR ( (LM_ERROR, "[%M] CCMObjectLocator::TreeNode::removeChild failed. Node \"%s\" is missing.\n"
+        DANCE_ERROR (1, (LM_ERROR, "CCMObjectLocator::TreeNode::removeChild failed. Node \"%C\" is missing.\n"
                      , child.c_str()));
       }
     if (0 == path_loc.length())   // i.e. empty
@@ -366,8 +366,8 @@ namespace DAnCE
         TreeNode * p = 0;
         if (0 == this->children_.find (child, p))
           {
-            DANCE_DEBUG ( (LM_DEBUG, "[%M] CCMObjectLocator::TreeNode::register_objects - "
-                         "node \"%s\" already exists. Replacing.\n"
+            DANCE_DEBUG (6, (LM_DEBUG, "CCMObjectLocator::TreeNode::register_objects - "
+                         "node \"%C\" already exists. Replacing.\n"
                          , child.c_str()));
             this->children_.unbind (child);
             delete p;

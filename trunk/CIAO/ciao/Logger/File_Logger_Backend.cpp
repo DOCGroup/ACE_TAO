@@ -11,7 +11,7 @@ namespace CIAO
   int
   File_Logger_Backend::open (const ACE_TCHAR *)
   {
-    CIAO_DEBUG ( (LM_DEBUG, CLINFO "Setting logger's output to file \"%s\"", this->filename_.c_str()));
+    CIAO_DEBUG (7, (LM_DEBUG, CLINFO "Setting logger's output to file \"%s\"", this->filename_.c_str()));
     this->fh_ = ACE_OS::fopen (this->filename_.c_str(), "w");
     if (0 == this->fh_)
       {
@@ -37,7 +37,7 @@ namespace CIAO
   ssize_t
   File_Logger_Backend::log (ACE_Log_Record &log_record)
   {
-    int res = log_record.print (0, ACE_Log_Msg::VERBOSE, this->fh_);
+    int const res = log_record.print (0, ACE_Log_Msg::VERBOSE, this->fh_);
     ACE_OS::fflush (this->fh_);
     return res;
   }

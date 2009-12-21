@@ -27,35 +27,35 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
 
   void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::RequestedIncompatibleQosStatus & /*status*/)  
+     const DDS::RequestedIncompatibleQosStatus & /*status*/)
   {
     //printf("ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n");
   }
 
   void ConnectorStatusListener_exec_i::on_sample_rejected(
      ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::SampleRejectedStatus & /*status*/)  
+     const DDS::SampleRejectedStatus & /*status*/)
   {
     //printf("ConnectorStatusListener_exec_i::on_sample_rejected\n");
   }
 
   void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
      ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedDeadlineMissedStatus & /*status*/)  
+     const DDS::OfferedDeadlineMissedStatus & /*status*/)
   {
     //printf("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
   }
 
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
      ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedIncompatibleQosStatus & /*status*/)  
+     const DDS::OfferedIncompatibleQosStatus & /*status*/)
   {
     //printf("ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n");
   }
 
   void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr /*the_entity*/,
-    ::DDS::StatusKind  /*status_kind*/)  
+    ::DDS::StatusKind  /*status_kind*/)
   {
     //printf("ConnectorStatusListener_exec_i::on_unexpected_status\n");
   }
@@ -134,7 +134,7 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     //printf ("*************** get_inf-_out_data_listener************************\n");
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new TestTopic RAW listener\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new TestTopic RAW listener\n")));
     return new TestTopic_RawListener_exec_i ();
   }
 
@@ -142,7 +142,7 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
   {
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
     return new PortStatusListener_exec_i ();
   }
 
@@ -179,7 +179,7 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
 
     if (CORBA::is_nil (lc.in ()))
       {
-        CIAO_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
+        ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw CORBA::INTERNAL ();
       }
     lc->mode (::CCM_DDS::ONE_BY_ONE);
@@ -196,13 +196,13 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
     //printf("*************in remove Receiver********** \n");
     if(!this->inconsistent_.value ())
       {
-         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
+         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
                                ACE_TEXT ("error 'on_inconsistent_topic' in Receiver\n")
                     ));
       }
     else
       {
-         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Received the expected ")
+         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Received the expected ")
                                ACE_TEXT ("'on_inconsistent_topic' in Receiver\n")
                     ));
       }

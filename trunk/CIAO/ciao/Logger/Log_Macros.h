@@ -11,7 +11,13 @@
 
 // default information printed with CIAO logging messages.
 
-#define CLINFO "(%P|%t) [%M] - %T - "
+#include "CIAO_Logger_Export.h"
+
+#if !defined (CLINFO)
+# define CLINFO "(%P|%t) [%M] - %T - "
+#endif
+
+extern CIAO_Logger_Export unsigned int CIAO_debug_level;
 
 #if (CIAO_NTRACE == 1)
 #  if !defined (ACE_NTRACE)
@@ -40,41 +46,50 @@
 #endif /* CIAO_NTRACE */
 
 #if defined (CIAO_NLOGGING)
-# define CIAO_ERROR(X) do {} while (0)
-# define CIAO_DEBUG(X) do {} while (0)
-#define CIAO_ERROR_RETURN(X, Y) return (Y)
-#define CIAO_ERROR_BREAK(X) { break; }
+# define CIAO_ERROR(L, X) do {} while (0)
+# define CIAO_DEBUG(L, X) do {} while (0)
+#define CIAO_ERROR_RETURN(L, X, Y) return (Y)
+#define CIAO_ERROR_BREAK(L, X) { break; }
 #else
 # if !defined (CIAO_ERROR)
-#  define CIAO_ERROR(X) \
+#  define CIAO_ERROR(L, X) \
   do { \
-    int __ace_error = ACE_Log_Msg::last_error_adapter (); \
-    ACE_Log_Msg *ace___ = ACE_Log_Msg::instance ();               \
-    ace___->conditional_set (__FILE__, __LINE__, -1, __ace_error); \
-    ace___->log X; \
+    if (CIAO_debug_level >= L) \
+      { \
+        int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
+        ACE_Log_Msg *ace___ = ACE_Log_Msg::instance ();               \
+        ace___->conditional_set (__FILE__, __LINE__, -1, __ace_error); \
+        ace___->log X; \
+      } \
   } while (0)
 #  endif
 # if !defined (CIAO_DEBUG)
-#  define CIAO_DEBUG(X) \
+#  define CIAO_DEBUG(L, X) \
   do { \
-    int __ace_error = ACE_Log_Msg::last_error_adapter (); \
-    ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
-    ace___->log X; \
+    if (CIAO_debug_level >= L) \
+      { \
+        int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
+        ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
+        ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
+        ace___->log X; \
+      } \
   } while (0)
 # endif
 # if !defined (CIAO_ERROR_RETURN)
-#  define CIAO_ERROR_RETURN(X, Y) \
+#  define CIAO_ERROR_RETURN(L, X, Y) \
   do { \
-    int __ace_error = ACE_Log_Msg::last_error_adapter (); \
-    ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    ace___->conditional_set (__FILE__, __LINE__, Y, __ace_error); \
-    ace___->log X; \
+    if (CIAO_debug_level >= L) \
+      { \
+        int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
+        ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
+        ace___->conditional_set (__FILE__, __LINE__, Y, __ace_error); \
+        ace___->log X; \
+      } \
     return Y; \
   } while (0)
 # endif
 # if !defined (CIAO_ERROR_BREAK)
-#  define CIAO_ERROR_BREAK(X) { CIAO_ERROR (X); break; }
+#  define CIAO_ERROR_BREAK(L, X) { CIAO_ERROR (L, X); break; }
 # endif
 #endif
 

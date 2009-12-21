@@ -36,14 +36,14 @@ CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadl
         }
       else
         {
-          CIAO_DEBUG ((LM_DEBUG,
+          CIAO_DEBUG (6, (LM_DEBUG,
                       ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
                       ACE_TEXT ("No portstatus listener installed\n")));
         }
     }
   catch (...)
     {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
+      CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
                              ACE_TEXT ("DDS Exception caught\n")));
     }
 }
@@ -64,14 +64,14 @@ CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
         }
       else
         {
-          CIAO_DEBUG ((LM_DEBUG,
+          CIAO_DEBUG (6, (LM_DEBUG,
                       ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
                       ACE_TEXT ("No portstatus listener installed\n")));
         }
     }
   catch (...)
     {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
+      CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
                              ACE_TEXT ("DDS Exception caught\n")));
     }
 }

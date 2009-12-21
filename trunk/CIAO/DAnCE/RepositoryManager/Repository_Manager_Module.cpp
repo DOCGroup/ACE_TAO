@@ -60,22 +60,22 @@ namespace DAnCE
 
         try
           {
-            DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT("DAnCE::Repository_Manager::Worker::svc - ")
+            DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT("DAnCE::Repository_Manager::Worker::svc - ")
                           ACE_TEXT("Spawning thread %u for the ORB.\n"), thread_id));
             this->orb_->run ();
-            DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT("DAnCE::Repository_Manager::Worker::svc - ")
+            DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT("DAnCE::Repository_Manager::Worker::svc - ")
                           ACE_TEXT("ORB event loop for thread %u completed successfully.\n"), thread_id));
           }
         catch (const CORBA::Exception &ex)
           {
-            DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("DAnCE::Repository_Manager::Worker::svc - ")
+            DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("DAnCE::Repository_Manager::Worker::svc - ")
                           ACE_TEXT("Caught CORBA exception from ORB event loop for thread %u: %C\n"),
                           thread_id, ex._info ().c_str ()));
             return -1;
           }
         catch (...)
           {
-            DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("DAnCE::Repository_Manager::Worker::svc - ")
+            DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("DAnCE::Repository_Manager::Worker::svc - ")
                           ACE_TEXT("Caught unknown C++ exception from ORB event loop for thread %u\n"),
                           thread_id));
             return -1;
@@ -169,41 +169,41 @@ DAnCE_RepositoryManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
       switch (c)
         {
         case 'd':
-          DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
+          DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
                         ACE_TEXT("Binding to provided Domain Naming Context: '%s'\n"),
                         get_opts.opt_arg ()));
           this->options_.domain_nc_ = get_opts.opt_arg ();
           break;
 
         case 'f':
-          DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
+          DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
                         ACE_TEXT("Output filename for IOR is %s\n"),
                         get_opts.opt_arg ()));
           this->options_.ior_file_ = get_opts.opt_arg ();
           break;
 
         case 't':
-          DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
+          DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
                         ACE_TEXT("Number of threads is %s\n"), get_opts.opt_arg ()));
           this->options_.threads_ = (ACE_OS::atoi (get_opts.opt_arg ()));
           break;
 
         case 'p':
-          DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
+          DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
                         ACE_TEXT("Package directory is %s\n"),
                         get_opts.opt_arg ()));
           this->options_.package_dir_ = get_opts.opt_arg ();
           break;
 
         case 'n':
-          DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
+          DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
                         ACE_TEXT("Name is %s\n"),
                         get_opts.opt_arg ()));
           this->options_.name_ = get_opts.opt_arg ();
           break;
 
         case 's':
-          DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
+          DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
                         ACE_TEXT("Server address is %s\n"),
                         get_opts.opt_arg ()));
           this->options_.server_address_ = get_opts.opt_arg ();
@@ -212,13 +212,13 @@ DAnCE_RepositoryManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
         case 0:
           if (ACE_OS::strcmp (get_opts.long_option (), ACE_TEXT("spawn-http")) == 0)
             {
-              DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
+              DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
                             ACE_TEXT("Found option to spawn in-process HTTP server\n")));
               this->options_.spawn_http_ = true;
             }
           else if (ACE_OS::strcmp (get_opts.long_option (), ACE_TEXT("http-port")) == 0)
             {
-              DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
+              DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
                             ACE_TEXT("Using %s as the spawned HTTP server port\n"),
                             get_opts.opt_arg ()));
               this->options_.spawn_http_ = true;
@@ -226,7 +226,7 @@ DAnCE_RepositoryManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
             }
           else if (ACE_OS::strcmp (get_opts.long_option (), ACE_TEXT("http-threads")) == 0)
             {
-              DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
+              DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
                             ACE_TEXT("Using %s as the spawned HTTP number of threads\n"),
                             get_opts.opt_arg ()));
               this->options_.spawn_http_ = true;
@@ -234,7 +234,7 @@ DAnCE_RepositoryManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
             }
           else if (ACE_OS::strcmp (get_opts.long_option (), ACE_TEXT("http-threading")) == 0)
             {
-              DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
+              DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
                             ACE_TEXT("Using %s as the spawned HTTP server threading model\n"),
                             get_opts.opt_arg ()));
               this->options_.spawn_http_ = true;
@@ -242,7 +242,7 @@ DAnCE_RepositoryManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
             }
           else if (ACE_OS::strcmp (get_opts.long_option (), ACE_TEXT("http-io")) == 0)
             {
-              DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
+              DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
                             ACE_TEXT("Using %s as the spawned HTTP server IO strategy\n"),
                             get_opts.opt_arg ()));
               this->options_.spawn_http_ = true;
@@ -250,7 +250,7 @@ DAnCE_RepositoryManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
             }
           else if (ACE_OS::strcmp (get_opts.long_option (), ACE_TEXT("http-caching")) == 0)
             {
-              DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
+              DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
                             ACE_TEXT("Using %s as the spawned HTTP server caching strategy\n"),
                             get_opts.opt_arg ()));
               this->options_.spawn_http_ = true;
@@ -258,7 +258,7 @@ DAnCE_RepositoryManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
             }
           else
             {
-              DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
+              DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
                             ACE_TEXT("ERROR: unknown long option %s\n"),
                             get_opts.long_option ()));
             }
@@ -268,7 +268,7 @@ DAnCE_RepositoryManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
         case 'h':
         case '?': // Display help for use of the server.
         default:
-          DANCE_ERROR_RETURN ( (LM_ERROR,
+          DANCE_ERROR_RETURN (1, (LM_ERROR,
                                 this->usage (),
                                 argv [0], c),
                                false);
@@ -279,7 +279,7 @@ DAnCE_RepositoryManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
 
   if (this->options_.server_address_ == 0)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Repository_Manager_Module::parse_args - ")
                     ACE_TEXT("Must provide server address using --server-address option.\n")));
       return false;
     }
@@ -298,7 +298,7 @@ DAnCE_RepositoryManager_Module::create_object (CORBA::ORB_ptr orb,
     {
       if (CORBA::is_nil(orb))
         {
-          DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
                        ACE_TEXT("Attempted to create Repository Manager with a nil orb.\n")));
           return CORBA::Object::_nil();
         }
@@ -309,7 +309,7 @@ DAnCE_RepositoryManager_Module::create_object (CORBA::ORB_ptr orb,
 
       if (ACE_OS::strcmp(orb->id(), this->orb_->id()) != 0)
         {
-          DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
                        ACE_TEXT("Resetting NM's orb.\n")));
           this->orb_ = CORBA::ORB::_duplicate (orb);
           this->domain_nc_ = CosNaming::NamingContext::_nil();
@@ -329,7 +329,7 @@ DAnCE_RepositoryManager_Module::create_object (CORBA::ORB_ptr orb,
         {
           try
             {
-              DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
+              DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
                            ACE_TEXT("Resolving DomainNC.\n")));
               CORBA::Object_var domain_obj = this->orb_->string_to_object (this->options_.domain_nc_);
               if (!CORBA::is_nil (domain_obj.in ()))
@@ -337,7 +337,7 @@ DAnCE_RepositoryManager_Module::create_object (CORBA::ORB_ptr orb,
                   this->domain_nc_ = CosNaming::NamingContext::_narrow (domain_obj.in());
                   if (CORBA::is_nil (this->domain_nc_.in ()))
                     {
-                      DANCE_ERROR ((LM_ERROR,DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
+                      DANCE_ERROR (1, (LM_ERROR,DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
                                     ACE_TEXT("Narrow to NamingContext return nil for DomainNC.\n")));
                       return CORBA::Object::_nil ();
                     }
@@ -345,13 +345,13 @@ DAnCE_RepositoryManager_Module::create_object (CORBA::ORB_ptr orb,
             }
           catch (const CORBA::Exception&)
             {
-              DANCE_DEBUG  ((LM_WARNING, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
+              DANCE_DEBUG (6, (LM_WARNING, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
                              ACE_TEXT("DomainNC context not found!\n")));
             }
         }
 
 
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
                     ACE_TEXT("Initializing the IOR Table\n")));
       // Initialize IOR table
       CORBA::Object_var table_object = orb->resolve_initial_references ("IORTable");
@@ -360,7 +360,7 @@ DAnCE_RepositoryManager_Module::create_object (CORBA::ORB_ptr orb,
 
       if (CORBA::is_nil (adapter.in ()))
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
                          ACE_TEXT("Unable to RIR the IORTable.\n")));
           return CORBA::Object::_nil ();
         }
@@ -402,7 +402,7 @@ DAnCE_RepositoryManager_Module::create_object (CORBA::ORB_ptr orb,
             ns_name = "RepositoryManager";
           else ns_name = this->options_.name_;
 
-          DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
                        ACE_TEXT("Registering NM in NC as \"%C\".\n"), ns_name.c_str ()));
           CosNaming::Name name (1);
           name.length (1);
@@ -414,10 +414,10 @@ DAnCE_RepositoryManager_Module::create_object (CORBA::ORB_ptr orb,
       // Writing ior to file
       if (0 != this->options_.ior_file_)
         {
-          DANCE_DEBUG ((LM_TRACE,  DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
+          DANCE_DEBUG (9, (LM_TRACE,  DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
                         ACE_TEXT("Writing RM IOR %C to file %C.\n"), this->options_.ior_file_, ior.in ()));
           if (!DAnCE::Repository_Manager::write_IOR (this->options_.ior_file_, ior.in ()))
-            DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
+            DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
                           ACE_TEXT("Error: Unable to write IOR to file %C\n"),
                           this->options_.ior_file_));
         }
@@ -427,10 +427,10 @@ DAnCE_RepositoryManager_Module::create_object (CORBA::ORB_ptr orb,
       mgr->activate ();
 
       // Finishing Deployment part
-      DANCE_DEBUG ((LM_NOTICE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
+      DANCE_DEBUG (6, (LM_NOTICE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
                     ACE_TEXT("DAnCE_RepositoryManager is running...\n")));
 
-      DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
+      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
                     ACE_TEXT("RepositoryManager IOR: %C\n"), ior.in ()));
 
       return nm_obj._retn ();
@@ -447,13 +447,13 @@ DAnCE_RepositoryManager_Module::create_poas (void)
 {
   DANCE_TRACE("DAnCE_Repository_Manager_Module::create_poas");
   // Get reference to Root POA.
-  DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_poas - ")
+  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_poas - ")
                 ACE_TEXT("Resolving root POA\n")));
   CORBA::Object_var obj = this->orb_->resolve_initial_references ("RootPOA");
 
   this->root_poa_ = PortableServer::POA::_narrow (obj.in ());
 
-  DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_poas - ")
+  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_poas - ")
                 ACE_TEXT("Obtaining the POAManager\n")));
   PortableServer::POAManager_var mgr = this->root_poa_->the_POAManager ();
 
@@ -462,7 +462,7 @@ DAnCE_RepositoryManager_Module::create_poas (void)
 
   try
     {
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_poas - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_poas - ")
                     ACE_TEXT("DAnCE_RepositoryManager_Module::create_poas - ")
                     ACE_TEXT("Creating the \"Repository\" POA.\n")));
 
@@ -474,7 +474,7 @@ DAnCE_RepositoryManager_Module::create_poas (void)
     }
   catch (const PortableServer::POA::AdapterAlreadyExists &)
     {
-      DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_poas - ")
+      DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_poas - ")
                     ACE_TEXT("Using existing \"Repository\" POA\n")));
       this->rm_poa_ = this->root_poa_->find_POA ("Repository", 0);
     }

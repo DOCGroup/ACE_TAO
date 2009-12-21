@@ -29,20 +29,20 @@ namespace CIAO_Writer_Receiver_Impl
     const WriterTest & an_instance ,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
-    CIAO_DEBUG ((LM_ERROR, ACE_TEXT ("WriterTest_Listener::on_one_data ")
+    ACE_DEBUG ((LM_ERROR, ACE_TEXT ("WriterTest_Listener::on_one_data ")
             ACE_TEXT ("received writer info for <%C> at %u\n"),
             an_instance.key.in (),
             an_instance.iteration));
     if (an_instance.iteration > this->iterations_)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: received iteration ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: received iteration ")
                         ACE_TEXT ("greater than expected : ")
                         ACE_TEXT ("expected <%u> - received <%u>\n"),
                         an_instance.iteration, this->iterations_));
       }
     if (an_instance.iteration == 0)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: received iteration ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: received iteration ")
                         ACE_TEXT ("is zero\n")));
       }
   }
@@ -54,13 +54,13 @@ namespace CIAO_Writer_Receiver_Impl
   {
     for (unsigned int i = 0; i < an_instance.length (); ++i)
       {
-        CIAO_DEBUG ((LM_ERROR, ACE_TEXT ("WriterTest_Listener::on_many_data ")
+        ACE_DEBUG ((LM_ERROR, ACE_TEXT ("WriterTest_Listener::on_many_data ")
                 ACE_TEXT ("received writer info for <%C> at %u\n"),
                 an_instance[i].key.in (),
                 an_instance[i].iteration));
       }
   }
-  
+
   //============================================================
   // Component Executor Implementation Class: Receiver_exec_iKeyedTest_Listener_exec_i ();
   //============================================================
@@ -77,7 +77,7 @@ namespace CIAO_Writer_Receiver_Impl
   ::CCM_DDS::WriterTest::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new WriterTest RAW listener\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new WriterTest RAW listener\n")));
     return new WriterTest_Listener_exec_i (this->iterations_);
   }
 
@@ -86,7 +86,7 @@ namespace CIAO_Writer_Receiver_Impl
   {
     return 0;
   }
-  
+
   // Operations from Components::SessionComponent.
   ::CORBA::UShort
   Receiver_exec_i::iterations (void)
@@ -125,7 +125,7 @@ namespace CIAO_Writer_Receiver_Impl
 
     if (CORBA::is_nil (lc.in ()))
       {
-        CIAO_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
+        ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw CORBA::INTERNAL ();
       }
     lc->mode (::CCM_DDS::NOT_ENABLED);

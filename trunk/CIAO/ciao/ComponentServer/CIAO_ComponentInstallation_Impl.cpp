@@ -23,7 +23,7 @@ namespace CIAO
     {
       CIAO_TRACE ("ComponentInstallation_Impl::install");
 
-      CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentInstallation_Impl::install - "
+      CIAO_DEBUG (6, (LM_DEBUG, CLINFO "ComponentInstallation_Impl::install - "
                    "implUUID %C, component_loc %C\n", implUUID, component_loc));
 
       ACE_CString location = component_loc;
@@ -34,7 +34,7 @@ namespace CIAO
         }
       else
         {
-          CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentInstallation_Impl::install - Location for artifact %C "
+          CIAO_DEBUG (6, (LM_DEBUG, CLINFO "ComponentInstallation_Impl::install - Location for artifact %C "
                        "already present, replacing.\n",
                        implUUID));
           this->locations_.rebind (implUUID, location);
@@ -65,7 +65,7 @@ namespace CIAO
       ACE_CString s;
       if (0 == this->locations_.find (implUUID, s))
         {
-          CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentInstallation_Impl::get_implementation - "
+          CIAO_DEBUG (6, (LM_DEBUG, CLINFO "ComponentInstallation_Impl::get_implementation - "
                        "ComponentInstallation_Impl::get_implementation for UUID %C, location %C\n",
                        implUUID, s.c_str()));
 
@@ -73,7 +73,7 @@ namespace CIAO
         }
       else
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO "ComponentInstallation_Impl::get_implementation - "
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "ComponentInstallation_Impl::get_implementation - "
                        "cannot find location for specified implementation UUID %C\n", implUUID));
           throw ::Components::Deployment::UnknownImplId();
           return 0;
@@ -91,13 +91,13 @@ namespace CIAO
       ACE_CString s;
       if (0 == this->locations_.find (implUUID, s))
         {
-          CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentInstallation_Impl::get_valuetypefactory_location - "
+          CIAO_DEBUG (6, (LM_DEBUG, CLINFO "ComponentInstallation_Impl::get_valuetypefactory_location - "
                        "UUID:\"%C\" repid:\"%C\" -> location:\"%C\"\n", implUUID, repid, s.c_str()));
           return CORBA::string_dup (s.c_str());
         }
       else
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO "ComponentInstallation_Impl::get_valuetypefactory_location - "
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "ComponentInstallation_Impl::get_valuetypefactory_location - "
                        "cannot find location for implementation UUID %C and repid %C.\n", implUUID, repid));
           throw ::Components::Deployment::InstallationFailure();
           return 0;

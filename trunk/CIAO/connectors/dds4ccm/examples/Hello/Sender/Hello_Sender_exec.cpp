@@ -53,14 +53,14 @@ namespace CIAO_Hello_Sender_Impl
     if(!this->ready_to_start_.value())
       {
         if((!CORBA::is_nil(the_entity)) && (kind==DDS::PUBLICATION_MATCHED_STATUS))
-          {  
+          {
             //DataWriter find a DataReader that Matched the Topic
             this->ready_to_start_ = true;
           }
       }
   }
- 
-    
+
+
   //============================================================
   // Pulse generator
   //============================================================
@@ -108,7 +108,7 @@ namespace CIAO_Hello_Sender_Impl
   {
     return new ConnectorStatusListener_exec_i (this->ready_to_start_);
   }
-  
+
   ACE_CString Sender_exec_i::create_message (const ACE_CString &msg)
   {
     if (!this->log_time_)
@@ -123,7 +123,7 @@ namespace CIAO_Hello_Sender_Impl
     ret = ret + " " + msg;
     return ret.c_str ();
   }
-  
+
   void
   Sender_exec_i::tick ()
   {
@@ -131,7 +131,7 @@ namespace CIAO_Hello_Sender_Impl
     ACE_OS::sleep (1);
 
     // Start writing after DataWriter find first DataReader that matched the Topic
-    // It is stll possible that other Readers aren't yet ready to recieve data, for that case in the 
+    // It is stll possible that other Readers aren't yet ready to recieve data, for that case in the
     // profile the durability is set to TRANSIENT_DURABILITY_QOS, so each Raeder should receive each message.
     //
     if(this->ready_to_start_.value())
@@ -162,7 +162,7 @@ namespace CIAO_Hello_Sender_Impl
                 ACE_Time_Value (5, usec),
                 ACE_Time_Value (0, usec)) == -1)
     {
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
                              ACE_TEXT ("Error scheduling timer")));
     }
   }
@@ -171,7 +171,7 @@ namespace CIAO_Hello_Sender_Impl
   Sender_exec_i::stop (void)
   {
     this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
     delete this->ticker_;
   }
 
@@ -181,13 +181,13 @@ namespace CIAO_Hello_Sender_Impl
   {
     return this->iterations_;
   }
-  
+
   void
   Sender_exec_i::iterations (::CORBA::ULong iterations)
   {
     this->iterations_ = iterations;
   }
-  
+
   char *
   Sender_exec_i::message (void)
   {

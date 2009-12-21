@@ -38,14 +38,14 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_requested_incompatib
         }
       else
         {
-          CIAO_DEBUG ((LM_DEBUG,
+          CIAO_DEBUG (6, (LM_DEBUG,
                       ACE_TEXT ("SubscriberListener_T::on_requested_incompatible_qos: ")
                       ACE_TEXT ("No error listener connected\n")));
         }
     }
   catch (...)
     {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("SubscriberListener_T::on_requested_incompatible_qos: ")
+      CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("SubscriberListener_T::on_requested_incompatible_qos: ")
                              ACE_TEXT ("DDS Exception caught\n")));
     }
 }
@@ -66,14 +66,14 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_changed(
         }
       else
         {
-          CIAO_DEBUG ((LM_DEBUG,
+          CIAO_DEBUG (6, (LM_DEBUG,
                       ACE_TEXT ("SubscriberListener_T::on_liveliness_changed: ")
                       ACE_TEXT ("No error listener connected\n")));
         }
     }
   catch (...)
     {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("SubscriberListener_T::on_liveliness_changed: ")
+      CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("SubscriberListener_T::on_liveliness_changed: ")
                              ACE_TEXT ("DDS Exception caught\n")));
     }
 }
@@ -94,14 +94,14 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_sample_rejected(
         }
       else
         {
-          CIAO_DEBUG ((LM_DEBUG,
+          CIAO_DEBUG (6, (LM_DEBUG,
                       ACE_TEXT ("SubscriberListener_T::on_sample_rejected: ")
                       ACE_TEXT ("No error listener connected\n")));
         }
     }
   catch (...)
     {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("SubscriberListener_T::on_sample_rejected: ")
+      CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("SubscriberListener_T::on_sample_rejected: ")
                              ACE_TEXT ("DDS Exception caught\n")));
     }
 }
@@ -122,14 +122,14 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_subscription_matched
         }
       else
         {
-          CIAO_DEBUG ((LM_DEBUG,
+          CIAO_DEBUG (6, (LM_DEBUG,
                       ACE_TEXT ("SubscriberListener_T::on_subscription_matched: ")
                       ACE_TEXT ("No error listener connected\n")));
         }
     }
   catch (...)
     {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("SubscriberListener_T::on_subscription_matched: ")
+      CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("SubscriberListener_T::on_subscription_matched: ")
                              ACE_TEXT ("DDS Exception caught\n")));
     }
 }
@@ -149,14 +149,14 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_data_on_readers(
         }
       else
         {
-          CIAO_DEBUG ((LM_DEBUG,
+          CIAO_DEBUG (6, (LM_DEBUG,
                       ACE_TEXT ("SubscriberListener_T::on_data_on_readers: ")
                       ACE_TEXT ("No error listener connected\n")));
         }
     }
   catch (...)
     {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("SubscriberListener_T::on_data_on_readers: ")
+      CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("SubscriberListener_T::on_data_on_readers: ")
                              ACE_TEXT ("DDS Exception caught\n")));
     }
 }

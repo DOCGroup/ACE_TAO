@@ -81,7 +81,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE>::init (
     }
   catch (...)
     {
-      CIAO_ERROR ((LM_EMERGENCY, "Caught unknown c++ exception while creating subscriber entities\n"));
+      CIAO_ERROR (1, (LM_EMERGENCY, "Caught unknown c++ exception while creating subscriber entities\n"));
       throw CORBA::INTERNAL ();
     }
 }

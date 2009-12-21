@@ -80,7 +80,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain (void)
 {
-  CIAO_DEBUG ((LM_TRACE, CLINFO "DDS_Base_Connector_T::configure_default_domain_ - "
+  CIAO_DEBUG (9, (LM_TRACE, CLINFO "DDS_Base_Connector_T::configure_default_domain_ - "
                 "Configuring default domain\n"));
 
   if (CORBA::is_nil (this->domain_participant_factory_.in ()))
@@ -145,7 +145,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain (void)
       }
     catch (...)
       {
-        CIAO_ERROR ((LM_ERROR, "Caught unknown C++ exception while configuring default domain\n"));
+        CIAO_ERROR (1, (LM_ERROR, "Caught unknown C++ exception while configuring default domain\n"));
         throw CORBA::INTERNAL ();
       }
     }

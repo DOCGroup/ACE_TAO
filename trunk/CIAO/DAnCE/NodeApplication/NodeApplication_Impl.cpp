@@ -39,7 +39,7 @@ namespace
     DANCE_TRACE ("NodeApplication::<anonymous>::get_property_value<T>");
     CORBA::Any any;
 
-    DANCE_DEBUG ((LM_TRACE, DLINFO
+    DANCE_DEBUG (9, (LM_TRACE, DLINFO
                   ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
                   ACE_TEXT("Finding property value for name '%C'\n"),
                   name));
@@ -52,14 +52,14 @@ namespace
           }
         else
           {
-            DANCE_ERROR ((LM_WARNING, DLINFO
+            DANCE_ERROR (1, (LM_WARNING, DLINFO
                           ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
                           ACE_TEXT("Failed to extract property value for %C\n"), name));
             return false;
           }
       }
 
-    DANCE_DEBUG ((LM_TRACE, DLINFO
+    DANCE_DEBUG (9, (LM_TRACE, DLINFO
                   ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
                   ACE_TEXT("Property value for name '%C' has no value\n"), name));
 
@@ -71,7 +71,7 @@ namespace
   {
     DANCE_TRACE ("NodeApplication::<anonymous>::get_property_value<bool>");
 
-    DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<bool> - ")
+    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<bool> - ")
                   ACE_TEXT("Finding property value for name '%C'\n"),
                   name));
 
@@ -84,13 +84,13 @@ namespace
           }
         else
           {
-            DANCE_ERROR ((LM_WARNING, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
+            DANCE_ERROR (1, (LM_WARNING, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
                           ACE_TEXT("Failed to extract property value for %C\n"), name));
             return false;
           }
       }
 
-    DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<bool> - ")
+    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<bool> - ")
                   ACE_TEXT("Property value for name '%C' has no value\n"), name));
 
     return false;
@@ -102,7 +102,7 @@ namespace
     DANCE_TRACE ("NodeApplication::<anonymous>::get_property_value<const char *>");
     CORBA::Any any;
 
-    DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<bool> - ")
+    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<bool> - ")
                   ACE_TEXT("Finding property value for name '%C'\n"),
                   name));
 
@@ -114,13 +114,13 @@ namespace
           }
         else
           {
-            DANCE_ERROR ((LM_WARNING, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<const char *> - ")
+            DANCE_ERROR (1, (LM_WARNING, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<const char *> - ")
                           ACE_TEXT("Failed to extract property value for %C\n"), name));
             return false;
           }
       }
 
-    DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<bool> - ")
+    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<bool> - ")
                   ACE_TEXT("Property value for name '%C' has no value\n"), name));
 
     return false;
@@ -131,7 +131,7 @@ namespace
   {
     DANCE_TRACE ("NodeApplication::<anonymous>::get_property_value<T>");
 
-    DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
+    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
                   ACE_TEXT("Finding property value for name '%C'\n"),
                   name));
 
@@ -139,13 +139,13 @@ namespace
       {
         if (ACE_OS::strcmp (properties[i].name.in (), name) == 0)
           {
-            DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
+            DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
                           ACE_TEXT("Found property '%C'\n"), name));
             if (properties[i].value >>= val)
               return true;
             else
               {
-                DANCE_ERROR ((LM_WARNING, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
+                DANCE_ERROR (1, (LM_WARNING, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
                               ACE_TEXT("Failed to extract property value for %C\n"), name));
                 return false;
               }
@@ -153,7 +153,7 @@ namespace
       }
 
 
-    DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
+    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
                   ACE_TEXT("Property value for name '%C' has no value\n"), name));
 
     return false;
@@ -164,7 +164,7 @@ namespace
   {
     DANCE_TRACE ("NodeApplication::<anonymous>::get_property_value<const char *>");
 
-    DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
+    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
                   ACE_TEXT("Finding property value for name '%C'\n"),
                   name));
 
@@ -172,18 +172,18 @@ namespace
       {
         if (ACE_OS::strcmp (properties[i].name.in (), name) == 0)
           {
-            DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
+            DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
                           ACE_TEXT("Found property '%C'\n"), name));
             if (properties[i].value >>= CORBA::Any::to_string (val, 0))
               {
-                DANCE_DEBUG ((LM_TRACE,
+                DANCE_DEBUG (9, (LM_TRACE,
                               DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
                               ACE_TEXT("Value is %C\n"), val));
                 return true;
               }
             else
               {
-                DANCE_ERROR ((LM_WARNING, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
+                DANCE_ERROR (1, (LM_WARNING, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
                               ACE_TEXT("Failed to extract property value for %C\n"), name));
                 return false;
               }
@@ -191,7 +191,7 @@ namespace
       }
 
 
-    DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
+    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
                   ACE_TEXT("Unable to find property named %C\n"), name));
 
     return false;
@@ -219,7 +219,7 @@ namespace
       {
         if (ACE_OS::strncmp (src[i].name.in (), edu_prop, ACE_OS::strlen (edu_prop)) == 0)
           {
-            DANCE_DEBUG ((LM_TRACE, DLINFO
+            DANCE_DEBUG (9, (LM_TRACE, DLINFO
                       ACE_TEXT("NodeApplication::append_properties - ")
                       ACE_TEXT("Adding property %C\n"), src[i].name.in ()));
             CORBA::ULong const dest_length = dest.length ();
@@ -248,7 +248,7 @@ NodeApplication_Impl::NodeApplication_Impl (CORBA::ORB_ptr orb,
   PROPERTY_MAP::const_iterator i = properties.begin ();
   while (!i.done ())
     {
-      DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::NodeApplication_Impl - ")
+      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::NodeApplication_Impl - ")
                     ACE_TEXT("Binding value for property '%C'\n"), i->key ().c_str ()));
       this->properties_.bind (i->key (), i->item ());
       i.advance ();
@@ -267,20 +267,20 @@ NodeApplication_Impl::~NodeApplication_Impl()
 
   /* TODO: This is highly suspect.  I believe we should be using get_component_server,
      not calling create_container. */
-  DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
+  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
                 ACE_TEXT("Deactivating %u ComponentServers\n"),
                 this->servers_.size ()));
   for (size_t i = 0; i < this->servers_.size (); ++i)
     {
       ComponentServer &server = this->servers_[i];
 
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
                     ACE_TEXT("In ComponentServer %u, deactivating %u containers\n"), i, server.containers.size ()));
       for (size_t j = 0; j < server.containers.size (); ++j)
         {
           Container &container = server.containers[j];
 
-          DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
                         ACE_TEXT("In container %u hosted in server %u\n"), j, i));
 
           try
@@ -292,19 +292,19 @@ NodeApplication_Impl::~NodeApplication_Impl()
             }
           catch (const CORBA::Exception &ex)
             {
-              DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
+              DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
                             ACE_TEXT("Caught CORBA exception while removing container %u on server %u: %C\n"),
                             j, i, ex._info ().c_str ()));
             }
           catch (...)
             {
-              DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
+              DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
                             ACE_TEXT("Caught unknown C++ exception while removing container %u on server %u.\n"),
                             j, i));
             }
         }
 
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
                     ACE_TEXT("Removing component server %u\n"), i));
 
       try
@@ -314,18 +314,18 @@ NodeApplication_Impl::~NodeApplication_Impl()
         }
       catch (const CORBA::Exception &ex)
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
                         ACE_TEXT("Caught CORBA exception while removing server %u: %C\n"),
                         i, ex._info ().c_str ()));
         }
       catch (...)
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
                         ACE_TEXT("Caught unknown C++ exception while removing server %u.\n"),
                         i));
         }
 
-      DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
+      DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
                     ACE_TEXT("Successfully removed container %u on node %C.\n"),
                     i, this->node_name_.c_str ()));
     }
@@ -347,19 +347,19 @@ NodeApplication_Impl::init()
   CORBA::Boolean multithread = false;
 
   get_property_value (CIAO::Deployment::SERVER_EXECUTABLE, this->properties_, cs_path);
-  DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init - ")
+  DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init - ")
                 ACE_TEXT("Component server path: %C\n"), cs_path));
   get_property_value (CIAO::Deployment::SERVER_ARGUMENTS, this->properties_, cs_args);
-  DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init - ")
+  DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init - ")
                 ACE_TEXT("Component server arguments: %C\n"), cs_args));
   get_property_value (CIAO::Deployment::SERVER_TIMEOUT, this->properties_, spawn);
-  DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init - ")
+  DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init - ")
                 ACE_TEXT("Spawn delay: %u\n"), spawn));
   get_property_value (CIAO::Deployment::SERVER_MULTITHREAD, this->properties_, multithread);
-  DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init - ")
+  DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init - ")
                 ACE_TEXT("Threading: %C\n"), multithread ? "Multi" : "Single"));
 
-  DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::init - ")
+  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::init - ")
                 ACE_TEXT("Spawning server activator\n")));
 
   CIAO::Deployment::ComponentInstallation_Impl *tmp_ci = 0;
@@ -396,7 +396,7 @@ NodeApplication_Impl::init()
   PortableServer::ObjectId_var sa_id =
     this->poa_->activate_object (this->activator_.get ());
 
-  DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::init - ServerActivator object created\n")));
+  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::init - ServerActivator object created\n")));
 
   const ACE_TCHAR *ior = 0;
 
@@ -410,14 +410,14 @@ NodeApplication_Impl::init()
         }
       catch (const CORBA::Exception &e)
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::init - ")
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::init - ")
                         ACE_TEXT("Unable to resolve the instance naming context:%C\n"),
                         e._info ().c_str ()));
         }
-      DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init - ")
+      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init - ")
                     ACE_TEXT("Successfully resolved the instance naming context.\n")));
     }
-  else DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init - ")
+  else DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init - ")
                      ACE_TEXT("No instance NC was provided\n")));
 }
 
@@ -436,7 +436,7 @@ NodeApplication_Impl::configuration_complete_components ()
           continue;
         }
 
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::configuration_complete_components - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::configuration_complete_components - ")
                     ACE_TEXT("Invoking configuration_complete on component instance %C on node %C\n"),
                     this->plan_.instance[this->instances_[k]->idd_idx].name.in (),
                     this->node_name_.c_str ()));
@@ -447,7 +447,7 @@ NodeApplication_Impl::configuration_complete_components ()
             Components::CCMObject::_narrow (this->instances_[k]->ref.in ());
           if (CORBA::is_nil (this->instances_[k]->ref))
             {
-              DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::configuration_complete_components - ")
+              DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::configuration_complete_components - ")
                             ACE_TEXT("Failed to narrow object reference for component instance %C\n"),
                             this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
               continue;
@@ -469,13 +469,13 @@ NodeApplication_Impl::configuration_complete_components ()
                 }
             }
 
-          DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT("NodeApplication_Impl::configuration_complete_components - ")
+          DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT("NodeApplication_Impl::configuration_complete_components - ")
                         ACE_TEXT("Component %C successfully configured.\n"),
                         this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
         }
       catch (const CORBA::Exception &ex)
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::configuration_complete_components - ")
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::configuration_complete_components - ")
                         ACE_TEXT("Caught CORBA exception from ccm_activate on component %C: %C\n"),
                         this->plan_.instance[this->instances_[k]->idd_idx].name.in (),
                         ex._info ().c_str ()));
@@ -488,7 +488,7 @@ NodeApplication_Impl::configuration_complete_components ()
         }
       catch (...)
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::configuration_complete_components - ")
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::configuration_complete_components - ")
                         ACE_TEXT("Caught unknown C++ exception from ccm_activate on component %C\n"),
                         this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
           if (!error)
@@ -519,7 +519,7 @@ NodeApplication_Impl::start ()
           continue;
         }
 
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::start - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::start - ")
                     ACE_TEXT("Invoking start on component instance %C on node %C\n"),
                     this->plan_.instance[this->instances_[k]->idd_idx].name.in (),
                     this->node_name_.c_str ()));
@@ -531,7 +531,7 @@ NodeApplication_Impl::start ()
 
           if (CORBA::is_nil (this->instances_[k]->container->ref.in ()))
             {
-              DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::start - ")
+              DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::start - ")
                             ACE_TEXT("Failed to narrow object reference for container managing ")
                             ACE_TEXT("component instance %C to a CIAO container reference\n"),
                             this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
@@ -558,13 +558,13 @@ NodeApplication_Impl::start ()
                 }
             }
 
-          DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT("NodeApplication_Impl::start - ")
+          DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT("NodeApplication_Impl::start - ")
                         ACE_TEXT("Component %C successfully activated.\n"),
                         this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
         }
       catch (const CORBA::Exception &ex)
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::start - ")
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::start - ")
                         ACE_TEXT("Caught CORBA exception from ccm_activate on component %C: %C\n"),
                         this->plan_.instance[this->instances_[k]->idd_idx].name.in (),
                         ex._info ().c_str ()));
@@ -577,7 +577,7 @@ NodeApplication_Impl::start ()
         }
       catch (...)
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::start - ")
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::start - ")
                         ACE_TEXT("Caught unknown C++ exception from ccm_activate on component %C\n"),
                         this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
           if (!error)
@@ -603,7 +603,7 @@ NodeApplication_Impl::install_home (Container &cont, Instance &inst)
   const ::Deployment::InstanceDeploymentDescription &idd =
     this->plan_.instance[inst.idd_idx];
 
-  DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
+  DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
                 ACE_TEXT("Starting installation of home %C on node %C\n"),
                 idd.name.in (), idd.node.in ()));
 
@@ -615,7 +615,7 @@ NodeApplication_Impl::install_home (Container &cont, Instance &inst)
 
   if (entrypt == 0)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
                     ACE_TEXT("Unable to find home factory property on home %C\n"),
                     idd.name.in ()));
       throw ::Deployment::InvalidComponentExecParameter (mdd.name.in (),
@@ -629,7 +629,7 @@ NodeApplication_Impl::install_home (Container &cont, Instance &inst)
 
   for (CORBA::ULong i = 0; i < mdd.execParameter.length (); ++i)
     {
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
                     ACE_TEXT("Inserting value for execParameter %C\n"), mdd.execParameter[i].name.in ()));
       config[pos++] = new CIAO::ConfigValue_impl (mdd.execParameter[i].name.in (),
                                                   mdd.execParameter[i].value);
@@ -637,7 +637,7 @@ NodeApplication_Impl::install_home (Container &cont, Instance &inst)
 
   for (CORBA::ULong i = 0; i < idd.configProperty.length (); ++i)
     {
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
                     ACE_TEXT("Inserting value for configProperty %C\n"), idd.configProperty[i].name.in ()));
       config[pos++] =  new CIAO::ConfigValue_impl (idd.configProperty[i].name.in (),
                                                    idd.configProperty[i].value);
@@ -645,7 +645,7 @@ NodeApplication_Impl::install_home (Container &cont, Instance &inst)
 
   try
     {
-      DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
+      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
                     ACE_TEXT("Calling install_home on container.  Home id '%C', entrypt '%C', ")
                     ACE_TEXT("length of config values is %u\n"),
                     idd.name.in (), entrypt, config.length ()));
@@ -656,7 +656,7 @@ NodeApplication_Impl::install_home (Container &cont, Instance &inst)
 
       if (CORBA::is_nil (home))
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
                         ACE_TEXT("Got nil object reference from container while installing home %C on node %C,")
                         ACE_TEXT("throwing PlanError\n"),
                         idd.name.in (), idd.node.in ()));
@@ -664,13 +664,13 @@ NodeApplication_Impl::install_home (Container &cont, Instance &inst)
                                          "Nil object reference returned from conainer");
         }
 
-      DANCE_DEBUG ((LM_INFO, DLINFO  ACE_TEXT("NodeApplication_Impl::install_home - ")
+      DANCE_DEBUG (8, (LM_INFO, DLINFO  ACE_TEXT("NodeApplication_Impl::install_home - ")
                     ACE_TEXT("Home '%C' on node '%C' successfully installed\n"),
                     idd.name.in (), idd.node.in ()));
 
       inst.ref = CORBA::Object::_narrow (home);
 
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
                     ACE_TEXT("Populating attributes for home %C\n"),
                     idd.name.in ()));
 
@@ -684,7 +684,7 @@ NodeApplication_Impl::install_home (Container &cont, Instance &inst)
     }
   catch (const Components::InvalidConfiguration &)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
                     ACE_TEXT("Error creating home %C on node %C, caught InvalidConfiguration.  Throwing exception\n"),
                     idd.name.in (), idd.node.in ()));
       throw ::Deployment::InvalidProperty (idd.name.in (),
@@ -692,7 +692,7 @@ NodeApplication_Impl::install_home (Container &cont, Instance &inst)
     }
   catch (const CORBA::Exception &ex)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
                     ACE_TEXT("Caught CORBA exception while installing home %C: %C\n"),
                     idd.name.in (),
                     ex._info ().c_str ()));
@@ -701,7 +701,7 @@ NodeApplication_Impl::install_home (Container &cont, Instance &inst)
     }
   catch (...)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
                     ACE_TEXT("Caught unknown C++ exception while installing home %C\n"),
                     idd.name.in ()));
       throw ::Deployment::StartError (idd.name.in (),
@@ -717,7 +717,7 @@ NodeApplication_Impl::install_component (Container &cont, Instance &inst)
   const ::Deployment::MonolithicDeploymentDescription &mdd = this->plan_.implementation[inst.mdd_idx];
   const ::Deployment::InstanceDeploymentDescription &idd = this->plan_.instance[inst.idd_idx];
 
-  DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
+  DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
                 ACE_TEXT("Starting installation of home %C on node %C\n"),
                 idd.name.in (), idd.node.in ()));
 
@@ -728,7 +728,7 @@ NodeApplication_Impl::install_component (Container &cont, Instance &inst)
 
   if (entrypt == 0)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_component - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_component - ")
                     ACE_TEXT("Unable to find component factory property on component %C\n"),
                     idd.name.in ()));
       throw ::Deployment::InvalidComponentExecParameter (mdd.name.in (),
@@ -742,7 +742,7 @@ NodeApplication_Impl::install_component (Container &cont, Instance &inst)
 
     for (CORBA::ULong i = 0; i < mdd.execParameter.length (); ++i)
     {
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::install_component - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::install_component - ")
                     ACE_TEXT("Inserting value for execParameter %C\n"), mdd.execParameter[i].name.in ()));
       config[pos++] = new CIAO::ConfigValue_impl (mdd.execParameter[i].name.in (),
                                                   mdd.execParameter[i].value);
@@ -750,7 +750,7 @@ NodeApplication_Impl::install_component (Container &cont, Instance &inst)
 
   for (CORBA::ULong i = 0; i < idd.configProperty.length (); ++i)
     {
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::install_component - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::install_component - ")
                     ACE_TEXT("Inserting value for configProperty %C\n"), idd.configProperty[i].name.in ()));
       config[pos++] =  new CIAO::ConfigValue_impl (idd.configProperty[i].name.in (),
                                                    idd.configProperty[i].value);
@@ -760,7 +760,7 @@ NodeApplication_Impl::install_component (Container &cont, Instance &inst)
 
   if (CORBA::is_nil (ciao_cont.in ()))
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_component - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_component - ")
                     ACE_TEXT("Unable to narrow container assigned for component instance %C to one that supports ")
                     ACE_TEXT("un-homed components.\n")));
       throw ::Deployment::PlanError (idd.name.in (),
@@ -769,7 +769,7 @@ NodeApplication_Impl::install_component (Container &cont, Instance &inst)
 
   try
     {
-      DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::install_component - ")
+      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::install_component - ")
                     ACE_TEXT("Calling install_component on container.  Component id '%C', entrypt '%C', ")
                     ACE_TEXT("length of config values is %u\n"),
                     idd.name.in (), entrypt, config.length ()));
@@ -780,7 +780,7 @@ NodeApplication_Impl::install_component (Container &cont, Instance &inst)
 
       if (CORBA::is_nil (comp))
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_component - ")
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_component - ")
                         ACE_TEXT("Got nil object reference from container while installing component %C on node %C,")
                         ACE_TEXT("throwing PlanError\n"),
                         idd.name.in (), idd.node.in ()));
@@ -788,13 +788,13 @@ NodeApplication_Impl::install_component (Container &cont, Instance &inst)
                                          "Nil object reference returned from install_component on conainer");
         }
 
-      DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT("NodeApplication_Impl::install_component - ")
+      DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT("NodeApplication_Impl::install_component - ")
                     ACE_TEXT("Component '%C' on node '%C' successfully installed\n"),
                     idd.name.in (), idd.node.in ()));
 
       inst.ref = CORBA::Object::_narrow (comp);
 
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::install_component - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::install_component - ")
                     ACE_TEXT("Populating attributes for home %C\n"),
                     idd.name.in ()));
 
@@ -808,7 +808,7 @@ NodeApplication_Impl::install_component (Container &cont, Instance &inst)
     }
     catch (const Components::InvalidConfiguration &)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_component - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_component - ")
                     ACE_TEXT("Error creating component %C on node %C, caught InvalidConfiguration. Throwing exception\n"),
                     idd.name.in (), idd.node.in ()));
       throw ::Deployment::InvalidProperty (idd.name.in (),
@@ -816,7 +816,7 @@ NodeApplication_Impl::install_component (Container &cont, Instance &inst)
     }
   catch (const CORBA::Exception &ex)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_component - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_component - ")
                     ACE_TEXT("Caught CORBA exception while installing component %C: %C\n"),
                     idd.name.in (),
                     ex._info ().c_str ()));
@@ -825,7 +825,7 @@ NodeApplication_Impl::install_component (Container &cont, Instance &inst)
     }
   catch (...)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_component - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_component - ")
                     ACE_TEXT("Caught unknown C++ exception while installing component %C\n"),
                     idd.name.in ()));
       throw ::Deployment::StartError (idd.name.in (),
@@ -841,7 +841,7 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
   const ::Deployment::InstanceDeploymentDescription &idd = this->plan_.instance[inst.idd_idx];
   this->instances_[inst.idd_idx] = &inst;
 
-  DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
+  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
                 ACE_TEXT("Starting installation of homed component %C on node %C\n"),
                 idd.name.in (),
                 idd.node.in ()));
@@ -849,21 +849,21 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
   const char *home_id = 0;
   get_property_value (DAnCE::EXPLICIT_HOME, idd.configProperty, home_id);
 
-  DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
+  DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
                 ACE_TEXT("Property %C has value %C\n"),
                 DAnCE::EXPLICIT_HOME, home_id));
 
 
   if (home_id == 0)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Nodeapplication_Impl::install_homed_component - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Nodeapplication_Impl::install_homed_component - ")
                     ACE_TEXT("Apparent homed component %C lacks a %C configProperty, aborting installation\n"),
                     idd.name.in (), DAnCE::EXPLICIT_HOME));
       throw ::Deployment::PlanError (idd.name.in (),
                                      "No explicit home  property on component requiring explicit home.");
     }
 
-  DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
+  DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
                 ACE_TEXT("Found explicit home property '%C' for component '%C'\n"),
                 home_id,
                 idd.name.in ()));
@@ -875,7 +875,7 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
       if (ACE_OS::strcmp (home_id,
                           this->plan_.instance[cont.homes[i].idd_idx].name.in ()) == 0)
         {
-          DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
                         ACE_TEXT("Found home designated for component '%C'\n"),
                         idd.name.in ()));
           home_inst = &cont.homes[i];
@@ -885,7 +885,7 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
 
   if (home_inst == 0)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
                     ACE_TEXT("Unable to find home instance matching %C allocated to same container as component %C\n"),
                     home_id,
                     idd.name.in ()));
@@ -898,7 +898,7 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
 
   if (CORBA::is_nil (home.in ()))
     {
-      DANCE_ERROR ((LM_ERROR,  DLINFO ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
+      DANCE_ERROR (1, (LM_ERROR,  DLINFO ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
                     ACE_TEXT("Object reference for home '%C' for homed component '%C' is nil\n"),
                     home_id,
                     idd.name.in ()));
@@ -909,7 +909,7 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
   try
     {
       inst.home = home_inst;
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
                     ACE_TEXT("Invoking create_component on home %C for component %C\n"),
                     home_id,
                     idd.name.in ()));
@@ -918,7 +918,7 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
 
       if (CORBA::is_nil (ccm_obj))
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
       ACE_TEXT("Received nil component reference from create_component on home %C ")
       ACE_TEXT(" while creating component %C\n"),
                         home_id, idd.name.in ()));
@@ -927,12 +927,12 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
         }
 
       inst.ref = CORBA::Object::_narrow (ccm_obj.in ());
-      DANCE_DEBUG ((LM_INFO, DLINFO  ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
+      DANCE_DEBUG (8, (LM_INFO, DLINFO  ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
                     ACE_TEXT("Component %C successfully installed in home %C\n"),
                     idd.name.in (),
                     home_id));
 
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
                     ACE_TEXT("Populating attributes for component %C\n"),
                     idd.name.in ()));
       ComponentAttributesSetter::SetComponentAttributes (idd.name.in (),
@@ -943,7 +943,7 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
     }
   catch (const Components::CreateFailure &)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
                     ACE_TEXT("Caught CreateFailure exception from home '%C' while installing component '%C'\n"),
                     home_inst,
                     idd.name.in ()));
@@ -952,7 +952,7 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
     }
   catch (const CORBA::Exception &ex)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
                     ACE_TEXT("Caught CORBA exception while installing component %C in home %C: %C\n"),
                     idd.name.in (),
                     home_id,
@@ -962,7 +962,7 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
     }
   catch (...)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
                     ACE_TEXT("Caught unknown C++ exception while installing component %C in home  %C\n"),
                     idd.name.in (),
                     home_id));
@@ -980,7 +980,7 @@ NodeApplication_Impl::create_component_server (size_t index)
 
     try
     {
-      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::create_component_Server - ")
+      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::create_component_Server - ")
                    ACE_TEXT("creating component server %u\n"), index));
       ::Components::ConfigValues config_values;
 
@@ -994,12 +994,12 @@ NodeApplication_Impl::create_component_server (size_t index)
   }
 
       server.ref = this->activator_->create_component_server (config_values);
-      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::create_component_server - ")
+      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::create_component_server - ")
                    ACE_TEXT("component server created\n")));
     }
   catch (const ::Components::CreateFailure& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::create_container - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::create_container - ")
                    ACE_TEXT("Components::Deployment::ServerActivator_var::create_component_server() ")
                    ACE_TEXT("returned ::Components::CreateFailure exception\n")));
       throw ::Deployment::StartError("",
@@ -1007,7 +1007,7 @@ NodeApplication_Impl::create_component_server (size_t index)
     }
   catch (const ::Components::Deployment::InvalidConfiguration& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::create_container - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::create_container - ")
                    ACE_TEXT("Components::Deployment::ServerActivator_var::create_component_server() ")
                    ACE_TEXT("returned ::Components::Deployment::InvalidConfiguration exception\n")));
       throw ::Deployment::InvalidProperty("",
@@ -1023,7 +1023,7 @@ NodeApplication_Impl::create_component_server (size_t index)
       }
     catch (...)
       {
-        DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::create_container - ")
+        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::create_container - ")
                       ACE_TEXT("Caught exception whilst creating container; re-throwing.\n")));
         throw;
       }
@@ -1040,7 +1040,7 @@ NodeApplication_Impl::store_instance_ior (Instance &inst)
                           this->plan_.instance[inst.idd_idx].configProperty,
                           name))
     {
-      DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::store_instance_ior - ")
+      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::store_instance_ior - ")
                     ACE_TEXT("Storing instance '%C' object reference in Naming Service as %C\n"),
                     this->plan_.instance[inst.idd_idx].name.in (),
                     name));
@@ -1065,14 +1065,14 @@ NodeApplication_Impl::create_container (size_t server, size_t cont_idx)
 
   Container &container = this->servers_[server].containers[cont_idx];
 
-  DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::create_container - ")
+  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::create_container - ")
                 ACE_TEXT("Creating container\n")));
   // TODO: Need to create configvalues
   Components::ConfigValues cvs;
 
   container.ref = this->servers_[server].ref->create_container (cvs);
 
-  DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::create_container - ")
+  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::create_container - ")
                 ACE_TEXT("Configuring %u homes on container %u on server %u\n"),
                 container.homes.size (),
                 server, cont_idx));
@@ -1084,7 +1084,7 @@ NodeApplication_Impl::create_container (size_t server, size_t cont_idx)
       this->store_instance_ior (container.homes[i]);
     }
 
-  DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::create_container - ")
+  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::create_container - ")
                 ACE_TEXT("Configuring %u components on container %u on server %u\n"),
                 container.components.size (),
                 server, cont_idx));
@@ -1124,7 +1124,7 @@ NodeApplication_Impl::create_colocation_groups (void)
     {
       if (this->plan_.localityConstraint[i].constraint != ::Deployment::PlanSameProcess)
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO
+          DANCE_ERROR (1, (LM_ERROR, DLINFO
                         ACE_TEXT ("NodeApplication_Impl::create_colocation_groups - ")
                         ACE_TEXT ("Error: On locality constraint %u, unsupported locality constraint.\n"),
                         i));
@@ -1137,7 +1137,7 @@ NodeApplication_Impl::create_colocation_groups (void)
         {
           std::string id = this->plan_.instance[instances[j]].name.in ();
 
-          DANCE_DEBUG ((LM_INFO, DLINFO
+          DANCE_DEBUG (8, (LM_INFO, DLINFO
                         ACE_TEXT ("NodeApplication_Impl::create_colocation_groups - ")
                         ACE_TEXT ("Instance <%C> allocated to component server %u\n"),
                         id.c_str (), num_servers));
@@ -1157,13 +1157,13 @@ NodeApplication_Impl::create_colocation_groups (void)
         {
           if (!create_default_server)
             {
-              DANCE_DEBUG ((LM_INFO, DLINFO
+              DANCE_DEBUG (8, (LM_INFO, DLINFO
                             ACE_TEXT ("NodeApplication_Impl::create_colocation_groups - ")
                             ACE_TEXT ("Creating default colocation group.\n")));
               create_default_server = true;
             }
 
-          DANCE_DEBUG ((LM_INFO, DLINFO
+          DANCE_DEBUG (8, (LM_INFO, DLINFO
                         ACE_TEXT ("NodeApplication_Impl::create_colocation_groups - ")
                         ACE_TEXT ("Assigning instance <%C> to default colocation group.\n"),
                         i->first.c_str ()));
@@ -1187,7 +1187,7 @@ NodeApplication_Impl::init_components()
   DANCE_TRACE ("NodeApplication_Impl::init_components");
 
   Components::ConfigValues config_values;
-  DANCE_DEBUG((LM_DEBUG, DLINFO
+  DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                ACE_TEXT("NodeApplication_Impl::init_components - ")
                ACE_TEXT("Configuring %u component/home instances\n"),
                this->plan_.instance.length()));
@@ -1219,7 +1219,7 @@ NodeApplication_Impl::init_components()
             {
             case eHome:
               {
-                DANCE_DEBUG ((LM_DEBUG, DLINFO
+                DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                               ACE_TEXT("NodeApplication_Impl::init_components - ")
                               ACE_TEXT("Allocating instance %C as a home\n"),
                               this->plan_.instance[i].name.in ()));
@@ -1237,7 +1237,7 @@ NodeApplication_Impl::init_components()
               }
             case eComponent:
               {
-                DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init_components - ")
+                DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init_components - ")
                               ACE_TEXT("Allocating instance %C as a standalone component\n"),
                               this->plan_.instance[i].name.in ()));
                 size_t const svr = colocation_map[this->plan_.instance[i].name.in ()];
@@ -1252,7 +1252,7 @@ NodeApplication_Impl::init_components()
               }
             case eHomedComponent:
               {
-                DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init_components - ")
+                DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init_components - ")
                               ACE_TEXT("Allocating instance %C as a home managed component\n"),
                               this->plan_.instance[i].name.in ()));
                 size_t const svr = colocation_map[this->plan_.instance[i].name.in ()];
@@ -1267,7 +1267,7 @@ NodeApplication_Impl::init_components()
               }
             default:
               {
-                DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::init_components - ")
+                DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::init_components - ")
                              ACE_TEXT("get_instance_type function returned invalid instance type\n")));
                 throw ::Deployment::InvalidProperty (this->plan_.instance[i].name.in (),
                                                      "Unable to affirmatively determine instance type");
@@ -1276,26 +1276,26 @@ NodeApplication_Impl::init_components()
         }
         catch (...)
         {
-          DANCE_ERROR((LM_ERROR, DLINFO
+          DANCE_ERROR (1, (LM_ERROR, DLINFO
                       ACE_TEXT("Exception was thrown while sorting instance \"%C\".\n"),
                       this->plan_.instance[i].name.in()));
           throw;
         }
     }
 
-  DANCE_DEBUG ((LM_TRACE, DLINFO
+  DANCE_DEBUG (9, (LM_TRACE, DLINFO
                 ACE_TEXT("NodeApplication_Impl::init_components - ")
                 ACE_TEXT("Creating component servers and installing components.\n")));
 
   for (size_t i = 0; i < this->servers_.size (); ++i)
     {
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::init_components - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::init_components - ")
                     ACE_TEXT("Creating component server with index %u\n"), i));
       this->create_component_server (i);
     }
 
 
-  DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init_components - finished\n")));
+  DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init_components - finished\n")));
 }
 
 void
@@ -1320,7 +1320,7 @@ NodeApplication_Impl::passivate_components()
 
           if (CORBA::is_nil (this->instances_[k]->container->ref.in ()))
             {
-              DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::start - ")
+              DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::start - ")
                             ACE_TEXT("Failed to narrow object reference for container managing ")
                             ACE_TEXT("component instance %C to a CIAO container reference\n"),
                             this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
@@ -1338,7 +1338,7 @@ NodeApplication_Impl::passivate_components()
             }
           else
             {
-              DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::start - ")
+              DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::start - ")
                             ACE_TEXT("Attempting to passivate non-active component %C\n"),
                             this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
               test_and_set_exception (error, exception,
@@ -1347,13 +1347,13 @@ NodeApplication_Impl::passivate_components()
               continue;
             }
 
-          DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT("NodeApplication_Impl::passivate_components - ")
+          DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT("NodeApplication_Impl::passivate_components - ")
                         ACE_TEXT("Component %C successfully passivated.\n"),
                         this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
         }
       catch (const CORBA::Exception &ex)
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::passivate_components - ")
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::passivate_components - ")
                         ACE_TEXT("Caught CORBA exception from ccm_passivate on component %C: %C\n"),
                         this->plan_.instance[this->instances_[k]->idd_idx].name.in (),
                         ex._info ().c_str ()));
@@ -1366,7 +1366,7 @@ NodeApplication_Impl::passivate_components()
         }
       catch (...)
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::passivate_components - ")
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::passivate_components - ")
                         ACE_TEXT("Caught unknown C++ exception from ccm_passivate on component %C\n"),
                         this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
           if (!error)
@@ -1400,14 +1400,14 @@ NodeApplication_Impl::remove_components()
             continue;
 
           if (this->instances_[k]->state != ePassive)
-            DANCE_DEBUG ((LM_WARNING, DLINFO ACE_TEXT("NodeApplication_Impl::remove_components - ")
+            DANCE_DEBUG (6, (LM_WARNING, DLINFO ACE_TEXT("NodeApplication_Impl::remove_components - ")
                           ACE_TEXT("Attempting to remove component that is not passive.\n")));
 
           if (this->instances_[k]->type == eComponent)
             {
               if (this->instances_[k]->container == 0)
                 {
-                  DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::remove_components - ")
+                  DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::remove_components - ")
                                 ACE_TEXT("Container element in component data structure for '%C' is nill\n"),
                                 this->plan_.instance[this->instances_[k]->idd_idx].name.in ()
                                 ));
@@ -1425,7 +1425,7 @@ NodeApplication_Impl::remove_components()
 
               if (CORBA::is_nil (ciao_container.in ()))
                 {
-                  DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::remove_components - ")
+                  DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::remove_components - ")
                                 ACE_TEXT("Attempted to remove un-homed component from unsupported container\n")));
 
                   test_and_set_exception (error, exception,
@@ -1444,7 +1444,7 @@ NodeApplication_Impl::remove_components()
 
               if (CORBA::is_nil (home))
                 {
-                  DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::remove_components - ")
+                  DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::remove_components - ")
                                 ACE_TEXT("Object reference for home %C, managing component %C is nil.\n"),
                                 this->plan_.instance[this->instances_[k]->home->idd_idx].name.in (),
                                 this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
@@ -1462,14 +1462,14 @@ NodeApplication_Impl::remove_components()
 
           this->instances_[k]->state = eRemoved;
 
-          DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT("NodeApplication_Impl::remove_components - ")
+          DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT("NodeApplication_Impl::remove_components - ")
                         ACE_TEXT("Component %C successfully removed.\n"),
                         this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
 
         }
       catch (const CORBA::Exception &ex)
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::remove_components - ")
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::remove_components - ")
                         ACE_TEXT("Caught CORBA exception removing on component %C: %C\n"),
                         this->plan_.instance[this->instances_[k]->idd_idx].name.in (),
                         ex._info ().c_str ()));
@@ -1480,7 +1480,7 @@ NodeApplication_Impl::remove_components()
         }
       catch (...)
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::remove_components - ")
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::remove_components - ")
                         ACE_TEXT("Caught unknown C++ exception from ccm_remove on component %C\n"),
                         this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
           test_and_set_exception (error,
@@ -1497,14 +1497,14 @@ NodeApplication_Impl::remove_components()
           if (this->instances_[k]->type != eHome)
             continue;
 
-          DANCE_ERROR ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::remove_components - ")
+          DANCE_ERROR (1, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::remove_components - ")
                         ACE_TEXT("Removing home %C\n"),
                         this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
 
           if (this->instances_[k]->container == 0 ||
               CORBA::is_nil (this->instances_[k]->container->ref.in ()))
             {
-              DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::remove_components - ")
+              DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::remove_components - ")
                             ACE_TEXT("Home %C lacks an associated container reference\n"),
                             this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
               test_and_set_exception (error,
@@ -1517,13 +1517,13 @@ NodeApplication_Impl::remove_components()
           Components::CCMHome_var home = Components::CCMHome::_narrow (this->instances_[k]->ref.in ());
           this->instances_[k]->container->ref->remove_home (home.in ());
 
-          DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT("NodeApplication_Impl::remove_components - ")
+          DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT("NodeApplication_Impl::remove_components - ")
                        ACE_TEXT("Successfully uninstalled home %C\n"),
                        this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
         }
       catch (const CORBA::Exception &ex)
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::remove_components - ")
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::remove_components - ")
                         ACE_TEXT("Caught CORBA exception removing home %C: %C\n"),
                         this->plan_.instance[this->instances_[k]->idd_idx].name.in (),
                         ex._info ().c_str ()));
@@ -1534,7 +1534,7 @@ NodeApplication_Impl::remove_components()
         }
       catch (...)
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::remove_components - ")
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::remove_components - ")
                         ACE_TEXT("Caught unknown C++ exception from while removing home %C\n"),
                         this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
           test_and_set_exception (error,
@@ -1555,34 +1555,34 @@ NodeApplication_Impl::get_instance_type (const ::Deployment::Properties& prop) c
 
   for (CORBA::ULong i = 0; i < prop.length (); ++i)
     {
-      DANCE_DEBUG ((LM_TRACE, DLINFO  ACE_TEXT("NodeApplication_Impl::get_instance_type - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO  ACE_TEXT("NodeApplication_Impl::get_instance_type - ")
                     ACE_TEXT("Checking property %C\n"),
                     prop[i].name.in ()));
 
       if (ACE_OS::strcmp (prop[i].name.in (),
                           DAnCE::HOME_FACTORY) == 0)
         {
-          DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::get_instance_type - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::get_instance_type - ")
                         ACE_TEXT("Found Home type\n")));
           return eHome;
         }
       if (ACE_OS::strcmp (prop[i].name.in (),
                           DAnCE::COMPONENT_FACTORY) == 0)
         {
-          DANCE_DEBUG  ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::get_instance_type - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::get_instance_type - ")
                          ACE_TEXT("Found unmanaged component type.\n")));
           return eComponent;
         }
       if (ACE_OS::strcmp (prop[i].name.in (),
                           DAnCE::EXPLICIT_HOME) == 0)
         {
-          DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::get_instance_type - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::get_instance_type - ")
                         ACE_TEXT("Found explicit home component type.\n")));
-            return eHomedComponent;
+          return eHomedComponent;
         }
     }
 
-  DANCE_ERROR ((LM_INFO, DLINFO ACE_TEXT("NodeApplication_Impl::get_instance_type - ")
+  DANCE_ERROR (1, (LM_INFO, DLINFO ACE_TEXT("NodeApplication_Impl::get_instance_type - ")
                 ACE_TEXT("Unable to determine instance type\n")));
   return eInvalid;
 }
@@ -1590,7 +1590,7 @@ NodeApplication_Impl::get_instance_type (const ::Deployment::Properties& prop) c
 ::Deployment::Connections*
 NodeApplication_Impl::getAllConnections()
 {
-  DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - started\n")));
+  DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - started\n")));
 
   ::Deployment::Connections_var conn;
   ACE_NEW_THROW_EX (conn,
@@ -1611,7 +1611,7 @@ NodeApplication_Impl::getAllConnections()
               ACE_CString const inst_name =
                 this->plan_.instance[this->plan_.connection[i].internalEndpoint[j].instanceRef].name.in();
 
-              DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
+              DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
                             ACE_TEXT("Found provider '%C' for connection '%C'\n"),
                             this->plan_.connection[i].name.in (),
                             inst_name.c_str ()));
@@ -1632,7 +1632,7 @@ NodeApplication_Impl::getAllConnections()
                           {
                             if (this->is_local_facet (this->plan_.connection[i]))
                               {
-                                DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
+                                DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
                                              ACE_TEXT("Found local facet for connection %C endpoint %C started\n"),
                                              this->plan_.connection[i].name.in(),
                                              name.c_str ()));
@@ -1640,12 +1640,12 @@ NodeApplication_Impl::getAllConnections()
                               }
                             else
                               {
-                                DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
+                                DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
                                              ACE_TEXT("provide_facet for connection %C endpoint %C started\n"),
                                              this->plan_.connection[i].name.in(),
                                              name.c_str ()));
                                 (*conn) [index].endpoint[0] = obj->provide_facet (name.c_str());
-                                DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
+                                DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
                                              ACE_TEXT("provide_facet for connection %C endpoint %C finished\n"),
                                              this->plan_.connection[i].name.in(),
                                              name.c_str ()));
@@ -1653,17 +1653,17 @@ NodeApplication_Impl::getAllConnections()
                           }
                         else
                           {
-                            DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
+                            DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
                                          ACE_TEXT("provide_facet for connection %C endpoint %C started\n"),
                                          this->plan_.connection[i].name.in(),
                                          name.c_str ()));
                             (*conn) [index].endpoint[0] = CORBA::Object::_duplicate (obj.in());
                           }
-                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - provide_facet finished\n")));
+                        DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - provide_facet finished\n")));
                       }
                     catch (const ::Components::InvalidName& )
                       {
-                        DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::getAllConnections - ")
+                        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::getAllConnections - ")
                                      ACE_TEXT("Components::CCMObject_var::provide_facet() returned ")
                                      ACE_TEXT("::Components::InvalidName exception for connection %C and port %C\n"),
                                      this->plan_.connection[i].name.in (),
@@ -1678,17 +1678,17 @@ NodeApplication_Impl::getAllConnections()
                   {
                     try
                       {
-                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
+                        DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
                                      ACE_TEXT("get_consumer for connection %C endpoint %C started\n"),
                                      this->plan_.connection[i].name.in(),
                                      this->plan_.connection[i].internalEndpoint[j].portName.in()));
                         (*conn) [index].endpoint[0] = obj->get_consumer (this->plan_.connection[i].internalEndpoint[j].portName.in());
-                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
+                        DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
                                      ACE_TEXT("get_consumer finished\n")));
                       }
                     catch (const ::Components::InvalidName& )
                       {
-                        DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::getAllConnections - ")
+                        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::getAllConnections - ")
                                      ACE_TEXT("Components::CCMObject_var::get_consumer() returned ")
                                      ACE_TEXT("::Components::InvalidName exception for connection %C and port %C\n"),
                                      this->plan_.connection[i].name.in (),
@@ -1700,7 +1700,7 @@ NodeApplication_Impl::getAllConnections()
                   }
                 default:
                   {
-                    DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::getAllConnections - ")
+                    DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::getAllConnections - ")
                                  ACE_TEXT("Connection.InternalEndPoint.Kind is not a ")
                                  ACE_TEXT("Deployment::Facet or Deployment::EventConsumer\n")));
                     throw ::Deployment::InvalidProperty(this->plan_.connection[i].name.in (),
@@ -1710,7 +1710,7 @@ NodeApplication_Impl::getAllConnections()
             }
         }
     }
-  DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - finished\n")));
+  DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - finished\n")));
   return conn._retn();
 }
 
@@ -1720,7 +1720,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
 {
   DANCE_TRACE ("NodeApplication_Impl::finishLaunch");
 
-  DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
+  DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
                ACE_TEXT("started for connections sequence with length %d and plan size %d\n"),
                providedReference.length(),
                this->plan_.connection.length()));
@@ -1729,7 +1729,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
   {
     std::ostringstream pr_stream;
     pr_stream << providedReference << std::endl;
-    DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::finishLaunch - Provided references: %C\n",
+    DANCE_DEBUG (9, (LM_TRACE, DLINFO "NodeApplication_Impl::finishLaunch - Provided references: %C\n",
                   pr_stream.str ().c_str ()));
   }
 #endif /* GEN_OSTREAM_OPS */
@@ -1738,7 +1738,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
     {
       CORBA::ULong inst (this->plan_.connection[j].internalEndpoint[0].instanceRef);
 
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
                     ACE_TEXT("Connection %C, instance %u\n"),
                     this->plan_.connection[j].name.in (),
                     inst));
@@ -1747,7 +1747,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
       {
         std::ostringstream conn_stream;
         conn_stream << this->plan_.connection[j] << std::endl;
-        DANCE_DEBUG ((LM_TRACE, "NodeApplication_Impl::finishLaunch - Local connections: %C\n", conn_stream.str ().c_str ()));
+        DANCE_DEBUG (9, (LM_TRACE, "NodeApplication_Impl::finishLaunch - Local connections: %C\n", conn_stream.str ().c_str ()));
       }
 #endif /* GEN_OSTREAM_OPS  */
 
@@ -1756,7 +1756,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
 
       if (CORBA::is_nil (obj.in ()))
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
                         ACE_TEXT("Unable to narrow apparent component instance reference to CCMObject for instance '%C'\n"),
                         this->plan_.instance[inst].name.in ()));
           throw ::Deployment::InvalidConnection (this->plan_.instance[inst].name.in (),
@@ -1777,7 +1777,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                     {
                     case ::Deployment::Facet:
                       {
-                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
+                        DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
                                      ACE_TEXT("Set for facet [%C]\n"), name.c_str ()));
                         Components::CCMObject_var ext_inst;
                         try
@@ -1814,7 +1814,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                             ext_inst = Components::CCMObject::_narrow (tmp);
                             if (CORBA::is_nil (ext_inst.in()))
                               {
-                                DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
+                                DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
                                              ACE_TEXT("facet for [%C] can't be narrowed\n"), name.c_str ()));
                                 break;
                               }
@@ -1838,7 +1838,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
 
                     case ::Deployment::EventConsumer:
                       {
-                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - set for consumer\n")));
+                        DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - set for consumer\n")));
                         Components::CCMObject_var ext_inst;
                         try
                           {
@@ -1851,7 +1851,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                             ext_inst = Components::CCMObject::_narrow (tmp);
                             if (CORBA::is_nil (ext_inst.in()))
                               {
-                                DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::finishLaunch - ")
+                                DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::finishLaunch - ")
                                              ACE_TEXT("reference for %C can't be narrowed\n"), name.c_str ()));
                                 throw ::Deployment::InvalidConnection(conn.name.in (),
                                                                       "Couldn't narrow reference for external reference");
@@ -1886,7 +1886,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                     case ::Deployment::SimplexReceptacle:
                       {
                         // What we should do with Cookie, returned from connect call???
-                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - Set for receptacle\n")));
+                        DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - Set for receptacle\n")));
                         ::Components::CCMObject_var facet =
                            ::Components::CCMObject::_narrow (providedReference[i].endpoint[0].in ());
 
@@ -1915,7 +1915,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                       }
                     case ::Deployment::EventEmitter:
                       {
-                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - set for emitter\n")));
+                        DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - set for emitter\n")));
                         this->connect_emitter (obj.in(),
                                                conn.internalEndpoint[0].portName.in(),
                                                providedReference[i].endpoint[0].in());
@@ -1923,7 +1923,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                       }
                     case ::Deployment::EventPublisher:
                       {
-                        DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - set for publisher\n")));
+                        DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - set for publisher\n")));
                         this->connect_publisher (obj.in(),
                                                  conn.internalEndpoint[0].portName.in(),
                                                  providedReference[i].endpoint[0].in());
@@ -1931,7 +1931,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                       }
                     default:
                       {
-                        DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - currect Connection.InternalEndPoint.Kind ")
+                        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - currect Connection.InternalEndPoint.Kind ")
                                      ACE_TEXT("is not a Deployment::SimplexReceptacle, Deployment::EventEmitter, Deployment::EventPublisher ")
                                      ACE_TEXT("(Connection:%C Kind:%i PortName:%C)\n"),
                                      conn.name.in(),
@@ -1945,7 +1945,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                 }
               catch (::Deployment::StartError &ex)
                 {
-                  DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
+                  DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
                                 ACE_TEXT("Intercepted StartError exception while configuring [%C] connection, rethrowing\n"),
                                 name.c_str ()));
                   ex.name = name.c_str ();
@@ -1953,7 +1953,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                 }
               catch (::Deployment::InvalidConnection &ex)
                 {
-                  DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
+                  DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
                                 ACE_TEXT("Intercepted InvalidConnection exception while configuring [%C] connection, rethrowing\n"),
                                 name.c_str ()));
                   ex.name = name.c_str ();
@@ -1970,7 +1970,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
       this->start();
     }
 
-  DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - finished\n")));
+  DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - finished\n")));
 }
 
 bool
@@ -2006,7 +2006,7 @@ NodeApplication_Impl::connect_receptacle (const ::Deployment::PlanConnectionDesc
 
           if (CORBA::is_nil (facet))
             {
-              DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - ")
+              DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - ")
                             ACE_TEXT ("Unable to narrow facet for local facet connection [%C] to receptable [%C]\n"),
                             facet_name.c_str (), recep_name.c_str ()));
               throw ::Deployment::InvalidConnection ("", "");
@@ -2014,7 +2014,7 @@ NodeApplication_Impl::connect_receptacle (const ::Deployment::PlanConnectionDesc
 
           if (CORBA::is_nil (ccm_receptacle))
             {
-              DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - ")
+              DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - ")
                             ACE_TEXT ("Unable to narrow receptacle for local facet connection [%C] to receptable [%C]\n"),
                             facet_name.c_str (), recep_name.c_str ()));
               throw ::Deployment::InvalidConnection ("", "");
@@ -2022,51 +2022,51 @@ NodeApplication_Impl::connect_receptacle (const ::Deployment::PlanConnectionDesc
 
           if (CORBA::is_nil (cont))
             {
-              DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - ")
+              DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - ")
                             ACE_TEXT ("Unable to narrow container for local facet connection [%C] to receptable [%C]\n"),
                             facet_name.c_str (), recep_name.c_str ()));
               throw ::Deployment::InvalidConnection ("", "");
             }
 
-          DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT ("NodeApplication_Impl::connect_receptacle - ")
+          DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT ("NodeApplication_Impl::connect_receptacle - ")
                         ACE_TEXT ("Connecting local facet [%C] to receptacle [%C]\n"),
                         facet_name.c_str (), recep_name.c_str ()));
 
           cont->connect_local_facet (facet, facet_name.c_str (), ccm_receptacle, recep_name.c_str ());
-          DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - connect finished\n")));
+          DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - connect finished\n")));
         }
       else
         {
-          DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - ")
+          DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - ")
                        ACE_TEXT("connect SimplexReceptacle for [%C] started\n"), recep_name.c_str()));
           res = facet->connect (recep_name.c_str(), receptacle);
-          DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - connect finished\n")));
+          DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - connect finished\n")));
         }
     }
   catch (const ::Components::InvalidName& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_receptacle - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_receptacle - ")
                    ACE_TEXT("Components::CCMObject_var::connect() returned ::Components::InvalidName exception\n")));
       throw ::Deployment::StartError("",
                                      "Received InvalidName exception while connecting receptacle.");
     }
   catch (const ::Components::InvalidConnection& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_receptacle - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_receptacle - ")
                    ACE_TEXT("Components::CCMObject_var::connect() returned ::Components::InvalidConnection exception\n")));
       throw ::Deployment::InvalidConnection("",
                                             "InvalidConnection caught while connecting receptacle.");
     }
   catch (const ::Components::AlreadyConnected& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_receptacle - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_receptacle - ")
                    ACE_TEXT("Components::CCMObject_var::connect() returned ::Components::AlreadyConnected exception\n")));
       throw ::Deployment::InvalidConnection("",
                                             "Caught AlreadyConnected exception while connecting receptacle");
     }
   catch (const ::Components::ExceededConnectionLimit& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_receptacle - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_receptacle - ")
                    ACE_TEXT("Components::CCMObject_var::connect() returned ::Components::ExceededConnectionLimit exception\n")));
       throw ::Deployment::InvalidConnection("",
                                             "Caught ExceededConnectionLimit exception while connecting receptacle.");
@@ -2082,35 +2082,35 @@ NodeApplication_Impl::connect_receptacle_ext (Components::CCMObject_ptr inst,
   Components::Cookie* res = 0;
   try
     {
-      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle_ext - ")
+      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle_ext - ")
                    ACE_TEXT("connect SimplexReceptacle for %C started\n"), port_name.c_str()));
       res = inst->connect (port_name.c_str(), facet);
-      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle_ext - connect finished\n")));
+      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle_ext - connect finished\n")));
     }
   catch (const ::Components::InvalidName& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_receptacle_ext - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_receptacle_ext - ")
                    ACE_TEXT("Components::CCMObject_var::connect() returned ::Components::InvalidName exception\n")));
       throw ::Deployment::StartError("",
                                      "Caught InvalidName exception while connecting external receptacle.");
     }
   catch (const ::Components::InvalidConnection& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_receptacle_ext - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_receptacle_ext - ")
                    ACE_TEXT("Components::CCMObject_var::connect() returned ::Components::InvalidConnection exception\n")));
       throw ::Deployment::InvalidConnection("",
                                             "Caught InvalidConnection exception while connecting external receptacle.");
     }
   catch (const ::Components::AlreadyConnected& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_receptacle_ext - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_receptacle_ext - ")
                    ACE_TEXT("Components::CCMObject_var::connect() returned ::Components::AlreadyConnected exception\n")));
       throw ::Deployment::InvalidConnection("",
                                             "Caught AlreadyConnected exception while connecting external receptacle.");
     }
   catch (const ::Components::ExceededConnectionLimit& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_receptacle_ext - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_receptacle_ext - ")
                    ACE_TEXT("Components::CCMObject_var::connect() returned ::Components::ExceededConnectionLimit exception\n")));
       throw ::Deployment::InvalidConnection("",
                                             "Caught ExceededConnectionLimit while connecting external receptacle.");
@@ -2126,29 +2126,29 @@ NodeApplication_Impl::connect_emitter (Components::CCMObject_ptr inst,
   Components::EventConsumerBase_var event = Components::EventConsumerBase::_unchecked_narrow (consumer);
   try
     {
-      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_emitter - ")
+      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_emitter - ")
                    ACE_TEXT("connect_consumer for %C started\n"), port_name.c_str()));
       inst->connect_consumer (port_name.c_str(), event);
-      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_emitter - ")
+      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_emitter - ")
                    ACE_TEXT("connect_consumer finished\n")));
     }
   catch (const ::Components::InvalidName& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" ACE_TEXT(NodeApplication_Impl::connect_emitter - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" ACE_TEXT(NodeApplication_Impl::connect_emitter - ")
                    ACE_TEXT("Components::CCMObject_var::connect_consumer() returned ::Components::InvalidName exception\n")));
       throw ::Deployment::StartError("",
                                      "Caught InvalidName while connecting emitter.");
     }
   catch (const ::Components::AlreadyConnected& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_emitter - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_emitter - ")
                    ACE_TEXT("Components::CCMObject_var::connect_consumer() returned ::Components::AlreadyConnected exception\n")));
       throw ::Deployment::InvalidConnection("",
                                             "Caught AlreadyConnected exception while connecting emitter");
     }
   catch (const ::Components::InvalidConnection& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_emitter - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_emitter - ")
                    ACE_TEXT("Components::CCMObject_var::connect_consumer() returned ::Components::InvalidConnection exception\n")));
       throw ::Deployment::InvalidConnection("",
                                             "Caught InvalidConnection while connecting emitter.");
@@ -2163,21 +2163,21 @@ NodeApplication_Impl::connect_emitter_ext (Components::CCMObject_ptr inst,
   Components::EventConsumerBase_var event = Components::EventConsumerBase::_unchecked_narrow (consumer);
   try
     {
-      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_emitter_ext - ")
+      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_emitter_ext - ")
                    ACE_TEXT("connect_emitter_ext for %C started\n"), port_name.c_str()));
       inst->connect_consumer (port_name.c_str(), event);
-      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_emitter_ext - connect_emitter_ext finished\n")));
+      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_emitter_ext - connect_emitter_ext finished\n")));
     }
   catch (const ::Components::AlreadyConnected& )
     {
-      DANCE_DEBUG ( (LM_WARNING, ACE_TEXT("NodeApplication_Impl::connect_emitter_ext - ")
+      DANCE_DEBUG (6, (LM_WARNING, ACE_TEXT("NodeApplication_Impl::connect_emitter_ext - ")
                      ACE_TEXT("Components::CCMObject_var::connect_consumer() returned ::Components::AlreadyConnected exception\n")));
       throw ::Deployment::InvalidConnection("",
                                             "Caught AlreadyConnected exception while connecting external emitter.");
     }
   catch (const ::Components::InvalidConnection& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_emitter_ext - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_emitter_ext - ")
                    ACE_TEXT("Components::CCMObject_var::connect_consumer() returned ::Components::InvalidConnection exception\n")));
       throw ::Deployment::InvalidConnection("",
                                             "Caught InvalidConnection exception while connecting external emitter.");
@@ -2193,7 +2193,7 @@ NodeApplication_Impl::connect_publisher (Components::CCMObject_ptr inst,
 
   if (CORBA::is_nil (inst))
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::connect_publisher - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::connect_publisher - ")
                     ACE_TEXT("Provided a nil CCMObject reference while connecting port %C\n"),
                     port_name.c_str ()));
       throw ::Deployment::InvalidConnection ();
@@ -2203,24 +2203,24 @@ NodeApplication_Impl::connect_publisher (Components::CCMObject_ptr inst,
   try
     {
       res = inst->subscribe (port_name.c_str(), event);
-      DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_publisher - successfully subscribed %C\n"),
+      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_publisher - successfully subscribed %C\n"),
                    port_name.c_str ()));
     }
   catch (const ::Components::InvalidName& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_publisher - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_publisher - ")
                    ACE_TEXT("Components::CCMObject_var::subscribe() returned ::Components::InvalidName exception\n")));
       throw ::Deployment::StartError("", "Caught InvalidName exception while connecting publisher");
     }
   catch (const ::Components::InvalidConnection& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_publisher - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_publisher - ")
                    ACE_TEXT("Components::CCMObject_var::subscribe() returned ::Components::InvalidConnection exception\n")));
       throw ::Deployment::InvalidConnection("", "Caught InvalidConnection exception while connecting publisher.");
     }
   catch (const ::Components::ExceededConnectionLimit& )
     {
-      DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_publisher - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_publisher - ")
                    ACE_TEXT("Components::CCMObject_var::subscribe() returned ::Components::ExceededCOnnectionLimit exception\n")));
       throw ::Deployment::InvalidConnection("", "Caught ExceededConnectionLimit exception while connecting publisher.");
     }

@@ -47,7 +47,7 @@ namespace CIAO_Hello_Receiver_Impl
         int usec_rec = ACE_OS::atoi (rec.substr (3, 6).c_str ());
         if (sec_rec != now.second ())
           usec_rec += 10000000;
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("<%C> received <%C> - <%d>. difference <%d>\n"),
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("<%C> received <%C> - <%d>. difference <%d>\n"),
                     this->name_.c_str (),
                     an_instance.hello.in (),
                     an_instance.iterator,
@@ -55,13 +55,13 @@ namespace CIAO_Hello_Receiver_Impl
       }
     else
     {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT("<%C> received <%C> - <%d>.\n"),
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("<%C> received <%C> - <%d>.\n"),
       this->name_.c_str (),
       an_instance.hello.in (),
       an_instance.iterator));
     }
 /*
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DDSHello_Listener: ")
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("DDSHello_Listener: ")
             ACE_TEXT ("received hello for <%C> - iterator <%d>\n"),
             an_instance.hello.in (),
             an_instance.iterator));
@@ -96,7 +96,7 @@ namespace CIAO_Hello_Receiver_Impl
     const ::DDS::SampleLostStatus & /* status */)
   {
     ++this->lost_;
-    CIAO_DEBUG ((LM_ERROR, ACE_TEXT("port status listener::on_sample_lost\n")));
+    ACE_DEBUG ((LM_ERROR, ACE_TEXT("port status listener::on_sample_lost\n")));
   }
 
 
@@ -118,47 +118,47 @@ namespace CIAO_Hello_Receiver_Impl
      ::DDS::Topic_ptr /* the_topic */,
      const DDS::InconsistentTopicStatus & /* status */)
   {
-    CIAO_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
+    ACE_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
           ACE_TEXT ("ConnectorStatusListener_exec_i::on_inconsistent_topic\n")));
   }
 
   void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::RequestedIncompatibleQosStatus & /*status*/)  
+     const DDS::RequestedIncompatibleQosStatus & /*status*/)
   {
-    CIAO_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
+    ACE_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
           ACE_TEXT ("ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n")));
   }
 
   void ConnectorStatusListener_exec_i::on_sample_rejected(
      ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::SampleRejectedStatus & /*status*/)  
+     const DDS::SampleRejectedStatus & /*status*/)
   {
-    CIAO_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
+    ACE_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
           ACE_TEXT ("ConnectorStatusListener_exec_i::on_sample_rejected\n")));
   }
 
   void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
      ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedDeadlineMissedStatus & /*status*/)  
+     const DDS::OfferedDeadlineMissedStatus & /*status*/)
   {
-    CIAO_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
+    ACE_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
           ACE_TEXT ("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n")));
   }
 
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
      ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedIncompatibleQosStatus & /*status*/)  
+     const DDS::OfferedIncompatibleQosStatus & /*status*/)
   {
-    CIAO_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
+    ACE_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
           ACE_TEXT ("ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n")));
   }
 
   void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr /*the_entity*/,
-    ::DDS::StatusKind  /*status_kind*/)  
+    ::DDS::StatusKind  /*status_kind*/)
   {
-    CIAO_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
+    ACE_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
           ACE_TEXT ("ConnectorStatusListener_exec_i::on_unexpected_status\n")));
   }
 
@@ -166,9 +166,9 @@ namespace CIAO_Hello_Receiver_Impl
     ::DDS::DataReader_ptr /*the_reader*/,
     const ::DDS::SubscriptionMatchedStatus & /*status*/)
   {
-    CIAO_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
+    ACE_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
           ACE_TEXT ("ConnectorStatusListener_exec_i::on_subscription_matched\n")));
-  }  
+  }
 
   //============================================================
   // Component Executor Implementation Class: Receiver_exec_iDDSHello_Listener_exec_i ();
@@ -213,14 +213,14 @@ namespace CIAO_Hello_Receiver_Impl
   ::CCM_DDS::Hello::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new DDSHello RAW listener\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new DDSHello RAW listener\n")));
     return new DDSHello_Listener_exec_i (this->received_, this->name_);
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
   {
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
     return new PortStatusListener_exec_i (this->lost_);
   }
 
@@ -257,7 +257,7 @@ namespace CIAO_Hello_Receiver_Impl
 
     if (CORBA::is_nil (lc.in ()))
       {
-        CIAO_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
+        ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw CORBA::INTERNAL ();
       }
     lc->mode ( ::CCM_DDS::ONE_BY_ONE);
@@ -271,18 +271,18 @@ namespace CIAO_Hello_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-    CIAO_DEBUG ((LM_INFO, "Receiver_exec_i summary: received <%u> - expected <%d> - lost <%u>\n",
+    ACE_DEBUG ((LM_INFO, "Receiver_exec_i summary: received <%u> - expected <%d> - lost <%u>\n",
                 this->received_.value (),
                 this->expected_,
                 this->lost_.value ()));
     if (this->lost_ > 0)
       {
-        CIAO_ERROR ((LM_ERROR, "ERROR : Lost %u samples\n",
+        ACE_ERROR ((LM_ERROR, "ERROR : Lost %u samples\n",
             this->lost_.value ()));
-      } 
+      }
     if (this->received_ < this->expected_)
       {
-        CIAO_ERROR ((LM_ERROR, "ERROR : Expected to receive %u samples, actually got %u\n",
+        ACE_ERROR ((LM_ERROR, "ERROR : Expected to receive %u samples, actually got %u\n",
             this->expected_, this->received_.value ()));
       }
   }

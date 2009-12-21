@@ -57,7 +57,7 @@ namespace CIAO_Simple_SimpleNilFacetUser_Impl
 
     if (CORBA::is_nil (trig.in ()))
       {
-        CIAO_ERROR ((LM_ERROR, "SimpleNilFacetUser_exec_i::ccm_activate () - "
+        ACE_ERROR ((LM_ERROR, "SimpleNilFacetUser_exec_i::ccm_activate () - "
                      "Error: Reference nil for port trig\n"));
         return;
       }
@@ -68,24 +68,24 @@ namespace CIAO_Simple_SimpleNilFacetUser_Impl
       }
     catch (const ::CORBA::INV_OBJREF &)
       {
-        CIAO_DEBUG ((LM_DEBUG, "SimpleNilFacetUser_exec_i::ccm_activate () - "
+        ACE_DEBUG ((LM_DEBUG, "SimpleNilFacetUser_exec_i::ccm_activate () - "
                      "Caught correct CORBA exception\n"));
         caught_exception = true;
       }
     catch (const CORBA::Exception &ex)
       {
-        CIAO_ERROR ((LM_ERROR, "SimpleNilFacetUser_exec_i::ccm_activate () - "
+        ACE_ERROR ((LM_ERROR, "SimpleNilFacetUser_exec_i::ccm_activate () - "
                      "Caught CORBA exception, details follow:\n"));
         ex._tao_print_exception ("SimpleNilFacetUser_exec_i::ccm_activate () - ");
       }
     catch (...)
       {
-        CIAO_ERROR ((LM_ERROR, "SimpleNilFacetUser_exec_i::ccm_activate () - "
+        ACE_ERROR ((LM_ERROR, "SimpleNilFacetUser_exec_i::ccm_activate () - "
                      "Error: Caught unknown exception whilst invoking reference for port trig.\n"));
       }
     if (!caught_exception)
       {
-        CIAO_ERROR ((LM_ERROR, "SimpleNilFacetUser_exec_i::ccm_activate () - "
+        ACE_ERROR ((LM_ERROR, "SimpleNilFacetUser_exec_i::ccm_activate () - "
                      "Error: Didn't catch correct exception\n"));
       }
   }

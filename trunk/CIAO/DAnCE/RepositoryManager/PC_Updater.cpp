@@ -200,7 +200,7 @@ void PC_Updater::clear_list ()
       iter++;
     }
 
-    DANCE_ERROR ((LM_ERROR,
+    DANCE_ERROR (1, (LM_ERROR,
                "[PC_Updater::update] Unable to update: %s!\n",
                location));
 

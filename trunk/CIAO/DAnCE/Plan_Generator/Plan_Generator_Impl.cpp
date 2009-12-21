@@ -63,7 +63,7 @@ namespace CIAO
 
       if (CORBA::is_nil (this->rm_.in ()))
         {
-          DANCE_ERROR ((LM_ERROR,
+          DANCE_ERROR (1, (LM_ERROR,
                       "(%P|%t) Plan_Generator_i: nil Repository "
                       "Manager reference, narrow failed\n"));
           return false;
@@ -79,7 +79,7 @@ namespace CIAO
     {
       if (CORBA::is_nil (rm_.in ()))
         {
-          DANCE_ERROR ((LM_ERROR,
+          DANCE_ERROR (1, (LM_ERROR,
                       "(%P|%t) Plan_Generator_i: nil Execution\n"));
           return false;
         }
@@ -130,7 +130,7 @@ namespace CIAO
     {
       if (CORBA::is_nil (rm_.in ()))
         {
-          DANCE_ERROR ((LM_ERROR,
+          DANCE_ERROR (1, (LM_ERROR,
                       "(%P|%t) Plan_Generator_i: nil Execution\n"));
           return false;
         }

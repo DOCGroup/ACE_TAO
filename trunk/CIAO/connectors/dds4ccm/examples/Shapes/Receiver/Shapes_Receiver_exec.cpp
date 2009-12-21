@@ -58,7 +58,7 @@ namespace CIAO_Shapes_Receiver_Impl
     const ShapeType & an_instance ,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("ShapeType_Listener: ")
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ShapeType_Listener: ")
             ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
             an_instance.color.in (),
             an_instance.x,
@@ -126,13 +126,13 @@ namespace CIAO_Shapes_Receiver_Impl
         this->reader_->read_one_last (shape_info, readinfo, ::DDS::HANDLE_NIL);
         time_t tim = readinfo.source_timestamp.sec;
         tm* time = localtime(&tim);
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ONE Read_Info ")
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ONE Read_Info ")
                   ACE_TEXT (" -> date = %02d:%02d:%02d.%d\n"),
                             time->tm_hour,
                             time->tm_min,
                             time->tm_sec,
                             readinfo.source_timestamp.nanosec));
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ON shape info : ")
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ON shape info : ")
             ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
             shape_info.color.in (),
             shape_info.x,
@@ -141,7 +141,7 @@ namespace CIAO_Shapes_Receiver_Impl
       }
     catch(CCM_DDS::NonExistent& )
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ShapeType_Read_One: ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ShapeType_Read_One: ")
                   ACE_TEXT ("no shape_info receieved\n")));
       }
   }
@@ -156,7 +156,7 @@ namespace CIAO_Shapes_Receiver_Impl
       {
         time_t tim = readinfoseq[i].source_timestamp.sec;
         tm* time = localtime(&tim);
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
             ACE_TEXT ("-> UTC date = %02d:%02d:%02d.%d\n"),
                             time->tm_hour,
                             time->tm_min,
@@ -165,7 +165,7 @@ namespace CIAO_Shapes_Receiver_Impl
       }
     for(CORBA::ULong i = 0; i < shape_infos->length(); ++i)
       {
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL Shape Info : ")
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL Shape Info : ")
               ACE_TEXT ("Number <%d> : received shape_info for <%C> at %u:%u:%u\n"),
             i,
             shape_infos[i].color.in (),
@@ -188,13 +188,13 @@ namespace CIAO_Shapes_Receiver_Impl
           {
             time_t tim = readinfo->source_timestamp.sec;
             tm* time = localtime(&tim);
-            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ReadInfo -> ")
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ReadInfo -> ")
                                    ACE_TEXT ("date = %02d:%02d:%02d.%d\n"),
                                 time->tm_hour,
                                 time->tm_min,
                                 time->tm_sec,
                                 readinfo->source_timestamp.nanosec));
-            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ShapeType : ")
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ShapeType : ")
                                    ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
                 shape_info->color.in (),
                 shape_info->x,
@@ -203,13 +203,13 @@ namespace CIAO_Shapes_Receiver_Impl
           }
         else
           {
-            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE No data available for <%C>\n"),
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE No data available for <%C>\n"),
                     shape_info->color.in ()));
           }
       }
     catch(CCM_DDS::NonExistent& )
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ShapeType_Read_One: no shape_info receieved\n")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ShapeType_Read_One: no shape_info receieved\n")));
       }
   }
 
@@ -273,21 +273,21 @@ namespace CIAO_Shapes_Receiver_Impl
   ::CCM_DDS::ShapeType::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new ShapeType RAW listener\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new ShapeType RAW listener\n")));
     return new ShapeType_Listener_exec_i ();
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
   {
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
     return new PortStatusListener_exec_i ();
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_get_status (void)
   {
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
     return new PortStatusListener_exec_i ();
   }
 
@@ -325,7 +325,7 @@ namespace CIAO_Shapes_Receiver_Impl
 
     if (CORBA::is_nil (lc.in ()))
       {
-        CIAO_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
+        ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw CORBA::INTERNAL ();
       }
 
@@ -339,7 +339,7 @@ namespace CIAO_Shapes_Receiver_Impl
                                           ACE_Time_Value(0, usec),
                                           ACE_Time_Value(0, usec)) == -1)
       {
-        CIAO_ERROR ((LM_ERROR, "Unable to schedule Timer\n"));
+        ACE_ERROR ((LM_ERROR, "Unable to schedule Timer\n"));
       }
   }
 

@@ -34,13 +34,13 @@ namespace CIAO_Event_Connection_Test_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
-    this->writer_ = 
+    this->writer_ =
         this->context_->get_connection_info_write_data ();
     if (!CORBA::is_nil (this->writer_))
       {
         this->writer_ok_ = true;
       }
-    this->writer_dds_datawriter_ = 
+    this->writer_dds_datawriter_ =
         this->context_->get_connection_info_write_dds_entity ();
     if (!CORBA::is_nil (this->writer_dds_datawriter_))
       {
@@ -63,19 +63,19 @@ namespace CIAO_Event_Connection_Test_Sender_Impl
   {
     if (!this->writer_ok_)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Sender : get writer failed\n")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Sender : get writer failed\n")));
       }
     else
       {
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender : Get writer passed\n")));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender : Get writer passed\n")));
       }
     if (!this->writer_dds_datawriter_ok_)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Sender : get dds writer failed\n")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Sender : get dds writer failed\n")));
       }
     else
       {
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender : Get dds writer passed\n")));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender : Get dds writer passed\n")));
       }
   }
 

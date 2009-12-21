@@ -44,7 +44,7 @@ struct Options
         path_ = tmp.substring (begin, pos - begin);
       else
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "Options::Installation::init - "
+          DANCE_ERROR (1, (LM_ERROR, DLINFO "Options::Installation::init - "
                       "Installation directive missing name and replace parameters, "
                       "must have form path,name,replace\n"));
           return false;
@@ -58,7 +58,7 @@ struct Options
         name_ = tmp.substring (begin, pos - begin);
       else
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "Options::Installation::init - "
+          DANCE_ERROR (1, (LM_ERROR, DLINFO "Options::Installation::init - "
                       "Installation directive mssing replace parameter, "
                       "must have form path,name,replace\n"));
           return false;
@@ -70,7 +70,7 @@ struct Options
       else if (tmp[begin] == '1') replace_ = true;
       else
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "Options::Installation::init - "
+          DANCE_ERROR (1, (LM_ERROR, DLINFO "Options::Installation::init - "
                       "Replace directive muse be 1 or 0.\n"));
           return false;
         }
@@ -106,7 +106,7 @@ struct Options
         path_ = tmp.substring (begin, pos - begin);
       else
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "Options::Creation::init - "
+          DANCE_ERROR (1, (LM_ERROR, DLINFO "Options::Creation::init - "
                       "Creation directive missing name, base location,  and replace parameters, "
                       "must have form path,name,base,replace\n"));
           return false;
@@ -120,7 +120,7 @@ struct Options
         name_ = tmp.substring (begin, pos - begin);
       else
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "Options::Creation::init - "
+          DANCE_ERROR (1, (LM_ERROR, DLINFO "Options::Creation::init - "
                       "Creation directive mssing base location and replace parameter, "
                       "must have form path,name,base,replace\n"));
           return false;
@@ -133,7 +133,7 @@ struct Options
         base_location_ = tmp.substring (begin, pos - begin);
       else
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "Options::Creation::init - "
+          DANCE_ERROR (1, (LM_ERROR, DLINFO "Options::Creation::init - "
                       "Creation directive mssing replace parameter, "
                       "must have form path,name,base,replace\n"));
           return false;
@@ -145,7 +145,7 @@ struct Options
       else if (tmp[begin] == '1') replace_ = true;
       else
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "Options::Creation::init - "
+          DANCE_ERROR (1, (LM_ERROR, DLINFO "Options::Creation::init - "
                       "Replace directive muse be 1 or 0.\n"));
           return false;
         }
@@ -174,7 +174,7 @@ struct Options
 
   void usage (void)
   {
-    DANCE_ERROR ((LM_EMERGENCY, "usage:\n"
+    DANCE_ERROR (1, (LM_EMERGENCY, "usage:\n"
                 "\t-h,--help\t\t\tThis message.\n"
                 "\t-r,--rm-ior <ior>\t\tIOR where the RM instance may be found\n"
                 "\t-i,--install <path>,<name>,<1|0>\tInstall package found at <path> into the RM, with <name>,\n"
@@ -221,7 +221,7 @@ struct Options
             break;
 
           case 'r':
-            DANCE_DEBUG ((LM_DEBUG, DLINFO "Options::parse_args - "
+            DANCE_DEBUG (6, (LM_DEBUG, DLINFO "Options::parse_args - "
                           "Using provided RM IOR: %C\n",
                           get_opt.opt_arg ()));
             rm_ior_ = get_opt.opt_arg ();
@@ -235,11 +235,11 @@ struct Options
               }
 
             if (inst.replace_)
-              DANCE_DEBUG ((LM_DEBUG, DLINFO "Options::parse_args - "
+              DANCE_DEBUG (6, (LM_DEBUG, DLINFO "Options::parse_args - "
                             "Replacing installed package from path %C with name %C.\n", inst.path_.c_str (),
                             inst.name_.c_str ()));
             else
-              DANCE_DEBUG ((LM_DEBUG, DLINFO "Options::parse_args - "
+              DANCE_DEBUG (6, (LM_DEBUG, DLINFO "Options::parse_args - "
                             "Installing package from path %C with name %C.\n", inst.path_.c_str (),
                             inst.name_.c_str ()));
 
@@ -254,13 +254,13 @@ struct Options
               }
 
             if (create.replace_)
-              DANCE_DEBUG ((LM_DEBUG, DLINFO "Options::parse_args - "
+              DANCE_DEBUG (6, (LM_DEBUG, DLINFO "Options::parse_args - "
                             "Replacing installed package from path %C with name %C and base location %C.\n",
                             create.path_.c_str (),
                             create.name_.c_str (),
                             create.base_location_.c_str ()));
             else
-              DANCE_DEBUG ((LM_DEBUG, DLINFO "Options::parse_args - "
+              DANCE_DEBUG (6, (LM_DEBUG, DLINFO "Options::parse_args - "
                             "Installing new package from path %C with name %C and base location %C.\n",
                             create.path_.c_str (),
                             create.name_.c_str (),
@@ -270,25 +270,25 @@ struct Options
             break;
 
           case 'u':
-            DANCE_DEBUG ((LM_DEBUG, DLINFO "Options::parse_args - "
+            DANCE_DEBUG (6, (LM_DEBUG, DLINFO "Options::parse_args - "
                           "Removing package with UUID %C\n", get_opt.opt_arg ()));
             this->uninstall_.insert (get_opt.opt_arg ());
             break;
 
           case 'l':
-            DANCE_DEBUG ((LM_DEBUG, DLINFO "Options::parse_args - "
+            DANCE_DEBUG (6, (LM_DEBUG, DLINFO "Options::parse_args - "
                           "Listing all packages.\n"));
             this->list_ = true;
             break;
 
           case 's':
-            DANCE_DEBUG ((LM_DEBUG, DLINFO "Options::parse_args - "
+            DANCE_DEBUG (6, (LM_DEBUG, DLINFO "Options::parse_args - "
                           "Shutting down the RM instance.\n"));
             this->shutdown_ = true;
             break;
 
           case 'd':
-            DANCE_DEBUG ((LM_DEBUG, DLINFO "Options::parse_args - "
+            DANCE_DEBUG (6, (LM_DEBUG, DLINFO "Options::parse_args - "
                           "Using provided Domain NC: %C\n",
                           get_opt.opt_arg ()));
             domain_nc_ = get_opt.opt_arg ();
@@ -299,7 +299,7 @@ struct Options
               }
             else
               {
-                DANCE_ERROR ((LM_ERROR, DLINFO "Options::parse_args - "
+                DANCE_ERROR (1, (LM_ERROR, DLINFO "Options::parse_args - "
                               "Unknown long option: %C\n",
                               get_opt.long_option ()));
                 this->usage ();
@@ -332,7 +332,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
       dlf->init (argc, argv);
 
-      DANCE_DEBUG ((LM_TRACE, DLINFO
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO
                     "Module_main.h - initializing ORB\n"));
 
       CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
@@ -352,7 +352,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
       int error = options.parse_args (argc, argv);
       if (error == -1)
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "repository_manager_admin_exec::main - "
+          DANCE_ERROR (1, (LM_ERROR, DLINFO "repository_manager_admin_exec::main - "
                         "Failed to parse command line arguments.\n"));
         }
       else if (error == 1)
@@ -362,7 +362,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
       if (options.rm_ior_ == 0)
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "repository_manager_admin_exec::main - "
+          DANCE_ERROR (1, (LM_ERROR, DLINFO "repository_manager_admin_exec::main - "
                         "No RepositoryManager IOR provided\n"));
           return -1;
         }
@@ -375,7 +375,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
       if (CORBA::is_nil (obj))
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "repository_manager_admin_exec::main - "
+          DANCE_ERROR (1, (LM_ERROR, DLINFO "repository_manager_admin_exec::main - "
                         "Provided IOR was invalid or could not be narrowed: %s\n",
                         options.rm_ior_));
           return -1;
@@ -424,16 +424,16 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
           ::CORBA::StringSeq * packages = admin.list_packages ();
           if (packages == 0)
             {
-              DANCE_ERROR ((LM_ERROR, DLINFO "repository_manager_admin_exec::main - "
+              DANCE_ERROR (1, (LM_ERROR, DLINFO "repository_manager_admin_exec::main - "
                             "No packages returned from list_packages\n"));
               retval = -1;
             }
 
-          DANCE_DEBUG ((LM_EMERGENCY, "Listing %u packages installed on server:\n"));
+          DANCE_DEBUG (6, (LM_EMERGENCY, "Listing %u packages installed on server:\n"));
 
           for (CORBA::ULong i = 0; i < packages->length (); ++i)
             {
-              DANCE_DEBUG ((LM_EMERGENCY, "\t%s\n",
+              DANCE_DEBUG (6, (LM_EMERGENCY, "\t%s\n",
                             (*packages)[i].in ()));
             }
 
@@ -442,21 +442,21 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
       if (options.shutdown_)
         {
-          DANCE_DEBUG ((LM_EMERGENCY, "Shutting down the Repository Manager\n"));
+          DANCE_DEBUG (6, (LM_EMERGENCY, "Shutting down the Repository Manager\n"));
           if (!admin.shutdown ())
             retval = -1;
         }
     }
   catch (CORBA::Exception &ex)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO "repository_manager_admin_exec::main - "
+      DANCE_ERROR (1, (LM_ERROR, DLINFO "repository_manager_admin_exec::main - "
                     "Caught unexpected CORBA Exception: %s\n",
                     ex._info ().c_str ()));
       return -1;
     }
   catch (...)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO "repository_manager_admin_exec::main - "
+      DANCE_ERROR (1, (LM_ERROR, DLINFO "repository_manager_admin_exec::main - "
                     "Caught unexpected C++ exception.\n"));
       return -1;
     }

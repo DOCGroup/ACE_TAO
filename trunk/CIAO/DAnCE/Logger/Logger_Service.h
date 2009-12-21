@@ -16,13 +16,11 @@ namespace DAnCE
       virtual ACE_Log_Msg_Backend * get_logger_backend (CORBA::ORB_ptr orb);
     private:
       void parse_args (int argc, ACE_TCHAR **argv);
-      void set_levels (void);
 
       ACE_TString filename_;
       bool trace_;
-      int log_level_;
     };
-} // DAnCE
+}
 
 ACE_FACTORY_DECLARE (DAnCE_Logger, Logger_Service)
 
