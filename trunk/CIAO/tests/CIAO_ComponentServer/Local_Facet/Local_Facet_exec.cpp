@@ -20,7 +20,7 @@ namespace CIAO_Bar_Impl
 
   void Foo_exec_i::simple (void)
   {
-    CIAO_DEBUG ((LM_INFO, "Got simple invocation\n"));
+    ACE_DEBUG ((LM_INFO, "Got simple invocation\n"));
   }
 
   // Operations from ::Foo
@@ -69,14 +69,14 @@ namespace CIAO_Bar_Impl
 
     if (CORBA::is_nil (foo_intf))
       {
-        CIAO_ERROR ((LM_ERROR, "ERROR: Local_Facet_Test: got a nil object reference for my connection\n"));
+        ACE_ERROR ((LM_ERROR, "ERROR: Local_Facet_Test: got a nil object reference for my connection\n"));
         return;
       }
 
-    CIAO_DEBUG ((LM_DEBUG, "Invoking simple\n"));
+    ACE_DEBUG ((LM_DEBUG, "Invoking simple\n"));
     foo_intf->simple ();
 
-    CIAO_DEBUG ((LM_INFO, "Test successful!\n"));
+    ACE_DEBUG ((LM_INFO, "Test successful!\n"));
   }
 
   void

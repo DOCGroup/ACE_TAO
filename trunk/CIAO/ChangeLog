@@ -1,3 +1,10 @@
+Mon Dec 21 14:56:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CIAO_ComponentServer/Local_Facet/Local_Facet_exec.cpp
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent_exec.cpp
+        * tests/IDL_Test/Double_Inherited_Component/ComponentC_exec.cpp
+          Use ACE_ERROR/ACE_DEBUG
+
 Mon Dec 21 12:52:38 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/docs/TestCoverage.ods:
