@@ -46,13 +46,6 @@ module A
 */
 };
 
-/*
-Jeff can you check this one?
-module EmptyTyped<typename S, typename Z>
-{
-};
-*/
- 
 typedef sequence<iface> ifaceSeq;
 
 module second<exception X, typename W>
