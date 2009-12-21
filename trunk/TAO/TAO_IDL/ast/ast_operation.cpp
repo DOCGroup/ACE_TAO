@@ -389,6 +389,22 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
                 
               break;
             }
+          case AST_Decl::NT_native:
+            {
+              // This is the only use case for this node type.
+              int compare =
+                ACE_OS::strcmp (d->local_name ()->get_string (),
+                                "UserExceptionBase");
+                                
+              if (compare != 0)
+                {
+                  idl_global->err ()->error1 (
+                    UTL_Error::EIDL_ILLEGAL_RAISES,
+                    this);
+                }
+                
+              break;
+            }
           default:
             idl_global->err ()->error1 (
               UTL_Error::EIDL_ILLEGAL_RAISES,
