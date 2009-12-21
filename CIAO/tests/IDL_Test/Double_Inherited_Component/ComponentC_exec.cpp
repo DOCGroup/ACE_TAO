@@ -93,11 +93,11 @@ namespace CIAO_connector_test_C_Impl
   ComponentC_exec_i::ccm_remove (void)
   {
     if (!this->topic_name_c_has_been_set_)
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Topic name C has not been set\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Topic name C has not been set\n")));
     if (!this->topic_name_b_has_been_set_)
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Topic name B has not been set\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Topic name B has not been set\n")));
     if (!this->topic_name_a_has_been_set_)
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Topic name A has not been set\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Topic name A has not been set\n")));
   }
 
   extern "C" INHERITED_COMPONENTS_EXEC_Export ::Components::EnterpriseComponent_ptr
