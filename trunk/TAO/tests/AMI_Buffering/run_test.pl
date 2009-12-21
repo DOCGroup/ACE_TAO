@@ -27,7 +27,9 @@ my $iorfile = "server.ior";
 
 #Files which used by server
 my $server_iorfile = $server->LocalFile ($iorfile);
+my $server_iorfile_admin = $server->LocalFile ($iorfile_admin);
 $server->DeleteFile($iorfile);
+$server->DeleteFile($iorfile_admin);
 
 #Files which used by client
 my $client_iorfile = $client->LocalFile ($iorfile);
@@ -45,7 +47,8 @@ $AD = $admin->CreateProcess ("admin",
 
 $SV = $server->CreateProcess ("server",
                               "-ORBdebuglevel $debug_level " .
-                              "-o $server_iorfile");
+                              "-o $server_iorfile " .
+                              "-k file://$server_iorfile_admin");
 
 $CL = $client->CreateProcess ("client",
                               "-k file://$client_iorfile " .
@@ -62,6 +65,21 @@ if ($admin_status != 0) {
 if ($admin->WaitForFileTimed ($iorfile_admin,
                                $admin->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile_admin>\n";
+    $AD->Kill (); $AD->TimedWait (1);
+    exit 1;
+}
+if ($admin->GetFile ($iorfile_admin) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$admin_iorfile_admin>\n";
+    $AD->Kill (); $AD->TimedWait (1);
+    exit 1;
+}
+if ($client->PutFile ($iorfile_admin) == -1) {
+    print STDERR "ERROR: cannot set file <$client_iorfile_admin>\n";
+    $AD->Kill (); $AD->TimedWait (1);
+    exit 1;
+}
+if ($server->PutFile ($iorfile_admin) == -1) {
+    print STDERR "ERROR: cannot set file <$server_iorfile_admin>\n";
     $AD->Kill (); $AD->TimedWait (1);
     exit 1;
 }
@@ -96,17 +114,6 @@ if ($client->PutFile ($iorfile) == -1) {
     exit 1;
 }
 
-if ($admin->GetFile ($iorfile_admin) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$admin_iorfile_admin>\n";
-    KillServers();
-    exit 1;
-}
-if ($client->PutFile ($iorfile_admin) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iorfile_admin>\n";
-    KillServers();
-    exit 1;
-}
-
 $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
 if ($client_status != 0) {
@@ -129,10 +136,9 @@ if ($admin_status != 0) {
 }
 
 $server->DeleteFile($iorfile);
-
 $client->DeleteFile($iorfile);
 $client->DeleteFile($iorfile_admin);
-
+$server->DeleteFile($iorfile_admin);
 $admin->DeleteFile($iorfile_admin);
 
 exit $status;
