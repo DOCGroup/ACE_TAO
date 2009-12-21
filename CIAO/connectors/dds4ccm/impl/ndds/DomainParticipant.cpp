@@ -48,7 +48,7 @@ namespace CIAO
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::create_publisher_with_profile");
 
-        CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_DomainParticipant_i::create_publisher_with_profile - "
+        CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipant_i::create_publisher_with_profile - "
                      "Creating Publisher\n"));
 
         RTI_PublisherListener_i *rti_pl = new RTI_PublisherListener_i (a_listener);
@@ -60,12 +60,12 @@ namespace CIAO
 
         if (!rti_pub)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_DomainParticipant_i::create_publisher_with_profile - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipant_i::create_publisher_with_profile - "
                          "Error: Unable to create Publisher\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
 
-        CIAO_DEBUG ((LM_INFO, CLINFO "RTI_DomainParticipant_i::create_publisher_with_profile - "
+        CIAO_DEBUG (6, (LM_INFO, CLINFO "RTI_DomainParticipant_i::create_publisher_with_profile - "
                      "Successfully created a DDSPublisher\n"));
 
         rti_pub->enable ();
@@ -84,7 +84,7 @@ namespace CIAO
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::create_publisher");
 
-        CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_DomainParticipant_i::create_publisher - "
+        CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipant_i::create_publisher - "
                      "Creating Publisher\n"));
 
         DDS_PublisherQos rti_qos = DDS_PUBLISHER_QOS_DEFAULT;
@@ -97,12 +97,12 @@ namespace CIAO
 
         if (!rti_pub)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_DomainParticipant_i::create_publisher - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipant_i::create_publisher - "
                          "Error: Unable to create Publisher\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
 
-        CIAO_DEBUG ((LM_INFO, CLINFO "RTI_DomainParticipant_i::create_publisher - "
+        CIAO_DEBUG (6, (LM_INFO, CLINFO "RTI_DomainParticipant_i::create_publisher - "
                      "Successfully created a DDSPublisher\n"));
 
         rti_pub->enable ();
@@ -120,23 +120,23 @@ namespace CIAO
 
         if (!rti_pub)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_DomainParticipant_i::delete_publisher - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipant_i::delete_publisher - "
                          "Unable to cast provided object refence to servant pointer.\n"));
             return ::DDS::RETCODE_ERROR;
           }
 
-        CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_DomainParticipant_i::delete_publisher - "
+        CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipant_i::delete_publisher - "
                      "Successfully casted provided object refence to RTI_Publisher_i\n"));
 
         DDS_ReturnCode_t retval = this->impl_->delete_publisher (rti_pub->get_impl ());
 
         if (retval != DDS_RETCODE_OK)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_DomainParticipant_i::delete_publisher - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipant_i::delete_publisher - "
                          "Error: RTI delete_publisher returned non-ok error code %c\n",
                          translate_retcode (retval)));
           }
-        else CIAO_DEBUG ((LM_INFO, CLINFO "RTI_DomainParticipant_i::delete_publisher - "
+        else CIAO_DEBUG (6, (LM_INFO, CLINFO "RTI_DomainParticipant_i::delete_publisher - "
                           "Provided publisher successfully created\n"));
 
         return retval;
@@ -151,7 +151,7 @@ namespace CIAO
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::create_subscriber_with_profile");
 
-        CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_DomainParticipant_i::create_subscriber_with_profile - "
+        CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipant_i::create_subscriber_with_profile - "
                      "Creating Subscriber\n"));
 
         RTI_SubscriberListener_i *rti_sl = new RTI_SubscriberListener_i (a_listener);
@@ -164,12 +164,12 @@ namespace CIAO
 
         if (!rti_sub)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_DomainParticipant_i::create_subscriber_with_profile - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipant_i::create_subscriber_with_profile - "
                          "Error: Unable to create Subscriber\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
 
-        CIAO_DEBUG ((LM_INFO, CLINFO "RTI_DomainParticipant_i::create_subscriber_with_profile - "
+        CIAO_DEBUG (6, (LM_INFO, CLINFO "RTI_DomainParticipant_i::create_subscriber_with_profile - "
                      "Successfully created a DDSSubscriber\n"));
 
         rti_sub->enable ();
@@ -187,7 +187,7 @@ namespace CIAO
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::create_subscriber");
 
-        CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_DomainParticipant_i::create_subscriber - "
+        CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipant_i::create_subscriber - "
                      "Creating Subscriber\n"));
 
         RTI_SubscriberListener_i *rti_sl = new RTI_SubscriberListener_i (a_listener);
@@ -198,12 +198,12 @@ namespace CIAO
 
         if (!rti_sub)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_DomainParticipant_i::create_subscriber - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipant_i::create_subscriber - "
                          "Error: Unable to create Subscriber\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
 
-        CIAO_DEBUG ((LM_INFO, CLINFO "RTI_DomainParticipant_i::create_subscriber - "
+        CIAO_DEBUG (6, (LM_INFO, CLINFO "RTI_DomainParticipant_i::create_subscriber - "
                      "Successfully created a DDSSubscriber\n"));
 
         rti_sub->enable ();
@@ -221,12 +221,12 @@ namespace CIAO
 
         if (!rti_sub)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_DomainParticipant_i::delete_subscriber - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipant_i::delete_subscriber - "
                          "Unable to cast provided object refence to servant pointer.\n"));
             return ::DDS::RETCODE_ERROR;
           }
 
-        CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_DomainParticipant_i::delete_subscriber - "
+        CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipant_i::delete_subscriber - "
                      "Successfully casted provided object refence to RTI_Subscriber_i\n"));
 
         return this->impl_->delete_subscriber (rti_sub->get_impl ());
@@ -253,7 +253,7 @@ namespace CIAO
 
         if (impl_name == 0)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic - "
                          "Error: provided nil topic name\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER,
                                           0);
@@ -261,13 +261,13 @@ namespace CIAO
 
         if (type_name == 0)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic - "
                          "Error: provided nil type name\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER,
                                           0);
           }
 
-        CIAO_DEBUG ((LM_DEBUG, CLINFO "DDS_DomainParticipant_i::create_topic - "
+        CIAO_DEBUG (6, (LM_DEBUG, CLINFO "DDS_DomainParticipant_i::create_topic - "
                      "Attempting to create topic with name %C and type %C\n",
                      impl_name, type_name));
 
@@ -280,12 +280,12 @@ namespace CIAO
 
         if (rti_topic == 0)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic - "
                          "Error: RTI DDS returned a nil topic\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
 
-        CIAO_DEBUG ((LM_INFO, CLINFO "DDS_DomainParticipant_i::create_topic - "
+        CIAO_DEBUG (6, (LM_INFO, CLINFO "DDS_DomainParticipant_i::create_topic - "
                      "Successfully created topic with name %C and type %C\n",
                      impl_name, type_name));
 
@@ -309,7 +309,7 @@ namespace CIAO
 
         if (impl_name == 0)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic_with_profile - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic_with_profile - "
                          "Error: provided nil topic name\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER,
                                           0);
@@ -317,13 +317,13 @@ namespace CIAO
 
         if (type_name == 0)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic_with_profile - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic_with_profile - "
                          "Error: provided nil type name\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER,
                                           0);
           }
 
-        CIAO_DEBUG ((LM_DEBUG, CLINFO "DDS_DomainParticipant_i::create_topic_with_profile - "
+        CIAO_DEBUG (6, (LM_DEBUG, CLINFO "DDS_DomainParticipant_i::create_topic_with_profile - "
                      "Attempting to create topic with name %C and type %C\n",
                      impl_name, type_name));
 
@@ -337,12 +337,12 @@ namespace CIAO
 
         if (rti_topic == 0)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic - "
                          "Error: RTI DDS returned a nil topic\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
 
-        CIAO_DEBUG ((LM_INFO, CLINFO "DDS_DomainParticipant_i::create_topic - "
+        CIAO_DEBUG (6, (LM_INFO, CLINFO "DDS_DomainParticipant_i::create_topic - "
                      "Successfully created topic with name %C and type %C\n",
                      impl_name, type_name));
 
@@ -362,23 +362,23 @@ namespace CIAO
 
         if (top == 0)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_DomainParticipant_i::delete_topic - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipant_i::delete_topic - "
                          "Unable to cast provided object reference to servant.\n"));
             return ::DDS::RETCODE_BAD_PARAMETER;
           }
 
-        CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_DomainParticipant_i::delete_topic - "
+        CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipant_i::delete_topic - "
                      "Successfully casted provided object reference to servant.\n"));
 
         DDS_ReturnCode_t retval = this->impl_->delete_topic (top->get_impl ());
 
         if (retval != DDS_RETCODE_OK)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_DomainParticipant_i::delete_topic - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipant_i::delete_topic - "
                          "Error: RTI delete_topic returned non-ok error code %c\n",
                          translate_retcode (retval)));
           }
-        else CIAO_DEBUG ((LM_INFO, CLINFO "RTI_DomainParticipant_i::delete_topic - "
+        else CIAO_DEBUG (6, (LM_INFO, CLINFO "RTI_DomainParticipant_i::delete_topic - "
                           "Provided topic successfully deleted\n"));
 
         return retval;

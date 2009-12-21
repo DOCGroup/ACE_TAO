@@ -323,7 +323,7 @@ namespace CIAO
   Servant_Impl_Base::get_all_receptacles (void)
   {
     CIAO_TRACE("  Servant_Impl_Base::get_all_receptacles (void)");
-    CIAO_DEBUG ((LM_TRACE, CLINFO "Servant_Impl_Base::get_all_receptacles\n"));
+    CIAO_DEBUG (9, (LM_TRACE, CLINFO "Servant_Impl_Base::get_all_receptacles\n"));
 
     ::Components::ReceptacleDescriptions *tmp = 0;
     ACE_NEW_THROW_EX (tmp,
@@ -335,7 +335,7 @@ namespace CIAO
     retval->length (this->receptacle_table_.current_size ());
     CORBA::ULong i = 0;
 
-    CIAO_DEBUG ((LM_DEBUG, CLINFO
+    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                 "Servant_Impl_Base::get_all_receptacles - Building sequence of length %d\n",
                 retval->length()));
 
@@ -343,7 +343,7 @@ namespace CIAO
          iter != this->receptacle_table_.end ();
          ++iter, ++i)
       {
-        CIAO_DEBUG ((LM_TRACE, CLINFO
+        CIAO_DEBUG (9, (LM_TRACE, CLINFO
                     "Servant_Impl_Base::get_all_receptacles - Starting loop iteration...\n",
                     retval->length()));
 
@@ -351,7 +351,7 @@ namespace CIAO
         retval[i] = entry.int_id_;
       }
 
-    CIAO_DEBUG ((LM_TRACE, CLINFO "Servant_Impl_Base::get_all_receptacles - Escaped loop.\n"));
+    CIAO_DEBUG (9, (LM_TRACE, CLINFO "Servant_Impl_Base::get_all_receptacles - Escaped loop.\n"));
     return retval._retn ();
   }
 
@@ -461,7 +461,7 @@ namespace CIAO
                                      ::Components::Cookie * cookie)
   {
     CIAO_TRACE("Servant_Impl_Base::add_receptacle");
-    CIAO_DEBUG ((LM_INFO, CLINFO
+    CIAO_DEBUG (6, (LM_INFO, CLINFO
                 "Servant_Impl_Base::add_receptacle - attempting to add new connection to receptacle (%C)\n",
                 receptacle_name));
 
@@ -470,7 +470,7 @@ namespace CIAO
 
     if (this->receptacle_table_.find (receptacle_name, safe) == -1)
     {
-      CIAO_DEBUG ((LM_DEBUG, CLINFO
+      CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                   "Servant_Impl_Base::add_receptacle - Found no receptacle named (%C), creating it...\n",
                   receptacle_name));
 
@@ -499,7 +499,7 @@ namespace CIAO
     }
     else
     {
-      CIAO_DEBUG ((LM_DEBUG, CLINFO
+      CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                   "Servant_Impl_Base::add_receptacle - Found a receptacle named (%C)\n",
                   receptacle_name));
       rd = safe.inout ();
@@ -515,7 +515,7 @@ namespace CIAO
       cds.length (old_length + 1);
       cds [old_length] = cd_safe;
 
-      CIAO_DEBUG ((LM_DEBUG, CLINFO
+      CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                   "Servant_Impl_Base::add_receptacle - Added new connection to "
                   "existing receptacle named  (%C)\n",
                   receptacle_name));
@@ -523,7 +523,7 @@ namespace CIAO
 
     if (this->receptacle_table_.bind (receptacle_name, safe) == 0)
       {
-        CIAO_DEBUG ((LM_INFO, CLINFO
+        CIAO_DEBUG (6, (LM_INFO, CLINFO
                     "Servant_Impl_Base::add_receptacle - Successfully added new receptacle named (%C)\n",
                     receptacle_name));
       }
@@ -536,7 +536,7 @@ namespace CIAO
     CIAO_TRACE("Servant_Impl_Base::add_consumer");
     if (0 == port_name || ::CORBA::is_nil (port_ref))
       {
-        CIAO_ERROR ((LM_ERROR, CLINFO "Servant_Impl_Base::add_consumer - Bad port name [%C] or bad objref\n",
+        CIAO_ERROR (1, (LM_ERROR, CLINFO "Servant_Impl_Base::add_consumer - Bad port name [%C] or bad objref\n",
                     port_name));
         throw ::CORBA::BAD_PARAM ();
         return;

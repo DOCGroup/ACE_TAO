@@ -1,4 +1,5 @@
 // $Id$
+
 #ifndef CIAO_LOGGER_SERVICE_H_
 #define CIAO_LOGGER_SERVICE_H_
 
@@ -18,16 +19,12 @@ namespace CIAO
       virtual ACE_Log_Msg_Backend * get_logger_backend (CORBA::ORB_ptr orb);
 
     private:
-
       void parse_args (int argc, ACE_TCHAR **argv);
-      void set_levels (void);
 
       ACE_TString filename_;
       bool trace_;
-      int log_level_;
     };
-
-} // DAnCE
+}
 
 ACE_FACTORY_DECLARE (CIAO_Logger, Logger_Service)
 

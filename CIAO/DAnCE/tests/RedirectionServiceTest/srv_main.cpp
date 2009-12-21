@@ -60,15 +60,15 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 
     redirection.registration_start (node_name, app_name);
     redirection.registration (node_name, app_name, inst_name, port_name, dummy_obj.in());
-    DANCE_DEBUG((LM_DEBUG, "[%M] Registration for port have finished.\n\n"));
+    ACE_DEBUG ((LM_DEBUG, "Registration for port have finished.\n\n"));
     redirection.registration (node_name, app_name, inst_name, dummy_obj.in());
-    DANCE_DEBUG((LM_DEBUG, "[%M] Registration for component have finished.\n\n"));
+    ACE_DEBUG ((LM_DEBUG, "Registration for component have finished.\n\n"));
     redirection.registration_finish (node_name, app_name);
     orb->run();
   }
 //    catch (...)
 //    {
-//        DANCE_ERROR((LM_ERROR, "[%M] An error has occured."));
+//        ACE_ERROR ((LM_ERROR, "An error has occured."));
 //    }
   return 0;
 }

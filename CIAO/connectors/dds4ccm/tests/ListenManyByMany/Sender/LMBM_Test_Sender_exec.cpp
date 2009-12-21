@@ -65,13 +65,13 @@ namespace CIAO_LMBM_Test_Sender_Impl
           {
             ++this->last_key_->second->iteration;
             this->writer_->write_one (this->last_key_->second, ::DDS::HANDLE_NIL);
-            CIAO_DEBUG ((LM_DEBUG, "Written key <%C> - <%u>\n",
+            ACE_DEBUG ((LM_DEBUG, "Written key <%C> - <%u>\n",
                           this->last_key_->first.c_str (),
                           this->last_key_->second->iteration));
           }
         catch (const CCM_DDS::InternalError& )
           {
-            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
                         ACE_TEXT ("while updating writer info for <%C>.\n"),
                           this->last_key_->first.c_str ()));
           }
@@ -124,7 +124,7 @@ namespace CIAO_LMBM_Test_Sender_Impl
                 ACE_Time_Value (5, 50000),
                 ACE_Time_Value (0, 50000)) == -1)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
                               ACE_TEXT ("Error scheduling timer")));
       }
   }
@@ -181,12 +181,12 @@ namespace CIAO_LMBM_Test_Sender_Impl
     catch (const CORBA::Exception& ex)
       {
         ex._tao_print_exception ("Exception caught:");
-        CIAO_ERROR ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: Sender_exec_i::ccm_activate: Exception caught\n")));
       }
     catch (...)
       {
-        CIAO_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: Sender_exec_i::ccm_activate: Unknown exception caught\n")));
       }
   }

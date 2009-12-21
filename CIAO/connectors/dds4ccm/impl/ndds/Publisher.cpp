@@ -46,7 +46,7 @@ namespace CIAO
 
         if (!topic)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter - "
                          "Error: Unable to cast provided topic to its servant.\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
           }
@@ -62,7 +62,7 @@ namespace CIAO
 
         if (!rti_dw)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter - "
                          "Error: RTI Topic returned a nil datawriter.\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
@@ -88,7 +88,7 @@ namespace CIAO
 
         if (!topic)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter_with_profile - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter_with_profile - "
                          "Error: Unable to cast provided topic to its servant.\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
           }
@@ -103,7 +103,7 @@ namespace CIAO
 
         if (!rti_dw)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter_with_profile - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter_with_profile - "
                          "Error: RTI Topic returned a nil datawriter.\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
@@ -125,23 +125,23 @@ namespace CIAO
 
         if (top == 0)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Publisher_i::delete_datawriter - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::delete_datawriter - "
                          "Unable to cast provided object reference to servant.\n"));
             return ::DDS::RETCODE_BAD_PARAMETER;
           }
 
-        CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_Publisher_i::delete_datawriter - "
+        CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_Publisher_i::delete_datawriter - "
                      "Successfully casted provided object reference to servant.\n"));
 
         DDS_ReturnCode_t retval = this->impl ()->delete_datawriter (top->get_impl ());
 
         if (retval != DDS_RETCODE_OK)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Publisher_i::delete_datawriter - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::delete_datawriter - "
                          "Error: RTI delete_datawriter returned non-ok error code %c\n",
                          translate_retcode (retval)));
           }
-        else CIAO_DEBUG ((LM_INFO, CLINFO "RTI_Publisher_i::delete_datawriter - "
+        else CIAO_DEBUG (6, (LM_INFO, CLINFO "RTI_Publisher_i::delete_datawriter - "
                           "Provided datawriter successfully deleted\n"));
 
         return retval;

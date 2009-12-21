@@ -59,12 +59,12 @@ namespace CIAO_LNE_Test_Sender_Impl
         ACE_Time_Value tv (1, 0);
         ACE_OS::sleep (tv);
         this->writer_->write_many (write_many);
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("write_many : written <%u> samples\n"),
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("write_many : written <%u> samples\n"),
               write_many.length ()));
       }
     catch (const CCM_DDS::InternalError& ex)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
                     ACE_TEXT ("while write many writer info: index <%d> - retval <%d>\n"),
                       ex.index, ex.error_code));
       }
@@ -130,12 +130,12 @@ namespace CIAO_LNE_Test_Sender_Impl
     catch (const CORBA::Exception& ex)
       {
         ex._tao_print_exception ("Exception caught:");
-        CIAO_ERROR ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: Sender_exec_i::ccm_activate: Exception caught\n")));
       }
     catch (...)
       {
-        CIAO_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: Sender_exec_i::ccm_activate: Unknown exception caught\n")));
       }
   }

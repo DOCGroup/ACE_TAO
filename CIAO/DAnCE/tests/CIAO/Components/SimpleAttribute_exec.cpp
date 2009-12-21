@@ -101,12 +101,12 @@ namespace CIAO_Simple_SimpleAttribute_Impl
         this->long_ == -1 ||
         this->short_ == -1)
       {
-        CIAO_ERROR ((LM_ERROR, "SimpleAttribute_exec_i::ccm_activate - "
+        ACE_ERROR ((LM_ERROR, "SimpleAttribute_exec_i::ccm_activate - "
                      "Error: Attribute values didin't initialize correctly!\n"));
       }
     else
       {
-        CIAO_DEBUG ((LM_EMERGENCY, "SimpleAttribute_exec_i::ccm_activate - "
+        ACE_DEBUG ((LM_EMERGENCY, "SimpleAttribute_exec_i::ccm_activate - "
                      "Test passed!  String attribute is %s\n",
                      this->str_.c_str ()));
       }
@@ -204,12 +204,12 @@ namespace CIAO_Simple_SimpleAttribute_Impl
         this->long_ == -1 ||
         this->short_ == -1)
       {
-        CIAO_ERROR ((LM_ERROR, "SimpleAttribute_exec_i::ccm_activate - "
+        ACE_ERROR ((LM_ERROR, "SimpleAttribute_exec_i::ccm_activate - "
                      "Error: Attribute values didin't initialize correctly!\n"));
       }
     else
       {
-        CIAO_DEBUG ((LM_EMERGENCY, "SimpleAttributeHome_exec_i::create - "
+        ACE_DEBUG ((LM_EMERGENCY, "SimpleAttributeHome_exec_i::create - "
                      "Test passed!  String attribute is %s\n",
                      this->str_.c_str ()));
       }

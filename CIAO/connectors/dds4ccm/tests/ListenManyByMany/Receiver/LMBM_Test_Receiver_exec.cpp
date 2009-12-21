@@ -41,19 +41,19 @@ namespace CIAO_LMBM_Test_Receiver_Impl
   {
     if (an_instance.length () == 0)
       {
-        CIAO_ERROR ((LM_ERROR, "ERROR: ListenManyByManyTest_Listener_exec_i::on_many_data:"
+        ACE_ERROR ((LM_ERROR, "ERROR: ListenManyByManyTest_Listener_exec_i::on_many_data:"
                                "instance sequence length is nil\n"));
         return;
       }
     for (CORBA::ULong i = 0 ; i < info.length(); ++i)
       {
-        CIAO_DEBUG ((LM_DEBUG, "ListenManyByManyTest_Listener_exec_i::on_many_data:"
+        ACE_DEBUG ((LM_DEBUG, "ListenManyByManyTest_Listener_exec_i::on_many_data:"
                                "key <%C> - iteration <%d>\n",
                                an_instance[i].key.in (),
                                an_instance[i].iteration));
         if (!info[i].instance_handle.isValid)
           {
-            CIAO_ERROR ((LM_ERROR, "ERROR: ListenManyByManyTest_Listener_exec_i::on_many_data:"
+            ACE_ERROR ((LM_ERROR, "ERROR: ListenManyByManyTest_Listener_exec_i::on_many_data:"
                                 "instance handle %d seems to be invalid"
                                 "key <%C> - iteration <%d>\n",
                                  i,
@@ -63,7 +63,7 @@ namespace CIAO_LMBM_Test_Receiver_Impl
         if (info[i].source_timestamp.sec == 0 &&
             info[i].source_timestamp.nanosec == 0)
           {
-            CIAO_ERROR ((LM_ERROR, "ERROR: ListenManyByManyTest_Listener_exec_i::on_one_data: "
+            ACE_ERROR ((LM_ERROR, "ERROR: ListenManyByManyTest_Listener_exec_i::on_one_data: "
                                 "source timestamp seems to be invalid (nil) "
                                 "key <%C> - iteration <%d>\n",
                                 an_instance[i].key.in (),
@@ -247,7 +247,7 @@ namespace CIAO_LMBM_Test_Receiver_Impl
     this->expected_ = this->keys_ * this->iterations_;
     if (this->received_many_by_many_.value () == 0)
       {
-        CIAO_ERROR ((LM_ERROR, "ERROR: MANY_BY_MANY: "
+        ACE_ERROR ((LM_ERROR, "ERROR: MANY_BY_MANY: "
                                "Didn't receive samples on many_by_many "
                                "callback while mode is MANY_BY_MANY "
                                "expected <%u> - received <%u>\n",
@@ -256,7 +256,7 @@ namespace CIAO_LMBM_Test_Receiver_Impl
       }
     else if (this->expected_ != this->received_many_by_many_.value ())
       {
-        CIAO_ERROR ((LM_ERROR, "ERROR: MANY_BY_MANY: "
+        ACE_ERROR ((LM_ERROR, "ERROR: MANY_BY_MANY: "
                                "Didn't receive the expected "
                                "number of samples on many_by_many "
                                "callback while mode is MANY_BY_MANY "
@@ -266,7 +266,7 @@ namespace CIAO_LMBM_Test_Receiver_Impl
       }
     if (this->received_one_by_one_.value () > 0)
       {
-        CIAO_ERROR ((LM_ERROR, "ERROR: MANY_BY_MANY: "
+        ACE_ERROR ((LM_ERROR, "ERROR: MANY_BY_MANY: "
                                "Received samples on one_by_one "
                                "callback while mode is MANY_BY_MANY "
                                "expected <0> - received <%u>\n",
@@ -274,7 +274,7 @@ namespace CIAO_LMBM_Test_Receiver_Impl
       }
     if (!this->started_.value ())
       {
-        CIAO_ERROR ((LM_ERROR, "ERROR: MANY_BY_MANY: "
+        ACE_ERROR ((LM_ERROR, "ERROR: MANY_BY_MANY: "
                                "Didn't received DATA_ON_READERS_STATUS on "
                                "ConnectorStatusListener\n"));
       }
@@ -284,14 +284,14 @@ namespace CIAO_LMBM_Test_Receiver_Impl
       {
         if (this->many_received_.value ())
           {
-            CIAO_DEBUG ((LM_DEBUG, "MANY_BY_MANY: "
+            ACE_DEBUG ((LM_DEBUG, "MANY_BY_MANY: "
                                    "Received only data on "
                                    "many_by_many callback. "
                                    "Test passed!\n"));
           }
         else
           {
-            CIAO_DEBUG ((LM_ERROR, "ERROR: MANY_BY_MANY: "
+            ACE_DEBUG ((LM_ERROR, "ERROR: MANY_BY_MANY: "
                                    "Received only data on "
                                    "many_by_many callback but "
                                    "all samples were received "

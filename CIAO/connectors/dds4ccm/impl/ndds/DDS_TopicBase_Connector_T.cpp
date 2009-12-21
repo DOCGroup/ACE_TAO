@@ -127,7 +127,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_subscriber (void)
 {
-  CIAO_DEBUG ((LM_TRACE, CLINFO "DDS_TopicBase_Connector_T::configure_subscriber - "
+  CIAO_DEBUG (9, (LM_TRACE, CLINFO "DDS_TopicBase_Connector_T::configure_subscriber - "
                 "Configuring subscriber\n"));
 
   if (CORBA::is_nil (this->subscriber_.in ()))
@@ -162,7 +162,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_publisher (void)
 {
-  CIAO_DEBUG ((LM_TRACE, CLINFO "DDS_TopicBase_Connector_T::configure_publisher - "
+  CIAO_DEBUG (9, (LM_TRACE, CLINFO "DDS_TopicBase_Connector_T::configure_publisher - "
                 "Configuring publisher\n"));
 
   if (CORBA::is_nil (this->publisher_.in ()))
@@ -197,7 +197,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic (void)
 {
-  CIAO_DEBUG ((LM_TRACE, CLINFO "DDS_TopicBase_Connector_T::configure_default_topic - "
+  CIAO_DEBUG (9, (LM_TRACE, CLINFO "DDS_TopicBase_Connector_T::configure_default_topic - "
                 "Configuring default topic\n"));
 
   this->configure_default_domain ();
@@ -249,7 +249,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic (void)
         }
       catch (...)
         {
-          CIAO_ERROR ((LM_ERROR, "Caught unknown error while configuring default topic\n"));
+          CIAO_ERROR (1, (LM_ERROR, "Caught unknown error while configuring default topic\n"));
           throw CORBA::INTERNAL ();
         }
     }

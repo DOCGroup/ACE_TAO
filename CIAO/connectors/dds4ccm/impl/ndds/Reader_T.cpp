@@ -79,7 +79,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_without_instance (
   if (retval != DDS_RETCODE_OK && retval != DDS_RETCODE_NO_DATA)
     {
       this->impl ()->return_loan(data, sample_info);
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_without_instance - ")
+      CIAO_ERROR (1, (LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_without_instance - ")
                             ACE_TEXT ("retval is %C\n"), translate_retcode(retval)));
       throw ::CCM_DDS::InternalError (retval, 0);
     }
@@ -103,7 +103,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_last (
 
   CORBA::ULong const nr_of_last_samples = get_nr_valid_samples (sample_info, true);
 
-  CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_last - ")
+  CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_last - ")
                           ACE_TEXT ("total number of samples <%u> - ")
                           ACE_TEXT ("last number of samples <%u>\n"),
                             data.length(),
@@ -141,7 +141,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_all (
   this->read_without_instance (data, sample_info);
 
   CORBA::ULong const nr_of_valid_samples = get_nr_valid_samples (sample_info);
-  CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all - ")
+  CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all - ")
                           ACE_TEXT ("total number of samples <%u> - ")
                           ACE_TEXT ("valid number of samples <%u>\n"),
                             data.length (),
@@ -201,7 +201,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_with_instance (
   const ::DDS_InstanceHandle_t & lookup_hnd,
   DDS_SampleInfoSeq & sample_info)
 {
-  CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_with_instance - ")
+  CIAO_DEBUG (6, (LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_with_instance - ")
                         ACE_TEXT ("Reading with instance.\n")));
   DDS_ReturnCode_t const retval = this->impl ()->read_instance (
                                       data,
@@ -214,7 +214,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_with_instance (
   if (retval != DDS_RETCODE_OK && retval != DDS_RETCODE_NO_DATA)
     {
       this->impl ()->return_loan(data, sample_info);
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_with_instance - ")
+      CIAO_ERROR (1, (LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_with_instance - ")
                             ACE_TEXT ("retval is %C\n"), translate_retcode(retval)));
       throw ::CCM_DDS::InternalError (retval, 0);
     }
@@ -235,7 +235,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_last (
   this->read_with_instance (data, lookup_hnd, sample_info);
 
   ::DDS_Long sample = data.length();
-  CIAO_DEBUG ((LM_INFO,
+  CIAO_DEBUG (6, (LM_INFO,
               ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_last - ")
               ACE_TEXT ("total number of samples <%u>\n"),
               sample));
@@ -270,7 +270,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_all (
 
   // Count the number of valid samples
   CORBA::ULong nr_of_valid_samples = this->get_nr_valid_samples (sample_info);
-  CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all - ")
+  CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all - ")
                           ACE_TEXT ("total number of samples <%u> - ")
                           ACE_TEXT ("valid number of samples <%u>\n"),
                             data.length (),
@@ -334,7 +334,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::data_reader (
 
       if (rdw == 0)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::data_reader - "
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::data_reader - "
                        "Unable to cast provided DataReader to servant\n"));
           throw ::CORBA::INTERNAL ();
         }
@@ -343,7 +343,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::data_reader (
 
       if (!impl_)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::data_reader - "
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::data_reader - "
                        "Unable to narrow the provided reader entity to the specific "
                        "type necessary to publish messages\n"));
           throw ::CORBA::INTERNAL ();

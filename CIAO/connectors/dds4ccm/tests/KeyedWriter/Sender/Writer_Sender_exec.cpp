@@ -64,14 +64,14 @@ namespace CIAO_Writer_Sender_Impl
           {
             ::DDS::InstanceHandle_t hnd = this->handles_[i->first.c_str ()];
             this->writer_->unregister_instance (i->second, hnd);
-            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Unregistered <%C> - iteration <%d> - valid handle <%d>\n"),
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Unregistered <%C> - iteration <%d> - valid handle <%d>\n"),
                       i->first.c_str (),
                       i->second->iteration,
                       hnd.isValid));
           }
         catch (...)
           {
-            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: ")
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: ")
                     ACE_TEXT ("unknown exception caught during unregister_instance.\n")));
           }
       }
@@ -84,26 +84,26 @@ namespace CIAO_Writer_Sender_Impl
     ::DDS::InstanceHandle_t hnd = this->writer_->register_instance (i->second);
     if (!hnd.isValid)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unable to register handle for <%C> - iteration <%d>\n"),
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unable to register handle for <%C> - iteration <%d>\n"),
           i->first.c_str (), i->second->iteration));
       }
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Registering instance with <%C> - iteration <%d> - valid handle <%d>\n"),
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Registering instance with <%C> - iteration <%d> - valid handle <%d>\n"),
                 i->second->key.in (),
                 i->second->iteration,
                 hnd.isValid));
     this->handles_[i->first.c_str ()] = hnd;
     ++i;
-    //test exception. In Qos, max_instances is set to 1 
+    //test exception. In Qos, max_instances is set to 1
     //so only one instance may be registered.
     hnd = this->writer_->register_instance (i->second);
     if (hnd.isValid)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Shouldn't be able to register instance for <%C> - iteration <%d>\n"),
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Shouldn't be able to register instance for <%C> - iteration <%d>\n"),
           i->first.c_str (), i->second->iteration));
       }
     else
       {
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Expected : Registering second key not succeeded.\n"),
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Expected : Registering second key not succeeded.\n"),
           i->first.c_str (), i->second->iteration));
       }
   }
@@ -138,7 +138,7 @@ namespace CIAO_Writer_Sender_Impl
             if (this->last_key == this->ktests_.begin ())
               { // the first key should throw this exception; all others
                 // shouldn't
-                CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
+                ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
                             ACE_TEXT ("while updating writer info for <%C>.\n"),
                               this->last_key->first.c_str ()));
               }
@@ -146,7 +146,7 @@ namespace CIAO_Writer_Sender_Impl
         //only the first iterations are registered.
         if (this->last_key != this->ktests_.begin () && !exception_caught)
           {
-            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: No exception caught ")
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: No exception caught ")
                     ACE_TEXT ("while writing unregistered data\n")));
           }
         ++this->last_key;
@@ -206,21 +206,21 @@ namespace CIAO_Writer_Sender_Impl
       {
         if (ex.index == 0)
           {
-            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal excep ")
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal excep ")
                         ACE_TEXT ("while write many for first instance : index <%d> - retval <%d>\n"),
                           ex.index, ex.error_code));
           }
-        else 
+        else
           {
             expected_exception_thrown = true;
-            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Expected Internal excep ")
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Expected Internal excep ")
                     ACE_TEXT ("while write many writer info: index <%d> - retval <%d>\n"),
                       ex.index, ex.error_code));
           }
       }
     if (!expected_exception_thrown)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Expected Internal excep ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Expected Internal excep ")
                 ACE_TEXT ("was not thrown\n")));
       }
 
@@ -252,7 +252,7 @@ namespace CIAO_Writer_Sender_Impl
                 ACE_Time_Value (0, usec),
                 ACE_Time_Value (0, usec)) == -1)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
                               ACE_TEXT ("Error scheduling timer")));
       }
   }
@@ -261,7 +261,7 @@ namespace CIAO_Writer_Sender_Impl
   Sender_exec_i::stop (void)
   {
     this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
     delete this->ticker_;
   }
 

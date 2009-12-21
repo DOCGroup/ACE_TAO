@@ -34,38 +34,38 @@ ServerActivator_Impl::ServerActivator_Impl (CORBA::ORB_ptr orb,
     , poa_ (PortableServer::POA::_duplicate (poa))
     , compInst_ (Components::Deployment::ComponentInstallation::_duplicate (compInst))
 {
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] ServerActivator_Impl::ServerActivator_Impl - started\n"));
+  DANCE_DEBUG (6, (LM_DEBUG, "ServerActivator_Impl::ServerActivator_Impl - started\n"));
 
   CORBA::Object_var obj =
     this->orb_->resolve_initial_references ("ProcessDestinationNC");
   if (CORBA::is_nil(obj))
     {
-      DANCE_ERROR((LM_ERROR, "[%M] ServerActivator_Impl::ServerActivator_Impl - Failed to retrieve the \"ProcessDestinationNC\" object.\n"));
+      DANCE_ERROR (1, (LM_ERROR, "ServerActivator_Impl::ServerActivator_Impl - Failed to retrieve the \"ProcessDestinationNC\" object.\n"));
       throw CORBA::ORB::InvalidName();
     }
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] ServerActivator_Impl::ServerActivator_Impl name service reference received\n"));
+  DANCE_DEBUG (6, (LM_DEBUG, "ServerActivator_Impl::ServerActivator_Impl name service reference received\n"));
   try
   {
     this->naming_ = CosNaming::NamingContext::_narrow (obj);
   }
   catch (...)
   {
-    DANCE_ERROR((LM_ERROR, "[%M] ServerActivator_Impl::ServerActivator_Impl - failed to narrow the \"ProcessDestinationNC\" NC.\n"));
+    DANCE_ERROR (1, (LM_ERROR, "ServerActivator_Impl::ServerActivator_Impl - failed to narrow the \"ProcessDestinationNC\" NC.\n"));
     throw;
   }
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] ServerActivator_Impl::ServerActivator_Impl - finished\n"));
+  DANCE_DEBUG (6, (LM_DEBUG, "ServerActivator_Impl::ServerActivator_Impl - finished\n"));
 }
 
 ServerActivator_Impl::~ServerActivator_Impl()
 {
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] ServerActivator_Impl::~ServerActivator_Impl - started\n"));
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] ServerActivator_Impl::~ServerActivator_Impl - finished\n"));
+  DANCE_DEBUG (6, (LM_DEBUG, "ServerActivator_Impl::~ServerActivator_Impl - started\n"));
+  DANCE_DEBUG (6, (LM_DEBUG, "ServerActivator_Impl::~ServerActivator_Impl - finished\n"));
 }
 
 ::Components::Deployment::ComponentServer_ptr
 ServerActivator_Impl::create_component_server (const ::Components::ConfigValues & config)
 {
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] ServerActivator_Impl::create_component_server - started\n"));
+  DANCE_DEBUG (6, (LM_DEBUG, "ServerActivator_Impl::create_component_server - started\n"));
 
   // NOTA: These are the configuration values understood by the server activator
   // for component server creation
@@ -91,7 +91,7 @@ ServerActivator_Impl::create_component_server (const ::Components::ConfigValues 
       }
     else
       {
-        DANCE_ERROR ( (LM_ERROR, "[%M] ServerActivator_Impl::create_component_server - read_config_value() function fails\n"));
+        DANCE_ERROR (1, (LM_ERROR, "ServerActivator_Impl::create_component_server - read_config_value() function fails\n"));
         throw ::Components::Deployment::InvalidConfiguration();
       }
   }
@@ -114,33 +114,33 @@ ServerActivator_Impl::create_component_server (const ::Components::ConfigValues 
     }
   catch (const CosNaming::NamingContext::NotFound& )
     {
-      DANCE_ERROR ( (LM_ERROR, "[%M] ServerActivator_Impl::create_component_server - NotFound exception rised."
+      DANCE_ERROR (1, (LM_ERROR, "ServerActivator_Impl::create_component_server - NotFound exception rised."
                    "(Name : CDMW/SERVICES/ASSEMBLYANDDEPLOYMENT/%C)\n"
                    , processDest.c_str()));
       throw ::Components::CreateFailure();
     }
   catch (const CosNaming::NamingContext::CannotProceed& )
     {
-      DANCE_ERROR ( (LM_ERROR, "[%M] ServerActivator_Impl::create_component_server - NotFound exception rised."
+      DANCE_ERROR (1, (LM_ERROR, "ServerActivator_Impl::create_component_server - NotFound exception rised."
                    "(Name : CDMW/SERVICES/ASSEMBLYANDDEPLOYMENT/%C)\n"
                    , processDest.c_str()));
       throw ::Components::CreateFailure();
     }
   catch (const CosNaming::NamingContext::InvalidName& )
     {
-      DANCE_ERROR ( (LM_ERROR, "[%M] ServerActivator_Impl::create_component_server - NotFound exception rised."
+      DANCE_ERROR (1, (LM_ERROR, "ServerActivator_Impl::create_component_server - NotFound exception rised."
                    "(Name : CDMW/SERVICES/ASSEMBLYANDDEPLOYMENT/%C)\n"
                    , processDest.c_str()));
       throw ::Components::CreateFailure();
     }
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] ServerActivator_Impl::create_component_server - ComponentServer object resolved\n"));
+  DANCE_DEBUG (6, (LM_DEBUG, "ServerActivator_Impl::create_component_server - ComponentServer object resolved\n"));
   //Casting founded object
   ::Components::Deployment::ComponentServer_var server
     = ::Components::Deployment::ComponentServer::_narrow (obj);
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] ServerActivator_Impl::create_component_server - ComponentServer object narrowed\n"));
+  DANCE_DEBUG (6, (LM_DEBUG, "ServerActivator_Impl::create_component_server - ComponentServer object narrowed\n"));
   if (CORBA::is_nil (server))
     {
-      DANCE_ERROR ( (LM_ERROR, "[%M] ServerActivator_Impl::create_component_server - ComponentServer in process destination %s  could not be contacted\n", processDest.c_str()));
+      DANCE_ERROR (1, (LM_ERROR, "ServerActivator_Impl::create_component_server - ComponentServer in process destination %s  could not be contacted\n", processDest.c_str()));
       throw ::Components::CreateFailure (::Components::COMPONENT_SERVER_NOT_FOUND);
     }
 
@@ -151,23 +151,23 @@ ServerActivator_Impl::create_component_server (const ::Components::ConfigValues 
   //TODO add checking on already present component server with exception CdmwDeployment::COMPONENT_SERVER_ALREADY_CREATED
   if (0 != this->servers_.bind (processDest, ::Components::Deployment::ComponentServer::_duplicate (server.in())))
     {
-      DANCE_ERROR ( (LM_ERROR, "[%M] ServerActivator_Impl::create_component_server - ComponentServer in process destination %s already exists.\n", processDest.c_str()));
+      DANCE_ERROR (1, (LM_ERROR, "ServerActivator_Impl::create_component_server - ComponentServer in process destination %s already exists.\n", processDest.c_str()));
       throw ::Components::CreateFailure (::Components::COMPONENT_SERVER_ALREADY_CREATED);
     }
 
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] ServerActivator_Impl::create_component_server - finished\n"));
+  DANCE_DEBUG (6, (LM_DEBUG, "ServerActivator_Impl::create_component_server - finished\n"));
   return server._retn ();
 }
 
 void
 ServerActivator_Impl::remove_component_server (::Components::Deployment::ComponentServer_ptr server)
 {
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] ServerActivator_Impl::remove_component_server - started\n"));
+  DANCE_DEBUG (6, (LM_DEBUG, "ServerActivator_Impl::remove_component_server - started\n"));
 
   // Checking input parameters
   if (CORBA::is_nil (server))
     {
-      DANCE_ERROR ( (LM_ERROR, "[%M] ServerActivator_Impl::remove_component_server - Wrong input parameter\n"));
+      DANCE_ERROR (1, (LM_ERROR, "ServerActivator_Impl::remove_component_server - Wrong input parameter\n"));
       throw CORBA::BAD_PARAM();
     }
 
@@ -189,17 +189,17 @@ ServerActivator_Impl::remove_component_server (::Components::Deployment::Compone
   // if no equivalent found, throw exception
   if (!bFound)
     {
-      DANCE_ERROR ( (LM_ERROR, "[%M] ServerActivator_Impl::remove_component_server - equivalent server cannot be found in servers list\n"));
+      DANCE_ERROR (1, (LM_ERROR, "ServerActivator_Impl::remove_component_server - equivalent server cannot be found in servers list\n"));
       throw ::Components::RemoveFailure (::Components::UNKNOWN_COMPONENT_SERVER);
     }
 
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] ServerActivator_Impl::remove_component_server - finished\n"));
+  DANCE_DEBUG (6, (LM_DEBUG, "ServerActivator_Impl::remove_component_server - finished\n"));
 }
 
 ::Components::Deployment::ComponentServers *
 ServerActivator_Impl::get_component_servers ()
 {
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] ServerActivator_Impl::get_component_servers - started\n"));
+  DANCE_DEBUG (6, (LM_DEBUG, "ServerActivator_Impl::get_component_servers - started\n"));
 
   ::Components::Deployment::ComponentServers* pServers = 0;
   ACE_NEW_THROW_EX (pServers,
@@ -214,14 +214,14 @@ ServerActivator_Impl::get_component_servers ()
       i++;
     }
 
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] ServerActivator_Impl::get_component_servers - finished\n"));
+  DANCE_DEBUG (6, (LM_DEBUG, "ServerActivator_Impl::get_component_servers - finished\n"));
   return pServers;
 }
 
 void
 ServerActivator_Impl::initializeComponentServer (::Components::Deployment::ComponentServer_ptr server)
 {
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] ServerActivator_Impl::initializeComponentServer - started\n"));
+  DANCE_DEBUG (6, (LM_DEBUG, "ServerActivator_Impl::initializeComponentServer - started\n"));
 
   // the ComponentServer should be a Cdmw ComponentServer
   Components::Deployment::ComponentServer_var cdmwServer =
@@ -230,12 +230,12 @@ ServerActivator_Impl::initializeComponentServer (::Components::Deployment::Compo
   if (CORBA::is_nil (cdmwServer.in ())
     {
       // Component server is not Cdmw ComponentServer
-      DANCE_ERROR ( (LM_ERROR, "[%M] ServerActivator_Impl::initializeComponentServer - ComponentServer is not CdmwComponentServer\n"));
+      DANCE_ERROR (1, (LM_ERROR, "ServerActivator_Impl::initializeComponentServer - ComponentServer is not CdmwComponentServer\n"));
       throw ::Components::CreateFailure (::Components::COMPONENT_SERVER_NOT_FOUND);
     }
   if (CORBA::is_nil (this->compInst_.in()))
     {
-      DANCE_DEBUG ( (LM_DEBUG, "[%M] ServerActivator_Impl::initializeComponentServer - Reference on ComponentInstallation is nil!!!!\n"));
+      DANCE_DEBUG (6, (LM_DEBUG, "ServerActivator_Impl::initializeComponentServer - Reference on ComponentInstallation is nil!!!!\n"));
     }
   CdmwCcmComponentServer::ComponentServer_var proprietary_svr =
     CdmwCcmComponentServer::ComponentServer::_narrow (cdmwServer);
@@ -245,5 +245,5 @@ ServerActivator_Impl::initializeComponentServer (::Components::Deployment::Compo
   // give it the ServerActivator
   proprietary_svr->set_server_activator (Components::Deployment::ServerActivator::_narrow (this->poa_->servant_to_reference (this)));
 
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] ServerActivator_Impl::initializeComponentServer - finished\n"));
+  DANCE_DEBUG (6, (LM_DEBUG, "ServerActivator_Impl::initializeComponentServer - finished\n"));
 }

@@ -53,18 +53,18 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
           {
             ++this->last_key->second->iteration;
             this->writer_->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
-            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Written key <%C> with <%d>\n"),
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written key <%C> with <%d>\n"),
                     this->last_key->first.c_str (),
                     this->last_key->second->iteration));
           }
         catch (const CCM_DDS::NonExistent& )
           {
-            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Key info for <%s> not updated: <%s> didn't exist.\n"),
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Key info for <%s> not updated: <%s> didn't exist.\n"),
                         this->last_key->first.c_str (), this->last_key->first.c_str ()));
           }
         catch (const CCM_DDS::InternalError& )
           {
-            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while updating key info for <%s>.\n"),
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while updating key info for <%s>.\n"),
                         this->last_key->first.c_str ()));
           }
         ++this->last_key;
@@ -99,7 +99,7 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
                 ACE_Time_Value (0, usec),
                 ACE_Time_Value (0, usec)) == -1)
     {
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
                              ACE_TEXT ("Error scheduling timer")));
     }
   }
@@ -108,7 +108,7 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
   Sender_exec_i::stop (void)
   {
     this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
     delete this->ticker_;
   }
 
@@ -170,7 +170,7 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
   Sender_exec_i::ccm_activate (void)
   {
     this->start ();
-    
+
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
                         this->mutex_, CORBA::INTERNAL ());
 

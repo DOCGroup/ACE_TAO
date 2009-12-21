@@ -9,8 +9,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
     {
       if (argc < 1)
         {
-          DANCE_ERROR((LM_ERROR,
-                       ACE_TEXT ("[%M] Incorrect count of arguments. ")
+          ACE_ERROR ((LM_ERROR,
+                       ACE_TEXT ("Incorrect count of arguments. ")
                        ACE_TEXT ("Path to deployment plan has not been specified.\n")));
           return 1;
         }
@@ -28,7 +28,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
     }
   catch (...)
     {
-      DANCE_ERROR((LM_ERROR, ACE_TEXT ("[%M] Unexpected exception\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception\n")));
       return 1;
     }
 

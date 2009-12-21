@@ -79,13 +79,13 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
           return;
       else if (result != DDS_RETCODE_OK)
         {
-          CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unable to take data from data reader, error %d.\n"), result));
+          CIAO_ERROR (1, (LM_ERROR, ACE_TEXT ("Unable to take data from data reader, error %d.\n"), result));
         }
       if (this->control_->mode () == ::CCM_DDS::ONE_BY_ONE)
         {
           for (::DDS_Long i = 0; i < data.length (); ++i)
             {
-              // sample data may not be valid anymore when 
+              // sample data may not be valid anymore when
               // deleted so don't check the valid_data flag
               // here.
               if (sample_info[i].instance_state ==

@@ -8,8 +8,7 @@ project(DAnCE_Logger): dance_lib, messaging, acelib {
   Source_Files {
     File_Logger_Backend.cpp
     Logger_Service.cpp
-  }
-  Header_Files {
+    Log_Macros.cpp
   }
 }
 

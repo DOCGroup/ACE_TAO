@@ -124,12 +124,12 @@ namespace CIAO_Getter_Test_Sender_Impl
         ACE_Time_Value tv (1, 0);
         ACE_OS::sleep (tv);
         this->writer_->write_many (write_many);
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("write_many : written <%u> samples\n"),
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("write_many : written <%u> samples\n"),
               write_many.length ()));
       }
     catch (const CCM_DDS::InternalError& ex)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
                     ACE_TEXT ("while write many writer info: index <%d> - retval <%d>\n"),
                       ex.index, ex.error_code));
       }
@@ -150,7 +150,7 @@ namespace CIAO_Getter_Test_Sender_Impl
                     ACE_Time_Value (0, 500000),
                     ACE_Time_Value (0, 500000)) == -1)
           {
-            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
                                   ACE_TEXT ("Error scheduling timer")));
           }
       }
@@ -170,11 +170,11 @@ namespace CIAO_Getter_Test_Sender_Impl
         ACE_Time_Value tv (0, 50000);
         ACE_OS::sleep (tv);
         this->writer_->write_one (*new_key, ::DDS::HANDLE_NIL);
-        CIAO_DEBUG ((LM_DEBUG, CLINFO "Written key <%C> with <%d>\n",
+        ACE_DEBUG ((LM_DEBUG, CLINFO "Written key <%C> with <%d>\n",
                     new_key->key.in (), last_iter_));
         ++last_iter_;
      }
-   else 
+   else
     {
       write_many ();
       this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
@@ -240,12 +240,12 @@ namespace CIAO_Getter_Test_Sender_Impl
     catch (const CORBA::Exception& ex)
       {
         ex._tao_print_exception ("Exception caught:");
-        CIAO_ERROR ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: Sender_exec_i::ccm_activate: Exception caught\n")));
       }
     catch (...)
       {
-        CIAO_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: Sender_exec_i::ccm_activate: Unknown exception caught\n")));
       }
   }
@@ -259,7 +259,7 @@ namespace CIAO_Getter_Test_Sender_Impl
   Sender_exec_i::ccm_remove (void)
   {
     this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
     delete this->ticker_;
   }
 

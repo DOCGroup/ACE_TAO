@@ -34,13 +34,13 @@ namespace DAnCE
                            "%s",
                            ior);
           ACE_OS::fclose (ior_output_file_);
-          DANCE_DEBUG ( (LM_TRACE, DLINFO ACE_TEXT("ExectionManager::write_IOR - EM's ior was written into file \"%C\"\n"), ior_file_name));
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("ExectionManager::write_IOR - EM's ior was written into file \"%C\"\n"), ior_file_name));
           return true;
         }
       else
         {
-          DANCE_ERROR ( (LM_ERROR,
-                         ACE_TEXT("[%M] DAnCE_ExecutionManager::write_ior-file - ")
+          DANCE_ERROR (1, (LM_ERROR,
+                         ACE_TEXT("[%M%] DAnCE_ExecutionManager::write_ior-file - ")
                          ACE_TEXT("Unable to open ExecutionManager IOR output file %C : %m\n"),
                          ior_file_name));
           return false;
@@ -91,46 +91,46 @@ DAnCE_ExecutionManager_Module::parse_args (int argc, ACE_TCHAR *argv[])
       switch (c)
         {
         case 'e':
-          DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::parse_args - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::parse_args - ")
                         ACE_TEXT("Output filename is %s\n"),
                         get_opts.opt_arg ()));
           this->options_.exec_mgr_file_ = get_opts.opt_arg ();
           break;
         case 'n':
-          DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::parse_args - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::parse_args - ")
                         ACE_TEXT("--node-mgr option was parsed out for EM\n")));
           this->options_.node_managers_.push_back (get_opts.opt_arg ());
           break;
 
         case 'p':
-          DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::parse_args - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::parse_args - ")
                         ACE_TEXT("--process-ns enabled for EM\n")));
           this->options_.process_ns_ = true;
           this->options_.process_ns_file_ = get_opts.opt_arg ();
           break;
 
         case 'c':
-          DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::parse_args - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::parse_args - ")
                         ACE_TEXT("--create-plan-ns enabled for EM\n")));
           this->options_.create_plan_ns_ = true;
           this->options_.create_plan_ns_ior_ = get_opts.opt_arg ();
           break;
 
         case 'r':
-          DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::parse_args - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::parse_args - ")
                         ACE_TEXT("--rebind-plan-ns enabled for EM\n")));
           this->options_.rebind_plan_ns_ = true;
           this->options_.rebind_plan_ns_ior_ = get_opts.opt_arg ();
           break;
 
         case 'i':
-          DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::parse_args - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::parse_args - ")
                         ACE_TEXT("--port-indirection enabled for EM\n")));
           this->options_.port_indirection_ = true;
           break;
 
         case 'f':
-          DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::parse_args - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::parse_args - ")
                         ACE_TEXT("--ignore-failure enabled for EM\n")));
           this->options_.ignore_failure_ = true;
           break;
@@ -139,7 +139,7 @@ DAnCE_ExecutionManager_Module::parse_args (int argc, ACE_TCHAR *argv[])
           if (ACE_OS::strcmp (get_opts.long_option (),
                               ACE_TEXT("node-map")) == 0)
             {
-              DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
+              DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
                             ACE_TEXT("Found Node map filename %s.\n"),
                             get_opts.opt_arg ()));
               this->options_.node_map_ = get_opts.opt_arg ();
@@ -149,7 +149,7 @@ DAnCE_ExecutionManager_Module::parse_args (int argc, ACE_TCHAR *argv[])
           else if (ACE_OS::strcmp (get_opts.long_option (),
                                    ACE_TEXT("domain-nc")) == 0)
             {
-              DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
+              DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
                             ACE_TEXT("Binding to domain naming context %s.\n"),
                             get_opts.opt_arg ()));
               this->options_.domain_nc_ = get_opts.opt_arg ();
@@ -159,7 +159,7 @@ DAnCE_ExecutionManager_Module::parse_args (int argc, ACE_TCHAR *argv[])
         case 'h':
           //case '?': // Display help for use of the server.
           //default:
-          DANCE_ERROR_RETURN ((LM_ERROR,
+          DANCE_ERROR_RETURN (1, (LM_ERROR,
                                "usage:  %s\n"
                                "\t--exec-mgr,-e [execution manager ior file name]\n"
                                "\t--node-mgr,-n <node name>[=node manager ior file name]\n"
@@ -188,26 +188,26 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
     {
       if (this->em_impl_ != 0)
         {
-          DANCE_ERROR ( (LM_ERROR,
+          DANCE_ERROR (1, (LM_ERROR,
                          DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
                          ACE_TEXT("Error: ExecutionManager already exists.\n")));
           return CORBA::Object::_nil ();
         }
 
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
                     ACE_TEXT("before parsing arguments.\n")));
 
       if (!this->parse_args (argc, argv))
         return CORBA::Object::_nil ();
 
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
                     ACE_TEXT("before creating value factory.\n")));
       CORBA::ValueFactory_var vf = new Components::Cookie_init();
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
                     ACE_TEXT("before registering value factory.\n")));
       vf = orb->register_value_factory ("IDL:omg.org/Components/Cookie:1.0", vf.in());
 
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
                     ACE_TEXT("after creating value factory.\n")));
       // Get reference to Root POA.
       CORBA::Object_var poa_obj
@@ -222,7 +222,7 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
       policies.length (2);
       try
         {
-          DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
                         ACE_TEXT("before creating the \"Managers\" POA.\n")));
 
           policies[0] = poa->create_id_assignment_policy (PortableServer::USER_ID);
@@ -243,7 +243,7 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
         {
           if (this->options_.domain_nc_)
             {
-              DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
+              DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
                             ACE_TEXT("before resolving \"DomainNC\".\n")));
               CORBA::Object_var domain_obj = orb->string_to_object (this->options_.domain_nc_);
               if (!CORBA::is_nil (domain_obj.in ()))
@@ -251,7 +251,7 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
                   domain_nc = CosNaming::NamingContext::_narrow (domain_obj.in());
                   if (CORBA::is_nil (domain_nc.in ()))
                     {
-                      DANCE_ERROR ( (LM_ERROR,
+                      DANCE_ERROR (1, (LM_ERROR,
                                      DLINFO ACE_TEXT("Narrow to NamingContext return nil for DomainNC.\n")));
                       return CORBA::Object::_nil ();
                     }
@@ -260,7 +260,7 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
         }
       catch (CORBA::Exception&)
         {
-          DANCE_DEBUG ((LM_DEBUG,
+          DANCE_DEBUG (6, (LM_DEBUG,
                         DLINFO ACE_TEXT("DomainNC context not found!\n")));
         }
 
@@ -273,13 +273,13 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
 
       if (CORBA::is_nil (adapter.in ()))
         {
-          DANCE_ERROR ( (LM_ERROR,
+          DANCE_ERROR (1, (LM_ERROR,
                          DLINFO ACE_TEXT("Nil IORTable\n")));
           return CORBA::Object::_nil ();
         }
 
       // Create and install the DAnCE Daemon servant on child POA
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - before creating EM servant.\n")));
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - before creating EM servant.\n")));
       ACE_NEW_RETURN (this->em_impl_,
                       DAnCE::ExecutionManager_Impl (orb,
                                                     poa.in (),
@@ -309,7 +309,7 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
       // Binding execution manager to name service
       if (!CORBA::is_nil (domain_nc.in ()))
         {
-          DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("Registering EM in NC.\n")));
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Registering EM in NC.\n")));
           CosNaming::Name name (1);
           name.length (1);
           name[0].id = CORBA::string_dup ("ExecutionManager");
@@ -319,7 +319,7 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
       // End ExecutionManager initialization part
 
       // Initializing NodeManagers
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
                     ACE_TEXT("before processing --node-mgr options(%u).\n"), this->options_.node_managers_.size()));
       for (size_t i = 0; i < this->options_.node_managers_.size(); ++i)
         {
@@ -329,7 +329,7 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
 
           if (ACE_CString::npos == pos)
             {
-              DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
+              DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
                             ACE_TEXT("Execution manager received --node-mgr without IOR\n")));
               continue;
             }
@@ -337,13 +337,13 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
           node_name = this->options_.node_managers_[i].substring (0, pos);
           nm_ior = this->options_.node_managers_[i].substring (pos + 1);
 
-          DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("Placing node \"%C\" to EM's map.\n"), node_name.c_str()));
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Placing node \"%C\" to EM's map.\n"), node_name.c_str()));
           this->em_impl_->add_node_manager (node_name.c_str(), nm_ior.c_str ());
         }
 
       if (this->options_.node_map_ != 0)
         {
-          DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
                         ACE_TEXT("Parsing node map %C\n"),
                         this->options_.node_map_));
           this->em_impl_->load_node_map (this->options_.node_map_);

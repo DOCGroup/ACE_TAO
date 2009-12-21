@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (DAnCE_Utils): dance_lib, dance_deployment_svnt, naming  {
+project (DAnCE_Utils): dance_lib, dance_deployment_svnt, naming, dance_logger {
   sharedname = DAnCE_Utils
   dynamicflags = DANCE_UTILS_BUILD_DLL
 

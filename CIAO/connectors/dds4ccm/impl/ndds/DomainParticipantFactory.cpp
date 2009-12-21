@@ -31,7 +31,7 @@ namespace CIAO
       {
         CIAO_TRACE ("RTI_DomainParticipantFactory_i::create_participant");
 
-        CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::create_participant - "
+        CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::create_participant - "
                      "Creating domain participant\n"));
         DDSDomainParticipant *part = DDSDomainParticipantFactory::get_instance ()->
           create_participant (domain_id,
@@ -41,7 +41,7 @@ namespace CIAO
 
         if (!part)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_DomainParticipantFactory_i::create_participant - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipantFactory_i::create_participant - "
                          "Error: Unable to create DomainParticipant\n"));
             throw CCM_DDS::InternalError (1, 0);
           }
@@ -65,7 +65,7 @@ namespace CIAO
       {
         CIAO_TRACE ("RTI_DomainParticipantFactory_i::create_participant_with_profile");
 
-        CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::create_participant_with_profile - "
+        CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::create_participant_with_profile - "
                      "Creating domain participant\n"));
         DDSDomainParticipant *part = DDSDomainParticipantFactory::get_instance ()->
           create_participant_with_profile (domain_id,
@@ -76,7 +76,7 @@ namespace CIAO
 
         if (!part)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_DomainParticipantFactory_i::create_participant_with_profile - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipantFactory_i::create_participant_with_profile - "
                          "Error: Unable to create DomainParticipant\n"));
             throw CCM_DDS::InternalError (1, 0);
           }
@@ -98,11 +98,11 @@ namespace CIAO
 
         if (!part)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_DomainParticipantFactory_i::delete_participant - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipantFactory_i::delete_participant - "
                          "Unable to cast provided object reference to servant type, bailing.\n"));
             return DDS::RETCODE_ERROR;
           }
-        CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::delete_participant - "
+        CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::delete_participant - "
                      "Successfully casted provided object reference to servant type.\n"));
 
         DDS_ReturnCode_t retval = DDSDomainParticipantFactory::get_instance ()->
@@ -110,11 +110,11 @@ namespace CIAO
 
         if (retval != DDS_RETCODE_OK)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_DomainParticipantFactory_i::delete_participant - "
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipantFactory_i::delete_participant - "
                          "RTI delete_participant returned non-ok error code %C\n",
                          translate_retcode (retval)));
           }
-        else CIAO_DEBUG ((LM_INFO, CLINFO "RTI_DomainParticipantFactory_i::delete_participant - "
+        else CIAO_DEBUG (6, (LM_INFO, CLINFO "RTI_DomainParticipantFactory_i::delete_participant - "
                           "Successfully deleted provided participant.\n"));
 
         return retval;

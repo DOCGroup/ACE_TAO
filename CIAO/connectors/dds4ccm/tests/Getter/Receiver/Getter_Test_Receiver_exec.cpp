@@ -34,7 +34,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
     this->callback_.timeout_get_many ();
   }
 
-  void 
+  void
   Invoker_exec_i::start_get_one (const char * key,
                                      CORBA::Long iteration)
   {
@@ -138,7 +138,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
     to.nanosec = 0;
     this->getter_->time_out (to);
     this->getter_->max_delivered_data (40);
-    CIAO_DEBUG ((LM_DEBUG, CLINFO "Receiver_exec_i::get_many: "
+    ACE_DEBUG ((LM_DEBUG, CLINFO "Receiver_exec_i::get_many: "
                                   "Start getting data from DDS: "
                                   "#keys <%d> - #iterations <%d> with timeout: "
                                   "sec <%d> - nanosec <%u>\n",
@@ -153,14 +153,14 @@ namespace CIAO_Getter_Test_Receiver_Impl
       {
         if (gettertest_seq->length () == 0)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "Receiver_exec_i::get_many: "
+            ACE_ERROR ((LM_ERROR, CLINFO "Receiver_exec_i::get_many: "
                                           "No data returned. "
                                           "number of samples: "
                                           "expected at least one - received <0>\n"));
           }
         for (CORBA::ULong i = 0; i < gettertest_seq->length (); ++i)
           {
-            CIAO_DEBUG ((LM_DEBUG, CLINFO "Receiver_exec_i::get_many: "
+            ACE_DEBUG ((LM_DEBUG, CLINFO "Receiver_exec_i::get_many: "
                                           "Returned data : key <%C> - iteration <%d>\n",
                                           (*gettertest_seq)[i].key.in (),
                                           (*gettertest_seq)[i].iteration));
@@ -168,19 +168,19 @@ namespace CIAO_Getter_Test_Receiver_Impl
       }
     else
       {
-        CIAO_ERROR ((LM_ERROR, CLINFO "ERROR: GET MANY: "
+        ACE_ERROR ((LM_ERROR, CLINFO "ERROR: GET MANY: "
                                       "Time out occurred\n"));
       }
   }
 
-  void 
+  void
   Receiver_exec_i::get_one (const char * key, CORBA::Long iteration)
   {
     DDS::Duration_t to;
     to.sec = 5;
     to.nanosec = 0;
     this->getter_->time_out (to);
-    CIAO_DEBUG ((LM_DEBUG, CLINFO "Receiver_exec_i::get_one: "
+    ACE_DEBUG ((LM_DEBUG, CLINFO "Receiver_exec_i::get_one: "
                                   "Start getting data from DDS: "
                                   "key <%C> - iteration <%d> "
                                   " with timeout: "
@@ -195,12 +195,12 @@ namespace CIAO_Getter_Test_Receiver_Impl
     if (result)
       {
         ACE_Time_Value dur = ACE_OS::gettimeofday () - tv;
-        CIAO_DEBUG ((LM_DEBUG, "Receiver_exec_i::get_one: "
+        ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::get_one: "
                                "get_one took <%#T>\n",
                                &dur));
         if (ACE_OS::strcmp (gettertest_info->key, key) != 0)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "ERROR: GET ONE: "
+            ACE_ERROR ((LM_ERROR, CLINFO "ERROR: GET ONE: "
                                           "Expected key does "
                                           "not match received key: "
                                           "expected <%C> - received <%C>\n",
@@ -209,7 +209,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
           }
         if (gettertest_info->iteration != iteration)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "ERROR: GET ONE: "
+            ACE_ERROR ((LM_ERROR, CLINFO "ERROR: GET ONE: "
                                           "Expected iteration does "
                                           "not match received iteration: "
                                           "expected <%d> - received <%d>\n",
@@ -219,7 +219,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
         // check readinfo struct.
         if (readinfo.instance_handle.isValid)
           {
-            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: GET MANY: ")
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: GET MANY: ")
                     ACE_TEXT ("received instance handle should be invalid ")
                     ACE_TEXT ("for unkeyed data: ")
                     ACE_TEXT ("key <%C> - iteration <%u>\n"),
@@ -229,20 +229,20 @@ namespace CIAO_Getter_Test_Receiver_Impl
         if (readinfo.source_timestamp.sec == 0 &&
             readinfo.source_timestamp.nanosec == 0)
           {
-            CIAO_ERROR ((LM_ERROR, "ERROR: READ ONE LAST: "
+            ACE_ERROR ((LM_ERROR, "ERROR: READ ONE LAST: "
                                 "source timestamp seems to be invalid (nil) "
                                 "key <%C> - iteration <%d>\n",
                                 gettertest_info->key.in (),
                                 gettertest_info->iteration));
           }
-        CIAO_DEBUG ((LM_DEBUG, CLINFO "Receiver_exec_i::get_one: "
+        ACE_DEBUG ((LM_DEBUG, CLINFO "Receiver_exec_i::get_one: "
                                       "Returned data : key <%C> - iteration <%d>\n",
                                       gettertest_info->key.in (),
                                       gettertest_info->iteration));
       }
     else
       {
-        CIAO_ERROR ((LM_ERROR, CLINFO "ERROR: GET ONE: "
+        ACE_ERROR ((LM_ERROR, CLINFO "ERROR: GET ONE: "
                                       "Time out while waiting for "
                                       "key <%C> - iteration <%d>\n",
                                       key,
@@ -259,7 +259,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
         to.sec = 1;
         to.nanosec = 0;
         this->getter_->time_out (to);
-        CIAO_DEBUG ((LM_DEBUG, CLINFO "Receiver_exec_i::timeout_get_one: "
+        ACE_DEBUG ((LM_DEBUG, CLINFO "Receiver_exec_i::timeout_get_one: "
                                       "Start getting data from DDS: timeout: "
                                       "sec <%d> - nanosec <%u>\n",
                                       this->getter_->time_out ().sec,
@@ -269,25 +269,25 @@ namespace CIAO_Getter_Test_Receiver_Impl
         bool result = this->getter_->get_one (gettertest_info, readinfo);
         if (result)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "ERROR: TIMEOUT GET ONE: "
+            ACE_ERROR ((LM_ERROR, CLINFO "ERROR: TIMEOUT GET ONE: "
                                           "Returning true when get no data.\n"));
           }
         else
           {
-            CIAO_DEBUG ((LM_DEBUG, CLINFO "Receiver_exec_i::timeout_get_one: "
+            ACE_DEBUG ((LM_DEBUG, CLINFO "Receiver_exec_i::timeout_get_one: "
                                           "Expected to return no data.\n"));
           }
       }
     catch (const CCM_DDS::InternalError& )
       {
-        CIAO_ERROR ((LM_ERROR, "ERROR: TIMEOUT GET ONE: "
+        ACE_ERROR ((LM_ERROR, "ERROR: TIMEOUT GET ONE: "
                                "Caught unexcepted InternalError "
                                "exception\n"));
       }
     catch (const CORBA::Exception& ex)
       {
         ex._tao_print_exception ("ERROR: TIMEOUT GET ONE:");
-        CIAO_ERROR ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
                 "ERROR: Receiver_exec_i::timeout_get_one : Exception caught\n"));
       }
   }
@@ -301,7 +301,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
         to.sec = 1;
         to.nanosec = 0;
         this->getter_->time_out (to);
-        CIAO_DEBUG ((LM_DEBUG, CLINFO "Receiver_exec_i::timeout_get_many: "
+        ACE_DEBUG ((LM_DEBUG, CLINFO "Receiver_exec_i::timeout_get_many: "
                                       "Start getting data from DDS: timeout: "
                                       "sec <%d> - nanosec <%u>\n",
                                       this->getter_->time_out ().sec,
@@ -311,25 +311,25 @@ namespace CIAO_Getter_Test_Receiver_Impl
         bool result = this->getter_->get_many (gettertest_seq, readinfo);
         if (result)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "ERROR: TIMEOUT GET MANY: "
+            ACE_ERROR ((LM_ERROR, CLINFO "ERROR: TIMEOUT GET MANY: "
                                           "Returning true when get no data.\n"));
           }
         else
           {
-            CIAO_DEBUG ((LM_DEBUG, CLINFO "Receiver_exec_i::timeout_get_many: "
+            ACE_DEBUG ((LM_DEBUG, CLINFO "Receiver_exec_i::timeout_get_many: "
                                           "Expected to return no data.\n"));
           }
       }
     catch (const CCM_DDS::InternalError& )
       {
-        CIAO_ERROR ((LM_ERROR, "ERROR: TIMEOUT GET MANY: "
+        ACE_ERROR ((LM_ERROR, "ERROR: TIMEOUT GET MANY: "
                                "Caught unexcepted InternalError "
                                "exception\n"));
       }
     catch (const CORBA::Exception& ex)
       {
         ex._tao_print_exception ("ERROR: TIMEOUT GET MANY:");
-        CIAO_ERROR ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
                       "ERROR: Receiver_exec_i::timeout_get_many : Exception caught\n"));
       }
   }

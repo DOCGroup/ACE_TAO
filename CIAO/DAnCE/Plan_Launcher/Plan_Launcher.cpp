@@ -16,7 +16,7 @@ namespace DAnCE
           }
         catch (const Plan_Launcher_Impl::Deployment_Failure& e)
           {
-            DANCE_ERROR ( (LM_ERROR, "[%M] PlanLauncher error : %C.\n", e.error_.c_str()));
+            DANCE_ERROR (1, (LM_ERROR, "PlanLauncher error : %C.\n", e.error_.c_str()));
           }
         catch (const CORBA::Exception& ex)
           {
@@ -25,7 +25,7 @@ namespace DAnCE
           }
         catch (...)
           {
-            DANCE_ERROR ( (LM_ERROR, "[%M] Plan_Launcher.cpp::run_main_implementation Unknown exception.\n"));
+            DANCE_ERROR (1, (LM_ERROR, "Plan_Launcher.cpp::run_main_implementation Unknown exception.\n"));
             return -1;
           }
         return 0;

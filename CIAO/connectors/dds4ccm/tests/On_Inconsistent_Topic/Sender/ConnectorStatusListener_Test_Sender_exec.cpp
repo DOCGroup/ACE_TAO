@@ -126,13 +126,13 @@ void
     //printf("*************in remove Sender********** \n");
     if(!this->inconsistent_.value ())
       {
-         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
+         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
                                ACE_TEXT ("error 'on_inconsistent_topic' in Sender\n")
                     ));
       }
     else
       {
-         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Received the expected ")
+         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Received the expected ")
                                ACE_TEXT (" 'on_inconsistent_topic' in Sender\n")));
       }
   }

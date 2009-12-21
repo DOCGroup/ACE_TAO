@@ -24,14 +24,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       Deployment::DeploymentPlan plan;
       Deployment::NodeApplicationManager_ptr nam_ptr =
         nm->preparePlan (plan, Deployment::ResourceCommitmentManager::_nil());
-      DANCE_DEBUG((LM_DEBUG, "[%M] Plan prepared\n"));
+      ACE_DEBUG ((LM_DEBUG, "Plan prepared\n"));
 
       nm->destroyManager (nam_ptr);
-      DANCE_DEBUG((LM_DEBUG, "[%M] NodeApplicationManager object destroyed\n"));
+      ACE_DEBUG ((LM_DEBUG, "NodeApplicationManager object destroyed\n"));
     }
   catch (const CORBA::Exception &)
     {
-      DANCE_ERROR((LM_ERROR, "[%M] Uncaught CORBA exception\n"));
+      ACE_ERROR ((LM_ERROR, "Uncaught CORBA exception\n"));
       return 1;
     }
   catch (...)

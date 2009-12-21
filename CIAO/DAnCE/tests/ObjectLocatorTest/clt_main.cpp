@@ -19,37 +19,37 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       url += inst_name;
       url += "/";
       url += port_name;
-      DANCE_DEBUG((LM_DEBUG, "[%M] URL : %s\n", url.c_str()));
+      ACE_DEBUG ((LM_DEBUG, "URL : %s\n", url.c_str()));
 
       CORBA::Object_var obj = orb->string_to_object (url.c_str());
       if (CORBA::is_nil (obj))
         {
-          DANCE_ERROR((LM_ERROR, "[%M] Failed to convert url to object. The test failed.\n"));
+          ACE_ERROR ((LM_ERROR, "Failed to convert url to object. The test failed.\n"));
           return 1;
         }
-      DANCE_DEBUG((LM_DEBUG, "[%M] URL -> object : ok.\n"));
+      ACE_DEBUG ((LM_DEBUG, "URL -> object : ok.\n"));
 
       Dummy_var dummy_obj = Dummy::_narrow (obj);
       if (CORBA::is_nil (dummy_obj))
         {
-          DANCE_ERROR((LM_ERROR, "[%M] Failed to narrow the object to custom type. The test failed.\n"));
+          ACE_ERROR ((LM_ERROR, "Failed to narrow the object to custom type. The test failed.\n"));
           return 1;
         }
-      DANCE_DEBUG((LM_DEBUG, "[%M] object -> dummy : ok.\n"));
+      ACE_DEBUG ((LM_DEBUG, "object -> dummy : ok.\n"));
 
-      DANCE_DEBUG((LM_DEBUG, "[%M] Dummy object returned : %s.", dummy_obj->sayHello()));
-      DANCE_DEBUG((LM_DEBUG, "[%M] The test succeeded."));
+      ACE_DEBUG ((LM_DEBUG, "Dummy object returned : %s.", dummy_obj->sayHello()));
+      ACE_DEBUG ((LM_DEBUG, "The test succeeded."));
       return 0;
     }
   catch (CORBA::Exception & e)
     {
-      DANCE_ERROR((LM_ERROR, "[%M] A CORBA exception \"%s\" (%s) was thrown. The test failed."
+      ACE_ERROR ((LM_ERROR, "A CORBA exception \"%s\" (%s) was thrown. The test failed."
                    , e._name(), e._info().c_str()));
       return 1;
     }
   catch (...)
     {
-      DANCE_ERROR((LM_ERROR, "[%M] An exception was thrown. The test failed."));
+      ACE_ERROR ((LM_ERROR, "An exception was thrown. The test failed."));
       return 1;
     }
 }

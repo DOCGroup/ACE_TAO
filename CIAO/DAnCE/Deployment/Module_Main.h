@@ -47,7 +47,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
       dlf->init (argc, argv);
 
-      DANCE_DEBUG ((LM_TRACE, DLINFO
+      DANCE_DEBUG (6, (LM_TRACE, DLINFO
                     ACE_TEXT("Module_main.h - initializing ORB\n")));
 
       CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
@@ -63,7 +63,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
           ace->set_flags(ACE_Log_Msg::CUSTOM);
         }
 
-      DANCE_DEBUG ((LM_TRACE, DLINFO
+      DANCE_DEBUG (6, (LM_TRACE, DLINFO
                     ACE_TEXT("Module_Main.h - initializing module instance\n")));
 
       DANCE_MODULE_MAIN_CLASS_NAME module_instance;
@@ -75,7 +75,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
       if (!CORBA::is_nil (obj.in ()))
         orb->run ();
 
-      DANCE_DEBUG ((LM_TRACE, DLINFO
+      DANCE_DEBUG (6, (LM_TRACE, DLINFO
                     ACE_TEXT("Module_Main.h - ORB event loop finished, exiting.\n")));
 
       orb->destroy ();

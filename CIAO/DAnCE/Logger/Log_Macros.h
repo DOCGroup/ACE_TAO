@@ -9,17 +9,13 @@
 #ifndef DANCE_LOG_MACROS_H_
 #define DANCE_LOG_MACROS_H_
 
-/*
-// By default tracing is turned off.
-#if !defined (DANCE_NTRACE)
-#  if !defined (ACE_NTRACE)
-#    define DANCE_NTRACE 1
-#  else
-#    define DANCE_NTRACE ACE_NTRACE
-#  endif
-#endif DANCE_NTRACE
-*/
-#define DLINFO ACE_TEXT("(%P|%t) [%M] - %T - ")
+#include "DAnCE_Logger_Export.h"
+
+#if !defined (DLINFO)
+# define DLINFO ACE_TEXT("(%P|%t) [%M] - %T - ")
+#endif
+
+extern DAnCE_Logger_Export unsigned int DAnCE_debug_level;
 
 #if (DANCE_NTRACE == 1)
 #  if !defined (ACE_NTRACE)
@@ -48,41 +44,50 @@
 #endif /* DANCE_NTRACE */
 
 #if defined (DANCE_NLOGGING)
-# define DANCE_ERROR(X) do {} while (0)
-# define DANCE_DEBUG(X) do {} while (0)
-#define DANCE_ERROR_RETURN(X, Y) return (Y)
-#define DANCE_ERROR_BREAK(X) { break; }
+# define DANCE_ERROR(L, X) do {} while (0)
+# define DANCE_DEBUG(L, X) do {} while (0)
+#define DANCE_ERROR_RETURN(L, X, Y) return (Y)
+#define DANCE_ERROR_BREAK(L, X) { break; }
 #else
 # if !defined (DANCE_ERROR)
-#  define DANCE_ERROR(X) \
+#  define DANCE_ERROR(L, X) \
   do { \
-    int __ace_error = ACE_Log_Msg::last_error_adapter (); \
-    ACE_Log_Msg *ace___ = ACE_Log_Msg::instance ();               \
-    ace___->conditional_set (__FILE__, __LINE__, -1, __ace_error); \
-    ace___->log X; \
+    if (DAnCE_debug_level >= L) \
+      { \
+        int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
+        ACE_Log_Msg *ace___ = ACE_Log_Msg::instance ();               \
+        ace___->conditional_set (__FILE__, __LINE__, -1, __ace_error); \
+        ace___->log X; \
+      } \
   } while (0)
 #  endif
 # if !defined (DANCE_DEBUG)
-#  define DANCE_DEBUG(X) \
+#  define DANCE_DEBUG(L, X) \
   do { \
-    int __ace_error = ACE_Log_Msg::last_error_adapter (); \
-    ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
-    ace___->log X; \
+    if (DAnCE_debug_level >= L) \
+      { \
+        int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
+        ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
+        ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
+        ace___->log X; \
+      } \
   } while (0)
 # endif
 # if !defined (DANCE_ERROR_RETURN)
-#  define DANCE_ERROR_RETURN(X, Y) \
+#  define DANCE_ERROR_RETURN(L, X, Y) \
   do { \
-    int __ace_error = ACE_Log_Msg::last_error_adapter (); \
-    ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    ace___->conditional_set (__FILE__, __LINE__, Y, __ace_error); \
-    ace___->log X; \
-    return Y; \
+    if (DAnCE_debug_level >= L) \
+      { \
+        int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
+        ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
+        ace___->conditional_set (__FILE__, __LINE__, Y, __ace_error); \
+        ace___->log X; \
+        return Y; \
+      } \
   } while (0)
 # endif
 # if !defined (DANCE_ERROR_BREAK)
-#  define DANCE_ERROR_BREAK(X) { DANCE_ERROR (X); break; }
+#  define DANCE_ERROR_BREAK(L, X) { DANCE_ERROR (L, X); break; }
 # endif
 #endif
 

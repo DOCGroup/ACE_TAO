@@ -1,7 +1,7 @@
 // -*- MPC -*-
 //$Id$
 
-project (Plan_Generator) : dance_deployment_stub, naming, dance_lib, dance_repositorymanager_stub {
+project (Plan_Generator) : dance_deployment_stub, naming, dance_lib, dance_repositorymanager_stub, dance_logger {
   sharedname = DAnCE_Plan_Generator
   dynamicflags = PLAN_GENERATOR_IMPL_BUILD_DLL
 

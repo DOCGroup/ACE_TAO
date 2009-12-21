@@ -28,13 +28,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
     }
   catch (CIAO::Deployment::RTComponentServer_Task::Error &e)
     {
-      CIAO_DEBUG ((LM_ALERT, CLINFO "CIAO_RTComponentServer main: Caught ComponentServer exception: %C\n",
+      CIAO_DEBUG (6, (LM_ALERT, CLINFO "CIAO_RTComponentServer main: Caught ComponentServer exception: %C\n",
                   e.err_.c_str ()));
       retval = -1;
     }
   catch (...)
     {
-      CIAO_DEBUG ((LM_ALERT, CLINFO "CIAO_RTComponentServer main: Caught unknown exception.\n"));
+      CIAO_DEBUG (6, (LM_ALERT, CLINFO "CIAO_RTComponentServer main: Caught unknown exception.\n"));
       retval = -1;
     }
 

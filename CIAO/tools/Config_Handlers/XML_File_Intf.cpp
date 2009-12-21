@@ -29,28 +29,28 @@ namespace CIAO
           if (!XML_Helper::XML_HELPER.is_initialized ())
             return false;
 
-          CIAO_DEBUG ((LM_TRACE, CLINFO "XML_File_Intf::read_process_file - "
+          CIAO_DEBUG (6, (LM_TRACE, CLINFO "XML_File_Intf::read_process_file - "
                        "Constructing DOM\n"));
           XERCES_CPP_NAMESPACE::DOMDocument *dom =
             XML_Helper::XML_HELPER.create_dom ((file));
 
           if (dom == 0)
             {
-              CIAO_DEBUG ((LM_TRACE, CLINFO "XML_File_Intf::read_process_file - "
+              CIAO_ERROR (1, (LM_ERROR, CLINFO "XML_File_Intf::read_process_file - "
                            "Failed to open file %s\n", file));
               return false;
             }
 
           XERCES_CPP_NAMESPACE::DOMElement *foo = dom->getDocumentElement ();
-          CIAO_DEBUG ((LM_TRACE, CLINFO "XML_File_Intf::read_process_file - "
+          CIAO_DEBUG (6, (LM_TRACE, CLINFO "XML_File_Intf::read_process_file - "
                        "DOMElement pointer: %u\n", foo));
 
-          CIAO_DEBUG ((LM_TRACE, CLINFO "XML_File_Intf::read_process_file - "
+          CIAO_DEBUG (6, (LM_TRACE, CLINFO "XML_File_Intf::read_process_file - "
                        "Parsing XML file with XSC\n"));
           deploymentPlan dp =
             CIAO::Config_Handlers::reader::DeploymentPlan (dom);
 
-          CIAO_DEBUG ((LM_TRACE, CLINFO "XML_File_Intf::read_process_file - "
+          CIAO_DEBUG (6, (LM_TRACE, CLINFO "XML_File_Intf::read_process_file - "
                        "Processing using config handlers\n"));
           DP_Handler dp_handler (dp);
 
@@ -61,13 +61,13 @@ namespace CIAO
         }
       catch (const Config_Error &ex)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO "XML_File_Intf::error at %C: %C\n",
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "XML_File_Intf::error at %C: %C\n",
                       ex.name_.c_str (), ex.error_.c_str ()));
         }
       catch (...)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO "XML_File_Intf::caught - "
-                                        "Unexpected exception whilst parsing XML into IDL.\n"));
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "XML_File_Intf::caught - "
+                      "Unexpected exception whilst parsing XML into IDL.\n"));
         }
 
       return false;

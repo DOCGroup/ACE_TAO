@@ -68,18 +68,18 @@ namespace CIAO_command_line_test_A_Impl
       {
         long tc =
           this->context_->get_CCM_object ()->_get_orb ()->orb_core ()->lane_resources ().transport_cache ().total_size ();
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Transport cache : set <%d>, current_size <%d>\n"),
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Transport cache : set <%d>, current_size <%d>\n"),
               this->tc_max_, tc));
         if (this->tc_max_ != tc)
           {
-            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Commandline parameter isn't not passed properly ")
-                                   ACE_TEXT ("should be <%d>, is <%d>\n"), 
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Commandline parameter isn't not passed properly ")
+                                   ACE_TEXT ("should be <%d>, is <%d>\n"),
                                    this->tc_max_, tc));
           }
       }
     catch (...)
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Exception caught while checking transport cache.\n")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Exception caught while checking transport cache.\n")));
       }
   }
 

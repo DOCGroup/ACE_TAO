@@ -51,7 +51,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::wait (
   DDS_ReturnCode_t const retcode = ws_->wait (active_conditions, timeout);
   if (retcode == DDS_RETCODE_TIMEOUT)
     {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Getter: No data available after timeout.\n")));
+      CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("Getter: No data available after timeout.\n")));
       return false;
     }
   return true;
@@ -110,7 +110,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_many (
                       ++number_read;
                     }
                 }
-              CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Getter_T::get_many: ")
+              CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("Getter_T::get_many: ")
                                 ACE_TEXT ("read <%d> - valid <%d>\n"),
                                 sample_info.length (),
                                 number_read));
@@ -132,7 +132,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_many (
               // RETCODE_NO_DATA should be an error
               // because after a timeout there should be
               // data.
-              CIAO_ERROR ((LM_ERROR, CLINFO
+              CIAO_ERROR (1, (LM_ERROR, CLINFO
                     "CIAO::DDS4CCM::RTI::Getter_T::Getter_T - "
                     "Error while reading from DDS: <%C>\n",
                     translate_retcode (retcode)));
@@ -143,7 +143,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_many (
           retcode = this->impl ()->return_loan(data,sample_info);
           if (retcode != DDS_RETCODE_OK)
             {
-              CIAO_ERROR ((LM_ERROR, ACE_TEXT ("return loan error %C\n"),
+              CIAO_ERROR (1, (LM_ERROR, ACE_TEXT ("return loan error %C\n"),
                           translate_retcode (retcode)));
             }
         }
@@ -195,7 +195,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
               // RETCODE_NO_DATA should be an error
               // because after a timeout there should be
               // data.
-              CIAO_ERROR ((LM_ERROR, CLINFO
+              CIAO_ERROR (1, (LM_ERROR, CLINFO
                     "CIAO::DDS4CCM::RTI::Getter_T::Getter_T - "
                     "Error while reading from DDS: <%C>\n",
                     translate_retcode (retcode)));
@@ -206,7 +206,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
           retcode = this->impl ()->return_loan(data,sample_info);
           if (retcode != DDS_RETCODE_OK)
             {
-              CIAO_ERROR ((LM_ERROR,
+              CIAO_ERROR (1, (LM_ERROR,
                           ACE_TEXT ("return loan error %C\n"),
                           translate_retcode (retcode)));
             }
@@ -265,7 +265,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::data_reader (
       RTI_DataReader_i *rdr = dynamic_cast <RTI_DataReader_i *> (reader);
       if (rdr == 0)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Getter_T::data_reader - "
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Getter_T::data_reader - "
                        "Unable to cast provided DataReader to servant\n"));
           throw CORBA::INTERNAL ();
         }
@@ -274,7 +274,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::data_reader (
 
       if (!this->impl_)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Getter_T::data_reader - "
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Getter_T::data_reader - "
                        "Unable to narrow the provided writer entity to the specific "
                        "type necessary to publish messages\n"));
           throw CORBA::INTERNAL ();
@@ -289,13 +289,13 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::data_reader (
       DDS_ReturnCode_t retcode = ws_->attach_condition (gd_);
       if (retcode != DDS_RETCODE_OK)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO "GETTER: Unable to attach guard condition to waitset.\n"));
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "GETTER: Unable to attach guard condition to waitset.\n"));
           throw CCM_DDS::InternalError (retcode, 0);
         }
       retcode = ws_->attach_condition (rd_condition_);
       if (retcode != DDS_RETCODE_OK)
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO "GETTER: Unable to attach read condition to waitset.\n"));
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "GETTER: Unable to attach read condition to waitset.\n"));
           throw CCM_DDS::InternalError (retcode, 1);
         }
     }
