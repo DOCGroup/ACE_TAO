@@ -1,3 +1,8 @@
+Mon Dec 21 11:29:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Fixed error message and added a test for generated file headers
+
 Mon Dec 21 11:26:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/bootstrap:
