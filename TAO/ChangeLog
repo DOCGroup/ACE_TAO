@@ -1,3 +1,14 @@
+Mon Dec 21 13:09:35 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * DevGuideExamples/Multithreading/ThreadPerConnection/MessengerServer.cpp:
+        * tests/Oneway_Send_Timeouts/run_test.pl:
+        * tests/Optimized_Connection/run_test.pl:
+        * examples/Simple/time-date/svc.conf:
+        * examples/Simple/time-date/run_test.pl:
+
+          Tests are converted to use new test framework
+          and added to fuzz build.
+
 Mon Dec 21 12:39:29 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * bin/tao_orb_tests.lst:

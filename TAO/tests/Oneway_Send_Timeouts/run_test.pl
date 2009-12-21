@@ -14,7 +14,7 @@ $status = 0;
 $debug_level = '0';
 $test_port = 12345;
 $management_port = 12346;
-$client_conf = "lf_flush.conf";
+$client_conf = $target->LocalFile ("lf_flush.conf");
 $flush_strategy = "LF";
 
 foreach $i (@ARGV) {

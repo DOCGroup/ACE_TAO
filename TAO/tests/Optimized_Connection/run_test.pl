@@ -22,8 +22,11 @@ my $client = PerlACE::TestTarget::create_target (1) || die "Create target 1 fail
 my $iorbase = "oc.ior";
 my $client_iorfile = $client->LocalFile ($iorbase);
 
+my $client_conf = $client->LocalFile ("oc_svc.conf");
+
 $CL = $client->CreateProcess ("client", "-k file://$client_iorfile ".
-                                        "-orbsvcconf oc_svc.conf");
+                                        "-orbsvcconf $client_conf");
+                                        
 
 if ($client->WaitForFileTimed ($iorbase,
                            $client->ProcessStartWaitInterval()) == -1) {
