@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : ciao_config_handlers_base, dynamicany, typecodefactory, dance_deployment_stub {
+project : ciao_config_handlers_base, dynamicany, typecodefactory, dance_deployment_stub, ciao_logger {
   verbatim(gnuace, macros) {
    override no_hidden_visibility = 1
   }
@@ -17,5 +17,5 @@ project : ciao_config_handlers_base, dynamicany, typecodefactory, dance_deployme
            Package_Config_Handlers \
            XSC_XML_Handlers \
            XSC_Config_Handlers_Common \
-           XSC_DynAny_Handler 
+           XSC_DynAny_Handler
 }
