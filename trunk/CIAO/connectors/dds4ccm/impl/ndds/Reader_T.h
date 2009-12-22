@@ -54,12 +54,13 @@ namespace CIAO
 
         virtual void filter (const ::CCM_DDS::QueryFilter & filter);
 
-        void data_reader (::DDS::DataReader_ptr reader);
+        void set_impl (::DDS::DataReader_ptr reader);
 
-        typename DDS_TYPE::data_reader * impl (void);
       private:
         typename DDS_TYPE::data_reader *impl_;
         ::DDS::DataReader_ptr reader_;
+
+        typename DDS_TYPE::data_reader * impl (void);
 
         DDS_InstanceHandle_t check_handle (
           const typename DDS_TYPE::value_type& an_instance,
