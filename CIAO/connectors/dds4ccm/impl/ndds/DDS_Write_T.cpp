@@ -47,7 +47,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::init (
               DDSDataWriter *rw = dynamic_cast < DDSDataWriter *> (dwv_tmp.in ());
               this->rti_writer_.set_impl (rw);
               this->writer_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
-              this->writer_t_.data_writer (dwv_tmp);
+              this->writer_t_.set_impl (dwv_tmp);
             }
             else
             {
@@ -61,7 +61,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::init (
               DDSDataWriter *rw = dynamic_cast < DDSDataWriter *> (dwv_tmp.in ());
               this->rti_writer_.set_impl (rw);
               this->writer_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
-              this->writer_t_.data_writer (dwv_tmp);
+              this->writer_t_.set_impl (dwv_tmp);
             }
         }
     }
