@@ -1,3 +1,23 @@
+Tue Dec 22 09:39:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Config_Handlers/DynAny_Handler/dynany_test.idl
+        * DAnCE/Config_Handlers/DynAny_Handler/test.cpp
+        * DAnCE/Config_Handlers/DynAny_Handler/test.mpc
+        * DAnCE/Config_Handlers/Package_Handlers/Package_Handlers.mpc
+        * DAnCE/Config_Handlers/Package_Handlers/test.cpp
+        * DAnCE/tests/Config_Handlers
+        * DAnCE/tests/Config_Handlers/DynAny_Handler
+        * DAnCE/tests/Config_Handlers/DynAny_Handler/dynany_test.idl
+        * DAnCE/tests/Config_Handlers/DynAny_Handler/test.cpp
+        * DAnCE/tests/Config_Handlers/DynAny_Handler/test.mpc
+        * DAnCE/tests/Config_Handlers/Package_Handlers
+        * DAnCE/tests/Config_Handlers/Package_Handlers/Package_Handlers.mpc
+        * DAnCE/tests/Config_Handlers/Package_Handlers/test.cpp
+          Moved tests to the test directory
+
+        * tools/tools.mwc:
+          Removed, not needed
+
 Tue Dec 22 09:32:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Logger/File_Logger_Backend.h
