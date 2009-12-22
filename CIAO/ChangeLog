@@ -1,3 +1,13 @@
+Tue Dec 22 14:34:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/Connector/AMI.mpc
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver.mpc
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender.mpc
+          Added missing afters
+
+        * connectors/ami4ccm/examples/Hello/Connector/Hello_Base.idl
+          No need to derive from ReplyHandler
+
 Tue Dec 22 14:36:11 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Getter_T.cpp:

@@ -137,7 +137,7 @@ project(Hello_Base_AMI_lem_stub) : ccm_svnt, ami   {
 }
 
 project(Hello_Base_AMI_stub) : ccm_stub, ami   {
-  after += Hello_Base_AMI_idl_gen AMI_Hello_Base_stub
+  after += Hello_Base_AMI_idl_gen AMI_Hello_Base_stub AMI_Hello_stub
   libs  += Hello_stub
   libpaths += ../lib
   libout = ../lib
@@ -162,7 +162,7 @@ project(Hello_Base_AMI_stub) : ccm_stub, ami   {
 }
 
 project(Hello_Base_AMI_exec) : ciao_executor, ami   {
-  after   += Hello_Base_AMI_lem_stub AMI_Hello_Base_AMI_stub AMI_Hello_Base_skel AMI_Hello_Base_exec Hello_Base_AMI_stub Conn_Hello_Base_skel
+  after   += Hello_Base_AMI_lem_stub AMI_Hello_Base_AMI_stub AMI_Hello_Base_skel AMI_Hello_Base_exec Hello_Base_AMI_stub Conn_Hello_Base_skel Conn_AMI_Hello_Base_exec AMI_Hello_exec AMI_Hello_skel
   sharedname = AMI_exec
   libs += AMI_stub AMI_lem_stub Hello_stub Hello_skel Hello_exec Conn_Hello_stub Conn_Hello_exec
   libpaths += ../lib
