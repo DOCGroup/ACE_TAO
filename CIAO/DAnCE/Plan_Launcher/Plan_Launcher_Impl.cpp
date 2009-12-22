@@ -1,8 +1,8 @@
 // $Id$
 #include "Plan_Launcher_Impl.h"
 #include "orbsvcs/CosNamingC.h"
-#include "tools/Config_Handlers/XML_File_Intf.h"
-#include "tools/Config_Handlers/DnC_Dump.h"
+#include "Config_Handlers/XML_File_Intf.h"
+#include "Config_Handlers/DnC_Dump.h"
 #include "ace/Sched_Params.h"
 #include "ccm/CCM_ObjectC.h"
 

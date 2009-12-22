@@ -1,7 +1,7 @@
 // $Id$
 
 #include "SimpleConsumer_exec.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "DAnCE/Logger/Log_Macros.h"
 
 namespace CIAO_Simple_SimpleConsumer_Impl
 {
@@ -11,12 +11,12 @@ namespace CIAO_Simple_SimpleConsumer_Impl
 
   SimpleConsumer_exec_i::SimpleConsumer_exec_i (void)
   {
-    CIAO_TRACE ("SimpleConsumer_exec_i::SimpleConsumer_exec_i (void)");
+    DANCE_TRACE ("SimpleConsumer_exec_i::SimpleConsumer_exec_i (void)");
   }
 
   SimpleConsumer_exec_i::~SimpleConsumer_exec_i (void)
   {
-    CIAO_TRACE ("SimpleConsumer_exec_i::~SimpleConsumer_exec_i (void)");
+    DANCE_TRACE ("SimpleConsumer_exec_i::~SimpleConsumer_exec_i (void)");
   }
 
   // Supported or inherited operations.
@@ -29,7 +29,7 @@ namespace CIAO_Simple_SimpleConsumer_Impl
   SimpleConsumer_exec_i::push_hello_ (
     ::Simple::Hello * ev )
   {
-    CIAO_TRACE ("SimpleConsumer_exec_i::push_hello_ ()");
+    DANCE_TRACE ("SimpleConsumer_exec_i::push_hello_ ()");
     // Your code here.
 
     ACE_DEBUG ((LM_EMERGENCY, "SimpleConsumer_exec_i::push_hello_ - "
@@ -42,7 +42,7 @@ namespace CIAO_Simple_SimpleConsumer_Impl
   SimpleConsumer_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
-    CIAO_TRACE ("SimpleConsumer_exec_i::set_session_context ()");
+    DANCE_TRACE ("SimpleConsumer_exec_i::set_session_context ()");
 
     this->context_ =
       ::Simple::CCM_SimpleConsumer_Context::_narrow (ctx);
@@ -56,28 +56,28 @@ namespace CIAO_Simple_SimpleConsumer_Impl
   void
   SimpleConsumer_exec_i::configuration_complete ()
   {
-    CIAO_TRACE ("SimpleConsumer_exec_i::configuration_complete ()");
+    DANCE_TRACE ("SimpleConsumer_exec_i::configuration_complete ()");
     // Your code here.
   }
 
   void
   SimpleConsumer_exec_i::ccm_activate ()
   {
-    CIAO_TRACE ("SimpleConsumer_exec_i::ccm_activate ()");
+    DANCE_TRACE ("SimpleConsumer_exec_i::ccm_activate ()");
     // Your code here.
   }
 
   void
   SimpleConsumer_exec_i::ccm_passivate ()
   {
-    CIAO_TRACE ("SimpleConsumer_exec_i::ccm_passivate ()");
+    DANCE_TRACE ("SimpleConsumer_exec_i::ccm_passivate ()");
     // Your code here.
   }
 
   void
   SimpleConsumer_exec_i::ccm_remove ()
   {
-    CIAO_TRACE ("SimpleConsumer_exec_i::ccm_remove ()");
+    DANCE_TRACE ("SimpleConsumer_exec_i::ccm_remove ()");
     // Your code here.
   }
 
@@ -87,12 +87,12 @@ namespace CIAO_Simple_SimpleConsumer_Impl
 
   SimpleConsumerHome_exec_i::SimpleConsumerHome_exec_i (void)
   {
-    CIAO_TRACE ("SimpleConsumerHome_exec_i::SimpleConsumerHome_exec_i (void)");
+    DANCE_TRACE ("SimpleConsumerHome_exec_i::SimpleConsumerHome_exec_i (void)");
   }
 
   SimpleConsumerHome_exec_i::~SimpleConsumerHome_exec_i (void)
   {
-    CIAO_TRACE ("SimpleConsumerHome_exec_i::~SimpleConsumerHome_exec_i (void)");
+    DANCE_TRACE ("SimpleConsumerHome_exec_i::~SimpleConsumerHome_exec_i (void)");
   }
 
   // Supported or inherited operations.
@@ -108,7 +108,7 @@ namespace CIAO_Simple_SimpleConsumer_Impl
   ::Components::EnterpriseComponent_ptr
   SimpleConsumerHome_exec_i::create ()
   {
-    CIAO_TRACE ("SimpleConsumerHome_exec_i::create ()");
+    DANCE_TRACE ("SimpleConsumerHome_exec_i::create ()");
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
 
@@ -123,7 +123,7 @@ namespace CIAO_Simple_SimpleConsumer_Impl
   extern "C" SIMPLECONSUMER_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Simple_SimpleConsumerHome_Impl (void)
   {
-    CIAO_TRACE ("create_Simple_SimpleConsumerHome_Impl (void)");
+    DANCE_TRACE ("create_Simple_SimpleConsumerHome_Impl (void)");
     ::Components::HomeExecutorBase_ptr retval =
       ::Components::HomeExecutorBase::_nil ();
 
