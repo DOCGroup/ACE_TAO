@@ -32,37 +32,6 @@ struct TAO_IDL_FE_Export FE_Utils
 
   static bool duplicate_param_id (T_PARAMLIST_INFO *params);
 
-  struct T_Ref_Info
-  {
-    UTL_ScopedName *name_;
-    UTL_StrList *params_;
-
-    T_Ref_Info (void);
-    T_Ref_Info (UTL_ScopedName *n, UTL_StrList *strs);
-
-    void destroy (void);
-  };
-
-  typedef ACE_Unbounded_Queue<T_Ref_Info> T_REFLIST_INFO;
-
-  struct T_Port_Info
-  {
-    ACE_CString name_;
-    AST_PortType *type_;
-
-    T_Port_Info (const char *name, AST_PortType *type);
-  };
-
-  struct T_Inst_Info
-  {
-    UTL_ScopedName *name_;
-    UTL_NameList *args_;
-
-    T_Inst_Info (UTL_ScopedName *n, UTL_NameList *args);
-
-    void destroy (void);
-  };
-
   struct T_ARGLIST : ACE_Unbounded_Queue<AST_Decl *>
   {
     void destroy (void);

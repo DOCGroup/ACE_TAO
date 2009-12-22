@@ -182,10 +182,6 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
   AST_Decl::NodeType            ntval;          /* Node type value      */
   FE_Utils::T_Param_Info        *pival;         /* Template interface param */
   FE_Utils::T_PARAMLIST_INFO    *plval;         /* List of template params */
-  FE_Utils::T_Ref_Info          *trval;         /* Template interface info */
-  FE_Utils::T_REFLIST_INFO      *rlval;         /* List of above structs */
-  FE_Utils::T_Inst_Info         *tival;         /* Template instantiation */
-  FE_Utils::T_Port_Info         *ptval;         /* Porttype reference */
   FE_Utils::T_ARGLIST           *alval;         /* List of template args */
 }
 
@@ -377,13 +373,8 @@ definition
         }
         ;
 
-at_least_one_fixed_definition
-        : fixed_definitions fixed_definition
-        ;
-
-fixed_definitions
-        : fixed_definitions fixed_definition
-        | /* EMPTY */
+at_least_one_definition
+        : definitions definition
         ;
 
 fixed_definition
@@ -447,9 +438,9 @@ fixed_definition
 //      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
-        | fixed_module
+        | module
         {
-//      | fixed_module
+//      | module
           idl_global->set_parse_state (IDL_GlobalData::PS_ModuleDeclSeen);
         }
           ';'
@@ -542,10 +533,10 @@ module_header
         }
         ;
 
-fixed_module
+module
         : module_header
         {
-// fixed_module : module_header
+// module : module_header
           idl_global->set_parse_state (IDL_GlobalData::PS_ModuleIDSeen);
 
           // The module_header rule is common to template module, fixed
@@ -583,9 +574,9 @@ fixed_module
 //      '{'
         idl_global->set_parse_state (IDL_GlobalData::PS_ModuleSqSeen);
         }
-        at_least_one_fixed_definition
+        at_least_one_definition
         {
-//      at_least_one_fixed_definition
+//      at_least_one_definition
           idl_global->set_parse_state (IDL_GlobalData::PS_ModuleBodySeen);
         }
         '}'
@@ -628,7 +619,7 @@ template_module
             {
               idl_global->err ()->duplicate_param_id (
                 $1);
-                
+
               return 1;
             }
         }
@@ -649,7 +640,7 @@ template_module
            * Push it on the stack
            */
           idl_global->scopes ().push (tm);
-          
+
           // Store these for reference as we parse the scope 
           // of the template module.
           idl_global->current_params ($3);
@@ -1398,17 +1389,23 @@ state_member
         : IDL_PUBLIC
         {
 // state_member : IDL_PUBLIC
+        }
+        member_i
+        {
+//        member_i
           /* is $0 to member_i */
           $<vival>$ = AST_Field::vis_PUBLIC;
         }
-        member_i
         | IDL_PRIVATE
         {
-//      IDL_PRIVATE
+//        IDL_PRIVATE
+        }
+        member_i
+        {
+//        member_i
           /* is $0 to member_i */
           $<vival>$ = AST_Field::vis_PRIVATE;
         }
-        member_i
         ;
 
 exports
@@ -5404,6 +5401,9 @@ emits_decl : IDL_EMITS scoped_name id
 // emits_decl : IDL_EMITS scoped_name id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
+          AST_Decl::NodeType nt = AST_Decl::NT_type;
+          AST_Param_Holder *ph = 0;
+
           AST_Decl *d = s->lookup_by_name ($2,
                                            true);
 
@@ -5415,7 +5415,7 @@ emits_decl : IDL_EMITS scoped_name id
           else
             {
               nt = d->node_type ();
-            
+
               switch (nt)
                 {
                   case AST_Decl::NT_eventtype:
@@ -5423,16 +5423,16 @@ emits_decl : IDL_EMITS scoped_name id
                   case AST_Decl::NT_param_holder:
                     ph = AST_Param_Holder::narrow_from_decl (d);
                     nt = ph->info ()->type_;
-                    
+
                     if (nt != AST_Decl::NT_type
                        && nt != AST_Decl::NT_eventtype)
                       {
                         idl_global->err ()->mismatched_template_param (
                           ph->info ()->name_.c_str ());
-                          
+
                         so_far_so_good = false;
                       }
-                      
+
                     break;
                   default:
                     idl_global->err ()->eventtype_expected (d);
