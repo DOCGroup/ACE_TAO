@@ -24,7 +24,7 @@
 
 namespace Deployment
 {
-  struct DeploymentPlan ;
+  struct DeploymentPlan;
 }
 
 namespace CIAO
@@ -38,10 +38,10 @@ namespace CIAO
 
       ::Deployment::DeploymentPlan const *get_plan (void);
       ::Deployment::DeploymentPlan *release_plan (void);
-      
+
       void add_search_path (const ACE_TCHAR *environment,
                             const ACE_TCHAR *relpath);
-      
+
     protected:
 
       bool read_process_file (const ACE_TCHAR *file);

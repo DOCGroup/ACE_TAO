@@ -1,3 +1,26 @@
+Tue Dec 22 12:47:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Config_Handlers/Config_Handlers.mpc
+        * DAnCE/Config_Handlers/DynAny_Handler.mpc
+        * DAnCE/Config_Handlers/DynAny_Handler/DynAny_Handler.mpc
+        * DAnCE/Config_Handlers/test.cdp
+        * DAnCE/Config_Handlers/test.cpp
+        * DAnCE/Config_Handlers/Utils/Functors.h
+        * DAnCE/Config_Handlers/XML_File_Intf.h
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/simple_em_launcher.cpp
+        * DAnCE/tests/CIAO/NodeManager-Deployments/simple_nm_launcher.cpp
+        * DAnCE/tests/Config_Handlers/Config_Handlers.mpc
+        * DAnCE/tests/Config_Handlers/DynAny_Handler/test.cpp
+        * DAnCE/tests/Config_Handlers/test.cdp
+        * DAnCE/tests/Config_Handlers/test.cpp
+        * DAnCE/tests/DeploymentPlanDump/test.cpp
+        * DAnCE/tests/DeploymentPlanTestReferences/test.cpp
+        * DAnCE/tests/DeploymentTest1/test.cpp
+          Moved more tests to DAnCE/tests and make sure DANCE_ROOT/docs/schema
+          is also used
+
 Tue Dec 22 09:39:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Config_Handlers/DynAny_Handler/dynany_test.idl

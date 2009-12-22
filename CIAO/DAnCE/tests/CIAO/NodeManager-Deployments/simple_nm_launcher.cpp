@@ -47,6 +47,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("*** simple_nm_launcher: parsing XML\n")));
       // Parse plan
       CIAO::Config_Handlers::XML_File_Intf xml (argv[2]);
+      xml.add_search_path (ACE_TEXT ("DANCE_ROOT"), ACE_TEXT ("/docs/schema/"));
       xml.add_search_path (ACE_TEXT ("CIAO_ROOT"), ACE_TEXT ("/docs/schema/"));
 
       auto_ptr< ::Deployment::DeploymentPlan> plan (xml.release_plan ());

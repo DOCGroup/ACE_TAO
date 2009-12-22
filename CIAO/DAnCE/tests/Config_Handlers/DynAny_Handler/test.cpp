@@ -48,21 +48,21 @@ bool check_doubleseq (CORBA::Any &any)
   ACE_DEBUG ((LM_DEBUG, "Checking a double sequence\n"));
 
   dynany_test::DoubleSequence *seq;
-  
+
   if (!(any >>= seq))
     {
       ACE_ERROR ((LM_ERROR, "failed to extract double sequence\n"));
       return false;
     }
-  
+
   static const CORBA::Double ref_seq[3] = {1.0, 2.0, 2.5};
-  
+
   if (seq->length () != 3)
     {
       ACE_ERROR ((LM_ERROR, "Unexpected length of double sequence\n"));
       return false;
     }
-  
+
   for (CORBA::ULong i = 0; i < seq->length (); ++i)
     {
       if ((*seq)[i] != ref_seq[i])
@@ -72,7 +72,7 @@ bool check_doubleseq (CORBA::Any &any)
           return false;
         }
     }
-  
+
   return true;
 }
 
@@ -81,13 +81,13 @@ bool check_longseq (dynany_test::LongSequence *seq);
 bool check_longseq (CORBA::Any &any)
 {
   dynany_test::LongSequence *seq;
-  
+
   if (!(any >>= seq))
     {
       ACE_ERROR ((LM_ERROR, "failed to extract long sequence\n"));
       return false;
     }
-  
+
   return check_longseq (seq);
 }
 
@@ -96,13 +96,13 @@ bool check_longseq (dynany_test::LongSequence *seq)
   ACE_DEBUG ((LM_DEBUG, "Checking a long sequence\n"));
 
   static const CORBA::Long ref_seq[3] = {1, 5, 6};
-  
+
   if (seq->length () != 3)
     {
       ACE_ERROR ((LM_ERROR, "Unexpected length of long sequence\n"));
       return false;
     }
-  
+
   for (CORBA::ULong i = 0; i < seq->length (); ++i)
     {
       if ((*seq)[i] != ref_seq[i])
@@ -112,7 +112,7 @@ bool check_longseq (dynany_test::LongSequence *seq)
           return false;
         }
     }
-  
+
   return true;
 }
 
@@ -122,15 +122,15 @@ bool check_stringseq (dynany_test::StringSequence *seq);
 bool check_stringseq (CORBA::Any &any)
 {
   dynany_test::StringSequence *seq;
-  
+
   if (!(any >>= seq))
     {
       ACE_ERROR ((LM_ERROR, "failed to extract string sequence\n"));
       return false;
     }
-  
+
   return check_stringseq (seq);
-}  
+}
 
 bool check_stringseq (dynany_test::StringSequence *seq)
 {
@@ -139,13 +139,13 @@ bool check_stringseq (dynany_test::StringSequence *seq)
   static const std::string ref_seq[3] = {"StringOne",
                                          "StringTwo",
                                          "StringThree"};
-  
+
   if (seq->length () != 3)
     {
       ACE_ERROR ((LM_ERROR, "Unexpected length of string sequence\n"));
       return false;
     }
-  
+
   for (CORBA::ULong i = 0; i < seq->length (); ++i)
     {
       std::string val ((*seq)[i].in ());
@@ -157,7 +157,7 @@ bool check_stringseq (dynany_test::StringSequence *seq)
           return false;
         }
     }
-  
+
   return true;
 }
 
@@ -166,7 +166,7 @@ bool check_colorseq (dynany_test::ColorSequence *seq);
 bool check_colorseq (CORBA::Any &any)
 {
   dynany_test::ColorSequence *seq;
-  
+
   if (!(any >>= seq))
     {
       ACE_ERROR ((LM_ERROR, "failed to extract color sequence\n"));
@@ -175,20 +175,20 @@ bool check_colorseq (CORBA::Any &any)
 
   return check_colorseq (seq);
 }
-    
+
 bool check_colorseq (dynany_test::ColorSequence *seq)
 {
   ACE_DEBUG ((LM_DEBUG, "Checking a color sequence\n"));
 
-  static const dynany_test::COLOR ref_seq[5] = {dynany_test::yellow, dynany_test::grey, dynany_test::red, 
+  static const dynany_test::COLOR ref_seq[5] = {dynany_test::yellow, dynany_test::grey, dynany_test::red,
                                                 dynany_test::blue, dynany_test::black};
-  
+
   if (seq->length () != 5)
     {
       ACE_ERROR ((LM_ERROR, "Unexpected length of color sequence\n"));
       return false;
     }
-  
+
   for (CORBA::ULong i = 0; i < seq->length (); ++i)
     {
       if ((*seq)[i] != ref_seq[i])
@@ -198,7 +198,7 @@ bool check_colorseq (dynany_test::ColorSequence *seq)
           return false;
         }
     }
-  
+
   return true;
 }
 
@@ -207,13 +207,13 @@ bool check_foo_struct (CORBA::Any &any)
   ACE_DEBUG ((LM_DEBUG, "Checking a foo struct\n"));
 
   dynany_test::Foo *foo;
-  
+
   if (!(any >>= foo))
     {
       ACE_ERROR ((LM_ERROR, "failed to extract foo struct\n"));
       return false;
     }
-  
+
   // Check contents of foo struct
   if (foo->db != 5.5)
     {
@@ -221,7 +221,7 @@ bool check_foo_struct (CORBA::Any &any)
                   foo->db));
       return false;
     }
-  
+
   return check_colorseq (&foo->color_sequence) &&
     check_longseq (&foo->long_sequence) &&
     check_stringseq (&foo->string_sequence);
@@ -239,23 +239,24 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_UNUSED_ARG (orb);
 
   //Create an XML_Helper for all the file work
-  
+
   bool success (true);
-  
+
   XML_File_Intf intf (input_file);
+  intf.add_search_path ("DANCE_ROOT", "/docs/schema/");
   intf.add_search_path ("CIAO_ROOT", "/docs/schema/");
-  
+
   if (intf.get_plan () != 0)
     {
       std::cout << "Instance document import succeeded.  Checking contents.\n";
 
       //Retrieve the newly created IDL structure
       Deployment::DeploymentPlan *idl = intf.release_plan();
-      
+
       for (CORBA::ULong i = 0; i < idl->infoProperty.length (); ++i)
         {
           std::string name (idl->infoProperty[i].name.in ());
-          
+
           if (name == "double_sequence")
             success = success && check_doubleseq (idl->infoProperty[i].value);
           if (name == "long_sequence")
@@ -269,9 +270,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       delete idl;
 
-      
+
     }
-  
+
   if (success)
     return 0;
   else
