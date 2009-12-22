@@ -1,3 +1,8 @@
+Tue Dec 22 14:36:11 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+          Resolved runtime error.
+
 Tue Dec 22 14:21:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDS_Update_T.cpp:
