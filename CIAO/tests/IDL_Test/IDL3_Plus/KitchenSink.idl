@@ -23,6 +23,8 @@ interface iface
   exception iface_excep {};
 };
 
+typedef sequence<iface> ifaceSeq;
+
 eventtype ev
 {
 };
@@ -37,24 +39,35 @@ module A
   local interface C 
   {
   };
-/*  
-  Jeff, can you check this one
+
   module Nested<typename T, sequence <T> TSeq>
   {
     typedef short y;
+
     interface XX 
     {
-    }
-  };
-*/
-};
+    };
 
-typedef sequence<iface> ifaceSeq;
+    // A regular module may be nested inside a template module,
+    // but another template module may not.
+    module GoodNested
+    {
+      typedef long Lo;
+    };
+/*
+    module BadNested<typename S>
+    {
+      typedef S S_Tdef;
+    };*/
+  };
+
+  module Nested<iface, ifaceSeq> Nested_Inst;
+};
 
 module second<exception X, typename W>
 {
   typedef short sho;
-  
+
   valuetype pkey : Components::PrimaryKeyBase
   {
     public long id_key;
@@ -67,7 +80,7 @@ module B
   module second_B<typename T, sequence <T> TSeq> 
   {
     alias A::Nested<T, TSeq> NestedA
-    
+
     interface do : NestedA::XX
     {
     };
@@ -85,12 +98,12 @@ module Ast<typename T,
   interface Foo : T
   {
     attribute T Foo_Attr;
-    
+
     void Foo_Op (in TSeq inarg) raises (S);
   };
 
   alias second<T, S> second_ref;
-  
+
   valuetype VT_T : V supports T
   {
   };
@@ -100,32 +113,32 @@ module Ast<typename T,
     provides iface iface_facet;
     uses multiple T T_Recep;
   };
-  
+
   component Comp_T
   {
     uses multiple T Comp_T_Recep;
     mirrorport PT_T Comp_T_Mirror_Port;
     provides T Comp_T_Facet;
     emits E Comp_T_Emit;
-    
+
     // Tests unique lookup mechanism for types referenced
     // from an aliased template module.
     attribute second_ref::sho sho_attr;
   };
-  
+
   home Comp_T_Home manages Comp_T primarykey second_ref::pkey
   {
     factory create_Comp_T (in TSeq inarg);
     finder find_Comp_T (in T inarg);
   };
-  
+
   // TAO IDL compiler uses the same code for both component
   // and home 'supports' constructs, so we test it here
   // where there is no conflict with the port interfaces.
   home Comp_T_Home_2 supports T manages Comp_T primarykey V
   {
   };
-  
+
   connector Conn_T
   {
     port PT_T Conn_T_Port;
@@ -135,7 +148,7 @@ module Ast<typename T,
   const unsigned long Ast_Const = M;
   const unsigned long LC = 7;
   typedef sequence<T, M> AnotherTSeq;
-  
+
   struct boo
   {
     T T_field;
