@@ -1,3 +1,11 @@
+Tue Dec 22 14:21:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/ndds/InstanceHandleManager_T.h:
+        * connectors/dds4ccm/impl/ndds/InstanceHandleManager_T.cpp:
+          Renamed setter data_writer to set_impl (to be consistent).
+
 Tue Dec 22 13:34:45 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReader.cpp:
