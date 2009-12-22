@@ -57,7 +57,7 @@ CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::unre
 
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
 void
-CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::data_writer (
+CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::set_impl (
   ::DDS::DataWriter_ptr writer)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::InstanceHandleManager_T::data_writer");
@@ -77,9 +77,9 @@ CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::data
           throw ::CORBA::INTERNAL ();
         }
 
-      impl_ =  DDS_TYPE::data_writer::narrow (rdw->get_impl ());
+      this->impl_ =  DDS_TYPE::data_writer::narrow (rdw->get_impl ());
 
-      if (!impl_)
+      if (!this->impl_)
         {
           CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::InstanceHandleManager_T::data_writer - "
                        "Unable to narrow the provided writer entity to the specific "
