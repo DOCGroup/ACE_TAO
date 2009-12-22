@@ -1,3 +1,10 @@
+Tue Dec 22 13:34:45 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReader.cpp:
+        * connectors/dds4ccm/impl/ndds/QueryCondition.h:
+        * connectors/dds4ccm/impl/ndds/QueryCondition.cpp:
+          Implemented setter and getter for DDSQueryCondition.
+
 Tue Dec 22 13:01:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Starter

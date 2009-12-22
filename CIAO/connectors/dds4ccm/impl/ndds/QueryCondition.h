@@ -32,7 +32,7 @@ namespace CIAO
       {
       public:
         // Constructor
-        RTI_QueryCondition_i (DDSQueryCondition *sc);
+        RTI_QueryCondition_i (void);
 
         // Destructor
         virtual ~RTI_QueryCondition_i (void);
@@ -63,9 +63,14 @@ namespace CIAO
         set_query_parameters (
           const ::DDS::StringSeq & query_parameters);
 
-        DDSQueryCondition * get_query_condition (void);
+        DDSQueryCondition * get_impl (void);
+
+        void set_impl (DDSQueryCondition * qc);
+
       private:
-        DDSQueryCondition *impl_;
+        DDSQueryCondition * impl_;
+
+        DDSQueryCondition * impl ();
       };
     }
   }
