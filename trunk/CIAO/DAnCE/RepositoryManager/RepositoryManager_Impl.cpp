@@ -143,6 +143,8 @@ namespace DAnCE
           DANCE_ERROR (1, (LM_ERROR, "Failed to add the type\n"));
       }
 
+    CIAO::Config_Handlers::XML_Helper::_path_resolver.add_path (ACE_TEXT ("DANCE_ROOT"),
+                                                                ACE_TEXT ("/docs/schema/"));
     CIAO::Config_Handlers::XML_Helper::_path_resolver.add_path (ACE_TEXT ("CIAO_ROOT"),
                                                                 ACE_TEXT ("/docs/schema/"));
 

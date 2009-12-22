@@ -25,6 +25,7 @@ Plan_Launcher_Impl::load_xml_plan(const ACE_TCHAR *deployment_plan_uri)
   try
     {
       CIAO::Config_Handlers::XML_File_Intf intf (deployment_plan_uri);
+      intf.add_search_path (ACE_TEXT("DANCE_ROOT"), ACE_TEXT("/docs/schema/"));
       intf.add_search_path (ACE_TEXT("CIAO_ROOT"), ACE_TEXT("/docs/schema/"));
       intf.add_search_path (ACE_TEXT("TAO_ROOT"), ACE_TEXT("/docs/schema/"));
       plan = intf.release_plan ();

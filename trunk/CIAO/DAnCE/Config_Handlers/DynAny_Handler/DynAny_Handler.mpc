@@ -6,14 +6,14 @@ project (XSC_DynAny_Handler) : xerces, dynamicany, typecodefactory, dance_deploy
   libs += XSC_XML_Handlers
   dynamicflags += DYNANY_HANDLER_BUILD_DLL
   macros += XML_USE_PTHREADS
-  includes += $(CIAO_ROOT)/tools/Config_Handlers
+  includes += $(DANCE_ROOT)/Config_Handlers
 
   Source_Files {
-    DynAny_Handler/DynAny_Handler.cpp
-    DynAny_Handler/DynEnum_Handler.cpp
-    DynAny_Handler/DynSequence_Handler.cpp
-    DynAny_Handler/DynStruct_Handler.cpp
-    DynAny_Handler/DynAlias_Handler.cpp
+    DynAny_Handler.cpp
+    DynEnum_Handler.cpp
+    DynSequence_Handler.cpp
+    DynStruct_Handler.cpp
+    DynAlias_Handler.cpp
   }
 
   Header_Files {
