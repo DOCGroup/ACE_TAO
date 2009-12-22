@@ -1,3 +1,16 @@
+Tue Dec 22 17:19:42 UTC 2009  Johnny Willemsen  <jwillemsen {at} remedy.nl>
+
+        * tests/IDL_Test/attribute.idl:
+          A readonly attribute should just use raises, on a rw attribute
+          first getraises and after that setraises has to be specified,
+          not other way around
+
+Tue Dec 22 15:59:42 UTC 2009  Johnny Willemsen  <jwillemsen {at} remedy.nl>
+
+        * tests/IDL_Test/attribute.idl:
+        * tests/IDL_Test/IDL_Test.mpc:
+          Added test file for attributes
+
 Tue Dec 22 17:06:08 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_utils.cpp:
