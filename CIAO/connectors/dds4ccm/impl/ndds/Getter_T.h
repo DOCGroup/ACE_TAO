@@ -45,12 +45,11 @@ namespace CIAO
         virtual ::CCM_DDS::DataNumber_t max_delivered_data (void);
         virtual void max_delivered_data (::CCM_DDS::DataNumber_t max_delivered_data);
 
-        void data_reader (::DDS::DataReader_ptr reader);
-
-        typename DDS_TYPE::data_reader * impl (void);
+        void set_impl (::DDS::DataReader_ptr reader);
 
       private:
         typename DDS_TYPE::data_reader *impl_;
+
         DDSQueryCondition* condition_;
         ::DDS::Duration_t time_out_;
         ::CCM_DDS::DataNumber_t max_delivered_data_;
@@ -59,6 +58,8 @@ namespace CIAO
         DDSReadCondition*   rd_condition_;
 
         bool wait (DDSConditionSeq& active_conditions);
+
+        typename DDS_TYPE::data_reader * impl (void);
       };
     }
   }

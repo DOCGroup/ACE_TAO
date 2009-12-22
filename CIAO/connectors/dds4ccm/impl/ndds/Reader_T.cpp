@@ -319,14 +319,14 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (const ::CCM_DDS::Query
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::data_reader (
+CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::set_impl (
   ::DDS::DataReader_ptr reader)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::data_reader");
 
   if (::CORBA::is_nil (reader))
     {
-      impl_ = 0;
+      this->impl_ = 0;
     }
   else
     {
@@ -339,9 +339,9 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::data_reader (
           throw ::CORBA::INTERNAL ();
         }
 
-      impl_ =  DDS_TYPE::data_reader::narrow (rdw->get_impl ());
+      this->impl_ =  DDS_TYPE::data_reader::narrow (rdw->get_impl ());
 
-      if (!impl_)
+      if (!this->impl ())
         {
           CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::data_reader - "
                        "Unable to narrow the provided reader entity to the specific "
