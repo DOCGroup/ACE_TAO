@@ -61,29 +61,29 @@ namespace CIAO_Hello_Sender_Impl
 
     virtual void foo (::CORBA::Long ami_return_val, const char * answer);
 
-    virtual void foo_excep (::Messaging::ExceptionHolder * excep_holder);
+    virtual void foo_excep (::CCM_AMI::ExceptionHolder_ptr excep_holder);
 
     // Hello Reply Handler
     virtual void hello (::CORBA::Long answer);
 
-    virtual void hello_excep (::Messaging::ExceptionHolder * excep_holder);
+    virtual void hello_excep (::CCM_AMI::ExceptionHolder_ptr excep_holder);
 
     //GET rw_attrib Reply Handler
     virtual void get_rw_attrib (
       ::CORBA::Short ami_return_val);
     virtual void get_rw_attrib_excep (
-      ::Messaging::ExceptionHolder * excep_holder);
+      ::CCM_AMI::ExceptionHolder_ptr excep_holder);
 
     //SET rw_attrib Reply Handler
     virtual void set_rw_attrib (void);
     virtual void set_rw_attrib_excep (
-      ::Messaging::ExceptionHolder * excep_holder);
+      ::CCM_AMI::ExceptionHolder_ptr excep_holder);
 
     //ro_attrib Reply Handler
     virtual void get_ro_attrib (
       ::CORBA::Short ami_return_val);
     virtual void get_ro_attrib_excep (
-      ::Messaging::ExceptionHolder * excep_holder);
+      ::CCM_AMI::ExceptionHolder_ptr excep_holder);
   };
 
   class Sender_exec_i

@@ -30,7 +30,7 @@ namespace CIAO_Hello_Sender_Impl
     }
 
   void HandleException (
-      ::Messaging::ExceptionHolder * excep_holder,
+      ::CCM_AMI::ExceptionHolder_ptr excep_holder,
       const char* func)
     {
       printf ("Sender (%s) :\tHandle except AMI\n",
@@ -45,11 +45,9 @@ namespace CIAO_Hello_Sender_Impl
                   ex.id, ex.error_string.in ());
           HandleException (ex.id, ex.error_string.in (), func);
         }
-      catch (const CORBA::Exception&)
+      catch (const CORBA::Exception& ex)
         {
-          // For now, this excep is EXPECTED! Don't print it
-          // otherwise the scoreboard will be confused.
-          //ex._tao_print_exception ("Caught unexpected except:");
+          ex._tao_print_exception ("ERROR: Caught unexpected except:");
         }
     }
 
@@ -79,7 +77,7 @@ namespace CIAO_Hello_Sender_Impl
 
   void
   MyFoo_callback_exec_i::foo_excep (
-      ::Messaging::ExceptionHolder * excep_holder)
+      ::CCM_AMI::ExceptionHolder * excep_holder)
   {
     HandleException (excep_holder, "FOO");
   }
@@ -94,7 +92,7 @@ namespace CIAO_Hello_Sender_Impl
 
   void
   MyFoo_callback_exec_i::hello_excep (
-      ::Messaging::ExceptionHolder * excep_holder)
+      ::CCM_AMI::ExceptionHolder * excep_holder)
   {
     HandleException (excep_holder, "HELLO");
   }
@@ -109,7 +107,7 @@ namespace CIAO_Hello_Sender_Impl
 
   void
   MyFoo_callback_exec_i::get_rw_attrib_excep (
-    ::Messaging::ExceptionHolder * excep_holder)
+    ::CCM_AMI::ExceptionHolder * excep_holder)
   {
     HandleException (excep_holder, "GET RW_ATTRIB");
   }
@@ -123,7 +121,7 @@ namespace CIAO_Hello_Sender_Impl
 
   void
   MyFoo_callback_exec_i::set_rw_attrib_excep (
-    ::Messaging::ExceptionHolder * excep_holder)
+    ::CCM_AMI::ExceptionHolder * excep_holder)
   {
     HandleException (excep_holder, "SET_RW_ATTRIB");
   }
@@ -138,7 +136,7 @@ namespace CIAO_Hello_Sender_Impl
 
   void
   MyFoo_callback_exec_i::get_ro_attrib_excep (
-    ::Messaging::ExceptionHolder * excep_holder)
+    ::CCM_AMI::ExceptionHolder * excep_holder)
   {
     HandleException (excep_holder, "RO_ATTRIB");
   }
@@ -158,7 +156,7 @@ namespace CIAO_Hello_Sender_Impl
       {
         if (CORBA::is_nil (my_foo_ami_))
           {
-            printf ("Sender (ASYNCH) :\tfoo_ami is NIL !!!\n");
+            printf ("ERROR Sender (ASYNCH) :\tfoo_ami is NIL !!!\n");
             return 1;
           }
         else
