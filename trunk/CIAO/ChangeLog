@@ -1,3 +1,17 @@
+Tue Dec 22 13:01:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Starter
+        * DAnCE/Starter/Starter.cpp
+        * DAnCE/Starter/Starter.h
+        * DAnCE/Starter/Starter.mpc
+        * DAnCE/StaticConfigurator
+        * DAnCE/StaticConfigurator/README
+        * DAnCE/StaticConfigurator/StaticDAnCEApp.cpp.tmpl
+        * DAnCE/StaticConfigurator/StaticDAnCEApp.mpc.tmpl
+        * DAnCE/StaticConfigurator/StaticDAnCEParser.cpp
+        * DAnCE/StaticConfigurator/StaticDAnCEParser.mpc
+          Removed, really old stuff and not maintained
+
 Tue Dec 22 13:02:31 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDS_Get_T.cpp:
