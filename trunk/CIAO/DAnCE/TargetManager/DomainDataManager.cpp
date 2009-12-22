@@ -1,8 +1,8 @@
 // $Id$
 #include "DomainDataManager.h"
 
-#include "tools/Config_Handlers/DD_Handler.h"
-#include "tools/Config_Handlers/DnC_Dump.h"
+#include "Config_Handlers/DD_Handler.h"
+#include "Config_Handlers/DnC_Dump.h"
 #include "DAnCE/Logger/Log_Macros.h"
 
 #ifdef GEN_OSTREAM_OPS

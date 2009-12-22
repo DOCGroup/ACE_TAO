@@ -12,7 +12,7 @@
 #include "Deployment/Deployment_NodeApplicationC.h"
 #include "Deployment/Deployment_NodeManagerC.h"
 #include "Deployment/Deployment_DeploymentPlanC.h"
-#include "tools/Config_Handlers/XML_File_Intf.h"
+#include "Config_Handlers/XML_File_Intf.h"
 
 int usage ()
 {

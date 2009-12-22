@@ -8,14 +8,12 @@
 
 #include "ace/OS_NS_unistd.h"
 #include "tao/ORB.h"
-#include "ciao/Logger/Logger_Service.h"
-#include "ciao/Logger/Log_Macros.h"
 #include "DAnCE/Logger/Logger_Service.h"
 #include "DAnCE/Logger/Log_Macros.h"
 #include "Deployment/Deployment_DomainApplicationC.h"
 #include "Deployment/Deployment_ExecutionManagerC.h"
 #include "Deployment/Deployment_DeploymentPlanC.h"
-#include "tools/Config_Handlers/XML_File_Intf.h"
+#include "Config_Handlers/XML_File_Intf.h"
 
 int usage ()
 {
@@ -27,15 +25,15 @@ int usage ()
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  CIAO_DISABLE_TRACE ();
+  DANCE_DISABLE_TRACE ();
 
-  auto_ptr<CIAO::Logger_Service> logger;
+  auto_ptr<DAnCE::Logger_Service> logger;
 
-  CIAO::Logger_Service
-    * dlf = ACE_Dynamic_Service<CIAO::Logger_Service>::instance ("CIAO_Logger_Backend_Factory");
+  DAnCE::Logger_Service
+    * dlf = ACE_Dynamic_Service<DAnCE::Logger_Service>::instance ("DAnCE_Logger_Backend_Factory");
 
   if (!dlf)
-    dlf = new CIAO::Logger_Service;
+    dlf = new DAnCE::Logger_Service;
 
   logger.reset (dlf);
   logger->init (argc, argv);
