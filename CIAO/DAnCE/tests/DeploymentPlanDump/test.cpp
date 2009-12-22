@@ -1,6 +1,6 @@
 // $Id$
-#include "tools/Config_Handlers/DnC_Dump.h"
-#include "tools/Config_Handlers/XML_File_Intf.h"
+#include "Config_Handlers/DnC_Dump.h"
+#include "Config_Handlers/XML_File_Intf.h"
 #include "DAnCE/Logger/Log_Macros.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR * argv[])

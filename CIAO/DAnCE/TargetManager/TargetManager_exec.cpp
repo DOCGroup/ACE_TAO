@@ -1,7 +1,7 @@
 // $Id$
 #include "TargetManager_exec.h"
-#include "tools/Config_Handlers/DD_Handler.h"
-#include "tools/Config_Handlers/DnC_Dump.h"
+#include "Config_Handlers/DD_Handler.h"
+#include "Config_Handlers/DnC_Dump.h"
 
 #include "DomainEventsC.h"
 

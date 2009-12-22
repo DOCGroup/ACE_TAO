@@ -1,7 +1,7 @@
 // $Id$
 
 #include "SimplePublisher_exec.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "DAnCE/Logger/Log_Macros.h"
 
 namespace CIAO_Simple_SimplePublisher_Impl
 {
@@ -11,12 +11,12 @@ namespace CIAO_Simple_SimplePublisher_Impl
 
   SimplePublisher_exec_i::SimplePublisher_exec_i (void)
   {
-    CIAO_TRACE ("SimplePublisher_exec_i::SimplePublisher_exec_i (void)");
+    DANCE_TRACE ("SimplePublisher_exec_i::SimplePublisher_exec_i (void)");
   }
 
   SimplePublisher_exec_i::~SimplePublisher_exec_i (void)
   {
-    CIAO_TRACE ("SimplePublisher_exec_i::~SimplePublisher_exec_i (void)");
+    DANCE_TRACE ("SimplePublisher_exec_i::~SimplePublisher_exec_i (void)");
   }
 
   // Supported or inherited operations.
@@ -31,7 +31,7 @@ namespace CIAO_Simple_SimplePublisher_Impl
   SimplePublisher_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
-    CIAO_TRACE ("SimplePublisher_exec_i::set_session_context ()");
+    DANCE_TRACE ("SimplePublisher_exec_i::set_session_context ()");
     this->context_ =
       ::Simple::CCM_SimplePublisher_Context::_narrow (ctx);
 
@@ -44,14 +44,14 @@ namespace CIAO_Simple_SimplePublisher_Impl
   void
   SimplePublisher_exec_i::configuration_complete ()
   {
-    CIAO_TRACE ("SimplePublisher_exec_i::configuration_complete ()");
+    DANCE_TRACE ("SimplePublisher_exec_i::configuration_complete ()");
     // Your code here.
   }
 
   void
   SimplePublisher_exec_i::ccm_activate ()
   {
-    CIAO_TRACE ("SimplePublisher_exec_i::ccm_activate ()");
+    DANCE_TRACE ("SimplePublisher_exec_i::ccm_activate ()");
     ::Simple::Hello_var hello = new OBV_Simple::Hello ("Test successful, hello from SimplePublisher_exec_i");
 
     this->context_->push_hello (hello._retn ());
@@ -61,14 +61,14 @@ namespace CIAO_Simple_SimplePublisher_Impl
   void
   SimplePublisher_exec_i::ccm_passivate ()
   {
-    CIAO_TRACE ("SimplePublisher_exec_i::ccm_passivate ()");
+    DANCE_TRACE ("SimplePublisher_exec_i::ccm_passivate ()");
     // Your code here.
   }
 
   void
   SimplePublisher_exec_i::ccm_remove ()
   {
-    CIAO_TRACE ("SimplePublisher_exec_i::ccm_remove ()");
+    DANCE_TRACE ("SimplePublisher_exec_i::ccm_remove ()");
     // Your code here.
   }
 
@@ -78,12 +78,12 @@ namespace CIAO_Simple_SimplePublisher_Impl
 
   SimplePublisherHome_exec_i::SimplePublisherHome_exec_i (void)
   {
-    CIAO_TRACE ("SimplePublisherHome_exec_i::SimplePublisherHome_exec_i (void)");
+    DANCE_TRACE ("SimplePublisherHome_exec_i::SimplePublisherHome_exec_i (void)");
   }
 
   SimplePublisherHome_exec_i::~SimplePublisherHome_exec_i (void)
   {
-    CIAO_TRACE ("SimplePublisherHome_exec_i::~SimplePublisherHome_exec_i (void)");
+    DANCE_TRACE ("SimplePublisherHome_exec_i::~SimplePublisherHome_exec_i (void)");
   }
 
   // Supported or inherited operations.
@@ -99,7 +99,7 @@ namespace CIAO_Simple_SimplePublisher_Impl
   ::Components::EnterpriseComponent_ptr
   SimplePublisherHome_exec_i::create ()
   {
-    CIAO_TRACE ("SimplePublisherHome_exec_i::create ()");
+    DANCE_TRACE ("SimplePublisherHome_exec_i::create ()");
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
 
@@ -114,7 +114,7 @@ namespace CIAO_Simple_SimplePublisher_Impl
   extern "C" SIMPLEPUBLISHER_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Simple_SimplePublisherHome_Impl (void)
   {
-    CIAO_TRACE ("create_Simple_SimplePublisherHome_Impl (void)");
+    DANCE_TRACE ("create_Simple_SimplePublisherHome_Impl (void)");
 
     ::Components::HomeExecutorBase_ptr retval =
       ::Components::HomeExecutorBase::_nil ();

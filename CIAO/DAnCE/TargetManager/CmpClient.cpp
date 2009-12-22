@@ -17,7 +17,7 @@
 #include "ace/FILE_Connector.h"
 #include "ace/FILE_Addr.h"
 #include "ace/Get_Opt.h"
-#include "tools/Config_Handlers/DnC_Dump.h"
+#include "Config_Handlers/DnC_Dump.h"
 
 /**
  * TM_Tester contains the code to test the TM Component
