@@ -55,7 +55,7 @@ project(AMI_Hello_Base_Hello_Sender_lem_stub) : ccm_svnt, ami   {
 }
 
 project(AMI_Hello_Base_Hello_Sender_stub) : ccm_stub, ami   {
-  after += AMI_Hello_Base_Hello_Sender_idl_gen AMI_Hello_Base_stub AMI_Hello_stub
+  after += AMI_Hello_Base_Hello_Sender_idl_gen AMI_Hello_Base_stub AMI_Hello_stub Conn_Hello_Base_stub
   libs  += Hello_stub Conn_Hello_stub
   libpaths += ../lib
   libout = ../lib
@@ -80,9 +80,9 @@ project(AMI_Hello_Base_Hello_Sender_stub) : ccm_stub, ami   {
 }
 
 project(AMI_Hello_Base_Hello_Sender_exec) : ciao_executor, ami  {
-  after   += AMI_Hello_Base_Hello_Sender_lem_stub AMI_Hello_Base_Hello_Sender_stub AMI_Hello_Base_exec AMI_Hello_exec
+  after   += AMI_Hello_Base_Hello_Sender_lem_stub AMI_Hello_Base_Hello_Sender_stub AMI_Hello_Base_exec AMI_Hello_exec Conn_Hello_Base_stub
   sharedname = Hello_Sender_exec
-  libs += Hello_Sender_stub Hello_Sender_lem_stub Hello_stub Hello_exec Hello_stub Conn_Hello_stub Conn_Hello_exec Conn_Hello_stub
+  libs += Hello_Sender_stub Hello_Sender_lem_stub Hello_stub Hello_exec Hello_stub Conn_Hello_stub Conn_Hello_exec
   libpaths += ../lib
   libout = ../lib
   dynamicflags   = HELLO_SENDER_EXEC_BUILD_DLL

@@ -9,7 +9,7 @@
 module Hello
 {
   // Callback interface from AMI-component to Sender component
-  local interface AMI_MyFooCallback : ::Messaging::ReplyHandler
+  local interface AMI_MyFooCallback
   {
     void foo (in long ami_return_val, in string answer);
     void foo_excep   (in Messaging::ExceptionHolder excep_holder);
