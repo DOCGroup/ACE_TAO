@@ -57,7 +57,7 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE>::init (
               DDSDataReader *rd = dynamic_cast < DDSDataReader *> (reader.in ());
               this->rti_reader_.set_impl (rd);
               this->data_reader_ = ::DDS::CCM_DataReader::_narrow (reader);
-              this->dds_read_.data_reader (this->data_reader_.in ());
+              this->dds_read_.set_impl (this->data_reader_.in ());
             }
           else
             {
@@ -71,7 +71,7 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE>::init (
               DDSDataReader *rd = dynamic_cast < DDSDataReader *> (reader.in ());
               this->rti_reader_.set_impl (rd);
               this->data_reader_ = ::DDS::CCM_DataReader::_narrow (reader);
-              this->dds_read_.data_reader (this->data_reader_.in ());
+              this->dds_read_.set_impl (this->data_reader_.in ());
             }
         }
     }

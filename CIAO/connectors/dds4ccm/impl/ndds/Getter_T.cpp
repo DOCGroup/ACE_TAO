@@ -67,7 +67,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_many (
   infos = new ::CCM_DDS::ReadInfoSeq;
 
   DDSConditionSeq active_conditions;
-  if (!this->wait (active_conditions))
+  if (!this->impl () && !this->wait (active_conditions))
     {
       return false;
     }
@@ -160,8 +160,10 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
   an_instance = new typename DDS_TYPE::value_type;
 
   DDSConditionSeq active_conditions;
-  if (!this->wait (active_conditions))
-    return false;
+  if (!this->impl () && !this->wait (active_conditions))
+    {
+      return false;
+    }
 
   DDS_SampleInfoSeq sample_info;
   typename DDS_TYPE::dds_seq_type data;
@@ -247,7 +249,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::max_delivered_data (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::data_reader (
+CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::set_impl (
   ::DDS::DataReader_ptr reader)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Getter_T::data_reader");
@@ -283,7 +285,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::data_reader (
       // Now create the waitset conditions
       gd_ = new DDSGuardCondition ();
       ws_ = new DDSWaitSet ();
-      rd_condition_ = this->impl_->create_readcondition (DDS_NOT_READ_SAMPLE_STATE,
+      rd_condition_ = this->impl ()->create_readcondition (DDS_NOT_READ_SAMPLE_STATE,
                                                          DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
                                                          DDS_ALIVE_INSTANCE_STATE | DDS_NOT_ALIVE_INSTANCE_STATE);
       DDS_ReturnCode_t retcode = ws_->attach_condition (gd_);
