@@ -1,3 +1,16 @@
+Tue Dec 22 15:41:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/Base/Hello.idl
+        * connectors/ami4ccm/examples/Hello/Connector/AMI_MyFoo_i.cpp
+        * connectors/ami4ccm/examples/Hello/Connector/Hello_Base.idl
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.h
+          Introduced CCM_AMI::ExceptionHolder which is just a local interface
+          where the executor will contain the AMI exception holder, but
+          this is hidden for the component developer. The example will now
+          fail because there is a problem in TAO related to attributes
+          and AMI, see bugzilla 3801
+
 Tue Dec 22 14:34:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/Connector/AMI.mpc

@@ -4,7 +4,16 @@
 #define HELLO_BASE_IDL
 
 #include "Base/Hello.idl"
-#include "tao/Messaging/Messaging.pidl"
+
+module CCM_AMI
+{
+  native UserExceptionBase;
+
+  local interface ExceptionHolder
+  {
+    void raise_exception() raises (UserExceptionBase);
+  };
+};
 
 module Hello
 {
@@ -12,19 +21,19 @@ module Hello
   local interface AMI_MyFooCallback
   {
     void foo (in long ami_return_val, in string answer);
-    void foo_excep   (in Messaging::ExceptionHolder excep_holder);
+    void foo_excep   (in CCM_AMI::ExceptionHolder excep_holder);
 
     void hello (in long ami_return_val);
-    void hello_excep   (in Messaging::ExceptionHolder excep_holder);
+    void hello_excep   (in CCM_AMI::ExceptionHolder excep_holder);
 
     void get_rw_attrib (in short ami_return_val);
-    void get_rw_attrib_excep (in Messaging::ExceptionHolder excep_holder);
+    void get_rw_attrib_excep (in CCM_AMI::ExceptionHolder excep_holder);
 
     void set_rw_attrib ();
-    void set_rw_attrib_excep (in Messaging::ExceptionHolder excep_holder);
+    void set_rw_attrib_excep (in CCM_AMI::ExceptionHolder excep_holder);
 
     void get_ro_attrib (in short ami_return_val);
-    void get_ro_attrib_excep (in Messaging::ExceptionHolder excep_holder);
+    void get_ro_attrib_excep (in CCM_AMI::ExceptionHolder excep_holder);
   };
 
   // AMI component. Sender calls AMI-component and AMI-component calls Receiver

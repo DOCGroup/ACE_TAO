@@ -19,7 +19,8 @@ module Hello
       void hello (out long answer)
         raises (InternalError);
 
-      attribute short rw_attrib;
+      attribute short rw_attrib
+        setraises (InternalError);
       readonly attribute short ro_attrib;
     };
 };
