@@ -5,6 +5,8 @@ project(*IDL): taoserver, messaging, gen_ostream {
   idlflags += -GC -GH -Gd -GT
 
   IDL_Files {
+    attribute.idl
+
     array.idl
     Bug_2350_Regression.idl
     Bug_2577_Regression.idl
@@ -75,6 +77,8 @@ project(*Main): taoserver, messaging, gen_ostream {
   }
 
   Source_Files {
+    attributeC.cpp
+    attributeS.cpp
     anonymousA.cpp
     anonymousC.cpp
     anonymousS.cpp
