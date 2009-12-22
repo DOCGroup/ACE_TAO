@@ -16,16 +16,15 @@ module Hello
         getraises (InternalErrorA)
         setraises (InternalErrorB);
 
+      attribute short rw_attrib_reverted
+        getraises (InternalErrorB)
+        setraises (InternalErrorA);
+
       attribute short rw_attribB
         getraises (InternalErrorB);
 
-      // This should work
-//      readonly attribute short ro_attrib
-//        getraises (InternalErrorB);
-
-      // Illegal, so commented out
-//      readonly attribute short ro_attrib
-//        setraises (InternalErrorB);
+      readonly attribute short ro_attrib
+        raises (InternalErrorB);
     };
 };
 
