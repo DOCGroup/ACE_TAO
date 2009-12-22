@@ -67,7 +67,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_many (
   infos = new ::CCM_DDS::ReadInfoSeq;
 
   DDSConditionSeq active_conditions;
-  if (!this->impl () && !this->wait (active_conditions))
+  if (!this->wait (active_conditions))
     {
       return false;
     }
@@ -160,7 +160,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
   an_instance = new typename DDS_TYPE::value_type;
 
   DDSConditionSeq active_conditions;
-  if (!this->impl () && !this->wait (active_conditions))
+  if (!this->wait (active_conditions))
     {
       return false;
     }
