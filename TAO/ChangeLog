@@ -1,3 +1,10 @@
+Wed Dec 23 18:48:31 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+
+          Made bool changes according to ACE-guidelines.html.
+          
 Wed Dec 23 15:47:02 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:
