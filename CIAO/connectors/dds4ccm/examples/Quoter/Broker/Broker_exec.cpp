@@ -35,7 +35,7 @@ namespace CIAO_Quoter_Broker_Impl
   void
   Broker_exec_i::read_one (void)
   {
-    std::cerr << "read_one" << std::endl;
+    ACE_DEBUG ((LM_DEBUG, "read_one\n"));
     ::Quoter::Stock_Info  stock_info;
     stock_info.symbol= "IBM";
     ::CCM_DDS::ReadInfo readinfo;
@@ -44,64 +44,64 @@ namespace CIAO_Quoter_Broker_Impl
       {
         this->reader_->read_one_last (stock_info, readinfo, ::DDS::HANDLE_NIL);
         time_t tim = readinfo.source_timestamp.sec;
-        printf("Read_Info. -> date = %s",ctime(&tim));
-        printf ("Stock_Info_Read_One: received a stock_info for <%s> at %u:%u:%u\n",
+        ACE_DEBUG ((LM_DEBUG, "Read_Info. -> date = %s\n", ctime (&tim)));
+        ACE_DEBUG ((LM_DEBUG, "Stock_Info_Read_One: received a stock_info for <%s> at %u:%u:%u\n",
             stock_info.symbol.in (),
             stock_info.low,
             stock_info.current,
-            stock_info.high);
+            stock_info.high));
       }
     catch(CCM_DDS::NonExistent& )
       {
-        printf("Stock_Info_Read_One: no stock_info received\n");
+        ACE_DEBUG ((LM_DEBUG, "Stock_Info_Read_One: no stock_info received\n"));
       }
   }
 
   void
   Broker_exec_i::read_all (void)
   {
-    std::cerr << "read_all" << std::endl;
+    ACE_DEBUG ((LM_DEBUG, "read_all\n"));
 
     ::Quoter::Stock_Info_Seq_var  stock_infos;
     ::CCM_DDS::ReadInfoSeq_var readinfoseq;
-    this->reader_->read_all(stock_infos.out(), readinfoseq.out());
+    this->reader_->read_all(stock_infos.out (), readinfoseq.out ());
     if(readinfoseq->length()!= 0)
       {
         int nr_of_infos = readinfoseq->length();
         for(int i = 0; i < nr_of_infos; i ++)
           {
             time_t tim = readinfoseq[i].source_timestamp.sec;
-            printf("Read_Info.source_timestamp -> date = %s",ctime(&tim));
+            ACE_DEBUG ((LM_DEBUG, "Read_Info.source_timestamp -> date = %s\n",ctime (&tim)));
           }
       }
     if(stock_infos->length()!= 0)
       {
         for(CORBA::ULong i = 0; i < stock_infos->length(); i ++)
           {
-            printf ("Stock_Info_Read_All: Number %d : received a stock_info for <%s> at %u:%u:%u\n",
+            ACE_DEBUG ((LM_DEBUG, "Stock_Info_Read_All: Number %d : received a stock_info for <%s> at %u:%u:%u\n",
                 i,
                 stock_infos[i].symbol.in (),
                 stock_infos[i].low,
                 stock_infos[i].current,
-                stock_infos[i].high);
+                stock_infos[i].high));
           }
       }
   }
   void
   Broker_exec_i::read_all_history (void)
   {
-    std::cerr << "read_all_history" << std::endl;
+    ACE_DEBUG ((LM_DEBUG, "read_all_history\n"));
 
     ::Quoter::Stock_Info_Seq_var  stock_infos;
     ::CCM_DDS::ReadInfoSeq_var readinfoseq;
-    this->reader_->read_all(stock_infos.out(), readinfoseq.out());
+    this->reader_->read_all(stock_infos.out (), readinfoseq.out ());
     if(readinfoseq->length()!= 0)
       {
         int nr_of_infos = readinfoseq->length();
         for(int i = 0; i < nr_of_infos; i ++)
           {
             time_t tim = readinfoseq[i].source_timestamp.sec;
-            printf("Read_Info.source_timestamp -> date = %s",ctime(&tim));
+            ACE_DEBUG ((LM_DEBUG, "Read_Info.source_timestamp -> date = %s\n", ctime (&tim)));
           }
       }
     if(stock_infos->length()!= 0)
@@ -109,12 +109,12 @@ namespace CIAO_Quoter_Broker_Impl
         int nr_of_stock_infos = stock_infos->length();
         for(CORBA::ULong i = 0; i < (CORBA::ULong)nr_of_stock_infos; i ++)
           {
-            printf ("Stock_Info_Read_All_History: Number %d : received a stock_info for <%s> at %u:%u:%u\n",
+            ACE_DEBUG ((LM_DEBUG, "Stock_Info_Read_All_History: Number %d : received a stock_info for <%s> at %u:%u:%u\n",
                 i,
                 stock_infos[i].symbol.in (),
                 stock_infos[i].low,
                 stock_infos[i].current,
-                stock_infos[i].high);
+                stock_infos[i].high));
           }
       }
   }
@@ -122,7 +122,7 @@ namespace CIAO_Quoter_Broker_Impl
   void
   Broker_exec_i::read_one_history (void)
   {
-    std::cerr << "read_one_history" << std::endl;
+    ACE_DEBUG ((LM_DEBUG, "read_one_history\n"));
     ::Quoter::Stock_Info  stock_info;
     stock_info.symbol= "IBM";  //key of instance to read
 
@@ -130,14 +130,14 @@ namespace CIAO_Quoter_Broker_Impl
     ::CCM_DDS::ReadInfoSeq_var readinfoseq;
     try
       {
-        this->reader_->read_one_all(stock_info,stock_infos.out(), readinfoseq.out(), ::DDS::HANDLE_NIL);
+        this->reader_->read_one_all(stock_info,stock_infos.out (), readinfoseq.out (), ::DDS::HANDLE_NIL);
         if(readinfoseq->length()!= 0)
           {
             int nr_of_infos = readinfoseq->length();
             for(int i = 0; i < nr_of_infos; i ++)
               {
                 time_t tim = readinfoseq[i].source_timestamp.sec;
-                printf("Read_Info.source_timestamp -> date = %s",ctime(&tim));
+                ACE_DEBUG ((LM_DEBUG, "Read_Info.source_timestamp -> date = %s\n", ctime (&tim)));
               }
           }
         if(stock_infos->length()!= 0)
@@ -145,18 +145,18 @@ namespace CIAO_Quoter_Broker_Impl
             int nr_of_stock_infos = stock_infos->length();
             for(CORBA::ULong i = 0; i < (CORBA::ULong)nr_of_stock_infos; i ++)
               {
-                printf ("Stock_Info_Read_One_History: Number %d : received a stock_info for <%s> at %u:%u:%u\n",
+                ACE_DEBUG ((LM_DEBUG, "Stock_Info_Read_One_History: Number %d : received a stock_info for <%s> at %u:%u:%u\n",
                     i,
                     stock_infos[i].symbol.in (),
                     stock_infos[i].low,
                     stock_infos[i].current,
-                    stock_infos[i].high);
+                    stock_infos[i].high));
               }
           }
       }
     catch(CCM_DDS::NonExistent& )
       {
-         printf("Stock_Info_Read_One_History: no stock_info's received\n");
+         ACE_DEBUG ((LM_DEBUG, "Stock_Info_Read_One_History: no stock_info's received\n"));
       }
   }
   //============================================================
@@ -183,11 +183,11 @@ namespace CIAO_Quoter_Broker_Impl
     const ::Quoter::Stock_Info & an_instance,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
-    printf ("Stock_Info_Listener: received a stock_info for <%s> at %u:%u:%u\n",
+    ACE_DEBUG ((LM_DEBUG, "Stock_Info_Listener: received a stock_info for <%s> at %u:%u:%u\n",
             an_instance.symbol.in (),
             an_instance.low,
             an_instance.current,
-            an_instance.high);
+            an_instance.high));
   }
   //============================================================
   // Facet Executor Implementation Class: PortStatusListener_exec_i
@@ -195,7 +195,7 @@ namespace CIAO_Quoter_Broker_Impl
 
   PortStatusListener_exec_i::PortStatusListener_exec_i (void)
   {
-    printf("####### construct PortStatusListener ######");
+    ACE_DEBUG ((LM_DEBUG, "####### construct PortStatusListener ######\n"));
   }
 
   PortStatusListener_exec_i::~PortStatusListener_exec_i (void)
@@ -209,7 +209,7 @@ namespace CIAO_Quoter_Broker_Impl
     ::DDS::DataReader_ptr /* the_reader */,
     const ::DDS::RequestedDeadlineMissedStatus & /* status */)
   {
-    printf("####### deadline missed ######");
+    ACE_DEBUG ((LM_DEBUG, "####### deadline missed ######\n"));
   }
 
   void
@@ -217,9 +217,9 @@ namespace CIAO_Quoter_Broker_Impl
     ::DDS::DataReader_ptr  /*the_reader*/ ,
     const ::DDS::SampleLostStatus &  status )
   {
-    printf("####### sample lost ######");
-    printf(" status.total_count = %d\n", status.total_count);
-    printf(" status.total_count_change = %d\n", status.total_count_change);
+    ACE_DEBUG ((LM_DEBUG, "####### sample lost ######\n"));
+    ACE_DEBUG ((LM_DEBUG, " status.total_count = %d\n", status.total_count));
+    ACE_DEBUG ((LM_DEBUG, " status.total_count_change = %d\n", status.total_count_change));
   }
 
   //============================================================
@@ -234,7 +234,7 @@ namespace CIAO_Quoter_Broker_Impl
 
   Broker_exec_i::~Broker_exec_i (void)
   {
-    printf ("Broker_exec_i::~Broker_exec_i\n");
+    ACE_DEBUG ((LM_DEBUG, "Broker_exec_i::~Broker_exec_i\n"));
   }
 
   // Supported operations and attributes.
@@ -246,15 +246,14 @@ namespace CIAO_Quoter_Broker_Impl
   ::CCM_DDS::Quoter::CCM_Listener_ptr
   Broker_exec_i::get_info_out_data_listener (void)
   {
-    printf ("*************** out listener\n");
+    ACE_DEBUG ((LM_DEBUG, "*************** out listener\n"));
     return new Stock_Info_Listener_exec_i ();
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Broker_exec_i::get_info_out_status (void)
   {
-    printf ("*************** out status************************\n");
-    //return ::CCM_DDS::CCM_PortStatusListener::_nil ();
+    ACE_DEBUG ((LM_DEBUG, "*************** out status************************\n"));
     return new PortStatusListener_exec_i ();
   }
 
@@ -278,14 +277,14 @@ namespace CIAO_Quoter_Broker_Impl
   void
   Broker_exec_i::configuration_complete (void)
   {
-    std::cerr << ">>> Broker_exec_i::configuration_complete" << endl;
+    ACE_DEBUG ((LM_DEBUG, ">>> Broker_exec_i::configuration_complete\n"));
     this->reader_ = this->context_->get_connection_info_out_data();
   }
 
   void
   Broker_exec_i::start (void)
   {
-    std::cerr << ">>> Broker_exec_i::start" << endl;
+    ACE_DEBUG ((LM_DEBUG, ">>> Broker_exec_i::start\n"));
     // calculate the interval time
     if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
                 this->ticker_,
@@ -293,7 +292,7 @@ namespace CIAO_Quoter_Broker_Impl
                 ACE_Time_Value (0, 2000),
                 ACE_Time_Value (0, 2000)) == -1)
     {
-      std::cerr << ">>> Broker_exec_i::start : error scheduling timer" << endl;
+      ACE_DEBUG ((LM_DEBUG, ">>> Broker_exec_i::start : error scheduling timer\n"));
     }
   }
 
@@ -301,20 +300,20 @@ namespace CIAO_Quoter_Broker_Impl
   Broker_exec_i::stop (void)
   {
     this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
-    std::cerr << ">>> Broker_exec_i::stop" << endl;
+    ACE_DEBUG ((LM_DEBUG, ">>> Broker_exec_i::stop\n"));
     delete this->ticker_;
   }
 
   void
   Broker_exec_i::ccm_activate (void)
   {
-    std::cerr << ">>> Broker_exec_i::ccm_activate" << endl;
+    ACE_DEBUG ((LM_DEBUG, ">>> Broker_exec_i::ccm_activate\n"));
     ::CCM_DDS::DataListenerControl_var lc =
     this->context_->get_connection_info_out_data_control ();
 
     if (CORBA::is_nil (lc.in ()))
       {
-        printf ("Error:  Listener control receptacle is null!\n");
+        ACE_DEBUG ((LM_DEBUG, "Error:  Listener control receptacle is null!\n"));
         throw CORBA::INTERNAL ();
       }
     //in case of testing Listener set lc-> enabled true
@@ -327,14 +326,14 @@ namespace CIAO_Quoter_Broker_Impl
   void
   Broker_exec_i::ccm_passivate (void)
   {
-    std::cerr << ">>> Broker_exec_i::ccm_passivate" << endl;
+    ACE_DEBUG ((LM_DEBUG, ">>> Broker_exec_i::ccm_passivate\n"));
     this->stop ();
   }
 
   void
   Broker_exec_i::ccm_remove (void)
   {
-    std::cerr << ">>> Broker_exec_i::ccm_remove" << endl;
+    ACE_DEBUG ((LM_DEBUG, ">>> Broker_exec_i::ccm_remove\n"));
   }
 
   extern "C" BROKER_EXEC_Export ::Components::EnterpriseComponent_ptr
@@ -342,7 +341,7 @@ namespace CIAO_Quoter_Broker_Impl
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    printf("in create Broker\n");
+    ACE_DEBUG ((LM_DEBUG, "in create Broker\n"));
     ACE_NEW_NORETURN (
       retval,
       Broker_exec_i);
