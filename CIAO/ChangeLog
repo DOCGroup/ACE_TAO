@@ -1,3 +1,10 @@
+Wed Dec 23 09:17:14 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+        * connectors/dds4ccm/impl/ndds/InstanceHandleManager_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Resolved fuzz errors regarding trace.
+
 Wed Dec 23 09:04:04 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
