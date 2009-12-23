@@ -4,6 +4,8 @@ workspace {
   ccm
   ciao
   DAnCE
-  tools/Config_Handlers
   tools/XML
+  exclude {
+    DAnCE/tests
+  }
 }
