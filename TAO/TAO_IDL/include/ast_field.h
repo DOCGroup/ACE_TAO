@@ -113,7 +113,7 @@ public:
 
   // Are we or do we contain a wstring?
   virtual int contains_wstring (void);
-  
+
   // Determine this bit of state after we have
   // be added to our aggregate type and before
   // we are destroyed.
