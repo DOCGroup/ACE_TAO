@@ -418,8 +418,10 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
          << "dynamic_cast<TAO::ExceptionHolder *> (arg_" << index
          << ");" << be_uidt_nl
          << "if (tao_excepholder != 0)" << be_idt_nl
+         << "{" << be_idt_nl
          << "tao_excepholder->set_exception_data "
             "(_tao_" << op_name << "_exceptiondata, " << exceptions_count << ");" << be_uidt_nl
+         << "}" << be_uidt_nl
          << be_nl;
     }
 
