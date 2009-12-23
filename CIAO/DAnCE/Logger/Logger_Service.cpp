@@ -30,6 +30,15 @@ namespace DAnCE
 
     this->parse_args (argc, argv);
 
+    if (this->trace_)
+      {
+        DANCE_ENABLE_TRACE ();
+      }
+    else
+      {
+        DANCE_DISABLE_TRACE ();
+      }
+
     return 0;
   }
 

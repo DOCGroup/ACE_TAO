@@ -1,3 +1,11 @@
+Wed Dec 23 14:38:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Logger/Logger_Service.cpp:
+          Fixed CIAO_TRACE_ENABLE functionality
+
+        * DAnCE/Logger/Logger_Service.cpp:
+          Fixed DANCE_TRACE_ENABLE functionality
+
 Wed Dec 23 14:08:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Servant_Activator.cpp:
