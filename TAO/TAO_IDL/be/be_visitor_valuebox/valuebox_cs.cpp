@@ -133,12 +133,12 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
 
   // _tao_match_formal_type method.  Generated because ValueBase interface
   // requires it. Since value boxes do not support inheritence, this can
-  // simply return 1.
+  // simply return true.
   *os << "::CORBA::Boolean " << be_nl
       << node->name ()
       << "::_tao_match_formal_type (ptrdiff_t ) const" << be_nl
       << "{" << be_idt_nl
-      << "return 1;" << be_uidt_nl
+      << "return true;" << be_uidt_nl
       << "}" << be_nl << be_nl;
       
 
@@ -242,8 +242,8 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << node->local_name () << " *&vb_object" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "::CORBA::Boolean is_null_object = 0;" << be_nl
-      << "::CORBA::Boolean is_indirected = 0;" << be_nl
+      << "::CORBA::Boolean is_null_object = false;" << be_nl
+      << "::CORBA::Boolean is_indirected = false;" << be_nl
       << "TAO_InputCDR indrected_strm ((size_t) 0);" << be_nl
       << "if ( ::CORBA::ValueBase::_tao_validate_box_type (" << be_idt
       << be_idt << be_idt_nl
@@ -254,12 +254,12 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << be_uidt_nl
       << ") == false)" << be_uidt_nl
       << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl
+      << "return false;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "vb_object = 0;" << be_nl
       << "if (is_null_object)"  << be_idt_nl
       << "{" << be_idt_nl
-      << "return 1;" << be_uidt_nl
+      << "return true;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "if (is_indirected)"  << be_idt_nl
       << "{" << be_idt_nl
@@ -313,7 +313,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << node->name ()
       << "::_tao_unmarshal_v (TAO_InputCDR &)" << be_nl
       << "{" << be_idt_nl
-      << "return 1;" << be_uidt_nl
+      << "return true;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // Emit the type specific elements.  The visit_* methods in this
