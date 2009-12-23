@@ -21,7 +21,6 @@ module Writer
     attribute unsigned short rate;
     attribute unsigned short iterations;
     attribute unsigned short keys;
-    attribute unsigned short max_dds_samples;
   };
 };
 

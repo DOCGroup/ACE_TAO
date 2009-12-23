@@ -34,9 +34,7 @@ namespace CIAO_Writer_Sender_Impl
     : rate_ (1),
       iterations_ (15),
       keys_ (5),
-      assignment_ (WRITE_UNKEYED),
-      samples_written_ (0),
-      max_dds_samples_ (10)
+      assignment_ (WRITE_UNKEYED)
   {
     this->ticker_ = new pulse_Generator (*this);
   }
@@ -73,37 +71,19 @@ namespace CIAO_Writer_Sender_Impl
         try
           {
             ++this->last_key->second->iteration;
-            ++this->samples_written_;
+            Octet_Seq_var reply_mesg = new Octet_Seq (1);
+            reply_mesg->length (1);
+            this->last_key->second->data = *reply_mesg._retn ();
             this->writer_->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
-            if (this->samples_written_ > this->max_dds_samples_)
-              {
-                ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: No InternalError ")
-                            ACE_TEXT ("caught while writing more samples than ")
-                            ACE_TEXT ("DDS can hold: max samples in DDS <%d> - ")
-                            ACE_TEXT ("samples written until now <%u>.\n"),
-                              this->max_dds_samples_,
-                              this->samples_written_));
-              }
-            else
-              {
-                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written keyed <%C> - iteration <%d>\n"),
-                        this->last_key->first.c_str (),
-                        this->last_key->second->iteration));
-              }
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written keyed <%C> - iteration <%d>\n"),
+                    this->last_key->first.c_str (),
+                    this->last_key->second->iteration));
           }
         catch (const CCM_DDS::InternalError& )
           {
-            if (this->samples_written_ > this->max_dds_samples_)
-              {
-                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::write_unkeyed: ")
-                            ACE_TEXT ("Expected InternalError received")));
-              }
-            else
-              {
-                ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
-                            ACE_TEXT ("while updating writer info for <%C>.\n"),
-                              this->last_key->first.c_str ()));
-              }
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
+                        ACE_TEXT ("while updating writer info for <%C>.\n"),
+                          this->last_key->first.c_str ()));
           }
         ++this->last_key;
       }
@@ -133,14 +113,18 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::write_many ()
   {
+    CORBA::ULong nr_samples = this->keys_ * this->iterations_;
     WriterTest_Seq write_many_no_excep;
-    write_many_no_excep.length (this->max_dds_samples_ - 1);
+    write_many_no_excep.length (nr_samples);
     //write with no exception
-    for (CORBA::ULong i = 1; i < this->max_dds_samples_; ++i)
+    for (CORBA::ULong i = 1; i < nr_samples - 1; ++i)
       {
         WriterTest new_key;
         new_key.key = CORBA::string_dup("KEY_1");
         new_key.iteration = i;
+        Octet_Seq_var reply_mesg = new Octet_Seq (1);
+        reply_mesg->length (1);
+        new_key.data = *reply_mesg._retn ();
         write_many_no_excep[i-1] = new_key;
       }
     try
@@ -155,42 +139,54 @@ namespace CIAO_Writer_Sender_Impl
                     ACE_TEXT ("while write many writer info: index <%d> - retval <%d>\n"),
                       ex.index, ex.error_code));
       }
+    start_new_assignment (TEST_EXCEPTION);
+  }
 
-    //write with exception
-    WriterTest_Seq write_many_seq;
-    write_many_seq.length (this->keys_ * this->iterations_);
-    int iter_key = 0;
-    for (Writer_Table::iterator iter = this->ktests_.begin ();
-         iter != this->ktests_.end ();
-         ++iter)
+  void
+  Sender_exec_i::test_exception ()
+  {
+    if (this->last_key != this->ktests_.end ())
       {
-        ++iter_key;
-        for (CORBA::UShort i = 1; i < this->iterations_ + 1; ++i)
+        try
           {
-            char key[7];
-            WriterTest new_key;
-            ACE_OS::sprintf (key, "KEY_%d", iter_key);
-            new_key.key = CORBA::string_dup(key);
-            new_key.iteration = i;
-            write_many_seq[iter_key + i] = new_key;
+            ++this->last_key->second->iteration;
+            const long length = 100000;
+            Octet_Seq_var reply_mesg =
+              new Octet_Seq (length);
+            reply_mesg->length (length);
+            this->last_key->second->data = *reply_mesg._retn ();
+            this->writer_->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: No InternalError ")
+                        ACE_TEXT ("caught while writing a large amount of data.\n")));
+          }
+        catch (const CCM_DDS::InternalError& )
+          {
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::test_exception: ")
+                        ACE_TEXT ("OK: Expected InternalErr received")));
+          }
+        ++this->last_key;
+      }
+    else
+      {
+        //onto the next iteration
+        this->last_key = this->ktests_.begin ();
+        while (this->last_key != this->ktests_.end ())
+          {
+            if (this->last_key->second->iteration == this->iterations_)
+              {
+                //next key
+                ++this->last_key;
+              }
+            else
+              {
+                break;
+              }
+          }
+        if (this->last_key == this->ktests_.end ())
+          {
+            start_new_assignment (WRITE_NONE);
           }
       }
-    try
-      {
-        this->writer_->write_many (write_many_seq);
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: no exception ")
-                    ACE_TEXT ("while writing too many samples : ")
-                    ACE_TEXT ("written <%u> - max <%u>\n"),
-                      write_many_seq.length (),
-                      this->max_dds_samples_));
-      }
-    catch (const CCM_DDS::InternalError& ex)
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
-                    ACE_TEXT ("while write many writer info: index <%d> - retval <%d>\n"),
-                      ex.index, ex.error_code));
-      }
-    this->assignment_ = WRITE_NONE;
   }
 
   void
@@ -203,6 +199,10 @@ namespace CIAO_Writer_Sender_Impl
           break;
         case WRITE_MULTI:
           write_many ();
+          break;
+        case TEST_EXCEPTION:
+          test_exception ();
+          break;
         default:
           break;
       }
@@ -254,18 +254,6 @@ namespace CIAO_Writer_Sender_Impl
   Sender_exec_i::iterations (::CORBA::UShort iterations)
   {
     this->iterations_ = iterations;
-  }
-
-  ::CORBA::UShort
-  Sender_exec_i::max_dds_samples (void)
-  {
-    return this->max_dds_samples_;
-  }
-
-  void
-  Sender_exec_i::max_dds_samples (::CORBA::UShort max_dds_samples)
-  {
-    this->max_dds_samples_ = max_dds_samples;
   }
 
   ::CORBA::UShort
