@@ -1389,22 +1389,22 @@ state_member
         : IDL_PUBLIC
         {
 // state_member : IDL_PUBLIC
+          /* is $0 to member_i */
+          $<vival>$ = AST_Field::vis_PUBLIC;
         }
         member_i
         {
 //        member_i
-          /* is $0 to member_i */
-          $<vival>$ = AST_Field::vis_PUBLIC;
         }
         | IDL_PRIVATE
         {
 //        IDL_PRIVATE
+          /* is $0 to member_i */
+          $<vival>$ = AST_Field::vis_PRIVATE;
         }
         member_i
         {
 //        member_i
-          /* is $0 to member_i */
-          $<vival>$ = AST_Field::vis_PRIVATE;
         }
         ;
 
@@ -1780,7 +1780,7 @@ const_dcl :
                 {
                   AST_Expression::ExprType et =
                     $3;
-                    
+
                   if (param_holder != 0
                       && et != param_holder->info ()->const_type_)
                     {
@@ -1788,13 +1788,13 @@ const_dcl :
                         param_holder->info ()->name_.c_str ());
                     }
                   else
-                    {                    
+                    {
                       c =
                         idl_global->gen ()->create_constant (
                           $3,
                           $9,
                           &n);
-                          
+
                       (void) s->fe_add_constant (c);
                     }
                 }
@@ -1802,7 +1802,7 @@ const_dcl :
               $5->destroy ();
               delete $5;
               $5 = 0;
-              
+
               delete result;
               result = 0;
             }
