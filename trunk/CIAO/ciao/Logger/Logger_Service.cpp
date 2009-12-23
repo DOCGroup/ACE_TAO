@@ -30,6 +30,15 @@ namespace CIAO
 
     this->parse_args (argc, argv);
 
+    if (this->trace_)
+      {
+        CIAO_ENABLE_TRACE ();
+      }
+    else
+      {
+        CIAO_DISABLE_TRACE ();
+      }
+
     return 0;
   }
 
