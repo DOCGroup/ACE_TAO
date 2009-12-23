@@ -1,3 +1,8 @@
+Wed Dec 23 10:44:14 UTC 2009  Marijke Hengstmengel <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/Updater/Sender/Updater_Sender_exec.cpp
+          Set 'OK' in debug message when catching the expected InternalError
+
 Wed Dec 23 09:17:14 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
