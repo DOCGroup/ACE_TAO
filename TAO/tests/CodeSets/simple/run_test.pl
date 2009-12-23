@@ -25,8 +25,8 @@ $client->DeleteFile($iorbase);
 my $client_conf = $client->LocalFile ("cs_test.conf");
 my $server_conf = $server->LocalFile ("cs_test.conf");
 
-$SV = $server->CreateProcess ("server", " -ORBDottedDecimalAddresses 1");
-$CL = $client->CreateProcess ("client", " -ORBSvcConf $client_conf");
+$SV = $server->CreateProcess ("server", "-o $server_iorfile -ORBDottedDecimalAddresses 1");
+$CL = $client->CreateProcess ("client", "-k file://$client_iorfile -ORBSvcConf $client_conf");
 
 $status = 0;
 
@@ -61,10 +61,10 @@ $client->DeleteFile($iorbase);
 
 print STDOUT "\nServer using char translator\n\n";
 
-$SV2 = $server->CreateProcess ("server", " -ORBDottedDecimalAddresses 1 -ORBSvcConf $server_conf");
-$CL2 = $client->CreateProcess ("client");
+$SV->Arguments ("-o $server_iorfile -ORBDottedDecimalAddresses 1 -ORBSvcConf $server_conf");
+$CL->Arguments ("-k file://$client_iorfile");
 
-$server_status = $SV2->Spawn ();
+$server_status = $SV->Spawn ();
 if ($server_status != 0) {
     print STDERR "ERROR: Starting server 2 returned $server_status\n";
     exit 1;
@@ -72,17 +72,17 @@ if ($server_status != 0) {
 if ($server->WaitForFileTimed ($iorbase,
                                $server->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $SV2->Kill (); $SV2->TimedWait (1);
+    $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
 
-$client_status = $CL2->SpawnWaitKill ($client->ProcessStartWaitInterval ());
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval ());
 if ($client_status != 0) {
     print STDERR "ERROR: client 2 returned $client_status\n";
     $status = 1;
 }
 
-$server_status = $SV2->WaitKill ($server->ProcessStopWaitInterval ());
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval ());
 if ($server_status != 0) {
     print STDERR "ERROR: server 2 returned $server_status\n";
     $status = 1;
