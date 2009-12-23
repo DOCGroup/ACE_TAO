@@ -227,7 +227,7 @@ namespace CIAO_Hello_Receiver_Impl
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Receiver_exec_i::get_info_out_connector_status (void)
   {
-    printf ("*************** out connector status************************\n");
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new ConnectorStatusListener\n")));
     return new ConnectorStatusListener_exec_i ();
   }
 

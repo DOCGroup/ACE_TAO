@@ -1,3 +1,10 @@
+Wed Dec 23 08:27:11 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp:
+          Using ACE_ERROR and ACE_DEBUG instead of printf.
+
 Wed Dec 23 08:06:34 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
