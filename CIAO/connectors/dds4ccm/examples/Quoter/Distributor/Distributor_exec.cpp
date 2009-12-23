@@ -138,7 +138,7 @@ namespace CIAO_Quoter_Distributor_Impl
               i->second->low = i->second->current;
 
             if (!CORBA::is_nil (this->writer_)) {
-              ACE_DEBUG ((LM_DEBUG, "WRITE AND CREATE stock_info for <%s> %u:%u:%u\n",
+              ACE_DEBUG ((LM_DEBUG, "WRITE AND CREATE stock_info for <%C> %u:%u:%u\n",
                             i->first.c_str (),
                             i->second->low,
                             i->second->current,
@@ -149,7 +149,7 @@ namespace CIAO_Quoter_Distributor_Impl
                 }
               catch (const CCM_DDS::InternalError& )
                 {
-                  ACE_ERROR ((LM_ERROR, "Internal Error while writing Stock_info for <%s>.\n",
+                  ACE_ERROR ((LM_ERROR, "Internal Error while writing Stock_info for <%C>.\n",
                                 i->first.c_str ()));
                 }
             }

@@ -44,8 +44,8 @@ namespace CIAO_Quoter_Broker_Impl
       {
         this->reader_->read_one_last (stock_info, readinfo, ::DDS::HANDLE_NIL);
         time_t tim = readinfo.source_timestamp.sec;
-        ACE_DEBUG ((LM_DEBUG, "Read_Info. -> date = %s\n", ctime (&tim)));
-        ACE_DEBUG ((LM_DEBUG, "Stock_Info_Read_One: received a stock_info for <%s> at %u:%u:%u\n",
+        ACE_DEBUG ((LM_DEBUG, "Read_Info. -> date = %C\n", ctime (&tim)));
+        ACE_DEBUG ((LM_DEBUG, "Stock_Info_Read_One: received a stock_info for <%C> at %u:%u:%u\n",
             stock_info.symbol.in (),
             stock_info.low,
             stock_info.current,
@@ -71,14 +71,14 @@ namespace CIAO_Quoter_Broker_Impl
         for(int i = 0; i < nr_of_infos; i ++)
           {
             time_t tim = readinfoseq[i].source_timestamp.sec;
-            ACE_DEBUG ((LM_DEBUG, "Read_Info.source_timestamp -> date = %s\n",ctime (&tim)));
+            ACE_DEBUG ((LM_DEBUG, "Read_Info.source_timestamp -> date = %C\n",ctime (&tim)));
           }
       }
     if(stock_infos->length()!= 0)
       {
         for(CORBA::ULong i = 0; i < stock_infos->length(); i ++)
           {
-            ACE_DEBUG ((LM_DEBUG, "Stock_Info_Read_All: Number %d : received a stock_info for <%s> at %u:%u:%u\n",
+            ACE_DEBUG ((LM_DEBUG, "Stock_Info_Read_All: Number %d : received a stock_info for <%C> at %u:%u:%u\n",
                 i,
                 stock_infos[i].symbol.in (),
                 stock_infos[i].low,
@@ -101,7 +101,7 @@ namespace CIAO_Quoter_Broker_Impl
         for(int i = 0; i < nr_of_infos; i ++)
           {
             time_t tim = readinfoseq[i].source_timestamp.sec;
-            ACE_DEBUG ((LM_DEBUG, "Read_Info.source_timestamp -> date = %s\n", ctime (&tim)));
+            ACE_DEBUG ((LM_DEBUG, "Read_Info.source_timestamp -> date = %C\n", ctime (&tim)));
           }
       }
     if(stock_infos->length()!= 0)
@@ -109,7 +109,7 @@ namespace CIAO_Quoter_Broker_Impl
         int nr_of_stock_infos = stock_infos->length();
         for(CORBA::ULong i = 0; i < (CORBA::ULong)nr_of_stock_infos; i ++)
           {
-            ACE_DEBUG ((LM_DEBUG, "Stock_Info_Read_All_History: Number %d : received a stock_info for <%s> at %u:%u:%u\n",
+            ACE_DEBUG ((LM_DEBUG, "Stock_Info_Read_All_History: Number %d : received a stock_info for <%C> at %u:%u:%u\n",
                 i,
                 stock_infos[i].symbol.in (),
                 stock_infos[i].low,
@@ -137,7 +137,7 @@ namespace CIAO_Quoter_Broker_Impl
             for(int i = 0; i < nr_of_infos; i ++)
               {
                 time_t tim = readinfoseq[i].source_timestamp.sec;
-                ACE_DEBUG ((LM_DEBUG, "Read_Info.source_timestamp -> date = %s\n", ctime (&tim)));
+                ACE_DEBUG ((LM_DEBUG, "Read_Info.source_timestamp -> date = %C\n", ctime (&tim)));
               }
           }
         if(stock_infos->length()!= 0)
@@ -145,7 +145,7 @@ namespace CIAO_Quoter_Broker_Impl
             int nr_of_stock_infos = stock_infos->length();
             for(CORBA::ULong i = 0; i < (CORBA::ULong)nr_of_stock_infos; i ++)
               {
-                ACE_DEBUG ((LM_DEBUG, "Stock_Info_Read_One_History: Number %d : received a stock_info for <%s> at %u:%u:%u\n",
+                ACE_DEBUG ((LM_DEBUG, "Stock_Info_Read_One_History: Number %d : received a stock_info for <%C> at %u:%u:%u\n",
                     i,
                     stock_infos[i].symbol.in (),
                     stock_infos[i].low,
@@ -183,7 +183,7 @@ namespace CIAO_Quoter_Broker_Impl
     const ::Quoter::Stock_Info & an_instance,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
-    ACE_DEBUG ((LM_DEBUG, "Stock_Info_Listener: received a stock_info for <%s> at %u:%u:%u\n",
+    ACE_DEBUG ((LM_DEBUG, "Stock_Info_Listener: received a stock_info for <%C> at %u:%u:%u\n",
             an_instance.symbol.in (),
             an_instance.low,
             an_instance.current,
