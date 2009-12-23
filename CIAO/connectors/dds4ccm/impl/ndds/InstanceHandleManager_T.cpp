@@ -60,7 +60,7 @@ void
 CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::set_impl (
   ::DDS::DataWriter_ptr writer)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::InstanceHandleManager_T::data_writer");
+  CIAO_TRACE ("CIAO::DDS4CCM::RTI::InstanceHandleManager_T::set_impl");
 
   if (::CORBA::is_nil (writer))
     {

@@ -322,7 +322,7 @@ void
 CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::set_impl (
   ::DDS::DataReader_ptr reader)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::data_reader");
+  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::set_impl");
 
   if (::CORBA::is_nil (reader))
     {
