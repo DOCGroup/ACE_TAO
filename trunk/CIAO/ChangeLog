@@ -1,3 +1,11 @@
+Wed Dec 23 15:08:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/Logger/Logger_Service.cpp:
+          Using ace functionality to parse commandline parameters.
+
+        * connectors/dds4ccm/tests/Getter/descriptors/run_test.pl:
+          Removed CIAO/DANCE_LOG_LEVEL parameters.
+
 Wed Dec 23 14:38:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Logger/Logger_Service.cpp:
