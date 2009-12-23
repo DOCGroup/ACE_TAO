@@ -22,42 +22,42 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
      const DDS::InconsistentTopicStatus & /* status */)
   {
     this->inconsistent_ = true;
-    //printf("Receiver: ConnectorStatusListener_exec_i::on_inconsistent_topic\n");
+    //ACE_DEBUG ((LM_DEBUG, "Receiver: ConnectorStatusListener_exec_i::on_inconsistent_topic\n"));
   }
 
   void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
     ::DDS::DataReader_ptr /*the_reader*/,
      const DDS::RequestedIncompatibleQosStatus & /*status*/)
   {
-    //printf("ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n");
+    //ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n"));
   }
 
   void ConnectorStatusListener_exec_i::on_sample_rejected(
      ::DDS::DataReader_ptr /*the_reader*/,
      const DDS::SampleRejectedStatus & /*status*/)
   {
-    //printf("ConnectorStatusListener_exec_i::on_sample_rejected\n");
+    //ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_sample_rejected\n"));
   }
 
   void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
      ::DDS::DataWriter_ptr /*the_writer*/,
      const DDS::OfferedDeadlineMissedStatus & /*status*/)
   {
-    //printf("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
+    //ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_offered_deadline_missed\n"));
   }
 
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
      ::DDS::DataWriter_ptr /*the_writer*/,
      const DDS::OfferedIncompatibleQosStatus & /*status*/)
   {
-    //printf("ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n");
+    //ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n"));
   }
 
   void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr /*the_entity*/,
     ::DDS::StatusKind  /*status_kind*/)
   {
-    //printf("ConnectorStatusListener_exec_i::on_unexpected_status\n");
+    //ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_unexpected_status\n"));
   }
 
   TestTopic_RawListener_exec_i::TestTopic_RawListener_exec_i (void)
@@ -75,7 +75,7 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
     const TestTopic & /*an_instance*/ ,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
-    //printf(" receive data ============= %d\n",this->received_);
+    //ACE_DEBUG ((LM_DEBUG, " receive data ============= %d\n", this->received_));
   }
 
   void
@@ -83,7 +83,7 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
     const TestTopic_Seq & /*an_instance */,
     const ::CCM_DDS::ReadInfoSeq & /* info */)
   {
-    //printf(" receive data ============= %d\n",this->received_);
+    //ACE_DEBUG ((LM_DEBUG, " receive data ============= %d\n", this->received_));
   }
 
   //============================================================
@@ -149,7 +149,7 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Receiver_exec_i::get_info_out_connector_status (void)
   {
-    //printf ("*************** out connector status************************\n");
+    //ACE_DEBUG ((LM_DEBUG, "*************** out connector status************************\n"));
     return new ConnectorStatusListener_exec_i (this->inconsistent_);
   }
 
@@ -179,7 +179,7 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
 
     if (CORBA::is_nil (lc.in ()))
       {
-        ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw CORBA::INTERNAL ();
       }
     lc->mode (::CCM_DDS::ONE_BY_ONE);
@@ -193,7 +193,7 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-    //printf("*************in remove Receiver********** \n");
+    ACE_DEBUG ((LM_DEBUG, "*************in remove Receiver********** \n"));
     if(!this->inconsistent_.value ())
       {
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
