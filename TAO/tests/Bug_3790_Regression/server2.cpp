@@ -8,7 +8,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-const char *testIOR = "corbaloc:iiop:localhost:15989/SIMPLE_TEST_KEY";
+const ACE_TCHAR *testIOR = ACE_TEXT ("corbaloc:iiop:localhost:15989/SIMPLE_TEST_KEY");
 const ACE_TCHAR *anotherIOR = ACE_TEXT ("file://test.ior");
 
 int
