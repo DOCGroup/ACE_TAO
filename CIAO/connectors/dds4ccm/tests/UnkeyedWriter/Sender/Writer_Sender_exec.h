@@ -24,7 +24,8 @@ namespace CIAO_Writer_Sender_Impl
   enum WRITER_ASSIGNMENT {
     WRITE_NONE,
     WRITE_UNKEYED,
-    WRITE_MULTI
+    WRITE_MULTI,
+    TEST_EXCEPTION
   };
 
   class pulse_Generator :
@@ -56,10 +57,6 @@ namespace CIAO_Writer_Sender_Impl
 
     virtual void iterations (::CORBA::UShort iterations);
 
-    virtual ::CORBA::UShort max_dds_samples (void);
-
-    virtual void max_dds_samples (::CORBA::UShort max_dds_samples);
-
     virtual ::CORBA::UShort keys (void);
 
     virtual void keys (::CORBA::UShort keys);
@@ -86,14 +83,13 @@ namespace CIAO_Writer_Sender_Impl
     CORBA::UShort iterations_;
     CORBA::UShort keys_;
     WRITER_ASSIGNMENT assignment_;
-    CORBA::UShort samples_written_;
-    CORBA::UShort max_dds_samples_;
 
     void reset_iterations ();
     void start_new_assignment (
         WRITER_ASSIGNMENT assignment);
     void write_unkeyed ();
     void write_many ();
+    void test_exception ();
 
     TAO_SYNCH_MUTEX mutex_;
     typedef std::map<ACE_CString, WriterTest_var> Writer_Table;
