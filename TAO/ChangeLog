@@ -1,7 +1,12 @@
+Wed Dec 23 19:14:42 UTC 2009  Johnny Willemsen  <jwillemsen {at} remedy.nl>
+
+        * orbsvcs/tests/Bug_2248_Regression/client.cpp:
+          Fixed QNX compile problem
+
 Wed Dec 23 19:07:38 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
-        
+
           In implied IDL generation for AMI, added a copy of
           exception list to AMI-releated operation nodes corresponding
           to attributes the same as they already are for other
@@ -14,7 +19,7 @@ Wed Dec 23 18:48:31 UTC 2009  Yan Dai  <dai_y@ociweb.com>
         * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
 
           Made bool changes according to ACE-guidelines.html.
-          
+
 Wed Dec 23 15:47:02 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:
