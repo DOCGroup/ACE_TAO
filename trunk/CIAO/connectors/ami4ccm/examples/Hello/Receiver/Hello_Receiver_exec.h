@@ -32,6 +32,9 @@ namespace CIAO_Hello_Receiver_Impl
     virtual void rw_attrib (::CORBA::Short new_value);
 
     virtual CORBA::Short ro_attrib ();
+  private:
+    bool get_rw_;
+    bool get_ro_;
   };
 
   class  Receiver_exec_i

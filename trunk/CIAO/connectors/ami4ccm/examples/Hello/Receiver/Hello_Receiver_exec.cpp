@@ -6,7 +6,7 @@
 
 namespace CIAO_Hello_Receiver_Impl
 {
-  MyFoo_exec_i::MyFoo_exec_i (void)
+  MyFoo_exec_i::MyFoo_exec_i (void) : get_rw_ (false), get_ro_ (false)
   {
   }
 
@@ -20,9 +20,7 @@ namespace CIAO_Hello_Receiver_Impl
     if (ACE_OS::strlen (in_str) == 0)
       {
         printf ("Receiver (FOO) :\tEMPTY string received -> throw internal excep with id <42> and errorstring <Hello World>\n");
-        Hello::InternalError ex;
-        ex.id = 42;
-        ex.error_string = "Hello world";
+        Hello::InternalError ex (42, "Hello world");
         throw ex;
       }
     else
@@ -46,7 +44,17 @@ namespace CIAO_Hello_Receiver_Impl
   MyFoo_exec_i::rw_attrib ()
   {
     printf ("Receiver (RW_ATTRIB) :\tReceived request\n");
-    ACE_OS::sleep (ACE_OS::rand () % 2);
+    if (this->get_rw_)
+      {
+        printf ("Receiver (FOO) :\tSecond get rw_attrib received -> throw internal excep with id <42> and errorstring <Hello World>\n");
+        Hello::InternalError ex (42, "Hello world");
+        throw ex;
+      }
+    else
+      {
+        ACE_OS::sleep (ACE_OS::rand () % 2);
+        this->get_rw_ = true;
+      }
     return ACE_OS::rand () % 100;
   }
 
@@ -55,8 +63,8 @@ namespace CIAO_Hello_Receiver_Impl
   {
     if (new_value == 0)
       {
-        printf ("Receiver (RW_ATTRIB) :\tnew_value == 0 -> THROW empty exception\n");
-        Hello::InternalError ex;
+        printf ("Receiver (RW_ATTRIB) :\tnew_value == 0 -> throw internal excep with id <42> and errorstring <Hello World>\n");
+        Hello::InternalError ex (42, "Hello world");
         throw ex;
       }
     else
@@ -70,7 +78,17 @@ namespace CIAO_Hello_Receiver_Impl
   MyFoo_exec_i::ro_attrib ()
   {
     printf ("Receiver (RO_ATTRIB) :\tReceived request\n");
-    ACE_OS::sleep (ACE_OS::rand () % 2);
+    if (this->get_ro_)
+      {
+        printf ("Receiver (FOO) :\tSecond get ro_attrib received -> throw internal excep with id <42> and errorstring <Hello World>\n");
+        Hello::InternalError ex (42, "Hello world");
+        throw ex;
+      }
+    else
+      {
+        ACE_OS::sleep (ACE_OS::rand () % 2);
+        this->get_ro_ = true;
+      }
     return ACE_OS::rand () % 100;
   }
 
