@@ -258,9 +258,9 @@ namespace CIAO_Updater_Sender_Impl
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater update_one with incompatible datum and handle.\n")));   
         result =  false;
       }
-      catch (const CCM_DDS::InternalError& )
+	  catch (CCM_DDS::InternalError& ex )
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Expected : Exception InternalError test updater update_one with incompatible datum and handle.\n")));
+		  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK: Expected : Exception InternalError test updater update_one with incompatible datum and handle. ex %d\n"),ex.error_code));
         result = true;
       }
     }
