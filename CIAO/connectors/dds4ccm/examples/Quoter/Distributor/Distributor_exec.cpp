@@ -36,7 +36,7 @@ namespace CIAO_Quoter_Distributor_Impl
       }
     catch (...)
       {
-        printf("Distributor pulse_Generator::handle_timeout: Caught exception\n");
+        ACE_ERROR ((LM_ERROR, "Distributor pulse_Generator::handle_timeout: Caught exception\n"));
       }
 
     return 0;
@@ -57,48 +57,48 @@ namespace CIAO_Quoter_Distributor_Impl
      ::DDS::Topic_ptr /*the_topic*/,
      const DDS::InconsistentTopicStatus & /*status*/)
   {
-    printf("ConnectorStatusListener_exec_i::on_inconsistent_topic\n");
+    ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_inconsistent_topic\n"));
   }
 
   void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
     ::DDS::DataReader_ptr /*the_reader*/,
      const DDS::RequestedIncompatibleQosStatus & /*status*/)
   {
-    printf("ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n");
+    ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n"));
   }
 
   void ConnectorStatusListener_exec_i::on_sample_rejected(
      ::DDS::DataReader_ptr /*the_reader*/,
      const DDS::SampleRejectedStatus & /*status*/)
   {
-    printf("ConnectorStatusListener_exec_i::on_sample_rejected\n");
+    ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_sample_rejected\n"));
   }
 
   void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
      ::DDS::DataWriter_ptr /*the_writer*/,
      const DDS::OfferedDeadlineMissedStatus & /*status*/)
   {
-    printf("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
+    ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_offered_deadline_missed\n"));
   }
 
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
      ::DDS::DataWriter_ptr /*the_writer*/,
      const DDS::OfferedIncompatibleQosStatus & /*status*/)
   {
-    printf("ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n");
+    ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n"));
   }
 
   void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr /*the_entity*/,
     ::DDS::StatusKind  /*status_kind*/)
   {
-    printf("ConnectorStatusListener_exec_i::on_unexpected_status\n");
+    ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_unexpected_status\n"));
   }
 
   void ConnectorStatusListener_exec_i::on_publication_matched ( ::DDS::DataWriter_ptr ,
                                       const DDS::PublicationMatchedStatus & )
   {
-    printf ("ConnectorStatusListener_exec_i::on_publication_matched\n");
+    ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_publication_matched\n"));
   }
 
   Distributor_exec_i::Distributor_exec_i (void)
@@ -138,19 +138,19 @@ namespace CIAO_Quoter_Distributor_Impl
               i->second->low = i->second->current;
 
             if (!CORBA::is_nil (this->writer_)) {
-              printf ("WRITE AND CREATE stock_info for <%s> %u:%u:%u\n",
-                            i->first.c_str(),
+              ACE_DEBUG ((LM_DEBUG, "WRITE AND CREATE stock_info for <%s> %u:%u:%u\n",
+                            i->first.c_str (),
                             i->second->low,
                             i->second->current,
-                            i->second->high);
+                            i->second->high));
               try
                 {
                   this->writer_->write_one (i->second, ::DDS::HANDLE_NIL);
                 }
               catch (const CCM_DDS::InternalError& )
                 {
-                  printf ("Internal Error while writing Stock_info for <%s>.\n",
-                                i->first.c_str ());
+                  ACE_ERROR ((LM_ERROR, "Internal Error while writing Stock_info for <%s>.\n",
+                                i->first.c_str ()));
                 }
             }
             else
@@ -240,7 +240,7 @@ namespace CIAO_Quoter_Distributor_Impl
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Distributor_exec_i::get_info_out_connector_status (void)
   {
-    printf ("*************** DIST out connector status************************\n");
+    ACE_DEBUG ((LM_DEBUG, "*************** DIST out connector status************************\n"));
     return new ConnectorStatusListener_exec_i ();
   }
 
