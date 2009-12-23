@@ -1141,6 +1141,15 @@ be_visitor_ami_pre_proc::generate_get_operation (be_attribute *node)
   operation->set_name (get_name);
   operation->set_defined_in (node->defined_in ());
 
+  // Copy the exceptions since the user exception information may
+  // be needed when collocation is disabled.
+  UTL_ExceptList *exceptions = node->get_get_exceptions ();
+
+  if (0 != exceptions)
+    {
+      operation->be_add_exceptions (exceptions->copy ());
+    }
+
   return operation;
 }
 
@@ -1179,6 +1188,15 @@ be_visitor_ami_pre_proc::generate_set_operation (be_attribute *node)
   operation->set_name (set_name);
   operation->set_defined_in (node->defined_in ());
   operation->be_add_argument (arg);
+
+  // Copy the exceptions since the user exception information may
+  // be needed when collocation is disabled.
+  UTL_ExceptList *exceptions = node->get_set_exceptions ();
+
+  if (0 != exceptions)
+    {
+      operation->be_add_exceptions (exceptions->copy ());
+    }
 
   return operation;
 }
