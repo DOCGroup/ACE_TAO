@@ -1,3 +1,8 @@
+Wed Dec 23 15:20:54 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/Logger/Logger_Service.cpp:
+          Using %s instead of %C
+
 Wed Dec 23 15:08:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/Logger/Logger_Service.cpp:
