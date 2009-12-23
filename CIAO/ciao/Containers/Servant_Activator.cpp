@@ -1,11 +1,8 @@
+// $Id$
+
 #include "Servant_Activator.h"
-
-#include "tao/PortableServer/PortableServer_Functions.h"
 #include "ciao/Logger/Log_Macros.h"
-
-ACE_RCSID (ciao,
-           Servant_Activator_i,
-           "$Id$")
+#include "tao/PortableServer/PortableServer_Functions.h"
 
 namespace CIAO
 {
