@@ -146,8 +146,5 @@ be_operation::arguments (void)
   return this->strategy_->arguments ();
 }
 
-
-
-
 IMPL_NARROW_FROM_DECL (be_operation)
 IMPL_NARROW_FROM_SCOPE (be_operation)
