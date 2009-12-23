@@ -22,41 +22,41 @@
 #include "tao/Protocols_Hooks.h"
 #include "tao/ORB_Core.h"
 
-CORBA::Short
-get_implicit_thread_CORBA_priority (CORBA::ORB_ptr orb)
-{
-  CORBA::Object_var obj =
-    orb->resolve_initial_references (TAO_OBJID_PRIORITYMAPPINGMANAGER);
-
-  TAO_Priority_Mapping_Manager_var mapping_manager =
-    TAO_Priority_Mapping_Manager::_narrow (obj.in ());
-
-  if (CORBA::is_nil (mapping_manager.in ()))
-    throw CORBA::INTERNAL ();
-
-  RTCORBA::PriorityMapping *pm =
-    mapping_manager.in ()->mapping ();
-
-  TAO_Protocols_Hooks *tph =
-    orb->orb_core ()->get_protocols_hooks ();
-
-  CORBA::Short corba_priority;
-  CORBA::Short native_priority;
-
-  if (tph->get_thread_native_priority (native_priority) == 0 &&
-      pm->to_CORBA (native_priority, corba_priority))
-  {
-    return corba_priority;
-  }
-
-  ACE_DEBUG ((LM_DEBUG, "get_implicit_thread_CORBA_priority - failed to access priority\n"));
-  throw CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
-}
-
 namespace CIAO
 {
   namespace Deployment
   {
+    CORBA::Short
+    get_implicit_thread_CORBA_priority (CORBA::ORB_ptr orb)
+    {
+      CORBA::Object_var obj =
+        orb->resolve_initial_references (TAO_OBJID_PRIORITYMAPPINGMANAGER);
+
+      TAO_Priority_Mapping_Manager_var mapping_manager =
+        TAO_Priority_Mapping_Manager::_narrow (obj.in ());
+
+      if (CORBA::is_nil (mapping_manager.in ()))
+        throw CORBA::INTERNAL ();
+
+      RTCORBA::PriorityMapping *pm =
+        mapping_manager.in ()->mapping ();
+
+      TAO_Protocols_Hooks *tph =
+        orb->orb_core ()->get_protocols_hooks ();
+
+      CORBA::Short corba_priority;
+      CORBA::Short native_priority;
+
+      if (tph->get_thread_native_priority (native_priority) == 0 &&
+          pm->to_CORBA (native_priority, corba_priority))
+      {
+        return corba_priority;
+      }
+
+      ACE_DEBUG ((LM_DEBUG, "get_implicit_thread_CORBA_priority - failed to access priority\n"));
+      throw CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+    }
+
     RTComponentServer_Task::Error::Error(const ACE_CString &err) : err_(err)
     {
     }
@@ -65,7 +65,7 @@ namespace CIAO
       static_threads_ (0),
       dynamic_threads_ (0)
     {
-      CIAO_TRACE ("CIAO_RTComponentServer_Task::CIAO_RTComponentServer_Task ()");
+      CIAO_TRACE ("CIAO_RTComponentServer_Task::CIAO_RTComponentServer_Task");
 
       Logger_Service
         *clf = ACE_Dynamic_Service<Logger_Service>::instance ("CIAO_Logger_Backend_Factory");
