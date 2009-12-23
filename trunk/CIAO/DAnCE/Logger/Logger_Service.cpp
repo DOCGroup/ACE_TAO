@@ -73,14 +73,14 @@ namespace DAnCE
 
             case 'l':
               DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Logger_Service::parse_args - ")
-                            ACE_TEXT("Log level set to %C\n"),
+                            ACE_TEXT("Log level set to %s\n"),
                             get_opts.opt_arg ()));
               DAnCE_debug_level = ACE_OS::atoi (get_opts.opt_arg ());
               break;
 
             case 'f':
               DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Logger_Service::parse_args - ")
-                            ACE_TEXT("Log file set to %C\n"),
+                            ACE_TEXT("Log file set to %s\n"),
                             get_opts.opt_arg ()));
               this->filename_ = get_opts.opt_arg ();
               break;
