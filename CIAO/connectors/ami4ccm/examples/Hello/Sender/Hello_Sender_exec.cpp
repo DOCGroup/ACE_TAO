@@ -161,13 +161,13 @@ namespace CIAO_Hello_Sender_Impl
           }
         else
           {
-            printf ("Sender (ASYNCH) :\tInvoke Asynchronous calls\n");
-            my_foo_ami_->sendc_foo (new MyFoo_callback_exec_i (), "Do something asynchronous");
-            my_foo_ami_->sendc_hello (new MyFoo_callback_exec_i ());
-            my_foo_ami_->sendc_get_rw_attrib(new MyFoo_callback_exec_i ());
-            my_foo_ami_->sendc_set_rw_attrib(new MyFoo_callback_exec_i (), 15);
-            my_foo_ami_->sendc_get_ro_attrib(new MyFoo_callback_exec_i ());
-            printf ("Sender (ASYNCH) :\tInvoked Asynchronous calls\n");
+            //printf ("Sender (ASYNCH) :\tInvoke Asynchronous calls\n");
+            //my_foo_ami_->sendc_foo (new MyFoo_callback_exec_i (), "Do something asynchronous");
+            //my_foo_ami_->sendc_hello (new MyFoo_callback_exec_i ());
+            //my_foo_ami_->sendc_get_rw_attrib(new MyFoo_callback_exec_i ());
+            //my_foo_ami_->sendc_set_rw_attrib(new MyFoo_callback_exec_i (), 15);
+            //my_foo_ami_->sendc_get_ro_attrib(new MyFoo_callback_exec_i ());
+            //printf ("Sender (ASYNCH) :\tInvoked Asynchronous calls\n");
           }
       }
     printf ("Sender (ASYNCH) :\tInvoke Asynchronous calls to test except handling\n");
@@ -282,12 +282,13 @@ namespace CIAO_Hello_Sender_Impl
     asynch_foo_generator* asynch_foo_gen =
         new asynch_foo_generator (asynch_foo);
     asynch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
-
+/*
     ::Hello::MyFoo_var synch_foo =
         this->context_->get_connection_run_my_foo ();
     synch_foo_generator* synch_foo_gen =
       new synch_foo_generator (synch_foo);
     synch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
+*/
   }
 
   void

@@ -28,33 +28,33 @@ namespace CIAO_ConnectorStatusListener_Test_Sender_Impl
      ::DDS::Topic_ptr /*the_topic*/,
      const DDS::InconsistentTopicStatus & /*status*/)
     {
-//    printf("Sender : ConnectorStatusListener_sec_exec_i::on_inconsistent_topic\n");
+//    ACE_DEBUG ((LM_DEBUG, "Sender : ConnectorStatusListener_sec_exec_i::on_inconsistent_topic\n"));
       this->inconsistent_ = true;
     }
   void ConnectorStatusListener_sec_exec_i::on_requested_incompatible_qos(
     ::DDS::DataReader_ptr /*the_reader*/,
      const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
-//      printf("ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n");
+//    ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n"));
     }
   void ConnectorStatusListener_sec_exec_i::on_sample_rejected(
      ::DDS::DataReader_ptr /*the_reader*/,
      const DDS::SampleRejectedStatus & /*status*/)  {
-//      printf("ConnectorStatusListener_exec_i::on_sample_rejected\n");
+//    ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_sample_rejected\n"));
     }
   void ConnectorStatusListener_sec_exec_i::on_offered_deadline_missed(
      ::DDS::DataWriter_ptr /*the_writer*/,
      const DDS::OfferedDeadlineMissedStatus & /*status*/)  {
- //     printf("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
+//    ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_offered_deadline_missed\n"));
     }
   void ConnectorStatusListener_sec_exec_i::on_offered_incompatible_qos(
      ::DDS::DataWriter_ptr /*the_writer*/,
      const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
- //     printf("ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n");
+//    ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n"));
     }
   void ConnectorStatusListener_sec_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr /*the_entity*/,
     ::DDS::StatusKind  /*status_kind*/)  {
- //     printf("ConnectorStatusListener_exec_i::on_unexpected_status\n");
+//    ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_unexpected_status\n"));
     }
 
   //============================================================
