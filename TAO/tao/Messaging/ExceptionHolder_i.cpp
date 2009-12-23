@@ -73,14 +73,16 @@ namespace TAO
         {
           CORBA::ULong minor = 0;
           CORBA::ULong completion = 0;
-          if ((_tao_in >> minor) == 0 ||
-              (_tao_in >> completion) == 0)
-            throw ::CORBA::MARSHAL (TAO::VMCID, CORBA::COMPLETED_MAYBE);
+          if (!(_tao_in >> minor) ||
+              !(_tao_in >> completion))
+            {
+              throw ::CORBA::MARSHAL (TAO::VMCID, CORBA::COMPLETED_MAYBE);
+            }
 
           CORBA::SystemException* exception =
             TAO::create_system_exception (type_id.in ());
 
-          if (exception == 0)
+          if (!exception)
             {
               // @@ We should raise a CORBA::NO_MEMORY, but we ran out
               //    of memory already. We need a pre-allocated, TSS,
