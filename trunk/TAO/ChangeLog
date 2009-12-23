@@ -1,3 +1,19 @@
+Wed Dec 23 11:56:42 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/CodeSets/simple/client.cpp:
+        * tests/CodeSets/simple/server.cpp:
+        * tests/CodeSets/simple/run_test.pl:
+        * tests/Bug_3766_Regression/client.cpp:
+        * tests/Bug_3766_Regression/server.cpp:
+        * tests/Bug_3766_Regression/run_test.pl:
+          Changed the tests so they accept IORs from command line.
+
+        * tests/Bug_3790_Regression/server2.cpp:
+          Fixed compile error on wchar builds.
+
+        * bin/tao_orb_tests.lst:
+          Disabled a test for bug#3542 on static builds.
+
 Wed Dec 23 09:31:42 UTC 2009  Johnny Willemsen  <jwillemsen {at} remedy.nl>
 
         * TAO_IDL/be/be_visitor_operation/upcall_command_ss.cpp:

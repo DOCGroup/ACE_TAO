@@ -2,6 +2,35 @@
 
 #include "TestI.h"
 #include "ace/OS.h"
+#include "ace/Get_Opt.h"
+
+const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
+
+int
+parse_args (int argc, ACE_TCHAR *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'o':
+        ior_output_file = get_opts.opt_arg ();
+        break;
+
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-o <iorfile>"
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+  // Indicates sucessful parsing of the command line
+  return 0;
+}
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -24,6 +53,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
 
+      if (parse_args (argc, argv) != 0)
+        return 1;
+
       Test_i *test_impl = new Test_i(orb.in());
 
       PortableServer::ServantBase_var owner_transfer(test_impl);
@@ -38,7 +70,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior = orb->object_to_string (test.in());
 
       // Output the IOR to the <ior_output_file>
-      FILE* file = ACE_OS::fopen("server.ior", "w");
+      FILE* file = ACE_OS::fopen(ior_output_file, "w");
 
       if (file == 0)
       {
