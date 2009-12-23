@@ -1,3 +1,16 @@
+Wed Dec 23 12:23:03 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/UnkeyedWriter/Base/Writer_Base.idl:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender.idl:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender_exec.h:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedWriter/descriptors/Plan.cdp:
+          Reworked this test. DDS does not return an error when max_samples is
+          reached. Now a large block of data is send.
+
+        * connectors/dds4ccm/tests/UnkeyedWriter/descriptors/USER_QOS_PROFILES.xml:
+          Removed this file.
+
 Wed Dec 23 10:44:14 UTC 2009  Marijke Hengstmengel <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/Updater/Sender/Updater_Sender_exec.cpp
