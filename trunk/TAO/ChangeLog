@@ -1,3 +1,16 @@
+Wed Dec 23 15:47:02 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Reverted a change to the 'state_member' production rule that
+          was causing the public/private qualifier to be lost in
+          valuetypes and eventtypes.
+
+        * TAO_IDL/include/ast_field.h:
+
+          Removed extra spaces.
+
 Wed Dec 23 11:56:42 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/CodeSets/simple/client.cpp:

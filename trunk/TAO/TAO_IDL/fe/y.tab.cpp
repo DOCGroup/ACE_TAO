@@ -3754,6 +3754,8 @@ tao_yyreduce:
 
     {
 // state_member : IDL_PUBLIC
+          /* is $0 to member_i */
+          (tao_yyval.vival) = AST_Field::vis_PUBLIC;
         }
     break;
 
@@ -3761,8 +3763,6 @@ tao_yyreduce:
 
     {
 //        member_i
-          /* is $0 to member_i */
-          (tao_yyval.vival) = AST_Field::vis_PUBLIC;
         }
     break;
 
@@ -3770,6 +3770,8 @@ tao_yyreduce:
 
     {
 //        IDL_PRIVATE
+          /* is $0 to member_i */
+          (tao_yyval.vival) = AST_Field::vis_PRIVATE;
         }
     break;
 
@@ -3777,8 +3779,6 @@ tao_yyreduce:
 
     {
 //        member_i
-          /* is $0 to member_i */
-          (tao_yyval.vival) = AST_Field::vis_PRIVATE;
         }
     break;
 
