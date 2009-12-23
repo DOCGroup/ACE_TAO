@@ -21,7 +21,7 @@ const ACE_TCHAR *second_key = 0;
 const ACE_TCHAR *first_iogr_file = 0;
 const ACE_TCHAR *second_iogr_file = 0;
 
-int delay = 15; //seconds
+int sleep_delay = 15; //seconds
 
 // Objects
 CORBA::Object_var object_primary = 0;
@@ -57,7 +57,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         second_iogr_file = get_opts.opt_arg ();
         break;
       case 't':
-        delay = ACE_OS::atoi(get_opts.opt_arg ());
+        sleep_delay = ACE_OS::atoi(get_opts.opt_arg ());
         break;
       case '?':
       default:
@@ -97,7 +97,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (manager.write_to_files ())
         return -1;
 
-      ACE_OS::sleep (delay);
+      ACE_OS::sleep (sleep_delay);
+
       // Client, who is going to use the merged IOR
       // Construct that with the managers ORB
       Client_i client_imp (manager.orb ());
