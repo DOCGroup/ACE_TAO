@@ -22,8 +22,8 @@ namespace DAnCE
     ACE_Env_Value<int> log (ACE_TEXT("DANCE_LOG_LEVEL"), DAnCE_debug_level);
     DAnCE_debug_level = log;
 
-    ACE_Env_Value<int> trace (ACE_TEXT("DANCE_TRACE_ENABLE"), this->trace_);
-    this->trace_ = trace;
+    ACE_Env_Value<int> trace (ACE_TEXT("DANCE_TRACE_ENABLE"), false);
+    this->trace_ = (trace != 0);
 
     ACE_Env_Value<const ACE_TCHAR *> filename (ACE_TEXT("DANCE_LOG_FILE"), this->filename_.c_str ());
     this->filename_ = filename;
