@@ -20,8 +20,11 @@ module Hello
         raises (InternalError);
 
       attribute short rw_attrib
+        getraises (InternalError)
         setraises (InternalError);
-      readonly attribute short ro_attrib;
+
+      readonly attribute short ro_attrib
+        raises (InternalError);
     };
 };
 

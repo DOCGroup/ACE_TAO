@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #include "Hello_Sender_exec.h"
@@ -12,8 +11,7 @@ namespace CIAO_Hello_Sender_Impl
       const char* error_string,
       const char* func)
     {
-      printf ("Sender (%s) :\tCallback except from AMI\n",
-                  func);
+      printf ("Sender (%s) :\tCallback except from AMI\n", func);
       if (id != 42)
       {
         printf ("ERROR (%s) :\tReceived unexpected ID received in except handler\n",
@@ -26,23 +24,22 @@ namespace CIAO_Hello_Sender_Impl
               func);
         return;
       }
-      printf ("Sender (%s) :\tReceived the correct except parameters.\n", func);
+      printf ("OK (%s) :\tReceived the correct except parameters.\n", func);
     }
 
   void HandleException (
       ::CCM_AMI::ExceptionHolder_ptr excep_holder,
       const char* func)
     {
-      printf ("Sender (%s) :\tHandle except AMI\n",
-                  func);
+      printf ("Sender (%s) :\tHandle except AMI\n", func);
       try
         {
           excep_holder->raise_exception ();
         }
       catch (const Hello::InternalError& ex)
         {
-          printf ("AMI CORBA (FOO) :\tCaught the correct except type <%d> <%s>\n",
-                  ex.id, ex.error_string.in ());
+          ACE_DEBUG ((LM_DEBUG, "Sender: Caught the correct except type <%d> <%C>\n",
+                  ex.id, ex.error_string.in ()));
           HandleException (ex.id, ex.error_string.in (), func);
         }
       catch (const CORBA::Exception& ex)
@@ -165,7 +162,9 @@ namespace CIAO_Hello_Sender_Impl
             my_foo_ami_->sendc_foo (new MyFoo_callback_exec_i (), "Do something asynchronous");
             my_foo_ami_->sendc_hello (new MyFoo_callback_exec_i ());
             my_foo_ami_->sendc_get_rw_attrib(new MyFoo_callback_exec_i ());
+            my_foo_ami_->sendc_get_rw_attrib(new MyFoo_callback_exec_i ());
             my_foo_ami_->sendc_set_rw_attrib(new MyFoo_callback_exec_i (), 15);
+            my_foo_ami_->sendc_get_ro_attrib(new MyFoo_callback_exec_i ());
             my_foo_ami_->sendc_get_ro_attrib(new MyFoo_callback_exec_i ());
             printf ("Sender (ASYNCH) :\tInvoked Asynchronous calls\n");
           }
@@ -213,7 +212,7 @@ namespace CIAO_Hello_Sender_Impl
         CORBA::Long result = my_foo_ami_->foo ("", out_str);
         printf ("Sender (SYNCH) :\tInvoked synchronous call result <%d> answer <%s>\n", result, out_str);
       }
-    catch (Hello::InternalError& ex)
+    catch (const Hello::InternalError& ex)
       {
         printf ("Sender (SYNCH FOO) :\tExpected Except caught : <%d> <%s>\n", ex.id, ex.error_string.in ());
       }
@@ -223,17 +222,15 @@ namespace CIAO_Hello_Sender_Impl
         my_foo_ami_->rw_attrib (0);
         printf ("Sender (SYNCH) :\tInvoked synchronous call rw_attrib\n");
       }
-    catch (Hello::InternalError& ex)
-     {
+    catch (const Hello::InternalError& ex)
+      {
         printf ("Sender (SYNCH RW_ATTRIB) :\tExpected Except caught : <%d> <%s>\n", ex.id, ex.error_string.in ());
       }
-      catch (const CORBA::Exception&)
+    catch (const CORBA::Exception& ex)
       {
-        // For now, this excep is EXPECTED! Don't print it
-        // otherwise the scoreboard will be confused.
-        //ex._tao_print_exception ("Caught unexpected except:");
+        ex._tao_print_exception ("ERROR: Caught unexpected except:");
       }
-      return 0;
+    return 0;
   }
 
   //============================================================
@@ -270,13 +267,11 @@ namespace CIAO_Hello_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
-    /* Your code here. */
   }
 
   void
   Sender_exec_i::ccm_activate (void)
   {
-
     ::Hello::AMI_MyFoo_var asynch_foo =
       this->context_->get_connection_run_asynch_my_foo();
     asynch_foo_generator* asynch_foo_gen =
@@ -288,7 +283,6 @@ namespace CIAO_Hello_Sender_Impl
     synch_foo_generator* synch_foo_gen =
       new synch_foo_generator (synch_foo);
     synch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
-
   }
 
   void
