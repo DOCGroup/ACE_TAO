@@ -133,7 +133,6 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
   ::CCM_DDS::TestTopic::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
-    //printf ("*************** get_inf-_out_data_listener************************\n");
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new TestTopic RAW listener\n")));
     return new TestTopic_RawListener_exec_i ();
   }
@@ -149,7 +148,6 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Receiver_exec_i::get_info_out_connector_status (void)
   {
-    //ACE_DEBUG ((LM_DEBUG, "*************** out connector status************************\n"));
     return new ConnectorStatusListener_exec_i (this->inconsistent_);
   }
 

@@ -73,7 +73,6 @@ namespace CIAO_ConnectorStatusListener_Test_Sender_Impl
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Sender_exec_i::get_test_sec_topic_connector_status (void)
   {
-    //printf ("*************** out connector status sender test_sec_topic************************\n");
     return new ConnectorStatusListener_sec_exec_i (this->inconsistent_);
   }
 
@@ -92,14 +91,12 @@ namespace CIAO_ConnectorStatusListener_Test_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
-    //printf("-------------configuration_complete ----------------\n");
   }
 
 
 void
   Sender_exec_i::add_instance_of_sec_topic (const char * key, int x)
   {
-    //printf("-------------add_instance_of_second_topic----------------\n");
     TestSecondTopic *new_key = new TestSecondTopic;
     new_key->key = CORBA::string_dup(key);
     new_key->x = x;
@@ -123,7 +120,6 @@ void
   void
   Sender_exec_i::ccm_remove (void)
   {
-    //printf("*************in remove Sender********** \n");
     if(!this->inconsistent_.value ())
       {
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
