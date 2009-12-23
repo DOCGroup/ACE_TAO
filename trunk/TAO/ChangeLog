@@ -1,3 +1,24 @@
+Wed Dec 23 09:13:42 UTC 2009  Johnny Willemsen  <jwillemsen {at} remedy.nl>
+
+        * tests/Bug_3801_Regression:
+          New test to reproduce problem with AMI and attributes
+
+        * bin/tao_orb_tests.lst:
+          Added 3801
+
+        * bin/tao_other_tests.lst:
+          Removed WinCE
+
+        * tao/Messaging/ExceptionHolder_i.cpp:
+          bool changes
+
+`       * tao/Object.cpp:
+          bool changes, check all return values
+
+        * tao/Valuetype/ValueBase.cpp:
+          bool changes, fixed a lot of debug messages that had a totally
+          wrong layout
+
 Tue Dec 22 17:19:42 UTC 2009  Johnny Willemsen  <jwillemsen {at} remedy.nl>
 
         * tests/IDL_Test/attribute.idl:
