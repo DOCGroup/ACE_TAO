@@ -37,7 +37,7 @@ be_template_module_ref::destroy (void)
 }
 
 int
-be_template_module_ref::ast_accept (be_visitor *)
+be_template_module_ref::accept (be_visitor *)
 {
   return 0;//visitor->visit_template_module_ref (this);
 }
