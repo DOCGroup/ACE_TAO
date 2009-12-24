@@ -1,3 +1,11 @@
+Thu Dec 24 10:55:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/RPC/run_test.pl
+        * performance-tests/SCTP/run_spectrum.pl
+        * performance-tests/TCP/run_test.pl
+        * performance-tests/UDP/run_test.pl
+          Fuzz fixes
+
 Thu Dec 24 10:49:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * protocols/tests/HTBP/ping/run_test.pl
