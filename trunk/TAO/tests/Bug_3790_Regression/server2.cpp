@@ -60,7 +60,7 @@ char *
 Task::locate (const char *)
 {
   CORBA::Object_var fwdObj = orb_->string_to_object(anotherIOR);
-  CORBA::String_var fwdString = orb_->object_to_string(fwdObj);
+  CORBA::String_var fwdString = orb_->object_to_string(fwdObj.in ());
 
   ACE_DEBUG ((LM_DEBUG,
               "IN LOCATOR!  Forwarding client to: %C\n",
