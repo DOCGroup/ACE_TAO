@@ -1,3 +1,10 @@
+Thu Dec 24 13:15:42 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_template_module_ref.h:
+        * TAO_IDL/be/be_template_module_ref.cpp:
+        
+          Fixed cut-and-paste error in virtual method name.
+
 Thu Dec 24 10:20:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Trader/Trader.h:
