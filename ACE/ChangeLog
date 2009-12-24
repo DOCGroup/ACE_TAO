@@ -1,3 +1,20 @@
+Thu Dec 24 09:54:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_string.cpp:
+          Const changes, layout changes, call ACE_OS::strncat instead of
+          strncat directly
+
+        * ace/Log_Msg.cpp:
+        * ace/Log_Msg.h:
+          Const changes
+
+        * ace/config-win32-borland.h:
+          C++ Builder 2010 has a broken wcsncat, reported as QC80630, for
+          this version we now enable the ACE emulation for wcsncat
+
+        * ace/OS_NS_wchar.cpp:
+          Initialise some pointers with 0
+
 Mon Dec 21 11:29:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:

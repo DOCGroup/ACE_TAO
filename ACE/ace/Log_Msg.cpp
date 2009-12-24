@@ -1165,7 +1165,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                 case 'A':             // ACE_timer_t
                   {
                     ACE_OS::strcpy (fp, ACE_TEXT ("f"));
-                    double value = va_arg (argp, double);
+                    double const value = va_arg (argp, double);
                     if (can_check)
                       this_len = ACE_OS::snprintf (bp, bspace, format, value);
                     else

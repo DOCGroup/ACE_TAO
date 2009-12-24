@@ -155,6 +155,10 @@
 # endif
 #endif
 
+#if (__BORLANDC__ == 0x621)
+// C++ Builder 2010 wcsncat seems broken
+# define ACE_LACKS_WCSNCAT
+#endif
 
 #define ACE_WCSDUP_EQUIVALENT ::_wcsdup
 #define ACE_STRCASECMP_EQUIVALENT ::stricmp
