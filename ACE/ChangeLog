@@ -1,3 +1,12 @@
+Thu Dec 24 10:49:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/tests/HTBP/ping/run_test.pl
+        * protocols/tests/HTBP/Reactor_Tests/run_test.pl
+        * protocols/tests/HTBP/Send_Large_Msg/run_test.pl
+        * protocols/tests/HTBP/Send_Recv_Tests/run_test.pl
+        * tests/run_test.pl
+          Fixed fuzz
+
 Thu Dec 24 10:20:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/gperf/src/Bool_Array.h:
