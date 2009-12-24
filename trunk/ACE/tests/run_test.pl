@@ -26,8 +26,6 @@ use File::Basename;
 
 $config_list = new PerlACE::ConfigList;
 
-PerlACE::add_lib_path("$ENV{ACE_ROOT}/tests");
-
 ################################################################################
 
 sub check_for_more_configs ()
@@ -155,7 +153,7 @@ sub run_program ($@)
     check_log ($program);
 
     if ($config_list->check_config ('Codeguard')) {
-    	check_codeguard_log ($program);
+        check_codeguard_log ($program);
     }
     chdir $start_dir;
 }
@@ -332,9 +330,9 @@ sub check_log ($)
                         }
                         print STDERR "======= End Sublog File \n";
                     }
-		}
+                }
             }
-	}
+        }
     }
 }
 
@@ -433,6 +431,8 @@ my($oh) = \*STDOUT;
 
 my $target = PerlACE::TestTarget::create_target (1);
 
+$target->AddLibPath("$ENV{ACE_ROOT}/tests");
+
 # Put needed files in place for targets that require them.
 #
 # Service_Config_Test needs service config file.
@@ -452,16 +452,16 @@ if ($target->PutFile ("Service_Config_Stream_Test.conf", $svc_conf_file) == -1) 
 }
 
 foreach $test (@tests) {
-  if (defined $opt_d) {
-    print "Would run test $test now\n";
-  }
-  elsif ($config_list->check_config ('Purify')) {
-    purify_program ($test);
-  }
-  else {
-    run_program ($target, $test);
-  }
-  $target->GetStderrLog();
+    if (defined $opt_d) {
+        print "Would run test $test now\n";
+    }
+    elsif ($config_list->check_config ('Purify')) {
+        purify_program ($test);
+    }
+    else {
+        run_program ($target, $test);
+    }
+    $target->GetStderrLog();
 }
 
 check_resources ($oh) if (!defined $opt_d);
