@@ -1,3 +1,12 @@
+Thu Dec 24 10:20:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Trader/Trader.h:
+        * tao/Incoming_Message_Stack.h:
+          Fixes for C++ Builder 2010 Update 4/5
+
+        * tao/Synch_Invocation.cpp:
+          Updated some very old comments
+
 Wed Dec 23 19:14:42 UTC 2009  Johnny Willemsen  <jwillemsen {at} remedy.nl>
 
         * orbsvcs/tests/Bug_2248_Regression/client.cpp:
