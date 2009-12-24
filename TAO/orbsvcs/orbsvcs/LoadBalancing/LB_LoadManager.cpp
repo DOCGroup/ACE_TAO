@@ -29,7 +29,7 @@ ACE_RCSID (LoadBalancing,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_LB_LoadManager::TAO_LB_LoadManager (int ping_timeout, 
+TAO_LB_LoadManager::TAO_LB_LoadManager (int ping_timeout,
                                         int ping_interval)
   : reactor_ (0),
     poa_ (),
@@ -721,16 +721,16 @@ TAO_LB_LoadManager::next_member (const PortableServer::ObjectId & oid)
       CORBA::Object_var obj;
 
       // The following iteration to get next_member from strategy needs
-      // be synchronized with any member change method (e.g. add_member, 
+      // be synchronized with any member change method (e.g. add_member,
       // remove_member). We need make the LB use RW strategy to ensure
       // single threaded.
-      
+
       // Remove any disconnected members. Doing removing in the ORB thread
       // to avoid synchnorize between ORB and validate thread.
       this->object_group_manager_.remove_inactive_members ();
 
       size_t n_members = this->object_group_manager_.member_count (oid, true);
-    
+
       size_t count = 0;
 
       while (count < n_members)
@@ -751,7 +751,7 @@ TAO_LB_LoadManager::next_member (const PortableServer::ObjectId & oid)
           throw;
         }
 
-        if (this->object_group_manager_.is_alive (oid, obj))
+        if (this->object_group_manager_.is_alive (oid, obj.in ()))
           break;
       }
 
@@ -871,7 +871,7 @@ TAO_LB_LoadManager::initialize (ACE_Reactor * reactor,
       ACE_TEXT ("thread to validate connection.\n")));
     throw CORBA::INTERNAL ();
   }
-    
+
   if (CORBA::is_nil (this->lm_ref_.in ()))
     {
       this->lm_ref_ = this->_this ();
@@ -1170,11 +1170,11 @@ TAO_LB_LoadManager::svc (void)
 {
   while (! this->shutdown_)
   {
-    // The validate interval for each member is in the range 
+    // The validate interval for each member is in the range
     // between ping_interval_ and  ping_timeout_ * number of members.
     ACE_Time_Value start = ACE_OS::gettimeofday ();
     ACE_Time_Value due = start + this->ping_interval_;
-    this->object_group_manager_.validate_members (this->orb_, this->ping_timeout_);
+    this->object_group_manager_.validate_members (this->orb_.in (), this->ping_timeout_);
     ACE_Time_Value end = ACE_OS::gettimeofday ();
     if (due > end)
     {
@@ -1185,6 +1185,6 @@ TAO_LB_LoadManager::svc (void)
 
   return 0;
 }
- 
+
 
 TAO_END_VERSIONED_NAMESPACE_DECL
