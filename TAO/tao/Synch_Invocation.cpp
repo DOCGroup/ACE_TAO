@@ -503,12 +503,10 @@ namespace TAO
 
     mon.set_status (TAO_INVOKE_USER_EXCEPTION);
 
-    // If we have native exceptions, we must manage the memory allocated
-    // by the call above to alloc(). Otherwise the Environment class
-    // manages the memory.
+    // We must manage the memory allocated
+    // by the call above to alloc(). 
     auto_ptr<CORBA::Exception> safety (exception);
 
-    // Direct throw because we don't have the try_ENV.
     exception->_raise ();
 
     return TAO_INVOKE_USER_EXCEPTION;
