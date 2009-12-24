@@ -40,5 +40,5 @@ be_template_module_inst::accept (be_visitor *)
   return 0;//visitor->visit_template_module_inst (this);
 }
 
-IMPL_NARROW_FROM_DECL (be_template_module_inst);
+IMPL_NARROW_FROM_DECL (be_template_module_inst)
 
