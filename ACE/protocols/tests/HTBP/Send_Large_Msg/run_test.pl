@@ -17,7 +17,7 @@ $synchfile = $target1->LocalFile ("$synchbase");
 my $port = $target1->RandomPort ();
 my $host = $target1->HostName();
 
-my $SV = $target1->CreateProcess("server", "-p $port -o $synchfile");
+my $SV = $target1->CreateProcess ("server", "-p $port -o $synchfile");
 my $CL = $target2->CreateProcess ("client", " -h $host -p $port");
 
 $target1->DeleteFile ($synchbase);
@@ -34,14 +34,14 @@ if ($target1->WaitForFileTimed ($synchbase,
 
 $target1->DeleteFile ($synchbase);
 
-$client = $CL->SpawnWaitKill (300);
+$client = $CL->SpawnWaitKill ($target2->ProcessStartWaitInterval() + 285);
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
-$server = $SV->WaitKill (10);
+$server = $SV->WaitKill ($target1->ProcessStopWaitInterval());
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
