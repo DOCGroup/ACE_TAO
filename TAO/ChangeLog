@@ -1,3 +1,8 @@
+Thu Dec 24 16:58:36 UTC 2009  Phil Mesnier  <mesnierp@ociweb.com>
+
+        * bin/tao_other_tests.lst: 
+          Skip the new LB tests on singlethreaded builds.
+
 Thu Dec 24 13:15:42 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be_include/be_template_module_ref.h:
