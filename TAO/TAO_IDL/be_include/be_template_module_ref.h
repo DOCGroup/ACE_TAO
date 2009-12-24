@@ -26,7 +26,7 @@ public:
   virtual void destroy (void);
 
   // Visiting.
-  virtual int ast_accept (be_visitor *visitor);
+  virtual int accept (be_visitor *visitor);
 };
 
 #endif           // BE_TEMPLATE_MODULE_REF_H
