@@ -48,7 +48,6 @@ DAnCE_NodeManager_Module::SOptions::SOptions(void)
     create_plan_ns_ior_ (0),
     rebind_plan_ns_ (false),
     rebind_plan_ns_ior_ (0),
-    ignore_failure_ (false),
     cs_path_ (ACE_TEXT("ciao_componentserver")),
     timeout_ (5),
     standalone_ (false),
@@ -86,7 +85,6 @@ DAnCE_NodeManager_Module::usage (void)
     "\t-c|--create-plan-ns [NC] create plan objects (components and ports) representation in name context with ior NC\n"
     "\t-r|--rebind-plan-ns [NC] bind plan representation name context to NC\n"
     "\t-i|--port-indirection\t enable plan objects indirection via servant locator\n"
-    //"\t-f|--ignore-failure\t\t ignore deployment failures\n"
     "\t-s|--server-executable\t default component server executable\n"
     "\t--server-args\t\t additional arguments to supply to the component server\n"
     "\t--standalone-nm\t\t Indicates that this NodeManager is not managed by an ExecutionManager\n"
@@ -101,7 +99,7 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc,
                         argv,
-                        ACE_TEXT("e:n:p::c::r::ifs:t:h"),
+                        ACE_TEXT("e:n:p::c::r::is:t:h"),
                         0,
                         0,
                         ACE_Get_Opt::RETURN_IN_ORDER);
@@ -112,7 +110,6 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
   get_opts.long_option (ACE_TEXT("create-plan-ns"), 'c', ACE_Get_Opt::ARG_OPTIONAL);
   get_opts.long_option (ACE_TEXT("rebind-plan-ns"), 'r', ACE_Get_Opt::ARG_OPTIONAL);
   get_opts.long_option (ACE_TEXT("port-indirection"), 'i', ACE_Get_Opt::NO_ARG);
-  get_opts.long_option (ACE_TEXT("ignore-failure"), 'f', ACE_Get_Opt::NO_ARG);
   get_opts.long_option (ACE_TEXT("server-executable"), 's', ACE_Get_Opt::ARG_REQUIRED);
   get_opts.long_option (ACE_TEXT("server-args"), ACE_Get_Opt::ARG_REQUIRED);
   get_opts.long_option (ACE_TEXT("standalone-nm"), ACE_Get_Opt::NO_ARG);
@@ -159,12 +156,6 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
           DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
                         ACE_TEXT("Instructed to create port indirection service\n")));
           this->options_.port_indirection_ = true;
-          break;
-
-        case 'f':
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
-                        ACE_TEXT("Instructed to ignore deployment errors\n")));
-          this->options_.ignore_failure_ = true;
           break;
 
         case 's':

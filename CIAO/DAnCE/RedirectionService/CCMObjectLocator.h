@@ -64,12 +64,11 @@ namespace DAnCE
                                                  ::PortableServer::ServantLocator::Cookie & the_cookie);
 
     virtual void postinvoke (
-                             const ::PortableServer::ObjectId & /*oid*/,
-                             ::PortableServer::POA_ptr /*adapter*/,
-                             const char * /*operation*/,
-                             ::PortableServer::ServantLocator::Cookie /*the_cookie*/,
-                             ::PortableServer::Servant /*the_servant*/
-                             );
+                             const ::PortableServer::ObjectId & oid,
+                             ::PortableServer::POA_ptr adapter,
+                             const char * operation,
+                             ::PortableServer::ServantLocator::Cookie the_cookie,
+                             ::PortableServer::Servant the_servant);
 
     void start_register (const ACE_CString& plan);
 

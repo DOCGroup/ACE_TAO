@@ -46,6 +46,7 @@ namespace CIAO_Hello_Receiver_Impl
     printf ("Receiver (RW_ATTRIB) :\tReceived request\n");
     if (this->get_rw_)
       {
+        this->get_rw_ = false;
         printf ("Receiver (FOO) :\tSecond get rw_attrib received -> throw internal excep with id <42> and errorstring <Hello World>\n");
         Hello::InternalError ex (42, "Hello world");
         throw ex;
@@ -80,6 +81,7 @@ namespace CIAO_Hello_Receiver_Impl
     printf ("Receiver (RO_ATTRIB) :\tReceived request\n");
     if (this->get_ro_)
       {
+        this->get_ro_ = false;
         printf ("Receiver (FOO) :\tSecond get ro_attrib received -> throw internal excep with id <42> and errorstring <Hello World>\n");
         Hello::InternalError ex (42, "Hello world");
         throw ex;
