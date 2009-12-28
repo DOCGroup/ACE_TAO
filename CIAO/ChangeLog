@@ -1,3 +1,9 @@
+Mon Dec 28 17:31:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/docs/AMI4CCM-explanation.odt:
+        * connectors/ami4ccm/docs/AMI4CCM-spec.odt:
+          Started to update these documents with the current proto
+
 Mon Dec 28 12:43:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Logger/Logger_Service.cpp:
