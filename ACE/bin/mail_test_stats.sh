@@ -2,6 +2,7 @@ export TREE_ROOT=/home/build/ACE/latest
 export ACE_ROOT=$TREE_ROOT/ACE_wrappers
 export TAO_ROOT=$ACE_ROOT/TAO
 export CIAO_ROOT=$TAO_ROOT/CIAO
+mkdir -p $TREE_ROOT
 cd $TREE_ROOT
 svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE+TAO+CIAO .
 cd $ACE_ROOT/bin
