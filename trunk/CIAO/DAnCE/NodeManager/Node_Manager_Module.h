@@ -62,7 +62,6 @@ class DAnCE_NodeManager_Module_Export DAnCE_NodeManager_Module
         const ACE_TCHAR* rebind_plan_ns_ior_;
         bool port_indirection_;
         ACE_Vector<ACE_TString> node_managers_;
-        bool ignore_failure_;
         const ACE_TCHAR * cs_path_;
         unsigned int timeout_;
         CORBA::Boolean standalone_;

@@ -20,7 +20,7 @@ namespace CIAO
     template <typename Source,
               typename Dest,
               typename Dest_Type,
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x620)
+#if defined (__BORLANDC__) && (__BORLANDC__ < 0x630)
               void (Func)(const Source &, Dest_Type &)>
 #else
               void (&Func)(const Source &, Dest_Type &)>

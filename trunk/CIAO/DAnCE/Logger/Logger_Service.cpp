@@ -22,8 +22,8 @@ namespace DAnCE
     ACE_Env_Value<int> log (ACE_TEXT("DANCE_LOG_LEVEL"), DAnCE_debug_level);
     DAnCE_debug_level = log;
 
-    ACE_Env_Value<int> trace (ACE_TEXT("DANCE_TRACE_ENABLE"), this->trace_);
-    this->trace_ = trace;
+    ACE_Env_Value<int> trace (ACE_TEXT("DANCE_TRACE_ENABLE"), 0);
+    this->trace_ = (trace != 0);
 
     ACE_Env_Value<const ACE_TCHAR *> filename (ACE_TEXT("DANCE_LOG_FILE"), this->filename_.c_str ());
     this->filename_ = filename;
@@ -50,21 +50,21 @@ namespace DAnCE
 
     ACE_Get_Opt get_opts (argc,
                           argv,
-                          "l:tf:",
+                          "l:af:",
                           0,
                           0,
                           ACE_Get_Opt::RETURN_IN_ORDER);
 
-    get_opts.long_option (ACE_TEXT("log-level"), 'l', ACE_Get_Opt::ARG_OPTIONAL);
-    get_opts.long_option (ACE_TEXT("trace"), 't', ACE_Get_Opt::ARG_OPTIONAL);
-    get_opts.long_option (ACE_TEXT("log-file"), 'f', ACE_Get_Opt::ARG_OPTIONAL);
+    get_opts.long_option (ACE_TEXT("log-level"), 'l', ACE_Get_Opt::ARG_REQUIRED);
+    get_opts.long_option (ACE_TEXT("trace"), 'a', ACE_Get_Opt::NO_ARG);
+    get_opts.long_option (ACE_TEXT("log-file"), 'f', ACE_Get_Opt::ARG_REQUIRED);
 
     int c;
     while ( (c = get_opts ()) != -1)
       {
         switch (c)
           {
-            case 't':
+            case 'a':
               DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Logger_Service::parse_args - ")
                             ACE_TEXT("Trace enabled\n"),
                             get_opts.opt_arg ()));

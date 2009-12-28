@@ -1,3 +1,33 @@
+Mon Dec 28 12:43:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Logger/Logger_Service.cpp:
+          Use ACE to parse commandline arguments
+
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+          Each second call to an attribute results in an exception
+
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Added missing try/catch for the attributes
+
+        * DAnCE/Config_Handlers/RDD_Handler.cpp:
+          Unicode fixes
+
+        * DAnCE/Config_Handlers/Utils/Functors.h:
+          C++ Builder 2010 fix
+
+        * DAnCE/Logger/Logger_Service.cpp:
+          Use -a for enabling tracing, -t is already used
+
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.h:
+          Removed ignore_failure, not used
+
+        * DAnCE/RedirectionService/CCMObjectLocator.h:
+          Doxygen changes
+
+        * DAnCE/RedirectionService/RedirectionService.mpc:
+          Layout change
+
 Wed Dec 23 20:14:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/Base/Hello.idl
