@@ -22,7 +22,7 @@ namespace CIAO
     ACE_Env_Value<int> log (ACE_TEXT("CIAO_LOG_LEVEL"), CIAO_debug_level);
     CIAO_debug_level = log;
 
-    ACE_Env_Value<int> trace (ACE_TEXT("CIAO_TRACE_ENABLE"), false);
+    ACE_Env_Value<int> trace (ACE_TEXT("CIAO_TRACE_ENABLE"), 0);
     this->trace_ = (trace != 0);
 
     ACE_Env_Value<const ACE_TCHAR *> filename (ACE_TEXT("CIAO_LOG_FILE"), this->filename_.c_str ());
@@ -45,45 +45,44 @@ namespace CIAO
   void
   Logger_Service::parse_args (int argc, ACE_TCHAR **argv)
   {
-    const ACE_TCHAR *shortl = ACE_TEXT("-l");
-    const ACE_TCHAR *longl = ACE_TEXT("--log-level");
-    const ACE_TCHAR *tracel = ACE_TEXT("--trace");
-    const ACE_TCHAR *traces = ACE_TEXT("-t");
-    const ACE_TCHAR *lfl = ACE_TEXT("--log-file");
-    const ACE_TCHAR *lfs = ACE_TEXT("-f");
+    CIAO_TRACE ("Logger_Service::parse_args");
 
-    // We need to actually FIND the -l option, as the get_opt won't ignore
-    // the ORB options and such.
-    for (int i = 0; i < argc; ++i)
+    ACE_Get_Opt get_opts (argc,
+                          argv,
+                          "l:tf:",
+                          0,
+                          0,
+                          ACE_Get_Opt::RETURN_IN_ORDER);
+
+    get_opts.long_option (ACE_TEXT("log-level"), 'l', ACE_Get_Opt::ARG_REQUIRED);
+    get_opts.long_option (ACE_TEXT("trace"), 't', ACE_Get_Opt::NO_ARG);
+    get_opts.long_option (ACE_TEXT("log-file"), 'f', ACE_Get_Opt::ARG_REQUIRED);
+
+    int c;
+    while ( (c = get_opts ()) != -1)
       {
-        if (ACE_OS::strncmp (argv[i], traces, 2) == 0 ||
-            ACE_OS::strncmp (argv[i], tracel, 7) == 0)
+        switch (c)
           {
-            this->trace_ = true;
-            continue;
-          }
+            case 't':
+              CIAO_DEBUG (9, (LM_TRACE, CLINFO ACE_TEXT("Logger_Service::parse_args - ")
+                            ACE_TEXT("Trace enabled\n"),
+                            get_opts.opt_arg ()));
+              this->trace_ = true;
+              break;
 
-        if (ACE_OS::strncmp (argv[i], shortl, 2) == 0 ||
-            ACE_OS::strncmp (argv[i], longl, 11) == 0)
-          {
-            if ((i + 1) < argc && *argv[i + 1] != '-')
-              {
-                int const level = ACE_OS::atoi (argv[i + 1]);
+            case 'l':
+              CIAO_DEBUG (9, (LM_TRACE, CLINFO ACE_TEXT("Logger_Service::parse_args - ")
+                            ACE_TEXT("Log level set to %s\n"),
+                            get_opts.opt_arg ()));
+              CIAO_debug_level = ACE_OS::atoi (get_opts.opt_arg ());
+              break;
 
-                if (level != 0)
-                  {
-                    CIAO_debug_level = level;
-                  }
-              }
-          }
-
-        if (ACE_OS::strncmp (argv[i], lfs, 2) == 0 ||
-            ACE_OS::strncmp (argv[i], lfl, 10) == 0)
-          {
-            if ((i + 1) < argc && *argv[i + 1] != '-')
-              {
-                this->filename_ = argv[i+1];
-              }
+            case 'f':
+              CIAO_DEBUG (9, (LM_TRACE, CLINFO ACE_TEXT("Logger_Service::parse_args - ")
+                            ACE_TEXT("Log file set to %s\n"),
+                            get_opts.opt_arg ()));
+              this->filename_ = get_opts.opt_arg ();
+              break;
           }
       }
   }

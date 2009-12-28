@@ -188,7 +188,7 @@ namespace CIAO_Hello_Sender_Impl
   {
     ACE_OS::sleep (3);
     //run synch calls
-    char * out_str;
+    char * out_str = 0;
     for (int i = 0; i < 5; ++i)
       {
         CORBA::Long result = my_foo_ami_->foo ("Do something synchronous", out_str);
@@ -198,14 +198,35 @@ namespace CIAO_Hello_Sender_Impl
         my_foo_ami_->hello (answer);
         printf ("Sender (SYNCH):\tInvoked synchronous call (HELLO) answer <%d>\n", answer);
 
-        CORBA::Short rw_attrib = my_foo_ami_->rw_attrib ();
-        printf ("Sender (SYNCH):\tInvoked synchronous call (GET_RW_ATTRIB) answer <%d>\n", rw_attrib);
+        try 
+          {
+            CORBA::Short rw_attrib = my_foo_ami_->rw_attrib ();
+            printf ("Sender (SYNCH):\tInvoked synchronous call (GET_RW_ATTRIB) answer <%d>\n", rw_attrib);
+          }
+        catch (const Hello::InternalError& ex)
+          {
+            printf ("Sender (SYNCH FOO) :\tExpected Except caught : <%d> <%s>\n", ex.id, ex.error_string.in ());
+          }
+          
+        try 
+          {
+            my_foo_ami_->rw_attrib (15);
+            printf ("Sender (SYNCH):\tInvoked synchronous call (SET_RW_ATTRIB) to <15>\n");
+          }
+        catch (const Hello::InternalError& ex)
+          {
+            printf ("Sender (SYNCH FOO) :\tExpected Except caught : <%d> <%s>\n", ex.id, ex.error_string.in ());
+          }
 
-        my_foo_ami_->rw_attrib (15);
-        printf ("Sender (SYNCH):\tInvoked synchronous call (SET_RW_ATTRIB) to <15>\n");
-
-        CORBA::Short ro_attrib = my_foo_ami_->ro_attrib ();
-        printf ("Sender (SYNCH):\tInvoked synchronous call (GET_RO_ATTRIB) answer <%d>\n", ro_attrib);
+        try 
+          {
+            CORBA::Short ro_attrib = my_foo_ami_->ro_attrib ();
+            printf ("Sender (SYNCH):\tInvoked synchronous call (GET_RO_ATTRIB) answer <%d>\n", ro_attrib);
+          }
+        catch (const Hello::InternalError& ex)
+          {
+            printf ("Sender (SYNCH FOO) :\tExpected Except caught : <%d> <%s>\n", ex.id, ex.error_string.in ());
+          }
       }
     try
       {
