@@ -47,13 +47,13 @@ libTAO_IDL_FE_la_SOURCES = \
   ast/ast_field.cpp \
   ast/ast_generator.cpp \
   ast/ast_home.cpp \
-  ast/ast_instantiated_connector.cpp \
   ast/ast_interface.cpp \
   ast/ast_interface_fwd.cpp \
   ast/ast_mirror_port.cpp \
   ast/ast_module.cpp \
   ast/ast_native.cpp \
   ast/ast_operation.cpp \
+  ast/ast_param_holder.cpp \
   ast/ast_porttype.cpp \
   ast/ast_predefined_type.cpp \
   ast/ast_provides.cpp \
@@ -65,10 +65,9 @@ libTAO_IDL_FE_la_SOURCES = \
   ast/ast_string.cpp \
   ast/ast_structure.cpp \
   ast/ast_structure_fwd.cpp \
-  ast/ast_template_common.cpp \
-  ast/ast_template_interface.cpp \
-  ast/ast_tmpl_mirror_port.cpp \
-  ast/ast_tmpl_port.cpp \
+  ast/ast_template_module.cpp \
+  ast/ast_template_module_inst.cpp \
+  ast/ast_template_module_ref.cpp \
   ast/ast_type.cpp \
   ast/ast_typedef.cpp \
   ast/ast_union.cpp \
@@ -87,13 +86,10 @@ libTAO_IDL_FE_la_SOURCES = \
   fe/fe_global.cpp \
   fe/fe_home_header.cpp \
   fe/fe_init.cpp \
-  fe/fe_instantiated_interface_header.cpp \
   fe/fe_interface_header.cpp \
   fe/fe_lookup.cpp \
   fe/fe_obv_header.cpp \
   fe/fe_private.cpp \
-  fe/fe_template_header_common.cpp \
-  fe/fe_template_interface_header.cpp \
   fe/fe_utils.cpp \
   fe/lex.yy.cpp \
   fe/y.tab.cpp \
@@ -141,13 +137,13 @@ noinst_HEADERS = \
   include/ast_field.h \
   include/ast_generator.h \
   include/ast_home.h \
-  include/ast_instantiated_connector.h \
   include/ast_interface.h \
   include/ast_interface_fwd.h \
   include/ast_mirror_port.h \
   include/ast_module.h \
   include/ast_native.h \
   include/ast_operation.h \
+  include/ast_param_holder.h \
   include/ast_porttype.h \
   include/ast_predefined_type.h \
   include/ast_provides.h \
@@ -157,10 +153,9 @@ noinst_HEADERS = \
   include/ast_string.h \
   include/ast_structure.h \
   include/ast_structure_fwd.h \
-  include/ast_template_common.h \
-  include/ast_template_interface.h \
-  include/ast_tmpl_mirror_port.h \
-  include/ast_tmpl_port.h \
+  include/ast_template_module.h \
+  include/ast_template_module_inst.h \
+  include/ast_template_module_ref.h \
   include/ast_type.h \
   include/ast_typedef.h \
   include/ast_union.h \
@@ -178,12 +173,9 @@ noinst_HEADERS = \
   include/fe_event_header.h \
   include/fe_extern.h \
   include/fe_home_header.h \
-  include/fe_instantiated_interface_header.h \
   include/fe_interface_header.h \
   include/fe_obv_header.h \
   include/fe_private.h \
-  include/fe_template_header_common.h \
-  include/fe_template_interface_header.h \
   include/fe_utils.h \
   include/global_extern.h \
   include/idl_defines.h \
@@ -246,7 +238,6 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_home.cpp \
   be/be_identifier_helper.cpp \
   be/be_init.cpp \
-  be/be_instantiated_connector.cpp \
   be/be_interface.cpp \
   be/be_interface_fwd.cpp \
   be/be_interface_strategy.cpp \
@@ -256,6 +247,7 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_null_return_emitter.cpp \
   be/be_operation.cpp \
   be/be_operation_strategy.cpp \
+  be/be_param_holder.cpp \
   be/be_porttype.cpp \
   be/be_predefined_type.cpp \
   be/be_produce.cpp \
@@ -267,9 +259,9 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_string.cpp \
   be/be_structure.cpp \
   be/be_structure_fwd.cpp \
-  be/be_template_interface.cpp \
-  be/be_tmpl_mirror_port.cpp \
-  be/be_tmpl_port.cpp \
+  be/be_template_module.cpp \
+  be/be_template_module_inst.cpp \
+  be/be_template_module_ref.cpp \
   be/be_tmplinst.cpp \
   be/be_type.cpp \
   be/be_typedef.cpp \
@@ -303,7 +295,6 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_visitor_factory.cpp \
   be/be_visitor_field.cpp \
   be/be_visitor_home.cpp \
-  be/be_visitor_iface_inst.cpp \
   be/be_visitor_interface.cpp \
   be/be_visitor_interface_fwd.cpp \
   be/be_visitor_module.cpp \
@@ -354,7 +345,6 @@ noinst_HEADERS += \
   be_include/be_helper.h \
   be_include/be_home.h \
   be_include/be_identifier_helper.h \
-  be_include/be_instantiated_connector.h \
   be_include/be_interface.h \
   be_include/be_interface_fwd.h \
   be_include/be_interface_strategy.h \
@@ -364,6 +354,7 @@ noinst_HEADERS += \
   be_include/be_null_return_emitter.h \
   be_include/be_operation.h \
   be_include/be_operation_strategy.h \
+  be_include/be_param_holder.h \
   be_include/be_porttype.h \
   be_include/be_predefined_type.h \
   be_include/be_provides.h \
@@ -374,9 +365,9 @@ noinst_HEADERS += \
   be_include/be_string.h \
   be_include/be_structure.h \
   be_include/be_structure_fwd.h \
-  be_include/be_template_interface.h \
-  be_include/be_tmpl_mirror_port.h \
-  be_include/be_tmpl_port.h \
+  be_include/be_template_module.h \
+  be_include/be_template_module_inst.h \
+  be_include/be_template_module_ref.h \
   be_include/be_type.h \
   be_include/be_typedef.h \
   be_include/be_union.h \
@@ -409,7 +400,6 @@ noinst_HEADERS += \
   be_include/be_visitor_factory.h \
   be_include/be_visitor_field.h \
   be_include/be_visitor_home.h \
-  be_include/be_visitor_iface_inst.h \
   be_include/be_visitor_interface.h \
   be_include/be_visitor_interface_fwd.h \
   be_include/be_visitor_module.h \
