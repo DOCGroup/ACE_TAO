@@ -1,3 +1,11 @@
+Tue Dec 29 16:37:54 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * orbsvcs/tests/CosEvent/Timeout/TimeoutTestMain.cpp:
+          Fixed a small memory leak.
+
+        * tests/RTCORBA/Banded_Connections/run_test.pl:
+          Fixed a typo in IOR name.
+
 Tue Dec 29 09:23:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.h:
