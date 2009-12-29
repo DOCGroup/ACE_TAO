@@ -17,12 +17,16 @@
 #include <iostream>
 #include <map>
 #include <set>
-#include <stdexcept>
 #include "SANet_Types.h"
 #include "SANode.h"
-#include "SA_POP_Types.h"
 
 namespace SANet {
+  /// Set of task node IDs.
+  typedef std::set<TaskID> TaskIDSet;
+
+  /// Set of condition node IDs.
+  typedef std::set<CondID> CondIDSet;
+
   /// Map from task node ID to pointer.
   typedef std::map<TaskID, TaskNode *> TaskNodeMap;
 
@@ -45,13 +49,22 @@ namespace SANet {
     /// Constructor.
     Network (void);
 
+    /// Copy constructor. Performs initialization by making a deep copy
+    /// of the provided network (including allocation of new nodes with
+    /// state copied from nodes in provided network and creation of
+    /// corresponding links between them).
+    /**
+     * @param s  Network to copy.
+     */
+    Network (const Network &s);
+
     /// Destructor.
     virtual ~Network ();
 
 
 
     // ************************************************************************
-    // Network creations methods.
+    // Network creation methods.
     // ************************************************************************
 
     /// Add a new task node to the network.
@@ -81,9 +94,9 @@ namespace SANet {
      *
      * @param false_prob  Initial probability that value is false.
      *
-     * @param cond_kind The type of condition
+     * @param cond_kind  The type of condition.
      *
-     * @param goal_util  Initial utility (positive for goals, zero otherwise).
+     * @param goal_util  Initial utility (positive for TRUE goals, negative for FALSE goals, and zero for non-goals).
      */
     virtual void add_cond (CondID ID, std::string name,
       MultFactor atten_factor, Probability true_prob, Probability false_prob,
@@ -115,34 +128,11 @@ namespace SANet {
      *
      * @param weight  Link weight (probability task sets condition to
      * true, or negative of the probability task sets condition to false).
-     *
-     * @param port_ID  ID of port (on task) associated with this condition
+     *     * @param port_ID  ID of port (on task) associated with this condition
      *                 (used for data nodes).
      */
     virtual void add_effect_link (TaskID task_ID, CondID cond_ID,
       LinkWeight weight, PortID port_ID = "");
-
-    /// Set the state of a task node.
-    /**
-     * @param task_ID  Task node ID.
-     *
-     * @param state  New state (false for inactive, and true for active);
-     */
-    virtual void set_task_state(TaskID task_ID, bool state);
-
-    /// Set the state of a condition node.
-    /**
-     * @param cond_ID  Condition node ID.
-     *
-     * @param state  New state (false for inactive, and true for active);
-     */
-    virtual void set_cond_state(CondID cond_ID, bool state);
-
-    /// Set state of all nodes.
-    /**
-     * @param state  New state (false for inactive, and true for active);
-     */
-    virtual void set_nodes_state(bool state);
 
 
 
@@ -163,12 +153,14 @@ namespace SANet {
     /// Print Graphviz network representation to stream.
     /**
      * @param strm  Output stream on which to print network representation.
+     *
      * @param graphmap  The color mapping being used.
+     *
      * @param defaultColor  The default color if it's not in the mapping.     
      */
-    virtual void print_graphviz (std::basic_ostream<char, std::char_traits<char> >& strm, std::map<std::string, std::string>& graphmap, std::string defaultColor = "grey");
-
-    
+    virtual void print_graphviz (std::basic_ostream<char,
+      std::char_traits<char> >& strm, std::map<std::string, std::string>& graphmap,
+      std::string defaultColor = "grey");
 
     /// Print XML network representation to stream.
     /**
@@ -226,7 +218,7 @@ namespace SANet {
      *
      * @param prior  New prior probability;
      */
-    virtual void update_prior(TaskID task_ID, Probability prior);
+    virtual void update_prior (TaskID task_ID, Probability prior);
 
     /// Update a task to condition link.
     /**
@@ -240,8 +232,30 @@ namespace SANet {
      * @param port_ID  ID of port (on task) associated with this condition
      *                 (used for data nodes).
      */
-    virtual void update_effect_link(TaskID task_ID, CondID cond_ID,
-                               LinkWeight weight, PortID port_ID= "");
+    virtual void update_effect_link (TaskID task_ID, CondID cond_ID,
+      LinkWeight weight, PortID port_ID= "");
+
+    /// Set the state of a task node.
+    /**
+     * @param task_ID  Task node ID.
+     *
+     * @param state  New state (false for inactive, and true for active);
+     */
+    virtual void set_task_state(TaskID task_ID, bool state);
+
+    /// Set the state of a condition node.
+    /**
+     * @param cond_ID  Condition node ID.
+     *
+     * @param state  New state (false for inactive, and true for active);
+     */
+    virtual void set_cond_state(CondID cond_ID, bool state);
+
+    /// Set state of all nodes.
+    /**
+     * @param state  New state (false for inactive, and true for active);
+     */
+    virtual void set_nodes_state(bool state);
 
 
 
@@ -283,6 +297,20 @@ namespace SANet {
      */
     virtual Probability get_cond_val (CondID cond_id);
 
+    /// Get a condition's future probability for a given value.
+    /// (NOTE: Future probability is based on whatever spreading
+    /// activiation has already been executed.)
+    /// (WARNING: Condition node must have been active for all
+    /// spreading activation or exception will be thrown.)
+    /**
+     * @param cond_id  Condition ID.
+     *
+     * @param value  Value for which to get condition future probability.
+     *
+     * @return  Future task expected utility.
+     */
+    Probability get_cond_future_val(CondID cond_id, bool value);
+
     /// Get all goals.
     /**
      * @return  Set of condition ids and associated utilities.
@@ -298,6 +326,8 @@ namespace SANet {
     virtual Utility get_task_current_eu (TaskID task_id);
 
     /// Get a task's future expected utility.
+    /// (NOTE: Future probability is based on whatever spreading
+    /// activiation has already been executed).
     /**
      * @param task_id  The task id.
      *
@@ -363,7 +393,7 @@ namespace SANet {
 
     /// Get the prior probability for a task node in the network.
     /**
-     * @param ID  Node ID.
+     * @param ID  ID of task node.
      *
      * @returns  Prior probability of the task.
      */
@@ -373,28 +403,26 @@ namespace SANet {
     /**
      * @param task_ID  Task ID.
      *
-     * @param cond_ID  Cond ID.
+     * @param cond_ID  Condition ID.
      *
      * @returns  Weight of the effect link.
      */
     virtual LinkWeight get_link(TaskID task_ID, CondID cond_ID);
 
+
+    // ****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+    // Ankit's function get_duration() needs to be removed, once we ensure any
+    // scheduling code relying on it has been changed.
+    // ****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+
     /// Get the duration of a task
     /**
-     * @param task_id ID of the Task
+     * @param task_id  Task ID.
      *
-     * @return duration of the task
+     * @return  Duration of the task.
      */
     virtual TimeValue get_duration (TaskID task_id);
 
-
-    Probability get_cond_future_val(int step, CondID cond_id);
-
-    int get_step();
-
-//    void note_causal_link(SA_POP::CausalLink clink);
-
-//    void restrict_prop_to_clinks(bool val);
 
 
   protected:
@@ -420,17 +448,17 @@ namespace SANet {
     // State variables.
     // ************************************************************************
 
-    //Set of Active Task Nodes
-    std::set<SANet::TaskID> active_tasks_;
+    /// Set of active task nodes (by ID).
+    TaskIDSet active_tasks_;
 
-    //Set of Disabled Task Nodes
-    std::set<SANet::TaskID> disabled_tasks_;
+    /// Set of disabled task nodes (by ID).
+    TaskIDSet disabled_tasks_;
 
-    //Set of Active Condition Nodes
-    std::set<SANet::CondID> active_conds_;
+    /// Set of active condition nodes (by ID).
+    CondIDSet active_conds_;
 
-    //Set of Active Task Nodes
-    std::set<SANet::CondID> disabled_conds_;
+    /// Set of disabled condition nodes (by ID).
+    CondIDSet disabled_conds_;
 
     /// Goals.
     GoalMap goals_;
@@ -439,26 +467,11 @@ namespace SANet {
     int step_;
 
 
-
-//    bool restrict_prop_to_clinks_;
-
-
-//    std::multimap<TaskID, SA_POP::CausalLink> causal_links_by_first_;
-//    std::multimap<CondID, SA_POP::CausalLink> causal_links_by_cond_;
-//    std::multimap<TaskID, SA_POP::CausalLink> causal_links_by_second_;
-
-
-
     // ************************************************************************
     // State helper methods.
     // ************************************************************************
 
     void reset_step();
-
-    //bool is_clink_first_to_cond_by_first(TaskID task, CondID cond);
-    //bool is_clink_first_to_cond_by_cond (CondID cond, TaskID task);
-    //bool is_clink_cond_to_second_by_second(TaskID task, CondID cond);
-    //bool is_clink_cond_to_second_by_cond(CondID cond, TaskiD second);
   };
 };
 

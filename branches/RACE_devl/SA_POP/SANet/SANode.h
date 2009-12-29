@@ -77,6 +77,16 @@ namespace SANet {
      */
     Node (NodeID ID, std::string name, MultFactor atten_factor);
 
+    /// Copy constructor. Performs initialization by making a deep copy
+    /// of the provided node (with the exception of network structural
+    /// information about other nodes).
+    /// (WARNING: Links, including their probability values and node
+    /// pointers, to & from this node are EMPTY in the newly created copy.)
+    /**
+     * @param s  Node to copy.
+     */
+    Node (const Node &s);
+
     /// Destructor.
     virtual ~Node ();
 
@@ -165,7 +175,7 @@ namespace SANet {
 	void reset_step();
 
 	bool is_active(){
-		return active;
+		return active_;
 	}
 
   protected:
@@ -173,7 +183,7 @@ namespace SANet {
     NodeID ID_;
 
     /// Flag indicating whether the node is active.
-    bool active;
+    bool active_;
 
     /// Name of node (descriptive only).
     std::string name_;
@@ -240,6 +250,16 @@ namespace SANet {
     TaskNode (TaskID ID, std::string name, MultFactor atten_factor, TaskCost cost,
       Probability prior_prob);
 
+    /// Copy constructor. Performs initialization by making a deep copy
+    /// of the provided node (with the exception of network structural
+    /// information about other nodes).
+    /// (WARNING: Links, including their probability values and node
+    /// pointers, to & from this node are EMPTY in the newly created copy.)
+    /**
+     * @param s  Task node to copy.
+     */
+    TaskNode (const TaskNode &s);
+
     /// Destructor.
     virtual ~TaskNode (void);
 
@@ -296,20 +316,15 @@ namespace SANet {
      */
     virtual Utility get_utility (int step);
 
-    /// Get Prior of the TaskNode.
+    /// Get prior probability of the task.
     /**
-     * 
-     *
-     * @return  Expected utility.
+     * @return  Prior probability of the task.
      */
     virtual Probability get_prior (void);
 
-    /// Update Prior of the TaskNode.
+    /// Update prior probability of the task.
     /**
-     * 
-     * @param prior the new prior for the task
-     *
-     * 
+     * @param prior  The new prior probability of the task.
      */
     virtual void update_prior (Probability prior);
 
@@ -329,11 +344,19 @@ namespace SANet {
     virtual void add_precond (CondID ID, CondNode *node, Probability true_prob,
       Probability false_prob);
 
+    /// Get conditional probability of success for a particular precondition.
+    /**
+     * @param cond_ID  Precondition node.
+     *
+     * @return  Conditional probability of the link.
+     */
+    virtual ConditionalProb get_precond_prob (CondID cond_ID);
+
     /// Add effect link.
     /**
-     * @param ID  Node ID.
+     * @param ID  ID of effect condition node ID.
      *
-     * @param node  Node pointer.
+     * @param node  Pointer to effect condition node.
      *
      * @param weight  Link weight (probability task sets condition to
      * true, or negative of the probability task sets condition to false).
@@ -342,7 +365,7 @@ namespace SANet {
 
     /// Update effect link.
     /**
-     * @param ID  Node ID.
+     * @param ID  ID of effect condition node ID.
      *
      * @param node  Node pointer.
      *
@@ -350,6 +373,14 @@ namespace SANet {
      * true, or negative of the probability task sets condition to false).
      */
     virtual void update_effect (CondID ID, CondNode *node, LinkWeight weight);
+
+    /// Get probability of effect (link weight) for a particular effect condition.
+    /**
+     * @param cond_ID  Effect condition node ID.
+     *
+     * @return  Conditional probability of the link.
+     */
+    virtual Probability get_effect_prob (CondID cond_ID);
 
 	void set_pos_util(double util);
 
@@ -396,6 +427,16 @@ namespace SANet {
      */
     CondNode (CondID ID, std::string name, MultFactor atten_factor,
        Probability true_prob, Probability false_prob, Utility goal_util, CondKind cond_kind);
+
+    /// Copy constructor. Performs initialization by making a deep copy
+    /// of the provided node (with the exception of network structural
+    /// information about other nodes).
+    /// (WARNING: Links, including their probability values and node
+    /// pointers, to & from this node are EMPTY in the newly created copy.)
+    /**
+     * @param s  Condition node to copy.
+     */
+    CondNode (const CondNode &s);
 
     /// Destructor.
     virtual ~CondNode (void);

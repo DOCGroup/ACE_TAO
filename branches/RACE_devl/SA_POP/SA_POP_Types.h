@@ -36,7 +36,7 @@
 #define SA_POP_DEBUG_VERBOSE 30
 
 // SET current SA-POP Debug output level.
-#define SA_POP_DEBUG_LEVEL SA_POP_DEBUG_QUIET
+#define SA_POP_DEBUG_LEVEL SA_POP_DEBUG_VERBOSE
 
 #define _CRTDBG_MAP_ALLOC
 #if defined (SA_POP_HAS_ACE)
@@ -123,6 +123,22 @@ namespace SA_POP {
 
   /// Type of a probability.
   typedef EUCalc Probability;
+
+  /// Type of a conditional probability.
+  struct ConditionalProb {
+    // Probability when conditioned variable is true.
+    Probability true_prob;
+    // Probability when conditioned variable is false.
+    Probability false_prob;
+    bool operator== (const ConditionalProb &s) const { return this->true_prob == s.true_prob && this->false_prob == s.false_prob; };
+    bool operator!= (const ConditionalProb &s) const { return !(*this == s); };
+    bool operator< (const ConditionalProb &s) const
+    {
+      if (this->true_prob == s.true_prob)
+        return this->false_prob < s.false_prob;
+      return this->true_prob < s.true_prob;
+    };
+  };
 
   /// Type of a (precondition or effect) link weight.
   typedef EUCalc LinkWeight;

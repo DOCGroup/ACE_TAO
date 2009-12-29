@@ -25,7 +25,7 @@ Node::Node (NodeID ID, std::string name, MultFactor atten_factor)
   step_ (0),
   prob_changed_ (false),
   util_changed_ (false) ,
-  active(true)
+  active_ (true)
 {
   // Initialize probability and utility info.
   pos_util_.utility = 0;
@@ -42,6 +42,50 @@ Node::Node (NodeID ID, std::string name, MultFactor atten_factor)
   pre_links_.clear ();
   post_nodes_.clear ();
   post_links_.clear ();
+};
+
+// Copy constructor. Performs initialization by making a deep copy
+// of the provided node (with the exception of network structural
+// information about other nodes).
+// (WARNING: Links, including their probability values and node
+// pointers, to & from this node are EMPTY in the newly created copy.)
+Node::Node (const Node &s)
+: ID_ (s.ID_),
+  active_ (s.active_),
+  name_ (s.name_),
+  atten_factor_ (s.atten_factor_),
+  step_ (s.step_),
+  prob_changed_ (s.prob_changed_),
+  util_changed_ (s.util_changed_)
+{
+  // Initialize probability and utility info.
+  this->pos_util_ = s.pos_util_;
+  this->neg_util_ = s.neg_util_;
+  this->true_prob_ = s.true_prob_;
+  this->false_prob_ = s.false_prob_;
+
+  // Initialize (EMPTY) pre- and post-node maps & links.
+  this->pre_nodes_.clear ();
+  this->pre_links_.clear ();
+  this->post_nodes_.clear ();
+  this->post_links_.clear ();
+
+// Node data members.
+//    NodeID ID_;
+//    bool active_;
+//    std::string name_;
+//    MultFactor atten_factor_;
+//    int step_;
+//    NodeMap pre_nodes_;
+//    NodeMap post_nodes_;
+//    LinkMap pre_links_;
+//    LinkMap post_links_;
+//    bool prob_changed_;
+//    bool util_changed_;
+//    Utility_Info pos_util_;
+//    Utility_Info neg_util_;
+//    Probability_Info true_prob_;
+//    Probability_Info false_prob_;
 };
 
 Node::~Node ()
@@ -93,7 +137,7 @@ std::string Node::get_name (void)
 /// Set activity flag
 void Node::set_activity (bool state)
 {
-  active = state;
+  this->active_ = state;
 }
 
 NodeID Node::get_ID (void)
@@ -120,10 +164,52 @@ const LinkMap& Node::get_post (void)
 TaskNode::TaskNode (NodeID ID, std::string name, MultFactor atten_factor,
                           TaskCost cost, Probability prior_prob)
 : Node (ID, name, atten_factor),
-  cost_ (cost),
-  prior_prob_ (prior_prob)
+  prior_prob_ (prior_prob),
+  cost_ (cost)
 {
-  // Nothing to do.
+  // Initialize (empty) pre-node maps (true/false conditional probabilities for preconditions).
+  this->pre_true_probs_.clear ();
+  this->pre_false_probs_.clear ();
+};
+
+// Copy constructor. Performs initialization by making a deep copy
+// of the provided node (with the exception of network structural
+// information about other nodes).
+// (WARNING: Links, including their probability values and node
+// pointers, to & from this node are EMPTY in the newly created copy.)
+TaskNode::TaskNode (const TaskNode &s)
+: Node (s),
+  prior_prob_ (s.prior_prob_),
+  cost_ (s.cost_)
+{
+  // Initialize (EMPTY) pre-node maps (true/false conditional probabilities for preconditions).
+  this->pre_true_probs_.clear ();
+  this->pre_false_probs_.clear ();
+
+  // All other data members initialized to copy values by base class.
+
+// Node data members.
+//    NodeID ID_;
+//    bool active_;
+//    std::string name_;
+//    MultFactor atten_factor_;
+//    int step_;
+//    NodeMap pre_nodes_;
+//    NodeMap post_nodes_;
+//    LinkMap pre_links_;
+//    LinkMap post_links_;
+//    bool prob_changed_;
+//    bool util_changed_;
+//    Utility_Info pos_util_;
+//    Utility_Info neg_util_;
+//    Probability_Info true_prob_;
+//    Probability_Info false_prob_;
+
+// TaskNode additional data members.
+//    Probability prior_prob_;
+//    TaskCost cost_;
+//    LinkMap pre_true_probs_;
+//    LinkMap pre_false_probs_;
 };
 
 TaskNode::~TaskNode (void)
@@ -145,7 +231,7 @@ bool TaskNode::update (void)
 {
 
   //Check to see if node is active before updating 
-  if(!active)
+  if(!(this->active_))
   {
     //the node should return as not changing the network
 	step_++;
@@ -734,6 +820,27 @@ void TaskNode::add_precond (CondID ID, CondNode *node, Probability true_prob,
   node->add_post_link (ID_, this, weight);
 };
 
+// Get conditional probability of success for a particular precondition.
+ConditionalProb TaskNode::get_precond_prob (CondID cond_ID)
+{
+  // Find conditional probability of success when precondition is true.
+  SANet::LinkMap::iterator link_true_iter = this->pre_true_probs_.find (cond_ID);
+  if (link_true_iter == this->pre_true_probs_.end ())
+    throw UnknownNode ();
+
+  // Find conditional probability of success when precondition is false.
+  SANet::LinkMap::iterator link_false_iter = this->pre_false_probs_.find (cond_ID);
+  if (link_false_iter == this->pre_false_probs_.end ())
+    throw UnknownNode ();
+
+  // Create conditional probability structure with true and false conditional probabilities.
+  ConditionalProb precond_prob;
+  precond_prob.true_prob = link_true_iter->second;
+  precond_prob.false_prob = link_false_iter->second;
+  
+  return precond_prob;
+};
+
 void TaskNode::add_effect (CondID ID, CondNode *node, LinkWeight weight)
 {
   // Add node to post-nodes.
@@ -767,6 +874,17 @@ void TaskNode::update_effect (CondID ID, CondNode *node, LinkWeight weight)
 
   // update link for precondition node.
   node->update_pre_link (ID_, this, weight);
+};
+
+// Get probability of effect (link weight) for a particular effect condition.
+Probability TaskNode::get_effect_prob (CondID cond_ID)
+{
+  // Find probability of effect.
+  SANet::LinkMap::iterator link_iter = this->post_links_.find (cond_ID);
+  if (link_iter == this->post_links_.end ())
+    throw UnknownNode ();
+
+  return link_iter->second;
 };
 
 Probability TaskNode::get_prior (void)
@@ -805,6 +923,46 @@ CondNode::CondNode (CondID ID, std::string name, MultFactor atten_factor,
     this->neg_util_.utility = goal_util;
     this->neg_util_.common.insert (std::make_pair (ID, goal_util));
   }
+};
+
+// Copy constructor. Performs initialization by making a deep copy
+// of the provided node (with the exception of network structural
+// information about other nodes).
+// (WARNING: Links, including their probability values and node
+// pointers, to & from this node are EMPTY in the newly created copy.)
+CondNode::CondNode (const CondNode &s)
+: Node (s),
+  goal_util_ (s.goal_util_),
+  init_true_prob_ (s.init_true_prob_),
+  true_prob_from_ (s.true_prob_from_),
+  false_prob_from_ (s.false_prob_from_),
+  cond_kind_ (s.cond_kind_)
+{
+  // All other data members initialized to copy values by base class.
+
+// Node data members.
+//    NodeID ID_;
+//    bool active_;
+//    std::string name_;
+//    MultFactor atten_factor_;
+//    int step_;
+//    NodeMap pre_nodes_;
+//    NodeMap post_nodes_;
+//    LinkMap pre_links_;
+//    LinkMap post_links_;
+//    bool prob_changed_;
+//    bool util_changed_;
+//    Utility_Info pos_util_;
+//    Utility_Info neg_util_;
+//    Probability_Info true_prob_;
+//    Probability_Info false_prob_;
+
+// CondNode additional data members.
+//    Utility goal_util_;
+//    Probability init_true_prob_;
+//    TaskID true_prob_from_;
+//    TaskID false_prob_from_;
+//    CondKind cond_kind_;
 };
 
 CondNode::~CondNode (void)
@@ -1001,7 +1159,7 @@ bool CondNode::update (void)
 {
 
   //Check to see if node is active before updating 
-  if(!active)
+  if(!(this->active_))
   {
 	step_++;
     //the node should return as not changing the network
