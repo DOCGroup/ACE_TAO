@@ -59,7 +59,6 @@ namespace CIAO_Hello_AMI_Receiver_Impl
         printf ("AMI (FOO) :\tCalling AMI CORBA server\n");
         this->ami_foo_server_->sendc_hello (the_handler_var.in ());
         printf ("AMI (FOO) : \tInvoked sendc_foo\n");
-
       }
   }
 
@@ -85,7 +84,7 @@ namespace CIAO_Hello_AMI_Receiver_Impl
   void
   AMI_MyFoo_exec_i::sendc_set_rw_attrib (
     ::Hello::AMI_MyFooCallback_ptr ami_handler,
-  CORBA::Short rw_attrib)
+    CORBA::Short rw_attrib)
   {
     printf ("AMI (FOO) :\tsendc_set_rw_attrib\n");
     if (!::CORBA::is_nil (this->ami_foo_server_.in ()))
