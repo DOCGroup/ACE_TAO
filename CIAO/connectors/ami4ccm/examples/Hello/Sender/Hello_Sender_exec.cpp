@@ -294,7 +294,7 @@ namespace CIAO_Hello_Sender_Impl
   Sender_exec_i::ccm_activate (void)
   {
     ::Hello::AMI_MyFoo_var asynch_foo =
-      this->context_->get_connection_run_asynch_my_foo();
+      this->context_->get_connection_sendc_run_my_foo();
     asynch_foo_generator* asynch_foo_gen =
         new asynch_foo_generator (asynch_foo);
     asynch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);

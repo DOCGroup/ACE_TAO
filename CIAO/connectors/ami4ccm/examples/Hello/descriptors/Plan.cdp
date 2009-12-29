@@ -217,13 +217,13 @@
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>run_asynch_my_foo</portName>
+      <portName>sendc_run_my_foo</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>perform_asynch_my_foo</portName>
+      <portName>sendc_run_my_foo</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
@@ -239,7 +239,7 @@
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>my_foo_receiver</portName>
+      <portName>run_my_foo</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />

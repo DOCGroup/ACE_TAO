@@ -21,10 +21,10 @@ module Hello
   local interface AMI_MyFooCallback
   {
     void foo (in long ami_return_val, in string answer);
-    void foo_excep   (in CCM_AMI::ExceptionHolder excep_holder);
+    void foo_excep (in CCM_AMI::ExceptionHolder excep_holder);
 
     void hello (in long ami_return_val);
-    void hello_excep   (in CCM_AMI::ExceptionHolder excep_holder);
+    void hello_excep (in CCM_AMI::ExceptionHolder excep_holder);
 
     void get_rw_attrib (in short ami_return_val);
     void get_rw_attrib_excep (in CCM_AMI::ExceptionHolder excep_holder);
@@ -44,7 +44,7 @@ module Hello
     void sendc_foo (in AMI_MyFooCallback ami_handler, in string in_str);
     void sendc_hello (in AMI_MyFooCallback ami_handler);
 
-    //asynch method for handling attributes
+    /// Asynch method for handling attributes
     void sendc_get_rw_attrib (in AMI_MyFooCallback ami_handler);
     void sendc_set_rw_attrib (in AMI_MyFooCallback ami_handler, in short rw_attrib);
     void sendc_get_ro_attrib (in AMI_MyFooCallback ami_handler);
