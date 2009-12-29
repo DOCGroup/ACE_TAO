@@ -311,11 +311,13 @@ public:
                                         TAO_OutStream *os);
   // Common code called from gen_colloc_op_defn_helper().
 
-  virtual void gen_ostream_operator (TAO_OutStream *os);
+  virtual void gen_ostream_operator (TAO_OutStream *os,
+                                     bool use_underscore);
   // Overridden from class be_type.
 
   virtual void gen_member_ostream_operator (TAO_OutStream *os,
                                             const char *instance_name,
+                                            bool use_underscore,
                                             bool accessor = false);
   // Overridden from class be_type.
 

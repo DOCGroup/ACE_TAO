@@ -140,8 +140,10 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
   ACE_OS::memset (fname,
                   '\0',
                   NAMEBUFSIZE);
+                  
+  bool use_underscore = (this->ctx_->tdef () == 0);
 
-  if (this->ctx_->tdef ())
+  if (!use_underscore)
     {
       ACE_OS::sprintf (fname, "%s", node->full_name ());
     }
@@ -218,12 +220,12 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
 
   if (be_global->gen_ostream_operators ())
     {
-      node->gen_ostream_operator (os);
+      node->gen_ostream_operator (os, use_underscore);
     }
 
   *os << be_global->core_versioning_end () << be_nl;
 
-  node->cli_stub_cdr_op_gen (1);
+  node->cli_stub_cdr_op_gen (true);
   return 0;
 }
 
