@@ -61,7 +61,7 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     virtual ~AMI_exec_i (void);
 
     virtual ::Hello::CCM_AMI_MyFoo_ptr
-    get_perform_asynch_my_foo (void);
+    get_sendc_run_my_foo (void);
 
     virtual void
     set_session_context (

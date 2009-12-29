@@ -142,7 +142,7 @@ namespace CIAO_Hello_AMI_Receiver_Impl
   // Port operations.
 
   ::Hello::CCM_AMI_MyFoo_ptr
-  AMI_exec_i::get_perform_asynch_my_foo (void)
+  AMI_exec_i::get_sendc_run_my_foo (void)
   {
     this->myfoo_ = new AMI_MyFoo_exec_i ();
     return this->myfoo_;
@@ -166,7 +166,7 @@ namespace CIAO_Hello_AMI_Receiver_Impl
   AMI_exec_i::configuration_complete (void)
   {
     this->receiver_foo_ =
-      this->context_->get_connection_my_foo_receiver ();
+      this->context_->get_connection_run_my_foo ();
 
     this->myfoo_->provide_receiver (receiver_foo_.in ());
   }
