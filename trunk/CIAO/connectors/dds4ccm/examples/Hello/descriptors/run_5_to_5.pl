@@ -46,9 +46,6 @@ $status = 0;
 $cdp_file = "5_Senders.cdp";
 $cdp_file_two = "5_Receivers.cdp";
 
-$ENV{"DANCE_TRACE_ENABLE"} = 0;
-$ENV{"CIAO_TRACE_ENABLE"} = 0;
-
 sub create_targets {
     #   naming service
     $tg_naming = PerlACE::TestTarget::create_target (1) || die "Create target for ns failed\n";
