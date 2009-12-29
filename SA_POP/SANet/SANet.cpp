@@ -17,16 +17,14 @@
 #include "SANet.h"
 #include "SANode.h"
 #include "SANet_Exceptions.h"
-#include "SA_POP_Types.h"
 
 using namespace SANet;
 
 
 SANet::Network::Network (void)
 : step_ (0)
-//, restrict_prop_to_clinks_(false)
 {
-  // Clear maps & sets.
+  // All map/set member variables initially empty.
   this->task_nodes_.clear ();
   this->cond_nodes_.clear ();
   this->precond_links_.clear ();
@@ -36,14 +34,104 @@ SANet::Network::Network (void)
   this->disabled_tasks_.clear ();
   this->active_conds_.clear ();
   this->disabled_conds_.clear ();
-//  this->causal_links_by_first_.clear ();
-//  this->causal_links_by_cond_.clear ();
-//  this->causal_links_by_second_.clear ();
 };
 
-int SANet::Network::get_step(){
-	return step_;
-}
+
+// Copy constructor. Performs initialization by making a deep copy
+// of the provided network (including allocation of new nodes with
+// state copied from nodes in provided network and creation of
+// corresponding links between them).
+SANet::Network::Network (const Network &s)
+: step_ (s.step_)
+{
+  // Member variables that include node pointers are initially empty.
+  this->task_nodes_.clear ();
+  this->cond_nodes_.clear ();
+
+  // Member variables that include links are initially empty (will be populated during link creation).
+  this->precond_links_.clear ();
+  this->effect_links_.clear ();
+
+  // Copy active/disabled node (ID) sets (no node pointers and no links).
+  this->active_tasks_ = s.active_tasks_;
+  this->disabled_tasks_ = s.disabled_tasks_;
+  this->active_conds_ = s.active_conds_;
+  this->disabled_conds_ = s.disabled_conds_;
+
+  // Copy goals (no node pointers and no links).
+  this->goals_ = s.goals_;
+
+  // Create new nodes corresponding to those in s, adding each to appropriate node (ID to pointer) map.
+  for (TaskNodeMap::const_iterator node_iter = s.task_nodes_.begin ();
+    node_iter != s.task_nodes_.end (); node_iter++)
+  {
+    SANet::TaskNode *new_node = new SANet::TaskNode (*(node_iter->second));
+    this->task_nodes_.insert (std::make_pair (node_iter->first, new_node));
+  }
+  for (CondNodeMap::const_iterator node_iter = s.cond_nodes_.begin ();
+    node_iter != s.cond_nodes_.end (); node_iter++)
+  {
+    SANet::CondNode *new_node = new SANet::CondNode (*(node_iter->second));
+    this->cond_nodes_.insert (std::make_pair (node_iter->first, new_node));
+  }
+
+  // Create precondition links corresponding to all those in s
+  // (using pointers to new nodes instead of the original nodes in s).
+  for (PrecondLinkPortMap::const_iterator link_iter = s.precond_links_.begin ();
+    link_iter != s.precond_links_.end (); link_iter++)
+  {
+    PrecondLink link = link_iter->first;
+    PortID port = link_iter->second;
+
+    // Get pointer to task node in original network.
+    TaskNodeMap::const_iterator orig_task_iter = s.task_nodes_.find (link.second);
+    if (orig_task_iter == s.task_nodes_.end ())
+      throw UnknownNode ();
+    TaskNode *orig_task = orig_task_iter->second;
+
+    // Get precondition link conditional probabilities.
+    ConditionalProb prob = orig_task->get_precond_prob (link.first);
+
+    // Add precondition link.
+    this->add_precond_link (link.first, link.second, prob.true_prob, prob.false_prob, port);
+  }
+
+  // Create effect links corresponding to all those in s
+  // (using pointers to new nodes instead of the original nodes in s).
+  for (EffectLinkPortMap::const_iterator link_iter = s.effect_links_.begin ();
+    link_iter != s.effect_links_.end (); link_iter++)
+  {
+    EffectLink link = link_iter->first;
+    PortID port = link_iter->second;
+
+    // Get pointer to task node.
+    TaskNodeMap::const_iterator orig_task_iter = s.task_nodes_.find (link.first);
+    if (orig_task_iter == s.task_nodes_.end ())
+      throw UnknownNode ();
+    TaskNode *orig_task = orig_task_iter->second;
+
+    // Get effect link probability.
+    Probability prob = orig_task->get_effect_prob (link.second);
+
+    // Add effect link.
+    this->add_effect_link (link.first, link.second, prob, port);
+  }
+
+// Network data members
+    // STRUCTURE VARIABLES.
+//    TaskNodeMap task_nodes_;
+//    CondNodeMap cond_nodes_;
+//    PrecondLinkPortMap precond_links_;
+//    EffectLinkPortMap effect_links_;
+    // STATE VARIABLES.
+//    TaskIDSet active_tasks_;
+//    TaskIDSet disabled_tasks_;
+//    CondIDSet active_conds_;
+//    CondIDSet disabled_conds_;
+//    GoalMap goals_;
+//    int step_;
+};
+
 
 SANet::Network::~Network ()
 {
@@ -61,10 +149,6 @@ SANet::Network::~Network ()
     delete node_iter->second;
   }
 };
-
-//void SANet::Network::restrict_prop_to_clinks(bool val){
-//	restrict_prop_to_clinks_ = val;
-//};
 
 void SANet::Network::add_task (TaskID ID, std::string name, MultFactor atten_factor,
                           TaskCost cost, Probability prior_prob)
@@ -103,40 +187,6 @@ void SANet::Network::reset_step(){
 	}
 }
 
-
-/*
-void SANet::Network::note_causal_link(SA_POP::CausalLink clink){
-	causal_links_by_first_.insert(std::pair<TaskID, SA_POP::CausalLink> (clink.first, clink));
-	causal_links_by_cond_.insert(std::pair<CondID, SA_POP::CausalLink> (clink.cond.id, clink));
-	causal_links_by_second_.insert(std::pair<TaskID, SA_POP::CausalLink> (clink.second, clink));
-}
-
-bool SANet::Network::is_clink_first_to_cond_by_first(TaskID task, CondID cond){
-
-	for(std::multimap<SANet::TaskID, SA_POP::CausalLink>::iterator it = causal_links_by_first_.lower_bound(task); 
-		it != causal_links_by_first_.upper_bound(task); it++){
-			SA_POP::CausalLink clink = it->second;
-		if(clink.cond.id == cond){
-			return true;
-		}
-	}
-
-	return false;
-}
-
-bool SANet::Network::is_clink_first_to_cond_by_cond(CondID cond, TaskID task){
-	for(std::multimap<SANet::CondID, SA_POP::CausalLink>::iterator it = causal_links_by_cond_.lower_bound(task);
-		it != causal_links_by_cond_.upper_bound(cond); it++){
-			SA_POP::CausalLink clink = it->second;
-
-			if(clink.first == task){
-				return true;
-			}
-	}
-
-	return false;
-}
-*/
 
 Probability SANet::Network::get_prior(TaskID ID)
 {
@@ -536,12 +586,23 @@ Probability SANet::Network::get_cond_val (CondID cond_id)
   return iter->second->get_init_prob ();
 };
 
-Probability SANet::Network::get_cond_future_val(CondID cond_id, int step){
+// Get a condition's future probability for a given value.
+// (NOTE: Future probability is based on whatever spreading
+// activation has already been executed.)
+
+//****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
+// (WARNING: Condition node must have been active for all
+// spreading activation or exception will be thrown.)
+//****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
+
+Probability SANet::Network::get_cond_future_val(CondID cond_id, bool value)
+{
 	CondNodeMap::iterator iter = this->cond_nodes_.find(cond_id);
 	if(iter == this->cond_nodes_.end())
-		throw "SANet::Network::get_cond_val (): Unknown condition node.";
-	return iter->second->get_prob (step).probability;
+		throw "SANet::Network::get_cond_future_val (): Unknown condition node.";
+	return (iter->second->get_prob (this->step_, value)).probability;
 }
+
 
 // Get all goals.
 const GoalMap& SANet::Network::get_goals (void)
@@ -665,12 +726,21 @@ CondSet SANet::Network::get_effects (TaskID task_id)
   return effects;
 };
 
+
+
+// ****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+// Ankit's function get_duration() needs to be removed, once we ensure any
+// scheduling code relying on it has been changed.
+
 // Get the duration of a task.
 TimeValue SANet::Network::get_duration (TaskID task_id)
 {
 	TaskNode *temp = this->task_nodes_.find(task_id)->second;
   return NULL_TIME;
 }
+// ****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+
+
 
 // Get all tasks that satisfy a condition.
 TaskSet SANet::Network::get_satisfying_tasks (Condition cond)
@@ -739,98 +809,89 @@ LinkPorts SANet::Network::get_clink_ports (TaskID task1_id, CondID cond_id,
 // Set Task State.
 void SANet::Network::set_task_state(TaskID task_ID, bool state)
 {
+  // Get pointer to node from ID.
+  SANet::TaskNodeMap::iterator task_iter = this->task_nodes_.find(task_ID);
+  if (task_iter == this->task_nodes_.end ())
+    throw UnknownNode ();
+  
+  // Use node pointer to set activity state.
+  task_iter->second->set_activity(state);
 
-    task_nodes_.find(task_ID)->second->set_activity(state);
-
-    if(state)
-    {
-      //insetr into active, remove from disabled
-      this->active_tasks_.insert(task_ID);
-
-      this->disabled_tasks_.erase(task_ID);
-
-    }
-    else
-    {
-      //remove from active, insert into disabled
-
-      this->active_tasks_.erase(task_ID);
-
-      this->disabled_tasks_.insert(task_ID);
-    }
+  if(state) {
+    // Insert into active task set & remove from disabled task set.
+    this->active_tasks_.insert(task_ID);
+    this->disabled_tasks_.erase(task_ID);
+  } else {
+    // Remove from active task set & insert into disabled task set.
+    this->active_tasks_.erase(task_ID);
+    this->disabled_tasks_.insert(task_ID);
+  }
 };
 
 // Set Cond State.
 void SANet::Network::set_cond_state(CondID cond_ID, bool state)
 {
     
-    cond_nodes_.find(cond_ID)->second->set_activity(state);
-    if(state)
-    {
-      //insetr into active, remove from disabled
-      this->active_conds_.insert(cond_ID);
+  // Get pointer to node from ID.
+  SANet::CondNodeMap::iterator cond_iter = this->cond_nodes_.find(cond_ID);
+  if (cond_iter == this->cond_nodes_.end ())
+    throw UnknownNode ();
+  
+  // Use node pointer to set activity state.
+  cond_iter->second->set_activity(state);
 
+  if(state) {
+    // Insert into active condition set & remove from disabled condition set.
+    this->active_conds_.insert(cond_ID);
+    this->disabled_conds_.erase(cond_ID);
 
-      this->disabled_conds_.erase(cond_ID);
-
-    }
-    else
-    {
-      //remove from active, insert into disabled
-
-      this->active_conds_.erase(cond_ID);
-
-      this->disabled_conds_.insert(cond_ID);
-    }
+  } else {
+    // Remove from active condition set & insert into disabled condition set.
+    this->active_conds_.erase(cond_ID);
+    this->disabled_conds_.insert(cond_ID);
+  }
 
 };
 
 // Set All nodes to State.
 void SANet::Network::set_nodes_state(bool state)
 {
-    if(state)
+  if(state) {
+    // For all tasks, activate, insert into active set, & remove from disabled set.
+    for (TaskNodeMap::iterator node_iter = task_nodes_.begin ();
+    node_iter != task_nodes_.end (); node_iter++)
     {
-
-      //insetr all tasks into active, remove from disabled
-      for (TaskNodeMap::iterator node_iter = task_nodes_.begin ();
-      node_iter != task_nodes_.end (); node_iter++)
-      {
-        node_iter->second->set_activity(state);
-        this->active_tasks_.insert(node_iter->first);
-
-        this->disabled_tasks_.erase(node_iter->first);
-      }
-
-      for (CondNodeMap::iterator node_iter = cond_nodes_.begin ();
-      node_iter != cond_nodes_.end (); node_iter++)
-      {
-        node_iter->second->set_activity(state);
-        this->active_conds_.insert(node_iter->first);
-
-        this->disabled_conds_.erase(node_iter->first);
-      }
+      node_iter->second->set_activity(state);
+      this->active_tasks_.insert(node_iter->first);
+      this->disabled_tasks_.erase(node_iter->first);
     }
-    else
+
+    // For all conditions, activate, insert into active set, & remove from disabled set.
+    for (CondNodeMap::iterator node_iter = cond_nodes_.begin ();
+    node_iter != cond_nodes_.end (); node_iter++)
     {
-      //remove from active, insert into disabled
-
-      for (TaskNodeMap::iterator node_iter = task_nodes_.begin ();
-      node_iter != task_nodes_.end (); node_iter++)
-      {
-        node_iter->second->set_activity(state);
-        this->active_tasks_.erase(node_iter->first);
-
-        this->disabled_tasks_.insert(node_iter->first);
-      }
-
-      for (CondNodeMap::iterator node_iter = cond_nodes_.begin ();
-      node_iter != cond_nodes_.end (); node_iter++)
-      {
-        node_iter->second->set_activity(state);
-        this->active_conds_.erase(node_iter->first);
-
-        this->disabled_conds_.insert(node_iter->first);
-      }
+      node_iter->second->set_activity(state);
+      this->active_conds_.insert(node_iter->first);
+      this->disabled_conds_.erase(node_iter->first);
     }
+  } else {
+    // For all tasks, deactivate, remove from active set, & insert into disabled set.
+    for (TaskNodeMap::iterator node_iter = task_nodes_.begin ();
+         node_iter != task_nodes_.end (); node_iter++)
+    {
+      node_iter->second->set_activity(state);
+      this->active_tasks_.erase(node_iter->first);
+      this->disabled_tasks_.insert(node_iter->first);
+    }
+
+    // For all conditions, deactivate, remove from active set, & insert into disabled set.
+    for (CondNodeMap::iterator node_iter = cond_nodes_.begin ();
+         node_iter != cond_nodes_.end (); node_iter++)
+    {
+      node_iter->second->set_activity(state);
+      this->active_conds_.erase(node_iter->first);
+      this->disabled_conds_.insert(node_iter->first);
+    }
+  }
 
 };

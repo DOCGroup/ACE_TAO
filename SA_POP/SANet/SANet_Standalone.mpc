@@ -1,7 +1,8 @@
 project(SANet_Demo) : xerces, aceexe, sapop_xml {
   exename = SANet_Demo
 
-  includes += $(SAPOP_ROOT)
+  includes += $(SAPOP_ROOT) \
+              $(SAPOP_ROOT)/UserInput
 
   macros = SANET_STANDALONE
 
@@ -15,6 +16,9 @@ project(SANet_Demo) : xerces, aceexe, sapop_xml {
 
     SANet_XML_Typedefs.h
     SANetFileIn.h
+
+    $(SAPOP_ROOT)/UserInput/InputCL.h
+    $(SAPOP_ROOT)/UserInput/Question.h
   }
 
 
@@ -29,6 +33,8 @@ project(SANet_Demo) : xerces, aceexe, sapop_xml {
     SANet_XML_Typedefs.cpp
     SANetFileIn.cpp
     XML_SANet.cpp
+
+    $(SAPOP_ROOT)/UserInput/InputCL.cpp
   }
 
   Documentation_Files {

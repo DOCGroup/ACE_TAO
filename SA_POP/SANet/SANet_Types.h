@@ -68,6 +68,9 @@ namespace SANet {
   /// Type of a probability.
   typedef SA_POP::Probability Probability;
 
+  /// Type of a conditional probability.
+  typedef SA_POP::ConditionalProb ConditionalProb;
+
   /// Type of a (precondition or effect) link weight.
   typedef SA_POP::LinkWeight LinkWeight;
 
@@ -247,6 +250,22 @@ namespace SANet {
 
   /// Type of a probability.
   typedef EUCalc Probability;
+
+  /// Type of a conditional probability.
+  struct ConditionalProb {
+    // Probability when conditioned variable is true.
+    Probability true_prob;
+    // Probability when conditioned variable is false.
+    Probability false_prob;
+    bool operator== (const ConditionalProb &s) const { return this->true_prob == s.true_prob && this->false_prob == s.false_prob; };
+    bool operator!= (const ConditionalProb &s) const { return !(*this == s); };
+    bool operator< (const ConditionalProb &s) const
+    {
+      if (this->true_prob == s.true_prob)
+        return this->false_prob < s.false_prob;
+      return this->true_prob < s.true_prob;
+    };
+  };
 
   /// Type of a (precondition or effect) link weight.
   typedef EUCalc LinkWeight;
