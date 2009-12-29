@@ -1,4 +1,9 @@
-Thu Dec 29 09:12:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Dec 29 09:23:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.h:
+          Fix for CB2010
+
+Tue Dec 29 09:12:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/Makefile.am:
           Updated for all changes related to IDL3+
