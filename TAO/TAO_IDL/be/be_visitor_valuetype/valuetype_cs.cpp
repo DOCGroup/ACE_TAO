@@ -517,6 +517,9 @@ be_visitor_valuetype_cs::gen_ostream_operator_r (be_valuetype *node,
           
       ACE_CString instance_name ("this->");
       instance_name += f->local_name ()->get_string ();
-      f->gen_member_ostream_operator (os, instance_name.c_str (), true);
+      f->gen_member_ostream_operator (os,
+                                      instance_name.c_str (),
+                                      false,
+                                      true);
     }
 }

@@ -70,7 +70,8 @@ be_enum::be_enum (UTL_ScopedName *n,
 }
 
 void
-be_enum::gen_ostream_operator (TAO_OutStream *os)
+be_enum::gen_ostream_operator (TAO_OutStream *os,
+                               bool /* use_underscore */)
 {
   *os << be_nl
       << "std::ostream& operator<< (std::ostream &strm, const "

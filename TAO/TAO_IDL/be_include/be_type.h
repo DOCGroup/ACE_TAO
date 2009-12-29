@@ -57,11 +57,13 @@ public:
   void gen_fwd_helper_name (void);
   // Compute the value of the member.
   
-  virtual void gen_ostream_operator (TAO_OutStream *os);
+  virtual void gen_ostream_operator (TAO_OutStream *os,
+                                     bool use_underscore);
   // No-op, overridden in derived classes.
 
   virtual void gen_member_ostream_operator (TAO_OutStream *os,
                                             const char *instance_name,
+                                            bool use_underscore,
                                             bool accessor = false);
   // Generic implementation here, overridden for some types.
 

@@ -176,7 +176,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
 
   if (be_global->gen_ostream_operators ())
     {
-      node->gen_ostream_operator (os);
+      node->gen_ostream_operator (os, false);
     }
 
   *os << be_global->core_versioning_end () << be_nl;

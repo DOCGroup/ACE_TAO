@@ -47,7 +47,8 @@ public:
   virtual bool has_duplicate_case_labels (void);
   // Do we have at least one member with multiple case labels?
 
-  virtual void gen_ostream_operator (TAO_OutStream *os);
+  virtual void gen_ostream_operator (TAO_OutStream *os,
+                                     bool use_underscore);
   // Overridden from class be_type.
 
   virtual void destroy (void);

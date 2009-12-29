@@ -48,10 +48,12 @@ public:
   // Generate dimensions. If slice == 1, generate dimensions for the slice
   // definition.
   
-  virtual void gen_ostream_operator (TAO_OutStream *os);
+  virtual void gen_ostream_operator (TAO_OutStream *os,
+                                     bool use_underscore);
   virtual void gen_member_ostream_operator (TAO_OutStream *os,
                                             const char *instance_name,
-                                            bool accessor = false);
+                                            bool use_underscore,
+                                            bool accessor);
   // Overridden from class be_type.
 
   // Visiting.

@@ -44,7 +44,8 @@ public:
   // Copy BE-specific values when redefining struct or union
   // from a forward declaration.
   
-  virtual void gen_ostream_operator (TAO_OutStream *os);
+  virtual void gen_ostream_operator (TAO_OutStream *os,
+                                     bool use_underscore);
   // Overridden from class be_type.
 
   virtual void destroy (void);

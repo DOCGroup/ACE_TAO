@@ -108,6 +108,7 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
 void
 be_predefined_type::gen_member_ostream_operator (TAO_OutStream *os,
                                                  const char *instance_name,
+                                                 bool use_underscore,
                                                  bool accessor)
 {
   switch (this->pt ())
@@ -136,6 +137,7 @@ be_predefined_type::gen_member_ostream_operator (TAO_OutStream *os,
       default:
         this->be_type::gen_member_ostream_operator (os,
                                                     instance_name,
+                                                    use_underscore,
                                                     accessor);
         break;
     }

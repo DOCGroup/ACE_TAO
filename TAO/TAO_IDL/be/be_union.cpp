@@ -121,7 +121,8 @@ be_union::has_duplicate_case_labels (void)
 }
 
 void
-be_union::gen_ostream_operator (TAO_OutStream *os)
+be_union::gen_ostream_operator (TAO_OutStream *os,
+                                bool use_underscore)
 {
   *os << be_nl
       << "std::ostream& operator<< (" << be_idt << be_idt_nl
@@ -179,7 +180,10 @@ be_union::gen_ostream_operator (TAO_OutStream *os)
       
       *os << "strm << ";
       
-      ub->gen_member_ostream_operator (os, instance_name.c_str (), true);
+      ub->gen_member_ostream_operator (os,
+                                       instance_name.c_str (),
+                                       use_underscore,
+                                       true);
       
       *os << ";" << be_nl
           << "break;" << be_uidt;

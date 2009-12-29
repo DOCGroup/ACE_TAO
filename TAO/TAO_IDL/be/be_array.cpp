@@ -259,13 +259,14 @@ be_array::gen_dimensions (TAO_OutStream *os,
 
 // Overridden method
 void
-be_array::gen_ostream_operator (TAO_OutStream *os)
+be_array::gen_ostream_operator (TAO_OutStream *os,
+                                bool use_underscore)
 {
   be_scope* scope = be_scope::narrow_from_scope (this->defined_in ());
   be_decl* parent = scope->decl ();
   ACE_CString arg_name (ACE_CString (parent->full_name ())
                         + "::"
-                        + (this->anonymous () ? "_" : "")
+                        + (use_underscore ? "_" : "")
                         + this->local_name ()->get_string ()
                         + "_forany &_tao_array");
 
@@ -311,7 +312,10 @@ be_array::gen_ostream_operator (TAO_OutStream *os)
     }
    
   be_type *bt = be_type::narrow_from_decl (this->base_type ());
-  bt->gen_member_ostream_operator (os, instance_name.c_str ());
+  bt->gen_member_ostream_operator (os,
+                                   instance_name.c_str (),
+                                   use_underscore,
+                                   false);
     
   *os << ";";
   
@@ -330,13 +334,14 @@ be_array::gen_ostream_operator (TAO_OutStream *os)
 void
 be_array::gen_member_ostream_operator (TAO_OutStream *os,
                                        const char *instance_name,
+                                       bool use_underscore,
                                        bool accessor)
 {
   be_scope* scope = be_scope::narrow_from_scope (this->defined_in ());
   be_decl* parent = scope->decl ();
   ACE_CString decl_name (ACE_CString (parent->full_name ())
                          + "::"
-                         + (this->anonymous () ? "_" : "")
+                         + (use_underscore ? "_" : "")
                          + this->local_name ()->get_string ());
   
  // The container is always const, so the member is const as well,
@@ -344,7 +349,10 @@ be_array::gen_member_ostream_operator (TAO_OutStream *os,
  *os << decl_name.c_str () << "_forany ("
      << "const_cast< " << decl_name.c_str () << "_slice *> (";
   
-  this->be_type::gen_member_ostream_operator (os, instance_name, accessor);
+  this->be_type::gen_member_ostream_operator (os,
+                                              instance_name,
+                                              use_underscore,
+                                              accessor);
   
   *os << "))";
 }
