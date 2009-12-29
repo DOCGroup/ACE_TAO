@@ -51,7 +51,7 @@ else {
         "-b bands.unix";
 }
 
-$SV = $server->CreateProcess ("server", $server_args . " -n $server_iorfile1 -o $server_iorfile1"),
+$SV = $server->CreateProcess ("server", $server_args . " -n $server_iorfile1 -o $server_iorfile2"),
 
 $CL = $client->CreateProcess ("client", "-n file://$client_iorfile1 -o file://$client_iorfile2");
 
