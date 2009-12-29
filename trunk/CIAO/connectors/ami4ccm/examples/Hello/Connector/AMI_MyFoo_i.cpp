@@ -10,14 +10,16 @@ class ExceptionHolder_i
 {
 public:
     ExceptionHolder_i (::Messaging::ExceptionHolder* holder) : holder_ (holder) {}
-    virtual void
-    raise_exception (void)
-    {
-    if (holder_)
-      holder_->raise_exception ();
-    else
-      throw ::CORBA::UNKNOWN (TAO::VMCID, CORBA::COMPLETED_YES);
-    }
+
+    virtual void raise_exception (void)
+      {
+        if (holder_)
+          {
+            holder_->raise_exception ();
+          }
+        else
+          throw ::CORBA::UNKNOWN (TAO::VMCID, CORBA::COMPLETED_YES);
+      }
 private:
     ::Messaging::ExceptionHolder* holder_;
 };
@@ -43,7 +45,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
     const char * out_str)
   {
     printf ("AMI CORBA (FOO) :\tMyFoo Foo Reply Handler::foo\n");
-    this->foo_callback_->foo (result, CORBA::string_dup (out_str));
+    this->foo_callback_->foo (result, out_str);
     this->_remove_ref ();
   }
 

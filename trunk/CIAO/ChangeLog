@@ -1,3 +1,9 @@
+Tue Dec 29 11:22:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/Connector/AMI_exec.cpp:
+        * connectors/ami4ccm/examples/Hello/Connector/AMI_MyFoo_i.cpp:
+          Layout changes
+
 Tue Dec 29 10:16:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/run_5_to_1.pl
