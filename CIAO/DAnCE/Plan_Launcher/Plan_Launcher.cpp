@@ -16,7 +16,8 @@ namespace DAnCE
           }
         catch (const Plan_Launcher_Impl::Deployment_Failure& e)
           {
-            DANCE_ERROR (1, (LM_ERROR, "PlanLauncher error : %C.\n", e.error_.c_str()));
+            DANCE_ERROR (1, (LM_ERROR, "PlanLauncher error: %C.\n", e.error_.c_str()));
+            return -1;
           }
         catch (const CORBA::Exception& ex)
           {
