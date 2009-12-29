@@ -40,6 +40,7 @@ public:
   // Overridden from class be_type.
   virtual void gen_member_ostream_operator (TAO_OutStream *os,
                                             const char *instance_name,
+                                            bool use_underscore,
                                             bool accessor = false);
 
   // Visiting.

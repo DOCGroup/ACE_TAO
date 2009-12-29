@@ -409,7 +409,8 @@ be_sequence::decl (void)
 
 // Overridden method
 void
-be_sequence::gen_ostream_operator (TAO_OutStream *os)
+be_sequence::gen_ostream_operator (TAO_OutStream *os,
+                                   bool /* use_underscore */)
 {
   *os << be_nl
       << "std::ostream& operator<< (" << be_idt << be_idt_nl

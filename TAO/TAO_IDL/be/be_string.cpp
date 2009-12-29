@@ -68,6 +68,7 @@ be_string::be_string (AST_Decl::NodeType nt,
 void
 be_string::gen_member_ostream_operator (TAO_OutStream *os,
                                         const char *instance_name,
+                                        bool use_underscore,
                                         bool accessor)
 {
   // For wide strings, generate code that outputs the hex values of
@@ -79,6 +80,7 @@ be_string::gen_member_ostream_operator (TAO_OutStream *os,
       
       this->be_type::gen_member_ostream_operator (os,
                                                   instance_name,
+                                                  use_underscore,
                                                   accessor);
       
       *os << " << \"\\\"\"";

@@ -1347,7 +1347,8 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
 }
 
 void
-be_interface::gen_ostream_operator (TAO_OutStream *os)
+be_interface::gen_ostream_operator (TAO_OutStream *os,
+                                    bool /* use_underscore */)
 {
   *os << be_nl
       << "std::ostream& operator<< (" << be_idt << be_idt_nl
@@ -1365,6 +1366,7 @@ be_interface::gen_ostream_operator (TAO_OutStream *os)
 void
 be_interface::gen_member_ostream_operator (TAO_OutStream *os,
                                            const char *instance_name,
+                                           bool /* use_underscore */,
                                            bool accessor)
 {
   *os << instance_name << (accessor ? " ()" : ".in ()");

@@ -30,10 +30,6 @@
 #include "idl_defines.h"
 #include "global_extern.h"
 
-ACE_RCSID (be,
-           be_structure,
-           "$Id$")
-
 be_structure::be_structure (void)
   : COMMON_Base (),
     AST_Decl (),
@@ -84,7 +80,8 @@ be_structure::redefine (AST_Structure *from)
 
 // Overridden method
 void
-be_structure::gen_ostream_operator (TAO_OutStream *os)
+be_structure::gen_ostream_operator (TAO_OutStream *os,
+                                    bool /* use_underscore */)
 {
   *os << be_nl
       << "std::ostream& operator<< (" << be_idt << be_idt_nl
@@ -124,7 +121,13 @@ be_structure::gen_ostream_operator (TAO_OutStream *os)
           
       ACE_CString instance_name ("_tao_aggregate.");
       instance_name += f->local_name ()->get_string ();
-      f->gen_member_ostream_operator (os, instance_name.c_str ());
+      AST_Decl::NodeType nt = f->field_type ()->node_type ();
+      bool member_use_underscore =
+        nt == AST_Decl::NT_array || nt == AST_Decl::NT_sequence;
+      f->gen_member_ostream_operator (os,
+                                      instance_name.c_str (),
+                                      member_use_underscore,
+                                      false);
     }
     
   *os << be_nl

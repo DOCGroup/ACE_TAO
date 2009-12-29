@@ -233,13 +233,15 @@ be_type::gen_fwd_helper_name (void)
 }
 
 void
-be_type::gen_ostream_operator (TAO_OutStream *)
+be_type::gen_ostream_operator (TAO_OutStream *,
+                               bool /* use_underscore */)
 {
 }
 
 void
 be_type::gen_member_ostream_operator (TAO_OutStream *os,
                                       const char *instance_name,
+                                      bool /* use_underscore */,
                                       bool accessor)
 {
   *os << instance_name << (accessor ? " ()" : "");

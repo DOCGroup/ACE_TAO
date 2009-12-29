@@ -74,10 +74,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_extern.h"
 #include "global_extern.h"
 
-ACE_RCSID (be,
-           be_produce,
-           "$Id$")
-
 // Clean up before exit, whether successful or not.
 TAO_IDL_BE_Export void
 BE_cleanup (void)

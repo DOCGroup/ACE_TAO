@@ -549,7 +549,8 @@ be_valuetype::gen_helper_stubs (char *, char *)
 }
 
 void
-be_valuetype::gen_ostream_operator (TAO_OutStream *os)
+be_valuetype::gen_ostream_operator (TAO_OutStream *os,
+                                    bool /* use_underscore */)
 {
   *os << be_nl
       << "std::ostream& operator<< (" << be_idt << be_idt_nl

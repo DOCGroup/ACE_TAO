@@ -18,10 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_union,
-           cdr_op_cs,
-           "$Id$")
-
 // ***************************************************************************
 // Union visitor for generating CDR operator declarations in the client
 // stubs file
@@ -204,14 +200,16 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
       << "}" << be_nl << be_nl
       << "return result;" << be_uidt_nl
       << "}" << be_nl;
+      
+  bool use_underscore = (this->ctx_->tdef () == 0);
 
   if (be_global->gen_ostream_operators ())
     {
-      node->gen_ostream_operator (os);
+      node->gen_ostream_operator (os, use_underscore);
     }
 
   *os << be_global->core_versioning_end () << be_nl;
 
-  node->cli_stub_cdr_op_gen (1);
+  node->cli_stub_cdr_op_gen (true);
   return 0;
 }

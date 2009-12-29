@@ -73,7 +73,8 @@ public:
                                 char *full_name = 0);
   // Generate the helper functions implementation.
 
-  virtual void gen_ostream_operator (TAO_OutStream *os);
+  virtual void gen_ostream_operator (TAO_OutStream *os,
+                                     bool use_underscore);
   // Overridden from class be_type.
 
   void gen_var_out_seq_decls (void);
