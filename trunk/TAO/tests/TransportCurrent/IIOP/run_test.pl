@@ -53,7 +53,7 @@ else {
 }
 
 $SV = $server->CreateProcess ("server",
-                              "@ARGV -c 0 -ORBSvcConf $base_server_conf -o $server_iorfile");
+                              "@ARGV -c 0 -ORBSvcConf $server_conf_file -o $server_iorfile");
 
 $CL = $client->CreateProcess ("client",
                               "@ARGV -n 1 -ORBSvcConf $client_conf_file -k file://$client_iorfile");
