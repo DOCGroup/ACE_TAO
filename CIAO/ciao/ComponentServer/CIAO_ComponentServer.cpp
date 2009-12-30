@@ -7,7 +7,6 @@
  */
 
 #include "CIAO_ComponentServer_Task.h"
-#include "ace/Thread_Manager.h"
 #include "ciao/Logger/Log_Macros.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR **argv)
@@ -28,13 +27,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
     }
   catch (CIAO::Deployment::ComponentServer_Task::Error &e)
     {
-      CIAO_DEBUG (6, (LM_ALERT, CLINFO "CIAO_ComponentServer main: Caught ComponentServer exception: %C\n",
+      CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO_ComponentServer main: Caught ComponentServer exception: %C\n",
                   e.err_.c_str ()));
       retval = -1;
     }
   catch (...)
     {
-      CIAO_DEBUG (6, (LM_ALERT, CLINFO "CIAO_ComponentServer main: Caught unknown exception.\n"));
+      CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO_ComponentServer main: Caught unknown exception.\n"));
       retval = -1;
     }
 
