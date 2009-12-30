@@ -13,7 +13,6 @@
 #include "ace/String_Base.h"
 #include "ace/Task.h"
 #include "tao/ORB.h"
-#include "ciao/Logger/Logger_Service.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 
 namespace CIAO
@@ -38,13 +37,9 @@ namespace CIAO
     private:
       void parse_args (int argc, ACE_TCHAR **argv);
 
-      void configure_logging_backend (void);
-
       void usage (void);
 
       CORBA::ORB_var orb_;
-
-      auto_ptr<CIAO::Logger_Service> logger_;
 
       ACE_CString uuid_;
       ACE_TString callback_ior_str_;
