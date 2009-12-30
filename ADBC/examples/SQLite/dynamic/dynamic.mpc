@@ -1,0 +1,10 @@
+// $Id$
+
+project (dynamic) : adbc_sqlite {
+  exename = dynamic
+  install = .
+
+  Source_Files {
+    dynamic.cpp
+  }
+}
