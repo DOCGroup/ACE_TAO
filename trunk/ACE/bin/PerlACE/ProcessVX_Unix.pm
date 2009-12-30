@@ -468,16 +468,4 @@ sub TimedWait ($)
     return -1;
 }
 
-sub IgnoreHostRoot
-{
-    my $self = shift;
-
-    if (@_ != 0) {
-        $self->{IGNOREHOSTROOT} = shift;
-    }
-
-    return $self->{IGNOREHOSTROOT};
-}
-
-
 1;
