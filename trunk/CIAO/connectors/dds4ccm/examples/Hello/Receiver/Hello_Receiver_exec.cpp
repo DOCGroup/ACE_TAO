@@ -87,7 +87,6 @@ namespace CIAO_Hello_Receiver_Impl
     ::DDS::DataReader_ptr /* the_reader */,
     const ::DDS::RequestedDeadlineMissedStatus & /* status */)
   {
-    /* Your code here. */
   }
 
   void

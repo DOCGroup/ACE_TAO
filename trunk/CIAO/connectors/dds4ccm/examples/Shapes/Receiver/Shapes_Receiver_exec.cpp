@@ -84,7 +84,6 @@ namespace CIAO_Shapes_Receiver_Impl
     ::DDS::DataReader_ptr /* the_reader */,
     const ::DDS::RequestedDeadlineMissedStatus & /* status */)
   {
-    /* Your code here. */
   }
 
   void
@@ -92,7 +91,6 @@ namespace CIAO_Shapes_Receiver_Impl
     ::DDS::DataReader_ptr /* the_reader */,
     const ::DDS::SampleLostStatus & /* status */)
   {
-
   }
 
   //============================================================

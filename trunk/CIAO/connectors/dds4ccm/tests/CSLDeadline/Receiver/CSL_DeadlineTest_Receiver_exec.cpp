@@ -7,34 +7,34 @@
 
 namespace CIAO_CSL_DeadlineTest_Receiver_Impl
 {
- 
+
 //============================================================
   // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
   //============================================================
-  
+
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &incompatible)
    : incompatible_ (incompatible)
   {
   }
-  
+
   ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
   {
-    
+
   }
-  
+
   // Operations from ::CCM_DDS::ConnectorStatusListener
   void ConnectorStatusListener_exec_i::on_inconsistent_topic(
-     ::DDS::Topic_ptr /*the_topic*/, 
+     ::DDS::Topic_ptr /*the_topic*/,
      const DDS::InconsistentTopicStatus & /*status*/){
     }
- 
+
   void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
     ::DDS::DataReader_ptr /*the_reader*/,
      const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
     }
 
   void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr /*the_reader*/, 
+     ::DDS::DataReader_ptr /*the_reader*/,
      const DDS::SampleRejectedStatus & /*status*/)  {
     }
 
@@ -45,7 +45,7 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
     }
 
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr /*the_writer*/, 
+     ::DDS::DataWriter_ptr /*the_writer*/,
      const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
    }
 
@@ -53,7 +53,7 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
     ::DDS::Entity_ptr /*the_entity*/,
     ::DDS::StatusKind /*status_kind*/)  {
     }
- 
+
   //============================================================
   // Facet Executor Implementation Class: TestTopic_RawListener_exec_i
   //============================================================
@@ -80,7 +80,7 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
             an_instance.key.in (),
             an_instance.x));
   }
-  
+
   void
   TestTopic_RawListener_exec_i::on_many_data (
     const TestTopic_Seq & /*an_instance */,
@@ -106,7 +106,6 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
     ::DDS::DataReader_ptr /* the_reader */,
     const ::DDS::RequestedDeadlineMissedStatus & /* status */)
   {
-    /* Your code here. */
   }
 
   void
@@ -114,7 +113,6 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
     ::DDS::DataReader_ptr /* the_reader */,
     const ::DDS::SampleLostStatus & /* status */)
   {
-
   }
 
   //============================================================
@@ -168,7 +166,7 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
-  
+
   }
 
   void
@@ -182,7 +180,7 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
         ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw CORBA::INTERNAL ();
       }
-    lc->mode (::CCM_DDS::ONE_BY_ONE);    
+    lc->mode (::CCM_DDS::ONE_BY_ONE);
   }
 
   void
@@ -194,21 +192,17 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
   Receiver_exec_i::ccm_remove (void)
   {
      if(this->incompatible_.value ())
-      {   
-     
+      {
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did receive the unexpected ")
                                ACE_TEXT (" error 'on_offered_deadline_missed' in Receiver")
-                    )); 
+                    ));
       }
-   
     else
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Haven't received the un-expected ")
-                               ACE_TEXT ("'on_offered_deadline_missed' in Receiver\n")
+                              ACE_TEXT ("'on_offered_deadline_missed' in Receiver\n")
                     ));
       }
- 
-
   }
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
