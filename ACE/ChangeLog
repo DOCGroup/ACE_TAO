@@ -1,3 +1,8 @@
+Wed Dec 30 08:41:03 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/Sig_Handler.cpp:
+          Do not use SA_SIGINFO on LynxOS.
+
 Thu Dec 24 10:55:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/RPC/run_test.pl
