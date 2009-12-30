@@ -1,3 +1,8 @@
+Wed Dec 30 08:14:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Deployment/Module_Main.h:
+          Check if we get an object back and add more exception handling
+
 Tue Dec 29 11:22:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/Connector/AMI_exec.cpp:

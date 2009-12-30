@@ -33,6 +33,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
   DANCE_DISABLE_TRACE ();
 
   auto_ptr<Logger_Service> logger;
+  int retval = 0;
 
   try
     {
@@ -64,7 +65,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
         }
 
       DANCE_DEBUG (6, (LM_TRACE, DLINFO
-                    ACE_TEXT("Module_Main.h - initializing module instance\n")));
+                   ACE_TEXT("Module_Main.h - initializing module instance\n")));
 
       DANCE_MODULE_MAIN_CLASS_NAME module_instance;
 
@@ -73,20 +74,34 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
                                                              argv);
 #ifndef DANCE_MODULE_MAIN_SKIP_ORB_RUN
       if (!CORBA::is_nil (obj.in ()))
-        orb->run ();
+        {
+          orb->run ();
+        }
+      else
+        {
+          DANCE_ERROR (1, (LM_ERROR, DLINFO
+                       ACE_TEXT("Module_Main.h - No object created.\n")));
+          retval = -1;
+        }
 
       DANCE_DEBUG (6, (LM_TRACE, DLINFO
-                    ACE_TEXT("Module_Main.h - ORB event loop finished, exiting.\n")));
+                   ACE_TEXT("Module_Main.h - ORB event loop finished, exiting.\n")));
 
       orb->destroy ();
 #endif
     }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Module_Main.h");
+      retval = -1;
+    }
   catch (...)
     {
-      return -1;
+      DANCE_ERROR (1, (LM_ERROR, "Module_Main.h - Unknown exception.\n"));
+      retval = -1;
     }
 
-  return 0;
+  return retval;
 }
 
 #endif
