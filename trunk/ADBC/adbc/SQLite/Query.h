@@ -64,10 +64,6 @@ public:
    */
   virtual void prepare (const char * query, size_t len);
 
-  /// Destroy the query. The query is no longer usable after
-  /// this method returns.
-  virtual void destroy (void);
-
   /**
    * Directly execute a database query.
    *

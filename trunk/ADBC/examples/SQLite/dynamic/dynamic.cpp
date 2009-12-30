@@ -4,6 +4,7 @@
 #include "ace/streams.h"
 #include "adbc/SQLite/Connection.h"
 #include "adbc/SQLite/Exception.h"
+#include "adbc/destroy_t.h"
 
 static const char * __DROP_STMT__ =
 "DROP TABLE IF EXISTS signup_sheet";
@@ -37,15 +38,20 @@ int ACE_TMAIN (int argc, char * argv [])
 
     // Allocate a new query. Future versions will allow you to
     // declare a query on the stack.
-    ::ADBC::SQLite::Query query (conn);
+    ::ADBC::SQLite::Query * query = conn.create_query ();
+
+    // Make sure that we delete the query.
+    ACE_Utils::Auto_Functor <::ADBC::SQLite::Query,
+                             ::ADBC::destroy_t <::ADBC::SQLite::Query> >
+                             auto_destroy (query);
 
     // Execute queries that have no record.
-    query.execute_no_record (__DROP_STMT__);
-    query.execute_no_record (__CREATE_STMT__);
-    query.execute_no_record (__INSERT_STMT__);
+    query->execute_no_record (__DROP_STMT__);
+    query->execute_no_record (__CREATE_STMT__);
+    query->execute_no_record (__INSERT_STMT__);
 
     // Execute a query that has a record.
-    ::ADBC::SQLite::Record * record = query.execute (__SELECT_STMT__);
+    ::ADBC::SQLite::Record * record = query->execute (__SELECT_STMT__);
 
     // View the results of the query.
     ACE_CString timeofday, firstname, middlename, surname;

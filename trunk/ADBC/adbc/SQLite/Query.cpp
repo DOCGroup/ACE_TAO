@@ -29,11 +29,11 @@ void Query::prepare (const char * query)
 //
 void Query::prepare (const char * query, size_t len)
 {
-  if (this->stmt_ != 0)
-    this->finalize ();
+  // Finalize the statement before continuing.
+  this->finalize ();
 
+  // Allocate a new statement/query object.
   const char * tail = 0;
-
   int retval = ::sqlite3_prepare_v2 (this->parent_.conn_,
                                      query,
                                      len,
@@ -45,14 +45,6 @@ void Query::prepare (const char * query, size_t len)
 
   // Reset the parameters for the statement.
   this->params_.reset ();
-}
-
-//
-// destroy
-//
-void Query::destroy (void)
-{
-  delete this;
 }
 
 //
@@ -111,6 +103,9 @@ long Query::last_insert_id (void)
 //
 void Query::finalize (void)
 {
+  if (this->stmt_ == 0)
+    return;
+
   // Release the statements resources.
   ::sqlite3_finalize (this->stmt_);
 

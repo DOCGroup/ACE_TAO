@@ -24,8 +24,7 @@ Query::Query (Connection & parent)
 ADBC_INLINE
 Query::~Query (void)
 {
-  if (this->stmt_ != 0)
-    this->finalize ();
+  this->finalize ();
 }
 
 //

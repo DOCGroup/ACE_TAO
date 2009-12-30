@@ -1,3 +1,22 @@
+Wed Dec 30 22:54:02 UTC 2009  James H. Hill  <hillj@dre.vanderbilt.edu>
+
+        * adbc/SQLite/Query.h:
+        * adbc/SQLite/Query.inl:
+        * adbc/SQLite/Query.cpp:
+
+          Improved the inline implementation.
+
+        * examples/SQLite/dynamic:
+        * examples/SQLite/dynamic/dynamic.mpc:
+        * examples/SQLite/dynamic/dynamic.mwc:
+        * examples/SQLite/dynamic/dynamic.cpp:
+
+          Example illustrating dynamic allocation of a query.
+
+        * examples/SQLite/simple/simple.cpp:
+
+          This example no longer dynamically allocates the query.
+
 Wed Dec 30 22:26:58 UTC 2009  James H. Hill  <hillj@dre.vanderbilt.edu>
 
         * ADBC.mwc:
