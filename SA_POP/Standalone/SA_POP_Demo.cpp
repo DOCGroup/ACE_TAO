@@ -21,7 +21,7 @@
 #include "InputCL.h"
 
 
-// SA-POP DEFAULTS.
+// Additional SA-POP DEFAULT values for use in standalone demo.
 namespace SA_POP {
   namespace Default {
     const SA_POP::CondID CondIDMin = 1;
@@ -31,7 +31,7 @@ namespace SA_POP {
   };  /* SA_POP::Default namespace */
 };  /* SA_POP namespace */
 
-// SPREADING ACTIVATION DEFAULTS.
+// Additional SANet DEFAULT values for us in standalone demo.
 namespace SANet {
   namespace Default {
     const size_t SA_MAX_STEPS = 1000;

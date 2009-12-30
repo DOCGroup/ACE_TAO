@@ -1,3 +1,15 @@
+Wed Dec 30 22:01:23 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * Planner.cpp:
+        * SA_POP_Types.h:
+        * SA_PlanStrategy.cpp:
+        * TaskMapFileIn.cpp:
+        * SANet/SANetFileIn.cpp:
+        * SANet/SANet_Types.h:
+        * Standalone/SA_POP_Demo.cpp:
+
+          Updated SA-POP default value handling.
+
 Tue Dec 29 22:28:23 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * UserInput:
@@ -33,7 +45,7 @@ Tue Dec 29 22:28:23 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.ed
 
           Added SANet cloning (deep copy by copy constructor).
           Also cleaned up some more of the SANet code.
-          
+
 
 Fri Dec 18 20:28:36 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
@@ -53,6 +65,7 @@ Fri Dec 18 20:28:36 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.ed
 
           Removed SANet cruft (including non-functional methods called from the planner in SA-POP).
           Also cleaned up some of the SANet & SANode commenting and constructors.
+
 
 Fri Dec 18 01:00:33 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
@@ -87,6 +100,7 @@ Fri Dec 18 01:00:33 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.ed
         * experiments/EU_Test/RandomGenerator.cpp:
 
           Removed these files (old EU experiment skeleton).
+
 
 Fri Dec 11 23:54:51 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
@@ -141,6 +155,7 @@ Fri Dec  4 18:16:57 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
         These files were modified to take the new active and disabled flags
         for computing expected utilities of plans.
 
+
 Tue Nov 10 21:55:22 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
         * utils/SANetGenerator/Net_Complete.py:
@@ -157,6 +172,7 @@ Tue Nov 10 21:54:59 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
         Updated to fix a bug with knowing when to stop.
 
+
 Mon Nov  9 00:49:19 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * SA_POP_Types.h:
@@ -169,6 +185,7 @@ Mon Nov  9 00:49:19 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * WorkingPlan.h:
 
           Portablility fixes.
+
 
 Wed Nov  4 22:47:08 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
