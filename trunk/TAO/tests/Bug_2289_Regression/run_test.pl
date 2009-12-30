@@ -34,7 +34,7 @@ $SV = $server->CreateProcess ("server",
                               "-o $server_iorfile " .
                               "-ORBDottedDecimalAddresses $dotted_decimal_addresses ");
 
-$hostname = $client->HostName();
+$hostname = $server->HostName();
 
 $CL = $client->CreateProcess ("client",
                               "-k corbaloc::$hostname:$port/collocated_ior_bound_in_remote_iortable " .
