@@ -203,7 +203,7 @@ Policy_Tester::create_objects (void)
     this->orb_->object_to_string (base_object.in ());
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Activated as <%s>\n"), ior.in ()));
+              ACE_TEXT ("Activated as <%C>\n"), ior.in ()));
 
   FILE *output_file = ACE_OS::fopen (this->rt_poa_properties_->ior_source (), "w");
   if (output_file == 0)
@@ -244,7 +244,7 @@ Policy_Tester::create_objects (void)
     this->orb_->object_to_string (over_object.in ());
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Activated as <%s>\n"), o_ior.in ()));
+              ACE_TEXT ("Activated as <%C>\n"), o_ior.in ()));
 
   output_file = ACE_OS::fopen (this->rt_object_properties_->ior_source (), "w");
 
