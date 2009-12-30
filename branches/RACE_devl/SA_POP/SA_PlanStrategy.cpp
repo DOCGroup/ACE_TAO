@@ -146,8 +146,8 @@ bool SA_PlanStrategy::satisfy_open_conds (void)
   if (this->open_conds_.empty ())
 	  return this->planner_->full_sched();
 
-	if( MAX_TASK_INSTS == -1 ||
-		!(this->planner_->get_working_plan()->get_all_insts().size() > MAX_TASK_INSTS)){
+	if( SA_POP::Default::MAX_TASK_INSTS == SA_POP::Default::UNLIMITED_TASK_INSTS ||
+		  this->planner_->get_working_plan()->get_all_insts().size() <= SA_POP::Default::MAX_TASK_INSTS ){
 		// Increment step counter.
 		this->cur_step_++;
 

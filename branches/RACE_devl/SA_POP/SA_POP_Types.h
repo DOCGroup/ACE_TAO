@@ -59,20 +59,6 @@ if (x <= SA_POP_DEBUG_LEVEL) \
 
 namespace SA_POP {
 
-//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
-  /// MAXIMUM number of task instances to allow in plan before planning failure.
-  const int MAX_TASK_INSTS = 12;
-//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
-
-
-
-
-  /// Environment variable for root path.
-  const std::string ROOT_PATH_STR = "SAPOP_ROOT";
-
-  /// Relative path (from root path) to SA-POP XML schemas.
-  const std::string XSD_REL_PATH_STR = "/docs/schema/";
-
   /// Type of a node id (tasks and conditions).
   /// (must be > 0 and unique across all tasks *and* conditions).
   typedef int NodeID;
@@ -811,5 +797,40 @@ namespace SA_POP {
   };
 
 };  /* SA_POP namespace */
+
+
+// Default values for use in SA-POP.
+namespace SA_POP {
+  namespace Default {
+    /// Threshold (>=) for probability of a condition to be considered satisfied.
+    const ::SA_POP::Probability COND_PROB_THRESH = 0.9;
+
+    /// Environment variable for root path.
+    const std::string ROOT_PATH_STR = "SAPOP_ROOT";
+
+    /// Relative path (from root path) to SA-POP XML schemas.
+    const std::string XSD_REL_PATH_STR = "/docs/schema/";
+
+    /// Maximum number of steps to run spreading activation.
+    /// (NOTE: Corresponds to consideration of the probabilistic effects
+    ///   of action sequences up to a length of half this value.)
+    const size_t SA_MAX_STEPS = 1000;
+
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+    /// Special value indicating UNLIMITED number of task instances allowed in plan.
+    /// (USE: Set MAX_TASK_INSTS equal to this value to allow unlimited task instances in planning.)
+    /// (NOTE: Value must be less than 0, so it does not conflict with other possible values
+    ///   of MAX_TASK_INSTS.)
+    const int UNLIMITED_TASK_INSTS = -1;
+
+    /// MAXIMUM number of task instances to allow in plan (before planning failure).
+    /// (WARNING: Use of this value is currently hard-coded into SA-POP
+    ///    with no way to externally override it.)
+    const int MAX_TASK_INSTS = UNLIMITED_TASK_INSTS;
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+
+  };  /* SA_POP::Default namespace */
+};  /* SA_POP namespace */
+
 
 #endif /* SA_POP_TYPES_H_ */

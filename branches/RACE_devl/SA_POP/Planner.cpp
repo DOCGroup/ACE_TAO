@@ -31,7 +31,7 @@ using namespace SA_POP;
 
 // Constructor.
 Planner::Planner (void)
-: cond_prob_thresh_ (0.9),
+: cond_prob_thresh_ (SA_POP::Default::COND_PROB_THRESH),
 has_objs_ (false),
 sanet_ (0),
 plan_strat_ (0),

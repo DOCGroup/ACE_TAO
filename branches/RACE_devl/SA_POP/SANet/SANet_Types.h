@@ -192,13 +192,13 @@ namespace SANet {
 
 #if defined (SANET_STANDALONE)
 namespace SA_POP {
+  namespace Default {
+    /// Environment variable for root path.
+    const std::string ROOT_PATH_STR = "SAPOP_ROOT";
 
-  /// Environment variable for root path.
-  const std::string ROOT_PATH_STR = "SAPOP_ROOT";
-
-  /// Relative path (from root path) to SA-POP XML schemas.
-  const std::string XSD_REL_PATH_STR = "/docs/schema/";
-
+    /// Relative path (from root path) to SA-POP XML schemas.
+    const std::string XSD_REL_PATH_STR = "/docs/schema/";
+  };  /* SA_POP::Default namespace */
 };  /* SA_POP namespace */
 
 namespace SANet {
