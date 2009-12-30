@@ -55,7 +55,7 @@ void Plan_Launcher_Impl::execute()
 
   if (this->mode_ & MODE_START_PLAN)
     {
-      size_t sz = this->xml_plan_urls_.size();
+      size_t const sz = this->xml_plan_urls_.size();
       for (size_t i= 0; i < sz; ++i)
         {
           DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Plan_Launcher_Impl::execute - ")
@@ -98,7 +98,7 @@ void Plan_Launcher_Impl::stop_plan()
 
   if (0 < this->xml_plan_urls_.size())
     {
-      size_t sz = this->xml_plan_urls_.size();
+      size_t const sz = this->xml_plan_urls_.size();
       for (size_t i= 0; i < sz; ++i)
         {
           DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Plan_Launcher_Impl::stop_plan - ")

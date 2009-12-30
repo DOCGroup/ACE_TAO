@@ -27,6 +27,7 @@ Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl(CORBA::ORB_ptr orb, int argc,
                     ACE_TEXT("Creating internal ORB.\n")));
       this->orb_ = CORBA::ORB_init (argc, argv);
     }
+
   this->parse_args(argc, argv);
 
   DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Plan_Launcher_i::init - em_ior = \"%C\"\n")
@@ -197,11 +198,7 @@ Plan_Launcher_Base_Impl::launch_plan(const ::Deployment::DeploymentPlan &plan)
           DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
                         ACE_TEXT("DomainApplication was received from startLaunch\n")));
         }
-      //this is temporal workaround while cdmw checks object type in connect call
-      /*
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO "Press any key after deployment on other node finished\n"));
-      getchar();
-      */
+
       this->create_external_connections (plan, conns.inout());
 
       // Call finish Launch to complete the connections
@@ -431,7 +428,7 @@ void Plan_Launcher_Base_Impl::parse_args(int argc, ACE_TCHAR *argv[])
             // trim leading file://
             if (0 < s.length())
               {
-                ssize_t pos = s.find("file://");
+                ssize_t const pos = s.find("file://");
                 if (0 == pos)
                   {
                     s = s.substring(7);
@@ -552,7 +549,7 @@ Plan_Launcher_Base_Impl::stop_plan()
   if (0 < this->cdr_plan_urls_.size())
     {
       stopped = true;
-      size_t sz = this->cdr_plan_urls_.size();
+      size_t const sz = this->cdr_plan_urls_.size();
       for (size_t i = 0; i < sz; ++i)
         {
           DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::stop_plan - ")
@@ -584,44 +581,7 @@ void Plan_Launcher_Base_Impl::create_external_connections(
     const ::Deployment::DeploymentPlan &plan, Deployment::Connections& conn)
 {
   DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("create_external_connections - start\n")));
-  /*    CORBA::Object_var obj = this->orb_->resolve_initial_references("NameService");
-   CosNaming::NamingContext_var naming = CosNaming::NamingContext::_narrow(obj.in());
-   CosNaming::BindingList_var bl;
-   CosNaming::BindingIterator_var bi;
-   //naming->list(10L, bl.out(), bi.out());
-   CosNaming::Name name(1);
-   name.length(3);
-   name[0].id = CORBA::string_dup("CDMW");//CORBA::string_dup("CcmDance1Test");
-   name[1].id = CORBA::string_dup ("SERVICES");
-   name[2].id = CORBA::string_dup("ASSEMBLYANDDEPLOYMENT");
-   obj = naming->resolve(name);
-   DANCE_DEBUG (6, (LM_DEBUG, "create_external_connections - After resolve\n"));
-   CosNaming::NamingContext_var CcmDance1Test = CosNaming::NamingContext::_narrow(obj.in());
-   CcmDance1Test->list(10L, bl.out(), bi.out());
-   bool exit = false;
-   while (!exit)
-   {
-   char buf[1024];
-   ACE_OS::sprintf(buf, "create_external_connections - naming size is %u\n", bl->length());
-   DANCE_DEBUG (6, (LM_DEBUG, buf));
-   for ( size_t i = 0; i< bl->length(); i++ )
-   {
-   for ( size_t j = 0; j < (*bl)[i].binding_name.length(); j++ )
-   {
-   ACE_OS::sprintf(buf, "create_external_connections - Binding name %s, binding kind %s, binding type %i\n"
-   , (*bl)[i].binding_name[j].id.in()
-   , (*bl)[i].binding_name[j].kind.in()
-   , (*bl)[i].binding_type);
-   DANCE_DEBUG (6, (LM_DEBUG, buf));
-   }
-   }
-   if(!bi->next_n(10L, bl.out()))
-   {
-   exit = true;
-   }
-   }
-   */
-  for (unsigned int i = 0; i < plan.connection.length(); i++)
+  for (CORBA::ULong i = 0; i < plan.connection.length(); i++)
     {
       if (plan.connection[i].externalReference.length() > 0
           && plan.connection[i].externalReference[0].provider)
