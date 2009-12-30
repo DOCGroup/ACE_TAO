@@ -24,11 +24,12 @@ my $server_iorfile = $server->LocalFile ($iorbase);
 my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
+my $server_conf = $server->LocalFile ("server$PerlACE::svcconf_ext");
 
 $endpoints = "-ORBEndpoint shmiop://12345 -ORBEndpoint iiop://:"
     . PerlACE::TestTarget::RandomPort(5000);
 $debug_conf = "-ORBDebugLevel $debug_level";
-$svc_conf = "-ORBSvcConf server.conf";
+$svc_conf = "-ORBSvcConf $server_conf";
 
 $server_opts = "-o $server_iorfile $svc_conf $endpoints $debug_conf";
 
