@@ -61,12 +61,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CORBA::String_var str = orb->object_to_string( messenger_obj.in() );
 
     // Output the IOR to the <ior_output_file>
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s\n",
-                               ior_output_file),
-                               1);
+    FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+    if (output_file == 0)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Cannot open output file for writing IOR: %s\n",
+                         ior_output_file),
+                         1);
     ACE_OS::fprintf (output_file, "%s", str.in ());
     ACE_OS::fclose (output_file);
     std::cout << "IOR written to file " << ACE_TEXT_ALWAYS_CHAR (ior_output_file) << std::endl;
