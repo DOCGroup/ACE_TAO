@@ -1,3 +1,11 @@
+Wed Dec 30 11:56:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CSLDeadline/Receiver/CSL_DeadlineTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Receiver/ConnectorStatusListener_Test_Receiver_exec.cpp:
+          Layout changes
+
 Wed Dec 30 10:31:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplication/ComponentAttributesSetter.cpp:
