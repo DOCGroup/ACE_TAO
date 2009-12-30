@@ -1,0 +1,6 @@
+// $Id$
+
+project : adbc_defaults {
+  libs  += ADBC_SQLite
+  after += ADBC_SQLite
+}

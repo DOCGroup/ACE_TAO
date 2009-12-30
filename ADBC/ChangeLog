@@ -1,0 +1,83 @@
+Wed Dec 30 22:26:58 UTC 2009  James H. Hill  <hillj@dre.vanderbilt.edu>
+
+        * ADBC.mwc:
+        * AUTHORS:
+        * COPYING:
+        * MPC:
+        * MPC/config:
+        * MPC/config/adbc_defaults.mpb:
+        * MPC/config/adbc_exe.mpb:
+        * MPC/config/adbc_lib.mpb:
+        * MPC/config/adbc_sqlite.mpb:
+        * MPC/config/adbclib.mpb:
+        * NEWS:
+        * PROBLEM-REPORT-FORM:
+        * THANKS:
+        * VERSION:
+        * adbc:
+        * adbc/ADBC.mpc:
+        * adbc/ADBC_export.h:
+        * adbc/Connection.h:
+        * adbc/Connection.inl:
+        * adbc/Connection.cpp:
+        * adbc/Exception.h:
+        * adbc/Exception.inl:
+        * adbc/Exception.cpp:
+        * adbc/Parameter.h:
+        * adbc/Parameter.inl:
+        * adbc/Parameter.cpp:
+        * adbc/Parameter_List.h:
+        * adbc/Parameter_List.inl:
+        * adbc/Parameter_List.cpp:
+        * adbc/Query.h:
+        * adbc/Query.inl:
+        * adbc/Query.cpp:
+        * adbc/Record.h:
+        * adbc/Record.inl:
+        * adbc/Record.cpp:
+        * adbc/SQLite:
+        * adbc/SQLite/Connection.h:
+        * adbc/SQLite/Connection.inl:
+        * adbc/SQLite/Connection.cpp:
+        * adbc/SQLite/Exception.h:
+        * adbc/SQLite/Exception.inl:
+        * adbc/SQLite/Exception.cpp:
+        * adbc/SQLite/Parameter.h:
+        * adbc/SQLite/Parameter.inl:
+        * adbc/SQLite/Parameter.cpp:
+        * adbc/SQLite/Parameter_List.h:
+        * adbc/SQLite/Parameter_List.inl:
+        * adbc/SQLite/Parameter_List.cpp:
+        * adbc/SQLite/Query.h:
+        * adbc/SQLite/Query.inl:
+        * adbc/SQLite/Query.cpp:
+        * adbc/SQLite/Record.h:
+        * adbc/SQLite/Record.inl:
+        * adbc/SQLite/Record.cpp:
+        * adbc/SQLite/SQLite.mpc:
+        * adbc/SQLite/SQLite_export.h:
+        * adbc/SQLite/Types.h:
+        * adbc/SQLite/Types.inl:
+        * adbc/SQLite/Types.cpp:
+        * adbc/Types.h:
+        * adbc/Types.inl:
+        * adbc/Types.cpp:
+        * adbc/destroy_t.h:
+        * bin:
+        * docs:
+        * lib:
+        * tests:
+
+          Checkpointing current implementation of ADBC. Right now, it
+          supports only SQLite3. The ODBC implementation still needs
+          to be ported from the CUTS distribution.
+
+        * examples:
+        * examples/SQLite:
+        * examples/SQLite/simple:
+        * examples/SQLite/simple/simple.mpc:
+        * examples/SQLite/simple/simple.mwc:
+        * examples/SQLite/simple/simple.cpp:
+
+          Very simple example illustrating how to use the SQLite3
+          implementation.
