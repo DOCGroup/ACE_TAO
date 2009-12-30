@@ -188,7 +188,7 @@ print "Invoking executor - launch the application -\n";
 print "Start dance_plan_launcher.exe with -x $cdp_file -k file://$ior_emfile\n";
 $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
                         "-x $cdp_file -k file://$ior_emfile");
-$E->SpawnWaitKill (2*$tg_executor->ProcessStartWaitInterval ());
+$E->SpawnWaitKill (3 * $tg_executor->ProcessStartWaitInterval ());
 
 for ($i = 0; $i < $nr_daemon; ++$i) {
     if ($tg_daemons[$i]->WaitForFileTimed ($iorbases[$i],
@@ -208,7 +208,7 @@ print "by running dance_plan_launcher.exe with -k file://$ior_emfile -x $cdp_fil
 
 $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
                         "-k file://$ior_emfile -x $cdp_file -q");
-$E->SpawnWaitKill (2 * $tg_executor->ProcessStopWaitInterval ());
+$E->SpawnWaitKill (3 * $tg_executor->ProcessStartWaitInterval ());
 
 print "Executor returned.\n";
 print "Shutting down rest of the processes.\n";
