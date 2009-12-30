@@ -10,27 +10,6 @@
 #include "DAnCE/Logger/Log_Macros.h"
 #include "Deployment/Deployment_ApplicationC.h"
 
-//bool read_config_value( const ACE_CString & name,
-//                        const Deployment::Properties & prop,
-//                        CORBA::Any_out value)
-//    throw()
-//{
-//    ACE_CString cdmw_name = name;
-//    bool found = false;
-//    CORBA::ULong len = prop.length();
-//    for (CORBA::ULong count = 0; count < len; ++count)
-//    {
-//        if ( cdmw_name.compare(prop[count].name.in()) == 0 )
-//        {
-//            value = new CORBA::Any(prop[count].value);
-//            found = true;
-//            break;
-//        }
-//    }
-//    return found;
-//}
-
-
 ComponentAttributesSetter::ComponentAttributesSetter()
 {
 }

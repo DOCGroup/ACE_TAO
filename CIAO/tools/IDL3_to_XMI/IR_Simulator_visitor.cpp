@@ -212,12 +212,12 @@ namespace CIAO
     ir_simulator_visitor::visit_interface (AST_Interface *node)
     {
       XMI_TRACE ("interface");
-      
+
       if (!this->do_i_care (node))
         {
           return 0;
         }
-      
+
       Incr_Guard guard (this->associating_);
 
       if (!this->associating_)
@@ -279,12 +279,12 @@ namespace CIAO
     ir_simulator_visitor::visit_valuebox (AST_ValueBox *node)
     {
       XMI_TRACE ("valuebox");
-      
+
       if (!this->do_i_care (node))
         {
           return 0;
         }
-      
+
       Incr_Guard guard (this->associating_);
 
       if (!this->associating_)
@@ -335,12 +335,12 @@ namespace CIAO
     ir_simulator_visitor::visit_valuetype_impl (AST_ValueType *node)
     {
       Incr_Guard guard (this->associating_);
-      
+
       if (!this->do_i_care (node))
         {
           return;
         }
-          
+
       if (!this->associating_)
         {
           // not associating, imported, not my concern
@@ -365,7 +365,7 @@ namespace CIAO
           AST_Type *t = node->inherits_concrete ();
           AST_ValueType *v =
             AST_ValueType::narrow_from_decl (t);
-            
+
           if (v != 0)
             {
               this->visit_valuetype_impl (v);
@@ -410,12 +410,12 @@ namespace CIAO
     ir_simulator_visitor::visit_component (AST_Component *node)
     {
       XMI_TRACE ("component");
-      
+
       if (!this->do_i_care (node))
         {
           return 0;
         }
-      
+
       Incr_Guard guard (this->associating_);
 
       if (!this->associating_)
@@ -461,7 +461,7 @@ namespace CIAO
 
       return 0;
     }
-    
+
     int
     ir_simulator_visitor::visit_component_fwd (AST_ComponentFwd *node)
     {
@@ -565,12 +565,12 @@ namespace CIAO
     ir_simulator_visitor::visit_home (AST_Home *node)
     {
       XMI_TRACE ("home");
-      
+
       if (!this->do_i_care (node))
         {
           return 0;
         }
-      
+
       Incr_Guard guard (this->associating_);
 
       if (!this->associating_)
@@ -677,7 +677,7 @@ namespace CIAO
         {
           return;
         }
-      
+
       Incr_Guard guard (this->associating_);
 
       if (!this->associating_)
@@ -694,7 +694,7 @@ namespace CIAO
             }
         }
       // associating, import
-      else  
+      else
         {
           node->set_imported (false);
         }
@@ -770,12 +770,12 @@ namespace CIAO
     ir_simulator_visitor::visit_enum (AST_Enum *node)
     {
       XMI_TRACE ("enum");
-      
+
       if (!this->do_i_care (node))
         {
           return 0;
         }
-      
+
       Incr_Guard guard (this->associating_);
 
       if (!this->associating_)
@@ -845,11 +845,11 @@ namespace CIAO
               //              ACE_DEBUG ((LM_DEBUG, "bar"));
               node->return_type ()->ast_accept (this);
             }
-            
+
           // **** arguments
           // **** exceptions
           UTL_ExceptList *exceptions = node->exceptions ();
-          
+
           if (exceptions != 0 && exceptions->length () > 0)
             {
               for (UTL_ExceptlistActiveIterator ei (exceptions);
@@ -939,12 +939,12 @@ namespace CIAO
     ir_simulator_visitor::visit_union (AST_Union *node)
     {
       XMI_TRACE ("union");
-      
+
       if (!this->do_i_care (node))
         {
           return 0;
         }
-      
+
       Incr_Guard guard (this->associating_);
 
       if (!this->associating_)
@@ -1008,8 +1008,6 @@ namespace CIAO
     {
       XMI_TRACE ("constant");
 
-      // CDMW XMI generator does not generate XMI for constants.
-      // it, in
       return 0;
     }
 
@@ -1024,12 +1022,12 @@ namespace CIAO
     ir_simulator_visitor::visit_array (AST_Array *node)
     {
       XMI_TRACE ("array val");
-      
+
       if (!this->do_i_care (node))
         {
           return 0;
         }
-      
+
       Incr_Guard guard (this->associating_);
 
       if (!this->associating_)
@@ -1133,7 +1131,7 @@ namespace CIAO
     ir_simulator_visitor::visit_root (AST_Root *node)
     {
       XMI_TRACE ("root");
-      
+
       try
         {
           this->visit_scope (node);
@@ -1155,7 +1153,7 @@ namespace CIAO
 
           return -1;
         }
-        
+
       return 0;
     }
 
