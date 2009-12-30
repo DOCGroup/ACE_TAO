@@ -322,34 +322,20 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
   try
     {
       DAnCE::Logger_Service
-        * dlf = ACE_Dynamic_Service<DAnCE::Logger_Service>::instance ("DAnCE_Logger_Backend_Factory");
+        * dlf = ACE_Dynamic_Service<DAnCE::Logger_Service>::instance ("DAnCE_Logger");
 
-      if (!dlf)
+      if (dlf)
         {
-          dlf = new DAnCE::Logger_Service;
-          logger.reset (dlf);
+          dlf->init (argc, argv);
         }
-
-      dlf->init (argc, argv);
 
       DANCE_DEBUG (9, (LM_TRACE, DLINFO
                     "Module_main.h - initializing ORB\n"));
 
       CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
-      ACE_Log_Msg_Backend * backend = dlf->get_logger_backend(orb);
-
-      if (backend != 0)
-        {
-          backend->open(0);
-          ACE_Log_Msg::msg_backend (backend);
-          ACE_Log_Msg * ace = ACE_Log_Msg::instance();
-          ace->clr_flags(ace->flags());
-          ace->set_flags(ACE_Log_Msg::CUSTOM);
-        }
-
       Options options;
-      int error = options.parse_args (argc, argv);
+      int const error = options.parse_args (argc, argv);
       if (error == -1)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO "repository_manager_admin_exec::main - "

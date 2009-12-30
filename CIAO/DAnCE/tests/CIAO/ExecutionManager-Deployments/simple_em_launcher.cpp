@@ -27,16 +27,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   DANCE_DISABLE_TRACE ();
 
-  auto_ptr<DAnCE::Logger_Service> logger;
-
   DAnCE::Logger_Service
-    * dlf = ACE_Dynamic_Service<DAnCE::Logger_Service>::instance ("DAnCE_Logger_Backend_Factory");
+    * dlf = ACE_Dynamic_Service<DAnCE::Logger_Service>::instance ("DAnCE_Logger");
 
-  if (!dlf)
-    dlf = new DAnCE::Logger_Service;
-
-  logger.reset (dlf);
-  logger->init (argc, argv);
+  if (dlf)
+    {
+      dlf->init (argc, argv);
+    }
 
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 

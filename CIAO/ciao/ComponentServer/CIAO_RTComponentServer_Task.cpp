@@ -68,16 +68,12 @@ namespace CIAO
       CIAO_TRACE ("CIAO_RTComponentServer_Task::CIAO_RTComponentServer_Task");
 
       Logger_Service
-        *clf = ACE_Dynamic_Service<Logger_Service>::instance ("CIAO_Logger_Backend_Factory");
+        *clf = ACE_Dynamic_Service<Logger_Service>::instance ("CIAO_Logger");
 
-      if (!clf)
+      if (clf)
         {
-          clf = new Logger_Service;
+          clf->init (argc, argv);
         }
-
-      this->logger_.reset (clf);
-
-      this->logger_->init (argc, argv);
 
       CIAO_DEBUG (9, (LM_TRACE, CLINFO
                    "CIAO_RTComponentServer_Task::CIAO_RTComponentServer_Task - "
@@ -86,8 +82,6 @@ namespace CIAO
       this->orb_ = CORBA::ORB_init (argc, argv);
 
       this->parse_args (argc, argv);
-
-      this->configure_logging_backend ();
 
       CIAO::Server_init (this->orb_.in ());
 
@@ -421,24 +415,6 @@ namespace CIAO
                    "\t-d|--dynamic <number>\t\tNumber of dynamic threads to run\n"
                    ));
 
-    }
-
-    void
-    RTComponentServer_Task::configure_logging_backend (void)
-    {
-      Logger_Service
-        *clf = ACE_Dynamic_Service<Logger_Service>::instance ("CIAO_Logger_Backend_Factory");
-      if (clf)
-        {
-          CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTComponentServer_Task::configure_logging_backend - "
-                       "Replacing logger backend\n"));
-          ACE_Log_Msg_Backend * backend = clf->get_logger_backend(this->orb_);
-          backend->open(0);
-          ACE_Log_Msg::msg_backend (backend);
-          ACE_Log_Msg * ace = ACE_Log_Msg::instance();
-          ace->clr_flags(ace->flags());
-          ace->set_flags(ACE_Log_Msg::CUSTOM);
-        }
     }
   }
 }

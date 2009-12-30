@@ -9,8 +9,8 @@
 #ifndef DANCE_MODULE_MAIN_H_
 #define DANCE_MODULE_MAIN_H_
 
-#include "ace/Auto_Ptr.h"
 #include "ace/Dynamic_Service.h"
+#include "tao/ORB.h"
 #include "tao/Object.h"
 #include "DAnCE/Logger/Log_Macros.h"
 #include "DAnCE/Logger/Logger_Service.h"
@@ -25,44 +25,27 @@
 
 //#include DANCE_MODULE_MAIN_INCLUDE_NAME
 
-using namespace DAnCE;
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   DANCE_DISABLE_TRACE ();
 
-  auto_ptr<Logger_Service> logger;
   int retval = 0;
 
   try
     {
-      Logger_Service
-        * dlf = ACE_Dynamic_Service<Logger_Service>::instance ("DAnCE_Logger_Backend_Factory");
+      DAnCE::Logger_Service
+        * dlf = ACE_Dynamic_Service<DAnCE::Logger_Service>::instance ("DAnCE_Logger");
 
-      if (!dlf)
+      if (dlf)
         {
-          dlf = new Logger_Service;
-          logger.reset (dlf);
+          dlf->init (argc, argv);
         }
-
-      dlf->init (argc, argv);
 
       DANCE_DEBUG (6, (LM_TRACE, DLINFO
                     ACE_TEXT("Module_main.h - initializing ORB\n")));
 
       CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
-
-      ACE_Log_Msg_Backend * backend = dlf->get_logger_backend(orb);
-
-      if (backend != 0)
-        {
-          backend->open(0);
-          ACE_Log_Msg::msg_backend (backend);
-          ACE_Log_Msg * ace = ACE_Log_Msg::instance();
-          ace->clr_flags(ace->flags());
-          ace->set_flags(ACE_Log_Msg::CUSTOM);
-        }
 
       DANCE_DEBUG (6, (LM_TRACE, DLINFO
                    ACE_TEXT("Module_Main.h - initializing module instance\n")));

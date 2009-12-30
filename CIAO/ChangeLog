@@ -1,3 +1,28 @@
+Wed Dec 30 12:50:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ComponentServer.cpp
+        * ciao/ComponentServer/CIAO_ComponentServer_Task.cpp
+        * ciao/ComponentServer/CIAO_ComponentServer_Task.h
+        * ciao/ComponentServer/CIAO_RTComponentServer_Task.cpp
+        * ciao/ComponentServer/CIAO_RTComponentServer_Task.h
+        * ciao/Logger/CIAOLoggerFactory.h
+        * ciao/Logger/File_Logger_Backend.cpp
+        * ciao/Logger/File_Logger_Backend.h
+        * ciao/Logger/Logger.mpc
+        * ciao/Logger/Logger_Service.cpp
+        * ciao/Logger/Logger_Service.h
+        * DAnCE/Deployment/Module_Main.h
+        * DAnCE/Logger/DAnCELoggerFactory.h
+        * DAnCE/Logger/File_Logger_Backend.cpp
+        * DAnCE/Logger/File_Logger_Backend.h
+        * DAnCE/Logger/Logger.mpc
+        * DAnCE/Logger/Logger_Service.cpp
+        * DAnCE/Logger/Logger_Service.h
+        * DAnCE/RepositoryManager/repository_manager_admin_exec.cpp
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/simple_em_launcher.cpp
+        * DAnCE/tests/CIAO/NodeManager-Deployments/simple_nm_launcher.cpp
+          Simplified logging infrastructure code
+
 Wed Dec 30 11:56:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:

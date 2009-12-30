@@ -5,6 +5,13 @@
 #include "ace/CORBA_macros.h"
 #include "tao/SystemException.h"
 #include "Log_Macros.h"
+#include "ace/Service_Config.h"
+
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+// Needed to set ACE_LOG_MSG::msg_ostream()
+// FUZZ: disable check_for_streams_include
+#  include "ace/streams.h"
+#endif /* !ACE_LACKS_IOSTREAM_TOTALLY */
 
 namespace DAnCE
   {
@@ -39,9 +46,47 @@ namespace DAnCE
         DANCE_DISABLE_TRACE ();
       }
 
+    if (this->filename_.length () > 0)
+      {
+#if defined (ACE_LACKS_IOSTREAM_TOTALLY)
+
+        FILE* output_stream = ACE_OS::fopen (this->filename_.c_str (), ACE_TEXT ("a"));
+
+        ACE_LOG_MSG->msg_ostream (output_stream, 1);
+
+#else /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+
+        ofstream* output_stream = 0;
+
+        //
+        // note: we are allocating dynamic memory here....but
+        // I assume it will persist for the life of the program
+        //
+
+        ACE_NEW_THROW_EX (output_stream,
+                          ofstream (),
+                          CORBA::NO_MEMORY (
+                            CORBA::SystemException::_tao_minor_code (
+                              0,
+                              ENOMEM),
+                            CORBA::COMPLETED_NO));
+
+        output_stream->open (ACE_TEXT_ALWAYS_CHAR (this->filename_.c_str ()),
+                             ios::out | ios::app);
+
+        if (!output_stream->bad ())
+          {
+            ACE_LOG_MSG->msg_ostream (output_stream, 1);
+          }
+
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+
+        ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER);
+        ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
+      }
+
     return 0;
   }
-
 
   void
   Logger_Service::parse_args (int argc, ACE_TCHAR **argv)
@@ -88,22 +133,19 @@ namespace DAnCE
       }
   }
 
-  ACE_Log_Msg_Backend *
-  Logger_Service::get_logger_backend (CORBA::ORB_ptr)
+  int
+  Logger_Service::Initializer (void)
   {
-    if (this->filename_ != ACE_TEXT(""))
-      {
-        File_Logger_Backend * the_backend = 0;
-        ACE_NEW_THROW_EX (the_backend,
-                          File_Logger_Backend (this->filename_.c_str()),
-                          CORBA::NO_MEMORY());
-        return the_backend;
-      }
-    return 0;
+    return ACE_Service_Config::process_directive (ace_svc_desc_Logger_Service);
   }
-
 } // DAnCE
 
 using namespace DAnCE;
+ACE_STATIC_SVC_DEFINE (Logger_Service,
+                       ACE_TEXT ("DAnCE_Logger"),
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (Logger_Service),
+                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+                       0)
 ACE_FACTORY_DEFINE (DAnCE_Logger, Logger_Service)
 
