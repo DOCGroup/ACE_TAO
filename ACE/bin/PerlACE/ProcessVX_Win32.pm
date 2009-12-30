@@ -408,16 +408,4 @@ sub Kill ()
     $self->{RUNNING} = 0;
 }
 
-sub IgnoreHostRoot
-{
-    my $self = shift;
-
-    if (@_ != 0) {
-        $self->{IGNOREHOSTROOT} = shift;
-    }
-
-    return $self->{IGNOREHOSTROOT};
-}
-
-
 1;
