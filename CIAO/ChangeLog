@@ -1,3 +1,25 @@
+Wed Dec 30 10:31:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplication/ComponentAttributesSetter.cpp:
+          Removed commented out code
+
+        * AnCE/NodeApplication/NodeApplication.mpc:
+          Removed commented out lines
+
+        * DAnCE/NodeApplication/ServerActivator_Impl.cpp:
+        * DAnCE/NodeApplication/ServerActivator_Impl.h:
+          Removed, not used
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
+          Removed commented out code
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
+          Const changes
+
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.cpp:
+          Removed commented out code
+
 Wed Dec 30 08:14:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Deployment/Module_Main.h:

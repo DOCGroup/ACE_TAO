@@ -434,12 +434,6 @@ namespace CIAO
                 ACE_TEXT_CHAR_TO_TCHAR (node->supports ()[i]->repoID ())));
             }
 
-          /* NOTE: CDMW XMI generator ignores supports specifications.
-          // Supports
-          if (node->n_supports () != 0)
-          throw Error ("ValueTypes which support are not currently supported.", node);
-          */
-
           ES_Guard oe_guard (LITERALS[OWNEDELEMENT_TAG], this);
 
           this->cached_type_ = node;
