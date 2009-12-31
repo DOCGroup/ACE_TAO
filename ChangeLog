@@ -1,3 +1,9 @@
+Thu Dec 31 17:24:14 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/wrapper_macros.GNU: If both static_libs_only
+          and shared_libs_only are set, report the error and stop. Thanks to
+          Howard Finer for reporting this.
+
 Mon Dec  7 16:09:18 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * tests/Basic_Types_Test.cpp: Add a verification for the endianness
