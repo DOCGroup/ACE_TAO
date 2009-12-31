@@ -1,3 +1,9 @@
+Thu Dec 31 17:24:14 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/wrapper_macros.GNU: If both static_libs_only
+          and shared_libs_only are set, report the error and stop. Thanks to
+          Howard Finer for reporting this.
+
 Thu Dec 31 12:27:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
