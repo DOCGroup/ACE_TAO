@@ -3,6 +3,7 @@
 #include "tao/ORB.h"
 #include "tao/Object.h"
 #include "tao/SystemException.h"
+#include "ace/Get_Opt.h"
 
 ACE_RCSID(Bug_2869_Regression, client, "$Id$")
 
