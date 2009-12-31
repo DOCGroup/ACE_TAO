@@ -146,8 +146,8 @@ namespace CIAO_Getter_Test_Receiver_Impl
                                   this->getter_->time_out ().sec,
                                   this->getter_->time_out ().nanosec));
 
-    GetterTest_Seq *gettertest_seq;
-    ::CCM_DDS::ReadInfoSeq *readinfo;
+    GetterTest_Seq *gettertest_seq = 0;
+    ::CCM_DDS::ReadInfoSeq *readinfo = 0;
     bool result = this->getter_->get_many (gettertest_seq, readinfo);
     if (result)
       {
@@ -320,7 +320,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
                                           "Expected to return no data.\n"));
           }
       }
-    catch (const CCM_DDS::InternalError& )
+    catch (const CCM_DDS::InternalError&)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: TIMEOUT GET MANY: "
                                "Caught unexcepted InternalError "
