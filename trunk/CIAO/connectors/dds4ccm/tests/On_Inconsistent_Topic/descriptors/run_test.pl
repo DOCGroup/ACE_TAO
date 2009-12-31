@@ -170,7 +170,12 @@ $daemons_running = 1;
 print "Invoking execution manager (dance_execution_manager.exe) with -e$ior_emfile\n";
 $EM = $tg_exe_man->CreateProcess ("$DANCE_ROOT/bin/dance_execution_manager",
                                     "-e$ior_emfile --domain-nc corbaloc:rir:/NameService");
-$EM->Spawn ();
+$em_status = $EM->Spawn ();
+
+if ($em_status != 0) {
+    print STDERR "ERROR: dance_execution_manager returned $em_status";
+    exit 1;
+}
 
 if ($tg_exe_man->WaitForFileTimed ($ior_embase,
                                 $tg_exe_man->ProcessStartWaitInterval ()) == -1) {
@@ -188,7 +193,13 @@ print "Invoking executor - launch the application -\n";
 print "Start dance_plan_launcher.exe with -x $cdp_file -k file://$ior_emfile\n";
 $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
                         "-x $cdp_file -k file://$ior_emfile");
-$E->SpawnWaitKill (3 * $tg_executor->ProcessStartWaitInterval ());
+$pl_status = $E->SpawnWaitKill (2 * $tg_executor->ProcessStartWaitInterval ());
+
+if ($pl_status != 0) {
+    print STDERR "ERROR: dance_plan_launcher returned $pl_status\n";
+    kill_open_processes ();
+    exit 1;
+}
 
 for ($i = 0; $i < $nr_daemon; ++$i) {
     if ($tg_daemons[$i]->WaitForFileTimed ($iorbases[$i],
@@ -208,7 +219,7 @@ print "by running dance_plan_launcher.exe with -k file://$ior_emfile -x $cdp_fil
 
 $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
                         "-k file://$ior_emfile -x $cdp_file -q");
-$E->SpawnWaitKill (3 * $tg_executor->ProcessStartWaitInterval ());
+$E->SpawnWaitKill (2 * $tg_executor->ProcessStartWaitInterval ());
 
 print "Executor returned.\n";
 print "Shutting down rest of the processes.\n";

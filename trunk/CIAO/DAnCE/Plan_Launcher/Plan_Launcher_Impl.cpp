@@ -92,6 +92,7 @@ void Plan_Launcher_Impl::execute()
       this->write_cdr_plan_file(this->cdr_dest_url_.c_str(), plan);
     }
 }
+
 void Plan_Launcher_Impl::stop_plan()
 {
   DANCE_TRACE ("Plan_Launcher_Impl::stop_plan");

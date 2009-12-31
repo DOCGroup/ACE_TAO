@@ -55,6 +55,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
       CORBA::Object_var obj = module_instance.create_object (orb.in (),
                                                              argc,
                                                              argv);
+
 #ifndef DANCE_MODULE_MAIN_SKIP_ORB_RUN
       if (!CORBA::is_nil (obj.in ()))
         {
@@ -63,15 +64,14 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
       else
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO
-                       ACE_TEXT("Module_Main.h - No object created.\n")));
+                       ACE_TEXT("Module_Main.h - Error: No object created.\n")));
           retval = -1;
         }
-
       DANCE_DEBUG (6, (LM_TRACE, DLINFO
                    ACE_TEXT("Module_Main.h - ORB event loop finished, exiting.\n")));
+#endif
 
       orb->destroy ();
-#endif
     }
   catch (const CORBA::Exception& ex)
     {
@@ -80,7 +80,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_ERROR, "Module_Main.h - Unknown exception.\n"));
+      DANCE_ERROR (1, (LM_ERROR, "Module_Main.h - Error: Unknown exception.\n"));
       retval = -1;
     }
 
