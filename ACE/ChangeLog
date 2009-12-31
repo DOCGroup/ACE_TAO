@@ -1,3 +1,8 @@
+Thu Dec 31 20:54:51 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/High_Res_Timer.cpp (get_cpuinfo): Don't use a CPU MHz value 0.
+          I got a customer report with a real cpuinfo file showing 0.
+
 Thu Dec 31 17:46:10 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * bin/MakeProjectCreator/config/ace_fl.mpb: Rather than add
