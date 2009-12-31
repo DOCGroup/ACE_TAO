@@ -1453,7 +1453,7 @@ sub check_for_bad_run_test ()
                         print_error ("$file:$.: using ACE_RUN_VX_TGTHOST, use TestTarget::HostName");
                     }
 
-                    if (m/Spawn(Wait(Kill)?)?\s*\(.+\->ProcessStop\)/) {
+                    if (m/Spawn(Wait(Kill)?)?\s*\(.+\->ProcessStop.*\)/) {
                         print_error ("$file:$.: uses Stop together with Spawn");
                     }
 

@@ -1,3 +1,8 @@
+Thu Dec 31 12:27:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Fixed fuzz check for Spawn with Stop
+
 Wed Dec 30 08:41:03 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/Sig_Handler.cpp:
