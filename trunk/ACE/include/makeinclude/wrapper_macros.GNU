@@ -729,8 +729,12 @@ ifeq ($(static_libs_only),0)
 endif # static_libs_only
 
 ifdef shared_libs_only
-  override shared_libs = 1
-  override static_libs =
+  ifdef static_libs_only
+    $(error Both static_libs_only and shared_libs_only defined.)
+  else
+    override shared_libs = 1
+    override static_libs =
+  endif
 endif # shared_libs_only
 ifdef static_libs_only
   override shared_libs =
