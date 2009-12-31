@@ -1,3 +1,9 @@
+Thu Dec 31 17:46:10 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * bin/MakeProjectCreator/config/ace_fl.mpb: Rather than add
+          PLATFORM_GL_LDFLAGS twice, one should be PLATFORM_X11_LDFLAGS.
+          Thanks to Aaron Scamehorn for catching this.
+
 Thu Dec 31 17:24:14 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/wrapper_macros.GNU: If both static_libs_only
