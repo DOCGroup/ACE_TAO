@@ -150,7 +150,7 @@ print STDERR "Starting Naming Service with -m 0 -ORBEndpoint iiop://localhost:60
 
 $ns_status = $NS->Spawn ();
 
-if ($status != 0) {
+if ($ns_status != 0) {
     print STDERR "ERROR: Unable to execute the naming service\n";
     kill_open_processes ();
     exit 1;
