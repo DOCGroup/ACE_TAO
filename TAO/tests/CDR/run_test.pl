@@ -26,7 +26,7 @@ while (($test,$args) = each %tests) {
     $TST = $target->CreateProcess ($test, $args);
     print STDERR "\tRUNNING $test\n";
 
-    $retval = $TST->SpawnWaitKill ($target->ProcessStopWaitInterval() + 60);
+    $retval = $TST->SpawnWaitKill ($target->ProcessStartWaitInterval() + 60);
 
     if ($retval != 0) {
         print STDERR "ERROR $brace $test $args, exit value $retval\n";
