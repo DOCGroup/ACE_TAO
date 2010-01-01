@@ -72,7 +72,7 @@ $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45); 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
     $SHUTDOWN = $client->CreateProcess ("Bug3333_Client", " -k file://$server_iorfile -s");
-    $SHUTDOWN->SpawnWaitKill ($client->ProcessStartWaitInterval()+$client->ProcessStopWaitInterval()+10);
+    $SHUTDOWN->SpawnWaitKill ($client->ProcessStartWaitInterval() + 25);
     $status = 1;
 }
 
