@@ -132,7 +132,7 @@ if ($client_status != 0) {
 
 $CL1->Arguments ("-i 100 -x -k file://$client1_iorfile");
 
-$client_status = $CL1->SpawnWaitKill ($client1->ProcessStopWaitInterval());
+$client_status = $CL1->SpawnWaitKill ($client1->ProcessStartWaitInterval());
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
