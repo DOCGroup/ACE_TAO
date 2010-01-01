@@ -62,13 +62,13 @@ namespace CIAO_Updater_Sender_Impl
     catch(const CCM_DDS::AlreadyCreated &)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: AlreadyCreated with test updater create_one <%C>.\n"),
-                      i.key.in()));   
+                      i.key.in()));
       result= false;
     }
     catch (const CCM_DDS::InternalError& )
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while create_one for <%C>.\n"),
-                      i.key.in()));   
+                      i.key.in()));
       result = false;;
     }
     return result;
@@ -79,7 +79,7 @@ namespace CIAO_Updater_Sender_Impl
   {
     CORBA::Boolean result = false;
     TestTopic i = this->topic_seq_one_[0];
-    //try to create same instance again, this should erase an AlreadyCreated exception 
+    //try to create same instance again, this should erase an AlreadyCreated exception
     try
     {
       this->updater_->create_one(i);
@@ -94,7 +94,7 @@ namespace CIAO_Updater_Sender_Impl
     catch (const CCM_DDS::InternalError& )
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while create_one for <%C>.\n"),
-                      i.key.in()));   
+                      i.key.in()));
       result = false;
     }
     return result;
@@ -115,13 +115,13 @@ namespace CIAO_Updater_Sender_Impl
     catch(const CCM_DDS::NonExistent &)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater update_one <%C>.\n"),
-                     i.key.in()));   
+                     i.key.in()));
       result = false;
     }
     catch (const CCM_DDS::InternalError& )
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while update_one for <%C>.\n"),
-                      i.key.in()));   
+                      i.key.in()));
       result = false;
     }
     return result;
@@ -129,10 +129,10 @@ namespace CIAO_Updater_Sender_Impl
 
   CORBA::Boolean
   Sender_exec_i::update_one_not_registered()
-  {    
+  {
     //update a not yet registered instance,expext a NonExistent exception
     CORBA::Boolean result = false;
-     //use second instance of table 
+     //use second instance of table
     TestTopic i = this->topic_seq_one_[1];
     try
     {
@@ -148,7 +148,7 @@ namespace CIAO_Updater_Sender_Impl
     catch (const CCM_DDS::InternalError& )
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while update_one for <%C>.\n"),
-                      i.key.in())); 
+                      i.key.in()));
       result = false;
     }
     return result;
@@ -169,13 +169,13 @@ namespace CIAO_Updater_Sender_Impl
     catch(const CCM_DDS::NonExistent &)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater delete_one <%C>.\n"),
-                     i.key.in()));   
+                     i.key.in()));
       result = false;
     }
     catch (const CCM_DDS::InternalError& )
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while delete_one for <%C>.\n"),
-                      i.key.in())); 
+                      i.key.in()));
       result = false;
     }
     return result;
@@ -201,7 +201,7 @@ namespace CIAO_Updater_Sender_Impl
     catch (const CCM_DDS::InternalError& )
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while delete_one for <%C>.\n"),
-                     i.key.in())); 
+                     i.key.in()));
       result = false;
     }
     return result;
@@ -218,29 +218,29 @@ namespace CIAO_Updater_Sender_Impl
     try
     {
       if(hnd.isValid)
-        {  
+        {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: update a new  instance after registrating instance, key <%C>\n"),
                       i.key.in()));
           this->updater_->update_one(i, hnd);
-       
+
         }
       else
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, invalid handle for <%C>.\n"),
-                        i.key.in())); 
+                        i.key.in()));
           result =  false;
         }
     }
     catch(const CCM_DDS::NonExistent &)
     {
        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater update_one using handle <%C>.\n"),
-                     i.key.in()));   
+                     i.key.in()));
        result =  false;
     }
     catch (const CCM_DDS::InternalError& )
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while update_one for <%C>.\n"),
-                      i.key.in())); 
+                      i.key.in()));
       result = false;
     }
     //update an instance with an instance_handler belonging to an other instance
@@ -255,10 +255,10 @@ namespace CIAO_Updater_Sender_Impl
       }
       catch(const CCM_DDS::NonExistent &)
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater update_one with incompatible datum and handle.\n")));   
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater update_one with incompatible datum and handle.\n")));
         result =  false;
       }
-	  catch (CCM_DDS::InternalError& ex )
+    catch (const CCM_DDS::InternalError& ex )
       {
 		  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK: Expected : Exception InternalE. test updater update_one with incompatible datum and handle. ex %d\n"),ex.error_code));
         result = true;
@@ -273,16 +273,16 @@ namespace CIAO_Updater_Sender_Impl
                     i.key.in()));
          this->updater_->delete_one(i, hnd);
       }
-     
+
       catch (const CCM_DDS::NonExistent &)
       {
-         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater delett_one with valid handler.\n")));   
+         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater delett_one with valid handler.\n")));
          result =  false;
       }
       catch (const CCM_DDS::InternalError& )
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while delete_one for <%C>.\n"),
-                      i.key.in())); 
+                      i.key.in()));
         result = false;
       }
     }
@@ -303,26 +303,26 @@ namespace CIAO_Updater_Sender_Impl
     }
     catch(const CCM_DDS::NonExistent& )
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater create_many\n")));   
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater create_many\n")));
     }
     catch (const CCM_DDS::InternalError& ex)
     {
        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
                    ACE_TEXT ("in updater: create_many: index <%d> - retval <%d>\n"),
                    ex.index, ex.error_code));
-          
+
     }
     if(result==true)
       {
         result = false;
         //test create_many  with AlreadyCreated exception
-        
+
         try
         {
            this->updater_->create_many (this->topic_seq_many_);
            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("create_many which are already created : <%u> samples\n"),
                          this->topic_seq_many_.length ()));
-      
+
         }
         catch (const CCM_DDS::NonExistent & )
         {
@@ -359,7 +359,7 @@ namespace CIAO_Updater_Sender_Impl
     }
     catch(const CCM_DDS::NonExistent& )
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater update_many.\n")));   
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater update_many.\n")));
       result = false;
     }
     catch (const CCM_DDS::InternalError& ex)
@@ -373,7 +373,7 @@ namespace CIAO_Updater_Sender_Impl
       {
         result = false;
        //update with exception
-       // make from the second and third instances a unregistered instance , see above  
+       // make from the second and third instances a unregistered instance , see above
         char key[7];
         TestTopic test_key;
         ACE_OS::sprintf (key, "XXX_%d",2);
@@ -398,7 +398,7 @@ namespace CIAO_Updater_Sender_Impl
 
           if((ex.indexes.length() != 2) || (ex.indexes[0] != 1) ||(ex.indexes[1] != 2))
             {
-              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Create_maney:expected exception: NonExistent gives wrong indexes.\n")));   
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Create_maney:expected exception: NonExistent gives wrong indexes.\n")));
               result = false;
             }
           else
@@ -413,7 +413,7 @@ namespace CIAO_Updater_Sender_Impl
         }
         catch (const CCM_DDS::AlreadyCreated & )
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: AlreadyCreated with test update_many with not registerd instances.\n")));   
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: AlreadyCreated with test update_many with not registerd instances.\n")));
           result = false;
         }
       }
@@ -426,7 +426,7 @@ namespace CIAO_Updater_Sender_Impl
     CORBA::Boolean result = false;
     result = false;
     //delete_many with exception
-    // make from the second and third instances a unregistered instance 
+    // make from the second and third instances a unregistered instance
     try
     {
       this->updater_->delete_many (this->topic_seq_many_);
@@ -441,7 +441,7 @@ namespace CIAO_Updater_Sender_Impl
 
       if((ex.indexes.length() != 2) || (ex.indexes[0] != 1) ||(ex.indexes[1] != 2))
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Create_many:expected exception: NonExistent gives wrong indices.\n")));   
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Create_many:expected exception: NonExistent gives wrong indices.\n")));
           result = false;
         }
         else
@@ -458,15 +458,15 @@ namespace CIAO_Updater_Sender_Impl
     }
     catch (const CCM_DDS::AlreadyCreated &)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: AlreadyCreated  with test updater delete_many.\n")));   
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: AlreadyCreated  with test updater delete_many.\n")));
       result = false;
     }
     if(result==true)
-    { 
+    {
     //delete many with no exception
-    //reset instances to original values   
+    //reset instances to original values
       for (int i = 1; i < 4; i++)
-        {  
+        {
           char key[7];
           TestTopic new_key;
           ACE_OS::sprintf (key, "many_%d", i);
@@ -478,13 +478,13 @@ namespace CIAO_Updater_Sender_Impl
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("delete_many : deleted <%u> samples\n"),
                                           this->topic_seq_many_.length ()));
- 
+
         this->updater_->delete_many (this->topic_seq_many_);
         result = true;
       }
       catch(const CCM_DDS::NonExistent& )
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater delete_many\n")));   
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater delete_many\n")));
         result = false;
       }
       catch (const CCM_DDS::InternalError& ex)
@@ -494,7 +494,7 @@ namespace CIAO_Updater_Sender_Impl
                    ex.index, ex.error_code));
         result = false;
       }
-    } 
+    }
     return result;
   }
 
@@ -506,7 +506,7 @@ namespace CIAO_Updater_Sender_Impl
     this->topic_seq_one_.length (total);
     //sequence for tests with .._one
     for (int i = 1; i < (total + 1); i++)
-      {  
+      {
         char key[7];
         TestTopic new_key;
         ACE_OS::sprintf (key, "KEY_%d", i);
@@ -517,7 +517,7 @@ namespace CIAO_Updater_Sender_Impl
     //sequence for tests with .._many
     this->topic_seq_many_.length (total);
     for (int i = 1; i < (total + 1); i++)
-      {  
+      {
         char key[7];
         TestTopic new_key;
         ACE_OS::sprintf (key, "many_%d", i);
@@ -634,7 +634,7 @@ namespace CIAO_Updater_Sender_Impl
   {
     this->updater_  = this->context_->get_connection_test_topic_update_data ();
   }
-  
+
   void
   Sender_exec_i::ccm_activate (void)
   {
@@ -652,8 +652,8 @@ namespace CIAO_Updater_Sender_Impl
   Sender_exec_i::ccm_remove (void)
   {
     if(!this->test_ok_.value())
-      {   
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Error in Updater in Sender"))); 
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Error in Updater in Sender")));
       }
   }
 
