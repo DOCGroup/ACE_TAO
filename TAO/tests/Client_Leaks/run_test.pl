@@ -25,7 +25,7 @@ if ($target->WaitForFileTimed($iorfile, $target->ProcessStartWaitInterval ()) ==
     exit 1;
 }
 
-$client = $CL->SpawnWaitKill ($target->ProcessStopWaitInterval () + 585);
+$client = $CL->SpawnWaitKill ($target->ProcessStartWaitInterval () + 585);
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";
