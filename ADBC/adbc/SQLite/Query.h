@@ -125,6 +125,9 @@ private:
 
   /// Collection of parameters for this query.
   Parameter_List params_;
+
+  /// Record associated with the statement.
+  Record record_;
 };
 }
 }

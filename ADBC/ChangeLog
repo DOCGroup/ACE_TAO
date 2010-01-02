@@ -1,3 +1,15 @@
+Sat Jan  2 02:23:02 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * adbc/SQLite/Query.h:
+        * adbc/SQLite/Query.inl:
+        * adbc/SQLite/Query.cpp:
+        * adbc/SQLite/Record.h:
+        * adbc/SQLite/Record.inl:
+
+          execute () no longer allocates a record for each query
+          executed. Instead, it return an embedded record, which
+          should not be deallocated () by the client.
+
 Wed Dec 30 22:54:02 UTC 2009  James H. Hill  <hillj@dre.vanderbilt.edu>
 
         * adbc/SQLite/Query.h:

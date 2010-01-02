@@ -60,6 +60,10 @@ void Query::execute_no_record (void)
 
   // Execute the SQL statement.
   int retval = ::sqlite3_step (this->stmt_);
+
+  if (retval == SQLITE_ERROR)
+    throw Exception (this->parent_);
+
   this->needs_reseting_ = true;
 
   if (retval != SQLITE_DONE)
@@ -80,14 +84,14 @@ Record * Query::execute (void)
   // Initialize the cursor for the record.
   int retval = ::sqlite3_step (this->stmt_);
 
-  Record * record = 0;
+  if (retval == SQLITE_ERROR)
+    throw Exception (this->parent_);
 
-  ACE_NEW_THROW_EX (record,
-                    Record (*this, retval),
-                    ACE_bad_alloc ());
-
+  // Update the record's state for the new query.
+  this->record_.state_ = retval;
   this->needs_reseting_ = true;
-  return record;
+
+  return &this->record_;
 }
 
 //
