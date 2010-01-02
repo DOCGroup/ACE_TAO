@@ -126,5 +126,16 @@ void Query::reset (void)
   this->needs_reseting_ = false;
 }
 
+//
+// count
+//
+size_t Query::count (void) const
+{
+  if (0 == this->parent_.conn_)
+    throw Exception ("invalid database connection");
+
+  return ::sqlite3_changes (this->parent_.conn_);
+}
+
 }
 }

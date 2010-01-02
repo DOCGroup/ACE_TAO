@@ -37,13 +37,6 @@ public:
   virtual ~Record (void);
 
   /**
-   * Get the number of records in the result.
-   *
-   * @return Number of records.
-   */
-  virtual size_t count (void) const = 0;
-
-  /**
    * Get the number of columns in the result.
    *
    * @return Number of columns.
