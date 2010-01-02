@@ -13,7 +13,8 @@ Query::Query (Connection & parent)
 : parent_ (parent),
   stmt_ (0),
   needs_reseting_ (false),
-  params_ (*this)
+  params_ (*this),
+  record_ (*this)
 {
 
 }
