@@ -38,13 +38,6 @@ public:
   virtual ~Record (void);
 
   /**
-   * Get the number of rows in the record. Right now, this always
-   * returns 0 since there is no way to determine the number of
-   * rows in a record using SQLite.
-   */
-  virtual size_t count (void) const;
-
-  /**
    * Get the number of columns in the record.
    *
    * @return        Number of columns.

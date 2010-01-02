@@ -24,14 +24,5 @@ Record::~Record (void)
 {
 
 }
-
-//
-// count
-//
-ADBC_INLINE
-size_t Record::count (void) const
-{
-  return -1;
-}
 }
 }

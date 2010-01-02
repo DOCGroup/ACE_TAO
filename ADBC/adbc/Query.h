@@ -109,6 +109,15 @@ public:
   /// Reset the query string.
   virtual void reset (void) = 0;
 
+  /**
+   * Determine the number of rows affected by the query. This method
+   * is useful for DELETE, INSERT, and UPDATE statements. It should
+   * not be used to determine the number of rows in a record after
+   * executing a SELECT statement since it may result in unreliable
+   * results depending on the driver.
+   */
+  virtual size_t count (void) const = 0;
+
 private:
   // prevent the following operations
   Query (const Query &);

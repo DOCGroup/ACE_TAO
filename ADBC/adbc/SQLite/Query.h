@@ -105,8 +105,13 @@ public:
    */
   virtual long last_insert_id (void);
 
+  // Get the number of rows affects by last SQL statement.
+  virtual size_t count (void) const;
+
+  // Get a list of the parameters.
   virtual Parameter_List & parameters (void);
 
+  // Get a read-only list of the parameters.
   virtual const Parameter_List & parameters (void) const;
 
   /// Reset the query string.

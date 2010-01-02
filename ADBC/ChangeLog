@@ -1,3 +1,16 @@
+Sat Jan  2 16:23:29 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * adbc/Query.h:
+        * adbc/Record.h:
+        * adbc/SQLite/Query.h:
+        * adbc/SQLite/Query.cpp:
+        * adbc/SQLite/Record.h:
+        * adbc/SQLite/Record.inl:
+
+          Moved the count () method from the Record class to the
+          Query class since it has no meaning on the SELECT SQL
+          statement, which results in a Record object for iteration.
+
 Sat Jan  2 02:23:02 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * adbc/SQLite/Query.h:
