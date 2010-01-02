@@ -43,7 +43,7 @@ void Query::execute_no_record (const char * query)
 // execute
 //
 ADBC_INLINE
-Record * Query::execute (const char * query)
+Record & Query::execute (const char * query)
 {
   this->prepare (query);
   return this->execute ();

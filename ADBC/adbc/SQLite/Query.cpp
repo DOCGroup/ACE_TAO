@@ -73,7 +73,7 @@ void Query::execute_no_record (void)
 //
 // execute
 //
-Record * Query::execute (void)
+Record & Query::execute (void)
 {
   if (this->stmt_ == 0)
     throw Exception ();
@@ -90,8 +90,7 @@ Record * Query::execute (void)
   // Update the record's state for the new query.
   this->record_.state_ = retval;
   this->needs_reseting_ = true;
-
-  return &this->record_;
+  return this->record_;
 }
 
 //

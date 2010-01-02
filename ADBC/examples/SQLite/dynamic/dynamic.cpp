@@ -51,17 +51,17 @@ int ACE_TMAIN (int argc, char * argv [])
     query->execute_no_record (__INSERT_STMT__);
 
     // Execute a query that has a record.
-    ::ADBC::SQLite::Record * record = query->execute (__SELECT_STMT__);
+    ::ADBC::SQLite::Record & record = query->execute (__SELECT_STMT__);
 
     // View the results of the query.
     ACE_CString timeofday, firstname, middlename, surname;
 
-    for ( ; !record->done (); record->advance ())
+    for ( ; !record.done (); record.advance ())
     {
-      record->get_data (1, timeofday);
-      record->get_data (2, firstname);
-      record->get_data (3, middlename);
-      record->get_data (4, surname);
+      record.get_data (1, timeofday);
+      record.get_data (2, firstname);
+      record.get_data (3, middlename);
+      record.get_data (4, surname);
 
       std::cout << timeofday << " - "
                 << firstname << " " << middlename << " " << surname
