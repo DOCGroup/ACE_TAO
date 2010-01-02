@@ -9,9 +9,9 @@ namespace SQLite
 //
 ADBC_INLINE
 Record::
-Record (const Query & query, int state)
+Record (const Query & query)
 : query_ (query),
-  state_ (state)
+  state_ (101)      /* SQLITE_DONE */
 {
 
 }

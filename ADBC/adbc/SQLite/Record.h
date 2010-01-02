@@ -98,7 +98,7 @@ private:
    * @param[in]       query         Parent of the record
    * @param[in]       state         Initial state
    */
-  Record (const Query & query, int state);
+  Record (const Query & query);
 
   /// Parent of the record.
   const Query & query_;
