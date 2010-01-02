@@ -82,7 +82,7 @@ public:
    *
    * @return  Pointer to a record.
    */
-  virtual Record * execute (const char * query);
+  virtual Record & execute (const char * query);
 
   /**
    * Execute a prepared query. This method is useful with the query is
@@ -92,7 +92,7 @@ public:
    *
    * @return  Pointer to a record.
    */
-  virtual Record * execute (void);
+  virtual Record & execute (void);
 
   /// Cancel the current query.
   virtual void cancel (void);

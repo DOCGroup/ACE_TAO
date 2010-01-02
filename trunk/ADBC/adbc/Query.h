@@ -67,7 +67,7 @@ public:
    *
    * @return  Pointer to a record.
    */
-  virtual Record * execute (const char * query) = 0;
+  virtual Record & execute (const char * query) = 0;
 
   /**
    * Execute a prepared query. This method is useful with the query is
@@ -77,7 +77,7 @@ public:
    *
    * @return  Pointer to a record.
    */
-  virtual Record * execute (void) = 0;
+  virtual Record & execute (void) = 0;
 
   /// Cancel the current query.
   virtual void cancel (void) = 0;

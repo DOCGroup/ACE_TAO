@@ -10,6 +10,11 @@ Sat Jan  2 02:23:02 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
           executed. Instead, it return an embedded record, which
           should not be deallocated () by the client.
 
+        * examples/SQLite/dynamic/dynamic.cpp:
+        * examples/SQLite/simple/simple.cpp:
+
+          Updated the examples.
+
 Wed Dec 30 22:54:02 UTC 2009  James H. Hill  <hillj@dre.vanderbilt.edu>
 
         * adbc/SQLite/Query.h:
