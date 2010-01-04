@@ -10,11 +10,11 @@
  */
 //=============================================================================
 
-#ifndef _CUTS_DB_SQLITE_RECORD_H_
-#define _CUTS_DB_SQLITE_RECORD_H_
+#ifndef _ADBC_DB_SQLITE_RECORD_H_
+#define _ADBC_DB_SQLITE_RECORD_H_
 
-#include "SQLite_export.h"
 #include "adbc/Record.h"
+#include "SQLite_export.h"
 
 namespace ADBC
 {
@@ -106,4 +106,4 @@ private:
 #include "Record.inl"
 #endif
 
-#endif  // !defined _CUTS_DB_SQLITE_RECORD_H_
+#endif  // !defined _ADBC_DB_SQLITE_RECORD_H_

@@ -51,6 +51,9 @@ public:
   /// Make the parameter a NULL value.
   virtual void null (void);
 
+  // Test if the parameter is NULL.
+  virtual bool is_null (void) const;
+
   /**
    * Bind the parameter to a character buffer. If the size of
    * the buffer is 0, then it is buffer is NULL terminated.
@@ -122,15 +125,6 @@ public:
   void bind (::ADBC::SQLite::Date_Time * dt);
 
   /**
-   * Set the length of the parameter. This is necessary of the
-   * parameter is already bound to a buffer, and the length of the
-   * input buffer has changed.
-   *
-   * @param[in]       len         Length of the buffer.
-   */
-  virtual void length (long len);
-
-  /**
    * Get the current length/size of the parameter.
    *
    * @return          The length/size of the parameter.
@@ -157,6 +151,9 @@ private:
 
   /// List that owns the parameter.
   const Parameter_List * owner_;
+
+  /// NULL state of the parameter.
+  bool is_null_;
 };
 }
 }

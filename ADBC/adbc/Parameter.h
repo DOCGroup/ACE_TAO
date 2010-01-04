@@ -84,6 +84,11 @@ public:
    */
   Parameter (void);
 
+  /**
+   * Copy constructor.
+   *
+   * @param[in]     p         Source parameter.
+   */
   Parameter (const Parameter & p);
 
   /// Destructor.
@@ -117,7 +122,7 @@ public:
    * @retval      1       The parameter is null.
    * @retval      0       The parameter is not null.
    */
-  virtual bool is_null (void) const;
+  virtual bool is_null (void) const = 0;
 
   /// Make the parameter a NULL value.
   virtual void null (void) = 0;
@@ -196,15 +201,6 @@ public:
   virtual void bind (Date_Time * dt) = 0;
 
   /**
-   * Set the length of the parameter. This is necessary of the
-   * parameter is already bound to a buffer, and the length of the
-   * input buffer has changed.
-   *
-   * @param[in]       len         Length of the buffer.
-   */
-  virtual void length (long len) = 0;
-
-  /**
    * Get the current length/size of the parameter.
    *
    * @return          The length/size of the parameter.
@@ -215,15 +211,11 @@ protected:
   /// The index of the parameter.
   int index_;
 
-private:
   /// The parameter type.
   Parameter_Type type_;
 
   /// The direction of the parameter.
   Direction_Type direction_;
-
-  /// Null flags for the parameter.
-  bool is_null_;
 };
 }
 
@@ -231,4 +223,4 @@ private:
 #include "Parameter.inl"
 #endif
 
-#endif  // !defined _CUTS_DB_PARAMETER_H_
+#endif  // !defined _ADBC_DB_PARAMETER_H_

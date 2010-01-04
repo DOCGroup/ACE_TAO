@@ -104,4 +104,4 @@ private:
 #include "Types.inl"
 #endif
 
-#endif  // !defined _CUTS_DB_SQLITE_TYPES_H_
+#endif  // !defined _ADBC_DB_SQLITE_TYPES_H_

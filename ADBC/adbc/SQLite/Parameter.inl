@@ -10,7 +10,8 @@ namespace SQLite
 //
 ADBC_INLINE
 Parameter::Parameter (void)
-: owner_ (0)
+: owner_ (0),
+  is_null_ (true)
 {
 
 }
@@ -21,8 +22,9 @@ Parameter::Parameter (void)
 ADBC_INLINE
 Parameter::
 Parameter (const Parameter & p)
-: ::ADBC::Parameter (p),
-  owner_ (p.owner_)
+: ADBC::Parameter (p),
+  owner_ (p.owner_),
+  is_null_ (p.is_null_)
 {
 
 }
@@ -37,16 +39,12 @@ Parameter::~Parameter (void)
 }
 
 //
-// operator =
+// is_null
 //
 ADBC_INLINE
-const Parameter &
-Parameter::operator = (const Parameter & rhs)
+bool Parameter::is_null (void) const
 {
-  this->owner_ = rhs.owner_;
-  this->index_ = rhs.index_;
-
-  return *this;
+  return this->is_null_;
 }
 
 //
@@ -133,18 +131,8 @@ void Parameter::bind (ACE_UINT64 * value)
 // length
 //
 ADBC_INLINE
-void Parameter::length (long len)
-{
-  // Ingore for now...
-}
-
-//
-// length
-//
-ADBC_INLINE
 long Parameter::length (void)
 {
-  // Ingore for now...
   return 0;
 }
 

@@ -92,4 +92,4 @@ protected:
 #include "Exception.inl"
 #endif
 
-#endif  // !defined _CUTS_DB_EXCEPTION_H_
+#endif  // !defined _ADBC_DB_EXCEPTION_H_

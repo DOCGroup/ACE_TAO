@@ -16,12 +16,33 @@ namespace ADBC
 namespace SQLite
 {
 //
+// Query
+//
+ADBC_INLINE
+Query::Query (Connection & parent)
+: parent_ (parent),
+  stmt_ (0),
+  params_ (*this),
+  record_ (*this)
+{
+
+}
+
+//
 // prepare
 //
 void Query::prepare (const char * query)
 {
   size_t len = ACE_OS::strlen (query);
   this->prepare (query, len);
+}
+
+//
+// cancel
+//
+void Query::cancel (void)
+{
+  ::sqlite3_interrupt (this->parent_.conn_);
 }
 
 //
@@ -53,21 +74,13 @@ void Query::prepare (const char * query, size_t len)
 void Query::execute_no_record (void)
 {
   if (this->stmt_ == 0)
-    throw Exception ();
+    throw Exception ("SQL statement is not prepared");
 
-  if (this->needs_reseting_)
-    this->reset ();
+  // Reset the record, then execute the statement.
+  this->record_.reset ();
 
-  // Execute the SQL statement.
-  int retval = ::sqlite3_step (this->stmt_);
-
-  if (retval == SQLITE_ERROR)
-    throw Exception (this->parent_);
-
-  this->needs_reseting_ = true;
-
-  if (retval != SQLITE_DONE)
-    throw Exception (this->parent_);
+  if (!this->record_.done ())
+    throw Exception ("SQL statement was a SELECT statement");
 }
 
 //
@@ -76,29 +89,11 @@ void Query::execute_no_record (void)
 Record & Query::execute (void)
 {
   if (this->stmt_ == 0)
-    throw Exception ();
-
-  if (this->needs_reseting_)
-    this->reset ();
-
-  // Initialize the cursor for the record.
-  int retval = ::sqlite3_step (this->stmt_);
-
-  if (retval == SQLITE_ERROR)
-    throw Exception (this->parent_);
+    throw Exception ("SQL statement is not prepared");
 
   // Update the record's state for the new query.
-  this->record_.state_ = retval;
-  this->needs_reseting_ = true;
+  this->record_.reset ();
   return this->record_;
-}
-
-//
-// last_insert_id
-//
-long Query::last_insert_id (void)
-{
-  return static_cast <long> (::sqlite3_last_insert_rowid (this->parent_.conn_));
 }
 
 //
@@ -111,10 +106,7 @@ void Query::finalize (void)
 
   // Release the statements resources.
   ::sqlite3_finalize (this->stmt_);
-
-  // Reset the variables.
   this->stmt_ = 0;
-  this->needs_reseting_ = false;
 }
 
 //
@@ -122,19 +114,8 @@ void Query::finalize (void)
 //
 void Query::reset (void)
 {
-  ::sqlite3_reset (this->stmt_);
-  this->needs_reseting_ = false;
-}
-
-//
-// count
-//
-size_t Query::count (void) const
-{
-  if (0 == this->parent_.conn_)
-    throw Exception ("invalid database connection");
-
-  return ::sqlite3_changes (this->parent_.conn_);
+  //::sqlite3_reset (this->stmt_);
+  //this->needs_reseting_ = false;
 }
 
 }
