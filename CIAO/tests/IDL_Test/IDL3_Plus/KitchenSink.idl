@@ -58,7 +58,8 @@ module A
     module BadNested<typename S>
     {
       typedef S S_Tdef;
-    };*/
+    };
+*/
   };
 
   module Nested<iface, ifaceSeq> Nested_Inst;
@@ -73,7 +74,6 @@ module second<exception X, typename W>
     public long id_key;
   };
 };
-
 
 module B
 {
