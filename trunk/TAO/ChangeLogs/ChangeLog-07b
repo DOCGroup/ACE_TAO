@@ -13,7 +13,7 @@ Thu Jul 26 09:21:50 UTC 2007  Vadym Ridosh  <vridosh@prismtech.com>
 Tue Jul 24 20:38:50 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * COPYING: Updated this file to reflect 2007.
-    
+
 Wed Jul 25 08:00:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Oneway_Buffering/Oneway_Buffering_Admin.cpp:
@@ -498,6 +498,8 @@ Wed Jul 18 09:55:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
           there is a replacement (using cdr without alignment)
           and isn't really used so far as we know. With the removal
           of this we lower our footprint.
+
+          This was exposed to the end user as -GIOPLite.
 
         * tao/Strategies/SCIOP_Lite_Factory.cpp:
         * tao/Strategies/SCIOP_Lite_Factory.h:
