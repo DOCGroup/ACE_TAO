@@ -1,8 +1,14 @@
+Mon Jan  4 16:46:22 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * adbc/config.h:
+
+          Missing file.
+
 Mon Jan  4 16:44:26 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * default.features.tmpl:
 
-	  Fixed errors in the template file.
+          Fixed errors in the template file.
 
 Mon Jan  4 06:02:42 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
 
