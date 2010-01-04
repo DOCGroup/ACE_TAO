@@ -84,7 +84,7 @@ void Parameter::bind (::ADBC::Date_Time * date_time)
 {
   // Cast the object its concrete type.
   ADBC::SQLite::Date_Time * dt =
-    dynamic_cast <::ADBC::SQLite::Date_Time *> (date_time);
+    dynamic_cast < ::ADBC::SQLite::Date_Time * > (date_time);
 
   if (0 != dt)
     this->bind (dt);
