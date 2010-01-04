@@ -69,7 +69,7 @@ be_visitor_home_ex_idl::visit_home (be_home *node)
 int
 be_visitor_home_ex_idl::visit_attribute (be_attribute *node)
 {
-   bool rd_only = node->readonly ();
+   bool const rd_only = node->readonly ();
 
    // Keep output statements separate because of side effects.
    // No need to check for anonymous array - anonymous types not

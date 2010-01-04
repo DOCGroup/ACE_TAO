@@ -42,7 +42,7 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
 {
   be_union *bu =
     this->ctx_->be_node_as_union ();
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ())
     {
@@ -136,7 +136,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
   be_union *bu =
     this->ctx_->be_node_as_union ();
 
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ())
     {

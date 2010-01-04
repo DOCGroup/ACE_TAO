@@ -97,7 +97,7 @@ be_visitor_union_branch_public_reset_cs::visit_array (be_array *node)
     this->ctx_->be_node_as_union_branch ();
   be_union *bu =
     this->ctx_->be_scope_as_union ();
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ())
     {
@@ -454,7 +454,7 @@ be_visitor_union_branch_public_reset_cs::visit_structure (be_structure *node)
     this->ctx_->be_node_as_union_branch ();
   be_union *bu =
     this->ctx_->be_scope_as_union ();
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ())
     {
