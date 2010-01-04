@@ -5,7 +5,7 @@
 #include "ciao/Logger/Log_Macros.h"
 #include "AMI_MyFoo_i.h"
 
-namespace CIAO_Hello_AMI_Receiver_Impl
+namespace CIAO_Hello_AMI_Sender_Impl
 {
   AMI_MyFoo_exec_i::AMI_MyFoo_exec_i ()
   {
@@ -153,7 +153,7 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     ::Components::SessionContext_ptr ctx)
   {
     this->context_ =
-      ::Hello::CCM_AMI_Receiver_Context::_narrow (ctx);
+      ::Hello::CCM_AMI_Sender_Context::_narrow (ctx);
 
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
