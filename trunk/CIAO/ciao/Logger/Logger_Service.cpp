@@ -105,22 +105,22 @@ namespace CIAO
         switch (c)
           {
             case 't':
-              CIAO_DEBUG (9, (LM_TRACE, CLINFO ACE_TEXT("Logger_Service::parse_args - ")
-                            ACE_TEXT("Trace enabled\n"),
+              CIAO_DEBUG (9, (LM_TRACE, CLINFO "Logger_Service::parse_args - "
+                            "Trace enabled\n",
                             get_opts.opt_arg ()));
               this->trace_ = true;
               break;
 
             case 'l':
-              CIAO_DEBUG (9, (LM_TRACE, CLINFO ACE_TEXT("Logger_Service::parse_args - ")
-                            ACE_TEXT("Log level set to %s\n"),
+              CIAO_DEBUG (9, (LM_TRACE, CLINFO "Logger_Service::parse_args - "
+                            "Log level set to %s\n",
                             get_opts.opt_arg ()));
               CIAO_debug_level = ACE_OS::atoi (get_opts.opt_arg ());
               break;
 
             case 'f':
-              CIAO_DEBUG (9, (LM_TRACE, CLINFO ACE_TEXT("Logger_Service::parse_args - ")
-                            ACE_TEXT("Log file set to %s\n"),
+              CIAO_DEBUG (9, (LM_TRACE, CLINFO "Logger_Service::parse_args - "
+                            "Log file set to %s\n",
                             get_opts.opt_arg ()));
               this->filename_ = get_opts.opt_arg ();
               break;
