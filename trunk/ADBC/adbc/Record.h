@@ -39,7 +39,7 @@ public:
   /**
    * Get the number of columns in the result.
    *
-   * @return Number of columns.
+   * @return        Number of columns.
    */
   virtual size_t columns (void) const = 0;
 
@@ -48,6 +48,9 @@ public:
 
   /// Determine if the record iterator is done.
   virtual bool done (void) const = 0;
+
+  /// Reset to the first row in the record.
+  virtual void reset (void) = 0;
 
   /**
    * Get a string data value at the specified column.
@@ -141,4 +144,4 @@ private:
 #include "Record.inl"
 #endif
 
-#endif  // !defined _CUTS_DB_RECORD_H_
+#endif  // !defined _ADBC_DB_RECORD_H_

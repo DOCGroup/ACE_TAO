@@ -1,6 +1,6 @@
 // $Id$
 
-project (ADBC) : adbc_defaults {
+project (ADBC) : acelib, adbc_defaults {
   sharedname   += ADBC
   dynamicflags += ADBC_BUILD_DLL
 

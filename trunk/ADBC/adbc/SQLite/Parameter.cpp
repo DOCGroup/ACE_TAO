@@ -16,18 +16,31 @@ namespace ADBC
 namespace SQLite
 {
 //
+// operator =
+//
+const Parameter & Parameter::operator = (const Parameter & rhs)
+{
+  if (this == &rhs)
+    return *this;
+
+  this->owner_ = rhs.owner_;
+  this->index_ = rhs.index_;
+
+  return *this;
+}
+
+//
 // null
 //
 void Parameter::null (void)
 {
-  int retval =
-    ::sqlite3_bind_null (this->owner_->owner ().stmt_,
-                         this->index_);
+  int retval = ::sqlite3_bind_null (this->owner_->owner ().stmt_,
+                                    this->index_);
 
-  if (retval == SQLITE_OK)
-    ::ADBC::Parameter::null ();
-  else
+  if (retval != SQLITE_OK)
     throw Exception (this->owner_->owner ().parent_);
+
+  this->is_null_ = true;
 }
 
 //

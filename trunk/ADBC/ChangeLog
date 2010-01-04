@@ -1,3 +1,64 @@
+Mon Jan  4 05:29:45 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * ADBC.mwc:
+
+          Explicitly specified the directories to include in
+          the workspace.
+
+        * MPC/config/adbc_sqlite.mpb:
+
+          Added the sqlite3 base project.
+
+        * MPC/config/adbclib.mpb:
+
+          Fixed errors in the base project specification.
+
+        * adbc/ADBC.mpc:
+        * adbc/Connection.h:
+        * adbc/Exception.h:
+        * adbc/Parameter.h:
+        * adbc/Parameter.inl:
+        * adbc/Parameter_List.h:
+        * adbc/Query.h:
+        * adbc/SQLite/Types.h:
+
+          Changed all instances of CUTS to ADBC.
+
+        * adbc/Record.h:
+
+          Added a pure virtual reset () method.
+
+        * adbc/SQLite/Parameter.h:
+        * adbc/SQLite/Parameter.inl:
+        * adbc/SQLite/Parameter.cpp:
+
+          Removed the length (size_t) function since this must be set
+          when a parameter is bound.
+
+          Re-implemented the is_null () so that is not implemented in
+          terms of its base class.
+
+        * adbc/SQLite/Query.h:
+        * adbc/SQLite/Query.inl:
+        * adbc/SQLite/Query.cpp:
+        * adbc/SQLite/Record.h:
+        * adbc/SQLite/Record.inl:
+        * adbc/SQLite/Record.cpp:
+
+          Improved the implementation of the Record class so that its
+          semantics are more in line with its specification. This also
+          simplified the execute* () methods on the Query class since
+          the Record handles reseting the cursor for each execution of
+          a statement.
+
+        * default.features.tmpl:
+
+          Template of all possible features for MPC.
+
+        * examples/SQLite/simple/simple.cpp:
+
+          Fixed build errors in the example.
+
 Sat Jan  2 16:23:29 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * adbc/Query.h:
