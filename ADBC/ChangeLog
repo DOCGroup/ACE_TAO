@@ -1,3 +1,41 @@
+Mon Jan  4 06:02:42 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * adbc/ODBC:
+        * adbc/ODBC/ODBC.mpc:
+        * adbc/ODBC/ODBC_Connection.h:
+        * adbc/ODBC/ODBC_Connection.inl:
+        * adbc/ODBC/ODBC_Connection.cpp:
+        * adbc/ODBC/ODBC_Env.h:
+        * adbc/ODBC/ODBC_Env.inl:
+        * adbc/ODBC/ODBC_Env.cpp:
+        * adbc/ODBC/ODBC_Exception.h:
+        * adbc/ODBC/ODBC_Exception.inl:
+        * adbc/ODBC/ODBC_Exception.cpp:
+        * adbc/ODBC/ODBC_Parameter.h:
+        * adbc/ODBC/ODBC_Parameter.inl:
+        * adbc/ODBC/ODBC_Parameter.cpp:
+        * adbc/ODBC/ODBC_Parameter_List.h:
+        * adbc/ODBC/ODBC_Parameter_List.inl:
+        * adbc/ODBC/ODBC_Parameter_List.cpp:
+        * adbc/ODBC/ODBC_Query.h:
+        * adbc/ODBC/ODBC_Query.inl:
+        * adbc/ODBC/ODBC_Query.cpp:
+        * adbc/ODBC/ODBC_Record.h:
+        * adbc/ODBC/ODBC_Record.inl:
+        * adbc/ODBC/ODBC_Record.cpp:
+        * adbc/ODBC/ODBC_Types.h:
+        * adbc/ODBC/ODBC_Types.inl:
+        * adbc/ODBC/ODBC_Types.cpp:
+        * adbc/ODBC/ODBC_export.h:
+        * examples/ODBC:
+        * examples/ODBC/static:
+        * examples/ODBC/static/static.mpc:
+        * examples/ODBC/static/static.mwc:
+        * examples/ODBC/static/static.cpp:
+
+          First implementation of ADBC wrappers for ODBC and a
+          simple example illstrating its usage.
+
 Mon Jan  4 05:29:45 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * ADBC.mwc:
