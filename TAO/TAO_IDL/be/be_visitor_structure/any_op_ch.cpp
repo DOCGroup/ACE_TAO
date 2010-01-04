@@ -81,7 +81,7 @@ be_visitor_structure_any_op_ch::visit_structure (be_structure *node)
 int
 be_visitor_structure_any_op_ch::visit_field (be_field *node)
 {
-  be_type *bt;
+  be_type *bt = 0;
 
   // First generate the type information.
   bt = be_type::narrow_from_decl (node->field_type ());

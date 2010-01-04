@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_argument, 
-           vardecl_ss, 
+ACE_RCSID (be_visitor_argument,
+           vardecl_ss,
            "$Id$")
 
 
@@ -75,7 +75,7 @@ int be_visitor_args_vardecl_ss::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg = this->ctx_->be_node_as_argument ();
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ())
     {
@@ -85,7 +85,7 @@ int be_visitor_args_vardecl_ss::visit_array (be_array *node)
     {
       bt = node;
     }
-    
+
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -119,7 +119,7 @@ int be_visitor_args_vardecl_ss::visit_enum (be_enum *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg = this->ctx_->be_node_as_argument ();
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ())
     {
@@ -173,7 +173,7 @@ int be_visitor_args_vardecl_ss::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg = this->ctx_->be_node_as_argument ();
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ())
     {
@@ -223,7 +223,7 @@ int be_visitor_args_vardecl_ss::visit_predefined_type (be_predefined_type *node)
         case AST_Argument::dir_INOUT:
         case AST_Argument::dir_OUT:
           switch (pt)
-            { 
+            {
               case AST_PredefinedType::PT_boolean:
               case AST_PredefinedType::PT_short:
               case AST_PredefinedType::PT_long:
@@ -258,7 +258,7 @@ int be_visitor_args_vardecl_ss::visit_sequence (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg = this->ctx_->be_node_as_argument ();
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ())
     {
@@ -386,7 +386,7 @@ be_visitor_args_vardecl_ss::emit_common (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg = this->ctx_->be_node_as_argument ();
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ())
     {
@@ -421,7 +421,7 @@ be_visitor_args_vardecl_ss::emit_common2 (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg = this->ctx_->be_node_as_argument ();
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ())
     {

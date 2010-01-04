@@ -112,7 +112,7 @@ be_visitor_union_branch_public_assign_cs::visit_array (be_array *node)
     this->ctx_->be_node_as_union_branch (); // get union branch
   be_union *bu =
     this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
+  be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -212,7 +212,7 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
     this->ctx_->be_node_as_union_branch (); // get union branch
   be_union *bu =
     this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
+  be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -309,7 +309,7 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (
     this->ctx_->be_node_as_union_branch (); // get union branch
   be_union *bu =
     this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
+  be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -424,7 +424,7 @@ be_visitor_union_branch_public_assign_cs::emit_valuetype_common (be_type *node)
     this->ctx_->be_node_as_union_branch (); // get union branch
   be_union *bu =
     this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
+  be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -494,7 +494,7 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (
     this->ctx_->be_node_as_union_branch (); // get union branch
   be_union *bu =
     this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
+  be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -606,7 +606,7 @@ be_visitor_union_branch_public_assign_cs::visit_sequence (be_sequence *node)
     this->ctx_->be_node_as_union_branch (); // get union branch
   be_union *bu =
     this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
+  be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -707,7 +707,7 @@ be_visitor_union_branch_public_assign_cs::visit_structure (be_structure *node)
     this->ctx_->be_node_as_union_branch (); // get union branch
   be_union *bu =
     this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
+  be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -802,7 +802,7 @@ be_visitor_union_branch_public_assign_cs::visit_union (be_union *node)
     this->ctx_->be_node_as_union_branch (); // get union branch
   be_union *bu =
     this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
+  be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())

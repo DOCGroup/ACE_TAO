@@ -59,7 +59,7 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
   // the type maybe. In the latter, we just need typedefs for the type and all
   // associated _var, _out, and other types.
 
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->tdef ())
     {
@@ -150,7 +150,7 @@ be_visitor_typedef_ch::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_typedef *tdef = this->ctx_->tdef ();
   be_decl *scope = this->ctx_->scope ();
-  be_type *bt;
+  be_type *bt = 0;
 
   // Is the base type an alias to an array node or an actual array node.
   if (this->ctx_->alias ())
@@ -270,7 +270,7 @@ be_visitor_typedef_ch::visit_enum (be_enum *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_typedef *tdef = this->ctx_->tdef ();
   be_decl *scope = this->ctx_->scope ();
-  be_type *bt;
+  be_type *bt = 0;
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())
@@ -314,7 +314,7 @@ be_visitor_typedef_ch::visit_interface (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_typedef *tdef = this->ctx_->tdef ();
   be_decl *scope = this->ctx_->scope ();
-  be_type *bt;
+  be_type *bt = 0;
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())
@@ -363,7 +363,7 @@ be_visitor_typedef_ch::visit_predefined_type (be_predefined_type *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_typedef *tdef = this->ctx_->tdef ();
   be_decl *scope = this->ctx_->scope ();
-  be_type *bt;
+  be_type *bt = 0;
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())
@@ -442,7 +442,7 @@ be_visitor_typedef_ch::visit_sequence (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_typedef *tdef = this->ctx_->tdef ();
   be_decl *scope = this->ctx_->scope ();
-  be_type *bt;
+  be_type *bt = 0;
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())
@@ -490,7 +490,7 @@ be_visitor_typedef_ch::visit_structure (be_structure *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_typedef *tdef = this->ctx_->tdef ();
   be_decl *scope = this->ctx_->scope ();
-  be_type *bt;
+  be_type *bt = 0;
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())
@@ -536,7 +536,7 @@ be_visitor_typedef_ch::visit_union (be_union *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_typedef *tdef = this->ctx_->tdef ();
   be_decl *scope = this->ctx_->scope ();
-  be_type *bt;
+  be_type *bt = 0;
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())
@@ -582,7 +582,7 @@ be_visitor_typedef_ch::visit_valuebox (be_valuebox *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_typedef *tdef = this->ctx_->tdef ();
   be_decl *scope = this->ctx_->scope ();
-  be_type *bt;
+  be_type *bt = 0;
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())
@@ -618,7 +618,7 @@ be_visitor_typedef_ch::visit_valuetype (be_valuetype *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_typedef *tdef = this->ctx_->tdef ();
   be_decl *scope = this->ctx_->scope ();
-  be_type *bt;
+  be_type *bt = 0;
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())

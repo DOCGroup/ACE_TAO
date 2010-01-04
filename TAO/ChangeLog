@@ -1,3 +1,48 @@
+Mon Jan  4 14:25:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_argument/argument.cpp
+        * TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp
+        * TAO_IDL/be/be_visitor_array/array.cpp
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp
+        * TAO_IDL/be/be_visitor_exception/exception_ctor.cpp
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp
+        * TAO_IDL/be/be_visitor_home/home_ex_idl.cpp
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype.cpp
+        * TAO_IDL/be/be_visitor_sequence/buffer_type.cpp
+        * TAO_IDL/be/be_visitor_sequence/sequence_base.cpp
+        * TAO_IDL/be/be_visitor_structure/any_op_ch.cpp
+        * TAO_IDL/be/be_visitor_typedef/any_op_ch.cpp
+        * TAO_IDL/be/be_visitor_typedef/any_op_cs.cpp
+        * TAO_IDL/be/be_visitor_typedef/cdr_op_ch.cpp
+        * TAO_IDL/be/be_visitor_typedef/cdr_op_cs.cpp
+        * TAO_IDL/be/be_visitor_typedef/serializer_op_ch.cpp
+        * TAO_IDL/be/be_visitor_typedef/serializer_op_cs.cpp
+        * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp
+        * TAO_IDL/be/be_visitor_typedef/typedef_ci.cpp
+        * TAO_IDL/be/be_visitor_typedef/typedef_cs.cpp
+        * TAO_IDL/be/be_visitor_union/discriminant_ch.cpp
+        * TAO_IDL/be/be_visitor_union/discriminant_ci.cpp
+        * TAO_IDL/be/be_visitor_union/discriminant_cs.cpp
+        * TAO_IDL/be/be_visitor_union_branch/private_ch.cpp
+        * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp
+        * TAO_IDL/be/be_visitor_union_branch/public_ch.cpp
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp
+        * TAO_IDL/be/be_visitor_union_branch/public_constructor_cs.cpp
+        * TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp
+        * TAO_IDL/be/be_visitor_valuebox/field_ch.cpp
+        * TAO_IDL/be/be_visitor_valuebox/field_ci.cpp
+        * TAO_IDL/be/be_visitor_valuebox/union_member_ci.cpp
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp
+        * TAO_IDL/be/be_visitor_valuetype/field_ci.cpp
+        * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp
+          Initialise pointer with 0
+
 Thu Dec 31 13:20:32 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Bug_1330_Regression/run_test.pl:

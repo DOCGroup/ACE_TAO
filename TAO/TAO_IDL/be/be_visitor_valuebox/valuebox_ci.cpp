@@ -548,7 +548,7 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
 
 
   // Retrieve the disriminant type.
-  be_type *bt;
+  be_type *bt = 0;
   bt = be_type::narrow_from_decl (node->disc_type ());
 
   if (!bt)

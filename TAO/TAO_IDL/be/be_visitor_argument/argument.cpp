@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_argument, 
-           argument, 
+ACE_RCSID (be_visitor_argument,
+           argument,
            "$Id$")
 
 be_visitor_args::be_visitor_args (be_visitor_context *ctx)
@@ -45,11 +45,11 @@ be_visitor_args::type_name (be_type *node,
                             const char *suffix)
 {
   static char namebuf [NAMEBUFSIZE];
-  ACE_OS::memset (namebuf, 
-                  '\0', 
+  ACE_OS::memset (namebuf,
+                  '\0',
                   NAMEBUFSIZE);
 
-  be_type *bt;
+  be_type *bt = 0;
 
   // Use the typedefed name if that is the one used in the IDL defn.
   if (this->ctx_->alias ())

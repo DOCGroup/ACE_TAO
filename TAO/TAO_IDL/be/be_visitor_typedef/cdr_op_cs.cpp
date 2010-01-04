@@ -67,7 +67,7 @@ be_visitor_typedef_cdr_op_cs::visit_typedef (be_typedef *node)
   // the type maybe. In the latter, we just need typedefs for the type and all
   // associated _var, _out, and other types.
 
-  be_type *bt; // base type
+  be_type *bt = 0; // base type
 
   if (this->ctx_->tdef ())
     {
@@ -140,7 +140,7 @@ be_visitor_typedef_cdr_op_cs::visit_typedef (be_typedef *node)
 int
 be_visitor_typedef_cdr_op_cs::visit_array (be_array *node)
 {
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ()) // typedef of a typedef
     {
@@ -172,7 +172,7 @@ be_visitor_typedef_cdr_op_cs::visit_array (be_array *node)
 int
 be_visitor_typedef_cdr_op_cs::visit_sequence (be_sequence *node)
 {
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ()) // typedef of a typedef
     {
@@ -203,7 +203,7 @@ be_visitor_typedef_cdr_op_cs::visit_sequence (be_sequence *node)
 int
 be_visitor_typedef_cdr_op_cs::visit_structure (be_structure *node)
 {
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ()) // typedef of a typedef
     {
@@ -234,7 +234,7 @@ be_visitor_typedef_cdr_op_cs::visit_structure (be_structure *node)
 int
 be_visitor_typedef_cdr_op_cs::visit_union (be_union *node)
 {
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ()) // typedef of a typedef
     {

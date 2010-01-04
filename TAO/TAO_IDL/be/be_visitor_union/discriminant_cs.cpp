@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_union, 
-           discriminant_cs, 
+ACE_RCSID (be_visitor_union,
+           discriminant_cs,
            "$Id$")
 
 // *************************************************************************
@@ -42,7 +42,7 @@ be_visitor_union_discriminant_cs::visit_enum (be_enum *node)
 {
   be_union *bu =
     this->ctx_->be_node_as_union ();  // get the enclosing union backend
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ())
     {
@@ -69,7 +69,7 @@ be_visitor_union_discriminant_cs::visit_enum (be_enum *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_discriminant_cs::"
                              "visit_enum - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
