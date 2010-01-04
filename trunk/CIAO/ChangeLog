@@ -1,3 +1,9 @@
+Mon Jan  4 20:41:07 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
+        
+          Cosmetic changes.
+
 Mon Jan  4 19:43:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/docs/AMI4CCM-explanation.odt:
