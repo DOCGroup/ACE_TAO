@@ -139,6 +139,8 @@ init_ior_files ();
 
 $NS = $tg_naming->CreateProcess ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 1 -ORBEndpoint iiop://localhost:60003 -o $ior_nsfile");
 
+print STDERR "Starting Naming Service with -m 1 -ORBEndpoint iiop://localhost:60003 -o ns.ior\n";
+
 $ns_status = $NS->Spawn ();
 
 if ($ns_status != 0) {
@@ -146,8 +148,6 @@ if ($ns_status != 0) {
     kill_open_processes ();
     exit 1;
 }
-
-print STDERR "Starting Naming Service with -m 1 -ORBEndpoint iiop://localhost:60003 -o ns.ior\n";
 
 if ($tg_naming->WaitForFileTimed ($ior_nsbase,
                                   $tg_naming->ProcessStartWaitInterval ()) == -1) {

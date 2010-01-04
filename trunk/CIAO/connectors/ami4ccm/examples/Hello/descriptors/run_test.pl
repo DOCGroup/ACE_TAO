@@ -17,10 +17,10 @@ $em_running = 0;
 $ns_running = 0;
 
 $nr_daemon = 3;
-@ports = ( 60000, 60001, 60002 );
-@iorbases = ( "AMI.ior", "Sender.ior", "Receiver.ior" );
+@ports = ( 60000, 60001 );
+@iorbases = ( "Sender.ior", "Receiver.ior", "AMI.ior" );
 @iorfiles = 0;
-@nodenames = ( "AMI", "Sender", "Receiver" );
+@nodenames = ( "Sender", "Receiver" );
 
 # ior files other than daemon
 $ior_nsbase = "ns.ior";
@@ -138,6 +138,8 @@ init_ior_files ();
 
 $NS = $tg_naming->CreateProcess ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 1 -ORBEndpoint iiop://localhost:60003 -o $ior_nsfile");
 
+print STDERR "Starting Naming Service with -m 1 -ORBEndpoint iiop://localhost:60003 -o ns.ior\n";
+
 $ns_status = $NS->Spawn ();
 
 if ($ns_status != 0) {
@@ -145,8 +147,6 @@ if ($ns_status != 0) {
     kill_open_processes ();
     exit 1;
 }
-
-print STDERR "Starting Naming Service with -m 1 -ORBEndpoint iiop://localhost:60003 -o ns.ior\n";
 
 if ($tg_naming->WaitForFileTimed ($ior_nsbase,
                                   $tg_naming->ProcessStartWaitInterval ()) == -1) {

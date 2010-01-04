@@ -1,3 +1,19 @@
+Mon Jan  4 13:29:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/Connector/AMI.idl
+        * connectors/ami4ccm/examples/Hello/Connector/AMI_exec.cpp
+        * connectors/ami4ccm/examples/Hello/Connector/AMI_exec.h
+        * connectors/ami4ccm/examples/Hello/descriptors/Plan.cdp
+        * connectors/ami4ccm/examples/Hello/descriptors/run_test.pl
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver.idl
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender.idl
+        * connectors/dds4ccm/examples/Hello/descriptors/run_1_to_5.pl
+          Updated name of the AMI connector, it is tied to the sender,
+          so call it AMI_Sender
+
+        * tests/IDL_Test/Double_Inherited_Component/run_test.pl:
+          Print message before spawn
+
 Mon Jan  4 12:14:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/docs/AMI4CCM-spec.odt:

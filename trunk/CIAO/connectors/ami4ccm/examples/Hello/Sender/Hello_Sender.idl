@@ -14,10 +14,10 @@ module Hello
   component Sender
   {
     /// For asynch invocation. @@implied
-    uses Hello::AMI_MyFoo sendc_run_my_foo;
+    uses AMI_MyFoo sendc_run_my_foo;
 
     /// For synchronous invocation
-    uses Hello::MyFoo run_my_foo;
+    uses MyFoo run_my_foo;
   };
 };
 
