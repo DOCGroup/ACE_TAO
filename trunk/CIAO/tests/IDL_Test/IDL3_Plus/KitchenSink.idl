@@ -74,8 +74,8 @@ module second<exception X, typename W>
   };
 };
 
-/*
-module B 
+
+module B
 {
   module second_B<typename T, sequence <T> TSeq>
   {
@@ -86,7 +86,6 @@ module B
     };
   };
 };
-*/
 
 module Ast<typename T,
            eventtype E,
