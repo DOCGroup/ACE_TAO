@@ -61,7 +61,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
     be_operation *node
   )
 {
-  be_type *bt;
+  be_type *bt = 0;
   be_visitor_context ctx;
 
   TAO_OutStream *os = this->ctx_->stream ();
@@ -297,7 +297,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_argument (
   )
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
+  be_type *bt = 0;
 
   // Retrieve the type for this argument.
   bt = be_type::narrow_from_decl (node->field_type ());

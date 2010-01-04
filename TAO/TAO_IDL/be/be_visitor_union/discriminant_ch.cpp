@@ -42,7 +42,7 @@ be_visitor_union_discriminant_ch::visit_enum (be_enum *node)
 {
   // Get the enclosing union backend.
   be_union *bu = this->ctx_->be_node_as_union ();
-  be_type *bt;
+  be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -96,7 +96,7 @@ be_visitor_union_discriminant_ch::visit_predefined_type (be_predefined_type
 {
   // get the enclosing union backend.
   be_union *bu = this->ctx_->be_node_as_union ();
-  be_type *bt;
+  be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())

@@ -41,7 +41,7 @@ be_visitor_interface_smart_proxy_ch::~be_visitor_interface_smart_proxy_ch (void)
 int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ())
     {

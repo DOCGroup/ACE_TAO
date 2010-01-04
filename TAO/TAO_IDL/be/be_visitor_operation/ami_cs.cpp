@@ -289,7 +289,7 @@ int
 be_visitor_operation_ami_cs::visit_argument (be_argument *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt; // argument type
+  be_type *bt = 0; // argument type
 
   // Retrieve the type for this argument.
   bt = be_type::narrow_from_decl (node->field_type ());

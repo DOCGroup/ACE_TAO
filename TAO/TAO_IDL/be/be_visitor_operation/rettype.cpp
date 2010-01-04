@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_operation, 
-           rettype, 
+ACE_RCSID (be_visitor_operation,
+           rettype,
            "$Id$")
 
 
@@ -82,7 +82,7 @@ be_visitor_operation_rettype::visit_native (be_native *node)
 int
 be_visitor_operation_rettype::visit_predefined_type (be_predefined_type *node)
 {
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ())
     {
@@ -93,9 +93,9 @@ be_visitor_operation_rettype::visit_predefined_type (be_predefined_type *node)
     {
       bt = node;
     }
-  
+
   AST_PredefinedType::PredefinedType pt = node->pt ();
-  
+
   if (pt != AST_PredefinedType::PT_void)
     {
       *os << "::";
@@ -264,7 +264,7 @@ be_visitor_operation_rettype::visit_valuebox (be_valuebox *node)
 const char *
 be_visitor_operation_rettype::type_name (be_type *node)
 {
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ())
     {
@@ -275,6 +275,6 @@ be_visitor_operation_rettype::type_name (be_type *node)
     {
       bt = node;
     }
-    
+
   return bt->full_name ();
 }

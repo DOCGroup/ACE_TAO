@@ -79,7 +79,7 @@ int
 be_visitor_field_ch::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ())
     {
@@ -148,7 +148,7 @@ int
 be_visitor_field_ch::visit_enum (be_enum *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ())
     {
@@ -236,7 +236,7 @@ int
 be_visitor_field_ch::emit_common (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ())
     {
@@ -270,7 +270,7 @@ int
 be_visitor_field_ch::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
+  be_type *bt = 0;
   be_typedef *td = this->ctx_->alias ();
 
   if (td != 0)
@@ -305,7 +305,7 @@ int
 be_visitor_field_ch::visit_sequence (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ())
     {
@@ -409,7 +409,7 @@ int
 be_visitor_field_ch::visit_structure (be_structure *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ())
     {
@@ -486,7 +486,7 @@ int
 be_visitor_field_ch::visit_union (be_union *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ())
     {

@@ -42,7 +42,7 @@ int
 be_visitor_sequence_buffer_type::visit_node (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
+  be_type *bt = 0;
 
   if (this->ctx_->alias ())
     {

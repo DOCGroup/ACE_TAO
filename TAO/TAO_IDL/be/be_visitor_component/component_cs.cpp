@@ -43,7 +43,7 @@ be_visitor_component_cs::visit_component (be_component *node)
       return 0;
     }
 
-  be_type *bt;
+  be_type *bt = 0;
 
   // Set the right type.
   if (this->ctx_->alias ())
