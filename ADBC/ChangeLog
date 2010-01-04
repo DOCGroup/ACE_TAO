@@ -1,8 +1,14 @@
+Mon Jan  4 16:51:31 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * .:
+
+          Added default.features to the ingore list.
+
 Mon Jan  4 16:49:24 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * adbc/SQLite/Parameter.cpp:
 
-	  Fixed build errors on MacOS X platforms.
+          Fixed build errors on MacOS X platforms.
 
 Mon Jan  4 16:47:56 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
 
