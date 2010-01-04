@@ -1,24 +1,12 @@
 // -*- C++ -*-
 // $Id$
 
+#include "Connection.h"
+
 namespace ADBC
 {
 namespace SQLite
 {
-//
-// Query
-//
-ADBC_INLINE
-Query::Query (Connection & parent)
-: parent_ (parent),
-  stmt_ (0),
-  needs_reseting_ (false),
-  params_ (*this),
-  record_ (*this)
-{
-
-}
-
 //
 // ~Query
 //
@@ -49,16 +37,6 @@ Record & Query::execute (const char * query)
   return this->execute ();
 }
 
-
-//
-// cancel
-//
-ADBC_INLINE
-void Query::cancel (void)
-{
-  // no-op
-}
-
 //
 // parameters
 //
@@ -76,5 +54,24 @@ const Parameter_List & Query::parameters (void) const
 {
   return this->params_;
 }
+
+//
+// last_insert_id
+//
+ADBC_INLINE
+long Query::last_insert_id (void)
+{
+  return static_cast <long> (::sqlite3_last_insert_rowid (this->parent_.conn_));
+}
+
+//
+// count
+//
+ADBC_INLINE
+size_t Query::count (void) const
+{
+  return ::sqlite3_changes (this->parent_.conn_);
+}
+
 }
 }

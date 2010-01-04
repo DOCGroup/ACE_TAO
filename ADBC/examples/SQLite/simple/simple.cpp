@@ -50,7 +50,7 @@ int ACE_TMAIN (int argc, char * argv [])
     // View the results of the query.
     ACE_CString timeofday, firstname, middlename, surname;
 
-    for ( ; !record.done (); record.dvance ())
+    for ( ; !record.done (); record.advance ())
     {
       record.get_data (1, timeofday);
       record.get_data (2, firstname);

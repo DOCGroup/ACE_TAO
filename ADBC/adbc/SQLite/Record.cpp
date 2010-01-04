@@ -10,7 +10,6 @@
 #include "Exception.h"
 #include "ace/Date_Time.h"
 #include "ace/Array.h"
-#include "sqlite3.h"
 #include <sstream>
 
 namespace ADBC
@@ -18,24 +17,21 @@ namespace ADBC
 namespace SQLite
 {
 //
-// count
-//
-size_t Record::columns (void) const
-{
-  return ::sqlite3_column_count (this->query_.stmt_);
-}
-
-//
 // reset
 //
 void Record::reset (void)
 {
   // Reset the cursor
-  this->state_ = ::sqlite3_reset (this->query_.stmt_);
+  if (this->state_ != SQLITE_OK)
+    this->state_ = ::sqlite3_reset (this->query_.stmt_);
 
   // Move the first element in the result.
   if (this->state_ == SQLITE_OK)
     this->state_ = ::sqlite3_step (this->query_.stmt_);
+
+  // Lastly, check for any errors.
+  if (this->state_ == SQLITE_ERROR || this->state_ == SQLITE_MISUSE)
+    throw Exception (this->query_.parent_);
 }
 
 //
@@ -43,18 +39,18 @@ void Record::reset (void)
 //
 void Record::advance (void)
 {
-  this->state_ = ::sqlite3_step (this->query_.stmt_);
+  if (this->state_ == SQLITE_ROW)
+    this->state_ = ::sqlite3_step (this->query_.stmt_);
 
-  if (this->state_ != SQLITE_ROW && this->state_ != SQLITE_DONE)
+  // Lastly, check for any errors.
+  if (this->state_ == SQLITE_ERROR || this->state_ == SQLITE_MISUSE)
     throw Exception (this->query_.parent_);
 }
 
 //
 // get_data
 //
-void Record::get_data (size_t column,
-                       char * buffer,
-                       size_t bufsize)
+void Record::get_data (size_t column, char * buffer, size_t bufsize)
 {
   // Get the size of the data in the column.
   -- bufsize;
@@ -78,8 +74,7 @@ void Record::get_data (size_t column,
 //
 // get_data
 //
-void Record::
-get_data (size_t column, ACE_CString & value)
+void Record::get_data (size_t column, ACE_CString & value)
 {
   size_t size = ::sqlite3_column_bytes (this->query_.stmt_, column);
 
@@ -92,24 +87,7 @@ get_data (size_t column, ACE_CString & value)
 //
 // get_data
 //
-void Record::get_data (size_t column, char & value)
-{
-  value = *::sqlite3_column_text (this->query_.stmt_, column);
-}
-
-//
-// get_data
-//
-void Record::get_data (size_t column, unsigned char & value)
-{
-  value = *::sqlite3_column_text (this->query_.stmt_, column);
-}
-
-//
-// get_data
-//
-void Record::
-get_data (size_t column, ACE_Date_Time & datetime)
+void Record::get_data (size_t column, ACE_Date_Time & datetime)
 {
   long value;
   const unsigned char * text = ::sqlite3_column_text (this->query_.stmt_,
@@ -144,67 +122,6 @@ get_data (size_t column, ACE_Date_Time & datetime)
   // Read the second from the string.
   istr >> value;
   datetime.second (value);
-}
-
-//
-// get_data
-//
-void Record::get_data (size_t column, short & value)
-{
-  int val = ::sqlite3_column_int (this->query_.stmt_, column);
-  value = static_cast <short> (val);
-}
-
-//
-// get_data
-//
-void Record::get_data (size_t column, unsigned short & value)
-{
-  int val = ::sqlite3_column_int (this->query_.stmt_, column);
-  value = static_cast <unsigned short> (val);
-}
-
-//
-// get_data
-//
-void Record::get_data (size_t column, long & value)
-{
-  int val = ::sqlite3_column_int (this->query_.stmt_, column);
-  value = static_cast <long> (val);
-}
-
-//
-// get_data
-//
-void Record::get_data (size_t column, unsigned long & value)
-{
-  int val = ::sqlite3_column_int (this->query_.stmt_, column);
-  value = static_cast <unsigned long> (val);
-}
-
-//
-// get_data
-//
-void Record::get_data (size_t column, float & value)
-{
-  double val = ::sqlite3_column_double (this->query_.stmt_, column);
-  value = static_cast <float> (val);
-}
-
-//
-// get_data
-//
-void Record::get_data (size_t column, double & value)
-{
-  value = ::sqlite3_column_double (this->query_.stmt_, column);
-}
-
-//
-// done
-//
-bool Record::done (void) const
-{
-  return this->state_ == SQLITE_DONE;
 }
 
 //

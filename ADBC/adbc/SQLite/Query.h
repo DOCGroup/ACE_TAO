@@ -13,12 +13,10 @@
 #ifndef _ADBC_SQLITE_QUERY_H_
 #define _ADBC_SQLITE_QUERY_H_
 
+#include "adbc/Query.h"
+#include "sqlite3.h"
 #include "Record.h"
 #include "Parameter_List.h"
-#include "adbc/Query.h"
-
-// Forward decl.
-struct sqlite3_stmt;
 
 namespace ADBC
 {
@@ -125,8 +123,6 @@ private:
 
   /// Actual SQLite3 statement.
   ::sqlite3_stmt * stmt_;
-
-  bool needs_reseting_;
 
   /// Collection of parameters for this query.
   Parameter_List params_;

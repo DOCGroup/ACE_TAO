@@ -129,4 +129,4 @@ private:
 #include "Query.inl"
 #endif
 
-#endif  // !defined _CUTS_DB_QUERY_H_
+#endif  // !defined _ADBC_DB_QUERY_H_

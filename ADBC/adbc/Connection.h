@@ -81,4 +81,4 @@ private:
 #include "Connection.inl"
 #endif
 
-#endif  // !defined _CUTS_DB_CONNECTION_H_
+#endif  // !defined _ADBC_DB_CONNECTION_H_
