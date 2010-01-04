@@ -13,7 +13,7 @@
 
 #include "tao/LocalObject.h"
 
-namespace CIAO_Hello_AMI_Receiver_Impl
+namespace CIAO_Hello_AMI_Sender_Impl
 {
   class  AMI_MyFoo_exec_i
     : public virtual ::Hello::CCM_AMI_MyFoo,
@@ -53,7 +53,7 @@ namespace CIAO_Hello_AMI_Receiver_Impl
   };
 
   class  AMI_exec_i
-    : public virtual AMI_Receiver_Exec,
+    : public virtual AMI_Sender_Exec,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -74,7 +74,7 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     virtual void ccm_remove (void);
 
   private:
-    ::Hello::CCM_AMI_Receiver_Context_var context_;
+    ::Hello::CCM_AMI_Sender_Context_var context_;
     ::Hello::AMI_MyFooCallback_var callback_foo_;
     ::Hello::MyFoo_var receiver_foo_;
 

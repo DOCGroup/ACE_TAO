@@ -13,7 +13,7 @@ module Hello
   component Receiver
   {
     /// Provides
-    provides Hello::MyFoo do_my_foo;
+    provides MyFoo do_my_foo;
   };
 };
 #endif
