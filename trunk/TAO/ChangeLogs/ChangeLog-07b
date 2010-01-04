@@ -499,7 +499,7 @@ Wed Jul 18 09:55:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
           and isn't really used so far as we know. With the removal
           of this we lower our footprint.
 
-          This was exposed to the end user as -GIOPLite.
+          This was exposed to the end user as -ORBGIOPLite.
 
         * tao/Strategies/SCIOP_Lite_Factory.cpp:
         * tao/Strategies/SCIOP_Lite_Factory.h:
