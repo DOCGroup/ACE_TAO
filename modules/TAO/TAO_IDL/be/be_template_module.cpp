@@ -33,9 +33,9 @@ be_template_module::destroy (void)
 }
 
 int
-be_template_module::accept(be_visitor *)
+be_template_module::accept(be_visitor *visitor)
 {
-  return 0;//visitor->visit_template_module (this);
+  return visitor->visit_template_module (this);
 }
 
 IMPL_NARROW_FROM_DECL (be_template_module)

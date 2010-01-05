@@ -17,6 +17,7 @@
 #include "be_sequence.h"
 #include "be_valuetype.h"
 #include "be_module.h"
+#include "be_template_module_inst.h"
 #include "be_field.h"
 #include "be_typedef.h"
 #include "be_component.h"
@@ -31,10 +32,13 @@
 #include "be_eventtype_fwd.h"
 #include "be_home.h"
 #include "be_extern.h"
+
 #include "ast_generator.h"
+
 #include "utl_exceptlist.h"
 #include "utl_namelist.h"
 #include "utl_err.h"
+
 #include "fe_interface_header.h"
 #include "global_extern.h"
 #include "nr_extern.h"
@@ -109,6 +113,22 @@ be_visitor_ccm_pre_proc::visit_module (be_module *node)
                         -1);
     }
 
+  return 0;
+}
+
+int
+be_visitor_ccm_pre_proc::visit_template_module_inst (
+  be_template_module_inst *node)
+{
+  UTL_Scope *s = node->defined_in ();
+  be_module *instance = 0;
+  
+  ACE_NEW_RETURN (instance,
+                  be_module (node->name ()),
+                  -1);
+                  
+  s->add_to_scope (instance);
+  
   return 0;
 }
 
