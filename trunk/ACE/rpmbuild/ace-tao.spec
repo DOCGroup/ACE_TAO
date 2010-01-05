@@ -976,9 +976,6 @@ export LD_LIBRARY_PATH=$ACE_ROOT/lib
 g++ --version
 g++ -dumpversion
 
-# Dump the lsb_release info
-lsb_release -a
-
 %if %skip_make
 cd .. && rm -rf ACE_wrappers && ln -s ACE_wrappers-BUILT ACE_wrappers
 %else
