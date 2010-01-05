@@ -120,6 +120,17 @@ void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
 {
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete ();
+  this->push_observer_.configuration_complete (
+    this->topic_.in (),
+    this->subscriber_.in (),
+    this->library_name_,
+    this->profile_name_);
+
+  this->pull_observer_.configuration_complete (
+    this->topic_.in (),
+    this->subscriber_.in (),
+    this->library_name_,
+    this->profile_name_);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -133,13 +144,9 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
     this->library_name_,
     this->profile_name_);
 
-  this->push_observer_.init (
+  this->push_observer_.activate (
     this->context_->get_connection_push_observer_data_listener (),
-    this->context_->get_connection_push_observer_status (),
-    this->topic_.in (),
-    this->subscriber_.in (),
-    this->library_name_,
-    this->profile_name_);
+    this->context_->get_connection_push_observer_status ());
 
   this->push_state_observer_.init (
     this->context_->get_connection_push_state_observer_data_listener (),
@@ -149,12 +156,8 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
     this->library_name_,
     this->profile_name_);
 
-  this->pull_observer_.init (
-    this->context_->get_connection_pull_observer_status (),
-    this->topic_.in (),
-    this->subscriber_.in (),
-    this->library_name_,
-    this->profile_name_);
+  this->pull_observer_.activate (
+    this->context_->get_connection_pull_observer_status ());
 
   this->passive_observer_.init (
     this->context_->get_connection_passive_observer_status (),
@@ -169,6 +172,8 @@ void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
 {
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate ();
+  this->push_observer_.passivate ();
+  this->pull_observer_.passivate ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -176,5 +181,7 @@ void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
 {
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove ();
+  this->push_observer_.remove ();
+  this->pull_observer_.remove ();
 }
 

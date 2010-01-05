@@ -22,6 +22,10 @@ void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
 {
   DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete ();
+
+  this->configure_default_topic ();
+  this->configure_subscriber ();
+  this->configure_publisher ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -36,10 +40,6 @@ void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
 {
   DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate ();
-
-  this->configure_default_topic ();
-  this->configure_subscriber ();
-  this->configure_publisher ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
