@@ -13,7 +13,7 @@ project(DDS_CSL_DeadlineTest_Base_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(DDS_CSL_DeadlineTest_Base_ndds_ts_gen) : ndds_ts_defaults   {
+project(DDS_CSL_DeadlineTest_Base_ndds_ts_gen) : ndds_ts_defaults {
   custom_only = 1
   after += DDS_CSL_DeadlineTest_Base_idl_gen
   ndds_ts_flags += -corba CSL_DeadlineTest_BaseC.h -orb ACE_TAO1.7

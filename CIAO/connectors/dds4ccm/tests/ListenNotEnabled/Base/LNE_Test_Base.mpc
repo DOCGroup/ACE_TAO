@@ -13,7 +13,7 @@ project(DDS_LNE_Test_Base_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(DDS_LNE_Test_Base_ndds_ts_gen) : ndds_ts_defaults   {
+project(DDS_LNE_Test_Base_ndds_ts_gen) : ndds_ts_defaults {
   custom_only = 1
   after += DDS_LNE_Test_Base_idl_gen
   ndds_ts_flags += -corba LNE_Test_BaseC.h -orb ACE_TAO1.7

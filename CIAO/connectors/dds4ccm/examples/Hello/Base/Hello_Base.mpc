@@ -13,7 +13,7 @@ project(DDS_Hello_Base_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(DDS_Hello_Base_ndds_ts_gen) : ndds_ts_defaults   {
+project(DDS_Hello_Base_ndds_ts_gen) : ndds_ts_defaults {
   avoids += ace_for_tao
   custom_only = 1
   after += DDS_Hello_Base_idl_gen
