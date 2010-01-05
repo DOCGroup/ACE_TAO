@@ -1,7 +1,20 @@
+Tue Jan  5 07:31:33 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Get_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Listen_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.cpp:
+          Separate DDS lifecycle from CCM lifecycle. DDS_Get_T and DDS_Listen_T
+          now have a configuration_complete, activate, passivate and remove
+          methods.
+
 Mon Jan  4 20:41:07 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
-        
+
           Cosmetic changes.
 
 Mon Jan  4 19:43:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>

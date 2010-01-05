@@ -101,6 +101,18 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
   CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
 
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete ();
+
+  this->push_consumer_.configuration_complete (
+    this->topic_.in (),
+    this->subscriber_.in (),
+    this->library_name_,
+    this->profile_name_);
+
+  this->pull_consumer_.configuration_complete (
+    this->topic_.in (),
+    this->subscriber_.in (),
+    this->library_name_,
+    this->profile_name_);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -109,13 +121,10 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
 {
   CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate");
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate ();
-  this->push_consumer_.init (
+
+  this->push_consumer_.activate (
     this->context_->get_connection_push_consumer_data_listener (),
-    this->context_->get_connection_push_consumer_status (),
-    this->topic_.in (),
-    this->subscriber_.in (),
-    this->library_name_,
-    this->profile_name_);
+    this->context_->get_connection_push_consumer_status ());
 
   this->supplier_.init (
     this->topic_.in (),
@@ -123,12 +132,8 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
     this->library_name_,
     this->profile_name_);
 
-  this->pull_consumer_.init (
-    this->context_->get_connection_pull_consumer_status (),
-    this->topic_.in (),
-    this->subscriber_.in (),
-    this->library_name_,
-    this->profile_name_);
+  this->pull_consumer_.activate (
+    this->context_->get_connection_pull_consumer_status ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -138,6 +143,10 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
   CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate");
 
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate ();
+
+  this->push_consumer_.passivate ();
+
+  this->pull_consumer_.passivate ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -147,4 +156,8 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
   CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove");
 
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove ();
+
+  this->push_consumer_.remove ();
+
+  this->pull_consumer_.remove ();
 }
