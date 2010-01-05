@@ -22,14 +22,57 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE>::~DDS_Read_T (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_Read_T<DDS_TYPE, CCM_TYPE>::init (
-  ::CCM_DDS::PortStatusListener_ptr listener,
+DDS_Read_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
   ::DDS::Topic_ptr topic,
   ::DDS::Subscriber_ptr subscriber,
   const char* library_name,
   const char* profile_name)
 {
-  CIAO_TRACE ("DDS_Read_T<DDS_TYPE, CCM_TYPE>::init");
+  CIAO_TRACE ("DDS_Read_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
+
+  try
+    {
+      if (CORBA::is_nil (this->data_.in ()))
+        {
+          ::DDS::DataReader_var reader;
+          if (profile_name && library_name)
+            {
+              reader = subscriber->create_datareader_with_profile (
+                  topic,
+                  library_name,
+                  profile_name,
+                  ::DDS::DataReaderListener::_nil (),
+                  0);
+            }
+          else
+            {
+              ::DDS::DataReaderQos drqos;
+              reader = subscriber->create_datareader (
+                  topic,
+                  drqos,
+                  ::DDS::DataReaderListener::_nil (),
+                  0);
+            }
+          ::CIAO::DDS4CCM::RTI::RTI_DataReader_i *rd =
+            dynamic_cast < ::CIAO::DDS4CCM::RTI::RTI_DataReader_i *> (reader.in ());
+          this->rti_reader_.set_impl (rd->get_impl ());
+          this->data_ = ::DDS::CCM_DataReader::_narrow (reader);
+          this->dds_read_.set_impl (reader);
+        }
+    }
+  catch (...)
+    {
+      CIAO_ERROR (1, (LM_EMERGENCY, "DDS_Read_T::configuration_complete: Caught unknown c++ exception.\n"));
+      throw CORBA::INTERNAL ();
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_Read_T<DDS_TYPE, CCM_TYPE>::activate (
+  ::CCM_DDS::PortStatusListener_ptr listener)
+{
+  CIAO_TRACE ("DDS_Read_T<DDS_TYPE, CCM_TYPE>::activate");
 
   try
     {
@@ -38,42 +81,50 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE>::init (
           this->status_ = new ::CIAO::DDS4CCM::RTI::PortStatusListener_T
             <DDS_TYPE, CCM_TYPE> (listener);
         }
-
-      if (CORBA::is_nil (this->data_.in ()))
-        {
-          if (profile_name && library_name)
-            {
-              ::DDS::DataReader_var reader =
-                subscriber->create_datareader_with_profile (
-                  topic,
-                  library_name,
-                  profile_name,
-                  this->status_.in (),
-                  ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
-              DDSDataReader *rd = dynamic_cast < DDSDataReader *> (reader.in ());
-              this->rti_reader_.set_impl (rd);
-              this->data_ = ::DDS::CCM_DataReader::_narrow (reader);
-              this->dds_read_.set_impl (reader);
-            }
-          else
-            {
-              ::DDS::DataReaderQos drqos;
-              ::DDS::DataReader_var reader =
-                subscriber->create_datareader (
-                  topic,
-                  drqos,
-                  this->status_.in (),
-                  ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
-              DDSDataReader *rd = dynamic_cast < DDSDataReader *> (reader.in ());
-              this->rti_reader_.set_impl (rd);
-              this->data_ = ::DDS::CCM_DataReader::_narrow (reader);
-              this->dds_read_.set_impl (reader);
-            }
-        }
+      this->rti_reader_.set_listener (
+        this->status_.in (),
+        ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_EMERGENCY, "Caught unknown c++ exception while creating subscriber entities\n"));
+      CIAO_ERROR (1, (LM_EMERGENCY, "DDS_Read_T::activate: Caught unknown c++ exception.\n"));
+      throw CORBA::INTERNAL ();
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_Read_T<DDS_TYPE, CCM_TYPE>::passivate ()
+{
+  CIAO_TRACE ("DDS_Read_T<DDS_TYPE, CCM_TYPE>::passivate");
+
+  try
+    {
+      this->rti_reader_.set_listener (
+              ::DDS::DataReaderListener::_nil (),
+              0);
+    }
+  catch (...)
+    {
+      CIAO_ERROR (1, (LM_EMERGENCY, "DDS_Read_T::passivate: Caught unknown c++ exception.\n"));
+      throw CORBA::INTERNAL ();
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_Read_T<DDS_TYPE, CCM_TYPE>::remove ()
+{
+  CIAO_TRACE ("DDS_Read_T<DDS_TYPE, CCM_TYPE>::remove");
+
+  try
+    {
+      this->rti_reader_.delete_contained_entities ();
+      this->rti_reader_.set_impl (0);
+    }
+  catch (...)
+    {
+      CIAO_ERROR (1, (LM_EMERGENCY, "DDS_Read_T::remove: Caught unknown c++ exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
