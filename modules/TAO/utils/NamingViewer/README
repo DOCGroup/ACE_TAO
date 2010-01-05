@@ -1,0 +1,74 @@
+$Id$
+
+This directory contains an MFC-based CosNaming viewer that that allows
+users to manipulate a Naming Context visually.
+
+Features
+--------
+
+        . Displays the entries of a naming context graphically in a
+          tree control.  
+
+        . Supports configuration of different naming servers.
+          Configuration is stored in the registry.  
+
+        . Double clicking on an object in the tree will open a dialog to 
+          examine the object reference.  This dialog will display the
+          stringified object reference, repository ID and profile
+          information. 
+
+        . Supports binding, unbinding, context creation and context
+          destroying.  User the right mouse button to pull up the
+          context menu. 
+
+        . Supports iterator returned from listing a context
+
+        . Initializes ORB with the command line arguments passed into
+          the executable.
+
+        . Supports resizing of the main window.
+
+        . Control-c copies the IOR of the currently selected object to
+          the clipboard.
+
+TO-DO List
+----------
+
+        . Add support for showing the components in an IOR's profile
+          (need a patch in TAO before we can do this).
+
+        . Display the object key for a profile.
+
+        . Add support for recursive destroys of contexts.
+
+        . Add support for "pingable" objects.  Pingable objects would
+          be pinged and the viewer could then graphically display
+          those objects that were "alive" and those that were not
+          available.
+
+        . Add configuration options like number of objects to fetch
+          per list, auto expanding of the tree, default naming
+          service, etc.
+
+        . Add support for cutting/moving/copying objects in the tree?
+
+        . Add ability to configure what is displayed for each entry in
+          a context. 
+
+        . Right now its just the id and kind, but we could also add in
+          the repository id and primary profile.
+
+Issues/Bugs
+-----------
+
+        . Need to find a better way of displaying the kind attribute
+          in a Name.  Right now we use "." which is ambiguous.
+          Perhaps a different color? 
+
+        . Consider getting rid of the Select NS button and the name of
+          the name service from the main window.  Put the name of the
+          server in the window title and allow the user to select a
+          new NS from the system menu.
+
+If you have any questions, please contact the author, Chris Hafey
+<chris@stentorsoft.com>.

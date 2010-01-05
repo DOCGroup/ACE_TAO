@@ -1,0 +1,57 @@
+// $Id$
+
+project(*idl): taoidldefaults, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  IDL_Files {
+    go.idl
+  }
+  custom_only = 1
+}
+
+project(*Ntf Perf Struct Supp): notifytest, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after += *idl
+  exename = Structured_Supplier
+  Source_Files {
+    Structured_Supplier.cpp
+    goS.cpp
+    goC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Ntf Perf Struct Cons): notifytest, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after += *idl
+  exename = Structured_Consumer
+  Source_Files {
+    goC.cpp
+    Notify_Structured_Push_Consumer.cpp
+    Structured_Consumer.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Ntf Perf Seq Supp): notifytest, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after += *idl
+  exename = Sequence_Supplier
+  Source_Files {
+    Sequence_Supplier.cpp
+    goS.cpp
+    goC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*notify perf Sequence Consumer): notifytest, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after += *idl
+  exename = Sequence_Consumer
+  Source_Files {
+    goC.cpp
+    Notify_Sequence_Push_Consumer.cpp
+    Sequence_Consumer.cpp
+  }
+  IDL_Files {
+  }
+}
+
