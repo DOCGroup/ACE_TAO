@@ -1,3 +1,18 @@
+Tue Jan  5 08:51:51 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Listen_T.cpp:
+          Optimized error logging.
+
+        * connectors/dds4ccm/impl/ndds/DDS_Read_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_Read_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_StateListen_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.cpp:
+          Separate DDS lifecycle from CCM lifecycle. DDS_Read_T and DDS_StateListen_T
+          now have a configuration_complete, activate, passivate and remove
+          methods.
+
 Tue Jan  5 07:31:33 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp:
