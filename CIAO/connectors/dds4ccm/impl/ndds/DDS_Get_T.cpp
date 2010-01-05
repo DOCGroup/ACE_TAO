@@ -62,7 +62,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_EMERGENCY, "Caught unknown c++ exception in configuration_complete in DDS_Get_T\n"));
+      CIAO_ERROR (1, (LM_EMERGENCY, "DDS_Get_T::configuration_complete: Caught unknown c++ exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -86,7 +86,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE>::activate (
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_EMERGENCY, "Caught unknown c++ exception in activate in DDS_Get_T\n"));
+      CIAO_ERROR (1, (LM_EMERGENCY, "DDS_Get_T::activate: Caught unknown c++ exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -104,7 +104,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE>::passivate (void)
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_EMERGENCY, "Caught unknown c++ exception in passivate in DDS_Get_T\n"));
+      CIAO_ERROR (1, (LM_EMERGENCY, "DDS_Get_T::passivate: Caught unknown c++ exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -121,7 +121,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE>::remove (void)
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_EMERGENCY, "Caught unknown c++ exception in remove in DDS_Get_T\n"));
+      CIAO_ERROR (1, (LM_EMERGENCY, "DDS_Get_T::remove: Caught unknown c++ exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
