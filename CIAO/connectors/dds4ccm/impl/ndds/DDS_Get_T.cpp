@@ -31,7 +31,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
 
   try
     {
-      if (CORBA::is_nil (this->data_.in ()))
+      if (CORBA::is_nil (this->data_reader_.in ()))
         {
           ::DDS::DataReader_var reader;
           if (profile_name && library_name)
@@ -55,7 +55,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
           ::CIAO::DDS4CCM::RTI::RTI_DataReader_i *rd =
             dynamic_cast < ::CIAO::DDS4CCM::RTI::RTI_DataReader_i *> (reader.in ());
           this->rti_reader_.set_impl (rd->get_impl ());
-          this->data_ = ::DDS::CCM_DataReader::_narrow (reader);
+          this->data_reader_ = ::DDS::CCM_DataReader::_narrow (reader);
           this->dds_get_.set_impl (reader);
           this->dds_read_.set_impl (reader);
         }
@@ -101,6 +101,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE>::passivate (void)
       this->rti_reader_.set_listener (
               ::DDS::DataReaderListener::_nil (),
               0);
+      this->status_ = ::DDS::DataReaderListener::_nil ();
     }
   catch (...)
     {
@@ -111,12 +112,16 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE>::passivate (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_Get_T<DDS_TYPE, CCM_TYPE>::remove (void)
+DDS_Get_T<DDS_TYPE, CCM_TYPE>::remove (
+  ::DDS::Subscriber_ptr subscriber)
 {
   CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE>::remove");
   try
     {
-      this->rti_reader_.delete_contained_entities ();
+      subscriber->delete_datareader (this->data_reader_.in ());
+      this->data_reader_ = ::DDS::CCM_DataReader::_nil ();
+      this->dds_get_.set_impl (0);
+      this->dds_read_.set_impl (0);
       this->rti_reader_.set_impl (0);
     }
   catch (...)

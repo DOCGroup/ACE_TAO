@@ -31,7 +31,8 @@ public:
 
   void passivate (void);
 
-  void remove (void);
+  void remove (
+    ::DDS::Publisher_ptr publisher);
 
 private:
   /**
