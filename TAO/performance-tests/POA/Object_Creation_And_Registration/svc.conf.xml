@@ -1,9 +1,0 @@
-<?xml version='1.0'?>
-<!-- Converted from ./performance-tests/POA/Object_Creation_And_Registration/svc.conf by svcconf-convert.pl -->
-<ACE_Svc_Conf>
- <!--  $Id$ -->
- <!--  -->
- <!--  Please see $TAO_ROOT/docs/Options.html for details on these options. -->
- <!--  -->
- <static id="Server_Strategy_Factory" params="-ORBActiveObjectMapSize 1001"/>
-</ACE_Svc_Conf>

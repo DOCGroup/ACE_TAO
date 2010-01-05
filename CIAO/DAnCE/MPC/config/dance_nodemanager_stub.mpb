@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : dance_deployment_stub, dance_targetmanager_stub, dance_nodeapplicationmanager_stub {
-  libs     += DAnCE_NodeManager_stub
-  after    += Deployment_NodeManager_stub
-}

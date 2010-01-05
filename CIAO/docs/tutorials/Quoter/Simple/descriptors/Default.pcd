@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<Deployment:packageConfiguration xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
-
-  <UUID>54077757-B4AF-443C-BA8D-9B5B68E1D1E0</UUID>
-
-</Deployment:packageConfiguration>

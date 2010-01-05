@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : ccm_svnt {
-//  after += Cdmw_IDL
-//  libs += DAnCE_Cdmw_IDL
-}

@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project {
-  includes += $(CIAO_ROOT) $(CIAO_ROOT)/DAnCE
-  libpaths += $(ACE_ROOT)/lib
-}
