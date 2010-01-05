@@ -30,13 +30,18 @@ public:
 
   ::DDS::CCM_DataReader_ptr get_dds_entity (void);
   //@}
-
-  void init (
-    ::CCM_DDS::PortStatusListener_ptr listener,
+  void configuration_complete (
     ::DDS::Topic_ptr topic,
     ::DDS::Subscriber_ptr subscriber,
     const char* library_name,
     const char* profile_name);
+
+  void activate (
+    ::CCM_DDS::PortStatusListener_ptr listener);
+
+  void passivate (void);
+
+  void remove (void);
 
 private:
   /**
