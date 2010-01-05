@@ -120,6 +120,12 @@ void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
 {
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete ();
+  this->observable_.configuration_complete (
+    this->topic_.in (),
+    this->publisher_.in (),
+    this->library_name_,
+    this->profile_name_);
+
   this->push_observer_.configuration_complete (
     this->topic_.in (),
     this->subscriber_.in (),
@@ -150,11 +156,7 @@ void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
 {
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate ();
-  this->observable_.init (
-    this->topic_.in (),
-    this->publisher_.in (),
-    this->library_name_,
-    this->profile_name_);
+  this->observable_.activate ();
 
   this->push_observer_.activate (
     this->context_->get_connection_push_observer_data_listener (),
@@ -176,6 +178,7 @@ void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
 {
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate ();
+  this->observable_.passivate ();
   this->push_observer_.passivate ();
   this->push_state_observer_.passivate ();
   this->pull_observer_.passivate ();
@@ -187,6 +190,7 @@ void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
 {
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove ();
+  this->observable_.remove ();
   this->push_observer_.remove ();
   this->push_state_observer_.remove ();
   this->pull_observer_.remove ();

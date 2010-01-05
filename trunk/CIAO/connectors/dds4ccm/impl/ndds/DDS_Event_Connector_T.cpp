@@ -108,6 +108,12 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
     this->library_name_,
     this->profile_name_);
 
+  this->supplier_.configuration_complete(
+    this->topic_.in (),
+    this->publisher_.in (),
+    this->library_name_,
+    this->profile_name_);
+
   this->pull_consumer_.configuration_complete (
     this->topic_.in (),
     this->subscriber_.in (),
@@ -126,11 +132,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
     this->context_->get_connection_push_consumer_data_listener (),
     this->context_->get_connection_push_consumer_status ());
 
-  this->supplier_.init (
-    this->topic_.in (),
-    this->publisher_.in (),
-    this->library_name_,
-    this->profile_name_);
+  this->supplier_.activate ();
 
   this->pull_consumer_.activate (
     this->context_->get_connection_pull_consumer_status ());
@@ -143,9 +145,8 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
   CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate");
 
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate ();
-
   this->push_consumer_.passivate ();
-
+  this->supplier_.passivate ();
   this->pull_consumer_.passivate ();
 }
 
@@ -156,8 +157,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
   CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove");
 
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove ();
-
   this->push_consumer_.remove ();
-
+  this->supplier_.remove ();
   this->pull_consumer_.remove ();
 }

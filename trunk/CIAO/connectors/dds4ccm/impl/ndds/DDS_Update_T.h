@@ -21,11 +21,17 @@ public:
 
   ::DDS::CCM_DataWriter_ptr  get_dds_entity (void);
 
-  void init (
+  void configuration_complete (
     ::DDS::Topic_ptr topic,
     ::DDS::Publisher_ptr publisher,
     const char* library_name,
     const char* profile_name);
+
+  void activate (void);
+
+  void passivate (void);
+
+  void remove (void);
 
 private:
   /**
