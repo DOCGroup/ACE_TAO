@@ -141,9 +141,9 @@ AST_Template_Module::destroy (void)
 }
 
 int
-AST_Template_Module::ast_accept (ast_visitor *)
+AST_Template_Module::ast_accept (ast_visitor *visitor)
 {
-  return 0;//visitor->visit_template_module (this);
+  return visitor->visit_template_module (this);
 }
 
 AST_Template_Module_Ref *

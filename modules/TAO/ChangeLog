@@ -1,3 +1,11 @@
+Tue Jan  5 19:33:27 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_template_module.cpp:
+        * TAO_IDL/ast/ast_template_module_ref.cpp:
+        * TAO_IDL/ast_template_module_inst.cpp:
+        
+          Uncommented code in ast_accept() methods.
+
 Mon Jan  4 14:25:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_argument/argument.cpp
