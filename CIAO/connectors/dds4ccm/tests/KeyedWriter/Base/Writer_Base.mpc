@@ -13,7 +13,7 @@ project(DDS_KeyedWriterBase_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(DDS_KeyedWriterBase_ndds_ts_gen) : ndds_ts_defaults   {
+project(DDS_KeyedWriterBase_ndds_ts_gen) : ndds_ts_defaults {
   custom_only = 1
   after += DDS_KeyedWriterBase_idl_gen
   ndds_ts_flags += -corba Writer_BaseC.h -orb ACE_TAO1.7
