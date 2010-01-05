@@ -190,10 +190,10 @@ void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
 {
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove ();
-  this->observable_.remove ();
-  this->push_observer_.remove ();
-  this->push_state_observer_.remove ();
-  this->pull_observer_.remove ();
-  this->passive_observer_.remove ();
+  this->observable_.remove (this->publisher_.in ());
+  this->push_observer_.remove (this->subscriber_.in ());
+  this->push_state_observer_.remove (this->subscriber_.in ());
+  this->pull_observer_.remove (this->subscriber_.in ());
+  this->passive_observer_.remove (this->subscriber_.in ());
 }
 
