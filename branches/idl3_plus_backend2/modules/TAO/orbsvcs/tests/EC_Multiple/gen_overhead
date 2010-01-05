@@ -1,0 +1,114 @@
+#!/bin/sh
+#
+# $Id$
+#
+
+#TESTS_SOURCES="X LCL RMT1 RMT2 RPT.X RPT.LCL RPT.RMT1 RPT.RMT2"
+TESTS_SOURCES="RPT.X RPT.LCL RPT.RMT1 RPT.RMT2"
+
+#TESTS="$TEST_SOURCES RPT.RMT RMT"
+TESTS="$TEST_SOURCES RPT.RMT"
+
+for i in $TESTS_SOURCES; do
+  grep "Scavenger time" OVH.${i}.*.log |
+    sed -e "s/^OVH\.${i}\.//" -e 's/\.log:Scavenger time://' |
+    sort -n > OVH.${i}.scav.data
+  grep "Push time" OVH.${i}.*.log |
+    sed -e "s/^OVH\.${i}\.//" -e 's/\.log:Push time://' |
+    sort -n > OVH.${i}.push.data
+# | awk '{printf ("%d %.3f\n", $1, $2/$1);}'
+done
+
+paste scav.RMT1.data scav.RMT2.data |
+  awk '{printf("%d %.3f\n", $1, ($2 + $4)/2);}' > OVH.RMT.scav.data
+paste push.RMT1.data push.RMT2.data |
+  awk '{printf("%d %.3f\n", $1, ($2 + $4)/2);}' > OVH.RMT.push.data
+
+paste scav.RPT.RMT1.data scav.RPT.RMT2.data |
+  awk '{printf("%d %.3f\n", $1, ($2 + $4)/2);}' > OVH.RPT.RMT.scav.data
+paste push.RPT.RMT1.data push.RPT.RMT2.data |
+  awk '{printf("%d %.3f\n", $1, ($2 + $4)/2);}' > OVH.RPT.RMT.push.data
+
+for i in X LCL RMT RMT1 RMT2; do
+  paste OVH.${i}.scav.data OVH.${i}.push.data |
+  awk '{
+    if (NR == 1) {
+       b = $2;
+    } else {
+      printf ("%d %.3f\n", $1, ($2 - $4 - b) / $1);
+    }}' > OVH.${i}.over.data
+done
+
+for i in RPT.X RPT.LCL RPT.RMT RPT.RMT1 RPT.RMT2; do
+  paste OVH.${i}.scav.data OVH.${i}.push.data |
+  awk '{
+    printf ("%d %.3f\n", $1, ($2 - $4));
+  }' > OVH.${i}.over.data
+done
+
+for i in $TESTS; do
+  case $i in
+    X) LABEL="Number of Messages [short circuit test]"
+       ;;
+    LCL) LABEL="Number of Messages [local EC test]"
+       ;;
+    RMT) LABEL="Number of Messages [remote EC test]"
+       ;;
+    RMT1) LABEL="Number of Messages [remote EC test 1]"
+       ;;
+    RMT2) LABEL="Number of Messages [remote EC test 2]"
+       ;;
+    RPT.X) LABEL="Test Number [short circuit test]"
+       ;;
+    RPT.LCL) LABEL="Test Number [local EC test]"
+       ;;
+    RPT.RMT) LABEL="Test Number [remote EC test]"
+       ;;
+    RPT.RMT1) LABEL="Test Number [remote EC test 1]"
+       ;;
+    RPT.RMT2) LABEL="Test Number [remote EC test 2]"
+       ;;
+
+    *) LABEL="Test Number [unknown test]"
+       ;;
+  esac
+  
+  gnuplot <<_EOF_
+set grid xtics ytics
+set xlabel "$LABEL"
+
+set terminal postscript eps color
+set ylabel "Time in scavenger (usecs)"
+set output "OVH.${i}.scav.eps"
+plot 'OVH.${i}.scav.data' w l
+set terminal x11
+plot 'OVH.${i}.scav.data' w l
+pause 2
+
+set terminal postscript eps
+set ylabel "Time in push (usecs)"
+set output "OVH.${i}.push.eps"
+plot 'OVH.${i}.push.data' w l
+set terminal x11
+plot 'OVH.${i}.push.data' w l
+pause 2
+
+set terminal postscript eps
+set ylabel "Overhead (usecs)"
+set output "OVH.${i}.over.eps"
+plot 'OVH.${i}.over.data' w l
+set terminal x11
+plot 'OVH.${i}.over.data' w l
+pause 2
+_EOF_
+done
+
+for i in OVH.push OVH.scav OVH.over; do
+  for j in $TESTS; do
+    gs -sDEVICE=jpeg -g640x480 -r110x110 -sNOPAUSE \
+       -sOutputFile="${i}.${j}.jpg" ${i}.${j}.eps quit.ps
+  done
+done
+
+exit 0
+
