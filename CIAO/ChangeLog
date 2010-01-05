@@ -1,3 +1,15 @@
+Tue Jan  5 09:37:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Update_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Write_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_Write_T.cpp:
+          Separate DDS lifecycle from CCM lifecycle. DDS_Update_T and DDS_Write_T
+          now have a configuration_complete, activate, passivate and remove
+          methods.
+
 Tue Jan  5 08:51:51 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDS_Get_T.cpp:

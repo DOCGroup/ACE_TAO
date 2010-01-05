@@ -28,19 +28,25 @@ public:
   ::DDS::CCM_DataWriter_ptr get_dds_entity (void);
   //@}
 
-  void init (
+  void configuration_complete (
     ::DDS::Topic_ptr topic,
     ::DDS::Publisher_ptr publisher,
     const char* library_name,
     const char* profile_name);
+
+  void activate (void);
+
+  void passivate (void);
+
+  void remove (void);
 
 private:
   /**
    * DDS_Write
    */
   //@{
-  ::DDS::CCM_DataWriter_var writer_;
-  ::DDS::DataWriterListener_var writer_listener_;
+  ::DDS::CCM_DataWriter_var data_writer_;
+  ::DDS::DataWriterListener_var data_listener_;
   ::CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE> writer_t_;
   ::CIAO::DDS4CCM::RTI::RTI_DataWriter_i rti_writer_;
   //@}
