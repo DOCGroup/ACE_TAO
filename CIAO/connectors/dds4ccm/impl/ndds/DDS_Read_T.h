@@ -38,7 +38,8 @@ public:
 
   void passivate (void);
 
-  void remove (void);
+  void remove (
+    ::DDS::Subscriber_ptr subscriber);
 
 private:
   /**

@@ -157,7 +157,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
   CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove");
 
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove ();
-  this->push_consumer_.remove ();
-  this->supplier_.remove ();
-  this->pull_consumer_.remove ();
+  this->push_consumer_.remove (this->subscriber_.in ());
+  this->supplier_.remove (this->publisher_.in ());
+  this->pull_consumer_.remove (this->subscriber_.in ());
 }

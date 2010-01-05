@@ -97,6 +97,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::passivate ()
       this->rti_writer_.set_listener (
         ::DDS::DataWriterListener::_nil (),
         0);
+      this->data_listener_ = ::DDS::DataWriterListener::_nil ();
     }
   catch (...)
     {
@@ -107,13 +108,16 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::passivate ()
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove ()
+DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove (
+  ::DDS::Publisher_ptr publisher)
 {
   CIAO_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove");
   try
     {
-      //this->rti_writer_.delete_contained_entities ();
+      publisher->delete_datawriter (this->data_writer_.in ());
       this->rti_writer_.set_impl (0);
+      this->data_writer_ = ::DDS::CCM_DataWriter::_nil ();
+      this->dds_update_.set_impl (0);
     }
   catch (...)
     {

@@ -52,7 +52,11 @@ namespace CIAO
           }
 
         DDSTopic *rti_topic = topic->get_impl ();
-        DDSDataWriterListener *rti_drl = new RTI_DataWriterListener_i (a_listener);
+        DDSDataWriterListener *rti_drl = 0;
+        if (!CORBA::is_nil (a_listener))
+          {
+            rti_drl = new RTI_DataWriterListener_i (a_listener);
+          }
         DDS_DataWriterQos rti_qos = DDS_DATAWRITER_QOS_DEFAULT;
 //        rti_qos <<= qos;
         DDSDataWriter *rti_dw = this->impl ()->create_datawriter (rti_topic,
@@ -77,8 +81,8 @@ namespace CIAO
 
       ::DDS::DataWriter_ptr
       RTI_Publisher_i::create_datawriter_with_profile (::DDS::Topic_ptr a_topic,
-          const char* library_name,
-          const char *profile_name,
+                                          const char* library_name,
+                                          const char *profile_name,
                                           ::DDS::DataWriterListener_ptr a_listener,
                                           ::DDS::StatusMask mask)
       {
@@ -94,7 +98,11 @@ namespace CIAO
           }
 
         DDSTopic *rti_topic = topic->get_impl ();
-        DDSDataWriterListener *rti_drl = new RTI_DataWriterListener_i (a_listener);
+        DDSDataWriterListener *rti_drl = 0;
+        if (!CORBA::is_nil (a_listener))
+          {
+            rti_drl = new RTI_DataWriterListener_i (a_listener);
+          }
         DDSDataWriter *rti_dw = this->impl ()->create_datawriter_with_profile (rti_topic,
                                                                 library_name,
                                                                 profile_name,

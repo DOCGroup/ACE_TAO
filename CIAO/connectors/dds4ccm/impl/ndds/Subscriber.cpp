@@ -78,10 +78,12 @@ namespace CIAO
             throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
           }
         DDSTopic *rti_topic = topic->get_impl ();
-//        DDSDataReaderListener *rti_drl = drl->get_datareaderlistener ();
-// todo leak
         DDS_DataReaderQos rti_qos = DDS_DATAREADER_QOS_DEFAULT;
-        DDSDataReaderListener *rti_drl = new RTI_DataReaderListener_i (a_listener);
+        DDSDataReaderListener *rti_drl = 0;
+        if (!CORBA::is_nil (a_listener))
+          {
+            rti_drl = new RTI_DataReaderListener_i (a_listener);
+          }
         DDSDataReader *rti_dr = this->impl ()->create_datareader (rti_topic,
                                                                 rti_qos,
                                                                 rti_drl,
@@ -117,9 +119,11 @@ namespace CIAO
             throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
           }
         DDSTopic *rti_topic = topic->get_impl ();
-//        DDSDataReaderListener *rti_drl = drl->get_datareaderlistener ();
-// todo leak
-        DDSDataReaderListener *rti_drl = new RTI_DataReaderListener_i (a_listener);
+        DDSDataReaderListener *rti_drl = 0;
+        if (!CORBA::is_nil (a_listener))
+          {
+            rti_drl = new RTI_DataReaderListener_i (a_listener);
+          }
         DDSDataReader *rti_dr = this->impl ()->create_datareader_with_profile (rti_topic,
                                                                 library_name,
                                                                 profile_name,

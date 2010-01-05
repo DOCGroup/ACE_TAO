@@ -109,6 +109,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE>::passivate ()
       this->rti_reader_.set_listener (
                 ::DDS::DataReaderListener::_nil (),
                 0);
+      this->data_listener_= ::DDS::DataReaderListener::_nil ();
     }
   catch (...)
     {
@@ -119,13 +120,16 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE>::passivate ()
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_Listen_T<DDS_TYPE, CCM_TYPE>::remove ()
+DDS_Listen_T<DDS_TYPE, CCM_TYPE>::remove (
+  ::DDS::Subscriber_ptr subscriber)
 {
   CIAO_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE>::remove");
   try
     {
-      this->rti_reader_.delete_contained_entities ();
+      subscriber->delete_datareader (this->data_reader_.in ());
       this->rti_reader_.set_impl (0);
+      this->data_reader_ = ::DDS::CCM_DataReader::_nil ();
+      this->dds_read_.set_impl (0);
     }
   catch (...)
     {

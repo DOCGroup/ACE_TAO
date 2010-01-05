@@ -41,14 +41,14 @@ public:
 
   void passivate (void);
 
-  void remove (void);
+  void remove (::DDS::Subscriber_ptr subscriber);
 
 private:
   /**
    * DDS_Get
    */
   //@{
-  ::DDS::CCM_DataReader_var data_;
+  ::DDS::CCM_DataReader_var data_reader_;
   ::DDS::DataReaderListener_var status_;
   ::CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE> dds_get_;
   ::CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> dds_read_;
