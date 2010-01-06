@@ -35,7 +35,7 @@ public:
   virtual void ccm_passivate (void);
 
 protected:
-  void configure_default_domain (void);
+  void init_default_domain (void);
 
   DDS::DomainId_t domain_id_;
   CORBA::String_var qos_profile_;

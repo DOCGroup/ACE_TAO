@@ -23,7 +23,6 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
 {
   CIAO_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
   DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete ();
-  this->configure_default_domain ();
   this->init_default_topic ();
   this->init_subscriber ();
   this->init_publisher ();

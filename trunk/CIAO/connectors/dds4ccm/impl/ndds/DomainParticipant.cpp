@@ -14,6 +14,7 @@
 #include "PublisherListener.h"
 #include "SubscriberListener.h"
 #include "TopicListener.h"
+#include "DomainParticipantListener.h"
 #include "PublisherQos.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
@@ -496,12 +497,11 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipant_i::set_listener (::DDS::DomainParticipantListener_ptr /*a_listener*/,
-                                             ::DDS::StatusMask /*mask*/)
+      RTI_DomainParticipant_i::set_listener (::DDS::DomainParticipantListener_ptr a_listener,
+                                             ::DDS::StatusMask mask)
       {
-//        RTI_DomainParticipantListener_i* rti_impl_list = new RTI_DomainParticipantListener_i (a_listener);
-        //return this->impl_->set_listener (rti_impl_list, mask);
-        throw CORBA::NO_IMPLEMENT ();
+        RTI_DomainParticipantListener_i* rti_impl_list = new RTI_DomainParticipantListener_i (a_listener);
+        return this->impl_->set_listener (rti_impl_list, mask);
       }
 
       ::DDS::DomainParticipantListener_ptr

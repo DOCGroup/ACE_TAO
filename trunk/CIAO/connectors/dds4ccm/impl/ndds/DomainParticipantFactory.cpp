@@ -2,6 +2,7 @@
 
 #include "DomainParticipantFactory.h"
 #include "DomainParticipant.h"
+#include "DomainParticipantListener.h"
 #include "Utils.h"
 
 #include "ciao/Logger/Log_Macros.h"
@@ -26,17 +27,24 @@ namespace CIAO
       ::DDS::DomainParticipant_ptr
       RTI_DomainParticipantFactory_i::create_participant (::DDS::DomainId_t domain_id,
                                                           const ::DDS::DomainParticipantQos & /*qos*/,
-                                                          ::DDS::DomainParticipantListener_ptr /*a_listener*/,
+                                                          ::DDS::DomainParticipantListener_ptr a_listener,
                                                           ::DDS::StatusMask mask)
       {
         CIAO_TRACE ("RTI_DomainParticipantFactory_i::create_participant");
 
         CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::create_participant - "
                      "Creating domain participant\n"));
+
+        RTI_DomainParticipantListener_i *rti_dpl = 0;
+        if (!CORBA::is_nil (a_listener))
+          {
+            rti_dpl = new RTI_DomainParticipantListener_i (a_listener);
+          }
+
         DDSDomainParticipant *part = DDSDomainParticipantFactory::get_instance ()->
           create_participant (domain_id,
                               DDS_PARTICIPANT_QOS_DEFAULT,
-                              0,
+                              rti_dpl,
                               mask);
 
         if (!part)
@@ -60,18 +68,24 @@ namespace CIAO
         ::DDS::DomainId_t domain_id,
         const char* library_name,
         const char *profile_name,
-        ::DDS::DomainParticipantListener_ptr /*a_listener*/,
+        ::DDS::DomainParticipantListener_ptr a_listener,
         ::DDS::StatusMask mask)
       {
         CIAO_TRACE ("RTI_DomainParticipantFactory_i::create_participant_with_profile");
 
         CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::create_participant_with_profile - "
                      "Creating domain participant\n"));
+        RTI_DomainParticipantListener_i *rti_dpl = 0;
+        if (!CORBA::is_nil (a_listener))
+          {
+            rti_dpl = new RTI_DomainParticipantListener_i (a_listener);
+          }
+
         DDSDomainParticipant *part = DDSDomainParticipantFactory::get_instance ()->
           create_participant_with_profile (domain_id,
                               library_name,
                               profile_name,
-                              0,
+                              rti_dpl,
                               mask);
 
         if (!part)
