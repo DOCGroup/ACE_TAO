@@ -2,6 +2,7 @@
 
 #include "Topic.h"
 #include "StatusCondition.h"
+#include "TopicListener.h"
 #include "InstanceHandle_t.h"
 #include "InconsistentTopicStatus.h"
 #include "TopicQos.h"
@@ -42,18 +43,16 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_Topic_i::set_listener (::DDS::TopicListener_ptr /*a_listener*/,
-                                 ::DDS::StatusMask /*mask*/)
+      RTI_Topic_i::set_listener (::DDS::TopicListener_ptr a_listener,
+                                 ::DDS::StatusMask mask)
       {
-        //RTI_TopicListener_i* rti_impl_list = new RTI_TopicListener_i (a_listener);
-        //return this->impl ()->set_listener (rti_impl_list, mask);
-        throw CORBA::NO_IMPLEMENT ();
+        RTI_TopicListener_i* rti_impl_list = new RTI_TopicListener_i (a_listener);
+        return this->impl ()->set_listener (rti_impl_list, mask);
       }
 
       ::DDS::TopicListener_ptr
       RTI_Topic_i::get_listener (void)
       {
-        throw CORBA::NO_IMPLEMENT ();
       }
 
       ::DDS::ReturnCode_t

@@ -21,32 +21,45 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
 {
+  CIAO_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
   DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete ();
-
-  this->configure_default_topic ();
-  this->configure_subscriber ();
-  this->configure_publisher ();
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
-{
-  DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove ();
+  this->configure_default_domain ();
+  this->init_default_topic ();
+  this->init_subscriber ();
+  this->init_publisher ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
 {
+  CIAO_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate");
   DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate ();
+  this->activate_default_topic ();
+  this->activate_subscriber ();
+  this->activate_publisher ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
 {
+  CIAO_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate");
   DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate ();
+  this->passivate_default_topic ();
+  this->passivate_subscriber ();
+  this->passivate_publisher ();
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
+{
+  CIAO_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove");
+  DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove ();
+  this->remove_default_topic ();
+  this->remove_subscriber ();
+  this->remove_publisher ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -125,82 +138,9 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_subscriber (void)
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::init_default_topic (void)
 {
-  CIAO_DEBUG (9, (LM_TRACE, CLINFO "DDS_TopicBase_Connector_T::configure_subscriber - "
-                "Configuring subscriber\n"));
-
-  if (CORBA::is_nil (this->subscriber_.in ()))
-    {
-      this->subscriber_listener_ = new ::CIAO::DDS4CCM::SubscriberListener_T
-        <DDS_TYPE, CCM_TYPE> (
-          this->context_,
-          this->context_->get_connection_error_listener ());
-
-      if (this->library_name_ && this->profile_name_)
-        {
-          this->subscriber_ = this->domain_participant_->
-            create_subscriber_with_profile (
-              this->library_name_,
-              this->profile_name_,
-              this->subscriber_listener_.in (),
-              ::CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
-        }
-      else
-        {
-          ::DDS::SubscriberQos sqos;
-          this->subscriber_ = this->domain_participant_->
-            create_subscriber (
-              sqos,
-              this->subscriber_listener_.in (),
-              ::CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
-        }
-    }
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_publisher (void)
-{
-  CIAO_DEBUG (9, (LM_TRACE, CLINFO "DDS_TopicBase_Connector_T::configure_publisher - "
-                "Configuring publisher\n"));
-
-  if (CORBA::is_nil (this->publisher_.in ()))
-    {
-      this->publisher_listener_ = new ::CIAO::DDS4CCM::PublisherListener_T
-        <DDS_TYPE, CCM_TYPE> (
-          this->context_,
-          this->context_->get_connection_error_listener ());
-
-      if (this->library_name_ && this->profile_name_)
-        {
-          this->publisher_ = this->domain_participant_->
-            create_publisher_with_profile (
-              this->library_name_,
-              this->profile_name_,
-              this->publisher_listener_.in (),
-              ::CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
-        }
-      else
-        {
-          ::DDS::PublisherQos pqos;
-          this->publisher_ = this->domain_participant_->
-            create_publisher (
-              pqos,
-              this->publisher_listener_.in (),
-              ::CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
-        }
-    }
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic (void)
-{
-  CIAO_DEBUG (9, (LM_TRACE, CLINFO "DDS_TopicBase_Connector_T::configure_default_topic - "
-                "Configuring default topic\n"));
-
-  this->configure_default_domain ();
+  CIAO_TRACE ("DDS_TopicBase_Connector_T::init_default_topic");
 
   if (CORBA::is_nil (this->topic_))
     {
@@ -214,10 +154,6 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic (void)
 
           if (retcode == DDS_RETCODE_OK)
             {
-              this->topiclistener_ = new ::CIAO::DDS4CCM::TopicListener_T
-                <DDS_TYPE, CCM_TYPE> (
-                    this->context_->get_connection_error_listener ());
-
               if (this->library_name_ && this->profile_name_)
                 {
                   ::DDS::TopicQos tqos;
@@ -227,8 +163,8 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic (void)
                       DDS_TYPE::type_support::get_type_name (),
                       this->library_name_,
                       this->profile_name_,
-                      this->topiclistener_.in (),
-                      ::CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+                      ::DDS::TopicListener::_nil (),
+                      0);
                 }
               else
                 {
@@ -238,8 +174,8 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic (void)
                       this->topic_name_.in (),
                       DDS_TYPE::type_support::get_type_name (),
                       tqos,
-                      this->topiclistener_.in (),
-                      ::CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+                      ::DDS::TopicListener::_nil (),
+                      0);
                 }
             }
           else
@@ -249,10 +185,272 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic (void)
         }
       catch (...)
         {
-          CIAO_ERROR (1, (LM_ERROR, "Caught unknown error while configuring default topic\n"));
+          CIAO_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::init_default_topic: "
+                                    "Caught unknown C++ exception.\n"));
           throw CORBA::INTERNAL ();
         }
     }
 }
 
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::init_subscriber (void)
+{
+  CIAO_TRACE ("DDS_TopicBase_Connector_T::init_subscriber");
 
+  if (CORBA::is_nil (this->subscriber_.in ()))
+    {
+      try
+        {
+          if (this->library_name_ && this->profile_name_)
+            {
+              this->subscriber_ = this->domain_participant_->
+                create_subscriber_with_profile (
+                  this->library_name_,
+                  this->profile_name_,
+                  ::DDS::SubscriberListener::_nil (),
+                  0);
+            }
+          else
+            {
+              ::DDS::SubscriberQos sqos;
+              this->subscriber_ = this->domain_participant_->
+                create_subscriber (
+                  sqos,
+                  ::DDS::SubscriberListener::_nil (),
+                  0);
+            }
+        }
+      catch (...)
+        {
+          CIAO_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::init_subscriber: "
+                                    "Caught unknown C++ exception.\n"));
+          throw CORBA::INTERNAL ();
+        }
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::init_publisher (void)
+{
+  CIAO_TRACE ("DDS_TopicBase_Connector_T::init_publisher");
+
+  if (CORBA::is_nil (this->publisher_.in ()))
+    {
+      if (this->library_name_ && this->profile_name_)
+        {
+          this->publisher_ = this->domain_participant_->
+            create_publisher_with_profile (
+              this->library_name_,
+              this->profile_name_,
+              ::DDS::PublisherListener::_nil (),
+              0);
+        }
+      else
+        {
+          ::DDS::PublisherQos pqos;
+          this->publisher_ = this->domain_participant_->
+            create_publisher (
+              pqos,
+              ::DDS::PublisherListener::_nil (),
+              0);
+        }
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_default_topic (void)
+{
+  CIAO_TRACE ("DDS_TopicBase_Connector_T::activate_default_topic");
+  try
+    {
+      if (CORBA::is_nil (this->topiclistener_.in ()))
+        {
+          this->topiclistener_ = new ::CIAO::DDS4CCM::TopicListener_T
+            <DDS_TYPE, CCM_TYPE> (
+                this->context_->get_connection_error_listener ());
+        }
+          this->topic_->set_listener (
+            this->topiclistener_.in (),
+            ::CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+    }
+  catch (...)
+    {
+      CIAO_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::activate_default_topic: "
+                                "Caught unknown C++ exception.\n"));
+      throw CORBA::INTERNAL ();
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_subscriber (void)
+{
+  CIAO_TRACE ("DDS_TopicBase_Connector_T::activate_subscriber");
+
+  try
+    {
+      if (CORBA::is_nil (this->subscriber_listener_.in ()))
+        {
+          this->subscriber_listener_ = new ::CIAO::DDS4CCM::SubscriberListener_T
+            <DDS_TYPE, CCM_TYPE> (
+              this->context_,
+              this->context_->get_connection_error_listener ());
+        }
+      this->subscriber_->set_listener (
+        this->subscriber_listener_.in (),
+        ::CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+    }
+  catch (...)
+    {
+      CIAO_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::activate_subscriber: "
+                                "Caught unknown C++ exception.\n"));
+      throw CORBA::INTERNAL ();
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_publisher (void)
+{
+  CIAO_TRACE ("DDS_TopicBase_Connector_T::activate_publisher");
+
+  try
+    {
+      if (CORBA::is_nil (this->publisher_listener_.in ()))
+        {
+          this->publisher_listener_ = new ::CIAO::DDS4CCM::PublisherListener_T
+            <DDS_TYPE, CCM_TYPE> (
+              this->context_,
+              this->context_->get_connection_error_listener ());
+        }
+      this->publisher_->set_listener (
+        this->publisher_listener_.in (),
+        ::CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+    }
+  catch (...)
+    {
+      CIAO_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::activate_publisher: "
+                                "Caught unknown C++ exception.\n"));
+      throw CORBA::INTERNAL ();
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::passivate_default_topic (void)
+{
+  CIAO_TRACE ("DDS_TopicBase_Connector_T::passivate_default_topic");
+
+  try
+    {
+      this->topic_->set_listener (
+        ::DDS::TopicListener::_nil (),
+        0);
+    }
+  catch (...)
+    {
+      CIAO_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::passivate_default_topic: "
+                                "Caught unknown C++ exception.\n"));
+      throw CORBA::INTERNAL ();
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::passivate_subscriber (void)
+{
+  CIAO_TRACE ("DDS_TopicBase_Connector_T::passivate_subscriber");
+
+  try
+    {
+      this->subscriber_->set_listener (
+        ::DDS::SubscriberListener::_nil (),
+        0);
+    }
+  catch (...)
+    {
+      CIAO_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::passivate_subscriber: "
+                                "Caught unknown C++ exception.\n"));
+      throw CORBA::INTERNAL ();
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::passivate_publisher (void)
+{
+  CIAO_TRACE ("DDS_TopicBase_Connector_T::passivate_publisher");
+
+  try
+    {
+      this->publisher_->set_listener (
+        ::DDS::PublisherListener::_nil (),
+        0);
+    }
+  catch (...)
+    {
+      CIAO_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::passivate_default_topic: "
+                                "Caught unknown C++ exception.\n"));
+      throw CORBA::INTERNAL ();
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::remove_default_topic (void)
+{
+  CIAO_TRACE ("DDS_TopicBase_Connector_T::remove_default_topic");
+
+  try
+    {
+      this->domain_participant_->delete_topic (this->topic_.in ());
+      this->topic_ = ::DDS::Topic::_nil ();
+    }
+  catch (...)
+    {
+      CIAO_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::remove_default_topic: "
+                                "Caught unknown C++ exception.\n"));
+      throw CORBA::INTERNAL ();
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::remove_subscriber (void)
+{
+  CIAO_TRACE ("DDS_TopicBase_Connector_T::remove_subscriber");
+
+  try
+    {
+      this->domain_participant_->delete_subscriber (this->subscriber_.in ());
+      this->subscriber_ = ::DDS::Subscriber::_nil ();
+    }
+  catch (...)
+    {
+      CIAO_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::remove_subscriber: "
+                                "Caught unknown C++ exception.\n"));
+      throw CORBA::INTERNAL ();
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::remove_publisher (void)
+{
+  CIAO_TRACE ("DDS_TopicBase_Connector_T::remove_publisher");
+
+  try
+    {
+      this->domain_participant_->delete_publisher (this->publisher_.in ());
+      this->publisher_ = ::DDS::Publisher::_nil ();
+    }
+  catch (...)
+    {
+      CIAO_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::remove_publisher: "
+                                "Caught unknown C++ exception.\n"));
+      throw CORBA::INTERNAL ();
+    }
+}
