@@ -129,7 +129,7 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
                         ACE_THROW_SPEC
 
 #---------------------------------------------------------------------------
-# Configuration::addtions related to external references
+# Configuration::additions related to external references
 #---------------------------------------------------------------------------
 
 TAGFILES              = html/ace/ACE.tag=../../../../ace \
@@ -166,7 +166,7 @@ DOT_MULTI_TARGETS     = YES
 DOT_PATH              =
 
 #---------------------------------------------------------------------------
-# Configuration::addtions related to the search engine
+# Configuration::additions related to the search engine
 #---------------------------------------------------------------------------
 
 SEARCHENGINE          = YES
