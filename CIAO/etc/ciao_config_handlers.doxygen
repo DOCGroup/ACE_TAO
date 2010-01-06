@@ -48,7 +48,7 @@ WARN_FORMAT           = "$file:$line: $text"
 # configuration options related to the input files
 #---------------------------------------------------------------------------
 
-INPUT                 = TAO/CIAO/tools/Config_Handlers
+INPUT                 = TAO/CIAO/DAnCE/Config_Handlers
 FILE_PATTERNS         = *.cpp *.h *.i *.inl *.pidl *.txt *.idl
 RECURSIVE             =
 EXCLUDE               =
@@ -117,7 +117,7 @@ ENABLE_PREPROCESSING  = YES
 MACRO_EXPANSION       = YES
 EXPAND_ONLY_PREDEF    = YES
 SEARCH_INCLUDES       = YES
-INCLUDE_PATH          = TAO . ACEXML TAO/tao/IORTable TAO/CIAO/tools/Config_Handlers
+INCLUDE_PATH          = TAO . ACEXML TAO/tao/IORTable TAO/CIAO/DAnCE/Config_Handlers
 PREDEFINED            = __ACE_INLINE__ \
                         ACE_TEMPLATES_REQUIRE_SOURCE \
                         ACE_BEGIN_VERSIONED_NAMESPACE_DECL \
