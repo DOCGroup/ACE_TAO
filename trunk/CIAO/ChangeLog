@@ -1,3 +1,17 @@
+Wed Jan  6 12:27:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Logger/Logger_Service.cpp:
+          Changed the commandline flags, to:
+          -CIAOLogLevel
+          -CIAOTraceEnable
+          -CIAOLogFile
+
+        * DAnCE/Logger/Logger_Service.cpp
+          Changed the commandline flags, to:
+          -DAnCELogLevel
+          -DAnCETraceEnable
+          -DAnCELogFile
+
 Wed Jan  6 10:39:52 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.h:
