@@ -1,3 +1,9 @@
+Wed Jan  6 04:28:23 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_iphone.GNU:
+
+          Minor enhancement.
+
 Mon Jan  4 20:09:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao.spec
