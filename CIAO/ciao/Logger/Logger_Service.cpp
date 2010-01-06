@@ -6,6 +6,7 @@
 #include "ace/Env_Value_T.h"
 #include "tao/SystemException.h"
 #include "ace/Service_Config.h"
+#include "ace/Arg_Shifter.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // Needed to set ACE_LOG_MSG::msg_ostream()
@@ -88,42 +89,40 @@ namespace CIAO
   {
     CIAO_TRACE ("Logger_Service::parse_args");
 
-    ACE_Get_Opt get_opts (argc,
-                          argv,
-                          "l:tf:",
-                          0,
-                          0,
-                          ACE_Get_Opt::RETURN_IN_ORDER);
+    ACE_Arg_Shifter arg_shifter (argc, argv);
 
-    get_opts.long_option (ACE_TEXT("log-level"), 'l', ACE_Get_Opt::ARG_REQUIRED);
-    get_opts.long_option (ACE_TEXT("trace"), 't', ACE_Get_Opt::NO_ARG);
-    get_opts.long_option (ACE_TEXT("log-file"), 'f', ACE_Get_Opt::ARG_REQUIRED);
-
-    int c;
-    while ( (c = get_opts ()) != -1)
+    while (arg_shifter.is_anything_left ())
       {
-        switch (c)
+        const ACE_TCHAR *current_arg = 0;
+        if (0 != (current_arg =
+                       arg_shifter.get_the_parameter
+                       (ACE_TEXT ("-CIAOLogLevel"))))
           {
-            case 't':
-              CIAO_DEBUG (9, (LM_TRACE, CLINFO "Logger_Service::parse_args - "
-                            "Trace enabled\n",
-                            get_opts.opt_arg ()));
-              this->trace_ = true;
-              break;
+            CIAO_debug_level = ACE_OS::atoi (current_arg);
 
-            case 'l':
-              CIAO_DEBUG (9, (LM_TRACE, CLINFO "Logger_Service::parse_args - "
-                            "Log level set to %s\n",
-                            get_opts.opt_arg ()));
-              CIAO_debug_level = ACE_OS::atoi (get_opts.opt_arg ());
-              break;
+            arg_shifter.consume_arg ();
+          }
+        else if (0 == arg_shifter.cur_arg_strncasecmp
+            (ACE_TEXT ("-CIAOTraceEnable")))
+          {
+            this->trace_ = true;
 
-            case 'f':
-              CIAO_DEBUG (9, (LM_TRACE, CLINFO "Logger_Service::parse_args - "
-                            "Log file set to %s\n",
-                            get_opts.opt_arg ()));
-              this->filename_ = get_opts.opt_arg ();
-              break;
+            arg_shifter.consume_arg ();
+          }
+        else if (0 != (current_arg =
+                       arg_shifter.get_the_parameter
+                       (ACE_TEXT ("-CIAOLogFile"))))
+          {
+            this->filename_ = current_arg;
+
+            arg_shifter.consume_arg ();
+          }
+        else
+          {
+            // Can't interpret this argument.  Move on to the next
+            // argument.  Any arguments that don't match are ignored
+            // so that the caller can still use them.
+            arg_shifter.ignore_arg ();
           }
       }
   }

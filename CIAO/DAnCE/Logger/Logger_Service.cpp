@@ -6,6 +6,7 @@
 #include "tao/SystemException.h"
 #include "Log_Macros.h"
 #include "ace/Service_Config.h"
+#include "ace/Arg_Shifter.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // Needed to set ACE_LOG_MSG::msg_ostream()
@@ -93,42 +94,40 @@ namespace DAnCE
   {
     DANCE_TRACE ("Logger_Service::parse_args");
 
-    ACE_Get_Opt get_opts (argc,
-                          argv,
-                          "l:af:",
-                          0,
-                          0,
-                          ACE_Get_Opt::RETURN_IN_ORDER);
+    ACE_Arg_Shifter arg_shifter (argc, argv);
 
-    get_opts.long_option (ACE_TEXT("log-level"), 'l', ACE_Get_Opt::ARG_REQUIRED);
-    get_opts.long_option (ACE_TEXT("trace"), 'a', ACE_Get_Opt::NO_ARG);
-    get_opts.long_option (ACE_TEXT("log-file"), 'f', ACE_Get_Opt::ARG_REQUIRED);
-
-    int c;
-    while ( (c = get_opts ()) != -1)
+    while (arg_shifter.is_anything_left ())
       {
-        switch (c)
+        const ACE_TCHAR *current_arg = 0;
+        if (0 != (current_arg =
+                       arg_shifter.get_the_parameter
+                       (ACE_TEXT ("-DAnCELogLevel"))))
           {
-            case 'a':
-              DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Logger_Service::parse_args - ")
-                            ACE_TEXT("Trace enabled\n"),
-                            get_opts.opt_arg ()));
-              this->trace_ = true;
-              break;
+            DAnCE_debug_level = ACE_OS::atoi (current_arg);
 
-            case 'l':
-              DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Logger_Service::parse_args - ")
-                            ACE_TEXT("Log level set to %s\n"),
-                            get_opts.opt_arg ()));
-              DAnCE_debug_level = ACE_OS::atoi (get_opts.opt_arg ());
-              break;
+            arg_shifter.consume_arg ();
+          }
+        else if (0 == arg_shifter.cur_arg_strncasecmp
+            (ACE_TEXT ("-DAnCETraceEnable")))
+          {
+            this->trace_ = true;
 
-            case 'f':
-              DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Logger_Service::parse_args - ")
-                            ACE_TEXT("Log file set to %s\n"),
-                            get_opts.opt_arg ()));
-              this->filename_ = get_opts.opt_arg ();
-              break;
+            arg_shifter.consume_arg ();
+          }
+        else if (0 != (current_arg =
+                       arg_shifter.get_the_parameter
+                       (ACE_TEXT ("-DAnCELogFile"))))
+          {
+            this->filename_ = current_arg;
+
+            arg_shifter.consume_arg ();
+          }
+        else
+          {
+            // Can't interpret this argument.  Move on to the next
+            // argument.  Any arguments that don't match are ignored
+            // so that the caller can still use them.
+            arg_shifter.ignore_arg ();
           }
       }
   }
