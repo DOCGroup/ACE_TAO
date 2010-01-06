@@ -19,7 +19,7 @@ public:
 
   virtual ~AST_Template_Module (void);
 
-  FE_Utils::T_PARAMLIST_INFO const *
+  FE_Utils::T_PARAMLIST_INFO *
   template_params (void) const;
   
   // Checks for errors in the template args of an instantiation.

@@ -1077,7 +1077,7 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
           // Set the scope node as "node" in which the code is being
           // generated so that elements in the node's scope can use it
           // for code generation.
-          this->ctx_->scope (node->decl ());
+          this->ctx_->scope (node);
 
           // Set the node to be visited.
           this->ctx_->node (bd);

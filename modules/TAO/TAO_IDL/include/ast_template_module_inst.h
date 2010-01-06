@@ -21,7 +21,7 @@ public:
   
   AST_Template_Module *ref (void) const;
 
-  FE_Utils::T_ARGLIST const *
+  FE_Utils::T_ARGLIST *
   template_args (void) const;
   
   // Narrowing.

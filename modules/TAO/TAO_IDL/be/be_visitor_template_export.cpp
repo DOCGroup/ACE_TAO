@@ -112,7 +112,9 @@ be_visitor_template_export::visit_sequence (be_sequence *node)
       << "template class " << be_global->stub_export_macro ()
       << " ";
 
-  if (node->gen_base_class_name (os, "", this->ctx_->scope ()) == -1)
+  if (node->gen_base_class_name (os,
+                                 "",
+                                 this->ctx_->scope ()->decl ()) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_template_export::"

@@ -32,7 +32,6 @@
 class be_valuetype;
 class be_exception;
 class UTL_ExceptList;
-class AST_Template_Interface;
 
 class be_visitor_ccm_pre_proc : public be_visitor_component_scope
 {
@@ -50,7 +49,6 @@ public:
 
   virtual int visit_root (be_root *node);
   virtual int visit_module (be_module *node);
-  virtual int visit_template_module_inst (be_template_module_inst *node);
   virtual int visit_component (be_component *node);
   virtual int visit_provides (be_provides *node);
   virtual int visit_uses (be_uses *node);
@@ -116,10 +114,6 @@ private:
                                       AST_Decl *parent);
   UTL_NameList *compute_inheritance (be_home *node);
   
-  // For provides and uses ports generated code -  may
-  // involve creation of instantiated template interface.
-  int store_port_interface (AST_Type *i);
-  
 private:
   // These are created for operations implied by 'uses multiple' declarations.
   Identifier module_id_;
@@ -140,11 +134,6 @@ private:
   // Working nodes.
   be_component *comp_;
   be_home *home_;
-  
-  // Working type for provides or uses ports.
-  // If the port refers to a template interface, an
-  // instantiation will be created.
-  AST_Type *port_interface_;
 };
 
 #endif // TAO_BE_VISITOR_CCM_PRE_PROC_H

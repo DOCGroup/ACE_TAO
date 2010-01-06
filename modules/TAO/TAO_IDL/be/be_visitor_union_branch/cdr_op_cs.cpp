@@ -66,7 +66,7 @@ be_visitor_union_branch_cdr_op_cs::visit_array (be_array *node)
 {
   // If not a typedef and we are defined in the use scope, we must be defined.
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -107,7 +107,7 @@ be_visitor_union_branch_cdr_op_cs::visit_array (be_array *node)
                   NAMEBUFSIZE);
 
   if (!this->ctx_->alias () // not a typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       // For anonymous arrays ...
       // we have to generate a name for us that has an underscore
@@ -231,7 +231,7 @@ be_visitor_union_branch_cdr_op_cs::visit_enum (be_enum *node)
   // Not a typedef and node is defined inside the union. Otherwise the cdr
   // operator is generated elsewhere.
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       // Instantiate a visitor context with a copy of our context. This info
       // will be modified based on what type of node we are visiting.
@@ -642,7 +642,7 @@ be_visitor_union_branch_cdr_op_cs::visit_sequence (be_sequence *node)
   // If the sequence is defined in this scope, generate its CDR stream
   // operators heree.
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       // Anonymous sequence
       be_visitor_context ctx (*this->ctx_);
@@ -833,7 +833,7 @@ be_visitor_union_branch_cdr_op_cs::visit_structure (be_structure *node)
   // If the structure is defined in this scope. generate its CDR
   // stream operators here.
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -929,7 +929,7 @@ be_visitor_union_branch_cdr_op_cs::visit_union (be_union *node)
   // If the union is defined in this scope, generate its CDR
   // stream operators here.
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -1002,7 +1002,8 @@ be_visitor_union_branch_cdr_op_cs::visit_union (be_union *node)
 int
 be_visitor_union_branch_cdr_op_cs::explicit_default (void)
 {
-  be_union *bu = be_union::narrow_from_decl (this->ctx_->scope ());
+  be_union *bu =
+    be_union::narrow_from_decl (this->ctx_->scope ()->decl ());
   int def_index = bu->default_index ();
 
   if (def_index != -1)

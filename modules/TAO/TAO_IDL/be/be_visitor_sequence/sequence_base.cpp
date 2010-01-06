@@ -68,11 +68,11 @@ be_visitor_sequence_base::visit_node (be_type *node)
       if (this->ctx_->sub_state ()
             == TAO_CodeGen::TAO_ARRAY_SEQ_CH_TEMPLATE_VAR)
         {
-          *os << bt->nested_type_name (this->ctx_->scope (), "_var");
+          *os << bt->nested_type_name (this->ctx_->scope ()->decl (), "_var");
         }
       else
         {
-          *os << bt->nested_type_name (this->ctx_->scope ());
+          *os << bt->nested_type_name (this->ctx_->scope ()->decl ());
         }
     }
   else
@@ -220,8 +220,8 @@ be_visitor_sequence_base_template_args::visit_interface (be_interface *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BASE_CH)
     {
-      *os << bt->nested_type_name (this->ctx_->scope ()) << ",";
-      *os << bt->nested_type_name (this->ctx_->scope (), "_var");
+      *os << bt->nested_type_name (this->ctx_->scope ()->decl ()) << ",";
+      *os << bt->nested_type_name (this->ctx_->scope ()->decl (), "_var");
     }
   else
     {
@@ -251,8 +251,8 @@ be_visitor_sequence_base_template_args::visit_interface_fwd (
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BASE_CH)
     {
-      *os << bt->nested_type_name (this->ctx_->scope ()) << ",";
-      *os << bt->nested_type_name (this->ctx_->scope (), "_var");
+      *os << bt->nested_type_name (this->ctx_->scope ()->decl ()) << ",";
+      *os << bt->nested_type_name (this->ctx_->scope ()->decl (), "_var");
     }
   else
     {

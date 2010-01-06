@@ -94,7 +94,8 @@ private:
                         const char *type_suffix,
                         const char *const_method);
 
-
+private:
+  be_valuebox *vb_node_;
 };
 
 #endif /* _BE_VISITOR_VALUEBOX_UNION_MEMBER_CI_H_ */
