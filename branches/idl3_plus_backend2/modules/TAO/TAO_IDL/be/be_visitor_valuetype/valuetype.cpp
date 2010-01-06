@@ -56,7 +56,7 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
       // generated so that elements in the node's scope can use it
       // for code generation.
 
-      this->ctx_->scope (node->decl ());
+      this->ctx_->scope (node);
       this->ctx_->node (bd);
       this->elem_number_++;
 
@@ -711,7 +711,7 @@ be_visitor_valuetype::gen_pd (be_valuetype *node)
       // Set the scope node as "node" in which the code is being
       // generated so that elements in the node's scope can use it
       // for code generation.
-      this->ctx_->scope (node->decl ());
+      this->ctx_->scope (node);
 
       // Set the node to be visited.
       this->ctx_->node (field);

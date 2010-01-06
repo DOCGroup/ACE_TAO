@@ -71,7 +71,8 @@ int
 be_visitor_valuetype_field_ci::visit_array (be_array *node)
 {
   be_decl *ub = this->ctx_->node ();
-  be_valuetype *bu = be_valuetype::narrow_from_decl (this->ctx_->scope ());
+  be_valuetype *bu =
+    be_valuetype::narrow_from_decl (this->ctx_->scope ()->decl ());
   be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.
@@ -117,7 +118,8 @@ int
 be_visitor_valuetype_field_ci::visit_structure (be_structure *node)
 {
   be_decl *ub = this->ctx_->node ();
-  be_valuetype *bu = be_valuetype::narrow_from_decl (this->ctx_->scope ());
+  be_valuetype *bu =
+    be_valuetype::narrow_from_decl (this->ctx_->scope ()->decl ());
   be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.
@@ -163,7 +165,8 @@ int
 be_visitor_valuetype_field_ci::visit_union (be_union *node)
 {
   be_decl *ub = this->ctx_->node ();
-  be_valuetype *bu = be_valuetype::narrow_from_decl (this->ctx_->scope ());
+  be_valuetype *bu =
+    be_valuetype::narrow_from_decl (this->ctx_->scope ()->decl ());
   be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.

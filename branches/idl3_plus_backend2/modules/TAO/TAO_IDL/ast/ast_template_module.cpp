@@ -32,7 +32,7 @@ AST_Template_Module::~AST_Template_Module (void)
 {
 }
 
-FE_Utils::T_PARAMLIST_INFO const *
+FE_Utils::T_PARAMLIST_INFO *
 AST_Template_Module::template_params (void) const
 {
   return this->template_params_;

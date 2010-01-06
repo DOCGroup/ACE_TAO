@@ -1,3 +1,75 @@
+Wed Jan  6 23:21:23 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_template_module.h:
+        * TAO_IDL/include/ast_template_module_inst.h:
+        * TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
+        * TAO_IDL/be/be_visitor_scope.cpp:
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_svs.cpp:
+        * TAO_IDL/be/be_visitor_operation/argument_marshal.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_base.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/buffer_type.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_root/root_sth.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/field_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/union_member_ci.cpp:
+        * TAO_IDL/be/be_visitor_template_export.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/serializer_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/array.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/serializer_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_visitor_context.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ci.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_field/serializer_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_field/field_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be/be_template_module.cpp:
+        * TAO_IDL/ast/ast_template_module.cpp:
+        * TAO_IDL/ast/ast_template_module_inst.cpp:
+        * TAO_IDL/be_include/be_visitor_context.h:
+        * TAO_IDL/be_include/be_visitor_valuebox/union_member_ci.h:
+        * TAO_IDL/be_include/be_visitor_valuebox/field_ci.h:
+        * TAO_IDL/be_include/be_visitor_valuebox/valuebox_ci.h:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+
+          - Changed 'scope' member of class be_visitor_context to
+            actually be a scope type, rather than a decl type as
+            previously.
+
+          - Added a new visitor and a separate pass for template module
+            instantiation.
+
+          - Added a few of the necessary visit_* methods to the
+            new visitor.
+
 Tue Jan  5 23:22:24 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_connector.cpp:

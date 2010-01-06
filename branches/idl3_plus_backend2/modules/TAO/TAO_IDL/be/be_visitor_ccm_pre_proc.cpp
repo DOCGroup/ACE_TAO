@@ -17,6 +17,7 @@
 #include "be_sequence.h"
 #include "be_valuetype.h"
 #include "be_module.h"
+#include "be_template_module.h"
 #include "be_template_module_inst.h"
 #include "be_field.h"
 #include "be_typedef.h"
@@ -78,8 +79,7 @@ be_visitor_ccm_pre_proc::be_visitor_ccm_pre_proc (
     unknown_key_value_ (0),
     duplicate_key_value_ (0),
     comp_ (0),
-    home_ (0),
-    port_interface_ (0)
+    home_ (0)
 {
 }
 
@@ -94,8 +94,9 @@ be_visitor_ccm_pre_proc::visit_root (be_root *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_ccm_pre_proc::"
-                         "visit_root - visit scope failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("visit_root - ")
+                         ACE_TEXT ("visit scope failed\n")),
                         -1);
     }
 
@@ -108,27 +109,12 @@ be_visitor_ccm_pre_proc::visit_module (be_module *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_ccm_pre_proc::"
-                         "visit_module - visit scope failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("visit_module - ")
+                         ACE_TEXT ("visit scope failed\n")),
                         -1);
     }
 
-  return 0;
-}
-
-int
-be_visitor_ccm_pre_proc::visit_template_module_inst (
-  be_template_module_inst *node)
-{
-  UTL_Scope *s = node->defined_in ();
-  be_module *instance = 0;
-  
-  ACE_NEW_RETURN (instance,
-                  be_module (node->name ()),
-                  -1);
-                  
-  s->add_to_scope (instance);
-  
   return 0;
 }
 
@@ -138,18 +124,20 @@ be_visitor_ccm_pre_proc::visit_component (be_component *node)
   if (this->lookup_cookie (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_ccm_pre_proc::"
-                         "visit_component - "
-                         "Components::Cookie lookup failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("visit_component - ")
+                         ACE_TEXT ("Components::Cookie ")
+                         ACE_TEXT ("lookup failed\n")),
                         -1);
     }
 
   if (this->lookup_exceptions (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_ccm_pre_proc::"
-                         "visit_component - "
-                         "component exception lookups failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("visit_component - ")
+                         ACE_TEXT ("component exception ")
+                         ACE_TEXT ("lookups failed\n")),
                         -1);
     }
     
@@ -159,9 +147,10 @@ be_visitor_ccm_pre_proc::visit_component (be_component *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_ccm_pre_proc::"
-                         "visit_component - "
-                         "code generation for scope3 failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("visit_component - ")
+                         ACE_TEXT ("code generation for ")
+                         ACE_TEXT ("scope3 failed\n")),
                         -1);
     }
 
@@ -171,15 +160,6 @@ be_visitor_ccm_pre_proc::visit_component (be_component *node)
 int
 be_visitor_ccm_pre_proc::visit_provides (be_provides *node)
 {
-  if (this->store_port_interface (node->provides_type ()) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_ccm_pre_proc::"
-                         "visit_provides - "
-                         "store_port_interface failed\n"),
-                        -1);
-    }
-  
   if (node->provides_type ()->is_local ())
     {
       return 0;
@@ -223,15 +203,6 @@ be_visitor_ccm_pre_proc::visit_provides (be_provides *node)
 int
 be_visitor_ccm_pre_proc::visit_uses (be_uses *node)
 {
-  if (this->store_port_interface (node->uses_type ()) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_ccm_pre_proc::"
-                         "visit_uses - "
-                         "store_port_interface failed\n"),
-                        -1);
-    }
-  
   if (node->uses_type ()->is_local ())
     {
       return 0;
@@ -242,27 +213,27 @@ be_visitor_ccm_pre_proc::visit_uses (be_uses *node)
       if (this->gen_connect_multiple (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_ccm_pre_proc::"
-                             "visit_uses - "
-                             "gen_connect_multiple failed\n"),
+                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                             ACE_TEXT ("visit_uses - ")
+                             ACE_TEXT ("gen_connect_multiple failed\n")),
                             -1);
         }
 
       if (this->gen_disconnect_multiple (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_ccm_pre_proc::"
-                             "visit_uses - "
-                             "gen_disconnect_multiple failed\n"),
+                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                             ACE_TEXT ("visit_uses - ")
+                             ACE_TEXT ("gen_disconnect_multiple failed\n")),
                             -1);
         }
 
       if (this->gen_get_connection_multiple (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_ccm_pre_proc::"
-                             "visit_uses - "
-                             "gen_get_connection_single failed\n"),
+                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                             ACE_TEXT ("visit_uses - ")
+                             ACE_TEXT ("gen_get_connection_single failed\n")),
                             -1);
         }
     }
@@ -271,27 +242,27 @@ be_visitor_ccm_pre_proc::visit_uses (be_uses *node)
       if (this->gen_connect_single (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_ccm_pre_proc::"
-                             "visit_uses - "
-                             "gen_connect_single failed\n"),
+                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                             ACE_TEXT ("visit_uses - ")
+                             ACE_TEXT ("gen_connect_single failed\n")),
                             -1);
         }
 
       if (this->gen_disconnect_single (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_ccm_pre_proc::"
-                             "visit_uses - "
-                             "gen_disconnect_single failed\n"),
+                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                             ACE_TEXT ("visit_uses - ")
+                             ACE_TEXT ("gen_disconnect_single failed\n")),
                             -1);
         }
 
       if (this->gen_get_connection_single (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_ccm_pre_proc::"
-                             "visit_uses - "
-                             "gen_get_connection_single failed\n"),
+                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                             ACE_TEXT ("visit_uses - ")
+                             ACE_TEXT ("gen_get_connection_single failed\n")),
                             -1);
         }
     }
@@ -305,18 +276,18 @@ be_visitor_ccm_pre_proc::visit_publishes (be_publishes *node)
   if (this->gen_subscribe (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_ccm_pre_proc::"
-                         "visit_publishes - "
-                         "gen_subscribe failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("visit_publishes - ")
+                         ACE_TEXT ("gen_subscribe failed\n")),
                         -1);
     }
 
   if (this->gen_unsubscribe (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_ccm_pre_proc::"
-                         "visit_publishes - "
-                         "gen_unsubscribe failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("visit_publishes - ")
+                         ACE_TEXT ("gen_unsubscribe failed\n")),
                         -1);
     }
 
@@ -329,18 +300,18 @@ be_visitor_ccm_pre_proc::visit_emits (be_emits *node)
   if (this->gen_emits_connect (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_ccm_pre_proc::"
-                         "visit_emits - "
-                         "gen_emits_connect failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("visit_emits - ")
+                         ACE_TEXT ("gen_emits_connect failed\n")),
                         -1);
     }
 
   if (this->gen_emits_disconnect (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_ccm_pre_proc::"
-                         "visit_emits - "
-                         "gen_emits_disconnect failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("visit_emits - ")
+                         ACE_TEXT ("gen_emits_disconnect failed\n")),
                         -1);
     }
 
@@ -353,9 +324,9 @@ be_visitor_ccm_pre_proc::visit_consumes (be_consumes *node)
   if (this->gen_get_consumer (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_ccm_pre_proc::"
-                         "visit_comsumes - "
-                         "gen_get_consumer failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("visit_comsumes - ")
+                         ACE_TEXT ("gen_get_consumer failed\n")),
                         -1);
     }
 
@@ -370,9 +341,9 @@ be_visitor_ccm_pre_proc::visit_home (be_home *node)
   if (xplicit == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
-                         "visit_home - "
-                         "code generation for explicit interface failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("visit_home - code generation ")
+                         ACE_TEXT ("for explicit interface failed\n")),
                         -1);
     }
 
@@ -381,46 +352,46 @@ be_visitor_ccm_pre_proc::visit_home (be_home *node)
   if (implicit == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
-                         "visit_home - "
-                         "code generation for implicit interface failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("visit_home - code generation ")
+                         ACE_TEXT ("for implicit interface failed\n")),
                         -1);
     }
 
   if (this->gen_factories (node, xplicit) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
-                         "visit_home - "
-                         "code generation for factories declarations failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("visit_home - code generation ")
+                         ACE_TEXT ("for factories declarations failed\n")),
                         -1);
     }
 
   if (this->gen_finders (node, xplicit) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
-                         "visit_home - "
-                         "code generation for finders declarations failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("visit_home - code generation ")
+                         ACE_TEXT ("for finders declarations failed\n")),
                         -1);
     }
 
   if (this->gen_implicit_ops (node, implicit) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
-                         "visit_home - "
-                         "code generation for primary key "
-                         "operations failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("visit_home - ")
+                         ACE_TEXT ("code generation for primary key ")
+                         ACE_TEXT ("operations failed\n")),
                         -1);
     }
 
   if (this->create_equivalent (node, xplicit, implicit) == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
-                         "visit_home - "
-                         "code generation for equivalent interface failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("visit_home - code generation ")
+                         ACE_TEXT ("for equivalent interface failed\n")),
                         -1);
     }
 
@@ -438,9 +409,9 @@ be_visitor_ccm_pre_proc::visit_eventtype (be_eventtype *node)
   if (this->create_event_consumer (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
-                         "visit_eventtype - "
-                         "code generation for consumer failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("visit_eventtype - code generation ")
+                         ACE_TEXT ("for consumer failed\n")),
                         -1);
     }
 
@@ -479,9 +450,9 @@ be_visitor_ccm_pre_proc::gen_factories (be_home *node,
       if ((*item)->be_insert_exception (this->create_failure_) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_ccm_pre_proc::"
-                             "gen_factories - "
-                             "exception insertion failed\n"),
+                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                             ACE_TEXT ("gen_factories - ")
+                             ACE_TEXT ("exception insertion failed\n")),
                             -1);
         }
 
@@ -516,9 +487,9 @@ be_visitor_ccm_pre_proc::gen_finders (be_home *node,
       if ((*item)->be_insert_exception (this->finder_failure_) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_ccm_pre_proc::"
-                             "gen_factories - "
-                             "exception insertion failed\n"),
+                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                             ACE_TEXT ("gen_factories - ")
+                             ACE_TEXT ("exception insertion failed\n")),
                             -1);
         }
 
@@ -538,9 +509,9 @@ be_visitor_ccm_pre_proc::gen_implicit_ops (be_home *node,
   if (this->gen_create (node, implicit) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
-                         "gen_implicit_ops - "
-                         "gen_create failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("gen_implicit_ops - ")
+                         ACE_TEXT ("gen_create failed\n")),
                         -1);
     }
 
@@ -554,27 +525,27 @@ be_visitor_ccm_pre_proc::gen_implicit_ops (be_home *node,
   if (this->gen_find_by_primary_key (node, implicit) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
-                         "gen_implicit_ops - "
-                         "gen_find_by_primary_key failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("gen_implicit_ops - ")
+                         ACE_TEXT ("gen_find_by_primary_key failed\n")),
                         -1);
     }
 
   if (this->gen_remove (node, implicit) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
-                         "gen_implicit_ops - "
-                         "gen_remove failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("gen_implicit_ops - ")
+                         ACE_TEXT ("gen_remove failed\n")),
                         -1);
     }
 
   if (this->gen_get_primary_key (node, implicit) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
-                         "gen_implicit_ops - "
-                         "gen_get_primary_key failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("gen_implicit_ops - ")
+                         ACE_TEXT ("gen_get_primary_key failed\n")),
                         -1);
     }
 
@@ -935,9 +906,9 @@ be_visitor_ccm_pre_proc::gen_subscribe (be_publishes *node)
   if (i == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_ccm_pre_proc::"
-                         "gen_subscribe - "
-                         "consumer lookup failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("gen_subscribe - ")
+                         ACE_TEXT ("consumer lookup failed\n")),
                         -1);
     }
 
@@ -974,9 +945,9 @@ be_visitor_ccm_pre_proc::gen_unsubscribe (be_publishes *node)
   if (i == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_ccm_pre_proc::"
-                         "gen_unsubscribe - "
-                         "consumer lookup failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("gen_unsubscribe - ")
+                         ACE_TEXT ("consumer lookup failed\n")),
                         -1);
     }
 
@@ -1045,9 +1016,9 @@ be_visitor_ccm_pre_proc::gen_emits_connect (be_emits *node)
   if (i == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_ccm_pre_proc::"
-                         "gen_emits_connect - "
-                         "consumer lookup failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("gen_emits_connect - ")
+                         ACE_TEXT ("consumer lookup failed\n")),
                         -1);
     }
 
@@ -1084,9 +1055,9 @@ be_visitor_ccm_pre_proc::gen_emits_disconnect (be_emits *node)
   if (i == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_ccm_pre_proc::"
-                         "gen_emits_disconnect - "
-                         "consumer lookup failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("gen_emits_disconnect - ")
+                         ACE_TEXT ("consumer lookup failed\n")),
                         -1);
     }
 
@@ -1129,9 +1100,9 @@ be_visitor_ccm_pre_proc::gen_get_consumer (be_consumes *node)
   if (i == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_ccm_pre_proc::"
-                         "gen_get_consumer - "
-                         "consumer lookup failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("gen_get_consumer - ")
+                         ACE_TEXT ("consumer lookup failed\n")),
                         -1);
     }
 
@@ -1379,9 +1350,9 @@ be_visitor_ccm_pre_proc::gen_extended_port (be_porttype *pt)
   if (this->visit_scope (pt) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_ccm_pre_proc::"
-                         "gen_extended_port - "
-                         "visit_scope for porttype failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("gen_extended_port - ")
+                         ACE_TEXT ("visit_scope for porttype failed\n")),
                         -1);
     }
     
@@ -1866,14 +1837,5 @@ be_visitor_ccm_pre_proc::compute_inheritance (be_home *node)
     }
 
   return retval;
-}
-
-int
-be_visitor_ccm_pre_proc::store_port_interface (AST_Type *i)
-{
-  // This is trivial now without template interfaces, needs
-  // to be factored out.
-  this->port_interface_ = i;
-  return 0;
 }
 

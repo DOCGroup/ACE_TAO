@@ -74,7 +74,7 @@ be_visitor_union_branch_cdr_op_ch::visit_array (be_array *node)
   // If not a typedef and we are defined in the use scope, we must be defined.
 
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       // This is the case for anonymous arrays.
 
@@ -101,7 +101,7 @@ be_visitor_union_branch_cdr_op_ch::visit_enum (be_enum *node)
 {
   // If not a typedef and we are defined in the use scope, we must be defined.
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -126,7 +126,7 @@ be_visitor_union_branch_cdr_op_ch::visit_sequence (be_sequence *node)
 {
   // If not a typedef and we are defined in the use scope, we must be defined.
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -150,7 +150,7 @@ be_visitor_union_branch_cdr_op_ch::visit_structure (be_structure *node)
 {
   // If not a typedef and we are defined in the use scope, we must be defined.
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -194,7 +194,7 @@ be_visitor_union_branch_cdr_op_ch::visit_union (be_union *node)
 {
   // If not a typedef and we are defined in the use scope, we must be defined.
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);

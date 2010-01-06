@@ -72,7 +72,7 @@ be_visitor_field_serializer_op_cs::visit_array (be_array *node)
   // If the array is defined in this scope, we must generate
   // CDR stream operators for the array itself.
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -114,7 +114,7 @@ be_visitor_field_serializer_op_cs::visit_array (be_array *node)
                   NAMEBUFSIZE);
 
   if (this->ctx_->alias () == 0 // Not a typedef.
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       // For anonymous arrays ...
       // we have to generate a name for us that has an underscore
@@ -193,7 +193,7 @@ be_visitor_field_serializer_op_cs::visit_enum (be_enum *node)
   // If we are defined inside this scope, we must generate the
   /// Serializer stream operators for us here.
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -670,7 +670,7 @@ be_visitor_field_serializer_op_cs::visit_sequence (be_sequence *node)
   // If the sequence is defined in this scope, generate its
   // Serializer stream operators here.
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -818,7 +818,7 @@ be_visitor_field_serializer_op_cs::visit_structure (be_structure *node)
   // If the struct is defined in this scope, generate its Serializer stream
   // operators here.
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -914,7 +914,7 @@ be_visitor_field_serializer_op_cs::visit_union (be_union *node)
   // If the union is defined in this scope, generate its Serializer stream
   // operators here.
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -1056,7 +1056,7 @@ be_visitor_serializer_op_field_decl::visit_array (be_array *node)
                   NAMEBUFSIZE);
 
   if (this->ctx_->alias () == 0 // Not a typedef.
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       // For anonymous arrays,
       // we have to generate a name for us that has an underscope

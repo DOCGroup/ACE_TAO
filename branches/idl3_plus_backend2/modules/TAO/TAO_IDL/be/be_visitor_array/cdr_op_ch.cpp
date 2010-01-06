@@ -73,7 +73,7 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
   // is a declaration (not a reference), we must generate code for
   // the declaration.
   if (this->ctx_->alias () == 0 && // Not a typedef.
-      bt->is_child (this->ctx_->scope ()))
+      bt->is_child (this->ctx_->scope ()->decl ()))
     {
       int status = 0;
       be_visitor_context ctx (*this->ctx_);

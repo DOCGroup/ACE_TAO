@@ -71,7 +71,7 @@ be_visitor_scope::visit_scope (be_scope *node)
       // Set the scope node as "node" in which the code is being
       // generated so that elements in the node's scope can use it
       // for code generation.
-      this->ctx_->scope (node->decl ());
+      this->ctx_->scope (node);
 
       // Set the node to be visited.
       this->ctx_->node (bd);
@@ -132,7 +132,7 @@ int
 be_visitor_scope::next_elem (be_decl *elem,
                              be_decl *&successor)
 {
-  be_decl *ctx_scope = this->ctx_->scope ();
+  be_decl *ctx_scope = this->ctx_->scope ()->decl ();
   be_scope *node = 0;
 
   if (ctx_scope != 0)
