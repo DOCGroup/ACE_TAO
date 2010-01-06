@@ -14,6 +14,7 @@ ifeq ($(IPHONE_TARGET), HARDWARE)
   IPHONE_PLATFORM:=$(XCODE)/Platforms/iPhoneOS.platform/Developer
   IPHONE_SDK:=$(IPHONE_PLATFORM)/SDKs/iPhoneOS${IPHONE_VERSION}.sdk
   IPHONE_HARDWARE_ARCHITECTURE=armv6
+  CODESIGN_ALLOCATE:=$(IPHONE_PLATFORM)/usr/bin/codesign_allocate
 endif
 
 CC:=$(IPHONE_PLATFORM)/usr/bin/gcc
