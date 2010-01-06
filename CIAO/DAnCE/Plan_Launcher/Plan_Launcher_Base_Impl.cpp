@@ -85,7 +85,7 @@ void Plan_Launcher_Base_Impl::execute()
       for (size_t i= 0; i < sz; ++i)
         {
           DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::execute - ")
-                        ACE_TEXT("launching plan \"%s\"...\n"), this->cdr_plan_urls_[i].c_str()));
+                        ACE_TEXT("launching plan \"<%s>\"...\n"), this->cdr_plan_urls_[i].c_str()));
           ::Deployment::DeploymentPlan_var plan = this->read_cdr_plan_file(this->cdr_plan_urls_[i].c_str());
           try
           {
@@ -242,11 +242,11 @@ Plan_Launcher_Base_Impl::launch_plan(const ::Deployment::DeploymentPlan &plan)
   catch (const Deployment::ResourceNotAvailable& ex)
     {
       char buf[1024];
-      ACE_OS::sprintf (buf, "Plan_Launcher_Base_Impl::launch_plan - EXCEPTION: ResourceNotAvaiable exception caught: %s,\n"
-          "Type: %s\n"
-          "Property: %s\n"
-          "Element: %s\n"
-          "Resource: %s\n",
+      ACE_OS::sprintf (buf, "Plan_Launcher_Base_Impl::launch_plan - EXCEPTION: ResourceNotAvaiable exception caught: <%s>,\n"
+          "Type: <%s>\n"
+          "Property: <%s>\n"
+          "Element: <%s>\n"
+          "Resource: <%s>\n",
           ex.name.in (),
           ex.resourceType.in (),
           ex.propertyName.in (),
@@ -258,7 +258,7 @@ Plan_Launcher_Base_Impl::launch_plan(const ::Deployment::DeploymentPlan &plan)
   catch (const Deployment::StartError& ex)
     {
       char buf[1024];
-      ACE_OS::sprintf (buf, "Plan_Launcher_Base_Impl::launch_plan - EXCEPTION: StartError exception caught: %s, %s\n",
+      ACE_OS::sprintf (buf, "Plan_Launcher_Base_Impl::launch_plan - EXCEPTION: StartError exception caught: <%s>, <%s>\n",
           ex.name.in (),
           ex.reason.in ());
       DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("%C"), buf));
@@ -267,7 +267,7 @@ Plan_Launcher_Base_Impl::launch_plan(const ::Deployment::DeploymentPlan &plan)
   catch (const Deployment::InvalidProperty& ex)
     {
       char buf[1024];
-      ACE_OS::sprintf (buf, "Plan_Launcher_Base_Impl::launch_plan - EXCEPTION: InvalidProperty exception caught: %s, %s\n",
+      ACE_OS::sprintf (buf, "Plan_Launcher_Base_Impl::launch_plan - EXCEPTION: InvalidProperty exception caught: <%s>, <%s>\n",
           ex.name.in (),
           ex.reason.in ());
       DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("%C"), buf));
@@ -276,7 +276,7 @@ Plan_Launcher_Base_Impl::launch_plan(const ::Deployment::DeploymentPlan &plan)
   catch (const Deployment::InvalidConnection& ex)
     {
       char buf[1024];
-      ACE_OS::sprintf (buf, "Plan_Launcher_Base_Impl::launch_plan - EXCEPTION: InvalidConnection exception caught: %s, %s\n",
+      ACE_OS::sprintf (buf, "Plan_Launcher_Base_Impl::launch_plan - EXCEPTION: InvalidConnection exception caught: <%s>, <%s>\n",
           ex.name.in (),
           ex.reason.in ());
       DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("%C"), buf));
@@ -285,7 +285,7 @@ Plan_Launcher_Base_Impl::launch_plan(const ::Deployment::DeploymentPlan &plan)
   catch (const CORBA::Exception& ex)
     {
       char buf[1024];
-      ACE_OS::sprintf (buf, "Plan_Launcher_Base_Impl::launch_plan - CORBA EXCEPTION: %s\n",
+      ACE_OS::sprintf (buf, "Plan_Launcher_Base_Impl::launch_plan - CORBA EXCEPTION: <%s>\n",
           ex._info().fast_rep());
       DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("%C"), buf));
       throw Deployment_Failure (buf);
@@ -501,9 +501,9 @@ void Plan_Launcher_Base_Impl::write_dam_ior(
     }
   else
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("PlanLauncher.cpp::write_dap_ior - Error in opening file %s to write DAM IOR: %m"),
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("PlanLauncher.cpp::write_dap_ior - Error in opening file <%s> to write DAM IOR: %m"),
               this->dam_ior_.c_str()));
-      throw Deployment_Failure (ACE_CString ("write_dap_ior - Error in opening file %s to write DAM IOR: %m") +
+      throw Deployment_Failure (ACE_CString ("write_dap_ior - Error in opening file <%s> to write DAM IOR: %m") +
           this->dam_ior_);
     }
 }
@@ -553,7 +553,7 @@ Plan_Launcher_Base_Impl::stop_plan()
       for (size_t i = 0; i < sz; ++i)
         {
           DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::stop_plan - ")
-                       ACE_TEXT("Stopping plan by plan file : %s\n"), this->cdr_plan_urls_[i].c_str()));
+                       ACE_TEXT("Stopping plan by plan file : <%s>\n"), this->cdr_plan_urls_[i].c_str()));
           ::Deployment::DeploymentPlan_var plan = this->read_cdr_plan_file(this->cdr_plan_urls_[i].c_str());
           if (!this->teardown_plan(plan->UUID.in()))
             {
@@ -767,7 +767,7 @@ Plan_Launcher_Base_Impl::expand_env_vars (const ACE_TCHAR * s)
             else
               {
                 DANCE_DEBUG (6, (LM_WARNING, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::expand_env_vars - ")
-                              ACE_TEXT("Envvar can not be parsed out at %i in \"%s\""),
+                              ACE_TEXT("Envvar can not be parsed out at %i in \"<%s>\""),
                               pos_start,
                               src.c_str()));
               }
