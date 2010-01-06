@@ -1,3 +1,21 @@
+Wed Jan  6 10:39:52 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.cpp:
+          Separate DDS lifecycle from CCM lifecycle. Implemented the
+          various DANCE start/shutdown steps.
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+          Implemented set_listener method.
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+          Do not use listener when nil.
+
+        * connectors/dds4ccm/impl/ndds/Topic.cpp:
+          Added traces. get_listener should throw a
+          no implement exception.
+
 Wed Jan  6 09:39:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.h:
