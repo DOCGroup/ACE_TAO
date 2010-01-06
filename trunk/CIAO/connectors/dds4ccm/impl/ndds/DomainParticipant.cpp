@@ -51,12 +51,16 @@ namespace CIAO
         CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipant_i::create_publisher_with_profile - "
                      "Creating Publisher\n"));
 
-        RTI_PublisherListener_i *rti_pl = new RTI_PublisherListener_i (a_listener);
+        RTI_PublisherListener_i *rti_pl = 0;
+        if (!CORBA::is_nil (a_listener))
+          {
+            rti_pl = new RTI_PublisherListener_i (a_listener);
+          }
         DDSPublisher * rti_pub =
-          this->impl_->create_publisher_with_profile (library_name,
-                                         profile_name,
-                                         rti_pl,
-                                         mask);
+          this->impl ()->create_publisher_with_profile (library_name,
+                                                        profile_name,
+                                                        rti_pl,
+                                                        mask);
 
         if (!rti_pub)
           {
@@ -88,12 +92,17 @@ namespace CIAO
                      "Creating Publisher\n"));
 
         DDS_PublisherQos rti_qos = DDS_PUBLISHER_QOS_DEFAULT;
-//        rti_qos <<= qos;
-        RTI_PublisherListener_i *rti_pl = new RTI_PublisherListener_i (a_listener);
+
+        RTI_PublisherListener_i *rti_pl = 0;
+        if (!CORBA::is_nil (a_listener))
+          {
+            rti_pl = new RTI_PublisherListener_i (a_listener);
+          }
+
         DDSPublisher * rti_pub =
-          this->impl_->create_publisher (rti_qos,
-                                         rti_pl,
-                                         mask);
+          this->impl ()->create_publisher (rti_qos,
+                                           rti_pl,
+                                           mask);
 
         if (!rti_pub)
           {
@@ -128,7 +137,7 @@ namespace CIAO
         CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipant_i::delete_publisher - "
                      "Successfully casted provided object refence to RTI_Publisher_i\n"));
 
-        DDS_ReturnCode_t retval = this->impl_->delete_publisher (rti_pub->get_impl ());
+        DDS_ReturnCode_t retval = this->impl ()->delete_publisher (rti_pub->get_impl ());
 
         if (retval != DDS_RETCODE_OK)
           {
@@ -154,9 +163,13 @@ namespace CIAO
         CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipant_i::create_subscriber_with_profile - "
                      "Creating Subscriber\n"));
 
-        RTI_SubscriberListener_i *rti_sl = new RTI_SubscriberListener_i (a_listener);
+        RTI_SubscriberListener_i *rti_sl = 0;
+        if (!CORBA::is_nil (a_listener))
+          {
+            rti_sl = new RTI_SubscriberListener_i (a_listener);
+          }
         DDSSubscriber * rti_sub =
-          this->impl_->create_subscriber_with_profile (
+          this->impl ()->create_subscriber_with_profile (
             library_name,
             profile_name,
             rti_sl,
@@ -190,11 +203,15 @@ namespace CIAO
         CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipant_i::create_subscriber - "
                      "Creating Subscriber\n"));
 
-        RTI_SubscriberListener_i *rti_sl = new RTI_SubscriberListener_i (a_listener);
+        RTI_SubscriberListener_i *rti_sl = 0;
+        if (!CORBA::is_nil (a_listener))
+          {
+            rti_sl = new RTI_SubscriberListener_i (a_listener);
+          }
         DDSSubscriber * rti_sub =
-          this->impl_->create_subscriber (DDS_SUBSCRIBER_QOS_DEFAULT,
-                                          rti_sl,
-                                          mask);
+          this->impl ()->create_subscriber (DDS_SUBSCRIBER_QOS_DEFAULT,
+                                            rti_sl,
+                                            mask);
 
         if (!rti_sub)
           {
@@ -229,13 +246,13 @@ namespace CIAO
         CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipant_i::delete_subscriber - "
                      "Successfully casted provided object refence to RTI_Subscriber_i\n"));
 
-        return this->impl_->delete_subscriber (rti_sub->get_impl ());
+        return this->impl ()->delete_subscriber (rti_sub->get_impl ());
       }
 
       ::DDS::Subscriber_ptr
       RTI_DomainParticipant_i::get_builtin_subscriber (void)
       {
-        DDSSubscriber* rti_sub = this->impl_->get_builtin_subscriber ();
+        DDSSubscriber* rti_sub = this->impl ()->get_builtin_subscriber ();
         ::DDS::Subscriber_var retval = new RTI_Subscriber_i ();
         RTI_Subscriber_i *rti_s = dynamic_cast < RTI_Subscriber_i *> (retval.in ());
         rti_s->set_impl (rti_sub);
@@ -271,8 +288,13 @@ namespace CIAO
                      "Attempting to create topic with name %C and type %C\n",
                      impl_name, type_name));
 
-        RTI_TopicListener_i *rti_tl = new RTI_TopicListener_i (a_listener);
-        DDSTopic *rti_topic = this->impl_->create_topic (impl_name,
+        RTI_TopicListener_i *rti_tl = 0;
+        if (!CORBA::is_nil (a_listener))
+          {
+            rti_tl = new RTI_TopicListener_i (a_listener);
+          }
+
+        DDSTopic *rti_topic = this->impl ()->create_topic (impl_name,
                                                          type_name,
                                                          DDS_TOPIC_QOS_DEFAULT,
                                                          rti_tl,
@@ -327,8 +349,12 @@ namespace CIAO
                      "Attempting to create topic with name %C and type %C\n",
                      impl_name, type_name));
 
-        RTI_TopicListener_i *rti_tl = new RTI_TopicListener_i (a_listener);
-        DDSTopic *rti_topic = this->impl_->create_topic_with_profile (impl_name,
+        RTI_TopicListener_i *rti_tl = 0;
+        if (!CORBA::is_nil (a_listener))
+          {
+            rti_tl = new RTI_TopicListener_i (a_listener);
+          }
+        DDSTopic *rti_topic = this->impl ()->create_topic_with_profile (impl_name,
                                                          type_name,
                                                          library_name,
                                                          profile_name,
@@ -370,7 +396,7 @@ namespace CIAO
         CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipant_i::delete_topic - "
                      "Successfully casted provided object reference to servant.\n"));
 
-        DDS_ReturnCode_t retval = this->impl_->delete_topic (top->get_impl ());
+        DDS_ReturnCode_t retval = this->impl ()->delete_topic (top->get_impl ());
 
         if (retval != DDS_RETCODE_OK)
           {
@@ -390,7 +416,7 @@ namespace CIAO
       {
         ::DDS_Duration_t ddstimeout;
         ddstimeout <<= timeout;
-        ::DDSTopic* rti_topic = this->impl_->find_topic (impl_name, ddstimeout);
+        ::DDSTopic* rti_topic = this->impl ()->find_topic (impl_name, ddstimeout);
         ::DDS::Topic_var retval = new RTI_Topic_i ();
         RTI_Topic_i *tp = dynamic_cast < RTI_Topic_i *> (retval.in ());
         tp->set_impl (rti_topic);
@@ -400,7 +426,7 @@ namespace CIAO
       ::DDS::TopicDescription_ptr
       RTI_DomainParticipant_i::lookup_topicdescription (const char * name)
       {
-        ::DDSTopicDescription* rti_topic = this->impl_->lookup_topicdescription (name);
+        ::DDSTopicDescription* rti_topic = this->impl ()->lookup_topicdescription (name);
         ::DDS::TopicDescription_var retval = new RTI_TopicDescription_i ();
         RTI_TopicDescription_i *rti_td = dynamic_cast < RTI_TopicDescription_i *>(retval.in ());
         rti_td->set_impl (rti_topic);
@@ -440,7 +466,7 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::delete_multitopic (::DDS::MultiTopic_ptr /*a_multitopic*/)
       {
-        //this->impl_->delete_multitopic (
+        //this->impl ()->delete_multitopic (
         CIAO_TRACE ("DDS_DomainParticipant_i::delete_multitopic");
         throw CORBA::NO_IMPLEMENT ();
 
@@ -449,7 +475,7 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::delete_contained_entities (void)
       {
-        return this->impl_->delete_contained_entities ();
+        return this->impl ()->delete_contained_entities ();
 
       }
 
@@ -491,7 +517,7 @@ namespace CIAO
       {
         ::DDS_InstanceHandle_t rti_handle;
         rti_handle <<= handle;
-        return this->impl_->ignore_participant (rti_handle);
+        return this->impl ()->ignore_participant (rti_handle);
 
       }
 
@@ -500,7 +526,7 @@ namespace CIAO
       {
         ::DDS_InstanceHandle_t rti_handle;
         rti_handle <<= handle;
-        return this->impl_->ignore_topic (rti_handle);
+        return this->impl ()->ignore_topic (rti_handle);
       }
 
       ::DDS::ReturnCode_t
@@ -508,7 +534,7 @@ namespace CIAO
       {
         ::DDS_InstanceHandle_t rti_handle;
         rti_handle <<= handle;
-        return this->impl_->ignore_publication (rti_handle);
+        return this->impl ()->ignore_publication (rti_handle);
       }
 
       ::DDS::ReturnCode_t
@@ -516,19 +542,19 @@ namespace CIAO
       {
         ::DDS_InstanceHandle_t rti_handle;
         rti_handle <<= handle;
-        return this->impl_->ignore_subscription (rti_handle);
+        return this->impl ()->ignore_subscription (rti_handle);
       }
 
       ::DDS::DomainId_t
       RTI_DomainParticipant_i::get_domain_id (void)
       {
-        return this->impl_->get_domain_id ();
+        return this->impl ()->get_domain_id ();
       }
 
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::assert_liveliness (void)
       {
-        return this->impl_->assert_liveliness ();
+        return this->impl ()->assert_liveliness ();
       }
 
       ::DDS::ReturnCode_t
@@ -583,7 +609,7 @@ namespace CIAO
       RTI_DomainParticipant_i::get_discovered_participants (::DDS::InstanceHandleSeq & impl_handles)
       {
         ::DDS_InstanceHandleSeq rtiseq;
-        ::DDS::ReturnCode_t const retval = this->impl_->get_discovered_participants (rtiseq);
+        ::DDS::ReturnCode_t const retval = this->impl ()->get_discovered_participants (rtiseq);
         rtiseq >>= impl_handles;
         return retval;
       }
@@ -601,7 +627,7 @@ namespace CIAO
       RTI_DomainParticipant_i::get_discovered_topics (::DDS::InstanceHandleSeq & impl_handles)
       {
         ::DDS_InstanceHandleSeq rtiseq;
-        ::DDS::ReturnCode_t const retval = this->impl_->get_discovered_topics (rtiseq);
+        ::DDS::ReturnCode_t const retval = this->impl ()->get_discovered_topics (rtiseq);
         rtiseq >>= impl_handles;
         return retval;
       }
@@ -620,7 +646,7 @@ namespace CIAO
       {
         ::DDS_InstanceHandle_t rti_handle;
         rti_handle <<= a_handle;
-        return this->impl_->contains_entity (rti_handle);
+        return this->impl ()->contains_entity (rti_handle);
 
       }
 
@@ -628,7 +654,7 @@ namespace CIAO
       RTI_DomainParticipant_i::get_current_time (::DDS::Time_t & current_time)
       {
         DDS_Time_t rti_time;
-        ::DDS::ReturnCode_t const retval = this->impl_->get_current_time (rti_time);
+        ::DDS::ReturnCode_t const retval = this->impl ()->get_current_time (rti_time);
         rti_time >>= current_time;
         return retval;
 
@@ -637,13 +663,13 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::enable (void)
       {
-        return this->impl_->enable ();
+        return this->impl ()->enable ();
       }
 
       ::DDS::StatusCondition_ptr
       RTI_DomainParticipant_i::get_statuscondition (void)
       {
-        DDSStatusCondition* sc = this->impl_->get_statuscondition ();
+        DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
         ::DDS::StatusCondition_var retval = new RTI_StatusCondition_i ();
         RTI_StatusCondition_i *rti_sc = dynamic_cast < RTI_StatusCondition_i *> (retval.in ());
         rti_sc->set_impl (sc);
@@ -653,13 +679,13 @@ namespace CIAO
       ::DDS::StatusMask
       RTI_DomainParticipant_i::get_status_changes (void)
       {
-        return this->impl_->get_status_changes ();
+        return this->impl ()->get_status_changes ();
       }
 
       ::DDS::InstanceHandle_t
       RTI_DomainParticipant_i::get_instance_handle (void)
       {
-        ::DDS_InstanceHandle_t const rtihandle = this->impl_->get_instance_handle ();
+        ::DDS_InstanceHandle_t const rtihandle = this->impl ()->get_instance_handle ();
         ::DDS::InstanceHandle_t handle;
         handle <<= rtihandle;
         return handle;
@@ -686,7 +712,6 @@ namespace CIAO
           }
         return this->impl_;
       }
-
     }
   }
 }

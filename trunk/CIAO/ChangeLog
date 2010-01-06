@@ -1,3 +1,15 @@
+Wed Jan  6 09:39:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+          Separate DDS lifecycle from CCM lifecycle. DomainParticipant
+          now have a configuration_complete, an activate, a passivate
+          and a remove method.
+
+        * connectors/dds4ccm/impl/ndds/Topic.cpp:
+          Implemented set_listener method.
+
 Tue Jan  5 19:25:18 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Base/Hello_Base.mpc

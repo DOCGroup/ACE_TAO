@@ -33,9 +33,21 @@ public:
   virtual void ccm_passivate (void);
 
 protected:
-  void configure_default_topic (void);
-  void configure_publisher (void);
-  void configure_subscriber (void);
+  void init_default_topic (void);
+  void init_publisher (void);
+  void init_subscriber (void);
+
+  void activate_default_topic (void);
+  void activate_publisher (void);
+  void activate_subscriber (void);
+
+  void passivate_default_topic (void);
+  void passivate_publisher (void);
+  void passivate_subscriber (void);
+
+  void remove_default_topic (void);
+  void remove_publisher (void);
+  void remove_subscriber (void);
 
   CORBA::String_var topic_name_;
   DDS::StringSeq key_fields_;
