@@ -1,3 +1,12 @@
+Wed Jan  6 05:25:26 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_iphone.GNU:
+
+          When building an executable for the iPhone Hardware (not simulator)
+          go ahead and automatically codesign the executable so it can be 
+          deployed on the hardware. Note that this is a temporary hack until
+          I can figure the proper way to do this.
+
 Wed Jan  6 04:28:23 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * include/makeinclude/platform_macosx_iphone.GNU:
