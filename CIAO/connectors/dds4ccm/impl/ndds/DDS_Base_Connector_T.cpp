@@ -78,7 +78,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain (void)
+DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::init_default_domain (void)
 {
   CIAO_DEBUG (9, (LM_TRACE, CLINFO "DDS_Base_Connector_T::configure_default_domain_ - "
                 "Configuring default domain\n"));
@@ -115,9 +115,6 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain (void)
               }
             }
           }
-        this->domainparticipantlistener_ = new ::CIAO::DDS4CCM::DomainParticipantListener_T
-          <DDS_TYPE, CCM_TYPE> (
-            this->context_->get_connection_error_listener ());
         if (this->library_name_ && this->profile_name_)
           {
             this->domain_participant_factory_->
@@ -129,8 +126,8 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain (void)
                 this->domain_id_,
                 this->library_name_,
                 this->profile_name_,
-                this->domainparticipantlistener_.in (),
-                ::CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+                ::DDS::DomainParticipantListener::_nil (),
+                0);
           }
         else
           {
@@ -139,13 +136,14 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain (void)
               this->domain_participant_factory_->create_participant (
                 this->domain_id_,
                 qos,
-                this->domainparticipantlistener_.in (),
-                ::CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+                ::DDS::DomainParticipantListener::_nil (),
+                0);
           }
       }
     catch (...)
       {
-        CIAO_ERROR (1, (LM_ERROR, "Caught unknown C++ exception while configuring default domain\n"));
+        CIAO_ERROR (1, (LM_ERROR, "DDS_Base_Connector_T::init_default_domain: "
+                                  "Caught unknown C++ exception while configuring default domain\n"));
         throw CORBA::INTERNAL ();
       }
     }
@@ -171,6 +169,59 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::set_session_context (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
+DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
+{
+  CIAO_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
+  this->init_default_domain ();
+  this->configuration_complete_ = true;
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
+{
+  CIAO_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate");
+  try
+    {
+      if (CORBA::is_nil (this->domainparticipantlistener_.in ()))
+        {
+          this->domainparticipantlistener_ = new ::CIAO::DDS4CCM::DomainParticipantListener_T
+            <DDS_TYPE, CCM_TYPE> (
+              this->context_->get_connection_error_listener ());
+        }
+      this->domain_participant_->set_listener (
+        this->domainparticipantlistener_.in (),
+        ::CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+    }
+  catch (...)
+    {
+      CIAO_ERROR (1, (LM_ERROR, "DDS_Base_Connector_T::ccm_activate: "
+                                "Caught unknown C++ exception while configuring default domain\n"));
+      throw CORBA::INTERNAL ();
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
+{
+  CIAO_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate");
+  try
+    {
+      this->domain_participant_->set_listener (
+        ::DDS::DomainParticipantListener::_nil (),
+        0);
+    }
+  catch (...)
+    {
+      CIAO_ERROR (1, (LM_ERROR, "DDS_Base_Connector_T::ccm_passivate: "
+                                "Caught unknown C++ exception while configuring default domain\n"));
+      throw CORBA::INTERNAL ();
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
 {
   CIAO_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove");
@@ -187,30 +238,3 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
       this->domain_participant_ = ::DDS::DomainParticipant::_nil ();
     }
 }
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
-DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
-{
-  CIAO_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate");
-
-  this->configure_default_domain ();
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
-DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
-{
-  CIAO_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate");
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
-DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
-{
-  CIAO_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
-  this->configuration_complete_ = true;
-}
-
-
-

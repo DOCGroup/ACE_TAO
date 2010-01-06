@@ -46,6 +46,7 @@ namespace CIAO
       RTI_Topic_i::set_listener (::DDS::TopicListener_ptr a_listener,
                                  ::DDS::StatusMask mask)
       {
+        CIAO_TRACE ("RTI_Topic_i::set_listener");
         RTI_TopicListener_i* rti_impl_list = new RTI_TopicListener_i (a_listener);
         return this->impl ()->set_listener (rti_impl_list, mask);
       }
@@ -53,6 +54,8 @@ namespace CIAO
       ::DDS::TopicListener_ptr
       RTI_Topic_i::get_listener (void)
       {
+        CIAO_TRACE ("RTI_Topic_i::get_listener");
+        throw CORBA::NO_IMPLEMENT ();
       }
 
       ::DDS::ReturnCode_t
