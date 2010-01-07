@@ -1,3 +1,19 @@
+Thu Jan  7 22:01:06 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_module.cpp:
+        
+          Cosmetic changes.
+          
+        * TAO_IDL/be/be_visitor_tmpl_module_inst.cpp:
+        * TAO_IDL/be_include/be_visitor_tmpl_module_inst.h:
+        
+          New files containing a new visitor dedicated to the
+          generation of implied IDL in the AST resulting 
+          from a template module instantiation. This 'preprocessing'
+          visitor will make a traversal before any of the others,
+          so that CCM, AMI and AMH implied IDL can be generated
+          from the contents of an instantiated module.
+
 Wed Jan  6 23:21:23 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_template_module.h:
