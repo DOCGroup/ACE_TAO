@@ -35,6 +35,7 @@
 #include "be_predefined_type.h"
 #include "be_uses.h"
 #include "be_argument.h"
+#include "be_component.h"
 #include "be_global.h"
 #include "be_extern.h"
 #include "utl_identifier.h"
@@ -64,14 +65,14 @@ be_visitor_ami4ccm_pre_proc::visit_component (be_component *node)
 {
 printf ("here 1\n");
 
-  //if (this->visit_scope (node) == -1)
-  //  {
-  //    ACE_ERROR_RETURN ((LM_ERROR,
-  //                       "(%N:%l) be_visitor_ami4ccm_pre_proc::"
-  //                       "visit_component - "
-  //                       "visit scope failed\n"),
-  //                      -1);
-  //  }
+  if (this->visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_ami4ccm_pre_proc::"
+                         "visit_component - "
+                         "visit scope failed\n"),
+                        -1);
+    }
 
   return 0;
 }
@@ -165,7 +166,7 @@ be_visitor_ami4ccm_pre_proc::visit_uses (be_uses *node)
                         -1);
     }
 
-  be_uses *uses = this->create_sendc_uses (node);
+  be_uses *uses = 0;//this->create_sendc_uses (node);
 
   if (uses)
     {
@@ -173,7 +174,7 @@ be_visitor_ami4ccm_pre_proc::visit_uses (be_uses *node)
 
       // Insert the ami handler after the node, the
       // exception holder will be placed between these two later.
-      component->be_add_uses (node);
+      component->be_add_uses (uses, node);
 
       // Remember from whom we were cloned
       //uses->original_interface (node);
@@ -182,6 +183,7 @@ be_visitor_ami4ccm_pre_proc::visit_uses (be_uses *node)
       // unless we set it.
       uses->set_imported (node->imported ());
     }
+
   return 0;
 }
 
@@ -354,7 +356,7 @@ int
 be_visitor_ami4ccm_pre_proc::visit_attribute (be_attribute *)
 {
 /*
-  // Temporerily generate the set operation.
+  // Temporarily generate the set operation.
   be_operation *set_operation =
     this->generate_set_operation (node);
 
@@ -387,7 +389,7 @@ be_visitor_ami4ccm_pre_proc::visit_attribute (be_attribute *)
         }
     }
 
-  // Temporerily generate the get operation.
+  // Temporarily generate the get operation.
   be_operation *get_operation =
     this->generate_get_operation (node);
 
@@ -862,13 +864,13 @@ be_visitor_ami4ccm_pre_proc::create_sendc_uses (be_uses *node)
   UTL_ScopedName *op_name =
     static_cast<UTL_ScopedName *> (node->name ()->copy ());
   op_name->last_component ()->replace_string (new_op_name.c_str ());
-
+printf ("%s\n", new_op_name.c_str());
   // Create the uses
   be_uses *op = 0;
   ACE_NEW_RETURN (op,
                   be_uses (op_name,
                            node->uses_type (),
-                           false),
+                           node->is_multiple ()),
                   0);
 
   op->set_name (op_name);
@@ -1165,7 +1167,7 @@ be_visitor_ami4ccm_pre_proc::visit_scope (be_scope *)
           }
       }
 
-      AST_Decl **elements;
+      AST_Decl **elements = 0;
       ACE_NEW_RETURN (elements,
                       AST_Decl *[number_of_elements],
                       -1);
@@ -1211,7 +1213,6 @@ be_visitor_ami4ccm_pre_proc::visit_scope (be_scope *)
           this->ctx_->node (bd);
           ++elem_number;
 
-
           // Send the visitor.
           if (bd == 0 ||  bd->accept (this) == -1)
             {
@@ -1227,7 +1228,7 @@ be_visitor_ami4ccm_pre_proc::visit_scope (be_scope *)
       delete [] elements;
       elements = 0;
     } // end of if
-    
+
   return 0;
 }
 */

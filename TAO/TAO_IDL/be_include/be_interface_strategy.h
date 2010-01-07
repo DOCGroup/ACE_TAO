@@ -27,7 +27,6 @@ class be_interface;
 
 // This class serves as a strategy base class for the differences
 // in generating e.g. ami reply handlers.
-
 class be_interface_strategy
 {
 public:
@@ -122,7 +121,6 @@ public:
   // Return the "flat" version of the scope
   //that encloses the interface.
 
-
   const char *relative_skel_name (const char *skel_name);
   // relative skeleton name
 
@@ -156,13 +154,11 @@ public:
 
   virtual TAO_CodeGen::CG_STATE next_state (
       TAO_CodeGen::CG_STATE current_state,
-      int is_extra_state = 0
-    );
+      int is_extra_state = 0);
   // Change the sate if necessary
 
   virtual int has_extra_code_generation (
-      TAO_CodeGen::CG_STATE current_state
-    );
+      TAO_CodeGen::CG_STATE current_state);
 
   virtual be_interface *replacement (void);
   // Returns the node, which is used instead of the original node,
@@ -301,8 +297,6 @@ protected:
   // of "str" and "suffix" and using the
   // "separator" to concatenate the two.
 
-
-
 protected:
 
   enum Suffix_Code
@@ -321,8 +315,6 @@ protected:
                   // This prefix is used to avoid name conflicts
                   // with the user classes.
   };
-
-
 
   static const char *suffix_table_[];
   static const char *tag_table_[];
