@@ -261,7 +261,7 @@ be_visitor_ami_pre_proc::visit_operation (be_operation *node)
 int
 be_visitor_ami_pre_proc::visit_attribute (be_attribute *node)
 {
-  // Temporerily generate the set operation.
+  // Temporarily generate the set operation.
   be_operation *set_operation =
     this->generate_set_operation (node);
 
@@ -294,7 +294,7 @@ be_visitor_ami_pre_proc::visit_attribute (be_attribute *node)
         }
     }
 
-  // Temporerily generate the get operation.
+  // Temporarily generate the get operation.
   be_operation *get_operation =
     this->generate_get_operation (node);
 
@@ -378,14 +378,14 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
 
   reply_handler->set_name (reply_handler_name);
   reply_handler->set_defined_in (s);
-  
+
   // Set repo id to 0, so it will be recomputed on the next access,
   // and set the prefix to the node's prefix. All this is
   // necessary in case the node's prefix was modified after
   // its declaration.
   reply_handler->AST_Decl::repoID (0);
   reply_handler->prefix (const_cast<char*> (node->prefix ()));
-  
+
   reply_handler->gen_fwd_helper_name ();
 
   // Now our customized reply handler is created, we have to
@@ -1037,7 +1037,7 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
           }
       }
 
-      AST_Decl **elements;
+      AST_Decl **elements = 0;
       ACE_NEW_RETURN (elements,
                       AST_Decl *[number_of_elements],
                       -1);
