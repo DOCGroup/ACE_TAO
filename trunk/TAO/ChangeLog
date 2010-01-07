@@ -1,4 +1,16 @@
-Thu Jan  7 10:44:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+Thu Jan  7 11:04:58 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/OBV/Supports/Supports_Test.mpc:
+          Reinstated dummy_label dependency.
+
+        * bin/tao_orb_tests.lst:
+          Disabled the OBV/Supports test again since there Solaris compilers 
+          as well as CB2010 do not grok the TAO code for valuetype 'supports' 
+          constructs and there is currently no budget to fix this.
+          This will need to be resolved at some time by either compiler fixes 
+          or a redesign of the TAO valuetype framework.
+
+Thu Jan  7 10:44:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/ast/ast_component.cpp
         * TAO_IDL/be/be_codegen.cpp
@@ -14,7 +26,7 @@ Thu Jan  7 10:44:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
           which should create all implied nodes for ami4ccm.
           This can be enabled using the new -GM option.
 
-Mon Jan  4 14:25:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+Mon Jan  4 14:25:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_argument/argument.cpp
         * TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp
