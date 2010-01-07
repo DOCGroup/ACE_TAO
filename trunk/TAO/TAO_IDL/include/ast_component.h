@@ -52,6 +52,12 @@ public:
   // Cleanup function.
   virtual void destroy (void);
 
+  // Allows adding an uses to a later point
+  // The port i is inserted after port ix, if
+  // ix is not null.
+  int be_add_uses (AST_Uses *i,
+                   AST_Uses *ix = 0);
+
   // Narrowing.
 
   DEF_NARROW_FROM_DECL (AST_Component);
@@ -73,7 +79,7 @@ protected:
   virtual AST_Emits *fe_add_emits (AST_Emits *p);
 
   virtual AST_Consumes *fe_add_consumes (AST_Consumes *p);
- 
+
   virtual AST_Extended_Port *fe_add_extended_port (AST_Extended_Port *p);
 
   virtual AST_Mirror_Port *fe_add_mirror_port (AST_Mirror_Port *p);

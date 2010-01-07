@@ -97,6 +97,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_corba_e_ (false),
     gen_minimum_corba_ (false),
     opt_tc_ (false),
+    ami4ccm_call_back_ (false),
     ami_call_back_ (false),
     gen_amh_classes_ (false),
     gen_tie_classes_ (false),
@@ -1390,6 +1391,18 @@ BE_GlobalData::opt_tc (void) const
 }
 
 void
+BE_GlobalData::ami4ccm_call_back (bool val)
+{
+  this->ami4ccm_call_back_ = val;
+}
+
+bool
+BE_GlobalData::ami4ccm_call_back (void) const
+{
+  return this->ami4ccm_call_back_;
+}
+
+void
 BE_GlobalData::ami_call_back (bool val)
 {
   this->ami_call_back_ = val;
@@ -1614,7 +1627,7 @@ BE_GlobalData::destroy (void)
 
   ACE::strdelete (this->ciao_exec_src_ending_);
   this->ciao_exec_src_ending_ = 0;
-  
+
   ACE::strdelete (this->ciao_exec_stub_hdr_ending_);
   this->ciao_exec_stub_hdr_ending_ = 0;
 
@@ -2476,6 +2489,11 @@ BE_GlobalData::parse_args (long &i, char **av)
             // AMI with Call back.
             be_global->ami_call_back (true);
           }
+        else if (av[i][2] == 'M')
+          {
+            // Generate tie classes and files
+            be_global->ami4ccm_call_back (true);
+          }
         else if (av[i][2] == 'T')
           {
             // Generate tie classes and files
@@ -2538,7 +2556,7 @@ BE_GlobalData::parse_args (long &i, char **av)
           }
         else if (av[i][2] == 'e')
           {
-            if (av[i][3] == 'x') 
+            if (av[i][3] == 'x')
               {
                 // CIAO executor impl code generation.
                 be_global->gen_ciao_exec_impl (true);
@@ -2552,7 +2570,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                     av[i]
                   ));
               }
-              
+
             break;
           }
         else if (av[i][2] == 'x')
@@ -2582,7 +2600,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                             av[i]
                           ));
                       }
-                      
+
                     break;
                   }
                 else if (av[i][4] == 'e' && av[i][5] == 'x')
@@ -2598,7 +2616,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                         av[i]
                       ));
                   }
-                  
+
                 break;
               }
             else
@@ -2610,7 +2628,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                     av[i]
                   ));
               }
-              
+
             break;
           }
         else if (av[i][2] == 'u')
@@ -2697,7 +2715,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                     av[i]
                   ));
               }
-              
+
             break;
           }
         else if (av[i][2] == 'd')
@@ -3327,6 +3345,10 @@ BE_GlobalData::usage (void) const
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -GH \t\t\tGenerate the AMH classes\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -GM \t\t\tGenerate the AMI4CCM classes\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
