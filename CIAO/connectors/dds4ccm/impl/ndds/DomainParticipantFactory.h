@@ -74,9 +74,9 @@ namespace CIAO
                                                           const char * library_name,
                                                           const char * profile_name);
       private:
-        DDSDomainParticipant * get_participant (const char * qos_profile);
+        void remove_participant (DDSDomainParticipant * part);
 
-        TAO_SYNCH_MUTEX mutex_;
+        TAO_SYNCH_MUTEX dps_mutex_;
         typedef std::map<const char *, DDSDomainParticipant *> DomainParticipants;
         DomainParticipants dps_;
       };
