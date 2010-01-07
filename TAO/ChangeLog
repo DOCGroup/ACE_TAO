@@ -1,3 +1,13 @@
+Thu Jan  7 18:56:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_array.cpp
+        * TAO_IDL/be/be_interface.cpp
+        * TAO_IDL/be/be_operation_strategy.cpp
+        * TAO_IDL/be/be_visitor_interface/amh_ss.cpp
+        * TAO_IDL/be/be_visitor_interface/interface.cpp
+        * TAO_IDL/be/be_visitor_interface/interface_is.cpp
+          Initialise pointers with 0, small layout changes
+
 Thu Jan  7 18:45:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_ami4ccm_pre_proc.cpp:

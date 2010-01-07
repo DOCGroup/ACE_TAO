@@ -217,7 +217,6 @@ be_interface::relative_skel_name (const char *skel_name)
   return this->strategy_->relative_skel_name (skel_name);
 }
 
-
 void
 be_interface::compute_full_skel_name (const char *prefix,
                                       char *&skelname)
@@ -674,8 +673,7 @@ be_interface:: gen_var_out_seq_decls (void)
 // ****************************************************************
 
 TAO_IDL_Inheritance_Hierarchy_Worker::~TAO_IDL_Inheritance_Hierarchy_Worker (
-    void
-  )
+    void)
 {
 }
 
@@ -731,9 +729,7 @@ private:
   be_visitor *visitor_;
 };
 
-Pure_Virtual_Regenerator::Pure_Virtual_Regenerator (
-    be_visitor *visitor
-  )
+Pure_Virtual_Regenerator::Pure_Virtual_Regenerator (be_visitor *visitor)
   : visitor_ (visitor)
 {
 }
@@ -935,7 +931,7 @@ be_interface::gen_operation_table (const char *flat_name,
         // QNX can't handle individual file names (path components)
         // longer than 48 characters.
 #if defined(__QNX__)
-        size_t temp_dir_len = ACE_OS::strlen (idl_global->temp_dir ());
+        size_t const temp_dir_len = ACE_OS::strlen (idl_global->temp_dir ());
 
         if (ACE_OS::strlen (temp_file) > temp_dir_len + 47)
           {
@@ -2391,7 +2387,7 @@ be_interface::copy_ctor_helper (be_interface *derived,
     }
   else if (base->is_nested ())
     {
-      be_decl *scope;
+      be_decl *scope = 0;
       scope = be_scope::narrow_from_scope (base->defined_in ())->decl ();
 
       *os << "POA_" << scope->name () << "::"
@@ -2546,13 +2542,11 @@ TAO_CodeGen::CG_STATE
 be_interface::next_state (TAO_CodeGen::CG_STATE current_state,
                           int is_extra_state)
 {
-  return this->strategy_->next_state (current_state,
-                                      is_extra_state);
+  return this->strategy_->next_state (current_state, is_extra_state);
 }
 
 int
-be_interface::has_extra_code_generation (
-  TAO_CodeGen::CG_STATE current_state)
+be_interface::has_extra_code_generation (TAO_CodeGen::CG_STATE current_state)
 {
   return this->strategy_->has_extra_code_generation (current_state);
 }
@@ -2564,7 +2558,7 @@ be_interface::original_interface (be_interface *original_interface)
 }
 
 be_interface *
-be_interface::original_interface ()
+be_interface::original_interface (void)
 {
   return this->original_interface_;
 }
@@ -2616,8 +2610,7 @@ be_interface::session_component_child (void)
       UTL_ScopedName sn (&head_id, &tail);
 
       AST_Decl *session_component =
-        const_cast<be_interface*> (this)->scope ()->lookup_by_name (&sn,
-                                                                    true);
+        const_cast<be_interface*> (this)->scope ()->lookup_by_name (&sn, true);
 
       tail_id.destroy ();
       head_id.destroy ();
@@ -2745,8 +2738,7 @@ private:
 };
 
 Facet_Op_Attr_Helper::Facet_Op_Attr_Helper (
-    be_visitor *visitor
-  )
+    be_visitor *visitor)
   : visitor_ (visitor)
 {
 }
