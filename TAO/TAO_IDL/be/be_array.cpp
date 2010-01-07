@@ -85,7 +85,7 @@ be_array::create_name (void)
   char namebuf [NAMEBUFSIZE];
   unsigned long i;
   UTL_ScopedName *n = 0;
-  be_decl *scope;
+  be_decl *scope = 0;
 
   ACE_OS::memset (namebuf,
                   '\0',
@@ -279,16 +279,16 @@ be_array::gen_ostream_operator (TAO_OutStream *os,
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "strm << \"" << this->name () << "\";" <<  be_nl << be_nl;
-  
+
   ACE_CDR::ULong ndims = this->n_dims ();
   ACE_CDR::ULong i = 0;
-  
+
   for (i = 0; i < ndims; ++i)
     {
       *os << "strm << \"[\";" << be_nl << be_nl;
-      
+
       AST_Expression *expr = this->dims ()[i];
-      
+
       // Generate a loop for each dimension.
       *os << "for ( ::CORBA::ULong i" << i << " = 0; i" << i << " < "
           << expr->ev ()->u.ulval << "; ++i" << i << ")" << be_idt_nl
@@ -298,11 +298,11 @@ be_array::gen_ostream_operator (TAO_OutStream *os,
           << "strm << \", \";" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
     }
-    
+
   *os << "strm << ";
-  
+
   ACE_CString instance_name ("_tao_array.in ()");
-  
+
   for (i = 0; i < ndims; ++i)
     {
       char *working = instance_name.rep ();
@@ -310,22 +310,22 @@ be_array::gen_ostream_operator (TAO_OutStream *os,
       instance_name += ACE_OS::itoa (i, working, 10);
       instance_name += "]";
     }
-   
+
   be_type *bt = be_type::narrow_from_decl (this->base_type ());
   bt->gen_member_ostream_operator (os,
                                    instance_name.c_str (),
                                    use_underscore,
                                    false);
-    
+
   *os << ";";
-  
+
   for (i = 0; i < ndims; ++i)
     {
-      *os << be_uidt_nl 
+      *os << be_uidt_nl
           << "}" << be_uidt_nl << be_nl
           << "strm << \"]\";";
     }
-    
+
   *os << be_nl
       << "return strm;" << be_uidt_nl
       << "}" << be_nl;
@@ -343,17 +343,17 @@ be_array::gen_member_ostream_operator (TAO_OutStream *os,
                          + "::"
                          + (use_underscore ? "_" : "")
                          + this->local_name ()->get_string ());
-  
+
  // The container is always const, so the member is const as well,
- // but we have to cast it away for the forany constructor.                        
+ // but we have to cast it away for the forany constructor.
  *os << decl_name.c_str () << "_forany ("
      << "const_cast< " << decl_name.c_str () << "_slice *> (";
-  
+
   this->be_type::gen_member_ostream_operator (os,
                                               instance_name,
                                               use_underscore,
                                               accessor);
-  
+
   *os << "))";
 }
 

@@ -24,7 +24,6 @@ ACE_RCSID (be,
            be_operation_strategy,
            "$Id$")
 
-
 be_operation_strategy::be_operation_strategy (be_operation *node,
                                               Strategy_Kind strategy_type)
   : node_ (node),
@@ -173,7 +172,6 @@ be_operation_ami_sendc_strategy::marshaling (void)
 {
   return marshaling_;
 }
-
 
 be_operation*
 be_operation_ami_sendc_strategy::arguments (void)
@@ -362,8 +360,7 @@ be_operation_amh_strategy::arguments (void)
 
 int
 be_operation_amh_strategy::has_extra_code_generation (
-    TAO_CodeGen::CG_STATE
-  )
+    TAO_CodeGen::CG_STATE)
 {
   return 0;
 }
