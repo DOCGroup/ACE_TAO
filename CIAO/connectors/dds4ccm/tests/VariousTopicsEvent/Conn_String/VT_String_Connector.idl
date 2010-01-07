@@ -1,0 +1,29 @@
+// $Id$
+
+/**
+ * @file VT_String_Connector.idl
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ *
+ * by-hand translation of the idl3p.
+ */
+
+#ifndef VT_STRING_CONNECTOR_IDL_
+#define VT_STRING_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/VTopic_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+TYPED_MODULE( ::TopicString, ::TopicString_Seq, TopicString)
+
+module VTopic
+{
+	connector VT_String_Connector : ::CCM_DDS::TopicString::DDS_Event
+  {
+  };
+ 
+};
+
+
+
+#endif /* VTopic_CONNECTOR_IDL_ */

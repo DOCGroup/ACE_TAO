@@ -1,0 +1,29 @@
+// $Id$
+
+/**
+ * @file VT_Array_Connector.idl
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ *
+ * by-hand translation of the idl3p.
+ */
+
+#ifndef VT_SEQ_CONNECTOR_IDL_
+#define VT_SEQ_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/VTopic_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+TYPED_MODULE( ::TopicSeq, ::TopicSeq_Seq, TopicSeq)
+
+module VTopic
+{
+  connector VT_Seq_Connector : ::CCM_DDS::TopicSeq::DDS_Event
+  {
+  };
+ 
+};
+
+
+
+#endif /* VTopic_CONNECTOR_IDL_ */

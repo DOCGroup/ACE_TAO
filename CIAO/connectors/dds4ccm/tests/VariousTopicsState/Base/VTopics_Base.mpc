@@ -1,0 +1,77 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -o ../lib -u DDS -n VTopics_Base"
+
+project(DDS_VTopics_Base_idl_gen) : taoidldefaults, anytypecode {
+  custom_only = 1
+  idlflags -= -St -Sa
+  idlflags += -SS -Gxhst \
+              -Wb,stub_export_macro=VTOPICS_BASE_STUB_Export \
+              -Wb,stub_export_include=VTopics_Base_stub_export.h
+
+  IDL_Files {
+    VTopics_Base.idl
+  }
+}
+
+project(DDS_VTopics_Base_ndds_ts_gen) : ndds_ts_defaults   {
+  custom_only = 1
+  after += DDS_VTopics_Base_idl_gen
+  ndds_ts_flags += -corba VTopics_BaseC.h -orb ACE_TAO1.7
+
+  NDDSTypeSupport_Files {
+    VTopics_Base.idl
+  }
+}
+
+project(DDS_VTopics_Base_NDDS_TS) : nddslib, taolib {
+  after += DDS_VTopics_Base_ndds_ts_gen DDS_VTopics_Base_stub
+  libs += DDS_VTopics_Base_stub
+  libout = ../lib
+  libpaths    += ../lib
+  sharedname = DDS_VTopics_Base_NDDS_TS
+  dynamicflags = NDDS_USER_DLL_EXPORT
+
+  verbatim(gnuace, macros) {
+    override no_hidden_visibility = 1
+  }
+
+  Source_Files {
+    VTopics_Base.cxx
+    VTopics_BasePlugin.cxx
+    VTopics_BaseSupport.cxx
+  }
+
+  Header_Files {
+    VTopics_Base.h
+    VTopics_BasePlugin.h
+    VTopics_BaseSupport.h
+  }
+
+  Inline_Files {
+  }
+}
+
+project(DDS_VTopics_Base_stub) : ccm_stub {
+  after += DDS_VTopics_Base_idl_gen
+  libout = ../lib
+  libpaths += ../lib
+  sharedname = DDS_VTopics_Base_stub
+  dynamicflags = VTOPICS_BASE_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    VTopics_BaseC.cpp
+  }
+
+  Header_Files {
+    VTopics_BaseC.h
+    VTopics_Base_stub_export.h
+  }
+
+  Inline_Files {
+    VTopics_BaseC.inl
+  }
+}
+
