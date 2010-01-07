@@ -97,7 +97,6 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::passivate ()
       this->rti_writer_.set_listener (
         ::DDS::DataWriterListener::_nil (),
         0);
-      this->data_listener_->_remove_ref ();
       this->data_listener_ = ::DDS::DataWriterListener::_nil ();
     }
   catch (...)

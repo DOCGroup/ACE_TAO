@@ -38,7 +38,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_deadline_miss
         }
       else
         {
-          CIAO_DEBUG (6, (LM_DEBUG,
+          CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                       ACE_TEXT ("PublisherListener_T::on_offered_deadline_missed: ")
                       ACE_TEXT ("No error listener connected\n")));
         }
@@ -66,7 +66,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_incompatible_
         }
       else
         {
-          CIAO_DEBUG (6, (LM_DEBUG,
+          CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                       ACE_TEXT ("PublisherListener_T::on_offered_incompatible_qos: ")
                       ACE_TEXT ("No error listener connected\n")));
         }
@@ -94,7 +94,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_lost (
         }
       else
         {
-          CIAO_DEBUG (6, (LM_DEBUG,
+          CIAO_DEBUG (6, (LM_DEBUG,CLINFO
                       ACE_TEXT ("PublisherListener_T::on_liveliness_lost: ")
                       ACE_TEXT ("No error listener connected\n")));
         }
@@ -122,7 +122,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_publication_matched (
         }
       else
         {
-          CIAO_DEBUG (6, (LM_DEBUG,
+          CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                       ACE_TEXT ("PublisherListener_T::on_publication_matched: ")
                       ACE_TEXT ("No error listener connected\n")));
         }

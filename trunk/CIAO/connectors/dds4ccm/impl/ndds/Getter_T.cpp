@@ -249,6 +249,36 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::max_delivered_data (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
+CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::passivate ()
+{
+  DDS_ReturnCode_t retcode = this->ws_->detach_condition (this->rd_condition_);
+  if (retcode != DDS_RETCODE_OK)
+    {
+      CIAO_ERROR (1, (LM_ERROR, CLINFO "Getter_T::passivate - "
+                      "Unable to detach read condition from waitset.\n"));
+    }
+    else CIAO_DEBUG (6, (LM_INFO, CLINFO "Getter_T::passivate - "
+                      "Read condition succesfully detached from waitset.\n"));
+  retcode = this->ws_->detach_condition (this->gd_);
+  if (retcode != DDS_RETCODE_OK)
+    {
+      CIAO_ERROR (1, (LM_ERROR, CLINFO "Getter_T::passivate - "
+                      "Unable to detach guard condition from waitset.\n"));
+    }
+    else CIAO_DEBUG (6, (LM_INFO, CLINFO "Getter_T::passivate - "
+                      "Guard condition succesfully detached from waitset.\n"));
+  retcode = this->impl ()->delete_readcondition (this->rd_condition_);
+  if (retcode != DDS_RETCODE_OK)
+    {
+      CIAO_ERROR (1, (LM_ERROR, CLINFO "Getter_T::passivate - "
+                      "Unable to delete read condition from DDSDataReader.\n"));
+    }
+    else CIAO_DEBUG (6, (LM_INFO, CLINFO "Getter_T::passivate - "
+                      "Read condition succesfully deleted from DDSDataReader.\n"));
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
 CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::set_impl (
   ::DDS::DataReader_ptr reader)
 {
@@ -283,18 +313,18 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::set_impl (
         }
 
       // Now create the waitset conditions
-      gd_ = new DDSGuardCondition ();
-      ws_ = new DDSWaitSet ();
-      rd_condition_ = this->impl ()->create_readcondition (DDS_NOT_READ_SAMPLE_STATE,
+      this->gd_ = new DDSGuardCondition ();
+      this->ws_ = new DDSWaitSet ();
+      this->rd_condition_ = this->impl ()->create_readcondition (DDS_NOT_READ_SAMPLE_STATE,
                                                          DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
                                                          DDS_ALIVE_INSTANCE_STATE | DDS_NOT_ALIVE_INSTANCE_STATE);
-      DDS_ReturnCode_t retcode = ws_->attach_condition (gd_);
+      DDS_ReturnCode_t retcode = this->ws_->attach_condition (this->gd_);
       if (retcode != DDS_RETCODE_OK)
         {
           CIAO_ERROR (1, (LM_ERROR, CLINFO "GETTER: Unable to attach guard condition to waitset.\n"));
           throw CCM_DDS::InternalError (retcode, 0);
         }
-      retcode = ws_->attach_condition (rd_condition_);
+      retcode = this->ws_->attach_condition (this->rd_condition_);
       if (retcode != DDS_RETCODE_OK)
         {
           CIAO_ERROR (1, (LM_ERROR, CLINFO "GETTER: Unable to attach read condition to waitset.\n"));

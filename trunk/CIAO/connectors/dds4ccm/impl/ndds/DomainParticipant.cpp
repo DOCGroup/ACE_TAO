@@ -143,11 +143,11 @@ namespace CIAO
         if (retval != DDS_RETCODE_OK)
           {
             CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipant_i::delete_publisher - "
-                         "Error: RTI delete_publisher returned non-ok error code %c\n",
+                         "Error: RTI delete_publisher returned non-ok error code %C\n",
                          translate_retcode (retval)));
           }
         else CIAO_DEBUG (6, (LM_INFO, CLINFO "RTI_DomainParticipant_i::delete_publisher - "
-                          "Provided publisher successfully created\n"));
+                          "Provided publisher successfully deleted\n"));
 
         return retval;
       }
@@ -247,7 +247,18 @@ namespace CIAO
         CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipant_i::delete_subscriber - "
                      "Successfully casted provided object refence to RTI_Subscriber_i\n"));
 
-        return this->impl ()->delete_subscriber (rti_sub->get_impl ());
+        DDS_ReturnCode_t retval = this->impl ()->delete_subscriber (rti_sub->get_impl ());
+
+        if (retval != DDS_RETCODE_OK)
+          {
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipant_i::delete_subscriber - "
+                         "Error: RTI delete_subscriber returned non-ok error code %C\n",
+                         translate_retcode (retval)));
+          }
+        else CIAO_DEBUG (6, (LM_INFO, CLINFO "RTI_DomainParticipant_i::delete_subscriber - "
+                          "Provided subscriber successfully deleted\n"));
+
+        return retval;
       }
 
       ::DDS::Subscriber_ptr
@@ -402,7 +413,7 @@ namespace CIAO
         if (retval != DDS_RETCODE_OK)
           {
             CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipant_i::delete_topic - "
-                         "Error: RTI delete_topic returned non-ok error code %c\n",
+                         "Error: RTI delete_topic returned non-ok error code %C\n",
                          translate_retcode (retval)));
           }
         else CIAO_DEBUG (6, (LM_INFO, CLINFO "RTI_DomainParticipant_i::delete_topic - "
