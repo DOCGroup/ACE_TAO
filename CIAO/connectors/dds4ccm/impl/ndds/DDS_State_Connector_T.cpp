@@ -177,23 +177,23 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
 {
-  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate ();
   this->observable_.passivate ();
   this->push_observer_.passivate ();
   this->push_state_observer_.passivate ();
   this->pull_observer_.passivate ();
   this->passive_observer_.passivate ();
+  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
 {
-  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove ();
   this->observable_.remove (this->publisher_.in ());
   this->push_observer_.remove (this->subscriber_.in ());
   this->push_state_observer_.remove (this->subscriber_.in ());
   this->pull_observer_.remove (this->subscriber_.in ());
   this->passive_observer_.remove (this->subscriber_.in ());
+  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove ();
 }
 

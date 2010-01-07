@@ -24,6 +24,14 @@ namespace CIAO
         CIAO_TRACE ("RTI_DomainParticipantFactory_i::~RTI_DomainParticipantFactory_i");
       }
 
+      DDSDomainParticipant*
+      RTI_DomainParticipantFactory_i::get_participant (const char * qos_profile)
+      {
+        ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
+                        this->mutex_, CORBA::INTERNAL ());
+        return this->dps_[qos_profile];
+      }
+
       ::DDS::DomainParticipant_ptr
       RTI_DomainParticipantFactory_i::create_participant (::DDS::DomainId_t domain_id,
                                                           const ::DDS::DomainParticipantQos & /*qos*/,
@@ -66,8 +74,8 @@ namespace CIAO
       ::DDS::DomainParticipant_ptr
       RTI_DomainParticipantFactory_i::create_participant_with_profile (
         ::DDS::DomainId_t domain_id,
-        const char* library_name,
-        const char *profile_name,
+        const char * library_name,
+        const char * profile_name,
         ::DDS::DomainParticipantListener_ptr a_listener,
         ::DDS::StatusMask mask)
       {
@@ -81,12 +89,19 @@ namespace CIAO
             rti_dpl = new RTI_DomainParticipantListener_i (a_listener);
           }
 
-        DDSDomainParticipant *part = DDSDomainParticipantFactory::get_instance ()->
-          create_participant_with_profile (domain_id,
-                              library_name,
-                              profile_name,
-                              rti_dpl,
-                              mask);
+        char * qos_profile;
+        ACE_OS::sprintf (qos_profile, "%s#%s", library_name, profile_name);
+        DDSDomainParticipant *part = this->get_participant (qos_profile);
+        if (!part)
+          {
+            part = DDSDomainParticipantFactory::get_instance ()->
+              create_participant_with_profile (domain_id,
+                                library_name,
+                                profile_name,
+                                rti_dpl,
+                                mask);
+            this->dps_[qos_profile] = part;
+          }
 
         if (!part)
           {
@@ -178,8 +193,8 @@ namespace CIAO
 
       ::DDS::ReturnCode_t
       RTI_DomainParticipantFactory_i::set_default_participant_qos_with_profile (
-                                                          const char* library_name,
-                                                          const char *profile_name)
+                                                          const char * library_name,
+                                                          const char * profile_name)
       {
         CIAO_TRACE ("RTI_DomainParticipantFactory_i::set_default_participant_qos_with_profile");
 
