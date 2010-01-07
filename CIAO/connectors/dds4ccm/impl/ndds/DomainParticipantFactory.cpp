@@ -89,7 +89,7 @@ namespace CIAO
             rti_dpl = new RTI_DomainParticipantListener_i (a_listener);
           }
 
-        char * qos_profile;
+        char qos_profile[256];
         ACE_OS::sprintf (qos_profile, "%s#%s", library_name, profile_name);
         DDSDomainParticipant *part = this->get_participant (qos_profile);
         if (!part)
