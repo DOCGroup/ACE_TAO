@@ -144,10 +144,10 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
 {
   CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate");
 
-  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate ();
   this->push_consumer_.passivate ();
   this->supplier_.passivate ();
   this->pull_consumer_.passivate ();
+  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -156,8 +156,8 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
 {
   CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove");
 
-  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove ();
   this->push_consumer_.remove (this->subscriber_.in ());
   this->supplier_.remove (this->publisher_.in ());
   this->pull_consumer_.remove (this->subscriber_.in ());
+  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove ();
 }

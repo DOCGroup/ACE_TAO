@@ -47,6 +47,8 @@ namespace CIAO
 
         void set_impl (::DDS::DataReader_ptr reader);
 
+        void passivate (void);
+
       private:
         typename DDS_TYPE::data_reader *impl_;
 

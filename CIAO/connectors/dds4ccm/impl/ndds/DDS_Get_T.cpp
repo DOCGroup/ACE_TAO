@@ -98,6 +98,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE>::passivate (void)
   CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE>::passivate");
   try
     {
+      this->dds_get_.passivate ();
       this->rti_reader_.set_listener (
               ::DDS::DataReaderListener::_nil (),
               0);

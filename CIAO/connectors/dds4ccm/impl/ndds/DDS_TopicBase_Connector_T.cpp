@@ -44,10 +44,10 @@ void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
 {
   CIAO_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate");
-  DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate ();
   this->passivate_default_topic ();
   this->passivate_subscriber ();
   this->passivate_publisher ();
+  DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -55,10 +55,10 @@ void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
 {
   CIAO_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove");
-  DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove ();
   this->remove_default_topic ();
   this->remove_subscriber ();
   this->remove_publisher ();
+  DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -348,6 +348,8 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::passivate_default_topic (void)
       this->topic_->set_listener (
         ::DDS::TopicListener::_nil (),
         0);
+
+      this->topiclistener_ = ::DDS::TopicListener::_nil ();
     }
   catch (...)
     {
@@ -368,6 +370,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::passivate_subscriber (void)
       this->subscriber_->set_listener (
         ::DDS::SubscriberListener::_nil (),
         0);
+      this->subscriber_listener_ = ::DDS::SubscriberListener::_nil ();
     }
   catch (...)
     {
@@ -388,6 +391,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::passivate_publisher (void)
       this->publisher_->set_listener (
         ::DDS::PublisherListener::_nil (),
         0);
+      this->publisher_listener_ = ::DDS::PublisherListener::_nil ();
     }
   catch (...)
     {

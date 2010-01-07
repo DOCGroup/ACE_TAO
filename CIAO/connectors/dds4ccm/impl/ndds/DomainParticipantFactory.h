@@ -18,6 +18,10 @@
 
 #include "tao/LocalObject.h"
 
+#include <map>
+
+class DDSDomainParticipant;
+
 namespace CIAO
 {
   namespace DDS4CCM
@@ -43,8 +47,8 @@ namespace CIAO
 
         virtual
           ::DDS::DomainParticipant_ptr create_participant_with_profile (::DDS::DomainId_t domain_id,
-                                                          const char* library_name,
-                                                          const char *profile_name,
+                                                          const char * library_name,
+                                                          const char * profile_name,
                                                            ::DDS::DomainParticipantListener_ptr a_listener,
                                                            ::DDS::StatusMask mask);
 
@@ -67,9 +71,14 @@ namespace CIAO
           ::DDS::ReturnCode_t get_qos (::DDS::DomainParticipantFactoryQos & qos);
 
         virtual ::DDS::ReturnCode_t set_default_participant_qos_with_profile(
-                                                          const char* library_name,
-                                                          const char *profile_name);
+                                                          const char * library_name,
+                                                          const char * profile_name);
+      private:
+        DDSDomainParticipant * get_participant (const char * qos_profile);
 
+        TAO_SYNCH_MUTEX mutex_;
+        typedef std::map<const char *, DDSDomainParticipant *> DomainParticipants;
+        DomainParticipants dps_;
       };
     }
   }

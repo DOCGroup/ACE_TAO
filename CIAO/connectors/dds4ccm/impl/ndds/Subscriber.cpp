@@ -164,11 +164,11 @@ namespace CIAO
         if (retval != DDS_RETCODE_OK)
           {
             CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::delete_datareader - "
-                         "Error: Returned non-ok error code %c\n",
+                         "Error: Returned non-ok error code %C\n",
                          translate_retcode (retval)));
           }
         else CIAO_DEBUG (6, (LM_INFO, CLINFO "RTI_Subscriber_i::delete_datareader - "
-                          "Successfully deleted\n"));
+                          "Datareader successfully  deleted\n"));
 
         return retval;
       }

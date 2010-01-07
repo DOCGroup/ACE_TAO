@@ -1,3 +1,43 @@
+Thu Jan  7 09:43:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.cpp:
+          Call passivate and remove on the base class after passivating
+          and removing his own stuff.
+
+        * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.cpp:
+          Setting listeners to nil. Also extended logging when deleting
+          subscriber.
+
+        * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.cpp:
+          Call passivate and remove on the base class after passivating
+          and removing his own stuff.
+          Also setting listeners to nil when passivating.
+
+        * connectors/dds4ccm/impl/ndds/DDS_Write_T.cpp:
+          Don't use remove_ref. Setting to nil should be enough.
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+          There should only one domainparticipant for the same
+          QOS profile. Build in check to prevent the creation of
+          another domainparticipant for the same QOS profile.
+
+        * connectors/dds4ccm/impl/ndds/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Getter_T.h:
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+          Added a passivate method. This cleans up
+          DDS read conditions and wait conditions.
+
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.cpp:
+          Extended log info with CLINFO.
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+          Using %C instead of %c. Also extended logging info.
+
 Wed Jan  6 12:51:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
