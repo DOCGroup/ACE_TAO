@@ -1,0 +1,29 @@
+// $Id$
+
+/**
+ * @file VTopic_Connector.idl
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ *
+ * by-hand translation of the idl3p.
+ */
+
+#ifndef VTOPIC_CONNECTOR_IDL_
+#define VTOPIC_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/VTopic_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+TYPED_MODULE( ::TestTopic, ::TestTopic_Seq, TestTopic)
+
+module VTopic
+{
+  connector VTopic_Connector : ::CCM_DDS::TestTopic::DDS_Event
+  {
+  };
+ 
+};
+
+
+
+#endif /* VTopic_CONNECTOR_IDL_ */
