@@ -1,3 +1,8 @@
+Thu Jan  7 15:52:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added DDS DataWriter test to the test framework.
+
 Thu Jan  7 15:50:15 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/DDSWriterEntity/*:
