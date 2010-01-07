@@ -24,14 +24,6 @@ namespace CIAO
         CIAO_TRACE ("RTI_DomainParticipantFactory_i::~RTI_DomainParticipantFactory_i");
       }
 
-      DDSDomainParticipant*
-      RTI_DomainParticipantFactory_i::get_participant (const char * qos_profile)
-      {
-        ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
-                        this->mutex_, CORBA::INTERNAL ());
-        return this->dps_[qos_profile];
-      }
-
       ::DDS::DomainParticipant_ptr
       RTI_DomainParticipantFactory_i::create_participant (::DDS::DomainId_t domain_id,
                                                           const ::DDS::DomainParticipantQos & /*qos*/,
@@ -91,17 +83,23 @@ namespace CIAO
 
         char qos_profile[256];
         ACE_OS::sprintf (qos_profile, "%s#%s", library_name, profile_name);
-        DDSDomainParticipant *part = this->get_participant (qos_profile);
-        if (!part)
-          {
-            part = DDSDomainParticipantFactory::get_instance ()->
-              create_participant_with_profile (domain_id,
-                                library_name,
-                                profile_name,
-                                rti_dpl,
-                                mask);
-            this->dps_[qos_profile] = part;
-          }
+
+        DDSDomainParticipant *part = 0;
+        {
+          ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
+                          this->dps_mutex_, CORBA::INTERNAL ());
+          part = this->dps_[qos_profile];
+          if (!part)
+            {
+              part = DDSDomainParticipantFactory::get_instance ()->
+                create_participant_with_profile (domain_id,
+                                  library_name,
+                                  profile_name,
+                                  rti_dpl,
+                                  mask);
+              this->dps_[qos_profile] = part;
+            }
+        }
 
         if (!part)
           {
@@ -116,6 +114,25 @@ namespace CIAO
         rti_dp->set_impl (part);
 
         return retval._retn ();
+      }
+
+      void
+      RTI_DomainParticipantFactory_i::remove_participant (DDSDomainParticipant * part)
+      {
+        ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
+                        this->dps_mutex_, CORBA::INTERNAL ());
+        DomainParticipants::iterator pos;
+        for (pos = this->dps_.begin(); pos != this->dps_.end(); ++pos)
+          {
+            if (pos->second == part)
+              {
+                CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::remove_participant - "
+                          "Deleting participant for %C.\n",
+                          pos->first));
+                this->dps_.erase (pos->first);
+                break;
+              }
+          }
       }
 
       ::DDS::ReturnCode_t
@@ -133,6 +150,8 @@ namespace CIAO
           }
         CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::delete_participant - "
                      "Successfully casted provided object reference to servant type.\n"));
+
+        this->remove_participant (part->get_impl ());
 
         DDS_ReturnCode_t retval = DDSDomainParticipantFactory::get_instance ()->
             delete_participant (part->get_impl ());
