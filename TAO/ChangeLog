@@ -1,13 +1,24 @@
+Thu Jan  7 18:45:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_ami4ccm_pre_proc.cpp:
+          Added some more code for implicit sendc_ ports
+
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+          Fixed typos
+
+        * TAO_IDL/be_include/be_interface_strategy.h:
+          Layout changes
+
 Thu Jan  7 11:04:58 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * tests/OBV/Supports/Supports_Test.mpc:
           Reinstated dummy_label dependency.
 
         * bin/tao_orb_tests.lst:
-          Disabled the OBV/Supports test again since there Solaris compilers 
-          as well as CB2010 do not grok the TAO code for valuetype 'supports' 
+          Disabled the OBV/Supports test again since there Solaris compilers
+          as well as CB2010 do not grok the TAO code for valuetype 'supports'
           constructs and there is currently no budget to fix this.
-          This will need to be resolved at some time by either compiler fixes 
+          This will need to be resolved at some time by either compiler fixes
           or a redesign of the TAO valuetype framework.
 
 Thu Jan  7 10:44:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
