@@ -518,7 +518,6 @@ be_visitor_interface::visit_operation (be_operation *node)
   // Change the state depending on the kind of node strategy.
   ctx.state (node->next_state (ctx.state ()));
 
-
   // Grab the appropriate visitor.
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
 
