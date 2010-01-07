@@ -118,14 +118,14 @@ AST_Component::look_in_supported (UTL_ScopedName *e,
         {
           continue;
         }
-        
+
       AST_Interface *i =
         AST_Interface::narrow_from_decl (*is);
-        
+
       d = (i)->lookup_by_name (e,
                                treat_as_ref,
                                0 /* not in parent */);
-                               
+
       if (d != 0)
         {
           break;
@@ -467,6 +467,23 @@ AST_Component::fe_add_mirror_port (AST_Mirror_Port *p)
                            p->local_name ());
 
   return p;
+}
+
+int
+AST_Component::be_add_uses (AST_Uses *i,
+                            AST_Uses *ix)
+{
+  // Add it to scope.
+  this->add_to_scope (i,
+                      ix);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (i,
+                           false,
+                           i->local_name (),
+                           ix);
+
+  return 0;
 }
 
 IMPL_NARROW_FROM_DECL (AST_Component)

@@ -132,10 +132,10 @@ be_visitor_ccm_pre_proc::visit_component (be_component *node)
                          "component exception lookups failed\n"),
                         -1);
     }
-    
+
   // Set working node for all port code generation.
   this->comp_ = node;
-    
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -159,17 +159,17 @@ be_visitor_ccm_pre_proc::visit_provides (be_provides *node)
                          "store_port_interface failed\n"),
                         -1);
     }
-  
+
   if (node->provides_type ()->is_local ())
     {
       return 0;
     }
-  
+
   // If this facet comes from a porttype, the instantiated
   // port/mirrorport name is prefixed to the facet name.
   ACE_CString prefix ("provide_");
   prefix += this->port_prefix_;
-  
+
   AST_Operation *provides_op = 0;
   UTL_ScopedName *op_name =
     this->create_scoped_name (prefix.c_str (),
@@ -183,7 +183,7 @@ be_visitor_ccm_pre_proc::visit_provides (be_provides *node)
                                 0,
                                 0),
                   -1);
-                  
+
   provides_op->set_defined_in (comp_);
   provides_op->set_imported (comp_->imported ());
   provides_op->set_name (op_name);
@@ -211,7 +211,7 @@ be_visitor_ccm_pre_proc::visit_uses (be_uses *node)
                          "store_port_interface failed\n"),
                         -1);
     }
-  
+
   if (node->uses_type ()->is_local ())
     {
       return 0;
@@ -570,7 +570,7 @@ be_visitor_ccm_pre_proc::gen_connect_single (be_uses *node)
   // port/mirrorport name is prefixed to the receptacle name.
   ACE_CString prefix ("connect_");
   prefix += this->port_prefix_;
-  
+
   UTL_ScopedName *op_full_name =
     this->create_scoped_name (prefix.c_str (),
                               node->local_name ()->get_string (),
@@ -626,7 +626,7 @@ be_visitor_ccm_pre_proc::gen_disconnect_single (be_uses *node)
   // port/mirrorport name is prefixed to the receptacle name.
   ACE_CString prefix ("disconnect_");
   prefix += this->port_prefix_;
-  
+
   UTL_ScopedName *op_full_name =
     this->create_scoped_name (prefix.c_str (),
                               node->local_name ()->get_string (),
@@ -665,7 +665,7 @@ be_visitor_ccm_pre_proc::gen_get_connection_single (be_uses *node)
   // port/mirrorport name is prefixed to the receptacle name.
   ACE_CString prefix ("get_connection_");
   prefix += this->port_prefix_;
-  
+
   UTL_ScopedName *op_full_name =
     this->create_scoped_name (prefix.c_str (),
                               node->local_name ()->get_string (),
@@ -682,7 +682,7 @@ be_visitor_ccm_pre_proc::gen_get_connection_single (be_uses *node)
   op->set_name (op_full_name);
   op->set_defined_in (comp_);
   op->set_imported (comp_->imported ());
-  
+
   if (0 == comp_->be_add_operation (op))
     {
       return -1;
@@ -698,7 +698,7 @@ be_visitor_ccm_pre_proc::gen_connect_multiple (be_uses *node)
   // port/mirrorport name is prefixed to the receptacle name.
   ACE_CString prefix ("connect_");
   prefix += this->port_prefix_;
-  
+
   UTL_ScopedName *op_full_name =
     this->create_scoped_name (prefix.c_str (),
                               node->local_name ()->get_string (),
@@ -754,7 +754,7 @@ be_visitor_ccm_pre_proc::gen_disconnect_multiple (be_uses *node)
   // port/mirrorport name is prefixed to the receptacle name.
   ACE_CString prefix ("disconnect_");
   prefix += this->port_prefix_;
-  
+
   UTL_ScopedName *op_full_name =
     this->create_scoped_name (prefix.c_str (),
                               node->local_name ()->get_string (),
@@ -804,7 +804,7 @@ be_visitor_ccm_pre_proc::gen_get_connection_multiple (be_uses *node)
   // port/mirrorport name is prefixed to the receptacle name.
   ACE_CString prefix ("get_connections_");
   prefix += this->port_prefix_;
-  
+
   UTL_ScopedName *op_full_name =
     this->create_scoped_name (prefix.c_str (),
                               node->local_name ()->get_string (),
@@ -1364,7 +1364,7 @@ be_visitor_ccm_pre_proc::gen_extended_port (be_porttype *pt)
                          "visit_scope for porttype failed\n"),
                         -1);
     }
-    
+
   return 0;
 }
 
@@ -1403,13 +1403,11 @@ be_visitor_ccm_pre_proc::lookup_cookie (be_component *node)
 int
 be_visitor_ccm_pre_proc::lookup_exceptions (be_component *node)
 {
-  int status = 0;
-
   for (int i = 0; i < N_EXCEPS; ++i)
     {
-      status = this->lookup_one_exception (node,
-                                           EXCEP_NAMES[i],
-                                           EXCEPS[i]);
+      int status = this->lookup_one_exception (node,
+                                               EXCEP_NAMES[i],
+                                               EXCEPS[i]);
 
       if (status == -1)
         {
@@ -1614,7 +1612,7 @@ be_visitor_ccm_pre_proc::create_explicit (be_home *node)
       d->set_name (new_name);
       i->add_to_scope (d);
     }
-    
+
   header.destroy ();
   parent_list->destroy ();
   delete parent_list;
@@ -1632,20 +1630,20 @@ be_visitor_ccm_pre_proc::create_implicit (be_home *node)
   ACE_NEW_RETURN (parent_id,
                   Identifier ("KeylessCCMHome"),
                   0);
-                  
+
   UTL_ScopedName *parent_local_name = 0;
   ACE_NEW_RETURN (parent_local_name,
                   UTL_ScopedName (parent_id, 0),
                   0);
-                  
+
   UTL_ScopedName *parent_full_name = 0;
   ACE_NEW_RETURN (parent_full_name,
                   UTL_ScopedName (this->module_id_.copy (),
                                   parent_local_name),
                   0);
-                  
+
   UTL_NameList parent_list (parent_full_name, 0);
-  
+
   UTL_NameList *parent_list_ptr = 0;
 
   if (node->primary_key () == 0)
@@ -1669,7 +1667,7 @@ be_visitor_ccm_pre_proc::create_implicit (be_home *node)
                               node->local_name (),
                               "Implicit",
                               ScopeAsDecl (node->defined_in ()));
-                              
+
   be_interface *i = 0;
   ACE_NEW_RETURN (i,
                   be_interface (implicit_name,
@@ -1683,19 +1681,19 @@ be_visitor_ccm_pre_proc::create_implicit (be_home *node)
 
   // Back to reality.
   idl_global->scopes ().pop ();
-  
+
   header.destroy ();
   parent_list.destroy ();
 
   i->set_name (implicit_name);
   i->set_defined_in (node->defined_in ());
   i->set_imported (node->imported ());
-  
+
   i->gen_fwd_helper_name ();
   i->original_interface (node);
   AST_Module *m = AST_Module::narrow_from_scope (node->defined_in ());
   m->be_add_interface (i);
-  
+
   return i;
 }
 

@@ -66,6 +66,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "be_visitor_root.h"
 #include "be_visitor_ami_pre_proc.h"
+#include "be_visitor_ami4ccm_pre_proc.h"
 #include "be_visitor_amh_pre_proc.h"
 #include "be_visitor_ccm_pre_proc.h"
 #include "be_visitor_context.h"
@@ -119,6 +120,12 @@ BE_produce (void)
     {
       be_visitor_ccm_pre_proc ccm_preproc_visitor (&ctx);
       BE_visit_root (ccm_preproc_visitor, "CCM preprocessing");
+    }
+
+  if (be_global->ami4ccm_call_back ())
+    {
+      be_visitor_ami4ccm_pre_proc ami4ccmpreproc_visitor (&ctx);
+      BE_visit_root (ami4ccmpreproc_visitor, "AMI4CCM preprocessing");
     }
 
   if (be_global->ami_call_back ())

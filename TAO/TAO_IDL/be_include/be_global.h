@@ -73,52 +73,52 @@ public:
   // base name to use in #include's etc.
   static const char *be_get_client_hdr_fname (
       bool base_name_only = false);
-      
+
   static const char *be_get_client_stub_fname (void);
-  
+
   static const char *be_get_client_inline_fname (
       bool base_name_only = false);
-      
+
   static const char *be_get_server_hdr_fname (
       bool base_name_only = false);
-      
+
   static const char *be_get_implementation_hdr_fname (
       bool base_name_only = false);
-      
+
   static const char *be_get_implementation_skel_fname (
       bool base_name_only = false);
-      
+
   static const char *be_get_server_template_hdr_fname (
       bool base_name_only = false);
-      
+
   static const char *be_get_server_skeleton_fname (void);
-  
+
   static const char *be_get_implementation_skeleton_fname (void);
-  
+
   static const char *be_get_server_template_skeleton_fname (
       bool base_name_only = false);
-      
+
   static const char *be_get_server_inline_fname (
       bool base_name_only = false);
-      
+
   static const char *be_get_anyop_source_fname (
       bool base_name_only = false);
-      
+
   static const char *be_get_anyop_header_fname (
       bool base_name_only = false);
-      
+
   static const char *be_get_ciao_svnt_hdr_fname (
       bool base_name_only = false);
-      
+
   static const char *be_get_ciao_svnt_src_fname (
       bool base_name_only = false);
-      
+
   static const char *be_get_ciao_exec_hdr_fname (
       bool base_name_only = false);
-      
+
   static const char *be_get_ciao_exec_src_fname (
       bool base_name_only = false);
-      
+
   static const char *be_get_ciao_exec_stub_hdr_fname (
       bool base_name_only = false);
 
@@ -133,45 +133,45 @@ public:
   static const char *be_get_client_hdr (
     UTL_String *idl_file_name,
     bool base_name_only = false);
-    
+
   static const char *be_get_client_stub (
     UTL_String *idl_file_name);
-    
+
   static const char *be_get_client_inline (
     UTL_String *idl_file_name,
     bool base_name_only = false);
-    
+
   static const char *be_get_server_hdr (
     UTL_String *idl_file_name,
     bool base_name_only = false);
-    
+
   static const char *be_get_implementation_hdr (
     UTL_String *idl_file_name,
     bool base_name_only = false);
-    
+
   static const char *be_get_implementation_skel (
     UTL_String *idl_file_name,
     bool base_name_only = false);
-    
+
   static const char *be_get_server_template_hdr (
     UTL_String *idl_file_name,
     bool base_name_only = false);
-    
+
   static const char *be_get_server_skeleton (
     UTL_String *idl_file_name);
-    
+
   static const char *be_get_server_template_skeleton (
       UTL_String *idl_file_name,
       bool base_name_only = false);
-      
+
   static const char *be_get_server_inline (
     UTL_String *idl_file_name,
     bool base_name_only = false);
-    
+
   static const char *be_get_anyop_header (
     UTL_String *idl_file_name,
     bool base_name_only = false);
-    
+
   static const char *be_get_anyop_source (
     UTL_String *idl_file_name,
     bool base_name_only = false);
@@ -191,7 +191,7 @@ public:
   static const char *be_get_ciao_exec_source (
     UTL_String *idl_file_name,
     bool base_name_only = false);
-    
+
   static const char *be_get_ciao_exec_stub_header (
     UTL_String *idl_file_name,
     bool base_name_only = false);
@@ -199,7 +199,7 @@ public:
   static const char *be_get_ciao_exec_idl (
     UTL_String *idl_file_name,
     bool base_name_only = false);
-    
+
   static const char *be_get_dds_typesupport_header (
     UTL_String *idl_file_name,
     bool base_name_only = false);
@@ -430,7 +430,7 @@ public:
 
   const char* anyop_source_ending (void) const;
   // Get the anyop_source_ending.
-  
+
   void ciao_svnt_header_ending (const char* s);
   const char* ciao_svnt_header_ending (void) const;
   void ciao_svnt_source_ending (const char* s);
@@ -445,7 +445,7 @@ public:
   const char* ciao_exec_idl_ending (void) const;
   // Similar to above, but for CIAO servant and executor
   // impl and executor IDL files, if generated.
-  
+
   void dds_typesupport_hdr_ending (const char* s);
   const char* dds_typesupport_hdr_ending (void) const;
   // For generating TypeSupport header file includes.
@@ -565,6 +565,12 @@ public:
 
   bool opt_tc (void) const;
   // Check if TypeCodes are optimized.
+
+  void ami4ccm_call_back (bool value);
+  // To enable or disable AMI4CCM call back feature
+
+  bool ami4ccm_call_back (void) const;
+  // Return the flag.
 
   void ami_call_back (bool value);
   // To enable or disable AMI call back feature of the Messaging
@@ -695,7 +701,7 @@ public:
   bool gen_custom_ending (void) const;
   void gen_custom_ending (bool val);
   // Accessors for the member gen_custom_ending_.
-  
+
   bool gen_ciao_svnt (void) const;
   void gen_ciao_svnt (bool val);
   bool gen_ciao_exec_idl (void) const;
@@ -703,7 +709,7 @@ public:
   bool gen_ciao_exec_impl (void) const;
   void gen_ciao_exec_impl (bool val);
   // Accessors for the corresponding members.
-  
+
   bool gen_component_swapping (void) const;
   void gen_component_swapping (bool val);
 
@@ -724,7 +730,7 @@ public:
 
   bool gen_exec_export_hdr_file (void) const;
   void gen_exec_export_hdr_file (bool val);
-  
+
   bool gen_lem_force_all (void) const;
   void gen_lem_force_all (bool val);
 
@@ -746,7 +752,7 @@ public:
 
   AST_Generator *generator_init (void);
   // Create an AST node generator.
-  
+
   const char *get_output_path (bool for_anyop,
                                bool for_skel);
   // Called from various places.
@@ -836,7 +842,7 @@ private:
 
   // Anyop source file name ending. Default is "A.cpp".
   char* anyop_src_ending_;
-  
+
   // CIAO servant header file name ending. Default is "_svnt.h".
   char* ciao_svnt_hdr_ending_;
 
@@ -851,10 +857,10 @@ private:
 
   // CIAO executor stub header file name ending. Default is "EC.h".
   char* ciao_exec_stub_hdr_ending_;
-  
+
   // CIAO executor IDL file name ending. Default is "E.idl".
   char* ciao_exec_idl_ending_;
-  
+
   // DDS TypeSupport header file name ending. Default is "Support.h".
   char* dds_typesupport_hdr_ending_;
 
@@ -908,6 +914,10 @@ private:
 
   bool opt_tc_;
   // do we generate optimized typecodes?
+
+  bool ami4ccm_call_back_;
+  // Flag to indicate whether the AMI4ccm Call back feature should be enabled
+  // for the generated files or not.
 
   bool ami_call_back_;
   // Flag to indicate whether the AMI Call back feature of the
@@ -1013,23 +1023,23 @@ private:
   bool gen_ciao_exec_impl_;
   // False by default, these flags trigger code generation
   // formerly done by the CIAO CIDL compiler.
-  
+
   bool gen_component_swapping_;
   // Different container #includes, modified servant code.
-  
+
   bool gen_ciao_static_config_;
   // Suppresses generation of table guards in CIAO servants.
-  
+
   bool gen_ciao_valuefactory_reg_;
   // Generate automatic valuetype factory registration in
   // CIAO servants.
-  
+
   bool gen_stub_export_hdr_file_;
   bool gen_skel_export_hdr_file_;
   bool gen_svnt_export_hdr_file_;
   bool gen_exec_export_hdr_file_;
   // Flags toggling export header file generation.
-  
+
   bool gen_lem_force_all_;
   // Toggles generation of exec IDL for facets with imported
   // interface types (not in main IDL file).

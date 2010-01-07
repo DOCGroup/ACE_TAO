@@ -82,7 +82,7 @@ be_visitor_arg_traits::visit_root (be_root *node)
 
   if (be_global->ami_call_back ())
     {
-      int status =
+      int const status =
         this->visit_valuetype (be_global->messaging_exceptionholder ());
 
       if (-1 == status)

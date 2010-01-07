@@ -1,3 +1,19 @@
+Thu Jan  7 10:44:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/ast/ast_component.cpp
+        * TAO_IDL/be/be_codegen.cpp
+        * TAO_IDL/be/be_global.cpp
+        * TAO_IDL/be/be_produce.cpp
+        * TAO_IDL/be/be_visitor_ami4ccm_pre_proc.cpp
+        * TAO_IDL/be/be_visitor_arg_traits.cpp
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp
+        * TAO_IDL/be_include/be_global.h
+        * TAO_IDL/be_include/be_visitor_ami4ccm_pre_proc.h
+        * TAO_IDL/include/ast_component.h
+          Committing the initial files for the ami4ccm visitors
+          which should create all implied nodes for ami4ccm.
+          This can be enabled using the new -GM option.
+
 Mon Jan  4 14:25:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_argument/argument.cpp
