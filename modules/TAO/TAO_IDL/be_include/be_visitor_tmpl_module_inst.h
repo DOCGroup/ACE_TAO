@@ -55,15 +55,10 @@ public:
   
 private:
   // If arg is a param holder, return the matching template arg,
-  // otherwise return arg unchanged.
+  // otherwise return arg unchanged. If the arg is declared in
+  // the scope of a template module, the returned node will be a
+  // copy created in the scope of the template module instantiation.
   AST_Decl *reify_type (AST_Decl *d);
-  
-private:
-  // Storage for the current template module params and args.
-  FE_Utils::T_PARAMLIST_INFO *current_t_params_;
-  FE_Utils::T_ARGLIST *current_t_args_;
-  
-  UTL_Scope *scope_for_adding_;
 };
 
 #endif // TAO_BE_VISITOR_TMPL_MODULE_INST_H

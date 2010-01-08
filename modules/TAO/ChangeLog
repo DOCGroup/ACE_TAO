@@ -1,3 +1,49 @@
+Fri Jan  8 22:37:35 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_reifying.cpp:
+        * TAO_IDL/be_include/be_visitor_reifying.h:
+
+          New files containing a new visitor that
+          handles the (possible) reification of
+          template parameter references when they
+          are replaced by template arguments. Also
+          checks to see if areference lookup is in
+          the scope of a template module. If so, a
+          copy needs to be made in the current
+          instantiation scope (see below).
+
+        * TAO_IDL/include/ast_visitor.h:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/be_include/be_visitor.h:
+
+          Added method visit_param_holder().
+
+        * TAO_IDL/be/be_param_holder.cpp:
+        * TAO_IDL/ast/ast_param_holder.cpp:
+
+          Added call to new visit_* method in the
+          accept() methods.
+
+        * TAO_IDL/be/be_visitor_context.cpp:
+        * TAO_IDL/be_include/be_visitor_context.h:
+
+          Added new state storage, namely the scope in
+          which the contents of an instantiated template
+          module are to be created. It is now stored in
+          the visitor context since both be_visitor_reifying
+          and be_visitor_tmpl_module_inst need to know it.
+
+        * TAO_IDL/be/be_visitor_tmpl_module_inst.cpp:
+        * TAO_IDL/be_include/be_visitor_tmpl_module_inst.h:
+
+          Moved some code to the visitor context, and some
+          to the new reifying visitor (see above).
+
+        * TAO_IDL/be/be_visitor_array.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+
+          Cosmetic changes.
+
 Thu Jan  7 22:01:06 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_module.cpp:

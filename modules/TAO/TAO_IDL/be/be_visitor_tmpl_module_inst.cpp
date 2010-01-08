@@ -8,6 +8,7 @@
 //=============================================================================
 
 #include "be_visitor_tmpl_module_inst.h"
+#include "be_visitor_reifying.h"
 #include "be_visitor_context.h"
 
 #include "be_root.h"
@@ -20,10 +21,7 @@
 
 be_visitor_tmpl_module_inst::be_visitor_tmpl_module_inst (
       be_visitor_context *ctx)
-  : be_visitor_scope (ctx),
-    current_t_params_ (0),
-    current_t_args_ (0),
-    scope_for_adding_ (0)
+  : be_visitor_scope (ctx)
 {
 }
 
@@ -49,13 +47,15 @@ be_visitor_tmpl_module_inst::visit_root (be_root *node)
 int
 be_visitor_tmpl_module_inst::visit_module (be_module *node)
 {
+  UTL_Scope *s = this->ctx_->template_module_inst_scope ();
+  
   // We can conveniently check this member's value to tell
   // if we are (at some level )processing a template module
   // instantiation.
   // If so, we need to create a new module on the AST.
   // When processing of the instantiation is done, the member
   // is reset to 0.
-  if (this->current_t_args_ != 0)
+  if (this->ctx_->template_args () != 0)
     {
       be_module *m = 0;
       
@@ -63,8 +63,8 @@ be_visitor_tmpl_module_inst::visit_module (be_module *node)
                       be_module (node->name ()),
                       -1);
                       
-      this->scope_for_adding_->add_to_scope (m);
-      this->scope_for_adding_ = m;
+      s->add_to_scope (m);
+      this->ctx_->template_module_inst_scope (m);
     }
     
   if (this->visit_scope (node) == -1)
@@ -76,6 +76,9 @@ be_visitor_tmpl_module_inst::visit_module (be_module *node)
                         -1);
     }
     
+  // Restore the outer adding scope.  
+  this->ctx_->template_module_inst_scope (s);
+  
   return 0;
 }
 
@@ -85,7 +88,7 @@ int
 be_visitor_tmpl_module_inst::visit_template_module (
   be_template_module *node)
 {
-  this->current_t_params_ = node->template_params ();
+  this->ctx_->template_params (node->template_params ());
   
   if (this->visit_scope (node) == -1)
     {
@@ -103,7 +106,7 @@ int
 be_visitor_tmpl_module_inst::visit_template_module_inst (
   be_template_module_inst *node)
 {
-  this->current_t_args_ = node->template_args ();
+  this->ctx_->template_args (node->template_args ());
   UTL_Scope *s = node->defined_in ();
   
   be_module *instance = 0;
@@ -118,7 +121,7 @@ be_visitor_tmpl_module_inst::visit_template_module_inst (
   
   // Everything we visit in the template module below will be
   // added to the module just created.
-  this->scope_for_adding_ = instance;
+  this->ctx_->template_module_inst_scope (instance);
   
   be_template_module *tm =
     be_template_module::narrow_from_decl (node->ref ());
@@ -137,15 +140,18 @@ be_visitor_tmpl_module_inst::visit_template_module_inst (
   // need to know this, for example while visiting an IDL module,
   // to decide whether to create an implied IDL module or just
   // visit its scope.  
-  this->current_t_args_ = 0;
+  this->ctx_->template_args (0);
 
+  // Restore the outer adding scope.  
+  this->ctx_->template_module_inst_scope (s);
+  
   return 0;
 }
 
 int
 be_visitor_tmpl_module_inst::visit_typedef (be_typedef *node)
 {
-  if (this->current_t_args_ == 0)
+  if (this->ctx_->template_args () == 0)
     {
       return 0;
     }
@@ -161,7 +167,7 @@ be_visitor_tmpl_module_inst::visit_typedef (be_typedef *node)
                                false),
                    -1);
                    
-  this->scope_for_adding_->add_to_scope (td);
+  this->ctx_->template_module_inst_scope ()->add_to_scope (td);
 
   return 0;
 }
@@ -169,56 +175,20 @@ be_visitor_tmpl_module_inst::visit_typedef (be_typedef *node)
 AST_Decl *
 be_visitor_tmpl_module_inst::reify_type (AST_Decl *d)
 {
-  if (d->node_type () == AST_Decl::NT_param_holder)
+  be_visitor_reifying rv (this->ctx_);
+  be_decl *be_candidate =
+    be_decl::narrow_from_decl (d);
+  
+  if (be_candidate->accept (&rv) != 0)
     {
-      AST_Param_Holder *ph =
-        AST_Param_Holder::narrow_from_decl (d);
-        
-      size_t i = 0;
-    
-      for (FE_Utils::T_PARAMLIST_INFO::ITERATOR iter (
-             *this->current_t_params_);
-           !iter.done ();
-           iter.advance (), ++i)
-        {
-          FE_Utils::T_Param_Info *item = 0;
-          iter.next (item);
-          
-          if (item == ph->info ())
-            {
-              AST_Decl **ret_ptr = 0;
-              
-              if (this->current_t_args_->get (ret_ptr, i) == 0)
-                {
-                  return *ret_ptr;
-                }
-              else
-                {
-                  ACE_ERROR ((LM_ERROR,
-                              ACE_TEXT ("be_visitor_tmpl_module_inst::")
-                              ACE_TEXT ("reify_type() - access of ")
-                              ACE_TEXT ("current template arglist failed - ")
-                              ACE_TEXT ("param=%C scope=%C index=%d\n"),
-                              item->name_.c_str (),
-                              this->ctx_->node ()->full_name (),
-                              i));
-                              
-                  return 0;
-                }
-            }
-        }
-        
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("be_visitor_tmpl_module_inst::")
-                  ACE_TEXT ("reify_type() - no match for ")
-                  ACE_TEXT ("template param %C in %C\n"),
-                  ph->info ()->name_.c_str (),
-                  this->ctx_->node ()->full_name ()));
+                  ACE_TEXT ("reify_type() - reifying ")
+                  ACE_TEXT ("visitor failed on %C\n"),
+                  be_candidate->full_name ()));
                   
       return 0;
     }
-  else
-    {
-      return d;
-    }
+    
+  return rv.reified_node ();
 }
