@@ -119,7 +119,7 @@ be_visitor_ami4ccm_pre_proc::visit_uses (be_uses *node)
 {
   printf ("here 2\n");
   // We check for an imported node after generating the reply handler.
-  if (node->is_local () || node->is_abstract ())
+  if (node->is_local () || node->is_abstract () || node->original_uses())
     {
       return 0;
     }
@@ -166,7 +166,7 @@ be_visitor_ami4ccm_pre_proc::visit_uses (be_uses *node)
                         -1);
     }
 
-  be_uses *uses = 0;//this->create_sendc_uses (node);
+  be_uses *uses = this->create_sendc_uses (node);
 
   if (uses)
     {
@@ -177,7 +177,7 @@ be_visitor_ami4ccm_pre_proc::visit_uses (be_uses *node)
       component->be_add_uses (uses, node);
 
       // Remember from whom we were cloned
-      //uses->original_interface (node);
+      uses->original_uses (node);
 
       // If this was created for an imported node, it will be wrong
       // unless we set it.
