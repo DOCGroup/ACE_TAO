@@ -672,6 +672,9 @@ public:
   be_interface *messaging_replyhandler (void);
   // Accessor for the member, sets it on the first call.
 
+  be_interface *ami4ccm_replyhandler (void);
+  // Accessor for the member, sets it on the first call.
+
   bool gen_anyop_files (void) const;
   void gen_anyop_files (bool val);
   // Accessors for the member.
@@ -978,6 +981,9 @@ private:
   // Storage for exception holders' base class node.
 
   be_interface *messaging_replyhandler_;
+  // Storage for the reply handlers' base class node.
+
+  be_interface *ami4ccm_replyhandler_;
   // Storage for the reply handlers' base class node.
 
   bool gen_anyop_files_;
