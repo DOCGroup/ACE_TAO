@@ -150,6 +150,17 @@ public:
   // *generating* code, as opposed to the interfaces where the methods
   // or structures are defined.
   
+  // Accessors/mutators for the template-related members.
+  
+  FE_Utils::T_PARAMLIST_INFO *template_params (void) const;
+  void template_params (FE_Utils::T_PARAMLIST_INFO *params);
+  
+  FE_Utils::T_ARGLIST *template_args (void) const;
+  void template_args (FE_Utils::T_ARGLIST *args);
+  
+  UTL_Scope *template_module_inst_scope (void) const;
+  void template_module_inst_scope (UTL_Scope *s);
+  
   // = helpers
 
   // visitors may need the actual type of the node stored in this context. We
@@ -285,6 +296,14 @@ private:
 
   be_interface *interface_;
   // See the method declaration above.
+  
+  // Storage for the current template module params and args.
+  FE_Utils::T_PARAMLIST_INFO *template_params_;
+  FE_Utils::T_ARGLIST *template_args_;
+  
+  // Scope for adding the instantiated contents of a template
+  // module.
+  UTL_Scope *template_module_inst_scope_;
 };
 
 #if defined (interface)

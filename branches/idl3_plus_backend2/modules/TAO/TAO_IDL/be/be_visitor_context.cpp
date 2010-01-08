@@ -53,7 +53,9 @@ be_visitor_context::be_visitor_context (void)
     attr_ (0),
     exception_ (0),
     comma_ (0),
-    interface_ (0)
+    interface_ (0),
+    template_params_ (0),
+    template_args_ (0)
 {
 }
 
@@ -245,6 +247,42 @@ be_visitor_context::interface (void) const
   return this->interface_;
 }
 
+FE_Utils::T_PARAMLIST_INFO *
+be_visitor_context::template_params (void) const
+{
+  return this->template_params_;
+}
+
+void
+be_visitor_context::template_params (FE_Utils::T_PARAMLIST_INFO *params)
+{
+  this->template_params_ = params;
+}
+
+FE_Utils::T_ARGLIST *
+be_visitor_context::template_args (void) const
+{
+  return this->template_args_;
+}
+
+void
+be_visitor_context::template_args (FE_Utils::T_ARGLIST *args)
+{
+  this->template_args_ = args;
+}
+
+UTL_Scope *
+be_visitor_context::template_module_inst_scope (void) const
+{
+  return this->template_module_inst_scope_;
+}
+
+void
+be_visitor_context::template_module_inst_scope (UTL_Scope *s)
+{
+  this->template_module_inst_scope_ = s;
+}
+  
 // ****************************************************************
 
 be_argument *
