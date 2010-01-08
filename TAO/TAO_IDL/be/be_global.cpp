@@ -115,6 +115,7 @@ BE_GlobalData::BE_GlobalData (void)
     messaging_exceptionholder_ (0),
     ami4ccm_exceptionholder_ (0),
     messaging_replyhandler_ (0),
+    ami4ccm_replyhandler_ (0),
     gen_anyop_files_ (false),
     gen_skel_files_ (true),
     gen_client_inline_ (true),
@@ -1676,6 +1677,13 @@ BE_GlobalData::destroy (void)
       this->messaging_replyhandler_ = 0;
     }
 
+  if (0 != this->ami4ccm_replyhandler_)
+    {
+      this->ami4ccm_replyhandler_->destroy ();
+      delete this->ami4ccm_replyhandler_;
+      this->ami4ccm_replyhandler_ = 0;
+    }
+
   if (0 != tao_cg)
     {
       tao_cg->destroy ();
@@ -1984,6 +1992,64 @@ BE_GlobalData::messaging_replyhandler (void)
     }
 
   return this->messaging_replyhandler_;
+}
+
+be_interface *
+BE_GlobalData::ami4ccm_replyhandler (void)
+{
+  if (0 == this->ami4ccm_replyhandler_)
+    {
+      be_module *msg = this->ami4ccm ();
+      idl_global->scopes ().push (msg);
+
+      Identifier *id = 0;
+      UTL_ScopedName *local_name = 0;
+
+      // Create a virtual module named "Messaging"
+      // "and an interface "ReplyHandler"
+      // from which we inherit.
+      ACE_NEW_RETURN (id,
+                      Identifier ("CCM_AMI"),
+                      0);
+
+      UTL_ScopedName *full_name = 0;
+      ACE_NEW_RETURN (full_name,
+                      UTL_ScopedName (id,
+                                      0),
+                      0);
+
+      ACE_NEW_RETURN (id,
+                      Identifier ("ReplyHandler"),
+                      0);
+
+      ACE_NEW_RETURN (local_name,
+                      UTL_ScopedName (id,
+                                      0),
+                      0);
+
+      full_name->nconc (local_name);
+
+      ACE_NEW_RETURN (this->ami4ccm_replyhandler_,
+                      be_interface (full_name,
+                                    0,  // inherited interfaces
+                                    0,  // number of inherited interfaces
+                                    0,  // ancestors
+                                    0,  // number of ancestors
+                                    0,  // not local
+                                    0), // not abstract
+                      0);
+
+      this->ami4ccm_replyhandler_->set_name (full_name);
+      this->ami4ccm_replyhandler_->set_prefix_with_typeprefix ("omg.org");
+
+      idl_global->scopes ().pop ();
+
+      // Notice the interface "ReplyHandler" that it is defined in the
+      // "CCM_AMI" module.
+      this->ami4ccm_replyhandler_->set_defined_in (msg);
+    }
+
+  return this->ami4ccm_replyhandler_;
 }
 
 bool
