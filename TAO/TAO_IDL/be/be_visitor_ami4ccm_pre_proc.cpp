@@ -188,9 +188,8 @@ be_visitor_ami4ccm_pre_proc::visit_uses (be_uses *node)
 }
 
 int
-be_visitor_ami4ccm_pre_proc::visit_interface (be_interface * /*node*/)
+be_visitor_ami4ccm_pre_proc::visit_interface (be_interface * node)
 {
-/*
   // We check for an imported node after generating the reply handler.
   if (node->is_local () || node->is_abstract ())
     {
@@ -295,14 +294,14 @@ be_visitor_ami4ccm_pre_proc::visit_interface (be_interface * /*node*/)
                          "visit scope failed\n"),
                         -1);
     }
-*/
+
   return 0;
 }
 
 int
-be_visitor_ami4ccm_pre_proc::visit_operation (be_operation *)
+be_visitor_ami4ccm_pre_proc::visit_operation (be_operation *node)
 {
-/*
+//return 0;
   if (node->flags () == AST_Operation::OP_oneway)
     {
       // We do nothing for oneways!
@@ -311,7 +310,7 @@ be_visitor_ami4ccm_pre_proc::visit_operation (be_operation *)
 
   // If we're here, we're sure that the arg traits specialization
   // for this will be needed.
-  be_global->messaging_exceptionholder ()->seen_in_operation (true);
+  be_global->ami4ccm_exceptionholder ()->seen_in_operation (true);
 
   be_operation *sendc_marshaling =
     this->create_sendc_operation (node,
@@ -348,14 +347,13 @@ be_visitor_ami4ccm_pre_proc::visit_operation (be_operation *)
           old_strategy = 0;
         }
     }
-*/
+
   return 0;
 }
 
 int
-be_visitor_ami4ccm_pre_proc::visit_attribute (be_attribute *)
+be_visitor_ami4ccm_pre_proc::visit_attribute (be_attribute *node)
 {
-/*
   // Temporarily generate the set operation.
   be_operation *set_operation =
     this->generate_set_operation (node);
@@ -420,21 +418,20 @@ be_visitor_ami4ccm_pre_proc::visit_attribute (be_attribute *)
           bos = 0;
         }
     }
-*/
+
   return 0;
 }
 
 be_valuetype *
 be_visitor_ami4ccm_pre_proc::create_exception_holder (be_interface *)
 {
-  return 0;//be_global->messaging_exceptionholder ();
+  return be_global->ami4ccm_exceptionholder ();
 }
 
 be_interface *
-be_visitor_ami4ccm_pre_proc::create_reply_handler (be_interface *,
-                                               be_valuetype *)
+be_visitor_ami4ccm_pre_proc::create_reply_handler (be_interface *node,
+                                                   be_valuetype *excep_holder)
 {
-/*
   // We're at global scope here so we need to fool the scope stack
   // for a minute so the correct repo id can be calculated at
   // interface construction time.
@@ -446,8 +443,8 @@ be_visitor_ami4ccm_pre_proc::create_reply_handler (be_interface *,
   this->generate_name (reply_handler_local_name,
                        "AMI_",
                        node->name ()->last_component ()->get_string(),
-                       "Handler");
-
+                       "Callback");
+printf ("%s\n", reply_handler_local_name.c_str ());
   UTL_ScopedName *reply_handler_name =
     static_cast<UTL_ScopedName *> (node->name ()->copy ());
   reply_handler_name->last_component ()->replace_string (
@@ -458,6 +455,14 @@ be_visitor_ami4ccm_pre_proc::create_reply_handler (be_interface *,
   AST_Type **p_intf =
     this->create_inheritance_list (node, n_parents);
 
+  if (!p_intf)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        "(%N:%l) be_visitor_ami_pre_proc::visit_interface - "
+                        "bad inheritance list\n"),
+                        0);
+    }
+
   be_interface *reply_handler = 0;
   ACE_NEW_RETURN (reply_handler,
                   be_interface (reply_handler_name, // name
@@ -465,9 +470,10 @@ be_visitor_ami4ccm_pre_proc::create_reply_handler (be_interface *,
                                 n_parents,          // number of inherited
                                 0,                  // list of all ancestors
                                 0,                  // number of ancestors
-                                0,                  // non-local
+                                1,                  // non-local
                                 0),                 // non-abstract
                   0);
+printf ("%s\n", reply_handler_local_name.c_str ());
 
   // Back to reality.
   idl_global->scopes ().pop ();
@@ -567,17 +573,16 @@ be_visitor_ami4ccm_pre_proc::create_reply_handler (be_interface *,
             }
         } // end of while loop
     } // end of if
-*/
-  return 0;//reply_handler;
+
+  return reply_handler;
 }
 
 int
 be_visitor_ami4ccm_pre_proc::create_raise_operation (
-    be_decl *,
-    be_valuetype *,
-    Operation_Kind )
+    be_decl *node,
+    be_valuetype *excep_holder,
+    Operation_Kind operation_kind)
 {
-  /*
   be_operation *orig_op = 0;
 
   if (operation_kind == NORMAL)
@@ -653,22 +658,6 @@ be_visitor_ami4ccm_pre_proc::create_raise_operation (
   operation->set_name (op_name);
   operation->set_defined_in (excep_holder);
 
-#if defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
-  if (operation_kind == NORMAL)
-    {
-      if (orig_op)
-        {
-          // Copy the exceptions.
-          UTL_ExceptList *exceptions = orig_op->exceptions ();
-
-          if (0 != exceptions)
-            {
-              operation->be_add_exceptions (exceptions->copy ());
-            }
-        }
-    }
-#endif
-
   // Set the proper strategy.
   be_operation_ami_exception_holder_raise_strategy *boaehrs = 0;
   ACE_NEW_RETURN (boaehrs,
@@ -690,15 +679,14 @@ be_visitor_ami4ccm_pre_proc::create_raise_operation (
     {
       return -1;
     }
-*/
+
   return 0;
 }
 
 be_operation *
-be_visitor_ami4ccm_pre_proc::create_sendc_operation (be_operation *,
-                                                 int )
+be_visitor_ami4ccm_pre_proc::create_sendc_operation (be_operation *node,
+                                                 int for_arguments)
 {
-/*
   if (node->flags () == AST_Operation::OP_oneway)
     {
       // We do nothing for oneways!
@@ -744,7 +732,7 @@ be_visitor_ami4ccm_pre_proc::create_sendc_operation (be_operation *,
       this->generate_name (handler_local_name,
                            "AMI_",
                            parent->name ()->last_component ()->get_string (),
-                           "Handler");
+                           "Callback");
 
       UTL_ScopedName *field_name =
         static_cast<UTL_ScopedName *> (parent->name ()->copy ());
@@ -844,8 +832,8 @@ be_visitor_ami4ccm_pre_proc::create_sendc_operation (be_operation *,
             }
         } // end of while loop
     } // end of if
-*/
-  return 0;//op;
+
+  return op;
 }
 
 be_uses *
@@ -880,11 +868,9 @@ printf ("%s\n", new_op_name.c_str());
 
 int
 be_visitor_ami4ccm_pre_proc::create_reply_handler_operation (
-    be_operation *,
-    be_interface *
-  )
+    be_operation *node,
+    be_interface *reply_handler)
 {
-  /*
   if (!node)
     {
       return -1;
@@ -1006,19 +992,19 @@ be_visitor_ami4ccm_pre_proc::create_reply_handler_operation (
     } // end of if
 
   // Set the proper strategy.
-  be_operation_ami_handler_reply_stub_strategy *boahrss = 0;
-  ACE_NEW_RETURN (boahrss,
-                  be_operation_ami_handler_reply_stub_strategy (operation),
-                  -1);
+  //be_operation_ami_handler_reply_stub_strategy *boahrss = 0;
+  //ACE_NEW_RETURN (boahrss,
+  //                be_operation_ami_handler_reply_stub_strategy (operation),
+  //                -1);
 
-  be_operation_strategy *old_strategy = operation->set_strategy (boahrss);
+  //be_operation_strategy *old_strategy = operation->set_strategy (boahrss);
 
-  if (old_strategy)
-    {
-      old_strategy->destroy ();
-      delete old_strategy;
-      old_strategy = 0;
-    }
+  //if (old_strategy)
+  //  {
+  //    old_strategy->destroy ();
+  //    delete old_strategy;
+  //    old_strategy = 0;
+  //  }
 
   operation->set_defined_in (reply_handler);
 
@@ -1039,16 +1025,15 @@ be_visitor_ami4ccm_pre_proc::create_reply_handler_operation (
     {
       return -1;
     }
-    */
+
   return 0;
 }
 
 int
-be_visitor_ami4ccm_pre_proc::create_excep_operation (be_operation *,
-                                                 be_interface *,
-                                                 be_valuetype *)
+be_visitor_ami4ccm_pre_proc::create_excep_operation (be_operation *node,
+                                                 be_interface *reply_handler,
+                                                 be_valuetype *excep_holder)
 {
-  /*
   if (!node)
     {
       return -1;
@@ -1143,14 +1128,13 @@ be_visitor_ami4ccm_pre_proc::create_excep_operation (be_operation *,
     {
       return -1;
     }
-*/
+
   return 0;
 }
 
 // Visit the scope and its elements.
-/*
 int
-be_visitor_ami4ccm_pre_proc::visit_scope (be_scope *)
+be_visitor_ami4ccm_pre_proc::visit_scope (be_scope *node)
 {
   // proceed if the number of members in our scope is greater than 0
   if (node->nmembers () > 0)
@@ -1231,7 +1215,6 @@ be_visitor_ami4ccm_pre_proc::visit_scope (be_scope *)
 
   return 0;
 }
-*/
 // Helper methods
 
 int
@@ -1247,9 +1230,8 @@ be_visitor_ami4ccm_pre_proc::generate_name (ACE_CString &destination,
 }
 
 be_operation *
-be_visitor_ami4ccm_pre_proc::generate_get_operation (be_attribute *)
+be_visitor_ami4ccm_pre_proc::generate_get_operation (be_attribute *node)
 {
-  /*
   ACE_CString original_op_name (
                   node->name ()->last_component ()->get_string ()
                 );
@@ -1279,14 +1261,13 @@ be_visitor_ami4ccm_pre_proc::generate_get_operation (be_attribute *)
     {
       operation->be_add_exceptions (exceptions->copy ());
     }
-    */
-  return 0;//operation;
+
+  return operation;
 }
 
 be_operation *
-be_visitor_ami4ccm_pre_proc::generate_set_operation (be_attribute *)
+be_visitor_ami4ccm_pre_proc::generate_set_operation (be_attribute *node)
 {
-  /*
   ACE_CString original_op_name (
                   node->name ()->last_component ()->get_string ()
                 );
@@ -1328,13 +1309,13 @@ be_visitor_ami4ccm_pre_proc::generate_set_operation (be_attribute *)
     {
       operation->be_add_exceptions (exceptions->copy ());
     }
-    */
-  return 0;//operation;
+
+  return operation;
 }
 
 AST_Type **
 be_visitor_ami4ccm_pre_proc::create_inheritance_list (be_interface *node,
-                                                  long &n_rh_parents)
+                                                      long &n_rh_parents)
 {
   AST_Type **retval = 0;
 
@@ -1356,7 +1337,7 @@ be_visitor_ami4ccm_pre_proc::create_inheritance_list (be_interface *node,
 
   if (n_rh_parents == 0)
     {
-      be_interface *inherit_intf = be_global->messaging_replyhandler ();
+      be_interface *inherit_intf = be_global->ami4ccm_replyhandler ();
 
       ACE_NEW_RETURN (retval,
                       AST_Type *[1],
@@ -1372,7 +1353,7 @@ be_visitor_ami4ccm_pre_proc::create_inheritance_list (be_interface *node,
                       0);
 
       ACE_CString prefix ("AMI_");
-      ACE_CString suffix ("Handler");
+      ACE_CString suffix ("Callback");
       long index = 0;
 
       for (long j = 0; j < n_parents; ++j)

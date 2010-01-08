@@ -2035,7 +2035,7 @@ BE_GlobalData::ami4ccm_replyhandler (void)
                                     0,  // number of inherited interfaces
                                     0,  // ancestors
                                     0,  // number of ancestors
-                                    0,  // not local
+                                    1,  // not local
                                     0), // not abstract
                       0);
 
