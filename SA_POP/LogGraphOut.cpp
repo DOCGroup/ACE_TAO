@@ -153,7 +153,7 @@ void LogGraphOut::notify_plan (SA_POP::Planner *planner)
   if(!byStep)
   {
     //Print out the entire graph first.
-    planner->print_graph(gfile, graphmap);
+    planner->print_sanet_graphviz(gfile, graphmap);
     //Now print out the graph of the causal links in the plan.
 	  for (CLSet::iterator cl_iter = plan.causal_links.begin ();
 		cl_iter != plan.causal_links.end ();
@@ -172,7 +172,7 @@ void LogGraphOut::notify_plan (SA_POP::Planner *planner)
   else if(byStep)
   {
     //Format a dot file with the entire graph to get the entire structure ready to print.
-    planner->print_graph(gfile, graphmap);
+    planner->print_sanet_graphviz(gfile, graphmap);
     //Propogate the image of taking a step in the plan by modifying the colors of the nodes.
     color_step(planner);
     //Use the timing to find the current step and color as necessary

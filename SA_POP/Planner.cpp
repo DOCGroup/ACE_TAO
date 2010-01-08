@@ -212,12 +212,18 @@ const TaskEUMap& Planner::get_eu_changes (void)
   return this->eu_changes_;
 };
 
-// Print network.
+// Print a text representation of the task network.
 void Planner::print_sanet (std::basic_ostream<char, std::char_traits<char> >& strm,
                            bool verbose)
 {
   this->sanet_->print (strm, verbose);
-}
+};
+
+// Print the graphviz representation of the task network.
+void Planner::print_sanet_graphviz (std::basic_ostream<char, std::char_traits<char> >& strm, std::map<std::string, std::string>& graphmap)
+{
+  this->sanet_->print_graphviz(strm, graphmap);
+};
 
 // Recursively plan (satisfy all open conditions & schedule constraints).
 bool Planner::recurse_plan (void)
@@ -336,18 +342,6 @@ void Planner::update_cond_val (CondID cond_id, double true_prob)
   this->sanet_->update_cond_val (cond_id, true_prob);
 };
 
-// Update a condition's (goal) utility.
-void Planner::update_cond_util (CondID cond_id, double utility)
-{
-  this->sanet_->update_cond_util (cond_id, utility);
-};
-
-// Update all condition utilities based on new goal set.
-void Planner::update_goals (GoalMap goals)
-{
-  this->sanet_->update_goals (goals);
-};
-
 // Get a condition's current value (probability of being true).
 double Planner::get_cond_val (CondID cond_id)
 {
@@ -382,16 +376,12 @@ CondKind Planner::get_cond_type (CondID cond_id)
   return this->sanet_->get_cond_type (cond_id);
 };
 
-// Get a task's current expected utility.
-double Planner::get_task_current_eu (TaskID task_id)
+// Get a task's future expected utility (EU) from spreading activation.
+// (NOTE: Future EU is based on whatever spreading
+// activation has already been executed).
+Utility Planner::get_task_sa_eu (TaskID task_id)
 {
-  return this->sanet_->get_task_current_eu (task_id);
-};
-
-// Get a task's future expected utility.
-double Planner::get_task_future_eu (TaskID task_id)
-{
-  return this->sanet_->get_task_future_eu (task_id);
+  return this->sanet_->get_task_sa_eu (task_id);
 };
 
 // Get all preconditions of a task.
@@ -438,9 +428,10 @@ CondSet Planner::get_effects (TaskID task_id)
   return this->sanet_->get_effects (task_id);
 };
 
-SANet::LinkWeight Planner::get_link(SANet::TaskID id, SANet::CondID cond_ID)
+// Get the probability of a task's effect.
+SANet::LinkWeight Planner::get_effect_prob(SANet::TaskID id, SANet::CondID cond_ID)
 {
-  return this->sanet_->get_link(id, cond_ID);
+  return this->sanet_->get_effect_prob(id, cond_ID);
 }
 
 // Get all tasks that satisfy a condition.
@@ -512,9 +503,9 @@ void Planner::notify_plan_changed (void)
   }
 };
 
-double Planner::calculate_plan_utility(size_t sa_max_steps)
+double Planner::calc_plan_eu(Plan plan)
 {
-//	sanet_->reset_step();
+  size_t sa_max_steps = 100;
 	sanet_->set_nodes_state(false);
 
 	for(CLSet::iterator it = this->plan_.causal_links.begin(); it != 
@@ -625,12 +616,6 @@ TaskImplID Planner::get_impl_id (TaskInstID task_inst)
 
 }
 
-
-void Planner::print_graph (std::basic_ostream<char, std::char_traits<char> >& strm, std::map<std::string, std::string>& graphmap)
-{
-  this->sanet_->print_graphviz(strm, graphmap);
-
-}
 
 //Allows the planner to update an effect link
 void Planner::update_effect (SANet::TaskID tsk, SANet::CondID cnd, SANet::LinkWeight weight)

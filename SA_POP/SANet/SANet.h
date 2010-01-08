@@ -206,7 +206,7 @@ namespace SANet {
      */
     virtual void update_cond_util (CondID cond_id, Utility utility);
 
-    /// Update all condition utilities based on new goal set.
+    /// Update all goal condition utilities based on new goal set.
     /**
      * @param goals  Set of goal condition ids and associated utilities.
      */
@@ -317,23 +317,15 @@ namespace SANet {
      */
     virtual const GoalMap& get_goals (void);
 
-    /// Get a task's current expected utility.
-    /**
-     * @param task_id  The task id.
-     *
-     * @return  Current task expected utility.
-     */
-    virtual Utility get_task_current_eu (TaskID task_id);
-
-    /// Get a task's future expected utility.
-    /// (NOTE: Future probability is based on whatever spreading
-    /// activiation has already been executed).
+    /// Get a task's future expected utility (EU) from spreading activation.
+    /// (NOTE: Future EU is based on whatever spreading
+    /// activation has already been executed).
     /**
      * @param task_id  The task id.
      *
      * @return  Future task expected utility.
      */
-    virtual Utility get_task_future_eu (TaskID task_id);
+    virtual Utility get_task_sa_eu (TaskID task_id);
 
     /// Get all preconditions of a task.
     /**
@@ -399,15 +391,15 @@ namespace SANet {
      */
     virtual Probability get_prior (TaskID ID);
 
-    /// Get a link weight for an effect in the network.
+    /// Get the probability of a task's effect in the network.
     /**
-     * @param task_ID  Task ID.
+     * @param task_ID  ID of task node.
      *
-     * @param cond_ID  Condition ID.
+     * @param cond_ID  ID of effect condition.
      *
-     * @returns  Weight of the effect link.
+     * @returns  Probability of effect given successful task execution.
      */
-    virtual LinkWeight get_link(TaskID task_ID, CondID cond_ID);
+    virtual Probability get_effect_prob(TaskID task_ID, CondID cond_ID);
 
 
     // ****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP

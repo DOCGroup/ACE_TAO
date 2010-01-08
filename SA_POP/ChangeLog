@@ -1,3 +1,20 @@
+Fri Jan  8 20:59:42 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * Planner.h:
+        * Planner.cpp:
+        * SA_POP_Types.h:
+        * SA_POP_Utils.h:
+        * SA_POP_Utils.cpp:
+        * SA_PlanHeuristics.cpp:
+        * SA_WorkingPlan.cpp:
+        * LogGraphOut.cpp:
+        * C2W/C2W_Demo.cpp:
+        * SANet/SANet.h:
+        * SANet/SANet.cpp:
+
+          Preliminary clean up of unclear/missing comments and non-robust code in SA-POP related to Planner functionality.
+
+
 Wed Dec 30 22:01:23 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * Planner.cpp:

@@ -6,7 +6,7 @@
 /**
  * @file  SA_POP_Types.cpp
  *
- * This file contains the implementation of class types used throughout SA-POP.
+ * This file contains the implementation of helper classes used by SA-POP.
  *
  * @author  John S. Kinnebrew <john.s.kinnebrew@vanderbilt.edu>
  */

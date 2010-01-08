@@ -40,13 +40,11 @@ namespace SA_POP {
   class Planner {
   public:
 
-
     /// Constructor.
     Planner (void);
 
     /// Destructor.
     virtual ~Planner (void);
-
 
 
     // ************************************************************************
@@ -80,8 +78,9 @@ namespace SA_POP {
     virtual void generate_all_threats(void);
 
 
+
     // ************************************************************************
-    // Planning and changed planning info accessor methods.
+    // Planning/re-planning methods.
     // ************************************************************************
 
     /// Run planning.
@@ -112,11 +111,25 @@ namespace SA_POP {
      */
     virtual bool replan (size_t sa_max_steps);
 
+
+
+    // ************************************************************************
+    // Plan accessor methods.
+    // ************************************************************************
+
     /// Get current plan.
     /**
      * @return  Reference to current plan.
      */
     virtual const Plan& get_plan (void);
+
+    /// Calculate expected utility (EU) of a plan for current conditions.
+    /**
+     * @param plan  Plan for which to calculate EU.
+     *
+     * @return  Expected utility of provided plan given current conditions.
+     */
+    virtual EUCalc calc_plan_eu (Plan plan);
 
     /// Get last set of expected utility changes.
     /**
@@ -124,7 +137,13 @@ namespace SA_POP {
      */
     virtual const TaskEUMap& get_eu_changes (void);
 
-    /// Print network.
+
+
+    // ************************************************************************
+    // Task network display/output methods.
+    // ************************************************************************
+
+    /// Print a text representation of the task network.
     /**
      * @param strm  Output stream on which to print network representation.
      *
@@ -132,6 +151,15 @@ namespace SA_POP {
      */
     virtual void print_sanet (std::basic_ostream<char, std::char_traits<char> >& strm
       = std::cout, bool verbose = false);
+
+    /// Print the graphviz representation of the task network.
+    /**
+     * @param strm  Output stream on which to print the graphviz representation.
+     *
+     * @param graphmap  Mapping from ??? to ???.
+     */
+    virtual void print_sanet_graphviz (std::basic_ostream<char, std::char_traits<char> >& strm,
+      std::map<std::string, std::string>& graphmap);
 
 
 
@@ -157,8 +185,6 @@ namespace SA_POP {
     /// Satisfy scheduling constraints in fully instantiated plan (no
     /// recursive call backs).
     /**
-     * 
-     *
      * @return  True if fully satisfied plan found, false otherwise.
      */
     virtual bool full_sched ();
@@ -177,9 +203,9 @@ namespace SA_POP {
 
     /// Undo and remove command.
     /**
-     * @param id  The id of the command to undo and remove.
+     * @param id  The ID of the command to undo and remove.
      *
-     * @exception InvalidCommand  The id provided does not correspond to top
+     * @exception InvalidCommand  The ID provided does not correspond to top
      *                            command.
      */
     virtual void undo_command (CommandID id);
@@ -192,9 +218,9 @@ namespace SA_POP {
 
     /// On current command, undo last execution (if any) & execute next option.
     /**
-     * @param id  The id of the command to undo and remove.
+     * @param id  The ID of the command to undo and remove.
      *
-     * @exception InvalidCommand  The id provided does not correspond to top
+     * @exception InvalidCommand  The ID provided does not correspond to top
      *                            command.
      *
      * @return True if command had an option to execute, false otherwise.
@@ -203,13 +229,13 @@ namespace SA_POP {
 
     /// Undo and remove all commands back to specified point.
     /**
-     * @param id  The id of the command to undo and remove through.
+     * @param id  The ID of the command to undo and remove through.
      */
     virtual void undo_through (CommandID id);
 
-    /// Get the current command id.
+    /// Get the current command ID.
     /**
-     * @return  The id of the current command
+     * @return  The ID of the current command
      */
     virtual CommandID cur_command_id();
 
@@ -220,25 +246,11 @@ namespace SA_POP {
 
     /// Update a condition's current value (probability of being true).
     /**
-     * @param cond_id  The condition id.
+     * @param cond_id  ID of the condition.
      *
      * @param true_prob  New probability that condition is true.
      */
     virtual void update_cond_val (CondID cond_id, double true_prob);
-
-    /// Update a condition's (goal) utility.
-    /**
-     * @param cond_id  The condition id.
-     *
-     * @param utility  New goal utility of condition.
-     */
-    virtual void update_cond_util (CondID cond_id, double utility);
-
-    /// Update all condition utilities based on new goal set.
-    /**
-     * @param goals  Set of goal condition ids and associated utilities.
-     */
-    virtual void update_goals (GoalMap goals);
 
 
 
@@ -248,7 +260,7 @@ namespace SA_POP {
 
     /// Get a condition's current value (probability of being true).
     /**
-     * @param cond_id  The condition id.
+     * @param cond_id  ID of the condition.
      *
      * @return  Probability that condition is true.
      */
@@ -262,7 +274,7 @@ namespace SA_POP {
 
     /// Get a task's name.
     /**
-     * @param task_id  The task id.
+     * @param task_id  ID of the task.
      *
      * @return  Task name.
      */
@@ -270,7 +282,7 @@ namespace SA_POP {
 
     /// Get a condition's name.
     /**
-     * @param cond_id  The condition id.
+     * @param cond_id  ID of the condition.
      *
      * @return  Condition name.
      */
@@ -278,31 +290,25 @@ namespace SA_POP {
 
     /// Get a condition's type/kind.
     /**
-     * @param cond_id  The condition id.
+     * @param cond_id  ID of the condition.
      *
      * @return  Condition type.
      */
     virtual CondKind get_cond_type (CondID cond_id);
 
-    /// Get a task's current expected utility.
+    /// Get a task's future expected utility (EU) from spreading activation.
+    /// (NOTE: Future EU is based on whatever spreading
+    /// activation has already been executed).
     /**
-     * @param task_id  The task id.
-     *
-     * @return  Current task expected utility.
-     */
-    virtual double get_task_current_eu (TaskID task_id);
-
-    /// Get a task's future expected utility.
-    /**
-     * @param task_id  The task id.
+     * @param task_id  ID of the task.
      *
      * @return  Future task expected utility.
      */
-    virtual double get_task_future_eu (TaskID task_id);
+    virtual Utility get_task_sa_eu (TaskID task_id);
 
     /// Get all preconditions of a task.
     /**
-     * @param task_id  The task id.
+     * @param task_id  ID of the task.
      *
      * @return  Set of all preconditions with associated values.
      */
@@ -310,7 +316,7 @@ namespace SA_POP {
 
     /// Get currently unsatisfied preconditions of a task.
     /**
-     * @param task_id  The task id.
+     * @param task_id  ID of the task.
      *
      * @return  Set of all unsatisfied preconditions with associated values.
      */
@@ -318,17 +324,25 @@ namespace SA_POP {
 
     /// Get all effects of a task.
     /**
-     * @param task_id  The task id.
+     * @param task_id  ID of the task.
      *
      * @return  Set of all effects with associated values.
      */
     virtual CondSet get_effects (TaskID task_id);
 
-    SANet::LinkWeight get_link(SANet::TaskID id, SANet::CondID cond_ID);
+    /// Get the probability of a task's effect.
+    /**
+     * @param task_ID  ID of task.
+     *
+     * @param cond_ID  ID of effect condition.
+     *
+     * @returns  Probability of effect given successful task execution.
+     */
+    virtual Probability get_effect_prob (SANet::TaskID id, SANet::CondID cond_ID);
 
     /// Get all tasks that satisfy a condition.
     /**
-     * @param cond_id  The condition id.
+     * @param cond_id  ID of the condition.
      *
      * @return  Set of all tasks that satisfy the given condition.
      */
@@ -336,12 +350,11 @@ namespace SA_POP {
 
     /// Get ports for a causal link.
     /**
-     * @param task1_id  ID of start task node in causal link.
+     * @param task1_id  ID of start task in causal link.
      *
-     * @param cond_id  ID of condition node in both precondition and effect
-     *                 links.
+     * @param cond_id  ID of the condition node in causal link.
      *
-     * @param task2_id  ID of end task node in causal link.
+     * @param task2_id  ID of end task in causal link.
      */
     virtual LinkPorts get_clink_ports (TaskID task1_id, CondID cond_id,
       TaskID task2_id);
@@ -352,11 +365,11 @@ namespace SA_POP {
     // Planning task/condition info accessor methods.
     // ************************************************************************
 
-    /// Get task id of a task instance.
+    /// Get task ID of a task instance.
     /**
-     * @param inst_id  The task instance id.
+     * @param inst_id  The task instance ID.
      *
-     * @return  The task id of this task instance.
+     * @return  ID of the task of this task instance.
      */
     virtual TaskID get_task_from_inst (TaskInstID inst_id);
 
@@ -375,7 +388,7 @@ namespace SA_POP {
 
     /// Get all implementations of a task.
     /**
-     * @param task_id  The task id.
+     * @param task_id  ID of the task.
      *
      * @return  The set of all implementations (ids) for the given task.
      */
@@ -383,7 +396,7 @@ namespace SA_POP {
 
     /// Get task implementation.
     /**
-     * @param impl_id  The task implementation id.
+     * @param impl_id  The task implementation ID.
      *
      * @return  Reference to the task implementation.
      */
@@ -391,9 +404,9 @@ namespace SA_POP {
 
     /// Get utilization info of a task implementation for a resource.
     /**
-     * @param impl_id  The task implementation id.
+     * @param impl_id  The task implementation ID.
      *
-     * @param resource_id  The resource id.
+     * @param resource_id  The resource ID.
      *
      * @return  The quantity of resource used.
      */
@@ -402,44 +415,46 @@ namespace SA_POP {
 
     /// Get all resources used by a task implementation.
     /**
-     * @param impl_id  The task implementation id.
+     * @param impl_id  The task implementation ID.
      *
      * @return  The set of all resources used (with associated usage values).
      */
     virtual ResourceMap get_all_resources (TaskImplID impl_id);
 
+
+
+
     // ************************************************************************
     // Scheduling Precedence Graph/Time Windows/Resources accessor methods.
     // ************************************************************************
 
+    /// Get the Task instances in a particular set of the specified task instance
+    /**
+     * @param task_inst The Task Instance whose Precedence Set has been queried
+     *
+     * @param prec_rel The Precedence relation to the task_inst
+     *
+     * @return A pointer to the Task Instance Set that has the relation prec_rel to task_inst
+     */
+    virtual const TaskInstSet* get_prec_insts (TaskInstID task_inst, PrecedenceRelation prec_rel);
 
-	/// Get the Task instances in a particular set of the specified task instance
-	/**
-	 * @param task_inst The Task Instance whose Precedence Set has been queried
-	 *
-	 * @param prec_rel The Precedence relation to the task_inst
-	 *
-	 * @return A pointer to the Task Instance Set that has the relation prec_rel to task_inst
-	 */
-	virtual const TaskInstSet* get_prec_insts (TaskInstID task_inst, PrecedenceRelation prec_rel);
+    /// Get the Start Window of the Task instance
+    /**
+     * @param task_inst The Task Instance whose Start Window is required
+     *
+     * @return The Start Window of task_inst
+     */
+    virtual TimeWindow get_start_window (TaskInstID task_inst);
 
-	/// Get the Start Window of the Task instance
-	/**
-	 * @param task_inst The Task Instance whose Start Window is required
-	 *
-	 * @return The Start Window of task_inst
-	 */
-	virtual TimeWindow get_start_window (TaskInstID task_inst);
+    /// Get the End Window of the Task instance
+    /**
+     * @param task_inst The Task Instance whose End Window is required
+     *
+     * @return The End Window of task_inst
+     */
+    virtual TimeWindow get_end_window (TaskInstID task_inst);
 
-	/// Get the End Window of the Task instance
-	/**
-	 * @param task_inst The Task Instance whose End Window is required
-	 *
-	 * @return The End Window of task_inst
-	 */
-	virtual TimeWindow get_end_window (TaskInstID task_inst);
-
-    //Get the duration of a task instance
+    ///Get the duration of a task instance
     /**
      * @param task_inst The task instance of which the duration is returned
      *
@@ -447,39 +462,38 @@ namespace SA_POP {
      */
     virtual TimeValue get_duration(TaskInstID task_inst);
 
-    /// Get task implementation id of a task instance.
+    /// Get task implementation ID of a task instance.
     /**
-     * @param inst_id  The task instance id.
+     * @param inst_id  The task instance ID.
      *
-     * @return  The task implementation id of this task instance.
+     * @return  The task implementation ID of this task instance.
      */
-    /// Get task implementation id of a task instance.
-	virtual TaskImplID get_task_impl_from_inst (TaskInstID inst_id);
+    virtual TaskImplID get_task_impl_from_inst (TaskInstID inst_id);
 
     /// Get the capacity of a resource.
     /**
-     * @param res_id The resource id whose capacity that we want to get.
+     * @param res_id The resource ID whose capacity that we want to get.
      *
      * @return The capacity of the resource
      */
-  virtual ResourceValue get_capacity (ResourceID res_id);
+    virtual ResourceValue get_capacity (ResourceID res_id);
 
     /// Get the Causal and Scheduling orderings to this task instance
     /**
      * @param inst_id The task instance to which all orderings are required
      */
-  virtual TaskInstSet before_orderings (TaskInstID inst_id);
+    virtual TaskInstSet before_orderings (TaskInstID inst_id);
 
     /// Get the Causal and Scheduling orderings from this task instance
     /**
      * @param inst_id The task instance from which all orderings are required
      */
-  virtual TaskInstSet after_orderings (TaskInstID inst_id);
+    virtual TaskInstSet after_orderings (TaskInstID inst_id);
 
-  /// Get all the task instances
-  virtual TaskInstSet get_all_insts();
-  
-    /// Check if the instance id already exists and is being reused.
+    /// Get all the task instances
+    virtual TaskInstSet get_all_insts();
+
+    /// Check if the instance ID already exists and is being reused.
     /**
      * @param task_inst The task instance being checked
      *
@@ -491,35 +505,25 @@ namespace SA_POP {
     /**
      * @param task_inst  The task instance.
      *
-     * @return The task implementation id.
+     * @return The task implementation ID.
      */
     virtual TaskImplID get_impl_id (TaskInstID task_inst);
 
 
-   /// (re) Set Effect Link
-   /**
-   * @param task_inst  The task id
-	 * @param task_inst  The Cond ID
-	 * @param task_inst  The LinkWeight
-	 * 
-   *
-   * @return nothing
-   */
-	virtual void update_effect (SANet::TaskID tsk, SANet::CondID cnd, SANet::LinkWeight weight);
-  
-  /// print the graphviz network of the SANet
-  /**
-   * @param strm  Output stream on which to print network representation.
-   *
-   * @return nothing
-   */
-  virtual void print_graph (std::basic_ostream<char, std::char_traits<char> >& strm, std::map<std::string, std::string>& graphmap);
+    /// (re) Set Effect Link
+    /**
+     * @param task_inst  ID of the task.
+     * @param task_inst  ID of the condition.
+     * @param task_inst  The LinkWeight
+     * 
+     *
+     * @return nothing
+     */
+    virtual void update_effect (SANet::TaskID tsk, SANet::CondID cnd, SANet::LinkWeight weight);
 
-  virtual WorkingPlan*  get_working_plan(void){return this->working_plan_;};
+    virtual WorkingPlan*  get_working_plan(void){return this->working_plan_;};
 
-  virtual void set_backtrack_cmd_id(CommandID cmd){backtrack_cmd = cmd;};
-
-  virtual double calculate_plan_utility(size_t sa_max_steps);
+    virtual void set_backtrack_cmd_id(CommandID cmd){backtrack_cmd = cmd;};
 
   protected:
     /// Threshold for current probability of a condition to be satisfied.

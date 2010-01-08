@@ -6,7 +6,7 @@
 /**
  * @file  SA_POP_Utils.h
  *
- * This file contains the definitions of classes that are utilized in SA_POP.
+ * This file contains the definitions of helper classes used by SA-POP.
  *
  * @author  Daniel L.C. Mack <daniel.l.mack@vanderbilt.edu>
  */

@@ -188,6 +188,7 @@ void SANet::Network::reset_step(){
 }
 
 
+// Get the prior probability for a task node in the network.
 Probability SANet::Network::get_prior(TaskID ID)
 {
   TaskNodeMap::iterator task_iter = task_nodes_.find (ID);
@@ -200,7 +201,8 @@ Probability SANet::Network::get_prior(TaskID ID)
 
 }
 
-LinkWeight SANet::Network::get_link(TaskID task_ID, CondID cond_ID)
+// Get the probability of a task's effect in the network.
+Probability SANet::Network::get_effect_prob(TaskID task_ID, CondID cond_ID)
 {
   TaskNodeMap::iterator task_iter = task_nodes_.find (task_ID);
   if (task_iter == task_nodes_.end ()) {
@@ -553,7 +555,7 @@ void SANet::Network::update_cond_util (CondID cond_id, Utility utility)
   cond_iter->second->set_goal_util (utility);
 };
 
-// Update all condition utilities based on new goal set.
+// Update all goal condition utilities based on new goal set.
 void SANet::Network::update_goals (GoalMap goals)
 {
   SANet::GoalMap goal;
@@ -646,15 +648,10 @@ CondKind SANet::Network::get_cond_type (CondID cond_id)
   return cond_iter->second->get_cond_kind ();
 };
 
-// Get a task's current expected utility.
-Utility SANet::Network::get_task_current_eu (TaskID task_id)
-{
-  // ****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
-  throw "Plan monitoring/updating/replanning not yet implemented: SANet::SANet::Network::get_task_current_eu ().";
-};
-
-// Get a task's future expected utility.
-Utility SANet::Network::get_task_future_eu (TaskID task_id)
+// Get a task's future expected utility (EU) from spreading activation.
+// (NOTE: Future EU is based on whatever spreading
+// activation has already been executed).
+Utility SANet::Network::get_task_sa_eu (TaskID task_id)
 {
   TaskNodeMap::iterator task_iter = task_nodes_.find (task_id);
   if (task_iter == task_nodes_.end ()) {
