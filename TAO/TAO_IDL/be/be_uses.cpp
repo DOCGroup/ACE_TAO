@@ -20,7 +20,8 @@ be_uses::be_uses (UTL_ScopedName *n,
     be_decl (AST_Decl::NT_uses,
              n),
     be_field (uses_type,
-              n)
+              n),
+    original_uses_ (0)
 {
 }
 
@@ -48,5 +49,18 @@ be_uses::destroy (void)
   this->AST_Uses::destroy ();
   this->be_field::destroy ();
 }
+
+void
+be_uses::original_uses (be_uses *original_uses)
+{
+  this->original_uses_ = original_uses;
+}
+
+be_uses *
+be_uses::original_uses (void)
+{
+  return this->original_uses_;
+}
+
 
 IMPL_NARROW_FROM_DECL (be_uses)
