@@ -111,8 +111,9 @@ BE_GlobalData::BE_GlobalData (void)
     void_type_ (0),
     ccmobject_ (0),
     messaging_ (0),
+    ami4ccm_ (0),
     messaging_exceptionholder_ (0),
-    exceptionholder_ (0),
+    ami4ccm_exceptionholder_ (0),
     messaging_replyhandler_ (0),
     gen_anyop_files_ (false),
     gen_skel_files_ (true),
@@ -1647,11 +1648,25 @@ BE_GlobalData::destroy (void)
       this->messaging_ = 0;
     }
 
+  if (0 != this->ami4ccm_)
+    {
+      this->ami4ccm_->destroy ();
+      delete this->ami4ccm_;
+      this->ami4ccm_ = 0;
+    }
+
   if (0 != this->messaging_exceptionholder_)
     {
       this->messaging_exceptionholder_->destroy ();
       delete this->messaging_exceptionholder_;
       this->messaging_exceptionholder_ = 0;
+    }
+
+  if (0 != this->ami4ccm_exceptionholder_)
+    {
+      this->ami4ccm_exceptionholder_->destroy ();
+      delete this->ami4ccm_exceptionholder_;
+      this->ami4ccm_exceptionholder_ = 0;
     }
 
   if (0 != this->messaging_replyhandler_)
@@ -1752,6 +1767,33 @@ BE_GlobalData::messaging (void)
   return this->messaging_;
 }
 
+be_module *
+BE_GlobalData::ami4ccm (void)
+{
+  if (0 == this->ami4ccm_)
+    {
+      Identifier *id = 0;
+      UTL_ScopedName *sn = 0;
+
+      ACE_NEW_RETURN (id,
+                      Identifier ("CCM_AMI"),
+                      0);
+
+      ACE_NEW_RETURN (sn,
+                      UTL_ScopedName (id,
+                                      0),
+                      0);
+
+      ACE_NEW_RETURN (this->ami4ccm_,
+                      be_module (sn),
+                      0);
+
+      this->ami4ccm_->set_name (sn);
+    }
+
+  return this->ami4ccm_;
+}
+
 be_valuetype *
 BE_GlobalData::messaging_exceptionholder (void)
 {
@@ -1820,15 +1862,70 @@ BE_GlobalData::messaging_exceptionholder (void)
 }
 
 be_valuetype *
-BE_GlobalData::exceptionholder (void) const
+BE_GlobalData::ami4ccm_exceptionholder (void)
 {
-  return this->exceptionholder_;
-}
+  if (0 == this->ami4ccm_exceptionholder_)
+    {
+      Identifier *id = 0;
+      be_module *msg = this->ami4ccm ();
+      idl_global->scopes ().push (msg);
 
-void
-BE_GlobalData::exceptionholder (be_valuetype *val)
-{
-  this->exceptionholder_ = val;
+      ACE_NEW_RETURN (id,
+                      Identifier ("CCM_AMI"),
+                      0);
+
+      // Create a valuetype "ExceptionHolder"
+      // from which we inherit.
+      UTL_ScopedName *full_name = 0;
+      ACE_NEW_RETURN (full_name,
+                      UTL_ScopedName (id,
+                                      0),
+                      0);
+
+      ACE_NEW_RETURN (id,
+                      Identifier ("ExceptionHolder"),
+                      0);
+
+      UTL_ScopedName *local_name = 0;
+      ACE_NEW_RETURN (local_name,
+                      UTL_ScopedName (id,
+                                      0),
+                      0);
+
+      full_name->nconc (local_name);
+
+      ACE_NEW_RETURN (this->ami4ccm_exceptionholder_,
+                      be_valuetype (full_name,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0),
+                      0);
+
+      this->ami4ccm_exceptionholder_->set_name (full_name);
+
+      // Notice the valuetype "ExceptionHolder" that it is defined in the
+      // "Messaging" module
+      this->ami4ccm_exceptionholder_->set_defined_in (msg);
+      this->ami4ccm_exceptionholder_->set_prefix_with_typeprefix (
+                                            "omg.org"
+                                          );
+
+      idl_global->scopes ().pop ();
+
+      // Notice the interface "ReplyHandler" that it is defined in the
+      // "Messaging" module.
+      this->ami4ccm_exceptionholder_->set_defined_in (msg);
+    }
+
+  return this->ami4ccm_exceptionholder_;
 }
 
 be_interface *

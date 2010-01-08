@@ -660,12 +660,14 @@ public:
   be_module *messaging (void);
   // Accessor for the member, sets it on the first call.
 
+  be_module *ami4ccm (void);
+  // Accessor for the member, sets it on the first call.
+
   be_valuetype *messaging_exceptionholder (void);
   // Accessor for the member, sets it on the first call.
 
-  be_valuetype *exceptionholder (void) const;
-  void exceptionholder (be_valuetype *val);
-  // Accessors for the member.
+  be_valuetype *ami4ccm_exceptionholder (void);
+  // Accessor for the member, sets it on the first call.
 
   be_interface *messaging_replyhandler (void);
   // Accessor for the member, sets it on the first call.
@@ -966,11 +968,14 @@ private:
   be_module *messaging_;
   // Storage for the messaging exceptions holder's virtual scope.
 
+  be_module *ami4ccm_;
+  // Storage for the ami4ccm exceptions holder's virtual scope.
+
   be_valuetype *messaging_exceptionholder_;
   // Storage for exception holders' base class node.
 
-  be_valuetype *exceptionholder_;
-  // Reference holder for the exceptionholder.
+  be_valuetype *ami4ccm_exceptionholder_;
+  // Storage for exception holders' base class node.
 
   be_interface *messaging_replyhandler_;
   // Storage for the reply handlers' base class node.
