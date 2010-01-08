@@ -212,6 +212,7 @@ namespace SA_POP {
 
 //*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
   // WHAT DOES THIS STRUCT DO / HOW IS IT USED?
+  // NOT A GENERIC SIMPLE TYPE IN SA-POP SO SHOULD BE MOVED TO FILES OF WHATEVER SPECIFIC CLASSES USE IT.
   struct SortTaskByTime{
 
     TaskID task_id;
@@ -534,6 +535,9 @@ namespace SA_POP {
   };
 
 
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+  // IS THIS REALLY SUPPOSED TO BE CALLED A SET?  WHAT IS THIS STRUCT FOR? COMMENT IT.
+  // LOOKS LIKE A STD::PAIR WOULD SUFFICE UNLESS THIS IS A MORE GENERAL TYPE THAN IT APPEARS.
   struct TaskInstEndTimeSet{
     TaskInstID inst;
     double end_time;
@@ -542,6 +546,7 @@ namespace SA_POP {
       return end_time < compare.end_time;
     };
   };
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
 
 
   /// Type of particular Task Implementation mapped to a Task Implementation Set.
@@ -558,6 +563,11 @@ namespace SA_POP {
   typedef SA_POP::ListMultiMap<Condition, TaskInstID> OpenCondMap;
 
 
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+  // WHAT ARE THESE STRUCTS FOR? COMMENT THEM.
+  // NOT GENERIC SIMPLE TYPEs IN SA-POP, SO SHOULD BE MOVED TO SA_POP_UTILS.H OR FILES OF WHATEVER SPECIFIC CLASSES USE IT.
+  // SOME/ALL OF FOLLOWING STRUCTS SHOULD BE RECREATED AS CLASSES, GIVEN THEIR COMPLEXITY.
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
   //Following structures form the condition-checking heuristic we use; if a task satisfies a condition for a 
   //instance task once, it cannot satisfy another instance of that task unless some of the open conditions open
   //when it was first used
@@ -811,7 +821,9 @@ namespace SA_POP {
     /// Relative path (from root path) to SA-POP XML schemas.
     const std::string XSD_REL_PATH_STR = "/docs/schema/";
 
-    /// Maximum number of steps to run spreading activation.
+    /// Default for maximum number of steps to run spreading activation.
+    /// (WARNING:  Should be left at a "high" value so any reasonable plan
+    ///  length for SA-POP planning can be accommodated.)
     /// (NOTE: Corresponds to consideration of the probabilistic effects
     ///   of action sequences up to a length of half this value.)
     const size_t SA_MAX_STEPS = 1000;

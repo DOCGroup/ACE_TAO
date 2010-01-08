@@ -389,13 +389,13 @@ void SA_WorkingPlan::generate_all_threats(void)
 				CausalLink causal_threatened = (*nit).second;
 				TaskID threatened_task = this->task_insts_.find(causal_threatened.first)->second;
 
-				SANet::LinkWeight threat_effect = this->planner_->get_link(threat_possibility_taskid, condition.id);
+				SANet::LinkWeight threat_effect = this->planner_->get_effect_prob(threat_possibility_taskid, condition.id);
 
 				SANet::LinkWeight causal_effect;
 				if(threatened_task == INIT_TASK_ID){
 					causal_effect = 2*(this->planner_->get_cond_val(causal_threatened.cond.id)-.5);
 				}else{
-					causal_effect = this->planner_->get_link(threatened_task, causal_threatened.cond.id);
+					causal_effect = this->planner_->get_effect_prob(threatened_task, causal_threatened.cond.id);
 				}
 
 				if((threat_effect > 0 && causal_effect < 0 )|| (threat_effect < 0 && causal_effect > 0)){

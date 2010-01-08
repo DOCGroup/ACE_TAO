@@ -168,7 +168,7 @@ TaskChoiceList SA_TaskStrategy::choose_task_fair (Condition open_cond)
   for (TaskSet::iterator iter = tasks.begin (); iter != tasks.end (); iter++)
   {
     task_map.insert (std::make_pair (
-      this->planner_->get_task_future_eu (*iter), *iter));
+      this->planner_->get_task_sa_eu (*iter), *iter));
   }
 
   std::multimap<TaskID, TaskInstID> tasks_to_insts;
@@ -268,7 +268,7 @@ TaskChoiceList SA_TaskStrategy::choose_task_once(Condition open_cond){
   for (TaskSet::iterator iter = tasks.begin (); iter != tasks.end (); iter++)
   {
     task_map.insert (std::make_pair (
-      this->planner_->get_task_future_eu (*iter), *iter));
+      this->planner_->get_task_sa_eu (*iter), *iter));
   }
 
   std::multimap<TaskID, TaskInstID> tasks_to_insts;
@@ -286,8 +286,11 @@ TaskChoiceList SA_TaskStrategy::choose_task_once(Condition open_cond){
   TaskChoiceList task_list;
   task_list.clear ();
 
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+  // WE NEED TO PUT A THRESHOLD ON PROBABILITY OF TRUE/FALSE INSTEAD OF COMPARING A DOUBLE TO A BOOL.
   //If init can handle it, put it on here first
   if(this->planner_->get_cond_val(open_cond.id) == open_cond.value){
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
 		TaskChoice init_choice;
 		init_choice.choice = REUSE_INST;
 		init_choice.task_id = INIT_TASK_ID;
@@ -339,7 +342,7 @@ TaskChoiceList SA_TaskStrategy::choose_task (Condition open_cond)
   for (TaskSet::iterator iter = tasks.begin (); iter != tasks.end (); iter++)
   {
     task_map.insert (std::make_pair (
-      this->planner_->get_task_future_eu (*iter), *iter));
+      this->planner_->get_task_sa_eu (*iter), *iter));
   }
 
   std::multimap<TaskID, TaskInstID> tasks_to_insts;

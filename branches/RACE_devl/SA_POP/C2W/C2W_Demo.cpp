@@ -262,8 +262,11 @@ int main (int argc, char* argv[])
     //planner->add_out_adapter (&s_out);
 	  //planner->add_out_adapter (&screen_out);
 
-    planner->plan (15, goal);
-	planner->calculate_plan_utility(15);
+    planner->plan (SA_POP::Default::SA_MAX_STEPS, goal);
+    SA_POP::Plan plan = planner->get_plan ();
+    SA_POP::Utility plan_eu = planner->calc_plan_eu (plan);
+
+    std::cout << "Expected utility of generated plan:  " << plan_eu << std::endl;
 
   //} 
   /*
