@@ -146,7 +146,7 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
   for (long i = 0; i < nih; ++i)
     {
       if (ih[i]->node_type () == AST_Decl::NT_param_holder)
-        {
+        { 
           this->param_holders_.enqueue_tail (ih[i]);
         }
     }
