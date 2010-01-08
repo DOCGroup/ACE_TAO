@@ -362,6 +362,14 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
   AST_Type **p_intf =
     this->create_inheritance_list (node, n_parents);
 
+  if (!p_intf)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        "(%N:%l) be_visitor_ami_pre_proc::visit_interface - "
+                        "bad inheritance list\n"),
+                        0);
+    }
+
   be_interface *reply_handler = 0;
   ACE_NEW_RETURN (reply_handler,
                   be_interface (reply_handler_name, // name
@@ -412,7 +420,10 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
                                  "(%N:%l) be_visitor_ami_pre_proc::visit_interface - "
                                  "bad node in this scope\n"),
                                 0);
-
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_ami_pre_proc::visit_interface - "
+                                 "bad node in this scope\n"),
+                                0);
             }
 
           if (d->node_type () == AST_Decl::NT_attr)
