@@ -1,9 +1,10 @@
-export TREE_ROOT=/home/build/ACE/latest
+export TREE_ROOT=$HOME/ACE/latest
 export ACE_ROOT=$TREE_ROOT/ACE_wrappers
 export TAO_ROOT=$ACE_ROOT/TAO
 export CIAO_ROOT=$TAO_ROOT/CIAO
+mkdir -p $TREE_ROOT
 cd $TREE_ROOT
-svn up
+svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE+TAO+CIAO .
 cd $ACE_ROOT/bin
 rm *Tests.txt
 rm *TestRev.txt
@@ -12,7 +13,7 @@ rm *Builds.txt
 ./diff-builds-and-group-fixed-tests-only.sh
 
 MAILTO="devo-group@list.isis.vanderbilt.edu"
-MAIL="/usr/bin/mail -S smtp=10.2.0.3"
+MAIL="mail -S smtp=10.2.0.3"
 MAILFROM="jwillemsen@remedy.nl"
 
 MAIL_ATTACHMENTS=
