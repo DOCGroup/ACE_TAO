@@ -1,9 +1,19 @@
+Sat Jan  9 00:42:55 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * ace/config-macosx-iphone.h:
+
+          added "#define ACE_SIZEOF_LONG_DOUBLE 8" since this is the size
+          of long double on my iPhone 3GS. The value of long double in the
+          simulator is probably different. We need to adjust this once
+          we verify that the simulator value is different than the
+          hardware's value.
+        
 Wed Jan  6 05:25:26 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * include/makeinclude/platform_macosx_iphone.GNU:
 
           When building an executable for the iPhone Hardware (not simulator)
-          go ahead and automatically codesign the executable so it can be 
+          go ahead and automatically codesign the executable so it can be
           deployed on the hardware. Note that this is a temporary hack until
           I can figure the proper way to do this.
 
