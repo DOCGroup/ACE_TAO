@@ -57,7 +57,7 @@
 #if !defined (ACE_HEX_DUMP)
 #define ACE_HEX_DUMP(X) \
   do { \
-    int __ace_error = ACE_Log_Msg::last_error_adapter (); \
+    int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
     ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
     ace___->log_hexdump X; \
@@ -66,7 +66,7 @@
 #if !defined (ACE_RETURN)
 #define ACE_RETURN(Y) \
   do { \
-    int __ace_error = ACE_Log_Msg::last_error_adapter (); \
+    int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
     ace___->set (__FILE__, __LINE__, Y, __ace_error, ace___->restart (), \
                  ace___->msg_ostream (), ace___->msg_callback ()); \
@@ -76,7 +76,7 @@
 #if !defined (ACE_ERROR_RETURN)
 #define ACE_ERROR_RETURN(X, Y) \
   do { \
-    int __ace_error = ACE_Log_Msg::last_error_adapter (); \
+    int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
     ace___->conditional_set (__FILE__, __LINE__, Y, __ace_error); \
     ace___->log X; \
@@ -86,7 +86,7 @@
 #if !defined (ACE_ERROR)
 #define ACE_ERROR(X) \
   do { \
-    int __ace_error = ACE_Log_Msg::last_error_adapter (); \
+    int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
     ace___->conditional_set (__FILE__, __LINE__, -1, __ace_error); \
     ace___->log X; \
@@ -95,7 +95,7 @@
 #if !defined (ACE_DEBUG)
 #define ACE_DEBUG(X) \
   do { \
-    int __ace_error = ACE_Log_Msg::last_error_adapter (); \
+    int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
     ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
     ace___->log X; \
@@ -105,7 +105,8 @@
 #define ACE_ERROR_INIT(VALUE, FLAGS) \
   do { \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    ace___->set_flags (FLAGS); ace___->op_status (VALUE); \
+    ace___->set_flags (FLAGS); \
+    ace___->op_status (VALUE); \
   } while (0)
 #endif
 #if !defined (ACE_ERROR_BREAK)
@@ -528,8 +529,13 @@ public:
    *  - 'S': print out the appropriate signal message corresponding
    *         to var-argument, e.g., as done by strsignal()
    *  - 's': prints a ACE_TCHAR* character string (also see C and W)
-   *  - 'T': print timestamp in hour:minute:sec:usec format.
+   *  - 'T': print timestamp in hour:minute:sec:usec format (plain option, 
+   *         i.e. without any flags, prints system supplied timestamp; 
+   *         with '#' flag added expects ACE_Time_Value* in argument list)
    *  - 'D': print timestamp as Weekday Month day year hour:minute:sec.usec
+   *         (plain option, i.e. without any flags, prints system supplied 
+   *         timestamp; with '#' flag added expects ACE_Time_Value* in 
+   *         argument list)
    *  - 't': print thread id (1 if single-threaded)
    *  - 'u': print as unsigned int
    *  - 'w': prints a wide character

@@ -29,6 +29,7 @@ sub new
 
     $self->{RUNNING} = 0;
     $self->{IGNOREEXESUBDIR} = 1;
+    $self->{IGNOREHOSTROOT} = 0;
     $self->{PROCESS} = undef;
     $self->{EXECUTABLE} = shift;
     $self->{ARGUMENTS} = shift;
@@ -406,6 +407,5 @@ sub Kill ()
 
     $self->{RUNNING} = 0;
 }
-
 
 1;

@@ -24,7 +24,7 @@ sleep ($target1->ProcessStartWaitInterval());
 
 $sender->Spawn ();
 
-$status = $receiver->WaitKill (40);
+$status = $receiver->WaitKill ($target2->ProcessStopWaitInterval() + 30);
 
 if ($status != 0) {
     print STDERR "ERROR: receiver returned $status\n";

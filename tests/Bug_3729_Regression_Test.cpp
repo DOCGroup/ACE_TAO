@@ -22,7 +22,7 @@ struct Multicast_Address
 
 int run_main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ACE_TEXT ("Bug_3279_Regression_Test"));
+  ACE_START_TEST (ACE_TEXT ("Bug_3729_Regression_Test"));
 
   int status = 0;     // Innocent until proven guilty
 
