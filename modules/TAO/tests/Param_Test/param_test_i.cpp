@@ -104,17 +104,14 @@ Param_Test_i::test_ulonglong (CORBA::ULongLong s1,
 // test unbounded strings. For return and out types, we return duplicates of
 // the in string. For the inout, we append the same string to itself and send
 // it back
-char *
-Param_Test_i::test_unbounded_string (const char *s1,
-                                     char *&s2,
-                                     CORBA::String_out s3)
+std::string
+Param_Test_i::test_unbounded_string (std::string s1,
+                                     std::string &s2,
+                                     std::string &s3)
 {
-  char *retstr = CORBA::string_dup (s1);
-  s3 = CORBA::string_dup (s1);
-  char *tmp = CORBA::string_alloc (2*ACE_OS::strlen (s2));
-  ACE_OS::sprintf (tmp, "%s%s", s2, s2);
-  CORBA::string_free (s2);
-  s2 = tmp;
+  std::string retstr = s1;
+  s3 = s1;
+  s2 = s1 + s1;
   return retstr;
 }
 
@@ -190,19 +187,17 @@ Param_Test_i::test_fixed_struct (const Param_Test::Fixed_Struct &s1,
 
 // = Sequences
 
-CORBA::LongSeq *
-Param_Test_i::test_long_sequence (const CORBA::LongSeq & s1,
-                                  CORBA::LongSeq & s2,
-                                  CORBA::LongSeq_out s3)
+Param_Test::UB_Long_Seq
+Param_Test_i::test_long_sequence (Param_Test::UB_Long_Seq & s1,
+                                  Param_Test::UB_Long_Seq & s2,
+                                  Param_Test::UB_Long_Seq & s3)
 {
-  CORBA::LongSeq
-    *ret = new CORBA::LongSeq,
-    *out = new CORBA::LongSeq;
+  Param_Test::UB_Long_Seq ret;
 
   s2 = s1;
-  *out = s1;
-  *ret = s1;
-  s3 = out;
+  s3 = s1;
+  ret = s1;
+
   return ret;
 }
 

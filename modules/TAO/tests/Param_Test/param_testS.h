@@ -243,10 +243,10 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
-  virtual char * test_unbounded_string (
-    const char * s1,
-    char *& s2,
-    ::CORBA::String_out s3) = 0;
+  virtual std::string test_unbounded_string (
+    const std::string s1,
+    std::string & s2,
+    std::string & s3) = 0;
   
   static void test_unbounded_string_skel (
       TAO_ServerRequest & server_request,
@@ -355,10 +355,10 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
-  virtual ::CORBA::LongSeq * test_long_sequence (
-    const ::CORBA::LongSeq & s1,
-    ::CORBA::LongSeq & s2,
-    ::CORBA::LongSeq_out s3) = 0;
+  virtual Param_Test::UB_Long_Seq test_long_sequence (
+    Param_Test::UB_Long_Seq & s1,
+    Param_Test::UB_Long_Seq & s2,
+    Param_Test::UB_Long_Seq & s3) = 0;
   
   static void test_long_sequence_skel (
       TAO_ServerRequest & server_request,

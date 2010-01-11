@@ -108,16 +108,6 @@ namespace TAO
 
 #endif /* end #if !defined */
 
-  template<>
-  class Arg_Traits<std::string>
-    : public
-        Basic_Arg_Traits_T <
-            std::string,
-            TAO::Any_Insert_Policy_Stream <std::string>
-          >
-  {
-  };
-  
   // TAO_IDL - Generated from
   // .\be\be_visitor_arg_traits.cpp:620
 

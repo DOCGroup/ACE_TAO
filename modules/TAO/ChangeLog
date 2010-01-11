@@ -1,3 +1,29 @@
+Mon Jan 11 19:17:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Basic_Arguments.h:
+        * tao/PortableServer/Basic_SArguments.h:
+        
+          Added specializations Arg_Traits<std::string> and
+          SArg_Traits<std::string>.
+          
+        * tests/Param_Test/param_testC.cpp:
+        
+          Removed specializations Arg_Traits<std::string>
+          since it is now in the ORB (see above).
+          
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/param_testS.cpp:
+        * tests/Param_Test/param_testS.h:
+        * tests/Param_Test/param_test_i.h:
+        
+          Modified test_unbounded_string() and test_long_sequence()
+          to use std::string and std::vector<CORBA::Long>, respectively,
+          as parameter/return types.
+          
+        * tests/README:
+        
+          Updated to reflect the changes above.
+
 Thu Dec 10 19:38:04 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Param_Test/README:

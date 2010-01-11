@@ -4,10 +4,9 @@
 // This version of Param_Test has been modified to use std::string for
 // the test_unbounded_string operation, and std::vector for the
 // test_long_sequence operation. Since modifications were done to generated
-// stub code, Param_TestC.h and Param_TestC.cpp have been added to the
-// repository in this branch, for the time being until the branch is merged
-// or until a dedicated test/example is created. So far, these modifications
-// are to the client side only.
+// code, Param_TestC.h, Param_TestC.cpp, Param_TestS.h, and Param_TestS.cpp
+// have been added to the repository in this branch, for the time being until
+// the branch is merged or until a dedicated test/example is created.
 //
 // Each data type tested in Param_Test has its own class that plugs into the
 // test framework. In this version, the classes in ub_string.{h,cpp} and
