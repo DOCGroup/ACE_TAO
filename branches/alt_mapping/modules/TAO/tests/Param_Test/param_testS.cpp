@@ -108,8 +108,18 @@ namespace TAO
   {
   };
 
+  template<>
+  class SArg_Traits<Param_Test::UB_Long_Seq>
+    : public 
+        Basic_SArg_Traits_T <
+            Param_Test::UB_Long_Seq,
+            TAO::Any_Insert_Policy_Stream <Param_Test::UB_Long_Seq>
+          >
+  {
+  };
+
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // .\be\be_visitor_arg_traits.cpp:620
 
@@ -677,6 +687,16 @@ namespace TAO
         Var_Size_Arg_Traits_T<
             CORBA::LongSeq,
             TAO::Any_Insert_Policy_Stream <CORBA::LongSeq>
+          >
+  {
+  };
+
+  template<>
+  class Arg_Traits<Param_Test::UB_Long_Seq>
+    : public 
+        Basic_Arg_Traits_T <
+            Param_Test::UB_Long_Seq,
+            TAO::Any_Insert_Policy_Stream <Param_Test::UB_Long_Seq>
           >
   {
   };
@@ -2423,25 +2443,25 @@ public:
   
   virtual void execute (void)
   {
-    TAO::SArg_Traits< char *>::ret_arg_type retval =
-      TAO::Portable_Server::get_ret_arg< char *> (
+    TAO::SArg_Traits<std::string>::ret_arg_type retval =
+      TAO::Portable_Server::get_ret_arg<std::string> (
         this->operation_details_,
         this->args_);
     
-    TAO::SArg_Traits< char *>::in_arg_type arg_1 =
-      TAO::Portable_Server::get_in_arg< char *> (
+    TAO::SArg_Traits<std::string>::in_arg_type arg_1 =
+      TAO::Portable_Server::get_in_arg<std::string> (
         this->operation_details_,
         this->args_,
         1);
       
-    TAO::SArg_Traits< char *>::inout_arg_type arg_2 =
-      TAO::Portable_Server::get_inout_arg< char *> (
+    TAO::SArg_Traits<std::string>::inout_arg_type arg_2 =
+      TAO::Portable_Server::get_inout_arg<std::string> (
         this->operation_details_,
         this->args_,
         2);
       
-    TAO::SArg_Traits< char *>::out_arg_type arg_3 =
-      TAO::Portable_Server::get_out_arg< char *> (
+    TAO::SArg_Traits<std::string>::out_arg_type arg_3 =
+      TAO::Portable_Server::get_out_arg<std::string> (
         this->operation_details_,
         this->args_,
         3);
@@ -2472,10 +2492,10 @@ void POA_Param_Test::test_unbounded_string_skel (
   static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
-  TAO::SArg_Traits< char *>::ret_val retval;
-  TAO::SArg_Traits< char *>::in_arg_val _tao_s1;
-  TAO::SArg_Traits< char *>::inout_arg_val _tao_s2;
-  TAO::SArg_Traits< char *>::out_arg_val _tao_s3;
+  TAO::SArg_Traits<std::string>::ret_val retval;
+  TAO::SArg_Traits<std::string>::in_arg_val _tao_s1;
+  TAO::SArg_Traits<std::string>::inout_arg_val _tao_s2;
+  TAO::SArg_Traits<std::string>::out_arg_val _tao_s3;
   
   TAO::Argument * const args[] =
     {
@@ -3271,25 +3291,25 @@ public:
   
   virtual void execute (void)
   {
-    TAO::SArg_Traits< ::CORBA::LongSeq>::ret_arg_type retval =
-      TAO::Portable_Server::get_ret_arg< ::CORBA::LongSeq> (
+    TAO::SArg_Traits<Param_Test::UB_Long_Seq>::ret_arg_type retval =
+      TAO::Portable_Server::get_ret_arg<Param_Test::UB_Long_Seq> (
         this->operation_details_,
         this->args_);
     
-    TAO::SArg_Traits< ::CORBA::LongSeq>::in_arg_type arg_1 =
-      TAO::Portable_Server::get_in_arg< ::CORBA::LongSeq> (
+    TAO::SArg_Traits<Param_Test::UB_Long_Seq>::in_arg_type arg_1 =
+      TAO::Portable_Server::get_in_arg<Param_Test::UB_Long_Seq> (
         this->operation_details_,
         this->args_,
         1);
       
-    TAO::SArg_Traits< ::CORBA::LongSeq>::inout_arg_type arg_2 =
-      TAO::Portable_Server::get_inout_arg< ::CORBA::LongSeq> (
+    TAO::SArg_Traits<Param_Test::UB_Long_Seq>::inout_arg_type arg_2 =
+      TAO::Portable_Server::get_inout_arg<Param_Test::UB_Long_Seq> (
         this->operation_details_,
         this->args_,
         2);
       
-    TAO::SArg_Traits< ::CORBA::LongSeq>::out_arg_type arg_3 =
-      TAO::Portable_Server::get_out_arg< ::CORBA::LongSeq> (
+    TAO::SArg_Traits<Param_Test::UB_Long_Seq>::out_arg_type arg_3 =
+      TAO::Portable_Server::get_out_arg<Param_Test::UB_Long_Seq> (
         this->operation_details_,
         this->args_,
         3);
@@ -3320,10 +3340,10 @@ void POA_Param_Test::test_long_sequence_skel (
   static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
-  TAO::SArg_Traits< ::CORBA::LongSeq>::ret_val retval;
-  TAO::SArg_Traits< ::CORBA::LongSeq>::in_arg_val _tao_s1;
-  TAO::SArg_Traits< ::CORBA::LongSeq>::inout_arg_val _tao_s2;
-  TAO::SArg_Traits< ::CORBA::LongSeq>::out_arg_val _tao_s3;
+  TAO::SArg_Traits<Param_Test::UB_Long_Seq>::ret_val retval;
+  TAO::SArg_Traits<Param_Test::UB_Long_Seq>::in_arg_val _tao_s1;
+  TAO::SArg_Traits<Param_Test::UB_Long_Seq>::inout_arg_val _tao_s2;
+  TAO::SArg_Traits<Param_Test::UB_Long_Seq>::out_arg_val _tao_s3;
   
   TAO::Argument * const args[] =
     {
