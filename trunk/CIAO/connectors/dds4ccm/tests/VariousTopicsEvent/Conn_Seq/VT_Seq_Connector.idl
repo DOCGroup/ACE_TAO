@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file VT_Array_Connector.idl
+ * @file VT_Seq_Connector.idl
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
  *
  * by-hand translation of the idl3p.
