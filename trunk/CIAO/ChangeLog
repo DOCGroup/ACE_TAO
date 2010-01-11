@@ -1,3 +1,21 @@
+Thu Jan  11 08:48:30 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Array/VT_Array_Connector_exec.h
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Seq/VT_Seq_Connector_exec.h
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_String/VT_String_Connector.idl
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Receiver/VTopic_Receiver.mpc
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Sender/VTopic_Sender.mpc
+        * connectors/dds4ccm/tests/VariousTopicsState/Base/VTopics_Base.idl
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Array/VTS_Array_Connector.idl
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Array/VTS_Array_Connector_exec.h
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Seq/VTS_Seq_Connector.idl
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Seq/VTS_Seq_Connector_exec.h
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_String/VTS_String_Connector.idl
+        * connectors/dds4ccm/tests/VariousTopicsState/Receiver/VTopics_Receiver.mpc
+        * connectors/dds4ccm/tests/VariousTopicsState/Sender/VTopics_Sender.mpc
+        * connectors/dds4ccm/tests/VariousTopicsState/Sender/VTopics_Sender_exec.h
+          Remove some tabs and change order in mpc files.
+
 Thu Jan  7 16:48:30 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * bin/ciao_tests.lst

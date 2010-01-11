@@ -22,7 +22,7 @@
   //arrays
   struct TopicArray {
     string key; //@key
-	  octet x_array[5];
+    octet x_array[5];
    };
 
   //unions
@@ -42,15 +42,15 @@
  */
 
   struct test {
-	  short x_test;
-	  string x_teststr;
+    short x_test;
+    string x_teststr;
   };
   typedef sequence<test> test_seq;
 
   //sequence
   struct TopicSeq {
     string key; //@key
-	  test_seq x_seq;
+    test_seq x_seq;
    };
   
 
