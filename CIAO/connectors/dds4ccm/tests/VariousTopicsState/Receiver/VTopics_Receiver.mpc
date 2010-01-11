@@ -2,7 +2,7 @@
 
 project(DDS_VTopics_Receiver_idl_gen) : componentidldefaults {
   custom_only = 1
-  after += DDS_VTopics_Connector_idl_gen DDS_VTS_String_Connector_idl_gen DDS_VTS_Array_Connector_idl_gen DDS_VTS_Seq_Connector_idl_gen
+  after += DDS_VTopics_Connector_idl_gen 
   idlflags += -Wb,stub_export_macro=RECEIVER_STUB_Export \
               -Wb,stub_export_include=Receiver_stub_export.h \
               -Wb,skel_export_macro=RECEIVER_SVNT_Export \

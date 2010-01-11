@@ -33,7 +33,7 @@ namespace CIAO_VT_Array_VT_Array_Connector_Impl
     TopicArrayDataReader > TopicArray_DDS_Traits;
 
   typedef CIAO::DDS4CCM::Connector_Traits <
-	  ::CIAO_VTopic_VT_Array_Connector_Impl::VT_Array_Connector_Exec,
+    ::CIAO_VTopic_VT_Array_Connector_Impl::VT_Array_Connector_Exec,
     TopicArray_Seq,
     ::CCM_DDS::TopicArray::CCM_Writer,
     ::CCM_DDS::TopicArray::CCM_Updater,

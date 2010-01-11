@@ -26,4 +26,4 @@ module VTopics
 
 
 
-#endif /* VTopics_CONNECTOR_IDL_ */
+#endif /* VTS_SEQ_CONNECTOR_IDL_ */
