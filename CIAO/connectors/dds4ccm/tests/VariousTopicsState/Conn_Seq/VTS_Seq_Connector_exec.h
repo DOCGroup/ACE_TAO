@@ -33,13 +33,13 @@ namespace CIAO_VTS_Seq_VTS_Seq_Connector_Impl
     TopicSeqDataReader > TopicSeq_DDS_Traits;
 
   typedef CIAO::DDS4CCM::Connector_Traits <
-	  ::CIAO_VTopics_VTS_Seq_Connector_Impl::VTS_Seq_Connector_Exec,
+    ::CIAO_VTopics_VTS_Seq_Connector_Impl::VTS_Seq_Connector_Exec,
     TopicSeq_Seq,
-	  ::CCM_DDS::TopicSeq::CCM_Writer,
+    ::CCM_DDS::TopicSeq::CCM_Writer,
     ::CCM_DDS::TopicSeq::CCM_Updater,
     ::CCM_DDS::TopicSeq::CCM_Getter,
     ::CCM_DDS::TopicSeq::CCM_Reader,
-   	::VTopics::CCM_VTS_Seq_Connector_Context,
+    ::VTopics::CCM_VTS_Seq_Connector_Context,
     ::CCM_DDS::TopicSeq::Listener,
     ::CCM_DDS::TopicSeq::StateListener,
     ::CCM_DDS::ConnectorStatusListener> TopicSeq_Connector_Traits;
