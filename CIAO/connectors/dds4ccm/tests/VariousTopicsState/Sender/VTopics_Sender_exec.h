@@ -34,22 +34,22 @@ namespace CIAO_VTopics_Sender_Impl
       
     virtual
     void on_inconsistent_topic( ::DDS::Topic_ptr the_topic, 
-							    const DDS::InconsistentTopicStatus & status);
+                  const DDS::InconsistentTopicStatus & status);
     virtual
     void on_requested_incompatible_qos( ::DDS::DataReader_ptr the_reader,
-							    const DDS::RequestedIncompatibleQosStatus & status);
+                  const DDS::RequestedIncompatibleQosStatus & status);
     virtual
     void on_sample_rejected( ::DDS::DataReader_ptr the_reader, 
-						     const DDS::SampleRejectedStatus & status);
+                  const DDS::SampleRejectedStatus & status);
     virtual
     void on_offered_deadline_missed( ::DDS::DataWriter_ptr the_writer,
-						     const DDS::OfferedDeadlineMissedStatus & status);
+                  const DDS::OfferedDeadlineMissedStatus & status);
     virtual
     void on_offered_incompatible_qos( ::DDS::DataWriter_ptr the_writer, 
-					      const DDS::OfferedIncompatibleQosStatus & status);
+                  const DDS::OfferedIncompatibleQosStatus & status);
     virtual
     void on_unexpected_status( ::DDS::Entity_ptr the_entity,
-       ::DDS::StatusKind  status_kind);
+      ::DDS::StatusKind  status_kind);
      private:
     Atomic_Boolean &unexpected_matched_;
   };
