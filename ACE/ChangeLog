@@ -1,3 +1,9 @@
+Tue Jan 12 19:33:25 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * ace/os_include/netinet/os_tcp.h:
+        * configure.ac:
+          Fixed typo.
+
 Tue Jan 12 19:28:32 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * ace/config-integritySCA.h:
