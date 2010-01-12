@@ -22,7 +22,6 @@ ifeq ($(IPHONE_TARGET), HARDWARE)
   IPHONE_HARDWARE_ARCHITECTURE=armv6
   CODESIGN_ALLOCATE:=$(IPHONE_PLATFORM)/usr/bin/codesign_allocate
   POSTLINK=; codesign -f -s "iPhone Developer" $(BIN)
-  LDFLAGS  += -mmacosx-version-min=10.5
 endif
 
 CC:=$(IPHONE_PLATFORM)/usr/bin/gcc
