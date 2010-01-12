@@ -1,3 +1,8 @@
+Tue Jan 12 19:19:26 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * ace/config-netbsd.h:
+          Removed ACE_LACKS_SWSCANF. It is no longer used.
+
 Tue Jan 12 19:15:19 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_stdlib.h:
