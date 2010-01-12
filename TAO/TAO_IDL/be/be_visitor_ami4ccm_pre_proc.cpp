@@ -312,41 +312,41 @@ be_visitor_ami4ccm_pre_proc::visit_operation (be_operation *node)
   // for this will be needed.
   be_global->ami4ccm_exceptionholder ()->seen_in_operation (true);
 
-  be_operation *sendc_marshaling =
-    this->create_sendc_operation (node,
-                                  0); // for arguments = FALSE
+  //be_operation *sendc_marshaling =
+  //  this->create_sendc_operation (node,
+  //                                0); // for arguments = FALSE
 
-  be_operation *sendc_arguments =
-    this->create_sendc_operation (node,
-                                  1); // for arguments = TRUE
+  //be_operation *sendc_arguments =
+  //  this->create_sendc_operation (node,
+  //                                1); // for arguments = TRUE
 
-  if (0 != sendc_marshaling && 0 != sendc_arguments)
-    {
-      sendc_marshaling->set_defined_in (node->defined_in ());
+  //if (0 != sendc_marshaling && 0 != sendc_arguments)
+  //  {
+  //    sendc_marshaling->set_defined_in (node->defined_in ());
 
-      sendc_arguments->set_defined_in (node->defined_in ());
+  //    sendc_arguments->set_defined_in (node->defined_in ());
 
-      // We do not copy the exceptions because the exceptions
-      // are delivered by the excep methods.
+  //    // We do not copy the exceptions because the exceptions
+  //    // are delivered by the excep methods.
 
-      // Set the proper strategy, and store the specialized
-      // marshaling and arguments operations in it.
-      be_operation_ami_sendc_strategy * boass = 0;
-      ACE_NEW_RETURN (boass,
-                      be_operation_ami_sendc_strategy (node,
-                                                       sendc_marshaling,
-                                                       sendc_arguments),
-                      -1);
+  //    // Set the proper strategy, and store the specialized
+  //    // marshaling and arguments operations in it.
+  //    be_operation_ami_sendc_strategy * boass = 0;
+  //    ACE_NEW_RETURN (boass,
+  //                    be_operation_ami_sendc_strategy (node,
+  //                                                     sendc_marshaling,
+  //                                                     sendc_arguments),
+  //                    -1);
 
-      be_operation_strategy *old_strategy = node->set_strategy (boass);
+  //    be_operation_strategy *old_strategy = node->set_strategy (boass);
 
-      if (old_strategy)
-        {
-          old_strategy->destroy ();
-          delete old_strategy;
-          old_strategy = 0;
-        }
-    }
+  //    if (old_strategy)
+  //      {
+  //        old_strategy->destroy ();
+  //        delete old_strategy;
+  //        old_strategy = 0;
+  //      }
+  //  }
 
   return 0;
 }
@@ -988,9 +988,6 @@ be_visitor_ami4ccm_pre_proc::create_sendc_operation (be_operation *node,
 be_uses *
 be_visitor_ami4ccm_pre_proc::create_sendc_uses (be_uses *node)
 {
-  Identifier *id = 0;
-  UTL_ScopedName *sn = 0;
-
   // Create the new name
   // Prepend "sendc_" to the name of the operation
   ACE_CString original_op_name (
