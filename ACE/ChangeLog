@@ -1,3 +1,11 @@
+Tue Jan 12 14:18:58 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * ace/CDR_Base.h:
+          Removed obsolete comment.
+        
+        * ace/config-lynxos.h:
+          Minor cleanup.
+
 Mon Jan 11 13:53:54 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/XtReactor/XtReactor.{h,cpp}: Added a fix for BugID 3775.
@@ -7,25 +15,25 @@ Mon Jan 11 13:53:54 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 Mon Jan 11 02:24:01 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/config-macros.h (ACE_WIN32CALL_RETURN): Changed
-  
+
           TYPE ace_result_ = (TYPE) X; \
-          
+
           to
-  
+
           TYPE ace_result_; \
           ace_result_ = (TYPE) X; \
-  
+
           to fix a compile error on MinGW.  Thanks to Arto Jalkanen
           <ajalkane at gmail dot com> for this fix.
 
 Mon Jan 11 02:20:09 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Message_Queue.h: Added
-        
+
           #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
           #include "ace/Message_Queue_NT.h"
           #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
-  
+
           to fix a compile error on MinGW.  Thanks to Arto Jalkanen
           <ajalkane at gmail dot com> for this fix.
 
