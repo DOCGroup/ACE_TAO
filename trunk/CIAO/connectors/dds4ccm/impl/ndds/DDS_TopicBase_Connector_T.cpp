@@ -271,9 +271,9 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_default_topic (void)
             <DDS_TYPE, CCM_TYPE> (
                 this->context_->get_connection_error_listener ());
         }
-          this->topic_->set_listener (
-            this->topiclistener_.in (),
-            ::CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+      this->topic_->set_listener (
+        this->topiclistener_.in (),
+        ::CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
     }
   catch (...)
     {

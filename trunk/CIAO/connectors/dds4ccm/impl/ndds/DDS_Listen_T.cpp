@@ -32,7 +32,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
   const char* library_name,
   const char* profile_name)
 {
-  CIAO_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE>::init");
+  CIAO_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
 
   try
     {

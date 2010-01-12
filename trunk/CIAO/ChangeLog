@@ -1,3 +1,26 @@
+Tue Jan 12 10:07:17 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+          Made the domainparticipantfactory a singleton.
+
+        * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.cpp:
+          Outlining code.
+
+        * connectors/dds4ccm/impl/ndds/DDS_Listen_T.cpp:
+          Resolved fuzz error.
+
+        * connectors/dds4ccm/tests/DDSWriterEntity/Sender/Writer_Sender.idl:
+        * connectors/dds4ccm/tests/DDSWriterEntity/Sender/Writer_Sender_exec.h:
+        * connectors/dds4ccm/tests/DDSWriterEntity/Sender/Writer_Sender_exec.cpp:
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/*:
+          Added test to test whether the same domainparticipant is used
+          when two connectors in the same process sharing the same qos_profile.
+
 Tue Jan  12 08:43:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/index.html:

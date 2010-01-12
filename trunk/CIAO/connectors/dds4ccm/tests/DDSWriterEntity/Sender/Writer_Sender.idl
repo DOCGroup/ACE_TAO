@@ -7,8 +7,8 @@
  * by-hand idl3 translation of sender components.
  */
 
-#ifndef DDS_KEYED_TEST_SENDER_IDL
-#define DDS_KEYED_TEST_SENDER_IDL
+#ifndef DDS_WRITER_ENTITY_SENDER_IDL
+#define DDS_WRITER_ENTITY_SENDER_IDL
 
 #include "Connector/Writer_Connector.idl"
 #include "Connector/Writer_ConnectorE.idl"
@@ -24,4 +24,4 @@ module Writer
   };
 };
 
-#endif
+#endif /* DDS_WRITER_ENTITY_SENDER_IDL */
