@@ -46,8 +46,6 @@ $cdp_file = "Plan.cdp";
 
 $ENV {'CIAO_TRACE_ENABLE'} = 0;
 $ENV {'DANCE_TRACE_ENABLE'} = 0;
-# $ENV {'CIAO_LOG_LEVEL'} = 0;
-# $ENV {'DANCE_LOG_LEVEL'} = 1;
 
 sub create_targets {
     #   naming service
