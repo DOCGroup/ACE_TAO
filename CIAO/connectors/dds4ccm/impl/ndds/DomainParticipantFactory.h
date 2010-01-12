@@ -34,7 +34,7 @@ namespace CIAO
         public virtual ::DDS::CCM_DomainParticipantFactory,
         public virtual ::CORBA::LocalObject
       {
-      friend class ACE_Singleton<RTI_DomainParticipantFactory_i, TAO_SYNCH_MUTEX>;
+      friend class ACE_Singleton<RTI_DomainParticipantFactory_i, ACE_SYNCH_RECURSIVE_MUTEX>;
 
       private:
         // Construtor
@@ -89,6 +89,8 @@ namespace CIAO
   }
 }
 
-typedef ACE_Singleton<CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i, TAO_SYNCH_MUTEX> DPFACTORY;
+typedef ACE_Singleton<CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i, ACE_SYNCH_RECURSIVE_MUTEX> Domain_Participant_Factory;
+
+#define DPFACTORY Domain_Participant_Factory::instance ()
 
 #endif

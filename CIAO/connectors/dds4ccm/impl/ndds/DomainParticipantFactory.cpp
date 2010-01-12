@@ -104,7 +104,6 @@ namespace CIAO
                               "Error: Unable to create DomainParticipant\n"));
                   throw CCM_DDS::InternalError (1, 0);
                 }
-
               part->enable ();
             }
           ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i ();
@@ -227,6 +226,6 @@ namespace CIAO
 }
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i, TAO_SYNCH_MUTEX> *
-         ACE_Singleton<CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i, TAO_SYNCH_MUTEX>::singleton_;
+template ACE_Singleton<CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i, ACE_SYNCH_RECURSIVE_MUTEX> *
+         ACE_Singleton<CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i, ACE_SYNCH_RECURSIVE_MUTEX>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

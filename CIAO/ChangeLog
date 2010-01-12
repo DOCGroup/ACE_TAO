@@ -1,3 +1,15 @@
+Tue Jan 12 13:31:31 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+          Using a define for factory instance method.
+
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Connector1/Connector1.mpc:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Connector2/Connector2.mpc:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Connector3/Connector3.mpc:
+          Resolved compiler errors on windows.
+
 Tue Jan  12 11:08:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/ami4ccm/ami4ccm.cpp:
