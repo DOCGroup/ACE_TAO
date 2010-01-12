@@ -1,6 +1,6 @@
 // $Id$
 
-project(Inherited_Components_idl_gen) : componentidldefaults   {
+project(Inherited_Components_idl_gen) : componentidldefaults {
   after +=
   custom_only = 1
   idlflags += -Wb,stub_export_macro=INHERITED_COMPONENTS_STUB_Export \
