@@ -852,17 +852,6 @@ ACE_LACKS_OPENDIR                       Platform lacks opendir and the opendir
                                         emulation must be used
 ACE_LACKS_READDIR                       Platform lacks readdir and the readdir
                                         emulation must be used
-ACE_LACKS_CMSG_DATA_MACRO               Platform has
-                                        ACE_HAS_4_4BSD_SENDMSG_RECVMSG but does
-                                        not define CMSG_DATA (cmsg) macro.
-ACE_LACKS_CMSG_DATA_MEMBER              Platform has
-                                        ACE_HAS_4_4BSD_SENDMSG_RECVMSG but its
-                                        cmsghdr structure does not contain
-                                        an 'unsigned char cmsg_data[0]'
-                                        member.  (This may be
-                                        'unsigned char __cmsg_data[0]' on some
-                                        platforms, in which case we need
-                                        another macro.)
 ACE_LACKS_COND_TIMEDWAIT_RESET          pthread_cond_timedwait does
                                         *not* reset the time argument
                                         when the lock is acquired.
