@@ -1,3 +1,28 @@
+Tue Jan 12 15:56:45 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          SharedDomainParticipant test should work now.
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+          Added logging when re-using a domainparticipant.
+
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Base/Base.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Component/Component.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Component/Component.mpc:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Connector:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Connector/Connector.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Connector/Connector.mpc:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Connector/Connector_exec.h:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Connector/Connector_exec.cpp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Connector/Connector1.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Connector/Connector1.mpc:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Connector/Connector1_exec.h:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Connector/Connector1_exec.cpp:
+          Rewritten this test. Deploy one connector three times instead of
+          deploying three seperate connectors.
+
 Tue Jan 12 13:55:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/ami4ccm/ami4ccm.h

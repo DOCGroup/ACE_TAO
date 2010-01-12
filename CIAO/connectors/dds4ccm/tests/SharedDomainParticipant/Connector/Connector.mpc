@@ -1,0 +1,142 @@
+// $Id$
+
+project(DDS_SharedDP_Connector_idl_gen) : connectoridldefaults {
+  after += DDS4CCM_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=SHAREDDP_CONNECTOR_STUB_Export \
+              -Wb,stub_export_include=Connector_stub_export.h \
+              -Wb,skel_export_macro=SHAREDDP_CONNECTOR_SVNT_Export \
+              -Wb,skel_export_include=Connector_svnt_export.h \
+              -Wb,svnt_export_macro=SHAREDDP_CONNECTOR_SVNT_Export \
+              -Wb,svnt_export_include=Connector_svnt_export.h \
+              -Wb,exec_export_macro=SHAREDDP_CONNECTOR_EXEC_Export \
+              -Wb,exec_export_include=Connector_exec_export.h \
+              -I ..
+
+  IDL_Files {
+    Connector.idl
+  }
+}
+
+project(DDS_SharedDP_Connector_lem_gen) : ciaoidldefaults {
+  custom_only = 1
+  after += DDS_SharedDP_Connector_idl_gen
+  idlflags += -Wb,stub_export_macro=SHAREDDP_CONNECTOR_LEM_STUB_Export \
+              -Wb,stub_export_include=Connector_lem_stub_export.h \
+              -SS -Gxhst \
+              -I .. -I $(CIAO_ROOT)/connectors -I$(CIAO_ROOT)/connectors/dds4ccm/idl
+
+  IDL_Files {
+    ConnectorE.idl
+  }
+}
+
+project(DDS_SharedDP_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
+  after += DDS_SharedDP_Connector_lem_gen DDS_SharedDP_Connector_stub DDS_SharedDPBase_stub DDS4CCM_lem_stub
+  libs  += DDS_SharedDPBase_stub DDS_Connector_stub DDS4CCM_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = DDS_Connector_lem_stub
+  dynamicflags   = SHAREDDP_CONNECTOR_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ConnectorEC.cpp
+  }
+
+  Header_Files {
+    ConnectorEC.h
+    Connector_lem_stub_export.h
+  }
+
+  Inline_Files {
+    ConnectorEC.inl
+  }
+}
+
+project(DDS_SharedDP_Connector_stub) : ccm_stub, dds4ccm_base {
+  after += DDS_SharedDP_Connector_idl_gen DDS_SharedDPBase_stub
+  libs  += DDS_SharedDPBase_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = DDS_Connector_stub
+  dynamicflags   = SHAREDDP_CONNECTOR_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ConnectorC.cpp
+  }
+
+  Header_Files {
+    ConnectorC.h
+    Connector_stub_export.h
+  }
+
+  Inline_Files {
+    ConnectorC.inl
+  }
+}
+
+project(DDS_SharedDP_Connector_exec) : ciao_executor, dds4ccm_impl {
+  after   += DDS_SharedDP_Connector_lem_stub DDS_SharedDP_Connector_stub DDS4CCM_lem_stub DDS_SharedDPBase_NDDS_TS
+  sharedname = DDS_Connector_exec
+  libs += DDS_Connector_stub DDS_Connector_lem_stub DDS_SharedDPBase_stub DDS4CCM_lem_stub DDS_SharedDPBase_NDDS_TS
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags   = SHAREDDP_CONNECTOR_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Connector_exec.cpp
+  }
+
+  Header_Files {
+    Connector_exec.h
+    Connector_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(DDS_SharedDP_Connector_svnt) : ciao_servant, dds4ccm_impl {
+  after      += DDS_SharedDP_Connector_lem_stub DDS_SharedDP_Connector_exec DDS_SharedDP_Connector_stub DDS4CCM_lem_stub
+  sharedname  = DDS_Connector_svnt
+  libs       += DDS_Connector_stub \
+                DDS_Connector_lem_stub  \
+                DDS_SharedDPBase_stub \
+                DDS_Connector_exec \
+                DDS4CCM_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags = SHAREDDP_CONNECTOR_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ConnectorS.cpp
+    Connector_svnt.cpp
+  }
+
+  Header_Files {
+    ConnectorS.h
+    Connector_svnt.h
+    Connector_svnt_export.h
+  }
+
+  Inline_Files {
+    ConnectorS.inl
+  }
+}

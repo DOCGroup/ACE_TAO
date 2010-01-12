@@ -1,0 +1,26 @@
+// $Id$
+
+/**
+ * @file Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef SHARED_DP_CONNECTOR_IDL_
+#define SHARED_DP_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+TYPED_MODULE( ::SharedDPTest, ::SharedDPTest_Seq, SharedDPTest)
+
+module SharedDP_Connector
+{
+  connector SDP_Connector : ::CCM_DDS::SharedDPTest::DDS_Event
+  {
+  };
+};
+
+
+
+#endif /* SHARED_DP_CONNECTOR_IDL_ */
