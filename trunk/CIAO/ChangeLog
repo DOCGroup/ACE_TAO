@@ -1,3 +1,25 @@
+Tue Jan  12 11:08:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/ami4ccm/ami4ccm.cpp:
+        * connectors/ami4ccm/ami4ccm/ami4ccm.h:
+        * connectors/ami4ccm/ami4ccm/ami4ccm.idl:
+        * connectors/ami4ccm/ami4ccm/ami4ccm.mpc:
+          New AMI4CCM stub library which is going to be used by
+          all connectors and components that want to use ami4ccm
+
+        * MPC/config/ami4ccm_stub.mpb:
+          New base project
+
+        * tests/Bug_3769_Regression/Foo.mpc
+        * tests/CIAO_ComponentServer/Local_Facet/Local_Facet.mpc
+        * tests/IDL_Test/Double_Inherited_Component/Inherited_components.mpc
+        * tests/IDL_Test/Inherited_Component/IhC_Bar.mpc
+        * tests/IDL_Test/Inherited_Component/IhC_Foo.mpc
+        * tests/IDL_Test/Lem_Specific_Export/Lem_Export.mpc
+        * tests/IDL_Test/PIDL_Include/PIDLInclude.mpc
+        * tests/Minimum/Receiver/Receiver.mpc
+          Layout changes
+
 Tue Jan 12 10:07:17 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.h:

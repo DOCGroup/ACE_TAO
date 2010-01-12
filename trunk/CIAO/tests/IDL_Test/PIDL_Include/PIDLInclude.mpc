@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl PIDLInclude"
 
-project(PIDLInclude_idl_gen) : componentidldefaults   {
+project(PIDLInclude_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=PIDLINCLUDE_STUB_Export \
               -Wb,stub_export_include=PIDLInclude_stub_export.h \
@@ -15,7 +15,7 @@ project(PIDLInclude_idl_gen) : componentidldefaults   {
   }
 }
 
-project(PIDLInclude_lem_gen) : ciaoidldefaults   {
+project(PIDLInclude_lem_gen) : ciaoidldefaults {
   after += PIDLInclude_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=PIDLINCLUDE_LEM_STUB_Export \
