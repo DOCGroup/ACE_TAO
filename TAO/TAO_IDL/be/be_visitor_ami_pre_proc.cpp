@@ -152,9 +152,7 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
                         -1);
     }
 
-  be_valuetype *excep_holder = be_global->messaging_exceptionholder ();
-  be_interface *reply_handler = this->create_reply_handler (node,
-                                                            excep_holder);
+  be_interface *reply_handler = this->create_reply_handler (node);
   if (reply_handler)
     {
       reply_handler->set_defined_in (node->defined_in ());
@@ -330,8 +328,7 @@ be_visitor_ami_pre_proc::visit_attribute (be_attribute *node)
 }
 
 be_interface *
-be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
-                                               be_valuetype *excep_holder)
+be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
 {
   // We're at global scope here so we need to fool the scope stack
   // for a minute so the correct repo id can be calculated at
@@ -436,8 +433,7 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
                                                     reply_handler);
 
               this->create_excep_operation (get_operation,
-                                            reply_handler,
-                                            excep_holder);
+                                            reply_handler);
 
               get_operation->destroy ();
               delete get_operation;
@@ -452,8 +448,7 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
                                                         reply_handler);
 
                   this->create_excep_operation (set_operation,
-                                                reply_handler,
-                                                excep_holder);
+                                                reply_handler);
 
                   set_operation->destroy ();
                   delete set_operation;
@@ -470,8 +465,7 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
                                                         reply_handler);
 
                   this->create_excep_operation (operation,
-                                                reply_handler,
-                                                excep_holder);
+                                                reply_handler);
                 }
             }
         } // end of while loop
@@ -483,7 +477,6 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
 int
 be_visitor_ami_pre_proc::create_raise_operation (
     be_decl *node,
-    be_valuetype *excep_holder,
     Operation_Kind operation_kind
   )
 {
@@ -522,6 +515,8 @@ be_visitor_ami_pre_proc::create_raise_operation (
                                       sn),
                   -1);
 
+  be_valuetype *excep_holder = be_global->messaging_exceptionholder ();
+  
   // Name the operation properly
   UTL_ScopedName *op_name =
     static_cast<UTL_ScopedName *> (excep_holder->name ()->copy ());
@@ -922,8 +917,7 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
 
 int
 be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
-                                                 be_interface *reply_handler,
-                                                 be_valuetype *excep_holder)
+                                                 be_interface *reply_handler)
 {
   if (!node)
     {
@@ -950,6 +944,7 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
                                   0),
                   -1);
 
+  be_valuetype *excep_holder = be_global->messaging_exceptionholder ();
   be_argument *arg = 0;
   ACE_NEW_RETURN (arg,
                   be_argument (AST_Argument::dir_IN,
