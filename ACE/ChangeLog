@@ -1,3 +1,8 @@
+Tue Jan 12 19:41:07 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * ace/config-integritySCA.h:
+          Removed ACE_LACKS_FILE_FCNTL. It is no longer used.
+
 Tue Jan 12 19:36:32 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * ace/config-openbsd.h:
