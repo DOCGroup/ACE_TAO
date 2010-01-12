@@ -577,6 +577,155 @@ printf ("%s\n", reply_handler_local_name.c_str ());
   return reply_handler;
 }
 
+be_interface *
+be_visitor_ami4ccm_pre_proc::create_sendc_interface (be_interface *node,
+                                                   be_valuetype *excep_holder)
+{
+  // We're at global scope here so we need to fool the scope stack
+  // for a minute so the correct repo id can be calculated at
+  // interface construction time.
+  UTL_Scope *s = node->defined_in ();
+  idl_global->scopes ().push (s);
+
+  // Create the reply handler name.
+  ACE_CString reply_handler_local_name;
+  this->generate_name (reply_handler_local_name,
+                       "AMI_",
+                       node->name ()->last_component ()->get_string(),
+                       "Callback");
+printf ("%s\n", reply_handler_local_name.c_str ());
+  UTL_ScopedName *reply_handler_name =
+    static_cast<UTL_ScopedName *> (node->name ()->copy ());
+  reply_handler_name->last_component ()->replace_string (
+                                             reply_handler_local_name.c_str ()
+                                           );
+
+  long n_parents = 0;
+  AST_Type **p_intf =
+    this->create_inheritance_list (node, n_parents);
+
+  if (!p_intf)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        "(%N:%l) be_visitor_ami_pre_proc::visit_interface - "
+                        "bad inheritance list\n"),
+                        0);
+    }
+
+  be_interface *reply_handler = 0;
+  ACE_NEW_RETURN (reply_handler,
+                  be_interface (reply_handler_name, // name
+                                p_intf,             // list of inherited
+                                n_parents,          // number of inherited
+                                0,                  // list of all ancestors
+                                0,                  // number of ancestors
+                                1,                  // non-local
+                                0),                 // non-abstract
+                  0);
+printf ("%s\n", reply_handler_local_name.c_str ());
+
+  // Back to reality.
+  idl_global->scopes ().pop ();
+
+  reply_handler->set_name (reply_handler_name);
+  reply_handler->set_defined_in (s);
+
+  // Set repo id to 0, so it will be recomputed on the next access,
+  // and set the prefix to the node's prefix. All this is
+  // necessary in case the node's prefix was modified after
+  // its declaration.
+  reply_handler->AST_Decl::repoID (0);
+  reply_handler->prefix (const_cast<char*> (node->prefix ()));
+
+  reply_handler->gen_fwd_helper_name ();
+
+  // Now our customized reply handler is created, we have to
+  // add the operations and attributes to the scope.
+  // Imported nodes get admitted here, so they can get
+  // the reply handler operations added, in case they are
+  // needed in the inheritance graph traversal for a
+  // child reply handler. However, no exception holder
+  // stuff is executed for an imported node.
+  if (node->nmembers () > 0)
+    {
+      this->elem_number_ = 0;
+      // Initialize an iterator to iterate thru our scope.
+
+      for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
+        {
+          AST_Decl *d = si.item ();
+
+          if (!d)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_ami4ccm_pre_proc::visit_interface - "
+                                 "bad node in this scope\n"),
+                                0);
+
+            }
+
+          if (d->node_type () == AST_Decl::NT_attr)
+            {
+              be_attribute *attribute = be_attribute::narrow_from_decl (d);
+
+              if (attribute == 0)
+                {
+                  return 0;
+                }
+
+              be_operation *get_operation =
+                this->generate_get_operation (attribute);
+
+              this->create_reply_handler_operation (get_operation,
+                                                    reply_handler);
+
+              this->create_excep_operation (get_operation,
+                                            reply_handler,
+                                            excep_holder);
+
+              get_operation->destroy ();
+              delete get_operation;
+              get_operation = 0;
+
+              if (!attribute->readonly ())
+                {
+                  be_operation *set_operation =
+                    this->generate_set_operation (attribute);
+
+                  this->create_reply_handler_operation (set_operation,
+                                                        reply_handler);
+
+                  this->create_excep_operation (set_operation,
+                                                reply_handler,
+                                                excep_holder);
+
+                  set_operation->destroy ();
+                  delete set_operation;
+                  set_operation = 0;
+                }
+            }
+          else
+            {
+              be_operation* operation = be_operation::narrow_from_decl (d);
+
+              if (operation)
+                {
+                  this->create_reply_handler_operation (operation,
+                                                        reply_handler);
+
+                  this->create_excep_operation (operation,
+                                                reply_handler,
+                                                excep_holder);
+                }
+            }
+        } // end of while loop
+    } // end of if
+
+  return reply_handler;
+}
+
 int
 be_visitor_ami4ccm_pre_proc::create_raise_operation (
     be_decl *node,
