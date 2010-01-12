@@ -111,13 +111,11 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::init_default_domain (void)
         }
       if (this->library_name_ && this->profile_name_)
         {
-          DPFACTORY::instance()->
-            set_default_participant_qos_with_profile (
+          DPFACTORY->set_default_participant_qos_with_profile (
               this->library_name_,
               this->profile_name_);
           this->domain_participant_ =
-            DPFACTORY::instance()->
-              create_participant_with_profile (
+            DPFACTORY->create_participant_with_profile (
                 this->domain_id_,
                 this->library_name_,
                 this->profile_name_,
@@ -128,7 +126,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::init_default_domain (void)
         {
           ::DDS::DomainParticipantQos qos;
           this->domain_participant_ =
-            DPFACTORY::instance()->create_participant (
+            DPFACTORY->create_participant (
               this->domain_id_,
               qos,
               ::DDS::DomainParticipantListener::_nil (),
@@ -225,7 +223,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
     {
       this->domain_participant_->delete_contained_entities ();
     }
-  DPFACTORY::instance ()->delete_participant (
+  DPFACTORY->delete_participant (
     this->domain_participant_.in ());
   this->domain_participant_ = ::DDS::DomainParticipant::_nil ();
 }
