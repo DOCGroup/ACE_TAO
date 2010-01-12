@@ -18,6 +18,8 @@
 
 #include "tao/LocalObject.h"
 
+#include "ace/Singleton.h"
+
 #include <map>
 
 class DDSDomainParticipant;
@@ -32,13 +34,16 @@ namespace CIAO
         public virtual ::DDS::CCM_DomainParticipantFactory,
         public virtual ::CORBA::LocalObject
       {
-      public:
-        // Constructor
+      friend class ACE_Singleton<RTI_DomainParticipantFactory_i, TAO_SYNCH_MUTEX>;
+
+      private:
+        // Construtor
         RTI_DomainParticipantFactory_i (void);
 
         // Destructor
         virtual ~RTI_DomainParticipantFactory_i (void);
 
+      public:
         virtual
           ::DDS::DomainParticipant_ptr create_participant (::DDS::DomainId_t domain_id,
                                                            const ::DDS::DomainParticipantQos & qos,
@@ -77,12 +82,13 @@ namespace CIAO
         void remove_participant (DDSDomainParticipant * part);
 
         TAO_SYNCH_MUTEX dps_mutex_;
-        typedef std::map<const char *, DDSDomainParticipant *> DomainParticipants;
+        typedef std::map<ACE_CString, DDSDomainParticipant *> DomainParticipants;
         DomainParticipants dps_;
       };
     }
   }
 }
 
+typedef ACE_Singleton<CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i, TAO_SYNCH_MUTEX> DPFACTORY;
 
 #endif

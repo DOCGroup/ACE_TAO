@@ -80,72 +80,66 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::init_default_domain (void)
 {
-  CIAO_DEBUG (9, (LM_TRACE, CLINFO "DDS_Base_Connector_T::configure_default_domain_ - "
+  CIAO_DEBUG (9, (LM_TRACE, CLINFO "DDS_Base_Connector_T::init_default_domain - "
                 "Configuring default domain\n"));
-
-  if (CORBA::is_nil (this->domain_participant_factory_.in ()))
+  try
     {
-      try
-      {
-        ACE_Env_Value<int> verbosity (ACE_TEXT("DDS4CCM_NDDS_LOG_VERBOSITY"),
-          NDDS_CONFIG_LOG_VERBOSITY_SILENT);
+      ACE_Env_Value<int> verbosity (ACE_TEXT("DDS4CCM_NDDS_LOG_VERBOSITY"),
+        NDDS_CONFIG_LOG_VERBOSITY_SILENT);
 
-        NDDS_Config_LogVerbosity n_verbosity =
-          static_cast <NDDS_Config_LogVerbosity> (verbosity.operator int());
-        NDDSConfigLogger::get_instance()->set_verbosity (n_verbosity);
+      NDDS_Config_LogVerbosity n_verbosity =
+        static_cast <NDDS_Config_LogVerbosity> (verbosity.operator int());
+      NDDSConfigLogger::get_instance()->set_verbosity (n_verbosity);
 
-        // Generic code
-        this->domain_participant_factory_ =
-          new ::CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i ();
-
-        if (this->qos_profile_.in ())
+      // Generic code
+      if (this->qos_profile_.in ())
+        {
+          char* buf = ACE_OS::strdup (this->qos_profile_.in ());
+          ACE_Tokenizer_T<char> tok (buf);
+          tok.delimiter_replace ('#', 0);
+          for (char *p = tok.next (); p; p = tok.next ())
           {
-            char* buf = ACE_OS::strdup (this->qos_profile_.in ());
-            ACE_Tokenizer_T<char> tok (buf);
-            tok.delimiter_replace ('#', 0);
-            for (char *p = tok.next (); p; p = tok.next ())
+            if (!this->library_name_)
             {
-              if (!this->library_name_)
-              {
-                this->library_name_ = p;
-              }
-              else if (!this->profile_name_)
-              {
-                this->profile_name_ = p;
-              }
+              this->library_name_ = p;
+            }
+            else if (!this->profile_name_)
+            {
+              this->profile_name_ = p;
             }
           }
-        if (this->library_name_ && this->profile_name_)
-          {
-            this->domain_participant_factory_->
-              set_default_participant_qos_with_profile (
-                this->library_name_,
-                this->profile_name_);
-            this->domain_participant_ =
-              this->domain_participant_factory_->create_participant_with_profile (
+        }
+      if (this->library_name_ && this->profile_name_)
+        {
+          DPFACTORY::instance()->
+            set_default_participant_qos_with_profile (
+              this->library_name_,
+              this->profile_name_);
+          this->domain_participant_ =
+            DPFACTORY::instance()->
+              create_participant_with_profile (
                 this->domain_id_,
                 this->library_name_,
                 this->profile_name_,
                 ::DDS::DomainParticipantListener::_nil (),
                 0);
-          }
-        else
-          {
-            ::DDS::DomainParticipantQos qos;
-            this->domain_participant_ =
-              this->domain_participant_factory_->create_participant (
-                this->domain_id_,
-                qos,
-                ::DDS::DomainParticipantListener::_nil (),
-                0);
-          }
-      }
-    catch (...)
-      {
-        CIAO_ERROR (1, (LM_ERROR, "DDS_Base_Connector_T::init_default_domain: "
-                                  "Caught unknown C++ exception while configuring default domain\n"));
-        throw CORBA::INTERNAL ();
-      }
+        }
+      else
+        {
+          ::DDS::DomainParticipantQos qos;
+          this->domain_participant_ =
+            DPFACTORY::instance()->create_participant (
+              this->domain_id_,
+              qos,
+              ::DDS::DomainParticipantListener::_nil (),
+              0);
+        }
+    }
+  catch (...)
+    {
+      CIAO_ERROR (1, (LM_ERROR, "DDS_Base_Connector_T::init_default_domain: "
+                                "Caught unknown C++ exception while configuring default domain\n"));
+      throw CORBA::INTERNAL ();
     }
 }
 
@@ -231,11 +225,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
     {
       this->domain_participant_->delete_contained_entities ();
     }
-
-  if (! ::CORBA::is_nil (this->domain_participant_factory_.in ()))
-    {
-      this->domain_participant_factory_->delete_participant (
-        this->domain_participant_.in ());
-      this->domain_participant_ = ::DDS::DomainParticipant::_nil ();
-    }
+  DPFACTORY::instance ()->delete_participant (
+    this->domain_participant_.in ());
+  this->domain_participant_ = ::DDS::DomainParticipant::_nil ();
 }

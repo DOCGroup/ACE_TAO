@@ -19,7 +19,6 @@
 
 #include <map>
 
-//lass DDSDataWriter;
 class WriterTestDataWriter;
 
 namespace CIAO_Writer_Sender_Impl

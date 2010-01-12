@@ -14,15 +14,15 @@ namespace CIAO
   {
     namespace RTI
     {
-      RTI_DomainParticipantFactory_i::RTI_DomainParticipantFactory_i (void)
-      {
-        CIAO_TRACE ("RTI_DomainParticipantFactory_i::RTI_DomainParticipantFactory_i");
-      }
+       RTI_DomainParticipantFactory_i::RTI_DomainParticipantFactory_i (void)
+       {
+         CIAO_TRACE ("RTI_DomainParticipantFactory_i::RTI_DomainParticipantFactory_i");
+       }
 
-      RTI_DomainParticipantFactory_i::~RTI_DomainParticipantFactory_i (void)
-      {
-        CIAO_TRACE ("RTI_DomainParticipantFactory_i::~RTI_DomainParticipantFactory_i");
-      }
+       RTI_DomainParticipantFactory_i::~RTI_DomainParticipantFactory_i (void)
+       {
+         CIAO_TRACE ("RTI_DomainParticipantFactory_i::~RTI_DomainParticipantFactory_i");
+       }
 
       ::DDS::DomainParticipant_ptr
       RTI_DomainParticipantFactory_i::create_participant (::DDS::DomainId_t domain_id,
@@ -81,10 +81,11 @@ namespace CIAO
             rti_dpl = new RTI_DomainParticipantListener_i (a_listener);
           }
 
-        char qos_profile[256];
-        ACE_OS::sprintf (qos_profile, "%s#%s", library_name, profile_name);
+        ACE_CString qos_profile = library_name;
+        qos_profile += ACE_TEXT ("#");
+        qos_profile += profile_name;
 
-        DDSDomainParticipant *part = 0;
+        DDSDomainParticipant * part = 0;
         {
           ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
                           this->dps_mutex_, CORBA::INTERNAL ());
@@ -97,30 +98,32 @@ namespace CIAO
                                   profile_name,
                                   rti_dpl,
                                   mask);
-              this->dps_[qos_profile] = part;
+              if (!part)
+                {
+                  CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipantFactory_i::create_participant_with_profile - "
+                              "Error: Unable to create DomainParticipant\n"));
+                  throw CCM_DDS::InternalError (1, 0);
+                }
+
+              part->enable ();
             }
+          ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i ();
+          RTI_DomainParticipant_i *rti_dp = dynamic_cast < RTI_DomainParticipant_i *> (retval.in ());
+          rti_dp->set_impl (part);
+
+          this->dps_[qos_profile] = part;
+
+          return retval._retn ();
         }
-
-        if (!part)
-          {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipantFactory_i::create_participant_with_profile - "
-                         "Error: Unable to create DomainParticipant\n"));
-            throw CCM_DDS::InternalError (1, 0);
-          }
-
-        part->enable ();
-        ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i ();
-        RTI_DomainParticipant_i *rti_dp = dynamic_cast < RTI_DomainParticipant_i *> (retval.in ());
-        rti_dp->set_impl (part);
-
-        return retval._retn ();
       }
 
       void
       RTI_DomainParticipantFactory_i::remove_participant (DDSDomainParticipant * part)
       {
+        CIAO_TRACE ("RTI_DomainParticipantFactory_i::remove_participant");
         ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
                         this->dps_mutex_, CORBA::INTERNAL ());
+
         DomainParticipants::iterator pos;
         for (pos = this->dps_.begin(); pos != this->dps_.end(); ++pos)
           {
@@ -128,7 +131,7 @@ namespace CIAO
               {
                 CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::remove_participant - "
                           "Deleting participant for %C.\n",
-                          pos->first));
+                          pos->first.c_str ()));
                 this->dps_.erase (pos->first);
                 break;
               }
@@ -222,3 +225,8 @@ namespace CIAO
     }
   }
 }
+
+#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+template ACE_Singleton<CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i, TAO_SYNCH_MUTEX> *
+         ACE_Singleton<CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i, TAO_SYNCH_MUTEX>::singleton_;
+#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
