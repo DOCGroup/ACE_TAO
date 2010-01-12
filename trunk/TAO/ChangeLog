@@ -1,3 +1,12 @@
+Tue Jan 12 19:31:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+          Bool changes
+
+        * TAO_IDL/be/be_visitor_ami4ccm_pre_proc.cpp:
+        * TAO_IDL/be_include/be_visitor_ami4ccm_pre_proc.h:
+          More tweaks to ami4ccm code generation
+
 Tue Jan 12 19:08:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:

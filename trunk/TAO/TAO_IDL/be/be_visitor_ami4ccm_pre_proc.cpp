@@ -244,7 +244,7 @@ be_visitor_ami4ccm_pre_proc::visit_interface (be_interface * node)
                         -1);
     }
 
-  be_valuetype *excep_holder = this->create_exception_holder (node);
+  be_valuetype *excep_holder = be_global->ami4ccm_exceptionholder ();
   be_interface *reply_handler = this->create_reply_handler (node,
                                                             excep_holder);
   if (reply_handler)
@@ -272,19 +272,19 @@ be_visitor_ami4ccm_pre_proc::visit_interface (be_interface * node)
     }
 
   // Set the proper strategy.
-  be_interface_ami_strategy *bias = 0;
-  ACE_NEW_RETURN (bias,
-                  be_interface_ami_strategy (node,
-                                             reply_handler),
-                  -1);
-  be_interface_strategy *old_strategy = node->set_strategy (bias);
+  //be_interface_ami_strategy *bias = 0;
+  //ACE_NEW_RETURN (bias,
+  //                be_interface_ami_strategy (node,
+  //                                           reply_handler),
+  //                -1);
+  //be_interface_strategy *old_strategy = node->set_strategy (bias);
 
-  if (old_strategy)
-    {
-      old_strategy->destroy ();
-      delete old_strategy;
-      old_strategy = 0;
-    }
+  //if (old_strategy)
+  //  {
+  //    old_strategy->destroy ();
+  //    delete old_strategy;
+  //    old_strategy = 0;
+  //  }
 
   if (this->visit_scope (node) == -1)
     {
@@ -361,31 +361,31 @@ be_visitor_ami4ccm_pre_proc::visit_attribute (be_attribute *node)
   this->visit_operation (set_operation);
 
   // Retrieve the strategy set by the visit operation.
-  be_operation_default_strategy *bods = 0;
-  ACE_NEW_RETURN (bods,
-                  be_operation_default_strategy (set_operation),
-                  -1);
+  //be_operation_default_strategy *bods = 0;
+  //ACE_NEW_RETURN (bods,
+  //                be_operation_default_strategy (set_operation),
+  //                -1);
 
-  be_operation_strategy *set_operation_strategy =
-    set_operation->set_strategy (bods);
+  //be_operation_strategy *set_operation_strategy =
+  //  set_operation->set_strategy (bods);
 
-  set_operation->destroy ();
-  delete set_operation;
-  set_operation = 0;
+  //set_operation->destroy ();
+  //delete set_operation;
+  //set_operation = 0;
 
-  // Assign it to the attribute as set_operation strategy.
-  if (0 != set_operation_strategy)
-    {
-      be_operation_strategy *bos =
-        node->set_set_strategy (set_operation_strategy);
+  //// Assign it to the attribute as set_operation strategy.
+  //if (0 != set_operation_strategy)
+  //  {
+  //    be_operation_strategy *bos =
+  //      node->set_set_strategy (set_operation_strategy);
 
-      if (0 != bos)
-        {
-          bos->destroy ();
-          delete bos;
-          bos = 0;
-        }
-    }
+  //    if (0 != bos)
+  //      {
+  //        bos->destroy ();
+  //        delete bos;
+  //        bos = 0;
+  //      }
+  //  }
 
   // Temporarily generate the get operation.
   be_operation *get_operation =
@@ -393,39 +393,33 @@ be_visitor_ami4ccm_pre_proc::visit_attribute (be_attribute *node)
 
   this->visit_operation (get_operation);
 
-  // Retrieve the strategy set by the visit operation.
-  ACE_NEW_RETURN (bods,
-                  be_operation_default_strategy (get_operation),
-                  -1);
+  //// Retrieve the strategy set by the visit operation.
+  //ACE_NEW_RETURN (bods,
+  //                be_operation_default_strategy (get_operation),
+  //                -1);
 
-  be_operation_strategy *get_operation_strategy =
-    get_operation->set_strategy (bods);
+  //be_operation_strategy *get_operation_strategy =
+  //  get_operation->set_strategy (bods);
 
-  get_operation->destroy ();
-  delete get_operation;
-  get_operation = 0;
+  //get_operation->destroy ();
+  //delete get_operation;
+  //get_operation = 0;
 
-  // Assign it to the attribute as get_operation strategy.
-  if (0 != get_operation_strategy)
-    {
-      be_operation_strategy *bos =
-        node->set_get_strategy (get_operation_strategy);
+  //// Assign it to the attribute as get_operation strategy.
+  //if (0 != get_operation_strategy)
+  //  {
+  //    be_operation_strategy *bos =
+  //      node->set_get_strategy (get_operation_strategy);
 
-      if (0 != bos)
-        {
-          bos->destroy ();
-          delete bos;
-          bos = 0;
-        }
-    }
+  //    if (0 != bos)
+  //      {
+  //        bos->destroy ();
+  //        delete bos;
+  //        bos = 0;
+  //      }
+  //  }
 
   return 0;
-}
-
-be_valuetype *
-be_visitor_ami4ccm_pre_proc::create_exception_holder (be_interface *)
-{
-  return be_global->ami4ccm_exceptionholder ();
 }
 
 be_interface *
@@ -470,7 +464,7 @@ printf ("%s\n", reply_handler_local_name.c_str ());
                                 n_parents,          // number of inherited
                                 0,                  // list of all ancestors
                                 0,                  // number of ancestors
-                                1,                  // non-local
+                                true,               // local
                                 0),                 // non-abstract
                   0);
 printf ("%s\n", reply_handler_local_name.c_str ());
@@ -619,7 +613,7 @@ printf ("%s\n", reply_handler_local_name.c_str ());
                                 n_parents,          // number of inherited
                                 0,                  // list of all ancestors
                                 0,                  // number of ancestors
-                                1,                  // non-local
+                                1,                  // local
                                 0),                 // non-abstract
                   0);
 printf ("%s\n", reply_handler_local_name.c_str ());
@@ -800,27 +794,27 @@ be_visitor_ami4ccm_pre_proc::create_raise_operation (
                   be_operation (rt,
                                 AST_Operation::OP_noflags,
                                 op_name,
-                                0,
+                                false,
                                 0),
                   -1);
 
   operation->set_name (op_name);
   operation->set_defined_in (excep_holder);
 
-  // Set the proper strategy.
-  be_operation_ami_exception_holder_raise_strategy *boaehrs = 0;
-  ACE_NEW_RETURN (boaehrs,
-                  be_operation_ami_exception_holder_raise_strategy (operation),
-                  -1);
+  //// Set the proper strategy.
+  //be_operation_ami_exception_holder_raise_strategy *boaehrs = 0;
+  //ACE_NEW_RETURN (boaehrs,
+  //                be_operation_ami_exception_holder_raise_strategy (operation),
+  //                -1);
 
-  be_operation_strategy *old_strategy = operation->set_strategy (boaehrs);
+  //be_operation_strategy *old_strategy = operation->set_strategy (boaehrs);
 
-  if (old_strategy)
-    {
-      old_strategy->destroy ();
-      delete old_strategy;
-      old_strategy = 0;
-    }
+  //if (old_strategy)
+  //  {
+  //    old_strategy->destroy ();
+  //    delete old_strategy;
+  //    old_strategy = 0;
+  //  }
 
   // After having generated the operation we insert it into the
   // exceptionholder valuetype.
@@ -862,7 +856,7 @@ be_visitor_ami4ccm_pre_proc::create_sendc_operation (be_operation *node,
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
                                 op_name,
-                                0,
+                                false,
                                 0),
                   0);
 
@@ -1055,7 +1049,7 @@ be_visitor_ami4ccm_pre_proc::create_reply_handler_operation (
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
                                 op_name,
-                                0,
+                                true,
                                 0),
                   -1);
 
@@ -1245,8 +1239,8 @@ be_visitor_ami4ccm_pre_proc::create_excep_operation (be_operation *node,
                   be_operation (rt,
                                 AST_Operation::OP_noflags,
                                 op_name,
-                                0,
-                                0),
+                                true,
+                                false),
                   -1);
 
   operation->set_name (op_name);
