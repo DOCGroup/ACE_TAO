@@ -79,9 +79,6 @@ private:
                                       be_valuetype *excep_holder);
   // create the reply handler interface
 
-  be_valuetype *create_exception_holder (be_interface *node);
-  // create the exception holder valuetype
-
   be_operation *create_sendc_operation (be_operation *node,
                                         int for_arguments);
   // create a method with "sendc_" prepended, if for_arguments
