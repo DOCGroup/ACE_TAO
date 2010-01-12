@@ -382,13 +382,15 @@ protected:
   // UTL_Scope. Definition follows below.
   friend class  UTL_ScopeActiveIterator;
 
-private:
+protected:
   friend int tao_yyparse (void);
   friend class AST_Enum;
   friend class IDL_GlobalData;
 
   // Scope Management Protocol.
-  virtual AST_PredefinedType *fe_add_predefined_type (AST_PredefinedType *t);
+  virtual
+  AST_PredefinedType *fe_add_predefined_type (
+    AST_PredefinedType *t);
 
   virtual
   AST_Module *fe_add_module (AST_Module *m);
@@ -397,11 +399,11 @@ private:
   AST_Template_Module_Inst *fe_add_template_module_inst (
     AST_Template_Module_Inst *m);
 
-    virtual
+  virtual
   AST_Template_Module_Ref *fe_add_template_module_ref (
     AST_Template_Module_Ref *m);
 
-virtual
+  virtual
   AST_Interface *fe_add_interface (AST_Interface *i);
 
   virtual

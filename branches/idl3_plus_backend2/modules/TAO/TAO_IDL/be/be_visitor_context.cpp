@@ -55,7 +55,8 @@ be_visitor_context::be_visitor_context (void)
     comma_ (0),
     interface_ (0),
     template_params_ (0),
-    template_args_ (0)
+    template_args_ (0),
+    template_module_inst_scope_ (0)
 {
 }
 
@@ -271,7 +272,7 @@ be_visitor_context::template_args (FE_Utils::T_ARGLIST *args)
   this->template_args_ = args;
 }
 
-UTL_Scope *
+be_scope *
 be_visitor_context::template_module_inst_scope (void) const
 {
   return this->template_module_inst_scope_;
@@ -280,7 +281,8 @@ be_visitor_context::template_module_inst_scope (void) const
 void
 be_visitor_context::template_module_inst_scope (UTL_Scope *s)
 {
-  this->template_module_inst_scope_ = s;
+  this->template_module_inst_scope_ =
+    be_scope::narrow_from_scope (s);
 }
   
 // ****************************************************************
