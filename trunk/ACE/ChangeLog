@@ -1,3 +1,10 @@
+Tue Jan 12 02:10:48 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_iphone.GNU:
+
+          crt1.10.6.o is missing under MacOSX 10.6 for iPhone Simulator.
+          Fallback to 10.5 until apple provides the missing crt1.10.6.o
+
 Sat Jan  9 00:42:55 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * ace/config-macosx-iphone.h:
@@ -7,7 +14,7 @@ Sat Jan  9 00:42:55 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
           simulator is probably different. We need to adjust this once
           we verify that the simulator value is different than the
           hardware's value.
-        
+
 Wed Jan  6 05:25:26 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * include/makeinclude/platform_macosx_iphone.GNU:
