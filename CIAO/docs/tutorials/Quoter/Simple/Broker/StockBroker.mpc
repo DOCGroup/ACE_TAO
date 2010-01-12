@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Stock_Base -c StockBrokerDriver StockBroker -l ../lib -o ../lib"
 
-project(Stock_Base_StockBroker_idl_gen) : componentidldefaults   {
+project(Stock_Base_StockBroker_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=STOCKBROKER_STUB_Export \
               -Wb,stub_export_include=StockBroker_stub_export.h \
@@ -15,7 +15,7 @@ project(Stock_Base_StockBroker_idl_gen) : componentidldefaults   {
   }
 }
 
-project(Stock_Base_StockBroker_lem_gen) : ciaoidldefaults   {
+project(Stock_Base_StockBroker_lem_gen) : ciaoidldefaults {
   after += Stock_Base_StockBroker_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=STOCKBROKER_LEM_STUB_Export \
@@ -111,7 +111,7 @@ project(Stock_Base_StockBroker_svnt) : ciao_servant   {
   libpaths += ../lib
   libout = ../lib
   dynamicflags = STOCKBROKER_SVNT_BUILD_DLL
-  
+
   IDL_Files {
   }
 
