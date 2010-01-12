@@ -9,22 +9,16 @@
 #ifndef DDS_SHARED_DP_COMPONENT_IDL
 #define DDS_SHARED_DP_COMPONENT_IDL
 
-#include "Connector1/Connector1.idl"
-#include "Connector1/Connector1E.idl"
-
-#include "Connector2/Connector2.idl"
-#include "Connector2/Connector2E.idl"
-
-#include "Connector3/Connector3.idl"
-#include "Connector3/Connector3E.idl"
+#include "Connector/Connector.idl"
+#include "Connector/ConnectorE.idl"
 
 module SharedDP
 {
   component SharedDPComponent
   {
-    port CCM_DDS::SharedDPTest1::DDS_Write write1;
-    port CCM_DDS::SharedDPTest2::DDS_Write write2;
-    port CCM_DDS::SharedDPTest3::DDS_Write write3;
+    port CCM_DDS::SharedDPTest::DDS_Write write1;
+    port CCM_DDS::SharedDPTest::DDS_Write write2;
+    port CCM_DDS::SharedDPTest::DDS_Write write3;
   };
 };
 

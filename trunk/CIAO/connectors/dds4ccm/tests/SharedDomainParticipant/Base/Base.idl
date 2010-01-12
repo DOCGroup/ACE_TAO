@@ -8,22 +8,10 @@
 #ifndef BASE_IDL
 #define BASE_IDL
 
-struct SharedDPTest1 {
-  string key1;
-  long iteration1;
+struct SharedDPTest {
+  string key;
+  long iteration;
 };
-typedef sequence<SharedDPTest1> SharedDPTest1_Seq;
-
-struct SharedDPTest2 {
-   string key2;
-   long iteration2;
- };
- typedef sequence<SharedDPTest2> SharedDPTest2_Seq;
-
- struct SharedDPTest3 {
-   string key3;
-   long iteration3;
- };
- typedef sequence<SharedDPTest3> SharedDPTest3_Seq;
+typedef sequence<SharedDPTest> SharedDPTest_Seq;
 
 #endif

@@ -106,6 +106,10 @@ namespace CIAO
                 }
               part->enable ();
             }
+          else CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::create_participant_with_profile - "
+                          "Re-using participant for %C.\n",
+                          qos_profile.c_str ()));
+
           ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i ();
           RTI_DomainParticipant_i *rti_dp = dynamic_cast < RTI_DomainParticipant_i *> (retval.in ());
           rti_dp->set_impl (part);
