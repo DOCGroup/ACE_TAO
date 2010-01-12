@@ -85,6 +85,10 @@ private:
                                       be_valuetype *excep_holder);
   // create the reply handler interface
 
+  be_interface *create_sendc_interface (be_interface *node,
+                                      be_valuetype *excep_holder);
+  // create the sendc interface
+  
   be_valuetype *create_exception_holder (be_interface *node);
   // create the exception holder valuetype
 
