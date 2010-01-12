@@ -1,0 +1,15 @@
+// $Id
+
+module CCM_AMI
+{
+  native UserExceptionBase;
+
+  local interface CCM_ExceptionHolder
+  {
+    void raise_exception() raises (UserExceptionBase);
+  };
+
+  /// Base interface for the Callback model
+  interface ReplyHandler { };
+};
+
