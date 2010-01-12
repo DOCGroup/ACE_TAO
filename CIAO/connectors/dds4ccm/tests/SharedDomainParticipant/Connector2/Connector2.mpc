@@ -1,5 +1,4 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -p DDS_OIT_Test_Base -l .. -o ../lib -u DDS Connector2"
 
 project(DDS_SharedDP_Connector2_idl_gen) : connectoridldefaults {
   after += DDS4CCM_idl_gen
@@ -33,7 +32,7 @@ project(DDS_SharedDP_Connector2_lem_gen) : ciaoidldefaults {
 }
 
 project(DDS_SharedDP_Connector2_lem_stub) : ccm_svnt, dds4ccm_base {
-  after += DDS_SharedDP_Connector2_lem_gen DDS_SharedDP_Connector2_stub DDS_OIT_Test_Base_stub DDS4CCM_lem_stub
+  after += DDS_SharedDP_Connector2_lem_gen DDS_SharedDP_Connector2_stub DDS_SharedDPBase_stub DDS4CCM_lem_stub
   libs  += DDS_SharedDPBase_stub DDS_Connector2_stub DDS4CCM_lem_stub
   libpaths += ../lib
   libout = ../lib
@@ -59,7 +58,7 @@ project(DDS_SharedDP_Connector2_lem_stub) : ccm_svnt, dds4ccm_base {
 }
 
 project(DDS_SharedDP_Connector2_stub) : ccm_stub, dds4ccm_base {
-  after += DDS_SharedDP_Connector2_idl_gen DDS_OIT_Test_Base_stub
+  after += DDS_SharedDP_Connector2_idl_gen DDS_SharedDPBase_stub
   libs  += DDS_SharedDPBase_stub
   libpaths += ../lib
   libout = ../lib
@@ -85,7 +84,7 @@ project(DDS_SharedDP_Connector2_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(DDS_SharedDP_Connector2_exec) : ciao_executor, dds4ccm_impl {
-  after   += DDS_SharedDP_Connector2_lem_stub DDS_SharedDP_Connector2_stub DDS4CCM_lem_stub DDS_OIT_Test_Base_NDDS_TS
+  after   += DDS_SharedDP_Connector2_lem_stub DDS_SharedDP_Connector2_stub DDS4CCM_lem_stub DDS_SharedDPBase_NDDS_TS
   sharedname = DDS_Connector2_exec
   libs += DDS_Connector2_stub DDS_Connector2_lem_stub DDS_SharedDPBase_stub DDS4CCM_lem_stub DDS_SharedDPBase_NDDS_TS
   libpaths += ../lib
