@@ -981,7 +981,6 @@ ACE_LACKS_PUTENV_PROTOTYPE              Platform/compiler lacks the
                                         LynxOS)
 ACE_LACKS_PWD_REENTRANT_FUNCTIONS       Platform lacks getpwnam_r()
                                         methods (e.g., SGI 6.2).
-ACE_LACKS_SID                           Platform lacks setsid()
 ACE_LACKS_QSORT                         Compiler/platform lacks the
                                         standard C library qsort()
                                         function
@@ -1034,7 +1033,6 @@ ACE_LACKS_SIGSET                        Platform lacks signal sets
                                         (e.g., Chorus and Win32)
 ACE_LACKS_STRPTIME                      Platform/compiler lacks the strptime()
                                         function.
-ACE_LACKS_STRCHR			Platform/compiler lacks strchr()
 ACE_LACKS_WCSCHR			Platform/compiler lacks wcschr()
 ACE_LACKS_STRDUP			Platform/compiler lacks strdup()
 ACE_LACKS_WCSDUP			Platform/compiler lacks wcsdup()
