@@ -1,7 +1,19 @@
+Tue Jan 12 19:15:19 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_stdlib.h:
+          Fixed typo.
+
+        * ace/README:
+          Removed ACE_LACKS_SID and ACE_LACKS_STRCHR.
+          These are no longer used.
+
+        * ace/config-integritySCA.h:
+          Removed ACE_LACKS_SHARED_MEMORY. It is no longer used.
+
 Tue Jan 12 19:04:15 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * ace/config-mvs.h:
-          Removed ACE_LACKS_MSGBUF_T. It is no longer used. 
+          Removed ACE_LACKS_MSGBUF_T. It is no longer used.
 
 Tue Jan 12 18:52:21 UTC 2010  Olli Savia  <ops@iki.fi>
 
