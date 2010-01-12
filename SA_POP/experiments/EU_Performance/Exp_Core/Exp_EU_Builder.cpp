@@ -6,7 +6,7 @@
  * @file  Exp_EU_Builder.cpp
  *
  * This file contains the implementation of the Exp_EU_Builder concrete class,
- * which implements a Builder creating SA_Planner and associated
+ * which implements a Builder creating Exp_EU_Planner and associated
  * objects for planning with spreading activation networks and scheduling
  * with the "roadblock" scheduler (Exp_EU_SchedStrategy).
  *
@@ -20,7 +20,9 @@
 //#include "SA_Builder.h"
 #include "Exp_EU_Builder.h"
 
-#include "Planner.h"
+//#include "Planner.h"
+#include "Exp_EU_Planner.h"
+
 #include "SANet/SANet.h"
 #include "SA_PlanHeuristics.h"
 #include "SA_PlanStrategy.h"
@@ -35,8 +37,9 @@ using namespace SA_POP;
 
 // Constructor.
 Exp_EU_Builder::Exp_EU_Builder (void)
+: exp_eu_planner_ (0)
 {
-  // Nothing to do.
+  // All other initialization handled by SA_Builder base class constructor.
 };
 
 // Destructor.
@@ -53,7 +56,9 @@ void Exp_EU_Builder::init (void)
   this->is_init_ = true;
 
   // Create objects.
-  this->planner_ = new Planner ();
+  this->exp_eu_planner_ = new Exp_EU_Planner ();
+  this->planner_ = this->exp_eu_planner_;
+
   this->sanet_ = new SANet::Network ();
   this->cond_choice_ = new SA_CondStrategy (this->planner_);
   this->task_choice_ = new SA_TaskStrategy (this->planner_);
@@ -84,3 +89,12 @@ void Exp_EU_Builder::init (void)
     this->working_plan_,
     this->task_map_);
 };
+
+// Get Exp_EU_Planner object.
+Exp_EU_Planner *Exp_EU_Builder::get_exp_eu_planner (void)
+{
+  if (!this->is_init_)
+    this->init ();
+  return this->exp_eu_planner_;
+};
+

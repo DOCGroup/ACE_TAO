@@ -1,3 +1,25 @@
+Tue Jan 12 03:11:44 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * C2W/C2W_Demo.mpc:
+        * C2W/C2W_Demo.cpp:
+        * Standalone/SA_POP_Demo.cpp:
+        * UserInput/InputCL.h:
+
+          User interface enhancements.
+
+        * experiments/EU_Performance/UserInput.h:
+        * experiments/EU_Performance/UserInput.cpp:
+
+          Removed unused files.
+
+        * experiments/EU_Performance/Exp_Core/Exp_EU_Builder.h:
+        * experiments/EU_Performance/Exp_Core/Exp_EU_Builder.cpp:
+        * experiments/EU_Performance/SAPOP_Exp_EU.cpp:
+        * experiments/EU_Performance/SAPOP_Exp_EU.mpc:
+
+          Continuing work on EU experiment.
+
+
 Fri Jan  8 20:59:42 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * Planner.h:
