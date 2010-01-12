@@ -46,6 +46,9 @@ public:
   virtual ~be_scope (void);
   // Destructor.
 
+  AST_Field *be_add_field (AST_Field *f);
+  // To access the protected base class method fe_add_field.
+
   virtual void comma (unsigned short set);
   // Set the comma producing state.
 

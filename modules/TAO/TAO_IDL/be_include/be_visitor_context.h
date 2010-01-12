@@ -158,7 +158,7 @@ public:
   FE_Utils::T_ARGLIST *template_args (void) const;
   void template_args (FE_Utils::T_ARGLIST *args);
   
-  UTL_Scope *template_module_inst_scope (void) const;
+  be_scope *template_module_inst_scope (void) const;
   void template_module_inst_scope (UTL_Scope *s);
   
   // = helpers
@@ -303,7 +303,7 @@ private:
   
   // Scope for adding the instantiated contents of a template
   // module.
-  UTL_Scope *template_module_inst_scope_;
+  be_scope *template_module_inst_scope_;
 };
 
 #if defined (interface)

@@ -52,6 +52,9 @@ public:
   virtual int visit_template_module (be_template_module *node);
   virtual int visit_template_module_inst (be_template_module_inst *node);
   virtual int visit_typedef (be_typedef *node);
+  virtual int visit_constant (be_constant *node);
+  virtual int visit_structure (be_structure *node);
+  virtual int visit_field (be_field *node);
   
 private:
   // If arg is a param holder, return the matching template arg,

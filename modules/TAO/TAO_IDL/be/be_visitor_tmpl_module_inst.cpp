@@ -16,6 +16,10 @@
 #include "be_template_module.h"
 #include "be_template_module_inst.h"
 #include "be_typedef.h"
+#include "be_constant.h"
+#include "be_structure.h"
+#include "be_param_holder.h"
+#include "be_expression.h"
 
 #include "ast_param_holder.h"
 
@@ -157,7 +161,8 @@ be_visitor_tmpl_module_inst::visit_typedef (be_typedef *node)
     }
     
   AST_Type *bt =
-    AST_Type::narrow_from_decl (this->reify_type (node->base_type ()));
+    AST_Type::narrow_from_decl (
+      this->reify_type (node->base_type ()));
   
   be_typedef *td = 0;
   ACE_NEW_RETURN  (td,
@@ -169,6 +174,119 @@ be_visitor_tmpl_module_inst::visit_typedef (be_typedef *node)
                    
   this->ctx_->template_module_inst_scope ()->add_to_scope (td);
 
+  return 0;
+}
+
+int
+be_visitor_tmpl_module_inst::visit_constant (be_constant *node)
+{
+  if (this->ctx_->template_args () == 0)
+    {
+      return 0;
+    }
+    
+  be_param_holder *ph =
+    be_param_holder::narrow_from_decl (
+      node->constant_value ()->param_holder ());
+      
+  AST_Expression *v = 0;
+  AST_Expression::ExprType et = AST_Expression::EV_none;
+    
+  if (ph != 0)
+    {
+      be_visitor_reifying rv (this->ctx_);
+      
+      if (rv.visit_param_holder (ph) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_tmpl_module_inst::")
+                             ACE_TEXT ("visit_constant - ")
+                             ACE_TEXT ("reification of param ")
+                             ACE_TEXT ("holder failed\n")),
+                            -1);
+        }
+        
+      AST_Constant *c =
+        AST_Constant::narrow_from_decl (rv.reified_node ());
+        
+      v = c->constant_value ();
+      et = c->et ();
+    }
+  else
+    {
+      v = node->constant_value ();
+      et = node->et ();
+    }
+    
+  be_expression *new_v = 0;
+  ACE_NEW_RETURN (new_v,
+                  be_expression (v, et),
+                  -1);
+    
+  be_constant *new_c = 0;
+  ACE_NEW_RETURN (new_c,
+                  be_constant (et, new_v, node->name ()),
+                  -1);
+    
+  this->ctx_->template_module_inst_scope ()->add_to_scope (new_c);
+
+  return 0;
+}
+
+int
+be_visitor_tmpl_module_inst::visit_structure (be_structure *node)
+{
+  if (this->ctx_->template_args () == 0)
+    {
+      return 0;
+    }
+    
+  be_structure *s = 0;
+  ACE_NEW_RETURN (s,
+                  be_structure (node->name (),
+                                node->is_local (),
+                                node->is_abstract ()),
+                  -1);
+      
+  // Hold current scope for restoration later.    
+  be_scope *holder = this->ctx_->template_module_inst_scope (); 
+           
+  holder->add_to_scope (s);
+  
+  // Store the new scope for traversal.
+  this->ctx_->template_module_inst_scope (s);
+  
+  if (this->visit_scope (node) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_tmpl_module_inst::")
+                         ACE_TEXT ("visit_structure - ")
+                         ACE_TEXT ("visit_scope() failed\n")),
+                        -1);
+    }
+    
+  // Restore the outer scope.  
+  this->ctx_->template_module_inst_scope (holder);
+
+  return 0;
+}
+
+int
+be_visitor_tmpl_module_inst::visit_field (be_field *node)
+{
+  AST_Type *t =
+    AST_Type::narrow_from_decl (
+      this->reify_type (node->field_type ()));
+      
+  be_field *f = 0;
+  ACE_NEW_RETURN (f,
+                  be_field (t,
+                            node->name (),
+                            node->visibility ()),
+                  -1);
+      
+  this->ctx_->template_module_inst_scope ()->be_add_field (f);
+  
   return 0;
 }
 
