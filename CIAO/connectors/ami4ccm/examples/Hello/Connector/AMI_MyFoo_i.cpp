@@ -3,26 +3,7 @@
 #include "AMI_MyFoo_i.h"
 #include "Hello_BaseEC.h"
 #include "tao/LocalObject.h"
-
-class ExceptionHolder_i
-    : public virtual ::CCM_AMI::CCM_ExceptionHolder,
-      public virtual ::CORBA::LocalObject
-{
-public:
-    ExceptionHolder_i (::Messaging::ExceptionHolder* holder) : holder_ (holder) {}
-
-    virtual void raise_exception (void)
-      {
-        if (holder_)
-          {
-            holder_->raise_exception ();
-          }
-        else
-          throw ::CORBA::UNKNOWN (TAO::VMCID, CORBA::COMPLETED_YES);
-      }
-private:
-    ::Messaging::ExceptionHolder* holder_;
-};
+#include "connectors/ami4ccm/ami4ccm/ami4ccm.h"
 
 namespace CCM_CORBA_AMI_MyFoo_Impl
 {
@@ -54,7 +35,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
     ::Messaging::ExceptionHolder * excep_holder)
   {
     printf ("AMI CORBA (FOO) :\tMyFoo Foo Reply Handler::foo_excep\n");
-    ExceptionHolder_i holder (excep_holder);
+    ::CCM_AMI::ExceptionHolder_i holder (excep_holder);
     this->foo_callback_->foo_excep (&holder);
     this->_remove_ref ();
   }
@@ -74,7 +55,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
     ::Messaging::ExceptionHolder * excep_holder)
   {
     printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::hello_excep\n");
-    ExceptionHolder_i holder (excep_holder);
+    ::CCM_AMI::ExceptionHolder_i holder (excep_holder);
     this->foo_callback_->hello_excep (&holder);
     this->_remove_ref ();
   }
@@ -94,7 +75,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
     ::Messaging::ExceptionHolder * excep_holder)
   {
     printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::get_rw_attrib_excep\n");
-    ExceptionHolder_i holder (excep_holder);
+    ::CCM_AMI::ExceptionHolder_i holder (excep_holder);
     this->foo_callback_->get_rw_attrib_excep (&holder);
     this->_remove_ref ();
   }
@@ -113,7 +94,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
     ::Messaging::ExceptionHolder * excep_holder)
   {
     printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::set_rw_attrib_excep\n");
-    ExceptionHolder_i holder (excep_holder);
+    ::CCM_AMI::ExceptionHolder_i holder (excep_holder);
     this->foo_callback_->set_rw_attrib_excep (&holder);
     this->_remove_ref ();
   }
@@ -133,7 +114,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
     ::Messaging::ExceptionHolder * excep_holder)
   {
     printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::get_ro_attrib_excep\n");
-    ExceptionHolder_i holder (excep_holder);
+    ::CCM_AMI::ExceptionHolder_i holder (excep_holder);
     this->foo_callback_->get_ro_attrib_excep (&holder);
     this->_remove_ref ();
   }

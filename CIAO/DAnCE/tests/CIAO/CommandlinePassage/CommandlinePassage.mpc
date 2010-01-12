@@ -1,6 +1,6 @@
 // $Id$
 
-project(CommandlinePassage_idl_gen) : componentidldefaults   {
+project(CommandlinePassage_idl_gen) : componentidldefaults {
   after +=
   custom_only = 1
   idlflags += -Wb,stub_export_macro=COMMANDLINEPASSAGE_STUB_Export \
@@ -53,7 +53,7 @@ project(CommandlinePassage_lem_stub) : ccm_svnt, dds4ccm_base   {
 
 project(CommandlinePassage_stub) : ccm_stub, dds4ccm_base   {
   after += CommandlinePassage_idl_gen
-  libs  += 
+  libs  +=
   sharedname = CommandlinePassage_stub
   dynamicflags   = COMMANDLINEPASSAGE_STUB_BUILD_DLL
 

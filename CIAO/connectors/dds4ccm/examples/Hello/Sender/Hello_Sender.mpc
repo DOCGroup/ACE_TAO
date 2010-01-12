@@ -1,6 +1,6 @@
 // $Id$
 
-project(DDS_Hello_Sender_idl_gen) : componentidldefaults   {
+project(DDS_Hello_Sender_idl_gen) : componentidldefaults {
   avoids += ace_for_tao
   after  += DDS_Hello_Connector_idl_gen
   custom_only = 1

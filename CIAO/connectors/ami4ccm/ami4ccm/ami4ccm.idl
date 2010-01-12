@@ -4,7 +4,7 @@ module CCM_AMI
 {
   native UserExceptionBase;
 
-  local interface CCM_ExceptionHolder
+  local interface ExceptionHolder
   {
     void raise_exception() raises (UserExceptionBase);
   };
