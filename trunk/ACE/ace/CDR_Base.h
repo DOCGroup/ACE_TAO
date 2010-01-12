@@ -220,7 +220,6 @@ public:
               // complain about no ANSI C++ long long.
               typedef   longlong_t LongLong;
 #     else
-              // LynxOS 2.5.0   and Linux don't have u_longlong_t.
               typedef   long long LongLong;
 #     endif /* sun */
 #   else  /* no native 64 bit integer type */
