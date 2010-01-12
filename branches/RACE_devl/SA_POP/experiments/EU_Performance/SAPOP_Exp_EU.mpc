@@ -1,21 +1,21 @@
 project(SAPOP_Exp_EU) : xerces, aceexe, sapop_xml {
   exename = SAPOP_Exp_EU
 
-   includes += $(SAPOP_ROOT)
+  includes += $(SAPOP_ROOT)
+  includes += $(SAPOP_ROOT)/UserInput
 
-   macros = SA_POP_HAS_ACE ACE_AS_STATIC_LIBS
+  macros = SA_POP_HAS_ACE ACE_AS_STATIC_LIBS
 
+
+  Header_Files {
+    $(SAPOP_ROOT)/UserInput/InputCL.h
+    $(SAPOP_ROOT)/UserInput/Question.h
+  }
 
   Source_Files {
     SAPOP_Exp_EU.cpp
-    UserInput.cpp
-  }
 
-  Inline_Files {
-  }
-
-  Header_Files {
-    UserInput.h
+    $(SAPOP_ROOT)/UserInput/InputCL.cpp
   }
 
   Documentation_Files {
@@ -28,6 +28,7 @@ project(SAPOP_Exp_EU) : xerces, aceexe, sapop_xml {
    Header_Files {
       Exp_Core/Exp_EU_Builder.h
       Exp_Core/Exp_EU_SchedStrategy.h
+      Exp_Core/Exp_EU_Planner.h
 
 
       $(SAPOP_ROOT)/SA_POP_Types.h
@@ -74,6 +75,7 @@ project(SAPOP_Exp_EU) : xerces, aceexe, sapop_xml {
    Source_Files {
       Exp_Core/Exp_EU_Builder.cpp
       Exp_Core/Exp_EU_SchedStrategy.cpp
+      Exp_Core/Exp_EU_Planner.cpp
 
 
       $(SAPOP_ROOT)/SA_POP_Exceptions.cpp

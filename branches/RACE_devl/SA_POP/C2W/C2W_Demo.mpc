@@ -1,17 +1,19 @@
 project(C2W_Demo) : xerces, aceexe, sapop_core_standalone {
   exename = C2W_Demo
 
-  Source_Files {
-    C2W_Demo.cpp
-    UserInput.cpp
-  }
-
-  Inline_Files {
-  }
+  includes += $(SAPOP_ROOT)/UserInput
 
   Header_Files {
-    UserInput.h
+    $(SAPOP_ROOT)/UserInput/InputCL.h
+    $(SAPOP_ROOT)/UserInput/Question.h
   }
+
+  Source_Files {
+    C2W_Demo.cpp
+
+    $(SAPOP_ROOT)/UserInput/InputCL.cpp
+  }
+
 
   Documentation_Files {
     readme.txt
