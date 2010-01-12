@@ -555,8 +555,8 @@ be_visitor_ami_pre_proc::create_raise_operation (
                   be_operation (rt,
                                 AST_Operation::OP_noflags,
                                 op_name,
-                                0,
-                                0),
+                                false,
+                                false),
                   -1);
 
   operation->set_name (op_name);
@@ -633,8 +633,8 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
                                 op_name,
-                                0,
-                                0),
+                                false,
+                                false),
                   0);
 
   op->set_name (op_name);
@@ -990,8 +990,8 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
                   be_operation (rt,
                                 AST_Operation::OP_noflags,
                                 op_name,
-                                0,
-                                0),
+                                false,
+                                false),
                   -1);
 
   operation->set_name (op_name);
@@ -1139,8 +1139,8 @@ be_visitor_ami_pre_proc::generate_get_operation (be_attribute *node)
                   be_operation (node->field_type (),
                                 AST_Operation::OP_noflags,
                                 get_name,
-                                0,
-                                0),
+                                false,
+                                false),
                   0);
 
   operation->set_name (get_name);
@@ -1186,8 +1186,8 @@ be_visitor_ami_pre_proc::generate_set_operation (be_attribute *node)
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
                                 set_name,
-                                0,
-                                0),
+                                false,
+                                false),
                   0);
 
   operation->set_name (set_name);

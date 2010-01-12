@@ -89,9 +89,6 @@ private:
                                       be_valuetype *excep_holder);
   // create the sendc interface
   
-  be_valuetype *create_exception_holder (be_interface *node);
-  // create the exception holder valuetype
-
   int visit_scope (be_scope *node);
   // specialized visit_scope
 
