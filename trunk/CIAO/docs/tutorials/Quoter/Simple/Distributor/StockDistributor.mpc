@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Stock_Base -c StockDistributorDriver StockDistributor -l ../lib -o ../lib"
 
-project(Stock_Base_StockDistributor_idl_gen) : componentidldefaults   {
+project(Stock_Base_StockDistributor_idl_gen) : componentidldefaults {
   after += Stock_Base_idl_gen
   custom_only = 1
   idlflags +=  \
@@ -17,7 +17,7 @@ project(Stock_Base_StockDistributor_idl_gen) : componentidldefaults   {
   }
 }
 
-project(Stock_Base_StockDistributor_lem_gen) : ciaoidldefaults   {
+project(Stock_Base_StockDistributor_lem_gen) : ciaoidldefaults {
   after += Stock_Base_StockDistributor_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=STOCKDISTRIBUTOR_LEM_STUB_Export \

@@ -1,10 +1,20 @@
+Tue Jan  12 08:43:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/index.html:
+          Fixed some broken links and removed some old ones. Thanks to
+          Sreejith <sreejithsmadhavan at gmail dot com> for reporting this
+
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker.mpc:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor.mpc:
+          Layout changes
+
 Mon Jan  11 13:56:30 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/VariousTopicsEvent/Connector/VTopic_Connector.mpc
         * connectors/dds4ccm/tests/VariousTopicsEvent/Receiver/VTopic_Receiver.mpc
         * connectors/dds4ccm/tests/VariousTopicsEvent/Sender/VTopic_Sender.mpc
         * connectors/dds4ccm/tests/VariousTopicsState/Connector/VTopics_Connector.mpc
-          Change in case. 
+          Change in case.
 
 Mon Jan  11 08:48:30 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
