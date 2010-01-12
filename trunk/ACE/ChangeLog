@@ -1,3 +1,11 @@
+Tue Jan 12 19:52:04 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * ace/Time_Value.inl:
+          Fixed typo.
+
+        * ace/config-openbsd.h:
+          Removed ACE_LACKS_STRFTIME.
+
 Tue Jan 12 19:41:07 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * ace/config-integritySCA.h:
