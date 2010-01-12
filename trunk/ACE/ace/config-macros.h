@@ -455,7 +455,8 @@
 #if defined (ACE_WIN32)
 # define ACE_WIN32CALL_RETURN(X,TYPE,FAILVALUE) \
   do { \
-    TYPE ace_result_ = (TYPE) X; \
+    TYPE ace_result_; \
+    ace_result_ = (TYPE) X; \
     if (ace_result_ == FAILVALUE) \
       ACE_OS::set_errno_to_last_error (); \
     return ace_result_; \
