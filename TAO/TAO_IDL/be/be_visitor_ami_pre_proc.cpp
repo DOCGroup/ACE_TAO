@@ -152,7 +152,7 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
                         -1);
     }
 
-  be_valuetype *excep_holder = this->create_exception_holder (node);
+  be_valuetype *excep_holder = be_global->messaging_exceptionholder ();
   be_interface *reply_handler = this->create_reply_handler (node,
                                                             excep_holder);
   if (reply_handler)
@@ -327,12 +327,6 @@ be_visitor_ami_pre_proc::visit_attribute (be_attribute *node)
     }
 
   return 0;
-}
-
-be_valuetype *
-be_visitor_ami_pre_proc::create_exception_holder (be_interface *)
-{
-  return be_global->messaging_exceptionholder ();
 }
 
 be_interface *
