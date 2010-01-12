@@ -1,3 +1,9 @@
+Tue Jan 12 14:12:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_ami4ccm_pre_proc.cpp:
+          Commented out some code not needed for ami4ccm, but needed for
+          ami
+
 Tue Jan 12 08:34:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_ami4ccm_pre_proc.cpp:
