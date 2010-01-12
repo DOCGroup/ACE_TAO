@@ -1,3 +1,9 @@
+Tue Jan 12 19:08:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be_include/be_visitor_ami_pre_proc.h:
+          No seperate method needed for creating the exceptionholder
+
 Tue Jan 12 14:12:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_ami4ccm_pre_proc.cpp:
