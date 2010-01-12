@@ -1389,6 +1389,13 @@ sub check_for_bad_run_test ()
             my $is_run_test = 0;
             my $sub = 0;
 
+            if (($file =~ /.*TAO\/examples\/Advanced.*/)) {
+              next ITERATION;
+            }
+            if (($file =~ /.*TAO\/orbsvcs\/examples\/Security\/Send_File.*/)) {
+              next ITERATION;
+            }
+
             print "Looking at file $file\n" if $opt_d;
 
             while (<FILE>) {

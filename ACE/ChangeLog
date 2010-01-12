@@ -1,3 +1,9 @@
+Tue Jan 12 20:25:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Disable run_test.pl checking for some directories that
+          aren't converted yet
+
 Tue Jan 12 19:52:04 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * ace/Time_Value.inl:
