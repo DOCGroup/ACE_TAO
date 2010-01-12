@@ -17,14 +17,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ami4ccm/ami4ccmC.h"
+#include "connectors/ami4ccm/ami4ccm/ami4ccmC.h"
 #include "tao/LocalObject.h"
 #include "tao/Messaging/Messaging.h"
 
 namespace CCM_AMI
 {
-  class ExceptionHolder_i
-      : public virtual ::CCM_AMI::CCM_ExceptionHolder,
+  class AMI4CCM_STUB_Export ExceptionHolder_i
+      : public virtual ::CCM_AMI::ExceptionHolder,
         public virtual ::CORBA::LocalObject
   {
   public:

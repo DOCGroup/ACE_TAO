@@ -1,3 +1,43 @@
+Tue Jan 12 13:55:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/ami4ccm/ami4ccm.h
+        * connectors/ami4ccm/ami4ccm/ami4ccm.idl
+        * connectors/ami4ccm/examples/Hello/Base/Hello.idl
+        * connectors/ami4ccm/examples/Hello/Connector/AMI.mpc
+        * connectors/ami4ccm/examples/Hello/Connector/AMI_MyFoo_i.cpp
+        * connectors/ami4ccm/examples/Hello/Connector/Hello_Base.idl
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver.mpc
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender.mpc
+          Use new ami4ccm_stub library
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.mpc
+        * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender.mpc
+        * connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender.mpc
+        * connectors/dds4ccm/tests/CSLQoS/Sender/CSL_QoSTest_Sender.mpc
+        * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender.mpc
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender.mpc
+        * connectors/dds4ccm/tests/Event_Connection_Test/Sender/Event_Connection_Test_Sender.mpc
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender.mpc
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender.mpc
+        * connectors/dds4ccm/tests/KeyedWriter/Sender/Writer_Sender.mpc
+        * connectors/dds4ccm/tests/ListenManyByMany/Sender/LMBM_Test_Sender.mpc
+        * connectors/dds4ccm/tests/ListenNotEnabled/Sender/LNE_Test_Sender.mpc
+        * connectors/dds4ccm/tests/ListenOneByOne/Sender/LOBO_Test_Sender.mpc
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Sender/ConnectorStatusListener_Test_Sender.mpc
+        * connectors/dds4ccm/tests/PSLDeadline/Sender/PSL_DeadlineTest_Sender.mpc
+        * connectors/dds4ccm/tests/PSLSampleLost/Sender/PSL_SampleLost_Sender.mpc
+        * connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender.mpc
+        * connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender.mpc
+        * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender.mpc
+        * connectors/dds4ccm/tests/SLOneByOne/Sender/SL_OneByOne_Sender.mpc
+        * connectors/dds4ccm/tests/State_Connection_Test/Sender/State_Connection_Test_Sender.mpc
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender.mpc
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender.mpc
+        * connectors/dds4ccm/tests/Updater/Sender/Updater_Sender.mpc
+        * DAnCE/tests/CIAO/CommandlinePassage/CommandlinePassage.mpc
+          Layout changes
+
 Tue Jan 12 13:31:31 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.cpp:
