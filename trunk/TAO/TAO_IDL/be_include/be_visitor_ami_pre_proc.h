@@ -69,14 +69,12 @@ public:
 
 private:
   int create_raise_operation (be_decl *node,
-                              be_valuetype *excep_holder,
                               Operation_Kind operation_kind);
   // Creates a raise operation from node and inserts it in
   // excep_holder, while obeying if it is a normal operation
   // or a set or get attribute.
 
-  be_interface *create_reply_handler (be_interface *node,
-                                      be_valuetype *excep_holder);
+  be_interface *create_reply_handler (be_interface *node);
   // create the reply handler interface
 
   be_operation *create_sendc_operation (be_operation *node,
@@ -87,8 +85,7 @@ private:
   // but this should not be marhaled, therefor we need the switch
 
   int create_excep_operation (be_operation *node,
-                              be_interface *reply_handler,
-                              be_valuetype *excep_holder);
+                              be_interface *reply_handler);
   // create a method with "_excep" appended
 
   int create_reply_handler_operation (be_operation *node,
