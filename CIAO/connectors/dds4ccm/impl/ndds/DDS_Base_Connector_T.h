@@ -43,7 +43,6 @@ protected:
   const char* library_name_;
   const char* profile_name_;
 
-  ::DDS::DomainParticipantFactory_var domain_participant_factory_;
   ::DDS::DomainParticipant_var domain_participant_;
   ::DDS::DomainParticipantListener_var domainparticipantlistener_;
   typename CCM_TYPE::context_type::_var_type context_;
