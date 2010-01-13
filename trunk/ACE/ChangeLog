@@ -1,3 +1,13 @@
+Wed Jan 13 06:45:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_types.h:
+        * ace/OS_NS_arpa_inet.cpp:
+        * ace/OS_NS_unistd.inl:
+          VxWorks 6.8 fixes
+
+        * ace/UUID.cpp:
+          Only one exit point for operator=, const change, initialise pointer with 0
+
 Wed Jan 13 03:24:06 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Message_Queue.h,
@@ -6,7 +16,7 @@ Wed Jan 13 03:24:06 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
           #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
           #include "ace/Message_Queue_NT.h"
           #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
-  
+
           from ace/Message_Queue.h to ace/Message_Queue_T.cpp since that
           is more localized.
 
