@@ -1,13 +1,18 @@
+Wed Jan 13 21:18:42 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * tests/Reference_Counted_Event_Handler_Test.cpp:
+          Fixed typo.
+          
 Wed Jan 13 14:40:35 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
-  
+
         * ace/Message_Queue.h: Moved
-  
+
           #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
           #include "ace/Message_Queue_NT.h"
           #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
-  
+
           back to this file based on comments from Arto.
-  
+
 Wed Jan 13 13:51:54 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Message_Queue_T.cpp: Moved
@@ -15,10 +20,10 @@ Wed Jan 13 13:51:54 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
           #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
           #include "ace/Message_Queue_NT.h"
           #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
-  
+
           to outside the versioned namespace block.  Thanks to Johnny for
           reporting this.
-  
+
 Wed Jan 13 09:03:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
