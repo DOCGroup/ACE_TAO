@@ -276,7 +276,7 @@ be_visitor_ami4ccm_pre_proc::visit_interface (be_interface * node)
 
       // Insert the ami handler after the node, the
       // exception holder will be placed between these two later.
-      module->be_add_interface (sendc_interface, node);
+      module->be_add_interface (sendc_interface, reply_handler);
 
       // Remember from whom we were cloned
       sendc_interface->original_interface (node);
@@ -285,15 +285,7 @@ be_visitor_ami4ccm_pre_proc::visit_interface (be_interface * node)
       // unless we set it.
       sendc_interface->set_imported (node->imported ());
     }
-  else
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ami4ccm_pre_proc::"
-                         "visit_interface - "
-                         "creating the sendc interface failed\n"),
-                        -1);
-    }
-    
+   
 
   // Set the proper strategy.
   //be_interface_ami_strategy *bias = 0;
@@ -594,6 +586,8 @@ printf ("%s\n", reply_handler_local_name.c_str ());
 be_interface *
 be_visitor_ami4ccm_pre_proc::create_ami_sendc_interface (be_interface *node)
 {
+if (node->imported ())
+ return 0;
   // We're at global scope here so we need to fool the scope stack
   // for a minute so the correct repo id can be calculated at
   // interface construction time.
@@ -614,26 +608,26 @@ printf ("%s\n", reply_handler_local_name.c_str ());
                                            );
 
   long n_parents = 0;
-  AST_Type **p_intf =
-    this->create_inheritance_list (node, n_parents);
+  //AST_Type **p_intf =
+  //  this->create_inheritance_list (node, n_parents);
 
-  if (!p_intf)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                        "(%N:%l) be_visitor_ami_pre_proc::visit_interface - "
-                        "bad inheritance list\n"),
-                        0);
-    }
+  //if (!p_intf)
+  //  {
+  //    ACE_ERROR_RETURN ((LM_ERROR,
+  //                      "(%N:%l) be_visitor_ami_pre_proc::visit_interface - "
+  //                      "bad inheritance list\n"),
+  //                      0);
+  //  }
 
   be_interface *reply_handler = 0;
   ACE_NEW_RETURN (reply_handler,
                   be_interface (reply_handler_name, // name
-                                p_intf,             // list of inherited
+                                0, //p_intf,             // list of inherited
                                 n_parents,          // number of inherited
                                 0,                  // list of all ancestors
                                 0,                  // number of ancestors
                                 true,               // local
-                                0),                 // non-abstract
+                                false),             // non-abstract
                   0);
 printf ("%s\n", reply_handler_local_name.c_str ());
 
@@ -700,9 +694,13 @@ printf ("%s\n", reply_handler_local_name.c_str ());
 
   if (0 != sendc_marshaling && 0 != sendc_arguments)
     {
-      sendc_marshaling->set_defined_in (node);
+  if (0 == reply_handler->be_add_operation (sendc_arguments))
+    {
+      return 0;
+    }
+      sendc_marshaling->set_defined_in (reply_handler);
 
-      sendc_arguments->set_defined_in (node);
+      sendc_arguments->set_defined_in (reply_handler);
     }
 
               //this->create_reply_handler_operation (get_operation,
@@ -712,23 +710,38 @@ printf ("%s\n", reply_handler_local_name.c_str ());
               //delete get_operation;
               //get_operation = 0;
 
-              //if (!attribute->readonly ())
-              //  {
-              //    be_operation *set_operation =
-              //      this->generate_set_operation (attribute);
+              if (!attribute->readonly ())
+                {
+                  be_operation *set_operation =
+                    this->generate_set_operation (attribute);
 
-              //    this->create_reply_handler_operation (set_operation,
-              //                                          reply_handler);
+  be_operation *sendc_marshaling =
+    this->create_sendc_operation (set_operation,
+                                  0); // for arguments = false
 
-              //    set_operation->destroy ();
-              //    delete set_operation;
-              //    set_operation = 0;
-              //  }
+  be_operation *sendc_arguments =
+    this->create_sendc_operation (set_operation,
+                                  1); // for arguments = true
+
+  if (0 != sendc_marshaling && 0 != sendc_arguments)
+    {
+  if (0 == reply_handler->be_add_operation (sendc_arguments))
+    {
+      return 0;
+    }
+      sendc_marshaling->set_defined_in (reply_handler);
+
+      sendc_arguments->set_defined_in (reply_handler);
+    }
+                  set_operation->destroy ();
+                  delete set_operation;
+                  set_operation = 0;
+                }
             }
           else
             {
               be_operation* operation = be_operation::narrow_from_decl (d);
-
+printf ("%s\n", operation->name ()->last_component ()->get_string());
               if (operation)
                 {
   be_operation *sendc_marshaling =
@@ -739,11 +752,18 @@ printf ("%s\n", reply_handler_local_name.c_str ());
     this->create_sendc_operation (operation,
                                   1); // for arguments = true
 
+    printf ("here 3\n");
   if (0 != sendc_marshaling && 0 != sendc_arguments)
     {
-      sendc_marshaling->set_defined_in (node);
+    printf ("here 4\n");
+      sendc_marshaling->set_defined_in (reply_handler);
 
-      sendc_arguments->set_defined_in (node);
+      sendc_arguments->set_defined_in (reply_handler);
+  if (0 == reply_handler->be_add_operation (sendc_arguments))
+    {
+      return 0;
+    }
+
     }
                   //this->create_reply_handler_operation (operation,
                   //                                      reply_handler);
