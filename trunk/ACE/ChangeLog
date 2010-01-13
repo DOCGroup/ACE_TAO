@@ -1,8 +1,14 @@
+Wed Jan 13 21:20:42 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * ace/README:
+          Removed ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS and
+          ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS. These are no longer used.
+
 Wed Jan 13 21:18:42 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * tests/Reference_Counted_Event_Handler_Test.cpp:
           Fixed typo.
-          
+
 Wed Jan 13 14:40:35 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Message_Queue.h: Moved

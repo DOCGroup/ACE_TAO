@@ -245,8 +245,6 @@ ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 ACE_HAS_BROKEN_ACCEPT_ADDR              Platform can't correctly deal
                                         with a NULL addr to accept()
                                         (e.g, VxWorks).
-ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS Compiler can't handle const char *
-                                        as rvalue in conditional operator.
 ACE_HAS_BROKEN_DGRAM_SENDV              Platform sendv() does not work
                                         properly with datagrams,
                                         i.e. it fails when the iovec
@@ -307,13 +305,6 @@ ACE_HAS_EBCDIC                          Compile in the ACE code set classes
                                         that support EBCDIC.
 ACE_HAS_EXCEPTIONS                      Compiler supports C++
                                         exception handling
-ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS    Compiler does not call
-                                        unexpected exception handler
-                                        if exception not listed in
-                                        exception specification is
-                                        thrown.  In particular, the
-                                        exception specification is not
-                                        respected.
 ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT  When a base-class is a
                                         specialization of a class template
                                         then this class template must be
