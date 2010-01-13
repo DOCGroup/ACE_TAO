@@ -260,11 +260,11 @@ namespace CIAO_Updater_Sender_Impl
       }
     catch (const CCM_DDS::InternalError& ex )
       {
-		  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK: Expected : Exception InternalE. test updater update_one with incompatible datum and handle. ex %d\n"),ex.error_code));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK: Expected : Exception InternalE. test updater update_one with incompatible datum and handle. ex %d\n"),ex.error_code));
         result = true;
       }
     }
-    if(result==true)
+    if (result==true)
     {
       try
       {
