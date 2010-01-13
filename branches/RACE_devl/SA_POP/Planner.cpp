@@ -505,6 +505,9 @@ void Planner::notify_plan_changed (void)
 
 double Planner::calc_plan_eu(Plan plan)
 {
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+// Replace with correct code to activate all tasks and their preconditions on a clone of the network.
+  /*
   size_t sa_max_steps = 100;
 	sanet_->set_nodes_state(false);
 
@@ -548,7 +551,10 @@ double Planner::calc_plan_eu(Plan plan)
 	//TODO the rest
 
 	return conj_utils;
-}
+  */
+  return 10;
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+};
 
 /// Get the Task instances in a particular set of the specified task instance
 const TaskInstSet* Planner::get_prec_insts (TaskInstID task_inst, PrecedenceRelation prec_rel)

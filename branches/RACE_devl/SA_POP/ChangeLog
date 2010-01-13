@@ -1,3 +1,12 @@
+Wed Jan 13 04:14:15 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * Planner.cpp:
+        * experiments/EU_Performance/Exp_Core/Exp_EU_Planner.h:
+        * experiments/EU_Performance/Exp_Core/Exp_EU_Planner.cpp:
+
+          Adding EU experiment planner.
+
+
 Tue Jan 12 03:11:44 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * C2W/C2W_Demo.mpc:
