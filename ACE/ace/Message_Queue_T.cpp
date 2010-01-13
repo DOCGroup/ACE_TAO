@@ -2967,6 +2967,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE>::create_Vx_message_queue (size_t max_me
 #endif /* defined (ACE_VXWORKS) */
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
+#include "ace/Message_Queue_NT.h"
 
 template <ACE_SYNCH_DECL>
 ACE_Message_Queue_NT *

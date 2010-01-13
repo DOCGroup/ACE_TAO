@@ -235,7 +235,7 @@ ACE_XtReactor::remove_handler_i (ACE_HANDLE handle,
   ACE_TRACE ("ACE_XtReactor::remove_handler_i");
 
   int result  = ACE_Select_Reactor::remove_handler_i (handle,
-						      mask);
+                                                      mask);
   if (result == -1)
     return -1;
 
@@ -303,12 +303,12 @@ ACE_XtReactor::synchronize_XtInput(ACE_HANDLE handle)
   if (condition == 0) // No input handler needed.
     {
       if (*XtID)
-	{
-	  // Remove linked list entry.
-	  ACE_XtReactorID *toDelete  = *XtID;
-	  *XtID = (*XtID)->next_;
-	  delete toDelete;
-	}
+        {
+          // Remove linked list entry.
+          ACE_XtReactorID *toDelete  = *XtID;
+          *XtID = (*XtID)->next_;
+          delete toDelete;
+        }
       return;
     }
 
@@ -339,9 +339,9 @@ ACE_XtReactor::compute_Xt_condition(ACE_HANDLE handle)
   // The returned value is either a combination of READ/WRITE/EXCEPT_MASK
   // or -1.
   int mask =this->bit_ops(handle,
-			  0,
-			  this->wait_set_,
-			  ACE_Reactor::GET_MASK);
+                          0,
+                          this->wait_set_,
+                          ACE_Reactor::GET_MASK);
 
   if (mask == -1) // No active mask.
     return 0;

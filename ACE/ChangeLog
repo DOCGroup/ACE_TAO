@@ -1,3 +1,20 @@
+Wed Jan 13 03:24:06 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Message_Queue.h,
+        * ace/Message_Queue_T.cpp: Moved the code
+
+          #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
+          #include "ace/Message_Queue_NT.h"
+          #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
+  
+          from ace/Message_Queue.h to ace/Message_Queue_T.cpp since that
+          is more localized.
+
+Wed Jan 13 02:54:10 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/XtReactor/XtReactor.cpp: Removed stray tabs.  Thanks to
+          Johnny for reporting this.
+
 Tue Jan 12 20:25:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
@@ -71,6 +88,7 @@ Tue Jan 12 18:52:21 UTC 2010  Olli Savia  <ops@iki.fi>
           Removed ACE_LACKS_CMSG_DATA_MACRO and ACE_LACKS_CMSG_DATA_MEMBER.
           These are no longer used.
 
+>>>>>>> .r88505
 Tue Jan 12 14:18:58 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * ace/CDR_Base.h:
