@@ -113,8 +113,8 @@ project(DDS_VTopics_Receiver_svnt) : ciao_servant, dds4ccm_base, nddslib {
   libs       += Receiver_stub Receiver_lem_stub DDS_VTopics_Base_stub \
                 DDS_VTopics_Connector_stub DDS_VTS_String_Connector_stub DDS_VTS_Array_Connector_stub DDS_VTS_Seq_Connector_stub \
                 DDS_VTopics_Connector_svnt DDS_VTS_String_Connector_svnt DDS_VTS_Array_Connector_svnt DDS_VTS_Seq_Connector_svnt  \
-                Receiver_exec DDS_VTopics_Connector_lem_stub DDS_VTS_String_Connector_lem_stub DDS_VTS_Array_Connector_lem_stub \
-                DDS_VTS_Seq_Connector_lem_stub DDS4CCM_lem_stub DDS4CCM_skel
+                Receiver_exec DDS_VTopics_Connector_lem_stub \
+                DDS4CCM_lem_stub DDS4CCM_skel
   libpaths += ../lib
   libout = ../lib
   includes += ..
