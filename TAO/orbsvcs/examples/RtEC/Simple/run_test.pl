@@ -35,17 +35,17 @@ $t->DeleteFile ($nsiorfile);
 $c->DeleteFile ($nsiorfile);
 $s->DeleteFile ($nsiorfile);
 
-$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service", 
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
                           " -o $ns_nsiorfile");
 
-$T = $t->CreateProcess ("Service", 
+$T = $t->CreateProcess ("Service",
                           " -ORBInitRef NameService=file://$t_nsiorfile ".
                           "-ORBsvcconf $t_conffile ");
 
-$C = $c->CreateProcess ("Consumer", 
+$C = $c->CreateProcess ("Consumer",
                         " -ORBInitRef NameService=file://$c_nsiorfile ");
 
-$S = $s->CreateProcess ("Supplier", 
+$S = $s->CreateProcess ("Supplier",
                         " -ORBInitRef NameService=file://$s_nsiorfile ");
 
 
@@ -105,7 +105,7 @@ if ($C_status != 0) {
 sleep 1;
 
 print STDOUT "Starting supplier\n";
-$S_status = $S->SpawnWaitKill ($s->ProcessStopWaitInterval()+105);
+$S_status = $S->SpawnWaitKill ($s->ProcessStartWaitInterval()+105);
 if ($S_status != 0) {
     print STDERR "ERROR: Supplier returned $S_status\n";
     exit 1;
