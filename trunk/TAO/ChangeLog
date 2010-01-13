@@ -1,3 +1,27 @@
+Wed Jan 13 08:51:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/NVList.cpp:
+          Const changes, layout changes, only one exit point in a method
+
+        * tao/AnyTypeCode/NVList_Adapter_Impl.cpp:
+        * tao/AnyTypeCode/NVList_Adapter_Impl.h:
+          Layout change
+
+        * tao/debug.cpp:
+          Explicitly initialise TAO_orb_debug to 0
+
+        * tao/debug.h:
+          Layout changes
+
+        * tao/Messaging/ExceptionHolder.pidl:
+          Layout changes
+
+        * tao/Messaging/ExceptionHolder_i.cpp:
+          Bool and layout changes
+
+        * tao/ORB_Core.cpp:
+          Layout changes
+
 Wed Jan 13 08:30:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/RtEC/Simple/run_test.pl:

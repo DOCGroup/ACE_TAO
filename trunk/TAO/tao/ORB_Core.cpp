@@ -845,7 +845,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
           ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER);
           ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
-
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBVerboseLogging"))))
