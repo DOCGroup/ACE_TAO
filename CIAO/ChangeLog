@@ -1,6 +1,5 @@
 Wed Jan 13 07:08:40 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
-
         * connectors/dds4ccm/tests/SharedDomainParticipant/Connector1:
         * connectors/dds4ccm/tests/SharedDomainParticipant/Connector1/Connector1.idl:
         * connectors/dds4ccm/tests/SharedDomainParticipant/Connector1/Connector1.mpc:
