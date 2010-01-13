@@ -1,3 +1,8 @@
+Wed Jan 13 09:03:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Only check run*.pl files when the filenames starts with run
+
 Wed Jan 13 06:45:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/sys/os_types.h:
