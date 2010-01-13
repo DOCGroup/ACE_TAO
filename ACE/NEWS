@@ -20,17 +20,20 @@ USER VISIBLE CHANGES BETWEEN ACE-5.7.5 and ACE-5.7.6
 
 . Added support for Embarcadero C++ Builder 2010
 
-. Added option to print a given ACE_Time_Value in the log 
+. Added option to print a given ACE_Time_Value in the log
   message instead of system supplied timestamp as in %T
   and %D.
-  The option is implemented as a variant of the %D/%T 
-  options by using the '#' flag character like '%#D' or 
-  '%#T'. When using this flag an ACE_Time_Value pointer is 
+  The option is implemented as a variant of the %D/%T
+  options by using the '#' flag character like '%#D' or
+  '%#T'. When using this flag an ACE_Time_Value pointer is
   expected in the argument list supplied with the log message.
   This fixed Bugzilla #3221.
-  
+
 . Fixed problems with ACE_INET_Addr::is_multicast() on
-  little endian platforms. This fixed bugzilla #3729.  
+  little endian platforms. This fixed bugzilla #3729.
+
+. Added compilation support for VxWorks 6.8, no runtime
+  testing has been performed
 
 USER VISIBLE CHANGES BETWEEN ACE-5.7.4 and ACE-5.7.5
 ====================================================
