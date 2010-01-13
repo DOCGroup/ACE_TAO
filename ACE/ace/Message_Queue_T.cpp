@@ -22,10 +22,6 @@
 #include "ace/Monitor_Size.h"
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
-#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
-#include "ace/Message_Queue_NT.h"
-#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue)
