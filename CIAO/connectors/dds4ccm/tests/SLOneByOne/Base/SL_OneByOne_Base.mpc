@@ -16,7 +16,6 @@ project(DDS_SL_OneByOne_Base_idl_gen) : taoidldefaults, anytypecode {
 project(DDS_SL_OneByOne_Base_ndds_ts_gen) : ndds_ts_defaults {
   custom_only = 1
   after += DDS_SL_OneByOne_Base_idl_gen
-  ndds_ts_flags += -corba SL_OneByOne_BaseC.h -orb ACE_TAO1.7
 
   NDDSTypeSupport_Files {
     SL_OneByOne_Base.idl

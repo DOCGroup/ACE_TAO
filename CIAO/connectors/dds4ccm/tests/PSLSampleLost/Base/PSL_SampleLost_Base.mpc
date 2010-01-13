@@ -16,7 +16,6 @@ project(DDS_PSL_SampleLost_Base_idl_gen) : taoidldefaults, anytypecode {
 project(DDS_PSL_SampleLost_Base_ndds_ts_gen) : ndds_ts_defaults {
   custom_only = 1
   after += DDS_PSL_SampleLost_Base_idl_gen
-  ndds_ts_flags += -corba PSL_SampleLost_BaseC.h -orb ACE_TAO1.7
 
   NDDSTypeSupport_Files {
     PSL_SampleLost_Base.idl

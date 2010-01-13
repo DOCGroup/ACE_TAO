@@ -16,7 +16,6 @@ project(DDS_NonChangeableBase_idl_gen) : taoidldefaults, anytypecode {
 project(DDS_NonChangeableBase_ndds_ts_gen) : ndds_ts_defaults {
   custom_only = 1
   after += DDS_NonChangeableBase_idl_gen
-  ndds_ts_flags += -corba NonChangeable_BaseC.h -orb ACE_TAO1.7
 
   NDDSTypeSupport_Files {
     NonChangeable_Base.idl
