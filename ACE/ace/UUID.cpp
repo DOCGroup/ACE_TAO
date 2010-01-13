@@ -36,24 +36,24 @@ namespace ACE_Utils
   const UUID &
   UUID::operator = (const UUID & rhs)
   {
-    if (this == &rhs)
-      return *this;
-
-    // Reset the string version of the UUID a string version
-    // exist, and the UUID is not equal to the old UUID.
-    if (0 != this->as_string_.get ())
+    if (this != &rhs)
       {
-        if (0 == rhs.as_string_.get () || *this != rhs)
-          this->as_string_.reset ();
+        // Reset the string version of the UUID a string version
+        // exist, and the UUID is not equal to the old UUID.
+        if (0 != this->as_string_.get ())
+          {
+            if (0 == rhs.as_string_.get () || *this != rhs)
+              this->as_string_.reset ();
+          }
+
+        // Copy the contents of the UUID.
+        ACE_OS::memcpy (&this->uuid_, &rhs.uuid_, BINARY_SIZE);
+
+        /// @todo We should create an UUID_Ex class for UUIDs that
+        ///       contain the thread id and process id.
+        this->thr_id_ = rhs.thr_id_;
+        this->pid_ = rhs.pid_;
       }
-
-    // Copy the contents of the UUID.
-    ACE_OS::memcpy (&this->uuid_, &rhs.uuid_, BINARY_SIZE);
-
-    /// @todo We should create an UUID_Ex class for UUIDs that
-    ///       contain the thread id and process id.
-    this->thr_id_ = rhs.thr_id_;
-    this->pid_ = rhs.pid_;
 
     return *this;
   }
@@ -315,7 +315,7 @@ namespace ACE_Utils
       return;
 
     ACE_OS::macaddr_node_t macaddress;
-    int result = ACE_OS::getmacaddress (&macaddress);
+    int const result = ACE_OS::getmacaddress (&macaddress);
 
     UUID_Node::Node_ID node_id;
 
@@ -393,7 +393,7 @@ namespace ACE_Utils
   UUID*
   UUID_Generator::generate_UUID (ACE_UINT16 version, u_char variant)
   {
-    UUID* uuid;
+    UUID* uuid = 0;
     ACE_NEW_RETURN (uuid,
                     UUID,
                     0);
