@@ -1,3 +1,14 @@
+Wed Jan 13 13:51:54 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Message_Queue_T.cpp: Moved
+
+          #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
+          #include "ace/Message_Queue_NT.h"
+          #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
+  
+          to outside the versioned namespace block.  Thanks to Johnny for
+          reporting this.
+  
 Wed Jan 13 09:03:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
