@@ -268,7 +268,7 @@ be_visitor_ami4ccm_pre_proc::visit_interface (be_interface * node)
                          "creating the reply handler failed\n"),
                         -1);
     }
-    
+
   be_interface *sendc_interface = this->create_ami_sendc_interface (node);
   if (sendc_interface)
     {
@@ -285,7 +285,7 @@ be_visitor_ami4ccm_pre_proc::visit_interface (be_interface * node)
       // unless we set it.
       sendc_interface->set_imported (node->imported ());
     }
-   
+
 
   // Set the proper strategy.
   //be_interface_ami_strategy *bias = 0;
@@ -1029,7 +1029,7 @@ be_visitor_ami4ccm_pre_proc::create_raise_operation (
 
 be_operation *
 be_visitor_ami4ccm_pre_proc::create_sendc_operation (be_operation *node,
-                                                 int for_arguments)
+                                                 bool for_arguments)
 {
   if (node->flags () == AST_Operation::OP_oneway)
     {
@@ -1102,7 +1102,7 @@ be_visitor_ami4ccm_pre_proc::create_sendc_operation (be_operation *node,
 
       // Create the argument.
       ACE_NEW_RETURN (id,
-                      Identifier ("ami_handler"),
+                      Identifier ("ami_callback"),
                       0);
 
       UTL_ScopedName *tmp = 0;
