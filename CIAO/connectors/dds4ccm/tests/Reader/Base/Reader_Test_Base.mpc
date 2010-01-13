@@ -16,7 +16,6 @@ project(DDS_Reader_Test_Base_idl_gen) : taoidldefaults, anytypecode {
 project(DDS_Reader_Test_Base_ndds_ts_gen) : ndds_ts_defaults {
   custom_only = 1
   after += DDS_Reader_Test_Base_idl_gen
-  ndds_ts_flags += -corba Reader_Test_BaseC.h -orb ACE_TAO1.7
 
   NDDSTypeSupport_Files {
     Reader_Test_Base.idl
