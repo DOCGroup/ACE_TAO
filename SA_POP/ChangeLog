@@ -1,3 +1,9 @@
+Wed Jan 13 16:16:38 UTC 2010  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
+
+        * utils/SANetGenerator/EUNets.py:
+	
+	Wrapper for creating multiple networks with the same parameters. 
+
 Wed Jan 13 04:14:15 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * Planner.cpp:
@@ -5,7 +11,6 @@ Wed Jan 13 04:14:15 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.ed
         * experiments/EU_Performance/Exp_Core/Exp_EU_Planner.cpp:
 
           Adding EU experiment planner.
-
 
 Tue Jan 12 03:11:44 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
