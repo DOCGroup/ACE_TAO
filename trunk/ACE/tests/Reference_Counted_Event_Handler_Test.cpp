@@ -1101,7 +1101,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_UNUSED_ARG (test);
     }
 
-#endif /* ACE_HAS_DEV_POOL || ACE_HAS_EVENT_POLL */
+#endif /* ACE_HAS_DEV_POLL || ACE_HAS_EVENT_POLL */
 
   ACE_END_TEST;
 
