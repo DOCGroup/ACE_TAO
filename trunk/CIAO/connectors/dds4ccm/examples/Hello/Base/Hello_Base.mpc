@@ -17,7 +17,6 @@ project(DDS_Hello_Base_ndds_ts_gen) : ndds_ts_defaults {
   avoids += ace_for_tao
   custom_only = 1
   after += DDS_Hello_Base_idl_gen
-  ndds_ts_flags += -corba Hello_BaseC.h -orb ACE_TAO1.7
 
   NDDSTypeSupport_Files {
     Hello_Base.idl

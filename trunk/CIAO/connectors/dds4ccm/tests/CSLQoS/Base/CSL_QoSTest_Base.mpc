@@ -16,7 +16,6 @@ project(DDS_CSL_QoSTest_Base_idl_gen) : taoidldefaults, anytypecode {
 project(DDS_CSL_QoSTest_Base_ndds_ts_gen) : ndds_ts_defaults {
   custom_only = 1
   after += DDS_CSL_QoSTest_Base_idl_gen
-  ndds_ts_flags += -corba CSL_QoSTest_BaseC.h -orb ACE_TAO1.7
 
   NDDSTypeSupport_Files {
     CSL_QoSTest_Base.idl
