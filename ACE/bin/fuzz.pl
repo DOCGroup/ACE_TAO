@@ -123,7 +123,7 @@ sub store_file ($)
     }
     elsif ($name =~ /\.pl$/i) {
         push @files_pl, ($name);
-        if ($name =~ /run.*\.pl$/i) {
+        if ($name =~ /^run.*\.pl$/i) {
             push @files_run_pl, ($name);
         }
     }
