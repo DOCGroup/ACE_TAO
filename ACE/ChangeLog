@@ -88,7 +88,6 @@ Tue Jan 12 18:52:21 UTC 2010  Olli Savia  <ops@iki.fi>
           Removed ACE_LACKS_CMSG_DATA_MACRO and ACE_LACKS_CMSG_DATA_MEMBER.
           These are no longer used.
 
->>>>>>> .r88505
 Tue Jan 12 14:18:58 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * ace/CDR_Base.h:
