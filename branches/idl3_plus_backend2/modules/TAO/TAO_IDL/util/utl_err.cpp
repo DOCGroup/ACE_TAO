@@ -84,10 +84,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (util,
-           utl_err,
-           "$Id$")
-
 // Convert an error code into a const char *
 static const char *
 error_string (UTL_Error::ErrorCode c)

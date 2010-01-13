@@ -11,6 +11,8 @@
 #include "be_visitor_context.h"
 
 #include "be_interface.h"
+#include "be_exception.h"
+#include "be_typedef.h"
 #include "be_array.h"
 #include "be_sequence.h"
 #include "be_predefined_type.h"
@@ -63,6 +65,22 @@ be_visitor_reifying::visit_interface (be_interface *node)
       this->reified_node_ = node;
     }
     
+  return 0;
+}
+
+int
+be_visitor_reifying::visit_exception (be_exception *node)
+{
+  this->reified_node_ = node;
+  
+  return 0;
+}
+
+int
+be_visitor_reifying::visit_typedef (be_typedef *node)
+{
+  this->reified_node_ = node;
+  
   return 0;
 }
 

@@ -31,6 +31,7 @@
 
 class be_template_module_inst;
 class AST_Type;
+class UTL_ExceptList;
 
 class be_visitor_tmpl_module_inst : public be_visitor_scope
 {
@@ -51,6 +52,10 @@ public:
   virtual int visit_module (be_module *node);
   virtual int visit_template_module (be_template_module *node);
   virtual int visit_template_module_inst (be_template_module_inst *node);
+  virtual int visit_interface (be_interface *node);
+  virtual int visit_attribute (be_attribute *node);
+  virtual int visit_operation (be_operation *node);
+  virtual int visit_argument (be_argument *node);
   virtual int visit_typedef (be_typedef *node);
   virtual int visit_constant (be_constant *node);
   virtual int visit_structure (be_structure *node);
@@ -62,6 +67,9 @@ private:
   // the scope of a template module, the returned node will be a
   // copy created in the scope of the template module instantiation.
   AST_Decl *reify_type (AST_Decl *d);
+  
+  // Utility method used for attributes and operations.
+  UTL_ExceptList *reify_exception_list (UTL_ExceptList *orig);
 };
 
 #endif // TAO_BE_VISITOR_TMPL_MODULE_INST_H
