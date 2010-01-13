@@ -222,10 +222,6 @@ protected:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
-#include "ace/Message_Queue_NT.h"
-#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
-
 // Include the templates here.
 #include "ace/Message_Queue_T.h"
 
