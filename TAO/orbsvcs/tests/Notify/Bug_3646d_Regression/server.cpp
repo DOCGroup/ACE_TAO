@@ -128,7 +128,7 @@ int ACE_TMAIN (int , ACE_TCHAR **)
     ACE_TEXT ("(%P|%t) main - entered\n")
   ));
 
-  for (int cnt = 0, max = 10; cnt < max; ++cnt)
+  for (int cnt = 0, max = 500; cnt < max; ++cnt)
     {
       ACE_DEBUG((
         LM_DEBUG,
