@@ -516,7 +516,7 @@ be_visitor_ami_pre_proc::create_raise_operation (
                   -1);
 
   be_valuetype *excep_holder = be_global->messaging_exceptionholder ();
-  
+
   // Name the operation properly
   UTL_ScopedName *op_name =
     static_cast<UTL_ScopedName *> (excep_holder->name ()->copy ());
@@ -1207,7 +1207,7 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
 {
   AST_Type **retval = 0;
 
-  long n_parents = node->n_inherits ();
+  long const n_parents = node->n_inherits ();
   AST_Type **parents = node->inherits ();
   AST_Type *parent = 0;
 
