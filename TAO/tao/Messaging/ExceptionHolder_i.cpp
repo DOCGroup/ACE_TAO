@@ -62,7 +62,7 @@ namespace TAO
 
       CORBA::String_var type_id;
 
-      if ((_tao_in >> type_id.inout ()) == 0)
+      if (!(_tao_in >> type_id.inout ()))
         {
           // Could not demarshal the exception id, raise a local
           // CORBA::MARSHAL
@@ -110,8 +110,13 @@ namespace TAO
           CORBA::Exception * const exception = this->data_[i].alloc ();
 
           if (exception == 0)
-            throw ::CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_YES);
-          exception->_tao_decode (_tao_in);
+            {
+              throw ::CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_YES);
+            }
+          else
+            {
+              exception->_tao_decode (_tao_in);
+            }
 
           // Raise the exception.
           ACE_Auto_Basic_Ptr<CORBA::Exception> e_ptr (exception);
@@ -163,7 +168,6 @@ namespace TAO
                       CORBA::NO_MEMORY ());
     return ret_val;
   }
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

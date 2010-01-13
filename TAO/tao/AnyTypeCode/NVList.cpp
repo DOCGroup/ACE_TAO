@@ -68,7 +68,7 @@ CORBA::NVList::_incr_refcnt (void)
 CORBA::ULong
 CORBA::NVList::_decr_refcnt (void)
 {
-  const CORBA::ULong new_count = --this->refcount_;
+  CORBA::ULong const new_count = --this->refcount_;
 
   if (new_count == 0)
     delete this;
@@ -234,7 +234,7 @@ CORBA::NVList::add_element (CORBA::Flags flags)
       return 0;
     }
 
-  this->max_++;
+  ++this->max_;
   return nv; // success
 }
 
@@ -439,17 +439,13 @@ CORBA::NVList::evaluate (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
-  if (this->incoming_ == 0)
+  if (this->incoming_ != 0)
     {
-      return;
+      auto_ptr<TAO_InputCDR> incoming (this->incoming_);
+      this->incoming_ = 0;
+
+      this->_tao_decode (*(incoming.get ()), this->incoming_flag_);
     }
-
-  auto_ptr<TAO_InputCDR> incoming (this->incoming_);
-  this->incoming_ = 0;
-
-  this->_tao_decode (*(incoming.get ()),
-                     this->incoming_flag_
-                    );
 }
 
 CORBA::Boolean
