@@ -1,3 +1,19 @@
+Wed Jan 13 23:16:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_tmpl_module_inst.cpp:
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/exceptlist_cs.cpp:
+        * TAO_IDL/be/be_visitor_reifying.cpp:
+        * TAO_IDL/ast/ast_attribute.cpp:
+        * TAO_IDL/ast/ast_argument.cpp:
+        * TAO_IDL/be_include/be_visitor_reifying.h:
+        * TAO_IDL/be_include/be_visitor_tmpl_module_inst.h:
+        * TAO_IDL/util/utl_err.cpp:
+        
+          Added support for template instantiation of contained
+          interfaces, operations, attributes, and the associated
+          arguments and exception lists.
+
 Tue Jan 12 22:45:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/utl_scope.h:

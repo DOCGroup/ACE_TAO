@@ -54,6 +54,8 @@ public:
   AST_Decl *reified_node (void) const;
 
   virtual int visit_interface (be_interface *node);
+  virtual int visit_exception (be_exception *node);
+  virtual int visit_typedef (be_typedef *node);
   virtual int visit_array (be_array *node);
   virtual int visit_sequence (be_sequence *node);
   virtual int visit_predefined_type (be_predefined_type *node);
