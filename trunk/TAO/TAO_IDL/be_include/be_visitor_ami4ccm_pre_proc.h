@@ -93,7 +93,7 @@ private:
   // specialized visit_scope
 
   be_operation *create_sendc_operation (be_operation *node,
-                                        int for_arguments);
+                                        bool for_arguments);
   // create a method with "sendc_" prepended, if for_arguments
   // equals one the sendc operation contains also the
   // object reference to the reply handler as the first argument,
