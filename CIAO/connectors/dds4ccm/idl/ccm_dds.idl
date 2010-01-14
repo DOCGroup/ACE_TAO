@@ -20,7 +20,8 @@
 module CCM_DDS \
 { \
   module T_MODULE { \
-        abstract interface InstanceHandleManager { \
+        abstract interface InstanceHandleManager \
+        { \
           DDS::InstanceHandle_t register_instance (in T datum); \
           void unregister_instance (in T datum, in DDS::InstanceHandle_t instance_handle); \
         }; \
@@ -35,23 +36,23 @@ module CCM_DDS \
         local interface Updater : InstanceHandleManager \
         { \
           void create_one (in T datum) \
-              raises (AlreadyCreated, \
-                      InternalError); \
+            raises (AlreadyCreated, \
+                    InternalError); \
           void update_one (in T datum, in DDS::InstanceHandle_t instance_handle) \
-              raises (NonExistent, \
-                      InternalError); \
+            raises (NonExistent, \
+                    InternalError); \
           void delete_one (in T datum,in DDS::InstanceHandle_t instance_handle) \
-              raises (NonExistent, \
-                      InternalError); \
+            raises (NonExistent, \
+                    InternalError); \
           void create_many (in TSeq data) \
-              raises (AlreadyCreated, \
-                      InternalError); \
+            raises (AlreadyCreated, \
+                    InternalError); \
           void update_many (in TSeq data) \
-              raises (NonExistent, \
-                      InternalError); \
+            raises (NonExistent, \
+                    InternalError); \
           void delete_many (in TSeq data) \
-              raises (NonExistent, \
-                      InternalError); \
+            raises (NonExistent, \
+                    InternalError); \
           readonly attribute boolean is_global_scope; \
           attribute boolean is_coherent_write; \
         }; \
@@ -69,22 +70,23 @@ module CCM_DDS \
           void read_last (out TSeq data, out ReadInfoSeq infos) \
             raises (InternalError); \
           void read_all (out TSeq data, out ReadInfoSeq infos) \
-              raises (InternalError); \
+            raises (InternalError); \
           void read_one_last (inout T datum, out ReadInfo info, \
-                                in DDS::InstanceHandle_t instance_handle) \
-              raises (NonExistent, InternalError); \
+                              in DDS::InstanceHandle_t instance_handle) \
+            raises (NonExistent, InternalError); \
           void read_one_all (in T datum, out TSeq data, out ReadInfoSeq infos, \
-                        in DDS::InstanceHandle_t instance_handle) \
-                raises (NonExistent, InternalError); \
+                             in DDS::InstanceHandle_t instance_handle) \
+            raises (NonExistent, InternalError); \
           attribute QueryFilter filter \
-                setraises (InternalError); \
+            setraises (InternalError); \
         }; \
         local interface Listener \
         { \
           void on_one_data (in T datum, in ReadInfo info); \
           void on_many_data (in TSeq data, in ReadInfoSeq infos); \
         }; \
-        local interface StateListener { \
+        local interface StateListener \
+        { \
           void on_creation (in T datum, in ReadInfo info); \
           void on_one_update (in T datum, in ReadInfo info); \
           void on_many_updates (in TSeq data, in ReadInfoSeq infos); \
