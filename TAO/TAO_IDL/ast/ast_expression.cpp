@@ -71,6 +71,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_typedef.h"
 #include "ast_param_holder.h"
 #include "ast_visitor.h"
+#include "ast_generator.h"
 
 #include "utl_err.h"
 #include "utl_scope.h"
@@ -165,8 +166,12 @@ AST_Expression::AST_Expression (AST_Expression *v,
         }
       else
         {
-          this->param_holder_ = ph;
-          v->param_holder_ = 0;
+          // The param info member isn't managed by this type,
+          // so we can just pass the pointer to the new expr.
+          this->param_holder_ =
+            idl_global->gen ()->create_param_holder (
+              ph->name (),
+              const_cast<FE_Utils::T_Param_Info *> (ph->info ()));
         }
 
       if (0 != v->pd_n)

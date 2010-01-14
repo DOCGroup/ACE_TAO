@@ -309,6 +309,4 @@ AST_Constant::enum_full_name (void)
     }
 }
 
-
-
 IMPL_NARROW_FROM_DECL(AST_Constant)

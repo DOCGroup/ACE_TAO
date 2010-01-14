@@ -71,6 +71,7 @@ class AST_String;
 class AST_Typedef;
 class AST_Root;
 class AST_Native;
+class AST_Param_Holder;
 
 class TAO_IDL_FE_Export ast_visitor
 {
@@ -104,6 +105,7 @@ public:
   virtual int visit_template_module (AST_Template_Module *node) = 0;
   virtual int visit_template_module_inst (AST_Template_Module_Inst *node) = 0;
   virtual int visit_template_module_ref (AST_Template_Module_Ref *node) = 0;
+  virtual int visit_param_holder (AST_Param_Holder *node) = 0;
   virtual int visit_porttype (AST_PortType *node) = 0;
   virtual int visit_provides (AST_Provides *node) = 0;
   virtual int visit_uses (AST_Uses *node) = 0;

@@ -96,7 +96,6 @@ private:
   void emit_accessor_modifier (be_decl *node);
 
   void emit_boxed_access (be_decl *node, const char *out_ref_modifier);
-
 };
 
 #endif /* _BE_VISITOR_VALUEBOX_CI_H_ */

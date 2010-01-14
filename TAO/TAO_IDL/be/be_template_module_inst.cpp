@@ -1,6 +1,8 @@
 // $Id$
 
 #include "be_template_module_inst.h"
+#include "be_visitor.h"
+
 #include "ast_template_module.h"
 
 be_template_module_inst::be_template_module_inst (
@@ -35,9 +37,9 @@ be_template_module_inst::destroy (void)
 }
 
 int
-be_template_module_inst::accept (be_visitor *)
+be_template_module_inst::accept (be_visitor *visitor)
 {
-  return 0;//visitor->visit_template_module_inst (this);
+  return visitor->visit_template_module_inst (this);
 }
 
 IMPL_NARROW_FROM_DECL (be_template_module_inst)

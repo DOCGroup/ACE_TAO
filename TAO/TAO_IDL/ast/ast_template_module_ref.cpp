@@ -2,6 +2,7 @@
 
 #include "ast_template_module_ref.h"
 #include "ast_template_module.h"
+#include "ast_visitor.h"
 
 #include "utl_strlist.h"
 
@@ -54,9 +55,9 @@ AST_Template_Module_Ref::destroy (void)
 }
 
 int
-AST_Template_Module_Ref::ast_accept (ast_visitor *)
+AST_Template_Module_Ref::ast_accept (ast_visitor *visitor)
 {
-  return 0;//visitor->visit_template_module_ref (this);
+  return visitor->visit_template_module_ref (this);
 }
 
 IMPL_NARROW_FROM_DECL (AST_Template_Module_Ref)

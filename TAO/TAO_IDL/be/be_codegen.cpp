@@ -1927,7 +1927,7 @@ TAO_CodeGen::gen_export_file (const char *filename,
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO_CodeGen::gen_export_file() - ")
-                  ACE_TEXT ("%C export include not initialized\n"),
+                  ACE_TEXT ("Error: %C export include not initialized\n"),
                   msg));
       return;
     }
@@ -2261,6 +2261,14 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       // Include Messaging skeleton file.
       this->gen_standard_include (this->client_header_,
                                   "tao/Messaging/Messaging.h");
+    }
+
+  // Include the AMI4CCM library entry point, if AMI4CCM is enabled.
+  if (be_global->ami4ccm_call_back () == true)
+    {
+      // Include Messaging skeleton file.
+      this->gen_standard_include (this->client_header_,
+                                  "connectors/ami4ccm/ami4ccm/ami4ccm.h");
     }
 
   // Include the smart proxy base class if smart proxies are enabled.

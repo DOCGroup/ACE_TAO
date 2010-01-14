@@ -33,9 +33,14 @@ be_template_module::destroy (void)
 }
 
 int
-be_template_module::accept(be_visitor *)
+be_template_module::accept (be_visitor *visitor)
 {
-  return 0;//visitor->visit_template_module (this);
+  // Disables visitation when this node is encountered as part
+  // of a normal scope traversal. We will call
+  // visit_template_module() directly when the template module
+  // is instantiated, and match template args with template params
+  // to generate implied IDL.
+  return 0;
 }
 
 IMPL_NARROW_FROM_DECL (be_template_module)

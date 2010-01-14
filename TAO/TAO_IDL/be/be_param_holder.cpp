@@ -18,6 +18,7 @@
 // ============================================================================
 
 #include "be_param_holder.h"
+#include "be_visitor.h"
 
 be_param_holder::be_param_holder (UTL_ScopedName *parameter_name,
                                   FE_Utils::T_Param_Info *info)
@@ -41,11 +42,9 @@ be_param_holder::~be_param_holder (void)
 }
 
 int
-be_param_holder::accept (be_visitor *)
+be_param_holder::accept (be_visitor *visitor)
 {
-  // This node isn't part of the AST, but managed by
-  // its reference holder.
-  return 0;
+  return visitor->visit_param_holder (this);
 }
 
 void

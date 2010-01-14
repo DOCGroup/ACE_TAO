@@ -22,10 +22,6 @@
 #include "be_expression.h"
 #include "be_visitor.h"
 
-ACE_RCSID (be,
-           be_expression,
-           "$Id$")
-
 be_expression::be_expression (UTL_ScopedName *n)
   : AST_Expression (n)
 {

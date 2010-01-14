@@ -121,7 +121,7 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << "TAO_"<< node->flat_name ()
       << "_Smart_Proxy_Base" << be_idt_nl
       << ": public virtual "
-      << bt->nested_type_name (this->ctx_->scope ());
+      << bt->nested_type_name (this->ctx_->scope ()->decl ());
 
 
   if (node->n_inherits () > 0)

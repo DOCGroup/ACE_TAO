@@ -28,6 +28,7 @@
 
 #include "be_codegen.h"
 
+#include "fe_utils.h"
 
 class TAO_OutStream;
 class be_decl;
@@ -47,6 +48,7 @@ class be_operation;
 class be_exception;
 class be_predefined_type;
 class be_root;
+class be_scope;
 class be_sequence;
 class be_string;
 class be_structure;
@@ -86,10 +88,10 @@ public:
   TAO_OutStream *stream (void);
   // get the stream
 
-  void scope (be_decl *scope);
+  void scope (be_scope *scope);
   // set the scope
 
-  be_decl *scope (void);
+  be_scope *scope (void);
   // get the scope in which code will be generated
 
   void node (be_decl *node);
@@ -147,7 +149,18 @@ public:
   // example). This field is use to hold the interface where we are
   // *generating* code, as opposed to the interfaces where the methods
   // or structures are defined.
-
+  
+  // Accessors/mutators for the template-related members.
+  
+  FE_Utils::T_PARAMLIST_INFO *template_params (void) const;
+  void template_params (FE_Utils::T_PARAMLIST_INFO *params);
+  
+  FE_Utils::T_ARGLIST *template_args (void) const;
+  void template_args (FE_Utils::T_ARGLIST *args);
+  
+  be_scope *template_module_inst_scope (void) const;
+  void template_module_inst_scope (UTL_Scope *s);
+  
   // = helpers
 
   // visitors may need the actual type of the node stored in this context. We
@@ -260,7 +273,7 @@ private:
   TAO_OutStream *os_;
   // current output stream
 
-  be_decl *scope_;
+  be_scope *scope_;
   // current scope in which code is generated
 
   be_decl *node_;
@@ -281,8 +294,16 @@ private:
   bool comma_;
   // whether scope should generate a comma after every element
 
-  be_interface* interface_;
+  be_interface *interface_;
   // See the method declaration above.
+  
+  // Storage for the current template module params and args.
+  FE_Utils::T_PARAMLIST_INFO *template_params_;
+  FE_Utils::T_ARGLIST *template_args_;
+  
+  // Scope for adding the instantiated contents of a template
+  // module.
+  be_scope *template_module_inst_scope_;
 };
 
 #if defined (interface)

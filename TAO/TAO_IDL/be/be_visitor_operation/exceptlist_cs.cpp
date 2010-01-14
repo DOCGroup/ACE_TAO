@@ -60,7 +60,8 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
       for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
            !ei.is_done ();)
         {
-          ex = be_exception::narrow_from_decl (ei.item ());
+          AST_Decl *d = ei.item ();
+          ex = be_exception::narrow_from_decl (d);
 
           *os << "{" << be_idt_nl
               << "\"" << ex->repoID () << "\"," << be_nl

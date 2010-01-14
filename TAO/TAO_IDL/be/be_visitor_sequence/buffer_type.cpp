@@ -55,7 +55,7 @@ be_visitor_sequence_buffer_type::visit_node (be_type *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH)
     {
-      *os << bt->nested_type_name (this->ctx_->scope ());
+      *os << bt->nested_type_name (this->ctx_->scope ()->decl ());
     }
   else
     {
@@ -104,7 +104,8 @@ be_visitor_sequence_buffer_type::visit_interface (be_interface *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH)
     {
-      *os << node->nested_type_name (this->ctx_->scope (), "_ptr");
+      *os << node->nested_type_name (this->ctx_->scope ()->decl (),
+                                     "_ptr");
     }
   else
     {
@@ -121,7 +122,7 @@ be_visitor_sequence_buffer_type::visit_interface_fwd (be_interface_fwd *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH)
     {
-      *os << node->nested_type_name (this->ctx_->scope (), "_ptr");
+      *os << node->nested_type_name (this->ctx_->scope ()->decl (), "_ptr");
     }
   else
     {
@@ -150,7 +151,7 @@ be_visitor_sequence_buffer_type::visit_valuebox (be_valuebox *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH)
     {
-      *os << node->nested_type_name (this->ctx_->scope (), " *");
+      *os << node->nested_type_name (this->ctx_->scope ()->decl (), " *");
     }
   else
     {
@@ -167,7 +168,7 @@ be_visitor_sequence_buffer_type::visit_valuetype (be_valuetype *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH)
     {
-      *os << node->nested_type_name (this->ctx_->scope (), " *");
+      *os << node->nested_type_name (this->ctx_->scope ()->decl (), " *");
     }
   else
     {
@@ -184,7 +185,7 @@ be_visitor_sequence_buffer_type::visit_valuetype_fwd (be_valuetype_fwd *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH)
     {
-      *os << node->nested_type_name (this->ctx_->scope (), " *");
+      *os << node->nested_type_name (this->ctx_->scope ()->decl (), " *");
     }
   else
     {

@@ -74,7 +74,7 @@ int
 be_visitor_field_cs::visit_array (be_array *node)
 {
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -97,7 +97,7 @@ int
 be_visitor_field_cs::visit_enum (be_enum *node)
 {
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -120,7 +120,7 @@ int
 be_visitor_field_cs::visit_sequence (be_sequence *node)
 {
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -143,7 +143,7 @@ int
 be_visitor_field_cs::visit_structure (be_structure *node)
 {
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -185,7 +185,7 @@ int
 be_visitor_field_cs::visit_union (be_union *node)
 {
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
