@@ -1,8 +1,23 @@
+Thu Jan 14 00:06:06 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * Planner.cpp:
+
+          Update Planner::calc_plan_eu().
+
+        * SA_POP_Types.h:
+
+          Update to plan struct (include the goal) and Null ID values.
+
+        * SA_WorkingPlan.cpp:
+
+          Update to SA_WorkingPlan initialization (using reset_plan()).
+
+
 Wed Jan 13 16:16:38 UTC 2010  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
         * utils/SANetGenerator/EUNets.py:
-	
-	Wrapper for creating multiple networks with the same parameters. 
+
+        Wrapper for creating multiple networks with the same parameters.
 
 Wed Jan 13 04:14:15 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 

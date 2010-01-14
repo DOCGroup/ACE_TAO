@@ -36,34 +36,44 @@ adj_min_times_cmd_ (0),
 adj_max_times_cmd_ (0),
 add_threats_cmd_ (0)
 {
-	this->task_insts_.clear ();
-	this->task_impls_.clear ();
-	this->causal_links_.clear ();
-	this->reused_insts_.clear();
-	this->sched_links_.clear();
+  // Initialize variables.
+  this->reset_plan ();
 
-	// Clear goal.
-	this->goal_.goal_id = "NULL";
-	this->goal_.name = "NULL";
-	this->goal_.abs_times.clear ();
-	this->goal_.rel_times.clear ();
-	this->goal_.goal_conds.clear ();
-	this->goal_.start_window = std::make_pair (0, 0);
-
-	// Clear plan.
-	this->plan_.causal_links.clear ();
-	this->plan_.connections.clear ();
-	this->plan_.sched_links.clear ();
-	this->plan_.task_insts.clear ();
-	this->plan_.threat_links.clear ();
-
+  // Create template commands.
 	this->add_task_cmd_ = new SA_AddTaskCmd (this);
 	this->assoc_impl_cmd_ = new SA_AssocTaskImplCmd (this);
 	this->resolve_threat_cmd_ = new SA_ResolveCLThreatCmd (this);
 	this->resolve_sched_cmd_ = new SA_ResolveSchedOrderCmd (this);
 	this->adj_min_times_cmd_ = new SA_AdjustMinTimesCmd (this);
 	this->adj_max_times_cmd_ = new SA_AdjustMaxTimesCmd (this);
+};
 
+// Destructor.
+SA_WorkingPlan::~SA_WorkingPlan (void)
+{
+	// Nothing to do.
+};
+
+//Reset Plan.
+
+void SA_WorkingPlan::reset_plan ()
+{
+  // Init simple variables.
+  this->next_inst_id_ = 1;
+
+  // Clear sets, maps, & structs.
+	this->task_insts_.clear ();
+	this->task_impls_.clear ();
+	this->causal_links_.clear ();
+	this->reused_insts_.clear();
+	this->sched_links_.clear();
+	this->precedence_graph_.clear();
+	this->init_start.clear();
+	this->init_end.clear();
+  this->goal_.clear ();
+	this->plan_.clear ();
+
+  // Initialize precedence graph.
 	PrecedenceSet temp;
 	this->precedence_graph_.insert(std::make_pair(BEFORE,temp));
 	this->precedence_graph_.insert(std::make_pair(AFTER,temp));
@@ -85,52 +95,6 @@ add_threats_cmd_ (0)
 
 	this->task_impls_.insert(std::pair<TaskInstID, TaskImplID>(INIT_TASK_INST_ID, INIT_TASK_IMPL_ID));
 	this->task_insts_.insert(std::pair<TaskInstID, TaskID>(INIT_TASK_INST_ID, INIT_TASK_ID));
-
-};
-
-// Destructor.
-SA_WorkingPlan::~SA_WorkingPlan (void)
-{
-	// Nothing to do.
-};
-
-//Reset Plan.
-
-void SA_WorkingPlan::reset_plan ()
-{
-
-	next_inst_id_ =1;
-	this->task_insts_.clear ();
-	this->task_impls_.clear ();
-	this->causal_links_.clear ();
-	this->reused_insts_.clear();
-	this->sched_links_.clear();
-
-	// Clear goal.
-	this->goal_.goal_id = "NULL";
-	this->goal_.name = "NULL";
-	this->goal_.abs_times.clear ();
-	this->goal_.rel_times.clear ();
-	this->goal_.goal_conds.clear ();
-	this->goal_.start_window = std::make_pair (0, 0);
-
-	// Clear plan.
-	this->plan_.causal_links.clear ();
-	this->plan_.connections.clear ();
-	this->plan_.sched_links.clear ();
-	this->plan_.task_insts.clear ();
-	this->plan_.threat_links.clear ();
-
-	this->precedence_graph_.clear();
-
-	this->init_start.clear();
-	this->init_end.clear();
-
-	PrecedenceSet temp;
-	this->precedence_graph_.insert(std::make_pair(BEFORE,temp));
-	this->precedence_graph_.insert(std::make_pair(AFTER,temp));
-	this->precedence_graph_.insert(std::make_pair(SIMUL,temp));
-	this->precedence_graph_.insert(std::make_pair(UNRANKED,temp));
 }
 
 // Set goal.
@@ -162,72 +126,75 @@ const Plan& SA_WorkingPlan::get_plan (void)
 {
 	//****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
 	// Should track whether plan has changed rather than regenerating every time.
+	//****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
 
 	// Clear plan.
-	this->plan_.causal_links.clear ();
-	this->plan_.connections.clear ();
-	this->plan_.sched_links.clear ();
-	this->plan_.task_insts.clear ();
-	this->plan_.threat_links.clear ();
+	this->plan_.clear ();
 
-	//****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
-	// (Need absolute windows from goal)
+  // Set goal.
+  this->plan_.goal = this->goal_;
+
 	// Set time windows.
-	this->plan_.start_window = std::make_pair (0, 0);
-	this->plan_.end_window = std::make_pair (0, 0);
-	//****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+	this->plan_.start_window = this->goal_.start_window;
 
 	//****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
-	// (Need goal structure to set plan ID & name)
-	// Set plan ID and name from goal.
-	this->plan_.plan_id = "1";
-	this->plan_.name = this->plan_.plan_id;
+	// (Set absolute end window from start window + end windows of goal conditions)
+  this->plan_.end_window.first = NULL_TIME;
+  this->plan_.end_window.second = NULL_TIME;
 	//****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+
+	// Set plan ID and name from goal.
+	this->plan_.plan_id = this->goal_.goal_id;
+	this->plan_.name = this->goal_.name;
 
 	// Add task instances to plan.
 	for (InstToTaskMap::iterator iter =
 		this->task_insts_.begin ();
 		iter != this->task_insts_.end (); iter++)
 	{
-		// Creat task instance and set instance and task IDs from task instance map.
-		PlanTaskInst inst;
-		inst.inst_id = iter->first;
-		inst.task_id = iter->second;
+    // If the task instance is a placeholder, don't add it.
+    if (iter->first < 0 || iter->first == GOAL_TASK_INST_ID || iter->first == INIT_TASK_INST_ID || iter->first == NULL_TASK_INST_ID)
+      continue;
 
-		//****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
-		// (Need to add separate Type to task nodes instead of using name.)
-		// Set instance type.
-		inst.type_id = this->planner_->get_task_name (inst.task_id);
-		// Give instance a name.
-		inst.name = "TaskInst";
-		inst.name += to_string (inst.inst_id);
-		inst.name += "_";
-		inst.name += inst.type_id;
-		//****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+    // Creat task instance and set instance and task IDs from task instance map.
+	  PlanTaskInst inst;
+	  inst.inst_id = iter->first;
+	  inst.task_id = iter->second;
 
-		// Set start and end windows for this instance.
-		SA_WorkingPlan::InstToWinMap::iterator win_iter;
-		win_iter = this->start_window_map_.find (inst.inst_id);
-		if (win_iter != this->start_window_map_.end ())
-			inst.start_window = win_iter->second;
-		else
-			throw "SA_POP::SA_WorkingPlan::get_plan (): Unable to find start window for task instance.";
-		win_iter = this->end_window_map_.find (inst.inst_id);
-		if (win_iter != this->end_window_map_.end ())
-			inst.end_window = win_iter->second;
-		else
-			throw "SA_POP::SA_WorkingPlan::get_plan (): Unable to find end window for task instance.";
+	  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+	  // (Need to add separate Type to task nodes instead of using name.)
+	  // Set instance type.
+	  inst.type_id = this->planner_->get_task_name (inst.task_id);
+	  // Give instance a name.
+	  inst.name = "TaskInst";
+	  inst.name += to_string (inst.inst_id);
+	  inst.name += "_";
+	  inst.name += inst.type_id;
+	  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
 
-		// Set suggested implementation for this instance.
-		InstToImplMap::iterator impl_iter;
-		impl_iter = this->task_impls_.find (inst.inst_id);
-		if (impl_iter != this->task_impls_.end ())
-			inst.suggested_impl = impl_iter->second;
-		else
-			throw "SA_POP::SA_WorkingPlan::get_plan (): Unable to find implementation from task instance.";
+	  // Set start and end windows for this instance.
+	  SA_WorkingPlan::InstToWinMap::iterator win_iter;
+	  win_iter = this->start_window_map_.find (inst.inst_id);
+	  if (win_iter != this->start_window_map_.end ())
+		  inst.start_window = win_iter->second;
+	  else
+		  throw "SA_POP::SA_WorkingPlan::get_plan (): Unable to find start window for task instance.";
+	  win_iter = this->end_window_map_.find (inst.inst_id);
+	  if (win_iter != this->end_window_map_.end ())
+		  inst.end_window = win_iter->second;
+	  else
+		  throw "SA_POP::SA_WorkingPlan::get_plan (): Unable to find end window for task instance.";
 
-		// Add instance to plan.
-		this->plan_.task_insts.insert (inst);
+	  // Set suggested implementation for this instance.
+	  InstToImplMap::iterator impl_iter;
+	  impl_iter = this->task_impls_.find (inst.inst_id);
+	  if (impl_iter != this->task_impls_.end ())
+		  inst.suggested_impl = impl_iter->second;
+	  else
+		  throw "SA_POP::SA_WorkingPlan::get_plan (): Unable to find implementation from task instance.";
+
+	  // Add instance to plan.
+	  this->plan_.task_insts.insert (inst);
 	}
 
 	// Add scheduling links.
@@ -244,8 +211,8 @@ const Plan& SA_WorkingPlan::get_plan (void)
 		this->causal_links_.begin ();
 		cl_iter != this->causal_links_.end (); cl_iter++)
 	{
-		// If this is the placeholder goal task instance, don't add connection.
-		if (cl_iter->second.second == SA_POP::GOAL_TASK_INST_ID)
+    // If either task instance in this causal link is a placeholder, don't add connection.
+    if (cl_iter->second.first < 0 || cl_iter->second.second < 0 || cl_iter->second.first == SA_POP::INIT_TASK_INST_ID || cl_iter->second.second == SA_POP::GOAL_TASK_INST_ID)
 			continue;
 
 		// If this condition is a data condition, add data connection to plan.
