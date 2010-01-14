@@ -312,7 +312,6 @@ namespace CIAO
                                                          DDS_TOPIC_QOS_DEFAULT,
                                                          rti_tl,
                                                          mask);
-
         if (rti_topic == 0)
           {
             CIAO_ERROR (1, (LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic - "
@@ -461,14 +460,13 @@ namespace CIAO
                          "Unable to cast provided topic.\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
-
-        DDS_StringSeq parameters;
-        parameters.length (expression_parameters.length ());
-
+        const char* paramaterlist[256];
         for (CORBA::ULong i = 0; i < expression_parameters.length (); ++i)
           {
-            parameters[i] = CORBA::string_dup (expression_parameters[i]);
+            paramaterlist[i] = expression_parameters[i].in ();
           }
+        DDS_StringSeq parameters (expression_parameters.length ());
+        parameters.from_array(paramaterlist, expression_parameters.length ());
 
         DDSContentFilteredTopic * rti_cft = this->impl ()->create_contentfilteredtopic (
                                                                     name,

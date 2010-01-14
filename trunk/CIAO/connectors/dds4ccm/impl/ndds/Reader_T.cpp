@@ -3,6 +3,7 @@
 #include "dds4ccm/impl/ndds/DataReader.h"
 #include "dds4ccm/impl/ndds/Utils.h"
 #include "dds4ccm/impl/ndds/SampleInfo.h"
+#include "dds4ccm/impl/ndds/Topic.h"
 #include "ciao/Logger/Log_Macros.h"
 
 // Implementation skeleton constructor
@@ -317,14 +318,14 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::filter");
   if (!this->cft_)
     {
-      DDSSubscriber *subscriber = this->impl ()->get_subscriber ();
+      DDSSubscriber * subscriber = this->impl ()->get_subscriber ();
       if (!subscriber)
         {
           CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
                         "Error: Unable to get Subscriber\n"));
           throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
         }
-      DDSDomainParticipant *dp = subscriber->get_participant ();
+      DDSDomainParticipant * dp = subscriber->get_participant ();
       if (!dp)
         {
           CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
@@ -332,23 +333,24 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
           throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 2);
         }
 
-      DDS_StringSeq parameters;
-      parameters.maximum (filter.query_parameters.length ());
-      parameters.length (filter.query_parameters.length ());
-
+      const char* paramaterlist[256];
       for (CORBA::ULong i = 0; i < filter.query_parameters.length (); ++i)
-          parameters[i] = DDS_String_dup (filter.query_parameters[i].in ());
+        {
+          paramaterlist[i] = filter.query_parameters[i].in ();
+        }
+      DDS_StringSeq parameters (filter.query_parameters.length ());
+      parameters.from_array(paramaterlist, filter.query_parameters.length ());
 
       this->cft_ = dp->create_contentfilteredtopic (
-                                    DDS_String_dup ("act_funny"),
+                                    "ActFunny",
                                     this->topic_,
-                                    DDS_String_dup (filter.query),
+                                    filter.query,
                                     parameters);
       if (!this->cft_)
         {
           CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
                         "Error: Unable to create ContentFilteredTopic\n"));
-          //throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 3);
+          throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 3);
         }
       CIAO_DEBUG (6, (LM_DEBUG, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
                         "ContentFilteredTopic created. Query <%C>\n",
@@ -363,10 +365,11 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::set_topic (
-  DDSTopic * topic)
+  ::DDS::Topic_ptr topic)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::set_topic");
-  this->topic_ = topic;
+  RTI_Topic_i * tp = dynamic_cast < RTI_Topic_i * > (topic);
+  this->topic_ = tp->get_impl ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>

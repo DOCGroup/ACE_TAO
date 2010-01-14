@@ -1,0 +1,26 @@
+// $Id$
+
+/**
+ * @file QueryFilter_Test_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ *
+ * by-hand translation of the idl3p.
+ */
+
+#ifndef QUERY_FILTER_TEST_CONNECTOR_IDL_
+#define QUERY_FILTER_TEST_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/QueryFilter_Test_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+TYPED_MODULE( ::QueryFilterTest, ::QueryFilterTest_Seq, QueryFilterTest)
+
+module QueryFilter_Test
+{
+  connector QueryFilter_Test_Connector : ::CCM_DDS::QueryFilterTest::DDS_Event
+  {
+  };
+};
+
+#endif /* QueryFilter_Test_CONNECTOR_IDL_ */
