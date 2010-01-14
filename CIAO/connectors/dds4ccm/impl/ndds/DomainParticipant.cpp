@@ -3,6 +3,7 @@
 #include "DomainParticipant.h"
 #include "Subscriber.h"
 #include "Publisher.h"
+#include "ContentFilteredTopic.h"
 #include "Topic.h"
 #include "TopicDescription.h"
 #include "Utils.h"
@@ -446,14 +447,49 @@ namespace CIAO
       }
 
       ::DDS::ContentFilteredTopic_ptr
-      RTI_DomainParticipant_i::create_contentfilteredtopic (const char * /*name*/,
-                                                            ::DDS::Topic_ptr /*related_topic*/,
-                                                            const char * /*filter_expression*/,
-                                                            const ::DDS::StringSeq & /*expression_parameters*/)
+      RTI_DomainParticipant_i::create_contentfilteredtopic (const char * name,
+                                                            ::DDS::Topic_ptr related_topic,
+                                                            const char * filter_expression,
+                                                            const ::DDS::StringSeq & expression_parameters)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::create_contentfilteredtopic");
-        throw CORBA::NO_IMPLEMENT ();
 
+        RTI_Topic_i *top = dynamic_cast< RTI_Topic_i *> (related_topic);
+        if (!top)
+          {
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipant_i::create_contentfilteredtopic - "
+                         "Unable to cast provided topic.\n"));
+            throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          }
+
+        DDS_StringSeq parameters;
+        parameters.length (expression_parameters.length ());
+
+        for (CORBA::ULong i = 0; i < expression_parameters.length (); ++i)
+          {
+            parameters[i] = CORBA::string_dup (expression_parameters[i]);
+          }
+
+        DDSContentFilteredTopic * rti_cft = this->impl ()->create_contentfilteredtopic (
+                                                                    name,
+                                                                    top->get_impl (),
+                                                                    filter_expression,
+                                                                    parameters);
+        if (!rti_cft)
+          {
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipant_i::create_contentfilteredtopic - "
+                         "RTI DDS returned a nil ContentFilteredTopic.\n"));
+            throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          }
+        CIAO_DEBUG (6, (LM_INFO, CLINFO "DDS_DomainParticipant_i::create_contentfilteredtopic - "
+                     "Successfully created topic with name %C and expresion %C\n",
+                     name, filter_expression));
+
+        ::DDS::ContentFilteredTopic_var retval = new RTI_ContentFilteredTopic_i ();
+        RTI_ContentFilteredTopic_i *tp = dynamic_cast < RTI_ContentFilteredTopic_i *> (retval.in ());
+        tp->set_impl (rti_cft);
+
+        return retval._retn ();
       }
 
       ::DDS::ReturnCode_t

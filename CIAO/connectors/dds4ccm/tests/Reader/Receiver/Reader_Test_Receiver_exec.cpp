@@ -352,7 +352,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
                 // check readinfo struct.
                 if (!(*readinfo_seq)[it].instance_handle.isValid)
                   {
-                    ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ONE LAST: ")
+                    ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ALL: ")
                             ACE_TEXT ("received instance handle should be valid ")
                             ACE_TEXT ("for keyed data: ")
                             ACE_TEXT ("key <%C> - iteration <%u>\n"),
@@ -362,7 +362,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
                 if ((*readinfo_seq)[it].source_timestamp.sec == 0 &&
                     (*readinfo_seq)[it].source_timestamp.nanosec == 0)
                   {
-                    ACE_ERROR ((LM_ERROR, "ERROR: READ ONE LAST: "
+                    ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
                                         "source timestamp seems to be invalid (nil) "
                                         "key <%C> - iteration <%d>\n",
                                         (*readertest_info_seq)[it].key.in (),

@@ -71,7 +71,7 @@ namespace CIAO
 
         DDSTopic * get_impl (void);
 
-        void set_impl (DDSTopic * dw);
+        void set_impl (DDSTopic * topic);
 
       private:
         DDSTopic * impl_;

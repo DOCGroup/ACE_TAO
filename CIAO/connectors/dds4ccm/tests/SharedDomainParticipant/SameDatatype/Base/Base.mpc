@@ -1,0 +1,76 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -o ../lib -u DDS -n Base"
+
+project(DDS_SharedDPBase_idl_gen) : taoidldefaults, anytypecode {
+  custom_only = 1
+  idlflags -= -St -Sa
+  idlflags += -SS -Gxhst \
+              -Wb,stub_export_macro=Base_STUB_Export \
+              -Wb,stub_export_include=Base_stub_export.h
+
+  IDL_Files {
+    Base.idl
+  }
+}
+
+project(DDS_SharedDPBase_ndds_ts_gen) : ndds_ts_defaults {
+  custom_only = 1
+  after += DDS_SharedDPBase_idl_gen
+
+  NDDSTypeSupport_Files {
+    Base.idl
+  }
+}
+
+project(DDS_SharedDPBase_NDDS_TS) : nddslib, taolib {
+  after += DDS_SharedDPBase_ndds_ts_gen DDS_SharedDPBase_stub
+  libs += DDS_SharedDPBase_stub
+  libout = ../lib
+  libpaths    += ../lib
+  sharedname = DDS_SharedDPBase_NDDS_TS
+  dynamicflags = NDDS_USER_DLL_EXPORT
+
+  verbatim(gnuace, macros) {
+    override no_hidden_visibility = 1
+  }
+
+  Source_Files {
+    Base.cxx
+    BasePlugin.cxx
+    BaseSupport.cxx
+  }
+
+  Header_Files {
+    Base.h
+    BasePlugin.h
+    BaseSupport.h
+  }
+
+  Inline_Files {
+  }
+}
+
+project(DDS_SharedDPBase_stub) : ccm_stub {
+  after += DDS_SharedDPBase_idl_gen
+  libout = ../lib
+  libpaths += ../lib
+  sharedname = DDS_SharedDPBase_stub
+  dynamicflags = Base_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    BaseC.cpp
+  }
+
+  Header_Files {
+    BaseC.h
+    Base_stub_export.h
+  }
+
+  Inline_Files {
+    BaseC.inl
+  }
+}
+
