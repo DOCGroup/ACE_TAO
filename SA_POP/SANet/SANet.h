@@ -190,6 +190,14 @@ namespace SANet {
      */
     virtual void update (int max_steps);
 
+    /// Reset saved probabilities and utilities from spreading activation
+    /// to initial state.
+    /// NOTE: This does not necessarily reset to original construction state
+    ///       if pre-spreading-activation values (e.g., initial probability,
+    ///       goal utility, links, prior probability) if those have been
+    ///       changed after construction.
+    virtual void reset_sa (void);
+
     /// Update a condition's current value (probability of being true).
     /**
      * @param cond_id  The condition id.

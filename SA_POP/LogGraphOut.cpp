@@ -100,18 +100,31 @@ void LogGraphOut::notify_plan (SA_POP::Planner *planner)
   bool done = false;
 
 
-  //This sends planning info not included in the graph to the console,  about timing windows.
+  // This sends planning info not included in the graph to the console,  about timing windows.
+  // REMOVED so both LogScreenOut and LogGraphOut can be used
+  // simultaneously without duplicate info sent to console.
+/*
   this->out_ << std::endl;
-  this->out_ << "Plan (" << plan.name << ") Changed at " << std::endl;
-  this->out_ << ctime (&cur_time) << std::endl;
+  this->out_ << "Plan (" << plan.name << ")" << " changed at " << ctime (&cur_time);
   this->out_ << "ID: " << plan.plan_id << std::endl;
-
+  this->out_ << "Goal Condition(s):";
+  for (GoalMap::iterator goal_iter = plan.goal.goal_conds.begin ();
+    goal_iter != plan.goal.goal_conds.end (); goal_iter++)
+  {
+    this->out_ << "   " << planner->get_cond_name (goal_iter->first);
+    if (goal_iter->second >= 0)
+      this->out_ << " (TRUE) = " << goal_iter->second;
+    else
+      this->out_ << " (FALSE) = " << (-1.0 * goal_iter->second);
+  }
+  this->out_ << std::endl;
   this->out_ << "Start Window: [" << plan.start_window.first << ", ";
   this->out_ << plan.start_window.second << "]" << std::endl;
-
   this->out_ << "End Window: [" << plan.end_window.first << ", ";
   this->out_ << plan.end_window.second << "]" << std::endl;
-  
+  this->out_ << "Expected Utility: " << planner->calc_plan_eu (plan) << std::endl << std::endl;
+*/
+
   std::vector<int> startimes;
 
   //Find the plan, and find the ealiest time for the latest time step

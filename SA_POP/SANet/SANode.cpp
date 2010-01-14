@@ -93,6 +93,24 @@ Node::~Node ()
   // Nothing to do.
 };
 
+void Node::reset_sa (void)
+{
+  // Initialize spreading activation step and flags.
+  this->reset_step ();
+  this->prob_changed_ = false;
+  this->util_changed_ = false;
+
+  // Initialize probability and utility info.
+  pos_util_.utility = 0;
+  pos_util_.common.clear ();
+  neg_util_.utility = 0;
+  neg_util_.common.clear ();
+  true_prob_.probability = 0;
+  true_prob_.common.clear ();
+  false_prob_.probability = 0;
+  false_prob_.common.clear ();
+};
+
 Utility_Info Node::get_reward (int step)
 {
   // Check to ensure step is the current step, or else throw exception
@@ -215,6 +233,31 @@ TaskNode::TaskNode (const TaskNode &s)
 TaskNode::~TaskNode (void)
 {
   // Nothing to do.
+};
+
+void TaskNode::reset_sa (void)
+{
+  // Initialize base class spreading activation info.
+  Node::reset_sa ();
+};
+
+Probability_Info TaskNode::get_prob (int step, bool value)
+{
+  // If deactivated, return 0.0 probability.
+  if (!this->active_) {
+    Probability_Info prob;
+    prob.common.clear ();
+    prob.probability = 0.0;
+    return prob;
+  }
+
+  // Check to ensure step is the current step, or else throw exception
+  if (step != step_) {
+    throw Invalid_Step ();
+  }
+
+  // If active, use base class function to return correct probability.
+  return Node::get_prob (step, value);
 };
 
 Utility_Info TaskNode::get_pos_util(void){
@@ -968,6 +1011,56 @@ CondNode::CondNode (const CondNode &s)
 CondNode::~CondNode (void)
 {
   // Nothing to do.
+};
+
+void CondNode::reset_sa (void)
+{
+  // Initialize base class spreading activation info.
+  Node::reset_sa ();
+
+  // Reset probabilities from initial probability.
+  this->true_prob_.probability = this->init_true_prob_;
+  this->false_prob_.probability = (1 - this->init_true_prob_);
+  this->true_prob_from_ = this->ID_;
+  this->false_prob_from_ = this->ID_;
+
+  // Set prob_changed_ flag.
+  prob_changed_ = true;
+
+  // If this node is a goal, set util_changed_ flag and add goal utility.
+  if (this->goal_util_ > 0) {
+    this->util_changed_ = true;
+    this->pos_util_.utility = this->goal_util_;
+    this->pos_util_.common.insert (std::make_pair (this->ID_, this->goal_util_));
+  } else if (this->goal_util_ < 0) {
+    this->util_changed_ = true;
+    this->neg_util_.utility = this->goal_util_;
+    this->neg_util_.common.insert (std::make_pair (this->ID_, this->goal_util_));
+  }
+};
+
+Probability_Info CondNode::get_prob (int step, bool value)
+{
+  // If deactivated, return initial probability.
+  if (!this->active_) {
+    Probability_Info prob;
+    prob.common.clear ();
+    prob.probability = 0.0;
+    if (value)
+      prob.probability = this->init_true_prob_;
+    else
+      prob.probability = (1.0 - this->init_true_prob_);
+
+    return prob;
+  }
+
+  // Check to ensure step is the current step, or else throw exception
+  if (step != step_) {
+    throw Invalid_Step ();
+  }
+
+  // Use base class function to return correct probability.
+  return Node::get_prob (step, value);
 };
 
 // Update goal utility.

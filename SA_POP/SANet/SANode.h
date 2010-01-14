@@ -90,6 +90,14 @@ namespace SANet {
     /// Destructor.
     virtual ~Node ();
 
+    /// Reset saved probabilities and utilities from spreading activation
+    /// to initial state.
+    /// NOTE: This does not necessarily reset to original construction state
+    ///       if pre-spreading-activation values (e.g., initial probability,
+    ///       goal utility, links, prior probability) if those have been
+    ///       changed after construction.
+    virtual void reset_sa (void);
+
     /// Get (positive) expected utility info (from goals) for a given step.
     /**
      * @param step  Step for which to get reward map.
@@ -262,6 +270,23 @@ namespace SANet {
 
     /// Destructor.
     virtual ~TaskNode (void);
+
+    /// Reset saved probabilities and utilities from spreading activation
+    /// to initial state.
+    /// NOTE: This does not necessarily reset to original construction state
+    ///       if pre-spreading-activation values (e.g. links, prior probability)
+    ///       if those have been changed after construction.
+    virtual void reset_sa (void);
+
+    /// Get (maximum) probability info for a given step and true/false value.
+    /**
+     * @param step  Step for which to get probability info.
+     *
+     * @param value  Value for which to get probability (default = true).
+     *
+     * @return  Probability info.
+     */
+    virtual Probability_Info get_prob (int step, bool value = true);
 
     /// Print node.
     /**
@@ -440,6 +465,23 @@ namespace SANet {
 
     /// Destructor.
     virtual ~CondNode (void);
+
+    /// Reset saved probabilities and utilities from spreading activation
+    /// to initial state.
+    /// NOTE: This does not necessarily reset to original construction state
+    ///       if pre-spreading-activation values (e.g., initial probability,
+    ///       goal utility) if those have been changed after construction.
+    virtual void reset_sa (void);
+
+    /// Get (maximum) probability info for a given step and true/false value.
+    /**
+     * @param step  Step for which to get probability info.
+     *
+     * @param value  Value for which to get probability (default = true).
+     *
+     * @return  Probability info.
+     */
+    virtual Probability_Info get_prob (int step, bool value = true);
 
     /// Update goal utility.
     /**

@@ -1,5 +1,6 @@
 workspace {
   cmdline += -include $SAPOP_ROOT/MPC/config
+  cmdline += -features boost=1
   Standalone/XML_Utils/XML/XML.mpc
   experiments/EU_Performance/SAPOP_Exp_EU.mpc
 }

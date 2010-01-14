@@ -18,6 +18,7 @@
 #include <map>
 #include <stdlib.h>
 #include <fstream>
+#include <sstream>
 #include "SA_POP_Types.h"
 #include "Planner.h"
 #include "PlanStrategy.h"
@@ -118,7 +119,8 @@ bool Planner::plan (size_t sa_max_steps, SA_POP::Goal goal)
   this->working_plan_->set_goal (goal);
   this->sanet_->update_goals (goal.goal_conds);
 
-  // Run spreading activation.
+  // Reset network and run spreading activation.
+  this->sanet_->reset_sa ();
   this->sanet_->update (sa_max_steps);
 
   // Set planning strategy goals and satisfy open conditions.
@@ -151,7 +153,8 @@ bool Planner::replan (size_t sa_max_steps, SA_POP::Goal goal)
   this->working_plan_->set_goal (goal);
   this->sanet_->update_goals (goal.goal_conds);
 
-  // Run spreading activation.
+  // Reset network and run spreading activation.
+  this->sanet_->reset_sa ();
   this->sanet_->update (sa_max_steps);
 
   // Set planning strategy goals and satisfy open conditions.
@@ -177,7 +180,8 @@ bool Planner::replan (size_t sa_max_steps)
   // Reset the working plan
   this->working_plan_->reset_plan ();
 
-  // Run spreading activation.
+  // Reset network and run spreading activation.
+  this->sanet_->reset_sa ();
   this->sanet_->update (sa_max_steps);
 
   // Set planning strategy goals and satisfy open conditions.
@@ -495,14 +499,18 @@ void Planner::notify_plan_changed (void)
   }
 };
 
-double Planner::calc_plan_eu(Plan plan)
+Utility Planner::calc_plan_eu(Plan plan)
 {
   // Probability of goal conditions should be completely updated
   // by spreading activation for <= 2 times the number of tasks
   // in the plan (because even a serial plan will be of no longer
   // than the number of tasks and times 2 to account for
   // update of condition nodes between tasks).
-  size_t sa_max_steps = 2 * plan.task_insts.size ();
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+//  size_t sa_max_steps = 2 * plan.task_insts.size ();
+  // Set to times 3 to be extra certain that sufficient SA is done.
+  size_t sa_max_steps = 3 * plan.task_insts.size ();
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
 
   // Clone current SANet.
   SANet::Network sanet (*(this->sanet_));
@@ -512,17 +520,28 @@ double Planner::calc_plan_eu(Plan plan)
 
   SA_POP::Goal goal = plan.goal;
 
+//  std::ostringstream goal_str;
+//  goal_str << "Activated goal conditions: ";
+
   // Activate goal conditions.
   for (SA_POP::GoalMap::iterator goal_iter = goal.goal_conds.begin (); goal_iter != goal.goal_conds.end (); goal_iter++) {
+//    goal_str << this->get_cond_name (goal_iter->first) << " ";
     sanet.set_cond_state (goal_iter->first, true);
   }
 
-  // Activate only nodes relevant to the plan (tasks in plan and their preconditions).
+//  SA_POP_DEBUG_STR(SA_POP_DEBUG_TEMP, goal_str.str ());
+
+  // Activate tasks in plan and their preconditions.
   for (PlanInstSet::iterator inst_iter = plan.task_insts.begin (); inst_iter != plan.task_insts.end (); inst_iter++) {
     if ((*inst_iter).inst_id == INIT_TASK_INST_ID) {
       std::cerr << "SA_POP::Planner::calc_plan_eu(Plan plan):  Initial state task instance found in plan." << std::endl;
       throw "SA_POP::Planner::calc_plan_eu(Plan plan):  Initial state task instance found in plan.";
     }
+
+//    std::ostringstream temp_str;
+//    temp_str << "Activated task [instance] and ( preconditions ): ";
+//    temp_str << this->get_task_name ((*inst_iter).task_id);
+//    temp_str << " [" << (*inst_iter).name << "] and ( ";
 
     // Activate task.
     sanet.set_task_state ((*inst_iter).task_id, true);
@@ -530,58 +549,51 @@ double Planner::calc_plan_eu(Plan plan)
     // Activate preconditions.
     SA_POP::CondSet preconds = this->get_preconds ((*inst_iter).task_id);
     for (SA_POP::CondSet::iterator cond_iter = preconds.begin (); cond_iter != preconds.end (); cond_iter++) {
+//      temp_str << this->get_cond_name ((*cond_iter).id) << " ";
       sanet.set_cond_state ((*cond_iter).id, true);
     }
+
+//    temp_str << ")";
+//    SA_POP_DEBUG_STR(SA_POP_DEBUG_TEMP, temp_str.str ());
   }
-//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
-// Replace with correct code to activate all tasks and their preconditions on a clone of the network.
-  /*
-  size_t sa_max_steps = 100;
-	sanet_->set_nodes_state(false);
 
-	for(CLSet::iterator it = this->plan_.causal_links.begin(); it != 
-		this->plan_.causal_links.end(); it++){
-		if((*it).first != INIT_TASK_INST_ID){
-			this->sanet_->set_task_state(this->working_plan_->get_task_from_inst((*it).first), true);
-		}
+  // Reset network and run spreading activation.
+  sanet.reset_sa ();
+	sanet.update(sa_max_steps);
 
-		this->sanet_->set_task_state(this->working_plan_->get_task_from_inst((*it).second), true);
-		this->sanet_->set_cond_state((*it).cond.id, true);
+//  std::ostringstream eu_str;
+//  eu_str << "Goals (probability, EU):  ";
 
-		std::cout<<(*it).cond.id<<" cond, "<<(*it).first<<" first, "<<(*it).second<<" second"<<std::endl;
+  // Calculate sum of expected utility for goals.
+  SA_POP::Utility eu_total = 0.0;
+  for (SA_POP::GoalMap::iterator goal_iter = goal.goal_conds.begin (); goal_iter != goal.goal_conds.end (); goal_iter++) {
+//    eu_str << this->get_cond_name (goal_iter->first) << " (";
+    SA_POP::Probability prob = 0.0;
+    SA_POP::Utility util = 0.0;
+    SA_POP::Utility eu = 0.0;
 
-	}
-
-
-	GoalMap goals = this->get_goals();
-
-	for(GoalMap::iterator it = goals.begin(); it != goals.end(); it++){
-		this->sanet_->set_cond_state(it->first, true);
-	}
-
-	sanet_->update(sa_max_steps);
-
-	double conj_utils = 0;
-	for(GoalMap::iterator it = goals.begin(); it != goals.end(); it++){
-		std::cout<<it->second<<std::endl;
-    if (it->second >= 0.0) {
-		  std::cout<<this->sanet_->get_cond_future_val(it->first, true)<<std::endl;
-		  conj_utils+=(it->second * this->sanet_->get_cond_future_val(it->first, true));
-    } else {
-		  std::cout<<this->sanet_->get_cond_future_val(it->first, false)<<std::endl;
-		  conj_utils+=(it->second * this->sanet_->get_cond_future_val(it->first, false));
+    // Set probability and utility of goal condition achieving desired value
+    // of true (if positive utility) or false (if negative utility).
+    if (goal_iter->second > 0) {
+      prob = sanet.get_cond_future_val (goal_iter->first, true);
+      util = goal_iter->second;
     }
-	}
+    else {
+      prob = sanet.get_cond_future_val (goal_iter->first, false);
+      util = -1 * goal_iter->second;
+    }
 
-	std::cout<<"Plan utility: "<<conj_utils<<std::endl;
+    // Expected utility of the goal condition is its probability times utility.
+    eu = prob * util;
 
-	sanet_->set_nodes_state(true);
-	//TODO the rest
+    eu_total += eu;
 
-	return conj_utils;
-  */
-  return 10;
-//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+//    eu_str << prob << ", " << eu << ")  " ;
+  }
+
+//  SA_POP_DEBUG_STR(SA_POP_DEBUG_TEMP, eu_str.str ());
+
+  return eu_total;
 };
 
 /// Get the Task instances in a particular set of the specified task instance

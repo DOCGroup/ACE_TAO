@@ -1,8 +1,11 @@
-project(SAPOP_Exp_EU) : xerces, aceexe, sapop_xml {
+project(SAPOP_Exp_EU) : aceexe, xerces, boost_base, sapop_xml {
   exename = SAPOP_Exp_EU
 
   includes += $(SAPOP_ROOT)
   includes += $(SAPOP_ROOT)/UserInput
+
+//  includes += $(BOOST_ROOT)
+//  libpaths += $(BOOST_ROOT)/lib
 
   macros = SA_POP_HAS_ACE ACE_AS_STATIC_LIBS
 
