@@ -1,3 +1,9 @@
+Thu Jan 14 11:18:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
+          Extended idl3+ test, added an example that doesn't compile yet,
+          commented that out on line 124
+
 Thu Jan 14 11:19:04 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
