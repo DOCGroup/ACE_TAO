@@ -242,13 +242,13 @@ be_visitor_valuetype_field_ch::visit_interface (be_interface *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Set method.
-  *os << pre_op() << "void " << ub->local_name () << " ("
+  *os << pre_op () << "void " << ub->local_name () << " ( ::"
       << bt->name () << "_ptr"
-      << ")" << post_op() << be_nl;
+      << ")" << post_op () << be_nl;
   // Get method.
-  *os << pre_op()
-      << bt->name () << "_ptr " << ub->local_name ()
-      << " (void) const" << post_op();
+  *os << pre_op ()
+      << "::" << bt->name () << "_ptr " << ub->local_name ()
+      << " (void) const" << post_op ();
 
   return 0;
 }

@@ -27,6 +27,7 @@
 
 class be_decl;
 class be_visitor;
+class UTL_ExceptList;
 
 class be_scope : public virtual UTL_Scope
 {
@@ -48,6 +49,10 @@ public:
 
   AST_Field *be_add_field (AST_Field *f);
   // To access the protected base class method fe_add_field.
+
+  virtual UTL_ExceptList *be_add_exceptions (UTL_ExceptList *t);
+  virtual AST_Argument *be_add_argument (AST_Argument *arg);
+  // Overridden in be_operation and be_factory.
 
   virtual void comma (unsigned short set);
   // Set the comma producing state.

@@ -1047,19 +1047,19 @@ value_concrete_decl :
             {
               v =
                 idl_global->gen ()->create_valuetype (
-                    $1->name (),
-                    $1->inherits (),
-                    $1->n_inherits (),
-                    $1->inherits_concrete (),
-                    $1->inherits_flat (),
-                    $1->n_inherits_flat (),
-                    $1->supports (),
-                    $1->n_supports (),
-                    $1->supports_concrete (),
-                    false,
-                    $1->truncatable (),
-                    false
-                  );
+                  $1->name (),
+                  $1->inherits (),
+                  $1->n_inherits (),
+                  $1->inherits_concrete (),
+                  $1->inherits_flat (),
+                  $1->n_inherits_flat (),
+                  $1->supports (),
+                  $1->n_supports (),
+                  $1->supports_concrete (),
+                  false,
+                  $1->truncatable (),
+                  false);
+                  
               i = AST_Interface::narrow_from_decl (v);
               AST_Interface::fwd_redefinition_helper (i,
                                                       s);
@@ -1195,7 +1195,9 @@ value_header :
                           FE_OBVHeader (sn,
                                         $2,
                                         $4,
-                                        $2 ? $2->truncatable () : false),
+                                        ($2 != 0
+                                           ? $2->truncatable ()
+                                           : false)),
                           1);
 
           if (0 != $4)

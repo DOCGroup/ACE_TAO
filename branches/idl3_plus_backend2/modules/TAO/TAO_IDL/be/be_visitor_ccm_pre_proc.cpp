@@ -439,15 +439,17 @@ be_visitor_ccm_pre_proc::gen_factories (be_home *node,
        i.advance ())
     {
       i.next (item);
-      (*item)->set_defined_in (xplicit);
+      be_operation *op = be_operation::narrow_from_decl (*item);
+      
+      op->set_defined_in (xplicit);
       UTL_ScopedName *new_name =
         this->create_scoped_name (0,
-                                  (*item)->local_name ()->get_string (),
+                                  op->local_name ()->get_string (),
                                   0,
                                   xplicit);
-      (*item)->set_name (new_name);
+      op->set_name (new_name);
 
-      if ((*item)->be_insert_exception (this->create_failure_) == -1)
+      if (op->be_insert_exception (this->create_failure_) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_ccm_pre_proc::")
@@ -456,7 +458,7 @@ be_visitor_ccm_pre_proc::gen_factories (be_home *node,
                             -1);
         }
 
-      if (0 == xplicit->be_add_operation (*item))
+      if (0 == xplicit->be_add_operation (op))
         {
           return -1;
         }
@@ -476,15 +478,17 @@ be_visitor_ccm_pre_proc::gen_finders (be_home *node,
        i.advance ())
     {
       i.next (item);
-      (*item)->set_defined_in (xplicit);
+      be_operation *op = be_operation::narrow_from_decl (*item);
+      
+      op->set_defined_in (xplicit);
       UTL_ScopedName *new_name =
         this->create_scoped_name (0,
-                                  (*item)->local_name ()->get_string (),
+                                  op->local_name ()->get_string (),
                                   0,
                                   xplicit);
       (*item)->set_name (new_name);
 
-      if ((*item)->be_insert_exception (this->finder_failure_) == -1)
+      if (op->be_insert_exception (this->finder_failure_) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_ccm_pre_proc::")
@@ -493,7 +497,7 @@ be_visitor_ccm_pre_proc::gen_finders (be_home *node,
                             -1);
         }
 
-      if (0 == xplicit->be_add_operation (*item))
+      if (0 == xplicit->be_add_operation (op))
         {
           return -1;
         }
@@ -1139,7 +1143,7 @@ be_visitor_ccm_pre_proc::gen_create (be_home *node,
                                                       "create",
                                                       0,
                                                       implicit);
-  AST_Operation *op = 0;
+  be_operation *op = 0;
   ACE_NEW_RETURN (op,
                   be_operation (node->managed_component (),
                                 AST_Operation::OP_noflags,
@@ -1201,7 +1205,7 @@ be_visitor_ccm_pre_proc::gen_find_by_primary_key (be_home *node,
                                                       "find_by_primary_key",
                                                       0,
                                                       implicit);
-  AST_Operation *op = 0;
+  be_operation *op = 0;
   ACE_NEW_RETURN (op,
                   be_operation (node->managed_component (),
                                 AST_Operation::OP_noflags,
@@ -1257,7 +1261,7 @@ be_visitor_ccm_pre_proc::gen_remove (be_home *node,
                                                       "remove",
                                                       0,
                                                       implicit);
-  AST_Operation *op = 0;
+  be_operation *op = 0;
   ACE_NEW_RETURN (op,
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
@@ -1313,7 +1317,7 @@ be_visitor_ccm_pre_proc::gen_get_primary_key (be_home *node,
                                                       "get_primary_key",
                                                       0,
                                                       implicit);
-  AST_Operation *op = 0;
+  be_operation *op = 0;
   ACE_NEW_RETURN (op,
                   be_operation (node->primary_key (),
                                 AST_Operation::OP_noflags,

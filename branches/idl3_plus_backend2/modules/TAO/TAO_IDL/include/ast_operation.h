@@ -140,22 +140,13 @@ public:
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 
-  // Method to add exceptions
-  UTL_ExceptList *be_add_exceptions (UTL_ExceptList *t);
-
-  // Add an argument to the scope.
-  AST_Argument *be_add_argument (AST_Argument *arg);
-
-  // Insert an exception at the head of the list.
-  int be_insert_exception (AST_Exception *ex);
-
   // Cleanup function.
   virtual void destroy (void);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
-private:
+protected:
   // Data.
 
   AST_Type *pd_return_type;

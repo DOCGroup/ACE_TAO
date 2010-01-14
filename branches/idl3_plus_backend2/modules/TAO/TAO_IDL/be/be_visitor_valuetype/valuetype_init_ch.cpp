@@ -20,10 +20,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype,
-           valuetype_init_ch,
-           "$Id$")
-
 be_visitor_valuetype_init_ch::be_visitor_valuetype_init_ch (
     be_visitor_context *ctx
   )
@@ -71,7 +67,8 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
   //@@ If I'm generating concrete class I need a RefCounter.
   os << "class " << be_global->stub_export_macro ()
      << " " << node->local_name ()
-     << "_init : public virtual ::CORBA::ValueFactoryBase" << be_nl;
+     << "_init" << be_idt_nl
+     << ": public virtual ::CORBA::ValueFactoryBase" << be_uidt_nl;
 
   // Generate the body.
   os << "{" << be_nl
@@ -126,15 +123,16 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
     {
       // Protected constructor.
       os << be_uidt_nl << be_nl
-         << "protected:" << be_idt_nl;
-      os << node->local_name () << "_init (void);";
+         << "protected:" << be_idt_nl
+         << node->local_name () << "_init (void);";
     }
 
   // Protected virtual destructor.
-  os << be_uidt_nl << be_nl << "protected:" << be_idt_nl;
-  os << "virtual ~" << node->local_name () << "_init (void);";
-
-  os << be_uidt_nl << "};";
+  os << be_uidt_nl << be_nl
+     << "protected:" << be_idt_nl
+     << "virtual ~" << node->local_name () << "_init (void);"
+     << be_uidt_nl
+     << "};";
 
   return 0;
 }

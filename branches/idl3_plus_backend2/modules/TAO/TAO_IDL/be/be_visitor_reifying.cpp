@@ -11,11 +11,15 @@
 #include "be_visitor_context.h"
 
 #include "be_interface.h"
+#include "be_valuetype.h"
+#include "be_eventtype.h"
+#include "be_component.h"
 #include "be_exception.h"
 #include "be_typedef.h"
 #include "be_array.h"
 #include "be_sequence.h"
 #include "be_predefined_type.h"
+#include "be_string.h"
 #include "be_constant.h"
 #include "be_param_holder.h"
 
@@ -45,26 +49,28 @@ be_visitor_reifying::reified_node (void) const
 int
 be_visitor_reifying::visit_interface (be_interface *node)
 {
-  if (this->declared_in_template_module (node))
-    {
-      ACE_NEW_RETURN (this->reified_node_,
-                      be_interface (node->name (),
-                                    node->inherits (),
-                                    node->n_inherits (),
-                                    node->inherits_flat (),
-                                    node->n_inherits_flat (),
-                                    node->is_local (),
-                                    node->is_abstract ()),
-                      -1);
-                      
-      this->ctx_->template_module_inst_scope ()->add_to_scope (
-        this->reified_node_ );
-    }
-  else
-    {
-      this->reified_node_ = node;
-    }
-    
+  this->reified_node_ = node;
+  return 0;
+}
+
+int
+be_visitor_reifying::visit_valuetype (be_valuetype *node)
+{
+  this->reified_node_ = node;
+  return 0;
+}
+
+int
+be_visitor_reifying::visit_eventtype (be_eventtype *node)
+{
+  this->reified_node_ = node;
+  return 0;
+}
+
+int
+be_visitor_reifying::visit_component (be_component *node)
+{
+  this->reified_node_ = node;
   return 0;
 }
 
@@ -72,7 +78,6 @@ int
 be_visitor_reifying::visit_exception (be_exception *node)
 {
   this->reified_node_ = node;
-  
   return 0;
 }
 
@@ -80,7 +85,6 @@ int
 be_visitor_reifying::visit_typedef (be_typedef *node)
 {
   this->reified_node_ = node;
-  
   return 0;
 }
 
@@ -237,6 +241,13 @@ be_visitor_reifying::visit_sequence (be_sequence *node)
 
 int
 be_visitor_reifying::visit_predefined_type (be_predefined_type *node)
+{
+  this->reified_node_ = node;
+  return 0;
+}
+
+int
+be_visitor_reifying::visit_string (be_string *node)
 {
   this->reified_node_ = node;
   return 0;
