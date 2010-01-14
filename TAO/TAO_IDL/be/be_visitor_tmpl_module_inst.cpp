@@ -236,7 +236,10 @@ be_visitor_tmpl_module_inst::visit_interface (be_interface *node)
                                 header.is_abstract ()),
                   -1);
              
-  parent_names->destroy ();                
+  if (parent_names)
+    {
+      parent_names->destroy ();                
+    }
   delete parent_names;
   parent_names = 0;
   
