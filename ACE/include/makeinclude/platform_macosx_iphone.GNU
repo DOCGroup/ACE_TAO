@@ -1,5 +1,7 @@
 # $Id$
 
+CROSS-COMPILE=1
+
 include $(ACE_ROOT)/include/makeinclude/platform_macosx_common.GNU
 
 XCODE:=/Developer
