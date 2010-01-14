@@ -333,7 +333,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
           throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 2);
         }
 
-      const char* paramaterlist[256];
+      const char* paramaterlist[filter.query_parameters.length ()];
       for (CORBA::ULong i = 0; i < filter.query_parameters.length (); ++i)
         {
           paramaterlist[i] = filter.query_parameters[i].in ();
