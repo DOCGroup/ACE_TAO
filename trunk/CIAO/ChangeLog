@@ -1,3 +1,25 @@
+Thu Jan 14 10:21:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Base:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Base/Base.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Base/Base.mpc:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Component:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Component/Component.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Component/Component.mpc:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Component/Component_exec.h:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Component/Component_exec.cpp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Connector:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Connector/Connector.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Connector/Connector.mpc:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Connector/Connector_exec.h:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/Connector/Connector_exec.cpp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/descriptors:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/descriptors/run_test.pl:
+          Removed these files. Moved to SharedDomainParticipant/SameDatatype.
+
 Thu Jan 14 10:11:06 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/*:
