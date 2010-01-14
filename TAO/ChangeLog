@@ -1,3 +1,18 @@
+Thu Jan 14 04:03:17 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * tests/Bug_3766_Regression/client.cpp:
+
+          Removed:
+
+          "CORBA::Object_var poa_object = 
+             orb->resolve_initial_references("RootPOA");"
+
+          This is a client, it doesn't link the PortableServer library
+          and does not use the RootPOA in the program.
+
+          Trying to resolve the RootPOA is believed to cause the test to fail
+          on the iPhone Simulator build. 
+
 Wed Jan 13 10:47:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_ami4ccm_pre_proc.cpp:
