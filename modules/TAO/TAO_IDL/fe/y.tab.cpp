@@ -343,7 +343,7 @@ typedef union TAO_YYSTYPE
   UTL_DeclList                  *dlval;         /* Declaration list     */
   FE_InterfaceHeader            *ihval;         /* Interface header     */
   FE_OBVHeader                  *vhval;         /* Valuetype header     */
-  FE_EventHeader                *ehval;         /* Event header         */
+  FE_EventHeader                *ehval;         /* Eventtype header     */
   FE_ComponentHeader            *chval;         /* Component header     */
   FE_HomeHeader                 *hhval;         /* Home header          */
   AST_Expression                *exval;         /* Expression value     */
@@ -3396,19 +3396,19 @@ tao_yyreduce:
             {
               v =
                 idl_global->gen ()->create_valuetype (
-                    (tao_yyvsp[(1) - (1)].vhval)->name (),
-                    (tao_yyvsp[(1) - (1)].vhval)->inherits (),
-                    (tao_yyvsp[(1) - (1)].vhval)->n_inherits (),
-                    (tao_yyvsp[(1) - (1)].vhval)->inherits_concrete (),
-                    (tao_yyvsp[(1) - (1)].vhval)->inherits_flat (),
-                    (tao_yyvsp[(1) - (1)].vhval)->n_inherits_flat (),
-                    (tao_yyvsp[(1) - (1)].vhval)->supports (),
-                    (tao_yyvsp[(1) - (1)].vhval)->n_supports (),
-                    (tao_yyvsp[(1) - (1)].vhval)->supports_concrete (),
-                    false,
-                    (tao_yyvsp[(1) - (1)].vhval)->truncatable (),
-                    false
-                  );
+                  (tao_yyvsp[(1) - (1)].vhval)->name (),
+                  (tao_yyvsp[(1) - (1)].vhval)->inherits (),
+                  (tao_yyvsp[(1) - (1)].vhval)->n_inherits (),
+                  (tao_yyvsp[(1) - (1)].vhval)->inherits_concrete (),
+                  (tao_yyvsp[(1) - (1)].vhval)->inherits_flat (),
+                  (tao_yyvsp[(1) - (1)].vhval)->n_inherits_flat (),
+                  (tao_yyvsp[(1) - (1)].vhval)->supports (),
+                  (tao_yyvsp[(1) - (1)].vhval)->n_supports (),
+                  (tao_yyvsp[(1) - (1)].vhval)->supports_concrete (),
+                  false,
+                  (tao_yyvsp[(1) - (1)].vhval)->truncatable (),
+                  false);
+                  
               i = AST_Interface::narrow_from_decl (v);
               AST_Interface::fwd_redefinition_helper (i,
                                                       s);
@@ -3563,7 +3563,9 @@ tao_yyreduce:
                           FE_OBVHeader (sn,
                                         (tao_yyvsp[(2) - (4)].nlval),
                                         (tao_yyvsp[(4) - (4)].nlval),
-                                        (tao_yyvsp[(2) - (4)].nlval) ? (tao_yyvsp[(2) - (4)].nlval)->truncatable () : false),
+                                        ((tao_yyvsp[(2) - (4)].nlval) != 0
+                                           ? (tao_yyvsp[(2) - (4)].nlval)->truncatable ()
+                                           : false)),
                           1);
 
           if (0 != (tao_yyvsp[(4) - (4)].nlval))

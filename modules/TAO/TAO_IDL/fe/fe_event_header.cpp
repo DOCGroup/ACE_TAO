@@ -2,10 +2,6 @@
 
 #include "fe_event_header.h"
 
-ACE_RCSID (fe,
-           fe_event_header,
-           "$Id$")
-
 FE_EventHeader::FE_EventHeader (UTL_ScopedName *n,
                                 UTL_NameList *inherits,
                                 UTL_NameList *supports,

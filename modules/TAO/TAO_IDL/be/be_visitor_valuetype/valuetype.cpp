@@ -19,10 +19,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype,
-           valuetype,
-           "$Id$")
-
 be_visitor_valuetype::be_visitor_valuetype (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {

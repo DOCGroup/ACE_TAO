@@ -15,6 +15,7 @@
 #include "be_module.h"
 #include "be_template_module.h"
 #include "be_template_module_inst.h"
+#include "be_eventtype.h"
 #include "be_interface.h"
 #include "be_attribute.h"
 #include "be_operation.h"
@@ -22,6 +23,7 @@
 #include "be_typedef.h"
 #include "be_constant.h"
 #include "be_structure.h"
+#include "be_factory.h"
 #include "be_param_holder.h"
 #include "be_expression.h"
 
@@ -32,10 +34,12 @@
 #include "utl_exceptlist.h"
 
 #include "fe_interface_header.h"
+#include "fe_obv_header.h"
 
 be_visitor_tmpl_module_inst::be_visitor_tmpl_module_inst (
       be_visitor_context *ctx)
-  : be_visitor_scope (ctx)
+  : be_visitor_scope (ctx),
+    for_eventtype_ (false)
 {
 }
 
@@ -163,6 +167,143 @@ be_visitor_tmpl_module_inst::visit_template_module_inst (
 }
 
 int
+be_visitor_tmpl_module_inst::visit_eventtype (be_eventtype *node)
+{
+  this->for_eventtype_ = true;
+  return this->visit_valuetype (node);
+}
+
+int
+be_visitor_tmpl_module_inst::visit_valuetype (be_valuetype *node)
+{
+  if (this->ctx_->template_args () == 0)
+    {
+      return 0;
+    }
+    
+  UTL_NameList *parent_names =
+    this->create_name_list (node->inherits (),
+                            node->n_inherits ());
+                            
+  UTL_NameList *supports_names =
+    this->create_name_list (node->supports (),
+                            node->n_supports ());
+                            
+  // Set the scope to our adding scope.
+  UTL_Scope *s = this->ctx_->template_module_inst_scope ();
+  idl_global->scopes ().push (s);
+
+  Identifier *node_id = 0;
+  ACE_NEW_RETURN (node_id,
+                  Identifier (node->local_name ()),
+                  -1);
+                  
+  UTL_ScopedName *local_name = 0;
+  ACE_NEW_RETURN (local_name,
+                  UTL_ScopedName (node_id, 0),
+                  -1);
+                  
+  be_valuetype *added_vtype = 0;
+
+  FE_OBVHeader header (local_name,
+                       parent_names,
+                       supports_names,
+                       (parent_names != 0
+                          ? parent_names->truncatable ()
+                          : false),
+                       this->for_eventtype_);
+  
+  if (this->for_eventtype_)
+    {
+      ACE_NEW_RETURN (added_vtype,
+                      be_eventtype (header.name (),
+                                    header.inherits (),
+                                    header.n_inherits (),
+                                    header.inherits_concrete (),
+                                    header.inherits_flat (),
+                                    header.n_inherits_flat (),
+                                    header.supports (),
+                                    header.n_supports (),
+                                    header.supports_concrete (),
+                                    false,
+                                    header.truncatable (),
+                                    false),
+                      -1);
+    }
+  else
+    {                           
+      ACE_NEW_RETURN (added_vtype,
+                      be_valuetype (header.name (),
+                                    header.inherits (),
+                                    header.n_inherits (),
+                                    header.inherits_concrete (),
+                                    header.inherits_flat (),
+                                    header.n_inherits_flat (),
+                                    header.supports (),
+                                    header.n_supports (),
+                                    header.supports_concrete (),
+                                    false,
+                                    header.truncatable (),
+                                    false),
+                      -1);
+    }
+             
+  parent_names->destroy ();                
+  delete parent_names;
+  parent_names = 0;
+  
+  supports_names->destroy ();
+  delete supports_names;
+  supports_names = 0;
+  
+  // Back to reality.
+  idl_global->scopes ().pop ();
+  
+  added_vtype->set_defined_in (s);
+  added_vtype->set_imported (node->imported ());
+  
+  // Set repo id to 0, so it will be recomputed on the next access,
+  // and set the prefix to the eventtype's prefix. All this is
+  // necessary in case the eventtype's prefix was modified after
+  // its declaration. We assume 'implied IDL' means that the
+  // derived event consumer interface should have the same prefix.
+  added_vtype->AST_Decl::repoID (0);
+  added_vtype->prefix (const_cast<char*> (node->prefix ()));
+  
+  // Force calculation of the repo id.
+  const char *dummy = added_vtype->repoID ();
+
+  // For interfaces, this should always be a module or root, and
+  // AST_Root is a subclass of AST_Module.
+  AST_Module *m = AST_Module::narrow_from_scope (s);
+  
+  m->be_add_valuetype (added_vtype);
+  
+  // Save our containing scope for restoration later.
+  be_scope *holder = this->ctx_->template_module_inst_scope ();
+  
+  // Update the adding scope for the interface contents.
+  this->ctx_->template_module_inst_scope (added_vtype);
+  
+  if (this->visit_scope (node) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_tmpl_module_inst::")
+                         ACE_TEXT ("visit_valuetype - ")
+                         ACE_TEXT ("visit_scope failed\n")),
+                        -1);
+    }
+    
+  // Restore the previous scope.  
+  this->ctx_->template_module_inst_scope (holder);
+  
+  // Reset the flag.
+  this->for_eventtype_ = false;
+    
+  return 0;
+}
+
+int
 be_visitor_tmpl_module_inst::visit_interface (be_interface *node)
 {
   if (this->ctx_->template_args () == 0)
@@ -170,43 +311,12 @@ be_visitor_tmpl_module_inst::visit_interface (be_interface *node)
       return 0;
     }
     
-  UTL_Scope *s = node->defined_in ();
-  UTL_NameList *parent_names = 0;
-  
-  // We're at global scope here so we need to fool the scope stack
-  // for a minute so the correct repo id can be calculated at
-  // interface construction time.
-  idl_global->scopes ().push (s);
-
-  for (long i = 0; i < node->n_inherits (); ++i)
-    {
-      AST_Type *parent =
-        AST_Type::narrow_from_decl (this->reify_type (
-          node->inherits ()[i]));
-          
-      // We copy each name added so we can call destroy() on the
-      // list, which disposes of the contents as well as the
-      // nested tail pointers.    
-      UTL_NameList *parent_name = 0;    
-      ACE_NEW_RETURN (parent_name,
-                      UTL_NameList (parent->name ()->copy (), 0),
-                      -1);
-
-      if (parent_names == 0)
-        {
-          parent_names = parent_name;
-        }
-      else
-        {
-          parent_names->nconc (parent_name);
-        }
-    }
-    
-  // Back to reality.
-  idl_global->scopes ().pop ();
-
-  // Now set the scope to our adding scope.
-  s = this->ctx_->template_module_inst_scope ();
+  UTL_NameList *parent_names =
+    this->create_name_list (node->inherits (),
+                            node->n_inherits ());
+                            
+  // Set the scope to our adding scope.
+  UTL_Scope *s = this->ctx_->template_module_inst_scope ();
   idl_global->scopes ().push (s);
 
   Identifier *node_id = 0;
@@ -254,7 +364,8 @@ be_visitor_tmpl_module_inst::visit_interface (be_interface *node)
   added_iface->AST_Decl::repoID (0);
   added_iface->prefix (const_cast<char*> (node->prefix ()));
   
-  const char *repo_id = added_iface->repoID ();
+  // Force calculation of the repo id.
+  const char *dummy = added_iface->repoID ();
 
   // For interfaces, this should always be a module or root, and
   // AST_Root is a subclass of AST_Module.
@@ -377,12 +488,10 @@ be_visitor_tmpl_module_inst::visit_argument (be_argument *node)
                                t,
                                node->name ()),
                   -1);
-      
-  be_operation *op =
-    be_operation::narrow_from_scope (
-      this->ctx_->template_module_inst_scope ());
-      
-  op->be_add_argument (arg);
+    
+  // This method is virtual in be_scope and overridden in
+  // be_operation and be_factory.    
+  this->ctx_->template_module_inst_scope ()->be_add_argument (arg);
       
   return 0;
 }
@@ -526,7 +635,45 @@ be_visitor_tmpl_module_inst::visit_field (be_field *node)
                             node->visibility ()),
                   -1);
       
-  this->ctx_->template_module_inst_scope ()->be_add_field (f);
+  be_scope *s = this->ctx_->template_module_inst_scope (); 
+  s->be_add_field (f);
+  f->set_defined_in (s);
+  
+  return 0;
+}
+
+int
+be_visitor_tmpl_module_inst::visit_factory (be_factory *node)
+{
+  Identifier id (node->local_name ()->get_string ());
+  UTL_ScopedName sn (&id, 0);
+  
+  be_factory *f = 0;
+  ACE_NEW_RETURN (f,
+                  be_factory (&sn),
+                  -1);
+                  
+  be_scope *s = this->ctx_->template_module_inst_scope ();
+  s->add_to_scope (f);
+  f->set_defined_in (s);
+  
+  this->ctx_->template_module_inst_scope (f);
+  
+  if (this->visit_scope (node) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_tmpl_module_inst::")
+                         ACE_TEXT ("visit_factory - ")
+                         ACE_TEXT ("visit_scope() failed\n")),
+                        -1);
+    }
+    
+  this->ctx_->template_module_inst_scope (s);
+  
+  UTL_ExceptList *reified_exceps =
+    this->reify_exception_list (node->exceptions ());
+    
+  f->be_add_exceptions (reified_exceps);
   
   return 0;
 }
@@ -582,6 +729,38 @@ be_visitor_tmpl_module_inst::reify_exception_list (
       else
         {
           retval->nconc (ex_list);
+        }
+    }
+    
+  return retval;
+}
+
+UTL_NameList *
+be_visitor_tmpl_module_inst::create_name_list (AST_Type **list,
+                                               long length)
+{
+  UTL_NameList *retval = 0;
+
+  for (long i = 0; i < length; ++i)
+    {
+      AST_Type *item =
+        AST_Type::narrow_from_decl (this->reify_type (list[i]));
+          
+      // We copy each name added so we can call destroy() on the
+      // list, which disposes of the contents as well as the
+      // nested tail pointers.    
+      UTL_NameList *name_item = 0;    
+      ACE_NEW_RETURN (name_item,
+                      UTL_NameList (item->name ()->copy (), 0),
+                      0);
+
+      if (retval == 0)
+        {
+          retval = name_item;
+        }
+      else
+        {
+          retval->nconc (name_item);
         }
     }
     

@@ -78,10 +78,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_exceptlist.h"
 #include "utl_namelist.h"
 
-ACE_RCSID (ast,
-           ast_factory,
-           "$Id$")
-
 AST_Factory::AST_Factory (void)
   : COMMON_Base (),
     AST_Decl (),
@@ -252,48 +248,48 @@ UTL_NameList *
 AST_Factory::fe_add_exceptions (UTL_NameList *t)
 {
   UTL_ScopedName *nl_n = 0;
-  AST_Exception *fe = 0;
+  AST_Type *fe = 0;
   AST_Decl *d = 0;
 
   this->pd_exceptions = 0;
 
-  for (UTL_NamelistActiveIterator nl_i (t); !nl_i.is_done (); nl_i.next ())
+  for (UTL_NamelistActiveIterator nl_i (t);
+       !nl_i.is_done ();
+       nl_i.next ())
     {
       nl_n = nl_i.item ();
 
-      d = this->lookup_by_name (nl_n,
-                                true);
+      d = this->defined_in ()->lookup_by_name (nl_n, true);
 
-      if (d == 0 || d->node_type() != AST_Decl::NT_except)
+      if (d == 0)
         {
           idl_global->err ()->lookup_error (nl_n);
           return 0;
         }
+        
+      AST_Decl::NodeType nt = d->node_type ();
 
-      fe = AST_Exception::narrow_from_decl (d);
-
-      if (fe == 0)
+      if (nt != AST_Decl::NT_except
+          && nt != AST_Decl::NT_param_holder)
         {
           idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
                                       this);
           return 0;
         }
 
+      fe = AST_Type::narrow_from_decl (d);
+
+      UTL_ExceptList *el = 0;
+      ACE_NEW_RETURN (el,
+                      UTL_ExceptList (fe, 0),
+                      0);
+
       if (this->pd_exceptions == 0)
         {
-          ACE_NEW_RETURN (this->pd_exceptions,
-                          UTL_ExceptList (fe,
-                                          0),
-                          0);
+          this->pd_exceptions = el;
         }
       else
         {
-          UTL_ExceptList *el = 0;
-          ACE_NEW_RETURN (el,
-                          UTL_ExceptList (fe,
-                                          0),
-                          0);
-
           this->pd_exceptions->nconc (el);
         }
 
@@ -306,6 +302,7 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
   t->destroy ();
   delete t;
   t = 0;
+  
   return t;
 }
 
