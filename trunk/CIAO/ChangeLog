@@ -1,7 +1,40 @@
+Thu Jan 14 10:08:40 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added SharedDomainParticipant for different datatypes.
+
+        * connectors/dds4ccm/docs/TestCoverage.ods:
+          Changed to meet the latest status.
+
+        * connectors/dds4ccm/idl/ccm_dds.idl:
+          code aligning.
+
+        * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.h:
+        * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Read_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+        * connectors/dds4ccm/impl/ndds/Reader_T.h:
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Topic.h:
+        * connectors/dds4ccm/impl/ndds/Topic.cpp:
+        * connectors/dds4ccm/impl/ndds/ndds_impl.mpc:
+          Started with implementation of the QueryFilter attribute.
+
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.cpp:
+          Optimized logging.
+
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/*:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/*:
+          Moved existing SharedDomainParticipant test to SameDatatype sub directory.
+          Added a new SharedDomainParticipant test with which deploys three connectors
+          with different datatypes.
+
 Thu Jan 14 09:10:40 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/docs/TestCoverage.ods
-	Add new tests.
+        Add new tests.
 
 Wed Jan 13 13:11:36 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 

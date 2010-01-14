@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Topic.h"
+#include "ContentFilteredTopic.h"
 #include "StatusCondition.h"
 #include "TopicListener.h"
 #include "InstanceHandle_t.h"
@@ -126,9 +127,9 @@ namespace CIAO
       }
 
       void
-      RTI_Topic_i::set_impl (DDSTopic * dw)
+      RTI_Topic_i::set_impl (DDSTopic * topic)
       {
-        this->impl_ = dw;
+        this->impl_ = topic;
       }
 
       DDSTopic *

@@ -8,7 +8,9 @@
 // Implementation skeleton constructor
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::Reader_T (void)
-  : impl_ (0)
+  : topic_ (0),
+    cft_ (0),
+    impl_ (0)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::Reader_T");
 }
@@ -61,7 +63,6 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::get_nr_valid_samples (
   return nr_of_samples;
 }
 
-
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_without_instance (
@@ -108,7 +109,6 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_last (
                           ACE_TEXT ("last number of samples <%u>\n"),
                             data.length(),
                             nr_of_last_samples));
-
   CORBA::ULong ix = 0;
   infoseq->length (nr_of_last_samples);
   inst_seq->length (nr_of_last_samples);
@@ -311,10 +311,62 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (const ::CCM_DDS::QueryFilter & filter)
+CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
+  const ::CCM_DDS::QueryFilter & filter)
 {
-  /// @todo
-  ACE_UNUSED_ARG (filter);
+  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::filter");
+  if (!this->cft_)
+    {
+      DDSSubscriber *subscriber = this->impl ()->get_subscriber ();
+      if (!subscriber)
+        {
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+                        "Error: Unable to get Subscriber\n"));
+          throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
+        }
+      DDSDomainParticipant *dp = subscriber->get_participant ();
+      if (!dp)
+        {
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+                        "Error: Unable to get DomainParticipant\n"));
+          throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 2);
+        }
+
+      DDS_StringSeq parameters;
+      parameters.maximum (filter.query_parameters.length ());
+      parameters.length (filter.query_parameters.length ());
+
+      for (CORBA::ULong i = 0; i < filter.query_parameters.length (); ++i)
+          parameters[i] = DDS_String_dup (filter.query_parameters[i].in ());
+
+      this->cft_ = dp->create_contentfilteredtopic (
+                                    DDS_String_dup ("act_funny"),
+                                    this->topic_,
+                                    DDS_String_dup (filter.query),
+                                    parameters);
+      if (!this->cft_)
+        {
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+                        "Error: Unable to create ContentFilteredTopic\n"));
+          //throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 3);
+        }
+      CIAO_DEBUG (6, (LM_DEBUG, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+                        "ContentFilteredTopic created. Query <%C>\n",
+                        filter.query.in ()));
+    }
+  else
+    {
+      //just set the expression_parameters.
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::set_topic (
+  DDSTopic * topic)
+{
+  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::set_impl");
+  this->topic_ = topic;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -330,16 +382,16 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::set_impl (
     }
   else
     {
-      RTI_DataReader_i *rdw = dynamic_cast <RTI_DataReader_i *> (reader);
+      RTI_DataReader_i *rdr = dynamic_cast <RTI_DataReader_i *> (reader);
 
-      if (!rdw)
+      if (!rdr)
         {
           CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::data_reader - "
                        "Unable to cast provided DataReader to servant\n"));
           throw ::CORBA::INTERNAL ();
         }
 
-      this->impl_ =  DDS_TYPE::data_reader::narrow (rdw->get_impl ());
+      this->impl_ =  DDS_TYPE::data_reader::narrow (rdr->get_impl ());
 
       if (!this->impl ())
         {

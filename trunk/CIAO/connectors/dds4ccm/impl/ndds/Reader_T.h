@@ -55,10 +55,12 @@ namespace CIAO
         virtual void filter (const ::CCM_DDS::QueryFilter & filter);
 
         void set_impl (::DDS::DataReader_ptr reader);
+        void set_topic (DDSTopic * topic);
 
       private:
-        typename DDS_TYPE::data_reader *impl_;
-        ::DDS::DataReader_ptr reader_;
+        DDSTopic * topic_;
+        DDSContentFilteredTopic * cft_;
+        typename DDS_TYPE::data_reader * impl_;
 
         typename DDS_TYPE::data_reader * impl (void);
 
