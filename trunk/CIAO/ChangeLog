@@ -1,3 +1,8 @@
+Thu Jan 14 11:19:04 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Resolved fuzz error.
+
 Thu Jan 14 10:33:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/docs/ccm_dds.idl:
