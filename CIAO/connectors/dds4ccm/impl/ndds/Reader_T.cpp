@@ -365,7 +365,7 @@ void
 CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::set_topic (
   DDSTopic * topic)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::set_impl");
+  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::set_topic");
   this->topic_ = topic;
 }
 
