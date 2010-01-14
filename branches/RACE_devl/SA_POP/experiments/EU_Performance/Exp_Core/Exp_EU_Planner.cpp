@@ -19,6 +19,7 @@
 #include <map>
 #include <stdlib.h>
 #include <fstream>
+#include <sstream>
 
 #include "SA_POP_Types.h"
 #include "Exp_EU_Planner.h"
@@ -35,6 +36,9 @@ using namespace SA_POP;
 
 // Constructor.
 Exp_EU_Planner::Exp_EU_Planner (void)
+:do_pause_ (false),
+ input_ (0),
+ ques_ (0)
 {
   // All initialization handled by Planner base class constructor.
 };
@@ -47,103 +51,20 @@ Exp_EU_Planner::~Exp_EU_Planner (void)
 }
 
 
-
-
-// Run planning.
-bool Exp_EU_Planner::plan (size_t sa_max_steps, SA_POP::Goal goal)
+// Set to pause and ask user whether to continue after each plan is generated.
+void Exp_EU_Planner::set_pause (UserInterface::InputCL *input_cl, UserInterface::QuestionBool *ques)
 {
-  // Add goal to working plan and task network.
-  this->working_plan_->set_goal (goal);
-  this->sanet_->update_goals (goal.goal_conds);
-
-  // Run spreading activation.
-  this->sanet_->update (sa_max_steps);
-
-  // Set planning strategy goals and satisfy open conditions.
-  this->plan_strat_->set_goals (goal.goal_conds);
-
-  if (this->plan_strat_->satisfy_open_conds ()) {
-    this->plan_ = this->working_plan_->get_plan ();
-
-    this->notify_plan_changed ();
-    return true;
-  }
-
-  return false;
+  this->input_ = input_cl;
+  this->ques_ = ques;
+  this->do_pause_ = true;
 };
 
-// Replan with new goal.
-bool Exp_EU_Planner::replan (size_t sa_max_steps, SA_POP::Goal goal)
+// Set to generate all plans without user input (instead of asking whether to continue after each plan is generated).
+void Exp_EU_Planner::unset_pause (void)
 {
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
-  // Full replanning not implemented, so just restart planning.
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
-
-  // Clear plan.
-  this->plan_.causal_links.clear ();
-  this->plan_.connections.clear ();
-  this->plan_.sched_links.clear ();
-  this->plan_.task_insts.clear ();
-  this->plan_.threat_links.clear ();
-
-  // Add goal to working plan and task network.
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
-  // Need to reset working plan.
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
-  this->working_plan_->reset_plan();
-  this->working_plan_->set_goal (goal);
-  this->sanet_->update_goals (goal.goal_conds);
-
-  // Run spreading activation.
-  this->sanet_->update (sa_max_steps);
-
-
-  // Set planning strategy goals and satisfy open conditions.
-  this->plan_strat_->set_goals (goal.goal_conds);
-  if (this->plan_strat_->satisfy_open_conds ()) {
-    this->plan_ = this->working_plan_->get_plan ();
-    this->notify_plan_changed ();
-    return true;
-  }
-
-  return false;
+  this->do_pause_ = false;
 };
 
-// Replan with existing goal.
-bool Exp_EU_Planner::replan (size_t sa_max_steps)
-{
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
-  // Full replanning not implemented, so just restart planning.
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
-  // Clear plan.
-  //TODO: Refactor this plan clearing into own function.
-  this->plan_.causal_links.clear ();
-  this->plan_.connections.clear ();
-  this->plan_.sched_links.clear ();
-  this->plan_.task_insts.clear ();
-  this->plan_.threat_links.clear ();
-  // Reset the working plan
-
-  // Run spreading activation.
-  this->sanet_->update (sa_max_steps);
-
-  // Set planning strategy goals and satisfy open conditions.
-  this->plan_strat_->set_goals (this->sanet_->get_goals ());
-  if (this->plan_strat_->satisfy_open_conds ()) {
-    this->plan_ = this->working_plan_->get_plan ();
-    this->notify_plan_changed ();
-    return true;
-  }
-
-  return false;
-};
-
-
-// Recursively plan (satisfy all open conditions & schedule constraints).
-bool Exp_EU_Planner::recurse_plan (void)
-{
-  return this->plan_strat_->satisfy_open_conds ();
-};
 
 // Satisfy scheduling constraints in fully instantiated plan (no
 // recursive call backs).
@@ -153,7 +74,20 @@ bool Exp_EU_Planner::full_sched ()
     this->plan_ = this->working_plan_->get_plan ();
     this->notify_plan_changed ();
     Utility plan_eu = this->calc_plan_eu (this->plan_);
-    std::cout << "Expected utility of generated plan:  " << plan_eu << std::endl << std::endl;
+
+//    std::ostringstream eu_str;
+//    eu_str << "Plan EU: " << plan_eu << std::endl << std::endl;
+//    SA_POP_DEBUG_STR(SA_POP_DEBUG_QUIET, eu_str.str ());
+
+    // If pausing to ask user whether to continue, ask question
+    // and return true (so the current plan will be returned instead
+    // of continuing planning) if user replies "No" to continuation
+    // question.
+    if (this->do_pause_) {
+      this->input_->ask ((*this->ques_));
+      if (!this->ques_->get_answer_bool ())
+        return true;
+    }
   }
 
   return false;

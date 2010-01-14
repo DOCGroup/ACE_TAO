@@ -307,7 +307,7 @@ void SA_WorkingPlan::generate_all_threats(void)
 			debug_text << "  Task ("<<threatened_task<<") " << "Inst ("<<causal_threatened.first<<") -(" << causal_threatened.cond.id << ")-> Task ("<<this->task_insts_.find(causal_threatened.second)->second<< ") Inst ("<< causal_threatened.second << ")" << std::endl;           
 
 	}
-	SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 	debug_text.str("");
 
 
@@ -324,7 +324,7 @@ void SA_WorkingPlan::generate_all_threats(void)
 		debug_text <<"  Task (" <<threat_possibility_taskid << ")"<< ": Inst (" <<iterator->first << ")" << std::endl;
 	}
 	debug_text<<std::endl;
-	SA_POP_DEBUG_STR (SA_POP_DEBUG_QUIET, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 	debug_text.str("");
 
 	debug_text << "SA_WorkingPlan::generate_all_threats:  All Causal Threats: " << std::endl;
@@ -412,7 +412,7 @@ void SA_WorkingPlan::generate_all_threats(void)
 	}
 
 
-	SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 	debug_text.str("");
 
 	print_precedence_graph("SA_WorkingPlan::generate_all_threats");
@@ -436,7 +436,7 @@ void SA_WorkingPlan::print_precedence_graph(std::string source){
 		}
 		debug_text<<std::endl;
 	}
-	SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 	debug_text.str("");
 
 	debug_text << source<<": Precendence Sets: AFTER: " << std::endl;
@@ -448,7 +448,7 @@ void SA_WorkingPlan::print_precedence_graph(std::string source){
 		debug_text<<std::endl;
 	}
 
-	SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 	debug_text.str("");
 
 
@@ -461,7 +461,7 @@ void SA_WorkingPlan::print_precedence_graph(std::string source){
 		debug_text<<std::endl;
 	}
 
-	SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 	debug_text.str("");
 
 	debug_text << source<<": Precendence Sets: UNRANKED: " << std::endl;
@@ -473,7 +473,7 @@ void SA_WorkingPlan::print_precedence_graph(std::string source){
 		debug_text<<std::endl;
 	}
 
-	SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 	debug_text.str("");
 
 }

@@ -129,7 +129,7 @@ namespace SA_POP {
      *
      * @return  Expected utility of provided plan given current conditions.
      */
-    virtual EUCalc calc_plan_eu (Plan plan);
+    virtual Utility calc_plan_eu (Plan plan);
 
     /// Get last set of expected utility changes.
     /**

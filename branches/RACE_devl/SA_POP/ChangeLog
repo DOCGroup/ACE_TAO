@@ -1,3 +1,39 @@
+Thu Jan 14 23:23:05 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * LogGraphOut.cpp:
+        * LogScreenOut.cpp:
+
+          Minor updates to plan output info & formatting.
+
+        * Planner.h:
+        * Planner.cpp:
+
+          Fixed calculation of plan EU to use a cloned SANet & activate relevant nodes (in calc_plan_eu()).
+
+        * SANet/SANet.h:
+        * SANet/SANet.cpp:
+        * SANet/SANode.h:
+        * SANet/SANode.cpp:
+
+          Corrected probability propagation for inactive nodes (in get_prob() methods) and added reset functionality (reset_sa() methods)
+
+        * SA_POP_Types.h:
+        * SA_WorkingPlan.cpp:
+
+          Set default debug output level to only temporary output and corrected debug levels in some existing debug statements.
+
+        * SAPOP_Exp_EU.mwc:
+
+          Updated SA-POP EU experiment to use Boost (for statistical analysis and random number generation).
+
+        * experiments/EU_Performance/Exp_Core/Exp_EU_Planner.h:
+        * experiments/EU_Performance/Exp_Core/Exp_EU_Planner.cpp:
+        * experiments/EU_Performance/SAPOP_Exp_EU.mpc:
+        * experiments/EU_Performance/SAPOP_Exp_EU.cpp:
+
+          Updated SA-POP EU experiment interface and recursive planning to find all plans.
+
+
 Thu Jan 14 00:06:06 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * Planner.cpp:

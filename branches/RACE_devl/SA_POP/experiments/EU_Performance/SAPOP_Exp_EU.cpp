@@ -141,9 +141,7 @@ int main (int argc, char* argv[])
   std::string tm_filename = "";
   size_t max_steps = SANet::Default::SA_MAX_STEPS;
 
-  std::vector<SA_POP::CondID> track_conds;
   std::vector<SA_POP::CondID> kconds;
-  std::map<SA_POP::CondID, double> condMap;
 
   // Get filenames from user.
   UserInterface::Question sanet_file_ques ("Task Network file:");
@@ -261,121 +259,30 @@ int main (int argc, char* argv[])
 
   
 
-  // Get number of conditions to track.
-  int track = 0;
-  //Conditions to be potentially displayed 
-	std::cout << "How many conditions to track? ";
-	std::cin >> track;
-
-  // Get conditions to track.
-	for(int t = 0; t < track; t++)
-	{
-		int cid = 0;
-		std::cout << "Enter the Condition ID to track:";
-		std::cin >> cid;
-		SA_POP::CondID ccid = SA_POP::CondID(cid);
-    condMap.insert(std::make_pair(ccid, 1));
-		track_conds.push_back(ccid);
-	
-	}
-
   //Configure the OutAdapters to use
   SA_POP::LogScreenOut screen_out (std::cout);
-  graph_out.addTracking(track_conds);
+  planner->add_out_adapter (&screen_out);
   planner->add_out_adapter (&graph_out);
   //SA_POP::SchemaOut s_out	(std::cout, kconds);
   //planner->add_out_adapter (&s_out);
-  planner->add_out_adapter (&screen_out);
 
+  // Set planner to ask whether continue after each plan is generated.
+  UserInterface::QuestionBool ques_cont_plan ("Continue planning to find next plan? [(Y)es or (N)o]:", false);
+  planner->set_pause (&user_input, &ques_cont_plan);
+
+  // Run experiment.
   planner->plan (max_steps, goal);
-  SA_POP::Plan plan = planner->get_plan ();
-  SA_POP::Utility plan_eu = planner->calc_plan_eu (plan);
-  std::cout << "Expected utility of generated plan:  " << plan_eu << std::endl;
 
+//  SA_POP::Plan plan = planner->get_plan ();
+//  SA_POP::Utility plan_eu = planner->calc_plan_eu (plan);
+//  std::cout << "Expected utility of generated plan:  " << plan_eu << std::endl;
 
-  UserInterface::QuestionChoice<UserInterface::ExpEU::NextKind> ques_next ("Negate an (E)ffect, change an external (C)ondition, or e(X)it:", UserInterface::ExpEU::INVALID, false);
-  ques_next.add_mapping ("E", UserInterface::ExpEU::EFFECT);
-  ques_next.add_mapping ("Effect", UserInterface::ExpEU::EFFECT);
-  ques_next.add_mapping ("C", UserInterface::ExpEU::CONDITION);
-  ques_next.add_mapping ("Condition", UserInterface::ExpEU::CONDITION);
-  ques_next.add_mapping ("X", UserInterface::ExpEU::EXIT);
-  ques_next.add_mapping ("Exit", UserInterface::ExpEU::EXIT);
-
-
-  bool stop = false;
-  while(!stop)
-  {
-	  displayConds(planner, track_conds, &condMap);
-
-    UserInterface::QuestionBool adv_ques ("Advance to next time step? [(Y)es or (N)o]:", false);
-    user_input.ask (adv_ques);
-    if (adv_ques.get_answer_bool ())
-	  {
-		  graph_out.moveStep();
-		  planner->plan (max_steps, goal);
-	  }
-	  else
-	  {
-      UserInterface::ExpEU::NextKind next_val = UserInterface::ExpEU::INVALID;
-      user_input.ask (ques_next);
-      next_val = ques_next.get_answer_val ();
-
-      switch (next_val)
-      {
-      case UserInterface::ExpEU::EFFECT:
-			  SA_POP::TaskID curTask;
-			  SA_POP::CondID curEff;
-			  std::cout << "Enter the Task ID: ";
-			  std::cin >> curTask;
-			  std::cout << "Enter the Condition ID: ";
-			  std::cin >> curEff;
-
-        for(std::map<SANet::CondID, double>::iterator cIter = condMap.begin(); cIter != condMap.end(); cIter++)
-        {
-          planner->update_cond_val((*cIter).first, (*cIter).second);
-        }
-        planner->update_effect(curTask, curEff, -1);
-
-        planner->replan(max_steps, goal);
-
-        break;
-
-      case UserInterface::ExpEU::CONDITION:
-      {
-			  SA_POP::CondID envi;
-			  SA_POP::Probability newprob;
-			  std::cout << "Enter the Condition ID: ";
-			  std::cin >> envi;
-			  std::cout << "Enter the Probability: ";
-			  std::cin >> newprob;
-        std::map<SANet::CondID, double>::iterator cmp = condMap.find(envi);
-        if(cmp != condMap.end())
-          (*cmp).second = newprob;
-
-        for(std::map<SANet::CondID, double>::iterator cIter = condMap.begin(); cIter != condMap.end(); cIter++)
-        {
-          planner->update_cond_val((*cIter).first, (*cIter).second);
-        }
-
-        planner->replan(max_steps, goal);
-      }
-        break;
-
-      case UserInterface::ExpEU::EXIT:
-      case UserInterface::ExpEU::INVALID:
-      default:
-			  stop = true;
-        break;
-      }
-	  }
-  }
 
   delete planner;
 
   // Wait for user to end program.
 //  UserInterface::Question end_ques ("Enter any character to end program:");
 //  user_input.ask (end_ques);
-
 
   _CrtDumpMemoryLeaks();
 

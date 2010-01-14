@@ -36,7 +36,7 @@
 #define SA_POP_DEBUG_VERBOSE 30
 
 // SET current SA-POP Debug output level.
-#define SA_POP_DEBUG_LEVEL SA_POP_DEBUG_TEMP
+#define SA_POP_DEBUG_LEVEL SA_POP_DEBUG_QUIET
 
 #define _CRTDBG_MAP_ALLOC
 

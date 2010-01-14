@@ -150,6 +150,24 @@ SANet::Network::~Network ()
   }
 };
 
+void SANet::Network::reset_sa (void)
+{
+  this->reset_step ();
+
+  // Reset all task and condition nodes.
+  for (TaskNodeMap::iterator node_iter = this->task_nodes_.begin ();
+    node_iter != this->task_nodes_.end (); node_iter++)
+  {
+    node_iter->second->reset_sa ();
+  }
+  for (CondNodeMap::iterator node_iter = this->cond_nodes_.begin ();
+    node_iter != this->cond_nodes_.end (); node_iter++)
+  {
+    node_iter->second->reset_sa ();
+  }
+
+};
+
 void SANet::Network::add_task (TaskID ID, std::string name, MultFactor atten_factor,
                           TaskCost cost, Probability prior_prob)
 {
