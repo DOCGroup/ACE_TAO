@@ -85,7 +85,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::init_default_domain (void)
   try
     {
       ACE_Env_Value<int> verbosity (ACE_TEXT("DDS4CCM_NDDS_LOG_VERBOSITY"),
-        9);
+        NDDS_CONFIG_LOG_VERBOSITY_SILENT);
 
       NDDS_Config_LogVerbosity n_verbosity =
         static_cast <NDDS_Config_LogVerbosity> (verbosity.operator int());
