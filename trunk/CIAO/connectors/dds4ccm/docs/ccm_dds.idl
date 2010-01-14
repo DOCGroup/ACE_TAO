@@ -161,7 +161,7 @@ module CCM_DDS {
                 abstract interface InstanceHandleManager {
                         DDS::InstanceHandle_t register_instance (in T datum)
                                 raises (InternalError);
-                        void unregister_instance (in datum, in DDS::InstanceHandle_t instance_handle)
+                        void unregister_instance (in T datum, in DDS::InstanceHandle_t instance_handle)
                                 raises (InternalError);
                         };
 
