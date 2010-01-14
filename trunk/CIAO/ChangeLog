@@ -1,3 +1,8 @@
+Thu Jan 14 15:33:59 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.cpp:
+          Reverted DDS logging change.
+
 Thu Jan 14 14:53:43 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryFilter/*:
