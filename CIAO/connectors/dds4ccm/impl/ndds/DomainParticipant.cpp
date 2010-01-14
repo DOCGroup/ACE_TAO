@@ -460,7 +460,7 @@ namespace CIAO
                          "Unable to cast provided topic.\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
-        const char* paramaterlist[256];
+        const char* paramaterlist[expression_parameters.length ()];
         for (CORBA::ULong i = 0; i < expression_parameters.length (); ++i)
           {
             paramaterlist[i] = expression_parameters[i].in ();
