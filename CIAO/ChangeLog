@@ -1,3 +1,8 @@
+Thu Jan 14 09:10:40 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/docs/TestCoverage.ods
+	Add new tests.
+
 Wed Jan 13 13:11:36 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * connectors/dds4ccm/examples/Hello/Base/Hello_Base.mpc:
