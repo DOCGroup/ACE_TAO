@@ -1,3 +1,8 @@
+Thu Jan 14 10:31:01 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/descriptors/Plan.cdp:
+          Deploying three connectors with different datatypes.
+
 Thu Jan 14 10:21:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
 
