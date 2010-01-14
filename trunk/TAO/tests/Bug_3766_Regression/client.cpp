@@ -43,9 +43,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
-
       CORBA::Object_var object = orb->string_to_object(ior);
 
       Test_var test = Test::_narrow (object.in ());
