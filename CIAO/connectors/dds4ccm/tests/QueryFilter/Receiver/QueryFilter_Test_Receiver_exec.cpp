@@ -8,6 +8,9 @@
 #define MIN_ITERATION_STR "2"
 #define MIN_ITERATION 2
 
+#define MAX_ITERATION_STR "5"
+#define MAX_ITERATION 5
+
 namespace CIAO_QueryFilter_Test_Receiver_Impl
 {
   //============================================================
@@ -150,6 +153,13 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
                                       "Didn't expect samples with iterations " 
                                       "<= %d\n",
                                       MIN_ITERATION));
+              }
+            if ((*queryfiltertest_info_seq)[it].iteration > MAX_ITERATION)
+              {
+                ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
+                                      "Didn't expect samples with iterations " 
+                                      "> %d\n",
+                                      MAX_ITERATION));
               }
           }
 
@@ -315,9 +325,10 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   Receiver_exec_i::ccm_activate (void)
   {
     CCM_DDS::QueryFilter filter;
-    filter.query = CORBA::string_dup (" ( iteration > %0 )");
-    filter.query_parameters.length (1);
+    filter.query = CORBA::string_dup (" ( (iteration > %0) AND (iteration < %1) )");
+    filter.query_parameters.length (2);
     filter.query_parameters[0] = CORBA::string_dup (MIN_ITERATION_STR);
+    filter.query_parameters[1] = CORBA::string_dup (MAX_ITERATION_STR);
     this->reader_->filter (filter);
   }
 
