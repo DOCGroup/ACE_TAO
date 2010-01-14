@@ -37,7 +37,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   if (node->defined_in () == 0)
     {
       // The node is a nested sequence, and has had no scope defined.
-      node->set_defined_in (DeclAsScope (this->ctx_->scope ()));
+      node->set_defined_in (DeclAsScope (this->ctx_->scope ()->decl ()));
     }
 
   // First create a name for ourselves.
@@ -126,7 +126,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       << node->local_name () << be_idt_nl
       << ": public" << be_idt << be_idt_nl;
 
-  if (node->gen_base_class_name (os, "", this->ctx_->scope ()) == -1)
+  if (node->gen_base_class_name (os, "", this->ctx_->scope ()->decl ()) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ch::"

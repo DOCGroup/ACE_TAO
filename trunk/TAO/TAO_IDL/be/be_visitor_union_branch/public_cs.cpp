@@ -71,7 +71,7 @@ be_visitor_union_branch_public_cs::visit_array (be_array *node)
   // If not a typedef and we are defined in the use scope, we must be
   // defined.
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       // Anonymous array case.
       be_visitor_context ctx (*this->ctx_);
@@ -117,7 +117,7 @@ be_visitor_union_branch_public_cs::visit_sequence (be_sequence *node)
   // defined.
 
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       // Anonymous sequence case.
       be_visitor_context ctx (*this->ctx_);

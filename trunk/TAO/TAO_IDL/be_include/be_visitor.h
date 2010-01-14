@@ -74,6 +74,7 @@ class be_string;
 class be_typedef;
 class be_root;
 class be_native;
+class be_param_holder;
 
 class be_visitor_context;
 class TAO_OutStream;
@@ -110,6 +111,7 @@ public:
   virtual int visit_template_module (be_template_module *node);
   virtual int visit_template_module_inst (be_template_module_inst *node);
   virtual int visit_template_module_ref (be_template_module_ref *node);
+  virtual int visit_param_holder (be_param_holder *node);
   virtual int visit_porttype (be_porttype *node);
   virtual int visit_provides (be_provides *node);
   virtual int visit_uses (be_uses *node);

@@ -242,7 +242,7 @@ be_visitor_component_cs::visit_component (be_component *node)
   // The _duplicate method
   *os << node->full_name () << "_ptr" << be_nl
       << node->full_name () << "::_duplicate ("
-      << bt->nested_type_name (this->ctx_->scope ())
+      << bt->nested_type_name (this->ctx_->scope ()->decl ())
       << "_ptr obj)" << be_nl
       << "{" << be_idt_nl
       << "if (! ::CORBA::is_nil (obj))" << be_idt_nl

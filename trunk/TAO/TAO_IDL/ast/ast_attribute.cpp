@@ -118,8 +118,10 @@ AST_Attribute::~AST_Attribute (void)
 void
 AST_Attribute::dump (ACE_OSTREAM_TYPE &o)
 {
-  this->dump_i (o, (this->pd_readonly == true ?
-                    "readonly attribute " : "attribute "));
+  this->dump_i (o, (this->pd_readonly == true
+                    ? "readonly attribute "
+                    : "attribute "));
+                    
   this->AST_Field::dump (o);
 }
 
@@ -210,7 +212,7 @@ UTL_NameList *
 AST_Attribute::fe_add_get_exceptions (UTL_NameList *t)
 {
   UTL_ScopedName *nl_n = 0;
-  AST_Exception *fe = 0;
+  AST_Type *fe = 0;
   AST_Decl *d = 0;
 
   this->pd_get_exceptions = 0;
@@ -219,39 +221,37 @@ AST_Attribute::fe_add_get_exceptions (UTL_NameList *t)
     {
       nl_n = nl_i.item ();
 
-      d = this->defined_in ()->lookup_by_name (nl_n,
-                                               true);
+      d = this->defined_in ()->lookup_by_name (nl_n, true);
 
-      if (d == 0 || d->node_type() != AST_Decl::NT_except)
+      if (d == 0)
         {
           idl_global->err ()->lookup_error (nl_n);
           return 0;
         }
+        
+      AST_Decl::NodeType nt = d->node_type ();
 
-      fe = AST_Exception::narrow_from_decl (d);
-
-      if (fe == 0)
+      if (nt != AST_Decl::NT_except
+          && nt != AST_Decl::NT_param_holder)
         {
           idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
-                                       this);
+                                      this);
           return 0;
         }
 
+      fe = AST_Type::narrow_from_decl (d);
+
+      UTL_ExceptList *el = 0;
+      ACE_NEW_RETURN (el,
+                      UTL_ExceptList (fe, 0),
+                      0);
+
       if (this->pd_get_exceptions == 0)
         {
-          ACE_NEW_RETURN (this->pd_get_exceptions,
-                          UTL_ExceptList (fe,
-                                          0),
-                          0);
+          this->pd_get_exceptions = el;
         }
       else
         {
-          UTL_ExceptList *el = 0;
-          ACE_NEW_RETURN (el,
-                          UTL_ExceptList (fe,
-                                          0),
-                          0);
-
           this->pd_get_exceptions->nconc (el);
         }
     }
@@ -265,7 +265,7 @@ UTL_NameList *
 AST_Attribute::fe_add_set_exceptions (UTL_NameList *t)
 {
   UTL_ScopedName *nl_n = 0;
-  AST_Exception *fe = 0;
+  AST_Type *fe = 0;
   AST_Decl *d = 0;
 
   this->pd_set_exceptions = 0;
@@ -274,39 +274,37 @@ AST_Attribute::fe_add_set_exceptions (UTL_NameList *t)
     {
       nl_n = nl_i.item ();
 
-      d = this->defined_in ()->lookup_by_name (nl_n,
-                                               true);
+      d = this->defined_in ()->lookup_by_name (nl_n, true);
 
-      if (d == 0 || d->node_type() != AST_Decl::NT_except)
+      if (d == 0)
         {
           idl_global->err ()->lookup_error (nl_n);
           return 0;
         }
+        
+      AST_Decl::NodeType nt = d->node_type ();
 
-      fe = AST_Exception::narrow_from_decl (d);
-
-      if (fe == 0)
+      if (nt != AST_Decl::NT_except
+          && nt != AST_Decl::NT_param_holder)
         {
           idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
-                                       this);
+                                      this);
           return 0;
         }
 
+      fe = AST_Type::narrow_from_decl (d);
+
+      UTL_ExceptList *el = 0;
+      ACE_NEW_RETURN (el,
+                      UTL_ExceptList (fe, 0),
+                      0);
+
       if (this->pd_set_exceptions == 0)
         {
-          ACE_NEW_RETURN (this->pd_set_exceptions,
-                          UTL_ExceptList (fe,
-                                          0),
-                          0);
+          this->pd_set_exceptions = el;
         }
       else
         {
-          UTL_ExceptList *el = 0;
-          ACE_NEW_RETURN (el,
-                          UTL_ExceptList (fe,
-                                          0),
-                          0);
-
           this->pd_set_exceptions->nconc (el);
         }
     }

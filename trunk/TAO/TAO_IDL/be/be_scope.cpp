@@ -16,10 +16,6 @@
 #include "be_root.h"
 #include "be_visitor.h"
 
-ACE_RCSID (be, 
-           be_scope, 
-           "$Id$")
-
 // Default Constructor.
 be_scope::be_scope (void)
   : UTL_Scope (),
@@ -39,6 +35,12 @@ be_scope::~be_scope (void)
 }
 
 // Code generation methods.
+
+AST_Field *
+be_scope::be_add_field (AST_Field *f)
+{
+  return this->fe_add_field (f);
+}
 
 void
 be_scope::comma (unsigned short comma)
@@ -99,7 +101,5 @@ be_scope::accept (be_visitor *visitor)
 {
   return visitor->visit_scope (this);
 }
-
-
 
 IMPL_NARROW_FROM_SCOPE (be_scope)

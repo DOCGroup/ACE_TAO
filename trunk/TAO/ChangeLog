@@ -1,17 +1,220 @@
+Thu Jan 14 10:39:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Merged revision 88432-88536 from the idl3_plus_backend2 branch to
+        svn head.
+
+        Wed Jan 13 23:16:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_tmpl_module_inst.cpp:
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/exceptlist_cs.cpp:
+        * TAO_IDL/be/be_visitor_reifying.cpp:
+        * TAO_IDL/ast/ast_attribute.cpp:
+        * TAO_IDL/ast/ast_argument.cpp:
+        * TAO_IDL/be_include/be_visitor_reifying.h:
+        * TAO_IDL/be_include/be_visitor_tmpl_module_inst.h:
+        * TAO_IDL/util/utl_err.cpp:
+
+          Added support for template instantiation of contained
+          interfaces, operations, attributes, and the associated
+          arguments and exception lists.
+
+        Tue Jan 12 22:45:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/utl_scope.h:
+
+          Changed the fe_add_* methods from private to
+          protected, so they can be called (polymorphically)
+          by the template module instantiation preprocessing
+          visitor through be_scope. Only fe_add_field()
+          is used this way so far, but there may be occasion
+          to expand the coverage.
+
+        * TAO_IDL/be/be_visitor_tmpl_module_inst.cpp:
+        * TAO_IDL/be/be_expression.cpp:
+        * TAO_IDL/be/be_structure.cpp:
+        * TAO_IDL/be/be_visitor_field.cpp:
+        * TAO_IDL/be/be_visitor_context.cpp:
+        * TAO_IDL/be/be_scope.cpp:
+        * TAO_IDL/ast/ast_constant.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/be_include/be_visitor_context.h:
+        * TAO_IDL/be_include/be_structure.h:
+        * TAO_IDL/be_include/be_scope.h:
+        * TAO_IDL/be_include/be_visitor_tmpl_module_inst.h:
+
+          Implemented visit_constant() and visit_structure()
+          in the template module instantiation visitor.
+
+        Fri Jan  8 22:37:35 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_reifying.cpp:
+        * TAO_IDL/be_include/be_visitor_reifying.h:
+
+          New files containing a new visitor that
+          handles the (possible) reification of
+          template parameter references when they
+          are replaced by template arguments. Also
+          checks to see if areference lookup is in
+          the scope of a template module. If so, a
+          copy needs to be made in the current
+          instantiation scope (see below).
+
+        * TAO_IDL/include/ast_visitor.h:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/be_include/be_visitor.h:
+
+          Added method visit_param_holder().
+
+        * TAO_IDL/be/be_param_holder.cpp:
+        * TAO_IDL/ast/ast_param_holder.cpp:
+
+          Added call to new visit_* method in the
+          accept() methods.
+
+        * TAO_IDL/be/be_visitor_context.cpp:
+        * TAO_IDL/be_include/be_visitor_context.h:
+
+          Added new state storage, namely the scope in
+          which the contents of an instantiated template
+          module are to be created. It is now stored in
+          the visitor context since both be_visitor_reifying
+          and be_visitor_tmpl_module_inst need to know it.
+
+        * TAO_IDL/be/be_visitor_tmpl_module_inst.cpp:
+        * TAO_IDL/be_include/be_visitor_tmpl_module_inst.h:
+
+          Moved some code to the visitor context, and some
+          to the new reifying visitor (see above).
+
+        * TAO_IDL/be/be_visitor_array.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+
+          Cosmetic changes.
+
+        Thu Jan  7 22:01:06 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_module.cpp:
+
+          Cosmetic changes.
+
+        * TAO_IDL/be/be_visitor_tmpl_module_inst.cpp:
+        * TAO_IDL/be_include/be_visitor_tmpl_module_inst.h:
+
+          New files containing a new visitor dedicated to the
+          generation of implied IDL in the AST resulting
+          from a template module instantiation. This 'preprocessing'
+          visitor will make a traversal before any of the others,
+          so that CCM, AMI and AMH implied IDL can be generated
+          from the contents of an instantiated module.
+
+        Wed Jan  6 23:21:23 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_template_module.h:
+        * TAO_IDL/include/ast_template_module_inst.h:
+        * TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
+        * TAO_IDL/be/be_visitor_scope.cpp:
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_svs.cpp:
+        * TAO_IDL/be/be_visitor_operation/argument_marshal.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_base.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/buffer_type.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_root/root_sth.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/field_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/union_member_ci.cpp:
+        * TAO_IDL/be/be_visitor_template_export.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/serializer_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/array.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/serializer_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_visitor_context.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ci.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_field/serializer_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_field/field_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be/be_template_module.cpp:
+        * TAO_IDL/ast/ast_template_module.cpp:
+        * TAO_IDL/ast/ast_template_module_inst.cpp:
+        * TAO_IDL/be_include/be_visitor_context.h:
+        * TAO_IDL/be_include/be_visitor_valuebox/union_member_ci.h:
+        * TAO_IDL/be_include/be_visitor_valuebox/field_ci.h:
+        * TAO_IDL/be_include/be_visitor_valuebox/valuebox_ci.h:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+
+          - Changed 'scope' member of class be_visitor_context to
+            actually be a scope type, rather than a decl type as
+            previously.
+
+          - Added a new visitor and a separate pass for template module
+            instantiation.
+
+          - Added a few of the necessary visit_* methods to the
+            new visitor.
+
+        Tue Jan  5 23:22:24 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_connector.cpp:
+        * TAO_IDL/be/be_template_module_inst.cpp:
+        * TAO_IDL/be/be_template_module_ref.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be/be_template_module.cpp:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+
+          Uncommented code in accept() methods, started
+          implementation of instantiated template module
+          traversal in be_visitor_ccm_pre_proc, and
+          cosmetic changes.
+
+        Tue Jan  5 19:33:27 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_template_module.cpp:
+        * TAO_IDL/ast/ast_template_module_ref.cpp:
+        * TAO_IDL/ast_template_module_inst.cpp:
+          Uncommented code in ast_accept() methods.
+
 Thu Jan 14 04:03:17 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * tests/Bug_3766_Regression/client.cpp:
 
           Removed:
 
-          "CORBA::Object_var poa_object = 
+          "CORBA::Object_var poa_object =
              orb->resolve_initial_references("RootPOA");"
 
           This is a client, it doesn't link the PortableServer library
           and does not use the RootPOA in the program.
 
           Trying to resolve the RootPOA is believed to cause the test to fail
-          on the iPhone Simulator build. 
+          on the iPhone Simulator build.
 
 Wed Jan 13 10:47:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 

@@ -93,7 +93,7 @@ be_visitor_valuetype_field_cdr_cs::visit_array (be_array *node)
                   NAMEBUFSIZE);
 
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       // For anonymous arrays ...
       // We have to generate a name for us that has an underscore
@@ -152,7 +152,7 @@ be_visitor_valuetype_field_cdr_cs::visit_array (be_array *node)
 
   // If not a typedef and we are defined in the use scope, we must be defined.
   if (!this->ctx_->alias () // not a typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       // This is the case for anonymous arrays.
       be_visitor_context ctx (*this->ctx_);
@@ -214,7 +214,7 @@ be_visitor_valuetype_field_cdr_cs::visit_enum (be_enum *node)
     }
 
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -603,7 +603,7 @@ be_visitor_valuetype_field_cdr_cs::visit_sequence (be_sequence *node)
     }
 
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     // Not a typedef AND
     // node is defined inside the valuetype.
     {
@@ -747,7 +747,7 @@ be_visitor_valuetype_field_cdr_cs::visit_structure (be_structure *node)
     }
 
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -829,7 +829,7 @@ be_visitor_valuetype_field_cdr_cs::visit_union (be_union *node)
     }
 
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -913,7 +913,7 @@ be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
     }
 
   // Retrieve the valuetype scope in which the code is generated.
-  be_decl *sc = this->ctx_->scope ();
+  be_decl *sc = this->ctx_->scope ()->decl ();
   be_valuetype *vt = be_valuetype::narrow_from_decl (sc);
 
   if (!vt)
@@ -933,7 +933,7 @@ be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
                   NAMEBUFSIZE);
 
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       // For anonymous arrays ...
       // We have to generate a name for us that has an underscope
