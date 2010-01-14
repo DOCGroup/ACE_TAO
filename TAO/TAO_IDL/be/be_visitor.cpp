@@ -134,6 +134,12 @@ be_visitor::visit_template_module_ref (be_template_module_ref *)
 }
 
 int
+be_visitor::visit_param_holder (be_param_holder *)
+{
+  return 0;
+}
+
+int
 be_visitor::visit_porttype (be_porttype *)
 {
   return 0;

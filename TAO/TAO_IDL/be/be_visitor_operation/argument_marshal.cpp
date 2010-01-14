@@ -219,7 +219,7 @@ be_visitor_args_decl::visit_array (be_array *node)
                   NAMEBUFSIZE);
 
   if (!this->ctx_->alias () // not a typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       // For anonymous arrays ...
       // We have to generate a name for us that has an underscope

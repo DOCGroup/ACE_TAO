@@ -62,7 +62,5 @@ be_module::accept (be_visitor *visitor)
   return visitor->visit_module (this);
 }
 
-
-
 IMPL_NARROW_FROM_DECL (be_module)
 IMPL_NARROW_FROM_SCOPE (be_module)

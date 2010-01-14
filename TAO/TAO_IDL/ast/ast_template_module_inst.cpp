@@ -2,6 +2,7 @@
 
 #include "ast_template_module_inst.h"
 #include "ast_template_module.h"
+#include "ast_visitor.h"
 
 AST_Template_Module_Inst::AST_Template_Module_Inst (
       UTL_ScopedName *n,
@@ -29,7 +30,7 @@ AST_Template_Module_Inst::ref (void) const
     AST_Template_Module::narrow_from_decl (this->field_type ());
 }
 
-FE_Utils::T_ARGLIST const *
+FE_Utils::T_ARGLIST *
 AST_Template_Module_Inst::template_args (void) const
 {
   return this->template_args_;
@@ -52,9 +53,9 @@ AST_Template_Module_Inst::destroy (void)
 }
 
 int
-AST_Template_Module_Inst::ast_accept (ast_visitor *)
+AST_Template_Module_Inst::ast_accept (ast_visitor *visitor)
 {
-  return 0;//visitor->visit_template_module_inst (this);
+  return visitor->visit_template_module_inst (this);
 }
 
 IMPL_NARROW_FROM_DECL (AST_Template_Module_Inst)

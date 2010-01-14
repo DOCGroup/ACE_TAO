@@ -198,7 +198,7 @@ be_visitor_array::visit_node (be_type *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_ARRAY_CH)
     {
-      *os << bt->nested_type_name (this->ctx_->scope ());
+      *os << bt->nested_type_name (this->ctx_->scope ()->decl ());
     }
   else
     {
@@ -225,7 +225,7 @@ be_visitor_array::emit_common (be_type *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_ARRAY_CH)
     {
-      *os << bt->nested_type_name (this->ctx_->scope (), "_var");
+      *os << bt->nested_type_name (this->ctx_->scope ()->decl (), "_var");
     }
   else
     {

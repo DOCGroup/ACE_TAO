@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ast_param_holder.h"
+#include "ast_visitor.h"
 
 #include "utl_identifier.h"
 
@@ -33,11 +34,9 @@ AST_Param_Holder::destroy (void)
 }
 
 int
-AST_Param_Holder::ast_accept (ast_visitor *)
+AST_Param_Holder::ast_accept (ast_visitor *visitor)
 {
-  // This node isn't part of the AST, but managed by
-  // its reference holder.
-  return 0;
+  return visitor->visit_param_holder (this);
 }
 
 void

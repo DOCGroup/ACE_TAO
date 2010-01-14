@@ -3,10 +3,6 @@
 #include "be_connector.h"
 #include "be_visitor.h"
 
-ACE_RCSID (be,
-           be_connector,
-           "$Id$")
-
 be_connector::be_connector (
       UTL_ScopedName *n,
       AST_Connector *base_connector)

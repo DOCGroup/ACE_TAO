@@ -9721,7 +9721,7 @@ tao_yyreduce:
               parent =
                 AST_Connector::narrow_from_decl (d);
 
-              if (parent == 0)
+              if (parent == 0 && so_far_so_good)
                 {
                   idl_global->err ()->error1 (
                     UTL_Error::EIDL_CONNECTOR_EXPECTED,

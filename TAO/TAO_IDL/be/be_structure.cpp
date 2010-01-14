@@ -151,13 +151,5 @@ be_structure::accept (be_visitor *visitor)
   return visitor->visit_structure (this);
 }
 
-AST_Field *
-be_structure::be_add_field (AST_Field *f)
-{
-  return this->fe_add_field (f);
-}
-
-
-
 IMPL_NARROW_FROM_DECL (be_structure)
 IMPL_NARROW_FROM_SCOPE (be_structure)

@@ -82,7 +82,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
           << ": " << be_idt;
 
       // Pass it to the base constructor.
-      if (node->gen_base_class_name (os, "", this->ctx_->scope ()) == -1)
+      if (node->gen_base_class_name (os, "", this->ctx_->scope ()->decl ()) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_sequence_cs::"
@@ -128,7 +128,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       << "  : " << be_idt << be_idt;
 
   // Pass it to the base constructor.
-  if (node->gen_base_class_name (os, "", this->ctx_->scope ()) == -1)
+  if (node->gen_base_class_name (os, "", this->ctx_->scope ()->decl ()) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_cs::"
@@ -157,7 +157,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       << "  : " << be_idt << be_idt;
 
   // Pass it to the base constructor.
-  if (node->gen_base_class_name (os, "", this->ctx_->scope ()) == -1)
+  if (node->gen_base_class_name (os, "", this->ctx_->scope ()->decl ()) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_cs::"

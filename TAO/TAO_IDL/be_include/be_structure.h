@@ -54,9 +54,6 @@ public:
   virtual int accept (be_visitor *visitor);
   // Visiting.
 
-  AST_Field *be_add_field (AST_Field *f);
-  // To access the protected base class method fe_add_field.
-
  // Narrowing.
 
   DEF_NARROW_FROM_DECL (be_structure);

@@ -42,12 +42,6 @@
 
 #include "be_visitor_context.h"
 
-ACE_RCSID (be,
-           be_visitor_context,
-           "$Id$")
-
-
-// constructor
 be_visitor_context::be_visitor_context (void)
   : state_ (TAO_CodeGen::TAO_INITIAL),
     sub_state_ (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN),
@@ -59,7 +53,10 @@ be_visitor_context::be_visitor_context (void)
     attr_ (0),
     exception_ (0),
     comma_ (0),
-    interface_ (0)
+    interface_ (0),
+    template_params_ (0),
+    template_args_ (0),
+    template_module_inst_scope_ (0)
 {
 }
 
@@ -116,6 +113,7 @@ be_visitor_context::reset (void)
   this->attr_ = 0;
   this->exception_ = 0;
   this->comma_ = 0;
+  this->interface_ = 0;
 }
 
 void
@@ -131,12 +129,12 @@ be_visitor_context::stream (void)
 }
 
 void
-be_visitor_context::scope (be_decl *s)
+be_visitor_context::scope (be_scope *s)
 {
   this->scope_ = s;
 }
 
-be_decl *
+be_scope *
 be_visitor_context::scope (void)
 {
   return this->scope_;
@@ -250,6 +248,43 @@ be_visitor_context::interface (void) const
   return this->interface_;
 }
 
+FE_Utils::T_PARAMLIST_INFO *
+be_visitor_context::template_params (void) const
+{
+  return this->template_params_;
+}
+
+void
+be_visitor_context::template_params (FE_Utils::T_PARAMLIST_INFO *params)
+{
+  this->template_params_ = params;
+}
+
+FE_Utils::T_ARGLIST *
+be_visitor_context::template_args (void) const
+{
+  return this->template_args_;
+}
+
+void
+be_visitor_context::template_args (FE_Utils::T_ARGLIST *args)
+{
+  this->template_args_ = args;
+}
+
+be_scope *
+be_visitor_context::template_module_inst_scope (void) const
+{
+  return this->template_module_inst_scope_;
+}
+
+void
+be_visitor_context::template_module_inst_scope (UTL_Scope *s)
+{
+  this->template_module_inst_scope_ =
+    be_scope::narrow_from_scope (s);
+}
+  
 // ****************************************************************
 
 be_argument *
@@ -517,7 +552,7 @@ be_visitor_context::be_scope_as_enum (void)
 {
   if (this->scope_ != 0)
     {
-      return be_enum::narrow_from_decl (this->scope_);
+      return be_enum::narrow_from_decl (this->scope_->decl ());
     }
   else
     {
@@ -530,7 +565,7 @@ be_visitor_context::be_scope_as_exception (void)
 {
   if (this->scope_ != 0)
     {
-      return be_exception::narrow_from_decl (this->scope_);
+      return be_exception::narrow_from_decl (this->scope_->decl ());
     }
   else
     {
@@ -543,7 +578,7 @@ be_visitor_context::be_scope_as_interface (void)
 {
   if (this->scope_ != 0)
     {
-      return be_interface::narrow_from_decl (this->scope_);
+      return be_interface::narrow_from_decl (this->scope_->decl ());
     }
   else
     {
@@ -556,7 +591,7 @@ be_visitor_context::be_scope_as_module (void)
 {
   if (this->scope_ != 0)
     {
-      return be_module::narrow_from_decl (this->scope_);
+      return be_module::narrow_from_decl (this->scope_->decl ());
     }
   else
     {
@@ -569,7 +604,7 @@ be_visitor_context::be_scope_as_operation (void)
 {
   if (this->scope_ != 0)
     {
-      return be_operation::narrow_from_decl (this->scope_);
+      return be_operation::narrow_from_decl (this->scope_->decl ());
     }
   else
     {
@@ -582,7 +617,7 @@ be_visitor_context::be_scope_as_root (void)
 {
   if (this->scope_ != 0)
     {
-      return be_root::narrow_from_decl (this->scope_);
+      return be_root::narrow_from_decl (this->scope_->decl ());
     }
   else
     {
@@ -595,7 +630,7 @@ be_visitor_context::be_scope_as_structure (void)
 {
   if (this->scope_ != 0)
     {
-      return be_structure::narrow_from_decl (this->scope_);
+      return be_structure::narrow_from_decl (this->scope_->decl ());
     }
   else
     {
@@ -608,7 +643,7 @@ be_visitor_context::be_scope_as_union (void)
 {
   if (this->scope_ != 0)
     {
-      return be_union::narrow_from_decl (this->scope_);
+      return be_union::narrow_from_decl (this->scope_->decl ());
     }
   else
     {
