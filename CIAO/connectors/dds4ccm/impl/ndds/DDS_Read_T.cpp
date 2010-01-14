@@ -58,8 +58,7 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
           this->rti_reader_.set_impl (rd->get_impl ());
           this->data_ = ::DDS::CCM_DataReader::_narrow (reader);
           this->dds_read_.set_impl (reader);
-          ::CIAO::DDS4CCM::RTI::RTI_Topic_i *rti_top = dynamic_cast < ::CIAO::DDS4CCM::RTI::RTI_Topic_i * > (topic);
-          this->dds_read_.set_topic (rti_top->get_impl ());
+          this->dds_read_.set_topic (topic);
         }
     }
   catch (...)

@@ -1,0 +1,28 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef RECEIVER_IDL
+#define RECEIVER_IDL
+
+#include "Connector/QueryFilter_Test_Connector.idl"
+#include "Connector/QueryFilter_Test_ConnectorE.idl"
+
+#include "Base/QueryFilter_Starter.idl"
+#include "Base/QueryFilter_StarterE.idl"
+
+module QueryFilter_Test
+{
+  component Receiver
+  {
+    port CCM_DDS::QueryFilterTest::DDS_Read info_out;
+
+    provides QueryFilterStarter reader_start;
+    provides CCM_DDS::ConnectorStatusListener info_out_connector_status;
+  };
+};
+
+#endif
