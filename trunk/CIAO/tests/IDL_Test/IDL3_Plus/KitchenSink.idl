@@ -87,6 +87,50 @@ module B
   };
 };
 
+module T
+{
+  typedef unsigned long MyLongType;
+  module Typed <typename T, sequence <T> TSeq> 
+  { 
+    local interface X 
+    { 
+      void send (in MyLongType a);
+    };
+    
+    porttype Y
+    {
+      uses X data;
+    };
+    
+    component Z
+    {
+      port Y myport;
+    };
+  };
+};
+
+struct XX
+{
+  string YY;
+};
+
+typedef sequence <XX> XX_Seq;
+
+module T
+{
+  module ::T::Typed < ::XX, ::XX_Seq> XX;
+};
+
+/*
+Jeff, this one doesn't work yet
+module V
+{  
+  component JJ : T::XX::Z
+  {
+  };
+};
+*/
+
 module Ast<typename T,
            eventtype E,
            exception S,
