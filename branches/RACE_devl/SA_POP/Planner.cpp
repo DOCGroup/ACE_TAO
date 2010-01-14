@@ -142,23 +142,17 @@ bool Planner::replan (size_t sa_max_steps, SA_POP::Goal goal)
   //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
 
   // Clear plan.
-  this->plan_.causal_links.clear ();
-  this->plan_.connections.clear ();
-  this->plan_.sched_links.clear ();
-  this->plan_.task_insts.clear ();
-  this->plan_.threat_links.clear ();
+  this->plan_.clear ();
+
+  // Reset the working plan
+  this->working_plan_->reset_plan ();
 
   // Add goal to working plan and task network.
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
-  // Need to reset working plan.
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
-  this->working_plan_->reset_plan();
   this->working_plan_->set_goal (goal);
   this->sanet_->update_goals (goal.goal_conds);
 
   // Run spreading activation.
   this->sanet_->update (sa_max_steps);
-
 
   // Set planning strategy goals and satisfy open conditions.
   this->plan_strat_->set_goals (goal.goal_conds);
@@ -178,13 +172,10 @@ bool Planner::replan (size_t sa_max_steps)
   // Full replanning not implemented, so just restart planning.
   //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
   // Clear plan.
-  //TODO: Refactor this plan clearing into own function.
-  this->plan_.causal_links.clear ();
-  this->plan_.connections.clear ();
-  this->plan_.sched_links.clear ();
-  this->plan_.task_insts.clear ();
-  this->plan_.threat_links.clear ();
+  this->plan_.clear ();
+
   // Reset the working plan
+  this->working_plan_->reset_plan ();
 
   // Run spreading activation.
   this->sanet_->update (sa_max_steps);
@@ -203,6 +194,7 @@ bool Planner::replan (size_t sa_max_steps)
 // Get current plan.
 const Plan& Planner::get_plan (void)
 {
+  this->plan_ = this->working_plan_->get_plan ();
   return this->plan_;
 };
 
@@ -505,6 +497,42 @@ void Planner::notify_plan_changed (void)
 
 double Planner::calc_plan_eu(Plan plan)
 {
+  // Probability of goal conditions should be completely updated
+  // by spreading activation for <= 2 times the number of tasks
+  // in the plan (because even a serial plan will be of no longer
+  // than the number of tasks and times 2 to account for
+  // update of condition nodes between tasks).
+  size_t sa_max_steps = 2 * plan.task_insts.size ();
+
+  // Clone current SANet.
+  SANet::Network sanet (*(this->sanet_));
+
+  // Deactivate all nodes, before activating relevant ones.
+  sanet.set_nodes_state (false);
+
+  SA_POP::Goal goal = plan.goal;
+
+  // Activate goal conditions.
+  for (SA_POP::GoalMap::iterator goal_iter = goal.goal_conds.begin (); goal_iter != goal.goal_conds.end (); goal_iter++) {
+    sanet.set_cond_state (goal_iter->first, true);
+  }
+
+  // Activate only nodes relevant to the plan (tasks in plan and their preconditions).
+  for (PlanInstSet::iterator inst_iter = plan.task_insts.begin (); inst_iter != plan.task_insts.end (); inst_iter++) {
+    if ((*inst_iter).inst_id == INIT_TASK_INST_ID) {
+      std::cerr << "SA_POP::Planner::calc_plan_eu(Plan plan):  Initial state task instance found in plan." << std::endl;
+      throw "SA_POP::Planner::calc_plan_eu(Plan plan):  Initial state task instance found in plan.";
+    }
+
+    // Activate task.
+    sanet.set_task_state ((*inst_iter).task_id, true);
+
+    // Activate preconditions.
+    SA_POP::CondSet preconds = this->get_preconds ((*inst_iter).task_id);
+    for (SA_POP::CondSet::iterator cond_iter = preconds.begin (); cond_iter != preconds.end (); cond_iter++) {
+      sanet.set_cond_state ((*cond_iter).id, true);
+    }
+  }
 //*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
 // Replace with correct code to activate all tasks and their preconditions on a clone of the network.
   /*
