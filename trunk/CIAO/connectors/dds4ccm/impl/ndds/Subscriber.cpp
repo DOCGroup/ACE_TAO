@@ -148,8 +148,8 @@ namespace CIAO
       RTI_Subscriber_i::delete_datareader (
         ::DDS::DataReader_ptr a_datareader)
       {
-        RTI_DataReader_i *top = dynamic_cast< RTI_DataReader_i *> (a_datareader);
-        if (!top)
+        RTI_DataReader_i *dr = dynamic_cast< RTI_DataReader_i *> (a_datareader);
+        if (!dr)
           {
             CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::delete_datareader - "
                          "Unable to cast provided object reference to servant.\n"));
@@ -159,7 +159,7 @@ namespace CIAO
         CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_Subscriber_i::delete_datareader - "
                      "Successfully casted provided object reference to servant.\n"));
 
-        DDS_ReturnCode_t retval = this->impl ()->delete_datareader (top->get_impl ());
+        DDS_ReturnCode_t retval = this->impl ()->delete_datareader (dr->get_impl ());
 
         if (retval != DDS_RETCODE_OK)
           {

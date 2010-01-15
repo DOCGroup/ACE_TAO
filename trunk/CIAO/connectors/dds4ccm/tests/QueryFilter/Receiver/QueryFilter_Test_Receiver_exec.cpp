@@ -162,66 +162,6 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
                                       MAX_ITERATION));
               }
           }
-
-        CORBA::ULong nr_samples = this->keys_ * this->iterations_;
-        if (queryfiltertest_info_seq->length () != nr_samples)
-          {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ALL: ")
-                ACE_TEXT ("Didn't receive the expected number of ")
-                ACE_TEXT ("samples : expected <%u> - received <%u>\n"),
-                nr_samples,
-                queryfiltertest_info_seq->length ()));
-          }
-        if (queryfiltertest_info_seq->length () > 0)
-          {
-            CORBA::UShort nr_keys_changed = 1;
-            CORBA::String_var last_key ((*queryfiltertest_info_seq)[0].symbol.in ());
-            CORBA::UShort iterations = 0;
-            for (CORBA::ULong it = 0; it < queryfiltertest_info_seq->length (); ++it)
-              {
-                if (ACE_OS::strcmp (last_key, (*queryfiltertest_info_seq)[it].symbol.in ()) != 0)
-                  {
-                    ACE_OS::strcpy (last_key, (*queryfiltertest_info_seq)[it].symbol.in ());
-                    ++nr_keys_changed;
-                  }
-                // check readinfo struct.
-                if (!(*readinfo_seq)[it].instance_handle.isValid)
-                  {
-                    ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ALL: ")
-                            ACE_TEXT ("received instance handle should be valid ")
-                            ACE_TEXT ("for keyed data: ")
-                            ACE_TEXT ("key <%C> - iteration <%u>\n"),
-                            (*queryfiltertest_info_seq)[it].symbol.in (),
-                            (*queryfiltertest_info_seq)[it].iteration));
-                  }
-                if ((*readinfo_seq)[it].source_timestamp.sec == 0 &&
-                    (*readinfo_seq)[it].source_timestamp.nanosec == 0)
-                  {
-                    ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
-                                        "source timestamp seems to be invalid (nil) "
-                                        "key <%C> - iteration <%d>\n",
-                                        (*queryfiltertest_info_seq)[it].symbol.in (),
-                                        (*queryfiltertest_info_seq)[it].iteration));
-                  }
-                ++iterations;
-              }
-            if (nr_keys_changed != this->keys_)
-              {
-                ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ALL: ")
-                    ACE_TEXT ("Didn't receive the expected number of ")
-                    ACE_TEXT ("instances : expected <%u> - received <%u>\n"),
-                    this->keys_,
-                    nr_keys_changed));
-              }
-            if (iterations != (this->keys_ * this->iterations_))
-              {
-                ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ALL: ")
-                    ACE_TEXT ("Didn't receive the expected number of ")
-                    ACE_TEXT ("samples : expected <%u> - received <%u>\n"),
-                    nr_samples,
-                    iterations));
-              }
-          }
       }
     catch (const CCM_DDS::NonExistent& ex)
       {
@@ -344,7 +284,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: ")
             ACE_TEXT ("Test did not run: Didn't receive ")
-            ACE_TEXT ("the expected number of DATA_ON_READERS")
+            ACE_TEXT ("the expected number of DATA_ON_READER ")
             ACE_TEXT ("events.\n")));
       }
   }
