@@ -1,3 +1,9 @@
+Fri Jan 15 09:59:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/IFR_Service/ifr_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_visitor.h:
+          Fixed compile errors because of tao_idl changes
+
 Fri Jan 15 09:56:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.pidl
