@@ -31,8 +31,7 @@ be_visitor_valuetype_init_arglist_ch::be_visitor_valuetype_init_arglist_ch (
 }
 
 be_visitor_valuetype_init_arglist_ch::~be_visitor_valuetype_init_arglist_ch (
-    void
-  )
+  void)
 {
 }
 
@@ -62,7 +61,7 @@ be_visitor_valuetype_init_arglist_ch::visit_factory (be_factory *node)
     }
   else
     {
-      os << "void)" << be_idt;
+      os << "void)";
     }
 
    return 0;

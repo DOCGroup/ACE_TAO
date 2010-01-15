@@ -24,11 +24,13 @@
 #include "be_predefined_type.h"
 #include "be_argument.h"
 #include "be_visitor.h"
-#include "global_extern.h"
 
-ACE_RCSID (be,
-           be_operation,
-           "$Id$")
+#include "ast_exception.h"
+
+#include "utl_err.h"
+#include "utl_exceptlist.h"
+
+#include "global_extern.h"
 
 be_operation::be_operation (void)
   : COMMON_Base (),
@@ -107,6 +109,44 @@ be_operation::accept (be_visitor *visitor)
   return visitor->visit_operation (this);
 }
 
+UTL_ExceptList *
+be_operation::be_add_exceptions (UTL_ExceptList *t)
+{
+  if (this->pd_exceptions != 0)
+    {
+      idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
+                                  this);
+    }
+  else
+    {
+      this->pd_exceptions = t;
+    }
+
+  return this->pd_exceptions;
+}
+
+AST_Argument *
+be_operation::be_add_argument (AST_Argument *arg)
+{
+  this->add_to_scope (arg);
+  this->add_to_referenced (arg,
+                           0,
+                           0);
+  return arg;
+}
+
+int
+be_operation::be_insert_exception (AST_Exception *ex)
+{
+  UTL_ExceptList *new_list = 0;
+  ACE_NEW_RETURN (new_list,
+                  UTL_ExceptList (ex,
+                                  this->pd_exceptions),
+                  -1);
+  this->pd_exceptions = new_list;
+  return 0;
+}
+
 be_operation_strategy *
 be_operation::set_strategy (be_operation_strategy *new_strategy)
 {
@@ -119,7 +159,6 @@ be_operation::set_strategy (be_operation_strategy *new_strategy)
 
   return old;
 }
-
 
 TAO_CodeGen::CG_STATE
 be_operation::next_state (TAO_CodeGen::CG_STATE current_state,

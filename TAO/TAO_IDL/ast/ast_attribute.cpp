@@ -217,7 +217,9 @@ AST_Attribute::fe_add_get_exceptions (UTL_NameList *t)
 
   this->pd_get_exceptions = 0;
 
-  for (UTL_NamelistActiveIterator nl_i (t); !nl_i.is_done (); nl_i.next ())
+  for (UTL_NamelistActiveIterator nl_i (t);
+       !nl_i.is_done ();
+       nl_i.next ())
     {
       nl_n = nl_i.item ();
 

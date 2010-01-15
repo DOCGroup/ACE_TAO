@@ -56,6 +56,15 @@ public:
   // Visiting.
   virtual int accept (be_visitor *visitor);
 
+  // Method to add exceptions
+  virtual UTL_ExceptList *be_add_exceptions (UTL_ExceptList *t);
+
+  // Add an argument to the scope.
+  virtual AST_Argument *be_add_argument (AST_Argument *arg);
+
+  // Insert an exception at the head of the list.
+  int be_insert_exception (AST_Exception *ex);
+
   be_operation_strategy *set_strategy (be_operation_strategy *new_strategy);
 
   TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,

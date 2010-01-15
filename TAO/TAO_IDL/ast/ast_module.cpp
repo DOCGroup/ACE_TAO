@@ -1871,6 +1871,20 @@ AST_Module::be_add_interface (AST_Interface *i,
   return 0;
 }
 
+int
+AST_Module::be_add_valuetype (AST_ValueType *v)
+{
+  // Add it to scope.
+  this->add_to_scope (v);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (v,
+                           false,
+                           v->local_name ());
+
+  return 0;
+}
+
 // Has this node been referenced here before?
 bool
 AST_Module::referenced (AST_Decl *e,

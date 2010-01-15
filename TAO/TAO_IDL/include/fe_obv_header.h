@@ -11,7 +11,7 @@ class AST_ValueType;
 // Internal class for FE to describe valuetype headers.
 //
 
-class FE_OBVHeader : public FE_InterfaceHeader
+class TAO_IDL_FE_Export FE_OBVHeader : public FE_InterfaceHeader
 {
 public:
 
