@@ -49,7 +49,23 @@ be_visitor_reifying::reified_node (void) const
 int
 be_visitor_reifying::visit_interface (be_interface *node)
 {
-  this->reified_node_ = node;
+  UTL_ScopedName *tmpl_tail =
+    this->template_module_rel_name (node);
+    
+  if (tmpl_tail != 0)
+    {
+      AST_Decl *d =
+        idl_global->scopes ().top ()->lookup_by_name (
+          tmpl_tail,
+          true);
+    
+      this->reified_node_ = d;
+    }
+  else
+    {
+      this->reified_node_ = node;
+    }
+    
   return 0;
 }
 
@@ -170,6 +186,10 @@ be_visitor_reifying::visit_array (be_array *node)
                             false),
                   -1);
                   
+ 
+  // No need to add this new node to any scope - it's anonymous
+  // and owned by the node that references it.
+                    
   sn.destroy ();
   v_list->destroy ();
   delete v_list;
@@ -236,6 +256,10 @@ be_visitor_reifying::visit_sequence (be_sequence *node)
                                false,
                                false),
                   -1);
+
+  // No need to add this new node to any scope - it's anonymous
+  // and owned by the node that references it.
+                    
   return 0;
 }
 
@@ -312,20 +336,27 @@ be_visitor_reifying::visit_param_holder (be_param_holder *node)
                     -1);
 }
 
-bool
-be_visitor_reifying::declared_in_template_module (AST_Decl *d)
+UTL_ScopedName *
+be_visitor_reifying::template_module_rel_name (AST_Decl *d)
 {
   AST_Decl *tmp = d;
+  ACE_CString name (d->full_name ());
   
   while (tmp != 0)
     {
       if (AST_Template_Module::narrow_from_decl (tmp) != 0)
         {
-          return true;
+          ACE_CString head (tmp->local_name ()->get_string ());
+          
+          ACE_CString::size_type start = name.find (head) + 2;
+            
+          ACE_CString tail (name.substr (start + head.length ()));
+            
+          return idl_global->string_to_scoped_name (tail.c_str ());
         }
         
       tmp = ScopeAsDecl (tmp->defined_in ());
     }
     
-  return false;
+  return 0;
 }
