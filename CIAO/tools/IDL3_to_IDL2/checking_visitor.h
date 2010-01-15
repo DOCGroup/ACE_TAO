@@ -62,6 +62,7 @@ public:
   virtual int visit_template_module (AST_Template_Module *node);
   virtual int visit_template_module_inst (AST_Template_Module_Inst *node);
   virtual int visit_template_module_ref (AST_Template_Module_Ref *node);
+  virtual int visit_param_holder (AST_Param_Holder *node);
   virtual int visit_porttype (AST_PortType *node);
   virtual int visit_provides (AST_Provides *node);
   virtual int visit_uses (AST_Uses *node);
