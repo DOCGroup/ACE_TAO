@@ -1,3 +1,15 @@
+Fri Jan 15 09:11:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/IDL3_to_IDL2/checking_visitor.cpp
+        * tools/IDL3_to_IDL2/checking_visitor.h
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.h
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.h
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.cpp
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.h
+          Updated for tao_idl changes
+
 Fri Jan 15 07:03:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryFilter/Base/QueryFilter_Test_Base.mpc:
