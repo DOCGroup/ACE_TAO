@@ -109,8 +109,8 @@ module PortableServer
 #if !defined (TAO_HAS_MINIMUM_POA) && !defined (CORBA_E_COMPACT)
     exception NoServant {};
 #endif
-    exception ObjectAlreadyActive {};
 #       endif
+    exception ObjectAlreadyActive {};
     exception ObjectNotActive {};
     exception ServantAlreadyActive {};
     exception ServantNotActive {};
@@ -201,13 +201,11 @@ module PortableServer
       raises (ServantAlreadyActive,
               WrongPolicy);
 
-#if !defined (CORBA_E_MICRO)
     void activate_object_with_id (in ObjectId id,
                                   in Servant p_servant)
       raises (ServantAlreadyActive,
               ObjectAlreadyActive,
               WrongPolicy);
-#endif
 
     void deactivate_object (in ObjectId oid)
       raises (ObjectNotActive, WrongPolicy);
