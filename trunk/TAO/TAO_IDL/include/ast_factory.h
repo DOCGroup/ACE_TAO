@@ -120,7 +120,7 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
-private:
+protected:
   // Data.
 
   UTL_ExceptList *pd_exceptions;

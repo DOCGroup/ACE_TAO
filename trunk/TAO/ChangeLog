@@ -1,3 +1,42 @@
+Fri Jan 15 10:17:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          Merged revision 88537-88564 from idl3_plus_backend2 to svn head
+
+        Thu Jan 14 22:50:03 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/ast_factory.h:
+        * TAO_IDL/include/global_extern.h:
+        * TAO_IDL/include/fe_obv_header.h:
+        * TAO_IDL/include/ast_operation.h:
+        * TAO_IDL/be/be_visitor_tmpl_module_inst.cpp:
+        * TAO_IDL/be/be_factory.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_arglist_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_reifying.cpp:
+        * TAO_IDL/be/be_operation.cpp:
+        * TAO_IDL/be/be_scope.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/ast/ast_operation.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_attribute.cpp:
+        * TAO_IDL/ast/ast_factory.cpp:
+        * TAO_IDL/be_include/be_operation.h:
+        * TAO_IDL/be_include/be_visitor_reifying.h:
+        * TAO_IDL/be_include/be_factory.h:
+        * TAO_IDL/be_include/be_scope.h:
+        * TAO_IDL/be_include/be_visitor_tmpl_module_inst.h:
+        * TAO_IDL/fe/fe_event_header.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/util/utl_namelist.cpp:
+          Added template instantiation code generation for
+          valuetypes and eventtypes.
+
 Fri Jan 15 09:59:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/IFR_Service/ifr_visitor.cpp:

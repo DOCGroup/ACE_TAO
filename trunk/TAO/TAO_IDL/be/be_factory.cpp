@@ -22,9 +22,13 @@
 #include "be_factory.h"
 #include "be_visitor.h"
 
-ACE_RCSID (be, 
-           be_factory, 
-           "$Id$")
+#include "ast_exception.h"
+#include "ast_argument.h"
+
+#include "utl_err.h"
+#include "utl_exceptlist.h"
+
+#include "global_extern.h"
 
 be_factory::be_factory (void)
   : COMMON_Base (),
@@ -69,7 +73,32 @@ be_factory::accept (be_visitor *visitor)
   return visitor->visit_factory (this);
 }
 
+UTL_ExceptList *
+be_factory::be_add_exceptions (UTL_ExceptList *t)
+{
+  if (this->pd_exceptions != 0)
+    {
+      idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
+                                  this);
+    }
+  else
+    {
+      this->pd_exceptions = t;
+      this->pd_n_exceptions = (t == 0 ? 0 : t->length ());
+    }
 
+  return this->pd_exceptions;
+}
+
+AST_Argument *
+be_factory::be_add_argument (AST_Argument *arg)
+{
+  this->add_to_scope (arg);
+  this->add_to_referenced (arg,
+                           0,
+                           0);
+  return arg;
+}
 
 IMPL_NARROW_FROM_DECL (be_factory)
 IMPL_NARROW_FROM_SCOPE (be_factory)

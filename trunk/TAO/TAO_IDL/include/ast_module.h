@@ -102,11 +102,14 @@ public:
   void set_has_nested_valuetype (void);
   bool has_nested_valuetype (void);
 
-  // Allows adding an interface to a later point
+  // Allows adding an interface at a later point.
   // The interface i is inserted after interface ix, if
   // ix is not null.
   int be_add_interface (AST_Interface *i,
                         AST_Interface *ix = 0);
+                        
+  // Allows adding a valuetype at a later point.
+  int be_add_valuetype (AST_ValueType *v);
 
   // Has this node been referenced here already?
   // Override of method in UTL_Scope.

@@ -281,48 +281,10 @@ AST_Operation::fe_add_context (UTL_StrList *t)
   return t;
 }
 
-UTL_ExceptList *
-AST_Operation::be_add_exceptions (UTL_ExceptList *t)
-{
-  if (this->pd_exceptions != 0)
-    {
-      idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
-                                  this);
-    }
-  else
-    {
-      this->pd_exceptions = t;
-    }
-
-  return this->pd_exceptions;
-}
-
-AST_Argument *
-AST_Operation::be_add_argument (AST_Argument *arg)
-{
-  this->add_to_scope (arg);
-  this->add_to_referenced (arg,
-                           0,
-                           0);
-  return arg;
-}
-
-int
-AST_Operation::be_insert_exception (AST_Exception *ex)
-{
-  UTL_ExceptList *new_list = 0;
-  ACE_NEW_RETURN (new_list,
-                  UTL_ExceptList (ex,
-                                  this->pd_exceptions),
-                  -1);
-  this->pd_exceptions = new_list;
-  return 0;
-}
-
 // Add these exceptions (identified by name) to this scope.
 // This looks up each name to resolve it to the name of a known
 // exception, and then adds the referenced exception to the list
-//  exceptions that this operation can raise.
+// exceptions that this operation can raise.
 
 // NOTE: No attempt is made to ensure that exceptions are mentioned
 //       only once..
