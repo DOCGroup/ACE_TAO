@@ -63,4 +63,17 @@ valuetype GetsDeprecatedMember : IncludedBase
   public string StringMember;
 };
 
+module X
+{
+  abstract valuetype AXXX
+  {
+    Object make_object ();
+  };
+
+  abstract valuetype BXXX : AXXX 
+  {
+  };
+  typedef sequence<BXXX> BSeq;
+};
+
 #endif /* IDL_TEST_VALUETYPE_IDL */
