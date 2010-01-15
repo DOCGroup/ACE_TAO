@@ -564,6 +564,15 @@ void SANet::Network::update_cond_val (CondID cond_id, Probability true_prob)
   iter->second->set_init_prob (true_prob);
 };
 
+// Update a set of conditions' current (init) value (probability of being true).
+void SANet::Network::update_conds_val (CondSet conds)
+{
+  for (CondSet::iterator cond_iter = conds.begin (); cond_iter != conds.end (); cond_iter++) {
+    this->update_cond_val ((*cond_iter).id, (*cond_iter).value);
+  }
+};
+
+
 // Update a condition's (goal) utility.
 void SANet::Network::update_cond_util (CondID cond_id, Utility utility)
 {
@@ -628,6 +637,55 @@ Probability SANet::Network::get_cond_future_val(CondID cond_id, bool value)
 const GoalMap& SANet::Network::get_goals (void)
 {
   return this->goals_;
+};
+
+// Get the number of conditions in the network.
+size_t SANet::Network::get_num_conds (void)
+{
+  return this->cond_nodes_.size ();
+};
+
+// Get all conditions in the network.
+CondSet SANet::Network::get_all_conds (void)
+{
+  CondSet conds;
+  conds.clear ();
+
+  // Create set of all condition nodes.
+  for (CondNodeMap::iterator node_iter = cond_nodes_.begin ();
+    node_iter != cond_nodes_.end (); node_iter++)
+  {
+    Condition cur_cond;
+    cur_cond.id = node_iter->second->get_ID ();
+    cur_cond.kind = node_iter->second->get_cond_kind ();
+    cur_cond.value = node_iter->second->get_init_prob ();
+
+    conds.insert (cur_cond);
+  }
+
+  return conds;
+};
+
+// Get the number of tasks in the network.
+size_t SANet::Network::get_num_tasks (void)
+{
+  return this->task_nodes_.size ();
+};
+
+// Get all tasks in the network.
+TaskSet SANet::Network::get_all_tasks (void)
+{
+  TaskSet tasks;
+  tasks.clear ();
+
+  // Create set of all taskition nodes.
+  for (TaskNodeMap::iterator node_iter = task_nodes_.begin ();
+    node_iter != task_nodes_.end (); node_iter++)
+  {
+    tasks.insert (node_iter->second->get_ID ());
+  }
+
+  return tasks;
 };
 
 // Get a task's name.

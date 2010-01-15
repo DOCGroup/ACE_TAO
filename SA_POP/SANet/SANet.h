@@ -198,13 +198,19 @@ namespace SANet {
     ///       changed after construction.
     virtual void reset_sa (void);
 
-    /// Update a condition's current value (probability of being true).
+    /// Update a condition's current (init) value (probability of being true).
     /**
      * @param cond_id  The condition id.
      *
      * @param true_prob  New probability that condition is true.
      */
     virtual void update_cond_val (CondID cond_id, Probability true_prob);
+
+    /// Update a set of conditions' current (init) value (probability of being true).
+    /**
+     * @param true_prob  Set of conditions with each including the value to set for current/init value.
+     */
+    virtual void update_conds_val (CondSet conds);
 
     /// Update a condition's (goal) utility.
     /**
@@ -272,6 +278,30 @@ namespace SANet {
     // ************************************************************************
     // General task/condition accessor methods.
     // ************************************************************************
+
+    /// Get the number of conditions in the network.
+    /**
+     * @return  Number of conditions in the network.
+     */
+    virtual size_t get_num_conds (void);
+
+    /// Get all conditions in the network.
+    /**
+     * @return  Set of all conditions in the network.
+     */
+    virtual CondSet get_all_conds (void);
+
+    /// Get the number of tasks in the network.
+    /**
+     * @return  Number of tasks in the network.
+     */
+    virtual size_t get_num_tasks (void);
+
+    /// Get all tasks in the network.
+    /**
+     * @return  Set of all tasks (as IDs) in the network.
+     */
+    virtual TaskSet get_all_tasks (void);
 
     /// Get a task's name.
     /**

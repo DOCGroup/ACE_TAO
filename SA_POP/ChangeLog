@@ -1,3 +1,25 @@
+Fri Jan 15 23:37:01 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * LogFileOut.cpp:
+
+          Minor update to plan output info & formatting.
+
+        * SANet/SANet.h:
+        * SANet/SANet.cpp:
+
+          Added methods to get all conditions/tasks, get number of conditions/tasks, & set (init) value of multiple conditions.
+
+        * experiments/EU_Performance/Exp_Core/Exp_EU_Planner.h:
+        * experiments/EU_Performance/Exp_Core/Exp_EU_Planner.cpp:
+
+          Added random network initialization (true initial conditions and goal conditions).
+          Updated trial/run statistics gathering & output.
+
+        * experiments/EU_Performance/SAPOP_Exp_EU.cpp:
+
+          Updated interface to allow running experiment on a network using random network initialization and statistics logging.
+
+
 Fri Jan 15 06:40:02 UTC 2010  Ben Podgursky  <bpodgursky@gmail.com>
 
         * SA_POP_Types.h:
@@ -7,9 +29,9 @@ Fri Jan 15 06:40:02 UTC 2010  Ben Podgursky  <bpodgursky@gmail.com>
 
         * utils/SANetGenerator/Net_Complete.py:
 
-	--Script generates task map
-	--No task limiter
-	--Uses choose task once strategy
+        --Script generates task map
+        --No task limiter
+        --Uses choose task once strategy
 
 Thu Jan 14 23:23:05 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
