@@ -130,7 +130,7 @@ namespace CIAO
 
         DDSDataReader * get_impl (void);
 
-        void set_impl (DDSDataReader * dw);
+        void set_impl (DDSDataReader * dr);
 
       private:
         DDSDataReader * impl_;

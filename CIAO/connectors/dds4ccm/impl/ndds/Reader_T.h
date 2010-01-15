@@ -58,8 +58,9 @@ namespace CIAO
         void set_topic (::DDS::Topic_ptr topic);
 
       private:
-        DDSTopic * topic_;
-        DDSContentFilteredTopic * cft_;
+        ::DDS::Topic_var topic_;
+        ::DDS::DataReader_var reader_;
+
         typename DDS_TYPE::data_reader * impl_;
 
         typename DDS_TYPE::data_reader * impl (void);
