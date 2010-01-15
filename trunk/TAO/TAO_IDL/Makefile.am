@@ -276,6 +276,7 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_valuetype_fwd.cpp \
   be/be_visitor.cpp \
   be/be_visitor_amh_pre_proc.cpp \
+  be/be_visitor_ami4ccm_pre_proc.cpp \
   be/be_visitor_ami_pre_proc.cpp \
   be/be_visitor_any_extracted_type_decl.cpp \
   be/be_visitor_arg_traits.cpp \
@@ -301,12 +302,14 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_visitor_native.cpp \
   be/be_visitor_null_return_value.cpp \
   be/be_visitor_operation.cpp \
+  be/be_visitor_reifying.cpp \
   be/be_visitor_root.cpp \
   be/be_visitor_scope.cpp \
   be/be_visitor_sequence.cpp \
   be/be_visitor_structure.cpp \
   be/be_visitor_structure_fwd.cpp \
   be/be_visitor_template_export.cpp \
+  be/be_visitor_tmpl_module_inst.cpp \
   be/be_visitor_traits.cpp \
   be/be_visitor_typecode.cpp \
   be/be_visitor_typedef.cpp \
@@ -381,6 +384,7 @@ noinst_HEADERS += \
   be_include/be_valuetype_fwd.h \
   be_include/be_visitor.h \
   be_include/be_visitor_amh_pre_proc.h \
+  be_include/be_visitor_ami4ccm_pre_proc.h \
   be_include/be_visitor_ami_pre_proc.h \
   be_include/be_visitor_any_extracted_type_decl.h \
   be_include/be_visitor_arg_traits.h \
@@ -406,12 +410,14 @@ noinst_HEADERS += \
   be_include/be_visitor_native.h \
   be_include/be_visitor_null_return_value.h \
   be_include/be_visitor_operation.h \
+  be_include/be_visitor_reifying.h \
   be_include/be_visitor_root.h \
   be_include/be_visitor_scope.h \
   be_include/be_visitor_sequence.h \
   be_include/be_visitor_structure.h \
   be_include/be_visitor_structure_fwd.h \
   be_include/be_visitor_template_export.h \
+  be_include/be_visitor_tmpl_module_inst.h \
   be_include/be_visitor_traits.h \
   be_include/be_visitor_typecode.h \
   be_include/be_visitor_typedef.h \
