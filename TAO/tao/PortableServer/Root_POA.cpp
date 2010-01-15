@@ -1150,7 +1150,6 @@ TAO_Root_POA::activate_object (PortableServer::Servant servant)
     }
 }
 
-#if !defined (CORBA_E_MICRO)
 void
 TAO_Root_POA::activate_object_with_id (const PortableServer::ObjectId &id,
                                        PortableServer::Servant servant)
@@ -1176,9 +1175,7 @@ TAO_Root_POA::activate_object_with_id (const PortableServer::ObjectId &id,
         return;
     }
 }
-#endif
 
-#if !defined (CORBA_E_MICRO)
 void
 TAO_Root_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
                                          PortableServer::Servant servant,
@@ -1191,7 +1188,6 @@ TAO_Root_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
                              priority,
                              wait_occurred_restart_call);
 }
-#endif
 
 void
 TAO_Root_POA::deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
