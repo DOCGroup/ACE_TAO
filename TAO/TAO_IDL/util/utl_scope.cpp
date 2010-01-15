@@ -2107,7 +2107,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
       // up was inherited into that interface. The first call to
       // look_in_inherited() is this function only checks base classes
       // of the scope (interface) we started the lookup from.
-      if (d == 0)
+      if (d == 0 && s != 0)
         {
           d = s->look_in_inherited (sn, treat_as_ref);
         }

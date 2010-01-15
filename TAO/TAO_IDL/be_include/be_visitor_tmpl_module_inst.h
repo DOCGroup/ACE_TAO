@@ -52,6 +52,8 @@ public:
   virtual int visit_module (be_module *node);
   virtual int visit_template_module (be_template_module *node);
   virtual int visit_template_module_inst (be_template_module_inst *node);
+  virtual int visit_eventtype (be_eventtype *node);
+  virtual int visit_valuetype (be_valuetype  *node);
   virtual int visit_interface (be_interface *node);
   virtual int visit_attribute (be_attribute *node);
   virtual int visit_operation (be_operation *node);
@@ -60,6 +62,7 @@ public:
   virtual int visit_constant (be_constant *node);
   virtual int visit_structure (be_structure *node);
   virtual int visit_field (be_field *node);
+  virtual int visit_factory (be_factory *node);
   
 private:
   // If arg is a param holder, return the matching template arg,
@@ -70,6 +73,14 @@ private:
   
   // Utility method used for attributes and operations.
   UTL_ExceptList *reify_exception_list (UTL_ExceptList *orig);
+  
+  // Utility method to create a NameList from a list of inherited
+  // or supported types that may contain a template param ref.
+  UTL_NameList *create_name_list (AST_Type **list, long length);
+  
+  // Flag to branch in visit_valuetype() where we create an
+  // eventtype or a valuetype.
+  bool for_eventtype_;
 };
 
 #endif // TAO_BE_VISITOR_TMPL_MODULE_INST_H

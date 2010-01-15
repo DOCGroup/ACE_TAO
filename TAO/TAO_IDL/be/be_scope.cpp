@@ -42,6 +42,18 @@ be_scope::be_add_field (AST_Field *f)
   return this->fe_add_field (f);
 }
 
+UTL_ExceptList *
+be_scope::be_add_exceptions (UTL_ExceptList *t)
+{
+  return 0;
+}
+
+AST_Argument *
+be_scope::be_add_argument (AST_Argument *arg)
+{
+  return 0;
+}
+
 void
 be_scope::comma (unsigned short comma)
 {

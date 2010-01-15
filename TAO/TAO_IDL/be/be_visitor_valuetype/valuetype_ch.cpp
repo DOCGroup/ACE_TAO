@@ -109,7 +109,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
             }
 
           // Dump the scoped name.
-          *os << "public virtual ";
+          *os << "public virtual ::";
           *os << inherited->nested_type_name (scope);
         }  // end of for loop
     }
@@ -169,7 +169,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   for (i = 0; i < node->n_supports (); ++i)
     {
       *os << "," << be_nl
-          << "public virtual "
+          << "public virtual ::"
           << node->supports ()[i]->name ();
     }
 
