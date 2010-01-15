@@ -1,16 +1,16 @@
 // $Id$
 
 #include "dds4ccm/impl/ndds/DataReader.h"
+#include "dds4ccm/impl/ndds/DataReaderListener_T.h"
 #include "dds4ccm/impl/ndds/Utils.h"
 #include "dds4ccm/impl/ndds/SampleInfo.h"
-#include "dds4ccm/impl/ndds/Topic.h"
+#include "dds4ccm/impl/ndds/Subscriber.h"
 #include "ciao/Logger/Log_Macros.h"
 
 // Implementation skeleton constructor
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::Reader_T (void)
   : topic_ (0),
-    cft_ (0),
     impl_ (0)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::Reader_T");
@@ -316,50 +316,50 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
   const ::CCM_DDS::QueryFilter & filter)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::filter");
-  if (!this->cft_)
+  ::DDS::Subscriber_var sub = this->reader_->get_subscriber ();
+  if (CORBA::is_nil (sub))
     {
-      DDSSubscriber * subscriber = this->impl ()->get_subscriber ();
-      if (!subscriber)
-        {
-          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
-                        "Error: Unable to get Subscriber\n"));
-          throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
-        }
-      DDSDomainParticipant * dp = subscriber->get_participant ();
-      if (!dp)
-        {
-          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
-                        "Error: Unable to get DomainParticipant\n"));
-          throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 2);
-        }
-
-      const char* parameterlist[filter.query_parameters.length ()];
-      for (CORBA::ULong i = 0; i < filter.query_parameters.length (); ++i)
-        {
-          parameterlist[i] = filter.query_parameters[i].in ();
-        }
-      DDS_StringSeq parameters (filter.query_parameters.length ());
-      parameters.from_array(parameterlist, filter.query_parameters.length ());
-
-      this->cft_ = dp->create_contentfilteredtopic (
-                                    "ActFunny",
-                                    this->topic_,
-                                    filter.query,
-                                    parameters);
-      if (!this->cft_)
-        {
-          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
-                        "Error: Unable to create ContentFilteredTopic\n"));
-          throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 3);
-        }
-      CIAO_DEBUG (6, (LM_DEBUG, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
-                        "ContentFilteredTopic created. Query <%C>\n",
-                        filter.query.in ()));
+      CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+                    "Error: Unable to get Subscriber.\n"));
+      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
     }
-  else
+  ::DDS::DomainParticipant_var dp = sub->get_participant ();
+  if (CORBA::is_nil (dp))
     {
-      //just set the expression_parameters.
+      CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+                    "Error: Unable to get Participant.\n"));
+      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
     }
+
+  DDS::ContentFilteredTopic_var cft =
+    dp->create_contentfilteredtopic (
+                        "ActFunny",
+                        this->topic_.in (),
+                        filter.query,
+                        filter.query_parameters);
+  if (CORBA::is_nil (cft))
+    {
+      CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+                    "Error: Unable to create ContentFilteredTopic.\n"));
+      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
+    }
+  ::DDS::DataReaderListener_var listener = this->reader_->get_listener ();
+  this->reader_->set_listener (::DDS::DataReaderListener::_nil (), 0);
+  ::DDS::ReturnCode_t retval = sub->delete_datareader (this->reader_);
+  if (retval != ::DDS::RETCODE_OK)
+    {
+      CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+                    "Error: Unable to delete DataReader.\n"));
+    }
+  ::DDS::DataReaderQos drqos;
+  this->reader_ = ::DDS::CCM_DataReader::_nil ();
+  ::DDS::DataReader_var reader = sub->create_datareader (
+                    this->topic_,
+                    drqos,
+                    listener,
+                    ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+  this->reader_ = ::DDS::CCM_DataReader::_narrow (reader);
+  this->set_impl (reader);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -367,9 +367,7 @@ void
 CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::set_topic (
   ::DDS::Topic_ptr topic)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::set_topic");
-  RTI_Topic_i * tp = dynamic_cast < RTI_Topic_i * > (topic);
-  this->topic_ = tp->get_impl ();
+  this->topic_ = topic;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -385,6 +383,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::set_impl (
     }
   else
     {
+      this->reader_ = reader;
       RTI_DataReader_i *rdr = dynamic_cast <RTI_DataReader_i *> (reader);
 
       if (!rdr)

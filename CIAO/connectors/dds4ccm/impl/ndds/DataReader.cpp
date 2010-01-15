@@ -137,17 +137,22 @@ namespace CIAO
         ::DDS::DataReaderListener_ptr a_listener,
         ::DDS::StatusMask mask)
       {
-        RTI_DataReaderListener_i* rti_impl_list = new RTI_DataReaderListener_i (a_listener);
-        return this->impl ()->set_listener (rti_impl_list, mask);
+        RTI_DataReaderListener_i* rti_drl = new RTI_DataReaderListener_i (a_listener);
+        return this->impl ()->set_listener (rti_drl, mask);
       }
 
       ::DDS::DataReaderListener_ptr
       RTI_DataReader_i::get_listener (void)
       {
-        //::DDSDataReaderListener* reader = this->impl ()->get_listener ();
-//        ::DDS::DataReaderListener_var dds_reader = new RTI_DataReaderListener_i (reader);
-        //return dds_reader._retn ();
-        throw CORBA::NO_IMPLEMENT ();
+        DDSDataReaderListener * drl = this->impl ()->get_listener ();
+        RTI_DataReaderListener_i * rti_drl = dynamic_cast< RTI_DataReaderListener_i *> (drl);
+        if (!rti_drl)
+          {
+            CIAO_ERROR (1, (LM_ERROR, "RTI_DataReader_i::get_listener - "
+                                      "DDS returned a NIL listener.\n"));
+            return ::DDS::DataReaderListener::_nil ();
+          }
+        return rti_drl->get_datareaderlistener ();
       }
 
       ::DDS::TopicDescription_ptr
@@ -265,9 +270,9 @@ namespace CIAO
       }
 
       void
-      RTI_DataReader_i::set_impl (DDSDataReader * dw)
+      RTI_DataReader_i::set_impl (DDSDataReader * dr)
       {
-        this->impl_ = dw;
+        this->impl_ = dr;
       }
 
       DDSDataReader *

@@ -1,3 +1,21 @@
+Fri Jan 15 14:02:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReader.h:
+        * connectors/dds4ccm/impl/ndds/DataReader.cpp:
+          Implemented get_listener methods.
+          Some renaming of variables.
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.h:
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Rewritten filter method. Now using DDS proxies instead
+          of DDS itself.
+
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+          Renaming some inconsistent named variables.
+
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.cpp:
+          Removed unnecessary logging.
+
 Fri Jan 15 09:11:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/IDL3_to_IDL2/checking_visitor.cpp
