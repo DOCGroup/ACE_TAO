@@ -1,3 +1,16 @@
+Fri Jan 15 15:31:56 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        
+          Reverted a small change made yesterday where the
+          generation of a double colon was prefixed to a name
+          that is not global.
+          
+        * tests/IDL_Test/valuetype.idl:
+        
+          Added an example to test the fix above, submitted by
+          Johnny Willemesen <jwillemsen@remedy.nl.
+
 Thu Jan 14 22:50:03 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_module.h:

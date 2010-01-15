@@ -63,4 +63,21 @@ valuetype GetsDeprecatedMember : IncludedBase
   public string StringMember;
 };
 
+// Tests the generation of the base valuetype's
+// name, which is not a full name but relative
+// to the scope it's in.
+module X
+{
+  abstract valuetype AXXX
+  {
+    Object make_object ();
+  };
+
+  abstract valuetype BXXX : AXXX 
+  {
+  };
+  
+  typedef sequence<BXXX> BSeq;
+};
+
 #endif /* IDL_TEST_VALUETYPE_IDL */
