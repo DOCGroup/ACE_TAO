@@ -753,7 +753,6 @@ namespace TAO
       return user_id._retn ();
     }
 
-#if !defined (CORBA_E_MICRO)
     void
     ServantRetentionStrategyRetain::activate_object_with_id (
       const PortableServer::ObjectId &id,
@@ -856,7 +855,6 @@ namespace TAO
       // invoke _remove_ref on it the same number of times.
       servant->_add_ref ();
     }
-#endif
 
     CORBA::Object_ptr
     ServantRetentionStrategyRetain::create_reference (

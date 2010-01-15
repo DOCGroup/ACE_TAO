@@ -164,7 +164,6 @@ namespace TAO
       throw PortableServer::POA::WrongPolicy ();
     }
 
-#if !defined (CORBA_E_MICRO)
     void
     ServantRetentionStrategyNonRetain::activate_object_with_id (
       const PortableServer::ObjectId &/*id*/,
@@ -174,7 +173,6 @@ namespace TAO
     {
       throw PortableServer::POA::WrongPolicy ();
     }
-#endif
 
     CORBA::Object_ptr
     ServantRetentionStrategyNonRetain::create_reference (

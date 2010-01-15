@@ -51,14 +51,12 @@ namespace TAO
                        CORBA::Short priority,
                        bool &wait_occurred_restart_call);
 
-#if !defined (CORBA_E_MICRO)
       virtual
       void
       activate_object_with_id (const PortableServer::ObjectId &id,
                                PortableServer::Servant servant,
                                CORBA::Short priority,
                                bool &wait_occurred_restart_call);
-#endif
 
       void deactivate_object (const PortableServer::ObjectId &id);
 

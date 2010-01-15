@@ -217,10 +217,8 @@ public:
 
   PortableServer::ObjectId *activate_object (PortableServer::Servant p_servant);
 
-#if !defined (CORBA_E_MICRO)
   void activate_object_with_id (const PortableServer::ObjectId &id,
                                 PortableServer::Servant p_servant);
-#endif
 
   void deactivate_object (const PortableServer::ObjectId &oid);
 
@@ -551,12 +549,10 @@ protected:
   PortableServer::Servant get_servant_i (void);
 
 protected:
-#if !defined (CORBA_E_MICRO)
   void activate_object_with_id_i (const PortableServer::ObjectId &id,
                                   PortableServer::Servant p_servant,
                                   CORBA::Short priority,
                                   bool &wait_occurred_restart_call);
-#endif
 
   virtual void remove_from_parent_i (void);
 
