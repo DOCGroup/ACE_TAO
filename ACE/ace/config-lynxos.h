@@ -7,6 +7,9 @@
 #define ACE_CONFIG_H
 #include /**/ "ace/pre.h"
 
+// System include files are not in sys/, this gets rid of warning.
+#define __NO_INCLUDE_WARN__
+
 #define __FREEBSDCODE__
 #include <param.h>
 #undef __FREEBSDCODE__
@@ -147,9 +150,6 @@
 #if !defined (ACE_USE_RCSID)
 # define ACE_USE_RCSID 0
 #endif /* ! ACE_USE_RCSID */
-
-// System include files are not in sys/, this gets rid of warning.
-#define __NO_INCLUDE_WARN__
 
 #if ACE_LYNXOS_MAJOR == 4 && ACE_LYNXOS_MINOR == 0
 # define ACE_LACKS_GETOPT_PROTOTYPE
