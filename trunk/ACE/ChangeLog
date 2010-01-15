@@ -1,3 +1,18 @@
+Fri Jan 15 01:01:02 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * tests/Thread_Attrs_Test.cpp:
+
+          Slight modification to allow this test to pass on the iPhone
+          builds. Changed the spanwed thread's size from 42k to 40k.
+
+          According to Apple's Documentation: "The minimum allowed stack
+          size for secondary threads is 16 KB and the stack size must be
+          a multiple of 4 KB." My change make the stack size a multiple
+          of 4k. Below is a reference to the Apple documentation for the
+          iPhone where I got the quote. 
+
+          http://developer.apple.com/iphone/library/documentation/Cocoa/Conceptual/Multithreading/CreatingThreads/CreatingThreads.html
+
 Thu Jan 14 20:06:49 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * include/makeinclude/platform_macosx_iphone.GNU:

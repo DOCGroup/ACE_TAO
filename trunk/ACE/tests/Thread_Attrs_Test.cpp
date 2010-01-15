@@ -127,7 +127,7 @@ run_main (int, ACE_TCHAR *[])
 
   int status = 0;
 #if defined (ACE_HAS_THREADS)
-  Stack_Size_Check size_checker (42*1024);
+  Stack_Size_Check size_checker (40*1024);
   status = size_checker.open(0);
   if (status == 0)
     {
