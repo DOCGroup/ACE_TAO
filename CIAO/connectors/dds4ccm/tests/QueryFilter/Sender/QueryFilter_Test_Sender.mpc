@@ -1,8 +1,8 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -p DDS_QueryFilter_Test_Base -l ../lib -o ../lib -c controller -u DDS Sender"
+// This file is generated with "generate_component_mpc.pl -p QueryFilter_Test_Base -l ../lib -o ../lib -c controller -u DDS Sender"
 
-project(DDS_QueryFilter_Test_Sender_idl_gen) : componentidldefaults {
-  after += DDS_QueryFilter_Test_Connector_idl_gen DDS_Starter_idl_gen
+project(QueryFilter_Test_Sender_idl_gen) : componentidldefaults {
+  after += QueryFilter_Test_Connector_idl_gen DDS_Starter_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SENDER_STUB_Export \
               -Wb,stub_export_include=Sender_stub_export.h \
@@ -19,8 +19,8 @@ project(DDS_QueryFilter_Test_Sender_idl_gen) : componentidldefaults {
   }
 }
 
-project(DDS_QueryFilter_Test_Sender_lem_gen) : ciaoidldefaults {
-  after += DDS_QueryFilter_Test_Sender_idl_gen
+project(QueryFilter_Test_Sender_lem_gen) : ciaoidldefaults {
+  after += QueryFilter_Test_Sender_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SENDER_LEM_STUB_Export \
               -Wb,stub_export_include=Sender_lem_stub_export.h \
@@ -31,10 +31,10 @@ project(DDS_QueryFilter_Test_Sender_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(DDS_QueryFilter_Test_Sender_lem_stub) : ccm_svnt, dds4ccm_base {
-  after += DDS_QueryFilter_Test_Sender_lem_gen DDS_QueryFilter_Test_Sender_stub \
-           DDS_QueryFilter_Test_Base_stub DDS_QueryFilter_Starter_stub
-  libs  += DDS_QueryFilter_Test_Base_stub Sender_stub QueryFilter_Starter_stub
+project(QueryFilter_Test_Sender_lem_stub) : ccm_svnt, dds4ccm_base {
+  after += QueryFilter_Test_Sender_lem_gen QueryFilter_Test_Sender_stub \
+           QueryFilter_Test_Base_stub DDS_QueryFilter_Starter_stub
+  libs  += QueryFilter_Test_Base_stub Sender_stub QueryFilter_Starter_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -58,11 +58,11 @@ project(DDS_QueryFilter_Test_Sender_lem_stub) : ccm_svnt, dds4ccm_base {
   }
 }
 
-project(DDS_QueryFilter_Test_Sender_stub) : ccm_stub, dds4ccm_base {
-  after += DDS_QueryFilter_Test_Sender_idl_gen DDS_QueryFilter_Test_Base_stub \
-           DDS_QueryFilter_Test_Connector_stub DDS_QueryFilter_Starter_stub \
+project(QueryFilter_Test_Sender_stub) : ccm_stub, dds4ccm_base {
+  after += QueryFilter_Test_Sender_idl_gen QueryFilter_Test_Base_stub \
+           QueryFilter_Test_Connector_stub DDS_QueryFilter_Starter_stub \
            DDS_QueryFilter_Starter_lem_stub
-  libs  += DDS_QueryFilter_Test_Base_stub DDS_QueryFilter_Test_Connector_stub \
+  libs  += QueryFilter_Test_Base_stub QueryFilter_Test_Connector_stub \
            QueryFilter_Starter_stub
   includes += ..
   libpaths += ../lib
@@ -87,13 +87,13 @@ project(DDS_QueryFilter_Test_Sender_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(DDS_QueryFilter_Test_Sender_exec) : ciao_executor, dds4ccm_base {
-  after   += DDS_QueryFilter_Test_Sender_lem_stub DDS_QueryFilter_Test_Sender_stub \
-             DDS_QueryFilter_Test_Connector_lem_stub DDS_QueryFilter_Test_Connector_stub \
+project(QueryFilter_Test_Sender_exec) : ciao_executor, dds4ccm_base {
+  after   += QueryFilter_Test_Sender_lem_stub QueryFilter_Test_Sender_stub \
+             QueryFilter_Test_Connector_lem_stub QueryFilter_Test_Connector_stub \
              DDS4CCM_lem_stub
   sharedname = Sender_exec
-  libs    += Sender_stub Sender_lem_stub DDS_QueryFilter_Test_Base_stub \
-             DDS_QueryFilter_Test_Connector_lem_stub DDS_QueryFilter_Test_Connector_stub \
+  libs    += Sender_stub Sender_lem_stub QueryFilter_Test_Base_stub \
+             QueryFilter_Test_Connector_lem_stub QueryFilter_Test_Connector_stub \
              QueryFilter_Starter_stub DDS4CCM_lem_stub
   libpaths += ../lib
   includes += ..
@@ -117,15 +117,15 @@ project(DDS_QueryFilter_Test_Sender_exec) : ciao_executor, dds4ccm_base {
 }
 
 
-project(DDS_QueryFilter_Test_Sender_svnt) : ciao_servant, dds4ccm_base, nddslib {
-  after      += DDS_QueryFilter_Test_Base_stub  DDS_QueryFilter_Test_Sender_lem_stub \
-                DDS4CCM_lem_stub DDS4CCM_skel DDS_QueryFilter_Test_Connector_stub \
-                DDS_QueryFilter_Test_Connector_svnt DDS_QueryFilter_Test_Connector_lem_stub \
+project(QueryFilter_Test_Sender_svnt) : ciao_servant, dds4ccm_base, nddslib {
+  after      += QueryFilter_Test_Base_stub  QueryFilter_Test_Sender_lem_stub \
+                DDS4CCM_lem_stub DDS4CCM_skel QueryFilter_Test_Connector_stub \
+                QueryFilter_Test_Connector_svnt QueryFilter_Test_Connector_lem_stub \
                 DDS_QueryFilter_Starter_stub
   sharedname  = Sender_svnt
-  libs       += Sender_stub Sender_lem_stub DDS_QueryFilter_Test_Base_stub DDS4CCM_lem_stub \
-                DDS4CCM_skel DDS_QueryFilter_Test_Connector_stub DDS_QueryFilter_Test_Connector_svnt \
-                DDS_QueryFilter_Test_Connector_lem_stub QueryFilter_Starter_stub
+  libs       += Sender_stub Sender_lem_stub QueryFilter_Test_Base_stub DDS4CCM_lem_stub \
+                DDS4CCM_skel QueryFilter_Test_Connector_stub QueryFilter_Test_Connector_svnt \
+                QueryFilter_Test_Connector_lem_stub QueryFilter_Starter_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
