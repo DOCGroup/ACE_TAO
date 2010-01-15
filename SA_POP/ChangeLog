@@ -1,3 +1,16 @@
+Fri Jan 15 06:40:02 UTC 2010  Ben Podgursky  <bpodgursky@gmail.com>
+
+        * SA_POP_Types.h:
+        * SA_PlanHeuristics.cpp:
+        * SA_PlanStrategy.h:
+        * SA_PlanStrategy.cpp:
+
+        * utils/SANetGenerator/Net_Complete.py:
+
+	--Script generates task map
+	--No task limiter
+	--Uses choose task once strategy
+
 Thu Jan 14 23:23:05 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * LogGraphOut.cpp:

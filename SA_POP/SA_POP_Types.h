@@ -203,6 +203,9 @@ namespace SA_POP {
 
 
 
+
+  //A struct used in a task choice strategy specifying whether a selected task
+  //is new or reused
   enum TaskChoiceType{REUSE_INST, NEW_INST};
 
   struct TaskChoice {
@@ -218,9 +221,7 @@ namespace SA_POP {
   /// Map from Task Instance IDs to Task IDs.
   typedef std::map <TaskInstID, TaskID> InstToTaskMap;
 
-
-//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
-  // WHAT DOES THIS STRUCT DO / HOW IS IT USED?
+  //Allows the sorting of tasks by the age of their most recent instance
   // NOT A GENERIC SIMPLE TYPE IN SA-POP SO SHOULD BE MOVED TO FILES OF WHATEVER SPECIFIC CLASSES USE IT.
   struct SortTaskByTime{
 
@@ -234,6 +235,9 @@ namespace SA_POP {
     }
 
     // IS THE LESS THAN OPERATOR REALLY SUPPOSED TO COMPARE INSTANCES BY GREATER THAN?
+	//Well it made sense at the time, since the instance # is a way of checking
+	//their relative ages.  Smaller instance numbers mean older task instances, which is the reverse
+	//of how I was looking to order the list.
     bool operator<(const SortTaskByTime & s) const {
       return this->last_instance > s.last_instance;
     }
@@ -244,9 +248,6 @@ namespace SA_POP {
       return this->last_instance == s.last_instance;
     }
   };
-//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
-
-
 
   /// Type of an implementation parameter.
   struct ImplParam {
