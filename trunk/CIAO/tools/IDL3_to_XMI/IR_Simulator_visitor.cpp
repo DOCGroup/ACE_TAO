@@ -209,6 +209,13 @@ namespace CIAO
     }
 
     int
+    ir_simulator_visitor::visit_param_holder(
+      AST_Param_Holder *)
+    {
+      return 0;
+    }
+
+    int
     ir_simulator_visitor::visit_interface (AST_Interface *node)
     {
       XMI_TRACE ("interface");

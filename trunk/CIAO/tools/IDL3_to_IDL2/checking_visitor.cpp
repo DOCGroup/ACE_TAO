@@ -157,6 +157,12 @@ checking_visitor::visit_template_module_ref (AST_Template_Module_Ref *)
 }
 
 int
+checking_visitor::visit_param_holder (AST_Param_Holder *)
+{
+  return 0;
+}
+
+int
 checking_visitor::visit_porttype (AST_PortType *)
 {
   return 0;
@@ -308,10 +314,10 @@ checking_visitor::visit_root (AST_Root *node)
         {
           this->idl2_only_files_ += " ";
         }
-        
+
       this->idl2_only_files_ += idl_global->included_idl_files ()[i];
     }
-  
+
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -319,12 +325,12 @@ checking_visitor::visit_root (AST_Root *node)
                          "codegen for scope failed\n"),
                         -1);
     }
-    
+
   // Append the remaining names in this list to the excluded
   // filenames list. If a filename ends up appearing twice, it
-  // shouldn't matter.  
+  // shouldn't matter.
   be_global->set_excluded_filenames (this->idl2_only_files_.c_str ());
-    
+
   return 0;
 }
 
@@ -407,27 +413,27 @@ checking_visitor::remove_idl2_only_filename (ACE_CString filename)
     {
       return;
     }
-    
+
   ACE_CString::size_type p = 0;
   ACE_CString raw_local_fname (filename);
-    
+
   ACE_CString::size_type pos = raw_local_fname.rfind ('/');
-  
+
   if (pos != ACE_CString::npos)
     {
       raw_local_fname =
         raw_local_fname.substr (pos + 1);
     }
-  
+
   while (p != ACE_CString::npos)
     {
       ACE_CString::size_type cursor = p;
-      
+
       if (cursor >= this->idl2_only_files_.length ())
         {
           break;
         }
-        
+
       p = this->idl2_only_files_.find (' ', cursor);
 
       ACE_CString one_filename =

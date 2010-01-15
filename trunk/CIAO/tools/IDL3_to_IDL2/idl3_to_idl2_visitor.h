@@ -60,7 +60,8 @@ public:
   virtual int visit_eventtype_fwd (AST_EventTypeFwd *node);
   virtual int visit_home (AST_Home *node);
   virtual int visit_root (AST_Root *node);
-
+  virtual int visit_param_holder(AST_Param_Holder *node);
+  
 private:
   UTL_ScopedName *create_scoped_name (const char *prefix,
                                       const char *local_name,

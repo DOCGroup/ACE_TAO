@@ -43,7 +43,7 @@ idl3_to_idl2_visitor::visit_module (AST_Module *node)
 
   ACE_CString name =
     IdentifierHelper::try_escape (node->original_local_name ());
-    
+
   *os << "module " << name.c_str () << be_nl
       << "{" << be_idt;
 
@@ -139,7 +139,7 @@ idl3_to_idl2_visitor::visit_component (AST_Component *node)
   long nsupports = node->n_supports ();
 
   *os << " : "
-      << (base != 0 
+      << (base != 0
             ? IdentifierHelper::orig_sn (base->name ()).c_str ()
             : "Components::CCMObject");
 
@@ -189,14 +189,14 @@ idl3_to_idl2_visitor::visit_provides (AST_Provides *node)
 {
   Identifier *orig_id =
     IdentifierHelper::original_local_name (node->local_name ());
-    
+
   UTL_ScopedName *n = node->provides_type ()->name ();
   ACE_CString impl_name =
     IdentifierHelper::orig_sn (n);
 
   *os << be_nl << be_nl
       << impl_name.c_str () << " provide_" << orig_id << " ();";
-      
+
   orig_id->destroy ();
   delete orig_id;
   orig_id = 0;
@@ -208,7 +208,7 @@ int
 idl3_to_idl2_visitor::visit_uses (AST_Uses *node)
 {
   *os << be_nl << be_nl;
-  
+
   Identifier *orig_id =
     IdentifierHelper::original_local_name (node->local_name ());
 
@@ -249,7 +249,7 @@ idl3_to_idl2_visitor::visit_uses (AST_Uses *node)
           << impl_name.c_str () << " get_connection_" << orig_id
           << " ();";
     }
-    
+
   orig_id->destroy ();
   delete orig_id;
   orig_id = 0;
@@ -259,7 +259,7 @@ idl3_to_idl2_visitor::visit_uses (AST_Uses *node)
 
 int
 idl3_to_idl2_visitor::visit_publishes (AST_Publishes *node)
-{ 
+{
   Identifier *orig_id =
     IdentifierHelper::original_local_name (node->local_name ());
 
@@ -277,7 +277,7 @@ idl3_to_idl2_visitor::visit_publishes (AST_Publishes *node)
       << impl_name.c_str () << "Consumer unsubscribe_" << orig_id
       << " (in Components::Cookie ck)" << be_idt_nl
       << "raises (Components::InvalidConnection);" << be_uidt;
-     
+
   orig_id->destroy ();
   delete orig_id;
   orig_id = 0;
@@ -304,7 +304,7 @@ idl3_to_idl2_visitor::visit_emits (AST_Emits *node)
       << impl_name.c_str () << "Consumer disconnect_" << orig_id
       << " ()" << be_idt_nl
       << "raises (Components::NoConnection);" << be_uidt;
-     
+
   orig_id->destroy ();
   delete orig_id;
   orig_id = 0;
@@ -325,7 +325,7 @@ idl3_to_idl2_visitor::visit_consumes (AST_Consumes *node)
   *os << be_nl << be_nl
       << impl_name.c_str () << "Consumer get_consumer_" << orig_id
       << " ();";
-     
+
   orig_id->destroy ();
   delete orig_id;
   orig_id = 0;
@@ -347,6 +347,12 @@ idl3_to_idl2_visitor::visit_mirror_port (AST_Mirror_Port *)
 
 int
 idl3_to_idl2_visitor::visit_connector (AST_Connector *)
+{
+  return 0;
+}
+
+int
+idl3_to_idl2_visitor::visit_param_holder (AST_Param_Holder *)
 {
   return 0;
 }
@@ -500,7 +506,7 @@ idl3_to_idl2_visitor::visit_home (AST_Home *node)
     {
       key_name =
         IdentifierHelper::orig_sn (key->name ());
-        
+
       *os << "in " << key_name.c_str () << " key";
     }
 
@@ -557,7 +563,7 @@ idl3_to_idl2_visitor::visit_root (AST_Root *node)
                                         "_IDL2.idl",
                                         "_TAO_IDL_",
                                         "_IDL_");
-                                            
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -575,7 +581,7 @@ idl3_to_idl2_visitor::visit_root (AST_Root *node)
           *os << be_nl;
         }
 
-      ACE_CString raw_filename = idl_global->included_idl_files ()[i];    
+      ACE_CString raw_filename = idl_global->included_idl_files ()[i];
       bool excluded_file_found =
         this->match_excluded_file (raw_filename.c_str ());
 
