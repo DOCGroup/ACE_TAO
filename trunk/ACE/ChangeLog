@@ -1,3 +1,46 @@
+Fri Jan 15 04:19:45 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Message_Queue_T.cpp: Readded
+
+          #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
+          #include "ace/Message_Queue_NT.h"
+          #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
+  
+          to fix a compile error on MinGW.  Thanks to Olli Savia
+          <ops@iki.fi> for this fix.
+
+Fri Jan 15 04:18:17 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Message_Queue_NT.cpp: Added 
+        
+          #include "ace/Message_Queue.h"
+  
+          to fix a compile error on MinGW.  Thanks to Olli Savia
+          <ops@iki.fi> for this fix.
+
+Fri Jan 15 04:17:06 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Message_Queue.h: Once again removed
+        
+          #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
+          #include "ace/Message_Queue_NT.h"
+          #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
+
+          from this file..
+
+Fri Jan 15 04:14:49 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/config-win32-common.h: Changed the definition
+          
+          # define ACE_HAS_NONSTATIC_OBJECT_MANAGER
+          
+          to 
+          
+          # define ACE_HAS_NONSTATIC_OBJECT_MANAGER 0
+          
+          to fix a compile error on MinGW.  Thanks to Olli Savia
+          <ops@iki.fi> for this fix.
+
 Fri Jan 15 01:01:02 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * tests/Thread_Attrs_Test.cpp:
