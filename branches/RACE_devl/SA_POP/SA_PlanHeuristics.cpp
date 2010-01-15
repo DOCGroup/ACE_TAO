@@ -146,18 +146,12 @@ SA_TaskStrategy::~SA_TaskStrategy (void)
 };
 
 
-
+//A task choice which tries a new task, if the highest EU task instance has already been tried
+//(instead of creating a new instance of the highest EU task)
 TaskChoiceList SA_TaskStrategy::choose_task_fair (Condition open_cond)
 {
 
   TaskSet tasks;
-
- // if(this->planner_->get_working_plan()->get_all_insts().size() > 8){
-		
-//	  TaskChoiceList s;
-	//  s.clear();
-//	  return s;
- // }
 
   tasks = this->planner_->get_satisfying_tasks (open_cond);
 
@@ -233,18 +227,14 @@ TaskChoiceList SA_TaskStrategy::choose_task_fair (Condition open_cond)
 			to_sort.note_instance(it->second);
 		  }
 	
-	//	  if(!(iter->second == INIT_TASK_ID && this->planner_->init_added)){
-			tasks_with_existing_instances.push_back(to_sort);
-	//	 }
-	  
+		tasks_with_existing_instances.push_back(to_sort);
+
 	  }
   }
 
   std::sort(tasks_with_existing_instances.begin(), tasks_with_existing_instances.end());
 
   for(std::vector<SortTaskByTime>::iterator it = tasks_with_existing_instances.begin(); it != tasks_with_existing_instances.end(); it++){
-		
-		
 
 		TaskChoice task_choice;
 		task_choice.choice = NEW_INST;

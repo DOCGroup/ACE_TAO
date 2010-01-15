@@ -295,12 +295,6 @@ namespace SA_POP {
     // Internal helper methods.
     // ************************************************************************
 
-    /// Recursively satisfy all open causal link threats and continue planning.
-    /**
-     * @return  True if planning succeeded, false otherwise.
-     */
-//    virtual bool satisfy_open_threats (void);
-
     /// Satisfy an open condition with an appropriate task.
     /**
      * @param open_cond  Open condition to be satisfied.
