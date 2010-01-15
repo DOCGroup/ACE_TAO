@@ -373,19 +373,19 @@
     <name>QueryFilter_Test_Connector_exec</name>
     <source/>
     <node/>
-    <location>DDS_QueryFilter_Test_Connector_exec</location>
+    <location>QueryFilter_Test_Connector_exec</location>
   </artifact>
   <artifact xmi:id="QueryFilter_Test_Connector_SvntArtifact">
     <name>QueryFilter_Test_Connector_svnt</name>
     <source/>
     <node/>
-    <location>DDS_QueryFilter_Test_Connector_svnt</location>
+    <location>QueryFilter_Test_Connector_svnt</location>
   </artifact>
   <artifact xmi:id="QueryFilter_Test_Connector_StubArtifact">
     <name>QueryFilter_Test_Connector_stub</name>
     <source/>
     <node/>
-    <location>DDS_QueryFilter_Test_Connector_stub</location>
+    <location>QueryFilter_Test_Connector_stub</location>
   </artifact>
   <artifact xmi:id="Receiver_ExecArtifact">
     <name>Receiver_exec</name>

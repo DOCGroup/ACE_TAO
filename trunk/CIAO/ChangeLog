@@ -1,3 +1,12 @@
+Fri Jan 15 07:03:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryFilter/Base/QueryFilter_Test_Base.mpc:
+        * connectors/dds4ccm/tests/QueryFilter/Connector/QueryFilter_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryFilter/Sender/QueryFilter_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryFilter/descriptors/Plan.cdp:
+          Changed project names due to fuzz warnings.
+
 Thu Jan 14 19:13:52 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
