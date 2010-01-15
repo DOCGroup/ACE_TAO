@@ -1,3 +1,24 @@
+Fri Jan 15 20:31:51 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/be/be_visitor_tmpl_module_inst.cpp:
+        * TAO_IDL/be/be_visitor_context.cpp:
+        * TAO_IDL/be/be_visitor_reifying.cpp:
+        * TAO_IDL/be_include/be_visitor_context.h:
+        * TAO_IDL/be_include/be_visitor_reifying.h:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          - Removed the template module instantation
+            scope storage in the visitor context, using
+            instead the global scope stack for that
+            purpose.
+
+          - Modified reifying visitor to find and store
+            a node already created in a template module
+            instantiation, if the corresponding node is
+            referenced in the template module.
+
 Fri Jan 15 15:31:56 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
