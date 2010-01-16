@@ -859,7 +859,7 @@ namespace SA_POP {
 namespace SA_POP {
   namespace Default {
     /// Threshold (>=) for probability of a condition to be considered satisfied.
-    const ::SA_POP::Probability COND_PROB_THRESH = 0.9;
+    const ::SA_POP::Probability COND_PROB_THRESH = 0.6;
 
     /// Environment variable for root path.
     const std::string ROOT_PATH_STR = "SAPOP_ROOT";

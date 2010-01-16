@@ -47,7 +47,8 @@ Exp_EU_Planner::Exp_EU_Planner (void)
 :do_pause_ (false),
  input_ (0),
  ques_ (0),
- do_stats_out_ (false)
+ do_stats_out_ (false),
+ trial_init_plan_eu (0.0)
 {
   this->reset_trial_stats ();
   this->reset_run_stats ();
@@ -78,6 +79,7 @@ Exp_EU_Planner::~Exp_EU_Planner (void)
 // Reset all planning statistics for an individual trial.
 void Exp_EU_Planner::reset_trial_stats (void)
 {
+  this->trial_init_plan_eu = 0.0;
   this->trial_results_.num_plans = 0;
   this->trial_results_.pref_plan_eu = 0.0;
   this->trial_results_.max_plan_eu = 0.0;
@@ -208,6 +210,69 @@ SA_POP::Exp_EU_Run_Results Exp_EU_Planner::exp_run (std::string log_trials_filen
 };
 
 
+// Run planning.
+bool Exp_EU_Planner::plan (size_t sa_max_steps, SA_POP::Goal goal)
+{
+  // Add goal to working plan and task network.
+  this->working_plan_->set_goal (goal);
+  this->sanet_->update_goals (goal.goal_conds);
+
+  // Reset network and run spreading activation.
+  this->sanet_->reset_sa ();
+  this->sanet_->update (sa_max_steps);
+
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+  // Output goal probabilities
+  //std::ostringstream goal_str;
+  //goal_str << "Goals (probability true):  ";
+  //for (SA_POP::GoalMap::iterator goal_iter = goal.goal_conds.begin (); goal_iter != goal.goal_conds.end (); goal_iter++) {
+  //  goal_str << this->sanet_->get_cond_name (goal_iter->first) << "(";
+  //  goal_str << this->sanet_->get_cond_future_val(goal_iter->first, true) << ")  ";
+  //}
+  //SA_POP_DEBUG_STR(SA_POP_DEBUG_TEMP, goal_str.str ());
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+
+  // Check that goal conditions meet probability criteria.
+  // Skip planning and return false if any goal condition does not.
+  for (SA_POP::GoalMap::iterator goal_iter = goal.goal_conds.begin (); goal_iter != goal.goal_conds.end (); goal_iter++) {
+    if (goal_iter->second >= 0) {
+      if (this->sanet_->get_cond_future_val(goal_iter->first, true) > 1.0 || this->sanet_->get_cond_future_val(goal_iter->first, true) < SA_POP::Default::GOAL_PROB_THRESH) {
+        std::ostringstream invalid_goal_str;
+        invalid_goal_str << "Goal condition (" << this->sanet_->get_cond_name (goal_iter->first) << ") ";
+        invalid_goal_str << "with probability, " << this->sanet_->get_cond_future_val(goal_iter->first, true) << ", ";
+        invalid_goal_str << "does not meet goal probability criteria.  Skipping planning.";
+        SA_POP_DEBUG_STR(SA_POP_DEBUG_TEMP, invalid_goal_str.str ());
+
+        return false;
+      }
+    } else {
+      if (this->sanet_->get_cond_future_val(goal_iter->first, false) > 1.0 || this->sanet_->get_cond_future_val(goal_iter->first, false) < SA_POP::Default::GOAL_PROB_THRESH) {
+        std::ostringstream invalid_goal_str;
+        invalid_goal_str << "Goal condition (" << this->sanet_->get_cond_name (goal_iter->first) << ") ";
+        invalid_goal_str << "with probability, " << this->sanet_->get_cond_future_val(goal_iter->first, false) << ", ";
+        invalid_goal_str << "does not meet goal probability criteria.  Skipping planning.";
+        SA_POP_DEBUG_STR(SA_POP_DEBUG_TEMP, invalid_goal_str.str ());
+
+        return false;
+      }
+    }
+  }
+
+  // Set planning strategy goals and satisfy open conditions.
+  this->plan_strat_->set_goals (goal.goal_conds);
+
+  if (this->plan_strat_->satisfy_open_conds ()) {
+    this->plan_ = this->working_plan_->get_plan ();
+
+    this->notify_plan_changed ();
+    return true;
+  }
+
+  return false;
+};
+
+
+
 // Satisfy scheduling constraints in fully instantiated plan (no
 // recursive call backs).
 bool Exp_EU_Planner::full_sched ()
@@ -242,20 +307,58 @@ void Exp_EU_Planner::track_stats (SA_POP::Plan plan)
   // Update number of plans generated.
   this->trial_results_.num_plans++;
 
+  // Get plan EU.
+  SA_POP::Utility plan_eu = this->calc_plan_eu (plan);
+
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+  // Output plan EUs
+  //std::ostringstream plan_eu_str;
+  //plan_eu_str << "Plan (EU = " << plan_eu << ") ";
+  //SA_POP_DEBUG_STR(SA_POP_DEBUG_TEMP, plan_eu_str.str ());
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+
   // Ignore first plan.
   if (this->trial_results_.num_plans <= 1) {
     // First plan.
     this->trial_results_.num_plans = 1;
 
+    // Save EU for comparison with following plans.
+    this->trial_init_plan_eu = plan_eu;
+
     // Increment counter of trials with initial plan.
     this->run_results_.num_init_plans++;
 
-    // Nothing else to do for first plan.
+    // Ignore plan.
     return;
   }
 
-  // Get plan EU.
-  SA_POP::Utility plan_eu = this->calc_plan_eu (plan);
+
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+  // If this plan has the same EU as first plan, ignore.
+  // WARNING:  This assumes that all plans will have EUs
+  //           that differ by at least a small percentage
+  //           unless they are the same plan with unnecessary
+  //           support for initially true conditions.
+  if (plan_eu >= ((1.0 - SA_POP::Default::PERCENT_DIFF_EU) * this->trial_init_plan_eu) &&
+    plan_eu <= ((1.0 + SA_POP::Default::PERCENT_DIFF_EU) * this->trial_init_plan_eu))
+  {
+    // Decrement plan counter, so this plan is not counted.
+    this->trial_results_.num_plans--;
+
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+    // Output plan EUs
+    //std::ostringstream ignore_plan_str;
+    //ignore_plan_str << "Ignoring plan (EU = " << plan_eu << ") ";
+    //ignore_plan_str << "within ignore percentage/multiplier (" << SA_POP::Default::PERCENT_DIFF_EU << ") ";
+    //ignore_plan_str << "of initial plan (EU = " << this->trial_init_plan_eu << ").";
+    //SA_POP_DEBUG_STR(SA_POP_DEBUG_TEMP, ignore_plan_str.str ());
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+
+    // Ignore plan.
+    return;
+  }
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+
 
   // Second plan is SA-POP preferred plan.
   if (this->trial_results_.num_plans == 2) {
