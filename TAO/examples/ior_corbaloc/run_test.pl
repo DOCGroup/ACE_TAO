@@ -149,7 +149,7 @@ for ($i = 0; $i <= $#servers; $i++) {
     push @SVs, $SV;
 }
 
-sleep (5);
+sleep (10);
 
 # List of tests to test corbaloc URL syntax.
 my @corbaloc_tests = (
