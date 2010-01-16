@@ -55,8 +55,7 @@ be_visitor_context::be_visitor_context (void)
     comma_ (0),
     interface_ (0),
     template_params_ (0),
-    template_args_ (0),
-    template_module_inst_scope_ (0)
+    template_args_ (0)
 {
 }
 
@@ -71,7 +70,9 @@ be_visitor_context::be_visitor_context (const be_visitor_context &ctx)
     attr_ (ctx.attr_),
     exception_ (ctx.exception_),
     comma_ (ctx.comma_),
-    interface_ (ctx.interface_)
+    interface_ (ctx.interface_),
+    template_params_ (ctx.template_params_),
+    template_args_ (ctx.template_args_)
 {
 }
 
@@ -89,6 +90,8 @@ be_visitor_context::operator= (const be_visitor_context &ctx)
   this->exception_ = ctx.exception_;
   this->comma_ = ctx.comma_;
   this->interface_ = ctx.interface_;
+  this->template_args_ = ctx.template_args_;
+  this->template_params_ = ctx.template_params_;
 
   return *this;
 }
@@ -114,6 +117,8 @@ be_visitor_context::reset (void)
   this->exception_ = 0;
   this->comma_ = 0;
   this->interface_ = 0;
+  this->template_args_ = 0;
+  this->template_params_ = 0;
 }
 
 void
@@ -272,19 +277,6 @@ be_visitor_context::template_args (FE_Utils::T_ARGLIST *args)
   this->template_args_ = args;
 }
 
-be_scope *
-be_visitor_context::template_module_inst_scope (void) const
-{
-  return this->template_module_inst_scope_;
-}
-
-void
-be_visitor_context::template_module_inst_scope (UTL_Scope *s)
-{
-  this->template_module_inst_scope_ =
-    be_scope::narrow_from_scope (s);
-}
-  
 // ****************************************************************
 
 be_argument *
