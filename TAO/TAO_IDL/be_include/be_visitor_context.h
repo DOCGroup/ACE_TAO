@@ -158,9 +158,6 @@ public:
   FE_Utils::T_ARGLIST *template_args (void) const;
   void template_args (FE_Utils::T_ARGLIST *args);
   
-  be_scope *template_module_inst_scope (void) const;
-  void template_module_inst_scope (UTL_Scope *s);
-  
   // = helpers
 
   // visitors may need the actual type of the node stored in this context. We
@@ -300,10 +297,6 @@ private:
   // Storage for the current template module params and args.
   FE_Utils::T_PARAMLIST_INFO *template_params_;
   FE_Utils::T_ARGLIST *template_args_;
-  
-  // Scope for adding the instantiated contents of a template
-  // module.
-  be_scope *template_module_inst_scope_;
 };
 
 #if defined (interface)
