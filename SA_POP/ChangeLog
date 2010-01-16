@@ -1,3 +1,14 @@
+Sat Jan 16 22:46:36 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * SA_POP_Types.h:
+        * experiments/EU_Performance/Exp_Core/Exp_EU_Planner.h:
+        * experiments/EU_Performance/Exp_Core/Exp_EU_Planner.cpp:
+        * experiments/EU_Performance/SAPOP_Exp_EU.cpp:
+
+          Experiment ignores (just SA, no planning) initial conditions/goal that result in invalid goal condition probabilities (or ones below the #define’d threshold).
+          Experiment ignores generated plans with the same EU (to within a #define’d threshold percentage) as the initial plan.
+
+
 Sat Jan 16 19:57:13 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * experiments/EU_Performance/Exp_Core/Exp_EU_Planner.h:

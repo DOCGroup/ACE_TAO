@@ -43,6 +43,11 @@
 // Additional SA-POP DEFAULT values for use in demo.
 namespace SA_POP {
   namespace Default {
+    // Multiplier to determine max trial attempts from number of trials to achieve.
+    const size_t TrialAttemptsMult = 5;
+
+
+    // Default ranges for values from user.
     const SA_POP::CondID CondIDMin = 1;
     const SA_POP::CondID CondIDMax = 999999;
     const SA_POP::Utility GoalUtilMin = -1000;
@@ -55,12 +60,10 @@ namespace SA_POP {
     const size_t NumKnownCondsMax = 100;
     const size_t NumTrialsMin = 1;
     const size_t NumTrialsMax = 1000;
-
+    const size_t NumNetsMin = 1;
+    const size_t NumNetsMax = 100000;
     // Default percentage of initial conditions to set as true (valid values: [0, 100]).
     const size_t NumPercentCondsInit = 30;
-
-    // Multiplier to determine max trial attempts from number of trials to achieve.
-    const size_t TrialAttemptsMult = 10;
   };  /* SA_POP::Default namespace */
 };  /* SA_POP namespace */
 
@@ -269,7 +272,7 @@ int main (int argc, char* argv[])
       }
 
       // Get number of networks to run.
-      UserInterface::QuestionInt num_runs_ques ("Number of networks:", SA_POP::Default::NumTrialsMin, SA_POP::Default::NumTrialsMax);
+      UserInterface::QuestionInt num_runs_ques ("Number of networks:", SA_POP::Default::NumNetsMin, SA_POP::Default::NumNetsMax);
       if (user_input.ask (num_runs_ques))
         num_runs = num_runs_ques.get_answer_int ();
 
@@ -442,6 +445,11 @@ int main (int argc, char* argv[])
         if (graphout_ques.get_answer_bool ())
           planner->add_out_adapter (&graph_out);
       }
+
+      // Add file output adapter, if user requested it.
+      SA_POP::LogFileOut file_out (plan_out_filename.c_str ());
+      if (do_plan_file)
+        planner->add_out_adapter (&file_out);
 
 //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
       std::cout << "Experimental parameters:" << std::endl;

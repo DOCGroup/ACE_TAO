@@ -40,6 +40,16 @@
 
 namespace SA_POP {
 
+  // Default values for use in EU Experiment.
+  namespace Default {
+    /// Threshold (>=) for probability of a goal to be considered satisfied.
+    const ::SA_POP::Probability GOAL_PROB_THRESH = 0.6;
+
+    /// Percentage/multiplier threshold for two plan EUs to be considered different.
+    /// (WARNING:  This should be a very small value.)
+    const double PERCENT_DIFF_EU = 0.000001;
+  };
+
   /// Container for experimental trial parameters.
   struct Exp_EU_Trial_Params {
     /// Number of goal conditions to generate.
@@ -204,6 +214,16 @@ namespace SA_POP {
     // Recursive planning/scheduling methods.
     // ************************************************************************
 
+    /// Run planning.
+    /**
+     * @param sa_max_steps  Maximum steps to run spreading activation.
+     *
+     * @param goal  Goal for which to plan.
+     *
+     * @return  True if planning succeeded, false otherwise.
+     */
+    virtual bool plan (size_t sa_max_steps, SA_POP::Goal goal);
+
     /// Satisfy scheduling constraints in fully instantiated plan (no
     /// recursive call backs).
     /**
@@ -232,6 +252,9 @@ namespace SA_POP {
 
     /// Output file stream for logging trial statistics.
     std::ofstream log_runs_out_;
+
+    /// Trial EU value for initial (thrown out) plan.
+    SA_POP::Utility trial_init_plan_eu;
 
     /// Results of current experimental trial.
     SA_POP::Exp_EU_Trial_Results trial_results_;
