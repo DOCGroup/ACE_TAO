@@ -17,5 +17,5 @@ rGen = sys.argv[6]
 outname = sys.argv[7]
 
 for each in range(0,Nnets):
-	nname = outname + str(each)
+	nname = outname + "_"+Ntasks+"_"+Nconds+"_"+inDegree+"_"+outDegree+"_"+str(each)
 	os.system("python Net_Complete.py " + Ntasks + " " + Nconds + " " + inDegree + " " + outDegree + " " + rGen + " " + nname)
