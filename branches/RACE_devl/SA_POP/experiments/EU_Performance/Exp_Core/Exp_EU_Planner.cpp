@@ -327,6 +327,7 @@ SA_POP::Goal Exp_EU_Planner::exp_init (size_t num_goal_conds, double percent_ini
 
     // Add goal condition.
     goal.goal_conds.insert (std::make_pair (goal_id, goal_util));
+    goal_ids.insert (goal_id);
   }
 
   // Reset all conditions to false.
