@@ -1,3 +1,12 @@
+Sat Jan 16 19:57:13 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * experiments/EU_Performance/Exp_Core/Exp_EU_Planner.h:
+        * experiments/EU_Performance/Exp_Core/Exp_EU_Planner.cpp:
+        * experiments/EU_Performance/SAPOP_Exp_EU.cpp:
+
+          Added experimental runs on a series of networks and cumulative statistics gathering/output.
+
+
 Sat Jan 16 03:39:12 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * experiments/EU_Performance/Exp_Core/Exp_EU_Planner.cpp:

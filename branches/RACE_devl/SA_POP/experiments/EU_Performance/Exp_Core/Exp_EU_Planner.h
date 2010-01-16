@@ -21,6 +21,7 @@
 #include <string>
 #include <set>
 #include <map>
+#include <list>
 #include <fstream>
 
 #include <boost/random.hpp>
@@ -38,6 +39,113 @@
 //#include "SANet/SANet.h"
 
 namespace SA_POP {
+
+  /// Container for experimental trial parameters.
+  struct Exp_EU_Trial_Params {
+    /// Number of goal conditions to generate.
+    size_t num_goal_conds;
+    
+    /// Percentage of conditions to set initial value to true.
+    double percent_init_true;
+
+    /// Minimum goal utility (uniform random choice in range [util_min, util_max]).
+    int util_min;
+
+    /// Maximum goal utility (uniform random choice in range [util_min, util_max]).
+    int util_max;
+
+    bool operator== (const Exp_EU_Trial_Params &s) const { return (this->num_goal_conds == s.num_goal_conds && this->percent_init_true == s.percent_init_true && this->util_min == s.util_min && this->util_max == s.util_max); };
+    bool operator!= (const Exp_EU_Trial_Params &s) const { return !(*this == s); };
+    bool operator< (const Exp_EU_Trial_Params &s) const
+    {
+      if (this->num_goal_conds == s.num_goal_conds) {
+        if (this->percent_init_true == s.percent_init_true) {
+          if (this->util_min == s.util_min) {
+            return this->util_max < s.util_max;
+          }
+          return this->util_min < s.util_min;
+        }
+        return this->percent_init_true < s.percent_init_true;
+      }
+      return this->num_goal_conds < s.num_goal_conds;
+    };
+  };
+
+  /// Container for experimental results of a trial.
+  struct Exp_EU_Trial_Results {
+    /// Expected utility of SA-POP preferred plan.
+    SA_POP::Utility pref_plan_eu;
+
+    /// Highest expected utility of any (schedulable/valid) plan (including preferred plan).
+    SA_POP::Utility max_plan_eu;
+
+    /// Number of plans generated.
+    size_t num_plans;
+
+    /// Trial goal.
+    SA_POP::Goal goal;
+
+    bool operator== (const Exp_EU_Trial_Results &s) const { return (this->pref_plan_eu == s.pref_plan_eu && this->max_plan_eu == s.max_plan_eu && this->num_plans == s.num_plans && this->goal == s.goal); };
+    bool operator!= (const Exp_EU_Trial_Results &s) const { return !(*this == s); };
+    bool operator< (const Exp_EU_Trial_Results &s) const
+    {
+      if (this->pref_plan_eu == s.pref_plan_eu) {
+        if (this->max_plan_eu == s.max_plan_eu) {
+          if (this->num_plans == s.num_plans) {
+            return this->goal < s.goal;
+          }
+          return this->num_plans < s.num_plans;
+        }
+        return this->max_plan_eu < s.max_plan_eu;
+      }
+      return this->pref_plan_eu < s.pref_plan_eu;
+    };
+  };
+
+  /// Container for a series of experimental results.
+  struct Exp_EU_Run_Results {
+    /// Run counter for number of trial attempts.
+    size_t num_trial_attempts;
+
+    /// Run counter for number of trials with initial plan generated.
+    size_t num_init_plans;
+
+    /// Run counter for number of trials with preferred plan generated.
+    size_t num_pref_plans;
+
+    /// Run counter for number of trials with at least one alternate plan generated.
+    size_t num_alt_plans;
+
+    /// Name of network.
+    std::string net_name;
+
+    /// List of trial results.
+    std::list<Exp_EU_Trial_Results> trials;
+
+    bool operator== (const Exp_EU_Run_Results &s) const { return (this->num_trial_attempts == s.num_trial_attempts && this->num_init_plans == s.num_init_plans && this->num_pref_plans == s.num_pref_plans && this->num_alt_plans == s.num_alt_plans && this->net_name == s.net_name && this->trials == s.trials); };
+    bool operator!= (const Exp_EU_Run_Results &s) const { return !(*this == s); };
+    bool operator< (const Exp_EU_Run_Results &s) const
+    {
+      if (this->num_trial_attempts == s.num_trial_attempts) {
+        if (this->num_init_plans == s.num_init_plans) {
+          if (this->num_pref_plans == s.num_pref_plans) {
+            if (this->num_alt_plans == s.num_alt_plans) {
+              if (this->net_name == s.net_name) {
+                return this->trials < s.trials;
+              }
+              return this->net_name < s.net_name;
+            }
+            return this->num_alt_plans < s.num_alt_plans;
+          }
+          return this->num_pref_plans < s.num_pref_plans;
+        }
+        return this->num_init_plans < s.num_init_plans;
+      }
+      return this->num_trial_attempts < s.num_trial_attempts;
+    };
+  };
+
+
 
   /**
    * @class Exp_EU_Planner
@@ -73,19 +181,13 @@ namespace SA_POP {
 
     /// Perform experimental trial(s).
     /**
-     * @param sa_max_steps  Maximum steps to run spreading activation.
-     *
      * @param log_trials_filename  Name of file to output trial statistics to.
      *
      * @param log_runs_filename  Name of file to output cumulative statistics from run to.
      *
-     * @param num_goal_conds  Number of goal conditions to generate.
+     * @param log_runs_filename  Name of current spreading activation network for logging.
      *
-     * @param percent_init_true  Percentage of conditions to set initial value to true.
-     *
-     * @param util_min  Minimum goal utility (uniform random choice in range [util_min, util_max]).
-     *
-     * @param util_max  Maximum goal utility (uniform random choice in range [util_min, util_max]).
+     * @param trial_params  Parameters for random initialization of each trial.
      *
      * @param max_trial_attempts  Maximum number of trial attempts to execute in order to reach assigned number of valid trials.
      *
@@ -93,9 +195,8 @@ namespace SA_POP {
      *
      * @param do_log_headers  Flag to output header lines to log files (if true).
      */
-    virtual void exp_run (size_t sa_max_steps, std::string log_trials_filename,
-      std::string log_runs_filename, size_t num_goal_conds, double percent_init_true,
-      size_t util_min, size_t util_max, size_t max_trial_attempts,
+    virtual SA_POP::Exp_EU_Run_Results exp_run (std::string log_trials_filename, std::string log_runs_filename,
+      std::string net_name, SA_POP::Exp_EU_Trial_Params trial_params, size_t max_trial_attempts,
       size_t num_trials = 1, bool do_log_headers = false);
     
 
@@ -132,26 +233,32 @@ namespace SA_POP {
     /// Output file stream for logging trial statistics.
     std::ofstream log_runs_out_;
 
+    /// Results of current experimental trial.
+    SA_POP::Exp_EU_Trial_Results trial_results_;
+
+    /// Results of current experimental run (multiple trials).
+    SA_POP::Exp_EU_Run_Results run_results_;
+
     /// Trial counter for number of plans generated.
-    size_t trial_num_plans_;
+//    size_t trial_num_plans_;
 
     /// Run counter for number of trial attempts.
-    size_t run_num_trial_attempts_;
+//    size_t run_num_trial_attempts_;
 
     /// Run counter for number of trials with initial plan generated.
-    size_t run_num_init_plans_;
+//    size_t run_num_init_plans_;
 
     /// Run counter for number of trials with preferred plan generated.
-    size_t run_num_pref_plans_;
+//    size_t run_num_pref_plans_;
 
     /// Run counter for number of trials with at least one alternate plan generated.
-    size_t run_num_alt_plans_;
+//    size_t run_num_alt_plans_;
 
     /// Expected utility of SA-POP preferred plan.
-    SA_POP::Utility pref_plan_eu_;
+//    SA_POP::Utility pref_plan_eu_;
 
     /// Highest expected utility of any (schedulable/valid) plan (including preferred plan).
-    SA_POP::Utility max_plan_eu_;
+//    SA_POP::Utility max_plan_eu_;
 
 
     // ************************************************************************
@@ -174,7 +281,10 @@ namespace SA_POP {
     virtual void log_trial_stats (void);
 
     /// Output run statistics to log.
-    virtual void log_run_stats (void);
+    /**
+     * @param trial_params  Parameters used for random initialization of trials in this experimental run.
+     */
+    virtual void log_run_stats (SA_POP::Exp_EU_Trial_Params trial_params);
 
     /// Output run header to log.
     virtual void log_run_header (void);
@@ -182,17 +292,11 @@ namespace SA_POP {
     /// Initialize experiment (set values for initial conditions and
     /// create goal).
     /**
-     * @param num_goal_conds  Number of goal conditions to generate.
-     *
-     * @param percent_init_true  Percentage of conditions to set initial value to true.
-     *
-     * @param util_min  Minimum goal utility (uniform random choice in range [util_min, util_max]).
-     *
-     * @param util_max  Maximum goal utility (uniform random choice in range [util_min, util_max]).
+     * @param params  Parameters for random initialization of trial.
      *
      * @return  Goal to use in current experimental run.
      */
-    virtual SA_POP::Goal exp_init (size_t num_goal_conds, double percent_init_true, size_t util_min, size_t util_max);
+    virtual SA_POP::Goal exp_init (SA_POP::Exp_EU_Trial_Params params);
   };
 
 };  /* SA_POP namespace */
