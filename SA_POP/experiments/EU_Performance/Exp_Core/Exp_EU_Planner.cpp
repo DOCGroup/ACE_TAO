@@ -20,8 +20,9 @@
 #include <stdlib.h>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
 
-#include "boost/random.hpp"
+#include <boost/random.hpp>
 #include <boost/accumulators/accumulators.hpp>
 #include <boost/accumulators/statistics/stats.hpp>
 #include <boost/accumulators/statistics/mean.hpp>
@@ -46,18 +47,13 @@ Exp_EU_Planner::Exp_EU_Planner (void)
 :do_pause_ (false),
  input_ (0),
  ques_ (0),
- do_stats_out_ (false),
- trial_num_plans_ (0),
- run_num_trial_attempts_ (0),
- run_num_init_plans_ (0),
- run_num_pref_plans_ (0),
- run_num_alt_plans_ (0),
- pref_plan_eu_ (0.0),
- max_plan_eu_ (0.0)
+ do_stats_out_ (false)
 {
+  this->reset_trial_stats ();
+  this->reset_run_stats ();
+
 //    std::ofstream log_trials_out_;
 //    std::ofstream log_runs_out_;
-
   // All other initialization handled by Planner base class constructor.
 };
 
@@ -82,18 +78,31 @@ Exp_EU_Planner::~Exp_EU_Planner (void)
 // Reset all planning statistics for an individual trial.
 void Exp_EU_Planner::reset_trial_stats (void)
 {
-  this->trial_num_plans_ = 0;
-  this->pref_plan_eu_ = 0.0;
-  this->max_plan_eu_ = 0.0;
+  this->trial_results_.num_plans = 0;
+  this->trial_results_.pref_plan_eu = 0.0;
+  this->trial_results_.max_plan_eu = 0.0;
+
+  // Create empty goal.
+  SA_POP::Goal goal;
+  goal.goal_id = "UserSpecifiedGoal ID";
+  goal.name = "User specified goal";
+  goal.abs_times.clear ();
+  goal.rel_times.clear ();
+  goal.goal_conds.clear ();
+  goal.start_window = std::make_pair (0, 0);
+
+  this->trial_results_.goal = goal;
 };
 
 // Reset all planning statistics for an individual experimental run.
 void Exp_EU_Planner::reset_run_stats (void)
 {
-  this->run_num_trial_attempts_ = 0;
-  this->run_num_init_plans_ = 0;
-  this->run_num_pref_plans_ = 0;
-  this->run_num_alt_plans_ = 0;
+  this->run_results_.num_trial_attempts = 0;
+  this->run_results_.num_init_plans = 0;
+  this->run_results_.num_pref_plans = 0;
+  this->run_results_.num_alt_plans = 0;
+  this->run_results_.net_name = "UnknownNetwork";
+  this->run_results_.trials.clear ();
 };
 
 // Set to pause and ask user whether to continue after each plan is generated.
@@ -111,8 +120,14 @@ void Exp_EU_Planner::unset_pause (void)
 };
 
 // Run experiment planning.
-void Exp_EU_Planner::exp_run (size_t sa_max_steps, std::string log_trials_filename, std::string log_runs_filename, size_t num_goal_conds, double percent_init_true, size_t util_min, size_t util_max, size_t max_trial_attempts, size_t num_trials, bool do_log_headers)
+SA_POP::Exp_EU_Run_Results Exp_EU_Planner::exp_run (std::string log_trials_filename, std::string log_runs_filename, std::string net_name, SA_POP::Exp_EU_Trial_Params trial_params, size_t max_trial_attempts, size_t num_trials, bool do_log_headers)
 {
+  // Maximum spreading activation steps to update network is twice
+  // the number of tasks (for worst case of linear network).
+  size_t sa_max_steps = 2 * this->sanet_->get_num_tasks ();
+
+  this->run_results_.net_name = net_name;
+
   // Set flag to output statistics to file.
   this->do_stats_out_ = true;
 
@@ -152,25 +167,29 @@ void Exp_EU_Planner::exp_run (size_t sa_max_steps, std::string log_trials_filena
   for (size_t trial_num = 0; trial_num < num_trials; trial_num++) {
     // If maximum number of trial attempts have been reached,
     // stop running trials.
-    if (this->run_num_trial_attempts_ >= max_trial_attempts)
+    if (this->run_results_.num_trial_attempts >= max_trial_attempts)
       break;
 
     // Initialize trial statistics.
     this->reset_trial_stats ();
 
     // Initialize conditions and goal.
-    SA_POP::Goal goal = this->exp_init (num_goal_conds, percent_init_true, util_min, util_max);
+    SA_POP::Goal goal = this->exp_init (trial_params);
+    this->trial_results_.goal = goal;
 
     // Perform experimental run.
     this->plan (sa_max_steps, goal);
 
     // Increment trial attempts counter.
-    this->run_num_trial_attempts_++;
+    this->run_results_.num_trial_attempts++;
 
     // Trial only valid if at least one alternate plan was generated.
-    if (this->trial_num_plans_ >= 3) {
+    if (this->trial_results_.num_plans >= 3) {
       // Log trial statistics to output file.
       this->log_trial_stats ();
+      
+      // Add to run results.
+      this->run_results_.trials.push_back (this->trial_results_);
     } else {
       // For invalid trial, decrement trial counter.
       trial_num--;
@@ -179,10 +198,13 @@ void Exp_EU_Planner::exp_run (size_t sa_max_steps, std::string log_trials_filena
   }
 
   // Log run statistics to output file.
-  this->log_run_stats ();
+  this->log_run_stats (trial_params);
 
   // Close output files.
   this->log_trials_out_.close ();
+  this->log_runs_out_.close ();
+
+  return this->run_results_;
 };
 
 
@@ -218,15 +240,15 @@ bool Exp_EU_Planner::full_sched ()
 void Exp_EU_Planner::track_stats (SA_POP::Plan plan)
 {
   // Update number of plans generated.
-  this->trial_num_plans_++;
+  this->trial_results_.num_plans++;
 
   // Ignore first plan.
-  if (this->trial_num_plans_ <= 1) {
+  if (this->trial_results_.num_plans <= 1) {
     // First plan.
-    this->trial_num_plans_ = 1;
+    this->trial_results_.num_plans = 1;
 
     // Increment counter of trials with initial plan.
-    this->run_num_init_plans_++;
+    this->run_results_.num_init_plans++;
 
     // Nothing else to do for first plan.
     return;
@@ -236,12 +258,12 @@ void Exp_EU_Planner::track_stats (SA_POP::Plan plan)
   SA_POP::Utility plan_eu = this->calc_plan_eu (plan);
 
   // Second plan is SA-POP preferred plan.
-  if (this->trial_num_plans_ == 2) {
+  if (this->trial_results_.num_plans == 2) {
     // Current maximum plan EU is this (preferred) plan's EU.
-    this->pref_plan_eu_ = this->max_plan_eu_ = plan_eu;
+    this->trial_results_.pref_plan_eu = this->trial_results_.max_plan_eu = plan_eu;
 
     // Increment counter of trials with preferred plan.
-    this->run_num_pref_plans_++;
+    this->run_results_.num_pref_plans++;
 
     // Nothing else to do for first plan.
     return;
@@ -251,27 +273,27 @@ void Exp_EU_Planner::track_stats (SA_POP::Plan plan)
 
   // If this is the first alternate plan (third plan generated),
   // increment counter of trials with at least one alternate plan.
-  if (this->trial_num_plans_ == 3) {
-    this->run_num_alt_plans_++;
+  if (this->trial_results_.num_plans == 3) {
+    this->run_results_.num_alt_plans++;
   }
 
   // If this plan has a higher EU than current max, update max.
-  if (plan_eu > this->max_plan_eu_)
-    this->max_plan_eu_ = plan_eu;
+  if (plan_eu > this->trial_results_.max_plan_eu)
+    this->trial_results_.max_plan_eu = plan_eu;
 };
 
 // Initialize experiment (set values for initial conditions and create goal).
-SA_POP::Goal Exp_EU_Planner::exp_init (size_t num_goal_conds, double percent_init_true, size_t util_min, size_t util_max)
+SA_POP::Goal Exp_EU_Planner::exp_init (SA_POP::Exp_EU_Trial_Params params)
 {
   // Check goal utility min & max for consistency.
-  if (util_min > util_max) {
+  if (params.util_min > params.util_max) {
     std::cerr << "SA-POP ERROR in Exp_EU_Planner::exp_init (): goal utility min is >= goal utility max";
     throw "SA-POP ERROR in Exp_EU_Planner::exp_init (): goal utility min is >= goal utility max";
   }
 
 
   SA_POP::Goal goal;
-  goal.goal_id = "ExperimentGoalID";
+  goal.goal_id = "ExperimentGeneratedGoalID";
   goal.name = "Experiment generated goal";
   goal.abs_times.clear ();
   goal.rel_times.clear ();
@@ -282,7 +304,7 @@ SA_POP::Goal Exp_EU_Planner::exp_init (size_t num_goal_conds, double percent_ini
   SA_POP::CondSet conds = this->sanet_->get_all_conds ();
 
   // Check number of goal conditions for consistency.
-  if (num_goal_conds > conds.size ()) {
+  if (params.num_goal_conds > conds.size ()) {
     std::cerr << "SA-POP ERROR in Exp_EU_Planner::exp_init (): more goal conditions than number of goals";
     throw "SA-POP ERROR in Exp_EU_Planner::exp_init (): more goal conditions than number of goals";
   }
@@ -290,7 +312,7 @@ SA_POP::Goal Exp_EU_Planner::exp_init (size_t num_goal_conds, double percent_ini
   // Initialize random number generators.
   boost::uniform_int<> goal_choice_dist(0,  conds.size () - 1);
   boost::variate_generator<boost::mt19937&, boost::uniform_int<> > gen_goal_choice(this->rand_gen_, goal_choice_dist);
-  boost::uniform_int<> goal_util_dist(util_min, util_max);
+  boost::uniform_int<> goal_util_dist(params.util_min, params.util_max);
   boost::variate_generator<boost::mt19937&, boost::uniform_int<> > gen_goal_util(this->rand_gen_, goal_util_dist);
   boost::uniform_real<> cond_init_dist(0.0, 1.0);
   boost::variate_generator<boost::mt19937&, boost::uniform_real<> > gen_cond_init(this->rand_gen_, cond_init_dist);
@@ -298,7 +320,7 @@ SA_POP::Goal Exp_EU_Planner::exp_init (size_t num_goal_conds, double percent_ini
   // Set goals.
   std::set<SA_POP::CondID> goal_ids;
   goal_ids.clear ();
-  for (size_t goal_ctr = 0; goal_ctr < num_goal_conds; goal_ctr++) {
+  for (size_t goal_ctr = 0; goal_ctr < params.num_goal_conds; goal_ctr++) {
     // Choose goal condition number.
     size_t goal_choice = gen_goal_choice ();
 
@@ -344,7 +366,7 @@ SA_POP::Goal Exp_EU_Planner::exp_init (size_t num_goal_conds, double percent_ini
 
     // Randomly determine whether to set condition to true.
     double init_check = gen_cond_init ();
-    if (init_check <= percent_init_true) {
+    if (init_check <= params.percent_init_true) {
       this->sanet_->update_cond_val ((*cond_iter).id, true);
     }
   }
@@ -390,9 +412,9 @@ void Exp_EU_Planner::log_trial_stats (void)
   }
 
   // Output trial statistics to file.
-  this->log_trials_out_ << this->pref_plan_eu_ << "\t";
-  this->log_trials_out_ << this->max_plan_eu_ << "\t";
-  this->log_trials_out_ << (this->trial_num_plans_ - 2);
+  this->log_trials_out_ << this->trial_results_.pref_plan_eu << "\t";
+  this->log_trials_out_ << this->trial_results_.max_plan_eu << "\t";
+  this->log_trials_out_ << (this->trial_results_.num_plans - 2);
   this->log_trials_out_ << std::endl;
 
 };
@@ -410,8 +432,17 @@ void Exp_EU_Planner::log_run_header (void)
     std::cerr << msg;
     throw msg;
   }
-  
+
   // Output run header to file.
+  this->log_runs_out_ << "SANet name" << "\t";
+  this->log_runs_out_ << "Number of goal conditions" << "\t";
+  this->log_runs_out_ << "Percent initial conditions true" << "\t";
+  this->log_runs_out_ << "Goal utility min" << "\t";
+  this->log_runs_out_ << "Goal utility max" << "\t";
+  this->log_runs_out_ << "Plan EU ratio (preferred : best) Mean" << "\t";
+  this->log_runs_out_ << "Plan EU ratio (preferred : best) Std Dev" << "\t";
+  this->log_runs_out_ << "Trial plans generated Mean" << "\t";
+  this->log_runs_out_ << "Trial plans generated Std Dev" << "\t";
   this->log_runs_out_ << "Trial attempts" << "\t";
   this->log_runs_out_ << "Trials w/ initial plan" << "\t";
   this->log_runs_out_ << "Trials w/ preferred plan" << "\t";
@@ -420,7 +451,7 @@ void Exp_EU_Planner::log_run_header (void)
 };
 
 // Output run statistics to log.
-void Exp_EU_Planner::log_run_stats (void)
+void Exp_EU_Planner::log_run_stats (SA_POP::Exp_EU_Trial_Params trial_params)
 {
   // Only log statistics if flag is set.
   if (!this->do_stats_out_)
@@ -433,11 +464,30 @@ void Exp_EU_Planner::log_run_stats (void)
     throw msg;
   }
 
+  // Calculate cumulative statistics for trials.
+  boost::accumulators::accumulator_set<double, boost::accumulators::stats<boost::accumulators::tag::mean, boost::accumulators::tag::variance> > acc_pref_best_ratio;
+  boost::accumulators::accumulator_set<double, boost::accumulators::stats<boost::accumulators::tag::mean, boost::accumulators::tag::variance> > acc_num_plans;
+  for (std::list<Exp_EU_Trial_Results>::iterator trial_iter = this->run_results_.trials.begin (); trial_iter != this->run_results_.trials.end (); trial_iter++) {
+    double pref_best_ratio = (*trial_iter).pref_plan_eu / (*trial_iter).max_plan_eu;
+
+    acc_pref_best_ratio (pref_best_ratio);
+    acc_num_plans ((*trial_iter).num_plans);
+  }
+
   // Output run statistics to file.
-  this->log_runs_out_ << this->run_num_trial_attempts_ << "\t";
-  this->log_runs_out_ << this->run_num_init_plans_ << "\t";
-  this->log_runs_out_ << this->run_num_pref_plans_ << "\t";
-  this->log_runs_out_ << this->run_num_alt_plans_;
+  this->log_runs_out_ << this->run_results_.net_name << "\t";
+  this->log_runs_out_ << trial_params.num_goal_conds << "\t";
+  this->log_runs_out_ << trial_params.percent_init_true << "\t";
+  this->log_runs_out_ << trial_params.util_min << "\t";
+  this->log_runs_out_ << trial_params.util_max << "\t";
+  this->log_runs_out_ << boost::accumulators::mean(acc_pref_best_ratio) << "\t";
+  this->log_runs_out_ << std::sqrt(boost::accumulators::variance(acc_pref_best_ratio)) << "\t";
+  this->log_runs_out_ << boost::accumulators::mean(acc_num_plans) << "\t";
+  this->log_runs_out_ << std::sqrt(boost::accumulators::variance(acc_num_plans)) << "\t";
+  this->log_runs_out_ << this->run_results_.num_trial_attempts << "\t";
+  this->log_runs_out_ << this->run_results_.num_init_plans << "\t";
+  this->log_runs_out_ << this->run_results_.num_pref_plans << "\t";
+  this->log_runs_out_ << this->run_results_.num_alt_plans;
   this->log_runs_out_ << std::endl;
 };
 
