@@ -174,7 +174,7 @@ if ($CLI_status != 0) {
     exit 1;
 }
 
-sleep (5);
+sleep (10);
 
 print STDERR "=== kill server A\n"; 
 $SRVA_status = $SRV_A->TerminateWaitKill ($srva->ProcessStopWaitInterval());
