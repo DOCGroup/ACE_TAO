@@ -1,3 +1,10 @@
+Sat Jan 16 03:39:12 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * experiments/EU_Performance/Exp_Core/Exp_EU_Planner.cpp:
+
+          Fixed network initialization so goal conditions can not be initial (true) conditions.
+
+
 Fri Jan 15 23:37:01 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * LogFileOut.cpp:
