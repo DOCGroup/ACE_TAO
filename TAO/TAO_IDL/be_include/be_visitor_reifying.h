@@ -27,8 +27,9 @@
 
 #include "be_visitor_decl.h"
 
-class AST_Decl;
+#include "utl_scoped_name.h"
 
+class AST_Decl;
 class be_param_holder;
 
 class be_visitor_reifying : public be_visitor_decl
@@ -67,7 +68,7 @@ public:
   virtual int visit_param_holder (be_param_holder *node);
 
 private:
-  bool declared_in_template_module (AST_Decl *d);
+  UTL_ScopedName *template_module_rel_name (AST_Decl *d);
 
 private:
   AST_Decl *reified_node_;

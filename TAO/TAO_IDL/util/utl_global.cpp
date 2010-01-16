@@ -1191,9 +1191,9 @@ IDL_GlobalData::update_prefix (char *filename)
 }
 
 UTL_ScopedName *
-IDL_GlobalData::string_to_scoped_name (char *s)
+IDL_GlobalData::string_to_scoped_name (const char *s)
 {
-  char *start = s;
+  char *start = const_cast<char *> (s);
   int len = 0;
   UTL_ScopedName *retval = 0;
   char tmp[256];
@@ -1203,6 +1203,22 @@ IDL_GlobalData::string_to_scoped_name (char *s)
   // a space.
   char *test = ACE_OS::strchr (start, ' ');
   char *end = ACE_OS::strstr (start, "::");
+  
+  // The loop below somehow doesn't cover this simple case.
+  if (test == 0 && end == 0)
+    {
+      // Simple local name.
+      Identifier *simple_id = 0;
+      ACE_NEW_RETURN (simple_id,
+                      Identifier (s),
+                      0);
+                      
+      ACE_NEW_RETURN (retval,
+                      UTL_ScopedName (simple_id, 0),
+                      0);
+                      
+      return retval;
+    }
 
   if (test != 0 && test - end < 0)
     {

@@ -36,6 +36,8 @@
 #include "fe_interface_header.h"
 #include "fe_obv_header.h"
 
+#include "nr_extern.h"
+
 be_visitor_tmpl_module_inst::be_visitor_tmpl_module_inst (
       be_visitor_context *ctx)
   : be_visitor_scope (ctx),
@@ -50,6 +52,10 @@ be_visitor_tmpl_module_inst::~be_visitor_tmpl_module_inst (void)
 int
 be_visitor_tmpl_module_inst::visit_root (be_root *node)
 {
+  // We will be updating the global scope stack as required for
+  // correct implied IDL creation. The root node is already on
+  // the stack so we needn't do anything here.
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -65,26 +71,34 @@ be_visitor_tmpl_module_inst::visit_root (be_root *node)
 int
 be_visitor_tmpl_module_inst::visit_module (be_module *node)
 {
-  UTL_Scope *s = this->ctx_->template_module_inst_scope ();
-  
   // We can conveniently check this member's value to tell
   // if we are (at some level )processing a template module
   // instantiation.
   // If so, we need to create a new module on the AST.
   // When processing of the instantiation is done, the member
   // is reset to 0.
-  if (this->ctx_->template_args () != 0)
-    {
-      be_module *m = 0;
+  bool in_template_module =
+    this->ctx_->template_args () != 0;
+  
+  be_module *added_module = 0;
       
-      ACE_NEW_RETURN (m,
+  // If we are traversing a template module as a result of its
+  // instantiation, we want to create a corresponding module
+  // in the instantiated module (at the top of the scope stack),
+  // and push it on the scope stack. Otherwise, we just push
+  // the module we are visiting.    
+  if (in_template_module)
+    {
+      ACE_NEW_RETURN (added_module,
                       be_module (node->name ()),
                       -1);
                       
-      s->add_to_scope (m);
-      this->ctx_->template_module_inst_scope (m);
+      idl_global->scopes ().top ()->add_to_scope (added_module);
     }
     
+  idl_global->scopes ().push (
+    in_template_module ? added_module : node);
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -94,8 +108,8 @@ be_visitor_tmpl_module_inst::visit_module (be_module *node)
                         -1);
     }
     
-  // Restore the outer adding scope.  
-  this->ctx_->template_module_inst_scope (s);
+  // Restore scope stack. 
+  idl_global->scopes ().pop ();
   
   return 0;
 }
@@ -125,21 +139,18 @@ be_visitor_tmpl_module_inst::visit_template_module_inst (
   be_template_module_inst *node)
 {
   this->ctx_->template_args (node->template_args ());
-  UTL_Scope *s = node->defined_in ();
   
   be_module *instance = 0;
-  
   ACE_NEW_RETURN (instance,
                   be_module (node->name ()),
                   -1);
                   
   // Add the new module to the scope containing the template
   // module instantiation.
-  s->add_to_scope (instance);
+  idl_global->scopes ().top ()->add_to_scope (instance);
   
-  // Everything we visit in the template module below will be
-  // added to the module just created.
-  this->ctx_->template_module_inst_scope (instance);
+  // Update our scope management.
+  idl_global->scopes ().push (instance);
   
   be_template_module *tm =
     be_template_module::narrow_from_decl (node->ref ());
@@ -160,8 +171,8 @@ be_visitor_tmpl_module_inst::visit_template_module_inst (
   // visit its scope.  
   this->ctx_->template_args (0);
 
-  // Restore the outer adding scope.  
-  this->ctx_->template_module_inst_scope (s);
+  // Restore the scope stack.  
+  idl_global->scopes ().pop ();
   
   return 0;
 }
@@ -189,10 +200,6 @@ be_visitor_tmpl_module_inst::visit_valuetype (be_valuetype *node)
     this->create_name_list (node->supports (),
                             node->n_supports ());
                             
-  // Set the scope to our adding scope.
-  UTL_Scope *s = this->ctx_->template_module_inst_scope ();
-  idl_global->scopes ().push (s);
-
   Identifier *node_id = 0;
   ACE_NEW_RETURN (node_id,
                   Identifier (node->local_name ()),
@@ -256,34 +263,10 @@ be_visitor_tmpl_module_inst::visit_valuetype (be_valuetype *node)
   delete supports_names;
   supports_names = 0;
   
-  // Back to reality.
-  idl_global->scopes ().pop ();
+  idl_global->scopes ().top ()->add_to_scope (added_vtype);
   
-  added_vtype->set_defined_in (s);
-  added_vtype->set_imported (node->imported ());
-  
-  // Set repo id to 0, so it will be recomputed on the next access,
-  // and set the prefix to the eventtype's prefix. All this is
-  // necessary in case the eventtype's prefix was modified after
-  // its declaration. We assume 'implied IDL' means that the
-  // derived event consumer interface should have the same prefix.
-  added_vtype->AST_Decl::repoID (0);
-  added_vtype->prefix (const_cast<char*> (node->prefix ()));
-  
-  // Force calculation of the repo id.
-  const char *dummy = added_vtype->repoID ();
-
-  // For interfaces, this should always be a module or root, and
-  // AST_Root is a subclass of AST_Module.
-  AST_Module *m = AST_Module::narrow_from_scope (s);
-  
-  m->be_add_valuetype (added_vtype);
-  
-  // Save our containing scope for restoration later.
-  be_scope *holder = this->ctx_->template_module_inst_scope ();
-  
-  // Update the adding scope for the interface contents.
-  this->ctx_->template_module_inst_scope (added_vtype);
+  // Update the scope management.
+  idl_global->scopes ().push (added_vtype);
   
   if (this->visit_scope (node) != 0)
     {
@@ -294,8 +277,8 @@ be_visitor_tmpl_module_inst::visit_valuetype (be_valuetype *node)
                         -1);
     }
     
-  // Restore the previous scope.  
-  this->ctx_->template_module_inst_scope (holder);
+  // Through with this scope.
+  idl_global->scopes ().pop ();
   
   // Reset the flag.
   this->for_eventtype_ = false;
@@ -315,10 +298,6 @@ be_visitor_tmpl_module_inst::visit_interface (be_interface *node)
     this->create_name_list (node->inherits (),
                             node->n_inherits ());
                             
-  // Set the scope to our adding scope.
-  UTL_Scope *s = this->ctx_->template_module_inst_scope ();
-  idl_global->scopes ().push (s);
-
   Identifier *node_id = 0;
   ACE_NEW_RETURN (node_id,
                   Identifier (node->local_name ()),
@@ -353,34 +332,10 @@ be_visitor_tmpl_module_inst::visit_interface (be_interface *node)
   delete parent_names;
   parent_names = 0;
   
-  // Back to reality.
-  idl_global->scopes ().pop ();
+  idl_global->scopes ().top ()->add_to_scope (added_iface);
   
-  added_iface->set_defined_in (s);
-  added_iface->set_imported (node->imported ());
-  
-  // Set repo id to 0, so it will be recomputed on the next access,
-  // and set the prefix to the eventtype's prefix. All this is
-  // necessary in case the eventtype's prefix was modified after
-  // its declaration. We assume 'implied IDL' means that the
-  // derived event consumer interface should have the same prefix.
-  added_iface->AST_Decl::repoID (0);
-  added_iface->prefix (const_cast<char*> (node->prefix ()));
-  
-  // Force calculation of the repo id.
-  const char *dummy = added_iface->repoID ();
-
-  // For interfaces, this should always be a module or root, and
-  // AST_Root is a subclass of AST_Module.
-  AST_Module *m = AST_Module::narrow_from_scope (s);
-  
-  m->be_add_interface (added_iface);
-  
-  // Save our containing scope for restoration later.
-  be_scope *holder = this->ctx_->template_module_inst_scope ();
-  
-  // Update the adding scope for the interface contents.
-  this->ctx_->template_module_inst_scope (added_iface);
+  // Update the scope stack.
+  idl_global->scopes ().push (added_iface);
   
   if (this->visit_scope (node) != 0)
     {
@@ -391,8 +346,8 @@ be_visitor_tmpl_module_inst::visit_interface (be_interface *node)
                         -1);
     }
     
-  // Restore the previous scope.  
-  this->ctx_->template_module_inst_scope (holder);
+  // Through with this scope.  
+  idl_global->scopes ().pop ();
     
   return 0;
 }
@@ -413,13 +368,7 @@ be_visitor_tmpl_module_inst::visit_attribute (be_attribute *node)
                                 node->is_abstract ()),
                   -1);
                   
-  be_scope *s = this->ctx_->template_module_inst_scope ();
-  added_attr->set_defined_in (s);               
-  s->add_to_scope (added_attr);
-  
-  // Force recalculation of our repo ID based on the new scope.
-  added_attr->repoID (0);
-  const char *dummy = added_attr->repoID ();
+  idl_global->scopes ().top ()->add_to_scope (added_attr);
   
   // These will work even if the exception lists are null.
   
@@ -453,11 +402,10 @@ be_visitor_tmpl_module_inst::visit_operation (be_operation *node)
                                 node->is_abstract ()),
                   -1);
                   
-  be_scope *s = this->ctx_->template_module_inst_scope ();
-  s->add_to_scope (added_op);
-  added_op->set_defined_in (s);
+  idl_global->scopes ().top ()->add_to_scope (added_op);
   
-  this->ctx_->template_module_inst_scope (added_op);
+  // Update the scope stack.
+  idl_global->scopes ().push (added_op);
   
   if (this->visit_scope (node) != 0)
     {
@@ -468,7 +416,8 @@ be_visitor_tmpl_module_inst::visit_operation (be_operation *node)
                         -1);
     }
     
-  this->ctx_->template_module_inst_scope (s);
+  // Through with this scope.  
+  idl_global->scopes ().pop ();
   
   UTL_ExceptList *new_ex =
     this->reify_exception_list (node->exceptions ());
@@ -485,16 +434,14 @@ be_visitor_tmpl_module_inst::visit_argument (be_argument *node)
     AST_Type::narrow_from_decl (
       this->reify_type (node->field_type ()));
       
-  be_argument *arg = 0;
-  ACE_NEW_RETURN (arg,
+  be_argument *added_arg = 0;
+  ACE_NEW_RETURN (added_arg,
                   be_argument (node->direction (),
                                t,
                                node->name ()),
                   -1);
     
-  // This method is virtual in be_scope and overridden in
-  // be_operation and be_factory.    
-  this->ctx_->template_module_inst_scope ()->be_add_argument (arg);
+  idl_global->scopes ().top ()->add_to_scope (added_arg);
       
   return 0;
 }
@@ -519,9 +466,7 @@ be_visitor_tmpl_module_inst::visit_typedef (be_typedef *node)
                                false),
                    -1);
                    
-  be_scope *s = this->ctx_->template_module_inst_scope ();
-  added_td->set_defined_in (s);               
-  s->add_to_scope (added_td);
+  idl_global->scopes ().top ()->add_to_scope (added_td);
 
   return 0;
 }
@@ -577,9 +522,7 @@ be_visitor_tmpl_module_inst::visit_constant (be_constant *node)
                   be_constant (et, new_v, node->name ()),
                   -1);
     
-  be_scope *s = this->ctx_->template_module_inst_scope ();
-  added_const->set_defined_in (s);               
-  s->add_to_scope (added_const);
+  idl_global->scopes ().top ()->add_to_scope (added_const);
 
   return 0;
 }
@@ -592,22 +535,19 @@ be_visitor_tmpl_module_inst::visit_structure (be_structure *node)
       return 0;
     }
     
+  UTL_ScopedName sn (node->name ()->last_component (), 0);
+    
   be_structure *added_struct = 0;
   ACE_NEW_RETURN (added_struct,
-                  be_structure (node->name (),
+                  be_structure (&sn,
                                 node->is_local (),
                                 node->is_abstract ()),
                   -1);
-      
-  // Hold current scope for restoration later.    
-  be_scope *holder = this->ctx_->template_module_inst_scope (); 
-           
-  holder->add_to_scope (added_struct);
-  added_struct->set_defined_in (holder);
+                        
+  idl_global->scopes ().top ()->add_to_scope (added_struct);
   
-  
-  // Store the new scope for traversal.
-  this->ctx_->template_module_inst_scope (added_struct);
+  // Update our scope stack.
+  idl_global->scopes ().push (added_struct);
   
   if (this->visit_scope (node) != 0)
     {
@@ -618,8 +558,8 @@ be_visitor_tmpl_module_inst::visit_structure (be_structure *node)
                         -1);
     }
     
-  // Restore the outer scope.  
-  this->ctx_->template_module_inst_scope (holder);
+  // Through with this scope.  
+  idl_global->scopes ().pop ();
 
   return 0;
 }
@@ -631,16 +571,14 @@ be_visitor_tmpl_module_inst::visit_field (be_field *node)
     AST_Type::narrow_from_decl (
       this->reify_type (node->field_type ()));
       
-  be_field *f = 0;
-  ACE_NEW_RETURN (f,
+  be_field *added_field = 0;
+  ACE_NEW_RETURN (added_field,
                   be_field (t,
                             node->name (),
                             node->visibility ()),
                   -1);
       
-  be_scope *s = this->ctx_->template_module_inst_scope (); 
-  s->be_add_field (f);
-  f->set_defined_in (s);
+  idl_global->scopes ().top ()->add_to_scope (added_field);
   
   return 0;
 }
@@ -651,16 +589,15 @@ be_visitor_tmpl_module_inst::visit_factory (be_factory *node)
   Identifier id (node->local_name ()->get_string ());
   UTL_ScopedName sn (&id, 0);
   
-  be_factory *f = 0;
-  ACE_NEW_RETURN (f,
+  be_factory *added_factory = 0;
+  ACE_NEW_RETURN (added_factory,
                   be_factory (&sn),
                   -1);
                   
-  be_scope *s = this->ctx_->template_module_inst_scope ();
-  s->add_to_scope (f);
-  f->set_defined_in (s);
+  idl_global->scopes ().top ()->add_to_scope (added_factory);
   
-  this->ctx_->template_module_inst_scope (f);
+  // Update the scope stack.
+  idl_global->scopes ().push (added_factory);
   
   if (this->visit_scope (node) != 0)
     {
@@ -671,12 +608,13 @@ be_visitor_tmpl_module_inst::visit_factory (be_factory *node)
                         -1);
     }
     
-  this->ctx_->template_module_inst_scope (s);
+  // Through with this scope.
+  idl_global->scopes ().pop ();
   
   UTL_ExceptList *reified_exceps =
     this->reify_exception_list (node->exceptions ());
     
-  f->be_add_exceptions (reified_exceps);
+  added_factory->be_add_exceptions (reified_exceps);
   
   return 0;
 }

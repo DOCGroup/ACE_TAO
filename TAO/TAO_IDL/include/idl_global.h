@@ -555,7 +555,7 @@ public:
   void update_prefix (char *filename);
   // Do repo id prefix bookkeeping when the file changes.
 
-  UTL_ScopedName *string_to_scoped_name (char *s);
+  UTL_ScopedName *string_to_scoped_name (const char *s);
   // Parses a string with double colons.
 
   long seen_include_file_before (char *);
