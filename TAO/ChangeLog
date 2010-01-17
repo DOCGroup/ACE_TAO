@@ -1,3 +1,10 @@
+Sun Jan 17 19:59:45 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * orbsvcs/tests/ImplRepo/scale/run_test.pl:
+
+          Increase the sleep() value to allow this test to pass on the
+          iPhone Simulator.
+
 Sun Jan 17 19:50:33 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * orbsvcs/tests/ImplRepo/ReconnectServer/run_test.pl:
