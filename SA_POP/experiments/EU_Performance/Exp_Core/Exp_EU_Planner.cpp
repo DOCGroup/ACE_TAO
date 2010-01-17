@@ -474,6 +474,12 @@ SA_POP::Goal Exp_EU_Planner::exp_init (SA_POP::Exp_EU_Trial_Params params)
     }
   }
 
+  //TEMP I really need to see cond values for a run -- Ben
+  std::cout<<std::endl;
+  for(SA_POP::CondSet::iterator cond_iter = conds.begin(); cond_iter != conds.end(); cond_iter++){
+	  std::cout<<"Value of "<<(*cond_iter).id<<" = "<<this->sanet_->get_cond_val((*cond_iter).id)<<std::endl;
+  }
+  std::cout<<std::endl;
  
   return goal;
 };

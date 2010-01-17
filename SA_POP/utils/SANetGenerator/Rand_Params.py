@@ -22,10 +22,30 @@ def flatGen(SANet, tasks, conds):
 		effects = SANet.successors(each)
 		effLinks[each] = [] 
 		effAr = effLinks[each]
+		
 		for eff in effects:
+			assigned = 0
 			#uses uniform for the time being
-			weight = rand.uniform(0,2) - 1
-			#a tuple for efficient look up
+			edges = SANet.edges(eff)
+			#print eff
+			#print edges
+			#for edge in edges:
+			#	#print eff
+			#	if edge[1] == each:
+			#		#print edge
+			#		assigned = 1
+			#		weight = rand.uniform(-.8,-1)
+			#		#print weight
+			#		break
+				
+			if assigned == 0:
+				#dire = rand.uniform(0,2) - 1
+			
+				#if dire >= 0:
+				weight = rand.uniform(.8,1)
+				#else:
+				#	weight = rand.uniform(-.8,-1)	
+				#a tuple for efficient look up
 			lnk = (eff, weight)
 			effAr.append(lnk)
 			

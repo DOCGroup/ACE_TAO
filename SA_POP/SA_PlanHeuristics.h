@@ -87,6 +87,7 @@ namespace SA_POP {
 
 	virtual TaskChoiceList choose_task_once(Condition open_cond);
 
+	virtual TaskChoiceList choose_task_once_optimistic (Condition open_cond);
   };
 
   /**
