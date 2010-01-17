@@ -35,9 +35,12 @@ $s->DeleteFile ($nsiorfile);
 $c->DeleteFile ($nsiorfile);
 $es->DeleteFile ($esiorfile);
 
+$sleeptime = 10;
+
 $NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
-$NS = $ns->CreateProcess ($NameService, "-ORBdebuglevel $debug_level ".
+$NS = $ns->CreateProcess ($NameService, "-ORBdebuglevel $debug_level -ORBListenEndpoints iiop://:2809 ".
                                         " -o $ns_nsiorfile");
+
 $EventService = "$ENV{TAO_ROOT}/orbsvcs/CosEvent_Service/CosEvent_Service";
 $ES = $es->CreateProcess ($EventService, " -o $es_esiorfile ".
                                         "-ORBInitRef NameService=file://$es_nsiorfile");
@@ -51,6 +54,8 @@ if ($NS_status != 0) {
     print STDERR "ERROR: Name Service returned $NS_status\n";
     exit 1;
 }
+
+sleep $sleeptime;
 
 if ($ns->WaitForFileTimed ($nsiorfile,$ns->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$ns_nsiorfile>\n";
@@ -79,7 +84,6 @@ if ($c->PutFile ($nsiorfile) == -1) {
     exit 1;
 }
 
-
 # start Event Service
 $ES_status = $ES->Spawn ();
 
@@ -87,6 +91,8 @@ if ($ES_status != 0) {
     print STDERR "ERROR: Event Service returned $ES_status\n";
     exit 1;
 }
+
+sleep $sleeptime;
 
 if ($es->WaitForFileTimed ($esiorfile,$es->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$es_esiorfile>\n";
