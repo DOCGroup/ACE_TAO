@@ -27,7 +27,7 @@ my $di = PerlACE::TestTarget::create_target (6) || die "Create target 6 failed\n
 
 # amount of delay between running the servers
 
-$sleeptime = 2;
+$sleeptime = 10;
 
 $nsiorfile = "ns.ior";
 $outputfile1 = "output1";
