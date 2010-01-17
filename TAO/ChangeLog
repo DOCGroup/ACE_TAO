@@ -1,3 +1,10 @@
+Sun Jan 17 18:31:07 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * orbsvcs/tests/AVStreams/Component_Switching/run_test.pl:
+
+          Increase the sleep() value to allow this test to pass on the
+          iPhone Simulator.
+
 Sun Jan 17 17:38:48 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl:

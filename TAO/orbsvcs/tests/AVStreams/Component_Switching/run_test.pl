@@ -31,7 +31,7 @@ my $di4 = PerlACE::TestTarget::create_target (10) || die "Create target 10 faile
 
 # amount of delay between running the servers
 
-$sleeptime = 5;
+$sleeptime = 10;
 $distributor_time = 8;
 $sender_time = 8;
 
