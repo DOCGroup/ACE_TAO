@@ -50,6 +50,8 @@ if ($nm_service->WaitForFileTimed ($naming_ior,
     exit 1;
 }
 
+sleep (10);
+
 if ($nm_service->GetFile ($naming_ior) == -1) {
     print STDERR "ERROR: cannot retrieve file <$nm_service_nmiorfile>\n";
     $NM_SV->Kill (); $NM_SV->TimedWait (1);
@@ -90,6 +92,7 @@ for $config (@test_configs) {
         exit 1;
     }
 
+    sleep(10);
 
     $test_status = $T->SpawnWaitKill ($test->ProcessStartWaitInterval() + 45);
 
