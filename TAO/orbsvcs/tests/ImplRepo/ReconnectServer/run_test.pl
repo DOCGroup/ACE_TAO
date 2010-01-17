@@ -121,7 +121,7 @@ if ($srvb->PutFile ($imriorfile) == -1) {
     exit 1;
 }
 
-#sleep (2);
+sleep (10);
 print STDERR "=== start server A: " . $SRV_A->CommandLine () . "\n";
 $SRVA_status = $SRV_A->Spawn ();
 print STDERR "command " . $SRV_A->CommandLine () . "\n";
@@ -197,7 +197,7 @@ if ($SRVB_status != 0) {
     exit 1;
 }
 
-sleep (5);
+sleep (10);
 $srva->DeleteFile ($srvaiorfile);
 $srvb->DeleteFile ($srvbiorfile);
 $cli->DeleteFile ($srvaiorfile);
