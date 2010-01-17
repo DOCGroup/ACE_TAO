@@ -833,7 +833,7 @@ sub perclient
 
     # Note : We have to wait long enough for the first server to self-destruct
     # or it will print out an exception when it can't notify the imr of its shutdown.
-    sleep 10;
+    sleep 20;
 
     $ACT_status = $ACT->TerminateWaitKill ($act->ProcessStopWaitInterval());
     if ($ACT_status != 0) {
