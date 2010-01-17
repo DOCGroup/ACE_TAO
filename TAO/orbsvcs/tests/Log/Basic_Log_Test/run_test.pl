@@ -81,7 +81,7 @@ if ($process_status != 0) {
 
 # Give time for logging service to initialize and install its object 
 # reference in the nameing service.
-sleep (5);
+sleep (10);
 
 print STDERR "Starting client\n";
 

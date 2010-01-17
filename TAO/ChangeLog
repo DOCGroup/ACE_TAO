@@ -1,3 +1,10 @@
+Sun Jan 17 19:42:25 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * orbsvcs/tests/Log/Basic_Log_Test/run_test.pl:
+
+          Increase the sleep() value to allow this test to pass on the
+          iPhone Simulator.
+
 Sun Jan 17 19:15:16 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * orbsvcs/tests/Notify/performance-tests/RedGreen/run_test.pl:
