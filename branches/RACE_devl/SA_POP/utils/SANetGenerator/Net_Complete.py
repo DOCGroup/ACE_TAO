@@ -58,7 +58,16 @@ for each in conds:
 	ofile.write("\"" + each +"\" [ style=filled, color = grey];\n")
 	
 for edge in SANet.edges():
-	ofile.write("\"" + edge[0] + "\" -> \"" + edge[1] + "\";\n")
+	if edge[0] in ParamInfo[3]:
+		elinks = ParamInfo[3][edge[0]]
+		weight = 0
+		for link in elinks:
+			if link[0] == edge[1]:
+				weight = link[1]
+				break
+		ofile.write("\"" + edge[0] + "\" -> \"" + edge[1] + "\"[label=\"" + str(weight) + "\"];\n")
+	else:	
+		ofile.write("\"" + edge[0] + "\" -> \"" + edge[1] + "\";\n")
 ofile.write("}\n")
 ofile.close()
 
@@ -104,7 +113,7 @@ tfile.write("\n\n\t")
 for each in tasks:
 	tfile.write("\n\t<taskImpl>\n\t\t<implID>" + each + "_1" + "</implID>\n\t\t<param>\n\t\t\t<paramID></paramID>\n\t\t\t<kind></kind>\n\t\t\t<value></value>\n\t\t</param>\n\t</taskImpl>\n" )
 	
-tfile.write("\n\t<resource>\n\t\t<resourceID>Dack</resourceID>\n\t\t<kind>DISCRETE</kind>\n\t\t<capacity>1</capacity>\n\t</resource>\n")	
+tfile.write("\n\t<resource>\n\t\t<resourceID>Dack</resourceID>\n\t\t<kind>DISCRETE</kind>\n\t\t<capacity>1000</capacity>\n\t</resource>\n")	
 
 for each in tasks:
 	tfile.write("\n\t<taskToImpl>\n\t\t<taskID>" + str(ttonum[each]) + "</taskID>\n\t\t<implID>" + each + "_1" + "</implID>\n\t\t<duration>1</duration>\n\t</taskToImpl>\n")	

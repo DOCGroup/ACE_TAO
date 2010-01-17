@@ -319,6 +319,75 @@ TaskChoiceList SA_TaskStrategy::choose_task_once(Condition open_cond){
   return task_list;
 }
 
+TaskChoiceList SA_TaskStrategy::choose_task_once_optimistic(Condition open_cond){
+  TaskSet tasks = this->planner_->get_satisfying_tasks (open_cond);
+
+  // Add tasks to map with EU (to sort).
+  std::multimap<EUCalc, TaskID> task_map;
+  task_map.clear ();
+  for (TaskSet::iterator iter = tasks.begin (); iter != tasks.end (); iter++)
+  {
+    task_map.insert (std::make_pair (
+      this->planner_->get_task_sa_eu (*iter), *iter));
+  }
+
+  std::multimap<TaskID, TaskInstID> tasks_to_insts;
+
+  SA_WorkingPlan* working_plan = (SA_WorkingPlan*)this->planner_->get_working_plan();
+
+  InstToTaskMap inst_task_map = working_plan->get_task_insts();
+
+  for(InstToTaskMap::iterator it = inst_task_map.begin(); 
+	  it != inst_task_map.end(); it++){
+		  tasks_to_insts.insert(std::pair<TaskID, TaskInstID>(it->second, it->first));
+  }
+
+  // Add tasks to list in reverse order of map (highest EU first).
+  TaskChoiceList task_list;
+  task_list.clear ();
+
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+  // WE NEED TO PUT A THRESHOLD ON PROBABILITY OF TRUE/FALSE INSTEAD OF COMPARING A DOUBLE TO A BOOL.
+  //If init can handle it, put it on here first
+  if(this->planner_->get_cond_val(open_cond.id) == open_cond.value){
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+		TaskChoice init_choice;
+		init_choice.choice = REUSE_INST;
+		init_choice.task_id = INIT_TASK_ID;
+		init_choice.task_inst_id = INIT_TASK_INST_ID;
+
+		task_list.push_back(init_choice);
+  }else{
+
+	  for (std::multimap<EUCalc, TaskID>::reverse_iterator iter = task_map.rbegin ();
+		iter != task_map.rend (); iter++)
+	  {
+
+		  for(std::multimap<TaskID, TaskInstID>::iterator it = tasks_to_insts.lower_bound(iter->second); it != tasks_to_insts.upper_bound(iter->second);
+			  it++){
+
+			TaskChoice task_choice;
+			task_choice.choice = REUSE_INST;
+			task_choice.task_id = it->first;
+			task_choice.task_inst_id = it->second;
+
+			task_list.push_back(task_choice);
+		  }
+		  
+	  if(tasks_to_insts.find(iter->second) == tasks_to_insts.end())
+	  {
+		TaskChoice task_choice;
+		task_choice.choice = NEW_INST;
+		task_choice.task_id = iter->second;
+		task_choice.task_inst_id = -2;
+
+		task_list.push_back(task_choice);
+	  }
+	}
+  }
+
+  return task_list;
+}
 
 
 // Choose the (ordering of) task(s) to satisfy an open condition.
