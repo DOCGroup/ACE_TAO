@@ -31,7 +31,7 @@ my $use_activator = 0;
 my $port = 9876;
 
 my $objprefix = "TstObj";
-my $client_wait_time = 5;
+my $client_wait_time = 10;
 
 $imriorfile = "imr_locator.ior";
 $actiorfile = "imr_activator.ior";
