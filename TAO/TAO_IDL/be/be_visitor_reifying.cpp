@@ -360,3 +360,4 @@ be_visitor_reifying::template_module_rel_name (AST_Decl *d)
     
   return 0;
 }
+

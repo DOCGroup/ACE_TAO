@@ -1,3 +1,9 @@
+Sun Jan 17 01:09:57 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * TAO_IDL/be/be_visitor_reifying.cpp:
+
+          Fixed fuzz error by ending a new empty line to the end of the file.
+
 Sat Jan 16 23:58:21 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * orbsvcs/tests/ImplRepo/ReconnectServer/run_test.pl:
