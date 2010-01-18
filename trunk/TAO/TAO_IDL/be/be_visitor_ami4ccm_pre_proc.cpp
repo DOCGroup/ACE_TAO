@@ -119,7 +119,7 @@ be_visitor_ami4ccm_pre_proc::visit_uses (be_uses *node)
 {
   printf ("here 2\n");
   // We check for an imported node after generating the reply handler.
-  if (node->is_local () || node->is_abstract () || node->original_uses())
+  if (node->is_local () || node->is_abstract () || node->original_uses ())
     {
       return 0;
     }
@@ -684,24 +684,29 @@ printf ("%s\n", reply_handler_local_name.c_str ());
 
               be_operation *get_operation =
                 this->generate_get_operation (attribute);
-  be_operation *sendc_marshaling =
-    this->create_sendc_operation (get_operation,
-                                  0); // for arguments = false
 
-  be_operation *sendc_arguments =
-    this->create_sendc_operation (get_operation,
-                                  1); // for arguments = true
+              be_operation *sendc_marshaling =
+                this->create_sendc_operation (get_operation,
+                                              0); // for arguments = false
 
-  if (0 != sendc_marshaling && 0 != sendc_arguments)
-    {
+              be_operation *sendc_arguments =
+                this->create_sendc_operation (get_operation,
+                                              1); // for arguments = true
+
+              if (0 != sendc_marshaling && 0 != sendc_arguments)
+                {
+      sendc_marshaling->original_operation (sendc_marshaling);
+      sendc_arguments->original_operation (sendc_arguments);
+      sendc_marshaling->is_local (true);
+      sendc_arguments->is_local (true);
   if (0 == reply_handler->be_add_operation (sendc_arguments))
-    {
+                {
       return 0;
-    }
-      sendc_marshaling->set_defined_in (reply_handler);
+                }
+                  sendc_marshaling->set_defined_in (reply_handler);
 
-      sendc_arguments->set_defined_in (reply_handler);
-    }
+                  sendc_arguments->set_defined_in (reply_handler);
+                }
 
               //this->create_reply_handler_operation (get_operation,
               //                                      reply_handler);
@@ -725,6 +730,10 @@ printf ("%s\n", reply_handler_local_name.c_str ());
 
   if (0 != sendc_marshaling && 0 != sendc_arguments)
     {
+      sendc_marshaling->original_operation (sendc_marshaling);
+      sendc_arguments->original_operation (sendc_arguments);
+      sendc_marshaling->is_local (true);
+      sendc_arguments->is_local (true);
   if (0 == reply_handler->be_add_operation (sendc_arguments))
     {
       return 0;
@@ -741,10 +750,9 @@ printf ("%s\n", reply_handler_local_name.c_str ());
           else
             {
               be_operation* operation = be_operation::narrow_from_decl (d);
-printf ("%s\n", operation->name ()->last_component ()->get_string());
               if (operation)
                 {
-  be_operation *sendc_marshaling =
+    be_operation *sendc_marshaling =
     this->create_sendc_operation (operation,
                                   0); // for arguments = false
 
@@ -753,12 +761,18 @@ printf ("%s\n", operation->name ()->last_component ()->get_string());
                                   1); // for arguments = true
 
     printf ("here 3\n");
+printf ("%s\n", operation->name ()->last_component ()->get_string());
   if (0 != sendc_marshaling && 0 != sendc_arguments)
     {
     printf ("here 4\n");
+printf ("%s\n", operation->name ()->last_component ()->get_string());
       sendc_marshaling->set_defined_in (reply_handler);
 
       sendc_arguments->set_defined_in (reply_handler);
+      sendc_marshaling->original_operation (operation);
+      sendc_arguments->original_operation (operation);
+      sendc_marshaling->is_local (true);
+      sendc_arguments->is_local (true);
   if (0 == reply_handler->be_add_operation (sendc_arguments))
     {
       return 0;
@@ -1029,14 +1043,14 @@ be_visitor_ami4ccm_pre_proc::create_raise_operation (
 
 be_operation *
 be_visitor_ami4ccm_pre_proc::create_sendc_operation (be_operation *node,
-                                                 bool for_arguments)
+                                                     bool for_arguments)
 {
-  if (node->flags () == AST_Operation::OP_oneway)
+  if (node->flags () == AST_Operation::OP_oneway) 
     {
       // We do nothing for oneways!
       return 0;
     }
-
+    
   Identifier *id = 0;
   UTL_ScopedName *sn = 0;
 
@@ -1064,7 +1078,6 @@ be_visitor_ami4ccm_pre_proc::create_sendc_operation (be_operation *node,
   op->set_name (op_name);
 
   // Create the first argument, which is a Reply Handler
-
   if (for_arguments)
     {
       // Look up the field type.
@@ -1253,7 +1266,7 @@ be_visitor_ami4ccm_pre_proc::create_reply_handler_operation (
                                 true,
                                 0),
                   -1);
-
+  operation->original_operation (node);
   operation->set_name (op_name);
 
   // If return type is non-void add it as first argument.
