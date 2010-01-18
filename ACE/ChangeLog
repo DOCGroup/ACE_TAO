@@ -1,3 +1,11 @@
+Mon Jan 18 17:57:47 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * ace/UUID.h:
+
+          Included Auto_Ptr.h since it is not included by other included
+          header files and in breaking builds if UUID.h is included before
+          including another file that does include Auto_Ptr.h
+
 Mon Jan 18 13:47:53 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/ace_for_tao.mpc: Added Message_Queue_NT.cpp in this file since
