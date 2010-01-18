@@ -181,8 +181,8 @@ be_visitor_valuebox_union_member_ci::visit_enum (be_enum *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
 
-  this->emit_member_set (vb_node_, field, bt, "", "");
-  this->emit_member_get (vb_node_, field, bt, "", "", "const");
+  this->emit_member_set (field, bt, "", "");
+  this->emit_member_get (field, bt, "", "", "const");
 
   return 0;
 }
@@ -217,8 +217,8 @@ be_visitor_valuebox_union_member_ci::visit_interface (be_interface *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  this->emit_member_set (vb_node_, field, bt, "", "_ptr");
-  this->emit_member_get (vb_node_, field, bt, "", "_ptr", "const");
+  this->emit_member_set (field, bt, "", "_ptr");
+  this->emit_member_get (field, bt, "", "_ptr", "const");
 
   return 0;
 }
@@ -253,8 +253,8 @@ be_visitor_valuebox_union_member_ci::visit_interface_fwd (be_interface_fwd *node
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  this->emit_member_set (vb_node_, field, bt, "", "_ptr");
-  this->emit_member_get (vb_node_, field, bt, "", "_ptr", "const");
+  this->emit_member_set (field, bt, "", "_ptr");
+  this->emit_member_get (field, bt, "", "_ptr", "const");
 
   return 0;
 }
@@ -307,19 +307,19 @@ be_visitor_valuebox_union_member_ci::visit_predefined_type (be_predefined_type *
   {
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_object:
-      this->emit_member_set (vb_node_, field, bt, " ::", "_ptr");
-      this->emit_member_get (vb_node_, field, bt, " ::", "_ptr", "const");
+      this->emit_member_set (field, bt, " ::", "_ptr");
+      this->emit_member_get (field, bt, " ::", "_ptr", "const");
       break;
     case AST_PredefinedType::PT_any:
-      this->emit_member_set (vb_node_, field, bt, "const ::", " &");
-      this->emit_member_get (vb_node_, field, bt, "const ::", " &", "const");
-      this->emit_member_get (vb_node_, field, bt, "::", " &", "");
+      this->emit_member_set (field, bt, "const ::", " &");
+      this->emit_member_get (field, bt, "const ::", " &", "const");
+      this->emit_member_get (field, bt, "::", " &", "");
       break;
     case AST_PredefinedType::PT_void:
       break;
     default:
-      this->emit_member_set (vb_node_, field, bt, " ::", "");
-      this->emit_member_get (vb_node_, field, bt, " ::", "", "const");
+      this->emit_member_set (field, bt, " ::", "");
+      this->emit_member_get (field, bt, " ::", "", "const");
       break;
   }
 
@@ -356,9 +356,9 @@ be_visitor_valuebox_union_member_ci::visit_sequence (be_sequence *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  this->emit_member_set (vb_node_, field, bt, "const ", " &");
-  this->emit_member_get (vb_node_, field, bt, "const ", " &", "const");
-  this->emit_member_get (vb_node_, field, bt, "", " &", "");
+  this->emit_member_set (field, bt, "const ", " &");
+  this->emit_member_get (field, bt, "const ", " &", "const");
+  this->emit_member_get (field, bt, "", " &", "");
 
   return 0;
 }
@@ -393,8 +393,8 @@ be_visitor_valuebox_union_member_ci::visit_string (be_string *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  this->emit_member_set (vb_node_, field, bt, "", "");
-  this->emit_member_set (vb_node_, field, bt, "const ", "");
+  this->emit_member_set (field, bt, "", "");
+  this->emit_member_set (field, bt, "const ", "");
 
   *os << "// Modifier to set the member." << be_nl;
 
@@ -416,7 +416,7 @@ be_visitor_valuebox_union_member_ci::visit_string (be_string *node)
       << " (val);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  this->emit_member_get (vb_node_, field, bt, "const ", "", "const");
+  this->emit_member_get (field, bt, "const ", "", "const");
 
   return 0;
 }
@@ -451,9 +451,9 @@ be_visitor_valuebox_union_member_ci::visit_structure (be_structure *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  this->emit_member_set (vb_node_, field, bt, "const ", " &");
-  this->emit_member_get (vb_node_, field, bt, "const ", " &", "const");
-  this->emit_member_get (vb_node_, field, bt, "", " &", "");
+  this->emit_member_set (field, bt, "const ", " &");
+  this->emit_member_get (field, bt, "const ", " &", "const");
+  this->emit_member_get (field, bt, "", " &", "");
 
   return 0;
 }
@@ -507,19 +507,19 @@ be_visitor_valuebox_union_member_ci::visit_union (be_union *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  this->emit_member_set (vb_node_, field, bt, "const ", " &");
-  this->emit_member_get (vb_node_, field, bt, "const ", " &", "const");
-  this->emit_member_get (vb_node_, field, bt, "", " &", "");
+  this->emit_member_set (field, bt, "const ", " &");
+  this->emit_member_get (field, bt, "const ", " &", "const");
+  this->emit_member_get (field, bt, "", " &", "");
 
   return 0;
 }
 
 void
-be_visitor_valuebox_union_member_ci::emit_member_set (be_decl *vb_node_,
-                                               be_decl *field,
-                                               be_type *field_type,
-                                               const char *const_arg,
-                                               const char *arg_modifier)
+be_visitor_valuebox_union_member_ci::emit_member_set (
+  be_decl *field,
+  be_type *field_type,
+  const char *const_arg,
+  const char *arg_modifier)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -536,12 +536,12 @@ be_visitor_valuebox_union_member_ci::emit_member_set (be_decl *vb_node_,
 }
 
 void
-be_visitor_valuebox_union_member_ci::emit_member_get (be_decl *vb_node_,
-                                               be_decl *field,
-                                               be_type *field_type,
-                                               const char *const_prefix,
-                                               const char *type_suffix,
-                                               const char *const_method)
+be_visitor_valuebox_union_member_ci::emit_member_get (
+  be_decl *field,
+  be_type *field_type,
+  const char *const_prefix,
+  const char *type_suffix,
+  const char *const_method)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 

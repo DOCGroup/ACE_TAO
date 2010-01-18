@@ -83,14 +83,12 @@ public:
   // visit union type
 
 private:
-  void emit_member_set (be_decl *vb_node,
-                        be_decl *field,
+  void emit_member_set (be_decl *field,
                         be_type *field_type,
                         const char *const_arg,
                         const char *arg_modifier);
 
-  void emit_member_get (be_decl *vb_node,
-                        be_decl *field,
+  void emit_member_get (be_decl *field,
                         be_type *field_type,
                         const char *const_prefix,
                         const char *type_suffix,
