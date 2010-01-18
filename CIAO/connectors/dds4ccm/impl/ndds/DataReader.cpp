@@ -148,7 +148,7 @@ namespace CIAO
         RTI_DataReaderListener_i * rti_drl = dynamic_cast< RTI_DataReaderListener_i *> (drl);
         if (!rti_drl)
           {
-            CIAO_ERROR (1, (LM_ERROR, "RTI_DataReader_i::get_listener - "
+            CIAO_DEBUG (6, (LM_DEBUG, "RTI_DataReader_i::get_listener - "
                                       "DDS returned a NIL listener.\n"));
             return ::DDS::DataReaderListener::_nil ();
           }

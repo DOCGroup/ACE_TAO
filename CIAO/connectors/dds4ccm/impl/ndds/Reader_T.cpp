@@ -11,6 +11,8 @@
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::Reader_T (void)
   : topic_ (0),
+    library_name_ (""),
+    profile_name_ (""),
     impl_ (0)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::Reader_T");
@@ -351,22 +353,46 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
       CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
                     "Error: Unable to delete DataReader.\n"));
     }
-  ::DDS::DataReaderQos drqos;
   this->reader_ = ::DDS::CCM_DataReader::_nil ();
-  ::DDS::DataReader_var reader = sub->create_datareader (
-                    this->topic_,
-                    drqos,
-                    listener,
-                    ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+
+  ::DDS::DataReader_var reader = ::DDS::DataReader::_nil ();
+  if (this->library_name_.length () > 0 &&
+      this->profile_name_.length () > 0)
+    {
+      reader = sub->create_datareader_with_profile (
+                        cft,
+                        this->library_name_.c_str (),
+                        this->profile_name_.c_str (),
+                        listener,
+                        ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+    }
+  else
+    {
+      ::DDS::DataReaderQos drqos;
+      reader = sub->create_datareader (
+                        cft,
+                        drqos,
+                        listener,
+                        ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+    }
+  if (CORBA::is_nil(reader))
+    {
+      CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+                    "Error: Unable to create a new DataReader.\n"));
+    }
   this->reader_ = ::DDS::CCM_DataReader::_narrow (reader);
   this->set_impl (reader);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::set_topic (
-  ::DDS::Topic_ptr topic)
+CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::set_qos (
+  ::DDS::Topic_ptr topic,
+  const char * library_name,
+  const char * profile_name)
 {
+  this->library_name_ = library_name;
+  this->profile_name_ = profile_name;
   this->topic_ = topic;
 }
 
