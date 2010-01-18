@@ -1,3 +1,8 @@
+Mon Jan 18 13:47:53 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/ace_for_tao.mpc: Added Message_Queue_NT.cpp in this file since
+          it seems to be needed for the ACE_FOR_TAO subset.
+
 Fri Jan 15 10:27:30 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
