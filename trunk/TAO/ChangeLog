@@ -1,3 +1,12 @@
+Mon Jan 18 10:00:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/IDL_Test.mpc:
+          Put all stubs an skeleton in a DLL and added two projects to
+          compile all TAO test idl files also with the RTI ddsgen tool
+          when that is enabled. All idl files and generated code that
+          cause warnings and/or errors are disabled and reported back
+          to RTI.
+
 Sun Jan 17 20:05:43 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * orbsvcs/tests/ImplRepo/run_test.pl:
