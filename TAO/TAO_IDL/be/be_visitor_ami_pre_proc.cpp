@@ -421,38 +421,36 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
             {
               be_attribute *attribute = be_attribute::narrow_from_decl (d);
 
-              if (attribute == 0)
+              if (attribute)
                 {
-                  return 0;
-                }
+                  be_operation *get_operation =
+                    this->generate_get_operation (attribute);
 
-              be_operation *get_operation =
-                this->generate_get_operation (attribute);
-
-              this->create_reply_handler_operation (get_operation,
-                                                    reply_handler);
-
-              this->create_excep_operation (get_operation,
-                                            reply_handler);
-
-              get_operation->destroy ();
-              delete get_operation;
-              get_operation = 0;
-
-              if (!attribute->readonly ())
-                {
-                  be_operation *set_operation =
-                    this->generate_set_operation (attribute);
-
-                  this->create_reply_handler_operation (set_operation,
+                  this->create_reply_handler_operation (get_operation,
                                                         reply_handler);
 
-                  this->create_excep_operation (set_operation,
+                  this->create_excep_operation (get_operation,
                                                 reply_handler);
 
-                  set_operation->destroy ();
-                  delete set_operation;
-                  set_operation = 0;
+                  get_operation->destroy ();
+                  delete get_operation;
+                  get_operation = 0;
+
+                  if (!attribute->readonly ())
+                    {
+                      be_operation *set_operation =
+                        this->generate_set_operation (attribute);
+
+                      this->create_reply_handler_operation (set_operation,
+                                                            reply_handler);
+
+                      this->create_excep_operation (set_operation,
+                                                    reply_handler);
+
+                      set_operation->destroy ();
+                      delete set_operation;
+                      set_operation = 0;
+                    }
                 }
             }
           else
