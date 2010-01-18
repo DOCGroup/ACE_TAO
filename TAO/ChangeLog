@@ -1,3 +1,8 @@
+Mon Jan 18 13:16:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+          Only one exit point in the method
+
 Mon Jan 18 12:19:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO/be/be_attribute.cpp:
