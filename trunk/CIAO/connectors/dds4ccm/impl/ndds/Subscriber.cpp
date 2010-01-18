@@ -3,6 +3,7 @@
 #include "Subscriber.h"
 #include "SubscriberListener.h"
 #include "Topic.h"
+#include "ContentFilteredTopic.h"
 #include "DataReader.h"
 #include "DataReaderListener.h"
 #include "Utils.h"
@@ -63,6 +64,62 @@ namespace CIAO
         return handle;
       }
 
+      DDSDataReader *
+      RTI_Subscriber_i::create_datareader (
+                    DDSContentFilteredTopic * topic,
+                    DDSDataReaderListener * rti_drl,
+                    ::DDS::StatusMask mask)
+      {
+        DDS_DataReaderQos rti_qos = DDS_DATAREADER_QOS_DEFAULT;
+        return this->impl ()->create_datareader (topic,
+                                                 rti_qos,
+                                                 rti_drl,
+                                                 mask);
+      }
+
+      DDSDataReader *
+      RTI_Subscriber_i::create_datareader (
+                    DDSTopic * topic,
+                    DDSDataReaderListener * rti_drl,
+                    ::DDS::StatusMask mask)
+      {
+        DDS_DataReaderQos rti_qos = DDS_DATAREADER_QOS_DEFAULT;
+        return this->impl ()->create_datareader (topic,
+                                                 rti_qos,
+                                                 rti_drl,
+                                                 mask);
+      }
+
+      DDSDataReader *
+      RTI_Subscriber_i::create_datareader_with_profile (
+                    DDSContentFilteredTopic * topic,
+                    const char * library_name,
+                    const char * profile_name,
+                    DDSDataReaderListener * rti_drl,
+                    ::DDS::StatusMask mask)
+      {
+        return this->impl ()->create_datareader_with_profile (topic,
+                                                              library_name,
+                                                              profile_name,
+                                                              rti_drl,
+                                                              mask);
+      }
+
+      DDSDataReader *
+      RTI_Subscriber_i::create_datareader_with_profile (
+                    DDSTopic * topic,
+                    const char * library_name,
+                    const char * profile_name,
+                    DDSDataReaderListener * rti_drl,
+                    ::DDS::StatusMask mask)
+      {
+        return this->impl ()->create_datareader_with_profile (topic,
+                                                              library_name,
+                                                              profile_name,
+                                                              rti_drl,
+                                                              mask);
+      }
+
       ::DDS::DataReader_ptr
       RTI_Subscriber_i::create_datareader (
         ::DDS::TopicDescription_ptr a_topic,
@@ -70,24 +127,32 @@ namespace CIAO
         ::DDS::DataReaderListener_ptr a_listener,
         ::DDS::StatusMask mask)
       {
-        RTI_Topic_i * topic = dynamic_cast < RTI_Topic_i * > (a_topic);
-        if (!topic)
-          {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader - "
-                         "Error: Unable to cast provided topic to its servant.\n"));
-            throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
-          }
-        DDSTopic *rti_topic = topic->get_impl ();
-        DDS_DataReaderQos rti_qos = DDS_DATAREADER_QOS_DEFAULT;
+
         DDSDataReaderListener *rti_drl = 0;
         if (!CORBA::is_nil (a_listener))
           {
             rti_drl = new RTI_DataReaderListener_i (a_listener);
           }
-        DDSDataReader *rti_dr = this->impl ()->create_datareader (rti_topic,
-                                                                rti_qos,
-                                                                rti_drl,
-                                                                mask);
+
+        DDSDataReader * rti_dr = 0;
+        RTI_Topic_i * topic = dynamic_cast < RTI_Topic_i * > (a_topic);
+
+        if (!topic)
+          {
+            RTI_ContentFilteredTopic_i * cf_topic =
+              dynamic_cast < RTI_ContentFilteredTopic_i * > (a_topic);
+            if (!cf_topic)
+              {
+                CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader - "
+                            "Error: Unable to cast provided topic to one of its servant.\n"));
+                throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
+              }
+            else
+              rti_dr = this->create_datareader (cf_topic->get_impl (), rti_drl, mask);
+          }
+        else
+          rti_dr = this->create_datareader (topic->get_impl (), rti_drl, mask);
+
         if (!rti_dr)
           {
             CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader - "
@@ -106,29 +171,44 @@ namespace CIAO
       ::DDS::DataReader_ptr
       RTI_Subscriber_i::create_datareader_with_profile (
         ::DDS::TopicDescription_ptr a_topic,
-        const char* library_name,
-        const char *profile_name,
+        const char * library_name,
+        const char * profile_name,
         ::DDS::DataReaderListener_ptr a_listener,
         ::DDS::StatusMask mask)
       {
-        RTI_Topic_i * topic = dynamic_cast < RTI_Topic_i * > (a_topic);
-        if (!topic)
-          {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
-                         "Error: Unable to cast provided topic to its servant.\n"));
-            throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
-          }
-        DDSTopic *rti_topic = topic->get_impl ();
         DDSDataReaderListener *rti_drl = 0;
         if (!CORBA::is_nil (a_listener))
           {
             rti_drl = new RTI_DataReaderListener_i (a_listener);
           }
-        DDSDataReader *rti_dr = this->impl ()->create_datareader_with_profile (rti_topic,
-                                                                library_name,
-                                                                profile_name,
-                                                                rti_drl,
-                                                                mask);
+
+        DDSDataReader * rti_dr = 0;
+        RTI_Topic_i * topic = dynamic_cast < RTI_Topic_i * > (a_topic);
+
+        if (!topic)
+          {
+            RTI_ContentFilteredTopic_i * cf_topic =
+              dynamic_cast < RTI_ContentFilteredTopic_i * > (a_topic);
+            if (!cf_topic)
+              {
+                CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
+                            "Error: Unable to cast provided topic to one of its servant.\n"));
+                throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
+              }
+            else
+              rti_dr = this->create_datareader_with_profile (cf_topic->get_impl (),
+                                                             library_name,
+                                                             profile_name,
+                                                             rti_drl,
+                                                             mask);
+          }
+        else
+          rti_dr = this->create_datareader_with_profile (topic->get_impl (),
+                                                             library_name,
+                                                             profile_name,
+                                                             rti_drl,
+                                                             mask);
+
         if (!rti_dr)
           {
             CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "

@@ -132,6 +132,34 @@ namespace CIAO
         DDSSubscriber *impl_;
 
         DDSSubscriber *impl (void);
+
+        DDSDataReader *
+        create_datareader (
+          DDSTopic * topic,
+          DDSDataReaderListener * rti_drl,
+          ::DDS::StatusMask mask);
+
+        DDSDataReader *
+        create_datareader (
+          DDSContentFilteredTopic * topic,
+          DDSDataReaderListener * rti_drl,
+          ::DDS::StatusMask mask);
+
+        DDSDataReader *
+        create_datareader_with_profile (
+          DDSContentFilteredTopic * topic,
+          const char* library_name,
+          const char *profile_name,
+          DDSDataReaderListener * rti_drl,
+          ::DDS::StatusMask mask);
+
+        DDSDataReader *
+        create_datareader_with_profile (
+          DDSTopic * topic,
+          const char* library_name,
+          const char *profile_name,
+          DDSDataReaderListener * rti_drl,
+          ::DDS::StatusMask mask);
       };
     }
   }
