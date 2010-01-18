@@ -84,6 +84,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Mem_Map.cpp
     Message_Block.cpp
     Message_Queue.cpp
+    Message_Queue_NT.cpp
     MMAP_Memory_Pool.cpp
     Monitor_Admin.cpp
     Monitor_Admin_Manager.cpp
