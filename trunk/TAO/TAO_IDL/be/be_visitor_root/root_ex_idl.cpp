@@ -40,10 +40,10 @@ int
 be_visitor_root_ex_idl::init (void)
 {
   // First open the client-side header file for writing.
-  int status =
+  int const status =
     tao_cg->start_ciao_exec_idl (
       be_global->be_get_ciao_exec_idl_fname ());
-      
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
