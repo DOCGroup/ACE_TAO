@@ -1,3 +1,14 @@
+Mon Jan 18 15:35:54 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuebox/field_ci.cpp:
+        * TAO_IDL//be_visitor_valuebox/union_member_ci.cpp:
+        * TAO_IDL/be_include/be_visitor_valuebox/union_member_ci.h:
+        * TAO_IDL/be_include/be_visitor_valuebox/field_ci.h:
+          
+          Removed parameter 'vb_node' from private methods
+          emit_member_get() and emit_member_set(), since this value
+          is now stored in a member variable.
+
 Fri Jan 15 20:31:51 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/idl_global.h:
