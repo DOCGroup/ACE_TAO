@@ -34,7 +34,8 @@ be_attribute::be_attribute (void)
     AST_Decl (),
     AST_Field (),
     AST_Attribute (),
-    be_decl ()
+    be_decl (),
+    original_attribute_ (0)
 {
   be_operation_default_strategy *bods = 0;
 
@@ -65,7 +66,8 @@ be_attribute::be_attribute (bool ro,
                    local,
                    abstract),
     be_decl (AST_Decl::NT_attr,
-             n)
+             n),
+    original_attribute_ (0)
 {
   be_operation_default_strategy *bods = 0;
 
@@ -160,6 +162,16 @@ be_attribute::destroy (void)
   this->AST_Attribute::destroy ();
 }
 
+void
+be_attribute::original_attribute (be_attribute *original_attribute)
+{
+  this->original_attribute_ = original_attribute;
+}
 
+be_attribute *
+be_attribute::original_attribute (void)
+{
+  return this->original_attribute_;
+}
 
 IMPL_NARROW_FROM_DECL (be_attribute)
