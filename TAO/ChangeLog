@@ -1,3 +1,11 @@
+Mon Jan 18 14:23:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_uses.cpp:
+          Layout change
+
+        * TAO_IDL/be/be_visitor_root/root_ex_idl.cpp:
+          Const change
+
 Mon Jan 18 13:55:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be_include/be_operation_strategy.h:
