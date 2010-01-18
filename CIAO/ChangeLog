@@ -1,3 +1,23 @@
+Mon Jan 18 10:14:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Read_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReader.cpp:
+          Renamed set_topic methods on Reader.
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.h:
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Implemented basics of filter method.
+
+        * connectors/dds4ccm/impl/ndds/Subscriber.h:
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+          Now able to create a DDSDataReader with a
+          ContentFilteredTopic as input.
+
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.cpp:
+          Resolved bug.
+
 Fri Jan 15 14:02:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReader.h:

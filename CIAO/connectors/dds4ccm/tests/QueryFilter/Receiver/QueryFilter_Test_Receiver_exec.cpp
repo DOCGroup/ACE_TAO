@@ -119,7 +119,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
                 queryfiltertest_info,
                 readinfo,
                 ::DDS::HANDLE_NIL);
-        return queryfiltertest_info.iteration == this->iterations_;
+        return queryfiltertest_info.iteration == MAX_ITERATION - 1;
       }
     catch (...)
       {
@@ -135,6 +135,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   {
     try
       {
+        printf ("READ_ALL\n");
         QueryFilterTest_Seq     *queryfiltertest_info_seq;
         ::CCM_DDS::ReadInfoSeq  *readinfo_seq;
         this->reader_->read_all (
