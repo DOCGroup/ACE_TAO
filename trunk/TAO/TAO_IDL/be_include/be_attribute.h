@@ -43,7 +43,7 @@ public:
 
   // Non-virtual override of frontend method.
   be_type *field_type (void) const;
-  
+
   // Visiting.
   virtual int accept (be_visitor *visitor);
 
@@ -66,9 +66,17 @@ public:
 
   be_operation_strategy *get_set_strategy (void);
   // Retrieve the underlying set_operation strategy.
-  
+
   virtual void destroy (void);
   // Cleanup.
+
+  void original_attribute (be_attribute *original_attribute);
+  // Sets the original attribute from which this one was created,
+  // applies only to implied IDL.
+
+  be_attribute *original_attribute ();
+  // Returns the original attribute from which this one was created,
+  // applies only to implied IDL
 
   // Narrowing
 
@@ -81,6 +89,8 @@ private:
   // Member for holding the strategy for covering
   // differences between various operations, e.g. sendc_, raise_
   // operations in the AMI spec.
+
+  be_attribute *original_attribute_;
 };
 
 #endif

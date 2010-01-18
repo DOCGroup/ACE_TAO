@@ -38,7 +38,8 @@ be_operation::be_operation (void)
     UTL_Scope (),
     AST_Operation (),
     be_scope (),
-    be_decl ()
+    be_decl (),
+    original_operation_ (0)
 {
   ACE_NEW (this->strategy_,
            be_operation_default_strategy (this));
@@ -61,7 +62,8 @@ be_operation::be_operation (AST_Type *rt,
                    abstract),
     be_scope (AST_Decl::NT_op),
     be_decl (AST_Decl::NT_op,
-             n)
+             n),
+    original_operation_ (0)
 {
   ACE_NEW (this->strategy_,
            be_operation_default_strategy (this));
@@ -183,6 +185,18 @@ be_operation*
 be_operation::arguments (void)
 {
   return this->strategy_->arguments ();
+}
+
+void
+be_operation::original_operation (be_operation *original_operation)
+{
+  this->original_operation_ = original_operation;
+}
+
+be_operation *
+be_operation::original_operation (void)
+{
+  return this->original_operation_;
 }
 
 IMPL_NARROW_FROM_DECL (be_operation)
