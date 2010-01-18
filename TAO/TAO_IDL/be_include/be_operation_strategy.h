@@ -29,7 +29,7 @@ class be_operation;
 class be_operation_strategy
 {
 public:
-  enum Strategy_Kind 
+  enum Strategy_Kind
   {
     DEFAULT = 0,
     AMI_SENDC,
@@ -52,7 +52,7 @@ public:
   // Change the state if necessary.
 
   virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
-  // Returns true if we have to genrate extra code.
+  // Returns true if we have to generate extra code.
 
   virtual be_operation *marshaling (void);
   // Returns the operation containing special marshaling information,
@@ -63,10 +63,10 @@ public:
   // Returns a customized arguments list, e.g. AMI sendc_ operations
   // only use the in and inout arguments but not the out arguments,
   // also the first argument is the reply handler.
-  
+
   virtual be_operation_strategy *copy (void);
   // Overrides return a deep copy.
-  
+
   virtual void destroy (void);
   // Cleanup.
 
@@ -92,7 +92,7 @@ public:
   // Overridden methods.
   TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
                                     int is_extra_state = 0);
-                                    
+
   virtual be_operation_strategy *copy (void);
   // Returns a deep copy.
 };
@@ -114,8 +114,8 @@ public:
                                     int is_extra_state = 0);
 
   virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
-  // Returns true if we have to genrate extra code.
-  
+  // Returns true if we have to generate extra code.
+
   virtual be_operation_strategy *copy (void);
   // Returns a deep copy.
 };
@@ -137,7 +137,7 @@ public:
                                     int is_extra_state = 0);
 
   virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
-  // Returns true if we have to genrate extra code.
+  // Returns true if we have to generate extra code.
 
   virtual be_operation *marshaling (void);
   // Returns the operation containing special marshaling information,
@@ -148,13 +148,13 @@ public:
   // Returns a customized arguments list, e.g. AMI sendc_ operations
   // only use the in and inout arguments but not the out arguments,
   // also the first argument is the reply handler.
-  
+
   virtual be_operation_strategy *copy (void);
   // Returns a deep copy.
-  
+
   virtual void destroy (void);
   // Cleanup.
-  
+
 private:
   be_operation *marshaling_;
   be_operation *arguments_;
@@ -177,7 +177,7 @@ public:
       TAO_CodeGen::CG_STATE current_state,
       int is_extra_state = 0
     );
-    
+
   virtual be_operation_strategy *copy (void);
   // Returns a deep copy.
 };
@@ -199,7 +199,7 @@ public:
   virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
 
   virtual be_operation *arguments (void);
-  
+
   virtual be_operation_strategy *copy (void);
   // Returns a deep copy.
 
