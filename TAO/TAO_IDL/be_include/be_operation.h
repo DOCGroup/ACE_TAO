@@ -72,7 +72,7 @@ public:
   // Decide on the next state.
 
   int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
-  // Returns true if we have to genrate extra code.
+  // Returns true if we have to generate extra code.
 
   be_operation *marshaling (void);
   // returns the operation containing special marshaling information,
@@ -84,6 +84,14 @@ public:
   // only use the in and inout arguments but not the out arguments,
   // also the first argument is the reply handler.
 
+  void original_operation (be_operation *original_operation);
+  // Sets the original operation from which this one was created,
+  // applies only to implied IDL.
+
+  be_operation *original_operation ();
+  // Returns the original operation from which this one was created,
+  // applies only to implied IDL
+
   // Narrowing
 
   DEF_NARROW_FROM_DECL (be_operation);
@@ -94,6 +102,8 @@ protected:
   // Member for holding the strategy for covering
   // differences between various operations, e.g. sendc_, raise_
   // operations in the AMI spec.
+  
+  be_operation *original_operation_;
 };
 
 #endif
