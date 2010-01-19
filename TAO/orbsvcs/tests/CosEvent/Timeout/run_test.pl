@@ -104,6 +104,8 @@ if ($server2->WaitForFileTimed ($ior2file,
     exit 1;
 }
 
+sleep(10); 
+
 $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
 if ($client_status != 0) {
