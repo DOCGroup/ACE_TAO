@@ -66,7 +66,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "be_visitor_root.h"
 #include "be_visitor_ami_pre_proc.h"
-#include "be_visitor_ami4ccm_pre_proc.h"
 #include "be_visitor_amh_pre_proc.h"
 #include "be_visitor_ccm_pre_proc.h"
 #include "be_visitor_tmpl_module_inst.h"
@@ -124,12 +123,6 @@ BE_produce (void)
       // processing visitor.
       be_visitor_tmpl_module_inst tmpl_mod_inst_visitor (&ctx);
       BE_visit_root (tmpl_mod_inst_visitor, "template module procdessing");
-    }
-
-  if (be_global->ami4ccm_call_back ())
-    {
-      be_visitor_ami4ccm_pre_proc ami4ccmpreproc_visitor (&ctx);
-      BE_visit_root (ami4ccmpreproc_visitor, "AMI4CCM preprocessing");
     }
 
   if (!idl_global->ignore_idl3 ())
@@ -225,7 +218,7 @@ BE_produce (void)
       be_visitor_root_is root_is_visitor (&ctx);
       BE_visit_root (root_is_visitor, "implementation skeleton");
     }
-    
+
   if (be_global->gen_ciao_svnt ())
     {
       ctx.state (TAO_CodeGen::TAO_ROOT_SVH);
@@ -236,7 +229,7 @@ BE_produce (void)
       be_visitor_root_svs root_svs_visitor (&ctx);
       BE_visit_root (root_svs_visitor, "CIAO servant source");
     }
-      
+
   if (be_global->gen_ciao_exec_idl ())
     {
       ctx.state (TAO_CodeGen::TAO_ROOT_EX_IDL);
@@ -255,7 +248,7 @@ BE_produce (void)
       be_visitor_root_exs root_exs_visitor (&ctx);
       BE_visit_root (root_exs_visitor, "CIAO exec impl source");
     }
-    
+
   tao_cg->gen_export_files ();
 
   // Done with this IDL file.
