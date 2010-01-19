@@ -128,7 +128,7 @@ be_visitor_context_svh::visit_uses (be_uses *node)
   const char *port_name = prefix.c_str ();
 
   const char *obj_name = node->uses_type ()->full_name ();
-  bool is_multiple = node->is_multiple ();
+  bool const is_multiple = node->is_multiple ();
 
   os_ << be_uidt_nl << be_nl
       << "public:" << be_idt_nl
@@ -144,11 +144,19 @@ be_visitor_context_svh::visit_uses (be_uses *node)
     {
       os_ << "::" << obj_name << "_ptr" << be_nl
           << "get_connection_" << port_name << " (void);";
+    }
 
-      if (be_global->ami4ccm_call_back ())
+  if (be_global->ami4ccm_call_back ())
+    {
+      os_ << be_nl << "virtual ";
+      if (is_multiple)
         {
-          os_ << be_nl << "virtual ";
-
+          os_ << "::" << node_->full_name () << "::"
+              << port_name << "Connections *" << be_nl
+              << "get_connections_" << port_name << " (void);";
+        }
+      else
+        {
           os_ << "::" << obj_name << "_ptr" << be_nl
               << "get_connection_sendc_" << port_name << " (void);";
         }

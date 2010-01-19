@@ -113,7 +113,17 @@ be_visitor_context_ex_idl::visit_uses (
       os_ << IdentifierHelper::orig_sn (impl->name ()).c_str ()
           << " get_connection_" << lname << " ();";
 
-      if (be_global->ami4ccm_call_back ())
+    }
+
+  if (be_global->ami4ccm_call_back ())
+    {
+      if (node->is_multiple ())
+        {
+          os_ << IdentifierHelper::orig_sn (node_->name ()).c_str ()
+              << "::" << lname << "Connections get_connections_"
+              << lname << " ();";
+        }
+      else
         {
           os_ << be_nl << "::" << IdentifierHelper::orig_sn (impl->name ()).c_str ()
               << " get_connection_sendc_" << lname << " ();";
