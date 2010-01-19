@@ -120,19 +120,22 @@ BE_produce (void)
 
   if (!idl_global->ignore_idl3 ())
     {
-      // This visitor needs to make its pass before the CCM
+      // This visitor needs to make its pass before any other
       // processing visitor.
       be_visitor_tmpl_module_inst tmpl_mod_inst_visitor (&ctx);
       BE_visit_root (tmpl_mod_inst_visitor, "template module procdessing");
-      
-      be_visitor_ccm_pre_proc ccm_preproc_visitor (&ctx);
-      BE_visit_root (ccm_preproc_visitor, "CCM preprocessing");
     }
 
   if (be_global->ami4ccm_call_back ())
     {
       be_visitor_ami4ccm_pre_proc ami4ccmpreproc_visitor (&ctx);
       BE_visit_root (ami4ccmpreproc_visitor, "AMI4CCM preprocessing");
+    }
+
+  if (!idl_global->ignore_idl3 ())
+    {
+      be_visitor_ccm_pre_proc ccm_preproc_visitor (&ctx);
+      BE_visit_root (ccm_preproc_visitor, "CCM preprocessing");
     }
 
   if (be_global->ami_call_back ())

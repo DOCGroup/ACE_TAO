@@ -2256,7 +2256,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
                                this->client_header_);
 
   // Include the Messaging library entry point, if AMI is enabled.
-  if (be_global->ami_call_back () == true)
+  if (be_global->ami_call_back ())
     {
       // Include Messaging skeleton file.
       this->gen_standard_include (this->client_header_,
@@ -2264,7 +2264,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
     }
 
   // Include the AMI4CCM library entry point, if AMI4CCM is enabled.
-  if (be_global->ami4ccm_call_back () == true)
+  if (be_global->ami4ccm_call_back ())
     {
       // Include Messaging skeleton file.
       this->gen_standard_include (this->client_header_,
@@ -2272,7 +2272,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
     }
 
   // Include the smart proxy base class if smart proxies are enabled.
-  if (be_global->gen_smart_proxies () == true)
+  if (be_global->gen_smart_proxies ())
     {
       this->gen_standard_include (this->client_header_,
                                   "tao/SmartProxies/Smart_Proxies.h");
