@@ -42,7 +42,7 @@ def flatGen(SANet, tasks, conds):
 				#dire = rand.uniform(0,2) - 1
 			
 				#if dire >= 0:
-				weight = rand.uniform(.8,1)
+				weight = rand.uniform(.8, 1)
 				#else:
 				#	weight = rand.uniform(-.8,-1)	
 				#a tuple for efficient look up

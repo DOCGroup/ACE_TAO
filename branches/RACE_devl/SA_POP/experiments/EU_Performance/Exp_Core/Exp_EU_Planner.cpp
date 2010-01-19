@@ -262,9 +262,9 @@ bool Exp_EU_Planner::plan (size_t sa_max_steps, SA_POP::Goal goal)
     }
 
 	//Very Temp--this is only for debugging, limit goal utility to 10 for now
-	if(this->sanet_->get_cond_future_val(goal_iter->first, true) > 10){
-		return false;
-	}
+	//if(goal_iter->second){
+	//	return false;
+	//}
   }
 
   // Set planning strategy goals and satisfy open conditions.
@@ -318,6 +318,21 @@ void Exp_EU_Planner::track_stats (SA_POP::Plan plan)
 
   // Get plan EU.
   SA_POP::Utility plan_eu = this->calc_plan_eu (plan);
+
+  GoalMap goals = this->sanet_->get_goals();
+
+  double max_eu = 0;
+  for(GoalMap::iterator it = goals.begin(); it != goals.end(); it++){
+	max_eu+=it->second;
+  }
+
+  if(max_eu < plan_eu){
+		std::ostringstream invalid_plan_str;
+        invalid_plan_str << "Invalid plan EU, returning";
+        SA_POP_DEBUG_STR(SA_POP_DEBUG_TEMP, invalid_plan_str.str ());
+		
+		return;
+  }
 
 //*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
   // Output plan EUs
