@@ -43,7 +43,7 @@ namespace SA_POP {
   // Default values for use in EU Experiment.
   namespace Default {
     /// Threshold (>=) for probability of a goal to be considered satisfied.
-    const ::SA_POP::Probability GOAL_PROB_THRESH = 0.6;
+    const ::SA_POP::Probability GOAL_PROB_THRESH = 0.3;
 
     /// Percentage/multiplier threshold for two plan EUs to be considered different.
     /// (WARNING:  This should be a very small value.)
@@ -261,27 +261,6 @@ namespace SA_POP {
 
     /// Results of current experimental run (multiple trials).
     SA_POP::Exp_EU_Run_Results run_results_;
-
-    /// Trial counter for number of plans generated.
-//    size_t trial_num_plans_;
-
-    /// Run counter for number of trial attempts.
-//    size_t run_num_trial_attempts_;
-
-    /// Run counter for number of trials with initial plan generated.
-//    size_t run_num_init_plans_;
-
-    /// Run counter for number of trials with preferred plan generated.
-//    size_t run_num_pref_plans_;
-
-    /// Run counter for number of trials with at least one alternate plan generated.
-//    size_t run_num_alt_plans_;
-
-    /// Expected utility of SA-POP preferred plan.
-//    SA_POP::Utility pref_plan_eu_;
-
-    /// Highest expected utility of any (schedulable/valid) plan (including preferred plan).
-//    SA_POP::Utility max_plan_eu_;
 
 
     // ************************************************************************

@@ -17,7 +17,7 @@
 #include <string>
 #include <set>
 #include <map>
-#include <stdlib.h>
+//#include <stdlib.h>
 #include <fstream>
 #include <sstream>
 #include <algorithm>
@@ -231,17 +231,12 @@ bool Exp_EU_Planner::plan (size_t sa_max_steps, SA_POP::Goal goal)
   //SA_POP_DEBUG_STR(SA_POP_DEBUG_TEMP, goal_str.str ());
 //*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
 
-  // Check that goal conditions meet probability criteria.
+  // Check that goal conditions meet probability and utility criteria.
   // Skip planning and return false if any goal condition does not.
   for (SA_POP::GoalMap::iterator goal_iter = goal.goal_conds.begin (); goal_iter != goal.goal_conds.end (); goal_iter++) {
-    if (goal_iter->second >= 0) 
-	{
-      if (this->sanet_->get_cond_future_val(goal_iter->first, true) > 1.0 || this->sanet_->get_cond_future_val(goal_iter->first, true) < SA_POP::Default::GOAL_PROB_THRESH) 
-	  {
-       
-
-		  
-		 std::ostringstream invalid_goal_str;
+    if (goal_iter->second >= 0) {
+      if (this->sanet_->get_cond_future_val(goal_iter->first, true) > 1.0 || this->sanet_->get_cond_future_val(goal_iter->first, true) < SA_POP::Default::GOAL_PROB_THRESH) {
+        std::ostringstream invalid_goal_str;
         invalid_goal_str << "Goal condition (" << this->sanet_->get_cond_name (goal_iter->first) << ") ";
         invalid_goal_str << "with probability, " << this->sanet_->get_cond_future_val(goal_iter->first, true) << ", ";
         invalid_goal_str << "does not meet goal probability criteria.  Skipping planning.";
@@ -260,11 +255,6 @@ bool Exp_EU_Planner::plan (size_t sa_max_steps, SA_POP::Goal goal)
         return false;
       }
     }
-
-	//Very Temp--this is only for debugging, limit goal utility to 10 for now
-	//if(goal_iter->second){
-	//	return false;
-	//}
   }
 
   // Set planning strategy goals and satisfy open conditions.
@@ -319,19 +309,30 @@ void Exp_EU_Planner::track_stats (SA_POP::Plan plan)
   // Get plan EU.
   SA_POP::Utility plan_eu = this->calc_plan_eu (plan);
 
-  GoalMap goals = this->sanet_->get_goals();
-
-  double max_eu = 0;
-  for(GoalMap::iterator it = goals.begin(); it != goals.end(); it++){
-	max_eu+=it->second;
+  // Calculate maximum goal utility as sum of absolute value of goal condition utilities.
+  SA_POP::Utility max_util_total = 0.0;
+  for (SA_POP::GoalMap::iterator goal_iter = plan.goal.goal_conds.begin (); goal_iter != plan.goal.goal_conds.end (); goal_iter++) {
+    // Add absolute value of utility of this goal to total.
+    if (goal_iter->second > 0) {
+      max_util_total += goal_iter->second;
+    }
+    else {
+      max_util_total += -1 * goal_iter->second;
+    }
   }
 
-  if(max_eu < plan_eu){
-		std::ostringstream invalid_plan_str;
-        invalid_plan_str << "Invalid plan EU, returning";
-        SA_POP_DEBUG_STR(SA_POP_DEBUG_TEMP, invalid_plan_str.str ());
-		
-		return;
+
+  // Throw out plans with invalid utilities.
+  if (plan_eu > max_util_total) {
+    // Decrement plan counter, so this plan is not counted.
+    this->trial_results_.num_plans--;
+
+    std::ostringstream invalid_plan_str;
+    invalid_plan_str << "Invalid plan EU of " << plan_eu << ". Ignoring plan.";
+    SA_POP_DEBUG_STR(SA_POP_DEBUG_TEMP, invalid_plan_str.str ());
+
+    // Ignore plan.
+    return;
   }
 
 //*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
@@ -382,7 +383,11 @@ void Exp_EU_Planner::track_stats (SA_POP::Plan plan)
     return;
   }
 
-  std::cout<<"EU of plan: "<<plan_eu<<" init plan EU: "<<this->trial_init_plan_eu<<std::endl;
+  // Output other plan EUs compared to initial plan EU.
+  //std::ostringstream plan_eu_str;
+  //plan_eu_str << "Current (valid) Plan EU = " << plan_eu << ", and ";
+  //plan_eu_str << "Initial Plan EU = " << this->trial_init_plan_eu;
+  //SA_POP_DEBUG_STR(SA_POP_DEBUG_TEMP, plan_eu_str.str ());
 
 //*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
 

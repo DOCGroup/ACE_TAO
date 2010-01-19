@@ -1,3 +1,36 @@
+Tue Jan 19 19:01:00 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * Planner.cpp:
+
+          Clean-up on Planner::calc_plan_eu()
+
+        * experiments/EU_Performance/Exp_Core/Exp_EU_Planner.h:
+        * experiments/EU_Performance/Exp_Core/Exp_EU_Planner.cpp:
+        * experiments/EU_Performance/SAPOP_Exp_EU.cpp:
+
+          Clean-up on EU experiment code, including throwing out plans with
+          invalid expected utilities (due to inability of SA to catch certain
+          double loops).
+
+
+Tue Jan 19 07:03:24 UTC 2010  Ben Podgursky  <bpodgursky@gmail.com>
+
+        * Planner.cpp:
+        * experiments/EU_Performance/Exp_Core/Exp_EU_Planner.cpp:
+        * experiments/EU_Performance/SAPOP_Exp_EU.cpp:
+
+          Additional debug output (checking for > 1 probabilities)
+
+Tue Jan 19 02:07:16 UTC 2010  Ben Podgursky  <bpodgursky@gmail.com>
+
+        * experiments/EU_Performance/Exp_Core/Exp_EU_Planner.cpp:
+        * experiments/EU_Performance/SAPOP_Exp_EU.cpp:
+
+          Turned off memory leak checking (took ages to output the leaks after long runs)
+
+          Check for invalid plan EU values.
+
+
 Sat Jan 16 22:46:36 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * SA_POP_Types.h:
@@ -5,8 +38,12 @@ Sat Jan 16 22:46:36 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.ed
         * experiments/EU_Performance/Exp_Core/Exp_EU_Planner.cpp:
         * experiments/EU_Performance/SAPOP_Exp_EU.cpp:
 
-          Experiment ignores (just SA, no planning) initial conditions/goal that result in invalid goal condition probabilities (or ones below the #define’d threshold).
-          Experiment ignores generated plans with the same EU (to within a #define’d threshold percentage) as the initial plan.
+          Experiment ignores (just SA, no planning) initial conditions/goal that
+          result in invalid goal condition probabilities (and ones below the
+          #define’d threshold).
+
+          Experiment ignores generated plans with the same EU (to within a
+          #define’d threshold percentage) as the initial plan.
 
 
 Sat Jan 16 19:57:13 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
