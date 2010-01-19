@@ -493,12 +493,18 @@ be_visitor_context_svs::gen_uses_simplex (
 
   if (be_global->ami4ccm_call_back ())
     {
+      ACE_CString original_op_name (
+        obj->name ()->last_component ()->get_string ());
+      ACE_CString new_op_name = ACE_CString ("AMI_") + original_op_name;
+      UTL_ScopedName *op_name =
+        static_cast<UTL_ScopedName *> (obj->name ()->copy ());
+      op_name->last_component ()->replace_string (new_op_name.c_str ());
       os_ << be_nl << be_nl
-          << "::" << fname << "_ptr" << be_nl
+          << "::" << op_name << "_ptr" << be_nl
           << node_->local_name () << "_Context::get_connection_sendc_"
           << port_name << " (void)" << be_nl
           << "{" << be_idt_nl
-          << "return ::" << fname << "::_duplicate (" << be_idt_nl
+          << "return ::" << op_name << "::_duplicate (" << be_idt_nl
           << "this->ciao_uses_sendc_" << port_name << "_.in ());"
           << be_uidt << be_uidt_nl
           << "}";

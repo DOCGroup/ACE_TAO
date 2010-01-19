@@ -2675,15 +2675,14 @@ be_interface::gen_facet_idl (TAO_OutStream &os)
       ACE_CString reply_handler_local_name;
       reply_handler_local_name += "AMI_";
       reply_handler_local_name += this->name ()->last_component ()->get_string();
-  printf ("%s\n", reply_handler_local_name.c_str ());
       UTL_ScopedName *reply_handler_name =
         static_cast<UTL_ScopedName *> (this->name ()->copy ());
-  reply_handler_name->last_component ()->replace_string (
+      reply_handler_name->last_component ()->replace_string (
                                              reply_handler_local_name.c_str ()
                                            );
       os << be_nl << be_nl
-         << "local interface AMI_"                                           
-         << this->original_local_name ()->get_string () 
+         << "local interface AMI_"
+         << this->original_local_name ()->get_string ()
          << "Callback : ::CCM_AMI::ReplyHandler"
          << be_nl
          << "{" << be_idt_nl
@@ -2697,11 +2696,11 @@ be_interface::gen_facet_idl (TAO_OutStream &os)
          << "void set_rw_attrib_excep (in CCM_AMI::ExceptionHolder excep_holder);" << be_nl
          << "void get_ro_attrib (in short ami_return_val);" << be_nl
          << "void get_ro_attrib_excep (in CCM_AMI::ExceptionHolder excep_holder);" << be_uidt_nl
-         << "};" 
+         << "};"
          << be_nl;
-         
-      os << be_nl 
-         << "local interface AMI_"                                           
+
+      os << be_nl
+         << "local interface AMI_"
          << this->original_local_name ()->get_string ()
          << be_nl
          << "{" << be_idt_nl
@@ -2710,10 +2709,10 @@ be_interface::gen_facet_idl (TAO_OutStream &os)
          << "void sendc_get_rw_attrib (in AMI_MyFooCallback ami_handler);" << be_nl
          << "void sendc_set_rw_attrib (in AMI_MyFooCallback ami_handler, in short rw_attrib);" << be_nl
          << "void sendc_get_ro_attrib (in AMI_MyFooCallback ami_handler);" << be_uidt_nl
-         << "};" 
+         << "};"
          << be_nl;
-         
-      os << be_nl 
+
+      os << be_nl
          << "local interface CCM_AMI_"
          << this->original_local_name ()->get_string ()
          << " : ::"
