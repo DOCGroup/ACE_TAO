@@ -1280,7 +1280,7 @@ sub both_ir_test
     $n_srv->DeleteFile ($nesteaiorfile);
     $n_cli->DeleteFile ($nesteaiorfile);
 
-    $IMR->Arguments ("-d 2 -t 5 -o $imr_imriorfile $refstyle");
+    $IMR->Arguments ("-d 2 -t 10 -o $imr_imriorfile $refstyle");
     $IMR_status = $IMR->Spawn ();
     if ($IMR_status != 0) {
         print STDERR "ERROR: ImR Service returned $IMR_status\n";
