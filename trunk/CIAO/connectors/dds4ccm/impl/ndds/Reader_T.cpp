@@ -343,6 +343,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::create_filter (
                     "Error: Unable to create ContentFilteredTopic.\n"));
       throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
     }
+//   this->set_expression_parameters (filter.query_parameters);
   ::DDS::DataReaderListener_var listener = this->reader_->get_listener ();
   this->reader_->set_listener (::DDS::DataReaderListener::_nil (), 0);
   ::DDS::ReturnCode_t retval = sub->delete_datareader (this->reader_);
@@ -406,7 +407,16 @@ template <typename DDS_TYPE, typename CCM_TYPE>
       }
     ::CCM_DDS::QueryFilter * filter = new ::CCM_DDS::QueryFilter();
     filter->query = this->cft_->get_filter_expression ();
-    this->cft_->get_expression_parameters (filter->query_parameters);
+    ::DDS::ReturnCode_t retval = this->cft_->get_expression_parameters (
+                                          filter->query_parameters);
+    if (retval != DDS::RETCODE_OK)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+                                  "Error getting expression_paramaters. "
+                                  "Retval is %C\n",
+                                  translate_retcode(retval)));
+        throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, retval);
+      }
     return filter;
   #endif
 }

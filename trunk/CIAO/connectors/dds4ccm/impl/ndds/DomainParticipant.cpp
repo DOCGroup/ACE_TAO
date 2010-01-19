@@ -460,19 +460,21 @@ namespace CIAO
                          "Unable to cast provided topic.\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
-        const char* parameterlist[expression_parameters.length ()];
+        const char** parameterlist = new const char*[expression_parameters.length ()];
+
         for (CORBA::ULong i = 0; i < expression_parameters.length (); ++i)
           {
             parameterlist[i] = expression_parameters[i].in ();
           }
         DDS_StringSeq parameters (expression_parameters.length ());
-        parameters.from_array(parameterlist, expression_parameters.length ());
+        parameters.from_array (parameterlist, expression_parameters.length ());
 
         DDSContentFilteredTopic * rti_cft = this->impl ()->create_contentfilteredtopic (
                                                                     name,
                                                                     top->get_impl (),
                                                                     filter_expression,
                                                                     parameters);
+        delete [] parameterlist;
         if (!rti_cft)
           {
             CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipant_i::create_contentfilteredtopic - "

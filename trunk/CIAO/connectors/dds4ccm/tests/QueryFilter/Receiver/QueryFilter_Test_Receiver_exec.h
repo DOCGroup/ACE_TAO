@@ -134,6 +134,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
 
     void read_all ();
     void check_filter ();
+    void test_exception ();
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
