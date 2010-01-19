@@ -515,6 +515,9 @@ Utility Planner::calc_plan_eu(Plan plan)
   // Clone current SANet.
   SANet::Network sanet (*(this->sanet_));
 
+  // Reset network.
+  sanet.reset_sa ();
+
   // Deactivate all nodes, before activating relevant ones.
   sanet.set_nodes_state (false);
 
@@ -529,7 +532,7 @@ Utility Planner::calc_plan_eu(Plan plan)
     sanet.set_cond_state (goal_iter->first, true);
   }
 
-//  SA_POP_DEBUG_STR(SA_POP_DEBUG_TEMP, goal_str.str ());
+//  SA_POP_DEBUG_STR(SA_POP_DEBUG_VERBOSE, goal_str.str ());
 
   // Activate tasks in plan and their preconditions.
   for (PlanInstSet::iterator inst_iter = plan.task_insts.begin (); inst_iter != plan.task_insts.end (); inst_iter++) {
@@ -554,11 +557,10 @@ Utility Planner::calc_plan_eu(Plan plan)
     }
 
 //    temp_str << ")";
-//    SA_POP_DEBUG_STR(SA_POP_DEBUG_TEMP, temp_str.str ());
+//    SA_POP_DEBUG_STR(SA_POP_DEBUG_VERBOSE, temp_str.str ());
   }
 
-  // Reset network and run spreading activation.
-  sanet.reset_sa ();
+  // Run spreading activation.
 	sanet.update(sa_max_steps);
 
 //  std::ostringstream eu_str;
@@ -591,7 +593,7 @@ Utility Planner::calc_plan_eu(Plan plan)
 //    eu_str << prob << ", " << eu << ")  " ;
   }
 
-//  SA_POP_DEBUG_STR(SA_POP_DEBUG_TEMP, eu_str.str ());
+//  SA_POP_DEBUG_STR(SA_POP_DEBUG_VERBOSE, eu_str.str ());
 
   return eu_total;
 };

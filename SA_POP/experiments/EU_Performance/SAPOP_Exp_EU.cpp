@@ -13,8 +13,10 @@
  */
 //=============================================================================
 
+// Dumping memory leaks at end of a long experimental run can take an
+// inordinate amount of time, so removing this for now.
 //#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
+//#include <stdlib.h>
 //#include <crtdbg.h>
 
 #include <iostream>
@@ -577,6 +579,8 @@ int main (int argc, char* argv[])
 //  UserInterface::Question end_ques ("Enter any character to end program:");
 //  user_input.ask (end_ques);
 
+// Dumping memory leaks at end of a long experimental run can take an
+// inordinate amount of time, so removing this for now.
   //_CrtDumpMemoryLeaks();
 
   return 0;
