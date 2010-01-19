@@ -2672,11 +2672,20 @@ be_interface::gen_facet_idl (TAO_OutStream &os)
 
   if (be_global->ami4ccm_call_back ())
     {
+      ACE_CString reply_handler_local_name;
+      reply_handler_local_name += "AMI_";
+      reply_handler_local_name += this->name ()->last_component ()->get_string();
+  printf ("%s\n", reply_handler_local_name.c_str ());
+      UTL_ScopedName *reply_handler_name =
+        static_cast<UTL_ScopedName *> (this->name ()->copy ());
+  reply_handler_name->last_component ()->replace_string (
+                                             reply_handler_local_name.c_str ()
+                                           );
       os << be_nl << be_nl
          << "local interface CCM_AMI_"
          << this->original_local_name ()->get_string ()
          << " : ::"
-         << IdentifierHelper::orig_sn (this->name ()).c_str ()
+         << IdentifierHelper::orig_sn (reply_handler_name).c_str ()
          << be_nl
          << "{" << be_idt;
 
