@@ -33,7 +33,7 @@ be_template_module::destroy (void)
 }
 
 int
-be_template_module::accept (be_visitor *visitor)
+be_template_module::accept (be_visitor *)
 {
   // Disables visitation when this node is encountered as part
   // of a normal scope traversal. We will call
