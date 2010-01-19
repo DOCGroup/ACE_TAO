@@ -1,3 +1,32 @@
+Tue Jan 19 10:57:12 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.cpp:
+          Implemented get_expression_parameters.
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+          Optimized logging.
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.h:
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Implemented getter method for filter.
+          Introduced define in order to switch between ContentFilteredTopics
+          and QueryConditions.
+
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component.mpc:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component.mpc:
+        * connectors/dds4ccm/tests/DDSWriterEntity/Sender/Writer_Sender.mpc:
+          Resolved compile errors on windows.
+
+        * connectors/dds4ccm/tests/QueryFilter/Base/QueryFilter_Starter.idl:
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryFilter/Sender/QueryFilter_Test_Sender.idl:
+        * connectors/dds4ccm/tests/QueryFilter/Sender/QueryFilter_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryFilter/Sender/QueryFilter_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryFilter/Sender/QueryFilter_Test_Sender_exec.cpp:
+          Extended tests.
+
 Mon Jan 18 10:14:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDS_Get_T.cpp:

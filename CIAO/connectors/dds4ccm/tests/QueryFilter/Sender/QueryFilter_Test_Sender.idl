@@ -24,6 +24,7 @@ module QueryFilter_Test
     provides CCM_DDS::ConnectorStatusListener info_out_connector_status;
 
     uses QueryFilterStarter start_reader;
+    provides QueryFilterRestarter restart_writer;
 
     attribute unsigned short keys;
     attribute unsigned short iterations;

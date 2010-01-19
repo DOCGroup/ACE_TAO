@@ -3,13 +3,21 @@
 // $Id$
 
 #include "QueryFilter_Test_Receiver_exec.h"
+
+#include "ace/OS_NS_unistd.h"
 #include "ciao/Logger/Log_Macros.h"
+
+#define QUERY "( (iteration > %0) AND (iteration < %1) )"
 
 #define MIN_ITERATION_STR "2"
 #define MIN_ITERATION 2
 
-#define MAX_ITERATION_STR "5"
-#define MAX_ITERATION 5
+#define MAX_ITERATION_1_STR "5"
+#define MAX_ITERATION_1 5
+
+#define MAX_ITERATION_2_STR "7"
+#define MAX_ITERATION_2 7
+
 
 namespace CIAO_QueryFilter_Test_Receiver_Impl
 {
@@ -96,7 +104,8 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   Receiver_exec_i::Receiver_exec_i (void)
     : iterations_ (10),
       keys_ (5),
-      has_run_ (false)
+      has_run_ (false),
+      current_max_iteration_ (MAX_ITERATION_1)
   {
   }
 
@@ -119,7 +128,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
                 queryfiltertest_info,
                 readinfo,
                 ::DDS::HANDLE_NIL);
-        return queryfiltertest_info.iteration == MAX_ITERATION - 1;
+        return queryfiltertest_info.iteration == MAX_ITERATION_1 - 1;
       }
     catch (...)
       {
@@ -155,12 +164,12 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
                                       "<= %d\n",
                                       MIN_ITERATION));
               }
-            if ((*queryfiltertest_info_seq)[it].iteration > MAX_ITERATION)
+            if ((*queryfiltertest_info_seq)[it].iteration > MAX_ITERATION_1)
               {
                 ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
                                       "Didn't expect samples with iterations " 
                                       "> %d\n",
-                                      MAX_ITERATION));
+                                      this->current_max_iteration_));
               }
           }
       }
@@ -188,10 +197,65 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   }
 
   void
+  Receiver_exec_i::check_filter ()
+  {
+    CCM_DDS::QueryFilter * filter = this->reader_->filter ();
+    //check query
+    if (ACE_OS::strcmp (filter->query, QUERY) == 0)
+      {
+        CIAO_ERROR (1, (LM_ERROR, "ERROR: Receiver_exec_i::check_filter - "
+                                  "Unexpected query when retrieving filter: "
+                                  "expected <%C> - received <%C>\n",
+                                  QUERY, filter->query.in ()));
+      }
+    //check current parameters.
+    if (filter->query_parameters.length () != 2)
+      {
+        CIAO_ERROR (1, (LM_ERROR, "ERROR: Receiver_exec_i::check_filter - "
+                                  "Unexpected number of parameters: "
+                                  "expected <%d> - received <%d>\n",
+                                  2, filter->query_parameters.length ()));
+      }
+
+    if (filter->query_parameters.length () >= 1)
+      {
+        if (ACE_OS::strcmp (filter->query_parameters[0], MIN_ITERATION_STR) == 0)
+          {
+            CIAO_ERROR (1, (LM_ERROR, "ERROR: Receiver_exec_i::check_filter - "
+                                      "Unexpected query when retrieving filter: "
+                                      "expected <%C> - received <%C>\n",
+                                      QUERY, filter->query.in ()));
+          }
+      }
+    if (filter->query_parameters.length () >= 2)
+      {
+        if (ACE_OS::strcmp (filter->query_parameters[1], MAX_ITERATION_2_STR) == 0)
+          {
+            CIAO_ERROR (1, (LM_ERROR, "ERROR: Receiver_exec_i::check_filter - "
+                                      "Unexpected query when retrieving filter: "
+                                      "expected <%C> - received <%C>\n",
+                                      QUERY, filter->query.in ()));
+          }
+      }
+  }
+
+  void
   Receiver_exec_i::run ()
   {
     this->has_run_ = true;
+    ACE_OS::sleep (2);
     read_all ();
+/*    CCM_DDS::QueryFilter filter;
+    filter.query = CORBA::string_dup ("");
+    filter.query_parameters.length (2);
+    filter.query_parameters[0] = CORBA::string_dup (MIN_ITERATION_STR);
+    filter.query_parameters[1] = CORBA::string_dup (MAX_ITERATION_2_STR);
+    this->reader_->filter (filter);
+    this->restarter_->restart_write ();
+    this->current_max_iteration_ = MAX_ITERATION_2;
+    ACE_OS::sleep (4);
+    read_all ();
+    check_filter ();*/
   }
 
   ::CORBA::UShort
@@ -260,16 +324,17 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   Receiver_exec_i::configuration_complete (void)
   {
     this->reader_ = this->context_->get_connection_info_out_data();
+    this->restarter_ = this->context_->get_connection_writer_restart ();
   }
 
   void
   Receiver_exec_i::ccm_activate (void)
   {
     CCM_DDS::QueryFilter filter;
-    filter.query = CORBA::string_dup (" ( (iteration > %0) AND (iteration < %1) )");
+    filter.query = CORBA::string_dup (QUERY);
     filter.query_parameters.length (2);
     filter.query_parameters[0] = CORBA::string_dup (MIN_ITERATION_STR);
-    filter.query_parameters[1] = CORBA::string_dup (MAX_ITERATION_STR);
+    filter.query_parameters[1] = CORBA::string_dup (MAX_ITERATION_1_STR);
     this->reader_->filter (filter);
   }
 

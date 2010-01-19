@@ -67,6 +67,12 @@ namespace CIAO
         ACE_CString library_name_;
         ACE_CString profile_name_;
 
+        #if defined DDS4CCM_USES_QUERY_CONDITION
+          DDS::ReadCondition_var qc_;
+        #else
+          DDS::ContentFilteredTopic_var cft_;
+        #endif
+
         typename DDS_TYPE::data_reader * impl_;
 
         typename DDS_TYPE::data_reader * impl (void);
@@ -87,6 +93,9 @@ namespace CIAO
         CORBA::ULong get_nr_valid_samples (
           const DDS_SampleInfoSeq & sample_info,
           bool determine_last = false);
+
+        void create_filter (
+          const ::CCM_DDS::QueryFilter & filter);
       };
     }
   }

@@ -59,6 +59,24 @@ namespace CIAO_QueryFilter_Test_Sender_Impl
 
 
   //============================================================
+  // Restarter_exec_i
+  //============================================================
+  Restarter_exec_i::Restarter_exec_i (Sender_exec_i & callback)
+    : callback_ (callback)
+  {
+  }
+
+  Restarter_exec_i::~Restarter_exec_i (void)
+  {
+  }
+
+  void
+  Restarter_exec_i::restart_write ()
+  {
+    this->callback_.start ();
+  }
+
+  //============================================================
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
   Sender_exec_i::Sender_exec_i (void)
@@ -133,6 +151,12 @@ namespace CIAO_QueryFilter_Test_Sender_Impl
   Sender_exec_i::get_info_out_connector_status (void)
   {
     return new ConnectorStatusListener_exec_i (*this);
+  }
+
+  ::CCM_QueryFilterRestarter_ptr
+  Sender_exec_i::get_restart_writer (void)
+  {
+    return new Restarter_exec_i (*this);
   }
 
   void
