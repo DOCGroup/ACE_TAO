@@ -2682,6 +2682,38 @@ be_interface::gen_facet_idl (TAO_OutStream &os)
                                              reply_handler_local_name.c_str ()
                                            );
       os << be_nl << be_nl
+         << "local interface AMI_"                                           
+         << this->original_local_name ()->get_string () 
+         << "Callback : ::CCM_AMI::ReplyHandler"
+         << be_nl
+         << "{" << be_idt_nl
+         << "void foo (in long ami_return_val, in string answer);" << be_nl
+         << "void foo_excep (in CCM_AMI::ExceptionHolder excep_holder);" << be_nl
+         << "void hello (in long ami_return_val);" << be_nl
+         << "void hello_excep (in CCM_AMI::ExceptionHolder excep_holder);" << be_nl
+         << "void get_rw_attrib (in short ami_return_val);" << be_nl
+         << "void get_rw_attrib_excep (in CCM_AMI::ExceptionHolder excep_holder);" << be_nl
+         << "void set_rw_attrib ();" << be_nl
+         << "void set_rw_attrib_excep (in CCM_AMI::ExceptionHolder excep_holder);" << be_nl
+         << "void get_ro_attrib (in short ami_return_val);" << be_nl
+         << "void get_ro_attrib_excep (in CCM_AMI::ExceptionHolder excep_holder);" << be_uidt_nl
+         << "};" 
+         << be_nl;
+         
+      os << be_nl 
+         << "local interface AMI_"                                           
+         << this->original_local_name ()->get_string ()
+         << be_nl
+         << "{" << be_idt_nl
+         << "void sendc_foo (in AMI_MyFooCallback ami_handler, in string in_str);" << be_nl
+         << "void sendc_hello (in AMI_MyFooCallback ami_handler);" << be_nl
+         << "void sendc_get_rw_attrib (in AMI_MyFooCallback ami_handler);" << be_nl
+         << "void sendc_set_rw_attrib (in AMI_MyFooCallback ami_handler, in short rw_attrib);" << be_nl
+         << "void sendc_get_ro_attrib (in AMI_MyFooCallback ami_handler);" << be_uidt_nl
+         << "};" 
+         << be_nl;
+         
+      os << be_nl 
          << "local interface CCM_AMI_"
          << this->original_local_name ()->get_string ()
          << " : ::"
