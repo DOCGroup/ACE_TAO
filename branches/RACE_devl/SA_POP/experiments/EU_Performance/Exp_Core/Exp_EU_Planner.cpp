@@ -196,7 +196,6 @@ SA_POP::Exp_EU_Run_Results Exp_EU_Planner::exp_run (std::string log_trials_filen
       // For invalid trial, decrement trial counter.
       trial_num--;
     }
-
   }
 
   // Log run statistics to output file.
@@ -235,9 +234,14 @@ bool Exp_EU_Planner::plan (size_t sa_max_steps, SA_POP::Goal goal)
   // Check that goal conditions meet probability criteria.
   // Skip planning and return false if any goal condition does not.
   for (SA_POP::GoalMap::iterator goal_iter = goal.goal_conds.begin (); goal_iter != goal.goal_conds.end (); goal_iter++) {
-    if (goal_iter->second >= 0) {
-      if (this->sanet_->get_cond_future_val(goal_iter->first, true) > 1.0 || this->sanet_->get_cond_future_val(goal_iter->first, true) < SA_POP::Default::GOAL_PROB_THRESH) {
-        std::ostringstream invalid_goal_str;
+    if (goal_iter->second >= 0) 
+	{
+      if (this->sanet_->get_cond_future_val(goal_iter->first, true) > 1.0 || this->sanet_->get_cond_future_val(goal_iter->first, true) < SA_POP::Default::GOAL_PROB_THRESH) 
+	  {
+       
+
+		  
+		 std::ostringstream invalid_goal_str;
         invalid_goal_str << "Goal condition (" << this->sanet_->get_cond_name (goal_iter->first) << ") ";
         invalid_goal_str << "with probability, " << this->sanet_->get_cond_future_val(goal_iter->first, true) << ", ";
         invalid_goal_str << "does not meet goal probability criteria.  Skipping planning.";
@@ -256,6 +260,11 @@ bool Exp_EU_Planner::plan (size_t sa_max_steps, SA_POP::Goal goal)
         return false;
       }
     }
+
+	//Very Temp--this is only for debugging, limit goal utility to 10 for now
+	if(this->sanet_->get_cond_future_val(goal_iter->first, true) > 10){
+		return false;
+	}
   }
 
   // Set planning strategy goals and satisfy open conditions.
@@ -357,6 +366,9 @@ void Exp_EU_Planner::track_stats (SA_POP::Plan plan)
     // Ignore plan.
     return;
   }
+
+  std::cout<<"EU of plan: "<<plan_eu<<" init plan EU: "<<this->trial_init_plan_eu<<std::endl;
+
 //*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
 
 

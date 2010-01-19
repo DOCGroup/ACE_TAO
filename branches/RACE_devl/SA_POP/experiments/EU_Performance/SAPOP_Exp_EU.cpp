@@ -13,9 +13,9 @@
  */
 //=============================================================================
 
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
+//#define _CRTDBG_MAP_ALLOC
+//#include <stdlib.h>
+//#include <crtdbg.h>
 
 #include <iostream>
 #include <fstream>
@@ -577,7 +577,7 @@ int main (int argc, char* argv[])
 //  UserInterface::Question end_ques ("Enter any character to end program:");
 //  user_input.ask (end_ques);
 
-  _CrtDumpMemoryLeaks();
+  //_CrtDumpMemoryLeaks();
 
   return 0;
 };
