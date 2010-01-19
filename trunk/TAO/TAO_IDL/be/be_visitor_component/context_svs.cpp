@@ -491,6 +491,19 @@ be_visitor_context_svs::gen_uses_simplex (
       << be_uidt << be_uidt_nl
       << "}";
 
+  if (be_global->ami4ccm_call_back ())
+    {
+      os_ << be_nl << be_nl
+          << "::" << fname << "_ptr" << be_nl
+          << node_->local_name () << "_Context::get_connection_sendc_"
+          << port_name << " (void)" << be_nl
+          << "{" << be_idt_nl
+          << "return ::" << fname << "::_duplicate (" << be_idt_nl
+          << "this->ciao_uses_sendc_" << port_name << "_.in ());"
+          << be_uidt << be_uidt_nl
+          << "}";
+    }
+
   os_ << be_nl << be_nl
       << "void" << be_nl
       << node_->local_name () << "_Context::connect_"

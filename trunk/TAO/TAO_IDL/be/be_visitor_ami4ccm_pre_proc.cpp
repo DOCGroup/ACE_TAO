@@ -590,6 +590,7 @@ if (node->imported ())
 return 0;
 
 }
+return 0;
   // We're at global scope here so we need to fool the scope stack
   // for a minute so the correct repo id can be calculated at
   // interface construction time.
