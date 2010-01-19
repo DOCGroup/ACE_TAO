@@ -586,12 +586,20 @@ Utility Planner::calc_plan_eu(Plan plan)
     // Expected utility of the goal condition is its probability times utility.
     eu = prob * util;
 
+	if(eu > 10){
+		bool b = true;
+	}
+
     eu_total += eu;
 
 //    eu_str << prob << ", " << eu << ")  " ;
   }
 
 //  SA_POP_DEBUG_STR(SA_POP_DEBUG_TEMP, eu_str.str ());
+
+  if(eu_total > 10){
+	bool b = true;
+  }
 
   return eu_total;
 };
