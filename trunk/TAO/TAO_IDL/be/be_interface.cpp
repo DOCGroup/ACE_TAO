@@ -2670,6 +2670,20 @@ be_interface::gen_facet_idl (TAO_OutStream &os)
   os << be_uidt_nl
      << "};";
 
+  if (be_global->ami4ccm_call_back ())
+    {
+      os << be_nl << be_nl
+         << "local interface CCM_AMI_"
+         << this->original_local_name ()->get_string ()
+         << " : ::"
+         << IdentifierHelper::orig_sn (this->name ()).c_str ()
+         << be_nl
+         << "{" << be_idt;
+
+      os << be_uidt_nl
+         << "};";
+    }
+
   this->gen_nesting_close (os);
 
   this->ex_idl_facet_gen (true);
