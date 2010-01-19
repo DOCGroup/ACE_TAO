@@ -52,19 +52,15 @@ ACE_RCSID (be,
 be_visitor_ami4ccm_pre_proc::be_visitor_ami4ccm_pre_proc (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
-
 }
 
 be_visitor_ami4ccm_pre_proc::~be_visitor_ami4ccm_pre_proc (void)
 {
-
 }
 
 int
 be_visitor_ami4ccm_pre_proc::visit_component (be_component *node)
 {
-printf ("here 1\n");
-
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -587,7 +583,11 @@ be_interface *
 be_visitor_ami4ccm_pre_proc::create_ami_sendc_interface (be_interface *node)
 {
 if (node->imported ())
- return 0;
+{
+
+return 0;
+
+}
   // We're at global scope here so we need to fool the scope stack
   // for a minute so the correct repo id can be calculated at
   // interface construction time.
@@ -1045,12 +1045,12 @@ be_operation *
 be_visitor_ami4ccm_pre_proc::create_sendc_operation (be_operation *node,
                                                      bool for_arguments)
 {
-  if (node->flags () == AST_Operation::OP_oneway) 
+  if (node->flags () == AST_Operation::OP_oneway)
     {
       // We do nothing for oneways!
       return 0;
     }
-    
+
   Identifier *id = 0;
   UTL_ScopedName *sn = 0;
 

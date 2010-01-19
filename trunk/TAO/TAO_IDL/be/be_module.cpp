@@ -22,8 +22,8 @@
 #include "be_module.h"
 #include "be_visitor.h"
 
-ACE_RCSID (be, 
-           be_module, 
+ACE_RCSID (be,
+           be_module,
            "$Id$")
 
 be_module::be_module (void)

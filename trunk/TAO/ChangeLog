@@ -1,3 +1,19 @@
+Tue Jan 19 11:33:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_module.cpp:
+          strip tailing white space
+
+        * TAO_IDL/be/be_visitor_ami4ccm_pre_proc.cpp:
+          Removed some debug lines
+
+        * TAO_IDL/fe/fe_component_header.cpp:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/fe/fe_obv_header.cpp:
+          Initialise pointers to 0
+
+        * TAO_IDL/util/utl_scope.cpp:
+          Simplified some methods
+
 Tue Jan 19 09:04:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:

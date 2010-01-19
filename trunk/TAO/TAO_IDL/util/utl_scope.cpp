@@ -183,7 +183,7 @@ iter_lookup_by_name_local (AST_Decl *d,
 
       d = td->base_type ();
     }
-    
+
   if (d == 0)
     {
       return 0;
@@ -191,7 +191,7 @@ iter_lookup_by_name_local (AST_Decl *d,
 
   AST_Template_Module_Ref *tmr =
     AST_Template_Module_Ref::narrow_from_decl (d);
-    
+
   if (tmr != 0)
     {
       d = tmr->ref ();
@@ -593,23 +593,23 @@ UTL_Scope::match_param (
 {
   const char *name = e->first_component ()->get_string ();
   AST_Param_Holder *retval = 0;
-  
+
   for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (*params);
        !i.done ();
        i.advance ())
     {
       FE_Utils::T_Param_Info *param = 0;
       i.next (param);
-      
+
       if (param->name_ == name)
         {
           retval =
             idl_global->gen ()->create_param_holder (e, param);
-            
+
           break;
         }
     }
-    
+
   return retval;
 }
 
@@ -852,12 +852,10 @@ UTL_Scope::add_argument (AST_Argument *a)
 AST_Union *
 UTL_Scope::add_union (AST_Union *u)
 {
-  if (u == 0)
+  if (u != 0)
     {
-      return 0;
+      u->set_added (true);
     }
-
-  u->set_added (true);
   return u;
 }
 
@@ -896,24 +894,20 @@ UTL_Scope::add_union_branch (AST_UnionBranch *u)
 AST_Structure *
 UTL_Scope::add_structure (AST_Structure *s)
 {
-  if (s == 0)
+  if (s != 0)
     {
-      return 0;
+      s->set_added (true);
     }
-
-  s->set_added (true);
   return s;
 }
 
 AST_StructureFwd *
 UTL_Scope::add_structure_fwd (AST_StructureFwd *s)
 {
-  if (s == 0)
+  if (s != 0)
     {
-      return 0;
+      s->set_added (true);
     }
-
-  s->set_added (true);
   return s;
 }
 
@@ -940,24 +934,20 @@ UTL_Scope::add_field (AST_Field *f)
 AST_Enum *
 UTL_Scope::add_enum (AST_Enum *e)
 {
-  if (e == 0)
+  if (e != 0)
     {
-      return 0;
+      e->set_added (true);
     }
-
-  e->set_added (true);
   return e;
 }
 
 AST_EnumVal *
 UTL_Scope::add_enum_val (AST_EnumVal *e)
 {
-  if (e == 0)
+  if (e != 0)
     {
-      return 0;
+      e->set_added (true);
     }
-
-  e->set_added (true);
   return e;
 }
 
@@ -1695,16 +1685,14 @@ UTL_Scope::lookup_primitive_type (AST_Expression::ExprType et)
 
 // Look through inherited list. Overridden in AST_Interface.
 AST_Decl *
-UTL_Scope::look_in_inherited (UTL_ScopedName *,
-                              bool )
+UTL_Scope::look_in_inherited (UTL_ScopedName *, bool)
 {
   return 0;
 }
 
 // Look through supported interface list. Overridden where necessary.
 AST_Decl *
-UTL_Scope::look_in_supported (UTL_ScopedName *,
-                              bool)
+UTL_Scope::look_in_supported (UTL_ScopedName *, bool)
 {
   return 0;
 }
@@ -1848,23 +1836,23 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
     {
       return 0;
     }
-    
+
   // If this call returns a non-zero value, we are in the scope
-  // of a template module.  
+  // of a template module.
   FE_Utils::T_PARAMLIST_INFO const *params =
     idl_global->current_params ();
-      
+
   if (e->length () == 1 && params != 0)
     {
       AST_Param_Holder *param_holder =
         this->match_param (e, params);
-        
+
       // Since we are inside the scope of a template module, any
       // single-segment scoped name that matches a template
       // parameter name has to be a reference to that parameter,
       // so we return the created placeholder. If there's no
       // match, 0 is returned, and we proceed with the regular
-      // lookup.  
+      // lookup.
       if (param_holder != 0)
         {
           return param_holder;
@@ -1986,41 +1974,41 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                         idl_global->filename ()->get_string (),
                         idl_global->lineno (),
                         d->full_name ()));
-                        
+
                       const bool same_file =
                         (0 == ACE_OS::strcmp (
                                 idl_global->filename ()->get_string (),
                                 d->file_name ().c_str ()) );
-                                
+
                       if (!same_file)
                         {
                           ACE_ERROR ((LM_ERROR,
                                       ACE_TEXT ("%C "),
                                       d->file_name ().c_str () ));
                         }
-                        
+
                       ACE_ERROR ((
                         LM_ERROR,
                         ACE_TEXT ("line %d but hidden by local \""),
                         d->line () ));
-                        
+
                       if (ScopeAsDecl (this)->full_name ()[0])
                         {
                           ACE_ERROR ((LM_ERROR,
                                       ACE_TEXT ("::%C"),
                                       ScopeAsDecl (this)->full_name () ));
                         }
-                        
+
                       ACE_ERROR ((LM_ERROR,
                                   ACE_TEXT ("::%C\""),
                                   e->head ()->get_string () ));
-                        
+
                       const bool same_file_again =
                         (same_file &&
                          0 == ACE_OS::strcmp (
                                 idl_global->filename ()->get_string (),
                                 first_one_found->file_name ().c_str ()) );
-                      
+
                       if (!same_file_again)
                         {
                           ACE_ERROR ((
@@ -2033,7 +2021,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                         {
                           ACE_ERROR ((LM_ERROR, ACE_TEXT (" at ") ));
                         }
-                        
+
                       ACE_ERROR ((LM_ERROR,
                                   ACE_TEXT ("line %d ?\n"),
                                   first_one_found->line () ));
@@ -2139,7 +2127,7 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
                               AST_Decl *ex)
 {
   UTL_Scope *s = 0;
-  AST_Decl **tmp;
+  AST_Decl **tmp = 0;
   AST_Interface *itf = 0;
   long oreferenced_allocated;
   long i;
@@ -2267,8 +2255,7 @@ UTL_Scope::add_to_name_referenced (Identifier *id)
 }
 
 void
-UTL_Scope::replace_referenced (AST_Decl *old_decl,
-                               AST_Decl *new_decl)
+UTL_Scope::replace_referenced (AST_Decl *old_decl, AST_Decl *new_decl)
 {
   for (int i = 0; i < this->pd_referenced_used; i++)
     {
@@ -2283,8 +2270,7 @@ UTL_Scope::replace_referenced (AST_Decl *old_decl,
 
 
 void
-UTL_Scope::replace_scope (AST_Decl *old_decl,
-                          AST_Decl *new_decl)
+UTL_Scope::replace_scope (AST_Decl *old_decl, AST_Decl *new_decl)
 {
   for (int i = 0; i < pd_decls_used; i++)
     {
@@ -2300,8 +2286,7 @@ UTL_Scope::replace_scope (AST_Decl *old_decl,
 
 // Add a node to set of nodes declared in this scope.
 void
-UTL_Scope::add_to_scope (AST_Decl *e,
-                         AST_Decl *ex)
+UTL_Scope::add_to_scope (AST_Decl *e, AST_Decl *ex)
 {
   if (e == 0)
     {
@@ -2726,7 +2711,7 @@ UTL_ScopeActiveIterator::UTL_ScopeActiveIterator (
 void
 UTL_ScopeActiveIterator::next (void)
 {
-  this->il++;
+  ++this->il;
 }
 
 // Get current item.
