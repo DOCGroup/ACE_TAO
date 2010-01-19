@@ -81,6 +81,8 @@ sub name_server
         $SV->Kill (); $SV->TimedWait (1);
         exit 1;
     }
+
+    sleep(10);
 }
 
 sub client
