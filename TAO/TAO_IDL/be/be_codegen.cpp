@@ -3259,6 +3259,12 @@ TAO_CodeGen::gen_exec_idl_includes (void)
         "#include \"ccm/CCM_Container.idl\"");
     }
 
+  if (be_global->ami4ccm_call_back ())
+    {
+      this->ciao_exec_idl_->print (
+        "\n#include \"connectors/ami4ccm/ami4ccm/ami4ccm.idl\"");
+    }
+
   this->gen_standard_include (
     this->ciao_exec_idl_,
     idl_global->stripped_filename ()->get_string ());
