@@ -125,7 +125,13 @@ be_visitor_context_ex_idl::visit_uses (
         }
       else
         {
-          os_ << be_nl << "::" << IdentifierHelper::orig_sn (impl->name ()).c_str ()
+          ACE_CString original_op_name (
+            impl->name ()->last_component ()->get_string ());
+          ACE_CString new_op_name = ACE_CString ("AMI_") + original_op_name;
+          UTL_ScopedName *op_name =
+            static_cast<UTL_ScopedName *> (impl->name ()->copy ());
+          op_name->last_component ()->replace_string (new_op_name.c_str ());
+          os_ << be_nl << "::" << IdentifierHelper::orig_sn (op_name).c_str ()
               << " get_connection_sendc_" << lname << " ();";
         }
     }
