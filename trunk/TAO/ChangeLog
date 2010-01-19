@@ -1,3 +1,10 @@
+Tue Jan 19 04:00:00 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+
+          Added some sleep statements to allow this test to pass on the
+          iPhone Simulator.
+
 Tue Jan 19 03:50:44 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * orbsvcs/tests/ImplRepo/run_test.pl:
