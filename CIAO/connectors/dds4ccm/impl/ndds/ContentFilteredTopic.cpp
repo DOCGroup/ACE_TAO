@@ -32,10 +32,9 @@ namespace CIAO
         ::DDS::StringSeq & expression_parameters)
       {
         CIAO_TRACE ("RTI_ContentFilteredTopic_i::get_expression_parameters");
-        ACE_UNUSED_ARG (expression_parameters);
         DDS_StringSeq parameters;
         ::DDS::ReturnCode_t retval = this->impl ()->get_expression_parameters (
-          parameters);
+                                                                    parameters);
         expression_parameters.length (parameters.length ());
         for (::DDS_Long i = 0 ; i < parameters.length(); ++i)
           {
