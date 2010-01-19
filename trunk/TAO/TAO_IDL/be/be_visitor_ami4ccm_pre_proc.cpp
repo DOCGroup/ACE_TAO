@@ -113,6 +113,7 @@ be_visitor_ami4ccm_pre_proc::visit_module (be_module *node)
 int
 be_visitor_ami4ccm_pre_proc::visit_uses (be_uses *node)
 {
+  return 0;
   printf ("here 2\n");
   // We check for an imported node after generating the reply handler.
   if (node->is_local () || node->is_abstract () || node->original_uses ())
@@ -186,6 +187,7 @@ be_visitor_ami4ccm_pre_proc::visit_uses (be_uses *node)
 int
 be_visitor_ami4ccm_pre_proc::visit_interface (be_interface * node)
 {
+return 0;
   // We check for an imported node after generating the reply handler.
   if (node->is_local () || node->is_abstract ())
     {
@@ -313,7 +315,7 @@ be_visitor_ami4ccm_pre_proc::visit_interface (be_interface * node)
 int
 be_visitor_ami4ccm_pre_proc::visit_operation (be_operation *node)
 {
-//return 0;
+return 0;
   if (node->flags () == AST_Operation::OP_oneway)
     {
       // We do nothing for oneways!

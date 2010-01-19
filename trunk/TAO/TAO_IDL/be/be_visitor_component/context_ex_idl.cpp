@@ -80,7 +80,7 @@ be_visitor_context_ex_idl::visit_component (
 
   os_ << be_uidt_nl
       << "};";
-      
+
   return 0;
 }
 
@@ -92,7 +92,7 @@ be_visitor_context_ex_idl::visit_uses (
 
   os_ << be_nl
       << "::";
-      
+
   ACE_CString port_name (this->port_prefix_);
   port_name += node->local_name ()->get_string ();
   const char *lname = port_name.c_str ();
@@ -112,8 +112,14 @@ be_visitor_context_ex_idl::visit_uses (
     {
       os_ << IdentifierHelper::orig_sn (impl->name ()).c_str ()
           << " get_connection_" << lname << " ();";
+
+      if (be_global->ami4ccm_call_back ())
+        {
+          os_ << be_nl << "::" << IdentifierHelper::orig_sn (impl->name ()).c_str ()
+              << " get_connection_sendc_" << lname << " ();";
+        }
     }
-    
+
   return 0;
 }
 
@@ -128,7 +134,7 @@ be_visitor_context_ex_idl::visit_publishes (
       << " (in ::"
       << IdentifierHelper::orig_sn (impl->name ()).c_str ()
       << " e);";
-      
+
   return 0;
 }
 
@@ -143,6 +149,6 @@ be_visitor_context_ex_idl::visit_emits (
       << " (in ::"
       << IdentifierHelper::orig_sn (impl->name ()).c_str ()
       << " e);";
-      
+
   return  0;
 }
