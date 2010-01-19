@@ -5,6 +5,7 @@
 #include "dds4ccm/impl/ndds/Utils.h"
 #include "dds4ccm/impl/ndds/SampleInfo.h"
 #include "dds4ccm/impl/ndds/Subscriber.h"
+#include "dds4ccm/impl/ndds/QueryCondition.h"
 #include "ciao/Logger/Log_Macros.h"
 
 // Implementation skeleton constructor
@@ -16,6 +17,11 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::Reader_T (void)
     impl_ (0)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::Reader_T");
+  #if defined DDS4CCM_USES_QUERY_CONDITION
+    this->qc_ = DDS::ReadCondition::_nil ();
+  #else
+    this->cft_ = DDS::ContentFilteredTopic::_nil ();
+  #endif
 }
 
 // Implementation skeleton destructor
@@ -305,43 +311,35 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_all (
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
- ::CCM_DDS::QueryFilter *
- CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (void)
-{
-  /// @todo
-  return 0;
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
+CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::create_filter (
   const ::CCM_DDS::QueryFilter & filter)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::filter");
+  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::create_filter");
   ::DDS::Subscriber_var sub = this->reader_->get_subscriber ();
   if (CORBA::is_nil (sub))
     {
-      CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+      CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::create_filter - "
                     "Error: Unable to get Subscriber.\n"));
       throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
     }
   ::DDS::DomainParticipant_var dp = sub->get_participant ();
   if (CORBA::is_nil (dp))
     {
-      CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+      CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::create_filter - "
                     "Error: Unable to get Participant.\n"));
       throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
     }
 
-  DDS::ContentFilteredTopic_var cft =
+  this->cft_ =
     dp->create_contentfilteredtopic (
                         "ActFunny",
                         this->topic_.in (),
                         filter.query,
                         filter.query_parameters);
-  if (CORBA::is_nil (cft))
+  if (CORBA::is_nil (this->cft_))
     {
-      CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+      CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::create_filter - "
                     "Error: Unable to create ContentFilteredTopic.\n"));
       throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
     }
@@ -350,7 +348,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
   ::DDS::ReturnCode_t retval = sub->delete_datareader (this->reader_);
   if (retval != ::DDS::RETCODE_OK)
     {
-      CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+      CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::create_filter - "
                     "Error: Unable to delete DataReader.\n"));
     }
   this->reader_ = ::DDS::CCM_DataReader::_nil ();
@@ -360,7 +358,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
       this->profile_name_.length () > 0)
     {
       reader = sub->create_datareader_with_profile (
-                        cft,
+                        this->cft_,
                         this->library_name_.c_str (),
                         this->profile_name_.c_str (),
                         listener,
@@ -370,18 +368,80 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
     {
       ::DDS::DataReaderQos drqos;
       reader = sub->create_datareader (
-                        cft,
+                        this->cft_,
                         drqos,
                         listener,
                         ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
     }
   if (CORBA::is_nil(reader))
     {
-      CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+      CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::create_filter - "
                     "Error: Unable to create a new DataReader.\n"));
     }
   this->reader_ = ::DDS::CCM_DataReader::_narrow (reader);
   this->set_impl (reader);
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+ ::CCM_DDS::QueryFilter *
+ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (void)
+{
+  #if defined DDS4CCM_USES_QUERY_CONDITION
+    if (CORBA::is_nil (this->qc_))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+                      "Error: No QueryCondition set yet. First set a filter.\n"));
+        throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+      }
+    ::CCM_DDS::QueryFilter * filter = new ::CCM_DDS::QueryFilter();
+    filter->query = this->qc_->get_query_expression ();
+    this->qc_->get_query_parameters (filter->query_parameters);
+    return filter;
+  #else
+    if (CORBA::is_nil (this->cft_))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+                      "Error: No ContentFilter set yet. First set a filter.\n"));
+        throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+      }
+    ::CCM_DDS::QueryFilter * filter = new ::CCM_DDS::QueryFilter();
+    filter->query = this->cft_->get_filter_expression ();
+    this->cft_->get_expression_parameters (filter->query_parameters);
+    return filter;
+  #endif
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
+  const ::CCM_DDS::QueryFilter & filter)
+{
+  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::filter");
+  #if defined DDS4CCM_USES_QUERY_CONDITION
+    if (CORBA::is_nil (this->qc_))
+      {
+        this->qc_ = this->reader_->create_querycondition (
+                        ::DDS::SampleStateMask sample_states,
+                        ::DDS::ViewStateMask view_states,
+                        ::DDS::InstanceStateMask instance_states,
+                        const char * query_expression,
+                        const ::DDS::StringSeq & query_parameters);
+      }
+    else
+      {
+        this->qc_p>set_query_parameters ();
+      }
+  #else
+    if (CORBA::is_nil (this->cft_))
+      {
+        create_filter (filter);
+      }
+    else
+      {
+        this->cft_->set_expression_parameters (
+          filter.query_parameters);
+      }
+  #endif
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>

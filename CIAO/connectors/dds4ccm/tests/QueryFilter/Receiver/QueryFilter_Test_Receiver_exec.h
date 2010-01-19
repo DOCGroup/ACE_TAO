@@ -125,11 +125,15 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   private:
     ::QueryFilter_Test::CCM_Receiver_Context_var context_;
     ::CCM_DDS::QueryFilterTest::Reader_var       reader_;
+    QueryFilterRestarter_var restarter_;
     CORBA::UShort   iterations_;
     CORBA::UShort   keys_;
     bool            has_run_;
 
+    int current_max_iteration_;
+
     void read_all ();
+    void check_filter ();
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

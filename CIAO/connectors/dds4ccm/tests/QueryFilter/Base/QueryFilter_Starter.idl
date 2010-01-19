@@ -5,8 +5,8 @@
  * @author Marcel Smit <msmit@remedy.nl>
  */
 
-#ifndef READER_STARTER_IDL
-#define READER_STARTER_IDL
+#ifndef QUERYFILTER_STARTER_IDL
+#define QUERYFILTER_STARTER_IDL
 
 interface QueryFilterStarter
 {
@@ -14,4 +14,9 @@ interface QueryFilterStarter
                               in unsigned short nr_iterations);
 };
 
-#endif /* READER_STARTER_IDL */
+interface QueryFilterRestarter
+{
+  void restart_write ();
+};
+
+#endif /* QUERYFILTER_STARTER_IDL */
