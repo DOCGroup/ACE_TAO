@@ -1,3 +1,17 @@
+Tue Jan 19 13:59:58 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+          Resolved compiler errors on Windows.
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Throwing exception when get_expression_parameters does
+          not succeed.
+
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.cpp:
+          Testing and catching proper exceptions.
+
 Tue Jan 19 10:57:12 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.cpp:

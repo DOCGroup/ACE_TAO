@@ -128,6 +128,8 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
                 queryfiltertest_info,
                 readinfo,
                 ::DDS::HANDLE_NIL);
+        ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::check_last - last iteration <%d>\n",
+                               queryfiltertest_info.iteration));
         return queryfiltertest_info.iteration == MAX_ITERATION_1 - 1;
       }
     catch (...)
@@ -197,45 +199,100 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   }
 
   void
+  Receiver_exec_i::test_exception ()
+  {
+    CCM_DDS::QueryFilter * filter = 0;
+    try
+      {
+        filter = this->reader_->filter ();
+      }
+    catch (const CCM_DDS::InternalError& ex)
+      {
+        ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::test_exception - "
+                              "Expected InternalError exception caught : retval <%u>\n",
+                              ex.error_code));
+        return;
+      }
+    catch (const CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("ERROR: Receiver_exec_i::test_exception: ");
+        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::test_exception - "
+                              "Unexpected exception caught\n"));
+        return;
+      }
+    ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::test_exception - "
+                          "No exception caught while retrieving unset filter.\n"));
+  }
+
+  void
   Receiver_exec_i::check_filter ()
   {
-    CCM_DDS::QueryFilter * filter = this->reader_->filter ();
-    //check query
-    if (ACE_OS::strcmp (filter->query, QUERY) == 0)
+    CCM_DDS::QueryFilter * filter = 0;
+    try
       {
-        CIAO_ERROR (1, (LM_ERROR, "ERROR: Receiver_exec_i::check_filter - "
-                                  "Unexpected query when retrieving filter: "
-                                  "expected <%C> - received <%C>\n",
-                                  QUERY, filter->query.in ()));
+        filter = this->reader_->filter ();
+      }
+    catch (const CCM_DDS::InternalError& ex)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter - "
+                              "caught InternalError exception: retval <%u>\n",
+                              ex.error_code));
+        return;
+      }
+    catch (const CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("ERROR: Receiver_exec_i::check_filter: ");
+        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter - "
+                              "Exception caught\n"));
+        return;
+      }
+
+    //check query
+    bool error = false;
+    if (ACE_OS::strcmp (filter->query, QUERY) != 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter - "
+                              "Unexpected query when retrieving filter: "
+                              "expected <%C> - received <%C>\n",
+                              QUERY, filter->query.in ()));
+        error = true;
       }
     //check current parameters.
     if (filter->query_parameters.length () != 2)
       {
-        CIAO_ERROR (1, (LM_ERROR, "ERROR: Receiver_exec_i::check_filter - "
-                                  "Unexpected number of parameters: "
-                                  "expected <%d> - received <%d>\n",
-                                  2, filter->query_parameters.length ()));
+        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter - "
+                              "Unexpected number of parameters: "
+                              "expected <%d> - received <%d>\n",
+                              2, filter->query_parameters.length ()));
+        error = true;
       }
 
     if (filter->query_parameters.length () >= 1)
       {
         if (ACE_OS::strcmp (filter->query_parameters[0], MIN_ITERATION_STR) == 0)
           {
-            CIAO_ERROR (1, (LM_ERROR, "ERROR: Receiver_exec_i::check_filter - "
-                                      "Unexpected query when retrieving filter: "
-                                      "expected <%C> - received <%C>\n",
-                                      QUERY, filter->query.in ()));
+            ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter - "
+                                  "Unexpected query when retrieving filter: "
+                                  "expected <%C> - received <%C>\n",
+                                  QUERY, filter->query.in ()));
+            error = true;
           }
       }
     if (filter->query_parameters.length () >= 2)
       {
         if (ACE_OS::strcmp (filter->query_parameters[1], MAX_ITERATION_2_STR) == 0)
           {
-            CIAO_ERROR (1, (LM_ERROR, "ERROR: Receiver_exec_i::check_filter - "
-                                      "Unexpected query when retrieving filter: "
-                                      "expected <%C> - received <%C>\n",
-                                      QUERY, filter->query.in ()));
+            ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter - "
+                                  "Unexpected query when retrieving filter: "
+                                  "expected <%C> - received <%C>\n",
+                                  QUERY, filter->query.in ()));
+            error = true;
           }
+      }
+    if (!error)
+      {
+        ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::check_filter - "
+                              "Passed check_filter test.\n"));
       }
   }
 
@@ -245,7 +302,8 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     this->has_run_ = true;
     ACE_OS::sleep (2);
     read_all ();
-/*    CCM_DDS::QueryFilter filter;
+/*
+    CCM_DDS::QueryFilter filter;
     filter.query = CORBA::string_dup ("");
     filter.query_parameters.length (2);
     filter.query_parameters[0] = CORBA::string_dup (MIN_ITERATION_STR);
@@ -255,7 +313,8 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     this->current_max_iteration_ = MAX_ITERATION_2;
     ACE_OS::sleep (4);
     read_all ();
-    check_filter ();*/
+*/
+    check_filter ();
   }
 
   ::CORBA::UShort
@@ -330,6 +389,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
+    test_exception ();
     CCM_DDS::QueryFilter filter;
     filter.query = CORBA::string_dup (QUERY);
     filter.query_parameters.length (2);
