@@ -116,7 +116,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
     }
 
   AST_Decl *d = 0;
-  UTL_ScopedName *item = 0;;
+  UTL_ScopedName *item = 0;
   AST_Interface *iface = 0;
   AST_Type *t = 0;
   long j = 0;
@@ -185,7 +185,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
               idl_global->err ()->inheritance_fwd_error (
                 this->interface_name_,
                 iface);
-                
+
               continue;
             }
 
@@ -195,7 +195,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
               idl_global->err ()->unconstrained_interface_expected (
                 this->name (),
                 iface->name ());
-                
+
               continue;
            }
         }
@@ -203,15 +203,15 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
         {
           AST_Param_Holder *ph =
             AST_Param_Holder::narrow_from_decl (d);
-            
+
           nt = ph->info ()->type_;
-          
+
           if (nt != AST_Decl::NT_type
               && nt != AST_Decl::NT_interface)
             {
               idl_global->err ()->mismatched_template_param (
                 ph->info ()->name_.c_str ());
-                
+
               continue;
             }
         }

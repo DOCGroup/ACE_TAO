@@ -177,12 +177,12 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
 
   long length = supports->length ();
   this->n_supports_ = length;
-  
+
   ACE_NEW (this->supports_,
            AST_Type *[length]);
 
   AST_Decl *d = 0;
-  UTL_ScopedName *item = 0;;
+  UTL_ScopedName *item = 0;
   AST_Interface *iface = 0;
   AST_Type *t = 0;
   int i = 0;
@@ -233,7 +233,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
         {
           d = AST_Typedef::narrow_from_decl (d)->primitive_base_type ();
         }
-        
+
       AST_Decl::NodeType nt = d->node_type ();
       t = AST_Type::narrow_from_decl (d);
 
@@ -245,15 +245,15 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
         {
           AST_Param_Holder *ph =
             AST_Param_Holder::narrow_from_decl (d);
-            
+
           nt = ph->info ()->type_;
-          
+
           if (nt != AST_Decl::NT_type
               && nt != AST_Decl::NT_interface)
             {
               idl_global->err ()->mismatched_template_param (
                 ph->info ()->name_.c_str ());
-                
+
               continue;
             }
         }
