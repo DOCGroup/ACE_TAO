@@ -359,7 +359,7 @@ be_visitor_servant_svs::visit_uses (be_uses *node)
   const char *port_name = prefix.c_str ();
 
   const char *obj_name = node->uses_type ()->full_name ();
-  bool is_multiple = node->is_multiple ();
+  bool const is_multiple = node->is_multiple ();
 
   if (node->uses_type ()->is_local ())
     {
@@ -1378,7 +1378,7 @@ be_visitor_disconnect_block::visit_uses (be_uses *node)
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
 
-  bool is_multiple = node->is_multiple ();
+  bool const is_multiple = node->is_multiple ();
 
   if (node->uses_type ()->is_local ())
     {
@@ -1431,7 +1431,7 @@ be_visitor_receptacle_desc::visit_uses (be_uses *node)
   const char *port_name = prefix.c_str ();
 
   AST_Type *obj = node->uses_type ();
-  bool is_multiple = node->is_multiple ();
+  bool const is_multiple = node->is_multiple ();
 
   os_ << be_nl << be_nl;
 
