@@ -144,6 +144,14 @@ be_visitor_context_svh::visit_uses (be_uses *node)
     {
       os_ << "::" << obj_name << "_ptr" << be_nl
           << "get_connection_" << port_name << " (void);";
+
+      if (be_global->ami4ccm_call_back ())
+        {
+          os_ << be_nl << "virtual ";
+
+          os_ << "::" << obj_name << "_ptr" << be_nl
+              << "get_connection_sendc_" << port_name << " (void);";
+        }
     }
 
   os_ << be_nl << be_uidt_nl
@@ -188,6 +196,13 @@ be_visitor_context_svh::visit_uses (be_uses *node)
       os_ << "// Simplex " << port_name << " connection." << be_nl
           << "::" << obj_name << "_var" << be_nl
           << "ciao_uses_" << port_name << "_;";
+
+      if (be_global->ami4ccm_call_back ())
+        {
+          os_ << be_nl << "// Simplex " << port_name << " connection." << be_nl
+              << "::" << obj_name << "_var" << be_nl
+              << "ciao_uses_sendc_" << port_name << "_;";
+        }
     }
 
   return 0;

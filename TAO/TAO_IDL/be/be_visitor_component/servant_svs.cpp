@@ -445,6 +445,29 @@ be_visitor_servant_svs::visit_uses (be_uses *node)
       << port_name << " ();" << be_uidt_nl
       << "}";
 
+  if (be_global->ami4ccm_call_back ())
+    {
+      os_ << be_nl << be_nl;
+      if (is_multiple)
+        {
+          os_ << node_->full_name () << "::" << port_name
+              << "Connections *";
+        }
+      else
+        {
+          os_ << obj_name << "_ptr";
+        }
+      os_ << be_nl
+          << node_->local_name () << "_Servant::get_connection_sendc"
+          << (is_multiple ? "s" : "") << "_"
+          << port_name << " (void)" << be_nl
+          << "{" << be_idt_nl
+          << "return this->context_->get_connection_sendc"
+          << (is_multiple ? "s" : "") << "_"
+          << port_name << " ();" << be_uidt_nl
+          << "}";
+    }
+
   return 0;
 }
 

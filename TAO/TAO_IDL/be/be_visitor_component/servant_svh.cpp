@@ -160,7 +160,7 @@ be_visitor_servant_svh::visit_uses (be_uses *node)
   prefix +=node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
   const char *obj_name = node->uses_type ()->full_name ();
-  bool is_multiple = node->is_multiple ();
+  bool const is_multiple = node->is_multiple ();
 
   if (node->uses_type ()->is_local ())
     {
@@ -181,6 +181,12 @@ be_visitor_servant_svh::visit_uses (be_uses *node)
     {
       os_ << "::" << obj_name << "_ptr" << be_nl
           << "get_connection_" << port_name << " (void);";
+
+      if (be_global->ami4ccm_call_back ())
+        {
+          os_ << be_nl << "::" << obj_name << "_ptr" << be_nl
+              << "get_connection_sendc_" << port_name << " (void);";
+        }
     }
 
   os_ << be_nl << be_nl
