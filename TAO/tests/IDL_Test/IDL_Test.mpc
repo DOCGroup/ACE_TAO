@@ -4,14 +4,16 @@ project(*IDL): taoserver, messaging, gen_ostream {
   custom_only=1
   idlflags += -GC -GH -Gd -GT
 
-  idlflags += -Wb,stub_export_macro=TAO_IDL_TEST_STUB_Export \
-              -Wb,stub_export_include=TAO_IDL_TEST_stub_export.h \
-              -Wb,skel_export_macro=TAO_IDL_TEST_STUB_Export \
-              -Wb,skel_export_include=TAO_IDL_TEST_stub_export.h -Gxhst
+  IDL_Files {
+    idlflags += -Wb,stub_export_macro=TAO_IDL_TEST_STUB_Export \
+                -Wb,stub_export_include=TAO_IDL_TEST_stub_export.h \
+                -Wb,skel_export_macro=TAO_IDL_TEST_STUB_Export \
+                -Wb,skel_export_include=TAO_IDL_TEST_stub_export.h -Gxhst
+
+    attribute.idl
+  }
 
   IDL_Files {
-    attribute.idl
-
     array.idl
     Bug_2350_Regression.idl
     Bug_2577_Regression.idl
@@ -237,7 +239,7 @@ project(*NDDS_IDL): ndds_ts_defaults {
     full.idl
     fwd.idl
     generic_object.idl
-    gperf.idl
+//    gperf.idl
     included.idl
     including.idl
     inherit.idl
