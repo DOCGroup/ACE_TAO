@@ -50,6 +50,26 @@ namespace CIAO_QueryFilter_Test_Sender_Impl
     Sender_exec_i &callback_;
   };
 
+  //============================================================
+  // Restarter_exec_i
+  //============================================================
+  class Restarter_exec_i
+    : public virtual ::CCM_QueryFilterRestarter,
+      public virtual ::CORBA::LocalObject
+  {
+  public:
+    Restarter_exec_i (Sender_exec_i & callback);
+    virtual ~Restarter_exec_i (void);
+
+    virtual void restart_write ();
+
+  private:
+    Sender_exec_i &callback_;
+  };
+
+  //============================================================
+  // Sender_exec_i
+  //============================================================
   class Sender_exec_i
     : public virtual Sender_Exec,
       public virtual ::CORBA::LocalObject
@@ -68,6 +88,9 @@ namespace CIAO_QueryFilter_Test_Sender_Impl
 
     virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
     get_info_out_connector_status (void);
+
+    virtual ::CCM_QueryFilterRestarter_ptr
+    get_restart_writer (void);
 
     virtual void set_session_context (::Components::SessionContext_ptr ctx);
 

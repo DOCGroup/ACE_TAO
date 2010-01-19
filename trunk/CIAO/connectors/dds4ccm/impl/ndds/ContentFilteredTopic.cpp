@@ -24,7 +24,7 @@ namespace CIAO
       RTI_ContentFilteredTopic_i::get_filter_expression (void)
       {
         CIAO_TRACE ("RTI_ContentFilteredTopic_i::get_filter_expression");
-        throw CORBA::NO_IMPLEMENT ();
+        return CORBA::string_dup (this->impl ()->get_filter_expression ());
       }
 
       ::DDS::ReturnCode_t
@@ -33,7 +33,15 @@ namespace CIAO
       {
         CIAO_TRACE ("RTI_ContentFilteredTopic_i::get_expression_parameters");
         ACE_UNUSED_ARG (expression_parameters);
-        throw CORBA::NO_IMPLEMENT ();
+        DDS_StringSeq parameters;
+        ::DDS::ReturnCode_t retval = this->impl ()->get_expression_parameters (
+          parameters);
+        expression_parameters.length (parameters.length ());
+        for (::DDS_Long i = 0 ; i < parameters.length(); ++i)
+          {
+            expression_parameters[i] = CORBA::string_dup (parameters[i]);
+          }
+        return retval;
       }
 
       ::DDS::ReturnCode_t
@@ -41,8 +49,15 @@ namespace CIAO
         const ::DDS::StringSeq & expression_parameters)
       {
         CIAO_TRACE ("RTI_ContentFilteredTopic_i::set_expression_parameters");
-        ACE_UNUSED_ARG (expression_parameters);
-        throw CORBA::NO_IMPLEMENT ();
+        const char* parameterlist[expression_parameters.length ()];
+        for (CORBA::ULong i = 0; i < expression_parameters.length (); ++i)
+          {
+            parameterlist[i] = expression_parameters[i].in ();
+          }
+        DDS_StringSeq parameters (expression_parameters.length ());
+        parameters.from_array(parameterlist, expression_parameters.length ());
+
+        return this->impl ()->set_expression_parameters (parameters);
       }
 
       ::DDS::Topic_ptr

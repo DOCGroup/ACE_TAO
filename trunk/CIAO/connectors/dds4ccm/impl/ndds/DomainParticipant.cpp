@@ -480,7 +480,7 @@ namespace CIAO
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
         CIAO_DEBUG (6, (LM_INFO, CLINFO "DDS_DomainParticipant_i::create_contentfilteredtopic - "
-                     "Successfully created topic with name %C and expresion %C\n",
+                     "Successfully created topic with name <%C> and filter expression <%C>\n",
                      name, filter_expression));
 
         ::DDS::ContentFilteredTopic_var retval = new RTI_ContentFilteredTopic_i ();

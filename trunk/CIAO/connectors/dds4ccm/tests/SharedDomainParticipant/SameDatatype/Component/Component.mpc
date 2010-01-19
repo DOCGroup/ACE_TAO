@@ -58,7 +58,8 @@ project(DDS_SharedDPComponent_lem_stub) : ccm_svnt, dds4ccm_base {
 }
 
 project(DDS_SharedDPComponent_stub) : ccm_stub, dds4ccm_base {
-  after += DDS_SharedDPComponent_idl_gen DDS_SharedDPBase_stub DDS_SharedDP_Connector_stub
+  after += DDS_SharedDPComponent_idl_gen DDS_SharedDPBase_stub \
+           DDS_SharedDP_Connector_lem_gen DDS_SharedDP_Connector_stub
   libs  += DDS_SharedDPBase_stub DDS_Connector_stub
   includes += ..
   libpaths += ../lib
@@ -90,7 +91,7 @@ project(DDS_SharedDPComponent_exec) : ciao_executor, nddslib, dds4ccm_base {
   sharedname = Component_exec
   libs += Component_stub Component_lem_stub DDS_SharedDPBase_stub \
           DDS_Connector_lem_stub DDS_Connector_stub \
-          DDS4CCM_lem_stub
+          DDS4CCM_lem_stub CIAO_DDS4CCM_NDDS_Impl
   libpaths += ../lib
   includes += ..
   libout = ../lib

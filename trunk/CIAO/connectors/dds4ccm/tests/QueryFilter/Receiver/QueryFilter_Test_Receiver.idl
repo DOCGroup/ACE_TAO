@@ -21,6 +21,8 @@ module QueryFilter_Test
     port CCM_DDS::QueryFilterTest::DDS_Read info_out;
 
     provides QueryFilterStarter reader_start;
+    uses QueryFilterRestarter writer_restart;
+
     provides CCM_DDS::ConnectorStatusListener info_out_connector_status;
   };
 };
