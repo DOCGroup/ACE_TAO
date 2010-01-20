@@ -4,12 +4,13 @@ project(*IDL): taoserver, messaging, gen_ostream {
   custom_only=1
   idlflags += -GC -GH -Gd -GT
 
-  IDL_Files {
-    idlflags += -Wb,stub_export_macro=TAO_IDL_TEST_STUB_Export \
-                -Wb,stub_export_include=TAO_IDL_TEST_stub_export.h \
-                -Wb,skel_export_macro=TAO_IDL_TEST_STUB_Export \
-                -Wb,skel_export_include=TAO_IDL_TEST_stub_export.h -Gxhst
+  idlflags += -Wb,stub_export_macro=TAO_IDL_TEST_STUB_Export \
+              -Wb,stub_export_include=TAO_IDL_TEST_stub_export.h \
+              -Wb,skel_export_macro=TAO_IDL_TEST_STUB_Export \
+              -Wb,skel_export_include=TAO_IDL_TEST_stub_export.h
 
+  IDL_Files {
+    idlflags += -Gxhst
     attribute.idl
   }
 
