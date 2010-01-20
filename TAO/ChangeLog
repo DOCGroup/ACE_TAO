@@ -1,3 +1,8 @@
+Wed Jan 20 19:19:19 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/ImplRepo_Service/Activator_Options.cpp:
+          Fixed compile warning.
+
 Wed Jan 20 15:15:02 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * MPC/config/tao_idl_fe.mpb:
