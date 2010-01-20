@@ -3,7 +3,7 @@
 
 // The ifrservice base project inherits from minimum_corba, so it's no longer
 // necessary to add minimum_corba to 'avoids' here.
-project(IFR_Service) : orbsvcsexe, install, ifrservice, ifr_client, imr_client, crosscompile {
+project(IFR_Service) : orbsvcsexe, install, ifrservice, ifr_client, imr_client  {
   exename = IFR_Service
 
   IDL_Files {
@@ -16,7 +16,7 @@ project(IFR_Service) : orbsvcsexe, install, ifrservice, ifr_client, imr_client, 
 }
 
 
-project(TAO_IFR_BE) : taolib, tao_output, conv_lib, ifr_client, crosscompile, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, tao_idl_fe {
+project(TAO_IFR_BE) : taolib, tao_output, conv_lib, ifr_client, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, tao_idl_fe {
   after       += IFR_Service
   sharedname   = TAO_IFR_BE
   dynamicflags = TAO_IFR_BE_BUILD_DLL
@@ -40,7 +40,7 @@ project(TAO_IFR_BE) : taolib, tao_output, conv_lib, ifr_client, crosscompile, av
 }
 
 
-project(TAO_IFR_EXE) : aceexe, install, ifr_client, mcpp, tao_idl_mcpp, crosscompile, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, tao_idl_fe {
+project(TAO_IFR_EXE) : aceexe, install, ifr_client, mcpp, tao_idl_mcpp, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, tao_idl_fe {
   after          += TAO_IFR_BE
   exename         = tao_ifr
   libs           += TAO_IFR_BE TAO

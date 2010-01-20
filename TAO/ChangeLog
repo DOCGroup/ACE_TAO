@@ -1,3 +1,14 @@
+Wed Jan 20 15:15:02 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * MPC/config/tao_idl_fe.mpb:
+        * TAO_IDL/tao_idl_fe.mpc:
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+
+          Build the IFR_Service executable on cross-build platforms.
+          This will allow more tests to pass on the iPhone Simulator.
+          According to Johnny Willemsen, there is no reason not to build
+          IFR_Service executable on cross-build platforms.
+
 Wed Jan 20 09:09:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/fe/lex.yy.cpp:
