@@ -1,3 +1,19 @@
+Wed Jan 20 12:28:43 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.cpp:
+          Resolved compiler error on windows.
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Throwing an exception when setting the query parameters.
+
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryFilter/Sender/QueryFilter_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryFilter/Sender/QueryFilter_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryFilter/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/QueryFilter/descriptors/run_test.pl:
+          Added some more tests.
+
 Tue Jan 19 13:59:58 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.cpp:
