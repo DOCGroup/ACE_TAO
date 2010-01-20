@@ -3106,8 +3106,7 @@ idl_store_pragma (char *buf)
           // associated with this file, otherwise we add the prefix.
           char *ext_id = idl_global->filename ()->get_string ();
           char *int_id = 0;
-          int status = idl_global->file_prefixes ().find (ext_id,
-                                                          int_id);
+          int const status = idl_global->file_prefixes ().find (ext_id, int_id);
 
           if (status == 0)
             {
@@ -3461,9 +3460,7 @@ idl_atof (char *s)
  * Convert (some) escaped characters into their ascii values
  */
 static char
-idl_escape_reader(
-    char *str
-  )
+idl_escape_reader(char *str)
 {
   if (str[0] != '\\')
     {
