@@ -1047,7 +1047,7 @@ IDL_GlobalData::destroy (void)
       this->pd_idl_src_file = 0;
     }
 
-  size_t size = this->pragma_prefixes ().size  ();
+  size_t const size = this->pragma_prefixes ().size  ();
   char *trash = 0;
 
   for (size_t i = 0; i < size; ++i)
