@@ -48,13 +48,18 @@ namespace CIAO
         const ::DDS::StringSeq & expression_parameters)
       {
         CIAO_TRACE ("RTI_ContentFilteredTopic_i::set_expression_parameters");
-        const char* parameterlist[expression_parameters.length ()];
+
+        const char** parameterlist = new const char*[expression_parameters.length ()];
+
         for (CORBA::ULong i = 0; i < expression_parameters.length (); ++i)
           {
             parameterlist[i] = expression_parameters[i].in ();
           }
+
         DDS_StringSeq parameters (expression_parameters.length ());
         parameters.from_array(parameterlist, expression_parameters.length ());
+
+        delete [] parameterlist;
 
         return this->impl ()->set_expression_parameters (parameters);
       }

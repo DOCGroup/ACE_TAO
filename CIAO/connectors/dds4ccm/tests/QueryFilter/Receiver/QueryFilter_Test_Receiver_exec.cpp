@@ -69,6 +69,8 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     ::DDS::Entity_ptr /*the_entity*/,
     ::DDS::StatusKind  status_kind)
   {
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
+                        this->mutex_, CORBA::INTERNAL ());
     if (status_kind == ::DDS::DATA_ON_READERS_STATUS &&
         !this->has_run_ &&
         this->callback_.check_last ())
@@ -297,23 +299,44 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   }
 
   void
+  Receiver_exec_i::test_set_query_parameters ()
+  {
+    try
+      {
+        this->current_max_iteration_ = MAX_ITERATION_2;
+        CCM_DDS::QueryFilter filter;
+        filter.query = CORBA::string_dup ("na");
+        filter.query_parameters.length (2);
+        filter.query_parameters[0] = CORBA::string_dup (MIN_ITERATION_STR);
+        filter.query_parameters[1] = CORBA::string_dup (MAX_ITERATION_2_STR);
+        this->reader_->filter (filter);
+        this->restarter_->restart_write ();
+        ACE_OS::sleep (14);
+        read_all ();
+      }
+    catch (const CCM_DDS::InternalError& ex)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::test_set_query_parameters - "
+                              "caught InternalError exception: retval <%u>\n",
+                              ex.error_code));
+        return;
+      }
+    catch (const CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("ERROR: Receiver_exec_i::test_set_query_parameters: ");
+        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter - "
+                              "Exception caught\n"));
+        return;
+      }
+  }
+
+  void
   Receiver_exec_i::run ()
   {
     this->has_run_ = true;
     ACE_OS::sleep (2);
     read_all ();
-/*
-    CCM_DDS::QueryFilter filter;
-    filter.query = CORBA::string_dup ("");
-    filter.query_parameters.length (2);
-    filter.query_parameters[0] = CORBA::string_dup (MIN_ITERATION_STR);
-    filter.query_parameters[1] = CORBA::string_dup (MAX_ITERATION_2_STR);
-    this->reader_->filter (filter);
-    this->restarter_->restart_write ();
-    this->current_max_iteration_ = MAX_ITERATION_2;
-    ACE_OS::sleep (4);
-    read_all ();
-*/
+    test_set_query_parameters ();
     check_filter ();
   }
 
@@ -382,21 +405,21 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
-    this->reader_ = this->context_->get_connection_info_out_data();
-    this->restarter_ = this->context_->get_connection_writer_restart ();
   }
 
   void
   Receiver_exec_i::ccm_activate (void)
   {
-    test_exception ();
+    this->reader_ = this->context_->get_connection_info_out_data();
+    this->restarter_ = this->context_->get_connection_writer_restart ();
+    //test_exception ();
     CCM_DDS::QueryFilter filter;
     filter.query = CORBA::string_dup (QUERY);
     filter.query_parameters.length (2);
     filter.query_parameters[0] = CORBA::string_dup (MIN_ITERATION_STR);
     filter.query_parameters[1] = CORBA::string_dup (MAX_ITERATION_1_STR);
     this->reader_->filter (filter);
-  }
+}
 
   void
   Receiver_exec_i::ccm_passivate (void)

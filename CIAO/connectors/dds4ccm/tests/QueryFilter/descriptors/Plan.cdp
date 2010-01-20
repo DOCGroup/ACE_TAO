@@ -351,6 +351,22 @@
     </internalEndpoint>
   </connection>
 
+  <connection>
+    <name>restart_writer</name>
+    <internalEndpoint>
+      <portName>writer_restart</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>restart_writer</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SenderComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
   <artifact xmi:id="Sender_ExecArtifact">
     <name>Sender_exec</name>
     <source/>
