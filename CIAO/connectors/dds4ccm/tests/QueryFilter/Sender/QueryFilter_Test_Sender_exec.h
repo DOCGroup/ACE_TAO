@@ -101,6 +101,7 @@ namespace CIAO_QueryFilter_Test_Sender_Impl
     virtual void ccm_remove (void);
 
     void start (void);
+    void restart (void);
 
   private:
     ::QueryFilter_Test::CCM_Sender_Context_var context_;

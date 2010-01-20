@@ -49,8 +49,9 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     virtual
     void on_unexpected_status( ::DDS::Entity_ptr ,
                               ::DDS::StatusKind );
+
   private:
-    /// Maintains a handle that actually process the event
+    TAO_SYNCH_MUTEX mutex_;
     Receiver_exec_i &callback_;
     bool has_run_;
   };
@@ -132,9 +133,10 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
 
     int current_max_iteration_;
 
-    void read_all ();
-    void check_filter ();
-    void test_exception ();
+    void read_all (void);
+    void check_filter (void);
+    void test_exception (void);
+    void test_set_query_parameters (void);
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

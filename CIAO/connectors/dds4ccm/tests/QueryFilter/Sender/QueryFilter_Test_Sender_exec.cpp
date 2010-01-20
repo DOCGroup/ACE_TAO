@@ -73,7 +73,7 @@ namespace CIAO_QueryFilter_Test_Sender_Impl
   void
   Restarter_exec_i::restart_write ()
   {
-    this->callback_.start ();
+    this->callback_.restart ();
   }
 
   //============================================================
@@ -89,6 +89,27 @@ namespace CIAO_QueryFilter_Test_Sender_Impl
 
   Sender_exec_i::~Sender_exec_i (void)
   {
+  }
+
+  void
+  Sender_exec_i::restart (void)
+  {
+    this->done_ = false;
+    this->ccm_activated_ = true;
+    for (CORBA::UShort iter_key = 1; iter_key < this->keys_ + 1; ++iter_key)
+      {
+        char key[7];
+        QueryFilterTest *new_key = new QueryFilterTest;
+        ACE_OS::sprintf (key, "KEY_%d", iter_key);
+        new_key->symbol = CORBA::string_dup(key);
+        for (CORBA::UShort iter = 1; iter < this->iterations_ + 1; ++iter)
+          {
+            new_key->iteration = iter;
+            this->writer_->register_instance (*new_key);
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Write key <%C> with <%d>\n"),
+                        key, iter));
+          }
+      }
   }
 
   void
@@ -112,9 +133,9 @@ namespace CIAO_QueryFilter_Test_Sender_Impl
             QueryFilterTest *new_key = new QueryFilterTest;
             ACE_OS::sprintf (key, "KEY_%d", iter_key);
             new_key->symbol = CORBA::string_dup(key);
-            for (CORBA::UShort iter = 1; iter < this->iterations_ + 1; ++iter)
-              {
-                new_key->iteration = iter;
+        for (CORBA::UShort iter = 1; iter < this->iterations_ + 1; ++iter)
+          {
+            new_key->iteration = iter;
                 this->writer_->write_one (*new_key, ::DDS::HANDLE_NIL);
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written key <%C> with <%d>\n"),
                             key, iter));

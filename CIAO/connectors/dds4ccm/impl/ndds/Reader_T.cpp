@@ -333,7 +333,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::create_filter (
 
   this->cft_ =
     dp->create_contentfilteredtopic (
-                        "ActFunny",
+                        "DDS4CCMContentFilteredTopic",
                         this->topic_.in (),
                         filter.query,
                         filter.query_parameters);
@@ -343,7 +343,6 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::create_filter (
                     "Error: Unable to create ContentFilteredTopic.\n"));
       throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
     }
-//   this->set_expression_parameters (filter.query_parameters);
   ::DDS::DataReaderListener_var listener = this->reader_->get_listener ();
   this->reader_->set_listener (::DDS::DataReaderListener::_nil (), 0);
   ::DDS::ReturnCode_t retval = sub->delete_datareader (this->reader_);
@@ -412,7 +411,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
     if (retval != DDS::RETCODE_OK)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
-                                  "Error getting expression_paramaters. "
+                                  "Error getting expression_parameters. "
                                   "Retval is %C\n",
                                   translate_retcode(retval)));
         throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, retval);
@@ -439,7 +438,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
       }
     else
       {
-        this->qc_p>set_query_parameters ();
+        this->qc_>set_query_parameters ();
       }
   #else
     if (CORBA::is_nil (this->cft_))
@@ -448,8 +447,16 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
       }
     else
       {
-        this->cft_->set_expression_parameters (
+        ::DDS::ReturnCode_t retval = this->cft_->set_expression_parameters (
           filter.query_parameters);
+        if (retval != ::DDS::RETCODE_OK)
+          {
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+                                      "Error setting expression_parameters. "
+                                      "Retval is %C\n",
+                                      translate_retcode(retval)));
+            throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, retval);
+          }
       }
   #endif
 }

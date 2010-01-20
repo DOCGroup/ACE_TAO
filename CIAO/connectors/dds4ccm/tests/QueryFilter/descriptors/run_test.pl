@@ -44,6 +44,11 @@ $tg_executor = 0;
 $status = 0;
 $cdp_file = "Plan.cdp";
 
+# $ENV {'CIAO_LOG_LEVEL'} = 2;
+# $ENV {'DANCE_LOG_LEVEL'} = 2;
+# $ENV {'DDS4CCM_NDDS_LOG_VERBOSITY'} = 9;
+
+
 sub create_targets {
     #   naming service
     $tg_naming = PerlACE::TestTarget::create_target (1) || die "Create target for ns failed\n";
