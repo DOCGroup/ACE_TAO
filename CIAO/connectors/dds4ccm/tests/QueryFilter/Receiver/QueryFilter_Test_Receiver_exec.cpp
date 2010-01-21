@@ -124,25 +124,28 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
 
         for (CORBA::ULong it = 0; it < queryfiltertest_info_seq->length (); ++it)
           {
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ALL : ")
-                ACE_TEXT ("sample received for <%C>: iteration <%u>\n"),
-                (*queryfiltertest_info_seq)[it].symbol.in (),
-                (*queryfiltertest_info_seq)[it].iteration));
-            if ((*queryfiltertest_info_seq)[it].iteration <=
-                  this->current_min_iteration_)
+            if ((*readinfo_seq)[it].access_status == ::CCM_DDS::FRESH_INFO)
               {
-                ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
-                                      "Didn't expect samples with iterations "
-                                      "<= %d\n",
-                                      this->current_min_iteration_));
-              }
-            if ((*queryfiltertest_info_seq)[it].iteration >
-                this->current_max_iteration_)
-              {
-                ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
-                                      "Didn't expect samples with iterations "
-                                      "> %d\n",
-                                      this->current_max_iteration_));
+                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ALL : ")
+                    ACE_TEXT ("sample received for <%C>: iteration <%u>\n"),
+                    (*queryfiltertest_info_seq)[it].symbol.in (),
+                    (*queryfiltertest_info_seq)[it].iteration));
+                if ((*queryfiltertest_info_seq)[it].iteration <=
+                      this->current_min_iteration_)
+                  {
+                    ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
+                                          "Didn't expect samples with iterations "
+                                          "<= %d\n",
+                                          this->current_min_iteration_));
+                  }
+                if ((*queryfiltertest_info_seq)[it].iteration >
+                    this->current_max_iteration_)
+                  {
+                    ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
+                                          "Didn't expect samples with iterations "
+                                          "> %d\n",
+                                          this->current_max_iteration_));
+                  }
               }
           }
       }
