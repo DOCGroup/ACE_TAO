@@ -80,6 +80,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_porttype.h"
 #include "ast_template_module.h"
 #include "ast_template_module_ref.h"
+#include "ast_template_module_inst.h"
 #include "ast_typedef.h"
 #include "ast_type.h"
 #include "ast_root.h"
@@ -113,10 +114,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
-
-ACE_RCSID (util,
-           utl_scope,
-           "$Id$")
 
 #undef  INCREMENT
 #define INCREMENT 64
@@ -1791,7 +1788,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
                 {
                   continue;
                 }
-
+                
               return d;
             }
           else

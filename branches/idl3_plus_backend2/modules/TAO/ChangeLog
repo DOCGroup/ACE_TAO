@@ -1,3 +1,53 @@
+Thu Jan 21 20:20:47 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_visitor_reifying.h:
+        * TAO_IDL/include/ast_visitor_tmpl_module_inst.h:
+        * TAO_IDL/include/ast_visitor_context.h:
+        * TAO_IDL/ast/ast_visitor_tmpl_module_inst.cpp:
+        * TAO_IDL/ast/ast_visitor_reifying.cpp:
+        * TAO_IDL/ast/ast_visitor_context.cpp:
+
+          Moved the visitors that create implied IDL upon
+          template module instantiation to the front end,
+          along with a piece of the visitor context class
+          that becomes a base class for the backend visitor
+          context class. This move is motivated by the fact
+          that generation of executor IDL turns this implied
+          IDL into explicit IDL, so in order to parse the
+          executor IDL file, this implied IDL must be added
+          to the AST in the front end.
+
+          The corresponding backend visitor classes will be
+          removed after further testing.
+
+        * TAO_IDL/include/ast_factory.h:
+        * TAO_IDL/include/ast_operation.h:
+        * TAO_IDL/be/be_factory.cpp:
+        * TAO_IDL/be/be_visitor_scope.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_module.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_visitor_context.cpp:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/be/be_operation.cpp:
+        * TAO_IDL/be/be_scope.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/ast/ast_visitor.cpp:
+        * TAO_IDL/ast/ast_operation.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_factory.cpp:
+        * TAO_IDL/be_include/be_operation.h:
+        * TAO_IDL/be_include/be_visitor_context.h:
+        * TAO_IDL/be_include/be_factory.h:
+        * TAO_IDL/be_include/be_scope.h:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Other changes related to the above visitor move, plus
+          some cosmetic changes. Spawning of the new visitors
+          when a template module instantiation is seen is not
+          added in this set of changes.
+
 Mon Jan 18 15:35:54 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuebox/field_ci.cpp:

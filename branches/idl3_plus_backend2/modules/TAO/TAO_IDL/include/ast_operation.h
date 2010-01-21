@@ -146,6 +146,9 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
+  // Method to add exceptions
+  UTL_ExceptList *be_add_exceptions (UTL_ExceptList *t);
+
 protected:
   // Data.
 

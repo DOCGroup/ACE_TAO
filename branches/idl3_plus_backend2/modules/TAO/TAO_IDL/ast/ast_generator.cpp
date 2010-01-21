@@ -129,7 +129,7 @@ AST_Module *
 AST_Generator::create_module (UTL_Scope *s,
                               UTL_ScopedName *n)
 {
- // We create this first so if we find a module with the
+  // We create this first so if we find a module with the
   // same name from an included file, we can add its
   // members to the new module's scope.
   AST_Module *retval = 0;
@@ -137,57 +137,59 @@ AST_Generator::create_module (UTL_Scope *s,
                   AST_Module (n),
                   0);
 
-  AST_Decl *d = 0;
   AST_Module *m = 0;
 
-  UTL_ScopeActiveIterator iter (s,
-                                UTL_Scope::IK_decls);
-
   // Check for another module of the same name in this scope.
-  while (!iter.is_done ())
+  for (UTL_ScopeActiveIterator iter (s, UTL_Scope::IK_decls);
+       !iter.is_done ();
+       iter.next ())
     {
-      d = iter.item ();
+      // Can't just check node type here, since it could be a
+      // template module or template module instantiation.
+      m = AST_Module::narrow_from_decl (iter.item ());
 
-      if (d->node_type () == AST_Decl::NT_module)
+      if (m != 0)
         {
           // Does it have the same name as the one we're
           // supposed to create.
-          if (d->local_name ()->compare (n->last_component ()))
+          if (m->local_name ()->compare (n->last_component ()))
             {
-              m = AST_Module::narrow_from_decl (d);
-
               // Get m's previous_ member, plus all it's decls,
               // into the new modules's previous_ member.
               retval->add_to_previous (m);
+              retval->prefix (const_cast<char *> (m->prefix ()));
             }
         }
-
-      iter.next ();
     }
 
   // If this scope is itself a module, and has been previously
   // opened, the previous opening may contain a previous opening
   // of the module we're creating.
-  d = ScopeAsDecl (s);
+  AST_Decl *d = ScopeAsDecl (s);
   AST_Decl::NodeType nt = d->node_type ();
 
   if (nt == AST_Decl::NT_module || nt == AST_Decl::NT_root)
     {
+      // Also check this to week out a template module or its
+      // instantiation.
       m = AST_Module::narrow_from_decl (d);
 
-      // AST_Module::previous_ is a set, so it contains each
-      // entry only once, but previous_ will contain the decls
-      // from all previous openings. See comment in
-      // AST_Module::add_to_previous() body.
-      d = m->look_in_previous (n->last_component ());
-
-      if (d != 0)
+      if (m != 0)
         {
-          if (d->node_type () == AST_Decl::NT_module)
-            {
-              m = AST_Module::narrow_from_decl (d);
+          // AST_Module::previous_ is a set, so it contains each
+          // entry only once, but previous_ will contain the decls
+          // from all previous openings. See comment in
+          // AST_Module::add_to_previous() body.
+          d = m->look_in_previous (n->last_component ());
 
-              retval->add_to_previous (m);
+          if (d != 0)
+            {
+              if (d->node_type () == AST_Decl::NT_module)
+                {
+                  m = AST_Module::narrow_from_decl (d);
+
+                  retval->add_to_previous (m);
+                }
             }
         }
     }
