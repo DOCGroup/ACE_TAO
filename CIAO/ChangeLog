@@ -1,3 +1,13 @@
+Thu Jan 21 08:07:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/Lem_Pragma:
+        * tests/IDL_Test/Lem_Pragma/A.idl:
+        * tests/IDL_Test/Lem_Pragma/B.idl:
+        * tests/IDL_Test/Lem_Pragma/C.idl:
+        * tests/IDL_Test/Lem_Pragma/Lem_Pragma.mpc:
+          New test for the new ciao lem pragma support. All tests and examples
+          in the archive will be updated to use this new feature
+
 Wed Jan 20 12:28:43 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.cpp:
