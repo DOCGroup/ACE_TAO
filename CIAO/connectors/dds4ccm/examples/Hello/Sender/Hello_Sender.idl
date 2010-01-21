@@ -11,7 +11,6 @@
 #define DDS_SENDER_IDL
 
 #include "Connector/Hello_Connector.idl"
-#include "Connector/Hello_ConnectorE.idl"
 
 module Hello
 {
@@ -22,18 +21,8 @@ module Hello
     attribute unsigned long iterations;
     attribute string message;
     attribute boolean log_time;
-    provides CCM_DDS::ConnectorStatusListener connector_status; 
+    provides CCM_DDS::ConnectorStatusListener connector_status;
   };
 };
 
-/*
-For future use: IDL3 plus
-module Hello
-{
-  component Sender
-  {
-    port CCM_DDS::DDS_Write <DDSHello> info;
-  };
-};
-*/
 #endif

@@ -3,16 +3,16 @@
 /**
  * @file Quoter_Connector.idl
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- *
- * by-hand translation of the idl3p.
  */
 
 #ifndef QUOTER_CONNECTOR_IDL_
 #define QUOTER_CONNECTOR_IDL_
 
-#include  <Components.idl>
+#include <Components.idl>
 #include "Base/Quoter_Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Connector/Quoter_ConnectorE.idl"
 
 TYPED_MODULE( ::Quoter::Stock_Info, ::Quoter::Stock_Info_Seq, Quoter)
 
@@ -23,4 +23,4 @@ module Quoter
   };
 };
 
-#endif /* QUOTER_CONNECTOR_IDL3_ */
+#endif /* QUOTER_CONNECTOR_IDL_ */
