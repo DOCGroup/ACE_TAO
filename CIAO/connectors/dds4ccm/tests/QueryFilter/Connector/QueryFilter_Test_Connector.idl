@@ -3,8 +3,6 @@
 /**
  * @file QueryFilter_Test_Connector.idl
  * @author Marcel Smit <msmit@remedy.nl>
- *
- * by-hand translation of the idl3p.
  */
 
 #ifndef QUERY_FILTER_TEST_CONNECTOR_IDL_

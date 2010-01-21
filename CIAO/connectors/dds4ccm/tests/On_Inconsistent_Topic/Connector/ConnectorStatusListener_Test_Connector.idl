@@ -3,8 +3,6 @@
 /**
  * @file ConnectorStatusListener_Test_Connector.idl
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
- *
- * by-hand translation of the idl3p.
  */
 
 #ifndef CONNECTORSTATUSLISTENER_TEST_CONNECTOR_IDL_
@@ -21,9 +19,6 @@ module ConnectorStatusListener_Test
   connector ConnectorStatusListener_Test_Connector : ::CCM_DDS::TestTopic::DDS_Event
   {
   };
-
 };
-
-
 
 #endif /* ConnectorStatusListener_CONNECTOR_IDL_ */

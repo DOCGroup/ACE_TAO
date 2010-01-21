@@ -3,8 +3,6 @@
 /**
  * @file Updater_Connector.idl
  * @author Marcel Smit <msmit@remedy.nl>
- *
- * by-hand translation of the idl3p.
  */
 
 #ifndef UPDATER_CONNECTOR_IDL_

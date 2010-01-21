@@ -3,8 +3,6 @@
 /**
  * @file SL_OneByOne_Connector.idl
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
- *
- * by-hand translation of the idl3p.
  */
 
 #ifndef SL_ONEBYONE_CONNECTOR_IDL_
@@ -21,9 +19,6 @@ module SL_OneByOne
   connector SL_OneByOne_Connector : ::CCM_DDS::TestTopic::DDS_State
   {
   };
- 
 };
-
-
 
 #endif /* SL_OneByOne_CONNECTOR_IDL_ */

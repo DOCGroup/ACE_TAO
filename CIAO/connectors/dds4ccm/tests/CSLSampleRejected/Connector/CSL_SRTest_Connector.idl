@@ -3,8 +3,6 @@
 /**
  * @file CSL_SRTest_Connector.idl
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
- *
- * by-hand translation of the idl3p.
  */
 
 #ifndef CSL_SRTEST_CONNECTOR_IDL_
@@ -21,9 +19,7 @@ module CSL_SRTest
   connector CSL_SRTest_Connector : ::CCM_DDS::TestTopic::DDS_Event
   {
   };
- 
+
 };
-
-
 
 #endif /* CSL_SRTEST_CONNECTOR_IDL_ */

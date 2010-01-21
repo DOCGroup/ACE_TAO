@@ -3,8 +3,6 @@
 /**
  * @file VTS_Seq_Connector.idl
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
- *
- * by-hand translation of the idl3p.
  */
 
 #ifndef VTS_SEQ_CONNECTOR_IDL_
@@ -21,9 +19,6 @@ module VTopics
   connector VTS_Seq_Connector : ::CCM_DDS::TopicSeq::DDS_Event
   {
   };
- 
 };
-
-
 
 #endif /* VTS_SEQ_CONNECTOR_IDL_ */
