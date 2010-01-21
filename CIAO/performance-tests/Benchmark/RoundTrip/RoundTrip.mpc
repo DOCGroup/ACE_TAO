@@ -10,7 +10,7 @@ project(Benchmark_RoundTrip_idl_gen) : componentidldefaults {
               -Wb,skel_export_macro=ROUNDTRIP_SVNT_Export \
               -Wb,skel_export_include=RoundTrip_svnt_export.h \
               -Wb,exec_export_macro=ROUNDTRIP_EXEC_Export \
-              -Wb,exec_export_include=RoundTrip_exec_export.h
+              -Wb,exec_export_include=RoundTrip_exec_export.h -I..
 
   IDL_Files {
     RoundTrip.idl
@@ -22,7 +22,7 @@ project(Benchmark_RoundTrip_lem_gen) : ciaoidldefaults {
   after += Benchmark_RoundTrip_idl_gen
   idlflags += -Wb,export_macro=ROUNDTRIP_EXEC_Export \
               -Wb,export_include=RoundTrip_exec_export.h \
-              -SS
+              -SS -I..
 
   IDL_Files {
     RoundTripE.idl

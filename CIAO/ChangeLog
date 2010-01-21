@@ -1,3 +1,15 @@
+Thu Jan 21 14:37:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Benchmark/Benchmark.idl
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.idl
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.mpc
+        * performance-tests/Benchmark/RoundTrip/RoundTripEI.idl
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.idl
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClientEI.idl
+        * performance-tests/Protocols/common/Protocols.idl
+        * performance-tests/Protocols/Receiver/Receiver.idl
+          Use the new pragma ciao lem
+
 Thu Jan 21 14:07:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPointEI.idl

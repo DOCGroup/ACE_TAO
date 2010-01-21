@@ -5,14 +5,14 @@
  * @file RoundTripEI.idl
  *
  *
- * @author 
+ * @author
  */
 //=============================================================================
 
 #ifndef CIAO_ROUNDTRIPEI_IDL
 #define CIAO_ROUNDTRIPEI_IDL
 
-#include "RoundTripE.idl"
+#include "RoundTrip.idl"
 
 module Benchmark
 {
