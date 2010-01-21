@@ -1,3 +1,15 @@
+Thu Jan 21 08:13:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Time_Value_Test.cpp:
+        * tests/tests.mpc:
+        * tests/run_test.lst:
+        * tests/Bug_2434_Regression_Test.cpp:
+          Moved the 64bit overflow test which fails on 64bit systems to
+          its own file and marked that as not fixed
+
+        * tests/Multicast_Test.cpp:
+          Const changes
+
 Tue Jan 19 13:24:02 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * tests/Bug_2980_Regression_Test.cpp:
