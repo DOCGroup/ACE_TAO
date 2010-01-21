@@ -3,8 +3,6 @@
 /**
  * @file VT_Array_Connector.idl
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
- *
- * by-hand translation of the idl3p.
  */
 
 #ifndef VT_ARRAY_CONNECTOR_IDL_
@@ -21,9 +19,6 @@ module VTopic
   connector VT_Array_Connector : ::CCM_DDS::TopicArray::DDS_Event
   {
   };
- 
 };
-
-
 
 #endif /* VT_ARRAY_CONNECTOR_IDL_ */

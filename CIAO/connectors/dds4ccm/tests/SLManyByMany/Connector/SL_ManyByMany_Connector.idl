@@ -3,8 +3,6 @@
 /**
  * @file SL_ManyByMany_Connector.idl
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
- *
- * by-hand translation of the idl3p.
  */
 
 #ifndef SL_MANYBYMANY_CONNECTOR_IDL_
@@ -21,9 +19,6 @@ module SL_ManyByMany
   connector SL_ManyByMany_Connector : ::CCM_DDS::TestTopic::DDS_State
   {
   };
- 
 };
-
-
 
 #endif /* SL_ManyByMany_CONNECTOR_IDL_ */

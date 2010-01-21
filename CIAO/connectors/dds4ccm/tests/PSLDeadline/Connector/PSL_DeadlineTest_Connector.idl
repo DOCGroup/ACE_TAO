@@ -3,8 +3,6 @@
 /**
  * @file PSL_DeadlineTest_Connector.idl
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
- *
- * by-hand translation of the idl3p.
  */
 
 #ifndef PSL_DeadlineTest_CONNECTOR_IDL_
@@ -21,9 +19,6 @@ module PSL_DeadlineTest
   connector PSL_DeadlineTest_Connector : ::CCM_DDS::TestTopic::DDS_Event
   {
   };
- 
 };
-
-
 
 #endif /* PSL_DeadlineTest_CONNECTOR_IDL_ */

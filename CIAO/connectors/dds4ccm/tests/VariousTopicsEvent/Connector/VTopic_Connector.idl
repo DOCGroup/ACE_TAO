@@ -3,8 +3,6 @@
 /**
  * @file VTopic_Connector.idl
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
- *
- * by-hand translation of the idl3p.
  */
 
 #ifndef VTOPIC_CONNECTOR_IDL_
@@ -21,9 +19,6 @@ module VTopic
   connector VTopic_Connector : ::CCM_DDS::TestTopic::DDS_Event
   {
   };
- 
 };
-
-
 
 #endif /* VTopic_CONNECTOR_IDL_ */

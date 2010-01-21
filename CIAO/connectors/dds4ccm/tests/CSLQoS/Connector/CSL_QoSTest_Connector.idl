@@ -3,8 +3,6 @@
 /**
  * @file CSL_QoSTest_Connector.idl
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
- *
- * by-hand translation of the idl3p.
  */
 
 #ifndef CSL_QOSTEST_CONNECTOR_IDL_
@@ -21,9 +19,6 @@ module CSL_QoSTest
   connector CSL_QoSTest_Connector : ::CCM_DDS::TestTopic::DDS_Event
   {
   };
- 
 };
-
-
 
 #endif /* CSL_QoSTest_CONNECTOR_IDL_ */

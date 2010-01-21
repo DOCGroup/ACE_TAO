@@ -3,8 +3,6 @@
 /**
  * @file CSL_DeadlineTest_Connector.idl
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
- *
- * by-hand translation of the idl3p.
  */
 
 #ifndef CSL_DeadlineTest_CONNECTOR_IDL_
@@ -21,9 +19,6 @@ module CSL_DeadlineTest
   connector CSL_DeadlineTest_Connector : ::CCM_DDS::TestTopic::DDS_Event
   {
   };
- 
 };
-
-
 
 #endif /* CSL_DeadlineTest_CONNECTOR_IDL_ */
