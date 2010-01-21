@@ -122,7 +122,7 @@ void Exp_EU_Planner::unset_pause (void)
 };
 
 // Run experiment planning.
-SA_POP::Exp_EU_Run_Results Exp_EU_Planner::exp_run (std::string log_trials_filename, std::string log_runs_filename, std::string net_name, SA_POP::Exp_EU_Trial_Params trial_params, size_t max_trial_attempts, size_t num_trials, bool do_log_headers)
+SA_POP::Exp_EU_Run_Results Exp_EU_Planner::exp_run (std::string log_trials_filename, std::string log_runs_filename, std::string net_name, SA_POP::Exp_EU_Trial_Params trial_params, size_t max_trial_attempts, size_t num_trials, bool do_trial_log_headers, bool do_run_log_headers)
 {
   // Maximum spreading activation steps to update network is twice
   // the number of tasks (for worst case of linear network).
@@ -160,9 +160,11 @@ SA_POP::Exp_EU_Run_Results Exp_EU_Planner::exp_run (std::string log_trials_filen
   }
 
   // Log headers if flag set.
-  if (do_log_headers) {
-    this->log_run_header ();
+  if (do_trial_log_headers) {
     this->log_trial_header ();
+  }
+  if (do_run_log_headers) {
+    this->log_run_header ();
   }
 
   // Do experimental runs.
@@ -506,12 +508,15 @@ SA_POP::Goal Exp_EU_Planner::exp_init (SA_POP::Exp_EU_Trial_Params params)
     }
   }
 
-  //TEMP I really need to see cond values for a run -- Ben
-  std::cout<<std::endl;
-  for(SA_POP::CondSet::iterator cond_iter = conds.begin(); cond_iter != conds.end(); cond_iter++){
-	  std::cout<<"Value of "<<(*cond_iter).id<<" = "<<this->sanet_->get_cond_val((*cond_iter).id)<<std::endl;
-  }
-  std::cout<<std::endl;
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+  // TEMP I really need to see cond values for a run -- Ben
+  //SA_POP_DEBUG(SA_POP_DEBUG_TEMP, "Initial conditions:");
+  //for(SA_POP::CondSet::iterator cond_iter = conds.begin(); cond_iter != conds.end(); cond_iter++){
+  //  std::ostringstream init_conds_ss;
+  //  init_conds_ss << "  Initial value of condition (ID) " << this->sanet_->get_cond_name((*cond_iter).id) << " (" << (*cond_iter).id << ") = " << this->sanet_->get_cond_val((*cond_iter).id);
+  //  SA_POP_DEBUG_STR(SA_POP_DEBUG_TEMP, init_conds_ss.str ());
+  //}
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
  
   return goal;
 };
@@ -531,6 +536,7 @@ void Exp_EU_Planner::log_trial_header (void)
   }
 
   // Output trial header to file.
+  this->log_trials_out_ << "SANet name" << "\t";
   this->log_trials_out_ << "Preferred plan EU" << "\t";
   this->log_trials_out_ << "Maximum plan EU" << "\t";
   this->log_trials_out_ << "Number of alternate plans";
@@ -553,6 +559,7 @@ void Exp_EU_Planner::log_trial_stats (void)
   }
 
   // Output trial statistics to file.
+  this->log_trials_out_ << this->run_results_.net_name << "\t";
   this->log_trials_out_ << this->trial_results_.pref_plan_eu << "\t";
   this->log_trials_out_ << this->trial_results_.max_plan_eu << "\t";
   this->log_trials_out_ << (this->trial_results_.num_plans - 2);
