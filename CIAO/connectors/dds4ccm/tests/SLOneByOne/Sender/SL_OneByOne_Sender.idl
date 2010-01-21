@@ -11,9 +11,6 @@
 #define DDS_SL_ONEBYONE_SENDER_IDL
 
 #include "Connector/SL_OneByOne_Connector.idl"
-#include "Connector/SL_OneByOne_ConnectorE.idl"
-
-
 
 module SL_OneByOne
 {
@@ -22,4 +19,5 @@ module SL_OneByOne
      port CCM_DDS::TestTopic::DDS_Update test_topic_update;
   };
 };
+
 #endif

@@ -9,7 +9,6 @@
 #define RECEIVER_IDL
 
 #include "Connector/Keyed_Test_Connector.idl"
-#include "Connector/Keyed_Test_ConnectorE.idl"
 
 module Keyed_Test
 {

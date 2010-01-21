@@ -3,6 +3,8 @@
 #ifndef DDS_RFT2_DCPS_IDL
 #define DDS_RFT2_DCPS_IDL
 
+#pragma ciao lem "connectors/dds4ccm/idl/dds_rtf2_dcpsE.idl"
+
 #define DOMAINID_TYPE_NATIVE    long
 #define HANDLE_TYPE_NATIVE      long
 #define HANDLE_NIL_NATIVE       0

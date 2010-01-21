@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file 
+ * @file
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
  */
 
@@ -9,17 +9,14 @@
 #define RECEIVER_IDL
 
 #include "Connector/VTopics_Connector.idl"
-#include "Connector/VTopics_ConnectorE.idl"
-
 
 module VTopics
 {
   component Receiver
   {
-    //port CCM_DDS::TestTopic::DDS_Listen info_out; 
+    //port CCM_DDS::TestTopic::DDS_Listen info_out;
     provides CCM_DDS::ConnectorStatusListener info_out_connector_status;
    };
 };
-
 
 #endif

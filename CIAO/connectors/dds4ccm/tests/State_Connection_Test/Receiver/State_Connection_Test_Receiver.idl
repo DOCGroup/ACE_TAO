@@ -9,7 +9,6 @@
 #define RECEIVER_IDL
 
 #include "Connector/State_Connection_Test_Connector.idl"
-#include "Connector/State_Connection_Test_ConnectorE.idl"
 
 module State_Connection_Test
 {

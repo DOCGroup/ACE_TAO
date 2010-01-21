@@ -12,6 +12,8 @@
 #include "Base/LMBM_Test_Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
+#pragma ciao lem "Connector/LMBM_Test_ConnectorE.idl"
+
 TYPED_MODULE( ::ListenManyByManyTest, ::ListenManyByManyTest_Seq, ListenManyByManyTest)
 
 module LMBM_Test

@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file 
+ * @file
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
  */
 
@@ -9,16 +9,13 @@
 #define RECEIVER_IDL
 
 #include "Connector/SL_ManyByMany_Connector.idl"
-#include "Connector/SL_ManyByMany_ConnectorE.idl"
-
 
 module SL_ManyByMany
 {
   component Receiver
   {
-    port CCM_DDS::TestTopic::DDS_StateListen info_out; 
+    port CCM_DDS::TestTopic::DDS_StateListen info_out;
   };
 };
-
 
 #endif

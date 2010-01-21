@@ -11,9 +11,6 @@
 #define DDS_SL_MANYBYMANY_SENDER_IDL
 
 #include "Connector/SL_ManyByMany_Connector.idl"
-#include "Connector/SL_ManyByMany_ConnectorE.idl"
-
-
 
 module SL_ManyByMany
 {
@@ -22,4 +19,5 @@ module SL_ManyByMany
      port CCM_DDS::TestTopic::DDS_Update test_topic_update;
   };
 };
+
 #endif

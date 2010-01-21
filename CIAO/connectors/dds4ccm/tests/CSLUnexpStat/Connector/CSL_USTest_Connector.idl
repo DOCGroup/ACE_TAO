@@ -12,6 +12,8 @@
 #include "Base/CSL_USTest_Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
+#pragma ciao lem "Connector/CSL_USTest_ConnectorE.idl"
+
 TYPED_MODULE( ::TestTopic, ::TestTopic_Seq, TestTopic)
 
 module CSL_USTest

@@ -9,10 +9,7 @@
 #define RECEIVER_IDL
 
 #include "Connector/Reader_Test_Connector.idl"
-#include "Connector/Reader_Test_ConnectorE.idl"
-
 #include "Base/Reader_Starter.idl"
-#include "Base/Reader_StarterE.idl"
 
 module Reader_Test
 {

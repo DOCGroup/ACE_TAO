@@ -12,6 +12,8 @@
 #include "Base/Unkeyed_Test_Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
+#pragma ciao lem "Connector/Unkeyed_Test_ConnectorE.idl"
+
 TYPED_MODULE( ::UnkeyedTest, ::UnkeyedTest_Seq, UnkeyedTest)
 
 module Unkeyed_Test

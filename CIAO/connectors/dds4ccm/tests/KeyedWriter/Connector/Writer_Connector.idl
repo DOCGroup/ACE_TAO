@@ -12,6 +12,8 @@
 #include "Base/Writer_Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
+#pragma ciao lem "Connector/Writer_ConnectorE.idl"
+
 TYPED_MODULE( ::WriterTest, ::WriterTest_Seq, WriterTest)
 
 module Writer

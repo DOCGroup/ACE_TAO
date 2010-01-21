@@ -11,11 +11,7 @@
 #define DDS_CONNECTORSTATUSLISTENER_TEST_SENDER_IDL
 
 #include "Connector/ConnectorStatusListener_Test_Connector.idl"
-#include "Connector/ConnectorStatusListener_Test_ConnectorE.idl"
-
 #include "SecConnector/ConnectorStatusListener_TestSec_Connector.idl"
-#include "SecConnector/ConnectorStatusListener_TestSec_ConnectorE.idl"
-
 
 module ConnectorStatusListener_Test
 {
@@ -25,4 +21,5 @@ module ConnectorStatusListener_Test
     provides CCM_DDS::ConnectorStatusListener test_sec_topic_connector_status;
   };
 };
+
 #endif

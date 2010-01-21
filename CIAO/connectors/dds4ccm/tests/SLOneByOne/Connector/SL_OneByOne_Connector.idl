@@ -12,6 +12,8 @@
 #include "Base/SL_OneByOne_Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
+#pragma ciao lem "Connector/SL_OneByOne_ConnectorE.idl"
+
 TYPED_MODULE( ::TestTopic, ::TestTopic_Seq, TestTopic)
 
 module SL_OneByOne

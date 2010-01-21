@@ -12,6 +12,8 @@
 #include "Base/Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
+#pragma ciao lem "Connector/Connector1E.idl"
+
 TYPED_MODULE( ::SharedDPTest1, ::SharedDPTest1_Seq, SharedDPTest1)
 
 module SharedDP_Connector1
