@@ -3,6 +3,8 @@
 #ifndef HELLO_IDL
 #define HELLO_IDL
 
+#pragma ciao lem "Base/HelloE.idl"
+
 module Hello
 {
   exception InternalError
