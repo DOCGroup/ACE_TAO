@@ -21,39 +21,18 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   class Receiver_exec_i;
 
   //============================================================
-  // ConnectorStatusListener_exec_i
+  // ReadHandler
   //============================================================
-  class RECEIVER_EXEC_Export ConnectorStatusListener_exec_i
-    : public virtual ::CCM_DDS::CCM_ConnectorStatusListener,
-      public virtual ::CORBA::LocalObject
+  class ReadHandler :
+    public ACE_Event_Handler
   {
   public:
-    ConnectorStatusListener_exec_i (Receiver_exec_i &);
-    virtual ~ConnectorStatusListener_exec_i (void);
-
-    virtual
-    void on_inconsistent_topic( ::DDS::Topic_ptr ,
-                              const DDS::InconsistentTopicStatus & );
-    virtual
-    void on_requested_incompatible_qos( ::DDS::DataReader_ptr ,
-                              const DDS::RequestedIncompatibleQosStatus & );
-    virtual
-    void on_sample_rejected( ::DDS::DataReader_ptr ,
-                              const DDS::SampleRejectedStatus & );
-    virtual
-    void on_offered_deadline_missed( ::DDS::DataWriter_ptr ,
-                              const DDS::OfferedDeadlineMissedStatus & );
-    virtual
-    void on_offered_incompatible_qos( ::DDS::DataWriter_ptr ,
-                              const DDS::OfferedIncompatibleQosStatus & );
-    virtual
-    void on_unexpected_status( ::DDS::Entity_ptr ,
-                              ::DDS::StatusKind );
-
+    ReadHandler (Receiver_exec_i &callback,
+                 CORBA::UShort run);
+    virtual int handle_exception (ACE_HANDLE fc = ACE_INVALID_HANDLE);
   private:
-    TAO_SYNCH_MUTEX mutex_;
     Receiver_exec_i &callback_;
-    bool has_run_;
+    CORBA::UShort run_;
   };
 
   //============================================================
@@ -69,6 +48,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
 
     virtual void set_reader_properties (CORBA::UShort nr_keys,
                   CORBA::UShort nr_iterations);
+    virtual void start_read (CORBA::UShort run);
 
   private:
     Receiver_exec_i &callback_;
@@ -98,11 +78,9 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     virtual ::CCM_QueryFilterStarter_ptr
     get_reader_start ();
 
-    virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
-    get_info_out_connector_status (void);
-
     bool check_last ();
-    void run (void);
+    void start (CORBA::UShort run);
+    void run (CORBA::UShort run);
 
     ::CORBA::UShort iterations (void);
 
@@ -131,6 +109,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     CORBA::UShort   keys_;
     bool            has_run_;
 
+    int current_min_iteration_;
     int current_max_iteration_;
 
     void read_all (void);

@@ -21,13 +21,11 @@ module QueryFilter_Test
   component Sender
   {
     port CCM_DDS::QueryFilterTest::DDS_Write info_write;
-    provides CCM_DDS::ConnectorStatusListener info_out_connector_status;
 
     uses QueryFilterStarter start_reader;
     provides QueryFilterRestarter restart_writer;
 
     attribute unsigned short keys;
-    attribute unsigned short iterations;
   };
 };
 

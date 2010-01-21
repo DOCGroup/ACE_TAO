@@ -12,6 +12,7 @@ interface QueryFilterStarter
 {
   void set_reader_properties (in unsigned short nr_keys,
                               in unsigned short nr_iterations);
+  void start_read (in unsigned short run);
 };
 
 interface QueryFilterRestarter
