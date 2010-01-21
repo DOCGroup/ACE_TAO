@@ -25,10 +25,6 @@
 #include "be_visitor_context.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (be,
-           be_visitor_scope,
-           "$Id$")
-
 // ******************************************************
 //  Generic visitor for a scope.
 //  All elements that give rise to a scope inherit from

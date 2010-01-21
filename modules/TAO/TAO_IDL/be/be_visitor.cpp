@@ -22,6 +22,7 @@
 // ============================================================================
 
 #include "be_visitor.h"
+
 #include "ace/config-all.h"
 
 be_visitor::be_visitor (void)

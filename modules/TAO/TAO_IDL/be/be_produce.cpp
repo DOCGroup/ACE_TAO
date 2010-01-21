@@ -68,7 +68,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_visitor_ami_pre_proc.h"
 #include "be_visitor_amh_pre_proc.h"
 #include "be_visitor_ccm_pre_proc.h"
-#include "be_visitor_tmpl_module_inst.h"
 #include "be_visitor_context.h"
 #include "be_root.h"
 #include "be_extern.h"
@@ -119,11 +118,6 @@ BE_produce (void)
 
   if (!idl_global->ignore_idl3 ())
     {
-      // This visitor needs to make its pass before the CCM
-      // processing visitor.
-      be_visitor_tmpl_module_inst tmpl_mod_inst_visitor (&ctx);
-      BE_visit_root (tmpl_mod_inst_visitor, "template module procdessing");
-      
       be_visitor_ccm_pre_proc ccm_preproc_visitor (&ctx);
       BE_visit_root (ccm_preproc_visitor, "CCM preprocessing");
     }

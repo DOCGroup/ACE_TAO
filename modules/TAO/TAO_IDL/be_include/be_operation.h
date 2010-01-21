@@ -56,9 +56,6 @@ public:
   // Visiting.
   virtual int accept (be_visitor *visitor);
 
-  // Method to add exceptions
-  virtual UTL_ExceptList *be_add_exceptions (UTL_ExceptList *t);
-
   // Add an argument to the scope.
   virtual AST_Argument *be_add_argument (AST_Argument *arg);
 
