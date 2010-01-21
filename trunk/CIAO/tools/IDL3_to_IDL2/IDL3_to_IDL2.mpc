@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(TAO_IDL3_TO_IDL2_BE) : acelib, install, ciao_output, crosscompile, tao_idl_fe {
+project(TAO_IDL3_TO_IDL2_BE) : acelib, install, ciao_output, tao_idl_fe {
   sharedname   = TAO_IDL3_TO_IDL2_BE
   dynamicflags = TAO_IDL3_TO_IDL2_BE_BUILD_DLL
 
@@ -33,7 +33,7 @@ project(TAO_IDL3_TO_IDL2_BE) : acelib, install, ciao_output, crosscompile, tao_i
   }
 }
 
-project(TAO_IDL3_TO_IDL2_EXE) : aceexe, install, ciao_output, crosscompile, tao_idl_mcpp, tao_idl_fe {
+project(TAO_IDL3_TO_IDL2_EXE) : aceexe, install, ciao_output, tao_idl_mcpp, tao_idl_fe {
   after          += TAO_IDL3_TO_IDL2_BE
   exename         = tao_idl3_to_idl2
   libs           += TAO_IDL3_TO_IDL2_BE
