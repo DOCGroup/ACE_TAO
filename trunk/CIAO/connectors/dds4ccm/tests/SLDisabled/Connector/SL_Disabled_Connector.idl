@@ -3,8 +3,6 @@
 /**
  * @file SL_Disabled_Connector.idl
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
- *
- * by-hand translation of the idl3p.
  */
 
 #ifndef SL_DISABLED_CONNECTOR_IDL_
@@ -21,9 +19,6 @@ module SL_Disabled
   connector SL_Disabled_Connector : ::CCM_DDS::TestTopic::DDS_State
   {
   };
- 
 };
-
-
 
 #endif /* SL_Disabled_CONNECTOR_IDL_ */

@@ -3,8 +3,6 @@
 /**
  * @file Event_Connection_Test_Connector.idl
  * @author Marcel Smit <msmit@remedy.nl>
- *
- * by-hand translation of the idl3p.
  */
 
 #ifndef KEYED_TEST_CONNECTOR_IDL_

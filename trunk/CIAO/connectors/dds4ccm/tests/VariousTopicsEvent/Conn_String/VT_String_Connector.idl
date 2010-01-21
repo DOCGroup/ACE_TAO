@@ -3,8 +3,6 @@
 /**
  * @file VT_String_Connector.idl
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
- *
- * by-hand translation of the idl3p.
  */
 
 #ifndef VT_STRING_CONNECTOR_IDL_
@@ -21,9 +19,6 @@ module VTopic
   connector VT_String_Connector : ::CCM_DDS::TopicString::DDS_Event
   {
   };
- 
 };
-
-
 
 #endif /* VTopic_CONNECTOR_IDL_ */
