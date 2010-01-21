@@ -12,6 +12,8 @@
 #include "Base/QueryFilter_Test_Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
+#pragma ciao lem "Connector/QueryFilter_Test_ConnectorE.idl"
+
 TYPED_MODULE( ::QueryFilterTest, ::QueryFilterTest_Seq, QueryFilterTest)
 
 module QueryFilter_Test

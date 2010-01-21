@@ -11,16 +11,14 @@
 #define DDS_CSL_QOSTEST_SENDER_IDL
 
 #include "Connector/CSL_QoSTest_Connector.idl"
-#include "Connector/CSL_QoSTest_ConnectorE.idl"
-
-
 
 module CSL_QoSTest
 {
   component Sender
   {
-     provides CCM_DDS::ConnectorStatusListener test_topic_connector_status; 
- 
+     provides CCM_DDS::ConnectorStatusListener test_topic_connector_status;
+
   };
 };
+
 #endif

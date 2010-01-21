@@ -1,13 +1,14 @@
 // $Id$
 /**
  * @file dds4ccm_PortStatusListener.idl
- *
  */
 
 #ifndef DDS4CCM_PORTSTATUSLISTNER_IDL3
 #define DDS4CCM_PORTSTATUSLISTNER_IDL3
 
 #include "connectors/dds4ccm/idl/dds4ccm_Base.idl"
+
+#pragma ciao lem "connectors/dds4ccm/idl/dds4ccm_PortStatusListenerE.idl"
 
 module CCM_DDS
 {

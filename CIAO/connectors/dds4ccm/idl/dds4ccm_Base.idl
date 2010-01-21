@@ -9,6 +9,8 @@
 
 #include "dds_rtf2_dcps.idl"
 
+#pragma ciao lem "connectors/dds4ccm/idl/dds4ccm_BaseE.idl"
+
 #define connector component
 
 module CCM_DDS

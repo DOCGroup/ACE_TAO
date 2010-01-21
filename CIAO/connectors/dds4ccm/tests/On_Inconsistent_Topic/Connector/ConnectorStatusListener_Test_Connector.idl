@@ -12,6 +12,8 @@
 #include "Base/ConnectorStatusListener_Test_Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
+#pragma ciao lem "Connector/ConnectorStatusListener_Test_ConnectorE.idl"
+
 TYPED_MODULE( ::TestTopic, ::TestTopic_Seq, TestTopic)
 
 module ConnectorStatusListener_Test

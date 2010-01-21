@@ -5,16 +5,10 @@
 
 #include  <Components.idl>
 #include "connectors/dds4ccm/idl/dds4ccm_DataListenerControl.idl"
-#include "connectors/dds4ccm/idl/dds4ccm_DataListenerControlE.idl"
 #include "connectors/dds4ccm/idl/dds4ccm_StateListenerControl.idl"
-#include "connectors/dds4ccm/idl/dds4ccm_StateListenerControlE.idl"
 #include "connectors/dds4ccm/idl/dds4ccm_PortStatusListener.idl"
-#include "connectors/dds4ccm/idl/dds4ccm_PortStatusListenerE.idl"
 #include "connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListener.idl"
-#include "connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListenerE.idl"
 #include "connectors/dds4ccm/idl/dds4ccm_Connector.idl"
-#include "connectors/dds4ccm/idl/dds4ccm_ConnectorE.idl"
-#include "connectors/dds4ccm/idl/dds_rtf2_dcpsE.idl"
 
 #define TYPED_MODULE(T, TSeq, T_MODULE) \
 module CCM_DDS \

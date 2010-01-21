@@ -12,6 +12,8 @@
 #include "Base/Event_Connection_Test_Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
+#pragma ciao lem "Connector/Event_Connection_Test_ConnectorE.idl"
+
 TYPED_MODULE( ::Event_ConnectionTest, ::Event_ConnectionTest_Seq, Event_ConnectionTest)
 
 module Event_Connection_Test

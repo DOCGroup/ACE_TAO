@@ -11,10 +11,7 @@
 #define DDS_QUERY_FILTER_TEST_SENDER_IDL
 
 #include "Connector/QueryFilter_Test_Connector.idl"
-#include "Connector/QueryFilter_Test_ConnectorE.idl"
-
 #include "Base/QueryFilter_Starter.idl"
-#include "Base/QueryFilter_StarterE.idl"
 
 module QueryFilter_Test
 {

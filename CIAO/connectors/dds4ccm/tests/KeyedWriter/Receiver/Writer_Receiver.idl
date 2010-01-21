@@ -9,7 +9,6 @@
 #define RECEIVER_IDL
 
 #include "Connector/Writer_Connector.idl"
-#include "Connector/Writer_ConnectorE.idl"
 
 module Writer
 {

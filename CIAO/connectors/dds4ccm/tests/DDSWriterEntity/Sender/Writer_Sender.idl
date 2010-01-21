@@ -11,7 +11,6 @@
 #define DDS_WRITER_ENTITY_SENDER_IDL
 
 #include "Connector/Writer_Connector.idl"
-#include "Connector/Writer_ConnectorE.idl"
 
 module Writer
 {

@@ -12,6 +12,8 @@
 #include "Base/PSL_SampleLost_Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
+#pragma ciao lem "Connector/PSL_SampleList_ConnectorE.idl"
+
 TYPED_MODULE( ::TestTopic, ::TestTopic_Seq, TestTopic)
 
 module PSL_SampleLost

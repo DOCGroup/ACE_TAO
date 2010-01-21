@@ -12,6 +12,8 @@
 #include "Base/VTopics_Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
+#pragma ciao lem "Connector/VTS_Array_ConnectorE.idl"
+
 TYPED_MODULE( ::TopicArray, ::TopicArray_Seq, TopicArray)
 
 module VTopics
