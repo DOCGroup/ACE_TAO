@@ -1,3 +1,16 @@
+Thu Jan 21 15:25:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Multicast_Test.cpp:
+          Fixed a Linux specific problem where certain Linux flavors use
+          VERY strict rules concerning multicast communications and where
+          using the (system defined) defaults for the network interface
+          used for multicast sending/receiving does not provide a
+          matching setup (i.e. resulting if used for sending does not
+          match the if used for receiving -> nothing received).
+          The fix simply forces a fixed 'lo' interface to be used for
+          sending and receiving.
+
+
 Thu Jan 21 14:57:57 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * include/makeinclude/platform_macosx_iphone.GNU:
@@ -7,6 +20,7 @@ Thu Jan 21 14:57:57 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
           Simulator. This hardcoding is obviously the wrong thing to do,
           and needs to be fixed in the future. For some reason, when building
           a static executable those macros are missing.
+
 
 Thu Jan 21 08:13:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
