@@ -203,11 +203,13 @@ namespace SA_POP {
      *
      * @param num_trials  Number of valid trials to attempt to achieve (each with randomly chosen initial conditions and goal).
      *
-     * @param do_log_headers  Flag to output header lines to log files (if true).
+     * @param do_trial_log_headers  Flag to output header line to trial log file (if true).
+     *
+     * @param do_run_log_headers  Flag to output header line to run log file (if true).
      */
     virtual SA_POP::Exp_EU_Run_Results exp_run (std::string log_trials_filename, std::string log_runs_filename,
       std::string net_name, SA_POP::Exp_EU_Trial_Params trial_params, size_t max_trial_attempts,
-      size_t num_trials = 1, bool do_log_headers = false);
+      size_t num_trials = 1, bool do_trial_log_headers = true, bool do_run_log_headers = true);
     
 
     // ************************************************************************

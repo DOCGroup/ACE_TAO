@@ -64,6 +64,8 @@ namespace SA_POP {
     const size_t NumTrialsMax = 1000;
     const size_t NumNetsMin = 1;
     const size_t NumNetsMax = 100000;
+    const size_t NumExpsMin = 1;
+    const size_t NumExpsMax = 50;
     // Default percentage of initial conditions to set as true (valid values: [0, 100]).
     const size_t NumPercentCondsInit = 30;
   };  /* SA_POP::Default namespace */
@@ -255,140 +257,179 @@ int main (int argc, char* argv[])
 
     // If multiple runs, get base filename and run experiment.
     if (do_mult_runs) {
-      std::string base_filename = "network";
-      size_t num_runs = 1;
-      boost::accumulators::accumulator_set<double, boost::accumulators::stats<boost::accumulators::tag::mean, boost::accumulators::tag::variance> > acc_pref_best_ratio;
-      boost::accumulators::accumulator_set<int, boost::accumulators::stats<boost::accumulators::tag::mean, boost::accumulators::tag::variance> > acc_num_plans;
-      boost::accumulators::accumulator_set<int, boost::accumulators::stats<boost::accumulators::tag::mean, boost::accumulators::tag::variance> > acc_trial_attempts;
-      boost::accumulators::accumulator_set<int, boost::accumulators::stats<boost::accumulators::tag::mean, boost::accumulators::tag::variance> > acc_init_plans;
-      boost::accumulators::accumulator_set<int, boost::accumulators::stats<boost::accumulators::tag::mean, boost::accumulators::tag::variance> > acc_pref_plans;
-      boost::accumulators::accumulator_set<int, boost::accumulators::stats<boost::accumulators::tag::mean, boost::accumulators::tag::variance> > acc_alt_plans;
+      std::map<std::string, size_t> exp_map;
+      exp_map.clear ();
 
-      // Get base filename.
-      UserInterface::Question base_file_ques ("Base filename:");
-      if (user_input.ask (base_file_ques))
-        base_filename = base_file_ques.get_answer ();
-      else {
-        std::cerr << "No base filename provided." << std::endl;
-        throw "No base filename provided.";
-      }
+      // Variable for number of experiments to run (each with its own network base filename).
+      size_t num_exps = 1;
 
       // Get number of networks to run.
-      UserInterface::QuestionInt num_runs_ques ("Number of networks:", SA_POP::Default::NumNetsMin, SA_POP::Default::NumNetsMax);
-      if (user_input.ask (num_runs_ques))
-        num_runs = num_runs_ques.get_answer_int ();
+      UserInterface::QuestionInt num_exps_ques ("Number of experiments (each with different network base filename):", SA_POP::Default::NumExpsMin, SA_POP::Default::NumExpsMax);
+      if (user_input.ask (num_exps_ques))
+        num_exps = num_exps_ques.get_answer_int ();
 
-      // Run on requested number of networks.
-      for (size_t run_num = 0; run_num < num_runs; run_num++) {
+      // Get base filename and number of networks for each experiment.
+      for (size_t exp_num = 0; exp_num < num_exps; exp_num++) {
+        std::string base_filename = "network";
+        size_t num_runs = 0;
 
-        // Construct SANet and TM filenames.
-        std::ostringstream sanet_ss;
-        sanet_ss << base_filename << run_num << ".xml";
-        sanet_filename = sanet_ss.str ();
-        std::ostringstream tm_ss;
-        tm_ss << base_filename << run_num << ".tm.xml";
-        tm_filename = tm_ss.str ();
-
-        SA_POP::Exp_EU_Builder builder;
-        SANet::SANetFileIn sanet_in;
-        SA_POP::TaskMapFileIn tm_in;
-
-        // Build task network and task map.
-        try {
-          sanet_in.build_net (sanet_filename, &builder);
-          tm_in.build_task_map (tm_filename, &builder);
-        } catch (std::string e) {
-          std::cerr << "ERROR while building task network and task map from files:";
-          std::cerr << std::endl;
-          std::cerr << e;
-        } catch (...) {
-          std::cerr << "UNKNOWN ERROR while building task network and task map from files." << std::endl;
+        // Get base filename.
+        std::ostringstream base_file_ques_ss;
+        base_file_ques_ss << "Base filename " << (exp_num + 1) << ":";
+        UserInterface::Question base_file_ques (base_file_ques_ss.str ());
+        if (user_input.ask (base_file_ques))
+          base_filename = base_file_ques.get_answer ();
+        else {
+          std::cerr << "No base filename provided." << std::endl;
+          throw "No base filename provided.";
         }
 
-        // Get SA-POP Planner.
-        planner = builder.get_exp_eu_planner ();
+        // Get number of networks to run.
+        UserInterface::QuestionInt num_runs_ques ("Number of networks with this base filename:", SA_POP::Default::NumNetsMin, SA_POP::Default::NumNetsMax);
+        if (user_input.ask (num_runs_ques))
+          num_runs = num_runs_ques.get_answer_int ();
 
-        // Add file output adapter, if user requested it.
-        SA_POP::LogFileOut file_out (plan_out_filename.c_str ());
-        if (do_plan_file)
-          planner->add_out_adapter (&file_out);
+        // Insert experiment info (base filename & runs) into map.
+        exp_map.insert (std::make_pair (base_filename, num_runs));
+      }
 
-        // Run trials.
-        std::cout << "Running trials on network " << run_num << std::endl;
-        run_results = planner->exp_run (log_trials_filename, log_runs_filename, sanet_filename, trial_params, num_trials * SA_POP::Default::TrialAttemptsMult, num_trials, do_log_headers);
+      // Run each experiment.
+      for (std::map<std::string, size_t>::iterator exp_iter = exp_map.begin (); exp_iter != exp_map.end (); exp_iter++) {
+        // Get base filename and number of networks to run.
+        std::string base_filename = exp_iter->first;
+        size_t num_runs = exp_iter->second;
 
-        // Add trials to cumulative statistics.
-        for (std::list<SA_POP::Exp_EU_Trial_Results>::iterator trial_iter = run_results.trials.begin (); trial_iter != run_results.trials.end (); trial_iter++) {
-          double pref_best_ratio = (*trial_iter).pref_plan_eu / (*trial_iter).max_plan_eu;
+        // Accumulators to keep experiment statistics.
+        boost::accumulators::accumulator_set<double, boost::accumulators::stats<boost::accumulators::tag::mean, boost::accumulators::tag::variance> > acc_pref_best_ratio;
+        boost::accumulators::accumulator_set<int, boost::accumulators::stats<boost::accumulators::tag::mean, boost::accumulators::tag::variance> > acc_num_plans;
+        boost::accumulators::accumulator_set<int, boost::accumulators::stats<boost::accumulators::tag::mean, boost::accumulators::tag::variance> > acc_trial_attempts;
+        boost::accumulators::accumulator_set<int, boost::accumulators::stats<boost::accumulators::tag::mean, boost::accumulators::tag::variance> > acc_init_plans;
+        boost::accumulators::accumulator_set<int, boost::accumulators::stats<boost::accumulators::tag::mean, boost::accumulators::tag::variance> > acc_pref_plans;
+        boost::accumulators::accumulator_set<int, boost::accumulators::stats<boost::accumulators::tag::mean, boost::accumulators::tag::variance> > acc_alt_plans;
 
-          acc_pref_best_ratio (pref_best_ratio);
-          acc_num_plans ((*trial_iter).num_plans);
+        // Do experimental runs for requested number of networks.
+        for (size_t run_num = 0; run_num < num_runs; run_num++) {
+
+          // Construct SANet and TM filenames.
+          std::ostringstream sanet_ss;
+          sanet_ss << base_filename << run_num << ".xml";
+          sanet_filename = sanet_ss.str ();
+          std::ostringstream tm_ss;
+          tm_ss << base_filename << run_num << ".tm.xml";
+          tm_filename = tm_ss.str ();
+
+          SA_POP::Exp_EU_Builder builder;
+          SANet::SANetFileIn sanet_in;
+          SA_POP::TaskMapFileIn tm_in;
+
+          // Build task network and task map.
+          try {
+            sanet_in.build_net (sanet_filename, &builder);
+            tm_in.build_task_map (tm_filename, &builder);
+          } catch (std::string e) {
+            std::cerr << "ERROR while building task network and task map from files:";
+            std::cerr << std::endl;
+            std::cerr << e;
+          } catch (...) {
+            std::cerr << "UNKNOWN ERROR while building task network and task map from files." << std::endl;
+          }
+
+          // Get SA-POP Planner.
+          planner = builder.get_exp_eu_planner ();
+
+          // Add file output adapter, if user requested it.
+          SA_POP::LogFileOut file_out (plan_out_filename.c_str ());
+          if (do_plan_file)
+            planner->add_out_adapter (&file_out);
+
+          // Output log headers only for first run.
+          bool do_run_log_headers = false;
+          if (run_num == 0)
+            do_run_log_headers = do_log_headers;
+
+          // Run trials.
+          std::cout << std::endl << std::endl;
+          std::cout << "Running trials on network " << run_num << std::endl;
+          std::cout << std::endl << std::endl;
+          run_results = planner->exp_run (log_trials_filename, log_runs_filename, sanet_filename, trial_params, num_trials * SA_POP::Default::TrialAttemptsMult, num_trials, do_log_headers, do_run_log_headers);
+
+          // Add trials to cumulative statistics.
+          for (std::list<SA_POP::Exp_EU_Trial_Results>::iterator trial_iter = run_results.trials.begin (); trial_iter != run_results.trials.end (); trial_iter++) {
+            double pref_best_ratio = (*trial_iter).pref_plan_eu / (*trial_iter).max_plan_eu;
+
+            acc_pref_best_ratio (pref_best_ratio);
+            acc_num_plans ((*trial_iter).num_plans);
+          }
+
+          // Add run to cumulative statistics.
+          acc_trial_attempts (run_results.num_trial_attempts);
+          acc_init_plans (run_results.num_init_plans);
+          acc_pref_plans (run_results.num_pref_plans);
+          acc_alt_plans (run_results.num_alt_plans);
+
+          // Delete planner.
+          delete planner;
         }
 
-        // Add run to cumulative statistics.
-        acc_trial_attempts (run_results.num_trial_attempts);
-        acc_init_plans (run_results.num_init_plans);
-        acc_pref_plans (run_results.num_pref_plans);
-        acc_alt_plans (run_results.num_alt_plans);
+        // Open/create experiment output file.
+        std::ofstream log_exp_out;
+        log_exp_out.open (log_exp_filename.c_str (), std::ios_base::out | std::ios_base::app);
+        if (log_exp_out == 0){
+          std::string msg = "SA-POP EU EXPERIMENT ERROR: in main():  Unable to open experiment log file (";
+          msg += log_exp_filename;
+          msg += ") for writing (append).";
+          std::cerr << msg;
+          throw msg;
+        }
 
-        // Delete planner.
-        delete planner;
-      }
+        // Output experiment header file for first experiment only.
+        if (exp_iter == exp_map.begin ()) {
+          if (do_log_headers) {
+            // Output experiment header to file.
+            log_exp_out << "Network base name" << "\t";
+            log_exp_out << "Number of goal conditions" << "\t";
+            log_exp_out << "Percent initial conditions true" << "\t";
+            log_exp_out << "Goal utility min" << "\t";
+            log_exp_out << "Goal utility max" << "\t";
+            log_exp_out << "Plan EU ratio (preferred : best) Mean" << "\t";
+            log_exp_out << "Plan EU ratio (preferred : best) Std Dev" << "\t";
+            log_exp_out << "Trial plans generated Mean" << "\t";
+            log_exp_out << "Trial plans generated Std Dev" << "\t";
+            log_exp_out << "Trial attempts Mean" << "\t";
+            log_exp_out << "Trial attempts Std Dev" << "\t";
+            log_exp_out << "Trials w/ initial plan Mean" << "\t";
+            log_exp_out << "Trials w/ initial plan Std Dev" << "\t";
+            log_exp_out << "Trials w/ preferred plan Mean" << "\t";
+            log_exp_out << "Trials w/ preferred plan Std Dev" << "\t";
+            log_exp_out << "Trials w/ alternate plan(s) Mean" << "\t";
+            log_exp_out << "Trials w/ alternate plan(s) Std Dev";
+            log_exp_out << std::endl;
+          }
+        }
 
-      // Open/create experiment output file.
-      std::ofstream log_exp_out;
-      log_exp_out.open (log_exp_filename.c_str (), std::ios_base::out | std::ios_base::app);
-      if (log_exp_out == 0){
-        std::string msg = "SA-POP EU EXPERIMENT ERROR: in main():  Unable to open experiment log file (";
-        msg += log_exp_filename;
-        msg += ") for writing (append).";
-        std::cerr << msg;
-        throw msg;
-      }
-
-      // Output experiment results.
-      if (do_log_headers) {
-        // Output experiment header to file.
-        log_exp_out << "Network base name" << "\t";
-        log_exp_out << "Number of goal conditions" << "\t";
-        log_exp_out << "Percent initial conditions true" << "\t";
-        log_exp_out << "Goal utility min" << "\t";
-        log_exp_out << "Goal utility max" << "\t";
-        log_exp_out << "Plan EU ratio (preferred : best) Mean" << "\t";
-        log_exp_out << "Plan EU ratio (preferred : best) Std Dev" << "\t";
-        log_exp_out << "Trial plans generated Mean" << "\t";
-        log_exp_out << "Trial plans generated Std Dev" << "\t";
-        log_exp_out << "Trial attempts Mean" << "\t";
-        log_exp_out << "Trial attempts Std Dev" << "\t";
-        log_exp_out << "Trials w/ initial plan Mean" << "\t";
-        log_exp_out << "Trials w/ initial plan Std Dev" << "\t";
-        log_exp_out << "Trials w/ preferred plan Mean" << "\t";
-        log_exp_out << "Trials w/ preferred plan Std Dev" << "\t";
-        log_exp_out << "Trials w/ alternate plan(s) Mean";
-        log_exp_out << "Trials w/ alternate plan(s) Std Dev";
+        // Output run statistics to file.
+        log_exp_out << base_filename << "\t";
+        log_exp_out << trial_params.num_goal_conds << "\t";
+        log_exp_out << trial_params.percent_init_true << "\t";
+        log_exp_out << trial_params.util_min << "\t";
+        log_exp_out << trial_params.util_max << "\t";
+        log_exp_out << boost::accumulators::mean(acc_pref_best_ratio) << "\t";
+        log_exp_out << std::sqrt(boost::accumulators::variance(acc_pref_best_ratio)) << "\t";
+        log_exp_out << boost::accumulators::mean(acc_num_plans) << "\t";
+        log_exp_out << std::sqrt(boost::accumulators::variance(acc_num_plans)) << "\t";
+        log_exp_out << boost::accumulators::mean(acc_trial_attempts) << "\t";
+        log_exp_out << std::sqrt(boost::accumulators::variance(acc_trial_attempts)) << "\t";
+        log_exp_out << boost::accumulators::mean(acc_init_plans) << "\t";
+        log_exp_out << std::sqrt(boost::accumulators::variance(acc_init_plans)) << "\t";
+        log_exp_out << boost::accumulators::mean(acc_pref_plans) << "\t";
+        log_exp_out << std::sqrt(boost::accumulators::variance(acc_pref_plans)) << "\t";
+        log_exp_out << boost::accumulators::mean(acc_alt_plans) << "\t";
+        log_exp_out << std::sqrt(boost::accumulators::variance(acc_alt_plans));
         log_exp_out << std::endl;
-      }
 
-      // Output run statistics to file.
-      log_exp_out << base_filename << "\t";
-      log_exp_out << trial_params.num_goal_conds << "\t";
-      log_exp_out << trial_params.percent_init_true << "\t";
-      log_exp_out << trial_params.util_min << "\t";
-      log_exp_out << trial_params.util_max << "\t";
-      log_exp_out << boost::accumulators::mean(acc_pref_best_ratio) << "\t";
-      log_exp_out << std::sqrt(boost::accumulators::variance(acc_pref_best_ratio)) << "\t";
-      log_exp_out << boost::accumulators::mean(acc_num_plans) << "\t";
-      log_exp_out << std::sqrt(boost::accumulators::variance(acc_num_plans)) << "\t";
-      log_exp_out << boost::accumulators::mean(acc_trial_attempts) << "\t";
-      log_exp_out << std::sqrt(boost::accumulators::variance(acc_trial_attempts)) << "\t";
-      log_exp_out << boost::accumulators::mean(acc_init_plans) << "\t";
-      log_exp_out << std::sqrt(boost::accumulators::variance(acc_init_plans)) << "\t";
-      log_exp_out << boost::accumulators::mean(acc_pref_plans) << "\t";
-      log_exp_out << std::sqrt(boost::accumulators::variance(acc_pref_plans)) << "\t";
-      log_exp_out << boost::accumulators::mean(acc_alt_plans) << "\t";
-      log_exp_out << std::sqrt(boost::accumulators::variance(acc_alt_plans)) << "\t";
-      log_exp_out << std::endl;
-      
+        // Close experiment output file.
+        log_exp_out.close ();
+      }
     } else {  // Run on single network.
       // Get filenames from user.
       UserInterface::Question sanet_file_ques ("Task Network file:");

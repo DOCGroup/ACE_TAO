@@ -1,3 +1,12 @@
+Thu Jan 21 06:25:33 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * experiments/EU_Performance/Exp_Core/Exp_EU_Planner.h:
+        * experiments/EU_Performance/Exp_Core/Exp_EU_Planner.cpp:
+        * experiments/EU_Performance/SAPOP_Exp_EU.cpp:
+
+          Logging and UI enhancements to run multiple experiments sequentially.
+
+
 Tue Jan 19 19:01:00 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * Planner.cpp:
