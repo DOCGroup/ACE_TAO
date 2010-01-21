@@ -448,12 +448,20 @@ public:
                       = ACE_SOCK_Dgram_Mcast::DEFOPTS);
   virtual ~MCT_Event_Handler (void);
 
+#if defined (__linux__)
+  int join (const ACE_INET_Addr &mcast_addr,
+            int reuse_addr = 1,
+            const ACE_TCHAR *net_if = ACE_TEXT ("lo"));
+  int leave (const ACE_INET_Addr &mcast_addr,
+             const ACE_TCHAR *net_if = ACE_TEXT ("lo"));
+#else
   int join (const ACE_INET_Addr &mcast_addr,
             int reuse_addr = 1,
             const ACE_TCHAR *net_if = 0);
   int leave (const ACE_INET_Addr &mcast_addr,
              const ACE_TCHAR *net_if = 0);
-
+#endif
+  
   // = Event Handler hooks.
   virtual int handle_input (ACE_HANDLE handle);
   virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask close_mask);
@@ -779,7 +787,9 @@ int producer (MCT_Config &config)
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Starting producer...\n")));
   ACE_SOCK_Dgram socket (ACE_sap_any_cast (ACE_INET_Addr &), PF_INET);
   //FUZZ: enable check_for_lack_ACE_OS
-
+#if defined (__linux__)
+  socket.set_nic ("lo");
+#endif
   // Note that is is IPv4 specific and needs to be changed once
   //
   if (config.ttl () > 1)
