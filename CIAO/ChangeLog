@@ -1,3 +1,8 @@
+Thu Jan 21 14:40:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/Connector/AMI_exec.cpp:
+          Make sure the executor is always there
+
 Thu Jan 21 14:37:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Benchmark/Benchmark.idl
