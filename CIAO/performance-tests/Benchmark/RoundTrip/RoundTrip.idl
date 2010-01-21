@@ -12,8 +12,9 @@
 #define CIAO_ROUNDTRIP_IDL
 
 #include "../Benchmark.idl"
-#include "../BenchmarkE.idl"
 #include <Components.idl>
+
+#pragma ciao lem "RoundTripE.idl"
 
 module Benchmark
 {

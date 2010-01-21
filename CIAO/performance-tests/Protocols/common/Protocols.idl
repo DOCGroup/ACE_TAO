@@ -1,6 +1,9 @@
 // $Id$
 #ifndef PROTOCOLS_IDL
 #define PROTOCOLS_IDL
+
+#pragma ciao lem "../common/ProtocolsE.idl"
+
 module Protocols
 {
   interface test
