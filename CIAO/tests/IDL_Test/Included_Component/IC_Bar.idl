@@ -1,7 +1,6 @@
 // $Id$
 
 #include "IC_Foo.idl"
-#include "IC_FooE.idl"
 
 component Bar
 {

@@ -3,7 +3,7 @@
 #ifndef TSEC_CHECKPOINTEI_IDL
 #define TSEC_CHECKPOINTEI_IDL
 
-#include "TSEC_CheckPointE.idl"
+#include "TSEC_CheckPoint.idl"
 
 module ENW
 {
@@ -13,7 +13,6 @@ module ENW
          Components::SessionComponent
   {
   };
-
 };
 
 #endif /* TSEC_CHECKPOINTEI_IDL */
