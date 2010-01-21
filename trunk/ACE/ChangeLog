@@ -1,3 +1,12 @@
+Thu Jan 21 16:33:37 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_iphone.GNU:
+
+          Removed the hardcoding of -DACE_AS_STATIC_LIBS and 
+          -DTAO_AS_STATIC_LIBS to CFLAGS and CXXFLAGS and instead
+          added static_libs_only=1. That fixes the problem. Thanks
+          to Johnny Willemsen for the tip.
+
 Thu Jan 21 15:25:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Multicast_Test.cpp:
