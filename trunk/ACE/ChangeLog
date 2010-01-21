@@ -1,3 +1,13 @@
+Thu Jan 21 14:57:57 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_iphone.GNU:
+
+          Added -DACE_AS_STATIC_LIBS and -DTAO_AS_STATIC_LIBS to the CFLAGS
+          and CXXFLAGS variables to allow more tests to pass on the iPhone
+          Simulator. This hardcoding is obviously the wrong thing to do,
+          and needs to be fixed in the future. For some reason, when building
+          a static executable those macros are missing.
+
 Thu Jan 21 08:13:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Time_Value_Test.cpp:
