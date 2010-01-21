@@ -125,7 +125,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
   //============================================================
 
   AMI_exec_i::AMI_exec_i (void)
-    : myfoo_ (0)
+    : myfoo_ (new AMI_MyFoo_exec_i ())
   {
   }
 
@@ -143,7 +143,6 @@ namespace CIAO_Hello_AMI_Sender_Impl
   ::Hello::CCM_AMI_MyFoo_ptr
   AMI_exec_i::get_sendc_run_my_foo (void)
   {
-    this->myfoo_ = new AMI_MyFoo_exec_i ();
     return this->myfoo_;
   }
   // Operations from Components::SessionComponent.
