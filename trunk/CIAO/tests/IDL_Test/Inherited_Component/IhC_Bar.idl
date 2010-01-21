@@ -2,7 +2,6 @@
 
 #include <Components.idl>
 #include "IhC_Foo.idl"
-#include "IhC_FooE.idl"
 
 component Bar : Foo
 {
