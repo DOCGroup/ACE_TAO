@@ -7,11 +7,10 @@
  * by-hand idl3 translation of sender components.
  */
 
-#ifndef DDS_SENDER_IDL
-#define DDS_SENDER_IDL
+#ifndef DDS_SHAPES_SENDER_IDL
+#define DDS_SHAPES_SENDER_IDL
 
 #include "Connector/Shapes_Connector.idl"
-#include "Connector/Shapes_ConnectorE.idl"
 
 module Shapes
 {

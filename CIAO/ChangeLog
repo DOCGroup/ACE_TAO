@@ -1,3 +1,22 @@
+Thu Jan 21 13:48:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.idl
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.idl
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker.idl
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.idl
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver.idl
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver.mpc
+        * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender.idl
+        * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender.mpc
+          Use the new pragma ciao lem
+
+        * DAnCE/TargetManager/TargetManager.idl:
+        * DAnCE/TargetManager/TargetManagerExt.idl:
+          Deleted, not used
+
 Thu Jan 21 13:44:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/ccm_dds.idl

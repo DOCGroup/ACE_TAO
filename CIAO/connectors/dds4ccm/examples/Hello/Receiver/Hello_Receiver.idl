@@ -9,7 +9,6 @@
 #define HELLO_RECEIVER_IDL
 
 #include "Connector/Hello_Connector.idl"
-#include "Connector/Hello_ConnectorE.idl"
 
 module Hello
 {
