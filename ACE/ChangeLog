@@ -1,8 +1,23 @@
+Thu Jan 21 23:16:27 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * ace/CDR_Stream.cpp:
+
+          Fixed the read_8 and write_8 methods for the iPhone Hardware.
+          The iPhone Hardware (ARM architecture) has the same memory 
+          layout as Intel targets, and no conversion or swapping is 
+          necessary. Double values sent from Windows to iPhone Hardware
+          were messed up before this fix due to unnecessary conversion. 
+
+        * ace/config-macosx-iphone-hardware.h:
+        * ace/config-macosx-iphone-simulator.h:
+
+          Added ACE_HAS_IPHONE macro.
+
 Thu Jan 21 16:33:37 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * include/makeinclude/platform_macosx_iphone.GNU:
 
-          Removed the hardcoding of -DACE_AS_STATIC_LIBS and 
+          Removed the hardcoding of -DACE_AS_STATIC_LIBS and
           -DTAO_AS_STATIC_LIBS to CFLAGS and CXXFLAGS and instead
           added static_libs_only=1. That fixes the problem. Thanks
           to Johnny Willemsen for the tip.
