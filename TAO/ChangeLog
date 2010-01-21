@@ -1,3 +1,12 @@
+Thu Jan 21 08:00:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+          Added support for #pragma ciao lem "X". When a lem is generated
+          than any X seen will be generated into the new lem file
+
 Thu Jan 21 01:50:30 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * orbsvcs/tests/Bug_3215_Regression/client.cpp:

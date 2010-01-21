@@ -1086,6 +1086,7 @@ IDL_GlobalData::destroy (void)
     {
       this->pd_root->destroy ();
     }
+
 }
 
 void
@@ -1203,7 +1204,7 @@ IDL_GlobalData::string_to_scoped_name (const char *s)
   // a space.
   char *test = ACE_OS::strchr (start, ' ');
   char *end = ACE_OS::strstr (start, "::");
-  
+
   // The loop below somehow doesn't cover this simple case.
   if (test == 0 && end == 0)
     {
@@ -1212,11 +1213,11 @@ IDL_GlobalData::string_to_scoped_name (const char *s)
       ACE_NEW_RETURN (simple_id,
                       Identifier (s),
                       0);
-                      
+
       ACE_NEW_RETURN (retval,
                       UTL_ScopedName (simple_id, 0),
                       0);
-                      
+
       return retval;
     }
 
@@ -1367,6 +1368,18 @@ ACE_Unbounded_Queue<char *> const &
 IDL_GlobalData::rel_include_paths (void) const
 {
   return this->rel_include_paths_;
+}
+
+void
+IDL_GlobalData::add_ciao_lem_file_names (const char *s)
+{
+  this->ciao_lem_file_names_.enqueue_tail (ACE::strnew (s));
+}
+
+ACE_Unbounded_Queue<char *> &
+IDL_GlobalData::ciao_lem_file_names (void) 
+{
+  return this->ciao_lem_file_names_;
 }
 
 ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex> &
@@ -1592,6 +1605,16 @@ IDL_GlobalData::fini (void)
       ACE::strdelete (*path_tmp);
     }
 
+  for (ACE_Unbounded_Queue_Iterator<char *>riter (
+            this->ciao_lem_file_names_
+          );
+       riter.done () == 0;
+       riter.advance ())
+    {
+      riter.next (path_tmp);
+      ACE::strdelete (*path_tmp);
+    }
+
   ACE_Hash_Map_Entry<char *, char *> *entry = 0;
 
   for (ACE_Hash_Map_Iterator<char *, char *, ACE_Null_Mutex> hiter (
@@ -1612,12 +1635,12 @@ IDL_GlobalData::create_uses_multiple_stuff (AST_Component *c,
                                             const char *port_prefix)
 {
   ACE_CString struct_name (port_prefix);
-  
+
   if (!struct_name.empty ())
     {
       struct_name += '_';
     }
-    
+
   struct_name += u->local_name ()->get_string ();
   struct_name += "Connection";
   Identifier struct_id (struct_name.c_str ());
@@ -1716,7 +1739,7 @@ IDL_GlobalData::hasspace (const char *s)
 {
   if (s)
     {
-      const size_t length = ACE_OS::strlen (s);
+      size_t const length = ACE_OS::strlen (s);
 
       // Windows can't have a space as the first or last character
       // but a unix filename can. Need to check all characters.
@@ -1817,22 +1840,21 @@ IDL_GlobalData::check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list)
   const char *pattern = "sequence<";
   size_t len = ACE_OS::strlen (pattern);
   size_t index = 0;
-  
-  
+
   for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (*list);
        !i.done ();
        i.advance (), ++index)
     {
       FE_Utils::T_Param_Info *param = 0;
       i.next (param);
-      
+
       if (param->name_.find (pattern) == 0)
         {
           // Get the substring of what's between the brackets.
           // It will have to match a previous param in the list.
           id = param->name_.substr (len,
                                     param->name_.length () - (len + 1));
-        
+
           if (!this->check_one_seq_of_param (list, id, index))
             {
               retval = id;
@@ -1848,7 +1870,7 @@ void
 IDL_GlobalData::add_dcps_data_type (const char* id)
 {
   // Check if the type already exists.
-  DCPS_Data_Type_Info* newinfo ;
+  DCPS_Data_Type_Info* newinfo = 0;
   if (this->dcps_type_info_map_.find (id, newinfo) != 0)
     {
       // No existing entry, add one.
@@ -1908,7 +1930,7 @@ IDL_GlobalData::DCPS_Data_Type_Info*
 IDL_GlobalData::is_dcps_type (UTL_ScopedName* target)
 {
   // Traverse the entire map.
-  DCPS_Type_Info_Map::ENTRY* entry ;
+  DCPS_Type_Info_Map::ENTRY* entry = 0;
   for (DCPS_Type_Info_Map::ITERATOR current (this->dcps_type_info_map_);
        current.next (entry);
        current.advance ())
@@ -2095,17 +2117,16 @@ IDL_GlobalData::check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
         {
           break;
         }
-    
+
       FE_Utils::T_Param_Info *info = 0;
       i.next (info);
-      
+
       if (info->name_ == param_id)
         {
           return true;
         }
     }
-    
+
   return false;
 }
-
 

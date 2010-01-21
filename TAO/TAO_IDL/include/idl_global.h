@@ -149,7 +149,7 @@ public:
     , PS_TmplModuleQsSeen       // '}' seen for template module
     , PS_TmplModuleBodySeen     // Seen a template module body
     , PS_InstModuleSeen         // Seen MODULE keyword + reference
-    , PS_InstModuleArgsSeen     // Seen template args 
+    , PS_InstModuleArgsSeen     // Seen template args
     , PS_InstModuleIDSeen       // Seen instantiated module ID
     , PS_ModuleRefSeen          // Seen ALIAS keyword + reference
     , PS_ModuleRefParamsSeen    // Seen the subset of params used
@@ -591,7 +591,11 @@ public:
   void add_rel_include_path (const char *s);
   ACE_Unbounded_Queue<char *> const & rel_include_paths (void) const;
   // Accessor/mutator for the rel_include_paths_ member.
-  
+
+  void add_ciao_lem_file_names (const char *s);
+  ACE_Unbounded_Queue<char *> & ciao_lem_file_names (void);
+  // Accessor/mutator for the ciao_lem_file_names__ member.
+
   FILE * open_included_file (char const * filename,
                              char const *& directory);
   // Attempt to open file for reading until it is found in one of the
@@ -648,16 +652,16 @@ public:
   bool multi_file_input (void) const;
   void multi_file_input (bool val);
   // Accessors for the member.
-  
+
   const char *big_file_name (void) const;
   // Just get the const string.
-  
+
   FE_Utils::T_PARAMLIST_INFO const *current_params (void) const;
   void current_params (FE_Utils::T_PARAMLIST_INFO *params);
   // Accessors for the member. If UTL_Scope::lookup_by_name()
   // has a 0 result, it will check this param list (if it is not
   // 0, meaning we are in the scope of a template module) for a
-  // match before returning, in case it is processing a 
+  // match before returning, in case it is processing a
   // referenced template parameter of the eclosing template
   // module.
 
@@ -677,7 +681,7 @@ public:
 
   void original_local_name (Identifier *local_name);
   // Strips _cxx_ prefix for use in port names.
-  
+
 private:
   bool check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
                                ACE_CString &param_id,
@@ -762,7 +766,7 @@ private:
     char *path_;
     bool is_system_;
   };
-  
+
   typedef ACE_Unbounded_Queue<Include_Path_Info> Unbounded_Paths_Queue;
   typedef ACE_Unbounded_Queue_Iterator<Include_Path_Info> Unbounded_Paths_Queue_Iterator;
   Unbounded_Paths_Queue include_paths_;
@@ -786,7 +790,7 @@ private:
   DCPS_Type_Info_Map dcps_type_info_map_ ;
   // Map of #pragma DCPS_DATA_TYPE and DCPS_DATA_KEY infomation.
 
-  bool dcps_support_zero_copy_read_; 
+  bool dcps_support_zero_copy_read_;
   // Are we enabled to support DCPS zero-copy read.
   // Need this flag to avoid generating wrong code for pre v0.12 DDS
   // with new TAO_IDL compiler.
@@ -800,16 +804,19 @@ private:
   char *recursion_start_;
   // Path to directory subtree we are iterating/recursing over.
   // Not used by all backends.
-  
+
   bool multi_file_input_;
   // Some backends process multiple files to a single output.
-  
+
   const char *big_file_name_;
   // Used if the above flag is set.
-  
+
   FE_Utils::T_PARAMLIST_INFO *current_params_;
   // Stored if we are parsing the scope of a template module,
   // 0 otherwise.
+
+  ACE_Unbounded_Queue<char *> ciao_lem_file_names_;
+  // Files parsed with ciao lem pragma
 };
 
 
