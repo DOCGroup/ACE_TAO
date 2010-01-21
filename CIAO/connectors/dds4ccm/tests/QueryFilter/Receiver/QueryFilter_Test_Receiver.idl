@@ -22,8 +22,6 @@ module QueryFilter_Test
 
     provides QueryFilterStarter reader_start;
     uses QueryFilterRestarter writer_restart;
-
-    provides CCM_DDS::ConnectorStatusListener info_out_connector_status;
   };
 };
 

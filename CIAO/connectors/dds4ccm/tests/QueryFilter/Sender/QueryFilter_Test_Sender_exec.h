@@ -19,34 +19,16 @@ namespace CIAO_QueryFilter_Test_Sender_Impl
 {
   class Sender_exec_i;
 
-  class SENDER_EXEC_Export ConnectorStatusListener_exec_i
-    : public virtual ::CCM_DDS::CCM_ConnectorStatusListener,
-      public virtual ::CORBA::LocalObject
+  //============================================================
+  // WriteHandler
+  //============================================================
+  class WriteHandler :
+    public ACE_Event_Handler
   {
   public:
-    ConnectorStatusListener_exec_i (Sender_exec_i &);
-    virtual ~ConnectorStatusListener_exec_i (void);
-
-    virtual
-    void on_inconsistent_topic( ::DDS::Topic_ptr ,
-                              const DDS::InconsistentTopicStatus & );
-    virtual
-    void on_requested_incompatible_qos( ::DDS::DataReader_ptr ,
-                              const DDS::RequestedIncompatibleQosStatus & );
-    virtual
-    void on_sample_rejected( ::DDS::DataReader_ptr ,
-                              const DDS::SampleRejectedStatus & );
-    virtual
-    void on_offered_deadline_missed( ::DDS::DataWriter_ptr ,
-                              const DDS::OfferedDeadlineMissedStatus & );
-    virtual
-    void on_offered_incompatible_qos( ::DDS::DataWriter_ptr ,
-                              const DDS::OfferedIncompatibleQosStatus & );
-    virtual
-    void on_unexpected_status( ::DDS::Entity_ptr ,
-                              ::DDS::StatusKind );
+    WriteHandler (Sender_exec_i &callback);
+    virtual int handle_exception (ACE_HANDLE fc = ACE_INVALID_HANDLE);
   private:
-    /// Maintains a handle that actually process the event
     Sender_exec_i &callback_;
   };
 
@@ -78,16 +60,9 @@ namespace CIAO_QueryFilter_Test_Sender_Impl
     Sender_exec_i (void);
     virtual ~Sender_exec_i (void);
 
-    virtual ::CORBA::UShort iterations (void);
-
-    virtual void iterations (::CORBA::UShort iterations);
-
     virtual ::CORBA::UShort keys (void);
 
     virtual void keys (::CORBA::UShort keys);
-
-    virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
-    get_info_out_connector_status (void);
 
     virtual ::CCM_QueryFilterRestarter_ptr
     get_restart_writer (void);
@@ -110,8 +85,7 @@ namespace CIAO_QueryFilter_Test_Sender_Impl
 
     CORBA::UShort iterations_;
     CORBA::UShort keys_;
-    bool          done_;
-    bool          ccm_activated_;
+    CORBA::UShort run_;
   };
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

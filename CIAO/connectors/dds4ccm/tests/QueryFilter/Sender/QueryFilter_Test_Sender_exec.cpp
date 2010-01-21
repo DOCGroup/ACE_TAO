@@ -2,61 +2,28 @@
 // $Id$
 
 #include "QueryFilter_Test_Sender_exec.h"
+#include "tao/ORB_Core.h"
+#include "ace/Reactor.h"
 #include "ciao/Logger/Log_Macros.h"
+
+#define ITERATIONS 10
 
 namespace CIAO_QueryFilter_Test_Sender_Impl
 {
   //============================================================
-  // ConnectorStatusListener_exec_i
+  // WriteHandler
   //============================================================
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Sender_exec_i &callback)
+  WriteHandler::WriteHandler (Sender_exec_i &callback)
     : callback_ (callback)
   {
   }
 
-  ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
+  int
+  WriteHandler::handle_exception (ACE_HANDLE)
   {
+    this->callback_.start ();
+    return 0;
   }
-
-  // Operations from ::CCM_DDS::ConnectorStatusListener
-  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
-     ::DDS::Topic_ptr ,
-     const DDS::InconsistentTopicStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
-    ::DDS::DataReader_ptr ,
-     const DDS::RequestedIncompatibleQosStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr ,
-     const DDS::SampleRejectedStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
-     ::DDS::DataWriter_ptr ,
-     const DDS::OfferedDeadlineMissedStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr ,
-     const DDS::OfferedIncompatibleQosStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_unexpected_status(
-    ::DDS::Entity_ptr /*the_entity*/,
-    ::DDS::StatusKind  status_kind)
-  {
-    if (status_kind == ::DDS::PUBLICATION_MATCHED_STATUS)
-      this->callback_.start ();
-  }
-
 
   //============================================================
   // Restarter_exec_i
@@ -80,10 +47,9 @@ namespace CIAO_QueryFilter_Test_Sender_Impl
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
   Sender_exec_i::Sender_exec_i (void)
-    : iterations_ (10),
+    : iterations_ (ITERATIONS),
       keys_ (5),
-      done_ (false),
-      ccm_activated_ (false)
+      run_ (1)
   {
   }
 
@@ -94,66 +60,40 @@ namespace CIAO_QueryFilter_Test_Sender_Impl
   void
   Sender_exec_i::restart (void)
   {
-    this->done_ = false;
-    this->ccm_activated_ = true;
+    ++this->run_;
+    WriteHandler *wh = new WriteHandler (*this);
+    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (wh);
+  }
+
+  void
+  Sender_exec_i::start (void)
+  {
+    if (!CORBA::is_nil (this->starter_))
+      {
+        this->starter_->set_reader_properties (this->keys_, this->iterations_);
+      }
+    else
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unable to start the reader\n")));
+      }
     for (CORBA::UShort iter_key = 1; iter_key < this->keys_ + 1; ++iter_key)
       {
         char key[7];
         QueryFilterTest *new_key = new QueryFilterTest;
         ACE_OS::sprintf (key, "KEY_%d", iter_key);
         new_key->symbol = CORBA::string_dup(key);
-        for (CORBA::UShort iter = 1; iter < this->iterations_ + 1; ++iter)
+        for (CORBA::UShort iter = ((this->run_ - 1) * this->iterations_) + 1;
+             iter < this->run_ * this->iterations_ + 1;
+             ++iter)
           {
             new_key->iteration = iter;
-            this->writer_->register_instance (*new_key);
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Write key <%C> with <%d>\n"),
+            this->writer_->write_one (*new_key, ::DDS::HANDLE_NIL);
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written key <%C> with <%d>\n"),
                         key, iter));
           }
       }
-  }
-
-  void
-  Sender_exec_i::start (void)
-  {
-    //start can be called more than once...
-    if (!this->done_ && this->ccm_activated_)
-      {
-        this->done_ = true;
-        if (!CORBA::is_nil (this->starter_))
-          {
-            this->starter_->set_reader_properties (this->keys_, this->iterations_);
-          }
-        else
-          {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unable to start the reader\n")));
-          }
-        for (CORBA::UShort iter_key = 1; iter_key < this->keys_ + 1; ++iter_key)
-          {
-            char key[7];
-            QueryFilterTest *new_key = new QueryFilterTest;
-            ACE_OS::sprintf (key, "KEY_%d", iter_key);
-            new_key->symbol = CORBA::string_dup(key);
-        for (CORBA::UShort iter = 1; iter < this->iterations_ + 1; ++iter)
-          {
-            new_key->iteration = iter;
-                this->writer_->write_one (*new_key, ::DDS::HANDLE_NIL);
-                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written key <%C> with <%d>\n"),
-                            key, iter));
-              }
-          }
-      }
-  }
-
-  ::CORBA::UShort
-  Sender_exec_i::iterations (void)
-  {
-    return this->iterations_;
-  }
-
-  void
-  Sender_exec_i::iterations (::CORBA::UShort iterations)
-  {
-    this->iterations_ = iterations;
+    ACE_OS::sleep (2);
+    this->starter_->start_read (this->run_);
   }
 
   ::CORBA::UShort
@@ -166,12 +106,6 @@ namespace CIAO_QueryFilter_Test_Sender_Impl
   Sender_exec_i::keys (::CORBA::UShort keys)
   {
     this->keys_ = keys;
-  }
-
-  ::CCM_DDS::CCM_ConnectorStatusListener_ptr
-  Sender_exec_i::get_info_out_connector_status (void)
-  {
-    return new ConnectorStatusListener_exec_i (*this);
   }
 
   ::CCM_QueryFilterRestarter_ptr
@@ -204,7 +138,8 @@ namespace CIAO_QueryFilter_Test_Sender_Impl
       {
         this->writer_ = this->context_->get_connection_info_write_data ();
         this->starter_ = this->context_->get_connection_start_reader ();
-        this->ccm_activated_ = true;
+        WriteHandler *wh = new WriteHandler (*this);
+        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (wh);
       }
     catch (const CORBA::Exception& ex)
       {

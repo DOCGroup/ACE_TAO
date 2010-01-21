@@ -1,3 +1,19 @@
+Thu Jan 21 12:32:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryFilter/Base/QueryFilter_Starter.idl:
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryFilter/Sender/QueryFilter_Test_Sender.idl:
+        * connectors/dds4ccm/tests/QueryFilter/Sender/QueryFilter_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryFilter/Sender/QueryFilter_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryFilter/descriptors/Plan.cdp:
+          Running tests in the ORB reactor thread (instead of running in a
+          DDS callback thread). This is done because you're not allowed to
+          set query parameters in a DDS callback thread.
+          Therefore removed ConnectorStatusListener and implemented an
+          ACE_EventHandler. Also extended tests.
+
 Thu Jan 21 11:42:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLDeadline/Connector/CSL_DeadlineTest_Connector.idl
