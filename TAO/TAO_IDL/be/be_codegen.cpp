@@ -3268,6 +3268,19 @@ TAO_CodeGen::gen_exec_idl_includes (void)
   this->gen_standard_include (
     this->ciao_exec_idl_,
     idl_global->stripped_filename ()->get_string ());
+
+  char **path_tmp  = 0;
+  for (ACE_Unbounded_Queue_Iterator<char *>riter (
+            idl_global->ciao_lem_file_names ()
+          );
+       riter.done () == 0;
+       riter.advance ())
+    {
+      riter.next (path_tmp);
+
+      // No newline first time for better formatting.
+      this->ciao_exec_idl_->print ("\n#include \"%s\"", *path_tmp);
+    }
 }
 
 void
