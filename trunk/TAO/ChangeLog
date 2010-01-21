@@ -1,3 +1,11 @@
+Thu Jan 21 01:45:41 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * orbsvcs/tests/Bug_3216_Regression/client.cpp:
+
+          added "include "tao/PI/PI.h" to the file to allow
+          this test to pass on the iPhone Simulator. The
+          inclusion of PI.h is rquired for static builds.
+
 Wed Jan 20 19:19:19 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/ImplRepo_Service/Activator_Options.cpp:
