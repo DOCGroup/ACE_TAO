@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p DDS_Shapes_Base -l ../lib -o ../lib -c controller -u DDS Sender"
 
-project(DDS_Sender_idl_gen) : componentidldefaults {
+project(DDS_Shapes_Sender_idl_gen) : componentidldefaults {
   after += DDS_Shapes_Connector_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SENDER_STUB_Export \
@@ -19,8 +19,8 @@ project(DDS_Sender_idl_gen) : componentidldefaults {
   }
 }
 
-project(DDS_Sender_lem_gen) : ciaoidldefaults {
-  after += DDS_Sender_idl_gen
+project(DDS_Shapes_Sender_lem_gen) : ciaoidldefaults {
+  after += DDS_Shapes_Sender_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SENDER_LEM_STUB_Export \
               -Wb,stub_export_include=Sender_lem_stub_export.h \
@@ -31,8 +31,8 @@ project(DDS_Sender_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(DDS_Sender_lem_stub) : ccm_svnt, dds4ccm_base {
-  after += DDS_Sender_lem_gen DDS_Sender_stub DDS_Shapes_Base_stub
+project(DDS_Shapes_Sender_lem_stub) : ccm_svnt, dds4ccm_base {
+  after += DDS_Shapes_Sender_lem_gen DDS_Shapes_Sender_stub DDS_Shapes_Base_stub
   libs  += DDS_Shapes_Base_stub Sender_stub
   libpaths += ../lib
   libout = ../lib
@@ -57,8 +57,8 @@ project(DDS_Sender_lem_stub) : ccm_svnt, dds4ccm_base {
   }
 }
 
-project(DDS_Sender_stub) : ccm_stub, dds4ccm_base {
-  after += DDS_Sender_idl_gen DDS_Shapes_Base_stub DDS_Shapes_Connector_stub
+project(DDS_Shapes_Sender_stub) : ccm_stub, dds4ccm_base {
+  after += DDS_Shapes_Sender_idl_gen DDS_Shapes_Base_stub DDS_Shapes_Connector_stub
   libs  += DDS_Shapes_Base_stub DDS_Shapes_Connector_stub
   includes += ..
   libpaths += ../lib
@@ -83,8 +83,8 @@ project(DDS_Sender_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(DDS_Sender_exec) : ciao_executor, dds4ccm_base {
-  after   += DDS_Sender_lem_stub DDS_Sender_stub DDS_Shapes_Connector_lem_stub DDS_Shapes_Connector_stub
+project(DDS_Shapes_Sender_exec) : ciao_executor, dds4ccm_base {
+  after   += DDS_Shapes_Sender_lem_stub DDS_Shapes_Sender_stub DDS_Shapes_Connector_lem_stub DDS_Shapes_Connector_stub
   sharedname = Sender_exec
   libs += Sender_stub Sender_lem_stub DDS_Shapes_Base_stub DDS_Shapes_Connector_lem_stub DDS_Shapes_Connector_stub
   libpaths += ../lib
@@ -109,8 +109,8 @@ project(DDS_Sender_exec) : ciao_executor, dds4ccm_base {
 }
 
 
-project(DDS_Sender_svnt) : ciao_servant, dds4ccm_base, nddslib {
-  after      += DDS_Shapes_Base_stub  DDS_Sender_lem_stub DDS4CCM_lem_stub DDS4CCM_skel DDS_Shapes_Connector_stub DDS_Shapes_Connector_svnt  DDS_Shapes_Connector_lem_stub
+project(DDS_Shapes_Sender_svnt) : ciao_servant, dds4ccm_base, nddslib {
+  after      += DDS_Shapes_Base_stub  DDS_Shapes_Sender_lem_stub DDS4CCM_lem_stub DDS4CCM_skel DDS_Shapes_Connector_stub DDS_Shapes_Connector_svnt  DDS_Shapes_Connector_lem_stub
   sharedname  = Sender_svnt
   libs       += Sender_stub Sender_lem_stub  \
                 DDS_Shapes_Base_stub DDS4CCM_lem_stub DDS4CCM_skel DDS_Shapes_Connector_stub DDS_Shapes_Connector_svnt DDS_Shapes_Connector_lem_stub

@@ -9,7 +9,6 @@
 #define BROKER_IDL
 
 #include "Connector/Quoter_Connector.idl"
-#include "Connector/Quoter_ConnectorE.idl"
 
 module Quoter
 {
@@ -19,17 +18,4 @@ module Quoter
   };
 };
 
-/*
-#include <dds4ccm/idl/dds4ccm_Connector_Base.idl3p>
-#include <dds4ccm/idl/dds4ccm_Port_RawListen.idl3p>
-
-module Quoter
-{
-  component Broker
-  {
-    port CCM_DDS::DDS_RawListen <Stock_Info> info;
-  };
-};
-
- */
 #endif

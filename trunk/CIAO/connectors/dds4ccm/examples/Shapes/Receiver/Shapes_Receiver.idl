@@ -9,7 +9,6 @@
 #define RECEIVER_IDL
 
 #include "Connector/Shapes_Connector.idl"
-#include "Connector/Shapes_ConnectorE.idl"
 
 module Shapes
 {
