@@ -1,5 +1,8 @@
 // $Id$
 
+#if !defined (AMI4CCM_IDL_H)
+#define AMI4CCM_IDL_H
+
 module CCM_AMI
 {
   native UserExceptionBase;
@@ -15,3 +18,4 @@ module CCM_AMI
   };
 };
 
+#endif /* AMI4CCM_IDL_H */
