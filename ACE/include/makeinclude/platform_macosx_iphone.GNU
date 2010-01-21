@@ -1,6 +1,7 @@
 # $Id$
 
 CROSS-COMPILE=1
+static_libs_only=1
 
 include $(ACE_ROOT)/include/makeinclude/platform_macosx_common.GNU
 
@@ -32,8 +33,8 @@ AR:=$(IPHONE_PLATFORM)/usr/bin/ar
 RANLIB:=$(IPHONE_PLATFORM)/usr/bin/ranlib
 DLD = $(CXX)
 LD  = $(CXX)
-CFLAGS   += -arch $(IPHONE_HARDWARE_ARCHITECTURE) -isysroot $(IPHONE_SDK) -DACE_AS_STATIC_LIBS -DTAO_AS_STATIC_LIBS
-CXXFLAGS += -arch $(IPHONE_HARDWARE_ARCHITECTURE) -isysroot $(IPHONE_SDK) -DACE_AS_STATIC_LIBS -DTAO_AS_STATIC_LIBS
+CFLAGS   += -arch $(IPHONE_HARDWARE_ARCHITECTURE) -isysroot $(IPHONE_SDK)
+CXXFLAGS += -arch $(IPHONE_HARDWARE_ARCHITECTURE) -isysroot $(IPHONE_SDK)
 
 ifneq (,$(HOST_ROOT))
   TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/ace_gperf
