@@ -11,7 +11,6 @@
 #define DDS_LISTEN_ONE_BY_ONE_TEST_SENDER_IDL
 
 #include "Connector/LOBO_Test_Connector.idl"
-#include "Connector/LOBO_Test_ConnectorE.idl"
 
 module LOBO_Test
 {

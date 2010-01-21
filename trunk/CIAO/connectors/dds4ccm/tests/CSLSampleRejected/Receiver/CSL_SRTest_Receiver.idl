@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file 
+ * @file
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
  */
 
@@ -9,20 +9,17 @@
 #define RECEIVER_IDL
 
 #include "Connector/CSL_SRTest_Connector.idl"
-#include "Connector/CSL_SRTest_ConnectorE.idl"
-
 
 module CSL_SRTest
 {
   component Receiver
   {
-    port CCM_DDS::TestTopic::DDS_Listen info_out; 
+    port CCM_DDS::TestTopic::DDS_Listen info_out;
     provides CCM_DDS::ConnectorStatusListener info_out_connector_status;
     attribute unsigned long rate;
     attribute boolean read_data;//if true, read_all is invoked.
     attribute boolean raw_listen; //if true, raw listen port is enabled.
    };
 };
-
 
 #endif

@@ -11,17 +11,15 @@
 #define DDS_CSL_SRTEST_SENDER_IDL
 
 #include "Connector/CSL_SRTest_Connector.idl"
-#include "Connector/CSL_SRTest_ConnectorE.idl"
-
-
 
 module CSL_SRTest
 {
   component Sender
   {
      port CCM_DDS::TestTopic::DDS_Write test_topic_write;
-     provides CCM_DDS::ConnectorStatusListener test_topic_connector_status; 
- 
+     provides CCM_DDS::ConnectorStatusListener test_topic_connector_status;
+
   };
 };
+
 #endif

@@ -11,9 +11,6 @@
 #define DDS_SL_DISABLED_SENDER_IDL
 
 #include "Connector/SL_Disabled_Connector.idl"
-#include "Connector/SL_Disabled_ConnectorE.idl"
-
-
 
 module SL_Disabled
 {
@@ -22,4 +19,5 @@ module SL_Disabled
      port CCM_DDS::TestTopic::DDS_Update test_topic_update;
   };
 };
+
 #endif

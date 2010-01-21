@@ -10,6 +10,8 @@
 
 #include "connectors/dds4ccm/idl/dds4ccm_Base.idl"
 
+#pragma ciao lem "connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListenerE.idl"
+
 module CCM_DDS
 {
   local interface ConnectorStatusListener {

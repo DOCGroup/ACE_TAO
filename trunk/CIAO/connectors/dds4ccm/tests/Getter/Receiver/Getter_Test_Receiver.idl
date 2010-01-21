@@ -9,10 +9,7 @@
 #define RECEIVER_IDL
 
 #include "Connector/Getter_Test_Connector.idl"
-#include "Connector/Getter_Test_ConnectorE.idl"
-
 #include "Base/Get_Invoker.idl"
-#include "Base/Get_InvokerE.idl"
 
 module Getter_Test
 {

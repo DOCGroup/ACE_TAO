@@ -11,9 +11,6 @@
 #define DDS_UPDATER_SENDER_IDL
 
 #include "Connector/Updater_Connector.idl"
-#include "Connector/Updater_ConnectorE.idl"
-
-
 
 module Updater
 {
@@ -22,4 +19,5 @@ module Updater
      port CCM_DDS::TestTopic::DDS_Update test_topic_update;
   };
 };
+
 #endif

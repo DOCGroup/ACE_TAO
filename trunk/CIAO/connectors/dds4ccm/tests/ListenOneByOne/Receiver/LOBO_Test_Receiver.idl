@@ -9,7 +9,6 @@
 #define RECEIVER_IDL
 
 #include "Connector/LOBO_Test_Connector.idl"
-#include "Connector/LOBO_Test_ConnectorE.idl"
 
 module LOBO_Test
 {

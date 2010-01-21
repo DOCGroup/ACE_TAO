@@ -9,7 +9,6 @@
 #define RECEIVER_IDL
 
 #include "Connector/LNE_Test_Connector.idl"
-#include "Connector/LNE_Test_ConnectorE.idl"
 
 module LNE_Test
 {

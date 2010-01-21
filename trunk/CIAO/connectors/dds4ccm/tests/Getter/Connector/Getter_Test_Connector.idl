@@ -12,6 +12,8 @@
 #include "Base/Getter_Test_Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
+#pragma ciao lem "Connector/Getter_Test_ConnectorE.idl"
+
 TYPED_MODULE( ::GetterTest, ::GetterTest_Seq, GetterTest)
 
 module Getter_Test

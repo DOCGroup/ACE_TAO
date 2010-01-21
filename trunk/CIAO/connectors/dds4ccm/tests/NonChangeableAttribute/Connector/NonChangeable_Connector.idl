@@ -12,6 +12,8 @@
 #include "Base/NonChangeable_Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
+#pragma ciao lem "Connector/NonChangeable_ConnectorE.idl"
+
 TYPED_MODULE( ::NonChangeableTest, ::NonChangeableTest_Seq, NonChangeableTest)
 
 module NonChangeable

@@ -11,14 +11,13 @@
 #define DDS_VTOPICS_SENDER_IDL
 
 #include "Connector/VTopics_Connector.idl"
-#include "Connector/VTopics_ConnectorE.idl"
-
 
 module VTopics
 {
   component Sender
   {
-    provides CCM_DDS::ConnectorStatusListener test_topic_connector_status; 
+    provides CCM_DDS::ConnectorStatusListener test_topic_connector_status;
   };
 };
+
 #endif

@@ -9,7 +9,6 @@
 #define RECEIVER_IDL
 
 #include "Connector/Event_Connection_Test_Connector.idl"
-#include "Connector/Event_Connection_Test_ConnectorE.idl"
 
 module Event_Connection_Test
 {

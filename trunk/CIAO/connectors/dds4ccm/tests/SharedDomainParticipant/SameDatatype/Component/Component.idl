@@ -10,7 +10,6 @@
 #define DDS_SHARED_DP_COMPONENT_IDL
 
 #include "Connector/Connector.idl"
-#include "Connector/ConnectorE.idl"
 
 module SharedDP
 {

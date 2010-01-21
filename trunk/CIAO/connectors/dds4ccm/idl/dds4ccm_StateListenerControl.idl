@@ -9,6 +9,8 @@
 
 #include "connectors/dds4ccm/idl/dds4ccm_DataListenerControl.idl"
 
+#pragma ciao lem "connectors/dds4ccm/idl/dds4ccm_StateListenerControlE.idl"
+
 module CCM_DDS
 {
   local interface StateListenerControl : DataListenerControl {

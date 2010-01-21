@@ -9,7 +9,6 @@
 #define RECEIVER_IDL
 
 #include "Connector/LMBM_Test_Connector.idl"
-#include "Connector/LMBM_Test_ConnectorE.idl"
 
 module LMBM_Test
 {

@@ -12,6 +12,8 @@
 #include "Base/Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
+#pragma ciao lem "Connector/Connector3E.idl"
+
 TYPED_MODULE( ::SharedDPTest3, ::SharedDPTest3_Seq, SharedDPTest3)
 
 module SharedDP_Connector3
@@ -20,7 +22,5 @@ module SharedDP_Connector3
   {
   };
 };
-
-
 
 #endif /* SHARED_DP_CONNECTOR3_IDL_ */

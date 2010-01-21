@@ -12,6 +12,8 @@
 #include "Base/SL_Disabled_Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
+#pragma ciao lem "Connector/SL_Disabled_ConnectorE.idl"
+
 TYPED_MODULE( ::TestTopic, ::TestTopic_Seq, TestTopic)
 
 module SL_Disabled

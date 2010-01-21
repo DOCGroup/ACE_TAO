@@ -12,6 +12,8 @@
 #include "Base/State_Connection_Test_Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
+#pragma ciao lem "Connector/State_Connection_Test_ConnectorE.idl"
+
 TYPED_MODULE( ::State_ConnectionTest, ::State_ConnectionTest_Seq, State_ConnectionTest)
 
 module State_Connection_Test

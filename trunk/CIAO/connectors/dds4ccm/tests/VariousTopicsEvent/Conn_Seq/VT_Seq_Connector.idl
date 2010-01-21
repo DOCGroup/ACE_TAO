@@ -12,6 +12,8 @@
 #include "Base/VTopic_Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
+#pragma ciao lem "Connector/VT_Seq_ConnectorE.idl"
+
 TYPED_MODULE( ::TopicSeq, ::TopicSeq_Seq, TopicSeq)
 
 module VTopic
