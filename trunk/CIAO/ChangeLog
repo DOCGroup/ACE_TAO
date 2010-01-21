@@ -1,3 +1,9 @@
+Thu Jan 21 13:55:41 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.cpp:
+          Resolved last test errors.
+
 Thu Jan 21 13:48:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.idl
