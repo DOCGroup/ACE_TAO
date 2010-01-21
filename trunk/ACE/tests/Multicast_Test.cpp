@@ -506,8 +506,8 @@ MCT_Event_Handler::mcast (void)
 int
 MCT_Event_Handler::find (const char *buf)
 {
-  size_t size = this->address_vec_.size ();
-  size_t i;
+  size_t const size = this->address_vec_.size ();
+  size_t i = 0;
   for (i = 0; i < size; ++i)
     {
       if (ACE_OS::strcasecmp (buf, this->address_vec_[i]->c_str ()) == 0)
@@ -672,7 +672,7 @@ MCT_Task::~MCT_Task (void)
 int
 MCT_Task::open (void *)
 {
-  MCT_Event_Handler *handler;
+  MCT_Event_Handler *handler = 0;
 
   ACE_INET_Addr addr = this->config_.group_start ();
   int groups = this->config_.groups ();

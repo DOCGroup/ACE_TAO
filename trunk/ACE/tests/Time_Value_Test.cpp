@@ -30,7 +30,6 @@ ACE_RCSID(tests, Time_Value_Test, "$Id$")
 
 #include "ace/Numeric_Limits.h"
 
-
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -108,16 +107,6 @@ run_main (int, ACE_TCHAR *[])
   tv1 *= 2.0;
   ACE_ASSERT (tv1 == tv2);
 
-  // test saturated result
-  tv1.set (max_time_t - 1, 499999);
-  tv2.set (max_time_t, 999999);  // ACE_Time_Value::max_time
-  tv1 *= 10.0;
-  ACE_ASSERT (tv1 == tv2);
-  tv1.set (max_time_t - 1, 499999);
-  tv2.set (min_time_t, -999999);
-  tv1 *= -10.0;
-  ACE_ASSERT (tv1 == tv2);
-
   // Test correct msec() convert; also checks for compile error reported in
   // Bugzilla 3336.
   ACE_Time_Value msec_test (42, 555000);
@@ -127,7 +116,7 @@ run_main (int, ACE_TCHAR *[])
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("msec test failed: %Q should be 42555\n"),
                 ms));
-  const ACE_Time_Value msec_test2 (42, 555000);
+  ACE_Time_Value const msec_test2 (42, 555000);
   ms = 0;
   msec_test2.msec (ms);
   if (ms != 42555)
