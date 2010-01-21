@@ -10,3 +10,4 @@ interface B
 };
 
 #endif /* B_IDL */
+
