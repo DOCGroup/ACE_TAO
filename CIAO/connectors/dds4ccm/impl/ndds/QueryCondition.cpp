@@ -3,6 +3,7 @@
 #include "QueryCondition.h"
 #include "Subscriber.h"
 #include "DataReader.h"
+#include "StringSeq.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
@@ -68,16 +69,22 @@ namespace CIAO
 
       ::DDS::ReturnCode_t
       RTI_QueryCondition_i::get_query_parameters (
-        ::DDS::StringSeq & /*query_parameters*/)
+        ::DDS::StringSeq & query_parameters)
       {
-        throw CORBA::NO_IMPLEMENT ();
+        DDS_StringSeq parameters;
+        ::DDS::ReturnCode_t retval = this->impl ()->get_query_parameters (
+                                                           parameters);
+        query_parameters <<= parameters;
+        return retval;
       }
 
       ::DDS::ReturnCode_t
       RTI_QueryCondition_i::set_query_parameters (
-        const ::DDS::StringSeq & /*query_parameters*/)
+        const ::DDS::StringSeq & query_parameters)
       {
-        throw CORBA::NO_IMPLEMENT ();
+        DDS_StringSeq parameters;
+        parameters <<= query_parameters;
+        return this->impl ()->set_query_parameters (parameters);
       }
 
       DDSQueryCondition *

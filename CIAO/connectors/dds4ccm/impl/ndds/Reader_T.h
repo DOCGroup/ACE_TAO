@@ -68,7 +68,7 @@ namespace CIAO
         ACE_CString profile_name_;
 
         #if defined DDS4CCM_USES_QUERY_CONDITION
-          DDS::ReadCondition_var qc_;
+          DDS::QueryCondition_var qc_;
         #else
           DDS::ContentFilteredTopic_var cft_;
         #endif
