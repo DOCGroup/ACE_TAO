@@ -32,27 +32,27 @@ namespace CIAO
         virtual ~RTI_ContentFilteredTopic_i (void);
 
         virtual
-          char * get_filter_expression (void);
+        char * get_filter_expression (void);
 
         virtual
-          ::DDS::ReturnCode_t get_expression_parameters (
+        ::DDS::ReturnCode_t get_expression_parameters (
             ::DDS::StringSeq & expression_parameters);
 
         virtual
-          ::DDS::ReturnCode_t set_expression_parameters (
+        ::DDS::ReturnCode_t set_expression_parameters (
             const ::DDS::StringSeq & expression_parameters);
 
         virtual
-          ::DDS::Topic_ptr get_related_topic (void);
+        ::DDS::Topic_ptr get_related_topic (void);
 
         virtual
-          char * get_type_name (void);
+        char * get_type_name (void);
 
         virtual
-          char * get_name (void);
+        char * get_name (void);
 
         virtual
-          ::DDS::DomainParticipant_ptr get_participant (void);
+        ::DDS::DomainParticipant_ptr get_participant (void);
 
         DDSContentFilteredTopic * get_impl (void);
 

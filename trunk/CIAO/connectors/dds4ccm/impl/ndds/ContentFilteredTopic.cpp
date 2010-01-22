@@ -1,6 +1,9 @@
 // $Id$
 
 #include "ContentFilteredTopic.h"
+#include "Topic.h"
+#include "StringSeq.h"
+
 #include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO
@@ -35,11 +38,7 @@ namespace CIAO
         DDS_StringSeq parameters;
         ::DDS::ReturnCode_t retval = this->impl ()->get_expression_parameters (
                                                                     parameters);
-        expression_parameters.length (parameters.length ());
-        for (::DDS_Long i = 0 ; i < parameters.length(); ++i)
-          {
-            expression_parameters[i] = CORBA::string_dup (parameters[i]);
-          }
+        expression_parameters <<= parameters;
         return retval;
       }
 
@@ -49,17 +48,8 @@ namespace CIAO
       {
         CIAO_TRACE ("RTI_ContentFilteredTopic_i::set_expression_parameters");
 
-        const char** parameterlist = new const char*[expression_parameters.length ()];
-
-        for (CORBA::ULong i = 0; i < expression_parameters.length (); ++i)
-          {
-            parameterlist[i] = expression_parameters[i].in ();
-          }
-
-        DDS_StringSeq parameters (expression_parameters.length ());
-        parameters.from_array(parameterlist, expression_parameters.length ());
-
-        delete [] parameterlist;
+        DDS_StringSeq parameters;
+        parameters <<= expression_parameters;
 
         return this->impl ()->set_expression_parameters (parameters);
       }
@@ -68,7 +58,11 @@ namespace CIAO
       RTI_ContentFilteredTopic_i::get_related_topic (void)
       {
         CIAO_TRACE ("RTI_ContentFilteredTopic_i::get_related_topic");
-        throw CORBA::NO_IMPLEMENT ();
+        DDSTopic *topic = this->impl ()->get_related_topic ();
+        ::DDS::Topic_var retval = new RTI_Topic_i ();
+        RTI_Topic_i *rti_topic = dynamic_cast < RTI_Topic_i *> (retval.in ());
+        rti_topic->set_impl (topic);
+        return retval._retn ();
       }
 
       char *

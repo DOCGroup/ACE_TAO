@@ -1,3 +1,23 @@
+Fri Jan 22 14:23:40 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.h:
+        * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReader.cpp:
+        * connectors/dds4ccm/impl/ndds/StringSeq.h:
+          Added operators in order to copy DDS_StringSeq
+          to and from DDS::StringSeq.
+
+        * connectors/dds4ccm/impl/ndds/InstanceHandle_t.h:
+          Added == and != operator in order to compare a
+          DDS_InstanceHandle with a DDS::InstanceHandle_t.
+
+        * connectors/dds4ccm/impl/ndds/QueryCondition.cpp:
+          Implemented remaining methods.
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.h:
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Implemented remaining implementation of QueryCondition.
+
 Fri Jan 22 12:46:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Contexts/Context_Impl_Base.cpp:
