@@ -18,7 +18,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::Reader_T (void)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::Reader_T");
   #if defined DDS4CCM_USES_QUERY_CONDITION
-    this->qc_ = DDS::ReadCondition::_nil ();
+    this->qc_ = DDS::QueryCondition::_nil ();
   #else
     this->cft_ = DDS::ContentFilteredTopic::_nil ();
   #endif
@@ -430,15 +430,30 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
     if (CORBA::is_nil (this->qc_))
       {
         this->qc_ = this->reader_->create_querycondition (
-                        ::DDS::SampleStateMask sample_states,
-                        ::DDS::ViewStateMask view_states,
-                        ::DDS::InstanceStateMask instance_states,
-                        const char * query_expression,
-                        const ::DDS::StringSeq & query_parameters);
+                                DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE,
+                                DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
+                                DDS_ALIVE_INSTANCE_STATE,
+                                filter.query,
+                                filter.query_parameters);
+        if (CORBA::is_nil (this->qc_))
+          {
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+                                      "Error creating query condition."));
+            throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
+          }
       }
     else
       {
-        this->qc_>set_query_parameters ();
+      ::DDS::ReturnCode_t retval = this->qc_->set_query_parameters (
+                                filter.query_parameters);
+      if (retval != ::DDS::RETCODE_OK)
+        {
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+                                    "Error setting expression_parameters. "
+                                    "Retval is %C\n",
+                                    translate_retcode(retval)));
+          throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, retval);
+        }
       }
   #else
     if (CORBA::is_nil (this->cft_))

@@ -17,6 +17,8 @@
 #include "Subscriber.h"
 #include "TopicDescription.h"
 #include "DataReaderQos.h"
+#include "StringSeq.h"
+
 #include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO
@@ -82,13 +84,22 @@ namespace CIAO
 
       ::DDS::QueryCondition_ptr
       RTI_DataReader_i::create_querycondition (
-        ::DDS::SampleStateMask /*sample_states*/,
-        ::DDS::ViewStateMask /*view_states*/,
-        ::DDS::InstanceStateMask /*instance_states*/,
-        const char * /*query_expression*/,
-        const ::DDS::StringSeq & /*query_parameters*/)
+        ::DDS::SampleStateMask sample_states,
+        ::DDS::ViewStateMask view_states,
+        ::DDS::InstanceStateMask instance_states,
+        const char * query_expression,
+        const ::DDS::StringSeq & query_parameters)
       {
-        DDSQueryCondition* qc = 0; // @todo = this->impl ()->create_querycondition (sample_states, view_states, instance_states, query_expression, query_parameters);
+        DDS_StringSeq parameters;
+        parameters <<= query_parameters;
+
+        DDSQueryCondition* qc = this->impl ()->create_querycondition (
+                                       sample_states,
+                                       view_states,
+                                       instance_states,
+                                       query_expression,
+                                       parameters);
+
         ::DDS::QueryCondition_var retval = new RTI_QueryCondition_i ();
         RTI_QueryCondition_i *rti_qc = dynamic_cast < RTI_QueryCondition_i *> (retval.in ());
         rti_qc->set_impl (qc);

@@ -42,4 +42,20 @@ operator>>= (const ::DDS::InstanceHandle_t &instancehandle, ::DDS_InstanceHandle
   ddsinstancehandle.isValid = instancehandle.isValid;
 }
 
+inline bool
+operator== (const ::DDS::InstanceHandle_t & instancehandle1, const ::DDS::InstanceHandle_t & instancehandle2)
+{
+  return instancehandle1.length  == instancehandle2.length  &&
+         instancehandle1.isValid == instancehandle2.isValid &&
+         ACE_OS::memcmp (instancehandle1.value, instancehandle2.value, sizeof (instancehandle1.value)) == 0;
+}
+
+inline bool
+operator!= (const ::DDS::InstanceHandle_t & instancehandle1, const ::DDS::InstanceHandle_t & instancehandle2)
+{
+  return instancehandle1.length  != instancehandle2.length  ||
+         instancehandle1.isValid != instancehandle2.isValid ||
+         ACE_OS::memcmp (instancehandle1.value, instancehandle2.value, sizeof (instancehandle1.value)) != 0;
+}
+
 #endif /* CIAO_RTI_INSTANCEHANDLE_T_H */
