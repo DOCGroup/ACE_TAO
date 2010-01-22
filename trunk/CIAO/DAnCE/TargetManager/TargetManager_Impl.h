@@ -28,8 +28,7 @@ public:
 
   void init (const ACE_TCHAR *file);
 
-  virtual
-  void shutdown (void);
+  virtual void shutdown (void);
 
   virtual
   ::Deployment::Domain * getAllResources (void);
@@ -41,12 +40,10 @@ public:
   ::Deployment::ResourceCommitmentManager_ptr createResourceCommitment (
     const ::Deployment::ResourceAllocations & resources);
 
-  virtual
-  void destroyResourceCommitment (
+  virtual void destroyResourceCommitment (
     ::Deployment::ResourceCommitmentManager_ptr manager);
 
-  virtual
-  void updateDomain (
+  virtual void updateDomain (
     const ::CORBA::StringSeq & elements,
     const ::Deployment::Domain & domainSubset,
     ::Deployment::DomainUpdateKind updateKind);
