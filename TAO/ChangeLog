@@ -1,3 +1,8 @@
+Fri Jan 22 10:14:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+          Generate another ami4ccm interface
+
 Thu Jan 21 08:00:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
