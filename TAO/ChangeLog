@@ -1,3 +1,9 @@
+Fri Jan 22 12:34:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+          Pass the ciao instance id through the constructor
+
 Fri Jan 22 11:58:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/context_svh.cpp:
