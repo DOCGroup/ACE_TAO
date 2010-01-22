@@ -95,7 +95,6 @@ run_main (int, ACE_TCHAR *[])
   ACE_ASSERT (tv1 == tv2);
 
   const time_t max_time_t = ACE_Numeric_Limits<time_t>::max ();
-  const time_t min_time_t = ACE_Numeric_Limits<time_t>::min ();
 
   // test results near limits
   tv1.set ((max_time_t >> 1), 499999);

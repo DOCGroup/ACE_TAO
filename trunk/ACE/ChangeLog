@@ -1,12 +1,17 @@
+Fri Jan 22 08:48:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Time_Value_Test.cpp:
+          Removed not used variable
+
 Thu Jan 21 23:16:27 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * ace/CDR_Stream.cpp:
 
           Fixed the read_8 and write_8 methods for the iPhone Hardware.
-          The iPhone Hardware (ARM architecture) has the same memory 
-          layout as Intel targets, and no conversion or swapping is 
+          The iPhone Hardware (ARM architecture) has the same memory
+          layout as Intel targets, and no conversion or swapping is
           necessary. Double values sent from Windows to iPhone Hardware
-          were messed up before this fix due to unnecessary conversion. 
+          were messed up before this fix due to unnecessary conversion.
 
         * ace/config-macosx-iphone-hardware.h:
         * ace/config-macosx-iphone-simulator.h:
@@ -34,7 +39,6 @@ Thu Jan 21 15:25:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
           The fix simply forces a fixed 'lo' interface to be used for
           sending and receiving.
 
-
 Thu Jan 21 14:57:57 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * include/makeinclude/platform_macosx_iphone.GNU:
@@ -44,7 +48,6 @@ Thu Jan 21 14:57:57 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
           Simulator. This hardcoding is obviously the wrong thing to do,
           and needs to be fixed in the future. For some reason, when building
           a static executable those macros are missing.
-
 
 Thu Jan 21 08:13:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
