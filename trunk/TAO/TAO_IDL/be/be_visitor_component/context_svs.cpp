@@ -475,9 +475,7 @@ be_visitor_context_svs::visit_emits (be_emits *node)
 }
 
 void
-be_visitor_context_svs::gen_uses_simplex (
-  AST_Type *obj,
-  const char *port_name)
+be_visitor_context_svs::gen_uses_simplex (AST_Type *obj, const char *port_name)
 {
   const char *fname = obj->full_name ();
 
@@ -507,6 +505,40 @@ be_visitor_context_svs::gen_uses_simplex (
           << "return ::" << op_name << "::_duplicate (" << be_idt_nl
           << "this->ciao_uses_sendc_" << port_name << "_.in ());"
           << be_uidt << be_uidt_nl
+          << "}";
+
+      os_ << be_nl << be_nl
+          << "void" << be_nl
+          << node_->local_name () << "_Context::connect_sendc_"
+          << port_name << " (" << be_idt_nl
+          << "::" << op_name << "_ptr c)" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "if (! ::CORBA::is_nil (this->ciao_uses_sendc_"
+          << port_name << "_.in ()))" << be_idt_nl
+          << "{" << be_idt_nl
+          << "throw ::Components::AlreadyConnected ();" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl
+          << "if ( ::CORBA::is_nil (c))" << be_idt_nl
+          << "{" << be_idt_nl
+          << "throw ::Components::InvalidConnection ();" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl
+          << "this->ciao_uses_sendc_" << port_name << "_ =" << be_idt_nl
+          << "::" << op_name << "::_duplicate (c);"
+          << be_uidt << be_uidt_nl
+          << "}";
+
+      os_ << be_nl << be_nl
+          << "::" << op_name << "_ptr" << be_nl
+          << node_->local_name () << "_Context::disconnect_sendc_"
+          << port_name << " (void)" << be_nl
+          << "{" << be_idt_nl
+          << "if ( ::CORBA::is_nil (this->ciao_uses_sendc_"
+          << port_name << "_.in ()))" << be_idt_nl
+          << "{" << be_idt_nl
+          << "throw ::Components::NoConnection ();" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl
+          << "return this->ciao_uses_sendc_" << port_name
+          << "_._retn ();" << be_uidt_nl
           << "}";
     }
 
