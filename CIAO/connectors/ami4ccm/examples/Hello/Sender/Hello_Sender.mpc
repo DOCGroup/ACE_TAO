@@ -10,7 +10,7 @@ project(AMI_Hello_Base_Hello_Sender_idl_gen) : componentidldefaults {
               -Wb,skel_export_include=Hello_Sender_svnt_export.h \
               -Wb,exec_export_macro=HELLO_SENDER_EXEC_Export \
               -Wb,exec_export_include=Hello_Sender_exec_export.h \
-              -I..
+              -I.. -GM
 
   IDL_Files {
     Hello_Sender.idl
@@ -31,7 +31,7 @@ project(AMI_Hello_Base_Hello_Sender_lem_gen) : ciaoidldefaults {
 
 project(AMI_Hello_Base_Hello_Sender_lem_stub) : ccm_svnt, ami   {
   after += AMI_Hello_Base_Hello_Sender_lem_gen AMI_Hello_stub Conn_Hello_Base_stub
-  libs  += Hello_stub Conn_Hello_stub
+  libs  += Hello_stub
   libpaths += ../lib
   libout = ../lib
   sharedname = Hello_Sender_lem_stub
@@ -56,7 +56,7 @@ project(AMI_Hello_Base_Hello_Sender_lem_stub) : ccm_svnt, ami   {
 
 project(AMI_Hello_Base_Hello_Sender_stub) : ccm_stub, ami   {
   after += AMI_Hello_Base_Hello_Sender_idl_gen AMI_Hello_Base_stub AMI_Hello_stub Conn_Hello_Base_stub
-  libs  += Hello_stub Conn_Hello_stub
+  libs  += Hello_stub
   libpaths += ../lib
   libout = ../lib
   sharedname = Hello_Sender_stub
@@ -82,7 +82,7 @@ project(AMI_Hello_Base_Hello_Sender_stub) : ccm_stub, ami   {
 project(AMI_Hello_Base_Hello_Sender_exec) : ciao_executor, ami, ami4ccm_stub {
   after   += AMI_Hello_Base_Hello_Sender_lem_stub AMI_Hello_Base_Hello_Sender_stub AMI_Hello_Base_exec AMI_Hello_exec Conn_Hello_Base_stub
   sharedname = Hello_Sender_exec
-  libs += Hello_Sender_stub Hello_Sender_lem_stub Hello_stub Hello_exec Hello_stub Conn_Hello_stub Conn_Hello_exec
+  libs += Hello_Sender_stub Hello_Sender_lem_stub Hello_stub Hello_exec Hello_stub
   libpaths += ../lib
   libout = ../lib
   dynamicflags   = HELLO_SENDER_EXEC_BUILD_DLL
@@ -105,11 +105,9 @@ project(AMI_Hello_Base_Hello_Sender_exec) : ciao_executor, ami, ami4ccm_stub {
 
 
 project(AMI_Hello_Base_Hello_Sender_svnt) : ciao_servant, ami   {
-  after      += AMI_Hello_Base_skel AMI_Hello_Base_Hello_Sender_lem_stub AMI_Hello_Base_exec AMI_Hello_exec Conn_Hello_Base_skel Conn_Hello_Base_stub Conn_Hello_Base_exec
+  after      += AMI_Hello_Base_skel AMI_Hello_Base_Hello_Sender_lem_stub AMI_Hello_Base_exec AMI_Hello_exec
   sharedname  = Hello_Sender_svnt
   libs       += Hello_Sender_stub Hello_Sender_lem_stub  \
-                Conn_Hello_stub \
-                Conn_Hello_exec \
                 Hello_skel \
                 Hello_stub \
                 Hello_exec

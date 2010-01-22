@@ -5,8 +5,6 @@
 
 #include <Components.idl>
 
-#include "Connector/Hello_Base.idl"
-#include "Connector/Hello_BaseE.idl"
 #include "Base/HelloE.idl"
 
 #define connector component

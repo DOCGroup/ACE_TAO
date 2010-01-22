@@ -1,14 +1,14 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n Hello"
 
-project(AMI_Hello_idl_gen) : componentidldefaults, ami {
+project(AMI_Hello_idl_gen) : componentidldefaults, ami, ami4ccm_stub {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_STUB_Export \
               -Wb,stub_export_include=Hello_stub_export.h \
               -Wb,skel_export_macro=HELLO_SKEL_Export \
               -Wb,skel_export_include=Hello_skel_export.h \
               -Wb,exec_export_macro=HELLO_EXEC_Export \
-              -Wb,exec_export_include=Hello_exec_export.h -I..
+              -Wb,exec_export_include=Hello_exec_export.h -I.. -GM
 
   IDL_Files {
     Hello.idl
@@ -26,7 +26,7 @@ project(AMI_Hello_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(AMI_Hello_stub) : ccm_stub, ami   {
+project(AMI_Hello_stub) : ccm_stub, ami, ami4ccm_stub {
   after += AMI_Hello_lem_gen
   libs  +=
   libout = ../lib
@@ -53,7 +53,7 @@ project(AMI_Hello_stub) : ccm_stub, ami   {
   }
 }
 
-project(AMI_Hello_exec) : ccm_executor, ami   {
+project(AMI_Hello_exec) : ccm_executor, ami, ami4ccm_stub {
   after += AMI_Hello_lem_gen AMI_Hello_stub
   libs += Hello_stub
   libout = ../lib

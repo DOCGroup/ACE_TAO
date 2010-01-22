@@ -5,17 +5,12 @@
 
 #include <Components.idl>
 
-#include "Base/HelloE.idl"
-#include "Connector/Hello_Base.idl"
-#include "Connector/Hello_BaseE.idl"
+#include "Base/Hello.idl"
 
 module Hello
 {
   component Sender
   {
-    /// For asynch invocation. @@implied
-    uses AMI_MyFoo sendc_run_my_foo;
-
     /// For synchronous invocation
     uses MyFoo run_my_foo;
   };
