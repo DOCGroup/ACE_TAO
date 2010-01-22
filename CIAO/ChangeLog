@@ -1,3 +1,14 @@
+Fri Jan 22 11:32:44 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Getter/Base/Get_Invoker.idl:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/SecConnector/ConnectorStatusListener_TestSec_Connector.idl:
+        * connectors/dds4ccm/tests/QueryFilter/Base/QueryFilter_Starter.idl:
+        * connectors/dds4ccm/tests/Reader/Base/Reader_Starter.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector1/Connector1.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector2/Connector2.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector3/Connector3.idl:
+          Resolved compiler errors due to pragma ciao lem implementation.
+
 Fri Jan 22 10:28:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Servant_Impl_Base.cpp:

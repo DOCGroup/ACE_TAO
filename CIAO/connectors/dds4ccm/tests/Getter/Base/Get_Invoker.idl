@@ -8,6 +8,8 @@
 #ifndef GETTER_INVOKER_IDL
 #define GETTER_INVOKER_IDL
 
+#pragma ciao lem "Base/Get_InvokerE.idl"
+
 interface GetInvoker
 {
   void start_timeout_get_one ();

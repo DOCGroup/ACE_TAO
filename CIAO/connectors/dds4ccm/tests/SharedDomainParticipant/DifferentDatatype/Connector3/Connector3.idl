@@ -12,7 +12,7 @@
 #include "Base/Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
-#pragma ciao lem "Connector/Connector3E.idl"
+#pragma ciao lem "Connector3/Connector3E.idl"
 
 TYPED_MODULE( ::SharedDPTest3, ::SharedDPTest3_Seq, SharedDPTest3)
 
