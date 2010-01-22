@@ -169,6 +169,8 @@ namespace CIAO
     CIAO_TRACE("Servant_Impl_Base::provide_facet (const char *name)");
     if (0 == name)
       {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO "Servant_Impl_Base::provide_facet - Got nil name"));
+
         throw Components::InvalidName ();
       }
 

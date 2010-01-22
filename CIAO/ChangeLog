@@ -1,3 +1,20 @@
+Fri Jan 22 10:28:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Servant_Impl_Base.cpp:
+          Add debug line
+
+        * DAnCE/tests/CIAO/Components/SimpleNilFacetProvider.idl
+        * DAnCE/tests/CIAO/Components/SimpleProvider.idl
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor.idl
+        * examples/BasicSP/BMClosedED/BMClosedED.idl
+        * examples/BasicSP/BMDevice/BMDevice.idl
+        * examples/DevGuideExamples/Messenger/Messenger.idl
+        * examples/Display/GPS/GPS.idl
+        * examples/Display/GPS/GPSEI.idl
+        * examples/Hello/Sender/Sender.idl
+        * examples/Null_Component/Null_Component.idl
+          Updated for pragma ciao lem
+
 Thu Jan 21 14:58:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/Base/Hello.idl:

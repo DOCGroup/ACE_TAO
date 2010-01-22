@@ -4,7 +4,6 @@
 #define SIMPLE_PROVIDER_IDL
 
 #include "SimpleCommon.idl"
-#include "SimpleCommonE.idl"
 #include "Components.idl"
 
 module Simple

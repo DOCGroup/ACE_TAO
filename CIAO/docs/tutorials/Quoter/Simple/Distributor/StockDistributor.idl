@@ -4,7 +4,6 @@
 #define STOCKDISTRIBUTOR_IDL
 
 #include "../Stock_Base/Stock_Base.idl"
-#include "../Stock_Base/Stock_BaseE.idl"
 
 module Stock
 {
@@ -20,7 +19,6 @@ module Stock
     void stop ();
   };
 
-
   /**
    * @class StockDistributor
    *
@@ -32,7 +30,6 @@ module Stock
     provides StockQuoter push_quoter;
     attribute long rate;
   };
-
 
   /**
    * @class StockDistributorHome
