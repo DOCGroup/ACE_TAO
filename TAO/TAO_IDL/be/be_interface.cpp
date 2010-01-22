@@ -2700,7 +2700,17 @@ be_interface::gen_facet_idl (TAO_OutStream &os)
          << be_nl;
 
       os << be_nl
-         << "local interface AMI_"
+         << "local interface CCM_AMI_"
+         << this->original_local_name ()->get_string ()
+         << "Callback : AMI_"
+         << this->original_local_name ()->get_string ()
+         << "Callback"
+         << be_nl
+         << "{"
+         << "};"
+         << be_nl;
+
+      os << be_nl << "local interface AMI_"
          << this->original_local_name ()->get_string ()
          << be_nl
          << "{" << be_idt_nl
