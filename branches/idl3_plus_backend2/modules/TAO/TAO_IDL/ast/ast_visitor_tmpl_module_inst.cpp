@@ -95,6 +95,12 @@ ast_visitor_tmpl_module_inst::visit_type (AST_Type *)
 }
 
 int
+ast_visitor_tmpl_module_inst::visit_predefined_type (AST_PredefinedType *)
+{
+  return 0;
+}
+
+int
 ast_visitor_tmpl_module_inst::visit_interface_fwd (AST_InterfaceFwd *)
 {
   return 0;
@@ -108,6 +114,12 @@ ast_visitor_tmpl_module_inst::visit_valuebox (AST_ValueBox *)
 
 int
 ast_visitor_tmpl_module_inst::visit_valuetype_fwd (AST_ValueTypeFwd *)
+{
+  return 0;
+}
+
+int
+ast_visitor_tmpl_module_inst::visit_component (AST_Component *)
 {
   return 0;
 }
@@ -197,6 +209,12 @@ ast_visitor_tmpl_module_inst::visit_structure_fwd (AST_StructureFwd *)
 }
 
 int
+ast_visitor_tmpl_module_inst::visit_exception (AST_Exception *)
+{
+  return 0;
+}
+
+int
 ast_visitor_tmpl_module_inst::visit_expression (AST_Expression *)
 {
   return 0;
@@ -234,6 +252,24 @@ ast_visitor_tmpl_module_inst::visit_union_label (AST_UnionLabel *)
 
 int
 ast_visitor_tmpl_module_inst::visit_enum_val (AST_EnumVal *)
+{
+  return 0;
+}
+
+int
+ast_visitor_tmpl_module_inst::visit_array (AST_Array *)
+{
+  return 0;
+}
+
+int
+ast_visitor_tmpl_module_inst::visit_sequence (AST_Sequence *)
+{
+  return 0;
+}
+
+int
+ast_visitor_tmpl_module_inst::visit_string (AST_String *)
 {
   return 0;
 }
