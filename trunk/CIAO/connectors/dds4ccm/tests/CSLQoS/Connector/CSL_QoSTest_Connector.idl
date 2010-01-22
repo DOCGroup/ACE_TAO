@@ -12,7 +12,7 @@
 #include "Base/CSL_QoSTest_Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
-#pragma ciao lem "Connector/CSL_QosTest_ConnectorE.idl"
+#pragma ciao lem "Connector/CSL_QoSTest_ConnectorE.idl"
 
 TYPED_MODULE( ::TestTopic, ::TestTopic_Seq, TestTopic)
 
