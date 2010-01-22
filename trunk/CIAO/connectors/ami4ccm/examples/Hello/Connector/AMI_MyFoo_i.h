@@ -5,6 +5,7 @@
 
 #include "Base/HelloS.h"
 #include "Hello_BaseC.h"
+#include "Base/HelloEC.h"
 #include "ace/Task.h"
 
 namespace CCM_CORBA_AMI_MyFoo_Impl
