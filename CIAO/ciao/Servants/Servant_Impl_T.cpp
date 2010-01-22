@@ -25,10 +25,7 @@ namespace CIAO
       ins_name_ (ins_name)
   {
     ACE_NEW (this->context_,
-             CONTEXT (home, c, this));
-
-    /// Set the instance id of the component on the context.
-    this->context_->_ciao_instance_id (this->ins_name_);
+             CONTEXT (home, c, this, ins_name));
 
     ::Components::SessionComponent_var scom =
       ::Components::SessionComponent::_narrow (exe);

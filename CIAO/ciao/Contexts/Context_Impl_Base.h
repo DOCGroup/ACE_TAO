@@ -56,7 +56,7 @@ namespace CIAO
     : public virtual Components::CCMContext
   {
   public:
-    Context_Impl_Base (Components::CCMHome_ptr home, Container_ptr c);
+    Context_Impl_Base (Components::CCMHome_ptr home, Container_ptr c, const char *instance_id);
 
     virtual ~Context_Impl_Base (void);
 
