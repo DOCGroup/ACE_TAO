@@ -50,8 +50,10 @@ public:
   virtual int visit_decl (AST_Decl *d);
   virtual int visit_scope (UTL_Scope *node);
   virtual int visit_type (AST_Type *node);
+  virtual int visit_predefined_type (AST_PredefinedType *node);
   virtual int visit_interface_fwd (AST_InterfaceFwd *node);
   virtual int visit_valuetype_fwd (AST_ValueTypeFwd *node);
+  virtual int visit_component (AST_Component *node);
   virtual int visit_home (AST_Home *node);
   virtual int visit_component_fwd (AST_ComponentFwd *node);
   virtual int visit_template_module_ref (AST_Template_Module_Ref *node);
@@ -66,6 +68,7 @@ public:
   virtual int visit_connector (AST_Connector *node);
   virtual int visit_eventtype_fwd (AST_EventTypeFwd *node);
   virtual int visit_structure_fwd (AST_StructureFwd *node);
+  virtual int visit_exception (AST_Exception *node);
   virtual int visit_expression (AST_Expression *node);
   virtual int visit_enum (AST_Enum *node);
   virtual int visit_union (AST_Union *node);
@@ -73,6 +76,9 @@ public:
   virtual int visit_union_branch (AST_UnionBranch *node);
   virtual int visit_union_label (AST_UnionLabel *node);
   virtual int visit_enum_val (AST_EnumVal *node);
+  virtual int visit_array (AST_Array *node);
+  virtual int visit_sequence (AST_Sequence *node);
+  virtual int visit_string (AST_String *node);
   virtual int visit_native (AST_Native *node);
   virtual int visit_valuebox (AST_ValueBox *node);
   virtual int visit_param_holder (AST_Param_Holder *node);

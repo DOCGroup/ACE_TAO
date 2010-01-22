@@ -105,6 +105,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_factory.h"
 #include "ast_exception.h"
 #include "ast_param_holder.h"
+#include "ast_visitor_tmpl_module_inst.h"
+#include "ast_visitor_context.h"
 
 #include "fe_declarator.h"
 #include "fe_interface_header.h"
@@ -808,6 +810,18 @@ template_module_inst
               $3);
 
           (void) s->fe_add_template_module_inst (tmi);
+          
+          ast_visitor_context ctx;
+          ctx.template_args ($3);
+          ast_visitor_tmpl_module_inst v (&ctx);
+          
+          if (v.visit_template_module_inst (tmi) != 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("visit_template_module_inst")
+                          ACE_TEXT (" failed\n")));
+
+              idl_global->set_err_count (idl_global->err_count () + 1);
         }
         ;
 

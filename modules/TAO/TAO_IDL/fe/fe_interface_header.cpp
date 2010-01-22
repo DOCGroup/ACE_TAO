@@ -293,9 +293,6 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
           throw Bailout ();
         }
         
-      item->dump (std::cout);
-      cout << endl;
-
       // Look it up.
       d = s->lookup_by_name  (item,
                               true,

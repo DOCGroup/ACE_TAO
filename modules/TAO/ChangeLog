@@ -1,3 +1,27 @@
+Fri Jan 22 18:26:17 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_tmpl_module_inst.cpp:
+        * TAO_IDL/be/be_visitor_reifying.cpp:
+        * TAO_IDL/be_include/be_visitor_reifying.h:
+        * TAO_IDL/be_include/be_visitor_tmpl_module_inst.h:
+
+          Removed these files, the visitors have been moved
+          to the front end.
+
+        * TAO_IDL/include/ast_visitor_tmpl_module_inst.h:
+        * TAO_IDL/ast/ast_visitor_tmpl_module_inst.cpp:
+
+          Added some missing no-op visit_* methods.
+
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+
+          Added spawn of template instantiation visitor.
+
+        * TAO_IDL/fe/fe_interface_header.cpp:
+
+          Removed recently added debugging output.
+
 Thu Jan 21 20:20:47 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_visitor_reifying.h:
