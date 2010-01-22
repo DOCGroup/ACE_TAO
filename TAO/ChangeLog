@@ -1,3 +1,11 @@
+Fri Jan 22 11:58:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          More tweaks for AMI4CCM
+
 Fri Jan 22 10:14:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:

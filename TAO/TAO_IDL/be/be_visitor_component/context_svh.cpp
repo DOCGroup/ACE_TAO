@@ -166,6 +166,28 @@ be_visitor_context_svh::visit_uses (be_uses *node)
 
           os_ << "::" << op_name << "_ptr" << be_nl
               << "get_connection_sendc_" << port_name << " (void);";
+
+          os_ << be_nl << be_uidt_nl
+              << "protected:" << be_idt_nl
+              << "virtual "
+              << (is_multiple ? "::Components::Cookie *" : "void")
+              << be_nl
+              << "connect_sendc_" << port_name << " (" << be_idt_nl
+              << "::" << op_name << "_ptr);"
+              << be_uidt_nl << be_nl;
+
+          os_ << "virtual ::" << op_name << "_ptr" << be_nl
+              << "disconnect_sendc_" << port_name << " (";
+
+          if (is_multiple)
+            {
+              os_ << be_idt_nl
+                  << "::Components::Cookie * ck);" << be_uidt;
+            }
+          else
+            {
+              os_ << "void);";
+            }
         }
     }
 
