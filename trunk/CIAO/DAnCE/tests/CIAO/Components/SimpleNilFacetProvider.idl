@@ -6,6 +6,8 @@
 #include "SimpleCommon.idl"
 #include "Components.idl"
 
+#pragma ciao lem "SimpleNilFacetProviderE.idl"
+
 module Simple
 {
   component SimpleNilFacetProvider
