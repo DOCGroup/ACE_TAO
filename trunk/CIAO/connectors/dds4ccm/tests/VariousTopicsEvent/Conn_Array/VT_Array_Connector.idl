@@ -12,7 +12,7 @@
 #include "Base/VTopic_Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
-#pragma ciao lem "Connector/VT_Array_ConnectorE.idl"
+#pragma ciao lem "VT_Array_ConnectorE.idl"
 
 TYPED_MODULE( ::TopicArray, ::TopicArray_Seq, TopicArray)
 
