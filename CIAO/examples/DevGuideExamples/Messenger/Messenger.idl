@@ -11,15 +11,11 @@
 
 #include <Components.idl>
 #include "Runnable.idl"
-#include "RunnableE.idl"
 #include "Publication.idl"
-#include "PublicationE.idl"
 #include "Message.idl"
-#include "MessageE.idl"
 #include "History.idl"
-#include "HistoryE.idl"
 
-component Messenger { 
+component Messenger {
   attribute string subject;
 
   provides Runnable control;

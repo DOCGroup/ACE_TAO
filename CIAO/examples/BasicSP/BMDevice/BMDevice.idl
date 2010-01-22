@@ -12,7 +12,6 @@
 #define CIAO_BMDEVICE_IDL
 
 #include "BasicSP.idl"
-#include "BasicSPE.idl"
 
 module BasicSP
 {

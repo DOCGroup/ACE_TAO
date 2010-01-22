@@ -4,7 +4,6 @@
 #define SIMPLE_PROVIDER_IDL
 
 #include "SimpleCommon.idl"
-#include "SimpleCommonE.idl"
 #include "Components.idl"
 
 module Simple
@@ -13,7 +12,7 @@ module Simple
   {
     provides Trigger trig;
   };
-  
+
   home SimpleProviderHome manages SimpleProvider
   {
   };
