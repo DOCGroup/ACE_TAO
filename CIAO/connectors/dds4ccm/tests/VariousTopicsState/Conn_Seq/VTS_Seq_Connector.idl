@@ -12,7 +12,7 @@
 #include "Base/VTopics_Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
-#pragma ciao lem "Connector/VTS_Seq_ConnectorE.idl"
+#pragma ciao lem "Conn_Seq/VTS_Seq_ConnectorE.idl"
 
 TYPED_MODULE( ::TopicSeq, ::TopicSeq_Seq, TopicSeq)
 
