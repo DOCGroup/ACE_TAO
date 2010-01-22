@@ -1,3 +1,10 @@
+Fri Jan 22 10:38:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * config-linux-common.h:
+          
+          Added fix for mismatch of ACE_SIZEOF_LONG_DOUBLE on Linux ppc 
+          32bit platforms (sizeof(long double) = 128 bit).
+          
 Fri Jan 22 08:48:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Time_Value_Test.cpp:
