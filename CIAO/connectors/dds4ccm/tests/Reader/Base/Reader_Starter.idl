@@ -8,6 +8,8 @@
 #ifndef READER_STARTER_IDL
 #define READER_STARTER_IDL
 
+#pragma ciao lem "Base/Reader_StarterE.idl"
+
 interface ReaderStarter
 {
   void read_no_data ();
