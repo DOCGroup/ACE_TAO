@@ -1,3 +1,19 @@
+Fri Jan 22 19:42:38 UTC 2010  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_template_module.cpp:
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+
+        * TAO_IDL/fe/fe_event_header.cpp:
+
+        * TAO_IDL/include/fe_event_header.h:
+
+          Removed these files.
+
 Fri Jan 22 18:26:17 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_tmpl_module_inst.cpp:
@@ -78,7 +94,7 @@ Mon Jan 18 15:35:54 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL//be_visitor_valuebox/union_member_ci.cpp:
         * TAO_IDL/be_include/be_visitor_valuebox/union_member_ci.h:
         * TAO_IDL/be_include/be_visitor_valuebox/field_ci.h:
-          
+
           Removed parameter 'vb_node' from private methods
           emit_member_get() and emit_member_set(), since this value
           is now stored in a member variable.
@@ -107,13 +123,13 @@ Fri Jan 15 20:31:51 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Fri Jan 15 15:31:56 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
-        
+
           Reverted a small change made yesterday where the
           generation of a double colon was prefixed to a name
           that is not global.
-          
+
         * tests/IDL_Test/valuetype.idl:
-        
+
           Added an example to test the fix above, submitted by
           Johnny Willemesen <jwillemsen@remedy.nl.
 
@@ -164,7 +180,7 @@ Wed Jan 13 23:16:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be_include/be_visitor_reifying.h:
         * TAO_IDL/be_include/be_visitor_tmpl_module_inst.h:
         * TAO_IDL/util/utl_err.cpp:
-        
+
           Added support for template instantiation of contained
           interfaces, operations, attributes, and the associated
           arguments and exception lists.
@@ -245,14 +261,14 @@ Fri Jan  8 22:37:35 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Thu Jan  7 22:01:06 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_module.cpp:
-        
+
           Cosmetic changes.
-          
+
         * TAO_IDL/be/be_visitor_tmpl_module_inst.cpp:
         * TAO_IDL/be_include/be_visitor_tmpl_module_inst.h:
-        
+
           New files containing a new visitor dedicated to the
-          generation of implied IDL in the AST resulting 
+          generation of implied IDL in the AST resulting
           from a template module instantiation. This 'preprocessing'
           visitor will make a traversal before any of the others,
           so that CCM, AMI and AMH implied IDL can be generated
@@ -349,7 +365,7 @@ Tue Jan  5 19:33:27 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/ast/ast_template_module.cpp:
         * TAO_IDL/ast/ast_template_module_ref.cpp:
         * TAO_IDL/ast_template_module_inst.cpp:
-        
+
           Uncommented code in ast_accept() methods.
 
 Mon Jan  4 14:25:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>

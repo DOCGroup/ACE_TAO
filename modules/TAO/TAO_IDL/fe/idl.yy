@@ -111,7 +111,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_declarator.h"
 #include "fe_interface_header.h"
 #include "fe_obv_header.h"
-#include "fe_event_header.h"
 #include "fe_component_header.h"
 #include "fe_home_header.h"
 #include "fe_utils.h"
@@ -158,7 +157,6 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
   UTL_DeclList                  *dlval;         /* Declaration list     */
   FE_InterfaceHeader            *ihval;         /* Interface header     */
   FE_OBVHeader                  *vhval;         /* Valuetype header     */
-  FE_EventHeader                *ehval;         /* Event header         */
   FE_ComponentHeader            *chval;         /* Component header     */
   FE_HomeHeader                 *hhval;         /* Home header          */
   AST_Expression                *exval;         /* Expression value     */
@@ -310,13 +308,11 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 
 %type <ihval>   interface_header
 
-%type <vhval>   value_header
+%type <vhval>   value_header event_rest_of_header
 
 %type <chval>   component_header
 
 %type <hhval>   home_header
-
-%type <ehval>   event_rest_of_header
 
 %type <exval>   expression const_expr or_expr xor_expr and_expr shift_expr
 %type <exval>   add_expr mult_expr unary_expr primary_expr literal
@@ -810,11 +806,11 @@ template_module_inst
               $3);
 
           (void) s->fe_add_template_module_inst (tmi);
-          
+
           ast_visitor_context ctx;
           ctx.template_args ($3);
           ast_visitor_tmpl_module_inst v (&ctx);
-          
+
           if (v.visit_template_module_inst (tmi) != 0)
             {
               ACE_ERROR ((LM_ERROR,
@@ -822,6 +818,7 @@ template_module_inst
                           ACE_TEXT (" failed\n")));
 
               idl_global->set_err_count (idl_global->err_count () + 1);
+            }
         }
         ;
 
@@ -6167,15 +6164,15 @@ event_rest_of_header :
 //      supports_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_SupportSpecSeen);
 
-          ACE_NEW_RETURN ($<ehval>$,
-                          FE_EventHeader (
-                              0,
-                              $1,
-                              $3,
-                              $1
-                                ? $1->truncatable ()
-                                : false
-                            ),
+          ACE_NEW_RETURN ($<vhval>$,
+                          FE_OBVHeader (
+                            0,
+                            $1,
+                            $3,
+                            $1
+                              ? $1->truncatable ()
+                              : false,
+                            true),
                           1);
 
           if (0 != $3)
