@@ -6,7 +6,6 @@
 #include <Components.idl>
 
 #include "Base/Hello.idl"
-#include "Base/HelloE.idl"
 
 module Hello
 {

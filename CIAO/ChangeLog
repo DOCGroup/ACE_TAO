@@ -1,3 +1,17 @@
+Fri Jan 22 11:59:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/Base/Hello.mpc
+        * connectors/ami4ccm/examples/Hello/Connector/AMI.idl
+        * connectors/ami4ccm/examples/Hello/Connector/AMI.mpc
+        * connectors/ami4ccm/examples/Hello/Connector/AMI_MyFoo_i.h
+        * connectors/ami4ccm/examples/Hello/Connector/Hello_Base.idl
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver.idl
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender.idl
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender.mpc
+          Use the ami4ccm support in TAO_IDL. The support is partly hardcoded
+          for just this interface, this is a prototype to show how
+          ami4ccm could look like. This needs some more tweaks and testing
+
 Fri Jan 22 11:32:44 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Getter/Base/Get_Invoker.idl:
