@@ -2,6 +2,8 @@
 
 #include "IC_Foo.idl"
 
+#pragma ciao lem "IC_BarE.idl"
+
 component Bar
 {
 };

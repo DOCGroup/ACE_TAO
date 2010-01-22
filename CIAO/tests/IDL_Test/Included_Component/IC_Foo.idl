@@ -4,6 +4,8 @@
 
 #include <Components.idl>
 
+#pragma ciao lem "IC_FooE.idl"
+
 component Foo
 {
 };
