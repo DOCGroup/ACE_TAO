@@ -184,7 +184,7 @@ be_visitor_servant_svh::visit_uses (be_uses *node)
 
       if (be_global->ami4ccm_call_back ())
         {
-          ACE_CString original_op_name (
+/*          ACE_CString original_op_name (
             node->uses_type ()->name ()->last_component ()->get_string ());
           ACE_CString new_op_name = ACE_CString ("AMI_") + original_op_name;
           UTL_ScopedName *op_name =
@@ -192,7 +192,18 @@ be_visitor_servant_svh::visit_uses (be_uses *node)
           op_name->last_component ()->replace_string (new_op_name.c_str ());
 
           os_ << be_nl << "::" << op_name << "_ptr" << be_nl
-              << "get_connection_sendc_" << port_name << " (void);";
+              << "get_connection_sendc_" << port_name << " (void);"; */
+
+/*          os_ << be_nl << be_nl
+              << "virtual "
+              << (is_multiple ? "::Components::Cookie *" : "void")
+              << be_nl
+              << "connect_sendc_" << port_name << " (" << be_idt_nl
+              << "::" << op_name << "_ptr);"
+              << be_uidt_nl << be_nl;
+
+          os_ << "virtual ::" << op_name << "_ptr" << be_nl
+              << "disconnect_sendc_" << port_name << " (void);";*/
         }
     }
 
