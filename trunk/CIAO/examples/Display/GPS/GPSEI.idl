@@ -11,7 +11,7 @@
 #ifndef GPSEI_IDL
 #define GPSEI_IDL
 
-#include "GPSE.idl"
+#include "GPS.idl"
 
 module HUDisplay
 {

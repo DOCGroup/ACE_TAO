@@ -4,7 +4,6 @@
 #define BMCLOSEDED_IDL
 
 #include "BasicSP.idl"
-#include "BasicSPE.idl"
 
 module BasicSP
 {
