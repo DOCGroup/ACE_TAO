@@ -9,6 +9,8 @@
 #ifndef PUBLICATION_IDL
 #define PUBLICATION_IDL
 
+#pragma ciao lem "PublicationE.idl"
+
 interface Publication {
   attribute string text;
   attribute unsigned short period;
