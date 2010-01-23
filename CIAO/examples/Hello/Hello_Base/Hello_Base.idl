@@ -5,6 +5,8 @@
 
 #include <Components.idl>
 
+#pragma ciao lem "../Hello_Base/Hello_Base.idl"
+
 module Hello
 {
   interface ReadMessage
