@@ -29,7 +29,7 @@ namespace DAnCE
   }
 
   bool
-  Node_Locator::process_node_map (const char *filename)
+  Node_Locator::process_node_map (const ACE_TCHAR *filename)
   {
     DANCE_TRACE ("Node_Locator::process_node_map");
 
