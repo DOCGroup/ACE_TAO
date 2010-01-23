@@ -56,7 +56,7 @@ namespace DAnCE
       // for shutdowning DAnCE agent
       virtual void shutdown ();
 
-      void add_node_manager (const ACE_TCHAR *name, const ACE_TCHAR *ior);
+      void add_node_manager (const char *name, const char *ior);
 
       void load_node_map (const ACE_TCHAR *filename);
 
