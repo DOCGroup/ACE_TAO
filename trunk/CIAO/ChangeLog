@@ -1,3 +1,13 @@
+Sat Jan 23 19:08:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp
+        * DAnCE/NodeManager/Node_Manager_Module.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp
+        * DAnCE/RepositoryManager/repository_manager_admin_exec.cpp
+        * DAnCE/RepositoryManager/Repository_Manager_Module.cpp
+        * DAnCE/TargetManager/Target_Manager_Module.cpp
+          Always print usage messages
+
 Sat Jan 23 18:46:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/DomainApplicationManager/Node_Locator.cpp

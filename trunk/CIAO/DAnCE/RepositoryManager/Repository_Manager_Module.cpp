@@ -268,7 +268,7 @@ DAnCE_RepositoryManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
         case 'h':
         case '?': // Display help for use of the server.
         default:
-          DANCE_ERROR_RETURN (1, (LM_ERROR,
+          DANCE_ERROR_RETURN (0, (LM_ERROR,
                                 this->usage (),
                                 argv [0], c),
                                false);
