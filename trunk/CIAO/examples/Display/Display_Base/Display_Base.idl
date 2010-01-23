@@ -13,6 +13,8 @@
 
 #include <Components.idl>
 
+#pragma ciao lem "../Display_Base/Display_Base.idl"
+
 module HUDisplay
 {
   /**

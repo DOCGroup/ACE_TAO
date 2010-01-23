@@ -9,6 +9,8 @@
 #ifndef RUNNABLE_IDL
 #define RUNNABLE_IDL
 
+#pragma ciao lem "RunnableE.idl"
+
 interface Runnable {
    void start();
    void stop();
