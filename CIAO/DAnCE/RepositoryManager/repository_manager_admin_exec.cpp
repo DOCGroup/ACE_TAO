@@ -174,7 +174,7 @@ struct Options
 
   void usage (void)
   {
-    DANCE_ERROR (1, (LM_EMERGENCY, "usage:\n"
+    DANCE_ERROR (0, (LM_EMERGENCY, "usage:\n"
                 "\t-h,--help\t\t\tThis message.\n"
                 "\t-r,--rm-ior <ior>\t\tIOR where the RM instance may be found\n"
                 "\t-i,--install <path>,<name>,<1|0>\tInstall package found at <path> into the RM, with <name>,\n"
