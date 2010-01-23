@@ -94,18 +94,6 @@ run_main (int, ACE_TCHAR *[])
   tv1 *= -10.0;
   ACE_ASSERT (tv1 == tv2);
 
-  const time_t max_time_t = ACE_Numeric_Limits<time_t>::max ();
-
-  // test results near limits
-  tv1.set ((max_time_t >> 1), 499999);
-  tv2.set ((-(max_time_t >> 1) << 1), -999998);
-  tv1 *= -2.0;
-  ACE_ASSERT (tv1 == tv2);
-  tv1.set (max_time_t >> 1, 499999);
-  tv2.set (((max_time_t >> 1) << 1), 999998);
-  tv1 *= 2.0;
-  ACE_ASSERT (tv1 == tv2);
-
   // Test correct msec() convert; also checks for compile error reported in
   // Bugzilla 3336.
   ACE_Time_Value msec_test (42, 555000);
