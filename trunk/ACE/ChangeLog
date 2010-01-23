@@ -1,3 +1,17 @@
+Sat Jan 23 13:53:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Thread_Attrs_Test.cpp:
+        
+          Changed test to check only if resulting stack size is
+          *at least* as large as requested.
+          As the Posix docs say that the size set for the threads stack 
+          will be the *minimum* size allocated (the actual size may f.i. be 
+          bigger because of a) pagesize rounding, b) guardsize addition)
+          this is the best we can do without konowing the exact algorithm
+          used by the pthread implementation.
+          Also see this https://bugzilla.redhat.com/show_bug.cgi?id=435337
+          for more information.           
+
 Fri Jan 22 10:38:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * config-linux-common.h:
