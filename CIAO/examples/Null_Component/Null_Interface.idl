@@ -9,6 +9,8 @@
 #ifndef NULL_INTERFACE_IDL
 #define NULL_INTERFACE_IDL
 
+#pragma ciao lem "Null_InterfaceE.idl"
+
 /**
  * @interface Null_Interface
  *
