@@ -5,6 +5,8 @@
 
 #include "Components.idl"
 
+#pragma ciao lem "SimpleCommonE.idl"
+
 module Simple
 {
   interface Trigger
