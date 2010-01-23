@@ -22,7 +22,7 @@ project(Benchmark_RoundTripClient_lem_gen) : ciaoidldefaults {
   after += Benchmark_RoundTripClient_idl_gen
   idlflags += -Wb,export_macro=ROUNDTRIPCLIENT_EXEC_Export \
               -Wb,export_include=RoundTripClient_exec_export.h \
-              -SS
+              -SS -I..
 
   IDL_Files {
     RoundTripClientE.idl
