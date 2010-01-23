@@ -12,7 +12,7 @@
 #ifndef CIAO_ROUNDTRIPCLIENTEI_IDL
 #define CIAO_ROUNDTRIPCLIENTEI_IDL
 
-#include "RoundTripClient.idl"
+#include "RoundTripClientE.idl"
 
 module Benchmark
 {
