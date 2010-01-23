@@ -5,6 +5,8 @@
 
 #include <Components.idl>
 
+#pragma ciao lem "../Stock_Base/Stock_BaseE.idl"
+
 module Stock
 {
   exception Invalid_Stock {};
