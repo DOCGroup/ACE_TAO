@@ -31,7 +31,7 @@ namespace DAnCE
 
     ::Deployment::NodeManager_ptr locate_node (const char *name);
 
-    bool process_node_map (const char *file);
+    bool process_node_map (const ACE_TCHAR *file);
 
     void store_ior (const char *name, const char *ior);
 

@@ -144,8 +144,8 @@ ExecutionManager_Impl::shutdown ()
 
 
 void
-ExecutionManager_Impl::add_node_manager (const ACE_TCHAR *name,
-                                         const ACE_TCHAR *ior)
+ExecutionManager_Impl::add_node_manager (const char *name,
+                                         const char *ior)
 {
   DANCE_TRACE ("ExecutionManager_Impl::add_node_manager");
   this->locator_.store_ior (name, ior);

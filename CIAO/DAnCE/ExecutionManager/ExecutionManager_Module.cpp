@@ -323,7 +323,7 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
                     ACE_TEXT("before processing --node-mgr options(%u).\n"), this->options_.node_managers_.size()));
       for (size_t i = 0; i < this->options_.node_managers_.size(); ++i)
         {
-          size_t pos = this->options_.node_managers_[i].find ('=');
+          size_t const pos = this->options_.node_managers_[i].find ('=');
           ACE_TString node_name = this->options_.node_managers_[i];
           ACE_TString nm_ior;
 
@@ -337,8 +337,8 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
           node_name = this->options_.node_managers_[i].substring (0, pos);
           nm_ior = this->options_.node_managers_[i].substring (pos + 1);
 
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Placing node \"%C\" to EM's map.\n"), node_name.c_str()));
-          this->em_impl_->add_node_manager (node_name.c_str(), nm_ior.c_str ());
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Placing node \"%s\" to EM's map.\n"), node_name.c_str()));
+          this->em_impl_->add_node_manager (ACE_TEXT_ALWAYS_CHAR(node_name.c_str()), ACE_TEXT_ALWAYS_CHAR(nm_ior.c_str ()));
         }
 
       if (this->options_.node_map_ != 0)
