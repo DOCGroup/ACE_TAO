@@ -12,6 +12,8 @@
 #include <Components.idl>
 #include "Null_Interface.idl"
 
+#pragma ciao lem "Null_ComponentE.idl"
+
 /**
  * @class Null_Component
  *
