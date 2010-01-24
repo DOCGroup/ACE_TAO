@@ -182,7 +182,7 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
         case 'h':
           //case '?': // Display help for use of the server.
           //default:
-          DANCE_ERROR_RETURN (0, (LM_ERROR,
+          ACE_ERROR_RETURN ((LM_ERROR,
                                 this->usage (),
                                 argv [0], c),
                                false);

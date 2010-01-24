@@ -381,7 +381,7 @@ void Plan_Launcher_Base_Impl::usage(const ACE_TCHAR* program)
       DANCE_ERROR (1, (LM_ERROR, ACE_TEXT ("[(%P|%t) Executor] Usage: %s <options>\n"), program));
     }
 
-  DANCE_ERROR (0, (LM_ERROR, ACE_TEXT ("Plan Launcher Options :\n")
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Plan Launcher Options :\n")
           ACE_TEXT ("-k|--em-ior <EXECUTION_MANAGER_IOR>")
           ACE_TEXT (" : Default file://em.ior\n")
           ACE_TEXT ("-d|--read-cdr-plan <CDR_DEPLOYMENT_PLAN_URL>\n")
