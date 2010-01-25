@@ -1,7 +1,6 @@
 // $Id$
 
 #include "ast_consumes.h"
-#include "ast_eventtype.h"
 #include "ast_visitor.h"
 
 AST_Consumes::AST_Consumes (UTL_ScopedName *n,
@@ -20,10 +19,10 @@ AST_Consumes::~AST_Consumes (void)
 {
 }
 
-AST_EventType *
+AST_Type *
 AST_Consumes::consumes_type (void) const
 {
-  return AST_EventType::narrow_from_decl (this->field_type ());
+  return this->field_type ();
 }
 
 void

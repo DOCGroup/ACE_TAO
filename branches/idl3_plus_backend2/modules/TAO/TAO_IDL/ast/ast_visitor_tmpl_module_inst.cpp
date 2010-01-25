@@ -16,14 +16,23 @@
 #include "ast_module.h"
 #include "ast_template_module.h"
 #include "ast_template_module_inst.h"
+#include "ast_template_module_ref.h"
 #include "ast_eventtype.h"
 #include "ast_interface.h"
+#include "ast_home.h"
+#include "ast_provides.h"
+#include "ast_uses.h"
+#include "ast_publishes.h"
+#include "ast_emits.h"
+#include "ast_consumes.h"
+#include "ast_mirror_port.h"
+#include "ast_connector.h"
 #include "ast_attribute.h"
 #include "ast_operation.h"
 #include "ast_argument.h"
 #include "ast_typedef.h"
 #include "ast_constant.h"
-#include "ast_structure.h"
+#include "ast_union.h"
 #include "ast_factory.h"
 #include "ast_param_holder.h"
 #include "ast_expression.h"
@@ -34,8 +43,8 @@
 #include "utl_identifier.h"
 #include "utl_exceptlist.h"
 
-#include "fe_interface_header.h"
 #include "fe_obv_header.h"
+#include "fe_home_header.h"
 
 #include "nr_extern.h"
 
@@ -119,8 +128,73 @@ ast_visitor_tmpl_module_inst::visit_valuetype_fwd (AST_ValueTypeFwd *)
 }
 
 int
-ast_visitor_tmpl_module_inst::visit_component (AST_Component *)
+ast_visitor_tmpl_module_inst::visit_component (AST_Component *node)
 {
+  if (this->ctx_->template_args () == 0)
+    {
+      return 0;
+    }
+    
+  UTL_ScopedName *base_name = 0;
+  AST_Decl *parent =
+    this->reify_type (node->base_component ());
+  
+  if (parent != 0)
+    {
+      base_name = parent->name ();
+    }
+    
+  UTL_NameList *supports_names =
+    this->create_name_list (node->supports (),
+                            node->n_supports ());
+                            
+  Identifier *node_id = 0;
+  ACE_NEW_RETURN (node_id,
+                  Identifier (node->local_name ()->get_string ()),
+                  -1);
+                  
+  UTL_ScopedName *local_name = 0;
+  ACE_NEW_RETURN (local_name,
+                  UTL_ScopedName (node_id, 0),
+                  -1);
+                  
+  FE_ComponentHeader header (local_name,
+                             base_name,
+                             supports_names,
+                             false);
+                             
+  AST_Component *added_comp =
+    idl_global->gen ()->create_component (header.name (),
+                                          header.base_component (),
+                                          header.supports (),
+                                          header.n_supports (),
+                                          header.supports_flat (),
+                                          header.n_supports_flat ());
+  
+  if (supports_names != 0)
+    {
+      supports_names->destroy ();
+      delete supports_names;
+      supports_names = 0;
+    }
+  
+  idl_global->scopes ().top ()->add_to_scope (added_comp);
+  
+  // Update the scope management.
+  idl_global->scopes ().push (added_comp);
+  
+  if (this->visit_scope (node) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("ast_visitor_tmpl_module_inst::")
+                         ACE_TEXT ("visit_component - ")
+                         ACE_TEXT ("visit_scope failed\n")),
+                        -1);
+    }
+    
+  // Through with this scope.
+  idl_global->scopes ().pop ();
+  
   return 0;
 }
 
@@ -137,68 +211,318 @@ ast_visitor_tmpl_module_inst::visit_component_fwd (AST_ComponentFwd *)
 }
 
 int
-ast_visitor_tmpl_module_inst::visit_template_module_ref (AST_Template_Module_Ref *)
+ast_visitor_tmpl_module_inst::visit_template_module_ref (
+  AST_Template_Module_Ref *node)
 {
+  UTL_ScopedName sn (node->local_name (), 0);
+  
+  AST_Module *added_module =
+    idl_global->gen ()->create_module (idl_global->scopes (). top (),
+                                       &sn);
+                                       
+  idl_global->scopes ().top ()->add_to_scope (added_module);
+  
+  idl_global->scopes ().push (added_module);
+  
+  // Visit the scope of referenced template module. No need to
+  // update the template parameter list since its param list has
+  // to be a subset of the one we're in.
+  if (this->visit_scope (node->ref ()) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("ast_visitor_tmpl_module_inst::")
+                         ACE_TEXT ("visit_template_module_ref - ")
+                         ACE_TEXT ("visit_scope failed\n")),
+                        -1);
+    }
+    
+  idl_global->scopes ().pop ();
+  
   return 0;
 }
 
 int
-ast_visitor_tmpl_module_inst::visit_porttype (AST_PortType *)
+ast_visitor_tmpl_module_inst::visit_porttype (AST_PortType *node)
 {
+  if (this->ctx_->template_args () == 0)
+    {
+      return 0;
+    }
+    
+  UTL_ScopedName sn (node->local_name (), 0);
+  
+  AST_PortType *added_porttype =
+    idl_global->gen ()->create_porttype (&sn);
+    
+  idl_global->scopes ().top ()->add_to_scope (added_porttype);
+    
+  idl_global->scopes ().push (added_porttype);
+  
+  if (this->visit_scope (node) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("ast_visitor_tmpl_module_inst::")
+                         ACE_TEXT ("visit_porttype - ")
+                         ACE_TEXT ("visit_scope failed\n")),
+                        -1);
+    }
+    
+  idl_global->scopes ().pop ();
+    
   return 0;
 }
 
 int
-ast_visitor_tmpl_module_inst::visit_provides (AST_Provides *)
+ast_visitor_tmpl_module_inst::visit_provides (AST_Provides *node)
 {
+  UTL_ScopedName sn (node->local_name (), 0);
+  
+  AST_Type *p_type =
+    AST_Type::narrow_from_decl (
+      this->reify_type (node->provides_type ()));
+  
+  AST_Provides *added_provides =
+    idl_global->gen ()->create_provides (&sn,
+                                         p_type);
+    
+  idl_global->scopes ().top ()->add_to_scope (added_provides);
+    
   return 0;
 }
 
 int
-ast_visitor_tmpl_module_inst::visit_uses (AST_Uses *)
+ast_visitor_tmpl_module_inst::visit_uses (AST_Uses *node)
 {
+  UTL_ScopedName sn (node->local_name (), 0);
+  
+  AST_Type *u_type =
+    AST_Type::narrow_from_decl (
+      this->reify_type (node->uses_type ()));
+  
+  AST_Uses *added_uses =
+    idl_global->gen ()->create_uses (&sn,
+                                     u_type,
+                                     node->is_multiple ());
+    
+  idl_global->scopes ().top ()->add_to_scope (added_uses);
+    
   return 0;
 }
 
 int
-ast_visitor_tmpl_module_inst::visit_publishes (AST_Publishes *)
+ast_visitor_tmpl_module_inst::visit_publishes (AST_Publishes *node)
 {
+  UTL_ScopedName sn (node->local_name (), 0);
+  
+  AST_Type *p_type =
+    AST_Type::narrow_from_decl (
+      this->reify_type (node->publishes_type ()));
+  
+  AST_Publishes *added_publishes =
+    idl_global->gen ()->create_publishes (&sn,
+                                          p_type);
+    
+  idl_global->scopes ().top ()->add_to_scope (added_publishes);
+    
   return 0;
 }
 
 int
-ast_visitor_tmpl_module_inst::visit_emits (AST_Emits *)
+ast_visitor_tmpl_module_inst::visit_emits (AST_Emits *node)
 {
+  UTL_ScopedName sn (node->local_name (), 0);
+  
+  AST_Type *e_type =
+    AST_Type::narrow_from_decl (
+      this->reify_type (node->emits_type ()));
+  
+  AST_Emits *added_emits =
+    idl_global->gen ()->create_emits (&sn, e_type);
+    
+  idl_global->scopes ().top ()->add_to_scope (added_emits);
+    
   return 0;
 }
 
 int
-ast_visitor_tmpl_module_inst::visit_consumes (AST_Consumes *)
+ast_visitor_tmpl_module_inst::visit_consumes (AST_Consumes *node)
 {
+  UTL_ScopedName sn (node->local_name (), 0);
+  
+  AST_Type *c_type =
+    AST_Type::narrow_from_decl (
+      this->reify_type (node->consumes_type ()));
+  
+  AST_Consumes *added_consumes =
+    idl_global->gen ()->create_consumes (&sn, c_type);
+    
+  idl_global->scopes ().top ()->add_to_scope (added_consumes);
+    
   return 0;
 }
 
 int
-ast_visitor_tmpl_module_inst::visit_extended_port (AST_Extended_Port *)
+ast_visitor_tmpl_module_inst::visit_extended_port (AST_Extended_Port *node)
 {
+  AST_PortType *pt =
+    AST_PortType::narrow_from_decl (
+      this->reify_type (node->port_type ()));
+      
+  UTL_ScopedName sn (node->local_name (), 0);
+     
+  AST_Extended_Port *added_ep =
+    idl_global->gen ()->create_extended_port (&sn, pt);
+    
+  idl_global->scopes ().top ()->add_to_scope (added_ep);
+  
   return 0;
 }
 
 int
-ast_visitor_tmpl_module_inst::visit_mirror_port (AST_Mirror_Port *)
+ast_visitor_tmpl_module_inst::visit_mirror_port (AST_Mirror_Port *node)
 {
+  AST_PortType *pt =
+    AST_PortType::narrow_from_decl (
+      this->reify_type (node->port_type ()));
+      
+  UTL_ScopedName sn (node->local_name (), 0);
+     
+  AST_Mirror_Port *added_mp =
+    idl_global->gen ()->create_mirror_port (&sn, pt);
+    
+  idl_global->scopes ().top ()->add_to_scope (added_mp);
+  
   return 0;
 }
 
 int
-ast_visitor_tmpl_module_inst::visit_connector (AST_Connector *)
+ast_visitor_tmpl_module_inst::visit_connector (AST_Connector *node)
 {
+  if (this->ctx_->template_args () == 0)
+    {
+      return 0;
+    }
+    
+  AST_Connector *parent =
+    AST_Connector::narrow_from_decl (
+      this->reify_type (node->base_connector ()));
+      
+  UTL_ScopedName sn (node->local_name (), 0);
+      
+  AST_Connector *added_connector =
+    idl_global->gen ()->create_connector (&sn, parent);
+    
+  idl_global->scopes ().top ()->add_to_scope (added_connector);
+  
+  idl_global->scopes ().push (added_connector);
+  
+  if (this->visit_scope (node) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("ast_visitor_tmpl_module_inst::")
+                         ACE_TEXT ("visit_connector - ")
+                         ACE_TEXT ("visit scope failed\n")),
+                        -1);
+    }
+    
+  idl_global->scopes ().pop ();
+      
   return 0;
 }
 
 int
-ast_visitor_tmpl_module_inst::visit_home (AST_Home *)
+ast_visitor_tmpl_module_inst::visit_home (AST_Home *node)
 {
+  if (this->ctx_->template_args () == 0)
+    {
+      return 0;
+    }
+    
+  UTL_ScopedName *base_name = 0;
+  AST_Decl *parent =
+    this->reify_type (node->base_home ());
+  
+  if (parent != 0)
+    {
+      base_name = parent->name ();
+    }
+    
+  UTL_NameList *supports_names =
+    this->create_name_list (node->supports (),
+                            node->n_supports ());
+                            
+  UTL_ScopedName *managed_comp_name = 0;
+  
+  AST_Component *managed_comp =
+    AST_Component::narrow_from_decl (
+      this->reify_type (node->managed_component ()));
+      
+  if (managed_comp != 0)
+    {
+      managed_comp_name = managed_comp->name ();
+    }
+    
+  UTL_ScopedName *p_key_name = 0;
+    
+  AST_ValueType *p_key =
+    AST_ValueType::narrow_from_decl (
+      this->reify_type (node->primary_key ()));
+      
+  if (p_key != 0)
+    {
+      p_key_name = p_key->name ();
+    }
+                            
+  Identifier *node_id = 0;
+  ACE_NEW_RETURN (node_id,
+                  Identifier (node->local_name ()->get_string ()),
+                  -1);
+                  
+  UTL_ScopedName *local_name = 0;
+  ACE_NEW_RETURN (local_name,
+                  UTL_ScopedName (node_id, 0),
+                  -1);
+                  
+  FE_HomeHeader header (local_name,
+                        base_name,
+                        supports_names,
+                        managed_comp_name,
+                        p_key_name);
+                        
+  AST_Home *added_home =
+    idl_global->gen ()->create_home (header.name (),
+                                     header.base_home (),
+                                     header.managed_component (),
+                                     header.primary_key (),
+                                     header.supports (),
+                                     header.n_supports (),
+                                     header.supports_flat (),
+                                     header.n_supports_flat ());
+                             
+  if (supports_names != 0)
+    {
+      supports_names->destroy ();
+      delete supports_names;
+      supports_names = 0;
+    }
+  
+  idl_global->scopes ().top ()->add_to_scope (added_home);
+  
+  // Update the scope management.
+  idl_global->scopes ().push (added_home);
+  
+  if (this->visit_scope (node) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("ast_visitor_tmpl_module_inst::")
+                         ACE_TEXT ("visit_home - ")
+                         ACE_TEXT ("visit_scope failed\n")),
+                        -1);
+    }
+    
+  // Through with this scope.
+  idl_global->scopes ().pop ();
+  
   return 0;
 }
 
@@ -474,14 +798,20 @@ ast_visitor_tmpl_module_inst::visit_valuetype (AST_ValueType *node)
                                               header.truncatable (),
                                               false);
     }
-             
-  parent_names->destroy ();                
-  delete parent_names;
-  parent_names = 0;
+        
+  if (parent_names != 0)
+    {           
+      parent_names->destroy ();                
+      delete parent_names;
+      parent_names = 0;
+    }
   
-  supports_names->destroy ();
-  delete supports_names;
-  supports_names = 0;
+  if (supports_names != 0)
+    {
+      supports_names->destroy ();
+      delete supports_names;
+      supports_names = 0;
+    }
   
   idl_global->scopes ().top ()->add_to_scope (added_vtype);
   
@@ -820,6 +1150,11 @@ ast_visitor_tmpl_module_inst::visit_factory (AST_Factory *node)
 AST_Decl *
 ast_visitor_tmpl_module_inst::reify_type (AST_Decl *d)
 {
+  if (d == 0)
+    {
+      return 0;
+    }
+    
   ast_visitor_reifying rv (this->ctx_);
   
   if (d->ast_accept (&rv) != 0)

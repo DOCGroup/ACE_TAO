@@ -15,10 +15,13 @@
 #include "ast_valuetype.h"
 #include "ast_eventtype.h"
 #include "ast_component.h"
+#include "ast_home.h"
 #include "ast_exception.h"
 #include "ast_typedef.h"
 #include "ast_array.h"
 #include "ast_sequence.h"
+#include "ast_union.h"
+#include "ast_enum.h"
 #include "ast_predefined_type.h"
 #include "ast_string.h"
 #include "ast_constant.h"
@@ -119,8 +122,9 @@ ast_visitor_reifying::visit_template_module_ref (AST_Template_Module_Ref *)
 }
 
 int
-ast_visitor_reifying::visit_porttype (AST_PortType *)
+ast_visitor_reifying::visit_porttype (AST_PortType *node)
 {
+  this->check_and_store (node);
   return 0;
 }
 
@@ -173,8 +177,9 @@ ast_visitor_reifying::visit_connector (AST_Connector *)
 }
 
 int
-ast_visitor_reifying::visit_home (AST_Home *)
+ast_visitor_reifying::visit_home (AST_Home *node)
 {
+  this->check_and_store (node);
   return 0;
 }
 
@@ -185,8 +190,9 @@ ast_visitor_reifying::visit_factory (AST_Factory *)
 }
 
 int
-ast_visitor_reifying::visit_structure (AST_Structure *)
+ast_visitor_reifying::visit_structure (AST_Structure *node)
 {
+  this->check_and_store (node);
   return 0;
 }
 
@@ -203,8 +209,9 @@ ast_visitor_reifying::visit_expression (AST_Expression *)
 }
 
 int
-ast_visitor_reifying::visit_enum (AST_Enum *)
+ast_visitor_reifying::visit_enum (AST_Enum *node)
 {
+  this->check_and_store (node);
   return 0;
 }
 
@@ -233,8 +240,9 @@ ast_visitor_reifying::visit_attribute (AST_Attribute *)
 }
 
 int
-ast_visitor_reifying::visit_union (AST_Union *)
+ast_visitor_reifying::visit_union (AST_Union *node)
 {
+  this->check_and_store (node);
   return 0;
 }
 
@@ -277,58 +285,42 @@ ast_visitor_reifying::visit_native (AST_Native *)
 int
 ast_visitor_reifying::visit_interface (AST_Interface *node)
 {
-  UTL_ScopedName *tmpl_tail =
-    this->template_module_rel_name (node);
-    
-  if (tmpl_tail != 0)
-    {
-      AST_Decl *d =
-        idl_global->scopes ().top ()->lookup_by_name (
-          tmpl_tail,
-          true);
-    
-      this->reified_node_ = d;
-    }
-  else
-    {
-      this->reified_node_ = node;
-    }
-    
+  this->check_and_store (node);
   return 0;
 }
 
 int
 ast_visitor_reifying::visit_valuetype (AST_ValueType *node)
 {
-  this->reified_node_ = node;
+  this->check_and_store (node);
   return 0;
 }
 
 int
 ast_visitor_reifying::visit_eventtype (AST_EventType *node)
 {
-  this->reified_node_ = node;
+  this->check_and_store (node);
   return 0;
 }
 
 int
 ast_visitor_reifying::visit_component (AST_Component *node)
 {
-  this->reified_node_ = node;
+  this->check_and_store (node);
   return 0;
 }
 
 int
 ast_visitor_reifying::visit_exception (AST_Exception *node)
 {
-  this->reified_node_ = node;
+  this->check_and_store (node);
   return 0;
 }
 
 int
 ast_visitor_reifying::visit_typedef (AST_Typedef *node)
 {
-  this->reified_node_ = node;
+  this->check_and_store (node);
   return 0;
 }
 
@@ -549,6 +541,31 @@ ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
                      node->info ()->name_.c_str (),
                      ScopeAsDecl (idl_global->scopes ().top ())->full_name ()),
                     -1);
+}
+
+void
+ast_visitor_reifying::check_and_store (AST_Decl *node)
+{
+  UTL_ScopedName *tmpl_tail =
+    this->template_module_rel_name (node);
+    
+  if (tmpl_tail != 0)
+    {
+      AST_Decl *d =
+        idl_global->scopes ().top ()->lookup_by_name (
+          tmpl_tail,
+          true);
+    
+      this->reified_node_ = d;
+      
+      tmpl_tail->destroy ();
+      delete tmpl_tail;
+      tmpl_tail = 0;
+    }
+  else
+    {
+      this->reified_node_ = node;
+    }
 }
 
 UTL_ScopedName *

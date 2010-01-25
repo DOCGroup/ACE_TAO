@@ -17,7 +17,7 @@ public:
   virtual ~AST_Publishes (void);
   
   // Data Accessor.
-  AST_EventType *publishes_type (void) const;
+  AST_Type *publishes_type (void) const;
 
   // Narrowing.
   DEF_NARROW_FROM_DECL(AST_Publishes);
