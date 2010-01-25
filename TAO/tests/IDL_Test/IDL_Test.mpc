@@ -338,9 +338,9 @@ project(*NDDS_Lib): taolib, messaging, gen_ostream, nddslib {
 //    generic_object.cxx
 //    generic_objectPlugin.cxx
 //    generic_objectSupport.cxx
-    included.cxx
-    includedPlugin.cxx
-    includedSupport.cxx
+//    included.cxx
+//    includedPlugin.cxx
+//    includedSupport.cxx
 //    including.cxx
 //    includingPlugin.cxx
 //    includingSupport.cxx
