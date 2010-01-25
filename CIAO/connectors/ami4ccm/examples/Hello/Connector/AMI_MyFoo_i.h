@@ -4,7 +4,6 @@
 #define AMI_MyFoo_i_H
 
 #include "Base/HelloS.h"
-#include "Hello_BaseC.h"
 #include "Base/HelloEC.h"
 #include "ace/Task.h"
 
