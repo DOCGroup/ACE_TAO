@@ -34,7 +34,7 @@ namespace CIAO
         public virtual ::DDS::CCM_DomainParticipantFactory,
         public virtual ::CORBA::LocalObject
       {
-      friend class ACE_Singleton<RTI_DomainParticipantFactory_i, ACE_SYNCH_RECURSIVE_MUTEX>;
+      friend class ACE_Singleton<RTI_DomainParticipantFactory_i, ACE_SYNCH_MUTEX>;
 
       private:
         // Construtor
@@ -84,13 +84,22 @@ namespace CIAO
         TAO_SYNCH_MUTEX dps_mutex_;
         typedef std::map<ACE_CString, DDSDomainParticipant *> DomainParticipants;
         DomainParticipants dps_;
+      private:
+        ACE_UNIMPLEMENTED_FUNC (void operator= (const RTI_DomainParticipantFactory_i &))
+        ACE_UNIMPLEMENTED_FUNC (RTI_DomainParticipantFactory_i (const RTI_DomainParticipantFactory_i &))
       };
+
+      /// Declare a process wide singleton
+      DDS4CCM_NDDS_IMPL_SINGLETON_DECLARE (ACE_Singleton,
+                                           RTI_DomainParticipantFactory_i,
+                                           ACE_SYNCH_MUTEX)
+
+      typedef ACE_Singleton<RTI_DomainParticipantFactory_i,
+                ACE_SYNCH_MUTEX> Domain_Participant_Factory;
     }
   }
 }
 
-typedef ACE_Singleton<CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i, ACE_SYNCH_RECURSIVE_MUTEX> Domain_Participant_Factory;
-
-#define DPFACTORY Domain_Participant_Factory::instance ()
+#define DPFACTORY ::CIAO::DDS4CCM::RTI::Domain_Participant_Factory::instance ()
 
 #endif
