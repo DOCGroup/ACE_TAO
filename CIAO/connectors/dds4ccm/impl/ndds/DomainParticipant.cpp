@@ -28,14 +28,12 @@ namespace CIAO
   {
     namespace RTI
     {
-      // Implementation skeleton constructor
       RTI_DomainParticipant_i::RTI_DomainParticipant_i (void)
         : impl_ (0)
       {
         CIAO_TRACE ("RTI_DomainParticipant_i::RTI_DomainParticipant_i");
       }
 
-      // Implementation skeleton destructor
       RTI_DomainParticipant_i::~RTI_DomainParticipant_i (void)
       {
         CIAO_TRACE ("RTI_DomainParticipant_i::~RTI_DomainParticipant_i");
@@ -345,16 +343,14 @@ namespace CIAO
           {
             CIAO_ERROR (1, (LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic_with_profile - "
                          "Error: provided nil topic name\n"));
-            throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER,
-                                          0);
+            throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
           }
 
         if (type_name == 0)
           {
             CIAO_ERROR (1, (LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic_with_profile - "
                          "Error: provided nil type name\n"));
-            throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER,
-                                          0);
+            throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
           }
 
         CIAO_DEBUG (6, (LM_DEBUG, CLINFO "DDS_DomainParticipant_i::create_topic_with_profile - "
