@@ -106,6 +106,13 @@ public:
   virtual int visit_param_holder (AST_Param_Holder *node);
   
 private:
+  // Check if arg is declared at some level in the scope of a
+  // template module. If so, look up the corresponding node in
+  // the corresponding instantiation, and store that instead.
+  void check_and_store (AST_Decl *node);
+  
+  // Returns a relative scoped name allocated on the heap if the
+  // arg is declared inside a template module, otherwise 0.
   UTL_ScopedName *template_module_rel_name (AST_Decl *d);
   
 private:

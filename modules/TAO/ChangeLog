@@ -1,3 +1,29 @@
+Mon Jan 25 22:39:39 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/fe_home_header.h:
+
+          Cosmetic changes.
+
+        * TAO_IDL/include/ast_visitor_reifying.h:
+        * TAO_IDL/include/ast_connector.h:
+        * TAO_IDL/include/ast_consumes.h:
+        * TAO_IDL/include/ast_publishes.h:
+        * TAO_IDL/include/ast_emits.h:
+        * TAO_IDL/ast/ast_consumes.cpp:
+        * TAO_IDL/ast/ast_visitor_tmpl_module_inst.cpp:
+        * TAO_IDL/ast/ast_publishes.cpp:
+        * TAO_IDL/ast/ast_emits.cpp:
+        * TAO_IDL/ast/ast_visitor_reifying.cpp:
+
+          Added support for components, homes, connectors,
+          porttypes, simple/extended ports and mirror
+          ports and aliases in an instantiated template
+          module.
+
+        * TAO_IDL/util/utl_global.cpp(string_to_scoped_name):
+
+          Completely rewrote the method using ACE_CString.
+
 Fri Jan 22 19:42:38 UTC 2010  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_template_module.cpp:
