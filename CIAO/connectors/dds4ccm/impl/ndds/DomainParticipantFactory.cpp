@@ -230,6 +230,6 @@ namespace CIAO
 }
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i, ACE_SYNCH_MUTEX> *
-         ACE_Singleton<CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i, ACE_SYNCH_MUTEX>::singleton_;
+template ACE_Singleton<CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i, TAO_SYNCH_MUTEX> *
+         ACE_Singleton<CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i, TAO_SYNCH_MUTEX>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

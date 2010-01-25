@@ -34,7 +34,7 @@ namespace CIAO
         public virtual ::DDS::CCM_DomainParticipantFactory,
         public virtual ::CORBA::LocalObject
       {
-      friend class ACE_Singleton<RTI_DomainParticipantFactory_i, ACE_SYNCH_MUTEX>;
+      friend class ACE_Singleton<RTI_DomainParticipantFactory_i, TAO_SYNCH_MUTEX>;
 
       private:
         // Construtor
@@ -92,10 +92,10 @@ namespace CIAO
       /// Declare a process wide singleton
       DDS4CCM_NDDS_IMPL_SINGLETON_DECLARE (ACE_Singleton,
                                            RTI_DomainParticipantFactory_i,
-                                           ACE_SYNCH_MUTEX)
+                                           TAO_SYNCH_MUTEX)
 
       typedef ACE_Singleton<RTI_DomainParticipantFactory_i,
-                ACE_SYNCH_MUTEX> Domain_Participant_Factory;
+                TAO_SYNCH_MUTEX> Domain_Participant_Factory;
     }
   }
 }
