@@ -1,3 +1,11 @@
+Mon Jan 25 14:51:09 UTC 2010  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Modified to best handle dependencies with a space or $(...) in 
+          them.   A GNU make substitute function call is used to escape
+          spaces.
+
 Mon Jan 25 09:24:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_macosx_iphone.GNU:
