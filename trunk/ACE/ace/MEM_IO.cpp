@@ -54,7 +54,7 @@ ACE_Reactive_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
       buf = 0;
       return 0;
     }
-  else if (retv != sizeof (ACE_OFF_T))
+  else if (retv != static_cast <ssize_t> (sizeof (ACE_OFF_T)))
     {
       //  Nothing available or we are really screwed.
       buf = 0;
@@ -75,26 +75,26 @@ ACE_Reactive_MEM_IO::send_buf (ACE_MEM_SAP_Node *buf,
     {
       return -1;
     }
-    
+
   // The offset.
   ACE_OFF_T offset =
     ACE_Utils::truncate_cast<ACE_OFF_T> (
       reinterpret_cast<char *> (buf)
       - static_cast<char *> (this->shm_malloc_->base_addr ()));
-      
+
   // Send the offset value over the socket.
   if (ACE::send (this->handle_,
                  (const char *) &offset,
                  sizeof (offset),
                  flags,
-                 timeout) != sizeof (offset))
+                 timeout) != static_cast <ssize_t> (sizeof (offset)))
     {
       // unsucessful send, release the memory in the shared-memory.
       this->release_buffer (buf);
 
       return -1;
     }
-    
+
   return ACE_Utils::truncate_cast<ssize_t> (buf->size ());
 }
 
