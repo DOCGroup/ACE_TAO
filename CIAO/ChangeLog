@@ -1,3 +1,11 @@
+Mon Jan 25 11:17:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.cpp
+        * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender_exec.cpp
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp
+          Const, layout, and debug message changes
+
 Mon Jan 25 10:01:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/MPC/config/dance_redirectionservice.mpb

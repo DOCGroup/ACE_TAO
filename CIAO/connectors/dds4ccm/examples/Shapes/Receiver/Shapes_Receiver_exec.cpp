@@ -65,6 +65,7 @@ namespace CIAO_Shapes_Receiver_Impl
             an_instance.y,
             an_instance.shapesize));
   }
+
   //============================================================
   // Facet Executor Implementation Class: PortStatusListener_exec_i
   //============================================================
@@ -78,7 +79,6 @@ namespace CIAO_Shapes_Receiver_Impl
   }
 
   // Operations from ::CCM_DDS::PortStatusListener
-
   void
   PortStatusListener_exec_i::on_requested_deadline_missed (
     ::DDS::DataReader_ptr /* the_reader */,
@@ -177,7 +177,6 @@ namespace CIAO_Shapes_Receiver_Impl
   Receiver_exec_i::get_one (void)
   {
     ShapeType_var shape_info;
-//    shape_info.color = "yellow";
     ::CCM_DDS::ReadInfo_var readinfo;
 
     try
@@ -215,6 +214,7 @@ namespace CIAO_Shapes_Receiver_Impl
   Receiver_exec_i::get_all (void)
   {
   }
+
   // Component attributes.
   ::CORBA::ULong
   Receiver_exec_i::rate (void)
@@ -228,6 +228,7 @@ namespace CIAO_Shapes_Receiver_Impl
   {
     this->rate_ = rate;
   }
+
   ::CORBA::Boolean
   Receiver_exec_i::get_data (void)
   {
