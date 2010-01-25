@@ -70,6 +70,14 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.7.5 and CIAO-0.7.6
 
 . Added support for the DDS State and Event connector with all ports
 
+. Extended AMI4CCM prototype with the latest ideas. The TAO_IDL compiler
+  has some hardcoded generation just for Hello example. It has to be
+  extended to generate the AMI4CCM connector and after that we can
+  remove the hardcoded generation with the real generation code
+
+. Added support for components/connectors with local interface. In the
+  cdp a deployRequirement has to be specified for any local connector
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.4 and CIAO-0.7.5
 =======================================================
 
