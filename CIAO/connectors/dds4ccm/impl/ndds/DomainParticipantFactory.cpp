@@ -159,7 +159,7 @@ namespace CIAO
 
         this->remove_participant (part->get_impl ());
 
-        DDS_ReturnCode_t retval = DDSDomainParticipantFactory::get_instance ()->
+        DDS_ReturnCode_t const retval = DDSDomainParticipantFactory::get_instance ()->
             delete_participant (part->get_impl ());
 
         if (retval != DDS_RETCODE_OK)
