@@ -137,7 +137,7 @@ namespace CIAO
         CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipant_i::delete_publisher - "
                      "Successfully casted provided object refence to RTI_Publisher_i\n"));
 
-        DDS_ReturnCode_t retval = this->impl ()->delete_publisher (rti_pub->get_impl ());
+        DDS_ReturnCode_t const retval = this->impl ()->delete_publisher (rti_pub->get_impl ());
 
         if (retval != DDS_RETCODE_OK)
           {
@@ -246,7 +246,7 @@ namespace CIAO
         CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipant_i::delete_subscriber - "
                      "Successfully casted provided object refence to RTI_Subscriber_i\n"));
 
-        DDS_ReturnCode_t retval = this->impl ()->delete_subscriber (rti_sub->get_impl ());
+        DDS_ReturnCode_t const retval = this->impl ()->delete_subscriber (rti_sub->get_impl ());
 
         if (retval != DDS_RETCODE_OK)
           {
@@ -404,7 +404,7 @@ namespace CIAO
         CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipant_i::delete_topic - "
                      "Successfully casted provided object reference to servant.\n"));
 
-        DDS_ReturnCode_t retval = this->impl ()->delete_topic (top->get_impl ());
+        DDS_ReturnCode_t const retval = this->impl ()->delete_topic (top->get_impl ());
 
         if (retval != DDS_RETCODE_OK)
           {
