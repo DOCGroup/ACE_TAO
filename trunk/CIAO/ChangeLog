@@ -1,3 +1,12 @@
+Mon Jan 25 10:01:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/MPC/config/dance_redirectionservice.mpb
+        * DAnCE/RedirectionService/*
+        * DAnCE/tests/ObjectLocatorTest/*
+        * DAnCE/tests/RedirectionServiceTest/*
+          Removed, redirectionservice isn't working in DAnCE and there are no
+          plans to add support for it
+
 Mon Jan 25 09:10:13 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/DDSWriterEntity/Sender/Writer_Sender.mpc:
