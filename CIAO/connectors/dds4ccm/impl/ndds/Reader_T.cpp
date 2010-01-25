@@ -78,7 +78,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_without_instance (
   typename DDS_TYPE::dds_seq_type & data,
   DDS_SampleInfoSeq & sample_info)
 {
-  DDS_ReturnCode_t retval = this->impl ()->read (
+  DDS_ReturnCode_t const retval = this->impl ()->read (
                                 data,
                                 sample_info,
                                 DDS_LENGTH_UNLIMITED,

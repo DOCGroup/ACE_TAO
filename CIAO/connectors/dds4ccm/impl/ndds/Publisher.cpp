@@ -141,7 +141,7 @@ namespace CIAO
         CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_Publisher_i::delete_datawriter - "
                      "Successfully casted provided object reference to servant.\n"));
 
-        DDS_ReturnCode_t retval = this->impl ()->delete_datawriter (top->get_impl ());
+        DDS_ReturnCode_t const retval = this->impl ()->delete_datawriter (top->get_impl ());
 
         if (retval != DDS_RETCODE_OK)
           {

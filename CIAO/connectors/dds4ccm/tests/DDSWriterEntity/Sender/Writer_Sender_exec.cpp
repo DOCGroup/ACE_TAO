@@ -91,7 +91,7 @@ namespace CIAO_Writer_Sender_Impl
       {
         ++this->last_key->second->iteration;
         DDS_InstanceHandle_t hnd = this->handles_[this->last_key->first.c_str ()];
-        DDS_ReturnCode_t retval = this->writer_->write (this->last_key->second, hnd);
+        DDS_ReturnCode_t const retval = this->writer_->write (this->last_key->second, hnd);
         if (retval == DDS_RETCODE_OK)
           {
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written keyed <%C> - iteration <%d> - valid handle <%d>\n"),

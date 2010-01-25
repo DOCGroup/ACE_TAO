@@ -239,7 +239,7 @@ namespace CIAO
         CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_Subscriber_i::delete_datareader - "
                      "Successfully casted provided object reference to servant.\n"));
 
-        DDS_ReturnCode_t retval = this->impl ()->delete_datareader (dr->get_impl ());
+        DDS_ReturnCode_t const retval = this->impl ()->delete_datareader (dr->get_impl ());
 
         if (retval != DDS_RETCODE_OK)
           {
