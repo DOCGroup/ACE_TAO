@@ -1,3 +1,9 @@
+Mon Jan 25 14:53:00 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * NEWS:
+        
+          Updated file with my changes since the last release.
+
 Fri Jan 22 12:34:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/context_svh.cpp:
