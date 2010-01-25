@@ -8,15 +8,16 @@ project(Lem_Pragma_idl_gen) : componentidldefaults {
               -Wb,skel_export_macro=KEYWORD_CLASH_SVNT_Export \
               -Wb,skel_export_include=Lem_Pragma_svnt_export.h \
               -Wb,exec_export_macro=KEYWORD_CLASH_EXEC_Export \
-              -Wb,exec_export_include=Lem_Pragma_exec_export.h 
+              -Wb,exec_export_include=Lem_Pragma_exec_export.h
 
   IDL_Files {
+    idlflags -= -Gxhst -Gxhsk -Gxhsv -Gxhex
     A.idl
     B.idl
   }
 
   IDL_Files {
-    idlflags += -Gex -Gxhst -Gxhsk -Gxhex
+    idlflags += -Gex
     C.idl
   }
 }
