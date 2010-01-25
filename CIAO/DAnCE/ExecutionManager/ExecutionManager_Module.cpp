@@ -157,10 +157,8 @@ DAnCE_ExecutionManager_Module::parse_args (int argc, ACE_TCHAR *argv[])
             }
 
         case 'h':
-          //case '?': // Display help for use of the server.
-          //default:
-          DANCE_ERROR_RETURN (0, (LM_ERROR,
-                               "usage:  %s\n"
+          ACE_ERROR_RETURN ((LM_ERROR,
+                               "usage: %s\n"
                                "\t--exec-mgr,-e [execution manager ior file name]\n"
                                "\t--node-mgr,-n <node name>[=node manager ior file name]\n"
                                "\t--node-map <file name> \t\tFile containing a node manager map\n"
