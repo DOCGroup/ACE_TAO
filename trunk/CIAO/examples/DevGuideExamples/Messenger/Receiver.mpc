@@ -17,7 +17,7 @@ project(Messenger_Receiver_idl_gen) : componentidldefaults {
 
 project(Messenger_Receiver_lem_gen) : ciaoidldefaults {
   custom_only = 1
-  after += Messenger_Receiver_idl_gen
+  after += Messenger_Receiver_idl_gen Messenger_idl_gen
   idlflags += -Wb,export_macro=RECEIVER_EXEC_Export \
               -Wb,export_include=Receiver_exec_export.h \
               -SS
