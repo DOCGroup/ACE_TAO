@@ -1,3 +1,8 @@
+Mon Jan 25 18:58:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/MEM_IO.cpp
+          Added casts to fix CB2010 warnings
+
 Mon Jan 25 18:49:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SPIPE_Stream.inl:
