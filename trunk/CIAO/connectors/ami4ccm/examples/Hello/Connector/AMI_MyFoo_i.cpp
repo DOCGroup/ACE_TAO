@@ -1,8 +1,6 @@
 // $Id$
 
 #include "AMI_MyFoo_i.h"
-#include "Hello_BaseEC.h"
-#include "tao/LocalObject.h"
 #include "connectors/ami4ccm/ami4ccm/ami4ccm.h"
 
 namespace CCM_CORBA_AMI_MyFoo_Impl
