@@ -89,11 +89,6 @@ namespace CIAO
         ACE_UNIMPLEMENTED_FUNC (RTI_DomainParticipantFactory_i (const RTI_DomainParticipantFactory_i &))
       };
 
-      /// Declare a process wide singleton
-      DDS4CCM_NDDS_IMPL_SINGLETON_DECLARE (ACE_Singleton,
-                                           RTI_DomainParticipantFactory_i,
-                                           TAO_SYNCH_MUTEX)
-
       typedef ACE_Singleton<RTI_DomainParticipantFactory_i,
                 TAO_SYNCH_MUTEX> Domain_Participant_Factory;
     }
@@ -101,5 +96,10 @@ namespace CIAO
 }
 
 #define DPFACTORY ::CIAO::DDS4CCM::RTI::Domain_Participant_Factory::instance ()
+
+/// Declare a process wide singleton
+DDS4CCM_NDDS_IMPL_SINGLETON_DECLARE (ACE_Singleton,
+                                      ::CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i,
+                                      TAO_SYNCH_MUTEX)
 
 #endif
