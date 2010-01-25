@@ -1,8 +1,13 @@
+Mon Jan 25 18:49:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SPIPE_Stream.inl:
+          Added casts to fix CB2010 warnings
+
 Mon Jan 25 14:51:09 UTC 2010  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
 
-          Modified to best handle dependencies with a space or $(...) in 
+          Modified to best handle dependencies with a space or $(...) in
           them.   A GNU make substitute function call is used to escape
           spaces.
 
