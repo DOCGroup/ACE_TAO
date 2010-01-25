@@ -1,3 +1,13 @@
+Mon Jan 25 13:08:46 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_StateListen_T.cpp:
+          Setting listener with the appropriate mask. This resolves
+          test errors regarding the StateListener.
+
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.cpp:
+          Changed 'exception' with 'excep'. This'll resolved
+          test errors which aren't real errors.
+
 Mon Jan 25 12:04:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:

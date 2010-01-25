@@ -182,8 +182,8 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
       }
     catch (const CCM_DDS::InternalError& ex)
       {
-        ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::test_exception - "
-                              "Expected InternalError exception caught : retval <%u>\n",
+        ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::test_excep - "
+                              "Expected InternalError excep caught : retval <%u>\n",
                               ex.error_code));
         return;
       }
