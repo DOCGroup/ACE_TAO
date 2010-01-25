@@ -117,7 +117,7 @@ namespace CIAO_Quoter_Distributor_Impl
   void
   Distributor_exec_i::tick (void)
   {
-    std::cerr << "Ticking" << std::endl;
+    ACE_DEBUG ((LM_DEBUG, "Ticking\n"));
 
     for (Stock_Table::iterator i = this->stocks_.begin ();
          i != this->stocks_.end ();
@@ -125,8 +125,6 @@ namespace CIAO_Quoter_Distributor_Impl
       {
         if (ACE_OS::rand () % 2)
           {
-            //std::cerr << "Updating stock: " << i->first.c_str () << std::endl;
-
             int delta = (ACE_OS::rand () % 10) - 2;
 
             i->second->current += delta;
@@ -154,7 +152,7 @@ namespace CIAO_Quoter_Distributor_Impl
                 }
             }
             else
-              std::cerr << "Writer reference is nil!" << std::endl;
+              ACE_ERROR ((LM_ERROR, "Writer reference is nil!\n"));
           }
       }
   }
@@ -163,7 +161,7 @@ namespace CIAO_Quoter_Distributor_Impl
   Distributor_exec_i::add_stock (
     const char * stock)
   {
-    std::cerr << "Distributor_exec_i::add_stock - Adding stock: " << stock << std::endl;
+    ACE_DEBUG ((LM_DEBUG, "Distributor_exec_i::add_stock - Adding stock: %C\n", stock));
 
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
                         this->mutex_, CORBA::INTERNAL ());
@@ -181,7 +179,7 @@ namespace CIAO_Quoter_Distributor_Impl
   void
   Distributor_exec_i::del_stock (const char * stock)
   {
-    std::cerr << "Distributor_exec_i::del_stock - Removing stock: "  << stock << std::endl;
+    ACE_DEBUG ((LM_DEBUG, "Distributor_exec_i::del_stock - Removing stock: %C\n", stock));
 
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
                         this->mutex_, CORBA::INTERNAL ());
@@ -192,8 +190,10 @@ namespace CIAO_Quoter_Distributor_Impl
       {
         this->stocks_.erase (pos);
       }
-
-    std::cerr << "Distributor_exec_i::del_stock - Stock no present: " << stock;
+    else
+      {
+        ACE_ERROR ((LM_ERROR, "Distributor_exec_i::del_stock - Stock not present: %C\n", stock));
+      }
   }
 
   void
@@ -207,7 +207,7 @@ namespace CIAO_Quoter_Distributor_Impl
                 ACE_Time_Value (0, usec),
                 ACE_Time_Value (0, usec)) == -1)
     {
-      std::cerr << ">>> Distributor_exec_i::start : error scheduling timer" << endl;
+      ACE_ERROR ((LM_ERROR, "Distributor_exec_i::start : error scheduling timer\n"));
     }
   }
 
@@ -215,7 +215,7 @@ namespace CIAO_Quoter_Distributor_Impl
   Distributor_exec_i::stop (void)
   {
     this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
-    std::cerr << ">>> Distributor_exec_i::stop" << endl;
+    ACE_DEBUG ((LM_DEBUG, "Distributor_exec_i::stop\n"));
     delete this->ticker_;
   }
 
