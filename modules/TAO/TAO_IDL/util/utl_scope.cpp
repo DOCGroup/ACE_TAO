@@ -185,7 +185,7 @@ iter_lookup_by_name_local (AST_Decl *d,
     {
       return 0;
     }
-
+/*
   AST_Template_Module_Ref *tmr =
     AST_Template_Module_Ref::narrow_from_decl (d);
     
@@ -193,7 +193,7 @@ iter_lookup_by_name_local (AST_Decl *d,
     {
       d = tmr->ref ();
     }
-
+*/
   // Try to convert the AST_Decl to a UTL_Scope.
   UTL_Scope *sc = DeclAsScope (d);
 
@@ -1786,6 +1786,15 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
 
               if (0 != t && full_def_only && !t->is_defined ())
                 {
+                  continue;
+                }
+                
+              if (AST_Template_Module_Ref::narrow_from_decl (d) != 0)
+                {
+                  // An IDL module has been created in this scope corresponding
+                  // to this node. That's the one we want to match, and it
+                  // occurs in the scope right after this node, so we'll match
+                  // what we're looking for on the next iteration.
                   continue;
                 }
                 

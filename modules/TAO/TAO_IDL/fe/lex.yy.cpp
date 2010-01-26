@@ -3160,7 +3160,7 @@ idl_store_pragma (char *buf)
   else if (ACE_OS::strncmp (buf + 8, "version", 7) == 0)
     {
       char *tmp = buf + 16;
-
+      
       while (*tmp == ' ' || *tmp == '\t')
         {
           ++tmp;
@@ -3172,6 +3172,9 @@ idl_store_pragma (char *buf)
         {
           number = ACE_OS::strchr (tmp, '\t');
         }
+
+      // Used later to trim the type string.
+      ptrdiff_t cutoff = number - tmp;
 
       // Most likely this means there is only a version number
       // without an identifier to apply it to.
@@ -3196,6 +3199,9 @@ idl_store_pragma (char *buf)
           number[len - 1] = '\0';
           len = ACE_OS::strlen (number);
         }
+
+      // Trim the type string after trimming the number string.
+      tmp[cutoff] = '\0';
 
       // This call adds a proper null terminator to tmp, so no need to
       // do it here.

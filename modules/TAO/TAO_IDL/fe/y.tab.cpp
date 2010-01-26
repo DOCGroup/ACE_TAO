@@ -276,6 +276,7 @@
 #include "ast_exception.h"
 #include "ast_param_holder.h"
 #include "ast_visitor_tmpl_module_inst.h"
+#include "ast_visitor_tmpl_module_ref.h"
 #include "ast_visitor_context.h"
 
 #include "fe_declarator.h"
@@ -3071,12 +3072,33 @@ tao_yyreduce:
               ref,
               (tao_yyvsp[(5) - (8)].slval));
 
-           (void) s->fe_add_template_module_ref (tmr);
+          (void) s->fe_add_template_module_ref (tmr);
 
-           sn.destroy ();
-           (tao_yyvsp[(2) - (8)].idlist)->destroy ();
-           delete (tao_yyvsp[(2) - (8)].idlist);
-           (tao_yyvsp[(2) - (8)].idlist) = 0;
+          sn.destroy ();
+          (tao_yyvsp[(2) - (8)].idlist)->destroy ();
+          delete (tao_yyvsp[(2) - (8)].idlist);
+          (tao_yyvsp[(2) - (8)].idlist) = 0;
+           
+          ast_visitor_context ctx;
+          ctx.template_params (ref->template_params ());
+          ast_visitor_tmpl_module_ref v (&ctx);
+
+          // The implied IDL resulting from this reference is
+          // created here, in the template module scope. Upon
+          // instantiation of the enclosing template module, the
+          // visitor copies this implied IDL to the instantiated
+          // module scope. The extra copy is less than ideal, but
+          // otherwise we have ugly lookup issues when the 
+          // referenced template module's contents are referenced
+          // using the aliased scoped name.
+          if (v.visit_template_module_ref (tmr) != 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("visit_template_module_ref")
+                          ACE_TEXT (" failed\n")));
+
+              idl_global->set_err_count (idl_global->err_count () + 1);
+            }
         }
     break;
 
@@ -6668,7 +6690,7 @@ tao_yyreduce:
   case 342:
 
     {
-// attribute_readonly : IDL_ATTRIBUTE
+// attribute_readwrite : IDL_ATTRIBUTE
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrSeen);
         }
     break;
