@@ -385,6 +385,58 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
   return 0;
 
+#elif defined (ACE_HAS_IPHONE)
+
+  const long BUFFERSIZE = 4000;
+  char buffer[BUFFERSIZE];
+
+  struct ifconf ifc;
+  struct ifreq* ifr;
+
+  ACE_HANDLE handle =
+    ACE_OS::socket (AF_INET, SOCK_DGRAM, 0);
+
+  if (handle == ACE_INVALID_HANDLE)
+    return -1;
+
+  ifc.ifc_len = BUFFERSIZE;
+  ifc.ifc_buf = buffer;
+
+  if (ACE_OS::ioctl (handle, SIOCGIFCONF, &ifc) < 0)
+    {
+      ACE_OS::close (handle);
+      return -1;
+    }
+  
+  for(char* ptr=buffer; ptr < buffer + ifc.ifc_len; )
+    { 
+      ifr = (struct ifreq *) ptr;
+
+      if (ifr->ifr_addr.sa_family == AF_LINK)
+        {
+          if(ACE_OS::strcmp (ifr->ifr_name, "en0") == 0)
+            {
+              struct sockaddr_dl* sdl = 
+                (struct sockaddr_dl *) &ifr->ifr_addr;
+
+              ACE_OS::memcpy (node->node,
+                              LLADDR(sdl),
+                              6);
+            }
+        }
+
+      ptr += sizeof(ifr->ifr_name);
+
+      if(sizeof(ifr->ifr_addr) > ifr->ifr_addr.sa_len)
+        ptr += sizeof(ifr->ifr_addr);
+      else
+        ptr += ifr->ifr_addr.sa_len;
+    }
+
+  ACE_OS::close (handle);
+
+  return 0;
+
 #else
   ACE_UNUSED_ARG (node);
   ACE_NOTSUP_RETURN (-1);

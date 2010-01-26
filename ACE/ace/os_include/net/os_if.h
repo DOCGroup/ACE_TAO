@@ -26,6 +26,9 @@
 
 #if !defined (ACE_LACKS_NET_IF_H)
 #  include /**/ <net/if.h>
+#  if defined (ACE_HAS_IPHONE)
+#    include /**/ <net/if_dl.h>
+#  endif /* ACE_HAS_IPHONE */
 #  if defined (HPUX) && defined (IOR)
    /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
       and we don't want that definition.  See IOP_IORC.h.
