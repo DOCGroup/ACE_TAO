@@ -1,3 +1,10 @@
+Tue Jan 26 22:55:18 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/config/ace_mc.mpb:
+
+          Assign to LDLIBS along with ACE_SHLIBS.  ACE_SHLIBS is only used
+          when building a shared library, LDLIBS is used for an executable.
+
 Tue Jan 26 19:53:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Process_Test.cpp:

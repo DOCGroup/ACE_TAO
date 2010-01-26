@@ -12,6 +12,7 @@ project : ace_etcl_parser {
   verbatim (gnuace, local) {
     "ifeq (1,$(winnt))"
     "  ACE_SHLIBS += pdh.lib"
+    "  LDLIBS += pdh.lib"
     "endif"
   }
 }
