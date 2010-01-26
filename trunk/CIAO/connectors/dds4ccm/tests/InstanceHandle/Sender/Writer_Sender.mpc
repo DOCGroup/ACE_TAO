@@ -2,7 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -p DDS_DDSInstanceHandleBase -l ../lib -o ../lib -c controller -u DDS Sender"
 
 project(DDS_DDSInstanceHandleSender_idl_gen) : componentidldefaults   {
-  after += DDS_DDSInstanceHandleConnector_idl_gen
+  after += DDS_InstanceHandleConnector_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SENDER_STUB_Export \
               -Wb,stub_export_include=Sender_stub_export.h \
@@ -60,8 +60,8 @@ project(DDS_DDSInstanceHandleSender_lem_stub) : ccm_svnt, dds4ccm_base {
 
 project(DDS_DDSInstanceHandleSender_stub) : ccm_stub, dds4ccm_base {
   after += DDS_DDSInstanceHandleSender_idl_gen DDS_DDSInstanceHandleBase_stub \
-           DDS_DDSInstanceHandleConnector_stub
-  libs  += DDS_DDSInstanceHandleBase_stub DDS_DDSInstanceHandleConnector_stub
+           DDS_InstanceHandleConnector_stub
+  libs  += DDS_DDSInstanceHandleBase_stub DDS_InstanceHandleConnector_stub
   includes += ..
   libpaths += ../lib
   libout = ../lib
@@ -87,11 +87,11 @@ project(DDS_DDSInstanceHandleSender_stub) : ccm_stub, dds4ccm_base {
 
 project(DDS_DDSInstanceHandleSender_exec) : ciao_executor, nddslib, dds4ccm_base {
   after += DDS_DDSInstanceHandleSender_lem_stub DDS_DDSInstanceHandleSender_stub \
-           DDS_DDSInstanceHandleConnector_lem_stub DDS_DDSInstanceHandleConnector_stub \
+           DDS_InstanceHandleConnector_lem_stub DDS_InstanceHandleConnector_stub \
            DDS4CCM_lem_stub CIAO_DDS4CCM_NDDS_Impl
   sharedname = Sender_exec
   libs += Sender_stub Sender_lem_stub DDS_DDSInstanceHandleBase_stub \
-          DDS_DDSInstanceHandleConnector_lem_stub DDS_DDSInstanceHandleConnector_stub \
+          DDS_InstanceHandleConnector_lem_stub DDS_InstanceHandleConnector_stub \
           DDS4CCM_lem_stub CIAO_DDS4CCM_NDDS_Impl
   libpaths += ../lib
   includes += ..
@@ -117,12 +117,12 @@ project(DDS_DDSInstanceHandleSender_exec) : ciao_executor, nddslib, dds4ccm_base
 
 project(DDS_DDSInstanceHandleSender_svnt) : ciao_servant, dds4ccm_base, nddslib {
   after += DDS_DDSInstanceHandleBase_stub DDS_DDSInstanceHandleSender_lem_stub \
-           DDS4CCM_lem_stub DDS4CCM_skel DDS_DDSInstanceHandleConnector_stub \
-           DDS_DDSInstanceHandleConnector_svnt DDS_DDSInstanceHandleConnector_lem_stub
+           DDS4CCM_lem_stub DDS4CCM_skel DDS_InstanceHandleConnector_stub \
+           DDS_InstanceHandleConnector_svnt DDS_InstanceHandleConnector_lem_stub
   sharedname = Sender_svnt
   libs += Sender_stub Sender_lem_stub DDS_DDSInstanceHandleBase_stub DDS4CCM_lem_stub \
-          DDS4CCM_skel DDS_DDSInstanceHandleConnector_stub DDS_DDSInstanceHandleConnector_svnt \
-          DDS_DDSInstanceHandleConnector_lem_stub
+          DDS4CCM_skel DDS_InstanceHandleConnector_stub DDS_InstanceHandleConnector_svnt \
+          DDS_InstanceHandleConnector_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..

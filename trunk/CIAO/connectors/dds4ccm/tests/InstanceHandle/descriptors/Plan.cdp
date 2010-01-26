@@ -218,18 +218,18 @@
     <name>Writer_Connector_exec</name>
     <source/>
     <node/>
-    <location>DDS_DDSInstanceHandleConnector_exec</location>
+    <location>DDS_InstanceHandleConnector_exec</location>
   </artifact>
   <artifact xmi:id="Writer_Connector_SvntArtifact">
     <name>Writer_Connector_svnt</name>
     <source/>
     <node/>
-    <location>DDS_DDSInstanceHandleConnector_svnt</location>
+    <location>DDS_InstanceHandleConnector_svnt</location>
   </artifact>
   <artifact xmi:id="Writer_Connector_StubArtifact">
     <name>Writer_Connector_stub</name>
     <source/>
     <node/>
-    <location>DDS_DDSInstanceHandleConnector_stub</location>
+    <location>DDS_InstanceHandleConnector_stub</location>
   </artifact>
 </Deployment:DeploymentPlan>
