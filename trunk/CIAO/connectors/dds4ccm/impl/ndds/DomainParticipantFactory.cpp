@@ -89,7 +89,7 @@ namespace CIAO
         {
           ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
                           this->dps_mutex_, CORBA::INTERNAL ());
-          part = this->dps_[qos_profile];
+          //part = this->dps_[qos_profile];
           if (!part)
             {
               part = DDSDomainParticipantFactory::get_instance ()->
@@ -114,7 +114,7 @@ namespace CIAO
           RTI_DomainParticipant_i *rti_dp = dynamic_cast < RTI_DomainParticipant_i *> (retval.in ());
           rti_dp->set_impl (part);
 
-          this->dps_[qos_profile] = part;
+          //this->dps_[qos_profile] = part;
 
           return retval._retn ();
         }
@@ -157,7 +157,7 @@ namespace CIAO
         CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::delete_participant - "
                      "Successfully casted provided object reference to servant type.\n"));
 
-        this->remove_participant (part->get_impl ());
+        //this->remove_participant (part->get_impl ());
 
         DDS_ReturnCode_t const retval = DDSDomainParticipantFactory::get_instance ()->
             delete_participant (part->get_impl ());
@@ -170,7 +170,6 @@ namespace CIAO
           }
         else CIAO_DEBUG (6, (LM_INFO, CLINFO "RTI_DomainParticipantFactory_i::delete_participant - "
                           "Successfully deleted provided participant.\n"));
-
         return retval;
       }
 

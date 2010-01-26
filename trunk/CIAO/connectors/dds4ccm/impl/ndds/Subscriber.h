@@ -126,7 +126,7 @@ namespace CIAO
 
         DDSSubscriber * get_impl (void);
 
-        void set_impl (DDSSubscriber *p);
+        void set_impl (DDSSubscriber * sub);
 
       private:
         DDSSubscriber *impl_;
