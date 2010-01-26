@@ -1,16 +1,28 @@
+Tue Jan 26 04:35:17 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * ace/config-macosx-leopard.h:
+
+          Added ACE_HAS_MAC_OSX macro.
+
+        * ace/OS_NS_netdb.cpp:
+        * ace/os_include/net/os_if.h:
+
+          Enabled ACE_OS::getmacaddress() for Mac OSX as well.
+          It uses exactly the same code as the iPhone's addition below.
+
 Tue Jan 26 04:18:54 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * ace/OS_NS_netdb.cpp:
 
           Implement ACE_OS::getmacaddress() for iPhone. The same implementation
-          will probably work on Mac OS X as well. I will verify this in the 
+          will probably work on Mac OS X as well. I will verify this in the
           future.
 
         * ace/os_include/net/os_if.h:
 
           Added "#include <net/if_dl.h>" to this file if ACE_HAS_IPHONE
           is defined. The ACE_OS::getmacaddress() depends on this include
-          include file. 
+          include file.
 
 Mon Jan 25 18:58:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 

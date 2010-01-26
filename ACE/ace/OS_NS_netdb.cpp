@@ -385,7 +385,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
   return 0;
 
-#elif defined (ACE_HAS_IPHONE)
+#elif defined (ACE_HAS_IPHONE) || defined (ACE_HAS_MAC_OSX)
 
   const long BUFFERSIZE = 4000;
   char buffer[BUFFERSIZE];
