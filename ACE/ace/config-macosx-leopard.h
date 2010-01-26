@@ -7,6 +7,7 @@
 #define ACE_CONFIG_MACOSX_LEOPARD_H
 
 #define ACE_HAS_MAC_OSX
+#define ACE_HAS_NET_IF_DL_H
 
 #if ! defined (__ACE_INLINE__)
 #define __ACE_INLINE__
