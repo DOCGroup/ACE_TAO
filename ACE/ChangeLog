@@ -1,3 +1,9 @@
+Tue Jan 26 13:27:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_common.GNU:
+          tao_idl3_to_idl2 is located in HOST_ROOT/TAO/CIAO/bin with
+          cross compilation
+
 Tue Jan 26 12:52:57 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * ace/config-macosx-leopard.h:
