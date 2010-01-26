@@ -1,7 +1,12 @@
+Tue Jan 26 14:23:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+          Reverted back to the original times, the changes broke the regular
+          running
+
 Mon Jan 25 14:53:00 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * NEWS:
-        
           Updated file with my changes since the last release.
 
 Fri Jan 22 12:34:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
