@@ -15,17 +15,15 @@
 
 #include "tao/LocalObject.h"
 
+#include "dds4ccm/impl/ndds/DataWriter.h"
+
 #include <map>
+
+class WriterTestDataWriter;
 
 namespace CIAO_Writer_Sender_Impl
 {
   class Sender_exec_i;
-
-  enum WRITER_ASSIGNMENT {
-    WRITE_NONE,
-    WRITE_KEYED,
-    WRITE_MULTI
-  };
 
   //============================================================
   // pulse_Generator
@@ -58,10 +56,6 @@ namespace CIAO_Writer_Sender_Impl
 
     virtual void rate (::CORBA::UShort rate);
 
-    virtual ::CORBA::UShort iterations (void);
-
-    virtual void iterations (::CORBA::UShort iterations);
-
     virtual ::CORBA::UShort keys (void);
 
     virtual void keys (::CORBA::UShort keys);
@@ -80,30 +74,25 @@ namespace CIAO_Writer_Sender_Impl
     void start (void);
     void stop (void);
 
-    CCM_DDS::WriterTest::Writer_var writer_;
+    WriterTestDataWriter * dds_writer_;
+    CCM_DDS::WriterTest::Writer_var ccm_writer_;
 
     pulse_Generator * ticker_;
     ::Writer::CCM_Sender_Context_var context_;
     CORBA::UShort rate_;
-    CORBA::UShort iterations_;
     CORBA::UShort keys_;
-    WRITER_ASSIGNMENT assignment_;
-    CORBA::Long last_iteration_;
 
-    void reset_iterations ();
     void register_handles ();
     void unregister_handles ();
-    void start_new_assignment (
-        WRITER_ASSIGNMENT assignment);
-    void write_keyed ();
-    void write_many ();
+    void test_equality ();
+    void test_non_equality ();
 
     TAO_SYNCH_MUTEX mutex_;
     typedef std::map<ACE_CString, WriterTest_var> Writer_Table;
     Writer_Table ktests_;
 
-    typedef std::map<ACE_CString, ::DDS::InstanceHandle_t> Writer_Table_Handles;
-    Writer_Table_Handles handles_;
+    typedef std::map<ACE_CString, ::DDS::InstanceHandle_t> CCM_Handles;
+    CCM_Handles handles_;
 
     Writer_Table::iterator last_key_;
   };
