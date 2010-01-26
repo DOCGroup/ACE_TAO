@@ -219,10 +219,6 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
 {
   CIAO_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove");
 
-  if (! ::CORBA::is_nil (this->domain_participant_.in ()))
-    {
-      this->domain_participant_->delete_contained_entities ();
-    }
   DPFACTORY->delete_participant (
     this->domain_participant_.in ());
   this->domain_participant_ = ::DDS::DomainParticipant::_nil ();

@@ -384,9 +384,9 @@ namespace CIAO
       }
 
       void
-      RTI_Subscriber_i::set_impl (DDSSubscriber * dw)
+      RTI_Subscriber_i::set_impl (DDSSubscriber * sub)
       {
-        this->impl_ = dw;
+        this->impl_ = sub;
       }
 
       DDSSubscriber *
