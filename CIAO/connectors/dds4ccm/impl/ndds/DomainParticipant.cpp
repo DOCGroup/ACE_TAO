@@ -741,9 +741,9 @@ namespace CIAO
       }
 
       void
-      RTI_DomainParticipant_i::set_impl (DDSDomainParticipant * dw)
+      RTI_DomainParticipant_i::set_impl (DDSDomainParticipant * dp)
       {
-        this->impl_ = dw;
+        this->impl_ = dp;
       }
 
       DDSDomainParticipant *
