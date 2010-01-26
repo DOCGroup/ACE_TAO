@@ -67,27 +67,27 @@ $srvb->DeleteFile ($srvbiorfile);
 $cli->DeleteFile ($srvaiorfile);
 
 
-$IMR = $imr->CreateProcess ("../../../ImplRepo_Service/ImplRepo_Service", 
+$IMR = $imr->CreateProcess ("../../../ImplRepo_Service/ImplRepo_Service",
                             "-ORBEndpoint "."$protocol"."://:".$port." ".
                             "-UnregisterIfAddressReused ".
                             "-d $imr_debug_level ".
                             "-o $imr_imriorfile ".
                             "-p $imr_imrdbfile");
-$SRV_A = $srva->CreateProcess ("serverA", 
+$SRV_A = $srva->CreateProcess ("serverA",
                                "_ORBDebugLevel = $debug_level ".
                                "-ORBEndpoint " . "$protocol" . "://:" . "$srv_port_base/portspan=20 ".
                                "-ORBInitRef ImplRepoService=file://$srva_imriorfile ".
                                "-ORBServerId $srv_a_id ".
                                "-ORBUseIMR 1 ".
                                "-o $srva_srvaiorfile");
-$SRV_B = $srvb->CreateProcess ("serverB", 
+$SRV_B = $srvb->CreateProcess ("serverB",
                                "_ORBDebugLevel = $debug_level ".
                                "-ORBEndpoint " . "$protocol" . "://:" . "$srv_port_base/portspan=20 ".
                                "-ORBInitRef ImplRepoService=file://$srvb_imriorfile ".
                                "-ORBServerId $srv_b_id ".
                                "-ORBUseIMR 1 ".
                                "-o $srvb_srvbiorfile");
-$CLI = $cli->CreateProcess ("client", 
+$CLI = $cli->CreateProcess ("client",
                             "$forward_opt -i file://$cli_srvaiorfile ".
                             "-t $client_duration ".
                             "-e $got_object_not_exist_exception ");
@@ -121,7 +121,7 @@ if ($srvb->PutFile ($imriorfile) == -1) {
     exit 1;
 }
 
-sleep (10);
+#sleep (2);
 print STDERR "=== start server A: " . $SRV_A->CommandLine () . "\n";
 $SRVA_status = $SRV_A->Spawn ();
 print STDERR "command " . $SRV_A->CommandLine () . "\n";
@@ -176,7 +176,7 @@ if ($CLI_status != 0) {
 
 sleep (10);
 
-print STDERR "=== kill server A\n"; 
+print STDERR "=== kill server A\n";
 $SRVA_status = $SRV_A->TerminateWaitKill ($srva->ProcessStopWaitInterval());
 if ($SRVA_status != 0) {
     print STDERR "ERROR: Server A returned $SRVA_status\n";
@@ -187,7 +187,7 @@ if ($SRVA_status != 0) {
     exit 1;
 }
 
-print STDERR "=== kill server B\n"; 
+print STDERR "=== kill server B\n";
 $SRVB_status = $SRV_B->TerminateWaitKill ($srvb->ProcessStopWaitInterval());
 if ($SRVB_status != 0) {
     print STDERR "ERROR: Server B returned $SRVB_status\n";
@@ -197,14 +197,14 @@ if ($SRVB_status != 0) {
     exit 1;
 }
 
-sleep (10);
+sleep (5);
 $srva->DeleteFile ($srvaiorfile);
 $srvb->DeleteFile ($srvbiorfile);
 $cli->DeleteFile ($srvaiorfile);
 
-print STDERR "=== restart server B\n"; 
+print STDERR "=== restart server B\n";
 # Run -ORBDebugLevel 10 to see server raise OBJECT_NOT_EXIST exception.
-$SRV_B = $srvb->CreateProcess ("serverB", 
+$SRV_B = $srvb->CreateProcess ("serverB",
                                "_ORBDebugLevel = $debug_level ".
                                "-ORBEndpoint " . "$protocol" . "://:" . "$srv_port_base/portspan=20 ".
                                "-ORBInitRef ImplRepoService=file://$srvb_imriorfile ".
@@ -228,7 +228,7 @@ if ($srvb->WaitForFileTimed ($srvbiorfile,$srvb->ProcessStartWaitInterval()) == 
 
 sleep ($delay * 2);
 
-print STDERR "=== restart server A\n"; 
+print STDERR "=== restart server A\n";
 print STDERR $SRV_A->CommandLine () . "\n";
 $SRVA_status = $SRV_A->Spawn ();
 if ($SRVA_status != 0) {
@@ -262,7 +262,7 @@ if ($cli->PutFile ($srvaiorfile) == -1) {
 
 $CLI_status = $CLI->WaitKill ($cli->ProcessStartWaitInterval()+$client_duration);
 if ($CLI_status != 0) {
-    print STDERR "ERROR: CLient returned $CLI_status\n";
+    print STDERR "ERROR: Client returned $CLI_status\n";
     $status = 1;
 }
 
