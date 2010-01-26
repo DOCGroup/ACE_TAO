@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(CIAO_IDL3_TO_XMI_BE) : acelib, install, ciao_output, crosscompile, ciao_xml_utils, tao_idl_fe {
+project(CIAO_IDL3_TO_XMI_BE) : acelib, install, ciao_output, ciao_xml_utils, tao_idl_fe {
   sharedname   = CIAO_IDL3_TO_XMI_BE
   dynamicflags = CIAO_IDL3_TO_XMI_BUILD_DLL
 
@@ -30,7 +30,7 @@ project(CIAO_IDL3_TO_XMI_BE) : acelib, install, ciao_output, crosscompile, ciao_
   }
 }
 
-project(CIAO_IDL3_TO_XMI_EXE) : aceexe, install, ciao_output, crosscompile, ciao_xml_utils, tao_idl_mcpp, xerces, tao_idl_fe {
+project(CIAO_IDL3_TO_XMI_EXE) : aceexe, install, ciao_output, ciao_xml_utils, tao_idl_mcpp, xerces, tao_idl_fe {
   after          += CIAO_IDL3_TO_XMI_BE
   exename         = tao_idl3_to_xmi
   libs           += CIAO_IDL3_TO_XMI_BE
