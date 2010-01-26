@@ -397,7 +397,7 @@ void
   }
 
    void 
-   Sender_exec_i::wait_for_readers(int numSubscribers)
+   Sender_exec_i::wait_for_readers(int /*numSubscribers*/)
    {
       //DDS_PublicationMatchedStatus status;
   //   DDS::PublicationMatchedStatus status;
