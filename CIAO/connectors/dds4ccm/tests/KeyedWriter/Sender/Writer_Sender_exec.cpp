@@ -111,7 +111,7 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::start_new_assignment (WRITER_ASSIGNMENT assignment)
   {
-    this->last_key = this->ktests_.begin ();
+    this->last_key_ = this->ktests_.begin ();
     this->assignment_ = assignment;
     reset_iterations ();
   }
@@ -119,55 +119,55 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::write_keyed ()
   {
-    if (this->last_key != this->ktests_.end ())
+    if (this->last_key_ != this->ktests_.end ())
       {
         bool exception_caught = false;
         try
           {
-            ++this->last_key->second->iteration;
-            ::DDS::InstanceHandle_t hnd = this->handles_[this->last_key->first.c_str ()];
-            this->writer_->write_one (this->last_key->second, hnd);
+            ++this->last_key_->second->iteration;
+            ::DDS::InstanceHandle_t hnd = this->handles_[this->last_key_->first.c_str ()];
+            this->writer_->write_one (this->last_key_->second, hnd);
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written keyed <%C> - iteration <%d> - valid handle <%d>\n"),
-                    this->last_key->first.c_str (),
-                    this->last_key->second->iteration,
+                    this->last_key_->first.c_str (),
+                    this->last_key_->second->iteration,
                     hnd.isValid));
           }
         catch (const CCM_DDS::InternalError& )
           {
             exception_caught = true;
-            if (this->last_key == this->ktests_.begin ())
+            if (this->last_key_ == this->ktests_.begin ())
               { // the first key should throw this exception; all others
                 // shouldn't
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
                             ACE_TEXT ("while updating writer info for <%C>.\n"),
-                              this->last_key->first.c_str ()));
+                              this->last_key_->first.c_str ()));
               }
           }
         //only the first iterations are registered.
-        if (this->last_key != this->ktests_.begin () && !exception_caught)
+        if (this->last_key_ != this->ktests_.begin () && !exception_caught)
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: No exception caught ")
                     ACE_TEXT ("while writing unregistered data\n")));
           }
-        ++this->last_key;
+        ++this->last_key_;
       }
     else
       {
         //onto the next iteration
-        this->last_key = this->ktests_.begin ();
-        while (this->last_key != this->ktests_.end ())
+        this->last_key_ = this->ktests_.begin ();
+        while (this->last_key_ != this->ktests_.end ())
           {
-            if (this->last_key->second->iteration == this->iterations_)
+            if (this->last_key_->second->iteration == this->iterations_)
               {
                 //next key
-                ++this->last_key;
+                ++this->last_key_;
               }
             else
               {
                 break;
               }
           }
-        if (this->last_key == this->ktests_.end ())
+        if (this->last_key_ == this->ktests_.end ())
           {
             unregister_handles ();
             start_new_assignment (WRITE_MULTI);
@@ -337,7 +337,7 @@ namespace CIAO_Writer_Sender_Impl
 
         this->ktests_[key] = new_key;
       }
-    this->last_key = this->ktests_.begin ();
+    this->last_key_ = this->ktests_.begin ();
     register_handles ();
     reset_iterations ();
   }
