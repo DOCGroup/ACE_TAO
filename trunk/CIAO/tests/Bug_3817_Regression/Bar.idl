@@ -1,18 +1,18 @@
-#ifndef FOO_IDL_
-#define FOO_IDL_
+#ifndef BAR_IDL_
+#define BAR_IDL_
 
 #include <Components.idl>
 
-interface Bar
+interface Foo
 {
-  void do_bar();
+  void do_foo();
 };
 
-component Foo
+component Bar
 {
-  provides Bar bar1;
-  provides Bar bar2;
+  provides Foo foo1;
+  provides Foo foo2;
 };
 
-#endif /* FOO_IDL_ */
+#endif /* BAR_IDL_ */
 
