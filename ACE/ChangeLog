@@ -1,3 +1,9 @@
+Tue Jan 26 19:53:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Process_Test.cpp:
+          Log some more details to get an insight why this test fails on
+          some systems
+
 Tue Jan 26 18:04:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_rel_manpages:
