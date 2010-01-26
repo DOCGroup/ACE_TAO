@@ -1,3 +1,12 @@
+Tue Jan 26 22:48:49 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * tests/Bug_3817_Regression:
+        * tests/Bug_3817_Regression/Foo.idl:
+        * tests/Bug_3817_Regression/Foo.mpc:
+
+          This test show an example where TAO_IDL does not generate
+          correct executor code.
+
 Tue Jan 26 19:56:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
