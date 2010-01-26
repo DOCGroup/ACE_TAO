@@ -1,3 +1,16 @@
+Tue Jan 26 23:07:18 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * tests/Bug_3817_Regression/Bar.idl:
+        * tests/Bug_3817_Regression/Bar.mpc:
+
+          Renamed to avoid project name conflicts with another regression
+          test.
+
+        * tests/Bug_3817_Regression/Foo.idl:
+        * tests/Bug_3817_Regression/Foo.mpc:
+
+          Removed these files.
+
 Tue Jan 26 22:48:49 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * tests/Bug_3817_Regression:
