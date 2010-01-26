@@ -1,3 +1,15 @@
+Tue Jan 26 12:52:57 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * ace/config-macosx-leopard.h:
+
+          Added ACE_HAS_NET_IF_DL_H macro.
+
+        * ace/os_include/net/os_if.h:
+
+          Removed hardcoding of ACE_HAS_IPHONE and ACE_HAS_MAC_OSX
+          checks. If the platform defines ACE_HAS_NET_IF_DL_H macro,
+          then <net/if_dl.h> will be included.
+
 Tue Jan 26 04:35:17 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * ace/config-macosx-leopard.h:
