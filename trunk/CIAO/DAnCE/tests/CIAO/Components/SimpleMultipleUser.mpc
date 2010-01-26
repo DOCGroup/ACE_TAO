@@ -16,7 +16,7 @@ project(SimpleCom_SimpleMulUser_idl_gen) : componentidldefaults {
 }
 
 project(SimpleCom_SimpleMulUser_lem_gen) : ciaoidldefaults {
-  after += SimpleCom_SimpleMulUser_idl_gen
+  after += SimpleCom_SimpleMulUser_idl_gen SimpleCommon_idl_gen
   custom_only = 1
   idlflags += -Wb,export_macro=SIMPLEMULTIPLEUSER_EXEC_Export \
               -Wb,export_include=SimpleMultipleUser_exec_export.h \
