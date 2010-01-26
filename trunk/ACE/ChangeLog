@@ -1,3 +1,8 @@
+Tue Jan 26 18:04:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_rel_manpages:
+          Doxygen is upgraded to 1.6.2
+
 Tue Jan 26 17:02:51 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/Dev_Poll_Reactor.cpp (unbind_all): When shutting down, call
