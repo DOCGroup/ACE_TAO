@@ -1,0 +1,18 @@
+#ifndef FOO_IDL_
+#define FOO_IDL_
+
+#include <Components.idl>
+
+interface Bar
+{
+  void do_bar();
+};
+
+component Foo
+{
+  provides Bar bar1;
+  provides Bar bar2;
+};
+
+#endif /* FOO_IDL_ */
+
