@@ -187,7 +187,7 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
 
             this->writer_->write_one (this->last_key_->second, ::DDS::HANDLE_NIL);
             ACE_DEBUG ((LM_DEBUG, "Written key <%C> - <%u>\n",
-                          this->last_key_->second->key,
+                          this->last_key_->second->key.in (),
                           this->last_key_->second->iteration));
           }
         catch (const CCM_DDS::InternalError& )
