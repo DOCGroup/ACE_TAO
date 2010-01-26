@@ -130,11 +130,6 @@ ast_visitor_tmpl_module_inst::visit_valuetype_fwd (AST_ValueTypeFwd *)
 int
 ast_visitor_tmpl_module_inst::visit_component (AST_Component *node)
 {
-  if (this->ctx_->template_args () == 0)
-    {
-      return 0;
-    }
-    
   UTL_ScopedName *base_name = 0;
   AST_Decl *parent =
     this->reify_type (node->base_component ());
@@ -212,43 +207,28 @@ ast_visitor_tmpl_module_inst::visit_component_fwd (AST_ComponentFwd *)
 
 int
 ast_visitor_tmpl_module_inst::visit_template_module_ref (
-  AST_Template_Module_Ref *node)
+  AST_Template_Module_Ref *)
 {
-  UTL_ScopedName sn (node->local_name (), 0);
-  
-  AST_Module *added_module =
-    idl_global->gen ()->create_module (idl_global->scopes (). top (),
-                                       &sn);
-                                       
-  idl_global->scopes ().top ()->add_to_scope (added_module);
-  
-  idl_global->scopes ().push (added_module);
-  
-  // Visit the scope of referenced template module. No need to
-  // update the template parameter list since its param list has
-  // to be a subset of the one we're in.
-  if (this->visit_scope (node->ref ()) != 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("ast_visitor_tmpl_module_inst::")
-                         ACE_TEXT ("visit_template_module_ref - ")
-                         ACE_TEXT ("visit_scope failed\n")),
-                        -1);
-    }
-    
-  idl_global->scopes ().pop ();
-  
+  // A subclass of this visitor is launched when an 'alias'
+  // construct is parsed, which creates the necessary implied IDL
+  // in the template module. This visitor skips the alias and
+  // processes the implied IDL. It's a bit inefficient to have
+  // the implied IDL in both the template module and its
+  // instantiations, but otherwise the lookup issues are
+  // extremely complicated. This approach allows 
+  // lookup_by_name_local() to just skip over the alias and
+  // match the module of the same name occurring later in the
+  // template module scope. From that vantage point, the
+  // reifying visitor uses its established mechanism to jump
+  // to the module of the same name in the instantiated template
+  // module scope (see ast_visitor_reifying::check_and_store()
+  // and ast_visitor_reifying::template_module_rel_name()).
   return 0;
 }
 
 int
 ast_visitor_tmpl_module_inst::visit_porttype (AST_PortType *node)
 {
-  if (this->ctx_->template_args () == 0)
-    {
-      return 0;
-    }
-    
   UTL_ScopedName sn (node->local_name (), 0);
   
   AST_PortType *added_porttype =
@@ -398,11 +378,6 @@ ast_visitor_tmpl_module_inst::visit_mirror_port (AST_Mirror_Port *node)
 int
 ast_visitor_tmpl_module_inst::visit_connector (AST_Connector *node)
 {
-  if (this->ctx_->template_args () == 0)
-    {
-      return 0;
-    }
-    
   AST_Connector *parent =
     AST_Connector::narrow_from_decl (
       this->reify_type (node->base_connector ()));
@@ -433,11 +408,6 @@ ast_visitor_tmpl_module_inst::visit_connector (AST_Connector *node)
 int
 ast_visitor_tmpl_module_inst::visit_home (AST_Home *node)
 {
-  if (this->ctx_->template_args () == 0)
-    {
-      return 0;
-    }
-    
   UTL_ScopedName *base_name = 0;
   AST_Decl *parent =
     this->reify_type (node->base_home ());
@@ -619,33 +589,15 @@ ast_visitor_tmpl_module_inst::visit_native (AST_Native *)
 int
 ast_visitor_tmpl_module_inst::visit_module (AST_Module *node)
 {
-  // We can conveniently check this member's value to tell
-  // if we are (at some level )processing a template module
-  // instantiation.
-  // If so, we need to create a new module on the AST.
-  // When processing of the instantiation is done, the member
-  // is reset to 0.
-  bool in_template_module =
-    this->ctx_->template_args () != 0;
+  UTL_ScopedName sn (node->local_name (), 0);
   
-  AST_Module *added_module = 0;
-      
-  // If we are traversing a template module as a result of its
-  // instantiation, we want to create a corresponding module
-  // in the instantiated module (at the top of the scope stack),
-  // and push it on the scope stack. Otherwise, we just push
-  // the module we are visiting.    
-  if (in_template_module)
-    {
-      added_module =
-        idl_global->gen ()->create_module (idl_global->scopes ().top (),
-                                           node->name ());
+  AST_Module *added_module =
+    idl_global->gen ()->create_module (idl_global->scopes ().top (),
+                                       &sn);
                       
       idl_global->scopes ().top ()->add_to_scope (added_module);
-    }
     
-  idl_global->scopes ().push (
-    in_template_module ? added_module : node);
+  idl_global->scopes ().push (added_module);
 
   if (this->visit_scope (node) == -1)
     {
@@ -733,11 +685,6 @@ ast_visitor_tmpl_module_inst::visit_eventtype (AST_EventType *node)
 int
 ast_visitor_tmpl_module_inst::visit_valuetype (AST_ValueType *node)
 {
-  if (this->ctx_->template_args () == 0)
-    {
-      return 0;
-    }
-    
   UTL_NameList *parent_names =
     this->create_name_list (node->inherits (),
                             node->n_inherits ());
@@ -839,11 +786,6 @@ ast_visitor_tmpl_module_inst::visit_valuetype (AST_ValueType *node)
 int
 ast_visitor_tmpl_module_inst::visit_interface (AST_Interface *node)
 {
-  if (this->ctx_->template_args () == 0)
-    {
-      return 0;
-    }
-    
   UTL_NameList *parent_names =
     this->create_name_list (node->inherits (),
                             node->n_inherits ());
@@ -872,10 +814,13 @@ ast_visitor_tmpl_module_inst::visit_interface (AST_Interface *node)
                                           header.n_inherits_flat (),
                                           header.is_local (),
                                           header.is_abstract ());
-             
-  parent_names->destroy ();                
-  delete parent_names;
-  parent_names = 0;
+   
+  if (parent_names != 0)
+    {           
+      parent_names->destroy ();                
+      delete parent_names;
+      parent_names = 0;
+    }
   
   idl_global->scopes ().top ()->add_to_scope (added_iface);
   
@@ -988,20 +933,19 @@ ast_visitor_tmpl_module_inst::visit_argument (AST_Argument *node)
 int
 ast_visitor_tmpl_module_inst::visit_typedef (AST_Typedef *node)
 {
-  if (this->ctx_->template_args () == 0)
-    {
-      return 0;
-    }
-    
   AST_Type *bt =
     AST_Type::narrow_from_decl (
       this->reify_type (node->base_type ()));
+      
+  UTL_ScopedName sn (node->local_name (), 0);
   
   AST_Typedef *added_td =
     idl_global->gen ()->create_typedef (bt,
-                                        node->name (),
+                                        &sn,
                                         false,
                                         false);
+                                        
+  AST_Decl *d = ScopeAsDecl (idl_global->scopes ().top ());
                    
   idl_global->scopes ().top ()->add_to_scope (added_td);
 
@@ -1011,11 +955,6 @@ ast_visitor_tmpl_module_inst::visit_typedef (AST_Typedef *node)
 int
 ast_visitor_tmpl_module_inst::visit_constant (AST_Constant *node)
 {
-  if (this->ctx_->template_args () == 0)
-    {
-      return 0;
-    }
-    
   AST_Param_Holder *ph =
     node->constant_value ()->param_holder ();
       
@@ -1064,11 +1003,6 @@ ast_visitor_tmpl_module_inst::visit_constant (AST_Constant *node)
 int
 ast_visitor_tmpl_module_inst::visit_structure (AST_Structure *node)
 {
-  if (this->ctx_->template_args () == 0)
-    {
-      return 0;
-    }
-    
   UTL_ScopedName sn (node->name ()->last_component (), 0);
     
   AST_Structure *added_struct =
@@ -1238,3 +1172,4 @@ ast_visitor_tmpl_module_inst::create_name_list (AST_Type **list,
     
   return retval;
 }
+

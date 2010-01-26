@@ -12,9 +12,8 @@
 //    ast_visitor_tmpl_module_inst.h
 //
 // = DESCRIPTION
-//    This visitor creates nodes resulting
-//    from the instantiation of a template module, or from a
-//    reference to one inside another, and adds these nodes
+//    This visitor creates nodes resulting from the
+//    instantiation of a template module, and adds these nodes
 //    to the AST.
 //
 // = AUTHOR
