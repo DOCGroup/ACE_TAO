@@ -492,11 +492,23 @@ ACE_Dev_Poll_Reactor::Handler_Repository::unbind_all (void)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::Handler_Repository::unbind_all");
 
-  // Unbind all of the event handlers.
+  // Unbind all of the event handlers; similar to remove_handler() on all.
   for (int handle = 0;
        handle < this->max_size_;
        ++handle)
-    this->unbind (handle);
+    {
+      Event_Tuple *entry = this->find (handle);
+      if (entry == 0)
+        continue;
+
+      // Check for ref counting now - handle_close () may delete eh.
+      bool const requires_reference_counting =
+        entry->event_handler->reference_counting_policy ().value () ==
+        ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
+
+      (void) entry->event_handler->handle_close (handle, entry->mask);
+      this->unbind (handle, requires_reference_counting);
+    }
 
   return 0;
 }
@@ -864,7 +876,7 @@ ACE_Dev_Poll_Reactor::close (void)
       this->delete_signal_handler_ = false;
     }
 
- (void) this->handler_rep_.close ();
+  (void) this->handler_rep_.close ();
 
   if (this->delete_timer_queue_)
     {
@@ -1575,7 +1587,7 @@ ACE_Dev_Poll_Reactor::remove_handler_i (ACE_HANDLE handle,
   // If registered event handler not the same as eh, don't mess with
   // the mask, but do the proper callback and refcount when needed.
   bool handle_reg_changed = true;
-  Event_Tuple *info =  this->handler_rep_.find (handle);
+  Event_Tuple *info = this->handler_rep_.find (handle);
   if (info == 0 && eh == 0)  // Nothing to work with
     return -1;
   if (info != 0 && (eh == 0 || info->event_handler == eh))
@@ -1598,12 +1610,6 @@ ACE_Dev_Poll_Reactor::remove_handler_i (ACE_HANDLE handle,
   // then remove it from the handler repository.
   if (!handle_reg_changed && info->mask == ACE_Event_Handler::NULL_MASK)
     this->handler_rep_.unbind (handle, requires_reference_counting);
-
-  // Note the fact that we've changed the state of the wait_set,
-  // i.e. the "interest set," which is used by the dispatching loop to
-  // determine whether it can keep going or if it needs to reconsult
-  // /dev/poll or /dev/epoll.
-  // this->state_changed_ = 1;
 
   return 0;
 }

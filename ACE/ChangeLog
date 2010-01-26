@@ -1,3 +1,8 @@
+Tue Jan 26 17:02:51 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dev_Poll_Reactor.cpp (unbind_all): When shutting down, call
+          handle_close() on all registered handlers. Fixes Bugzilla 2750.
+
 Tue Jan 26 13:27:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_common.GNU:
