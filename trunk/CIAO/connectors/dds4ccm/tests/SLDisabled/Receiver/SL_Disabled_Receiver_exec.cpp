@@ -9,6 +9,7 @@
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_time.h"
 #include "dds4ccm/impl/ndds/Utils.h"
+#include "dds4ccm/impl/ndds/TimeUtilities.h"
 
 namespace CIAO_SL_Disabled_Receiver_Impl
 {
@@ -135,14 +136,11 @@ namespace CIAO_SL_Disabled_Receiver_Impl
         for(CORBA::ULong i = 0; i < readinfoseq->length(); ++i)
           {
             this->updater_data_ = true;
-            time_t tim = readinfoseq[i].source_timestamp.sec;
-            tm* time = ACE_OS::localtime(&tim);
+            ACE_Time_Value tv;
+            tv <<= readinfoseq[i].source_timestamp;
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
-                        ACE_TEXT ("-> UTC date = %02d:%02d:%02d.%d\n"),
-                        time ? time->tm_hour : 0,
-                        time ? time->tm_min : 0,
-                        time ? time->tm_sec : 0,
-                        readinfoseq[i].source_timestamp.nanosec));
+                                  ACE_TEXT ("-> UTC date =%#T\n"),
+                                  &tv));
           }
         for(CORBA::ULong i = 0; i < TestTopic_infos->length(); ++i)
           {
@@ -152,7 +150,6 @@ namespace CIAO_SL_Disabled_Receiver_Impl
                         TestTopic_infos[i].key.in (),
                         TestTopic_infos[i].x));
           }
-      
       }
     catch (const CCM_DDS::InternalError& )
       {
@@ -204,7 +201,7 @@ namespace CIAO_SL_Disabled_Receiver_Impl
          ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw CORBA::INTERNAL ();
       }
-    
+
     lc->mode (::CCM_DDS::NOT_ENABLED);
     // calculate the interval time
     long usec = 1000000 / this->rate_;
@@ -229,13 +226,13 @@ namespace CIAO_SL_Disabled_Receiver_Impl
   Receiver_exec_i::ccm_remove (void)
   {
     if(!this->no_operation_.value ()|| !this->updater_data_.value())
-      {   
-     
+      {
+
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did receive an unexpected ")
                                ACE_TEXT (" operation from StateListener or Updater doesn't work in Receiver")
-                    )); 
+                    ));
       }
-   
+
     else
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Haven't received tan  unexpected ")

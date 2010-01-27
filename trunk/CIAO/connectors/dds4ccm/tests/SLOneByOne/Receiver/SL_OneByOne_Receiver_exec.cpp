@@ -9,6 +9,7 @@
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_time.h"
 #include "dds4ccm/impl/ndds/Utils.h"
+#include "dds4ccm/impl/ndds/TimeUtilities.h"
 
 namespace CIAO_SL_OneByOne_Receiver_Impl
 {
@@ -61,7 +62,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
                                      const ::CCM_DDS::ReadInfo & info)
   {
     if((!datum.key.in()==0) && (info.instance_status == CCM_DDS::INSTANCE_CREATED))
-      { 
+      {
         this->on_creation_ = true;
       }
   }
@@ -79,7 +80,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
 
       }
     if((!datum.key.in()==0) && (info.instance_status == CCM_DDS::INSTANCE_UPDATED))
-      { 
+      {
         this->on_one_update_ = true;
       }
   }
@@ -100,7 +101,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected info.status ")
                               ACE_TEXT ("'CCM_DDS::INSTANCE_DELETED'")
                               ACE_TEXT ("  with operation 'on_deletion' from StateListener in Receiver\n")
-                    )); 
+                    ));
 
       }
      if((!datum.key.in()==0) && (info.instance_status == CCM_DDS::INSTANCE_DELETED))
@@ -169,14 +170,11 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
         for(CORBA::ULong i = 0; i < readinfoseq->length(); ++i)
           {
             this->updater_data_ = true;
-            time_t tim = readinfoseq[i].source_timestamp.sec;
-            tm* time = ACE_OS::localtime(&tim);
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
-                        ACE_TEXT ("-> UTC date = %02d:%02d:%02d.%d\n"),
-                        time ? time->tm_hour : 0,
-                        time ? time->tm_min : 0,
-                        time ? time->tm_sec : 0,
-                        readinfoseq[i].source_timestamp.nanosec));
+          ACE_Time_Value tv;
+          tv <<= readinfoseq[i].source_timestamp;
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
+                                ACE_TEXT ("-> UTC date =%#T\n"),
+                                &tv));
           }
         for(CORBA::ULong i = 0; i < TestTopic_infos->length(); ++i)
           {
@@ -186,7 +184,6 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
                         TestTopic_infos[i].key.in (),
                         TestTopic_infos[i].x));
           }
-      
       }
     catch (const CCM_DDS::InternalError& )
       {
@@ -206,9 +203,9 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
   ::CCM_DDS::TestTopic::CCM_StateListener_ptr
     Receiver_exec_i::get_info_out_data_listener (void)
   {
-    return new StateListener_exec_i(this->no_operation_, 
-                                     this->on_creation_, 
-                                     this->on_one_update_, 
+    return new StateListener_exec_i(this->no_operation_,
+                                     this->on_creation_,
+                                     this->on_one_update_,
                                      this->on_deletion_);
   }
 
@@ -242,7 +239,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
          ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw CORBA::INTERNAL ();
       }
-    
+
     lc->mode (::CCM_DDS::ONE_BY_ONE);
     // calculate the interval time
     long usec = 1000000 / this->rate_;
@@ -268,34 +265,34 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
   {
     CORBA::Boolean no_error = true;
     if(!this->no_operation_.value ())
-      {   
+      {
          no_error = false;
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did receive an unexpected ")
                                ACE_TEXT (" operation 'on_many_updates' from StateListener in Receiver\n")
-                    )); 
+                    ));
       }
     if(!this->on_creation_ .value ())
-      {   
+      {
          no_error = false;
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: didn't receive the expected ")
                                ACE_TEXT (" operation 'on_creation' from StateListener in Receiver\n")
-                    )); 
+                    ));
       }
     if(!this->on_one_update_.value  ())
-      {   
+      {
          no_error = false;
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR:didn't receive the expected ")
                                ACE_TEXT (" operation 'on_one_update' from StateListener in Receiver\n")
-                    )); 
+                    ));
       }
     if(!this->on_deletion_.value ())
-      {   
+      {
          no_error = false;
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: didn't receive the expected ")
                                ACE_TEXT (" operation 'on_deletion' from StateListener in Receiver\n")
-                    )); 
+                    ));
       }
-   
+
     if(no_error==true)
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Have received the  expected ")
