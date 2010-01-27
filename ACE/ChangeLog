@@ -1,3 +1,10 @@
+Wed Jan 27 05:33:56 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * ace/config-macosx-iphone-hardware.h:
+
+          undefined ACE_HAS_SYSV_IPC, it doesn't seem that the 
+          iphone-hardware platform supports it.
+
 Tue Jan 26 22:55:18 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * bin/MakeProjectCreator/config/ace_mc.mpb:
