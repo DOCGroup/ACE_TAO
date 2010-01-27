@@ -1,3 +1,24 @@
+Wed Jan 27 20:08:48 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_union.h:
+        * TAO_IDL/include/ast_visitor_tmpl_module_inst.h:
+        * TAO_IDL/include/utl_labellist.h:
+        * TAO_IDL/include/ast_union_branch.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/be/be_union_label.cpp:
+        * TAO_IDL/ast/ast_visitor_tmpl_module_ref.cpp:
+        * TAO_IDL/ast/ast_visitor_tmpl_module_inst.cpp:
+        * TAO_IDL/ast/ast_visitor_reifying.cpp:
+        * TAO_IDL/ast/ast_enum.cpp:
+        * TAO_IDL/ast/ast_union_branch.cpp:
+        * TAO_IDL/util/utl_labellist.cpp:
+        * TAO_IDL/util/utl_exceptlist.cpp:
+        * TAO_IDL/util/utl_idlist.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Added support for unions and enums in the scope of a
+          template module.
+
 Tue Jan 26 20:21:30 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_visitor_tmpl_module_ref.h:

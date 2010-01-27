@@ -114,13 +114,14 @@ UTL_ExceptList::copy (void)
 {
   UTL_ExceptList *retval = 0;
   ACE_NEW_RETURN (retval,
-                  UTL_ExceptList (
-                      this->pd_car_data,
-                      this->tail () != 0
-                        ? (UTL_ExceptList *) this->tail ()->copy ()
-                        : 0
-                    ),
+                  UTL_ExceptList (this->pd_car_data,
+                                  0),
                   0);
+
+  if (this->tail () != 0)
+    {
+      retval->nconc ((UTL_ExceptList *) this->tail ()->copy ());
+    }
 
   return retval;
 }

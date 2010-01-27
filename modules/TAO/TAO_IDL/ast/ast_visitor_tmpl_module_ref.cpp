@@ -20,7 +20,7 @@
 
 ast_visitor_tmpl_module_ref::ast_visitor_tmpl_module_ref (
       ast_visitor_context *ctx)
-  : ast_visitor_tmpl_module_inst (ctx)
+  : ast_visitor_tmpl_module_inst (ctx, true)
 {
 }
 
@@ -54,8 +54,6 @@ ast_visitor_tmpl_module_ref::visit_template_module_ref (
                                        
   idl_global->scopes ().top ()->add_to_scope (added_module);
   
-  AST_Decl *d = ScopeAsDecl (idl_global->scopes ().top ());
-                   
   idl_global->scopes ().push (added_module);
   
   // Visit the scope of referenced template module. No need to

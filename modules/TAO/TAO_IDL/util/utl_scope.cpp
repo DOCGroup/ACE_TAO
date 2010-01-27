@@ -185,15 +185,7 @@ iter_lookup_by_name_local (AST_Decl *d,
     {
       return 0;
     }
-/*
-  AST_Template_Module_Ref *tmr =
-    AST_Template_Module_Ref::narrow_from_decl (d);
-    
-  if (tmr != 0)
-    {
-      d = tmr->ref ();
-    }
-*/
+
   // Try to convert the AST_Decl to a UTL_Scope.
   UTL_Scope *sc = DeclAsScope (d);
 
@@ -214,15 +206,19 @@ iter_lookup_by_name_local (AST_Decl *d,
       return 0;
     }
 
+  UTL_ScopedName *sn = (UTL_ScopedName *) e->tail ();
 
   if (result == 0)
     {
-      return 0;
+      if (sn == 0)
+        {
+          result = UTL_Scope::match_param (e);
+        }
+
+      return result;
     }
   else
     {
-      UTL_ScopedName *sn = (UTL_ScopedName *) e->tail ();
-
       if (sn == 0)
         {
           // We're done.
@@ -581,33 +577,6 @@ UTL_Scope::check_for_predef_seq (AST_Decl *d)
       default:
         break;
     }
-}
-
-AST_Param_Holder *
-UTL_Scope::match_param (
-  UTL_ScopedName *e,
-  FE_Utils::T_PARAMLIST_INFO const *params)
-{
-  const char *name = e->first_component ()->get_string ();
-  AST_Param_Holder *retval = 0;
-  
-  for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (*params);
-       !i.done ();
-       i.advance ())
-    {
-      FE_Utils::T_Param_Info *param = 0;
-      i.next (param);
-      
-      if (param->name_ == name)
-        {
-          retval =
-            idl_global->gen ()->create_param_holder (e, param);
-            
-          break;
-        }
-    }
-    
-  return retval;
 }
 
 // Public operations.
@@ -1855,15 +1824,10 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
       return 0;
     }
     
-  // If this call returns a non-zero value, we are in the scope
-  // of a template module.  
-  FE_Utils::T_PARAMLIST_INFO const *params =
-    idl_global->current_params ();
-      
-  if (e->length () == 1 && params != 0)
+  if (e->length () == 1)
     {
       AST_Param_Holder *param_holder =
-        this->match_param (e, params);
+        UTL_Scope::match_param (e);
         
       // Since we are inside the scope of a template module, any
       // single-segment scoped name that matches a template
@@ -2664,6 +2628,41 @@ unsigned long
 UTL_Scope::nmembers (void)
 {
   return this->pd_decls_used;
+}
+
+AST_Param_Holder *
+UTL_Scope::match_param (UTL_ScopedName *e)
+{
+  // If this call returns a zero value, we are not in the scope
+  // of a template module.  
+  FE_Utils::T_PARAMLIST_INFO const *params =
+    idl_global->current_params ();
+    
+  if (params == 0)
+    {
+      return 0;
+    }
+      
+  const char *name = e->first_component ()->get_string ();
+  AST_Param_Holder *retval = 0;
+  
+  for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (*params);
+       !i.done ();
+       i.advance ())
+    {
+      FE_Utils::T_Param_Info *param = 0;
+      i.next (param);
+      
+      if (param->name_ == name)
+        {
+          retval =
+            idl_global->gen ()->create_param_holder (e, param);
+            
+          break;
+        }
+    }
+    
+  return retval;
 }
 
 void
