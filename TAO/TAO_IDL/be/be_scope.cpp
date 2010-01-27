@@ -42,12 +42,6 @@ be_scope::be_add_field (AST_Field *f)
   return this->fe_add_field (f);
 }
 
-UTL_ExceptList *
-be_scope::be_add_exceptions (UTL_ExceptList *)
-{
-  return 0;
-}
-
 AST_Argument *
 be_scope::be_add_argument (AST_Argument *)
 {

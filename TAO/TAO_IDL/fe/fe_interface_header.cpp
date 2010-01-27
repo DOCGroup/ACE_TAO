@@ -84,6 +84,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 #include "nr_extern.h"
 
+#include "ace/streams.h"
+
 #undef  INCREMENT
 #define INCREMENT 512
 
@@ -290,7 +292,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
           // We will crash if we continue from here.
           throw Bailout ();
         }
-
+        
       // Look it up.
       d = s->lookup_by_name  (item,
                               true,

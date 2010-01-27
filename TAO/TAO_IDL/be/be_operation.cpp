@@ -111,22 +111,6 @@ be_operation::accept (be_visitor *visitor)
   return visitor->visit_operation (this);
 }
 
-UTL_ExceptList *
-be_operation::be_add_exceptions (UTL_ExceptList *t)
-{
-  if (this->pd_exceptions != 0)
-    {
-      idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
-                                  this);
-    }
-  else
-    {
-      this->pd_exceptions = t;
-    }
-
-  return this->pd_exceptions;
-}
-
 AST_Argument *
 be_operation::be_add_argument (AST_Argument *arg)
 {

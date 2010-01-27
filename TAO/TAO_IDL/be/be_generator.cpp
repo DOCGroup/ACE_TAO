@@ -158,22 +158,23 @@ be_generator::create_module (UTL_Scope *s,
                   be_module (n),
                   0);
 
+  AST_Module *m = 0;
 
   // Check for another module of the same name in this scope.
   for (UTL_ScopeActiveIterator iter (s, UTL_Scope::IK_decls);
        !iter.is_done ();
        iter.next ())
     {
-      AST_Decl *d = iter.item ();
+      // Can't just check node type here, since it could be a
+      // template module or template module instantiation.
+      m = AST_Module::narrow_from_decl (iter.item ());
 
-      if (d->node_type () == AST_Decl::NT_module)
+      if (m != 0)
         {
           // Does it have the same name as the one we're
           // supposed to create.
-          if (d->local_name ()->compare (n->last_component ()))
+          if (m->local_name ()->compare (n->last_component ()))
             {
-              AST_Module *m = AST_Module::narrow_from_decl (d);
-
               // Get m's previous_ member, plus all it's decls,
               // into the new modules's previous_ member.
               retval->add_to_previous (m);
@@ -190,21 +191,26 @@ be_generator::create_module (UTL_Scope *s,
 
   if (nt == AST_Decl::NT_module || nt == AST_Decl::NT_root)
     {
-      AST_Module *m = AST_Module::narrow_from_decl (d);
+      // Also check this to week out a template module or its
+      // instantiation.
+      m = AST_Module::narrow_from_decl (d);
 
-      // AST_Module::previous_ is a set, so it contains each
-      // entry only once, but previous_ will contain the decls
-      // from all previous openings. See comment in
-      // AST_Module::add_to_previous() body.
-      d = m->look_in_previous (n->last_component ());
-
-      if (d != 0)
+      if (m != 0)
         {
-          if (d->node_type () == AST_Decl::NT_module)
-            {
-              m = AST_Module::narrow_from_decl (d);
+          // AST_Module::previous_ is a set, so it contains each
+          // entry only once, but previous_ will contain the decls
+          // from all previous openings. See comment in
+          // AST_Module::add_to_previous() body.
+          d = m->look_in_previous (n->last_component ());
 
-              retval->add_to_previous (m);
+          if (d != 0)
+            {
+              if (d->node_type () == AST_Decl::NT_module)
+                {
+                  m = AST_Module::narrow_from_decl (d);
+
+                  retval->add_to_previous (m);
+                }
             }
         }
     }

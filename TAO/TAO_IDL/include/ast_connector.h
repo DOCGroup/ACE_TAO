@@ -7,9 +7,6 @@
 #include "ast_component.h"
 #include "fe_utils.h"
 
-class AST_Tmpl_Port;
-class AST_Tmpl_Mirror_Port;
-
 class TAO_IDL_FE_Export AST_Connector
   : public virtual AST_Component
 {
