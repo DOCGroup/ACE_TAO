@@ -1,3 +1,14 @@
+Wed Jan 27 22:55:24 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * TAO_IDL/util/utl_global.cpp(add_dcps_data_type):
+
+          Now that lookup_by_name_local() has been re-written in
+          Tue Jan 26 20:21:30 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+          on the idl3_plus_backend2 branch which was merged in
+          Wed Jan 27 14:19:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+          it doesn't add an extra space at the end of the name.  Changed
+          add_dcps_data_type() to account for this.
+
 Wed Jan 27 14:29:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/Makefile.am:
