@@ -14,7 +14,10 @@
 
 #pragma ciao lem "Connector2/Connector2E.idl"
 
-TYPED_MODULE( ::SharedDPTest2, ::SharedDPTest2_Seq, SharedDPTest2)
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::SharedDPTest2, ::SharedDPTest2_Seq> SharedDPTest2;
+};
 
 module SharedDP_Connector2
 {

@@ -14,7 +14,10 @@
 
 #pragma ciao lem "SecConnector/ConnectorStatusListener_TestSec_ConnectorE.idl"
 
-TYPED_MODULE( ::TestSecondTopic, ::TestSecondTopic_Seq, TestSecondTopic)
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::TestSecondTopic, ::TestSecondTopic_Seq> TestSecondTopic;
+};
 
 module ConnectorStatusListener_Test
 {

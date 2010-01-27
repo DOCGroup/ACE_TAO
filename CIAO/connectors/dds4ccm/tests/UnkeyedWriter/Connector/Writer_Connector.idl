@@ -14,7 +14,10 @@
 
 #pragma ciao lem "Connector/Writer_ConnectorE.idl"
 
-TYPED_MODULE( ::WriterTest, ::WriterTest_Seq, WriterTest)
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::WriterTest, ::WriterTest_Seq> WriterTest;
+};
 
 module Writer
 {

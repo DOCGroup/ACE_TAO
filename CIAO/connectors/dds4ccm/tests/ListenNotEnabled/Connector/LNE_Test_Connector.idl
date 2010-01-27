@@ -14,7 +14,10 @@
 
 #pragma ciao lem "Connector/LNE_Test_ConnectorE.idl"
 
-TYPED_MODULE( ::ListenNotEnabledTest, ::ListenNotEnabledTest_Seq, ListenNotEnabledTest)
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::ListenNotEnabledTest, ::ListenNotEnabledTest_Seq> ListenNotEnabledTest;
+};
 
 module LNE_Test
 {

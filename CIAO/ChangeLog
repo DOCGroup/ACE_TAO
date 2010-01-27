@@ -1,3 +1,56 @@
+Wed Jan 27 14:26:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.idl
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl
+        * connectors/dds4ccm/idl/ccm_dds.idl
+        * connectors/dds4ccm/performance-tests/Keyed/Connector/Perf_Keyed_Test_Connector.idl
+        * connectors/dds4ccm/tests/CSLDeadline/Connector/CSL_DeadlineTest_Connector.idl
+        * connectors/dds4ccm/tests/CSLQoS/Connector/CSL_QoSTest_Connector.idl
+        * connectors/dds4ccm/tests/CSLSampleRejected/Connector/CSL_SRTest_Connector.idl
+        * connectors/dds4ccm/tests/CSLUnexpStat/Connector/CSL_USTest_Connector.idl
+        * connectors/dds4ccm/tests/DDSWriterEntity/Connector/Writer_Connector.idl
+        * connectors/dds4ccm/tests/Event_Connection_Test/Connector/Event_Connection_Test_Connector.idl
+        * connectors/dds4ccm/tests/Getter/Connector/Getter_Test_Connector.idl
+        * connectors/dds4ccm/tests/InstanceHandle/Connector/Writer_Connector.idl
+        * connectors/dds4ccm/tests/KeyedSamples/Connector/Keyed_Test_Connector.idl
+        * connectors/dds4ccm/tests/KeyedWriter/Connector/Writer_Connector.idl
+        * connectors/dds4ccm/tests/ListenManyByMany/Connector/LMBM_Test_Connector.idl
+        * connectors/dds4ccm/tests/ListenNotEnabled/Connector/LNE_Test_Connector.idl
+        * connectors/dds4ccm/tests/ListenOneByOne/Connector/LOBO_Test_Connector.idl
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector.idl
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Connector/ConnectorStatusListener_Test_Connector.idl
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/SecConnector/ConnectorStatusListener_TestSec_Connector.idl
+        * connectors/dds4ccm/tests/PSLDeadline/Connector/PSL_DeadlineTest_Connector.idl
+        * connectors/dds4ccm/tests/PSLSampleLost/Connector/PSL_SampleLost_Connector.idl
+        * connectors/dds4ccm/tests/QueryFilter/Connector/QueryFilter_Test_Connector.idl
+        * connectors/dds4ccm/tests/Reader/Connector/Reader_Test_Connector.idl
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Connector/SetConnectorAttribute_Connector.idl
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector1/Connector1.idl
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector2/Connector2.idl
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector3/Connector3.idl
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Connector/Connector.idl
+        * connectors/dds4ccm/tests/SLDisabled/Connector/SL_Disabled_Connector.idl
+        * connectors/dds4ccm/tests/SLManyByMany/Connector/SL_ManyByMany_Connector.idl
+        * connectors/dds4ccm/tests/SLOneByOne/Connector/SL_OneByOne_Connector.idl
+        * connectors/dds4ccm/tests/State_Connection_Test/Connector/State_Connection_Test_Connector.idl
+        * connectors/dds4ccm/tests/UnkeyedSamples/Connector/Unkeyed_Test_Connector.idl
+        * connectors/dds4ccm/tests/UnkeyedWriter/Connector/Writer_Connector.idl
+        * connectors/dds4ccm/tests/Updater/Connector/Updater_Connector.idl
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Array/VT_Array_Connector.idl
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Seq/VT_Seq_Connector.idl
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_String/VT_String_Connector.idl
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Connector/VTopic_Connector.idl
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Array/VTS_Array_Connector.idl
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Seq/VTS_Seq_Connector.idl
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_String/VTS_String_Connector.idl
+        * connectors/dds4ccm/tests/VariousTopicsState/Connector/VTopics_Connector.idl
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.idl
+          TAO_IDL has now partly support for templated modules in the front end, but
+          testing shows that this is enough for our current tets. Much more seperate
+          tests will be created and more work has to be done, but this is a good
+          step in the right direction
+
 Wed Jan 27 10:00:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao_tests.lst:
