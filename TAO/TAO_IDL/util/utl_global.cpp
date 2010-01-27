@@ -1802,10 +1802,9 @@ IDL_GlobalData::add_dcps_data_type (const char* id)
     {
       // No existing entry, add one.
 
-      // trailing space required!!
       char* foo_type;
-      ACE_NEW (foo_type, char [ACE_OS::strlen (id) + 2]);
-      ACE_OS::sprintf (foo_type, "%s ", id);
+      ACE_NEW (foo_type, char [ACE_OS::strlen (id) + 1]);
+      ACE_OS::strcpy (foo_type, id);
 
       UTL_ScopedName* t1 = idl_global->string_to_scoped_name (foo_type);
       // chained with null Identifier required!!
