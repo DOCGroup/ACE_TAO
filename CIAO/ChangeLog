@@ -1,3 +1,25 @@
+Wed Jan 27 08:34:36 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Sender/ConnectorStatusListener_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/PSLDeadline/Sender/PSL_DeadlineTest_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/PSLSampleLost/Sender/PSL_SampleLost_Sender_exec.cpp:
+          Updated value of the keys.
+
+        * connectors/dds4ccm/impl/ndds/TimeUtilities.h:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver_exec.cpp:
+          Added operators in order to convert DDS::Time_T to ACE_Time_Value and
+          vice versa. The logging now uses ACE_Time_Value to print the timestamp.
+
 Wed Jan 27 06:47:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3817_Regression/Bar.idl:

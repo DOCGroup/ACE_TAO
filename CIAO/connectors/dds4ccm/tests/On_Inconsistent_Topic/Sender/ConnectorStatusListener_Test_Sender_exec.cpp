@@ -108,8 +108,8 @@ void
   Sender_exec_i::ccm_activate (void)
   {
     //add 2 different instances of topic
-    this->add_instance_of_sec_topic ("EEN",1);
-    this->add_instance_of_sec_topic ("TWEE",2);
+    this->add_instance_of_sec_topic ("ONE",1);
+    this->add_instance_of_sec_topic ("TWO",2);
   }
 
   void
