@@ -175,6 +175,8 @@ private:
   AST_UnionBranch *lookup_enum (AST_UnionBranch *b);
 
   friend int tao_yyparse (void);
+  friend class ast_visitor_tmpl_module_inst;
+  
   // Scope Management Protocol.
 
   virtual AST_Union *fe_add_union (AST_Union *u);

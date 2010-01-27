@@ -262,6 +262,12 @@ public:
   // How many entries are used?
   virtual unsigned long nmembers (void);
 
+  // If the Identifier string (from the scoped name which has been
+  // already determined to be of length 1) matches a param,
+  // create and return a param holder AST node, otherwise 
+  // return 0.
+  static AST_Param_Holder *match_param (UTL_ScopedName *e);
+  
   // Add to decls. Node represents a local declaration
   // The new decl e is inserted after ex if ex is not 0.
   // This one is public because the case of a reopened
@@ -337,14 +343,6 @@ protected:
   void check_for_predef_seq (AST_Decl *d);
   // Set the appropriate *_seen_ flag if we are seeing a spec-defined
   // sequence of a basic type.
-  
-  AST_Param_Holder *match_param (
-    UTL_ScopedName *e,
-    FE_Utils::T_PARAMLIST_INFO const *params);
-  // If the Identifier string (from the scoped name which has been
-  // already determined to be of length 1) matches a param,
-  // create and return a param holder AST node, otherwise 
-  // return 0.
   
 protected:
   // Data.
