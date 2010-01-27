@@ -29,7 +29,7 @@
 inline void
 operator<<= (::DDS::Time_t & dds_time, const ::ACE_Time_Value & ace_time)
 {
-  dds_time.sec = ace_time.sec ();
+  dds_time.sec = static_cast < ::CORBA::Long> (ace_time.sec ());
   dds_time.nanosec = ace_time.usec () * 1000;
 }
 
@@ -50,7 +50,7 @@ operator>>= (const ::DDS::Time_t & dds_time, ::ACE_Time_Value & ace_time)
 inline void
 operator>>= (const ::ACE_Time_Value & ace_time, ::DDS::Time_t &dds_time)
 {
-  dds_time.sec = ace_time.sec ();
+  dds_time.sec = static_cast < ::CORBA::Long> (ace_time.sec ());
   dds_time.nanosec = ace_time.usec () * 1000;
 }
 
