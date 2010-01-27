@@ -18,6 +18,11 @@ ACE_RCSID (tests,
            Bug_3709_Regression_Test,
            "$Id$")
 
+#if defined(_MSC_VER) && _MSC_VER < 1400
+#define MSVC_71_OR_OLDER
+#endif
+
+#ifndef MSVC_71_OR_OLDER
 template<template<typename U, typename = std::allocator<U> > class container, typename DT>
 container<DT> initializer(const DT &d)
 {
@@ -25,14 +30,17 @@ container<DT> initializer(const DT &d)
   t.insert(t.end(), d);
   return t;
 }
+#endif
 
 int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Bug_3709_Regression_Test"));
 
+#ifndef MSVC_71_OR_OLDER
   vector<int> v = initializer<vector>(5);
   v.clear ();
+#endif
 
   ACE_END_TEST;
 
