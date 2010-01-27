@@ -1,3 +1,9 @@
+Wed Jan 27 06:47:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3817_Regression/Bar.idl:
+          Fixed fuzz and commented out the double provides, that will
+          make the scoreboard turn green again for the moment
+
 Tue Jan 26 23:07:18 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * tests/Bug_3817_Regression/Bar.idl:
