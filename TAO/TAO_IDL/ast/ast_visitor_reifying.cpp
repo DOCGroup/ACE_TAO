@@ -328,7 +328,7 @@ int
 ast_visitor_reifying::visit_array (AST_Array *node)
 {
   AST_Type *bt = node->base_type ();
-    
+
   if (bt->ast_accept (this) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -337,17 +337,17 @@ ast_visitor_reifying::visit_array (AST_Array *node)
                          ACE_TEXT ("visit of base type failed\n")),
                         -1);
     }
-    
+
   bt = AST_Type::narrow_from_decl (this->reified_node_);
-  
+
   AST_Expression **dims = node->dims ();
   AST_Expression *v = 0;
   UTL_ExprList *v_list = 0;
-  
+
   for (ACE_CDR::ULong i = 0; i < node->n_dims (); ++i)
     {
       AST_Param_Holder *ph = dims[i]->param_holder ();
-      
+
       if (ph != 0)
         {
           if (this->visit_param_holder (ph) != 0)
@@ -359,10 +359,10 @@ ast_visitor_reifying::visit_array (AST_Array *node)
                                  ACE_TEXT ("failed\n")),
                                 -1);
             }
-      
+
           AST_Constant *c =
             AST_Constant::narrow_from_decl (this->reified_node_);
-            
+
           ACE_NEW_RETURN (v,
                           AST_Expression (c->constant_value (),
                                           AST_Expression::EV_ulong),
@@ -375,12 +375,12 @@ ast_visitor_reifying::visit_array (AST_Array *node)
                                           AST_Expression::EV_ulong),
                           -1);
         }
-        
+
       UTL_ExprList *el = 0;
       ACE_NEW_RETURN (el,
                       UTL_ExprList (v, 0),
                       -1);
-                      
+
       if (v_list == 0)
         {
           v_list = el;
@@ -390,28 +390,28 @@ ast_visitor_reifying::visit_array (AST_Array *node)
           v_list->nconc (el);
         }
     }
-    
+
   UTL_ScopedName sn (node->name ()->last_component ()->copy (),
                      0);
-                     
+
   AST_Array *arr =
     idl_global->gen ()->create_array (&sn,
                                       node->n_dims (),
                                       v_list,
                                       false,
                                       false);
-    
+
   // No need to add this new node to any scope - it's anonymous
   // and owned by the node that references it.
-                    
+
   sn.destroy ();
   v_list->destroy ();
   delete v_list;
   v_list = 0;
-  
+
   arr->set_base_type (bt);
   this->reified_node_ = arr;
-  
+
   return 0;
 }
 
@@ -419,7 +419,7 @@ int
 ast_visitor_reifying::visit_sequence (AST_Sequence *node)
 {
   AST_Type *bt = node->base_type ();
-    
+
   if (bt->ast_accept (this) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -428,12 +428,12 @@ ast_visitor_reifying::visit_sequence (AST_Sequence *node)
                          ACE_TEXT ("visit of base type failed\n")),
                         -1);
     }
-    
+
   bt = AST_Type::narrow_from_decl (this->reified_node_);
-  
+
   AST_Expression *v = node->max_size ();
   AST_Param_Holder *ph = v->param_holder ();
-  
+
   if (ph != 0)
     {
       if (this->visit_param_holder (ph) != 0)
@@ -445,19 +445,19 @@ ast_visitor_reifying::visit_sequence (AST_Sequence *node)
                              ACE_TEXT ("failed\n")),
                             -1);
         }
-      
+
       AST_Constant *c =
         AST_Constant::narrow_from_decl (this->reified_node_);
-        
+
       v = c->constant_value ();
     }
-  
+
   AST_Expression *bound =
     idl_global->gen ()->create_expr (v,
                                      AST_Expression::EV_ulong);
   Identifier id ("sequence");
   UTL_ScopedName sn (&id, 0);
-  
+
   this->reified_node_ =
     idl_global->gen ()->create_sequence (bound,
                                          bt,
@@ -467,7 +467,7 @@ ast_visitor_reifying::visit_sequence (AST_Sequence *node)
 
   // No need to add this new node to any scope - it's anonymous
   // and owned by the node that references it.
-                    
+
   return 0;
 }
 
@@ -508,15 +508,15 @@ ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
     {
       FE_Utils::T_Param_Info *item = 0;
       iter.next (item);
-      
+
       if (item == node->info ())
         {
           AST_Decl **ret_ptr = 0;
-          
+
           if (t_args->get (ret_ptr, i) == 0)
             {
               AST_Decl *candidate = *ret_ptr;
-                
+
               return candidate->ast_accept (this);
             }
           else
@@ -533,7 +533,7 @@ ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
             }
         }
     }
-    
+
   ACE_ERROR_RETURN ((LM_ERROR,
                      ACE_TEXT ("ast_visitor_reifying::")
                      ACE_TEXT ("visit_param_holder() - no match for ")
@@ -548,16 +548,16 @@ ast_visitor_reifying::check_and_store (AST_Decl *node)
 {
   UTL_ScopedName *tmpl_tail =
     this->template_module_rel_name (node);
-    
+
   if (tmpl_tail != 0)
     {
       AST_Decl *d =
         idl_global->scopes ().top ()->lookup_by_name (
           tmpl_tail,
           true);
-    
+
       this->reified_node_ = d;
-      
+
       tmpl_tail->destroy ();
       delete tmpl_tail;
       tmpl_tail = 0;
@@ -573,22 +573,23 @@ ast_visitor_reifying::template_module_rel_name (AST_Decl *d)
 {
   AST_Decl *tmp = d;
   ACE_CString name (d->full_name ());
-  
+
   while (tmp != 0)
     {
       if (AST_Template_Module::narrow_from_decl (tmp) != 0)
         {
           ACE_CString head (tmp->local_name ()->get_string ());
-          
+
           ACE_CString::size_type start = name.find (head) + 2;
-            
+
           ACE_CString tail (name.substr (start + head.length ()));
-            
+
           return idl_global->string_to_scoped_name (tail.c_str ());
         }
-        
+
       tmp = ScopeAsDecl (tmp->defined_in ());
     }
-    
+
   return 0;
 }
+
