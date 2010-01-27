@@ -14,7 +14,10 @@
 
 #pragma ciao lem "Connector/NonChangeable_ConnectorE.idl"
 
-TYPED_MODULE( ::NonChangeableTest, ::NonChangeableTest_Seq, NonChangeableTest)
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::NonChangeableTest, ::NonChangeableTest_Seq> NonChangeableTest;
+};
 
 module NonChangeable
 {

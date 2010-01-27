@@ -14,7 +14,10 @@
 
 #pragma ciao lem "Connector/Getter_Test_ConnectorE.idl"
 
-TYPED_MODULE( ::GetterTest, ::GetterTest_Seq, GetterTest)
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::GetterTest, ::GetterTest_Seq> GetterTest;
+};
 
 module Getter_Test
 {
