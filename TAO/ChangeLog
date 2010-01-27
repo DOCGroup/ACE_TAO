@@ -1,3 +1,180 @@
+Wed Jan 27 14:19:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Merged revision 88605-88741 from idl3_plus_backend2 to svn head. This
+        gives us templated modules for the small parts we need for dds4ccm
+
+        Tue Jan 26 20:21:30 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_visitor_tmpl_module_ref.h:
+        * TAO_IDL/ast/ast_visitor_tmpl_module_ref.cpp:
+
+          New files, defining a new visitor specialized to
+          create implied IDL related to template module
+          references as soon as they're parsed, rather than waiting
+          until template module instantiation time. The
+          template module instantiation visitor then copies
+          this implied IDL into its scope of instantiation.
+          The extra copy of the implied IDL nodes is justified
+          by the simplification of lookups involving a reference
+          to the instantiation of a template module reference.
+
+          This new visitor inherits from the template module
+          instantiation visitor, and overrides one method,
+          visit_template_module_ref(). The other are reused
+          as is.
+
+        * TAO_IDL/ast/ast_visitor_tmpl_module_inst.cpp:
+        * TAO_IDL/include/ast_visitor_tmpl_module_inst.h:
+
+          Changed the method overridden by the new visitor
+          above to a no-op, since the new visitor now handles
+          template module references.
+
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+
+          Added code to launch the new visitor immediately after
+          a template module reference is parsed and created.
+
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+
+          Fixed a bug that apparently just cropped up in the
+          "version" block of idl_store_pragma.
+
+        * TAO_IDL/util/utl_scope.cpp(lookup_by_name_local):
+
+          Now checks for a match with a template module reference,
+          and skips it, matching instead with the corresoponding
+          regular module created immediately after it in the scope.
+
+        Mon Jan 25 22:39:39 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/fe_home_header.h:
+
+          Cosmetic changes.
+
+        * TAO_IDL/include/ast_visitor_reifying.h:
+        * TAO_IDL/include/ast_connector.h:
+        * TAO_IDL/include/ast_consumes.h:
+        * TAO_IDL/include/ast_publishes.h:
+        * TAO_IDL/include/ast_emits.h:
+        * TAO_IDL/ast/ast_consumes.cpp:
+        * TAO_IDL/ast/ast_visitor_tmpl_module_inst.cpp:
+        * TAO_IDL/ast/ast_publishes.cpp:
+        * TAO_IDL/ast/ast_emits.cpp:
+        * TAO_IDL/ast/ast_visitor_reifying.cpp:
+
+          Added support for components, homes, connectors,
+          porttypes, simple/extended ports and mirror
+          ports and aliases in an instantiated template
+          module.
+
+        * TAO_IDL/util/utl_global.cpp(string_to_scoped_name):
+
+          Completely rewrote the method using ACE_CString.
+
+        Fri Jan 22 19:42:38 UTC 2010  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_template_module.cpp:
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+
+        * TAO_IDL/fe/fe_event_header.cpp:
+
+        * TAO_IDL/include/fe_event_header.h:
+
+          Removed these files.
+
+        Fri Jan 22 18:26:17 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_tmpl_module_inst.cpp:
+        * TAO_IDL/be/be_visitor_reifying.cpp:
+        * TAO_IDL/be_include/be_visitor_reifying.h:
+        * TAO_IDL/be_include/be_visitor_tmpl_module_inst.h:
+
+          Removed these files, the visitors have been moved
+          to the front end.
+
+        * TAO_IDL/include/ast_visitor_tmpl_module_inst.h:
+        * TAO_IDL/ast/ast_visitor_tmpl_module_inst.cpp:
+
+          Added some missing no-op visit_* methods.
+
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+
+          Added spawn of template instantiation visitor.
+
+        * TAO_IDL/fe/fe_interface_header.cpp:
+
+          Removed recently added debugging output.
+
+        Thu Jan 21 20:20:47 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_visitor_reifying.h:
+        * TAO_IDL/include/ast_visitor_tmpl_module_inst.h:
+        * TAO_IDL/include/ast_visitor_context.h:
+        * TAO_IDL/ast/ast_visitor_tmpl_module_inst.cpp:
+        * TAO_IDL/ast/ast_visitor_reifying.cpp:
+        * TAO_IDL/ast/ast_visitor_context.cpp:
+
+          Moved the visitors that create implied IDL upon
+          template module instantiation to the front end,
+          along with a piece of the visitor context class
+          that becomes a base class for the backend visitor
+          context class. This move is motivated by the fact
+          that generation of executor IDL turns this implied
+          IDL into explicit IDL, so in order to parse the
+          executor IDL file, this implied IDL must be added
+          to the AST in the front end.
+
+          The corresponding backend visitor classes will be
+          removed after further testing.
+
+        * TAO_IDL/include/ast_factory.h:
+        * TAO_IDL/include/ast_operation.h:
+        * TAO_IDL/be/be_factory.cpp:
+        * TAO_IDL/be/be_visitor_scope.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_module.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_visitor_context.cpp:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/be/be_operation.cpp:
+        * TAO_IDL/be/be_scope.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/ast/ast_visitor.cpp:
+        * TAO_IDL/ast/ast_operation.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_factory.cpp:
+        * TAO_IDL/be_include/be_operation.h:
+        * TAO_IDL/be_include/be_visitor_context.h:
+        * TAO_IDL/be_include/be_factory.h:
+        * TAO_IDL/be_include/be_scope.h:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Other changes related to the above visitor move, plus
+          some cosmetic changes. Spawning of the new visitors
+          when a template module instantiation is seen is not
+          added in this set of changes.
+
+        Mon Jan 18 15:35:54 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuebox/field_ci.cpp:
+        * TAO_IDL//be_visitor_valuebox/union_member_ci.cpp:
+        * TAO_IDL/be_include/be_visitor_valuebox/union_member_ci.h:
+        * TAO_IDL/be_include/be_visitor_valuebox/field_ci.h:
+
+          Removed parameter 'vb_node' from private methods
+          emit_member_get() and emit_member_set(), since this value
+          is now stored in a member variable.
+
 Tue Jan 26 14:23:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/ImplRepo/run_test.pl:

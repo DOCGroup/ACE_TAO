@@ -73,23 +73,6 @@ be_factory::accept (be_visitor *visitor)
   return visitor->visit_factory (this);
 }
 
-UTL_ExceptList *
-be_factory::be_add_exceptions (UTL_ExceptList *t)
-{
-  if (this->pd_exceptions != 0)
-    {
-      idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
-                                  this);
-    }
-  else
-    {
-      this->pd_exceptions = t;
-      this->pd_n_exceptions = (t == 0 ? 0 : t->length ());
-    }
-
-  return this->pd_exceptions;
-}
-
 AST_Argument *
 be_factory::be_add_argument (AST_Argument *arg)
 {

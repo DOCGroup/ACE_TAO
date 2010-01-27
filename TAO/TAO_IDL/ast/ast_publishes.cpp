@@ -1,7 +1,6 @@
 // $Id$
 
 #include "ast_publishes.h"
-#include "ast_eventtype.h"
 #include "ast_visitor.h"
 
 AST_Publishes::AST_Publishes (UTL_ScopedName *n,
@@ -19,10 +18,10 @@ AST_Publishes::~AST_Publishes (void)
 {
 }
 
-AST_EventType *
+AST_Type *
 AST_Publishes::publishes_type (void) const
 {
-  return AST_EventType::narrow_from_decl (this->field_type ());
+  return this->field_type ();
 }
 
 void

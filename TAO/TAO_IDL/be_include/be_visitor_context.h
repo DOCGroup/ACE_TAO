@@ -6,7 +6,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO IDL
+//    TAO_IDL_BE
 //
 // = FILENAME
 //    be_visitor_context.h
@@ -26,9 +26,11 @@
 #ifndef TAO_BE_VISITOR_CONTEXT_H
 #define TAO_BE_VISITOR_CONTEXT_H
 
-#include "be_codegen.h"
+#include "ast_visitor_context.h"
 
 #include "fe_utils.h"
+
+#include "be_codegen.h"
 
 class TAO_OutStream;
 class be_decl;
@@ -62,7 +64,7 @@ class be_union_branch;
 # undef interface
 #endif /* interface */
 
-class be_visitor_context
+class be_visitor_context : public ast_visitor_context
 {
 public:
   be_visitor_context (void);
@@ -149,14 +151,6 @@ public:
   // example). This field is use to hold the interface where we are
   // *generating* code, as opposed to the interfaces where the methods
   // or structures are defined.
-  
-  // Accessors/mutators for the template-related members.
-  
-  FE_Utils::T_PARAMLIST_INFO *template_params (void) const;
-  void template_params (FE_Utils::T_PARAMLIST_INFO *params);
-  
-  FE_Utils::T_ARGLIST *template_args (void) const;
-  void template_args (FE_Utils::T_ARGLIST *args);
   
   // = helpers
 

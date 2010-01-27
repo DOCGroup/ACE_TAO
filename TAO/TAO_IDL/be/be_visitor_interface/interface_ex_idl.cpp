@@ -21,10 +21,6 @@
 // Interface visitor for CIAO executor IDL.
 // ************************************************************
 
-ACE_RCSID (be_visitor_interface,
-           interface_ex_idl,
-           "$Id$")
-
 be_visitor_interface_ex_idl::be_visitor_interface_ex_idl (
   be_visitor_context *ctx)
   : be_visitor_interface (ctx)

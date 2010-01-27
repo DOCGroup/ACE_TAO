@@ -17,7 +17,7 @@ public:
   virtual ~AST_Consumes (void);
   
   // Data Accessor.
-  AST_EventType *consumes_type (void) const;
+  AST_Type *consumes_type (void) const;
 
   // Narrowing.
   DEF_NARROW_FROM_DECL(AST_Consumes);

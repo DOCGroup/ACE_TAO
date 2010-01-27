@@ -275,11 +275,13 @@
 #include "ast_factory.h"
 #include "ast_exception.h"
 #include "ast_param_holder.h"
+#include "ast_visitor_tmpl_module_inst.h"
+#include "ast_visitor_tmpl_module_ref.h"
+#include "ast_visitor_context.h"
 
 #include "fe_declarator.h"
 #include "fe_interface_header.h"
 #include "fe_obv_header.h"
-#include "fe_event_header.h"
 #include "fe_component_header.h"
 #include "fe_home_header.h"
 #include "fe_utils.h"
@@ -343,7 +345,6 @@ typedef union TAO_YYSTYPE
   UTL_DeclList                  *dlval;         /* Declaration list     */
   FE_InterfaceHeader            *ihval;         /* Interface header     */
   FE_OBVHeader                  *vhval;         /* Valuetype header     */
-  FE_EventHeader                *ehval;         /* Eventtype header     */
   FE_ComponentHeader            *chval;         /* Component header     */
   FE_HomeHeader                 *hhval;         /* Home header          */
   AST_Expression                *exval;         /* Expression value     */
@@ -873,63 +874,63 @@ static const tao_yytype_int16 tao_yyrhs[] =
 /* TAO_YYRLINE[TAO_YYN] -- source line where rule number TAO_YYN was defined.  */
 static const tao_yytype_uint16 tao_yyrline[] =
 {
-       0,   357,   357,   360,   361,   365,   368,   371,   377,   382,
-     381,   392,   391,   402,   401,   412,   411,   422,   421,   432,
-     431,   442,   441,   452,   451,   462,   461,   472,   471,   482,
-     481,   492,   491,   502,   501,   512,   511,   526,   525,   538,
-     573,   578,   537,   594,   602,   617,   627,   649,   653,   601,
-     672,   676,   677,   681,   682,   687,   693,   686,   751,   757,
-     750,   815,   816,   821,   860,   865,   820,   883,   882,   896,
-     934,   965,   999,   998,  1010,  1017,  1018,  1019,  1020,  1024,
-    1035,  1040,  1084,  1089,  1039,  1118,  1157,  1162,  1116,  1181,
-    1179,  1219,  1218,  1232,  1238,  1245,  1252,  1259,  1285,  1312,
-    1377,  1378,  1382,  1383,  1384,  1390,  1389,  1400,  1399,  1412,
-    1413,  1418,  1417,  1428,  1427,  1438,  1437,  1448,  1447,  1458,
-    1457,  1468,  1467,  1478,  1477,  1488,  1487,  1501,  1514,  1512,
-    1540,  1547,  1558,  1557,  1585,  1583,  1610,  1622,  1668,  1696,
-    1727,  1732,  1737,  1742,  1726,  1813,  1814,  1815,  1816,  1817,
-    1818,  1819,  1831,  1836,  1905,  1907,  1909,  1910,  1924,  1925,
-    1939,  1940,  1953,  1954,  1964,  1977,  1978,  1988,  2001,  2002,
-    2012,  2022,  2035,  2036,  2046,  2056,  2069,  2120,  2121,  2130,
-    2135,  2142,  2150,  2155,  2160,  2166,  2171,  2176,  2184,  2256,
-    2255,  2265,  2270,  2275,  2280,  2307,  2316,  2315,  2386,  2387,
-    2391,  2399,  2400,  2428,  2429,  2430,  2431,  2432,  2433,  2434,
-    2435,  2439,  2440,  2441,  2445,  2446,  2447,  2451,  2452,  2456,
-    2469,  2467,  2495,  2502,  2503,  2507,  2520,  2518,  2546,  2553,
-    2570,  2589,  2590,  2594,  2599,  2604,  2612,  2617,  2622,  2630,
-    2635,  2640,  2648,  2662,  2667,  2675,  2683,  2691,  2699,  2708,
-    2707,  2723,  2757,  2762,  2722,  2781,  2784,  2785,  2789,  2789,
-    2799,  2804,  2798,  2867,  2866,  2881,  2880,  2895,  2900,  2905,
-    2910,  2957,  2962,  2894,  2986,  2994,  3008,  3018,  3026,  3027,
-    3135,  3138,  3139,  3144,  3149,  3143,  3185,  3184,  3198,  3209,
-    3229,  3237,  3236,  3252,  3257,  3251,  3274,  3273,  3326,  3350,
-    3375,  3380,  3413,  3418,  3374,  3444,  3449,  3447,  3454,  3458,
-    3495,  3500,  3493,  3575,  3630,  3640,  3629,  3655,  3660,  3653,
-    3701,  3727,  3737,  3742,  3735,  3772,  3797,  3806,  3805,  3841,
-    3852,  3872,  3880,  3885,  3879,  3947,  3948,  3953,  3958,  3963,
-    3968,  3952,  4037,  4042,  4047,  4052,  4036,  4130,  4135,  4165,
-    4170,  4129,  4188,  4193,  4246,  4251,  4186,  4288,  4294,  4301,
-    4308,  4309,  4321,  4327,  4369,  4320,  4391,  4390,  4401,  4400,
-    4413,  4418,  4416,  4423,  4428,  4433,  4427,  4474,  4473,  4484,
-    4483,  4496,  4501,  4499,  4506,  4511,  4516,  4510,  4563,  4571,
-    4572,  4573,  4678,  4683,  4688,  4697,  4702,  4696,  4714,  4722,
-    4727,  4721,  4739,  4747,  4752,  4746,  4764,  4772,  4777,  4771,
-    4789,  4796,  4809,  4807,  4833,  4840,  4869,  4907,  4908,  4912,
-    4942,  4982,  4987,  4941,  5006,  5011,  5004,  5054,  5053,  5064,
-    5071,  5072,  5077,  5076,  5087,  5086,  5097,  5096,  5107,  5106,
-    5117,  5116,  5127,  5126,  5137,  5136,  5148,  5238,  5245,  5271,
-    5377,  5387,  5393,  5399,  5472,  5545,  5620,  5619,  5669,  5674,
-    5679,  5684,  5689,  5694,  5668,  5749,  5748,  5759,  5766,  5773,
-    5781,  5786,  5780,  5798,  5799,  5803,  5805,  5804,  5815,  5814,
-    5829,  5865,  5827,  5899,  5935,  5897,  5967,  5968,  5969,  5973,
-    5974,  5978,  6006,  6037,  6082,  6087,  6035,  6104,  6114,  6133,
-    6145,  6144,  6184,  6234,  6239,  6182,  6256,  6261,  6269,  6274,
-    6279,  6284,  6289,  6294,  6299,  6304,  6309,  6314,  6323,  6358,
-    6357,  6379,  6386,  6410,  6428,  6439,  6459,  6466,  6477,  6482,
-    6501,  6506,  6476,  6521,  6528,  6533,  6540,  6539,  6548,  6547,
-    6558,  6627,  6677,  6693,  6707,  6714,  6774,  6779,  6784,  6778,
-    6844,  6849,  6843,  6864,  6868,  6869,  6874,  6873,  6884,  6883,
-    6894,  6893,  6904,  6903
+       0,   355,   355,   358,   359,   363,   366,   369,   375,   380,
+     379,   390,   389,   400,   399,   410,   409,   420,   419,   430,
+     429,   440,   439,   450,   449,   460,   459,   470,   469,   480,
+     479,   490,   489,   500,   499,   510,   509,   524,   523,   536,
+     571,   576,   535,   592,   600,   615,   625,   647,   651,   599,
+     670,   674,   675,   679,   680,   685,   691,   684,   749,   755,
+     748,   826,   827,   832,   871,   876,   831,   894,   893,   907,
+     945,   976,  1010,  1009,  1021,  1028,  1029,  1030,  1031,  1035,
+    1046,  1051,  1095,  1100,  1050,  1129,  1168,  1173,  1127,  1192,
+    1190,  1232,  1231,  1245,  1251,  1258,  1265,  1272,  1298,  1325,
+    1390,  1391,  1395,  1396,  1397,  1403,  1402,  1413,  1412,  1425,
+    1426,  1431,  1430,  1441,  1440,  1451,  1450,  1461,  1460,  1471,
+    1470,  1481,  1480,  1491,  1490,  1501,  1500,  1514,  1527,  1525,
+    1553,  1560,  1571,  1570,  1598,  1596,  1623,  1635,  1681,  1709,
+    1740,  1745,  1750,  1755,  1739,  1826,  1827,  1828,  1829,  1830,
+    1831,  1832,  1844,  1849,  1918,  1920,  1922,  1923,  1937,  1938,
+    1952,  1953,  1966,  1967,  1977,  1990,  1991,  2001,  2014,  2015,
+    2025,  2035,  2048,  2049,  2059,  2069,  2082,  2133,  2134,  2143,
+    2148,  2155,  2163,  2168,  2173,  2179,  2184,  2189,  2197,  2269,
+    2268,  2278,  2283,  2288,  2293,  2320,  2329,  2328,  2399,  2400,
+    2404,  2412,  2413,  2441,  2442,  2443,  2444,  2445,  2446,  2447,
+    2448,  2452,  2453,  2454,  2458,  2459,  2460,  2464,  2465,  2469,
+    2482,  2480,  2508,  2515,  2516,  2520,  2533,  2531,  2559,  2566,
+    2583,  2602,  2603,  2607,  2612,  2617,  2625,  2630,  2635,  2643,
+    2648,  2653,  2661,  2675,  2680,  2688,  2696,  2704,  2712,  2721,
+    2720,  2736,  2770,  2775,  2735,  2794,  2797,  2798,  2802,  2802,
+    2812,  2817,  2811,  2880,  2879,  2894,  2893,  2908,  2913,  2918,
+    2923,  2970,  2975,  2907,  2999,  3007,  3021,  3031,  3039,  3040,
+    3148,  3151,  3152,  3157,  3162,  3156,  3198,  3197,  3211,  3222,
+    3242,  3250,  3249,  3265,  3270,  3264,  3287,  3286,  3339,  3363,
+    3388,  3393,  3426,  3431,  3387,  3457,  3462,  3460,  3467,  3471,
+    3508,  3513,  3506,  3588,  3643,  3653,  3642,  3668,  3673,  3666,
+    3714,  3740,  3750,  3755,  3748,  3785,  3810,  3819,  3818,  3854,
+    3865,  3885,  3893,  3898,  3892,  3960,  3961,  3966,  3971,  3976,
+    3981,  3965,  4050,  4055,  4060,  4065,  4049,  4143,  4148,  4178,
+    4183,  4142,  4201,  4206,  4259,  4264,  4199,  4301,  4307,  4314,
+    4321,  4322,  4334,  4340,  4382,  4333,  4404,  4403,  4414,  4413,
+    4426,  4431,  4429,  4436,  4441,  4446,  4440,  4487,  4486,  4497,
+    4496,  4509,  4514,  4512,  4519,  4524,  4529,  4523,  4576,  4584,
+    4585,  4586,  4691,  4696,  4701,  4710,  4715,  4709,  4727,  4735,
+    4740,  4734,  4752,  4760,  4765,  4759,  4777,  4785,  4790,  4784,
+    4802,  4809,  4822,  4820,  4846,  4853,  4882,  4920,  4921,  4925,
+    4955,  4995,  5000,  4954,  5019,  5024,  5017,  5067,  5066,  5077,
+    5084,  5085,  5090,  5089,  5100,  5099,  5110,  5109,  5120,  5119,
+    5130,  5129,  5140,  5139,  5150,  5149,  5161,  5251,  5258,  5284,
+    5390,  5400,  5406,  5412,  5485,  5558,  5633,  5632,  5682,  5687,
+    5692,  5697,  5702,  5707,  5681,  5762,  5761,  5772,  5779,  5786,
+    5794,  5799,  5793,  5811,  5812,  5816,  5818,  5817,  5828,  5827,
+    5842,  5878,  5840,  5912,  5948,  5910,  5980,  5981,  5982,  5986,
+    5987,  5991,  6019,  6050,  6095,  6100,  6048,  6117,  6127,  6146,
+    6158,  6157,  6197,  6247,  6252,  6195,  6269,  6274,  6282,  6287,
+    6292,  6297,  6302,  6307,  6312,  6317,  6322,  6327,  6336,  6371,
+    6370,  6392,  6399,  6423,  6441,  6452,  6472,  6479,  6490,  6495,
+    6514,  6519,  6489,  6534,  6541,  6546,  6553,  6552,  6561,  6560,
+    6571,  6640,  6690,  6706,  6720,  6727,  6787,  6792,  6797,  6791,
+    6857,  6862,  6856,  6877,  6881,  6882,  6887,  6886,  6897,  6896,
+    6907,  6906,  6917,  6916
 };
 #endif
 
@@ -3071,12 +3072,33 @@ tao_yyreduce:
               ref,
               (tao_yyvsp[(5) - (8)].slval));
 
-           (void) s->fe_add_template_module_ref (tmr);
+          (void) s->fe_add_template_module_ref (tmr);
 
-           sn.destroy ();
-           (tao_yyvsp[(2) - (8)].idlist)->destroy ();
-           delete (tao_yyvsp[(2) - (8)].idlist);
-           (tao_yyvsp[(2) - (8)].idlist) = 0;
+          sn.destroy ();
+          (tao_yyvsp[(2) - (8)].idlist)->destroy ();
+          delete (tao_yyvsp[(2) - (8)].idlist);
+          (tao_yyvsp[(2) - (8)].idlist) = 0;
+           
+          ast_visitor_context ctx;
+          ctx.template_params (ref->template_params ());
+          ast_visitor_tmpl_module_ref v (&ctx);
+
+          // The implied IDL resulting from this reference is
+          // created here, in the template module scope. Upon
+          // instantiation of the enclosing template module, the
+          // visitor copies this implied IDL to the instantiated
+          // module scope. The extra copy is less than ideal, but
+          // otherwise we have ugly lookup issues when the 
+          // referenced template module's contents are referenced
+          // using the aliased scoped name.
+          if (v.visit_template_module_ref (tmr) != 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("visit_template_module_ref")
+                          ACE_TEXT (" failed\n")));
+
+              idl_global->set_err_count (idl_global->err_count () + 1);
+            }
         }
     break;
 
@@ -3148,6 +3170,19 @@ tao_yyreduce:
               (tao_yyvsp[(3) - (6)].alval));
 
           (void) s->fe_add_template_module_inst (tmi);
+
+          ast_visitor_context ctx;
+          ctx.template_args ((tao_yyvsp[(3) - (6)].alval));
+          ast_visitor_tmpl_module_inst v (&ctx);
+
+          if (v.visit_template_module_inst (tmi) != 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("visit_template_module_inst")
+                          ACE_TEXT (" failed\n")));
+
+              idl_global->set_err_count (idl_global->err_count () + 1);
+            }
         }
     break;
 
@@ -3408,7 +3443,7 @@ tao_yyreduce:
                   false,
                   (tao_yyvsp[(1) - (1)].vhval)->truncatable (),
                   false);
-                  
+
               i = AST_Interface::narrow_from_decl (v);
               AST_Interface::fwd_redefinition_helper (i,
                                                       s);
@@ -6655,7 +6690,7 @@ tao_yyreduce:
   case 342:
 
     {
-// attribute_readonly : IDL_ATTRIBUTE
+// attribute_readwrite : IDL_ATTRIBUTE
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrSeen);
         }
     break;
@@ -8870,14 +8905,14 @@ tao_yyreduce:
               e =
                 idl_global->gen ()->create_eventtype (
                     &sn,
-                    (tao_yyvsp[(2) - (2)].ehval)->inherits (),
-                    (tao_yyvsp[(2) - (2)].ehval)->n_inherits (),
-                    (tao_yyvsp[(2) - (2)].ehval)->inherits_concrete (),
-                    (tao_yyvsp[(2) - (2)].ehval)->inherits_flat (),
-                    (tao_yyvsp[(2) - (2)].ehval)->n_inherits_flat (),
-                    (tao_yyvsp[(2) - (2)].ehval)->supports (),
-                    (tao_yyvsp[(2) - (2)].ehval)->n_supports (),
-                    (tao_yyvsp[(2) - (2)].ehval)->supports_concrete (),
+                    (tao_yyvsp[(2) - (2)].vhval)->inherits (),
+                    (tao_yyvsp[(2) - (2)].vhval)->n_inherits (),
+                    (tao_yyvsp[(2) - (2)].vhval)->inherits_concrete (),
+                    (tao_yyvsp[(2) - (2)].vhval)->inherits_flat (),
+                    (tao_yyvsp[(2) - (2)].vhval)->n_inherits_flat (),
+                    (tao_yyvsp[(2) - (2)].vhval)->supports (),
+                    (tao_yyvsp[(2) - (2)].vhval)->n_supports (),
+                    (tao_yyvsp[(2) - (2)].vhval)->supports_concrete (),
                     true,
                     false,
                     false
@@ -8981,15 +9016,15 @@ tao_yyreduce:
 //      supports_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_SupportSpecSeen);
 
-          ACE_NEW_RETURN ((tao_yyval.ehval),
-                          FE_EventHeader (
-                              0,
-                              (tao_yyvsp[(1) - (3)].nlval),
-                              (tao_yyvsp[(3) - (3)].nlval),
-                              (tao_yyvsp[(1) - (3)].nlval)
-                                ? (tao_yyvsp[(1) - (3)].nlval)->truncatable ()
-                                : false
-                            ),
+          ACE_NEW_RETURN ((tao_yyval.vhval),
+                          FE_OBVHeader (
+                            0,
+                            (tao_yyvsp[(1) - (3)].nlval),
+                            (tao_yyvsp[(3) - (3)].nlval),
+                            (tao_yyvsp[(1) - (3)].nlval)
+                              ? (tao_yyvsp[(1) - (3)].nlval)->truncatable ()
+                              : false,
+                            true),
                           1);
 
           if (0 != (tao_yyvsp[(3) - (3)].nlval))
@@ -9025,16 +9060,16 @@ tao_yyreduce:
               e =
                 idl_global->gen ()->create_eventtype (
                     &sn,
-                    (tao_yyvsp[(2) - (2)].ehval)->inherits (),
-                    (tao_yyvsp[(2) - (2)].ehval)->n_inherits (),
-                    (tao_yyvsp[(2) - (2)].ehval)->inherits_concrete (),
-                    (tao_yyvsp[(2) - (2)].ehval)->inherits_flat (),
-                    (tao_yyvsp[(2) - (2)].ehval)->n_inherits_flat (),
-                    (tao_yyvsp[(2) - (2)].ehval)->supports (),
-                    (tao_yyvsp[(2) - (2)].ehval)->n_supports (),
-                    (tao_yyvsp[(2) - (2)].ehval)->supports_concrete (),
+                    (tao_yyvsp[(2) - (2)].vhval)->inherits (),
+                    (tao_yyvsp[(2) - (2)].vhval)->n_inherits (),
+                    (tao_yyvsp[(2) - (2)].vhval)->inherits_concrete (),
+                    (tao_yyvsp[(2) - (2)].vhval)->inherits_flat (),
+                    (tao_yyvsp[(2) - (2)].vhval)->n_inherits_flat (),
+                    (tao_yyvsp[(2) - (2)].vhval)->supports (),
+                    (tao_yyvsp[(2) - (2)].vhval)->n_supports (),
+                    (tao_yyvsp[(2) - (2)].vhval)->supports_concrete (),
                     false,
-                    (tao_yyvsp[(2) - (2)].ehval)->truncatable (),
+                    (tao_yyvsp[(2) - (2)].vhval)->truncatable (),
                     false
                   );
               i = AST_Interface::narrow_from_decl (e);
@@ -9047,9 +9082,9 @@ tao_yyreduce:
               (void) s->fe_add_eventtype (e);
 
               // FE_EventHeader is not automatically destroyed in the AST
-              (tao_yyvsp[(2) - (2)].ehval)->destroy ();
-              delete (tao_yyvsp[(2) - (2)].ehval);
-              (tao_yyvsp[(2) - (2)].ehval) = 0;
+              (tao_yyvsp[(2) - (2)].vhval)->destroy ();
+              delete (tao_yyvsp[(2) - (2)].vhval);
+              (tao_yyvsp[(2) - (2)].vhval) = 0;
 
               sn.destroy ();
             }
