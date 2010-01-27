@@ -5,7 +5,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO IDL
+//    TAO_IDL_FE
 //
 // = FILENAME
 //    be_visitor_context.cpp
@@ -43,7 +43,8 @@
 #include "be_visitor_context.h"
 
 be_visitor_context::be_visitor_context (void)
-  : state_ (TAO_CodeGen::TAO_INITIAL),
+  : ast_visitor_context (),
+    state_ (TAO_CodeGen::TAO_INITIAL),
     sub_state_ (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN),
     os_ (0),
     scope_ (0),
@@ -53,14 +54,13 @@ be_visitor_context::be_visitor_context (void)
     attr_ (0),
     exception_ (0),
     comma_ (0),
-    interface_ (0),
-    template_params_ (0),
-    template_args_ (0)
+    interface_ (0)
 {
 }
 
 be_visitor_context::be_visitor_context (const be_visitor_context &ctx)
-  : state_ (ctx.state_),
+  : ast_visitor_context (ctx),
+    state_ (ctx.state_),
     sub_state_ (ctx.sub_state_),
     os_ (ctx.os_),
     scope_ (ctx.scope_),
@@ -70,9 +70,7 @@ be_visitor_context::be_visitor_context (const be_visitor_context &ctx)
     attr_ (ctx.attr_),
     exception_ (ctx.exception_),
     comma_ (ctx.comma_),
-    interface_ (ctx.interface_),
-    template_params_ (ctx.template_params_),
-    template_args_ (ctx.template_args_)
+    interface_ (ctx.interface_)
 {
 }
 
@@ -98,7 +96,7 @@ be_visitor_context::operator= (const be_visitor_context &ctx)
 
 be_visitor_context::~be_visitor_context (void)
 {
-  // we do not own anything
+  // We do not own anything.
 }
 
 //= helpers
@@ -251,30 +249,6 @@ be_interface *
 be_visitor_context::interface (void) const
 {
   return this->interface_;
-}
-
-FE_Utils::T_PARAMLIST_INFO *
-be_visitor_context::template_params (void) const
-{
-  return this->template_params_;
-}
-
-void
-be_visitor_context::template_params (FE_Utils::T_PARAMLIST_INFO *params)
-{
-  this->template_params_ = params;
-}
-
-FE_Utils::T_ARGLIST *
-be_visitor_context::template_args (void) const
-{
-  return this->template_args_;
-}
-
-void
-be_visitor_context::template_args (FE_Utils::T_ARGLIST *args)
-{
-  this->template_args_ = args;
 }
 
 // ****************************************************************

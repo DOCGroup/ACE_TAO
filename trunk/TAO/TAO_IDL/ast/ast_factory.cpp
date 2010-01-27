@@ -151,6 +151,23 @@ AST_Factory::destroy (void)
   this->UTL_Scope::destroy ();
 }
 
+UTL_ExceptList *
+AST_Factory::be_add_exceptions (UTL_ExceptList *t)
+{
+  if (this->pd_exceptions != 0)
+    {
+      idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
+                                  this);
+    }
+  else
+    {
+      this->pd_exceptions = t;
+      this->pd_n_exceptions = (t == 0 ? 0 : t->length ());
+    }
+
+  return this->pd_exceptions;
+}
+
 // Private operations.
 
 // Compute total number of members.
@@ -341,8 +358,6 @@ AST_Factory::ast_accept (ast_visitor *visitor)
 }
 
 // Data accessors
-
-
 
 IMPL_NARROW_FROM_DECL(AST_Factory)
 IMPL_NARROW_FROM_SCOPE(AST_Factory)

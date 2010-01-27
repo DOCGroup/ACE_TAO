@@ -218,6 +218,22 @@ AST_Operation::destroy (void)
   this->AST_Decl::destroy ();
 }
 
+UTL_ExceptList *
+AST_Operation::be_add_exceptions (UTL_ExceptList *t)
+{
+  if (this->pd_exceptions != 0)
+    {
+      idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
+                                  this);
+    }
+  else
+    {
+      this->pd_exceptions = t;
+    }
+
+  return this->pd_exceptions;
+}
+
 // Private operations.
 
 // Compute total number of members.

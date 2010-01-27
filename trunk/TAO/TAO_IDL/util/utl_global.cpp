@@ -1047,7 +1047,7 @@ IDL_GlobalData::destroy (void)
       this->pd_idl_src_file = 0;
     }
 
-  size_t const size = this->pragma_prefixes ().size  ();
+  size_t size = this->pragma_prefixes ().size  ();
   char *trash = 0;
 
   for (size_t i = 0; i < size; ++i)
@@ -1086,7 +1086,6 @@ IDL_GlobalData::destroy (void)
     {
       this->pd_root->destroy ();
     }
-
 }
 
 void
@@ -1194,119 +1193,46 @@ IDL_GlobalData::update_prefix (char *filename)
 UTL_ScopedName *
 IDL_GlobalData::string_to_scoped_name (const char *s)
 {
-  char *start = const_cast<char *> (s);
-  int len = 0;
   UTL_ScopedName *retval = 0;
-  char tmp[256];
-
-  // If we're doing #pragma ID, the id string may have a ::
-  // while the target scoped name does not, so we check for
-  // a space.
-  char *test = ACE_OS::strchr (start, ' ');
-  char *end = ACE_OS::strstr (start, "::");
-
-  // The loop below somehow doesn't cover this simple case.
-  if (test == 0 && end == 0)
-    {
-      // Simple local name.
-      Identifier *simple_id = 0;
-      ACE_NEW_RETURN (simple_id,
-                      Identifier (s),
-                      0);
-
-      ACE_NEW_RETURN (retval,
-                      UTL_ScopedName (simple_id, 0),
-                      0);
-
-      return retval;
-    }
-
-  if (test != 0 && test - end < 0)
-    {
-      end = test;
-    }
-
-  while (end != 0)
-    {
-      len = end - start;
-
-      if (len != 0)
-        {
-          ACE_OS::strncpy (tmp,
-                           start,
-                           len);
-
-          tmp[len] = '\0';
-
-          Identifier *id = 0;
-          ACE_NEW_RETURN (id,
-                          Identifier (tmp),
-                          0);
-
-          if (retval == 0)
-            {
-              ACE_NEW_RETURN (retval,
-                              UTL_ScopedName (id,
-                                              0),
-                              0);
-            }
-          else
-            {
-              UTL_ScopedName *conc_name = 0;
-              ACE_NEW_RETURN (conc_name,
-                              UTL_ScopedName (id,
-                                              0),
-                              0);
-
-              retval->nconc (conc_name);
-            }
-        }
-
-      start = end + 2;
-      end = (end[0] == ' ' ? 0 : ACE_OS::strstr (start, "::"));
-
-      if (test != 0 && test - end < 0)
-        {
-          end = 0;
-        }
-    }
-
-  len = test - start;
-
-  // This means we've already dealt with the space between the target
-  // name and the id string (above) and we're done.
-  if (test == 0 || len <= 0)
-    {
-      return retval;
-    }
-
-  ACE_OS::strncpy (tmp,
-                   start,
-                   len);
-
-  tmp[len] = '\0';
-
+  ACE_CString str (s);
   Identifier *id = 0;
-  ACE_NEW_RETURN (id,
-                  Identifier (tmp),
-                  0);
+  UTL_ScopedName *sn = 0;
 
-  if (retval == 0)
+  while (! str.empty ())
     {
-      ACE_NEW_RETURN (retval,
-                      UTL_ScopedName (id,
-                                      0),
-                      0);
-    }
-  else
-    {
-      UTL_ScopedName *conc_name = 0;
-      ACE_NEW_RETURN (conc_name,
-                      UTL_ScopedName (id,
-                                      0),
+      // Skip a leading double colon.
+      if (str.find (':') == 0)
+        {
+          str = str.substr (2);
+        }
+
+      // Find the next double colon (if any) and get the next
+      // name segment.
+      ACE_CString::size_type pos = str.find (':');
+      ACE_CString lname (str.substr (0, pos));
+
+      // Construct a UTL_ScopedName segment.
+      ACE_NEW_RETURN (id,
+                      Identifier (lname.c_str ()),
                       0);
 
-      retval->nconc (conc_name);
+      ACE_NEW_RETURN (sn,
+                      UTL_ScopedName (id, 0),
+                      0);
+
+      // Either make it the head of a new list or the tail of
+      // an existing one.
+      if (retval == 0)
+        {
+          retval = sn;
+        }
+      else
+        {
+          retval->nconc (sn);
+        }
+
+      // Update the working string.
+      str = str.substr (pos);
     }
 
   return retval;
@@ -1377,7 +1303,7 @@ IDL_GlobalData::add_ciao_lem_file_names (const char *s)
 }
 
 ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_lem_file_names (void) 
+IDL_GlobalData::ciao_lem_file_names (void)
 {
   return this->ciao_lem_file_names_;
 }
@@ -1739,7 +1665,7 @@ IDL_GlobalData::hasspace (const char *s)
 {
   if (s)
     {
-      size_t const length = ACE_OS::strlen (s);
+      const size_t length = ACE_OS::strlen (s);
 
       // Windows can't have a space as the first or last character
       // but a unix filename can. Need to check all characters.
@@ -1841,6 +1767,7 @@ IDL_GlobalData::check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list)
   size_t len = ACE_OS::strlen (pattern);
   size_t index = 0;
 
+
   for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (*list);
        !i.done ();
        i.advance (), ++index)
@@ -1870,7 +1797,7 @@ void
 IDL_GlobalData::add_dcps_data_type (const char* id)
 {
   // Check if the type already exists.
-  DCPS_Data_Type_Info* newinfo = 0;
+  DCPS_Data_Type_Info* newinfo ;
   if (this->dcps_type_info_map_.find (id, newinfo) != 0)
     {
       // No existing entry, add one.
@@ -1930,7 +1857,7 @@ IDL_GlobalData::DCPS_Data_Type_Info*
 IDL_GlobalData::is_dcps_type (UTL_ScopedName* target)
 {
   // Traverse the entire map.
-  DCPS_Type_Info_Map::ENTRY* entry = 0;
+  DCPS_Type_Info_Map::ENTRY* entry ;
   for (DCPS_Type_Info_Map::ITERATOR current (this->dcps_type_info_map_);
        current.next (entry);
        current.advance ())
@@ -2129,4 +2056,5 @@ IDL_GlobalData::check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
 
   return false;
 }
+
 

@@ -1,7 +1,6 @@
 // $Id$
 
 #include "ast_emits.h"
-#include "ast_eventtype.h"
 #include "ast_visitor.h"
 
 AST_Emits::AST_Emits (UTL_ScopedName *n,
@@ -19,10 +18,10 @@ AST_Emits::~AST_Emits (void)
 {
 }
 
-AST_EventType *
+AST_Type *
 AST_Emits::emits_type (void) const
 {
-  return AST_EventType::narrow_from_decl (this->field_type ());
+  return this->field_type ();
 }
 
 void

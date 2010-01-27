@@ -17,7 +17,7 @@ public:
   virtual ~AST_Emits (void);
   
   // Data Accessor.
-  AST_EventType *emits_type (void) const;
+  AST_Type *emits_type (void) const;
 
   // Narrowing.
   DEF_NARROW_FROM_DECL(AST_Emits);
