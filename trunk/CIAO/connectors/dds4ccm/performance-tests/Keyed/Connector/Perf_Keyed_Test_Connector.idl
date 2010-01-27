@@ -16,7 +16,10 @@
 
 #pragma ciao lem "Connector/Perf_Keyed_Test_ConnectorE.idl"
 
-TYPED_MODULE( ::PerfKeyedTest, ::PerfKeyedTest_Seq, PerfKeyedTest)
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::PerfKeyedTest, ::PerfKeyedTest_Seq> PerfKeyedTest;
+};
 
 module Perf_Keyed_Test
 {

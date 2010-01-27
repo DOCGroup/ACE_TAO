@@ -14,7 +14,10 @@
 
 #pragma ciao lem "Conn_Array/VTS_Array_ConnectorE.idl"
 
-TYPED_MODULE( ::TopicArray, ::TopicArray_Seq, TopicArray)
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::TopicArray, ::TopicArray_Seq> TopicArray;
+};
 
 module VTopics
 {

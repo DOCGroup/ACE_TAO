@@ -14,7 +14,10 @@
 
 #pragma ciao lem "Connector/Reader_Test_ConnectorE.idl"
 
-TYPED_MODULE( ::ReaderTest, ::ReaderTest_Seq, ReaderTest)
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::ReaderTest, ::ReaderTest_Seq> ReaderTest;
+};
 
 module Reader_Test
 {

@@ -14,7 +14,10 @@
 
 #pragma ciao lem "Connector/CSL_USTest_ConnectorE.idl"
 
-TYPED_MODULE( ::TestTopic, ::TestTopic_Seq, TestTopic)
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopic_Seq> TestTopic;
+};
 
 module CSL_USTest
 {

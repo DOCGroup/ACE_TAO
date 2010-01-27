@@ -14,7 +14,10 @@
 
 #pragma ciao lem "Connector/Keyed_Test_ConnectorE.idl"
 
-TYPED_MODULE( ::KeyedTest, ::KeyedTest_Seq, KeyedTest)
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::KeyedTest, ::KeyedTest_Seq> KeyedTest;
+};
 
 module Keyed_Test
 {

@@ -14,7 +14,10 @@
 
 #pragma ciao lem "Connector/QueryFilter_Test_ConnectorE.idl"
 
-TYPED_MODULE( ::QueryFilterTest, ::QueryFilterTest_Seq, QueryFilterTest)
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::QueryFilterTest, ::QueryFilterTest_Seq> QueryFilterTest;
+};
 
 module QueryFilter_Test
 {

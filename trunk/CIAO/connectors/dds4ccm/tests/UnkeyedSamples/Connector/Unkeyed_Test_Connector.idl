@@ -14,7 +14,10 @@
 
 #pragma ciao lem "Connector/Unkeyed_Test_ConnectorE.idl"
 
-TYPED_MODULE( ::UnkeyedTest, ::UnkeyedTest_Seq, UnkeyedTest)
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::UnkeyedTest, ::UnkeyedTest_Seq> UnkeyedTest;
+};
 
 module Unkeyed_Test
 {

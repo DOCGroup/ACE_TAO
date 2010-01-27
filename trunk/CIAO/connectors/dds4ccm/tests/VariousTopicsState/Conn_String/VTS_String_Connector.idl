@@ -14,7 +14,10 @@
 
 #pragma ciao lem "Conn_String/VTS_String_ConnectorE.idl"
 
-TYPED_MODULE( ::TopicString, ::TopicString_Seq, TopicString)
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::TopicString, ::TopicString_Seq> TopicString;
+};
 
 module VTopics
 {

@@ -14,7 +14,10 @@
 
 #pragma ciao lem "Connector/Quoter_ConnectorE.idl"
 
-TYPED_MODULE( ::Quoter::Stock_Info, ::Quoter::Stock_Info_Seq, Quoter)
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::Quoter::Stock_Info, ::Quoter::Stock_Info_Seq> Quoter;
+};
 
 module Quoter
 {
