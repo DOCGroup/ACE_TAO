@@ -5871,16 +5871,18 @@ factory_decl :
            */
           if (s != 0)
             {
-              AST_Home *home = AST_Home::narrow_from_scope (s);
+              AST_Home *h = AST_Home::narrow_from_scope (s);
+              
               o =
                 idl_global->gen ()->create_operation (
-                                        home->managed_component (),
+                                        h->managed_component (),
                                         AST_Operation::OP_noflags,
                                         &n,
                                         false,
                                         false
                                       );
-              home->factories ().enqueue_tail (o);
+                                      
+              h->factories ().enqueue_tail (o);
             }
 
           $2->destroy ();
@@ -5941,16 +5943,18 @@ finder_decl :
            */
           if (s != 0)
             {
-              AST_Home *home = AST_Home::narrow_from_scope (s);
+              AST_Home *h = AST_Home::narrow_from_scope (s);
+              
               o =
                 idl_global->gen ()->create_operation (
-                                        home->managed_component (),
+                                        h->managed_component (),
                                         AST_Operation::OP_noflags,
                                         &n,
                                         false,
                                         false
                                       );
-              home->finders ().enqueue_tail (o);
+                                      
+              h->finders ().enqueue_tail (o);
             }
 
           $2->destroy ();

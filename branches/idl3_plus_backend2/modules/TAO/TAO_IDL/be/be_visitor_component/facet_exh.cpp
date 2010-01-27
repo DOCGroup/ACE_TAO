@@ -37,6 +37,11 @@ int
 be_visitor_facet_exh::visit_provides (be_provides *node)
 {
   be_type *impl = node->provides_type ();
+  
+  if (impl->exec_hdr_facet_gen ())
+    {
+      return 0;
+    }
     
   // We don't want a '_cxx_' prefix here.
   const char *lname =
@@ -48,6 +53,11 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
   const char *sname = sname_str.c_str ();
   const char *global = (sname_str == "" ? "" : "::");
   
+  os_ << be_nl
+      << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__
+      << be_nl;
+
   os_ << be_nl
       << "class " << export_macro_.c_str () << " "
       << lname << "_exec_i" << be_idt_nl
@@ -87,6 +97,8 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
     
   os_ << be_uidt_nl
       << "};" << be_nl;
+      
+  impl->exec_hdr_facet_gen (true);
 
   return 0;
 }
