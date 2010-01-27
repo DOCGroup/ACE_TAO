@@ -11,6 +11,7 @@
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_time.h"
 #include "dds4ccm/impl/ndds/Utils.h"
+#include "dds4ccm/impl/ndds/TimeUtilities.h"
 
 namespace CIAO_PSL_DeadlineTest_Receiver_Impl
 {
@@ -20,11 +21,11 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (void)
   {
   }
-  
+
   ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
   {
   }
-  
+
   // Operations from ::CCM_DDS::ConnectorStatusListener
   void ConnectorStatusListener_exec_i::on_inconsistent_topic(
      ::DDS::Topic_ptr /*the_topic*/, 
@@ -55,7 +56,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
     ::DDS::Entity_ptr /*the_entity*/,
     ::DDS::StatusKind /*status_kind*/)  {
    }
- 
+
   read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
     : pulse_callback_ (callback)
   {
@@ -175,14 +176,11 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
       this->reader_->read_all(TestTopic_infos.out(), readinfoseq.out());
       for(CORBA::ULong i = 0; i < readinfoseq->length(); ++i)
         {
-          time_t tim = readinfoseq[i].source_timestamp.sec;
-          tm* time = ACE_OS::localtime(&tim);
+          ACE_Time_Value tv;
+          tv <<= readinfoseq[i].source_timestamp;
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
-              ACE_TEXT ("-> UTC date = %02d:%02d:%02d.%d\n"),
-                              time ? time->tm_hour : 0,
-                              time ? time->tm_min : 0,
-                              time ? time->tm_sec : 0,
-                              readinfoseq[i].source_timestamp.nanosec));
+                                ACE_TEXT ("-> UTC date =%#T\n"),
+                                &tv));
         }
       for(CORBA::ULong i = 0; i < TestTopic_infos->length(); ++i)
         {
@@ -239,13 +237,13 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
         throw ::CORBA::INTERNAL ();
       }
   }
-  
+
   void
   Receiver_exec_i::configuration_complete (void)
   {
     this->reader_ = this->context_->get_connection_info_out_data();
   }
- 
+
   void
   Receiver_exec_i::ccm_activate (void)
   {
@@ -282,11 +280,11 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
   Receiver_exec_i::ccm_remove (void)
   {
      if(!this->deadline_port_1_.value () || !this->deadline_port_2_.value ())
-      {   
-     
+      {
+
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
                                ACE_TEXT (" error 'on_requested_deadline_missed' on DDS_Listen and/or DDS_GET port in Receiver")
-                    )); 
+                    ));
       }
     else
       {
@@ -295,7 +293,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
                     ));
       }
   }
-  
+
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_PSL_DeadlineTest_Receiver_Impl (void)
   {

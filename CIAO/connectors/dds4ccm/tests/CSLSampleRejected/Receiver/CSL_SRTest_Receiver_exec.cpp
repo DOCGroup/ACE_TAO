@@ -10,6 +10,7 @@
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_time.h"
 #include "dds4ccm/impl/ndds/Utils.h"
+#include "dds4ccm/impl/ndds/TimeUtilities.h"
 
 namespace CIAO_CSL_SRTest_Receiver_Impl
 {
@@ -182,14 +183,11 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
     this->reader_->read_all(TestTopic_infos.out(), readinfoseq.out());
     for(CORBA::ULong i = 0; i < readinfoseq->length(); ++i)
       {
-        time_t tim = readinfoseq[i].source_timestamp.sec;
-        tm* time = ACE_OS::localtime(&tim);
+        ACE_Time_Value tv;
+        tv <<= readinfoseq[i].source_timestamp;
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
-            ACE_TEXT ("-> UTC date = %02d:%02d:%02d.%d\n"),
-                            time ? time->tm_hour : 0,
-                            time ? time->tm_min : 0,
-                            time ? time->tm_sec : 0,
-                            readinfoseq[i].source_timestamp.nanosec));
+                              ACE_TEXT ("-> UTC date =%#T\n"),
+                              &tv));
       }
     for(CORBA::ULong i = 0; i < TestTopic_infos->length(); ++i)
       {

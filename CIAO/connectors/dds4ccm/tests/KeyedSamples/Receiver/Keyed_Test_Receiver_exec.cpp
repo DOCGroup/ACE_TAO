@@ -6,6 +6,7 @@
 #include "ciao/Logger/Log_Macros.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_time.h"
+#include "dds4ccm/impl/ndds/TimeUtilities.h"
 
 namespace CIAO_Keyed_Test_Receiver_Impl
 {
@@ -78,14 +79,13 @@ namespace CIAO_Keyed_Test_Receiver_Impl
             keyedtest_info.key = CORBA::string_dup (key);
             ::CCM_DDS::ReadInfo readinfo;
             this->reader_->read_one_last (keyedtest_info, readinfo, ::DDS::HANDLE_NIL);
-            time_t tim = readinfo.source_timestamp.sec;
-            tm* time = ACE_OS::localtime(&tim);
+
+            ACE_Time_Value tv;
+            tv <<= readinfo.source_timestamp;
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ONE Read_Info ")
-                      ACE_TEXT (" -> date = %02d:%02d:%02d.%d\n"),
-                                time ? time->tm_hour : 0,
-                                time ? time->tm_min : 0,
-                                time ? time->tm_sec : 0,
-                                readinfo.source_timestamp.nanosec));
+                                  ACE_TEXT (" -> date =%#T\n"),
+                                  &tv));
+
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ONE keyed test info : ")
                 ACE_TEXT ("received keyedtest_info for <%C> at %u\n"),
                 keyedtest_info.key.in (),

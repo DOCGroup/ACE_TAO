@@ -168,8 +168,8 @@ namespace CIAO_PSL_DeadlineTest_Sender_Impl
   Sender_exec_i::ccm_activate (void)
   {
     //add 2 different instances of topic
-    this->add_instance_of_topic ("EEN",1);
-    this->add_instance_of_topic ("TWEE",2);
+    this->add_instance_of_topic ("ONE",1);
+    this->add_instance_of_topic ("TWO",2);
     this->start ();
   }
 
