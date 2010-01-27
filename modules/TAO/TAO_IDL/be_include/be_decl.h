@@ -122,6 +122,8 @@ public:
   bool ex_idl_facet_gen (void);
   bool svnt_hdr_facet_gen (void);
   bool svnt_src_facet_gen (void);
+  bool exec_hdr_facet_gen (void);
+  bool exec_src_facet_gen (void);
 
   // Set the flag indicating that code generation is done.
   void cli_hdr_gen (bool);
@@ -171,6 +173,8 @@ public:
   void ex_idl_facet_gen (bool);
   void svnt_hdr_facet_gen (bool);
   void svnt_src_facet_gen (bool);
+  void exec_hdr_facet_gen (bool);
+  void exec_src_facet_gen (bool);
 
   // Narrowing
 
@@ -230,6 +234,8 @@ private:
   bool ex_idl_facet_gen_;
   bool svnt_hdr_facet_gen_;
   bool svnt_src_facet_gen_;
+  bool exec_hdr_facet_gen_;
+  bool exec_src_facet_gen_;
 };
 
 #endif // if !defined
