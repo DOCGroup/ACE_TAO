@@ -144,7 +144,6 @@ AST_Decl::AST_Decl (void)
     pd_line (-1),
     pd_local_name (0),
     pd_original_local_name (0),
-    pd_added (false),
     full_name_ (0),
     prefix_ (0),
     version_ (0),
@@ -172,7 +171,6 @@ AST_Decl::AST_Decl (NodeType nt,
     pd_name (0),
     pd_local_name (n == 0 ? 0 : n->last_component ()->copy ()),
     pd_original_local_name (0),
-    pd_added (false),
     full_name_ (0),
     prefix_ (0),
     version_ (0),
@@ -1195,18 +1193,6 @@ void
 AST_Decl::set_in_main_file (bool is_it)
 {
   this->pd_in_main_file = is_it;
-}
-
-bool
-AST_Decl::added (void)
-{
-  return this->pd_added;
-}
-
-void
-AST_Decl::set_added (bool is_it)
-{
-  this->pd_added = is_it;
 }
 
 UTL_Scope *

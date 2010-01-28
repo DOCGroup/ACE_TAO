@@ -261,9 +261,6 @@ public:
   Identifier *original_local_name (void);
   void original_local_name (Identifier *);
 
-  bool added (void);
-  void set_added (bool is_it);
-
   // Narrowing.
 
   DEF_NARROW_FROM_DECL(AST_Decl);
@@ -356,9 +353,6 @@ private:
 
   Identifier *pd_original_local_name;
   // _cxx_ removed if any.
-
-  bool pd_added;
-  // Already added.
 
   char *full_name_;
   // Our full scoped name.

@@ -90,12 +90,12 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
   // signature.
   be_visitor_context ctx (*this->ctx_);
 
-  // first grab the interface definition inside which this operation is
+  // First grab the interface definition inside which this operation is
   // defined. We need this since argument types may very well be declared
   // inside the scope of the interface node. In such cases, we would like to
   // generate the appropriate relative scoped names.
   be_operation *op =
-    be_operation::narrow_from_decl (this->ctx_->node ());
+    be_operation::narrow_from_scope (this->ctx_->scope ());
 
   if (op == 0)
     {

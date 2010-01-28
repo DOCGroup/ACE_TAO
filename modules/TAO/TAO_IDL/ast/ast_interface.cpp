@@ -585,18 +585,10 @@ AST_Interface::fe_add_structure_fwd (AST_StructureFwd *t)
         {
           AST_Structure *s = AST_Structure::narrow_from_decl (d);
           t->set_full_definition (s);
-
-          if (t->added () == 0)
-            {
-              t->set_added (1);
-              this->add_to_scope (t);
-
-              // Must check later that all struct and union forward declarations
-              // are defined in the same IDL file.
-              AST_record_fwd_decl (t);
-            }
-
-          return t;
+          
+          // Must check later that all struct and union forward declarations
+          // are defined in the same IDL file.
+          AST_record_fwd_decl (t);
         }
       else
         {
@@ -798,17 +790,9 @@ AST_Interface::fe_add_union_fwd (AST_UnionFwd *t)
           AST_Union *s = AST_Union::narrow_from_decl (d);
           t->set_full_definition (s);
 
-          if (t->added () == 0)
-            {
-              t->set_added (1);
-              this->add_to_scope (t);
-
-              // Must check later that all struct and union forward declarations
-              // are defined in the same IDL file.
-              AST_record_fwd_decl (t);
-            }
-
-          return t;
+          // Must check later that all struct and union forward declarations
+          // are defined in the same IDL file.
+          AST_record_fwd_decl (t);
         }
       else
         {
@@ -1123,20 +1107,6 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
           scope = parent->defined_in ();
         }
 
-      // (JP) This could give a bogus error, since typeprefix can
-      // appear any time after the corresponding declaration.
-      // The right way to do this is with a separate traversal
-      // after the entire AST is built.
-      /*
-      if (ACE_OS::strcmp (i->prefix (), d->prefix ()) != 0)
-        {
-          idl_global->err ()->error1 (UTL_Error::EIDL_PREFIX_CONFLICT,
-                                      i);
-
-          return;
-        }
-      */
-
       fd = AST_Interface::narrow_from_decl (d);
 
       // Successful?
@@ -1182,7 +1152,14 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
                 }
 
               fd->redefine (i);
-
+              
+              AST_InterfaceFwd *fwd = fd->fwd_decl ();
+              
+              if (fwd != 0)
+                {
+                  fwd->set_as_defined ();
+                }
+              
               // Use full definition node.
               i->destroy ();
               delete i;

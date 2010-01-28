@@ -4103,7 +4103,7 @@ tao_yyreduce:
                                         AST_PredefinedType::PT_pseudo,
                                         &n
                                       );
-              (void) s->add_predefined_type (pdt);
+
               s->add_to_scope (pdt);
 
               (tao_yyvsp[(1) - (1)].idval)->destroy ();
