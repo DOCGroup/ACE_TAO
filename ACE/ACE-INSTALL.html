@@ -2463,6 +2463,29 @@ perl bin/mwc.pl  -type vc71 -relative ACE_ROOT=C:/ace/ACE_wrappers -relative TAO
         &lt;<a href="mailto:j.zorko@att.net">j.zorko@att.net</a>&gt; is
         only one of them.</p>
 
+</p></li><li><strong>iPhone/iPod Touch/iPad</strong><p>
+
+        </p><p>ACE builds and runs on the iPhone/iPod Touch/iPad Hardware 
+        and Simulator. Keep in mind that ACE/TAO needs to be built
+        statically since Apple does not allow third party dynamic libraries
+        to be deployed on the hardware. The following are needed to build ACE:</p>
+
+        <p>1. The iPhone SDK.</p>
+        <p>2. When creating $ACE_ROOT/ace/config.h, include
+        config-macosx-iphone-hardware.h if you want to deploy on the 
+        hardware, include config-macosx-iphone-simulator.h if you want
+        to deploy on the simulator. Even though those includes are named
+        after the iPhone, the includes work for iPhone/iPod Touch, and iPad.</p>
+        <p>3. You need to define two environment variables. The first is
+        IPHONE_TARGET. Set IPHONE_TARGET to SIMULATOR if you want to deploy
+        on SIMULATOR. Set IPHONE_TARGET to HARDWARE if you want to deploy on
+        the hardware device.</p> 
+        <p>4. When creating $ACE_ROOT/include/makeinclude/platform_macros.GNU,
+        include 'include $(ACE_ROOT)/include/makeinclude/platform_macosx_iphone.GNU'
+        in the file.</p>
+        
+       
+
 </li></ul>
 
 
