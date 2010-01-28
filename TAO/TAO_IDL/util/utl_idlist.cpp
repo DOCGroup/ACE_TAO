@@ -90,25 +90,19 @@ UTL_IdList::UTL_IdList (Identifier *s,
 
 // Public operations
 
-// Copy a list.
+// Copy an IdList.
 UTL_IdList *
 UTL_IdList::copy (void)
 {
   UTL_IdList *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  UTL_IdList (this->head ()->copy (),
+                              0),
+                  0);
 
-  if (this->tail () == 0)
+  if (this->tail () != 0)
     {
-      ACE_NEW_RETURN (retval,
-                      UTL_IdList (this->head ()->copy (),
-                                  0),
-                      0);
-    }
-  else
-    {
-      ACE_NEW_RETURN (retval,
-                      UTL_IdList (this->head ()->copy (),
-                                  (UTL_IdList *) this->tail ()->copy ()),
-                      0);
+      retval->nconc ((UTL_IdList *) this->tail ()->copy ());
     }
 
   return retval;

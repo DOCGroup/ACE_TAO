@@ -5,10 +5,6 @@
 #include "be_union_label.h"
 #include "be_visitor.h"
 
-ACE_RCSID (be,
-           be_union_label,
-           "$Id$")
-
 be_union_label::be_union_label (void)
   : AST_UnionLabel ()
 {
