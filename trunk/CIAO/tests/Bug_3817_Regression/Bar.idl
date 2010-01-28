@@ -12,7 +12,7 @@ interface Foo
 
 component Bar
 {
-//  provides Foo foo1;
+  provides Foo foo1;
   provides Foo foo2;
 };
 
