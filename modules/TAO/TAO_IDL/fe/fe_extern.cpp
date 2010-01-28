@@ -76,10 +76,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_indenter.h"
 #include "ace/UUID.h"
 
-ACE_RCSID (fe,
-           fe_extern,
-           "$Id$")
-
 extern int tao_yyparse (void);
 
 #ifdef USE_MCPP_BUFFER_LEXING

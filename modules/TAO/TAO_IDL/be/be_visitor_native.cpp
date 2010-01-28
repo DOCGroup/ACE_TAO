@@ -27,6 +27,3 @@
 
 #include "be_visitor_native/native_ch.cpp"
 
-ACE_RCSID (be,
-           be_visitor_native,
-           "$Id$")

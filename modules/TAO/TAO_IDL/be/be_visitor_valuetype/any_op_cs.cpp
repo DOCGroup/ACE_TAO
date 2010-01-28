@@ -18,11 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype,
-           any_op_cs,
-           "$Id$")
-
-
 // ***************************************************************************
 // Valuetype visitor for generating Any operator declarations in the client
 // stubs file

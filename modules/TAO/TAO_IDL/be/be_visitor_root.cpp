@@ -83,6 +83,3 @@
 #include "be_visitor_root/cdr_op.cpp"
 #include "be_visitor_root/serializer_op.cpp"
 
-ACE_RCSID (be,
-           be_visitor_root,
-           "$Id$")

@@ -42,11 +42,6 @@
 #include "global_extern.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (be,
-           be_visitor_ami_pre_proc,
-           "$Id$")
-
-
 be_visitor_ami_pre_proc::be_visitor_ami_pre_proc (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {

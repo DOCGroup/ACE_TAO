@@ -78,10 +78,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (ast,
-           ast_predefined_type,
-           "$Id$")
-
 AST_PredefinedType::AST_PredefinedType (void)
   : COMMON_Base (),
     AST_Decl (),

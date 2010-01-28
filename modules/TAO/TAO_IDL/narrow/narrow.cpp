@@ -80,10 +80,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_interface_fwd.h"
 #include "utl_scope.h"
 
-ACE_RCSID (narrow, 
-           narrow, 
-           "$Id$")
-
 // Narrowing functions for AST
 
 TAO_IDL_FE_Export AST_Decl *

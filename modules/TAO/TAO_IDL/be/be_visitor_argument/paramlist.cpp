@@ -19,11 +19,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_argument,
-           paramlist,
-           "$Id$")
-
-
 // ************************************************************
 // be_visitor_args_paramlist for parameter list in method declarations and
 // definitions
@@ -174,7 +169,8 @@ be_visitor_args_paramlist::visit_string (be_string *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Get the argument.
-  be_argument *arg = this->ctx_->be_node_as_argument ();
+  be_argument *arg =
+    be_argument::narrow_from_decl (this->ctx_->node ());
 
   // We need to make a distinction between bounded and unbounded strings.
   if (node->max_size ()->ev ()->u.ulval != 0)
@@ -202,13 +198,15 @@ be_visitor_args_paramlist::visit_string (be_string *node)
 }
 
 int
-be_visitor_args_paramlist::visit_predefined_type (be_predefined_type *node)
+be_visitor_args_paramlist::visit_predefined_type (
+  be_predefined_type *node)
 {
   // Get output stream.
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Get the argument.
-  be_argument *arg = this->ctx_->be_node_as_argument ();
+  be_argument *arg =
+    be_argument::narrow_from_decl (this->ctx_->node ());
 
   switch (node->pt ())
     {

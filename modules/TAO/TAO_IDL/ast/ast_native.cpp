@@ -3,10 +3,6 @@
 #include "ast_native.h"
 #include "ast_visitor.h"
 
-ACE_RCSID (ast,
-           ast_native,
-           "$Id$")
-
 AST_Native::AST_Native (void)
   : COMMON_Base (),
     AST_Decl (),

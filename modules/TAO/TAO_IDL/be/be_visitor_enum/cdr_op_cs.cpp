@@ -18,11 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_enum,
-           cdr_op_cs,
-           "$Id$")
-
-
 // ***************************************************************************
 // Enum visitor for generating CDR operator declarations in the client
 // stubs file.

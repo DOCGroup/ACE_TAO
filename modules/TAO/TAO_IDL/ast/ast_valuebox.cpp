@@ -4,10 +4,6 @@
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
-ACE_RCSID (ast, 
-           ast_valuebox, 
-           "ast_valuebox.cpp,v 1.0  Exp")
-
 AST_ValueBox::AST_ValueBox (void)
   : COMMON_Base (),
     AST_Decl (),

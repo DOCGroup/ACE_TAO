@@ -33,10 +33,6 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_ctype.h"
 
-ACE_RCSID (be,
-           be_global,
-           "$Id$")
-
 TAO_IDL_BE_Export BE_GlobalData *be_global = 0;
 
 BE_GlobalData::BE_GlobalData (void)

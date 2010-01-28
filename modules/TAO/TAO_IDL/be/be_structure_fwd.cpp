@@ -20,10 +20,6 @@
 #include "be_structure_fwd.h"
 #include "be_visitor.h"
 
-ACE_RCSID (be, 
-           be_structure_fwd, 
-           "$Id$")
-
 be_structure_fwd::be_structure_fwd (void)
   : COMMON_Base (),
     AST_Decl (),

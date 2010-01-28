@@ -19,10 +19,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_root, 
-           cdr_op, 
-           "$Id$")
-
 // ***************************************************************************
 // Root visitor for generating CDR operator declarations in the client header
 // and stub

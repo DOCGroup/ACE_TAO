@@ -15,10 +15,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_sequence,
-           cdr_op_cs,
-           "$Id$")
-
 // ***************************************************************************
 // Sequence visitor for generating CDR operator declarations in the client
 // stubs file.

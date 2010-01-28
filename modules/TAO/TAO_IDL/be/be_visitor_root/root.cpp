@@ -13,9 +13,6 @@
 //    Aniruddha Gokhale
 //
 // ============================================================================
-ACE_RCSID (be_visitor_root,
-           root,
-           "$Id$")
 
 // Generic Root visitor
 be_visitor_root::be_visitor_root (be_visitor_context *ctx)

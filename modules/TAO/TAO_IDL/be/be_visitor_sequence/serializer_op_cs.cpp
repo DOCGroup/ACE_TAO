@@ -15,10 +15,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_sequence,
-           serializer_op_cs,
-           "$Id$")
-
 // ***************************************************************************
 // Sequence visitor for generating Serializer operator declarations in the client
 // stubs file.
@@ -366,9 +362,10 @@ be_visitor_sequence_serializer_op_cs::visit_enum (be_enum *node)
   // the total length of the sequence as a cross product of the
   // dimensions.
 
-  be_sequence *sequence = this->ctx_->be_node_as_sequence ();
+  be_sequence *sequence =
+    be_sequence::narrow_from_decl (this->ctx_->node ());
 
-  if (!sequence)
+  if (sequence == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_serializer_op_cs::"
@@ -502,9 +499,10 @@ be_visitor_sequence_serializer_op_cs::visit_predefined_type (
   // the total length of the sequence as a cross product of the
   // dimensions.
 
-  be_sequence *sequence = this->ctx_->be_node_as_sequence ();
+  be_sequence *sequence =
+    be_sequence::narrow_from_decl (this->ctx_->node ());
 
-  if (!sequence)
+  if (sequence == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_serializer_op_cs::"
@@ -750,9 +748,10 @@ int
 be_visitor_sequence_serializer_op_cs::visit_node (be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_sequence *node = this->ctx_->be_node_as_sequence ();
+  be_sequence *node =
+    be_sequence::narrow_from_decl (this->ctx_->node ());
 
-  if (!node)
+  if (node == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_serializer_op_cs::"

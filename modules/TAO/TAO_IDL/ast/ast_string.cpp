@@ -78,10 +78,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "idl_defines.h"
 #include "global_extern.h"
 
-ACE_RCSID (ast,
-           ast_string,
-           "$Id$")
-
 AST_String::AST_String (void)
   : COMMON_Base (),
     AST_Decl (),

@@ -28,10 +28,6 @@
 #include "idl_defines.h"
 #include "nr_extern.h"
 
-ACE_RCSID (be,
-           be_type,
-           "$Id$")
-
 be_type::be_type (void)
   : COMMON_Base (),
     AST_Decl (),

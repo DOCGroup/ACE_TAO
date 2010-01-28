@@ -23,10 +23,6 @@
 #include "global_extern.h"
 #include "utl_err.h"
 
-ACE_RCSID (be,
-           be_component,
-           "$Id$")
-
 be_component::be_component (void)
   : COMMON_Base (),
     AST_Decl (),

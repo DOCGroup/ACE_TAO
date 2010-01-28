@@ -25,11 +25,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuebox,
-           field_ch,
-           "$Id$")
-
-
 be_visitor_valuebox_field_ch::be_visitor_valuebox_field_ch (
     be_visitor_context *ctx
   )

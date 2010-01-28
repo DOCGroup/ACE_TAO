@@ -77,10 +77,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_decllist.h"
 #include "fe_declarator.h"
 
-ACE_RCSID (util,
-           utl_decllist,
-           "$Id$")
-
 /*
  * Constructor(s)
  */

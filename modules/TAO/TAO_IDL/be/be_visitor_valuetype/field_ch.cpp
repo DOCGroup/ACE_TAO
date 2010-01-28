@@ -20,10 +20,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype,
-           field_ch,
-           "$Id$")
-
 be_visitor_valuetype_field_ch::be_visitor_valuetype_field_ch (
     be_visitor_context *ctx
   )

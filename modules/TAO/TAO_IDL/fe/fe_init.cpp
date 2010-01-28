@@ -75,10 +75,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/Env_Value_T.h"
 #include "ace/UUID.h"
 
-ACE_RCSID (fe,
-           fe_init,
-           "$Id$")
-
 const size_t LOCAL_ESCAPES_BUFFER_SIZE = 1024;
 
 // Populate the global scope with all predefined entities.

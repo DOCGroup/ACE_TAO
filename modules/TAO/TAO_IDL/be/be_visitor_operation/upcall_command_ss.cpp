@@ -17,11 +17,6 @@
 //
 // ============================================================================
 
-
-ACE_RCSID (be_visitor_operation,
-           upcall_command_ss,
-           "$Id$")
-
 be_visitor_operation_upcall_command_ss
 ::be_visitor_operation_upcall_command_ss (
     be_visitor_context *ctx)
