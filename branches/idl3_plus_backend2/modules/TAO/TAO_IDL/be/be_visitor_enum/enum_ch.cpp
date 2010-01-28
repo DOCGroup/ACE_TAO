@@ -20,11 +20,6 @@
 
 #include "be_visitor_typecode/typecode_decl.h"
 
-ACE_RCSID (be_visitor_enum, 
-           enum_ch, 
-           "$Id$")
-
-
 // ********************************************************************
 // Visitor implementation for the Enum type
 // This one for the client header file

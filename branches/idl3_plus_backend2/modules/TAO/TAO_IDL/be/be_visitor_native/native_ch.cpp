@@ -21,11 +21,6 @@
 #include "be_visitor_typecode/typecode_decl.h"
 #include "global_extern.h"
 
-ACE_RCSID (be_visitor_native,
-           native_ch,
-           "$Id$")
-
-
 // ********************************************************************
 // Visitor implementation for the Native type
 // This one for the client header file

@@ -46,10 +46,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 
-ACE_RCSID (be,
-           be_interface,
-           "$Id$")
-
 // Default constructor.
 be_interface::be_interface (void)
   : COMMON_Base (),

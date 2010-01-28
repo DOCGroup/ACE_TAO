@@ -18,10 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_union_branch,
-           public_ci,
-           "$Id$")
-
 // *****************************************************
 //  Visitor for union_branch in the client inline file.
 // *****************************************************
@@ -73,8 +69,10 @@ be_visitor_union_branch_public_ci::visit_union_branch (be_union_branch *node)
 int
 be_visitor_union_branch_public_ci::visit_array (be_array *node)
 {
-  be_union_branch *ub = this->ctx_->be_node_as_union_branch ();
-  be_union *bu = this->ctx_->be_scope_as_union ();
+  be_union_branch *ub =
+    be_union_branch::narrow_from_decl (this->ctx_->node ());
+  be_union *bu =
+    be_union::narrow_from_scope (this->ctx_->scope ());
   be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.
@@ -206,8 +204,10 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
 int
 be_visitor_union_branch_public_ci::visit_enum (be_enum *node)
 {
-  be_union_branch *ub = this->ctx_->be_node_as_union_branch ();
-  be_union *bu = this->ctx_->be_scope_as_union ();
+  be_union_branch *ub =
+    be_union_branch::narrow_from_decl (this->ctx_->node ());
+  be_union *bu =
+    be_union::narrow_from_scope (this->ctx_->scope ());
   be_type *bt = 0;
 
   // heck if we are visiting this node via a visit to a typedef node.
@@ -275,8 +275,10 @@ be_visitor_union_branch_public_ci::visit_enum (be_enum *node)
 int
 be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
 {
-  be_union_branch *ub = this->ctx_->be_node_as_union_branch ();
-  be_union *bu = this->ctx_->be_scope_as_union ();
+  be_union_branch *ub =
+    be_union_branch::narrow_from_decl (this->ctx_->node ());
+  be_union *bu =
+    be_union::narrow_from_scope (this->ctx_->scope ());
   be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.
@@ -363,8 +365,10 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
 int
 be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
 {
-  be_union_branch *ub = this->ctx_->be_node_as_union_branch ();
-  be_union *bu = this->ctx_->be_scope_as_union ();
+  be_union_branch *ub =
+    be_union_branch::narrow_from_decl (this->ctx_->node ());
+  be_union *bu =
+    be_union::narrow_from_scope (this->ctx_->scope ());
   be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.
@@ -469,8 +473,10 @@ be_visitor_union_branch_public_ci::visit_valuetype_fwd (be_valuetype_fwd *node)
 int
 be_visitor_union_branch_public_ci::emit_valuetype_common  (be_type *node)
 {
-  be_union_branch *ub = this->ctx_->be_node_as_union_branch ();
-  be_union *bu = this->ctx_->be_scope_as_union ();
+  be_union_branch *ub =
+    be_union_branch::narrow_from_decl (this->ctx_->node ());
+  be_union *bu =
+    be_union::narrow_from_scope (this->ctx_->scope ());
   be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.
@@ -546,8 +552,10 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
     be_predefined_type *node
   )
 {
-  be_union_branch *ub = this->ctx_->be_node_as_union_branch ();
-  be_union *bu = this->ctx_->be_scope_as_union ();
+  be_union_branch *ub =
+    be_union_branch::narrow_from_decl (this->ctx_->node ());
+  be_union *bu =
+    be_union::narrow_from_scope (this->ctx_->scope ());
   be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.
@@ -756,8 +764,10 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
 int
 be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
 {
-  be_union_branch *ub = this->ctx_->be_node_as_union_branch ();
-  be_union *bu = this->ctx_->be_scope_as_union ();
+  be_union_branch *ub =
+    be_union_branch::narrow_from_decl (this->ctx_->node ());
+  be_union *bu =
+    be_union::narrow_from_scope (this->ctx_->scope ());
   be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.
@@ -836,10 +846,12 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
 int
 be_visitor_union_branch_public_ci::visit_string (be_string *node)
 {
-  be_union_branch *ub = this->ctx_->be_node_as_union_branch ();
-  be_union *bu = this->ctx_->be_scope_as_union ();
+  be_union_branch *ub =
+    be_union_branch::narrow_from_decl (this->ctx_->node ());
+  be_union *bu =
+    be_union::narrow_from_scope (this->ctx_->scope ());
 
-  if (!ub || !bu)
+  if (ub == 0 || bu == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ci::"
@@ -1005,8 +1017,10 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
 int
 be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
 {
-  be_union_branch *ub = this->ctx_->be_node_as_union_branch ();
-  be_union *bu = this->ctx_->be_scope_as_union ();
+  be_union_branch *ub =
+    be_union_branch::narrow_from_decl (this->ctx_->node ());
+  be_union *bu =
+    be_union::narrow_from_scope (this->ctx_->scope ());
   be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.
@@ -1161,8 +1175,10 @@ be_visitor_union_branch_public_ci::visit_typedef (be_typedef *node)
 int
 be_visitor_union_branch_public_ci::visit_union (be_union *node)
 {
-  be_union_branch *ub = this->ctx_->be_node_as_union_branch ();
-  be_union *bu = this->ctx_->be_scope_as_union ();
+  be_union_branch *ub =
+    be_union_branch::narrow_from_decl (this->ctx_->node ());
+  be_union *bu =
+    be_union::narrow_from_scope (this->ctx_->scope ());
   be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.

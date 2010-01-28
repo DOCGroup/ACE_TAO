@@ -18,10 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_union, 
-           union, 
-           "$Id$")
-
 be_visitor_union::be_visitor_union (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {

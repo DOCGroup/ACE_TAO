@@ -17,11 +17,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuebox,
-           any_op_cs,
-           "$Id$")
-
-
 // ***************************************************************************
 // Valuebox visitor for generating Any operator declarations in the client
 // stubs file

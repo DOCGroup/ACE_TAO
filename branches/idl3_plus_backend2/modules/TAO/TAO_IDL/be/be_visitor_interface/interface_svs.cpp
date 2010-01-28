@@ -21,10 +21,6 @@
 // Interface visitor for CIAO servant source.
 // ************************************************************
 
-ACE_RCSID (be_visitor_interface,
-           interface_svs,
-           "$Id$")
-
 be_visitor_interface_svs::be_visitor_interface_svs (
   be_visitor_context *ctx)
   : be_visitor_interface (ctx)

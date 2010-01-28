@@ -5,10 +5,6 @@
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
-ACE_RCSID( ast,
-           ast_valuetype_fwd,
-           "$Id$")
-
 AST_ValueTypeFwd::AST_ValueTypeFwd (void)
   : COMMON_Base (),
     AST_Decl (),

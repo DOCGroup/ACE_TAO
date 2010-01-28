@@ -20,10 +20,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_array,
-           serializer_op_cs,
-           "$Id$")
-
 // ***************************************************************************
 // Array visitor for generating Serializer operator declarations in the client
 // stubs file
@@ -284,9 +280,10 @@ be_visitor_array_serializer_op_cs::visit_enum (be_enum *node)
   unsigned long i;
 
   // Grab the array node.
-  be_array *array = this->ctx_->be_node_as_array ();
+  be_array *array =
+    be_array::narrow_from_decl (this->ctx_->node ());
 
-  if (!node)
+  if (array == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_array_serializer_op_cs::"
@@ -419,9 +416,10 @@ be_visitor_array_serializer_op_cs::visit_predefined_type (
   unsigned long i;
 
   // Grab the array node.
-  be_array *array = this->ctx_->be_node_as_array ();
+  be_array *array =
+    be_array::narrow_from_decl (this->ctx_->node ());
 
-  if (!node)
+  if (array == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_array_serializer_op_cs::"
@@ -753,10 +751,11 @@ be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   ACE_CDR::ULong i;
-  be_array *node = this->ctx_->be_node_as_array ();
+  be_array *node =
+    be_array::narrow_from_decl (this->ctx_->node ());
   AST_Decl::NodeType nt = bt->node_type ();
 
-  if (!node)
+  if (node == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_array_serializer_op_cs::"

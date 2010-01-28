@@ -19,10 +19,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_interface_fwd, 
-           cdr_op_ch, 
-           "$Id$")
-
 // ***************************************************************************
 // Forward declared interface visitor for generating CDR operator declarations
 // in the client header. Called if this node is not later defined in the file.

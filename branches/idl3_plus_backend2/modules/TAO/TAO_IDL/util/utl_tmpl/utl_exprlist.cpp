@@ -59,8 +59,6 @@
 #include <idl.hh>
 #include <idl_extern.hh>
 
-ACE_RCSID(utl_tmpl, utl_exprlist, "$Id$")
-
 /*
  * Constructor(s)
  */

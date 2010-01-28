@@ -18,10 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_component_fwd, 
-           component_fwd_ch, 
-           "$Id$")
-
 // ********************************************************************
 // Visitor implementation for the Component_Fwd type
 // This one for the client header file

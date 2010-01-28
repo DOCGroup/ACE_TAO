@@ -20,10 +20,6 @@
 
 #include "utl_identifier.h"
 
-ACE_RCSID (be_visitor_structure, 
-           serializer_op_cs, 
-           "$Id$")
-
 be_visitor_structure_serializer_op_cs::be_visitor_structure_serializer_op_cs (
     be_visitor_context *ctx
   )

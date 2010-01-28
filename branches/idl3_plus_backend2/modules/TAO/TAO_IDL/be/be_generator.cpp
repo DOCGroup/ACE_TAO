@@ -118,10 +118,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "nr_extern.h"
 #include "ace/config-all.h"
 
-ACE_RCSID (be,
-           be_generator,
-           "$Id$")
-
 AST_Root *
 be_generator::create_root (UTL_ScopedName *n)
 {

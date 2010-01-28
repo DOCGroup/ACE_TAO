@@ -19,10 +19,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype_init,
-           arglist_ch,
-           "$Id$")
-
 be_visitor_valuetype_init_arglist_ch::be_visitor_valuetype_init_arglist_ch (
     be_visitor_context *ctx
   )

@@ -19,10 +19,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_module, 
-           cdr_op, 
-           "$Id: cdr_op.cpp,v 1.2 1999/05/28 02:16:43 coryan Exp ")
-
 // ***************************************************************************
 // Module visitor for generating CDR operator declarations in the client header
 // and stub

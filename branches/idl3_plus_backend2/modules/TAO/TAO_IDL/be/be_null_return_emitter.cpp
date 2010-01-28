@@ -25,10 +25,6 @@
 #include "be_structure.h"
 #include "be_union.h"
 
-ACE_RCSID (be, 
-           be_null_return_emitter, 
-           "$Id$")
-
 be_null_return_emitter::be_null_return_emitter (
     be_visitor_context *ctx)
   : ctx_ (ctx),

@@ -18,10 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_operation,
-           argument,
-           "$Id$")
-
 // ************************************************************
 // Generic operation visitor to handle the pre/post
 // do_static_call/upcall stuff with arguments.
@@ -98,9 +94,10 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
   // defined. We need this since argument types may very well be declared
   // inside the scope of the interface node. In such cases, we would like to
   // generate the appropriate relative scoped names.
-  be_operation *op = this->ctx_->be_scope_as_operation ();
+  be_operation *op =
+    be_operation::narrow_from_decl (this->ctx_->node ());
 
-  if (!op)
+  if (op == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_arglist::"

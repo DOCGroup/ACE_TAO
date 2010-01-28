@@ -21,10 +21,6 @@
 
 #include "be_visitor_sequence/serializer_op_ch.h"
 
-ACE_RCSID (be_visitor_array, 
-           serializer_op_ch, 
-           "$Id$")
-
 // ***************************************************************************
 // Array visitor for generating Serializer operator declarations in the client header
 // ***************************************************************************

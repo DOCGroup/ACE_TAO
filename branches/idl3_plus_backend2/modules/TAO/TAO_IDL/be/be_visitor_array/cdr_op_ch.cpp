@@ -21,10 +21,6 @@
 
 #include "be_visitor_sequence/cdr_op_ch.h"
 
-ACE_RCSID (be_visitor_array,
-           cdr_op_ch,
-           "$Id$")
-
 // ***************************************************************************
 // Array visitor for generating CDR operator declarations in the client header
 // ***************************************************************************

@@ -21,10 +21,6 @@
 #include "be_predefined_type.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (be,
-           be_visitor_template_export,
-           "$Id$")
-
 be_visitor_template_export::be_visitor_template_export (
   be_visitor_context *ctx)
   : be_visitor_scope (ctx)

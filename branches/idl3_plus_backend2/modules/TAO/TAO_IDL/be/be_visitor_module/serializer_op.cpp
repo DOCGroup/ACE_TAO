@@ -19,10 +19,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_module, 
-           serializer_op, 
-           "$Id: serializer_op.cpp,v 1.2 1999/05/28 02:16:43 coryan Exp ")
-
 // ***************************************************************************
 // Module visitor for generating Serializer operator declarations in the client header
 // and stub

@@ -75,10 +75,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
-ACE_RCSID( ast,
-           ast_interface_fwd,
-           "$Id$")
-
 AST_InterfaceFwd::AST_InterfaceFwd (void)
   : COMMON_Base (),
     AST_Decl (),

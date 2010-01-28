@@ -60,6 +60,3 @@
 #include "be_visitor_sequence/sequence_ch.cpp"
 #include "be_visitor_sequence/sequence_cs.cpp"
 
-ACE_RCSID (be, 
-           be_visitor_sequence, 
-           "$Id$")
