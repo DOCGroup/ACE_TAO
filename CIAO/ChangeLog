@@ -1,3 +1,8 @@
+Thu Jan 28 19:19:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/OMG-CCM-Tutorial.ppt:
+          Updated several parts to match more closely to the current situation
+
 Thu Jan 28 08:50:05 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component.mpc:
