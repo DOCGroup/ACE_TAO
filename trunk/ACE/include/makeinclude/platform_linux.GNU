@@ -53,11 +53,13 @@ endif
 ifeq ($(buildbits),64)
   FLAGS_C_CC += -m64
   LDFLAGS    += -m64
-  ifeq ($(SYSARCH),ppc64)
-    FLAGS_C_CC += -mminimal-toc
-  endif
   ifneq ($(CROSS_COMPILE),)
-    ifeq (powerpc64, $(findstring powerpc64,$(CROSS_COMPILE)))
+    PPC64_TARGET := $(shell echo '__powerpc64__' | $(CC) -E - | tail -n 1)
+    ifeq ($(PPC64_TARGET),1)
+      FLAGS_C_CC += -mminimal-toc
+    endif
+  else
+    ifeq ($(SYSARCH),ppc64)
       FLAGS_C_CC += -mminimal-toc
     endif
   endif

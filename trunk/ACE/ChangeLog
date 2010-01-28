@@ -1,3 +1,10 @@
+Thu Jan 28 10:21:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * include/makeinclude/platform_linux.GNU:
+          Corrected fix for cross compilation on powerpc64.
+          Now also allows for non-standard named crosscompilers (like ppu-xx)
+          and cross compilation of non-powerpc target on powerpc host.
+
 Thu Jan 28 08:21:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux.GNU:
