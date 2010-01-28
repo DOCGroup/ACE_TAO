@@ -25,10 +25,13 @@ project(AMI4CCM_stub) : ciao_lib, messaging {
     ami4ccm.h
     ami4ccmC.h
     ami4ccm_stub_export.h
-}
+  }
 
   Inline_Files {
     ami4ccmC.inl
+  }
+
+  IDL_Files {
   }
 }
 
