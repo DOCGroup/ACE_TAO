@@ -1,3 +1,8 @@
+Thu Jan 28 08:21:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux.GNU:
+          Fix for cross compilation to powerpc64
+
 Wed Jan 27 22:36:36 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * include/makeinclude/platform_win32_msvc.GNU:
