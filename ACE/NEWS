@@ -1,16 +1,16 @@
 USER VISIBLE CHANGES BETWEEN ACE-5.7.5 and ACE-5.7.6
 ====================================================
 
-. Added support for iPhone OS 3.1.2. The following
-  environment variable are needed:
+. Added support for iPhone/iPod Touch/iPad. The following
+  environment variables are needed:
 
   IPHONE_TARGET, should be set to either SIMULATOR or
   HARDWARE. Set to HARDWARE if you want to deploy
   on the iPhone/iPod Touch device.
 
-  IPHONE_VERSION, should be set to 3.1.2. One can set
-  the version to any future or past versions, but
-  only 3.1.2 has been tried.
+  IPHONE_VERSION, should be set to 3.1.2 or 3.2. One can
+  set the version to any future or past versions, but
+  only 3.1.2 and 3.2 have been tried.
 
   Note that one has to compile ACE/TAO statically as
   it is believed that the iPhone OS does not support
