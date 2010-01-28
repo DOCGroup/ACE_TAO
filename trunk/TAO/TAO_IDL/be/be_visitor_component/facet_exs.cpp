@@ -73,6 +73,11 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
 {
   be_type *impl = node->provides_type ();
 
+  if (impl->exec_src_facet_gen ())
+    {
+      return 0;
+    }
+    
   // We don't want any '_cxx_' prefix here.
   const char *lname =
     impl->original_local_name ()->get_string ();
@@ -129,6 +134,8 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
                             -1);
         }
     }
+
+  impl->exec_src_facet_gen (true);
 
   return 0;
 }

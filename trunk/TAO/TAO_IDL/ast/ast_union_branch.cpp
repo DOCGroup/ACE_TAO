@@ -77,8 +77,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_visitor.h"
 #include "utl_labellist.h"
 
-ACE_RCSID(ast, ast_union_branch, "$Id$")
-
 AST_UnionBranch::AST_UnionBranch (void)
   : COMMON_Base (),
     AST_Decl (),
@@ -139,7 +137,11 @@ AST_UnionBranch::destroy (void)
   this->AST_Field::destroy ();
 }
 
-// Data accessors.
+UTL_LabelList *
+AST_UnionBranch::labels (void) const
+{
+  return this->pd_ll;
+}
 
 AST_UnionLabel *
 AST_UnionBranch::label (unsigned long index)

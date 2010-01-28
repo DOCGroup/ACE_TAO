@@ -1,3 +1,46 @@
+Thu Jan 28 07:54:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Merged revision 88742-88757 from idl3_plus_backend2 to svn head. This
+        gives us templated modules for the small parts we need for dds4ccm
+
+        Wed Jan 27 22:19:17 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exh.cpp:
+        * TAO_IDL/be_include/be_decl.h:
+
+          Added check to ensure that a facet interface gets generated
+          only once in the executor header and source files. This fix
+          closes [BUGID:3817]. Thanks to Abdul Sowayan <sowayan@gmail.com>
+          for reporting the bug.
+
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+
+          Cosmetic changes.
+
+        Wed Jan 27 20:08:48 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_union.h:
+        * TAO_IDL/include/ast_visitor_tmpl_module_inst.h:
+        * TAO_IDL/include/utl_labellist.h:
+        * TAO_IDL/include/ast_union_branch.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/be/be_union_label.cpp:
+        * TAO_IDL/ast/ast_visitor_tmpl_module_ref.cpp:
+        * TAO_IDL/ast/ast_visitor_tmpl_module_inst.cpp:
+        * TAO_IDL/ast/ast_visitor_reifying.cpp:
+        * TAO_IDL/ast/ast_enum.cpp:
+        * TAO_IDL/ast/ast_union_branch.cpp:
+        * TAO_IDL/util/utl_labellist.cpp:
+        * TAO_IDL/util/utl_exceptlist.cpp:
+        * TAO_IDL/util/utl_idlist.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Added support for unions and enums in the scope of a
+          template module.
+
 Wed Jan 27 22:55:24 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * TAO_IDL/util/utl_global.cpp(add_dcps_data_type):

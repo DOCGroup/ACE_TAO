@@ -48,10 +48,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/String_Base.h"
 
-ACE_RCSID (be,
-           be_decl,
-           "$Id$")
-
 // Default Constructor
 be_decl::be_decl (void)
   : COMMON_Base (),
@@ -101,7 +97,9 @@ be_decl::be_decl (void)
     ccm_pre_proc_gen_ (false),
     ex_idl_facet_gen_ (false),
     svnt_hdr_facet_gen_ (false),
-    svnt_src_facet_gen_ (false)
+    svnt_src_facet_gen_ (false),
+    exec_hdr_facet_gen_ (false),
+    exec_src_facet_gen_ (false)
 {
 }
 
@@ -153,7 +151,12 @@ be_decl::be_decl (AST_Decl::NodeType type,
     srv_outarg_pragma_inst_gen_ (false),
     srv_retarg_tmpl_class_gen_ (false),
     srv_retarg_pragma_inst_gen_ (false),
-    ccm_pre_proc_gen_ (false)
+    ccm_pre_proc_gen_ (false),
+    ex_idl_facet_gen_ (false),
+    svnt_hdr_facet_gen_ (false),
+    svnt_src_facet_gen_ (false),
+    exec_hdr_facet_gen_ (false),
+    exec_src_facet_gen_ (false)
 {
 }
 
@@ -633,6 +636,18 @@ be_decl::svnt_src_facet_gen (void)
   return this->svnt_src_facet_gen_;
 }
 
+bool
+be_decl::exec_hdr_facet_gen (void)
+{
+  return this->exec_hdr_facet_gen_;
+}
+
+bool
+be_decl::exec_src_facet_gen (void)
+{
+  return this->exec_src_facet_gen_;
+}
+
 // Set the flag indicating that code generation is done.
 void
 be_decl::cli_hdr_gen (bool val)
@@ -903,6 +918,18 @@ void
 be_decl::svnt_src_facet_gen (bool val)
 {
   this->svnt_src_facet_gen_ = val;
+}
+
+void
+be_decl::exec_hdr_facet_gen (bool val)
+{
+  this->exec_hdr_facet_gen_ = val;
+}
+
+void
+be_decl::exec_src_facet_gen (bool val)
+{
+  this->exec_src_facet_gen_ = val;
 }
 
 //==========================================

@@ -92,12 +92,13 @@ public:
 
   virtual ~AST_UnionBranch (void);
 
-  // Data Accessors.
+  UTL_LabelList *labels (void) const;
+  
   AST_UnionLabel *label (unsigned long index = 0);
 
   unsigned long label_list_length (void);
   
-  // Called if our labels are enum values - adds them the
+  // Called if our labels are enum values - adds them to the
   // enclosing scope's name_referenced list.
   void add_labels (AST_Union *u);
   
@@ -122,10 +123,8 @@ public:
   virtual void destroy (void);
 
 private:
-  // Data.
-
-  UTL_LabelList *pd_ll;
   // list of labels.
+  UTL_LabelList *pd_ll;
 };
 
 #endif           // _AST_UNION_BRANCH_AST_UNION_BRAN_HH

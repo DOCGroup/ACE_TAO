@@ -509,7 +509,7 @@ ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
       FE_Utils::T_Param_Info *item = 0;
       iter.next (item);
 
-      if (item == node->info ())
+      if (item->name_ == node->info ()->name_)
         {
           AST_Decl **ret_ptr = 0;
 
