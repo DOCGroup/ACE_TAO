@@ -1,3 +1,9 @@
+Thu Jan 28 12:49:45 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * NEWS:
+
+          ACE/TAO now supports the new iPad ;-).          
+
 Thu Jan 28 10:21:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/platform_linux.GNU:
