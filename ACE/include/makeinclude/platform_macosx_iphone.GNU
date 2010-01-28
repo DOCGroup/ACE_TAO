@@ -1,6 +1,5 @@
 # $Id$
 
-CROSS-COMPILE=1
 static_libs_only=1
 
 include $(ACE_ROOT)/include/makeinclude/platform_macosx_common.GNU
@@ -20,6 +19,7 @@ ifeq ($(IPHONE_TARGET), SIMULATOR)
 endif
 
 ifeq ($(IPHONE_TARGET), HARDWARE)
+  CROSS-COMPILE=1
   IPHONE_PLATFORM:=$(XCODE)/Platforms/iPhoneOS.platform/Developer
   IPHONE_SDK:=$(IPHONE_PLATFORM)/SDKs/iPhoneOS${IPHONE_VERSION}.sdk
   IPHONE_HARDWARE_ARCHITECTURE=armv6
