@@ -123,7 +123,7 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
   // inside the scope of the interface node. In such cases, we would like to
   // generate the appropriate relative scoped names.
   be_operation *op =
-    be_operation::narrow_from_decl (this->ctx_->node ());
+    be_operation::narrow_from_scope (this->ctx_->scope ());
 
   if (op == 0)
     {

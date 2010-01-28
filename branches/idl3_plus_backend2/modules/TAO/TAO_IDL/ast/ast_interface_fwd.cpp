@@ -245,7 +245,7 @@ AST_InterfaceFwd::is_defined (void)
               // is a sufficient way to tell if our full
               // definition has already gone through the
               // add_to_scope process.
-              if (0 != fwd && fwd->full_definition ()->added ())
+              if (0 != fwd && fwd->is_defined ())
                 {
                   this->is_defined_ = true;
                 }

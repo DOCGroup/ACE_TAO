@@ -205,7 +205,6 @@ be_sequence::gen_name (void)
       // template and non-template implementations of IDL sequences.
       UTL_Scope *parent = this->defined_in ();
       seq->set_defined_in (parent);
-      parent->add_sequence (seq);
       char *seq_name = seq->gen_name ();
 
       ACE_OS::sprintf (namebuf,

@@ -1666,7 +1666,7 @@ interface_forward :
                                         AST_PredefinedType::PT_pseudo,
                                         &n
                                       );
-              (void) s->add_predefined_type (pdt);
+
               s->add_to_scope (pdt);
 
               $1->destroy ();
