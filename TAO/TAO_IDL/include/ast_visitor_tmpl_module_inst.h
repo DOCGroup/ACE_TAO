@@ -43,7 +43,8 @@ class ast_visitor_tmpl_module_inst : public ast_visitor
   //   instantiation or alias of a template module.
   //
 public:
-  ast_visitor_tmpl_module_inst (ast_visitor_context *ctx);
+  ast_visitor_tmpl_module_inst (ast_visitor_context *ctx,
+                                bool ref_only = false);
 
   virtual ~ast_visitor_tmpl_module_inst (void);
 
@@ -118,6 +119,10 @@ private:
   // Flag to branch in visit_valuetype() where we create an
   // eventtype or a valuetype.
   bool for_eventtype_;
+  
+  // Flag to short_circuit reifying if we are the base class of
+  // ast_visitor_tmpl_module_ref.
+  bool ref_only_;
 };
 
 #endif // TAO_AST_VISITOR_TMPL_MODULE_INST_H

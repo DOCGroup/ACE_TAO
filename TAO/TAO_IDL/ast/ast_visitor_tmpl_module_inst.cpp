@@ -33,6 +33,9 @@
 #include "ast_typedef.h"
 #include "ast_constant.h"
 #include "ast_union.h"
+#include "ast_union_branch.h"
+#include "ast_enum.h"
+#include "ast_enum_val.h"
 #include "ast_factory.h"
 #include "ast_param_holder.h"
 #include "ast_expression.h"
@@ -42,6 +45,7 @@
 #include "utl_namelist.h"
 #include "utl_identifier.h"
 #include "utl_exceptlist.h"
+#include "utl_labellist.h"
 
 #include "fe_obv_header.h"
 #include "fe_home_header.h"
@@ -49,10 +53,12 @@
 #include "nr_extern.h"
 
 ast_visitor_tmpl_module_inst::ast_visitor_tmpl_module_inst (
-      ast_visitor_context *ctx)
+      ast_visitor_context *ctx,
+      bool ref_only)
   : ast_visitor (),
     ctx_ (ctx),
-    for_eventtype_ (false)
+    for_eventtype_ (false),
+    ref_only_ (ref_only)
 {
 }
 
@@ -515,14 +521,63 @@ ast_visitor_tmpl_module_inst::visit_expression (AST_Expression *)
 }
 
 int
-ast_visitor_tmpl_module_inst::visit_enum (AST_Enum *)
+ast_visitor_tmpl_module_inst::visit_enum (AST_Enum *node)
 {
+  UTL_ScopedName sn (node->local_name (), 0);
+  
+  AST_Enum *added_enum =
+    idl_global->gen ()->create_enum (&sn,
+                                     node->is_local (),
+                                     node->is_abstract ());
+                                     
+  idl_global->scopes ().top ()->add_to_scope (added_enum);
+  
+  idl_global->scopes ().push (added_enum);
+  
+  if (this->visit_scope (node) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("ast_visitor_tmpl_module_inst::")
+                         ACE_TEXT ("visit_enum - ")
+                         ACE_TEXT ("visit_scope failed\n")),
+                        -1);
+    }
+    
+  idl_global->scopes ().pop ();
+                                       
   return 0;
 }
 
 int
-ast_visitor_tmpl_module_inst::visit_union (AST_Union *)
+ast_visitor_tmpl_module_inst::visit_union (AST_Union *node)
 {
+  UTL_ScopedName sn (node->local_name  (), 0);
+    
+  AST_Union *added_union =
+    idl_global->gen ()->create_union (node->disc_type (),
+                                      &sn,
+                                      node->is_local (),
+                                      node->is_abstract ());
+                        
+  idl_global->scopes ().top ()->add_to_scope (added_union);
+  
+  // Update our scope stack.
+  idl_global->scopes ().push (added_union);
+  
+  if (this->visit_scope (node) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("ast_visitor_tmpl_module_inst::")
+                         ACE_TEXT ("visit_union - ")
+                         ACE_TEXT ("visit_scope() failed\n")),
+                        -1);
+    }
+    
+  // Through with this scope.  
+  idl_global->scopes ().pop ();
+  
+  int dummy = added_union->member_count ();
+
   return 0;
 }
 
@@ -533,8 +588,28 @@ ast_visitor_tmpl_module_inst::visit_union_fwd (AST_UnionFwd *)
 }
 
 int
-ast_visitor_tmpl_module_inst::visit_union_branch (AST_UnionBranch *)
+ast_visitor_tmpl_module_inst::visit_union_branch (AST_UnionBranch *node)
 {
+  AST_Type *ft =
+    AST_Type::narrow_from_decl (
+      this->reify_type (node->field_type ()));
+      
+  UTL_ScopedName sn (node->local_name (), 0);
+  
+  // The union branch owns its label list so we have to copy it.
+  UTL_LabelList *ll = node->labels ()->copy ();
+    
+  AST_UnionBranch *added_branch =
+    idl_global->gen ()->create_union_branch (ll, ft, &sn);
+    
+  // fe_add_union_branch() does necessary things besides calling
+  // add_to_scope() so we need to reuse it.
+  
+  AST_Union *u =
+    AST_Union::narrow_from_scope (idl_global->scopes ().top ());
+    
+  u->fe_add_union_branch (added_branch);
+  
   return 0;
 }
 
@@ -545,8 +620,17 @@ ast_visitor_tmpl_module_inst::visit_union_label (AST_UnionLabel *)
 }
 
 int
-ast_visitor_tmpl_module_inst::visit_enum_val (AST_EnumVal *)
+ast_visitor_tmpl_module_inst::visit_enum_val (AST_EnumVal *node)
 {
+  UTL_ScopedName sn (node->local_name (), 0);
+  
+  AST_EnumVal *added_enum_val =
+    idl_global->gen ()->create_enum_val (
+      node->constant_value ()->ev ()->u.ulval,
+      &sn);
+      
+  idl_global->scopes ().top ()->add_to_scope (added_enum_val);
+      
   return 0;
 }
 
@@ -1089,6 +1173,25 @@ ast_visitor_tmpl_module_inst::reify_type (AST_Decl *d)
       return 0;
     }
 
+  if (this->ref_only_)
+    {
+      // If d is a param holder, the lookup will return a heap
+      // allocation, which we need since this node's destination
+      // owns param holders.
+      if (d->node_type () == AST_Decl::NT_param_holder)
+        {
+          const char *s = d->full_name ();
+          return
+            idl_global->scopes ().top ()->lookup_by_name (
+              d->name (),
+              true);
+        }
+      else
+        {
+          return d;
+        }
+    }
+    
   ast_visitor_reifying rv (this->ctx_);
 
   if (d->ast_accept (&rv) != 0)

@@ -317,7 +317,10 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
                            t->local_name ());
 
   if (t1 == 0)
-    return 0;  // Prevent dereferencing null pointer in nested calls.
+    {
+      // Prevent dereferencing null pointer in nested calls.
+      return 0;
+    }
 
   // Add it to enclosing scope.
   idl_global->scopes ().next_to_top ()->fe_add_enum_val (t1);
