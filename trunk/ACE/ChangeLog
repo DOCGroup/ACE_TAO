@@ -1,8 +1,15 @@
+Thu Jan 28 15:11:18 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * ACE-INSTALL.html:
+
+          Updated with information on how to build ACE for
+          iPhone/iPod Touch/iPad Simulator and Hardware.
+
 Thu Jan 28 12:49:45 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * NEWS:
 
-          ACE/TAO now supports the new iPad ;-).          
+          ACE/TAO now supports the new iPad ;-).
 
 Thu Jan 28 10:21:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
