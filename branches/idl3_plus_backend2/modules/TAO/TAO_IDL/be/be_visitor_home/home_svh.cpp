@@ -18,10 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_home,
-           home_svh,
-           "$Id$")
-
 // ******************************************************
 // Home visitor for server header
 // ******************************************************
@@ -131,6 +127,34 @@ be_visitor_home_svh::gen_servant_class (void)
       
   os_ << be_nl << be_nl
       << "virtual ~" << lname << "_Servant (void);";
+      
+  AST_Type *pk = node_->primary_key ();
+  
+  if (pk != 0)
+    {
+      os_ << be_nl << be_nl
+          << "// Implicit home primary key operations - not supported.";
+          
+      os_ << be_nl << be_nl
+          << "virtual ::" << comp_->name () << "_ptr" << be_nl
+          << "create (" << be_idt_nl
+          << "::" << pk->name () << " * key);" << be_uidt;
+          
+      os_ << be_nl << be_nl
+          << "virtual ::" << comp_->name () << "_ptr" << be_nl
+          << "find_by_primary_key (" << be_idt_nl
+          << "::" << pk->name () << " * key);" << be_uidt;
+          
+      os_ << be_nl << be_nl
+          << "virtual void" << be_nl
+          << "remove (" << be_idt_nl
+          << "::" << pk->name () << " * key);" << be_uidt;
+          
+      os_ << be_nl << be_nl
+          << "virtual ::" << pk->name () << " *" << be_nl
+          << "get_primary_key (" << be_idt_nl
+          << "::" << comp_->name () << "_ptr comp);" << be_uidt;
+    }
       
   this->gen_ops_attrs ();
   

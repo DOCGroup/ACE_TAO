@@ -1,3 +1,13 @@
+Thu Jan 28 15:56:11 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+        * TAO_IDL/be/be_visitor_home/home_svh.cpp:
+        
+          Added code generation for method overrides that appear as pure
+          virtual in the skeleton base class when the home has
+          a primary key. These methods throw CORBA::NO_IMPLEMENT,
+          since primary keys are not supported in CIAO.
+
 Wed Jan 27 22:19:17 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_decl.cpp:
