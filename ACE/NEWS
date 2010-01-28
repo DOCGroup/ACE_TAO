@@ -6,7 +6,7 @@ USER VISIBLE CHANGES BETWEEN ACE-5.7.5 and ACE-5.7.6
 
   IPHONE_TARGET, should be set to either SIMULATOR or
   HARDWARE. Set to HARDWARE if you want to deploy
-  on the iPhone/iPod Touch device.
+  on the iPhone/iPod Touch/iPad device.
 
   IPHONE_VERSION, should be set to 3.1.2 or 3.2. One can
   set the version to any future or past versions, but
