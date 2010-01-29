@@ -190,6 +190,12 @@ ast_visitor_reifying::visit_factory (AST_Factory *)
 }
 
 int
+ast_visitor_reifying::visit_finder (AST_Finder *)
+{
+  return 0;
+}
+
+int
 ast_visitor_reifying::visit_structure (AST_Structure *node)
 {
   this->check_and_store (node);

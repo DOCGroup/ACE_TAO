@@ -114,6 +114,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_typedef.h"
 #include "be_native.h"
 #include "be_factory.h"
+#include "be_finder.h"
 #include "utl_identifier.h"
 #include "nr_extern.h"
 #include "ace/config-all.h"
@@ -921,6 +922,17 @@ be_generator::create_factory (UTL_ScopedName *n)
   be_factory *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_factory (n),
+                  0);
+
+  return retval;
+}
+
+AST_Finder *
+be_generator::create_finder (UTL_ScopedName *n)
+{
+  be_finder *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_finder (n),
                   0);
 
   return retval;

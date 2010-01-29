@@ -3,7 +3,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO IDL
+//    TAO_IDL_BE
 //
 // = FILENAME
 //    be_factory.h
@@ -37,13 +37,10 @@ class be_factory : public virtual AST_Factory,
 {
 public:
   be_factory (void);
-  // Default constructor.
 
   be_factory (UTL_ScopedName *n);
-  // Constructor
 
   ~be_factory (void);
-  // Destructor.
 
   virtual void destroy (void);
   // Cleanup method.
@@ -55,9 +52,8 @@ public:
   virtual AST_Argument *be_add_argument (AST_Argument *arg);
 
   // Narrowing
-
   DEF_NARROW_FROM_DECL (be_factory);
   DEF_NARROW_FROM_SCOPE (be_factory);
 };
 
-#endif
+#endif // BE_FACTORY_H

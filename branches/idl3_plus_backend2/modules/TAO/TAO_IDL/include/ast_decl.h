@@ -152,7 +152,8 @@ public:
       , NT_native                   // Denotes a native type
                                     // dependent on the programming
                                     // language
-      , NT_factory                  // Denotes a OBV factory construct
+      , NT_factory                  // Denotes a OBV or home factory construct
+      , NT_finder                   // Denotes a home finder construct
       , NT_component                // Denotes a CORBA component
       , NT_component_fwd            // Denotes a forward declared component
       , NT_home                     // Denotes a CORBA component home

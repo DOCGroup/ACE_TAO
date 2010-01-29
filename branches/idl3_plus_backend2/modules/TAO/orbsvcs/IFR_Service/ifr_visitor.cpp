@@ -198,6 +198,12 @@ ifr_visitor::visit_factory (AST_Factory *)
 }
 
 int
+ifr_visitor::visit_finder (AST_Finder *)
+{
+  return 0;
+}
+
+int
 ifr_visitor::visit_structure (AST_Structure *)
 {
   return 0;
@@ -319,6 +325,12 @@ ifr_visitor::visit_root (AST_Root *)
 
 int 
 ifr_visitor::visit_native (AST_Native *)
+{
+  return 0;
+}
+
+int
+ifr_visitor::visit_param_holder (AST_Param_Holder *)
 {
   return 0;
 }

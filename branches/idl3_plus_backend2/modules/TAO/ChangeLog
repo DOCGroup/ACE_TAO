@@ -1,3 +1,44 @@
+Fri Jan 29 18:08:41 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_finder.h:
+        * TAO_IDL/be/be_finder.cpp:
+        * TAO_IDL/ast/ast_finder.cpp:
+        * TAO_IDL/be_include/be_finder.h:
+
+          New AST node classes, representing an IDL home
+          finder construct.
+
+        * orbsvcs/IFR_Service/ifr_visitor.h:
+        * orbsvcs/IFR_Service/ifr_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+
+          Updated backend with no-op overrides of 
+          visit_* methods added to the front end.
+
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_visitor_reifying.h:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_factory.h:
+        * TAO_IDL/include/ast_visitor_tmpl_module_inst.h:
+        * TAO_IDL/include/ast_visitor.h:
+        * TAO_IDL/be/be_factory.cpp:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/ast/ast_visitor_tmpl_module_inst.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_visitor_reifying.cpp:
+        * TAO_IDL/ast/ast_factory.cpp:
+        * TAO_IDL/be_include/be_visitor.h:
+        * TAO_IDL/be_include/be_factory.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/narrow/narrow.cpp:
+
+          Other changes corresponding to the addition
+          of the new AST classes and visit_* methods
+          above.
+
 Thu Jan 28 20:04:42 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_decl.h:
