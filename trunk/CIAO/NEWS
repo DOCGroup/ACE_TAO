@@ -69,7 +69,8 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.7.5 and CIAO-0.7.6
   This controls the ndds verbosity which is default set to silent
 
 . Added support for the DDS State and Event connector with all ports.
-  A set of tests has been added to test these connectors
+  A set of tests has been added to test these connectors. We implement
+  now the biggest part of the recent OMG 09-10-25 specification
 
 . Extended AMI4CCM prototype with the latest ideas. The TAO_IDL compiler
   has some hardcoded generation just for Hello example. It has to be
