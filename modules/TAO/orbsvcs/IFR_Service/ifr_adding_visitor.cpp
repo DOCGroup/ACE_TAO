@@ -52,16 +52,13 @@
 
 #include "ace/Vector_T.h"
 
-ACE_RCSID (IFR_Service,
-           ifr_adding_visitor,
-           "$Id$")
-
-ifr_adding_visitor::ifr_adding_visitor (AST_Decl *scope,
-                                        bool in_reopened,
-          bool allow_duplicate_typedefs)
+ifr_adding_visitor::ifr_adding_visitor (
+      AST_Decl *scope,
+      bool in_reopened,
+      bool allow_duplicate_typedefs)
   : scope_ (scope),
-  in_reopened_ (in_reopened),
-  allow_duplicate_typedefs_ (allow_duplicate_typedefs)
+    in_reopened_ (in_reopened),
+    allow_duplicate_typedefs_ (allow_duplicate_typedefs)
 {
 }
 

@@ -1165,6 +1165,12 @@ ast_visitor_tmpl_module_inst::visit_factory (AST_Factory *node)
   return 0;
 }
 
+int
+ast_visitor_tmpl_module_inst::visit_finder (AST_Finder *)
+{
+  return 0;
+}
+
 AST_Decl *
 ast_visitor_tmpl_module_inst::reify_type (AST_Decl *d)
 {

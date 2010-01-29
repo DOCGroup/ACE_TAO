@@ -92,6 +92,7 @@ class AST_Template_Module;
 class AST_Template_Module_Inst;
 class AST_Template_Module_Ref;
 class AST_Param_Holder;
+class AST_Finder;
 
 // Defines base class for node generators.
 
@@ -346,8 +347,11 @@ public:
   // Create a node representing a native.
   virtual AST_Native *create_native (UTL_ScopedName *n);
 
-  // Create a node representing an OBV factory construct.
+  // Create a node representing an OBV or home factory construct.
   virtual AST_Factory *create_factory (UTL_ScopedName *n);
+
+  // Create a node representing an home finder construct.
+  virtual AST_Finder *create_finder (UTL_ScopedName *n);
 
   // Create a node representing a valuebox.
   virtual AST_ValueBox *create_valuebox (UTL_ScopedName *n,

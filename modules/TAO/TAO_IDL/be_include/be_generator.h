@@ -262,8 +262,11 @@ public:
   // Create a node representing a native
   virtual AST_Native *create_native (UTL_ScopedName *n);
 
-  // Create a node representing a OBV factory construct
+  // Create a node representing a OBV or home factory construct
   virtual AST_Factory *create_factory (UTL_ScopedName *n);
+
+  // Create a node representing an home finder construct.
+  virtual AST_Finder *create_finder (UTL_ScopedName *n);
 
   virtual
   AST_PortType *create_porttype (UTL_ScopedName *n);

@@ -97,6 +97,7 @@ public:
   virtual int visit_structure (AST_Structure *node);
   virtual int visit_field (AST_Field *node);
   virtual int visit_factory (AST_Factory *node);
+  virtual int visit_finder (AST_Finder *node);
   
 private:
   // If arg is a param holder, return the matching template arg,

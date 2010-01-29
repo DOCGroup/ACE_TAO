@@ -103,6 +103,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_sequence.h"
 #include "ast_string.h"
 #include "ast_factory.h"
+#include "ast_finder.h"
 #include "ast_exception.h"
 #include "ast_param_holder.h"
 #include "ast_visitor_tmpl_module_inst.h"
