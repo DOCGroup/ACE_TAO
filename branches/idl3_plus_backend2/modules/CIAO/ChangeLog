@@ -1,3 +1,13 @@
+Fri Jan 29 17:59:53 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/checking_visitor.h:
+        * tools/IDL3_to_IDL2/basic_visitor.cpp:
+        * tools/IDL3_to_IDL2/basic_visitor.h:
+        * tools/IDL3_to_IDL2/checking_visitor.cpp:
+        
+          Added no-op overrides to new frontend visit_*
+          methods.
+
 Tue Jan  5 14:01:18 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp:

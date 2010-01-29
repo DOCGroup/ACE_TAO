@@ -71,6 +71,7 @@ public:
   virtual int visit_eventtype_fwd (AST_EventTypeFwd *node) = 0;
   virtual int visit_home (AST_Home *node) = 0;
   virtual int visit_factory (AST_Factory *node);
+  virtual int visit_finder (AST_Finder *node);
   virtual int visit_structure (AST_Structure *node);
   virtual int visit_structure_fwd (AST_StructureFwd *node);
   virtual int visit_exception (AST_Exception *node);
@@ -92,6 +93,7 @@ public:
   virtual int visit_typedef (AST_Typedef *node);
   virtual int visit_root (AST_Root *node) = 0;
   virtual int visit_native (AST_Native *node);
+  virtual int visit_param_holder (AST_Param_Holder *node);
   
 protected:
   void check_prefix (AST_Decl *d);

@@ -75,6 +75,7 @@ public:
   virtual int visit_eventtype_fwd (AST_EventTypeFwd *node);
   virtual int visit_home (AST_Home *node);
   virtual int visit_factory (AST_Factory *node);
+  virtual int visit_finder (AST_Finder *node);
   virtual int visit_structure (AST_Structure *node);
   virtual int visit_structure_fwd (AST_StructureFwd *node);
   virtual int visit_exception (AST_Exception *node);
@@ -96,6 +97,7 @@ public:
   virtual int visit_typedef (AST_Typedef *node);
   virtual int visit_root (AST_Root *node);
   virtual int visit_native (AST_Native *node);
+  virtual int visit_param_holder (AST_Param_Holder *node);
   
   bool is_idl3 (void) const;
   
