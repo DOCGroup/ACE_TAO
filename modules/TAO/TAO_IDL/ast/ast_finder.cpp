@@ -8,9 +8,9 @@
 AST_Finder::AST_Finder (UTL_ScopedName *n)
   : COMMON_Base (true,
                  false), //@@ Always local, never abstract
-    AST_Decl (AST_Decl::NT_factory,
+    AST_Decl (AST_Decl::NT_finder,
               n),
-    UTL_Scope (AST_Decl::NT_factory),
+    UTL_Scope (AST_Decl::NT_finder),
     AST_Factory (n)
 {
 }

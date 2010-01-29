@@ -108,6 +108,7 @@ can_be_redefined (AST_Decl *d)
     case AST_Decl::NT_op:
     case AST_Decl::NT_pre_defined:
     case AST_Decl::NT_factory:
+    case AST_Decl::NT_finder:
     case AST_Decl::NT_provides:
     case AST_Decl::NT_uses:
     case AST_Decl::NT_publishes:

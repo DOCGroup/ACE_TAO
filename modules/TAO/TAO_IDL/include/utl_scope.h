@@ -120,6 +120,7 @@ class AST_Typedef;
 class AST_Array;
 class AST_Native;
 class AST_Factory;
+class AST_Finder;
 class AST_PortType;
 class AST_Provides;
 class AST_Uses;
@@ -423,6 +424,9 @@ protected:
 
   virtual
   AST_Factory *fe_add_factory (AST_Factory *f);
+  
+  virtual
+  AST_Finder *fe_add_finder (AST_Finder *f);
 
   virtual
   AST_ValueBox *fe_add_valuebox (AST_ValueBox *vb);

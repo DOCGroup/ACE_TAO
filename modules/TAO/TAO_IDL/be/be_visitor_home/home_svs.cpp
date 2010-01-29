@@ -5,7 +5,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO IDL
+//    TAO_IDL_BE
 //
 // = FILENAME
 //    home_svs.cpp
@@ -28,7 +28,8 @@ be_visitor_home_svs::be_visitor_home_svs (be_visitor_context *ctx)
     comp_ (0),
     os_ (*ctx->stream ()),
     export_macro_ (be_global->svnt_export_macro ()),
-    swapping_ (be_global->gen_component_swapping ())
+    swapping_ (be_global->gen_component_swapping ()),
+    for_finder_ (false)
 {
   /// All existing CIAO examples set the servant export values in the CIDL
   /// compiler to equal the IDL compiler's skel export values. Below is a
@@ -105,6 +106,36 @@ be_visitor_home_svs::visit_argument (be_argument *node)
     }
 
   return 0;
+}
+
+int
+be_visitor_home_svs::visit_factory (be_factory *node)
+{
+  be_visitor_factory_svs v (this->ctx_,
+                            node_,
+                            comp_,
+                            this->for_finder_);
+  
+  if (v.visit_factory (node) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_home_svs::")
+                         ACE_TEXT ("visit_factory - ")
+                         ACE_TEXT ("traversal failed\n")),
+                        -1);
+    }
+    
+  // In case it was set for the call above.  
+  this->for_finder_ = false;
+  
+  return 0;
+}
+
+int
+be_visitor_home_svs::visit_finder (be_finder *node)
+{
+  this->for_finder_ = true;
+  return this->visit_factory (node);
 }
 
 int
@@ -191,7 +222,24 @@ be_visitor_home_svs::gen_servant_class (void)
           << be_uidt_nl
           << "}";
     }
+    
+  be_home *h = node_;
+  
+  while (h != 0)
+    {
+      if (this->visit_scope (h) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_home_svs::")
+                             ACE_TEXT ("gen_servant_class - ")
+                             ACE_TEXT ("codegen for scope failed\n")),
+                            -1);
+        }
+        
+      h = be_home::narrow_from_decl (h->base_home ());
+    }
 
+/*
   this->gen_ops_attrs ();
 
   os_ << be_nl << be_nl
@@ -203,7 +251,7 @@ be_visitor_home_svs::gen_servant_class (void)
       << "/// Finder operations.";
 
   this->gen_finders_r (node_);
-
+*/
   return 0;
 }
 

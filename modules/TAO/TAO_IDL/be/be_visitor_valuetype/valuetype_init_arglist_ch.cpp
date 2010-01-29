@@ -40,7 +40,7 @@ be_visitor_valuetype_init_arglist_ch::visit_factory (be_factory *node)
 
   if (node->nmembers () > 0)
     {
-      os << be_idt << be_idt_nl;
+      os << be_idt_nl;
 
       // All we do is hand over code generation to our scope.
       if (this->visit_scope (node) == -1)
@@ -52,8 +52,7 @@ be_visitor_valuetype_init_arglist_ch::visit_factory (be_factory *node)
                             -1);
         }
 
-      os << be_uidt_nl
-         << ")";
+      os << ")" << be_uidt;
     }
   else
     {

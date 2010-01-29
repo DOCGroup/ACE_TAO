@@ -66,6 +66,15 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
+  
+private:
+  // Scope Management Protocol.
+  
+  friend int tao_yyparse (void);
+  friend class ast_visitor_tmpl_module_inst;
+
+  virtual AST_Factory *fe_add_factory (AST_Factory *f);
+  virtual AST_Finder *fe_add_finder (AST_Finder *f);
 
 private:
   AST_Home *pd_base_home;

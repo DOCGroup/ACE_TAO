@@ -6,7 +6,8 @@
 
 #include "ast_interface.h"
 
-class TAO_IDL_FE_Export AST_ValueType : public virtual AST_Interface
+class TAO_IDL_FE_Export AST_ValueType
+  : public virtual AST_Interface
 {
 public:
   AST_ValueType (void);
