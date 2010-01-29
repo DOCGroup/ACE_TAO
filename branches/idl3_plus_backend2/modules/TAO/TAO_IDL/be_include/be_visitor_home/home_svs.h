@@ -5,7 +5,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO IDL
+//    TAO_IDL_BE
 //
 // = FILENAME
 //    home_svs.h
@@ -29,7 +29,8 @@ class be_visitor_home_svs : public be_visitor_scope
   //   be_visitor_home_svs
   //
   // = DESCRIPTION
-  //   This is a concrete visitor to generate the servant header for component.
+  //   This is a concrete visitor to generate the servant
+  //   source for a comopnent home.
   //
   //
 public:
@@ -41,6 +42,8 @@ public:
   virtual int visit_operation (be_operation *node);
   virtual int visit_attribute (be_attribute *node);
   virtual int visit_argument (be_argument *node);
+  virtual int visit_factory (be_factory *node);
+  virtual int visit_finder (be_finder *node);
   
 private:
   int gen_servant_class (void);
@@ -70,6 +73,7 @@ private:
   TAO_OutStream &os_;
   ACE_CString export_macro_;
   bool swapping_;
+  bool for_finder_;
 };
 
 /// Worker class passed to traverse_inheritance_graph(),

@@ -120,6 +120,10 @@ private:
   // eventtype or a valuetype.
   bool for_eventtype_;
   
+  // Flag to branch in visit_factory() where we create a
+  // finder or a factory.
+  bool for_finder_;
+  
   // Flag to short_circuit reifying if we are the base class of
   // ast_visitor_tmpl_module_ref.
   bool ref_only_;

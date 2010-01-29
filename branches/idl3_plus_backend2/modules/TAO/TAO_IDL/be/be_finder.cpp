@@ -23,13 +23,13 @@
 be_finder::be_finder (UTL_ScopedName *n)
   : COMMON_Base (1,
                  0), //@@ Always local, never abstract
-    AST_Decl (AST_Decl::NT_factory,
+    AST_Decl (AST_Decl::NT_finder,
               n),
-    UTL_Scope (AST_Decl::NT_factory),
+    UTL_Scope (AST_Decl::NT_finder),
     AST_Factory (n),
     AST_Finder (n),
-    be_scope (AST_Decl::NT_factory),
-    be_decl (AST_Decl::NT_factory,
+    be_scope (AST_Decl::NT_finder),
+    be_decl (AST_Decl::NT_finder,
              n),
     be_factory (n)
 {

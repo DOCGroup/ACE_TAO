@@ -92,6 +92,37 @@ be_visitor_home_svh::visit_attribute (be_attribute *node)
 }
 
 int
+be_visitor_home_svh::visit_factory (be_factory *node)
+{
+  os_ << be_nl << be_nl
+      << "virtual ::" << comp_->name () << "_ptr" << be_nl
+      << node->local_name ();
+      
+  // We can reuse this visitor.
+  be_visitor_valuetype_init_arglist_ch v (this->ctx_);
+  
+  if (v.visit_factory (node) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_home_svh::")
+                         ACE_TEXT ("visit_factory - ")
+                         ACE_TEXT ("codegen for argument ")
+                         ACE_TEXT ("list failed\n")),
+                        -1);
+    }
+    
+  os_ << ";";
+    
+  return 0;
+}
+
+int
+be_visitor_home_svh::visit_finder (be_finder *node)
+{
+  return this->visit_factory (node);
+}
+
+int
 be_visitor_home_svh::gen_servant_class (void)
 {
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
@@ -155,127 +186,26 @@ be_visitor_home_svh::gen_servant_class (void)
           << "get_primary_key (" << be_idt_nl
           << "::" << comp_->name () << "_ptr comp);" << be_uidt;
     }
-      
-  this->gen_ops_attrs ();
-  
-  this->gen_factories ();
-  
-  this->gen_finders ();
-      
-  os_ << be_uidt_nl
-      << "};";
-     
-  return 0;
-}
-
-int
-be_visitor_home_svh::gen_ops_attrs (void)
-{
-  os_ << be_nl << be_nl
-      << "// All operations and attributes.";
-      
-  int status =
-    node_->traverse_inheritance_graph (
-      be_visitor_home_svh::op_attr_decl_helper,
-      &os_);
-      
-  if (status == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_home_svh::")
-                         ACE_TEXT ("gen_ops_attrs - ")
-                         ACE_TEXT ("traverse_inheritance_graph() ")
-                         ACE_TEXT ("failed\n")),
-                        -1);
-    }
     
-  return 0;
-}
-
-int
-be_visitor_home_svh::gen_factories (void)
-{
-  os_ << be_nl << be_nl
-      << "// Factory operations.";
+  be_home *h = node_;
   
-  return this->gen_factories_r (node_);
-}
-
-int
-be_visitor_home_svh::gen_factories_r (AST_Home *node)
-{
-  if (node == 0)
+  while (h != 0)
     {
-      return 0;
-    }
-    
-  if (this->gen_init_ops_i (node->factories ()) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_home_svh::")
-                         ACE_TEXT ("gen_factories_r - ")
-                         ACE_TEXT ("gen_init_ops_i() failed\n")),
-                        -1);
-    }
-    
-  AST_Home *base = node->base_home ();
-  
-  return this->gen_factories_r (base);
-}
-
-int
-be_visitor_home_svh::gen_finders (void)
-{
-  os_ << be_nl << be_nl
-      << "// Finder operations.";
-  
-  return this->gen_finders_r (node_);
-}
-
-int
-be_visitor_home_svh::gen_finders_r (AST_Home *node)
-{
-  if (node == 0)
-    {
-      return 0;
-    }
-    
-  if (this->gen_init_ops_i (node->finders ()) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_home_svh::")
-                         ACE_TEXT ("gen_finders_r - ")
-                         ACE_TEXT ("gen_init_ops_i() failed\n")),
-                        -1);
-    }
-    
-  AST_Home *base = node->base_home ();
-  
-  return this->gen_finders_r (base);
-}
-
-int
-be_visitor_home_svh::gen_init_ops_i (AST_Home::INIT_LIST & list)
-{
-  AST_Operation **op = 0;
-  
-  for (AST_Home::INIT_LIST::ITERATOR i = list.begin ();
-       !i.done ();
-       i.advance ())
-    {
-      i.next (op);
-      be_operation *bop = be_operation::narrow_from_decl (*op);
-      
-      if (this->visit_operation (bop) == -1)
+      if (this->visit_scope (h) != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_home_svh::")
-                             ACE_TEXT ("gen_init_ops_i - ")
-                             ACE_TEXT ("visit_operation() failed\n")),
+                             ACE_TEXT ("gen_servant_class - ")
+                             ACE_TEXT ("visit_scope() failed\n")),
                             -1);
         }
+        
+      h = be_home::narrow_from_decl (h->base_home ());
     }
-    
+
+  os_ << be_uidt_nl
+      << "};";
+     
   return 0;
 }
 
@@ -290,23 +220,6 @@ be_visitor_home_svh::gen_entrypoint (void)
       << "::Components::HomeExecutorBase_ptr p," << be_nl
       << "::CIAO::Container_ptr c," << be_nl
       << "const char * ins_name);" << be_uidt; 
-}
-
-int
-be_visitor_home_svh::op_attr_decl_helper (be_interface * /* derived */,
-                                          be_interface *ancestor,
-                                          TAO_OutStream *os)
-{
-  /// We're in a static method, so we have to instantiate a temporary
-  /// visitor and context.
-  be_visitor_context ctx;
-  ctx.state (TAO_CodeGen::TAO_ROOT_SVH);
-  ctx.stream (os);
-  be_visitor_home_svh visitor (&ctx);
-  
-  /// Since this visitor overriddes only visit_operation() and 
-  /// visit_attribute(), we can get away with this for the declarations.
-  return visitor.visit_scope (ancestor);
 }
 
 

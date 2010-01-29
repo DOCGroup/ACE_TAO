@@ -741,6 +741,12 @@ UTL_Scope::fe_add_factory (AST_Factory *)
   return 0;
 }
 
+AST_Finder *
+UTL_Scope::fe_add_finder (AST_Finder *)
+{
+  return 0;
+}
+
 AST_PortType *
 UTL_Scope::fe_add_porttype (AST_PortType *)
 {
