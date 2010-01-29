@@ -1,3 +1,37 @@
+Fri Jan 29 22:03:03 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_home/factory_svs.cpp:
+        * TAO_IDL/be_include/be_visitor_home/factory_svs.h:
+
+          New visitor for homes, encapsulating the issues of
+          factory and finder code generation in the servant
+          source file.
+
+        * TAO_IDL/include/ast_valuetype.h:
+        * TAO_IDL/include/ast_home.h:
+        * TAO_IDL/include/ast_visitor_tmpl_module_inst.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+        * TAO_IDL/be/be_visitor_home/home_svh.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_arglist_ch.cpp:
+        * TAO_IDL/be/be_visitor_home.cpp:
+        * TAO_IDL/be/be_finder.cpp:
+        * TAO_IDL/ast/ast_home.cpp:
+        * TAO_IDL/ast/ast_visitor_tmpl_module_inst.cpp:
+        * TAO_IDL/ast/ast_finder.cpp:
+        * TAO_IDL/ast/ast_redef.cpp:
+        * TAO_IDL/be_include/be_visitor_home/home_svs.h:
+        * TAO_IDL/be_include/be_visitor_home/home_svh.h:
+        * TAO_IDL/be_include/be_visitor_home.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          In-progress change of home factory and finder handling.
+          Instead of being stored in lists in the home node, they
+          will be members of the home scope like any other legal
+          construct for a home scope.
+
 Fri Jan 29 18:08:41 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_finder.h:
