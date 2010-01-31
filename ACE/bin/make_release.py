@@ -562,12 +562,12 @@ def update_latest_tag (which, branch):
     """ Update one of the Latest_* tags externals to point the new release """
     global opts
     root_anon = re.sub ("^https:", "svn:", opts.repo_root)
-    propval = """ACE_wrappers %s/Middleware/tags/%s/ACE
-ACE_wrappers/TAO %s/Middleware/tags/%s/TAO
-ACE_wrappers/TAO/CIAO %s/Middleware/tags/%s/CIAO
+    propval = """ACE_wrappers %s/tags/%s/ACE
+ACE_wrappers/TAO %s/tags/%s/TAO
+ACE_wrappers/TAO/CIAO %s/tags/%s/CIAO
 """ % (root_anon, branch, root_anon, branch, root_anon, branch)
     svn_client.propset ("svn:externals", propval,
-                        opts.repo_root + "/Middleware/tags/Latest_" + which)
+                        opts.repo_root + "/tags/Latest_" + which)
 
 def tag ():
     """ Tags the DOC and MPC repositories for the version """
@@ -579,8 +579,8 @@ def tag ():
 
     if opts.take_action:
         # Tag middleware
-        svn_client.copy (opts.repo_root + "/Middleware/trunk",
-                        opts.repo_root + "/Middleware/tags/" + branch)
+        svn_client.copy (opts.repo_root + "/trunk",
+                        opts.repo_root + "/tags/" + branch)
 
         # Tag MPC
         svn_client.copy (opts.repo_root + "/MPC/trunk",
