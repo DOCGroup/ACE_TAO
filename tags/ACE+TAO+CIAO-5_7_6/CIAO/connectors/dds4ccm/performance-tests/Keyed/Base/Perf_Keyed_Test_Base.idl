@@ -1,0 +1,28 @@
+// $Id$
+
+/**
+ * @file Perf_Keyed_Test_Base.idl
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ */
+
+#ifndef PERF_KEYED_TEST_BASE_IDL
+#define PERF_KEYED_TEST_BASE_IDL
+
+//const long KEY_SIZE = 4;
+
+struct PerfKeyedTest {
+  string key; //@key
+  unsigned long seq_num;
+  long latency_ping;
+  unsigned long iteration;
+  unsigned long timestamp_ccm_sec;
+  long timestamp_ccm_usec;
+  //long timestamp_dds_sec;
+  //unsigned long timestamp_dds_usec;
+  //long duration_dds_sec;
+  //unsigned long duration_dds_usec;
+};
+
+typedef sequence<PerfKeyedTest> PerfKeyedTest_Seq;
+
+#endif

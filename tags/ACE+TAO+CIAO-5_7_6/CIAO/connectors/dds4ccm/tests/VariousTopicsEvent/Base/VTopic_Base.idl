@@ -1,0 +1,62 @@
+// $Id$
+
+/**
+ * @file   VTopic_Base.idl 
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ */
+
+#ifndef VTOPIC_BASE_IDL
+#define VTOPIC_BASE_IDL
+
+
+  struct TestTopic {
+    string key; //@key
+    long x;
+   };
+  //string
+  struct TopicString {
+    string key; //@key
+    string x_str;
+   };
+
+  //arrays
+  struct TopicArray {
+    string key; //@key
+    octet x_array[5];
+   };
+ 
+//unions
+/*  union X_Union switch (short) {
+    case 0:
+      string x_test;
+    case 1:
+      long   x_long;
+   };
+
+  struct TopicUnion {
+    string key; //@key
+    X_Union x_uni;
+ 
+   };
+
+ */
+
+  struct test {
+    short x_test;
+    string x_teststr;
+  };
+  typedef sequence<test> test_seq;
+
+  //sequence
+  struct TopicSeq {
+    string key; //@key
+    test_seq x_seq;
+   };
+
+  typedef sequence<TestTopic> TestTopic_Seq;
+  typedef sequence<TopicString> TopicString_Seq;
+  typedef sequence<TopicArray> TopicArray_Seq;
+ // typedef sequence<TopicUnion> TopicUnion_Seq;
+  typedef sequence<TopicSeq> TopicSeq_Seq;
+
+#endif

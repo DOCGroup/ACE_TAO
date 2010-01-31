@@ -1,0 +1,20 @@
+This directory contains subdirectories that test the ACE Reactor and Proactor
+
+	. Dgram
+		Tests the CODgram and Dgram classes with the Reactor.	
+	
+	. Misc
+		Various miscellaneous tests of Reactor functionality
+		(e.g., signals, timers, notification, etc.).
+
+	. Multicast
+		Tests out the ACE multicast capabilities in conjunction
+		with the Reactor.
+
+	. Ntalker
+		A program that implements a multicast "chat" program.
+
+
+	. Proactor
+		A program that illustrates the "Proactive" version of
+		the Reactor
