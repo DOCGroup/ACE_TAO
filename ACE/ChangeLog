@@ -1,3 +1,22 @@
+Mon Feb  1 11:21:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Connector.cpp:
+          Const change
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * etc/index.html:
+        * docs/Download.html:
+          Updated because of recent release
+
+        * tests/NonBlocking_Conn_Test.cpp:
+          Improved this test so that it really tests the connections
+
+        * tests/tests.mpc:
+          Bug_3709_Regression itselfs checks now for vc71
+
+        * ace/Reactor.h:
+          Doxygen fixes
+
 Sun Jan 31 01:04:43 CST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ACE version 5.7.6 released.
