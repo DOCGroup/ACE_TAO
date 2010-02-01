@@ -30,9 +30,10 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/Get_Opt.h"
 
-static int test_select_reactor = 1;
-static int test_tp_reactor = 1;
-static int test_wfmo_reactor = 1;
+static bool test_select_reactor = true;
+static bool test_tp_reactor = true;
+static bool test_wfmo_reactor = true;
+static int result = 0;
 
 Svc_Handler::Svc_Handler (void)
   : status_ (0),
@@ -58,8 +59,7 @@ Svc_Handler::open (void *)
 }
 
 int
-Svc_Handler::handle_close (ACE_HANDLE handle,
-                           ACE_Reactor_Mask mask)
+Svc_Handler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask mask)
 {
   *this->status_ = FAILED;
   (*this->completion_counter_)++;
@@ -68,9 +68,7 @@ Svc_Handler::handle_close (ACE_HANDLE handle,
                                                                          mask);
 }
 
-typedef ACE_Connector<Svc_Handler,
-                      ACE_SOCK_CONNECTOR>
-        CONNECTOR;
+typedef ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> CONNECTOR;
 
 static const char* hosts[] = {
   "www.russiantvguide.com:80",
@@ -157,11 +155,11 @@ test_connect (ACE_Reactor &reactor,
 void
 test (ACE_Reactor_Impl *impl)
 {
-  size_t nr_names = sizeof hosts / sizeof (char *);
-  ACE_INET_Addr *addresses =
-    new ACE_INET_Addr[nr_names];
+  size_t const nr_names = sizeof hosts / sizeof (char *);
+  ACE_INET_Addr *addresses = new ACE_INET_Addr[nr_names];
+  number_of_connections = 0;
 
-  for (size_t i = 0, number_of_connections = 0; i < nr_names; ++i)
+  for (size_t i = 0; i < nr_names; ++i)
     {
       if (addresses[number_of_connections].set (hosts[i]) == 0)
         ++number_of_connections;
@@ -171,8 +169,7 @@ test (ACE_Reactor_Impl *impl)
                     ACE_TEXT_CHAR_TO_TCHAR (hosts[i])));
     }
 
-  ACE_Reactor reactor (impl,
-                       1);
+  ACE_Reactor reactor (impl, 1);
 
   int complete_nonblocking_connections = 1;
   int dont_wait_for_nonblocking_connections = 0;
@@ -182,7 +179,7 @@ test (ACE_Reactor_Impl *impl)
     ACE_Synch_Options::defaults;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\nBlocking connections...\n\n"));
+              "Blocking connections...\n"));
 
   test_connect (reactor,
                 addresses,
@@ -193,7 +190,7 @@ test (ACE_Reactor_Impl *impl)
                         ACE_Time_Value (0, 50 * 1000));
 
   ACE_DEBUG ((LM_DEBUG,
-              "\nBlocking connections (with timeouts)...\n\n"));
+              "Blocking connections (with timeouts)...\n"));
 
   test_connect (reactor,
                 addresses,
@@ -204,7 +201,7 @@ test (ACE_Reactor_Impl *impl)
     (ACE_Synch_Options::USE_REACTOR);
 
   ACE_DEBUG ((LM_DEBUG,
-              "\nNon-blocking connections...\n\n"));
+              "Non-blocking connections...\n"));
 
   test_connect (reactor,
                 addresses,
@@ -212,7 +209,7 @@ test (ACE_Reactor_Impl *impl)
                 complete_nonblocking_connections);
 
   ACE_DEBUG ((LM_DEBUG,
-              "\nNon-blocking connections (without waiting for completions)...\n\n"));
+              "Non-blocking connections (without waiting for completions)...\n"));
 
   test_connect (reactor,
                 addresses,
@@ -224,7 +221,7 @@ test (ACE_Reactor_Impl *impl)
                            ACE_Time_Value (0, 500 * 1000));
 
   ACE_DEBUG ((LM_DEBUG,
-              "\nNon-blocking connections (with timeouts)...\n\n"));
+              "Non-blocking connections (with timeouts)...\n"));
 
   test_connect (reactor,
                 addresses,
@@ -279,15 +276,14 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("NonBlocking_Conn_Test"));
 
   // Validate options.
-  int result =
-    parse_args (argc, argv);
+  result = parse_args (argc, argv);
   if (result != 0)
     return result;
 
   if (test_select_reactor)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "\n\nTesting Select Reactor....\n\n"));
+                  "Testing Select Reactor....\n"));
 
       test (new ACE_Select_Reactor);
     }
@@ -295,7 +291,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (test_tp_reactor)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "\n\nTesting TP Reactor....\n\n"));
+                  "Testing TP Reactor....\n"));
 
       test (new ACE_TP_Reactor);
     }
@@ -305,7 +301,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (test_wfmo_reactor)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "\n\nTesting WFMO Reactor....\n\n"));
+                  "Testing WFMO Reactor....\n"));
 
       test (new ACE_WFMO_Reactor);
     }
@@ -314,6 +310,6 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   ACE_END_TEST;
 
-  return 0;
+  return result;
 }
 
