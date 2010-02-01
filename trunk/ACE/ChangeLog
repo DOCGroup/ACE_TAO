@@ -1,3 +1,25 @@
+Mon Feb  1 17:35:08 UTC 2010  Chris Cleeland  <cleeland_c@local>
+
+        * ace/Obstack_T.h:
+        * ace/Obstack_T.inl:
+        * ace/Obstack_T.cpp:
+        * ace/SStringfwd.h:
+        * ace/String_Base.h:
+        * ace/String_Base.inl:
+        * ace/String_Base.cpp:
+        * ace/Tokenizer_T.h:
+        * ace/Tokenizer_T.cpp:
+
+          Integrated changes originally done in OCITAO 1.4a by Steve Totten
+          to fulfill [RT 13868].
+
+          Wed Feb  1 10:40:35 2006  Steve Totten  <totten_s@ociweb.com>
+
+          Changed the use of "CHAR" as a template parameter to "ACE_CHAR_T" to
+          avoid possible clash with "CHAR" used as a preprocessor macro.
+          Thanks to Jennifer Kahng <jennifer dot kahng at lmco dot com> for
+          reporting the problem.  This change resolves [RT 8287].
+
 Mon Feb  1 11:21:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Connector.cpp:
@@ -19,7 +41,7 @@ Mon Feb  1 11:21:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jan 31 01:04:43 CST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ACE version 5.7.6 released.
+        * ACE version 5.7.6 released.
 
 Fri Jan 29 14:24:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
