@@ -131,6 +131,13 @@ be_visitor_obv_operation_arglist::visit_argument (be_argument *node)
   be_operation *op =
     be_operation::narrow_from_decl (this->ctx_->node ());
 
+  // Sometimes the operation is stored in the context scope instead.
+  if (op == 0)
+    {
+      op =
+        be_operation::narrow_from_scope (this->ctx_->scope ());
+    }
+        
   if (op == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

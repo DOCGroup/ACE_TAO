@@ -32,6 +32,7 @@
 #include "be_eventtype.h"
 #include "be_eventtype_fwd.h"
 #include "be_home.h"
+#include "be_finder.h"
 #include "be_extern.h"
 
 #include "ast_generator.h"
@@ -357,7 +358,7 @@ be_visitor_ccm_pre_proc::visit_home (be_home *node)
                          ACE_TEXT ("for implicit interface failed\n")),
                         -1);
     }
-
+/*
   if (this->gen_factories (node, xplicit) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -375,7 +376,7 @@ be_visitor_ccm_pre_proc::visit_home (be_home *node)
                          ACE_TEXT ("for finders declarations failed\n")),
                         -1);
     }
-
+*/
   if (this->gen_implicit_ops (node, implicit) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -426,6 +427,118 @@ be_visitor_ccm_pre_proc::visit_eventtype_fwd (be_eventtype_fwd *node)
     be_eventtype::narrow_from_decl (node->full_definition ());
 
   return this->visit_eventtype (fd);
+}
+
+int
+be_visitor_ccm_pre_proc::visit_operation (be_operation *node)
+{
+  UTL_ScopedName sn (node->local_name (), 0);
+
+  be_operation *home_op = 0;
+  ACE_NEW_RETURN (home_op,
+                  be_operation (node->return_type (),
+                                node->flags (),
+                                &sn,
+                                node->is_local (),
+                                node->is_abstract ()),
+                  -1);
+                                
+  home_op->be_add_exceptions (node->exceptions ());
+  
+  idl_global->scopes ().top ()->add_to_scope (home_op);
+  idl_global->scopes ().push (home_op);
+  
+  if (this->visit_scope (home_op) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("visit_operation - code generation ")
+                         ACE_TEXT ("for scope failed\n")),
+                        -1);
+    }
+    
+  idl_global->scopes ().pop ();
+    
+  return 0;
+}
+
+int
+be_visitor_ccm_pre_proc::visit_argument (be_argument *node)
+{
+  UTL_ScopedName sn (node->local_name (), 0);
+
+  be_argument *added_arg = 0;
+  ACE_NEW_RETURN (added_arg,
+                  be_argument (node->direction (),
+                               node->field_type (),
+                               &sn),
+                  -1);
+                  
+  idl_global->scopes ().top ()->add_to_scope (added_arg);
+  
+  return 0;
+}
+
+int
+be_visitor_ccm_pre_proc::visit_factory (be_factory *node)
+{
+  UTL_ScopedName sn (node->local_name (), 0);
+
+  be_operation *added_factory = 0;
+  ACE_NEW_RETURN (added_factory,
+                  be_operation (comp_,
+                                AST_Operation::OP_noflags,
+                                &sn,
+                                node->is_local (),
+                                node->is_abstract ()),
+                  -1);
+                  
+  idl_global->scopes ().top ()->add_to_scope (added_factory);
+  idl_global->scopes ().push (added_factory);
+  
+  if (this->visit_scope (node) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("visit_factory - code generation ")
+                         ACE_TEXT ("for scope failed\n")),
+                        -1);
+    }
+    
+  idl_global->scopes ().pop ();
+                    
+  return 0;
+}
+
+int
+be_visitor_ccm_pre_proc::visit_finder (be_finder *node)
+{
+  UTL_ScopedName sn (node->local_name (), 0);
+
+  be_operation *added_finder = 0;
+  ACE_NEW_RETURN (added_finder,
+                  be_operation (comp_,
+                                AST_Operation::OP_noflags,
+                                &sn,
+                                node->is_local (),
+                                node->is_abstract ()),
+                  -1);
+                  
+  idl_global->scopes ().top ()->add_to_scope (added_finder);
+  idl_global->scopes ().push (added_finder);
+  
+  if (this->visit_scope (node) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("visit_finder - code generation ")
+                         ACE_TEXT ("for scope failed\n")),
+                        -1);
+    }
+    
+  idl_global->scopes ().pop ();
+                    
+  return 0;
 }
 
 int
@@ -1561,13 +1674,16 @@ be_visitor_ccm_pre_proc::create_explicit (be_home *node)
   // We're at global scope here so we need to fool the scope stack
   // for a minute so the correct repo id can be calculated at
   // interface construction time.
-  idl_global->scopes ().push (node->defined_in ());
+  AST_Module *m =
+    AST_Module::narrow_from_scope (node->defined_in ());
+    
+  idl_global->scopes ().push (m);
 
   UTL_ScopedName *explicit_name =
-  this->create_scoped_name (0,
-                            node->local_name (),
-                            "Explicit",
-                            ScopeAsDecl (node->defined_in ()));
+    this->create_scoped_name ("",
+                              node->local_name (),
+                              "Explicit",
+                              m);
 
   be_interface *i = 0;
   ACE_NEW_RETURN (i,
@@ -1579,44 +1695,39 @@ be_visitor_ccm_pre_proc::create_explicit (be_home *node)
                                 false,
                                 false),
                   0);
-
-  // Back to reality.
-  idl_global->scopes ().pop ();
-
-  i->set_name (explicit_name);
-  i->set_defined_in (node->defined_in ());
-  i->set_imported (node->imported ());
+                  
+  (void) m->be_add_interface (i);
+  
   i->gen_fwd_helper_name ();
   i->original_interface (node);
-
-  // Reuse the home's decls in the explicit interface. No need
-  // to check for name clashes, redefinition, etc. because it
-  // has already been done in the home and the explicit interface
-  // is empty at this point. Later addition of factory and finder
-  // operations will do these checks to make sure they don't
-  // clash with the other decls.
-  for (UTL_ScopeActiveIterator iter (node, UTL_Scope::IK_decls);
-       ! iter.is_done ();
-       iter.next ())
+  
+  idl_global->scopes ().push (i);
+  
+  if (this->visit_scope (node) != 0)
     {
-      AST_Decl *d = iter.item ();
-      d->set_defined_in (i);
-      UTL_ScopedName *new_name =
-        this->create_scoped_name (0,
-                                  d->local_name ()->get_string (),
-                                  0,
-                                  i);
-      d->set_name (new_name);
-      i->add_to_scope (d);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("create_explicit - code generation ")
+                         ACE_TEXT ("for home scope failed\n")),
+                        0);
     }
-    
+
+  // Through with the explicit interface scope
+  idl_global->scopes ().pop ();
+
+  explicit_name->destroy ();
+  delete explicit_name;
+  explicit_name = 0;
+  
   header.destroy ();
+  
   parent_list->destroy ();
   delete parent_list;
   parent_list = 0;
+  
+  // Through with the scope containing the home.
+  idl_global->scopes ().pop ();
 
-  AST_Module *m = AST_Module::narrow_from_scope (node->defined_in ());
-  m->be_add_interface (i);
   return i;
 }
 

@@ -89,7 +89,7 @@ be_visitor_valuetype_init_arglist_ch::post_process (be_decl *bd)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // If we are not the last node in the list of arguments, generate a comma.
-  if (!this->last_node (bd))
+  if (! this->last_node (bd))
     {
       *os << "," << be_nl;
     }

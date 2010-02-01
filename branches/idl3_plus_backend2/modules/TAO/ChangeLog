@@ -1,3 +1,38 @@
+Mon Feb  1 22:30:44 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_home/factory_svs.cpp:
+        * TAO_IDL/be_include/be_visitor_home/factory_svs.h:
+
+          Removed this recently-added visitor, turned out
+          to be unnecessary.
+
+        * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+        * TAO_IDL/be/be_visitor_home/home_exs.cpp:
+        * TAO_IDL/be/be_visitor_home/home_svh.cpp:
+        * TAO_IDL/be/be_visitor_home/home_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_home/home_exh.cpp:
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_arglist_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_visitor_home.cpp:
+        * TAO_IDL/be/be_visitor_operation.cpp:
+        * TAO_IDL/be/be_scope.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/ast/ast_visitor_tmpl_module_inst.cpp:
+        * TAO_IDL/be_include/be_visitor_home/home_ex_idl.h:
+        * TAO_IDL/be_include/be_visitor_home/home_exh.h:
+        * TAO_IDL/be_include/be_visitor_home/home_svs.h:
+        * TAO_IDL/be_include/be_visitor_home/home_exs.h:
+        * TAO_IDL/be_include/be_visitor_home/home_svh.h:
+        * TAO_IDL/be_include/be_visitor_operation/arglist.h:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+        * TAO_IDL/be_include/be_visitor_home.h:
+
+          More work toward handling home factories and 
+          finders as members of the home's scope rather
+          than as a list in the home class. In progress.
+
 Fri Jan 29 22:03:03 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_home/factory_svs.cpp:
