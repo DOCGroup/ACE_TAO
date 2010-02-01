@@ -1,3 +1,11 @@
+Mon Feb  1 19:27:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/QoSProperties.h
+        * orbsvcs/orbsvcs/Notify/Topology_Saver.h
+        * orbsvcs/orbsvcs/Time_Utilities.h
+        * orbsvcs/orbsvcs/Time_Utilities.inl
+          Doxygen fixes
+
 Sun Jan 31 01:04:43 CST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAO version 1.7.6 released.
