@@ -281,8 +281,8 @@ public:
    * that were dispatched, 0 if the @a max_wait_time elapsed without
    * dispatching any handlers, or -1 if an error occurs.
    *
-   * The only difference between <alertable_handle_events> and
-   * <handle_events> is that in the alertable case, the eventloop will
+   * The only difference between alertable_handle_events() and
+   * handle_events() is that in the alertable case, the eventloop will
    * return when the system queues an I/O completion routine or an
    * Asynchronous Procedure Call.
    */
@@ -294,8 +294,8 @@ public:
    * @a max_wait_time value is a reference and can therefore never be
    * NULL.
    *
-   * The only difference between <alertable_handle_events> and
-   * <handle_events> is that in the alertable case, the eventloop will
+   * The only difference between alertable_handle_events() and
+   * handle_events() is that in the alertable case, the eventloop will
    * return when the system queues an I/O completion routine or an
    * Asynchronous Procedure Call.
    */
