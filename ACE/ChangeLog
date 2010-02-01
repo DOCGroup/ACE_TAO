@@ -1,3 +1,11 @@
+Tue Jan 26 03:56:45 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Init_ACE.h: Updated the documentation of ACE::init() and
+          ACE::fini() so it reflects what ACE actually does.  Thanks to
+          Steve Huston, Andrew Kaplan <alexande dot kaplan at tafcorp dot
+          com>, and Alexander Mintz <alexande dot mintz at tafcorp dot
+          com> for motivating this update.
+
 Mon Feb  1 17:35:08 UTC 2010  Chris Cleeland  <cleeland_c@local>
 
         * ace/Obstack_T.h:
