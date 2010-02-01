@@ -1,3 +1,7 @@
+Mon Feb  1 23:16:24  2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/Acceptor.h: Fixed up doxygen for ACE_Oneshot_Acceptor.
+
 Tue Jan 26 03:56:45 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Init_ACE.h: Updated the documentation of ACE::init() and
