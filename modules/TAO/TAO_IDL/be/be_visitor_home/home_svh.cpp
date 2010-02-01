@@ -200,6 +200,30 @@ be_visitor_home_svh::gen_servant_class (void)
                             -1);
         }
         
+      for (long i = 0; i < h->n_inherits (); ++i)
+        {
+          // A closure of all the supported interfaces is stored
+          // in the base class 'pd_inherits_flat' member.
+          be_interface *bi =
+            be_interface::narrow_from_decl (h->inherits ()[i]);
+   
+          int status =
+            bi->traverse_inheritance_graph (
+              be_visitor_home_svh::op_attr_decl_helper,
+              &os_);
+              
+          if (status == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("be_visitor_home_svh::")
+                                 ACE_TEXT ("gen_servant_class - ")
+                                 ACE_TEXT ("traverse_inheritance_graph() ")
+                                 ACE_TEXT ("failed for %s\n"),
+                                 bi->full_name ()),
+                                -1);
+            }
+        }  
+        
       h = be_home::narrow_from_decl (h->base_home ());
     }
 
@@ -220,6 +244,23 @@ be_visitor_home_svh::gen_entrypoint (void)
       << "::Components::HomeExecutorBase_ptr p," << be_nl
       << "::CIAO::Container_ptr c," << be_nl
       << "const char * ins_name);" << be_uidt; 
+}
+
+int
+be_visitor_home_svh::op_attr_decl_helper (be_interface * /* derived */,
+                                          be_interface *ancestor,
+                                          TAO_OutStream *os)
+{
+  /// We're in a static method, so we have to instantiate a temporary
+  /// visitor and context.
+  be_visitor_context ctx;
+  ctx.state (TAO_CodeGen::TAO_ROOT_SVH);
+  ctx.stream (os);
+  be_visitor_home_svh visitor (&ctx);
+  
+  /// Since this visitor overriddes only visit_operation() and 
+  /// visit_attribute(), we can get away with this for the declarations.
+  return visitor.visit_scope (ancestor);
 }
 
 

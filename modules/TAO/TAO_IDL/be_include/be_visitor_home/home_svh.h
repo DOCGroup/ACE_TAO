@@ -48,6 +48,12 @@ private:
   
   void gen_entrypoint (void);
   
+  /// Helper method passed to traverse_inheritance_graph(),
+  /// collects supported operations and attributes.
+  static int op_attr_decl_helper (be_interface *,
+                                  be_interface *,
+                                  TAO_OutStream *);
+                     
 private:
   be_home *node_;
   AST_Component *comp_;

@@ -48,25 +48,8 @@ public:
 private:
   int gen_servant_class (void);
   
-  int gen_ops_attrs (void);
-  
-  int gen_factories (void);
-  int gen_factories_r (AST_Home *node);
-  
-  int gen_finders (void);
-  int gen_finders_r (AST_Home *node);
-  
-  int gen_init_ops (AST_Home::INIT_LIST & list,
-                    bool finder_list);
-  
   void gen_entrypoint (void);
   
-  /// Helper method passed to traverse_inheritance_graph(),
-  /// collects supported operations and attributes.
-  static int op_attr_defn_helper (be_interface *,
-                                  be_interface *,
-                                  TAO_OutStream *);
-                     
 private:
   be_home *node_;
   AST_Component *comp_;

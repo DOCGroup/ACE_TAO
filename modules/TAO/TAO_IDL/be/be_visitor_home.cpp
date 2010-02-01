@@ -54,5 +54,4 @@
 #include "be_visitor_home/home_ex_idl.cpp"
 #include "be_visitor_home/home_exh.cpp"
 #include "be_visitor_home/home_exs.cpp"
-#include "be_visitor_home/factory_svs.cpp"
 

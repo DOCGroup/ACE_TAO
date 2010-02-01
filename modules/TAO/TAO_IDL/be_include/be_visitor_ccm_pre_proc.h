@@ -59,6 +59,11 @@ public:
   virtual int visit_eventtype (be_eventtype *node);
   virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
   
+  virtual int visit_operation (be_operation *node);
+  virtual int visit_argument (be_argument *node);
+  virtual int visit_factory (be_factory *node);
+  virtual int visit_finder (be_finder *node);
+  
 private:
   // Utility methods to handle the corresponding IDL declarations.
   int gen_factories (be_home *node,

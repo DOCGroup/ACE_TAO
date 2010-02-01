@@ -1143,12 +1143,12 @@ ast_visitor_tmpl_module_inst::visit_factory (AST_Factory *node)
   if (this->for_finder_)
     {
       added_factory =
-        idl_global->gen ()->create_factory (&sn);
+        idl_global->gen ()->create_finder (&sn);
     }
   else
     {
       added_factory =
-        idl_global->gen ()->create_finder (&sn);
+        idl_global->gen ()->create_factory (&sn);
     }
                   
   idl_global->scopes ().top ()->add_to_scope (added_factory);
