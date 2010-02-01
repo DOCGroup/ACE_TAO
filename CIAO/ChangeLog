@@ -1,3 +1,18 @@
+Mon Feb  1 19:16:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.idl:
+          Removed commented out code
+
+        * connectors/dds4ccm/performance-tests/Keyed/Connector/Perf_Keyed_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/DDSWriterEntity/Sender/Writer_Sender.mpc:
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender.mpc:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component.mpc
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component.mpc
+          Cleanup
+
+        * MPC/config/ciao_dds4ccm_ndds_impl.mpb:
+          Deleted, not used
+
 Sun Jan 31 01:04:43 CST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* CIAO version 0.7.6 released.

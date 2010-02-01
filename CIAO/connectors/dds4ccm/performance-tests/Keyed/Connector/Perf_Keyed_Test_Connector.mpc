@@ -85,9 +85,9 @@ project(DDS_Perf_Keyed_Test_Connector_stub) : ccm_stub, dds4ccm_base   {
 }
 
 project(DDS_Perf_Keyed_Test_Connector_exec) : ciao_executor, dds4ccm_impl {
-  after   += DDS_PK_Test_Connector_lem_stub DDS_Perf_Keyed_Test_Connector_stub DDS4CCM_lem_stub CIAO_DDS4CCM_NDDS_Impl DDS_Perf_Keyed_Test_Base_NDDS_TS
+  after   += DDS_PK_Test_Connector_lem_stub DDS_Perf_Keyed_Test_Connector_stub DDS4CCM_lem_stub DDS_Perf_Keyed_Test_Base_NDDS_TS
   sharedname = DDS_Perf_Keyed_Test_Connector_exec
-  libs += DDS_Perf_Keyed_Test_Connector_stub DDS_PK_Test_Connector_lem_stub DDS_Perf_Keyed_Test_Base_stub CIAO_DDS4CCM_NDDS_Impl DDS4CCM_lem_stub DDS_Perf_Keyed_Test_Base_NDDS_TS
+  libs += DDS_Perf_Keyed_Test_Connector_stub DDS_PK_Test_Connector_lem_stub DDS_Perf_Keyed_Test_Base_stub DDS4CCM_lem_stub DDS_Perf_Keyed_Test_Base_NDDS_TS
   libpaths += ../lib
   libout = ../lib
   includes += ..
