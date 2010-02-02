@@ -130,7 +130,9 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
 
   this->push_consumer_.activate (
     this->context_->get_connection_push_consumer_data_listener (),
-    this->context_->get_connection_push_consumer_status ());
+    this->context_->get_connection_push_consumer_status (),
+    0);
+// this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()  
 
   this->supplier_.activate ();
 

@@ -13,6 +13,8 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "dds4ccm/impl/ndds/PortStatusListener_T.h"
 
+class ACE_Reactor;
+
 namespace CIAO
 {
   namespace DDS4CCM
@@ -28,7 +30,8 @@ namespace CIAO
         DataReaderListener_T (
           typename CCM_TYPE::listener_type::_ptr_type listener,
           ::CCM_DDS::PortStatusListener_ptr port_status_listener,
-          ::CCM_DDS::DataListenerControl_ptr control);
+          ::CCM_DDS::DataListenerControl_ptr control,
+          ACE_Reactor* reactor);
 
         /// Destructor
         virtual ~DataReaderListener_T (void);
@@ -42,6 +45,7 @@ namespace CIAO
       private:
         typename CCM_TYPE::listener_type::_var_type listener_;
         ::CCM_DDS::DataListenerControl_var control_;
+        ACE_Reactor* reactor_;
       };
     }
   }

@@ -77,7 +77,8 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_Listen_T<DDS_TYPE, CCM_TYPE>::activate (
   typename CCM_TYPE::listener_type::_ptr_type listener,
-  ::CCM_DDS::PortStatusListener_ptr status)
+  ::CCM_DDS::PortStatusListener_ptr status,
+  ACE_Reactor* reactor)
 {
   CIAO_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE>::activate");
   try
@@ -88,7 +89,8 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE>::activate (
             <DDS_TYPE, CCM_TYPE> (
               listener,
               status,
-              this->data_control_.in ());
+              this->data_control_.in (),
+              reactor);
         }
       this->rti_reader_.set_listener (
         this->data_listener_.in (),

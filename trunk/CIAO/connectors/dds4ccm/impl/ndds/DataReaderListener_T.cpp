@@ -11,10 +11,12 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::DataReaderListener_T (
   typename CCM_TYPE::listener_type::_ptr_type listener,
   ::CCM_DDS::PortStatusListener_ptr port_status_listener,
-  ::CCM_DDS::DataListenerControl_ptr control)
+  ::CCM_DDS::DataListenerControl_ptr control,
+  ACE_Reactor* reactor)
   : PortStatusListener_T <DDS_TYPE, CCM_TYPE> (port_status_listener) ,
     listener_ (CCM_TYPE::listener_type::_duplicate (listener)),
-    control_ (::CCM_DDS::DataListenerControl::_duplicate (control))
+    control_ (::CCM_DDS::DataListenerControl::_duplicate (control)),
+    reactor_ (reactor)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderListener_T::DataReaderListener_T");
 }
@@ -38,12 +40,20 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(
     }
   else
     {
-      this->on_data_available_i (rdr);
-      
- //for now, don't use a DataReaderHandler. Just perform inline.
-//  ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>* rh =
- //     new  ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>(this, rdr);
-  //this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (rh);
+      if (this->reactor_)
+        {
+          ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>* rh =
+           new  ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>(this, rdr);
+          ACE_Event_Handler_var safe_handler (rh);
+          if (this->reactor_->notify (rh) != 0)
+            {
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("DataReaderListener_T::failed to use reactor.\n")));
+            }
+        }
+      else
+        {
+          this->on_data_available_i (rdr);
+        }
     }
 }
 
