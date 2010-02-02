@@ -1,3 +1,16 @@
+Tue Feb  2 12:36:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderHandler_T.h
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/ndds_impl.mpc
+        * connectors/dds4ccm/impl/ndds/OnUnexpectedStatusHandler.cpp
+        * connectors/dds4ccm/impl/ndds/OnUnexpectedStatusHandler.h
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.h
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.h
+          More rework for the thread switch
+
 Tue Feb  2 12:34:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CIAO/CommandlinePassage/CommandlinePassage.mpc:

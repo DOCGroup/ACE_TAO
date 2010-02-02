@@ -4,7 +4,7 @@
 #include "dds4ccm/impl/ndds/DataReader.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "dds4ccm/impl/ndds/DataReaderHandler_T.h"
-#include "tao/ORB_Core.h"
+#include "ace/Reactor.h"
 
 // Implementation skeleton constructor
 template <typename DDS_TYPE, typename CCM_TYPE>

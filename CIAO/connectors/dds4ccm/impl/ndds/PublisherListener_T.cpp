@@ -25,8 +25,8 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::~PublisherListener_T (vo
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_unexpected_status (
-  ::DDS::Entity* entity,
-  const ::DDS::StatusKind status_kind)
+  ::DDS::Entity_ptr entity,
+  ::DDS::StatusKind status_kind)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_unexpected_status");
 

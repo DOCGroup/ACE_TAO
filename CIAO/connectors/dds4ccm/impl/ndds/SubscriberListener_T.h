@@ -68,7 +68,7 @@ namespace CIAO
 
       virtual void on_unexpected_status(
         ::DDS::Entity* entity,
-        const ::DDS::StatusKind status_kind);
+        ::DDS::StatusKind status_kind);
 
     private:
       ::CCM_DDS::ConnectorStatusListener_var error_listener_;
