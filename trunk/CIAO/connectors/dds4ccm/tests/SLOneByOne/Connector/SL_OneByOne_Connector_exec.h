@@ -13,7 +13,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include /**/ "SL_OneByOne_Connector_exec_export.h"
-#include "tao/LocalObject.h"
 
 #include "dds4ccm/impl/ndds/DDS4CCM_Traits.h"
 #include "dds4ccm/impl/ndds/DDS_State_Connector_T.h"
@@ -25,7 +24,7 @@ namespace CIAO_SL_OneByOne_SL_OneByOne_Connector_Impl
 {
 
   // @from use of SL_OneByOne as a parameter
-  typedef CIAO::DDS4CCM::RTI::Type_Traits < 
+  typedef CIAO::DDS4CCM::RTI::Type_Traits <
     TestTopic,
     TestTopicSeq,
     TestTopicTypeSupport,

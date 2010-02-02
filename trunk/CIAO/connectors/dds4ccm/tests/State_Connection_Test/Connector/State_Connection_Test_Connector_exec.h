@@ -13,7 +13,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include /**/ "State_Connection_Test_Connector_exec_export.h"
-#include "tao/LocalObject.h"
 
 #include "dds4ccm/impl/ndds/DDS4CCM_Traits.h"
 #include "dds4ccm/impl/ndds/DDS_State_Connector_T.h"
@@ -24,7 +23,7 @@ namespace CIAO_State_Connection_Test_State_Connection_Test_Connector_Impl
 {
 
   // @from use of State_ConnectionTest as a parameter
-  typedef CIAO::DDS4CCM::RTI::Type_Traits < 
+  typedef CIAO::DDS4CCM::RTI::Type_Traits <
     State_ConnectionTest,
     State_ConnectionTestSeq,
     State_ConnectionTestTypeSupport,
