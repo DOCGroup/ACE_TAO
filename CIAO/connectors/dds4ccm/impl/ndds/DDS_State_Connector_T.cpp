@@ -166,7 +166,9 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
 
   this->push_state_observer_.activate (
     this->context_->get_connection_push_state_observer_data_listener (),
-    this->context_->get_connection_push_state_observer_status ());
+    this->context_->get_connection_push_state_observer_status (),
+    0);
+  // this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()
 
   this->pull_observer_.activate (
     this->context_->get_connection_pull_observer_status ());
