@@ -41,7 +41,7 @@ struct string_traits_decorator
     std::generate(begin, end, &derived::default_initializer);
   }
 
-# ifndef ACE_LACKS_MEMBER_TEMPLATES
+# if !defined (ACE_LACKS_MEMBER_TEMPLATES)
   // Allow MSVC++ >= 8 checked iterators to be used.
   template <typename iter>
   inline static void copy_range(
@@ -49,7 +49,7 @@ struct string_traits_decorator
   {
     std::transform(begin, end, dst, &derived::duplicate);
   }
-# else 
+# else
   inline static void copy_range(
       char_type ** begin, char_type ** end, char_type ** dst)
   {
@@ -57,7 +57,7 @@ struct string_traits_decorator
   }
 # endif  /* !ACE_LACKS_MEMBER_TEMPLATES */
 
-#ifndef ACE_LACKS_MEMBER_TEMPLATES
+# if !defined (ACE_LACKS_MEMBER_TEMPLATES)
   // Allow MSVC++ >= 8 checked iterators to be used.
   template <typename iter>
   inline static void copy_swap_range(
@@ -65,13 +65,13 @@ struct string_traits_decorator
   {
     std::swap_ranges(begin, end, dst);
   }
-#else
+# else
   inline static void copy_swap_range(
       char_type ** begin, char_type ** end, char_type ** dst)
   {
     std::swap_ranges(begin, end, dst);
   }
-#endif  /* !ACE_LACKS_MEMBER_TEMPLATES */
+# endif  /* !ACE_LACKS_MEMBER_TEMPLATES */
 
   inline static void release_range(
       char_type ** begin, char_type ** end)

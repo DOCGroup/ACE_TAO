@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/Var_Size_SArgument_T.h"
+#include "tao/PortableServer/SArg_Traits_T.h"
 #include "tao/PortableServer/portableserver_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,6 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
+#ifndef IIOP_TRANSPORT_CURRENT_H
+#define IIOP_TRANSPORT_CURRENT_H
 
 #include "tao/TransportCurrent/TCC.h"
 #include "tao/TransportCurrent/TC_IIOPC.h"
@@ -15,3 +17,4 @@ static int tao_iiop_transport_current_initializer_called =
 
 #endif /* TAO_AS_STATIC_LIBS */
 
+#endif /* IIOP_TRANSPORT_CURRENT_H */

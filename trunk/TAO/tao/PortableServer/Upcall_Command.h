@@ -17,7 +17,7 @@
 
 #include "tao/PortableServer/portableserver_export.h"
 
-#ifndef ACE_LACKS_PRAGMA_ONCE
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* !ACE_LACKS_PRAGMA_ONCE */
 

@@ -167,7 +167,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
 #if TAO_HAS_TRANSPORT_CURRENT == 1
   , stats_ (0)
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
-  , flush_in_post_open_ (0)
+  , flush_in_post_open_ (false)
 {
   ACE_NEW (this->messaging_object_,
             TAO_GIOP_Message_Base (orb_core,
