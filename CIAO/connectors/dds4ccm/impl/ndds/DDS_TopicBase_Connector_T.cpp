@@ -30,13 +30,13 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (ACE_Reactor* reactor)
 {
   CIAO_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate");
   DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate ();
   this->activate_default_topic ();
-  this->activate_subscriber ();
-  this->activate_publisher ();
+  this->activate_subscriber (reactor);
+  this->activate_publisher (reactor);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -285,7 +285,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_default_topic (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_subscriber (void)
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_subscriber (ACE_Reactor* reactor)
 {
   CIAO_TRACE ("DDS_TopicBase_Connector_T::activate_subscriber");
 
@@ -295,8 +295,8 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_subscriber (void)
         {
           this->subscriber_listener_ = new ::CIAO::DDS4CCM::SubscriberListener_T
             <DDS_TYPE, CCM_TYPE> (
-              this->context_,
-              this->context_->get_connection_error_listener ());
+              this->context_->get_connection_error_listener (),
+              reactor);
         }
       this->subscriber_->set_listener (
         this->subscriber_listener_.in (),
@@ -312,7 +312,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_subscriber (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_publisher (void)
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_publisher (ACE_Reactor* reactor)
 {
   CIAO_TRACE ("DDS_TopicBase_Connector_T::activate_publisher");
 
@@ -322,8 +322,8 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_publisher (void)
         {
           this->publisher_listener_ = new ::CIAO::DDS4CCM::PublisherListener_T
             <DDS_TYPE, CCM_TYPE> (
-              this->context_,
-              this->context_->get_connection_error_listener ());
+              this->context_->get_connection_error_listener (),
+              reactor);
         }
       this->publisher_->set_listener (
         this->publisher_listener_.in (),

@@ -126,7 +126,8 @@ void
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
 {
   CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate");
-  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate ();
+  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (0);
+// this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()  
 
   this->push_consumer_.activate (
     this->context_->get_connection_push_consumer_data_listener (),
