@@ -12,7 +12,7 @@
 #define CIAO_RTI_DATAREADERHANDLER_T_H
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-#include "ace/Reactor.h"
+#include "ace/Event_Handler.h"
 #include "dds4ccm/impl/ndds/DataReaderListener_T.h"
 
 namespace CIAO
