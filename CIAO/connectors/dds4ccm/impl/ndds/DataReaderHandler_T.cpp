@@ -13,6 +13,8 @@ CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::DataReaderHandler_T
       : drl_ (drl),
         dr_ (::DDS::DataReader::_duplicate (dr))
 {
+  this->reference_counting_policy ().value
+    (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>

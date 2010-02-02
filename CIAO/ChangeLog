@@ -1,3 +1,17 @@
+Tue Feb  2 10:44:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderHandler_T.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Listen_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Listen_T.h
+        * connectors/dds4ccm/impl/ndds/TopicListener_T.h
+          The internal dds4ccm classes will get an ACE_Reactor point, if
+          that is set, they will handle the thread switch using that
+          reactor. From the connector side we than only have to pass a
+          zero pointer or a pointer to a valid reactor
+
 Tue Feb  2 09:49:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector_exec.h
