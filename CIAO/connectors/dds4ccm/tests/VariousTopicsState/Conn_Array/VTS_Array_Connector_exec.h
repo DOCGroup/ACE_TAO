@@ -13,7 +13,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include /**/ "VTS_Array_Connector_exec_export.h"
-#include "tao/LocalObject.h"
 
 #include "dds4ccm/impl/ndds/DDS4CCM_Traits.h"
 #include "dds4ccm/impl/ndds/DDS_Event_Connector_T.h"
@@ -25,7 +24,7 @@ namespace CIAO_VTS_Array_VTS_Array_Connector_Impl
 {
 
   // @from use of VTopics as a parameter
-  typedef CIAO::DDS4CCM::RTI::Type_Traits < 
+  typedef CIAO::DDS4CCM::RTI::Type_Traits <
     TopicArray,
     TopicArraySeq,
     TopicArrayTypeSupport,

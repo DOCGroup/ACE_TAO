@@ -13,7 +13,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include /**/ "Quoter_Connector_exec_export.h"
-#include "tao/LocalObject.h"
 
 #include "dds4ccm/impl/ndds/DDS4CCM_Traits.h"
 #include "dds4ccm/impl/ndds/DDS_Event_Connector_T.h"
@@ -24,7 +23,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
 {
 
   // @from use of Stock_Info as a parameter
-  typedef CIAO::DDS4CCM::RTI::Type_Traits < 
+  typedef CIAO::DDS4CCM::RTI::Type_Traits <
     ::Quoter::Stock_Info,
     ::Quoter::Stock_InfoSeq,
     ::Quoter::Stock_InfoTypeSupport,

@@ -28,12 +28,35 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::~DataReaderListene
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(::DDS::DataReader *rdr)
+CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(::DDS::DataReader_ptr rdr)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderListener_T::on_data_available");
 
   if (CORBA::is_nil (this->control_.in ()) || this->control_->mode () == ::CCM_DDS::NOT_ENABLED)
-    return;
+    {
+      return;
+    }
+  else
+    {
+      this->on_data_available_i (rdr);
+      
+ //for now, don't use a DataReaderHandler. Just perform inline.
+//  ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>* rh =
+ //     new  ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>(this, rdr);
+  //this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (rh);
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (::DDS::DataReader_ptr rdr)
+{
+  CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderListener_T::on_data_available_i");
+
+  if (CORBA::is_nil (this->control_.in ()) || this->control_->mode () == ::CCM_DDS::NOT_ENABLED)
+    {
+      return;
+    }
 
   ::CIAO::DDS4CCM::RTI::RTI_DataReader_i* rd =
       dynamic_cast < ::CIAO::DDS4CCM::RTI::RTI_DataReader_i*>(rdr);
@@ -53,10 +76,7 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("DataReaderListener_T::narrow failed.\n")));
       return;
     }
-// for now, don't use a DataReaderHandler. Just perform inline.
-//  ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>* rh =
-//      new  ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>(this->listener_.in (), reader);
-//  this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (rh);
+    
   typename DDS_TYPE::dds_seq_type data;
   DDS_SampleInfoSeq sample_info;
   ::DDS::ReturnCode_t const result = reader->take (
@@ -67,10 +87,12 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(
               DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
               DDS_ANY_INSTANCE_STATE);
   if (result == DDS_RETCODE_NO_DATA)
+    {
       return;
+    }
   else if (result != DDS_RETCODE_OK)
     {
-      CIAO_ERROR (1, (LM_ERROR, ACE_TEXT ("Unable to take data from data reader, error %d.\n"), result));
+      CIAO_ERROR (1, (LM_ERROR, ACE_TEXT ("Unable to take data from data reader, error %C.\n"), translate_retcode (result)));
       return;
     }
 
@@ -99,8 +121,8 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(
 
       if (nr_of_samples > 0)
         {
-          typename CCM_TYPE::seq_type::_var_type inst_seq = new typename CCM_TYPE::seq_type;
-          ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;
+          typename CCM_TYPE::seq_type::_var_type inst_seq = new typename CCM_TYPE::seq_type (nr_of_samples);
+          ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq (nr_of_samples);
 
           infoseq->length (nr_of_samples);
           inst_seq->length (nr_of_samples);
