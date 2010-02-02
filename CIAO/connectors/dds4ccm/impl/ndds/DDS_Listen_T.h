@@ -8,6 +8,8 @@
 #ifndef DDS_LISTEN_T_H_
 #define DDS_LISTEN_T_H_
 
+class ACE_Reactor;
+
 template <typename DDS_TYPE, typename CCM_TYPE>
 class DDS_Listen_T
 {
@@ -35,7 +37,8 @@ public:
 
   void activate (
     typename CCM_TYPE::listener_type::_ptr_type listener,
-    ::CCM_DDS::PortStatusListener_ptr status);
+    ::CCM_DDS::PortStatusListener_ptr status,
+    ACE_Reactor* reactor);
 
   void passivate (void);
 

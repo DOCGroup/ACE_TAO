@@ -32,7 +32,7 @@ namespace CIAO
       static ::DDS::StatusMask get_mask (void);
 
     private:
-      CCM_DDS::ConnectorStatusListener_var  error_listener_;
+      CCM_DDS::ConnectorStatusListener_var error_listener_;
     };
   }
 }
