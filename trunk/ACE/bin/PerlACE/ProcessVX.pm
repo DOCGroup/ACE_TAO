@@ -436,18 +436,26 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
 $PerlACE::ProcessVX::WAIT_DELAY_FACTOR = $ENV{"ACE_RUNTEST_DELAY"};
 
 if (defined $ENV{'ACE_TEST_WINCE'}) {
-if ($OSNAME eq "MSWin32") {
-    require PerlACE::ProcessWinCE;
+  if ($OSNAME eq "MSWin32") {
+      require PerlACE::ProcessWinCE;
+  } else {
+      require PerlACE::ProcessWinCE_Unix;
+  }
 } else {
-    require PerlACE::ProcessWinCE_Unix;
+  if ($OSNAME eq "MSWin32") {
+      require PerlACE::ProcessVX_Win32;
+  }
+  else {
+      require PerlACE::ProcessVX_Unix;
+  }
 }
-} else {
-if ($OSNAME eq "MSWin32") {
-    require PerlACE::ProcessVX_Win32;
-}
-else {
-    require PerlACE::ProcessVX_Unix;
-}
+
+###
+
+sub kill_all ($)
+{
+  my $procmask = shift;
+  ## NOT IMPLEMENTED YET
 }
 
 1;

@@ -170,4 +170,11 @@ sub DeleteFile ($)
     unlink ("$newfile");
 }
 
+sub KillAll ($)
+{
+    my $self = shift;
+    my $procmask = shift;
+    PerlACE::ProcessVX::kill_all ($procmask);    
+}
+
 1;
