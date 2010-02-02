@@ -28,7 +28,7 @@ project(Inherited_Components_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(Inherited_Components_lem_stub) : ccm_svnt, dds4ccm_base   {
+project(Inherited_Components_lem_stub) : ccm_svnt {
   after += Inherited_Components_lem_gen Inherited_Components_stub
   libs  += ComponentC_stub
   sharedname = ComponentC_lem_stub
@@ -51,7 +51,7 @@ project(Inherited_Components_lem_stub) : ccm_svnt, dds4ccm_base   {
   }
 }
 
-project(Inherited_Components_stub) : ccm_stub, dds4ccm_base   {
+project(Inherited_Components_stub) : ccm_stub {
   after += Inherited_Components_idl_gen
   libs  +=
   sharedname = ComponentC_stub
@@ -74,7 +74,7 @@ project(Inherited_Components_stub) : ccm_stub, dds4ccm_base   {
   }
 }
 
-project(Inherited_Components_exec) : ciao_executor, dds4ccm_base   {
+project(Inherited_Components_exec) : ciao_executor {
   after   += Inherited_Components_lem_stub Inherited_Components_stub
   sharedname = ComponentC_exec
   libs += ComponentC_stub ComponentC_lem_stub
@@ -97,11 +97,10 @@ project(Inherited_Components_exec) : ciao_executor, dds4ccm_base   {
 }
 
 
-project(Inherited_Components_svnt) : ciao_servant, dds4ccm_base, nddslib {
-  after      += Inherited_Components_lem_stub DDS4CCM_lem_stub DDS4CCM_skel
+project(Inherited_Components_svnt) : ciao_servant {
+  after      += Inherited_Components_lem_stub
   sharedname  = ComponentC_svnt
-  libs       += ComponentC_stub ComponentC_lem_stub  \
-                DDS4CCM_lem_stub DDS4CCM_skel
+  libs       += ComponentC_stub ComponentC_lem_stub
   dynamicflags = INHERITED_COMPONENTS_SVNT_BUILD_DLL
 
   IDL_Files {
