@@ -533,4 +533,31 @@ sub TimedWait ($)
     return -1;
 }
 
+###
+
+sub kill_all ($)
+{
+  my $procmask = shift;
+  my $pid = -1;
+  my $first = 1;
+  for my $line (`ps w`) {    
+    if ($first) {
+      # skip first line (headers)
+      $first = 0;
+    } else {
+      # find matching process line
+      if ($line =~ /$procmask/) {
+        # find process PID
+        if ($line =~ /^\s*(\d+)\s+/) {
+          $pid = $1;
+          kill ('KILL', $pid); # kill process
+          if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+            print STDERR "INFO: Killed process at [$line]\n";
+          }
+        }
+      }
+    }
+  }
+}
+
 1;

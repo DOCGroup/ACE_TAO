@@ -72,4 +72,11 @@ sub WaitForFileTimed ($)
     return PerlACE::waitforfile_timed ($newfile, $timeout);
 }
 
+sub KillAll ($)
+{
+    my $self = shift;
+    my $procmask = shift;
+    PerlACE::ProcessVX::kill_all ($procmask);    
+}
+
 1;
