@@ -13,6 +13,7 @@
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Reactor.h"
+#include "dds4ccm/impl/ndds/DataReaderListener_T.h"
 
 namespace CIAO
 {
@@ -26,14 +27,14 @@ namespace CIAO
       {
         public:
           DataReaderHandler_T (
-              typename CCM_TYPE::listener_type::_ptr_type listener,
-              typename DDS_TYPE::data_reader * reader);
+              typename CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>* drl,
+              ::DDS::DataReader_ptr dr);
           virtual ~DataReaderHandler_T ();
 
           virtual int handle_exception (ACE_HANDLE fc = ACE_INVALID_HANDLE);
         private:
-          typename DDS_TYPE::data_reader * reader_;
-          typename CCM_TYPE::listener_type::_var_type listener_;
+          typename CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>* drl_;
+          ::DDS::DataReader_var dr_;
       };
     }
   }

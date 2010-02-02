@@ -1,3 +1,54 @@
+Tue Feb  2 09:49:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector_exec.h
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.h
+        * connectors/dds4ccm/performance-tests/Keyed/Connector/Perf_Keyed_Test_Connector_exec.h
+        * connectors/dds4ccm/tests/CSLDeadline/Connector/CSL_DeadlineTest_Connector_exec.h
+        * connectors/dds4ccm/tests/CSLQoS/Connector/CSL_QoSTest_Connector_exec.h
+        * connectors/dds4ccm/tests/CSLSampleRejected/Connector/CSL_SRTest_Connector_exec.h
+        * connectors/dds4ccm/tests/CSLUnexpStat/Connector/CSL_USTest_Connector_exec.h
+        * connectors/dds4ccm/tests/DDSWriterEntity/Connector/Writer_Connector_exec.h
+        * connectors/dds4ccm/tests/Event_Connection_Test/Connector/Event_Connection_Test_Connector_exec.h
+        * connectors/dds4ccm/tests/Getter/Connector/Getter_Test_Connector_exec.h
+        * connectors/dds4ccm/tests/InstanceHandle/Connector/Writer_Connector_exec.h
+        * connectors/dds4ccm/tests/KeyedSamples/Connector/Keyed_Test_Connector_exec.h
+        * connectors/dds4ccm/tests/KeyedWriter/Connector/Writer_Connector_exec.h
+        * connectors/dds4ccm/tests/ListenManyByMany/Connector/LMBM_Test_Connector_exec.h
+        * connectors/dds4ccm/tests/ListenNotEnabled/Connector/LNE_Test_Connector_exec.h
+        * connectors/dds4ccm/tests/ListenOneByOne/Connector/LOBO_Test_Connector_exec.h
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector_exec.h
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Connector/ConnectorStatusListener_Test_Connector_exec.h
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/SecConnector/CSL_TestSec_Connector_exec.h
+        * connectors/dds4ccm/tests/PSLDeadline/Connector/PSL_DeadlineTest_Connector_exec.h
+        * connectors/dds4ccm/tests/PSLSampleLost/Connector/PSL_SampleLost_Connector_exec.h
+        * connectors/dds4ccm/tests/QueryFilter/Connector/QueryFilter_Test_Connector_exec.h
+        * connectors/dds4ccm/tests/Reader/Connector/Reader_Test_Connector_exec.h
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Connector/SetConnectorAttribute_Connector_exec.h
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Connector/Connector_exec.h
+        * connectors/dds4ccm/tests/SLDisabled/Connector/SL_Disabled_Connector_exec.h
+        * connectors/dds4ccm/tests/SLManyByMany/Connector/SL_ManyByMany_Connector_exec.h
+        * connectors/dds4ccm/tests/SLOneByOne/Connector/SL_OneByOne_Connector_exec.h
+        * connectors/dds4ccm/tests/State_Connection_Test/Connector/State_Connection_Test_Connector_exec.h
+        * connectors/dds4ccm/tests/UnkeyedSamples/Connector/Unkeyed_Test_Connector_exec.h
+        * connectors/dds4ccm/tests/UnkeyedWriter/Connector/Writer_Connector_exec.h
+        * connectors/dds4ccm/tests/Updater/Connector/Updater_Connector_exec.h
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Array/VT_Array_Connector_exec.h
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Seq/VT_Seq_Connector_exec.h
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_String/VT_String_Connector_exec.h
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Connector/VTopic_Connector_exec.h
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Array/VTS_Array_Connector_exec.h
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Seq/VTS_Seq_Connector_exec.h
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_String/VTS_String_Connector_exec.h
+        * connectors/dds4ccm/tests/VariousTopicsState/Connector/VTopics_Connector_exec.h
+          removed not needed include of LocalObject
+
+        * connectors/dds4ccm/impl/ndds/DataReaderHandler_T.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderHandler_T.h
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h
+          First rework to implement the required thread switch
+
 Mon Feb  1 19:16:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.idl:
