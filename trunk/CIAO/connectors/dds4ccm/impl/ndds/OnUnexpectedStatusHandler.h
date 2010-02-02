@@ -14,12 +14,13 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "dds4ccm/idl/dds4ccm_ConnectorStatusListenerC.h"
 #include "ace/Event_Handler.h"
+#include "dds4ccm_ndds_impl_export.h"
 
 namespace CIAO
 {
   namespace DDS4CCM
   {
-    class On_Unexpected_Status_Handler :
+    class DDS4CCM_NDDS_IMPL_Export On_Unexpected_Status_Handler :
       public ACE_Event_Handler
     {
       public:

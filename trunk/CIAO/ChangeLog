@@ -1,3 +1,11 @@
+Tue Feb  2 12:43:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/OnUnexpectedStatusHandler.h:
+          Added missing export
+
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.cpp:
+          create eh when there is a reactor
+
 Tue Feb  2 12:36:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderHandler_T.h
