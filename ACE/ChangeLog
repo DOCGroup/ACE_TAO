@@ -1,3 +1,8 @@
+Tue Feb  2 19:52:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * html/Stats/index.shtml:
+          Updated link to Cell results
+
 Mon Feb  1 23:16:24  2010  Steve Huston  <shuston@riverace.com>
 
         * ace/Acceptor.h: Fixed up doxygen for ACE_Oneshot_Acceptor.
