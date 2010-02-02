@@ -416,4 +416,25 @@ sub TimedWait ($)
     return $self->Wait($timeout);
 }
 
+###
+
+sub kill_all ($)
+{
+  my $procmask = shift;
+  my $pid = -1;
+  for my $line (`tasklist /nh /fo csv`) {    
+    # find matching process line
+    if ($line =~ /$procmask/) {
+      # find process PID
+      if ($line =~ /^\"[^\"]+\",\"(\d+)\",/) {
+        $pid = $1;
+        Win32::Process::KillProcess ($pid, 0); # kill process
+        if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+          print STDERR "INFO: Killed process at [$line]\n"
+        }
+      }
+    }
+  }
+}
+
 1;
