@@ -11,6 +11,7 @@
 
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
+#include "tao/TypeCodeFactory_Adapter.h"
 
 #include "ace/OS_NS_string.h"
 
