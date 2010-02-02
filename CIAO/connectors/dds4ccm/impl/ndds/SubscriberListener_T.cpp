@@ -3,7 +3,7 @@
 
 #include "dds4ccm/impl/ndds/DataReader.h"
 #include "ciao/Logger/Log_Macros.h"
-#include "dds4ccm/impl/ndds/DataReaderHandler_T.h"
+#include "dds4ccm/impl/ndds/OnUnexpectedStatusHandler.h"
 #include "tao/ORB_Core.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -80,7 +80,21 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_unexpected_status (
 
   try
     {
-      this->error_listener_->on_unexpected_status (entity, status_kind);
+      if (this->reactor_)
+        {
+          ::CIAO::DDS4CCM::On_Unexpected_Status_Handler* rh =
+           new ::CIAO::DDS4CCM::On_Unexpected_Status_Handler (
+            this->error_listener_, entity, status_kind);
+          ACE_Event_Handler_var safe_handler (rh);
+          if (this->reactor_->notify (rh) != 0)
+            {
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("SubscriberListener_T::failed to use reactor.\n")));
+            }
+        }
+      else
+        {
+          this->error_listener_->on_unexpected_status (entity, status_kind);
+        }
     }
   catch (...)
     {
