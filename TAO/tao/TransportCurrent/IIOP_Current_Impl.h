@@ -17,6 +17,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/orbconf.h"
+
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 
 #include "tao/TransportCurrent/TC_IIOPC.h"

@@ -15,6 +15,9 @@
  */
 //=============================================================================
 
+#ifndef TAO_IMRCLIENT_IMPLREPO_PIDL
+#define TAO_IMRCLIENT_IMPLREPO_PIDL
+
 #include "tao/ImR_Client/ServerObject.pidl"
 
 module ImplementationRepository
@@ -174,3 +177,5 @@ module ImplementationRepository
     oneway void shutdown(in boolean activators, in boolean servers);
   };
 };
+
+#endif /* TAO_IMRCLIENT_IMPLREPO_PIDL */

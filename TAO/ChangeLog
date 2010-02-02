@@ -1,3 +1,59 @@
+Tue Feb  2 11:07:14 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_1361_Regression/server.cpp:
+        * tests/Bug_1361_Regression/shutdown.cpp:
+        * tests/Bug_1361_Regression/client.cpp:
+        * tests/Bug_1361_Regression/Echo.cpp:
+        * tests/Bug_1361_Regression/Bug_1361_Regression.mpc:
+          Simplified the test. It used libTAO_Messaging without any
+          need for it.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set_Find.h:
+        * tao/AnyTypeCode/Any_Array_Impl_T.cpp:
+        * tao/AnyTypeCode/Objref_TypeCode.cpp:
+        * tao/PortableServer/Any_SArg_Traits.h:
+        * tao/PortableServer/get_arg.h:
+        * tao/PI_Server/Policy_Creator_T.h:
+        * tao/Load_Protocol_Factory_T.h:
+        * tao/TransportCurrent/IIOP_Current_Impl.h:
+        * tao/Valuetype/Valuetype_Traits_Base_T.h:
+          Added required include.
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.h:
+        * tao/TransportCurrent/Current_ORBInitializer.h:
+          Removed unnecessary for templates export directive.
+
+        * tao/ImR_Client/ServerObject.pidl:
+        * tao/ImR_Client/ImplRepo.pidl:
+        * tao/AnyTypeCode/BasicTypeTraits.h:
+        * tao/IORTable/IORTable.pidl:
+        * tao/Object_Key.pidl:
+        * tao/TransportCurrent/Transport_Current.h:
+        * tao/TransportCurrent/IIOP_Transport_Current.h:
+          Added inclusion guards.
+
+        * tao/AnyTypeCode/Union_TypeCode.h:
+          Added necessary forward declaration.
+
+        * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h:
+        * tao/PortableServer/Upcall_Command.h:
+        * tao/PortableServer/Upcall_Wrapper.h:
+        * tao/Object_Reference_Traits_T.h:
+        * tao/String_Traits_T.h:
+        * tao/Value_Traits_T.h:
+        * tao/Array_Traits_T.h:
+        * tao/Utils/Servant_Var.inl:
+        * tao/Valuetype/Valuetype_Traits_T.h:
+          Changed 'ifndef ACE_LACKS_PRAGMA_ONCE' to
+          'if !defined (ACE_LACKS_PRAGMA_ONCE)'. So that ifndef is only used
+          for inclusion guards in TAO.
+
+        * tao/Transport.cpp:
+          Changed 0 to false for boolean type.
+
+        * tao/RTScheduling/ThreadAction.h:
+          Fixed code that didn't compile.
+
 Mon Feb  1 19:27:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/QoSProperties.h

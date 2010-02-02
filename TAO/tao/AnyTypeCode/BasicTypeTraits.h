@@ -12,6 +12,9 @@
  */
 //=============================================================================
 
+#ifndef BASIC_TYPE_TRAITS_H
+#define BASIC_TYPE_TRAITS_H
+
 #include "tao/AnyTypeCode/BasicTypeTraits_T.h"
 #include "tao/AnyTypeCode/Any.h"
 
@@ -467,3 +470,4 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
+#endif /* BASIC_TYPE_TRAITS_H */

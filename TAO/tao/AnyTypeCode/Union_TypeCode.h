@@ -31,6 +31,7 @@ namespace TAO
 {
   namespace TypeCode
   {
+    template <typename StringType, typename TypeCodeType> class Case;
 
     /**
      * @class Union

@@ -16,7 +16,12 @@
 // After generation the file diffs/Object_Key.diff must be used to manually
 // patch this file
 
+#ifndef TAO_OBJECTKEY_PIDL
+#define TAO_OBJECTKEY_PIDL
+
 module TAO
 {
   typedef sequence<octet> ObjectKey;
 };
+
+#endif /* TAO_OBJECTKEY_PIDL */
