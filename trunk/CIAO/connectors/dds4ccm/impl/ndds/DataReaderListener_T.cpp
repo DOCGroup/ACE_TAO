@@ -6,7 +6,6 @@
 #include "dds4ccm/impl/ndds/DataReaderHandler_T.h"
 #include "ace/Reactor.h"
 
-// Implementation skeleton constructor
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::DataReaderListener_T (
   typename CCM_TYPE::listener_type::_ptr_type listener,
@@ -21,7 +20,6 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::DataReaderListener
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderListener_T::DataReaderListener_T");
 }
 
-// Implementation skeleton destructor
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::~DataReaderListener_T (void)
 {

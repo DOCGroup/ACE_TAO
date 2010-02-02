@@ -13,7 +13,6 @@
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Event_Handler.h"
-#include "dds4ccm/impl/ndds/DataReaderListener_T.h"
 
 namespace CIAO
 {
@@ -21,6 +20,9 @@ namespace CIAO
   {
     namespace RTI
     {
+      template <typename DDS_TYPE, typename CCM_TYPE>
+      class DataReaderListener_T;
+
       template <typename DDS_TYPE, typename CCM_TYPE>
       class DataReaderHandler_T :
         public ACE_Event_Handler
