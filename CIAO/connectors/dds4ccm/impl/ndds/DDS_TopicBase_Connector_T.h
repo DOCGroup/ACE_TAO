@@ -29,7 +29,7 @@ public:
 
   virtual void configuration_complete (void);
   virtual void ccm_remove (void);
-  virtual void ccm_activate (void);
+  virtual void ccm_activate (ACE_Reactor* reactor);
   virtual void ccm_passivate (void);
 
 protected:
@@ -38,8 +38,8 @@ protected:
   void init_subscriber (void);
 
   void activate_default_topic (void);
-  void activate_publisher (void);
-  void activate_subscriber (void);
+  void activate_publisher (ACE_Reactor* reactor);
+  void activate_subscriber (ACE_Reactor* reactor);
 
   void passivate_default_topic (void);
   void passivate_publisher (void);
