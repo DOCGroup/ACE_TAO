@@ -8,10 +8,10 @@
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::SubscriberListener_T (
-  typename CCM_TYPE::context_type::_ptr_type context,
-  ::CCM_DDS::ConnectorStatusListener_ptr error_listener)
-    : context_ (CCM_TYPE::context_type::_duplicate (context)),
-      error_listener_ (::CCM_DDS::ConnectorStatusListener::_duplicate (error_listener))
+  ::CCM_DDS::ConnectorStatusListener_ptr error_listener,
+  ACE_Reactor* reactor)
+    : error_listener_ (::CCM_DDS::ConnectorStatusListener::_duplicate (error_listener)),
+      reactor_ (reactor)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::SubscriberListener_T::SubscriberListener_T");
 }
@@ -58,23 +58,35 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_changed(
 {
   CIAO_TRACE ("CIAO::DDS4CCM::SubscriberListener_T::on_liveliness_changed");
 
+  if (!CORBA::is_nil (this->error_listener_))
+    {
+      this->on_unexpected_status (reader, ::DDS::LIVELINESS_CHANGED_STATUS);
+    }
+  else
+    {
+      CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+                  ACE_TEXT ("SubscriberListener_T::on_liveliness_changed: ")
+                  ACE_TEXT ("No error listener connected\n")));
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_unexpected_status (
+  ::DDS::Entity* entity,
+  const ::DDS::StatusKind status_kind)
+{
+  CIAO_TRACE ("CIAO::DDS4CCM::SubscriberListener_T::on_unexpected_status");
+
   try
     {
-      if (!CORBA::is_nil (this->error_listener_))
-        {
-          this->error_listener_->on_unexpected_status (reader, ::DDS::LIVELINESS_CHANGED_STATUS);
-        }
-      else
-        {
-          CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                      ACE_TEXT ("SubscriberListener_T::on_liveliness_changed: ")
-                      ACE_TEXT ("No error listener connected\n")));
-        }
+      this->error_listener_->on_unexpected_status (entity, status_kind);
     }
   catch (...)
     {
-      CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("SubscriberListener_T::on_liveliness_changed: ")
-                             ACE_TEXT ("DDS Exception caught\n")));
+      CIAO_DEBUG (6, (LM_DEBUG,
+          ACE_TEXT ("SubscriberListener_T::on_unexpected_status: ")
+          ACE_TEXT ("DDS Exception caught\n")));
     }
 }
 
@@ -114,23 +126,15 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_subscription_matched
 {
   CIAO_TRACE ("CIAO::DDS4CCM::SubscriberListener_T::on_subscription_matched");
 
-  try
+  if (!CORBA::is_nil (this->error_listener_))
     {
-      if (!CORBA::is_nil (this->error_listener_))
-        {
-          this->error_listener_->on_unexpected_status (reader, ::DDS::SUBSCRIPTION_MATCHED_STATUS);
-        }
-      else
-        {
-          CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                      ACE_TEXT ("SubscriberListener_T::on_subscription_matched: ")
-                      ACE_TEXT ("No error listener connected\n")));
-        }
+      this->on_unexpected_status (reader, ::DDS::SUBSCRIPTION_MATCHED_STATUS);
     }
-  catch (...)
+  else
     {
-      CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("SubscriberListener_T::on_subscription_matched: ")
-                             ACE_TEXT ("DDS Exception caught\n")));
+      CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+                  ACE_TEXT ("SubscriberListener_T::on_subscription_matched: ")
+                  ACE_TEXT ("No error listener connected\n")));
     }
 }
 
@@ -141,23 +145,15 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_data_on_readers(
 {
   CIAO_TRACE ("CIAO::DDS4CCM::SubscriberListener_T::on_data_on_readers");
 
-  try
+  if (!CORBA::is_nil (this->error_listener_))
     {
-      if (!CORBA::is_nil (this->error_listener_))
-        {
-          this->error_listener_->on_unexpected_status (sub, ::DDS::DATA_ON_READERS_STATUS);
-        }
-      else
-        {
-          CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                      ACE_TEXT ("SubscriberListener_T::on_data_on_readers: ")
-                      ACE_TEXT ("No error listener connected\n")));
-        }
+      this->on_unexpected_status (sub, ::DDS::DATA_ON_READERS_STATUS);
     }
-  catch (...)
+  else
     {
-      CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("SubscriberListener_T::on_data_on_readers: ")
-                             ACE_TEXT ("DDS Exception caught\n")));
+      CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+                  ACE_TEXT ("SubscriberListener_T::on_data_on_readers: ")
+                  ACE_TEXT ("No error listener connected\n")));
     }
 }
 

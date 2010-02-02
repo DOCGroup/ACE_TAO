@@ -155,7 +155,9 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
 {
-  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate ();
+  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (0);
+  // this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()
+
   this->observable_.activate ();
 
   this->push_observer_.activate (

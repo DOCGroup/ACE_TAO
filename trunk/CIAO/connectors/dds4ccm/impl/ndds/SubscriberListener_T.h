@@ -13,6 +13,8 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
 
+class ACE_Reactor;
+
 namespace CIAO
 {
   namespace DDS4CCM
@@ -25,8 +27,8 @@ namespace CIAO
     public:
       /// Constructor
       SubscriberListener_T (
-        typename CCM_TYPE::context_type::_ptr_type context,
-        ::CCM_DDS::ConnectorStatusListener_ptr error_listener);
+        ::CCM_DDS::ConnectorStatusListener_ptr error_listener,
+        ACE_Reactor* reactor);
 
       /// Destructor
       virtual ~SubscriberListener_T (void);
@@ -64,9 +66,13 @@ namespace CIAO
 
       static ::DDS::StatusMask get_mask (void);
 
+      virtual void on_unexpected_status(
+        ::DDS::Entity* entity,
+        const ::DDS::StatusKind status_kind);
+
     private:
-    typename CCM_TYPE::context_type::_var_type context_;
       ::CCM_DDS::ConnectorStatusListener_var error_listener_;
+      ACE_Reactor* reactor_;
     };
   }
 }
