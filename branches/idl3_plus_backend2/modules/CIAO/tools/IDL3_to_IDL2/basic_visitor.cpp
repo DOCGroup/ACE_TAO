@@ -334,11 +334,6 @@ basic_visitor::visit_consumes (AST_Consumes *)
 int
 basic_visitor::visit_factory  (AST_Factory *node)
 {
-  if (node->imported ())
-    {
-      return 0;
-    }
-
   *os << be_nl;
 
   *os << "factory "
@@ -355,12 +350,6 @@ basic_visitor::visit_factory  (AST_Factory *node)
 
   this->check_id_and_version (node);
 
-  return 0;
-}
-
-int
-basic_visitor::visit_finder  (AST_Finder *)
-{
   return 0;
 }
 

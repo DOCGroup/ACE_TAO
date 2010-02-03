@@ -71,7 +71,6 @@ public:
   virtual int visit_eventtype_fwd (AST_EventTypeFwd *node) = 0;
   virtual int visit_home (AST_Home *node) = 0;
   virtual int visit_factory (AST_Factory *node);
-  virtual int visit_finder (AST_Finder *node);
   virtual int visit_structure (AST_Structure *node);
   virtual int visit_structure_fwd (AST_StructureFwd *node);
   virtual int visit_exception (AST_Exception *node);
