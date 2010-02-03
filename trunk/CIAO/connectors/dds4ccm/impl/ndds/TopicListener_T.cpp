@@ -2,6 +2,7 @@
 #include "dds4ccm/impl/ndds/Utils.h"
 
 #include "dds4ccm/impl/ndds/Topic.h"
+#include "dds4ccm/impl/ndds/OnUnexpectedStatusHandler.h"
 #include "ciao/Logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
