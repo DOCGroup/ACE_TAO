@@ -51,11 +51,11 @@ namespace CIAO
 
       static ::DDS::StatusMask get_mask (void);
 
+    private:
       virtual void on_unexpected_status(
         ::DDS::Entity* entity,
         ::DDS::StatusKind status_kind);
 
-    private:
       ::CCM_DDS::ConnectorStatusListener_var error_listener_;
       ACE_Reactor* reactor_;
     };
