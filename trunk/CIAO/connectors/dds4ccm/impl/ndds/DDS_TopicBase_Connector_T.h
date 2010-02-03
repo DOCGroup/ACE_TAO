@@ -37,7 +37,7 @@ protected:
   void init_publisher (void);
   void init_subscriber (void);
 
-  void activate_default_topic (void);
+  void activate_default_topic (ACE_Reactor* reactor);
   void activate_publisher (ACE_Reactor* reactor);
   void activate_subscriber (ACE_Reactor* reactor);
 

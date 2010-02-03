@@ -9,6 +9,8 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
 
+class ACE_Reactor;
+
 namespace CIAO
 {
   namespace DDS4CCM
@@ -20,7 +22,8 @@ namespace CIAO
     {
     public:
       /// Constructor
-      TopicListener_T (::CCM_DDS::ConnectorStatusListener_ptr error_listener);
+      TopicListener_T (::CCM_DDS::ConnectorStatusListener_ptr error_listener,
+                       ACE_Reactor* reactor);
 
       /// Destructor
       virtual ~TopicListener_T (void);
@@ -33,6 +36,7 @@ namespace CIAO
 
     private:
       CCM_DDS::ConnectorStatusListener_var error_listener_;
+      ACE_Reactor* reactor_;
     };
   }
 }
