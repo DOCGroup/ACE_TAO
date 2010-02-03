@@ -36,6 +36,38 @@ namespace CIAO
         ::DDS::Entity_var entity_;
         ::DDS::StatusKind status_kind_;
     };
+    
+    class DDS4CCM_NDDS_IMPL_Export OnRequestedOncompatibleQosHandler :
+      public ACE_Event_Handler
+    {
+      public:
+        OnRequestedOncompatibleQosHandler (
+            ::CCM_DDS::ConnectorStatusListener_ptr csl,
+            ::DDS::DataReader_ptr dr,
+            const ::DDS::RequestedIncompatibleQosStatus &status);
+        virtual ~OnRequestedOncompatibleQosHandler ();
+        virtual int handle_exception (ACE_HANDLE fc = ACE_INVALID_HANDLE);
+      private:
+        ::CCM_DDS::ConnectorStatusListener_var csl_;
+        ::DDS::DataReader_var dr_;
+        ::DDS::RequestedIncompatibleQosStatus const status_;
+    };
+
+    class DDS4CCM_NDDS_IMPL_Export OnSampleRejectedHandler :
+      public ACE_Event_Handler
+    {
+      public:
+        OnSampleRejectedHandler (
+            ::CCM_DDS::ConnectorStatusListener_ptr csl,
+            ::DDS::DataReader_ptr dr,
+            const ::DDS::SampleRejectedStatus &status);
+        virtual ~OnSampleRejectedHandler ();
+        virtual int handle_exception (ACE_HANDLE fc = ACE_INVALID_HANDLE);
+      private:
+        ::CCM_DDS::ConnectorStatusListener_var csl_;
+        ::DDS::DataReader_var dr_;
+        ::DDS::SampleRejectedStatus const status_;
+    };
   }
 }
 
