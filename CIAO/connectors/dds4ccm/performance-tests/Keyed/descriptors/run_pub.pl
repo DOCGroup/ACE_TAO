@@ -16,11 +16,11 @@ $daemons_running = 0;
 $em_running = 0;
 $ns_running = 0;
 
-$nr_daemon = 2;
-@ports = ( 60001, 60002 );
-@iorbases = ( "NodeApp1.ior", "NodeApp2.ior" );
+$nr_daemon = 1;
+@ports = ( 60001 );
+@iorbases = ( "Sender.ior" );
 @iorfiles = 0;
-@nodenames = ( "SenderNode", "ReceiverNode" );
+@nodenames = ( "SenderNode" );
 
 # ior files other than daemon
 # ior files other than daemon
@@ -42,7 +42,7 @@ $tg_exe_man = 0;
 $tg_executor = 0;
 
 $status = 0;
-$cdp_file = "Plan.cdp";
+$cdp_file = "Plan_pub.cdp";
 
 $ENV{"DANCE_TRACE_ENABLE"} = 0;
 $ENV{"CIAO_TRACE_ENABLE"} = 0;
@@ -144,11 +144,11 @@ init_ior_files ();
 
 # Invoke naming service
 
-$NS = $tg_naming->CreateProcess ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 1 -ORBEndpoint iiop://localhost:60003 -o $ior_nsfile");
+$NS = $tg_naming->CreateProcess ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 1 -ORBEndpoint iiop://localhost:60004 -o $ior_nsfile");
 
 $NS->Spawn ();
 
-print STDERR "Starting Naming Service with -m 1 -ORBEndpoint iiop://localhost:60003 -o ns.ior\n";
+print STDERR "Starting Naming Service with -m 1 -ORBEndpoint iiop://localhost:60004 -o ns.ior\n";
 
 if ($tg_naming->WaitForFileTimed ($ior_nsbase,
                                   $tg_naming->ProcessStartWaitInterval ()) == -1) {
@@ -159,7 +159,7 @@ if ($tg_naming->WaitForFileTimed ($ior_nsbase,
 
 $ns_running = 1;
 # Set up NamingService environment
-$ENV{"NameServiceIOR"} = "corbaloc:iiop:localhost:60003/NameService";
+$ENV{"NameServiceIOR"} = "corbaloc:iiop:localhost:60004/NameService";
 
 # Invoke node daemon.
 print "Invoking node daemon\n";
@@ -206,8 +206,8 @@ for ($i = 0; $i < $nr_daemon; ++$i) {
     }
 }
 
-print "Sleeping 120 seconds to allow task to complete\n";
-sleep (120);
+print "Sleeping 60 seconds to allow task to complete\n";
+sleep (60);
 
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";
