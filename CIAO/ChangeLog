@@ -1,3 +1,9 @@
+Wed Feb  3 15:08:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/ndds/PortStatusListener_T.cpp:
+          Reduced scope of the try/catch blocks
+
 Wed Feb  3 13:16:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp
