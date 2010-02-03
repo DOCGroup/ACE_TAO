@@ -34,7 +34,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (ACE_Reactor* reacto
 {
   CIAO_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate");
   DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate ();
-  this->activate_default_topic ();
+  this->activate_default_topic (reactor);
   this->activate_subscriber (reactor);
   this->activate_publisher (reactor);
 }
@@ -260,7 +260,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::init_publisher (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_default_topic (void)
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_default_topic (ACE_Reactor* reactor)
 {
   CIAO_TRACE ("DDS_TopicBase_Connector_T::activate_default_topic");
   try
@@ -269,7 +269,8 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_default_topic (void)
         {
           this->topiclistener_ = new ::CIAO::DDS4CCM::TopicListener_T
             <DDS_TYPE, CCM_TYPE> (
-                this->context_->get_connection_error_listener ());
+                this->context_->get_connection_error_listener (),
+                reactor);
         }
       this->topic_->set_listener (
         this->topiclistener_.in (),
