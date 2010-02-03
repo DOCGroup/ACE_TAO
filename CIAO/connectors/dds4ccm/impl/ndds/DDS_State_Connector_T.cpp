@@ -155,16 +155,18 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
 {
-  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (0);
-  // this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()
+  ACE_Reactor* reactor = 0;
+#if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
+  reactor = this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ();
+#endif
+  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (reactor);
 
   this->observable_.activate ();
 
   this->push_observer_.activate (
     this->context_->get_connection_push_observer_data_listener (),
     this->context_->get_connection_push_observer_status (),
-    0);
-  // this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()
+    reactor);
 
   this->push_state_observer_.activate (
     this->context_->get_connection_push_state_observer_data_listener (),

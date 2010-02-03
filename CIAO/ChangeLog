@@ -1,3 +1,16 @@
+Wed Feb  3 12:10:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/OnUnexpectedStatusHandler.cpp
+        * connectors/dds4ccm/impl/ndds/OnUnexpectedStatusHandler.h
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.cpp
+          Extended thread swit code, if you want to use this feature,
+          add CIAO_DDS4CCM_CONTEXT_SWITCH as 1 to your config.h file,
+          the code is not tested yet, when that is done, we will enable
+          this flag by default
+
 Wed Feb  3 11:59:43 UTC 2010  Marijke Hengstmengel  <mhengstmengle@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Keyed/Base/Perf_Keyed_Test_Base.idl:
@@ -13,7 +26,7 @@ Wed Feb  3 11:59:43 UTC 2010  Marijke Hengstmengel  <mhengstmengle@remedy.nl>
         * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender.idl:
         * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender_exec.cpp:
         * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender_exec.h:
-        Split in publisher and sunscriber proces. Use other time functions. Set some attributes.
+        Split in publisher and subscriber proces. Use other time functions. Set some attributes.
 
 Wed Feb  3 11:30:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 

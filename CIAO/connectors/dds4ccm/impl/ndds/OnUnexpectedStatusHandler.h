@@ -84,6 +84,38 @@ namespace CIAO
         ::DDS::Topic_var tp_;
         ::DDS::InconsistentTopicStatus const status_;
     };
+
+    class DDS4CCM_NDDS_IMPL_Export OnOfferedDeadlineMissedHandler :
+      public ACE_Event_Handler
+    {
+      public:
+        OnOfferedDeadlineMissedHandler (
+            ::CCM_DDS::ConnectorStatusListener_ptr csl,
+            ::DDS::DataWriter_ptr dw,
+            const ::DDS::OfferedDeadlineMissedStatus &status);
+        virtual ~OnOfferedDeadlineMissedHandler ();
+        virtual int handle_exception (ACE_HANDLE fc = ACE_INVALID_HANDLE);
+      private:
+        ::CCM_DDS::ConnectorStatusListener_var csl_;
+        ::DDS::DataWriter_var dw_;
+        ::DDS::OfferedDeadlineMissedStatus const status_;
+    };
+
+    class DDS4CCM_NDDS_IMPL_Export OnOfferedIncompatibleQoSHandler :
+      public ACE_Event_Handler
+    {
+      public:
+        OnOfferedIncompatibleQoSHandler (
+            ::CCM_DDS::ConnectorStatusListener_ptr csl,
+            ::DDS::DataWriter_ptr dw,
+            const ::DDS::OfferedIncompatibleQosStatus &status);
+        virtual ~OnOfferedIncompatibleQoSHandler ();
+        virtual int handle_exception (ACE_HANDLE fc = ACE_INVALID_HANDLE);
+      private:
+        ::CCM_DDS::ConnectorStatusListener_var csl_;
+        ::DDS::DataWriter_var dw_;
+        ::DDS::OfferedIncompatibleQosStatus const status_;
+    };
   }
 }
 
