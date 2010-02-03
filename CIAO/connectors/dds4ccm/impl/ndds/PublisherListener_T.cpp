@@ -4,6 +4,7 @@
 #include "dds4ccm/impl/ndds/DataReader.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "dds4ccm/impl/ndds/DataReaderHandler_T.h"
+#include "dds4ccm/impl/ndds/OnUnexpectedStatusHandler.h"
 #include "tao/ORB_Core.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
