@@ -45,7 +45,6 @@ namespace CIAO
       private:
         typename CCM_TYPE::listener_type::_var_type listener_;
         ::CCM_DDS::DataListenerControl_var control_;
-        ACE_Reactor* reactor_;
       };
     }
   }

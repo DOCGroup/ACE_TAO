@@ -28,18 +28,22 @@ namespace CIAO
         DataReaderStateListener_T (
                       typename CCM_TYPE::statelistener_type::_ptr_type listener,
                       ::CCM_DDS::PortStatusListener_ptr port_status_listener,
-                      ::CCM_DDS::StateListenerControl_ptr control);
+                      ::CCM_DDS::StateListenerControl_ptr control,
+                      ACE_Reactor* reactor);
 
         /// Destructor
         virtual ~DataReaderStateListener_T (void);
 
-        virtual void on_data_available( ::DDS::DataReader *rdr);
+        virtual void on_data_available( ::DDS::DataReader_ptr rdr);
 
         static ::DDS::StatusMask get_mask (void);
+
+        void on_data_available_i ( ::DDS::DataReader_ptr rdr);
 
       private:
         typename CCM_TYPE::statelistener_type::_var_type listener_;
         ::CCM_DDS::StateListenerControl_var control_;
+        ACE_Reactor* reactor_;
       };
     }
   }
