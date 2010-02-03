@@ -81,6 +81,7 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
                               ::DDS::StatusKind );
   private:
     Receiver_exec_i &callback_;
+    Atomic_Bool started_;
   };
 
   //============================================================
@@ -95,8 +96,7 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
     virtual ~Receiver_exec_i (void);
 
     void start ();
-    void record_time (const ACE_Time_Value &now,
-                      const ACE_Time_Value &ccm);
+    void record_time (unsigned long long nanotime);
 
     virtual ::CORBA::UShort iterations (void);
 
@@ -120,13 +120,11 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
       ::Components::SessionContext_ptr ctx);
 
     virtual void configuration_complete (void);
-
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
-  
+
     void write_one (const PerfKeyedTest & an_instance);
-   
 
   private:
     ::Perf_Keyed_Test::CCM_Receiver_Context_var context_;
@@ -139,6 +137,7 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
     Atomic_Bool   started_;
     CORBA::UShort iterations_;
     CORBA::UShort keys_;
+
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

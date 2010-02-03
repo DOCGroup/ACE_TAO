@@ -16,17 +16,17 @@ $daemons_running = 0;
 $em_running = 0;
 $ns_running = 0;
 
-$nr_daemon = 2;
-@ports = ( 60001, 60002 );
-@iorbases = ( "NodeApp1.ior", "NodeApp2.ior" );
+$nr_daemon = 1;
+@ports = ( 60002 );
+@iorbases = ( "Receiver.ior" );
 @iorfiles = 0;
-@nodenames = ( "SenderNode", "ReceiverNode" );
+@nodenames = ( "ReceiverNode" );
 
 # ior files other than daemon
 # ior files other than daemon
-$ior_nsbase = "ns.ior";
+$ior_nsbase = "ns1.ior";
 $ior_nsfile = 0;
-$ior_embase = "EM.ior";
+$ior_embase = "EM1.ior";
 $ior_emfile = 0;
 
 #  Processes
@@ -42,7 +42,7 @@ $tg_exe_man = 0;
 $tg_executor = 0;
 
 $status = 0;
-$cdp_file = "Plan.cdp";
+$cdp_file = "Plan_sub.cdp";
 
 $ENV{"DANCE_TRACE_ENABLE"} = 0;
 $ENV{"CIAO_TRACE_ENABLE"} = 0;
@@ -206,8 +206,8 @@ for ($i = 0; $i < $nr_daemon; ++$i) {
     }
 }
 
-print "Sleeping 120 seconds to allow task to complete\n";
-sleep (120);
+print "Sleeping 60 seconds to allow task to complete\n";
+sleep (60);
 
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";

@@ -8,19 +8,15 @@
 #ifndef PERF_KEYED_TEST_BASE_IDL
 #define PERF_KEYED_TEST_BASE_IDL
 
-//const long KEY_SIZE = 4;
 
 struct PerfKeyedTest {
   string key; //@key
+  long entity_id;  //id of subscriber/publisher
   unsigned long seq_num;
   long latency_ping;
-  unsigned long iteration;
-  unsigned long timestamp_ccm_sec;
-  long timestamp_ccm_usec;
-  //long timestamp_dds_sec;
-  //unsigned long timestamp_dds_usec;
-  //long duration_dds_sec;
-  //unsigned long duration_dds_usec;
+  string bin_data;
+  unsigned long data_len;
+  unsigned long long nanotime;
 };
 
 typedef sequence<PerfKeyedTest> PerfKeyedTest_Seq;
