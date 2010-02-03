@@ -30,23 +30,37 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_requested_incompatib
 {
   CIAO_TRACE ("CIAO::DDS4CCM::SubscriberListener_T::on_requested_incompatible_qos");
 
-  try
+  if (!CORBA::is_nil (this->error_listener_))
     {
-      if (!CORBA::is_nil (this->error_listener_))
+      try
         {
-          this->error_listener_->on_requested_incompatible_qos (the_reader, status);
+          if (this->reactor_)
+            {
+              ::CIAO::DDS4CCM::OnRequestedOncompatibleQosHandler* rh =
+               new ::CIAO::DDS4CCM::OnRequestedOncompatibleQosHandler (
+                this->error_listener_, the_reader, status);
+              ACE_Event_Handler_var safe_handler (rh);
+              if (this->reactor_->notify (rh) != 0)
+                {
+                  ACE_ERROR ((LM_ERROR, ACE_TEXT ("SubscriberListener_T::failed to use reactor.\n")));
+                }
+            }
+          else
+            {
+              this->error_listener_->on_requested_incompatible_qos (the_reader, status);
+            }
         }
-      else
+      catch (...)
         {
-          CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                      ACE_TEXT ("SubscriberListener_T::on_requested_incompatible_qos: ")
-                      ACE_TEXT ("No error listener connected\n")));
+          CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("SubscriberListener_T::on_requested_incompatible_qos: ")
+                                 ACE_TEXT ("DDS Exception caught\n")));
         }
     }
-  catch (...)
+  else
     {
-      CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("SubscriberListener_T::on_requested_incompatible_qos: ")
-                             ACE_TEXT ("DDS Exception caught\n")));
+      CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+                  ACE_TEXT ("SubscriberListener_T::on_requested_incompatible_qos: ")
+                  ACE_TEXT ("No error listener connected\n")));
     }
 }
 
@@ -107,28 +121,42 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_unexpected_status (
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_sample_rejected(
-  ::DDS::DataReader* reader,
+  ::DDS::DataReader_ptr reader,
   const ::DDS::SampleRejectedStatus& status)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::SubscriberListener_T::on_sample_rejected");
 
-  try
+  if (!CORBA::is_nil (this->error_listener_))
     {
-      if (!CORBA::is_nil (this->error_listener_))
+      try
         {
-          this->error_listener_->on_sample_rejected (reader, status);
+          if (this->reactor_)
+            {
+              ::CIAO::DDS4CCM::OnSampleRejectedHandler* rh =
+               new ::CIAO::DDS4CCM::OnSampleRejectedHandler (
+                this->error_listener_, reader, status);
+              ACE_Event_Handler_var safe_handler (rh);
+              if (this->reactor_->notify (rh) != 0)
+                {
+                  ACE_ERROR ((LM_ERROR, ACE_TEXT ("SubscriberListener_T::failed to use reactor.\n")));
+                }
+            }
+          else
+            {
+              this->error_listener_->on_sample_rejected (reader, status);
+            }
         }
-      else
+      catch (...)
         {
-          CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                      ACE_TEXT ("SubscriberListener_T::on_sample_rejected: ")
-                      ACE_TEXT ("No error listener connected\n")));
+          CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("SubscriberListener_T::on_sample_rejected: ")
+                                 ACE_TEXT ("DDS Exception caught\n")));
         }
     }
-  catch (...)
+  else
     {
-      CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("SubscriberListener_T::on_sample_rejected: ")
-                             ACE_TEXT ("DDS Exception caught\n")));
+      CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+                  ACE_TEXT ("SubscriberListener_T::on_sample_rejected: ")
+                  ACE_TEXT ("No error listener connected\n")));
     }
 }
 
