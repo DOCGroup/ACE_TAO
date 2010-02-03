@@ -119,3 +119,61 @@ CIAO::DDS4CCM::OnInconsistentTopicHandler::handle_exception (ACE_HANDLE)
     }
   return 0;
 }
+
+CIAO::DDS4CCM::OnOfferedDeadlineMissedHandler::OnOfferedDeadlineMissedHandler (
+  ::CCM_DDS::ConnectorStatusListener_ptr csl,
+  ::DDS::DataWriter_ptr dw,
+  const ::DDS::OfferedDeadlineMissedStatus &status) :
+    csl_ (::CCM_DDS::ConnectorStatusListener::_duplicate (csl)),
+    dw_ (::DDS::DataWriter::_duplicate (dw)),
+    status_ (status)
+{
+  this->reference_counting_policy ().value
+    (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
+}
+
+CIAO::DDS4CCM::OnOfferedDeadlineMissedHandler::~OnOfferedDeadlineMissedHandler (void)
+{
+}
+
+int
+CIAO::DDS4CCM::OnOfferedDeadlineMissedHandler::handle_exception (ACE_HANDLE)
+{
+  try
+    {
+      this->csl_->on_offered_deadline_missed (this->dw_, this->status_);
+    }
+  catch (...)
+    {
+    }
+  return 0;
+}
+
+CIAO::DDS4CCM::OnOfferedIncompatibleQoSHandler::OnOfferedIncompatibleQoSHandler (
+  ::CCM_DDS::ConnectorStatusListener_ptr csl,
+  ::DDS::DataWriter_ptr dw,
+  const ::DDS::OfferedIncompatibleQosStatus &status) :
+    csl_ (::CCM_DDS::ConnectorStatusListener::_duplicate (csl)),
+    dw_ (::DDS::DataWriter::_duplicate (dw)),
+    status_ (status)
+{
+  this->reference_counting_policy ().value
+    (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
+}
+
+CIAO::DDS4CCM::OnOfferedIncompatibleQoSHandler::~OnOfferedIncompatibleQoSHandler (void)
+{
+}
+
+int
+CIAO::DDS4CCM::OnOfferedIncompatibleQoSHandler::handle_exception (ACE_HANDLE)
+{
+  try
+    {
+      this->csl_->on_offered_incompatible_qos (this->dw_, this->status_);
+    }
+  catch (...)
+    {
+    }
+  return 0;
+}
