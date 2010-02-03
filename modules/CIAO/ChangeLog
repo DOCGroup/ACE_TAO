@@ -1,3 +1,24 @@
+Wed Feb  3 21:41:50 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/basic_visitor.cpp:
+        * tools/IDL3_to_IDL2/basic_visitor.h:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.h:
+        
+          Updated this backend to be in synch with recent
+          changes to the TAO_IDL frontend and other backends,
+          names the handling of home factories and fincers to
+          be as nodes in the home's scope, rather than as
+          member lists in the home AST node class.
+          
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
+        
+          Greatly updated and expanded with more test cases.
+          
+        * ciao/Servants/Home_Servant_Impl_T.h:
+        
+          Cosmetic changes.
+
 Fri Jan 29 17:59:53 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/checking_visitor.h:
