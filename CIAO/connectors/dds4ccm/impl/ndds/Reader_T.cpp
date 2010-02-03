@@ -362,7 +362,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::create_filter (
                         this->library_name_.c_str (),
                         this->profile_name_.c_str (),
                         listener,
-                        ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+                        ::CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
     }
   else
     {
@@ -371,7 +371,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::create_filter (
                         this->cft_,
                         drqos,
                         listener,
-                        ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+                        ::CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
     }
   if (CORBA::is_nil(reader))
     {

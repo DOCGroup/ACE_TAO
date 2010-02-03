@@ -7,26 +7,28 @@
 #include "tao/ORB_Core.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::PortStatusListener_T (
-      ::CCM_DDS::PortStatusListener_ptr port_status_listener)
-      : port_status_listener_ (::CCM_DDS::PortStatusListener::_duplicate (port_status_listener))
+CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::PortStatusListener_T (
+      ::CCM_DDS::PortStatusListener_ptr port_status_listener,
+      ACE_Reactor* reactor)
+      : port_status_listener_ (::CCM_DDS::PortStatusListener::_duplicate (port_status_listener)),
+        reactor_ (reactor)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::PortStatusListener_T::PortStatusListener_T");
+  CIAO_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::PortStatusListener_T");
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::~PortStatusListener_T (void)
+CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::~PortStatusListener_T (void)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::PortStatusListener_T::~PortStatusListener_T");
+  CIAO_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::~PortStatusListener_T");
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadline_missed (
+CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadline_missed (
   ::DDS::DataReader_ptr the_reader,
   const ::DDS::RequestedDeadlineMissedStatus & status)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::PortStatusListener_T::on_requested_deadline_missed");
+  CIAO_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::on_requested_deadline_missed");
 
   try
     {
@@ -50,11 +52,11 @@ CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadl
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
+CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
   ::DDS::DataReader_ptr the_reader,
   const ::DDS::SampleLostStatus & status)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::PortStatusListener_T::on_sample_lost");
+  CIAO_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::on_sample_lost");
 
   try
     {
@@ -78,7 +80,7 @@ CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::StatusMask
-CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask (void)
+CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask (void)
 {
   return DDS_REQUESTED_DEADLINE_MISSED_STATUS |
          DDS_SAMPLE_LOST_STATUS;
