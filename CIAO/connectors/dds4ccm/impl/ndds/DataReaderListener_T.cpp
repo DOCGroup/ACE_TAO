@@ -12,10 +12,9 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::DataReaderListener
   ::CCM_DDS::PortStatusListener_ptr port_status_listener,
   ::CCM_DDS::DataListenerControl_ptr control,
   ACE_Reactor* reactor)
-  : PortStatusListener_T <DDS_TYPE, CCM_TYPE> (port_status_listener) ,
+  : PortStatusListener_T <DDS_TYPE, CCM_TYPE> (port_status_listener, reactor) ,
     listener_ (CCM_TYPE::listener_type::_duplicate (listener)),
-    control_ (::CCM_DDS::DataListenerControl::_duplicate (control)),
-    reactor_ (reactor)
+    control_ (::CCM_DDS::DataListenerControl::_duplicate (control))
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderListener_T::DataReaderListener_T");
 }
@@ -84,7 +83,7 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("DataReaderListener_T::narrow failed.\n")));
       return;
     }
-    
+
   typename DDS_TYPE::dds_seq_type data;
   DDS_SampleInfoSeq sample_info;
   ::DDS::ReturnCode_t const result = reader->take (

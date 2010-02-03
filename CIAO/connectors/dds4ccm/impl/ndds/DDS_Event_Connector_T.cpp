@@ -140,7 +140,8 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
   this->supplier_.activate ();
 
   this->pull_consumer_.activate (
-    this->context_->get_connection_pull_consumer_status ());
+    this->context_->get_connection_pull_consumer_status (),
+    reactor);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>

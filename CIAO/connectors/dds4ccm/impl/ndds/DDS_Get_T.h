@@ -37,7 +37,8 @@ public:
     const char* profile_name);
 
   void activate (
-    ::CCM_DDS::PortStatusListener_ptr listener);
+    ::CCM_DDS::PortStatusListener_ptr listener,
+    ACE_Reactor* reactor);
 
   void passivate (void);
 

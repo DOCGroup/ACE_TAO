@@ -170,13 +170,16 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
 
   this->push_state_observer_.activate (
     this->context_->get_connection_push_state_observer_data_listener (),
-    this->context_->get_connection_push_state_observer_status ());
+    this->context_->get_connection_push_state_observer_status (),
+    reactor);
 
   this->pull_observer_.activate (
-    this->context_->get_connection_pull_observer_status ());
+    this->context_->get_connection_pull_observer_status (),
+    reactor);
 
   this->passive_observer_.activate (
-    this->context_->get_connection_passive_observer_status ());
+    this->context_->get_connection_passive_observer_status (),
+    reactor);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>

@@ -35,7 +35,8 @@ public:
 
   void activate (
     typename CCM_TYPE::statelistener_type::_ptr_type listener,
-    ::CCM_DDS::PortStatusListener_ptr status);
+    ::CCM_DDS::PortStatusListener_ptr status,
+    ACE_Reactor* reactor);
 
   void passivate (void);
 

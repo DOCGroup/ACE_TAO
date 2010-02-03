@@ -8,13 +8,13 @@
 
 #include <vector>
 
-// Implementation skeleton constructor
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::DataReaderStateListener_T (
   typename CCM_TYPE::statelistener_type::_ptr_type listener,
   ::CCM_DDS::PortStatusListener_ptr port_status_listener,
-  ::CCM_DDS::StateListenerControl_ptr control)
-  : PortStatusListener_T <DDS_TYPE, CCM_TYPE> (port_status_listener) ,
+  ::CCM_DDS::StateListenerControl_ptr control,
+  ACE_Reactor* reactor)
+  : PortStatusListener_T <DDS_TYPE, CCM_TYPE> (port_status_listener, reactor) ,
     listener_ (CCM_TYPE::statelistener_type::_duplicate (listener)),
     control_ (::CCM_DDS::StateListenerControl::_duplicate (control))
 {
@@ -30,7 +30,7 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::~DataReaderSt
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(::DDS::DataReader *rdr)
+CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(::DDS::DataReader_ptr rdr)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderStateListener_T::on_data_available");
 

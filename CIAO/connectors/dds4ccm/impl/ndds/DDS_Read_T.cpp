@@ -71,7 +71,8 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_Read_T<DDS_TYPE, CCM_TYPE>::activate (
-  ::CCM_DDS::PortStatusListener_ptr listener)
+  ::CCM_DDS::PortStatusListener_ptr listener,
+  ACE_Reactor* reactor)
 {
   CIAO_TRACE ("DDS_Read_T<DDS_TYPE, CCM_TYPE>::activate");
 
@@ -79,12 +80,12 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE>::activate (
     {
       if (CORBA::is_nil (this->status_.in ()))
         {
-          this->status_ = new ::CIAO::DDS4CCM::RTI::PortStatusListener_T
-            <DDS_TYPE, CCM_TYPE> (listener);
+          this->status_ = new ::CIAO::DDS4CCM::PortStatusListener_T
+            <DDS_TYPE, CCM_TYPE> (listener, reactor);
         }
       this->rti_reader_.set_listener (
         this->status_.in (),
-        ::CIAO::DDS4CCM::RTI::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+        ::CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
     }
   catch (...)
     {
@@ -101,9 +102,7 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE>::passivate ()
 
   try
     {
-      this->rti_reader_.set_listener (
-              ::DDS::DataReaderListener::_nil (),
-              0);
+      this->rti_reader_.set_listener (::DDS::DataReaderListener::_nil (), 0);
       this->status_ = ::DDS::DataReaderListener::_nil ();
     }
   catch (...)
