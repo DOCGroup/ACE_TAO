@@ -51,7 +51,7 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
       public virtual ::CORBA::LocalObject
   {
   public:
-    ConnectorStatusListener_exec_i (Atomic_Boolean &, int);
+    ConnectorStatusListener_exec_i (Atomic_Boolean &, int,  Sender_exec_i &callback_);
     virtual ~ConnectorStatusListener_exec_i (void);
     
     virtual
@@ -74,6 +74,7 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
                                ::DDS::StatusKind  status_kind);
 
   private:
+    Sender_exec_i &callback_;
     Atomic_Boolean &matched_;
     int number_of_subscribers_; 
   
@@ -114,22 +115,19 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     Sender_exec_i (void);
     virtual ~Sender_exec_i (void);
 
-    virtual ::CORBA::UShort iterations (void);
-     
     virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
     get_connector_status (void);
-    
+
     virtual ::CCM_DDS::PerfKeyedTest::CCM_Listener_ptr
     get_ping_listen_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_ping_listen_status (void);
 
+    void record_time (unsigned long long nanotime);
 
-   void record_time (const ACE_Time_Value &now,
-                     const ACE_Time_Value &ccm);
-
-    virtual void iterations (::CORBA::UShort iterations);
+    virtual ::CORBA::ULong iterations (void);
+    virtual void iterations (::CORBA::ULong iterations);
 
     virtual ::CORBA::UShort keys (void);
     virtual void keys (::CORBA::UShort keys);
@@ -140,8 +138,12 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     virtual ::CORBA::UShort sleep (void);
     virtual void sleep (::CORBA::UShort sleep);
 
-    virtual void wait_for_readers(int numSubscribers);
- 
+    virtual ::CORBA::UShort spin (void);
+    virtual void spin (::CORBA::UShort spin);
+
+    virtual ::CORBA::UShort datalen (void);
+    virtual void datalen (::CORBA::UShort datalen);
+
 
     virtual void set_session_context (::Components::SessionContext_ptr ctx);
 
@@ -153,6 +155,10 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
 
     void start (void);
     void write_one (void);
+    void write_one_with_spin (void);
+
+
+
 
   private:
     ::Perf_Keyed_Test::CCM_Sender_Context_var context_;
@@ -165,6 +171,9 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
 
     CORBA::UShort latency_count_;
     CORBA::UShort sleep_;
+    CORBA::UShort spin_;
+    CORBA::UShort datalen_;
+
 
     Atomic_Boolean matched_;
     int number_of_subscribers_;
@@ -172,7 +181,8 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     Atomic_Long  tv_max_;
     Atomic_Long  tv_min_;
     Atomic_Long  count_;
-
+    int number_of_msg_;
+    Atomic_Boolean timer_;
 
     TAO_SYNCH_MUTEX mutex_;
     typedef std::map<ACE_CString, PerfKeyedTest_var> Writer_Table;
@@ -186,4 +196,3 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
 }
 
 #endif /* ifndef */
-

@@ -19,14 +19,13 @@ module Perf_Keyed_Test
   {
     port CCM_DDS::PerfKeyedTest::DDS_Write info_write;
     attribute unsigned short keys;
-    attribute unsigned short iterations;
-    attribute unsigned short latency_count; //number of samples sent before  a latency ping packet is sent. default 100000, < sample_count
+    attribute unsigned long iterations;
+    attribute unsigned short latency_count; //number of samples sent before a latency ping packet is sent. default 100000, < sample_count
     attribute unsigned short sleep; //time to sleep between each send
+    attribute unsigned short spin;
+    attribute unsigned short datalen;
     provides CCM_DDS::ConnectorStatusListener connector_status;
     port CCM_DDS::PerfKeyedTest::DDS_Listen ping_listen;
-  //  attribute unsigned short sample_count;
-  //  attribute unsigned short latency_count; 
-  //  
   };
 };
 

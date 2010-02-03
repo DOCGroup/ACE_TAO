@@ -27,12 +27,27 @@ RTI Data Distribution Service user manual.
         -->
     <qos_profile name="LatencyQoS" is_default_qos="true">
       <!-- QoS used to configure the data writer created in the example code -->
-
       <datawriter_qos>
-        <!--
-        The number of samples for which the middleware will set aside space.
-        See the comments above for more information.
-        -->
+        <reliability>
+          <kind>RELIABLE_RELIABILITY_QOS</kind>
+          <max_blocking_time>
+            <sec>DURATION_INFINITE_SEC</sec>
+            <nanosec>DURATION_INFINITE_NSEC</nanosec>
+          </max_blocking_time>
+        </reliability>
+        <history>
+          <kind>KEEP_ALL_HISTORY_QOS</kind>
+        </history>
+        <durability>
+          <kind>TRANSIENT_DURABILITY_QOS</kind>
+        </durability>
+        <durability_service>
+          <history_kind>KEEP_LAST_HISTORY_QOS</history_kind>
+          <history_depth>1000</history_depth>
+          <max_samples>LENGTH_UNLIMITED</max_samples>
+          <max_samples_per_instance>LENGTH_UNLIMITED</max_samples_per_instance>
+          <max_instances>1000</max_instances>
+        </durability_service>
         <resource_limits>
           <max_instances>1000</max_instances>
           <initial_instances>1000</initial_instances>
@@ -40,83 +55,31 @@ RTI Data Distribution Service user manual.
           <initial_samples>100</initial_samples>
           <max_samples_per_instance>LENGTH_UNLIMITED</max_samples_per_instance>
         </resource_limits>
-        <!--
-        The behavioral contract under which the DataWriter will carry out the
-        reliability protocol. See the comments above for more information.
-        -->
         <protocol>
           <rtps_reliable_writer>
-            <low_watermark>10</low_watermark>
-            <high_watermark>100</high_watermark>
-            <heartbeats_per_max_samples>1000</heartbeats_per_max_samples>
-            <heartbeat_period>
-              <sec>DURATION_ZERO_SEC</sec>
-              <nanosec>10000000</nanosec>
-            </heartbeat_period>
-            <fast_heartbeat_period>
-              <sec>DURATION_ZERO_SEC</sec>
-              <nanosec>1000000</nanosec>
-            </fast_heartbeat_period>
-            <late_joiner_heartbeat_period>
-              <sec>DURATION_ZERO_SEC</sec>
-              <nanosec>10000000</nanosec>
-            </late_joiner_heartbeat_period>
-            <max_heartbeat_retries>LENGTH_UNLIMITED</max_heartbeat_retries>
-            <min_nack_response_delay>
-              <sec>DURATION_ZERO_SEC</sec>
-              <nanosec>DURATION_ZERO_NSEC</nanosec>
-            </min_nack_response_delay>
-            <max_nack_response_delay>
-              <sec>DURATION_ZERO_SEC</sec>
-              <nanosec>DURATION_ZERO_NSEC</nanosec>
-            </max_nack_response_delay>
+            <max_heartbeat_retries>10</max_heartbeat_retries>
           </rtps_reliable_writer>
         </protocol>
-
-        <writer_data_lifecycle>
-          <autodispose_unregistered_instances>false</autodispose_unregistered_instances>
-        </writer_data_lifecycle>
-
       </datawriter_qos>
-     
       <!-- QoS used to configure the data reader created in the example code -->
       <datareader_qos>
-        <!--
-        The number of samples for which the middleware will set aside space.
-        See the comments above for more information.
-        -->
+        <reliability>
+          <kind>RELIABLE_RELIABILITY_QOS</kind>
+        </reliability>
+        <history>
+          <kind>KEEP_ALL_HISTORY_QOS</kind>
+        </history>
         <resource_limits>
-          <max_instances>1000</max_instances>
-          <initial_instances>10</initial_instances>
-          <max_samples>100</max_samples>
           <initial_samples>100</initial_samples>
-          <max_samples_per_instance>100</max_samples_per_instance>
+          <initial_instances>100</initial_instances>
+          <max_samples>LENGTH_UNLIMITED</max_samples>
+          <max_instances>100</max_instances>
+          <max_samples_per_instance>LENGTH_UNLIMITED</max_samples_per_instance>
         </resource_limits>
-        <reader_resource_limits>
-          <max_samples_per_remote_writer>100</max_samples_per_remote_writer>
-        </reader_resource_limits>
-
-        <!--
-        The behavioral contract under which the DataReader will carry out the
-        reliability protocol. See the comments above for more information.
-        -->
-        <protocol>
-          <rtps_reliable_reader>
-            <min_heartbeat_response_delay>
-              <sec>DURATION_ZERO_SEC</sec>
-              <nanosec>DURATION_ZERO_NSEC</nanosec>
-            </min_heartbeat_response_delay>
-            <max_heartbeat_response_delay>
-              <sec>DURATION_ZERO_SEC</sec>
-              <nanosec>DURATION_ZERO_NSEC</nanosec>
-            </max_heartbeat_response_delay>
-            <heartbeat_suppression_duration>
-              <sec>DURATION_ZERO_SEC</sec>
-              <nanosec>DURATION_ZERO_NSEC</nanosec>
-            </heartbeat_suppression_duration>
-          </rtps_reliable_reader>
-        </protocol>
-      </datareader_qos>
+        <durability>
+          <kind>TRANSIENT_DURABILITY_QOS</kind>
+        </durability>
+        </datareader_qos>
       
     </qos_profile>
   </qos_library>
