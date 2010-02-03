@@ -1,3 +1,9 @@
+Wed Feb  3 09:52:47 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/IDL_Test/IDL_Test.mpc:
+        * tests/IDL_Test/Bug_3819_Regression.idl:
+          Added a test for bug#3819.
+
 Tue Feb  2 11:07:14 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Bug_1361_Regression/server.cpp:
