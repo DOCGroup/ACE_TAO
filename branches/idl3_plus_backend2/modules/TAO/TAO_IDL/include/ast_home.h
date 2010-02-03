@@ -5,7 +5,6 @@
 #define _AST_HOME_AST_HOME_HH
 
 #include "ast_interface.h"
-#include "ace/Unbounded_Queue.h"
 
 class AST_Home;
 class AST_Component;
@@ -46,12 +45,6 @@ public:
   AST_Component *managed_component (void) const;
 
   AST_Type *primary_key (void) const;
-  
-  typedef ACE_Unbounded_Queue<AST_Operation *> INIT_LIST;
-
-  INIT_LIST &factories (void);
-
-  INIT_LIST &finders (void);
 
   // Cleanup function.
   virtual void destroy (void);
@@ -80,8 +73,6 @@ private:
   AST_Home *pd_base_home;
   AST_Component *pd_managed_component;
   AST_Type *pd_primary_key;
-  INIT_LIST pd_factories;
-  INIT_LIST pd_finders;
   bool owns_primary_key_;
 };
 
