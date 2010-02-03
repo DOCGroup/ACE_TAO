@@ -1,3 +1,13 @@
+Wed Feb  3 15:23:16 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * orbsvcs/tests/AVStreams/Full_Profile/run_test.pl:
+        * orbsvcs/tests/AVStreams/Pluggable/run_test.pl:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/run_test.pl:
+
+          Increase sleep out time to allow these tests to pass on the
+          iPhone Simulator.
+
 Wed Feb  3 09:52:47 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/IDL_Test/IDL_Test.mpc:
@@ -70,7 +80,7 @@ Mon Feb  1 19:27:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jan 31 01:04:43 CST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO version 1.7.6 released.
+        * TAO version 1.7.6 released.
 
 Thu Jan 28 12:56:31 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
