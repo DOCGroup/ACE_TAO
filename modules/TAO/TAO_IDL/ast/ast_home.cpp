@@ -167,18 +167,6 @@ AST_Home::primary_key (void) const
   return this->pd_primary_key;
 }
 
-AST_Home::INIT_LIST &
-AST_Home::factories (void)
-{
-  return this->pd_factories;
-}
-
-AST_Home::INIT_LIST &
-AST_Home::finders (void)
-{
-  return this->pd_finders;
-}
-
 void
 AST_Home::destroy (void)
 {

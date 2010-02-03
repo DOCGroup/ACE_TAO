@@ -1648,7 +1648,6 @@ UTL_Scope::replace_scope (AST_Decl *old_decl,
           break;
         }
     }
-
 }
 
 
@@ -1892,8 +1891,11 @@ UTL_Scope::referenced (AST_Decl *e,
           // scope, then it's a type name for something else
           // that was, and it can appear any number of times
           // in this scope without a clash.
+          AST_Decl::NodeType nt = e->node_type ();
+          
           if (id->compare (*name_tmp) == true
-              && e->node_type () != AST_Decl::NT_module
+              && nt != AST_Decl::NT_module
+              && nt != AST_Decl::NT_param_holder
               && e->defined_in () == this)
             {
               idl_global->err ()->redef_error (id->get_string (),

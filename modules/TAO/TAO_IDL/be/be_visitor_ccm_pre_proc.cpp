@@ -9,6 +9,7 @@
 
 #include "be_visitor_ccm_pre_proc.h"
 #include "be_visitor_context.h"
+#include "be_visitor_xplicit_pre_proc.h"
 #include "be_root.h"
 #include "be_operation.h"
 #include "be_argument.h"
@@ -337,6 +338,11 @@ be_visitor_ccm_pre_proc::visit_consumes (be_consumes *node)
 int
 be_visitor_ccm_pre_proc::visit_home (be_home *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
+    
   AST_Interface *xplicit = this->create_explicit (node);
 
   if (xplicit == 0)
@@ -358,25 +364,7 @@ be_visitor_ccm_pre_proc::visit_home (be_home *node)
                          ACE_TEXT ("for implicit interface failed\n")),
                         -1);
     }
-/*
-  if (this->gen_factories (node, xplicit) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                         ACE_TEXT ("visit_home - code generation ")
-                         ACE_TEXT ("for factories declarations failed\n")),
-                        -1);
-    }
 
-  if (this->gen_finders (node, xplicit) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                         ACE_TEXT ("visit_home - code generation ")
-                         ACE_TEXT ("for finders declarations failed\n")),
-                        -1);
-    }
-*/
   if (this->gen_implicit_ops (node, implicit) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -427,196 +415,6 @@ be_visitor_ccm_pre_proc::visit_eventtype_fwd (be_eventtype_fwd *node)
     be_eventtype::narrow_from_decl (node->full_definition ());
 
   return this->visit_eventtype (fd);
-}
-
-int
-be_visitor_ccm_pre_proc::visit_operation (be_operation *node)
-{
-  UTL_ScopedName sn (node->local_name (), 0);
-
-  be_operation *home_op = 0;
-  ACE_NEW_RETURN (home_op,
-                  be_operation (node->return_type (),
-                                node->flags (),
-                                &sn,
-                                node->is_local (),
-                                node->is_abstract ()),
-                  -1);
-                                
-  home_op->be_add_exceptions (node->exceptions ());
-  
-  idl_global->scopes ().top ()->add_to_scope (home_op);
-  idl_global->scopes ().push (home_op);
-  
-  if (this->visit_scope (home_op) != 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                         ACE_TEXT ("visit_operation - code generation ")
-                         ACE_TEXT ("for scope failed\n")),
-                        -1);
-    }
-    
-  idl_global->scopes ().pop ();
-    
-  return 0;
-}
-
-int
-be_visitor_ccm_pre_proc::visit_argument (be_argument *node)
-{
-  UTL_ScopedName sn (node->local_name (), 0);
-
-  be_argument *added_arg = 0;
-  ACE_NEW_RETURN (added_arg,
-                  be_argument (node->direction (),
-                               node->field_type (),
-                               &sn),
-                  -1);
-                  
-  idl_global->scopes ().top ()->add_to_scope (added_arg);
-  
-  return 0;
-}
-
-int
-be_visitor_ccm_pre_proc::visit_factory (be_factory *node)
-{
-  UTL_ScopedName sn (node->local_name (), 0);
-
-  be_operation *added_factory = 0;
-  ACE_NEW_RETURN (added_factory,
-                  be_operation (comp_,
-                                AST_Operation::OP_noflags,
-                                &sn,
-                                node->is_local (),
-                                node->is_abstract ()),
-                  -1);
-                  
-  idl_global->scopes ().top ()->add_to_scope (added_factory);
-  idl_global->scopes ().push (added_factory);
-  
-  if (this->visit_scope (node) != 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                         ACE_TEXT ("visit_factory - code generation ")
-                         ACE_TEXT ("for scope failed\n")),
-                        -1);
-    }
-    
-  idl_global->scopes ().pop ();
-                    
-  return 0;
-}
-
-int
-be_visitor_ccm_pre_proc::visit_finder (be_finder *node)
-{
-  UTL_ScopedName sn (node->local_name (), 0);
-
-  be_operation *added_finder = 0;
-  ACE_NEW_RETURN (added_finder,
-                  be_operation (comp_,
-                                AST_Operation::OP_noflags,
-                                &sn,
-                                node->is_local (),
-                                node->is_abstract ()),
-                  -1);
-                  
-  idl_global->scopes ().top ()->add_to_scope (added_finder);
-  idl_global->scopes ().push (added_finder);
-  
-  if (this->visit_scope (node) != 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                         ACE_TEXT ("visit_finder - code generation ")
-                         ACE_TEXT ("for scope failed\n")),
-                        -1);
-    }
-    
-  idl_global->scopes ().pop ();
-                    
-  return 0;
-}
-
-int
-be_visitor_ccm_pre_proc::gen_factories (be_home *node,
-                                        AST_Interface *xplicit)
-{
-  AST_Operation **item = 0;
-
-  for (ACE_Unbounded_Queue_Iterator<AST_Operation *> i (node->factories ());
-       ! i.done ();
-       i.advance ())
-    {
-      i.next (item);
-      be_operation *op = be_operation::narrow_from_decl (*item);
-      
-      op->set_defined_in (xplicit);
-      UTL_ScopedName *new_name =
-        this->create_scoped_name (0,
-                                  op->local_name ()->get_string (),
-                                  0,
-                                  xplicit);
-      op->set_name (new_name);
-
-      if (op->be_insert_exception (this->create_failure_) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                             ACE_TEXT ("gen_factories - ")
-                             ACE_TEXT ("exception insertion failed\n")),
-                            -1);
-        }
-
-      if (0 == xplicit->be_add_operation (op))
-        {
-          return -1;
-        }
-    }
-
-  return 0;
-}
-
-int
-be_visitor_ccm_pre_proc::gen_finders (be_home *node,
-                                      AST_Interface *xplicit)
-{
-  AST_Operation **item = 0;
-
-  for (ACE_Unbounded_Queue_Iterator<AST_Operation *> i (node->finders ());
-       ! i.done ();
-       i.advance ())
-    {
-      i.next (item);
-      be_operation *op = be_operation::narrow_from_decl (*item);
-      
-      op->set_defined_in (xplicit);
-      UTL_ScopedName *new_name =
-        this->create_scoped_name (0,
-                                  op->local_name ()->get_string (),
-                                  0,
-                                  xplicit);
-      (*item)->set_name (new_name);
-
-      if (op->be_insert_exception (this->finder_failure_) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                             ACE_TEXT ("gen_factories - ")
-                             ACE_TEXT ("exception insertion failed\n")),
-                            -1);
-        }
-
-      if (0 == xplicit->be_add_operation (op))
-        {
-          return -1;
-        }
-    }
-
-  return 0;
 }
 
 int
@@ -1664,71 +1462,18 @@ be_visitor_ccm_pre_proc::lookup_consumer (be_field *node)
 AST_Interface *
 be_visitor_ccm_pre_proc::create_explicit (be_home *node)
 {
-  UTL_NameList *parent_list = this->compute_inheritance (node);
-  FE_InterfaceHeader header (0,
-                             parent_list,
-                             false,
-                             false,
-                             true);
-
-  // We're at global scope here so we need to fool the scope stack
-  // for a minute so the correct repo id can be calculated at
-  // interface construction time.
-  AST_Module *m =
-    AST_Module::narrow_from_scope (node->defined_in ());
-    
-  idl_global->scopes ().push (m);
-
-  UTL_ScopedName *explicit_name =
-    this->create_scoped_name ("",
-                              node->local_name (),
-                              "Explicit",
-                              m);
-
-  be_interface *i = 0;
-  ACE_NEW_RETURN (i,
-                  be_interface (explicit_name,
-                                header.inherits (),
-                                header.n_inherits (),
-                                header.inherits_flat (),
-                                header.n_inherits_flat (),
-                                false,
-                                false),
-                  0);
-                  
-  (void) m->be_add_interface (i);
+  be_visitor_xplicit_pre_proc v (this->ctx_);
   
-  i->gen_fwd_helper_name ();
-  i->original_interface (node);
-  
-  idl_global->scopes ().push (i);
-  
-  if (this->visit_scope (node) != 0)
+  if (v.visit_home (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                         ACE_TEXT ("create_explicit - code generation ")
-                         ACE_TEXT ("for home scope failed\n")),
+                         ACE_TEXT ("create_explicit - ")
+                         ACE_TEXT ("home xplicit visitor failed\n")),
                         0);
     }
-
-  // Through with the explicit interface scope
-  idl_global->scopes ().pop ();
-
-  explicit_name->destroy ();
-  delete explicit_name;
-  explicit_name = 0;
-  
-  header.destroy ();
-  
-  parent_list->destroy ();
-  delete parent_list;
-  parent_list = 0;
-  
-  // Through with the scope containing the home.
-  idl_global->scopes ().pop ();
-
-  return i;
+    
+  return v.xplicit ();
 }
 
 AST_Interface *
