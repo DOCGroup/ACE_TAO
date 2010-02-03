@@ -1,3 +1,9 @@
+Wed Feb  3 08:10:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/Two_Templ_Args/TwoTemplArgs.idl:
+          New IDL3+ test file, fails to compile, when TAO_IDL can
+          handle this, we will add the mpc file
+
 Tue Feb  2 12:43:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/OnUnexpectedStatusHandler.h:
