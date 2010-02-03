@@ -32,12 +32,26 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_unexpected_status (
 
   try
     {
-      this->error_listener_->on_unexpected_status (entity, status_kind);
+      if (this->reactor_)
+        {
+          ::CIAO::DDS4CCM::On_Unexpected_Status_Handler* rh =
+           new ::CIAO::DDS4CCM::On_Unexpected_Status_Handler (
+            this->error_listener_, entity, status_kind);
+          ACE_Event_Handler_var safe_handler (rh);
+          if (this->reactor_->notify (rh) != 0)
+            {
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("PublisherListener_T::failed to use reactor.\n")));
+            }
+        }
+      else
+        {
+          this->error_listener_->on_unexpected_status (entity, status_kind);
+        }
     }
   catch (...)
     {
       CIAO_DEBUG (6, (LM_DEBUG,
-          ACE_TEXT ("SubscriberListener_T::on_unexpected_status: ")
+          ACE_TEXT ("PublisherListener_T::on_unexpected_status: ")
           ACE_TEXT ("DDS Exception caught\n")));
     }
 }
@@ -50,23 +64,37 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_deadline_miss
 {
   CIAO_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_offered_deadline_missed");
 
-  try
+  if (!CORBA::is_nil (this->error_listener_))
     {
-      if (!CORBA::is_nil (this->error_listener_))
+      try
         {
-          this->error_listener_->on_offered_deadline_missed (the_Writer, status);
+          if (this->reactor_)
+            {
+              ::CIAO::DDS4CCM::OnOfferedDeadlineMissedHandler* rh =
+               new ::CIAO::DDS4CCM::OnOfferedDeadlineMissedHandler (
+                this->error_listener_, the_Writer, status);
+              ACE_Event_Handler_var safe_handler (rh);
+              if (this->reactor_->notify (rh) != 0)
+                {
+                  ACE_ERROR ((LM_ERROR, ACE_TEXT ("PublisherListener_T::failed to use reactor.\n")));
+                }
+            }
+          else
+            {
+              this->error_listener_->on_offered_deadline_missed (the_Writer, status);
+            }
         }
-      else
+      catch (...)
         {
-          CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                      ACE_TEXT ("PublisherListener_T::on_offered_deadline_missed: ")
-                      ACE_TEXT ("No error listener connected\n")));
+          CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("PublisherListener_T::on_offered_deadline_missed: ")
+                                 ACE_TEXT ("DDS Exception caught\n")));
         }
     }
-  catch (...)
+  else
     {
-      CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("PublisherListener_T::on_offered_deadline_missed: ")
-                             ACE_TEXT ("DDS Exception caught\n")));
+      CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+                  ACE_TEXT ("PublisherListener_T::on_offered_deadline_missed: ")
+                  ACE_TEXT ("No error listener connected\n")));
     }
 }
 
@@ -78,23 +106,37 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_incompatible_
 {
   CIAO_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_offered_incompatible_qos");
 
-  try
+  if (!CORBA::is_nil (this->error_listener_))
     {
-      if (!CORBA::is_nil (this->error_listener_))
+      try
         {
-          this->error_listener_->on_offered_incompatible_qos (the_Writer, status);
+          if (this->reactor_)
+            {
+              ::CIAO::DDS4CCM::OnOfferedIncompatibleQoSHandler* rh =
+               new ::CIAO::DDS4CCM::OnOfferedIncompatibleQoSHandler (
+                this->error_listener_, the_Writer, status);
+              ACE_Event_Handler_var safe_handler (rh);
+              if (this->reactor_->notify (rh) != 0)
+                {
+                  ACE_ERROR ((LM_ERROR, ACE_TEXT ("PublisherListener_T::failed to use reactor.\n")));
+                }
+            }
+          else
+            {
+              this->error_listener_->on_offered_incompatible_qos (the_Writer, status);
+            }
         }
-      else
+      catch (...)
         {
-          CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                      ACE_TEXT ("PublisherListener_T::on_offered_incompatible_qos: ")
-                      ACE_TEXT ("No error listener connected\n")));
+          CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("PublisherListener_T::on_offered_incompatible_qos: ")
+                                 ACE_TEXT ("DDS Exception caught\n")));
         }
     }
-  catch (...)
+  else
     {
-      CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("PublisherListener_T::on_offered_incompatible_qos: ")
-                             ACE_TEXT ("DDS Exception caught\n")));
+      CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+                  ACE_TEXT ("PublisherListener_T::on_offered_incompatible_qos: ")
+                  ACE_TEXT ("No error listener connected\n")));
     }
 }
 

@@ -112,9 +112,9 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (void)
   CIAO_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields");
 /*
     For future use, DDS_TYPE doesn't have get_typecode yet
-    ::DDS_TypeCode* ptr = ::DDS_TYPE::get_typecode ();
+    ::DDS_TypeCode* ptr = ::DDS_TYPE::type_support::get_typecode ();
     DDS_ExceptionCode_t ex;
-    DDS_UnsignedLong number = ptr->member_count (ex);
+    DDS_UnsignedLong const number = ptr->member_count (ex);
     for (DDS_UnsignedLong i = 0; i < number; i++)
     {
      if (ptr->is_member_key (i, ex))
@@ -155,7 +155,6 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::init_default_topic (void)
             {
               if (this->library_name_ && this->profile_name_)
                 {
-                  ::DDS::TopicQos tqos;
                   this->topic_ =
                     this->domain_participant_->create_topic_with_profile (
                       this->topic_name_.in (),
