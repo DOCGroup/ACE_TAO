@@ -30,23 +30,23 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadline_m
 {
   CIAO_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::on_requested_deadline_missed");
 
-  try
+  if (!CORBA::is_nil (this->port_status_listener_))
     {
-      if (!CORBA::is_nil (this->port_status_listener_))
+      try
         {
           this->port_status_listener_->on_requested_deadline_missed (the_reader, status);
         }
-      else
+      catch (...)
         {
-          CIAO_DEBUG (6, (LM_DEBUG,
-                      ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
-                      ACE_TEXT ("No portstatus listener installed\n")));
+          CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
+                                 ACE_TEXT ("DDS Exception caught\n")));
         }
     }
-  catch (...)
+  else
     {
-      CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
-                             ACE_TEXT ("DDS Exception caught\n")));
+      CIAO_DEBUG (6, (LM_DEBUG,
+                  ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
+                  ACE_TEXT ("No portstatus listener installed\n")));
     }
 }
 
@@ -58,23 +58,24 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
 {
   CIAO_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::on_sample_lost");
 
-  try
+  if (!CORBA::is_nil (this->port_status_listener_))
     {
-      if (!CORBA::is_nil (this->port_status_listener_))
+      try
         {
           this->port_status_listener_->on_sample_lost (the_reader, status);
         }
-      else
+      catch (...)
         {
           CIAO_DEBUG (6, (LM_DEBUG,
-                      ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
-                      ACE_TEXT ("No portstatus listener installed\n")));
+                          ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
+                          ACE_TEXT ("DDS Exception caught\n")));
         }
     }
-  catch (...)
+  else
     {
-      CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
-                             ACE_TEXT ("DDS Exception caught\n")));
+      CIAO_DEBUG (6, (LM_DEBUG,
+                  ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
+                  ACE_TEXT ("No portstatus listener installed\n")));
     }
 }
 

@@ -27,9 +27,9 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
   const char* profile_name)
 {
   CIAO_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
-  try
+  if (CORBA::is_nil  (this->data_writer_.in ()))
     {
-      if (CORBA::is_nil  (this->data_writer_.in ()))
+      try
         {
           ::DDS::DataWriter_var dwv_tmp;
           if (library_name && profile_name)
@@ -56,11 +56,11 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
           this->data_writer_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
           this->dds_update_.set_impl (dwv_tmp);
         }
-    }
-  catch (...)
-    {
-      CIAO_ERROR (1, (LM_EMERGENCY, "DDS_Update_T::configuration_complete: Caught unknown c++ exception.\n"));
-      throw CORBA::INTERNAL ();
+      catch (...)
+        {
+          CIAO_ERROR (1, (LM_EMERGENCY, "DDS_Update_T::configuration_complete: Caught unknown c++ exception.\n"));
+          throw CORBA::INTERNAL ();
+        }
     }
 }
 
