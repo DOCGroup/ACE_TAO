@@ -68,6 +68,22 @@ namespace CIAO
         ::DDS::DataReader_var dr_;
         ::DDS::SampleRejectedStatus const status_;
     };
+
+    class DDS4CCM_NDDS_IMPL_Export OnInconsistentTopicHandler :
+      public ACE_Event_Handler
+    {
+      public:
+        OnInconsistentTopicHandler (
+            ::CCM_DDS::ConnectorStatusListener_ptr csl,
+            ::DDS::Topic_ptr tp,
+            const ::DDS::InconsistentTopicStatus &status);
+        virtual ~OnInconsistentTopicHandler ();
+        virtual int handle_exception (ACE_HANDLE fc = ACE_INVALID_HANDLE);
+      private:
+        ::CCM_DDS::ConnectorStatusListener_var csl_;
+        ::DDS::Topic_var tp_;
+        ::DDS::InconsistentTopicStatus const status_;
+    };
   }
 }
 

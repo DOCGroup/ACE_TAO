@@ -1,3 +1,13 @@
+Wed Feb  3 11:30:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.h:
+        * connectors/dds4ccm/impl/ndds/OnUnexpectedStatusHandler.cpp:
+        * connectors/dds4ccm/impl/ndds/OnUnexpectedStatusHandler.h:
+        * connectors/dds4ccm/impl/ndds/TopicListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/TopicListener_T.h:
+          Thread switch for the on_inconsistent_topic
+
 Wed Feb  3 11:19:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/OnUnexpectedStatusHandler.cpp

@@ -90,3 +90,32 @@ CIAO::DDS4CCM::OnSampleRejectedHandler::handle_exception (ACE_HANDLE)
     }
   return 0;
 }
+
+CIAO::DDS4CCM::OnInconsistentTopicHandler::OnInconsistentTopicHandler (
+  ::CCM_DDS::ConnectorStatusListener_ptr csl,
+  ::DDS::Topic_ptr tp,
+  const ::DDS::InconsistentTopicStatus &status) :
+    csl_ (::CCM_DDS::ConnectorStatusListener::_duplicate (csl)),
+    tp_ (::DDS::Topic::_duplicate (tp)),
+    status_ (status)
+{
+  this->reference_counting_policy ().value
+    (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
+}
+
+CIAO::DDS4CCM::OnInconsistentTopicHandler::~OnInconsistentTopicHandler (void)
+{
+}
+
+int
+CIAO::DDS4CCM::OnInconsistentTopicHandler::handle_exception (ACE_HANDLE)
+{
+  try
+    {
+      this->csl_->on_inconsistent_topic (this->tp_, this->status_);
+    }
+  catch (...)
+    {
+    }
+  return 0;
+}
