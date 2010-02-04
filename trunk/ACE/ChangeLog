@@ -1,3 +1,17 @@
+Thu Feb  3 09:57:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Atomic_Op.inl:
+          Added support for the GCC Atomic Builtins, if you want to
+          use these, add ACE_HAS_GCC_ATOMIC_BUILTINS defined as 1 in
+          your config file
+
+        * ace/Reactor.cpp:
+        * ace/Select_Reactor_Base.cpp:
+          Layout changes
+
+        * ace/Reactor.h:
+          Doxygen change
+
 Tue Feb  2 19:57:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * bin/PerlACE/TestTarget_WinCE.pm:
@@ -9,7 +23,7 @@ Tue Feb  2 19:57:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
         * bin/PerlACE/TestTarget_LVRT.pm:
         * bin/PerlACE/Process_Win32.pm:
         * bin/PerlACE/Process_VMS.pm:
-        
+
           Added killall methods to the Process and Target frameworks.
           Currently only full implementation on Win32 and *nix platforms
           (empty on others).
