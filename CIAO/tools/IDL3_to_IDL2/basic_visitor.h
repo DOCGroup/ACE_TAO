@@ -92,6 +92,7 @@ public:
   virtual int visit_typedef (AST_Typedef *node);
   virtual int visit_root (AST_Root *node) = 0;
   virtual int visit_native (AST_Native *node);
+  virtual int visit_param_holder (AST_Param_Holder *node);
   
 protected:
   void check_prefix (AST_Decl *d);

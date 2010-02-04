@@ -274,29 +274,31 @@ namespace CIAO
     }
 
     int
-    idl3_to_xmi_visitor::visit_template_module (
-      AST_Template_Module *)
+    idl3_to_xmi_visitor::visit_template_module (AST_Template_Module *)
     {
       return 0;
     }
 
     int
-    idl3_to_xmi_visitor::visit_template_module_inst (
-      AST_Template_Module_Inst *)
+    idl3_to_xmi_visitor::visit_template_module_inst (AST_Template_Module_Inst *)
     {
       return 0;
     }
 
     int
-    idl3_to_xmi_visitor::visit_template_module_ref(
-      AST_Template_Module_Ref *)
+    idl3_to_xmi_visitor::visit_template_module_ref(AST_Template_Module_Ref *)
     {
       return 0;
     }
 
     int
-    idl3_to_xmi_visitor::visit_param_holder(
-      AST_Param_Holder *)
+    idl3_to_xmi_visitor::visit_param_holder(AST_Param_Holder *)
+    {
+      return 0;
+    }
+
+    int
+    idl3_to_xmi_visitor::visit_finder(AST_Finder *)
     {
       return 0;
     }

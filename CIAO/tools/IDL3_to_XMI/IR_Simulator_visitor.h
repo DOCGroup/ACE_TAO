@@ -63,6 +63,7 @@ namespace CIAO
       virtual int visit_template_module_inst (AST_Template_Module_Inst *node);
       virtual int visit_template_module_ref (AST_Template_Module_Ref *node);
       virtual int visit_param_holder(AST_Param_Holder *node);
+      virtual int visit_finder(AST_Finder *node);
       virtual int visit_interface (AST_Interface *node);
       virtual int visit_interface_fwd (AST_InterfaceFwd *node);
       virtual int visit_valuebox (AST_ValueBox *node);

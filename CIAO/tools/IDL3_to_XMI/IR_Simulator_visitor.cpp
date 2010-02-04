@@ -188,8 +188,7 @@ namespace CIAO
     }
 
     int
-    ir_simulator_visitor::visit_template_module (
-      AST_Template_Module *)
+    ir_simulator_visitor::visit_template_module (AST_Template_Module *)
     {
       return 0;
     }
@@ -202,15 +201,19 @@ namespace CIAO
     }
 
     int
-    ir_simulator_visitor::visit_template_module_ref(
-      AST_Template_Module_Ref *)
+    ir_simulator_visitor::visit_template_module_ref(AST_Template_Module_Ref *)
     {
       return 0;
     }
 
     int
-    ir_simulator_visitor::visit_param_holder(
-      AST_Param_Holder *)
+    ir_simulator_visitor::visit_param_holder(AST_Param_Holder *)
+    {
+      return 0;
+    }
+
+    int
+    ir_simulator_visitor::visit_finder(AST_Finder *)
     {
       return 0;
     }
