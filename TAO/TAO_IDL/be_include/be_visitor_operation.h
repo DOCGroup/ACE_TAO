@@ -1,23 +1,18 @@
 /* -*- c++ -*- */
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_operation.h
-//
-// = DESCRIPTION
-//    Concrete visitor for the Operation class
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_operation.h
+ *
+ *  $Id$
+ *
+ *  Concrete visitor for the Operation class
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef TAO_BE_VISITOR_OPERATION_H
 #define TAO_BE_VISITOR_OPERATION_H

@@ -1,37 +1,31 @@
-//
-// $Id$
-//
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    home_svh.h
-//
-// = DESCRIPTION
-//    Concrete visitor for the Home node.
-//    This provides for code generation in the servant header
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    home_svh.h
+ *
+ *  $Id$
+ *
+ *  Concrete visitor for the Home node.
+ *  This provides for code generation in the servant header
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef _BE_HOME_HOME_SVH_H_
 #define _BE_HOME_HOME_SVH_H_
 
+/**
+ * @class be_visitor_home_svh
+ *
+ * @brief be_visitor_home_svh
+ *
+ * This is a concrete visitor to generate the servant header for component.
+ */
 class be_visitor_home_svh : public be_visitor_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_home_svh
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate the servant header for component.
-  //
-  //
 public:
   be_visitor_home_svh (be_visitor_context *ctx);
   

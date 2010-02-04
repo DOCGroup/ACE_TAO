@@ -1,21 +1,18 @@
-// $Id$
 
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE_DLL
-//
-// = FILENAME
-//    be_identifier_helper.h
-//
-// = DESCRIPTION
-//    Utilities associated with UTL_Identifier.
-//
-// = AUTHOR
-//    Jeff Parsons <j.parsons@vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_identifier_helper.h
+ *
+ *  $Id$
+ *
+ *  Utilities associated with UTL_Identifier.
+ *
+ *
+ *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #ifndef BE_IDENTIFIER_HELPER_H
 #define BE_IDENTIFIER_HELPER_H

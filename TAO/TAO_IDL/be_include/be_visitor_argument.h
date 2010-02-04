@@ -1,23 +1,19 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_args.h
-//
-// = DESCRIPTION
-//    Visitors for generation of code for Arguments. These are used for the
-//    interpretive styled stubs and skeletons
-//
-// = AUTHOR
-//    Aniruddha Gokhale and Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_args.h
+ *
+ *  $Id$
+ *
+ *  Visitors for generation of code for Arguments. These are used for the
+ *  interpretive styled stubs and skeletons
+ *
+ *
+ *  @author Aniruddha Gokhale and Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #ifndef _BE_VISITOR_ARGUMENT_H
 #define _BE_VISITOR_ARGUMENT_H

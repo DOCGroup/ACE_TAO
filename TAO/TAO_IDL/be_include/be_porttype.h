@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    be_porttype.h
-//
-// = DESCRIPTION
-//    Extension of class AST_PortType for C++ code generation.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_porttype.h
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_PortType for C++ code generation.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef BE_PORTTYPE_H
 #define BE_PORTTYPE_H

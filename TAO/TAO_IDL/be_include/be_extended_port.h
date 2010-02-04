@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    be_extended_port.h
-//
-// = DESCRIPTION
-//    Extension of class AST_Extended_Port for C++ code generation.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_extended_port.h
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_Extended_Port for C++ code generation.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef BE_EXTENDED_PORT_H
 #define BE_EXTENDED_PORT_H

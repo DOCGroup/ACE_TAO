@@ -1,24 +1,19 @@
-//
-// $Id$
-//
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    servant_svs.h
-//
-// = DESCRIPTION
-//    Concrete visitor for the Component node.
-//    This provides for code generation for the Servant
-//    class definition
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    servant_svs.h
+ *
+ *  $Id$
+ *
+ *  Concrete visitor for the Component node.
+ *  This provides for code generation for the Servant
+ *  class definition
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef _BE_COMPONENT_SERVANT_SVS_H_
 #define _BE_COMPONENT_SERVANT_SVS_H_

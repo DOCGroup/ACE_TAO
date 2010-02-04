@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    facet_exs.h
-//
-// = DESCRIPTION
-//    This provides code generation for facets in the exec impl source.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    facet_exs.h
+ *
+ *  $Id$
+ *
+ *  This provides code generation for facets in the exec impl source.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef _BE_COMPONENT_FACET_EXS_H_
 #define _BE_COMPONENT_FACET_EXS_H_

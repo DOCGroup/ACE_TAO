@@ -1,23 +1,19 @@
 /* -*- c++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_root.h
-//
-// = DESCRIPTION
-//    Extension of class AST_Root that provides the backend
-//
-// = AUTHOR
-//    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_root.h
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_Root that provides the backend
+ *
+ *
+ *  @author Copyright 1994-1995 by Sun Microsystems
+ *  @author Inc. and Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef TAO_BE_ROOT_H
 #define TAO_BE_ROOT_H
@@ -38,11 +34,11 @@ class be_root : public virtual AST_Root,
   // = DESCRIPTION
   //
 public:
+  /// Default constructor.
   be_root (void);
-  // Default constructor.
 
+  /// Constructor that sets its scoped name <n>, and any pragmas <p>.
   be_root (UTL_ScopedName *n);
-  // Constructor that sets its scoped name <n>, and any pragmas <p>.
   
   virtual ~be_root (void);
 
@@ -53,8 +49,8 @@ public:
   AST_String *fe_add_string (AST_String *);
   AST_Array *fe_add_array (AST_Array *);
 
+  /// Cleanup method.
   virtual void destroy (void);
-  // Cleanup method.
 
   // Visiting.
   virtual int accept (be_visitor *visitor);

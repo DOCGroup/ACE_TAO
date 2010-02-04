@@ -1,23 +1,18 @@
 /* -*- c++ -*- */
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_component.h
-//
-// = DESCRIPTION
-//    Concrete visitors for the Component class
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_component.h
+ *
+ *  $Id$
+ *
+ *  Concrete visitors for the Component class
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef TAO_BE_VISITOR_COMPONENT_H
 #define TAO_BE_VISITOR_COMPONENT_H

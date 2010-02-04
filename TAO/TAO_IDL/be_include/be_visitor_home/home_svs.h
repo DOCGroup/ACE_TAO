@@ -1,38 +1,32 @@
-//
-// $Id$
-//
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    home_svs.h
-//
-// = DESCRIPTION
-//    Concrete visitor for the Home node.
-//    This provides for code generation in the servant source
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    home_svs.h
+ *
+ *  $Id$
+ *
+ *  Concrete visitor for the Home node.
+ *  This provides for code generation in the servant source
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef _BE_HOME_HOME_SVS_H_
 #define _BE_HOME_HOME_SVS_H_
 
+/**
+ * @class be_visitor_home_svs
+ *
+ * @brief be_visitor_home_svs
+ *
+ * This is a concrete visitor to generate the servant
+ * source for a comopnent home.
+ */
 class be_visitor_home_svs : public be_visitor_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_home_svs
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate the servant
-  //   source for a comopnent home.
-  //
-  //
 public:
   be_visitor_home_svs (be_visitor_context *ctx);
   

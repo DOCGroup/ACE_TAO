@@ -1,23 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_string.h
-//
-// = DESCRIPTION
-//    Extension of class AST_String that provides additional means for C++
-//    mapping.
-//
-// = AUTHOR
-//    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_string.h
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_String that provides additional means for C++
+ *  mapping.
+ *
+ *
+ *  @author Copyright 1994-1995 by Sun Microsystems
+ *  @author Inc. and Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef BE_STRING_H
 #define BE_STRING_H
@@ -56,8 +52,8 @@ public:
   DEF_NARROW_FROM_DECL (be_string);
 
 protected:
+  /// Overridden method to compute typecode name.
   virtual void compute_tc_name (void);
-  // Overridden method to compute typecode name.
 };
 
 #endif

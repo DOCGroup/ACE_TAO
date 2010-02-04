@@ -1,24 +1,20 @@
 /* -*- c++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_enum.h
-//
-// = DESCRIPTION
-//    Extension of class AST_Enum that provides additional means for C++
-//    mapping.
-//
-// = AUTHOR
-//    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_enum.h
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_Enum that provides additional means for C++
+ *  mapping.
+ *
+ *
+ *  @author Copyright 1994-1995 by Sun Microsystems
+ *  @author Inc. and Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef BE_ENUM_H
 #define BE_ENUM_H
@@ -34,20 +30,20 @@ class be_enum : public virtual AST_Enum,
                 public virtual be_type
 {
 public:
+  /// Default constructor.
   be_enum (void);
-  // Default constructor.
 
+  /// Constructor.
   be_enum (UTL_ScopedName *n,
            bool local,
            bool abstract);
-  // Constructor.
   
+  /// Overridden from class be_type.
   virtual void gen_ostream_operator (TAO_OutStream *os,
                                      bool use_underscore);
-  // Overridden from class be_type.
 
+  /// Cleanup method.
   virtual void destroy (void);
-  // Cleanup method.
 
   // Visiting.
   virtual int accept (be_visitor *visitor);

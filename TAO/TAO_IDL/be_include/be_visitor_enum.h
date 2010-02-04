@@ -1,23 +1,18 @@
 /* -*- c++ -*- */
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_enum.h
-//
-// = DESCRIPTION
-//    Concrete visitor for the enum class
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_enum.h
+ *
+ *  $Id$
+ *
+ *  Concrete visitor for the enum class
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef TAO_BE_VISITOR_ENUM_H
 #define TAO_BE_VISITOR_ENUM_H

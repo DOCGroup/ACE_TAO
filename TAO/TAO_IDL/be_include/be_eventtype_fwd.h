@@ -1,22 +1,19 @@
 /* -*- c++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_eventtype_fwd.h
-//
-// = DESCRIPTION
-//    Extension of class AST_EventType_Fwd that provides additional
-//    means for C++ mapping of an eventtype.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_eventtype_fwd.h
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_EventType_Fwd that provides additional
+ *  means for C++ mapping of an eventtype.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef BE_EVENTTYPE_FWD_H
 #define BE_EVENTTYPE_FWD_H
@@ -33,15 +30,15 @@ class be_eventtype_fwd : public virtual be_valuetype_fwd,
   // =DESCRIPTION
   //   Extensions to the be_interface_fwd class
 public:
+  /// Default constructor.
   be_eventtype_fwd (void);
-  // Default constructor.
 
+  /// Constructor.
   be_eventtype_fwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
-  // Constructor.
 
+  /// Destructor.
   virtual ~be_eventtype_fwd (void);
-  // Destructor.
 
   // Visiting.
   virtual int accept (be_visitor* visitor);

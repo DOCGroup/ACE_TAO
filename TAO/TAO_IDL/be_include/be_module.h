@@ -1,24 +1,20 @@
 /* -*- c++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_module.h
-//
-// = DESCRIPTION
-//    Extension of class AST_Module that provides additional means for C++
-//    mapping.
-//
-// = AUTHOR
-//    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_module.h
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_Module that provides additional means for C++
+ *  mapping.
+ *
+ *
+ *  @author Copyright 1994-1995 by Sun Microsystems
+ *  @author Inc. and Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef _BE_MODULE_H
 #define _BE_MODULE_H
@@ -34,14 +30,14 @@ class be_module : public virtual AST_Module,
                   public virtual be_decl
 {
 public:
+  /// Default constructor.
   be_module (void);
-  // Default constructor.
 
+  /// Constructor.
   be_module (UTL_ScopedName *n);
-  // Constructor.
 
+  /// Cleanup method.
   virtual void destroy (void);
-  // Cleanup method.
 
   // Visiting
   virtual int accept (be_visitor *visitor);
