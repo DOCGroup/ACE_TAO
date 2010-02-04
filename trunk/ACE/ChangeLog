@@ -1,3 +1,29 @@
+Thu Feb  4 15:32:24 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * tests/Reactor_Fairness_Test.cpp:
+        * tests/Reactor_Fairness_Test.h:
+        * tests/Makefile.am:
+        * tests/tests.mpc:
+        * tests/run_test.lst: New test to verify reactor fairness across a
+          set of registered I/O sockets. Tests Select, TP, Dev_Poll now.
+          TP fails fairness tests per Bugzilla 1031. Since the TP fairness
+          failure is a known issue, the new test is marked !FIXED_BUGS_ONLY.
+
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/Dev_Poll_Reactor.h: Two performance improvements to resolve
+          Bugzilla #3714:
+            1. The notify handler is no longer suspended/resumed around
+               notify processing. This removes the biggest source of CPU
+               consumption introduced at ACE 5.7 - simply acquiring/releasing
+               the token to handle notifies, each of which triggered another
+               token acquire/notify cycle.
+            2. As I/O handlers are suspended before callback, they are not
+               immediately resumed on callback return. Instead, they are added
+               to a "to be resumed" list that is examined just prior to the
+               next epoll_wait() call; any to-be-resumed handles are added
+               back to the epoll set just before waiting. This removes another
+               need to acquire the token just to resume a handler.
+
 Thu Feb  4 11:15:57 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * ace/Svc_Handler.cpp:

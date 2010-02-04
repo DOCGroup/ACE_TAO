@@ -43,6 +43,7 @@
 #if defined (ACE_HAS_DEV_POLL)
 struct pollfd;
 #elif defined (ACE_HAS_EVENT_POLL)
+#  include "ace/Array_Map.h"
 #  include /**/ <sys/epoll.h>
 #endif
 
@@ -1055,6 +1056,17 @@ protected:
   /// epoll_wait() but not yet processed.
   struct epoll_event event_;
 
+  /// Event handlers that are suspended/resumed around upcalls are not
+  /// immediately resumed; they're added to this list for resumption at
+  /// the next epoll_wait() call. This avoids always needing to acquire the
+  /// token just to resume a handler. Of course, if there are no other
+  /// handlers in the to-be-resumed list and an epoll_wait is already in
+  /// progress, the reactor needs to be notified to force another run around
+  /// the epoll_wait() call.
+  typedef ACE_Array_Map<ACE_HANDLE, ACE_Event_Handler *> Resume_Map;
+  Resume_Map to_be_resumed_;
+  volatile bool epoll_wait_in_progress_;
+  ACE_SYNCH_MUTEX to_be_resumed_lock_;
 #else
   /// The pollfd array that `/dev/poll' will feed its results to.
   struct pollfd *dp_fds_;

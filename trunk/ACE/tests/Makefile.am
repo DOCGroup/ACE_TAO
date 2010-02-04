@@ -2480,6 +2480,20 @@ Reactor_Exceptions_Test_LDADD = \
   libTest_Output.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+noinst_PROGRAMS += Reactor_Fairness_Test
+
+Reactor_Fairness_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Reactor_Fairness_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Reactor_Fairness_Test.cpp
+
+Reactor_Fairness_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
 ## Makefile.Reactor_Notification_Queue_Test.am
 
 noinst_PROGRAMS += Reactor_Notification_Queue_Test

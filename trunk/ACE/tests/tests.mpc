@@ -1146,6 +1146,13 @@ project(Reactor_Dispatch_Order_Test_Dev_Poll) : acetest {
   }
 }
 
+project(Reactor Fairness Test) : acetest {
+  exename = Reactor_Fairness_Test
+  Source_Files {
+    Reactor_Fairness_Test.cpp
+  }
+}
+
 project(Reactor Performance Test) : acetest {
   avoids += ace_for_tao
   exename = Reactor_Performance_Test
