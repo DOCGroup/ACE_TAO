@@ -1,3 +1,9 @@
+Thu Feb  4 11:45:20 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.h:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.cpp:
+          Corrected mask and according methods.
+
 Thu Feb  4 10:46:25 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/idl/ccm_dds.idl:
