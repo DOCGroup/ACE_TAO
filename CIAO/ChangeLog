@@ -1,3 +1,9 @@
+Thu Feb  4 12:37:44 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/OnUnexpectedStatusHandler.h:
+        * connectors/dds4ccm/impl/ndds/OnUnexpectedStatusHandler.cpp:
+          Resolved compiler errors.
+
 Thu Feb  4 12:31:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/OnUnexpectedStatusHandler.h:

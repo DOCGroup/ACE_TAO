@@ -203,7 +203,7 @@ CIAO::DDS4CCM::OnRequestedDeadlineMissedHandler::OnRequestedDeadlineMissedHandle
   ::CCM_DDS::PortStatusListener_ptr psl,
   ::DDS::DataReader_ptr dr,
   const ::DDS::RequestedDeadlineMissedStatus & status) :
-    psl_ (::CCM_DDS::ConnectorStatusListener::_duplicate (psl)),
+    psl_ (::CCM_DDS::PortStatusListener::_duplicate (psl)),
     dr_ (::DDS::DataReader::_duplicate (dr)),
     status_ (status)
 {
@@ -218,7 +218,7 @@ CIAO::DDS4CCM::OnRequestedDeadlineMissedHandler::handle_exception (ACE_HANDLE)
 {
   try
     {
-      this->port_status_listener_->on_requested_deadline_missed (this->rd_, this->status_);
+      this->psl_->on_requested_deadline_missed (this->dr_, this->status_);
     }
   catch (...)
     {
@@ -233,7 +233,7 @@ CIAO::DDS4CCM::OnSampleLostHandler::OnSampleLostHandler (
   ::CCM_DDS::PortStatusListener_ptr psl,
   ::DDS::DataReader_ptr dr,
   const ::DDS::SampleLostStatus & status) :
-    psl_ (::CCM_DDS::ConnectorStatusListener::_duplicate (psl)),
+    psl_ (::CCM_DDS::PortStatusListener::_duplicate (psl)),
     dr_ (::DDS::DataReader::_duplicate (dr)),
     status_ (status)
 {
@@ -248,7 +248,7 @@ CIAO::DDS4CCM::OnSampleLostHandler::handle_exception (ACE_HANDLE)
 {
   try
     {
-      this->port_status_listener_->on_sample_lost (this->rd_, this->status_);
+      this->psl_->on_sample_lost (this->dr_, this->status_);
     }
   catch (...)
     {
