@@ -1,3 +1,8 @@
+Thu Feb  4 13:56:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/Makefile.am:
+          Regenerated
+
 Thu Feb  4 09:25:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Merged revision 88756-88826 from idl3_plus_backend2 to svn head.
