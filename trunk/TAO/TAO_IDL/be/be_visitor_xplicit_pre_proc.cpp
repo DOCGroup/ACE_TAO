@@ -39,7 +39,7 @@ be_visitor_xplicit_pre_proc::visit_home (be_home *node)
 {
   this->node_ = node;
   UTL_NameList *parent_list = this->compute_inheritance (node);
-  
+
   FE_InterfaceHeader header (0,
                              parent_list,
                              false,
@@ -51,7 +51,7 @@ be_visitor_xplicit_pre_proc::visit_home (be_home *node)
   // interface construction time.
   AST_Module *m =
     AST_Module::narrow_from_scope (node->defined_in ());
-    
+
   idl_global->scopes ().push (m);
 
   UTL_ScopedName *explicit_name =
@@ -70,13 +70,13 @@ be_visitor_xplicit_pre_proc::visit_home (be_home *node)
                                 false,
                                 false),
                   0);
-                  
+
   (void) m->be_add_interface (i);
-  
+
   i->original_interface (node);
-  
+
   idl_global->scopes ().push (i);
-  
+
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -92,16 +92,16 @@ be_visitor_xplicit_pre_proc::visit_home (be_home *node)
   explicit_name->destroy ();
   delete explicit_name;
   explicit_name = 0;
-  
+
   header.destroy ();
-  
+
   parent_list->destroy ();
   delete parent_list;
   parent_list = 0;
-  
+
   // Through with the scope containing the home.
   idl_global->scopes ().pop ();
-  
+
   this->xplicit_ = i;
 
   return 0;
@@ -120,12 +120,12 @@ be_visitor_xplicit_pre_proc::visit_operation (be_operation *node)
                                 false,
                                 false),
                   -1);
-                                
+
   home_op->be_add_exceptions (node->exceptions ());
-  
+
   idl_global->scopes ().top ()->add_to_scope (home_op);
   idl_global->scopes ().push (home_op);
-  
+
   if (this->visit_scope (home_op) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -134,9 +134,9 @@ be_visitor_xplicit_pre_proc::visit_operation (be_operation *node)
                          ACE_TEXT ("for scope failed\n")),
                         -1);
     }
-    
+
   idl_global->scopes ().pop ();
-    
+
   return 0;
 }
 
@@ -151,9 +151,9 @@ be_visitor_xplicit_pre_proc::visit_argument (be_argument *node)
                                node->field_type (),
                                &sn),
                   -1);
-                  
+
   idl_global->scopes ().top ()->add_to_scope (added_arg);
-  
+
   return 0;
 }
 
@@ -170,14 +170,14 @@ be_visitor_xplicit_pre_proc::visit_factory (be_factory *node)
                                 false,
                                 false),
                   -1);
-                  
+
   AST_Interface *d =
     AST_Interface::narrow_from_scope (
       idl_global->scopes ().top ());
-                  
+
   idl_global->scopes ().top ()->add_to_scope (added_factory);
   idl_global->scopes ().push (added_factory);
-  
+
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -186,9 +186,9 @@ be_visitor_xplicit_pre_proc::visit_factory (be_factory *node)
                          ACE_TEXT ("for scope failed\n")),
                         -1);
     }
-    
+
   idl_global->scopes ().pop ();
-                    
+
   return 0;
 }
 
@@ -205,10 +205,10 @@ be_visitor_xplicit_pre_proc::visit_finder (be_finder *node)
                                 false,
                                 false),
                   -1);
-                  
+
   idl_global->scopes ().top ()->add_to_scope (added_finder);
   idl_global->scopes ().push (added_finder);
-  
+
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -217,9 +217,9 @@ be_visitor_xplicit_pre_proc::visit_finder (be_finder *node)
                          ACE_TEXT ("for scope failed\n")),
                         -1);
     }
-    
+
   idl_global->scopes ().pop ();
-                    
+
   return 0;
 }
 
@@ -228,3 +228,4 @@ be_visitor_xplicit_pre_proc::xplicit (void) const
 {
   return this->xplicit_;
 }
+

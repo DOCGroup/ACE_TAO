@@ -1,3 +1,5 @@
+// $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -130,7 +132,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       << be_uidt_nl;
 
   *os << "}" << be_nl;
-  
+
   if (be_global->gen_ostream_operators ())
     {
       node->gen_ostream_operator (os, false);
