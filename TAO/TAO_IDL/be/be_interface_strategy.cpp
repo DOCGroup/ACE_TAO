@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_interface_strategy.cpp
-//
-// = DESCRIPTION
-//    A strategy to cover the differences between various variants
-//    of an interface
-//
-// = AUTHOR
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_interface_strategy.cpp
+ *
+ *  $Id$
+ *
+ *  A strategy to cover the differences between various variants
+ *  of an interface
+ *
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 #include "be_interface_strategy.h"
 #include "be_interface.h"

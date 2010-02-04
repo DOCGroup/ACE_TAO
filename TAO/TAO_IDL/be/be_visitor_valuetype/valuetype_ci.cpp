@@ -1,23 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    valuetype_ci.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Valuetypes in the client inline file
-//
-// = AUTHOR
-//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
-//    based on code from Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    valuetype_ci.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Valuetypes in the client inline file
+ *
+ *
+ *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on code from Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // **************************************************
 // Valuetype visitor for client inline.

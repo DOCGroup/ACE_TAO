@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    invoke_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating the code that passes arguments to the CDR operators
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    invoke_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating the code that passes arguments to the CDR operators
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ****************************************************************************
 // visitor for arguments passing to the CDR operators.

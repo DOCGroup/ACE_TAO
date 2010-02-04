@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_constant.cpp
-//
-// = DESCRIPTION
-//    Visitors for generation of code for Constant
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_constant.cpp
+ *
+ *  $Id$
+ *
+ *  Visitors for generation of code for Constant
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "be_constant.h"
 #include "be_module.h"

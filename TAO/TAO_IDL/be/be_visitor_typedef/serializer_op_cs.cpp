@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    serializer_op_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for TAO::DCPS::Serializer operators
-//    in the client stubs
-//
-// = AUTHOR
-//    Scott Harris <harris_s@ociweb.com> based on code by Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    serializer_op_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for TAO::DCPS::Serializer operators
+ *  in the client stubs
+ *
+ *
+ *  @author Scott Harris <harris_s@ociweb.com> based on code by Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ***************************************************************************
 // Typedef visitor for generating Serializer operator declarations in the client

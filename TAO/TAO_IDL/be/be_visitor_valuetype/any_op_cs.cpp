@@ -1,22 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    any_op_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Any operators for valuetypes in the stubs
-//    file.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//    Boris Kolpackov <bosk@ipmce.ru>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    any_op_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Any operators for valuetypes in the stubs
+ *  file.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu> Boris Kolpackov <bosk@ipmce.ru>
+ */
+//=============================================================================
+
 
 // ***************************************************************************
 // Valuetype visitor for generating Any operator declarations in the client

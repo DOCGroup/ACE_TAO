@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_enum.cpp
-//
-// = DESCRIPTION
-//    Visitors for generation of code for Enum
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_enum.cpp
+ *
+ *  $Id$
+ *
+ *  Visitors for generation of code for Enum
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "be_enum.h"
 #include "be_enum_val.h"

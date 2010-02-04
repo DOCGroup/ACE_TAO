@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    operation_smart_proxy_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Operation in the stubs file.
-//
-// = AUTHOR
-//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    operation_smart_proxy_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Operation in the stubs file.
+ *
+ *
+ *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 // ************************************************************
 // Operation visitor for client stubs

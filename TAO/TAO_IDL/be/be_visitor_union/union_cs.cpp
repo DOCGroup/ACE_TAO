@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    union_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Unions in the client stubs
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    union_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Unions in the client stubs
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ******************************************************
 // For client stubs.

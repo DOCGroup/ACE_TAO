@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    component_si.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Components in the server skeleton.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    component_si.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Components in the server skeleton.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 // ******************************************************
 // Component visitor for server skeleton

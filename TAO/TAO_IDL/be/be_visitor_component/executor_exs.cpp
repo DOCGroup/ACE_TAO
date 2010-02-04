@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    executor_exs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code in the exec impl source.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    executor_exs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code in the exec impl source.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 be_visitor_executor_exs::be_visitor_executor_exs (
       be_visitor_context *ctx)

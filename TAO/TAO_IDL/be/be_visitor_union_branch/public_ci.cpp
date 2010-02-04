@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    public_ci.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Union Branch in the client inline file.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    public_ci.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Union Branch in the client inline file.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // *****************************************************
 //  Visitor for union_branch in the client inline file.

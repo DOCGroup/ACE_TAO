@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    servant_svh.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for a servant class in the
-//    servant header.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    servant_svh.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for a servant class in the
+ *  servant header.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 be_visitor_servant_svh::be_visitor_servant_svh (be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)

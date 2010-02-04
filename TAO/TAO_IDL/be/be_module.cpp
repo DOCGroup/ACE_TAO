@@ -1,23 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_module.cpp
-//
-// = DESCRIPTION
-//    Extension of class AST_Module that provides additional means for C++
-//    mapping of a module
-//
-// = AUTHOR
-//    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_module.cpp
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_Module that provides additional means for C++
+ *  mapping of a module
+ *
+ *
+ *  @author Copyright 1994-1995 by Sun Microsystems
+ *  @author Inc. and Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "be_module.h"
 #include "be_visitor.h"

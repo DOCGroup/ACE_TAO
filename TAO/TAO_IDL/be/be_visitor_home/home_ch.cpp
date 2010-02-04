@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    home_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Component Home node in the client header.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    home_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Component Home node in the client header.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 be_visitor_home_ch::be_visitor_home_ch (
     be_visitor_context *ctx

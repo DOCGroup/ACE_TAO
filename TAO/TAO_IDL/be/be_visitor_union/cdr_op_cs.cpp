@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    cdr_op_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for CDR operators for unions
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    cdr_op_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for CDR operators for unions
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ***************************************************************************
 // Union visitor for generating CDR operator declarations in the client

@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    smart_proxy_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for smart_proxy classes for an Interface in the
-//    client proxy file.
-//
-// = AUTHOR
-//    Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    smart_proxy_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for smart_proxy classes for an Interface in the
+ *  client proxy file.
+ *
+ *
+ *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 // ************************************************************
 //  be_visitor_interface_smart_proxy_cs

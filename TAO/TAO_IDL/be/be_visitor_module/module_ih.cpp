@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    module_ih.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Module in the implementation header
-//
-// = AUTHOR
-//    Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    module_ih.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Module in the implementation header
+ *
+ *
+ *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 // ************************************************************
 // Module visitor for server header

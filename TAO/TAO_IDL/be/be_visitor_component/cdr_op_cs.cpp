@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    cdr_op_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for CDR operators for components
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    cdr_op_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for CDR operators for components
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 be_visitor_component_cdr_op_cs::be_visitor_component_cdr_op_cs (
     be_visitor_context *ctx

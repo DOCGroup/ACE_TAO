@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    valuetype_init_arglist_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for the parameter list of the OBV factory
-//    signature.
-//
-// = AUTHOR
-//    Boris Kolpackov <bosk@ipmce.ru>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    valuetype_init_arglist_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for the parameter list of the OBV factory
+ *  signature.
+ *
+ *
+ *  @author Boris Kolpackov <bosk@ipmce.ru>
+ */
+//=============================================================================
+
 
 be_visitor_valuetype_init_arglist_ch::be_visitor_valuetype_init_arglist_ch (
     be_visitor_context *ctx

@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    field_serializer_op_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating TAO::DCPS::Serializer operators code for Field in
-//    the client stubs file.
-//
-// = AUTHOR
-//    Scott Harris <harris_s@ociweb.com> based on code by Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    field_serializer_op_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating TAO::DCPS::Serializer operators code for Field in
+ *  the client stubs file.
+ *
+ *
+ *  @author Scott Harris <harris_s@ociweb.com> based on code by Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "be_visitor_array/serializer_op_cs.h"
 #include "be_visitor_sequence/serializer_op_cs.h"

@@ -1,23 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_attribute.cpp
-//
-// = DESCRIPTION
-//    Extension of class AST_Attribute that provides additional means for C++
-//    mapping.
-//
-// = AUTHOR
-//    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_attribute.cpp
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_Attribute that provides additional means for C++
+ *  mapping.
+ *
+ *
+ *  @author Copyright 1994-1995 by Sun Microsystems
+ *  @author Inc. and Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "be_attribute.h"
 #include "be_type.h"

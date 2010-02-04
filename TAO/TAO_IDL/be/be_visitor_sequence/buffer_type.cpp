@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    buffer_type.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for the internal buffer type of the Sequence node
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    buffer_type.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for the internal buffer type of the Sequence node
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ****************************************************************
 // We have to generate the buffer type in the constructor

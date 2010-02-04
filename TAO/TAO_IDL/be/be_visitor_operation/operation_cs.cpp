@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    operation_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Operation in the stubs file.
-//
-// = AUTHOR
-//    Aniruddha Gokhale & Angelo Corsaro
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    operation_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Operation in the stubs file.
+ *
+ *
+ *  @author Aniruddha Gokhale & Angelo Corsaro
+ */
+//=============================================================================
+
 
 // ************************************************************
 // Operation visitor for client stubs

@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    exception_ci.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Exception in the inline file.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    exception_ci.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Exception in the inline file.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ******************************************************
 // for client inline

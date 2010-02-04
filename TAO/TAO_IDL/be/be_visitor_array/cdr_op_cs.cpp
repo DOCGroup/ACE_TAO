@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    cdr_op_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor for code generation of Arrays for the CDR operators in the client
-//    stubs.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    cdr_op_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor for code generation of Arrays for the CDR operators in the client
+ *  stubs.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 // ***************************************************************************
 // Array visitor for generating CDR operator declarations in the client

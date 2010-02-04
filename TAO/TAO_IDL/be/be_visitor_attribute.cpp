@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_attribute.cpp
-//
-// = DESCRIPTION
-//    Visitors for generation of code for Attribute
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_attribute.cpp
+ *
+ *  $Id$
+ *
+ *  Visitors for generation of code for Attribute
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "be_array.h"
 #include "be_component.h"

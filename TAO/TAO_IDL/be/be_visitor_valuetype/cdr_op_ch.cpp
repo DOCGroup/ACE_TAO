@@ -1,24 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    cdr_op_ch.cpp
-//
-// = DESCRIPTION
-//    Concrete visitor for valuetypes.
-//    This one provides code generation for the CDR operators.
-//
-// = AUTHOR
-//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
-//    based on code from Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    cdr_op_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Concrete visitor for valuetypes.
+ *  This one provides code generation for the CDR operators.
+ *
+ *
+ *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on code from Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 be_visitor_valuetype_cdr_op_ch::be_visitor_valuetype_cdr_op_ch (
     be_visitor_context *ctx

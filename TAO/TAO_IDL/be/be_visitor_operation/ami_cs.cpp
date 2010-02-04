@@ -1,23 +1,18 @@
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    ami_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Operation in the stubs file.
-//
-// = AUTHOR
-//    Aniruddha Gokhale,
-//    Alexander Babu Arulanthu <alex@cs.wustl.edu>
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ami_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Operation in the stubs file.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu> Michael Kircher
+ */
+//=============================================================================
+
 
 // ************************************************************
 // Operation visitor for client stubs

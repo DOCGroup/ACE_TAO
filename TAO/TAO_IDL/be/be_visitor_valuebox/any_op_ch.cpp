@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    any_op_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Any operators for a valuebox in the client
-//    header.
-//
-// = AUTHOR
-//    Gary Maxey
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    any_op_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Any operators for a valuebox in the client
+ *  header.
+ *
+ *
+ *  @author Gary Maxey
+ */
+//=============================================================================
+
 
 // ***************************************************************************
 // Valuebox visitor for generating Any operator declarations.

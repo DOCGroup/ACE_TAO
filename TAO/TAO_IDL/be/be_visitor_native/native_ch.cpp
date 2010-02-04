@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    enum_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Native in the client header
-//
-// = AUTHOR
-//    Johnny Willemsen
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    enum_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Native in the client header
+ *
+ *
+ *  @author Johnny Willemsen
+ */
+//=============================================================================
+
 
 #include "be_visitor_typecode/typecode_decl.h"
 #include "global_extern.h"

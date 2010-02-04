@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    valuebox_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for valueboxes in the client header
-//
-// = AUTHOR
-//    Gary Maxey
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    valuebox_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for valueboxes in the client header
+ *
+ *
+ *  @author Gary Maxey
+ */
+//=============================================================================
+
 
 // ******************************************************
 // Valuebox visitor for client header

@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    operation_exs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Operation in the CIAO executor file.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    operation_exs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Operation in the CIAO executor file.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 be_visitor_operation_exs::be_visitor_operation_exs (be_visitor_context *ctx)
   : be_visitor_scope (ctx),

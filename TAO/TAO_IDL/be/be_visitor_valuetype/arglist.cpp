@@ -1,24 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    arglist.cpp
-//
-// = DESCRIPTION
-//    Visitor generating the parameter list of operations
-//    in the Valuetype class.
-//
-// = AUTHOR
-//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
-//    based on code from Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    arglist.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating the parameter list of operations
+ *  in the Valuetype class.
+ *
+ *
+ *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on code from Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ************************************************************
 //   Operation visitor to generate the argument list.

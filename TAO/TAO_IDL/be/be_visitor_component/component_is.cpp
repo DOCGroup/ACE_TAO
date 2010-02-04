@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    component_is.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Components 
-//    in the implementation skeletons file.
-//
-// = AUTHOR
-//   Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    component_is.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Components 
+ *  in the implementation skeletons file.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 // ************************************************************
 // Component visitor for implementation skeletons.

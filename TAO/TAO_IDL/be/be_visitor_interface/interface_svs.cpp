@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    interface_svs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Interfaces in the
-//    CIAO servant source file.
-//
-// = AUTHOR
-//   Jeff Parsons <j.parsons@vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    interface_svs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Interfaces in the
+ *  CIAO servant source file.
+ *
+ *
+ *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
+ */
+//=============================================================================
+
 
 // ************************************************************
 // Interface visitor for CIAO servant source.

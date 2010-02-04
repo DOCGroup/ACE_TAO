@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    sequence_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Sequence in the client header
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    sequence_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Sequence in the client header
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // Root visitor for client header.
 be_visitor_sequence_ch::be_visitor_sequence_ch (be_visitor_context *ctx)

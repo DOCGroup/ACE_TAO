@@ -1,24 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_interface.cpp
-//
-// = DESCRIPTION
-//    Extension of class AST_Interface that provides additional means for C++
-//    mapping of an interface.
-//
-// = AUTHOR
-//    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and
-//    Aniruddha Gokhale,
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_interface.cpp
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_Interface that provides additional means for C++
+ *  mapping of an interface.
+ *
+ *
+ *  @author Copyright 1994-1995 by Sun Microsystems
+ *  @author Inc. and Aniruddha Gokhale
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 #include "be_interface.h"
 #include "be_interface_strategy.h"

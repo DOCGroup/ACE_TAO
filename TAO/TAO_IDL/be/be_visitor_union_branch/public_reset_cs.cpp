@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    public_reset_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Union Branch in the client inline file.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    public_reset_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Union Branch in the client inline file.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // *****************************************************
 //  visitor for union_branch in the client

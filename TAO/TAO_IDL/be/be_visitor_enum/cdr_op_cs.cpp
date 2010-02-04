@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    cdr_op_cs.cpp
-//
-// = DESCRIPTION
-//    Visitors for generation of code for Enum for the CDR operators
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    cdr_op_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitors for generation of code for Enum for the CDR operators
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ***************************************************************************
 // Enum visitor for generating CDR operator declarations in the client

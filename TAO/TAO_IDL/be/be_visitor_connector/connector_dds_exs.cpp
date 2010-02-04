@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    connector_dds_exs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Connectors in the exec impl source.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    connector_dds_exs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Connectors in the exec impl source.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 be_visitor_connector_dds_exs::be_visitor_connector_dds_exs (
       be_visitor_context *ctx)

@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    ami_exception_holder_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for excpetion holders.
-//
-// = AUTHOR
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ami_exception_holder_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for excpetion holders.
+ *
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 // ************************************************************
 // Interface visitor for client stubs

@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    root_si.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for the Root in the server inline file
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    root_si.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for the Root in the server inline file
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ***********************************************
 // Root visitor for server inline

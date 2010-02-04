@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    marshal_cs.cpp
-//
-// = DESCRIPTION
-//    Concrete visitor for valuetypes.
-//    This one provides code generation for marshalling.
-//
-// = AUTHOR
-//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    marshal_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Concrete visitor for valuetypes.
+ *  This one provides code generation for marshalling.
+ *
+ *
+ *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+ */
+//=============================================================================
+
 
 be_visitor_valuetype_marshal_cs::be_visitor_valuetype_marshal_cs (
     be_visitor_context *ctx

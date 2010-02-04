@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    amh_sh.cpp
-//
-// = DESCRIPTION
-//    Visitor generating AMH skeleton code for Operation node in the
-//    skeleton header.
-//
-// = AUTHOR
-//    Mayur Deshpande <mayur@ics.uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    amh_sh.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating AMH skeleton code for Operation node in the
+ *  skeleton header.
+ *
+ *
+ *  @author Mayur Deshpande <mayur@ics.uci.edu>
+ */
+//=============================================================================
+
 
 // ******************************************************
 // Visitor for generating AMH skeleton for "operation" in skeleton header.

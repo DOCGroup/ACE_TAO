@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_exception.cpp
-//
-// = DESCRIPTION
-//    Visitors for generation of code for Exception
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_exception.cpp
+ *
+ *  $Id$
+ *
+ *  Visitors for generation of code for Exception
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "be_field.h"
 #include "be_exception.h"

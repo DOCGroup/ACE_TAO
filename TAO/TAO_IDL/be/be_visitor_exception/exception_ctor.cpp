@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    exception_ctor.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for the special constructor for Exceptions
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    exception_ctor.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for the special constructor for Exceptions
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ************************************************************************
 //  code to generate the special ctor

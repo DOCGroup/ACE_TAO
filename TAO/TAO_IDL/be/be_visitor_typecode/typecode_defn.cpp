@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    typecode_defn.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for TypeCode definitions for types.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    typecode_defn.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for TypeCode definitions for types.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "be_interface_fwd.h"
 
