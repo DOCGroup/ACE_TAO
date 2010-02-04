@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    component_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Components in the client header.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    component_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Components in the client header.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 // ******************************************************
 // Component visitor for client header

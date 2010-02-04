@@ -1,23 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL Backend
-//
-// = FILENAME
-//    be_visitor_factory.cpp
-//
-// = DESCRIPTION
-//    Defines a factory that returns a specialized visitor object based on the
-//    code generation state. This factory creates visitors associated with
-//    Asynchronous Messaging Invocations (AMI) since, because of implied IDL,
-//    state is not locally known at visitor creation time.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_factory.cpp
+ *
+ *  $Id$
+ *
+ *  Defines a factory that returns a specialized visitor object based on the
+ *  code generation state. This factory creates visitors associated with
+ *  Asynchronous Messaging Invocations (AMI) since, because of implied IDL,
+ *  state is not locally known at visitor creation time.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "ast_argument.h"
 

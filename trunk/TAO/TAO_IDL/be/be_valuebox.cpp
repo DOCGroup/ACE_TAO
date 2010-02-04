@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_valuebox.cpp
-//
-// = DESCRIPTION
-//    Extension of class AST_Valuebox that provides additional means for C++
-//    mapping.
-//
-// = AUTHOR
-//    Gary Maxey
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_valuebox.cpp
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_Valuebox that provides additional means for C++
+ *  mapping.
+ *
+ *
+ *  @author Gary Maxey
+ */
+//=============================================================================
+
 
 #include "be_valuebox.h"
 #include "be_type.h"

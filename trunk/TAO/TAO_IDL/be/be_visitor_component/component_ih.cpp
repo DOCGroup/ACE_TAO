@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    component_ih.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Interfaces in the implementation header
-//
-// = AUTHOR
-//   Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    component_ih.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Interfaces in the implementation header
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 // ************************************************************
 // Interface visitor for implementation header.

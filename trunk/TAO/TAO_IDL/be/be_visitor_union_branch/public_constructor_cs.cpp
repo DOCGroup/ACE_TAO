@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    public_constructor_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Union Branch for the constructor operator
-//
-// = AUTHOR
-//    Johnny Willemsen
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    public_constructor_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Union Branch for the constructor operator
+ *
+ *
+ *  @author Johnny Willemsen
+ */
+//=============================================================================
+
 
 // **********************************************
 //  visitor for union_branch in the client stubs file generating the code for

@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    field_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Field node in the client header
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    field_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Field node in the client header
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "be_visitor_enum/enum_ch.h"
 #include "be_visitor_sequence/sequence_ch.h"

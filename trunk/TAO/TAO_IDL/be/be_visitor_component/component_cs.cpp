@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    component_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Components in the client stub.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    component_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Components in the client stub.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 // ******************************************************
 // Component visitor for client stub

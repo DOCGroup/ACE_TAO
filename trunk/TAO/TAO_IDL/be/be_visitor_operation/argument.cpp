@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    argument.cpp
-//
-// = DESCRIPTION
-//    Visitor that calls the visitor for arguments.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    argument.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor that calls the visitor for arguments.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ************************************************************
 // Generic operation visitor to handle the pre/post

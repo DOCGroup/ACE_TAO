@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    operation_svs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Operation in the CIAO servants file.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    operation_svs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Operation in the CIAO servants file.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 be_visitor_operation_svs::be_visitor_operation_svs (
       be_visitor_context *ctx)

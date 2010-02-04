@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    tie_ss.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for operations for the TIE class.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    tie_ss.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for operations for the TIE class.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ************************************************************
 // Operation visitor for server inline for TIE class operations.

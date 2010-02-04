@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    root_ih.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Root in the server implementation header
-//
-// = AUTHOR
-//   Yamuna  Krishnamurthy (yamuna@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    root_ih.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Root in the server implementation header
+ *
+ *
+ *  @author Yamuna  Krishnamurthy (yamuna@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 // ***********************************
 // Root visitor for implementation header

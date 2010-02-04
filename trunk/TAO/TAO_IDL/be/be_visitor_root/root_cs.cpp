@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    root_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Root in the client stubs file.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    root_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Root in the client stubs file.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ***********************************
 // Root visitor for client stubs

@@ -1,22 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_valuetype.cpp
-//
-// = DESCRIPTION
-//    Extension of class AST_Interface and be_interface that provides
-//    additional means for C++ mapping of an valuetype.
-//
-// = AUTHOR
-//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
-//    derived from be_interface.cpp
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_valuetype.cpp
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_Interface and be_interface that provides
+ *  additional means for C++ mapping of an valuetype.
+ *
+ *
+ *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> derived from be_interface.cpp
+ */
+//=============================================================================
+
 
 #include "be_valuetype.h"
 #include "be_visitor.h"

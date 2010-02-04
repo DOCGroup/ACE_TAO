@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    facet_svh.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for a facet servant class in the
-//    servant header.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    facet_svh.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for a facet servant class in the
+ *  servant header.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 be_visitor_facet_svh::be_visitor_facet_svh (be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)

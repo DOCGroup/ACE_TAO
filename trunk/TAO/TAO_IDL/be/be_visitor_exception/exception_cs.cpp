@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    exception_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Exception in the stubs file
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    exception_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Exception in the stubs file
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "be_visitor_typecode/typecode_defn.h"
 

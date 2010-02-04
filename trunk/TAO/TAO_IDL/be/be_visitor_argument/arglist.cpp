@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    arglist.cpp
-//
-// = DESCRIPTION
-//    Visitor that generates the parameters in an Operation signature
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    arglist.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor that generates the parameters in an Operation signature
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ************************************************************
 // be_visitor_args_arglist for parameter list in method declarations and

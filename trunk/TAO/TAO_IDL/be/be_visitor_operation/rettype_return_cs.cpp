@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    rettype_return_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for returning the return type variable.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    rettype_return_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for returning the return type variable.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ************************************************************
 //    be_visitor_operation_rettype_return_cs

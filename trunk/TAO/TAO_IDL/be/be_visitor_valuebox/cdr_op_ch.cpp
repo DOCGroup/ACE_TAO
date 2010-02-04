@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    cdr_op_ch.cpp
-//
-// = DESCRIPTION
-//    Concrete visitor for valueboxes.
-//    This one provides code generation for the CDR operators.
-//
-// = AUTHOR
-//    Gary Maxey
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    cdr_op_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Concrete visitor for valueboxes.
+ *  This one provides code generation for the CDR operators.
+ *
+ *
+ *  @author Gary Maxey
+ */
+//=============================================================================
+
 
 be_visitor_valuebox_cdr_op_ch::be_visitor_valuebox_cdr_op_ch (
     be_visitor_context *ctx

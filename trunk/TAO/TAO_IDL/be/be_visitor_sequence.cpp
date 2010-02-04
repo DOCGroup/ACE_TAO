@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_sequence.cpp
-//
-// = DESCRIPTION
-//    Visitors for generation of code for Sequence
-//
-// = AUTHOR
-//    Aniruddha Gokhale and Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_sequence.cpp
+ *
+ *  $Id$
+ *
+ *  Visitors for generation of code for Sequence
+ *
+ *
+ *  @author Aniruddha Gokhale and Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #include "be_array.h"
 #include "be_enum.h"

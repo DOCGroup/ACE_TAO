@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    structure_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Structure in the client header.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    structure_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Structure in the client header.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ******************************************************
 // for client header

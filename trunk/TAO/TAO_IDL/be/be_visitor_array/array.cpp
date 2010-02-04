@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    array.cpp
-//
-// = DESCRIPTION
-//    Generic visitor for code generation for Arrays
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    array.cpp
+ *
+ *  $Id$
+ *
+ *  Generic visitor for code generation for Arrays
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ************************************************************************
 //  generic visitor for array declaration

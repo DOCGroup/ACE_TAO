@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    vardecl_ss.cpp
-//
-// = DESCRIPTION
-//    Visitor that generates the variable declaration in the skeleton
-//    corresponding to the Argument node
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    vardecl_ss.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor that generates the variable declaration in the skeleton
+ *  corresponding to the Argument node
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ************************************************************************
 // Visitor to generate code for argument variable declaration

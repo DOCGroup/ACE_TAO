@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_eventtype_fwd.h
-//
-// = DESCRIPTION
-//    Extension of class be_valuetype_fwd that provides additional
-//    means for C++ mapping of an eventtype.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_eventtype_fwd.h
+ *
+ *  $Id$
+ *
+ *  Extension of class be_valuetype_fwd that provides additional
+ *  means for C++ mapping of an eventtype.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 
 #include "be_eventtype_fwd.h"

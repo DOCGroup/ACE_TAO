@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    facet_exs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for facets in the exec impl source.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    facet_exs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for facets in the exec impl source.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 be_visitor_facet_exs::be_visitor_facet_exs (
       be_visitor_context *ctx)

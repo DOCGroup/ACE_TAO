@@ -1,24 +1,19 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    field_ci.cpp
-//
-// = DESCRIPTION
-//     Visitor for the Valuebox class.
-//     This one generates code for accessor and modifier functions of
-//    for valuebox struct members.
-//
-// = AUTHOR
-//    Gary Maxey
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    field_ci.cpp
+ *
+ *  $Id$
+ *
+ *   Visitor for the Valuebox class.
+ *   This one generates code for accessor and modifier functions of
+ *  for valuebox struct members.
+ *
+ *
+ *  @author Gary Maxey
+ */
+//=============================================================================
+
 be_visitor_valuebox_field_ci::be_visitor_valuebox_field_ci (
     be_visitor_context *ctx
   )

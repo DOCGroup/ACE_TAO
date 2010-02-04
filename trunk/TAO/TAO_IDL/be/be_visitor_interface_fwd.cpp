@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_interface_fwd.cpp
-//
-// = DESCRIPTION
-//    Visitors for generation of code for Interface_Fwd
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_interface_fwd.cpp
+ *
+ *  $Id$
+ *
+ *  Visitors for generation of code for Interface_Fwd
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "be_interface_fwd.h"
 #include "be_interface.h"

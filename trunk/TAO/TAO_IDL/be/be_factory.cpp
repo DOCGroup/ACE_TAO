@@ -1,23 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    be_factory.cpp
-//
-// = DESCRIPTION
-//    Extension of class AST_Factory that provides additional means for C++
-//    mapping.
-//
-// = AUTHOR
-//    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and
-//    Boris Kolpackov <bosk@ipmce.ru>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_factory.cpp
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_Factory that provides additional means for C++
+ *  mapping.
+ *
+ *
+ *  @author Copyright 1994-1995 by Sun Microsystems
+ *  @author Inc. and Boris Kolpackov <bosk@ipmce.ru>
+ */
+//=============================================================================
+
 
 #include "be_factory.h"
 #include "be_visitor.h"

@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    root_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Root in the client header
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    root_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Root in the client header
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ********************************
 // Root visitor for client header

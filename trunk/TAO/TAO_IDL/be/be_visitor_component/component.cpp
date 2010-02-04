@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    component.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Components. This is a generic visitor.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    component.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Components. This is a generic visitor.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 // ******************************************************
 // Generic Component visitor

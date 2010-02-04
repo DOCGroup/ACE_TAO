@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    be_finder.cpp
-//
-// = DESCRIPTION
-//    Extension of class AST_Finder that provides additional means for C++
-//    mapping.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_finder.cpp
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_Finder that provides additional means for C++
+ *  mapping.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #include "be_finder.h"
 #include "be_visitor.h"

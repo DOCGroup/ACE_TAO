@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    valuetype_ss.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Interfaces in the server skeletons file.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    valuetype_ss.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Interfaces in the server skeletons file.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "nr_extern.h"
 

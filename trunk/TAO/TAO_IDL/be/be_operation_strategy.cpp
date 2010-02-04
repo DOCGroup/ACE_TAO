@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_operation_strategy.cpp
-//
-// = DESCRIPTION
-//    A strategy to cover the differences between various variants
-//    of an operations, e.g. AMI sendc_, AMI raise_
-//
-// = AUTHOR
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_operation_strategy.cpp
+ *
+ *  $Id$
+ *
+ *  A strategy to cover the differences between various variants
+ *  of an operations, e.g. AMI sendc_, AMI raise_
+ *
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 #include "be_operation_strategy.h"
 #include "be_operation.h"

@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    typecode_decl.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for TypeCode declaration for a type
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    typecode_decl.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for TypeCode declaration for a type
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ******************************************************
 // TypeCode declarations

@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    executor_ex_idl.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for components
-//    in the CIAO executor IDL.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    executor_ex_idl.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for components
+ *  in the CIAO executor IDL.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 be_visitor_executor_ex_idl::be_visitor_executor_ex_idl (
       be_visitor_context *ctx)

@@ -1,23 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    paramlist.cpp
-//
-// = DESCRIPTION
-//    Visitor that generates the Dyanmic::ParameterList
-//
-// = AUTHOR
-//    Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-//    Ossama Othman <ossama@uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    paramlist.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor that generates the Dyanmic::ParameterList
+ *
+ *
+ *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu> Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
 
 // ************************************************************
 // be_visitor_args_paramlist for parameter list in method declarations and

@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    exception_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Exception in the client header
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    exception_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Exception in the client header
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "be_visitor_typecode/typecode_decl.h"
 #include "global_extern.h"

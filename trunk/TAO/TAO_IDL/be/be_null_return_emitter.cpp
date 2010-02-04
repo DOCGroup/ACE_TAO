@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    be_null_return_emitter.cpp
-//
-// = DESCRIPTION
-//    Emits 'return x;' for all CORBA types and ACE-supported
-//    platforms.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_null_return_emitter.cpp
+ *
+ *  $Id$
+ *
+ *  Emits 'return x;' for all CORBA types and ACE-supported
+ *  platforms.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #include "be_null_return_emitter.h"
 #include "be_visitor_null_return_value.h"

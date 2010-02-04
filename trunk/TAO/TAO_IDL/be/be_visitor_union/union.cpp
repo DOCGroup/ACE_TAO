@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    union.cpp
-//
-// = DESCRIPTION
-//    Generic visitor generating code for Unions
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    union.cpp
+ *
+ *  $Id$
+ *
+ *  Generic visitor generating code for Unions
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 be_visitor_union::be_visitor_union (be_visitor_context *ctx)
   : be_visitor_scope (ctx)

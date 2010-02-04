@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    home_ex_idl.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Homes in the CIAO executor IDL.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    home_ex_idl.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Homes in the CIAO executor IDL.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 // ******************************************************
 // Home visitor for CIAO executor IDL

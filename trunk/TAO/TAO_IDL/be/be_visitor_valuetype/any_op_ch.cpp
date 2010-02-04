@@ -1,24 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    any_op_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Any operators for a valuetype in the client
-//    header.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//    Boris Kolpackov <bosk@ipmce.ru>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    any_op_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Any operators for a valuetype in the client
+ *  header.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu> Boris Kolpackov <bosk@ipmce.ru>
+ */
+//=============================================================================
+
 
 // ***************************************************************************
 // Valuetype visitor for generating Any operator declarations.

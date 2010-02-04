@@ -1,24 +1,19 @@
 
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    serializer_op_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating Serializer operator declarator for union_branch 
-//    in the client header
-//
-// = AUTHOR
-//    Scott Harris <harris_s@ociweb.com> based on code by Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    serializer_op_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating Serializer operator declarator for union_branch 
+ *  in the client header
+ *
+ *
+ *  @author Scott Harris <harris_s@ociweb.com> based on code by Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // **********************************************
 //  Visitor for union_branch in the client header file.

@@ -1,24 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    ami_handler_reply_stub_operation_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for AMI Handler call back operation in
-//    the client header.
-//
-// = AUTHOR
-//    Aniruddha Gokhale and Alexander Babu Arulanthu
-//    <alex@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ami_handler_reply_stub_operation_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for AMI Handler call back operation in
+ *  the client header.
+ *
+ *
+ *  @author Aniruddha Gokhale and Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 // ************************************************************
 // Operation visitor for server header

@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    array_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor for code generation of Arrays in the client stubs
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    array_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor for code generation of Arrays in the client stubs
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ************************************************************************
 //  visitor for array declaration in client stubs

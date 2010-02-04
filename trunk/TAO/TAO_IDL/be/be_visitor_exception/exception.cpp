@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    .cpp
-//
-// = DESCRIPTION
-//    Generic visitor generating code for Exceptions.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    .cpp
+ *
+ *  $Id$
+ *
+ *  Generic visitor generating code for Exceptions.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // Generic exception visitor.
 be_visitor_exception::be_visitor_exception (be_visitor_context *ctx)

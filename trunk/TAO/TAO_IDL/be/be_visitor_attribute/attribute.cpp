@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    attribute.cpp
-//
-// = DESCRIPTION
-//    Visitor for generation of code for Attribute
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    attribute.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor for generation of code for Attribute
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // Attribute gets mapped to one or possibly two operations based on whether
 // it is readonly or not. The two operations "get" and "set" the value of the

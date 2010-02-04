@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    home_svs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Homes in the servant source.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    home_svs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Homes in the servant source.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 // ******************************************************
 // Home visitor for server source

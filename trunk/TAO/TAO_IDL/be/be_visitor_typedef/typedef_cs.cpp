@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    typedef_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Typedef in the client stubs
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    typedef_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Typedef in the client stubs
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ******************************************************
 // Typedef visitor for client stubs

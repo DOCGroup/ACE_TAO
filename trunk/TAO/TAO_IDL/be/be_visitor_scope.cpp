@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_scope.cpp
-//
-// = DESCRIPTION
-//    Visitor for the base be_scope node. This serves to maintain the current
-//    state (context) of code generation for the derived visitor.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_scope.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor for the base be_scope node. This serves to maintain the current
+ *  state (context) of code generation for the derived visitor.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "be_argument.h"
 #include "be_scope.h"

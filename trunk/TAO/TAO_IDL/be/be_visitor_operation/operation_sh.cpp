@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    operation_sh.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Operation in the server header
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    operation_sh.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Operation in the server header
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ************************************************************
 // Operation visitor for server header

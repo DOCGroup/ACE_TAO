@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_union.cpp
-//
-// = DESCRIPTION
-//    Visitors for generation of code for Union
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_union.cpp
+ *
+ *  $Id$
+ *
+ *  Visitors for generation of code for Union
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "be_enum.h"
 #include "be_typedef.h"

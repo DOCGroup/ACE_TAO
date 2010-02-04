@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    any_op.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Any operators for elements in the scope of
-//    the Module.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    any_op.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Any operators for elements in the scope of
+ *  the Module.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ***************************************************************************
 // Module visitor for generating Any operator declarations in the client header

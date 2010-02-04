@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    marshal_ss.cpp
-//
-// = DESCRIPTION
-//    Visitor that generates code that passes the argument variable to the
-//    marshal operations.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    marshal_ss.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor that generates code that passes the argument variable to the
+ *  marshal operations.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ************************************************************************
 // Visitor to generate code for passing argument to the marshal/demarshal

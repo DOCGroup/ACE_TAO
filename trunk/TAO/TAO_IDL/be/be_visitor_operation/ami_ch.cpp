@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    ami_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating AMI stub code for Operation node in the
-//    client header.
-//
-// = AUTHOR
-//    Alexander Babu Arulanthu <alex@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ami_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating AMI stub code for Operation node in the
+ *  client header.
+ *
+ *
+ *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 // ******************************************************
 // Visitor for generating AMI stub for "operation" in client header.

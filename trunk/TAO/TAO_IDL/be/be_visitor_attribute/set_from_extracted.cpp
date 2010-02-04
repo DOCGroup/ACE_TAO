@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    set_from_extracted.cpp
-//
-// = DESCRIPTION
-//    Visitor for generation of arguments to attribute mutators
-//    that were first extracted from an Any
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    set_from_extracted.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor for generation of arguments to attribute mutators
+ *  that were first extracted from an Any
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 be_visitor_attribute_set_from_extracted::be_visitor_attribute_set_from_extracted (
     be_visitor_context *ctx)
