@@ -609,6 +609,9 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (ACE_Sig_Handler *sh,
   , poll_fd_ (ACE_INVALID_HANDLE)
   , size_ (0)
   // , ready_set_ ()
+#if defined (ACE_HAS_EVENT_POLL)
+  , epoll_wait_in_progress_ (false)
+#endif /* ACE_HAS_EVENT_POLL */
 #if defined (ACE_HAS_DEV_POLL)
   , dp_fds_ (0)
   , start_pfds_ (0)
@@ -965,11 +968,33 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
 
 #if defined (ACE_HAS_EVENT_POLL)
 
-   // Wait for an event.
-   int const nfds = ::epoll_wait (this->poll_fd_,
-                                  &this->event_,
-                                  1,
-                                  static_cast<int> (timeout));
+  // See if there are handlers that have to be resumed before waiting.
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->to_be_resumed_lock_, -1);
+    this->epoll_wait_in_progress_ = true;
+    for (Resume_Map::iterator i = this->to_be_resumed_.begin ();
+         i != this->to_be_resumed_.end ();
+         ++i)
+      {
+        // Make sure that 1) the handle is still registered,
+        // 2) the registered handler is the one we're waiting to resume.
+        Event_Tuple *info = this->handler_rep_.find (i->first);
+        if (info != 0 && info->event_handler == i->second)
+          {
+            this->resume_handler_i (i->first);
+          }
+      }
+    this->to_be_resumed_.clear ();
+  }
+
+  // Wait for an event.
+  int const nfds = ::epoll_wait (this->poll_fd_,
+                                 &this->event_,
+                                 1,
+                                 static_cast<int> (timeout));
+  // Count on this being an atomic update; at worst, we may get an
+  // extraneous notify() from dispatch_io_event.
+  this->epoll_wait_in_progress_ = false;
 
 #else
 
@@ -1281,13 +1306,13 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
       // With epoll, events are registered with oneshot, so the handle is
       // effectively suspended; future calls to epoll_wait() will select
       // the next event, so they're not managed here.
-      // The hitch to this is that the notify handler must always be resumed
-      // immediately, before letting go of the guard. Else it's possible to
-      // get into a state where all handles, including the notify pipe, are
-      // suspended and that means the wait thread can't be interrupted.
-      info->suspended = true;
-      if (eh == this->notify_handler_)
-        this->resume_handler_i (handle);
+      // The hitch to this is that the notify handler is always registered
+      // WITHOUT oneshot and is never suspended/resumed. This avoids endless
+      // notify loops caused by the notify handler requiring a resumption
+      // which requires the token, which requires a notify, etc. described
+      // in Bugzilla 3714. So, never suspend the notify handler.
+      if (eh != this->notify_handler_)
+        info->suspended = true;
 #endif /* ACE_HAS_DEV_POLL */
 
       int status = 0;   // gets callback status, below.
@@ -1299,12 +1324,49 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
         // notified handlers themselves is done in the notify handler.
         ACE_Dev_Poll_Handler_Guard eh_guard (eh);
 
+        bool reactor_resumes_eh =
+          eh->resume_handler () ==
+          ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER;
+
         // Release the reactor token before upcall.
         guard.release_token ();
 
         // Dispatch the detected event; will do the repeated upcalls
         // if callback returns > 0. We come back with either 0 or < 0.
         status = this->upcall (eh, callback, handle);
+
+        if (eh == this->notify_handler_)
+          return status == 0 ? 1 : -1;
+
+        // If the callback returned 0, epoll-based needs to resume the
+        // suspended handler but dev/poll doesn't.
+        // The epoll case is optimized to not acquire the token in order
+        // to resume the handler; the handler is added to a list of those
+        // that need to be resumed and is handled by the next leader
+        // that does an epoll_wait().
+        // In both epoll and dev/poll cases, if the callback returns <0,
+        // the token needs to be acquired and the handler checked and
+        // removed if it hasn't already been.
+        if (status == 0)
+          {
+#ifdef ACE_HAS_EVENT_POLL
+            // epoll-based effectively suspends handlers around the upcall.
+            // If the handler must be resumed, add it to the list.
+            if (reactor_resumes_eh)
+              {
+                ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                                  grd,
+                                  this->to_be_resumed_lock_,
+                                  -1);
+                bool map_was_empty = this->to_be_resumed_.empty();
+                this->to_be_resumed_.insert
+                  (Resume_Map::value_type (handle, eh));
+                if (this->epoll_wait_in_progress_ && map_was_empty)
+                  this->notify();
+              }
+#endif /* ACE_HAS_EVENT_POLL */
+            return 1;
+          }
 
         // All state in the handler repository may have changed during the
         // upcall while other threads had the token. Thus, reacquire the
@@ -1317,15 +1379,6 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
           {
             if (status < 0)
               this->remove_handler_i (handle, disp_mask);
-
-#ifdef ACE_HAS_EVENT_POLL
-            // epoll-based effectively suspends handlers around the upcall.
-            // If the handler must be resumed here, do it now.
-            if (info->suspended &&
-                (eh->resume_handler () ==
-                 ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER))
-              this->resume_handler_i (handle);
-#endif /* ACE_HAS_EVENT_POLL */
           }
       }
       // Scope close handles eh ref count decrement, if needed.
@@ -1428,8 +1481,13 @@ ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
      ACE_OS::memset (&epev, 0, sizeof (epev));
      static const int op = EPOLL_CTL_ADD;
 
-     epev.events  = this->reactor_mask_to_poll_event (mask) | EPOLLONESHOT;
      epev.data.fd = handle;
+     epev.events  = this->reactor_mask_to_poll_event (mask);
+     // All but the notify handler get registered with oneshot to facilitate
+     // auto suspend before the upcall. See dispatch_io_event for more
+     // information.
+     if (event_handler != this->notify_handler_)
+       epev.events |= EPOLLONESHOT;
 
      if (::epoll_ctl (this->poll_fd_, op, handle, &epev) == -1)
        {
