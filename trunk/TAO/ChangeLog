@@ -1,3 +1,17 @@
+Thu Feb  4 14:13:32 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * TAO_IDL/be/be_visitor_union/discriminant_ci.cpp:
+          Changed code to generate octal numbers where they are meant instead
+          of decimals. Removed code for wchars since wchar discriminant is
+          not allowed in unions.
+
+        * TAO_IDL/be/be_global.cpp:
+          Fixed a memory leak in tao_idl.
+
+        * TAO_IDL/ast/ast_module.cpp:
+          Fixed bug#3819. Multiple forward declarations of valuetypes,
+          eventtypes, and components don't crash tao_idl now.
+
 Thu Feb  4 13:56:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/Makefile.am:

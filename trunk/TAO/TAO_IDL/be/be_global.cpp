@@ -1628,6 +1628,9 @@ BE_GlobalData::destroy (void)
   ACE::strdelete (this->ciao_exec_idl_ending_);
   this->ciao_exec_idl_ending_ = 0;
 
+  ACE::strdelete (this->dds_typesupport_hdr_ending_);
+  this->dds_typesupport_hdr_ending_ = 0;
+
   ACE::strdelete (this->output_dir_);
   this->output_dir_ = 0;
 
