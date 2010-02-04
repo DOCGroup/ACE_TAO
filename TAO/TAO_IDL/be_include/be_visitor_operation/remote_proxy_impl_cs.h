@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- *  @file    operation_remote_proxy_impl_cs.h
+ *  @file    remote_proxy_impl_cs.h
  *
  *  $Id$
  *

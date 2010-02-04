@@ -1,7 +1,7 @@
 
 //=============================================================================
 /**
- *  @file    operation_ami_exception_holder_operation_cs.h
+ *  @file    ami_exception_holder_operation_cs.h
  *
  *  $Id$
  *

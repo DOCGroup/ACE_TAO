@@ -1,7 +1,7 @@
 
 //=============================================================================
 /**
- *  @file    enum_ch.cpp
+ *  @file    native_ch.cpp
  *
  *  $Id$
  *
@@ -55,9 +55,9 @@ be_visitor_native_ch::visit_native (be_native *node)
       // DDS/DCPS zero-copy read sequence type support.
       *os << be_nl << be_nl
           << "typedef ::TAO::DCPS::ZeroCopyInfoSeq< "
-          << "SampleInfo" 
-          << ", DCPS_ZERO_COPY_SEQ_DEFAULT_SIZE> " 
-          << "SampleInfo" 
+          << "SampleInfo"
+          << ", DCPS_ZERO_COPY_SEQ_DEFAULT_SIZE> "
+          << "SampleInfo"
           << "Seq;" << be_nl;
     }
   else if (idl_global->dcps_support_zero_copy_read ()
@@ -78,9 +78,9 @@ be_visitor_native_ch::visit_native (be_native *node)
 
       *os << be_nl << be_nl
           << "typedef ::TAO::DCPS::ZeroCopyDataSeq< "
-          << sample_name 
-          << ", DCPS_ZERO_COPY_SEQ_DEFAULT_SIZE> " 
-          << node->local_name () 
+          << sample_name
+          << ", DCPS_ZERO_COPY_SEQ_DEFAULT_SIZE> "
+          << node->local_name ()
           << ";" << be_nl;
     }
 

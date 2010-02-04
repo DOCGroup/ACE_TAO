@@ -1,7 +1,7 @@
 
 //=============================================================================
 /**
- *  @file    field_serializer_op_cs.cpp
+ *  @file    serializer_op_cs.cpp
  *
  *  $Id$
  *

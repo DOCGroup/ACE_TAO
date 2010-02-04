@@ -1,7 +1,7 @@
 
 //=============================================================================
 /**
- *  @file    operation_ami_handler_reply_stub_operation_cs.h
+ *  @file    ami_handler_reply_stub_operation_cs.h
  *
  *  $Id$
  *
@@ -46,11 +46,11 @@ public:
 
   // = template methods
   /// generate any info before the actual code for the stub is generated
-  int gen_pre_stub_info (be_operation *node, 
+  int gen_pre_stub_info (be_operation *node,
                          be_type *bt);
 
   /// generate code that marshals the arguments and transmits them
-  virtual int gen_marshal_and_invoke (be_operation *node, 
+  virtual int gen_marshal_and_invoke (be_operation *node,
                                       be_type *bt);
 
   // =helper
