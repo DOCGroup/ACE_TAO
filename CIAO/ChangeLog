@@ -1,3 +1,38 @@
+Thu Feb  4 10:46:25 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/idl/ccm_dds.idl:
+          Code aligning.
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
+        * connectors/dds4ccm/impl/ndds/DataWriterListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener_T.h:
+          Added implementation regarding
+          ReliableReaderActivityChangedStatus.
+
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.h:
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.h:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/TopicListener_T.cpp:
+          Added status logging for each DDS callback.
+
+        * connectors/dds4ccm/impl/ndds/Utils.h:
+        * connectors/dds4ccm/impl/ndds/Utils.cpp:
+          Added helper methods for status logging in
+          DDS callbacks.
+
+        * connectors/dds4ccm/impl/ndds/TimeUtilities.h:
+          Removed unnecessary comment.
+
+        * connectors/dds4ccm/tests/CSLUnexpStat/Base/CSL_USTest_Base.idl:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.h:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/CSLUnexpStat/descriptors/Plan.cdp:
+          Rewritten to test all unexpected status. Also removed unused
+          DDS callbacks and realigned some code.
+
 Thu Feb  4 10:38:43 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Bug_2130_Regression/descriptors/run_test.pl:
@@ -56,7 +91,7 @@ Thu Feb  4 10:38:43 UTC 2010  Martin Corino  <mcorino@remedy.nl>
         * examples/Null_Component/descriptors/run_test.pl:
 
          Added cleanup code to kill off remaining ciao_componentserver processes
-         (in case of certain test failures) since these otherwise tend to choke test 
+         (in case of certain test failures) since these otherwise tend to choke test
          machines.
 
 Thu Feb  4 10:30:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -301,7 +336,7 @@ Mon Feb  1 19:16:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jan 31 01:04:43 CST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* CIAO version 0.7.6 released.
+        * CIAO version 0.7.6 released.
 
 Fri Jan 29 13:36:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 

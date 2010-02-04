@@ -15,8 +15,11 @@ namespace CIAO_CSL_USTest_Sender_Impl
   //============================================================
   // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
   //============================================================
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &unexpected_matched, Atomic_Boolean &unexpected_liveliness)
-   : unexpected_matched_ (unexpected_matched),
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &unexpected_pub_matched,
+                                                                  Atomic_Boolean &unexpected_sub_matched,
+                                                                  Atomic_Boolean &unexpected_liveliness)
+   : unexpected_pub_matched_ (unexpected_pub_matched),
+     unexpected_sub_matched_ (unexpected_sub_matched),
      unexpected_liveliness_ (unexpected_liveliness)
   {
   }
@@ -26,41 +29,52 @@ namespace CIAO_CSL_USTest_Sender_Impl
   }
 
   // Operations from ::CCM_DDS::ConnectorStatusListener
-  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
+  void ConnectorStatusListener_exec_i::on_inconsistent_topic (
      ::DDS::Topic_ptr /*the_topic*/,
      const DDS::InconsistentTopicStatus & /*status*/)
-    {
-    }
+  {
+  }
 
-  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
+  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos (
     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
-    }
+     const DDS::RequestedIncompatibleQosStatus & /*status*/)
+  {
+  }
 
-  void ConnectorStatusListener_exec_i::on_sample_rejected(
+  void ConnectorStatusListener_exec_i::on_sample_rejected (
      ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::SampleRejectedStatus & /*status*/)  {
-    }
+     const DDS::SampleRejectedStatus & /*status*/)
+  {
+  }
 
-  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
+  void ConnectorStatusListener_exec_i::on_offered_deadline_missed (
      ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedDeadlineMissedStatus & /*status*/)  {
-    }
+     const DDS::OfferedDeadlineMissedStatus & /*status*/)
+  {
+  }
 
-  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
+  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos (
      ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
-    }
+     const DDS::OfferedIncompatibleQosStatus & /*status*/)
+  {
+  }
 
-  void ConnectorStatusListener_exec_i::on_unexpected_status(
+  void ConnectorStatusListener_exec_i::on_unexpected_status (
     ::DDS::Entity_ptr the_entity,
-    ::DDS::StatusKind  status_kind)  {
-      CORBA::ULong kind = status_kind;
-      if((!CORBA::is_nil(the_entity)) && (kind==DDS::PUBLICATION_MATCHED_STATUS))
+    ::DDS::StatusKind status_kind)
+  {
+    ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_unexpected_status: "
+                          "received <%C>\n",
+                          CIAO::DDS4CCM::translate_statuskind (status_kind)));
+    if (!CORBA::is_nil(the_entity) && status_kind == DDS::SUBSCRIPTION_MATCHED_STATUS)
       {
-        this->unexpected_matched_ = true;
+        this->unexpected_sub_matched_ = true;
       }
-      if((!CORBA::is_nil(the_entity)) && (kind==DDS::LIVELINESS_CHANGED_STATUS))
+    else if (!CORBA::is_nil(the_entity) && status_kind == DDS::PUBLICATION_MATCHED_STATUS)
+      {
+        this->unexpected_pub_matched_ = true;
+      }
+    else if (!CORBA::is_nil(the_entity) && status_kind == DDS::LIVELINESS_CHANGED_STATUS)
       {
         this->unexpected_liveliness_ = true;
       }
@@ -70,7 +84,8 @@ namespace CIAO_CSL_USTest_Sender_Impl
   //============================================================
 
   Sender_exec_i::Sender_exec_i (void)
-    : unexpected_matched_ (false),
+    : unexpected_pub_matched_ (false),
+      unexpected_sub_matched_ (false),
       unexpected_liveliness_ (false)
   {
   }
@@ -82,7 +97,9 @@ namespace CIAO_CSL_USTest_Sender_Impl
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Sender_exec_i::get_test_topic_connector_status (void)
   {
-    return new ConnectorStatusListener_exec_i (this->unexpected_matched_,this->unexpected_liveliness_);
+    return new ConnectorStatusListener_exec_i (this->unexpected_pub_matched_,
+                                               this->unexpected_sub_matched_,
+                                               this->unexpected_liveliness_);
   }
 
   // Supported operations and attributes.
@@ -91,7 +108,7 @@ namespace CIAO_CSL_USTest_Sender_Impl
   {
     this->context_ = ::CSL_USTest::CCM_Sender_Context::_narrow (ctx);
 
-    if ( ::CORBA::is_nil (this->context_.in ()))
+    if (::CORBA::is_nil (this->context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }
@@ -100,24 +117,12 @@ namespace CIAO_CSL_USTest_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
-    this->writer_  = this->context_->get_connection_test_topic_write_data ();
   }
 
   void
-  Sender_exec_i::add_instance_of_topic (const char * key, int x)
-  {
-    TestTopic *new_key = new TestTopic;
-    new_key->key = CORBA::string_dup(key);
-    new_key->x = x;
-    this->_ktests_[key] = new_key;
-  }
-  void
   Sender_exec_i::ccm_activate (void)
   {
-    //add 2 different instances of topic
-    this->add_instance_of_topic ("ONE",1);
-    this->add_instance_of_topic ("TWO",2);
- }
+  }
 
   void
   Sender_exec_i::ccm_passivate (void)
@@ -127,16 +132,24 @@ namespace CIAO_CSL_USTest_Sender_Impl
   void
   Sender_exec_i::ccm_remove (void)
   {
-    if(!this->unexpected_matched_.value () || !this->unexpected_liveliness_.value ())
+    if(!this->unexpected_pub_matched_.value () ||
+       !this->unexpected_sub_matched_.value () ||
+       !this->unexpected_liveliness_.value ())
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
-                               ACE_TEXT ("states 'PUBLICATION_MATCHED_STATUS and/or LIVELINESS_CHANGED_STATUS' in Sender\n")
+                              ACE_TEXT ("states 'PUBLICATION_MATCHED_STATUS ")
+                              ACE_TEXT ("and/or 'SUBSCRIPTION_MATCHED_STATUS' ")
+                              ACE_TEXT ("and/or 'LIVELINESS_CHANGED_STATUS' ")
+                              ACE_TEXT ("in Sender\n")
                     ));
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Received the expected ")
-                               ACE_TEXT ("'LIVELINESS_CHANGED_STATUS' and 'PUBLICATION_MATCHED_STATUS' in Sender\n")
+                              ACE_TEXT ("'LIVELINESS_CHANGED_STATUS' ")
+                              ACE_TEXT ("and 'PUBLICATION_MATCHED_STATUS' ")
+                              ACE_TEXT ("and 'SUBSCRIPTION_MATCHED_STATUS' ")
+                              ACE_TEXT ("in Sender\n")
                     ));
       }
   }

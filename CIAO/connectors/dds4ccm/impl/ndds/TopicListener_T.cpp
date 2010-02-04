@@ -29,6 +29,11 @@ CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::on_inconsistent_topic (
 {
   CIAO_TRACE ("CIAO::DDS4CCM::TopicListener_T::on_inconsistent_topic");
 
+  CIAO_DEBUG (10, (LM_DEBUG, CLINFO
+              ACE_TEXT ("TopicListener_T::on_inconsistent_topic: ")
+              ACE_TEXT ("total count <%d> - total change <%d> - "),
+              status.total_count, status.total_count_change));
+
   if (!CORBA::is_nil (this->error_listener_.in ()))
     {
       if (this->reactor_)
