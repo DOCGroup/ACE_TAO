@@ -44,7 +44,9 @@ CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::on_inconsistent_topic (
           ACE_Event_Handler_var safe_handler (rh);
           if (this->reactor_->notify (rh) != 0)
             {
-              ACE_ERROR ((LM_ERROR, ACE_TEXT ("TopicListener_T::failed to use reactor.\n")));
+              ACE_ERROR ((LM_ERROR, CLINFO
+                          ACE_TEXT ("TopicListener_T::on_inconsistent_topic: ")
+                          ACE_TEXT ("failed to use reactor.\n")));
             }
         }
       else
