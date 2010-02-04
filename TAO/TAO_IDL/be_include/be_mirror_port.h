@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    be_mirror_port.h
-//
-// = DESCRIPTION
-//    Extension of class AST_Mirror_Port for C++ code generation.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_mirror_port.h
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_Mirror_Port for C++ code generation.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef BE_MIRROR_PORT_H
 #define BE_MIRROR_PORT_H

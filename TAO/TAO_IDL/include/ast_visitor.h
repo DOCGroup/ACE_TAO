@@ -1,21 +1,18 @@
-// $Id$
 
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_FE_DLL
-//
-// = FILENAME
-//    ast_visitor.h
-//
-// = DESCRIPTION
-//    The abstract AST visitor base class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ast_visitor.h
+ *
+ *  $Id$
+ *
+ *  The abstract AST visitor base class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_IDL_FE_DLL_AST_VISITOR_H
 #define TAO_IDL_FE_DLL_AST_VISITOR_H
@@ -74,20 +71,20 @@ class AST_Root;
 class AST_Native;
 class AST_Param_Holder;
 
+/**
+ * @class ast_visitor
+ *
+ * @brief ast_visitor.
+ *
+ * To implement BE processing we use the "Visitor Pattern", this
+ * is the abstract "Visitor". This class is the abstract base class
+ * for visitors that traverse the AST_<node> classes. Other abstract
+ * classes for C++ code generation, Java code generation, or IfR
+ * administration, for example, can be derived from this class and
+ * be the root of their own subtree of specialized visitor classes.
+ */
 class TAO_IDL_FE_Export ast_visitor
 {
-  //
-  // = TITLE
-  //    ast_visitor.
-  //
-  // = DESCRIPTION
-  //    To implement BE processing we use the "Visitor Pattern", this
-  //    is the abstract "Visitor". This class is the abstract base class
-  //    for visitors that traverse the AST_<node> classes. Other abstract
-  //    classes for C++ code generation, Java code generation, or IfR
-  //    administration, for example, can be derived from this class and
-  //    be the root of their own subtree of specialized visitor classes.
-  //
 public:
   virtual ~ast_visitor (void);
 

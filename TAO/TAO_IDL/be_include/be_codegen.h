@@ -1,22 +1,18 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    be_codegen.h
-//
-// = DESCRIPTION
-//   The Code generator class
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ================================================================
+//=============================================================================
+/**
+ *  @file    be_codegen.h
+ *
+ *  $Id$
+ *
+ * The Code generator class
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef TAO_BE_CODEGEN_H
 #define TAO_BE_CODEGEN_H
@@ -31,15 +27,16 @@ class be_visitor_context;
 class be_visitor;
 class be_decl;
 
+/**
+ * @class TAO_CodeGen
+ *
+ * @brief TAO_CodeGen
+ *
+ * Holds global parameters for the Back End and
+ * generates the C++ mapping.
+ */
 class TAO_IDL_BE_Export TAO_CodeGen
 {
-  // = TITLE
-  //    TAO_CodeGen
-  //
-  // = DESCRIPTION
-  //    Holds global parameters for the Back End and
-  //    generates the C++ mapping.
-  //
 public:
 
   // Define all the code generation states.
@@ -223,54 +220,54 @@ public:
       TAO_SUB_STATE_UNKNOWN
     };
 
+  /// Constructor
   TAO_CodeGen (void);
-  // Constructor
 
+  /// Destructor
   ~TAO_CodeGen (void);
-  // Destructor
 
+  /// Factory that makes the right visitor based on the contex. This
+  /// delegates the task to its factory data member.
   be_visitor *make_visitor (be_visitor_context *);
-  // Factory that makes the right visitor based on the contex. This
-  // delegates the task to its factory data member.
 
+  /// Generate the C++ mapping for CORBA IDL.
   int gen_cplusplus_mapping (void);
-  // Generate the C++ mapping for CORBA IDL.
 
+  /// Set the client header stream.
   int start_client_header (const char *fname);
-  // Set the client header stream.
 
+  /// Set the client inline stream.
   int start_client_inline (const char *fname);
-  // Set the client inline stream.
 
+  /// Set the client stub stream.
   int start_client_stubs (const char *fname);
-  // Set the client stub stream.
 
+  /// Set the server header stream.
   int start_server_header (const char *fname);
-  // Set the server header stream.
 
+  /// Set the implementation header stream.
   int start_implementation_header (const char *fname);
-  // Set the implementation header stream.
 
+  /// Set the implementation skeleton stream.
   int start_implementation_skeleton (const char *fname);
-  // Set the implementation skeleton stream.
 
+  /// Set the server template header stream.
   int start_server_template_header (const char *fname);
-  // Set the server template header stream.
 
+  /// Set the server inline stream.
   int start_server_inline (const char *fname);
-  // Set the server inline stream.
 
+  /// Set the server skeletons stream.
   int start_server_skeletons (const char *fname);
-  // Set the server skeletons stream.
 
+  /// Set the server template skeletons stream.
   int start_server_template_skeletons (const char *fname);
-  // Set the server template skeletons stream.
 
+  /// Set the anyop header stream.
   int start_anyop_header (const char *fname);
-  // Set the anyop header stream.
 
+  /// Set the anyop source stream.
   int start_anyop_source (const char *fname);
-  // Set the anyop source stream.
   
   int start_ciao_svnt_header (const char *fname);
   int start_ciao_svnt_source (const char *fname);
@@ -278,9 +275,9 @@ public:
   int start_ciao_exec_source (const char *fname);
   int start_ciao_exec_idl (const char *fname);
 
+  /// Generate code at the end such as the <<= and >>= operators along
+  /// with the ending #endif statement.
   int end_client_header (void);
-  // Generate code at the end such as the <<= and >>= operators along
-  // with the ending #endif statement.
 
   /// Generate necessary code at end of client inline file.
   void end_client_inline (void);
@@ -288,32 +285,32 @@ public:
   /// Generate necessary code at end of client stub file.
   void end_client_stubs (void);
 
+  /// Put a last #endif in the server header.
   int end_server_header (void);
-  // Put a last #endif in the server header.
 
   /// Generate necessary code at end of server inline file.
   void end_server_inline (void);
 
+  /// Put a last #endif in the server header.
   int end_implementation_header (const char *fname);
-  // Put a last #endif in the server header.
 
+  /// Put a last #endif in the server header.
   int end_implementation_skeleton (const char *fname);
-  // Put a last #endif in the server header.
 
+  /// Put a last #endif in the server template header.
   int end_server_template_header (void);
-  // Put a last #endif in the server template header.
 
+  /// Put a last #endif in the server skeletons.
   int end_server_template_skeletons (void);
-  // Put a last #endif in the server skeletons.
 
+  /// Put a last #endif in the server skeletons.
   int end_server_skeletons (void);
-  // Put a last #endif in the server skeletons.
 
+  /// Put a last #endif in the anyop header.
   int end_anyop_header (void);
-  // Put a last #endif in the anyop header.
 
+  /// Make sure we end with a newline.
   int end_anyop_source (void);
-  // Make sure we end with a newline.
   
   int end_ciao_svnt_header (void);
   int end_ciao_svnt_source (void);
@@ -321,109 +318,113 @@ public:
   int end_ciao_exec_source (void);
   int end_ciao_exec_idl (void);
 
+  /// Get the client header stream.
   TAO_OutStream *client_header (void);
-  // Get the client header stream.
 
+  /// Get the client stubs stream.
   TAO_OutStream *client_stubs (void);
-  // Get the client stubs stream.
 
+  /// Get the client inline stream.
   TAO_OutStream *client_inline (void);
-  // Get the client inline stream.
 
+  /// get the server header stream.
   TAO_OutStream *server_header (void);
-  // get the server header stream.
 
+  /// Get the implementation header stream.
   TAO_OutStream *implementation_header (void);
-  // Get the implementation header stream.
 
+  /// Get the implementation skeleton stream.
   TAO_OutStream *implementation_skeleton (void);
-  // Get the implementation skeleton stream.
 
+  /// Get the server header template stream.
   TAO_OutStream *server_template_header (void);
-  // Get the server header template stream.
 
+  /// Get the server skeletons stream.
   TAO_OutStream *server_skeletons (void);
-  // Get the server skeletons stream.
 
+  /// Get the server template skeletons stream.
   TAO_OutStream *server_template_skeletons (void);
-  // Get the server template skeletons stream.
 
+  /// Get the server inline stream.
   TAO_OutStream *server_inline (void);
-  // Get the server inline stream.
 
+  /// Get the server template inline stream.
   TAO_OutStream *server_template_inline (void);
-  // Get the server template inline stream.
 
+  /// Get the anyop header stream.
   TAO_OutStream *anyop_header (void);
-  // Get the anyop header stream.
 
+  /// Get the anyop source stream.
   TAO_OutStream *anyop_source (void);
-  // Get the anyop source stream.
 
+  /// Get the CIAO servant header stream.
   TAO_OutStream *ciao_svnt_header (void);
-  // Get the CIAO servant header stream.
 
+  /// Get the CIAO servant source stream.
   TAO_OutStream *ciao_svnt_source (void);
-  // Get the CIAO servant source stream.
 
+  /// Get the CIAO executor impl header stream.
   TAO_OutStream *ciao_exec_header (void);
-  // Get the CIAO executor impl header stream.
 
+  /// Get the CIAO executor impl source stream.
   TAO_OutStream *ciao_exec_source (void);
-  // Get the CIAO executor impl source stream.
 
+  /// Get the CIAO executor impl source stream.
   TAO_OutStream *ciao_exec_idl (void);
-  // Get the CIAO executor impl source stream.
 
+  /// Set the gperf input file stream.
   void gperf_input_stream (TAO_OutStream *gperf_input);
-  // Set the gperf input file stream.
 
+  /// Retrieve the gperf input stream being used.
   TAO_OutStream *gperf_input_stream (void);
-  // Retrieve the gperf input stream being used.
 
+  /// Set the gperf input file name.
   void gperf_input_filename (char *filename);
-  // Set the gperf input file name.
 
+  /**
+   * Retrieve the gperf input file name being used.
+   * Name of the temp file used to collect the input for gperf
+   * program. This is needed coz I do ACE_OS::open on this when I need
+   * ACE_HANDLE for the file instead FILE*.
+   */
   char *gperf_input_filename (void);
-  // Retrieve the gperf input file name being used.
-  // Name of the temp file used to collect the input for gperf
-  // program. This is needed coz I do ACE_OS::open on this when I need
-  // ACE_HANDLE for the file instead FILE*.
 
+  /// Set current out stream.
   void outstream (TAO_OutStream *os);
-  // Set current out stream.
 
+  /// Retrieve current out stream being used.
   TAO_OutStream *outstream (void);
-  // Retrieve current out stream being used.
 
+  /**
+   * Set the visitor factory  object. In this respect, this behaves as the
+   * "strategy" pattern in which the TAO_CodeGen object is the context and the
+   * visitor_factory is the strategy object.
+   */
   void config_visitor_factory (void);
-  // Set the visitor factory  object. In this respect, this behaves as the
-  // "strategy" pattern in which the TAO_CodeGen object is the context and the
-  // visitor_factory is the strategy object.
 
+  /// Pass info.
   void node (be_decl *n);
-  // Pass info.
 
+  /// Retrieve passed info.
   be_decl *node (void);
-  // Retrieve passed info.
 
+  /// Convert input string to all upcase.
   const char *upcase (const char *str);
-  // Convert input string to all upcase.
 
+  /// Pass along the #ident string, if any, from the IDL file.
   void gen_ident_string (TAO_OutStream *stream) const;
-  // Pass along the #ident string, if any, from the IDL file.
   
+  /// Generates the export files selected on the command line.
   void gen_export_files (void);
-  // Generates the export files selected on the command line.
 
+  /// Generate file include, with optional empty comment to 
+  /// short-circuit DOxygen.
   void gen_standard_include (TAO_OutStream *stream,
                              const char *included_file,
                              bool add_comment = false);
-  // Generate file include, with optional empty comment to 
-  // short-circuit DOxygen.
 
+  /// Cleanup.
   void destroy (void);
-  // Cleanup.
 
 private:
   void gen_ifndef_string (const char *fname,
@@ -458,76 +459,78 @@ private:
                         bool for_skel = false);
 
 private:
+  /// Client header stream.
   TAO_OutStream *client_header_;
-  // Client header stream.
 
+  /// Client stub file stream
   TAO_OutStream *client_stubs_;
-  // Client stub file stream
 
+  /// Client side inline definitions.
   TAO_OutStream *client_inline_;
-  // Client side inline definitions.
 
+  /// Server header stream.
   TAO_OutStream *server_header_;
-  // Server header stream.
 
+  /// Implementation header stream.
   TAO_OutStream *implementation_header_;
-  // Implementation header stream.
 
+  /// Implementation skeleton stream.
   TAO_OutStream *implementation_skeleton_;
-  // Implementation skeleton stream.
 
+  /// Server header template stream.
   TAO_OutStream *server_template_header_;
-  // Server header template stream.
 
+  /// Server skeleton stream.
   TAO_OutStream *server_skeletons_;
-  // Server skeleton stream.
 
+  /// Server skeleton template stream.
   TAO_OutStream *server_template_skeletons_;
-  // Server skeleton template stream.
 
+  /// Server side inline file.
   TAO_OutStream *server_inline_;
-  // Server side inline file.
 
+  /// Anyop header file.
   TAO_OutStream *anyop_header_;
-  // Anyop header file.
 
+  /// Anyop source file.
   TAO_OutStream *anyop_source_;
-  // Anyop source file.
 
+  /// TAO_OutStream to collect the input for gperf program.
   TAO_OutStream *gperf_input_stream_;
-  // TAO_OutStream to collect the input for gperf program.
 
+  /// Component servant header file.
   TAO_OutStream *ciao_svnt_header_;
-  // Component servant header file.
 
+  /// Component servant source file.
   TAO_OutStream *ciao_svnt_source_;
-  // Component servant source file.
 
+  /// Component executor impl header file.
   TAO_OutStream *ciao_exec_header_;
-  // Component executor impl header file.
 
+  /// Component executor impl source file.
   TAO_OutStream *ciao_exec_source_;
-  // Component executor impl source file.
 
+  /// Component executor impl source file.
   TAO_OutStream *ciao_exec_idl_;
-  // Component executor impl source file.
 
+  /// Currently used out stream.
   TAO_OutStream *curr_os_;
-  // Currently used out stream.
 
+  /**
+   * Name of the temp file used to collect the input for gperf
+   * program. This is needed coz I do ACE_OS::open on this when I need
+   * ACE_HANDLE for the file instead FILE*.
+   */
   char *gperf_input_filename_;
-  // Name of the temp file used to collect the input for gperf
-  // program. This is needed coz I do ACE_OS::open on this when I need
-  // ACE_HANDLE for the file instead FILE*.
 
+  /// Save current node in this.
   be_decl *node_;
-  // Save current node in this.
 
+  /// Visitor factory object.
   TAO_Visitor_Factory *visitor_factory_;
-  // Visitor factory object.
 
+  /// The enumerated value indicating the lookup strategy.
   LOOKUP_STRATEGY strategy_;
-  // The enumerated value indicating the lookup strategy.
 };
 
 typedef ACE_Singleton<TAO_CodeGen, ACE_SYNCH_RECURSIVE_MUTEX> TAO_CODEGEN;

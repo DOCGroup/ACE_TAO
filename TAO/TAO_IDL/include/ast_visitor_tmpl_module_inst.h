@@ -1,26 +1,21 @@
-//
-// $Id$
-//
 
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    ast_visitor_tmpl_module_inst.h
-//
-// = DESCRIPTION
-//    This visitor creates nodes resulting
-//    from the instantiation of a template module, or from a
-//    reference to one inside another, and adds these nodes
-//    to the AST.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ast_visitor_tmpl_module_inst.h
+ *
+ *  $Id$
+ *
+ *  This visitor creates nodes resulting
+ *  from the instantiation of a template module, or from a
+ *  reference to one inside another, and adds these nodes
+ *  to the AST.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef TAO_AST_VISITOR_TMPL_MODULE_INST_H
 #define TAO_AST_VISITOR_TMPL_MODULE_INST_H
@@ -32,16 +27,16 @@ class UTL_ExceptList;
 class UTL_NameList;
 class ast_visitor_context;
 
+/**
+ * @class ast_visitor_tmpl_module_inst
+ *
+ * @brief ast_visitor_tmpl_module_inst
+ *
+ * Adds implied IDL code to the AST related to the
+ * instantiation or alias of a template module.
+ */
 class ast_visitor_tmpl_module_inst : public ast_visitor
 {
-  //
-  // = TITLE
-  //   ast_visitor_tmpl_module_inst
-  //
-  // = DESCRIPTION
-  //   Adds implied IDL code to the AST related to the
-  //   instantiation or alias of a template module.
-  //
 public:
   ast_visitor_tmpl_module_inst (ast_visitor_context *ctx,
                                 bool ref_only = false);

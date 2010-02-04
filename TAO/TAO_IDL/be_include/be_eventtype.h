@@ -1,19 +1,18 @@
 /* -*- c++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_eventtype.h
-//
-// = DESCRIPTION
-//    Extension of class AST_EventType and be_valuetype that provides
-//    additional means for C++ mapping of an valuetype.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_eventtype.h
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_EventType and be_valuetype that provides
+ *  additional means for C++ mapping of an valuetype.
+ *
+ *
+ */
+//=============================================================================
+
 
 #ifndef TAO_BE_EVENTTYPE_H
 #define TAO_BE_EVENTTYPE_H
@@ -31,9 +30,11 @@ class be_eventtype : public virtual be_valuetype,
   //    Extends be_valuetype.
   //
 public:
+  /// Default constructor.
   be_eventtype (void);
-  // Default constructor.
 
+  /// Constructor that sets its scoped name <n>, a list of inherited valuetypes
+  /// and supported interfaces <ih>, and the number of inherited interfaces <nih>
   be_eventtype (UTL_ScopedName *n,
                 AST_Type **inherits,
                 long n_inherits,
@@ -46,11 +47,9 @@ public:
                 bool abstract,
                 bool truncatable,
                 bool custom);
-  // Constructor that sets its scoped name <n>, a list of inherited valuetypes
-  // and supported interfaces <ih>, and the number of inherited interfaces <nih>
 
+  /// Destructor.
   ~be_eventtype (void);
-  // Destructor.
 
   // Visiting.
   virtual int accept (be_visitor *visitor);

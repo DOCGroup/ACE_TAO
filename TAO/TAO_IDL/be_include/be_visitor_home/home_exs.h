@@ -1,38 +1,32 @@
-//
-// $Id$
-//
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    home_exs.h
-//
-// = DESCRIPTION
-//    Concrete visitor for the Home node.
-//    This provides for code generation in the exec impl source
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    home_exs.h
+ *
+ *  $Id$
+ *
+ *  Concrete visitor for the Home node.
+ *  This provides for code generation in the exec impl source
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef _BE_HOME_HOME_EXS_H_
 #define _BE_HOME_HOME_EXS_H_
 
+/**
+ * @class be_visitor_home_exs
+ *
+ * @brief be_visitor_home_exs
+ *
+ * This is a concrete visitor to generate the
+ * exec impl source for home.
+ */
 class be_visitor_home_exs : public be_visitor_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_home_exs
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate the
-  //   exec impl source for home.
-  //
-  //
 public:
   be_visitor_home_exs (be_visitor_context *ctx);
   

@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    set_from_extracted.h
-//
-// = DESCRIPTION
-//    Encapsulation the variations in setting read/write
-//    attributes from values extracted from an Any
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    set_from_extracted.h
+ *
+ *  $Id$
+ *
+ *  Encapsulation the variations in setting read/write
+ *  attributes from values extracted from an Any
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef BE_VISITOR_ATTRIBUTE_SET_FROM_EXTRACTED_H
 #define BE_VISITOR_ATTRIBUTE_SET_FROM_EXTRACTED_H

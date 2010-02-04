@@ -1,26 +1,21 @@
-//
-// $Id$
-//
 
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    be_visitor_ccm_pre_proc.h
-//
-// = DESCRIPTION
-//    This visitor creates for components the appropriate AST
-//    (Abstract Syntax Tree) nodes, corresponding to provides, uses,
-//    emits, publishes and consumes declarations,
-//    and adds the nodes to the AST.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_ccm_pre_proc.h
+ *
+ *  $Id$
+ *
+ *  This visitor creates for components the appropriate AST
+ *  (Abstract Syntax Tree) nodes, corresponding to provides, uses,
+ *  emits, publishes and consumes declarations,
+ *  and adds the nodes to the AST.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef TAO_BE_VISITOR_CCM_PRE_PROC_H
 #define TAO_BE_VISITOR_CCM_PRE_PROC_H
@@ -33,15 +28,15 @@ class be_valuetype;
 class be_exception;
 class UTL_ExceptList;
 
+/**
+ * @class be_visitor_ccm_pre_proc
+ *
+ * @brief be_visitor_ccm_pre_proc
+ *
+ * Adds CCM implied IDL code to the AST.
+ */
 class be_visitor_ccm_pre_proc : public be_visitor_component_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_ccm_pre_proc
-  //
-  // = DESCRIPTION
-  //   Adds CCM implied IDL code to the AST.
-  //
 public:
   be_visitor_ccm_pre_proc (be_visitor_context *ctx);
 

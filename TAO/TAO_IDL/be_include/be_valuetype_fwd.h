@@ -1,25 +1,21 @@
 /* -*- c++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_valuetype_fwd.h
-//
-// = DESCRIPTION
-//    Extension of class AST_Interface_Fwd that provides additional
-//    means for C++ mapping of a valuetype.
-//
-// = AUTHOR
-//    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and
-//    Aniruddha Gokhale,
-//    changed for valuetypes from Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_valuetype_fwd.h
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_Interface_Fwd that provides additional
+ *  means for C++ mapping of a valuetype.
+ *
+ *
+ *  @author Copyright 1994-1995 by Sun Microsystems
+ *  @author Inc. and Aniruddha Gokhale
+ *  @author changed for valuetypes from Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+ */
+//=============================================================================
+
 
 #ifndef BE_VALUETYPE_FWD_H
 #define BE_VALUETYPE_FWD_H
@@ -36,15 +32,15 @@ class be_valuetype_fwd : public virtual be_interface_fwd,
   // =DESCRIPTION
   //   Extensions to the be_interface_fwd class
 public:
+  /// Default constructor.
   be_valuetype_fwd (void);
-  // Default constructor.
 
+  /// Constructor.
   be_valuetype_fwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
-  // Constructor.
 
+  /// Destructor.
   virtual ~be_valuetype_fwd (void);
-  // Destructor.
 
   // Visiting.
   virtual int accept (be_visitor* visitor);

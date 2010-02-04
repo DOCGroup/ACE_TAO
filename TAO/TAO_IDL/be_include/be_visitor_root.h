@@ -1,23 +1,18 @@
 /* -*- c++ -*- */
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_root.h
-//
-// = DESCRIPTION
-//    Concrete visitor for the Root class
-//
-// = AUTHOR
-//    Aniruddha Gokhale and Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_root.h
+ *
+ *  $Id$
+ *
+ *  Concrete visitor for the Root class
+ *
+ *
+ *  @author Aniruddha Gokhale and Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #ifndef TAO_BE_VISITOR_ROOT_H
 #define TAO_BE_VISITOR_ROOT_H

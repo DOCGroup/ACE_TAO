@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    operation_svs.h
-//
-// = DESCRIPTION
-//    Visitor for generating code for IDL operations in
-//    CIAO servant implementations
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    operation_svs.h
+ *
+ *  $Id$
+ *
+ *  Visitor for generating code for IDL operations in
+ *  CIAO servant implementations
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef _BE_VISITOR_OPERATION_OPERATION_SVS_H_
 #define _BE_VISITOR_OPERATION_OPERATION_SVS_H_
@@ -26,17 +21,16 @@
 // Operation visitor for CIAO servant implementations
 // ************************************************************
 
+/**
+ * @class be_visitor_operation_svs
+ *
+ * @brief be_visitor_operation_svs
+ *
+ * This is a concrete visitor to generate the CIAO servant
+ * implementations for operation
+ */
 class be_visitor_operation_svs : public be_visitor_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_operation_svs
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate the CIAO servant
-  //   implementations for operation
-  //
-  //
 public:
   be_visitor_operation_svs (be_visitor_context *ctx);
 

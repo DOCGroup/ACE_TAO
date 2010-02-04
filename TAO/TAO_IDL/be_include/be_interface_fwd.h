@@ -1,24 +1,20 @@
 /* -*- c++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_interface_fwd.h
-//
-// = DESCRIPTION
-//    Extension of class AST_InterfaceFwd that provides additional
-//    means for C++ mapping of a forward declared interface.
-//
-// = AUTHOR
-//    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_interface_fwd.h
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_InterfaceFwd that provides additional
+ *  means for C++ mapping of a forward declared interface.
+ *
+ *
+ *  @author Copyright 1994-1995 by Sun Microsystems
+ *  @author Inc. and Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef BE_INTERFACE_FWD_H
 #define BE_INTERFACE_FWD_H
@@ -38,23 +34,23 @@ class be_interface_fwd : public virtual AST_InterfaceFwd,
   // =DESCRIPTION
   //   Extensions to the AST_InterfaceFwd class
 public:
+  /// Default constructor.
   be_interface_fwd (void);
-  // Default constructor.
 
+  /// Constructor.
   be_interface_fwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
-  // Constructor.
 
+  /// Destructor.
   virtual ~be_interface_fwd (void);
-  // Destructor.
 
+  /// Mutator overrides for be_type members. If we have been
+  /// defined, we want the full definition to be set as well.
   virtual void seen_in_sequence (bool val);
   virtual void seen_in_operation (bool val);
-  // Mutator overrides for be_type members. If we have been
-  // defined, we want the full definition to be set as well.
 
+  /// Cleanup function.
   virtual void destroy (void);
-  // Cleanup function.
 
   // Visiting.
   virtual int accept (be_visitor* visitor);

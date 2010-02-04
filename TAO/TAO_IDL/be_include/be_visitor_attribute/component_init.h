@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    component_init.h
-//
-// = DESCRIPTION
-//    Visitor generating a block of code to initialize
-//    each of a component's read/write attributes
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    component_init.h
+ *
+ *  $Id$
+ *
+ *  Visitor generating a block of code to initialize
+ *  each of a component's read/write attributes
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef BE_VISITOR_ATTRIBUTE_COMPONENT_INIT_H
 #define BE_VISITOR_ATTRIBUTE_COMPONENT_INIT_H

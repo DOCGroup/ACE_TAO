@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_array.h
-//
-// = DESCRIPTION
-//    Visitors for generation of code for Arrays
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_array.h
+ *
+ *  $Id$
+ *
+ *  Visitors for generation of code for Arrays
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef TAO_BE_VISITOR_ARRAY_H
 #define TAO_BE_VISITOR_ARRAY_H

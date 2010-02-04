@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    executor_exh.h
-//
-// = DESCRIPTION
-//    This provides code generation in the exec impl header,
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    executor_exh.h
+ *
+ *  $Id$
+ *
+ *  This provides code generation in the exec impl header,
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef _BE_COMPONENT_EXECUTOR_EXH_H_
 #define _BE_COMPONENT_EXECUTOR_EXH_H_

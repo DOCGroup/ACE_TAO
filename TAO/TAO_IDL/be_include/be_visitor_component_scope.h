@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_component_scope.h
-//
-// = DESCRIPTION
-//    Base class for visitors that need to visit the scope of a 
-//    component and its ancestors, if any.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_component_scope.h
+ *
+ *  $Id$
+ *
+ *  Base class for visitors that need to visit the scope of a 
+ *  component and its ancestors, if any.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef _BE_COMPONENT_COMPONENT_SCOPE_H_
 #define _BE_COMPONENT_COMPONENT_SCOPE_H_
@@ -26,16 +21,16 @@
 
 #include "be_visitor_scope.h"
 
+/**
+ * @class be_visitor_component_scope
+ *
+ * @brief be_visitor_component_scope
+ *
+ * This is an abstract visitor providing a scope visitation
+ * method that traverses the base component recursively.
+ */
 class be_visitor_component_scope : public be_visitor_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_component_scope
-  //
-  // = DESCRIPTION
-  //   This is an abstract visitor providing a scope visitation
-  //   method that traverses the base component recursively.
-  //
 protected:
   be_visitor_component_scope (be_visitor_context *ctx);
   

@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    be_visitor_null_return_value.h
-//
-// = DESCRIPTION
-//    Encapsulation of rules for generating null return values
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_null_return_value.h
+ *
+ *  $Id$
+ *
+ *  Encapsulation of rules for generating null return values
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef BE_VISITOR_NULL_RETURN_VALUE_H
 #define BE_VISITOR_NULL_RETURN_VALUE_H
@@ -25,18 +20,17 @@
 
 class TAO_OutStream;
 
+/**
+ * @class be_visitor_null_return_value
+ *
+ * @brief be_visitor_null_return_value
+ *
+ * Contains overloaded methods that generate null return
+ * values, compliant with the CORBA IDL C++ mapping, and
+ * portable to all platforms supported by ACE.
+ */
 class be_visitor_null_return_value : public be_visitor_decl
 {
-  //
-  // = TITLE
-  //   be_visitor_null_return_value
-  //
-  // = DESCRIPTION
-  //   Contains overloaded methods that generate null return
-  //   values, compliant with the CORBA IDL C++ mapping, and
-  //   portable to all platforms supported by ACE.
-  //
-  //
 public:
   be_visitor_null_return_value (be_visitor_context *ctx);
   virtual ~be_visitor_null_return_value (void);

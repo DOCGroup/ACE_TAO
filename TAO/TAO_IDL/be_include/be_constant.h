@@ -1,24 +1,20 @@
 /* -*- c++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_constant.h
-//
-// = DESCRIPTION
-//    Extension of class AST_Constant that provides additional means for C++
-//    mapping.
-//
-// = AUTHOR
-//    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_constant.h
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_Constant that provides additional means for C++
+ *  mapping.
+ *
+ *
+ *  @author Copyright 1994-1995 by Sun Microsystems
+ *  @author Inc. and Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef BE_CONSTANT_H
 #define BE_CONSTANT_H
@@ -32,13 +28,13 @@ class be_constant : public virtual AST_Constant,
                     public virtual be_decl
 {
 public:
+  /// Constructor.
   be_constant (void);
-  // Constructor.
 
+  /// Constructor.
   be_constant (AST_Expression::ExprType et,
                AST_Expression *v,
                UTL_ScopedName *n);
-  // Constructor.
 
   // Visiting.
   virtual int accept (be_visitor *visitor);

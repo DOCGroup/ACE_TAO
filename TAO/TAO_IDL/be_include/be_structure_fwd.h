@@ -1,22 +1,19 @@
 /* -*- c++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_structure_fwd.h
-//
-// = DESCRIPTION
-//    Extension of class AST_StructureFwd that provides additional
-//    means for C++ mapping of a struct.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_structure_fwd.h
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_StructureFwd that provides additional
+ *  means for C++ mapping of a struct.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef BE_STRUCTURE_FWD_H
 #define BE_STRUCTURE_FWD_H
@@ -36,18 +33,18 @@ class be_structure_fwd : public virtual AST_StructureFwd,
   // =DESCRIPTION
   //   Extensions to the AST_StructureFwd class
 public:
+  /// Default constructor.
   be_structure_fwd (void);
-  // Default constructor.
 
+  /// Constructor.
   be_structure_fwd (AST_Structure *dummy,
                     UTL_ScopedName *n);
-  // Constructor.
 
+  /// Destructor.
   virtual ~be_structure_fwd (void);
-  // Destructor.
 
+  /// Cleanup function.
   virtual void destroy (void);
-  // Cleanup function.
 
   // Visiting.
   virtual int accept (be_visitor* visitor);

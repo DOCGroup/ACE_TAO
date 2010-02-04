@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    operation_exs.h
-//
-// = DESCRIPTION
-//    Visitor for generating code for IDL operations in
-//    CIAO executor implementations
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    operation_exs.h
+ *
+ *  $Id$
+ *
+ *  Visitor for generating code for IDL operations in
+ *  CIAO executor implementations
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef _BE_VISITOR_OPERATION_OPERATION_EXS_H_
 #define _BE_VISITOR_OPERATION_OPERATION_EXS_H_
@@ -26,17 +21,16 @@
 // Operation visitor for CIAO executor implementations
 // ************************************************************
 
+/**
+ * @class be_visitor_operation_exs
+ *
+ * @brief be_visitor_operation_exs
+ *
+ * This is a concrete visitor to generate the CIAO executor
+ * implementations for operation
+ */
 class be_visitor_operation_exs : public be_visitor_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_operation_exs
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate the CIAO executor
-  //   implementations for operation
-  //
-  //
 public:
   be_visitor_operation_exs (be_visitor_context *ctx);
 

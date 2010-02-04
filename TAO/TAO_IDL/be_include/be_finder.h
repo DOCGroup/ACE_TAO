@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    be_finder.h
-//
-// = DESCRIPTION
-//    Extension of class AST_Finder that provides additional means for C++
-//    mapping.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_finder.h
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_Finder that provides additional means for C++
+ *  mapping.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef BE_FINDER_H
 #define BE_FINDER_H
@@ -32,8 +29,8 @@ public:
 
   ~be_finder (void);
 
+  /// Cleanup method.
   virtual void destroy (void);
-  // Cleanup method.
 
   // Visiting.
   virtual int accept (be_visitor *visitor);

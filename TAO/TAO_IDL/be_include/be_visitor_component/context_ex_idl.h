@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    context_ex_idl.h
-//
-// = DESCRIPTION
-//    Provides code generation for the context class
-//    in the CIAO executor IDL.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    context_ex_idl.h
+ *
+ *  $Id$
+ *
+ *  Provides code generation for the context class
+ *  in the CIAO executor IDL.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef _BE_COMPONENT_CONTEXT_EX_IDL_H_
 #define _BE_COMPONENT_CONTEXT_EX_IDL_H_

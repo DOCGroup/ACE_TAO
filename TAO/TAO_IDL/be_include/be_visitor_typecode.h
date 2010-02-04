@@ -1,23 +1,18 @@
 /* -*- c++ -*- */
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_typecode.h
-//
-// = DESCRIPTION
-//    Concrete visitor to generate code for TypeCodes
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_typecode.h
+ *
+ *  $Id$
+ *
+ *  Concrete visitor to generate code for TypeCodes
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef TAO_BE_VISITOR_TYPECODE_H
 #define TAO_BE_VISITOR_TYPECODE_H
