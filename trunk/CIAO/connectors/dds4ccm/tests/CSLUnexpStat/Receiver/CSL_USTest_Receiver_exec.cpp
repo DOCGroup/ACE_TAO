@@ -30,42 +30,47 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   void ConnectorStatusListener_exec_i::on_inconsistent_topic(
      ::DDS::Topic_ptr /*the_topic*/,
      const DDS::InconsistentTopicStatus & /*status*/)
-    {
-    }
+  {
+  }
 
   void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
-    }
+     const DDS::RequestedIncompatibleQosStatus & /*status*/)
+  {
+  }
 
   void ConnectorStatusListener_exec_i::on_sample_rejected(
      ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::SampleRejectedStatus & /*status*/)  {
-    }
+     const DDS::SampleRejectedStatus & /*status*/)
+  {
+  }
 
   void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
      ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedDeadlineMissedStatus & /*status*/)  {
-    }
+     const DDS::OfferedDeadlineMissedStatus & /*status*/)
+  {
+  }
 
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
      ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
-    }
+     const DDS::OfferedIncompatibleQosStatus & /*status*/)
+  {
+  }
 
   void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr the_entity,
-    ::DDS::StatusKind  status_kind)  {
-      CORBA::ULong kind = status_kind;
-      if((!CORBA::is_nil(the_entity)) && (kind==DDS::SUBSCRIPTION_MATCHED_STATUS))
+    ::DDS::StatusKind  status_kind)
+  {
+    CORBA::ULong kind = status_kind;
+    if (!CORBA::is_nil (the_entity) && kind == DDS::SUBSCRIPTION_MATCHED_STATUS)
       {
         this->unexpected_matched_ = true;
       }
-      if((!CORBA::is_nil(the_entity)) &&(kind==DDS::LIVELINESS_CHANGED_STATUS))
+    if(!CORBA::is_nil(the_entity) && kind == DDS::LIVELINESS_CHANGED_STATUS)
       {
         this->unexpected_liveliness_ = true;
       }
-    }
+  }
 
   //============================================================
   // Facet Executor Implementation Class: TestTopic_RawListener_exec_i
@@ -98,31 +103,6 @@ namespace CIAO_CSL_USTest_Receiver_Impl
     const ::CCM_DDS::ReadInfoSeq & /* info */)
   {
   }
-  //============================================================
-  // Facet Executor Implementation Class: PortStatusListener_exec_i
-  //============================================================
-  PortStatusListener_exec_i::PortStatusListener_exec_i (void)
-  {
-  }
-
-  PortStatusListener_exec_i::~PortStatusListener_exec_i (void)
-  {
-  }
-
-  // Operations from ::CCM_DDS::PortStatusListener
-  void
-    PortStatusListener_exec_i::on_requested_deadline_missed (
-    ::DDS::DataReader_ptr /* the_reader */,
-    const ::DDS::RequestedDeadlineMissedStatus & /* status */)
-  {
-  }
-
-  void
-  PortStatusListener_exec_i::on_sample_lost (
-    ::DDS::DataReader_ptr /* the_reader */,
-    const ::DDS::SampleLostStatus & /* status */)
-  {
-  }
 
   //============================================================
   // Component Executor Implementation Class: Receiver_exec_iTestTopic_RawListener_exec_i ();
@@ -140,18 +120,18 @@ namespace CIAO_CSL_USTest_Receiver_Impl
 
   // Supported operations and attributes.
   // Port operations.
+  ::CCM_DDS::CCM_PortStatusListener_ptr
+  Receiver_exec_i::get_info_out_status (void)
+  {
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new TestTopic RAW listener\n")));
+    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
+  }
+
   ::CCM_DDS::TestTopic::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new TestTopic RAW listener\n")));
     return new TestTopic_RawListener_exec_i (this->received_);
-  }
-
-  ::CCM_DDS::CCM_PortStatusListener_ptr
-  Receiver_exec_i::get_info_out_status (void)
-  {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
-    return new PortStatusListener_exec_i ();
   }
 
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
@@ -178,10 +158,10 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   {
        this->reader_ = this->context_->get_connection_info_out_data ();
        if (CORBA::is_nil (this->reader_))
-       {
-         ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Reader is null!\n")));
-         throw CORBA::INTERNAL ();
-       }
+        {
+          ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Reader is null!\n")));
+          throw CORBA::INTERNAL ();
+        }
    }
 
   void

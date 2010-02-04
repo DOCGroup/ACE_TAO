@@ -200,42 +200,42 @@ module CCM_DDS
         // ---------
 
         porttype DDS_Write {
-                uses Writer                                     data;
+                uses Writer                     data;
                 uses DDS::DataWriter            dds_entity;
                 };
 
         porttype DDS_Update {
-                uses Updater                            data;
+                uses Updater                    data;
                 uses DDS::DataWriter            dds_entity;
                 };
 
         porttype DDS_Read {
-                uses Reader                                     data;
+                uses Reader                     data;
                 uses DDS::DataReader            dds_entity;
                 provides PortStatusListener     status;
                 };
 
         porttype DDS_Get {
-                uses Reader                                     data;
-                uses Getter                                     fresh_data;
+                uses Reader                     data;
+                uses Getter                     fresh_data;
                 uses DDS::DataReader            dds_entity;
                 provides PortStatusListener     status;
                 };
 
         porttype DDS_Listen {
-                uses Reader                                     data;
+                uses Reader                     data;
                 uses DataListenerControl        data_control;
-                provides Listener                       data_listener;
+                provides Listener               data_listener;
                 uses DDS::DataReader            dds_entity;
-                provides PortStatusListener status;
+                provides PortStatusListener     status;
                 };
 
         porttype DDS_StateListen {
-                uses Reader                                     data;
+                uses Reader                     data;
                 uses StateListenerControl       data_control;
                 provides StateListener          data_listener;
                 uses DDS::DataReader            dds_entity;
-                provides PortStatusListener status;
+                provides PortStatusListener     status;
                 };
 
         // ----------------------------
@@ -244,17 +244,17 @@ module CCM_DDS
         // ----------------------------
 
         connector DDS_State : DDS_TopicBase {
-                mirrorport DDS_Update                                   observable;
-                mirrorport DDS_Read                                             passive_observer;
-                mirrorport DDS_Get                                              pull_observer;
-                mirrorport DDS_Listen                                   push_observer;
-                mirrorport DDS_StateListen                              push_state_observer;
+                mirrorport DDS_Update           observable;
+                mirrorport DDS_Read             passive_observer;
+                mirrorport DDS_Get              pull_observer;
+                mirrorport DDS_Listen           push_observer;
+                mirrorport DDS_StateListen      push_state_observer;
                 };
 
         connector DDS_Event : DDS_TopicBase {
-                mirrorport DDS_Write                                    supplier;
-                mirrorport DDS_Get                                              pull_consumer;
-                mirrorport DDS_Listen                                   push_consumer;
+                mirrorport DDS_Write            supplier;
+                mirrorport DDS_Get              pull_consumer;
+                mirrorport DDS_Listen           push_consumer;
                 };
         };
 };

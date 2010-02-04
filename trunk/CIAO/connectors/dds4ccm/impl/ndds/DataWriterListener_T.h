@@ -45,6 +45,11 @@ namespace CIAO
       ::DDS::DataWriter_ptr ,
       const ::DDS::PublicationMatchedStatus & ) {}
 
+    virtual void
+    on_reliable_reader_activity_changed (
+      ::DDS::DataWriter_ptr ,
+      const ::DDS::ReliableReaderActivityChangedStatus & ) {}
+
       static ::DDS::StatusMask get_mask (void);
     };
   }

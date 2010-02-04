@@ -34,7 +34,7 @@ namespace CIAO
       virtual ~SubscriberListener_T (void);
 
       virtual void on_requested_incompatible_qos (
-        ::DDS::DataReader_ptr the_reader,
+        ::DDS::DataReader_ptr reader,
         const ::DDS::RequestedIncompatibleQosStatus & status);
 
       virtual void on_liveliness_changed(
@@ -52,26 +52,28 @@ namespace CIAO
       virtual void on_data_on_readers(
         ::DDS::Subscriber* subscriber);
 
-    virtual void
-    on_requested_deadline_missed (
-      ::DDS::DataReader_ptr ,
-      const ::DDS::RequestedDeadlineMissedStatus & ) {}
-    virtual void
-    on_data_available (
-      ::DDS::DataReader_ptr ) {}
-    virtual void
-    on_sample_lost (
-      ::DDS::DataReader_ptr ,
-      const ::DDS::SampleLostStatus & ) {}
+      virtual void on_requested_deadline_missed (
+        ::DDS::DataReader_ptr reader,
+        const ::DDS::RequestedDeadlineMissedStatus & status);
+
+      virtual void on_data_available (
+        ::DDS::DataReader_ptr reader);
+
+      virtual void on_sample_lost (
+        ::DDS::DataReader_ptr reader,
+        const ::DDS::SampleLostStatus & status);
 
       static ::DDS::StatusMask get_mask (void);
 
     private:
+      typename CCM_TYPE::context_type::_var_type context_;
+
       virtual void on_unexpected_status(
-        ::DDS::Entity* entity,
+        ::DDS::Entity_ptr entity,
         ::DDS::StatusKind status_kind);
 
       ::CCM_DDS::ConnectorStatusListener_var error_listener_;
+
       ACE_Reactor* reactor_;
     };
   }

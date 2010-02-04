@@ -67,7 +67,23 @@ namespace CIAO
           }
         return "***Unknown enum value, update RTI::translate_statuskind()";
 #undef RTI_DDS_RETCODE
-    }
+      }
+
+    inline const char * translate_rejectedstatuskind (DDS::SampleRejectedStatusKind ret)
+      {
+#define RTI_DDS_RETCODE(X) case X: return #X
+        switch (ret)
+          {
+            RTI_DDS_RETCODE (DDS::NOT_REJECTED);
+            RTI_DDS_RETCODE (DDS::REJECTED_BY_INSTANCES_LIMIT);
+            RTI_DDS_RETCODE (DDS::REJECTED_BY_SAMPLES_LIMIT);
+            RTI_DDS_RETCODE (DDS::REJECTED_BY_SAMPLES_PER_INSTANCE_LIMIT);
+          }
+        return "***Unknown enum value, update RTI::translate_rejectedstatuskind()";
+#undef RTI_DDS_RETCODE
+      }
+
+    const char * translate_instancehandle (DDS::InstanceHandle_t hnd);
   }
 }
 
