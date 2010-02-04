@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    enum_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Enums in the client stubs
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    enum_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Enums in the client stubs
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "be_visitor_typecode/enum_typecode.h"
 

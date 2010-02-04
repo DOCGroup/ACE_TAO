@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_typedef.cpp
-//
-// = DESCRIPTION
-//    Visitors for generation of code for Typedef
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_typedef.cpp
+ *
+ *  $Id$
+ *
+ *  Visitors for generation of code for Typedef
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "be_array.h"
 #include "be_enum.h"

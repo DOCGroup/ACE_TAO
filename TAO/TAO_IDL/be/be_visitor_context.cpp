@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_FE
-//
-// = FILENAME
-//    be_visitor_context.cpp
-//
-// = DESCRIPTION
-//     Maintains the context information for visitors
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_context.cpp
+ *
+ *  $Id$
+ *
+ *   Maintains the context information for visitors
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "be_visitor_context.h"
 #include "be_extern.h"

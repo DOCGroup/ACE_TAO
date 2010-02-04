@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    root_sth.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Root in the server template header
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    root_sth.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Root in the server template header
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 // ****************************************
 // Root visitor for server template header

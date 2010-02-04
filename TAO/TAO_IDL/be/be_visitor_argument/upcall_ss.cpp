@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    upcall_ss.cpp
-//
-// = DESCRIPTION
-//    Visitor that generates code that passes argument variables to the
-//    upcall.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    upcall_ss.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor that generates code that passes argument variables to the
+ *  upcall.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ************************************************************************
 // visitor for passing arguments to the upcall

@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    tie_sh.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for TIE class for an Interface in the header
-//    file.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    tie_sh.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for TIE class for an Interface in the header
+ *  file.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ************************************************************
 // Interface visitor for server header.

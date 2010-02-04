@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    constant_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for the Constant node in the client header.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    constant_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for the Constant node in the client header.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ********************************************************************
 // Visitor implementation for the Constant type

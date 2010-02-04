@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_structure_fwd.cpp
-//
-// = DESCRIPTION
-//    Visitors for generation of code for be_structure_fwd
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_structure_fwd.cpp
+ *
+ *  $Id$
+ *
+ *  Visitors for generation of code for be_structure_fwd
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #include "be_structure_fwd.h"
 #include "be_structure.h"

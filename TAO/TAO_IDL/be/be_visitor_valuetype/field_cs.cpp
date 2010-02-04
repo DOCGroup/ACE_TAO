@@ -1,25 +1,19 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    field_cs.cpp
-//
-// = DESCRIPTION
-//     Visitor for the Valuetype class.
-//     This one generates code for accessor and modifier functions of
-//     valuetype state members (in the stub file).
-//
-// = AUTHOR
-//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
-//    derived from be_visitor_union_branch/public_ci.cpp
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    field_cs.cpp
+ *
+ *  $Id$
+ *
+ *   Visitor for the Valuetype class.
+ *   This one generates code for accessor and modifier functions of
+ *   valuetype state members (in the stub file).
+ *
+ *
+ *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> derived from be_visitor_union_branch/public_ci.cpp
+ */
+//=============================================================================
+
 
 be_visitor_valuetype_field_cs::be_visitor_valuetype_field_cs (
     be_visitor_context *ctx

@@ -1,20 +1,16 @@
-//
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    interface_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Interfaces in the client stubs file.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    interface_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Interfaces in the client stubs file.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ************************************************************
 // Interface visitor for client stubs

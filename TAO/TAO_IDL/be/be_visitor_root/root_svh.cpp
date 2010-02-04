@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    root_svh.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Root in the CIAO servant header
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    root_svh.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Root in the CIAO servant header
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 // ********************************
 // Root visitor for CIAO servant header

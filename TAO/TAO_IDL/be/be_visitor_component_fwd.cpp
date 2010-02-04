@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_component_fwd.cpp
-//
-// = DESCRIPTION
-//    Visitors for generation of code for forward declared Component
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_component_fwd.cpp
+ *
+ *  $Id$
+ *
+ *  Visitors for generation of code for forward declared Component
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #include "be_component_fwd.h"
 #include "be_helper.h"

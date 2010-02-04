@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    ami_interface_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for AMI Interfaces in the client header
-//
-// = AUTHOR
-//    Aniruddha Gokhale,
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ami_interface_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for AMI Interfaces in the client header
+ *
+ *
+ *  @author Aniruddha Gokhale
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 // ******************************************************
 // Interface visitor for client header

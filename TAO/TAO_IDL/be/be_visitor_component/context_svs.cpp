@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    context_svs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for a context class in the
-//    servant sourece.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    context_svs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for a context class in the
+ *  servant sourece.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 be_visitor_context_svs::be_visitor_context_svs (be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)

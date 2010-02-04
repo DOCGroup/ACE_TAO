@@ -1,23 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_exception.cpp
-//
-// = DESCRIPTION
-//    Extension of class AST_Exception that provides additional means for C++
-//    mapping of an interface.
-//
-// = AUTHOR
-//    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_exception.cpp
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_Exception that provides additional means for C++
+ *  mapping of an interface.
+ *
+ *
+ *  @author Copyright 1994-1995 by Sun Microsystems
+ *  @author Inc. and Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 
 #include "be_exception.h"

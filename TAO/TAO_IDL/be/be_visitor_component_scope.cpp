@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_component_scope.cpp
-//
-// = DESCRIPTION
-//    Abstract visitor providing ancestor scope visitation.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_component_scope.cpp
+ *
+ *  $Id$
+ *
+ *  Abstract visitor providing ancestor scope visitation.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #include "be_visitor_component_scope.h"
 #include "be_visitor_context.h"

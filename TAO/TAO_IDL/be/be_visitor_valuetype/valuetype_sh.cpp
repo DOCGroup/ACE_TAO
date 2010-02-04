@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    valuetype_sh.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for value types in the server header
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    valuetype_sh.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for value types in the server header
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 // ************************************************************
 // Valuetype visitor for server header.

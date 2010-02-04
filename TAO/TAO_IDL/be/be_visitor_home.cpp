@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    be_visitor_home.cpp
-//
-// = DESCRIPTION
-//    Visitors for generation of code for a component home.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_home.cpp
+ *
+ *  $Id$
+ *
+ *  Visitors for generation of code for a component home.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #include "ace/Log_Msg.h"
 

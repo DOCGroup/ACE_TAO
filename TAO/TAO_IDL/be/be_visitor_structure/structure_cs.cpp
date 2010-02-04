@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    structure_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Structures in the client stubs file.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    structure_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Structures in the client stubs file.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ***************************************************************************
 // For client stubs.

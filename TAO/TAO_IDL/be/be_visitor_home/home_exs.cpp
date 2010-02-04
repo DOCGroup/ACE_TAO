@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    home_exs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for homes in the exec impl source.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    home_exs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for homes in the exec impl source.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 // ******************************************************
 // Home visitor for exec impl source

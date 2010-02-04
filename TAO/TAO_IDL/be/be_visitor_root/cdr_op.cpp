@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    cdr_op.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for the CDR operators for types defined
-//    in Root's scope.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    cdr_op.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for the CDR operators for types defined
+ *  in Root's scope.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ***************************************************************************
 // Root visitor for generating CDR operator declarations in the client header

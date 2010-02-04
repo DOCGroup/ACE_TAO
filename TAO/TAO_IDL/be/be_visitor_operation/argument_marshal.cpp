@@ -1,24 +1,19 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    argument_marshal.cpp
-//
-// = DESCRIPTION
-//    Visitor to pass arguments to the CDR operators. This one helps in
-//    generating the && and the , at the right place. This one is for the
-//    skeleton side.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    argument_marshal.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor to pass arguments to the CDR operators. This one helps in
+ *  generating the && and the , at the right place. This one is for the
+ *  skeleton side.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ************************************************************
 // operation visitor to handle the passing of arguments to the CDR operators

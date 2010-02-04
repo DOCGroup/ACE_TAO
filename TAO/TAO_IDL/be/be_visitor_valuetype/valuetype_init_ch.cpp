@@ -1,24 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    valuetype_init_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Valuetypes factory in the client header
-//    (see IDL to C++ mapping). Based on ptc/00-01-02.
-//
-// = AUTHOR
-//   Boris Kolpackov <bosk@ipmce.ru>
-//
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    valuetype_init_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Valuetypes factory in the client header
+ *  (see IDL to C++ mapping). Based on ptc/00-01-02.
+ *
+ *
+ *  @author Boris Kolpackov <bosk@ipmce.ru>
+ */
+//=============================================================================
+
 
 be_visitor_valuetype_init_ch::be_visitor_valuetype_init_ch (
     be_visitor_context *ctx

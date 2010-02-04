@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    ami_exception_holder_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating exception holders for the AMI callback model.
-//
-// = AUTHOR
-//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ami_exception_holder_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating exception holders for the AMI callback model.
+ *
+ *
+ *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
+ */
+//=============================================================================
+
 
 // ******************************************************
 // Interface visitor for client header.

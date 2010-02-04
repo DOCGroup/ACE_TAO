@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    serializer_op_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating TAO::DCPS::Serializer operator declarator for field 
-//    in the client header
-//
-// = AUTHOR
-//    Scott Harris <harris_s@ociweb.com> based on code by Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    serializer_op_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating TAO::DCPS::Serializer operator declarator for field 
+ *  in the client header
+ *
+ *
+ *  @author Scott Harris <harris_s@ociweb.com> based on code by Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "be_visitor_array/serializer_op_ch.h"
 #include "be_visitor_enum/serializer_op_ch.h"

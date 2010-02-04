@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    operation_is.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Operation in the implementation skeleton
-//
-// = AUTHOR
-//   Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    operation_is.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Operation in the implementation skeleton
+ *
+ *
+ *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 // ************************************************************
 // Operation visitor for implementation skeleton

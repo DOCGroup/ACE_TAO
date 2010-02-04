@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_valuetype_fwd.cpp
-//
-// = DESCRIPTION
-//    Visitors for generation of code for Valuetype_Fwd
-//
-// = AUTHOR
-//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_valuetype_fwd.cpp
+ *
+ *  $Id$
+ *
+ *  Visitors for generation of code for Valuetype_Fwd
+ *
+ *
+ *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+ */
+//=============================================================================
+
 
 #include "be_valuetype.h"
 #include "be_valuetype_fwd.h"

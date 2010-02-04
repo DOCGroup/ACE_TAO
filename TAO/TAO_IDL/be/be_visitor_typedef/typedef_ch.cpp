@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    typedef_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Typedef in the client header
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    typedef_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Typedef in the client header
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ******************************************************
 // Typedef visitor for client header

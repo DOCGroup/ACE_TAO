@@ -1,18 +1,17 @@
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    array_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor for Array code generation in client header
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    array_ch.cpp
+ *
+ *  $Id$
+
+ *
+ *  Visitor for Array code generation in client header
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 ACE_RCSID (be_visitor_array,
            array_ch,

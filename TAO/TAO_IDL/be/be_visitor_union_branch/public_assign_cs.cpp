@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    public_assign_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Union Branch for the assignment operator
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    public_assign_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Union Branch for the assignment operator
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // **********************************************
 //  visitor for union_branch in the client stubs file generating the code for

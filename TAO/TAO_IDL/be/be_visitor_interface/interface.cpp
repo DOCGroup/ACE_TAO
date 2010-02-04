@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    interface.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Interfaces. This is a generic visitor.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    interface.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Interfaces. This is a generic visitor.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ******************************************************
 // Generic Interface visitor

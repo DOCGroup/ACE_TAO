@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_FE
-//
-// = FILENAME
-//    ast_visitor_context.cpp
-//
-// = DESCRIPTION
-//     Maintains the context information for visitors
-//
-// = AUTHOR
-//    Jeff Parsons & Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ast_visitor_context.cpp
+ *
+ *  $Id$
+ *
+ *   Maintains the context information for visitors
+ *
+ *
+ *  @author Jeff Parsons & Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "ast_visitor_context.h"
 

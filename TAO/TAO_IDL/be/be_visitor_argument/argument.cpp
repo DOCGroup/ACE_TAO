@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    argument.cpp
-//
-// = DESCRIPTION
-//    generic visitor for Argument node
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    argument.cpp
+ *
+ *  $Id$
+ *
+ *  generic visitor for Argument node
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 be_visitor_args::be_visitor_args (be_visitor_context *ctx)
   : be_visitor_decl (ctx),

@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    field_cdr_op_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Field in the client stubs file.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    field_cdr_op_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Field in the client stubs file.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "be_visitor_array/cdr_op_cs.h"
 #include "be_visitor_sequence/cdr_op_cs.h"

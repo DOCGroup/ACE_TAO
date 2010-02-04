@@ -1,26 +1,21 @@
-//
-// $Id$
-//
 
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_ami4ccm_pre_proc.cpp
-//
-// = DESCRIPTION
-//    This visitor creates for AMI4CCM implied IDL constructs
-//    the appropriate AST (Abstract Syntax Tree) node,
-//    sets the corresponding interface or operation strategy
-//    on it and enteres the nodes into the AST.
-//
-// = AUTHOR
-//    Johnny Willemsen  <jwillemsen@remedy.nl>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_ami4ccm_pre_proc.cpp
+ *
+ *  $Id$
+ *
+ *  This visitor creates for AMI4CCM implied IDL constructs
+ *  the appropriate AST (Abstract Syntax Tree) node,
+ *  sets the corresponding interface or operation strategy
+ *  on it and enteres the nodes into the AST.
+ *
+ *
+ *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
+ */
+//=============================================================================
+
 
 #include "be_visitor_ami4ccm_pre_proc.h"
 #include "be_visitor_context.h"

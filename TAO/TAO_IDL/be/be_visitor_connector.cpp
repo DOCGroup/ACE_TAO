@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_connector.cpp
-//
-// = DESCRIPTION
-//    Visitors for generation of code for Connector.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_connector.cpp
+ *
+ *  $Id$
+ *
+ *  Visitors for generation of code for Connector.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #include "be_connector.h"
 

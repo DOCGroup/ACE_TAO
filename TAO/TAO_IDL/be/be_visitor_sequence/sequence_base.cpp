@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    sequence_base.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for the base type of the Sequence
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    sequence_base.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for the base type of the Sequence
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ****************************************************************
 // We have to generate the parameters for the template that implements

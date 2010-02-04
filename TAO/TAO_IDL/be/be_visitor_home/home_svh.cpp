@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    home_svh.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for HOmes in the servant header.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    home_svh.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for HOmes in the servant header.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 // ******************************************************
 // Home visitor for server header

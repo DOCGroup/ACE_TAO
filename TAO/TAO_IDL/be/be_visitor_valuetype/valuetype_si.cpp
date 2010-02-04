@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    valuetype_si.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Interfaces in the server inline file
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    valuetype_si.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Interfaces in the server inline file
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 // ************************************************************************
 // Valuetype visitor for server inline

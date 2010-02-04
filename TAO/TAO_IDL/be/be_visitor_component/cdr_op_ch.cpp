@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    cdr_op_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for CDR operators for components. This uses
-//    compiled marshaling.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    cdr_op_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for CDR operators for components. This uses
+ *  compiled marshaling.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 // ***************************************************************************
 // Interface visitor for generating CDR operator declarations in the client header

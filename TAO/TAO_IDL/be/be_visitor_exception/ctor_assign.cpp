@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    ctor_assign.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for the special CTOR and assignment operator for
-//    Exceptions.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ctor_assign.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for the special CTOR and assignment operator for
+ *  Exceptions.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ************************************************************************
 // Used for the body of the assignment operator and the copy constructor.

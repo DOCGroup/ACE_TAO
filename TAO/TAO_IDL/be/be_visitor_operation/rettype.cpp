@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    rettype.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for return type of the Operation node
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    rettype.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for return type of the Operation node
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ****************************************************************************
 // Operation visitor for return types. This generates the mapping for a return

@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    private_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Union branch for the private part of the
-//    class.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    private_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Union branch for the private part of the
+ *  class.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // **********************************************
 //  visitor for union_branch in the client header generating the private information

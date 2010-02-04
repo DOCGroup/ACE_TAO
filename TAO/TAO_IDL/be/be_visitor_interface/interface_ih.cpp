@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    interface_ih.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Interfaces in the implementation header
-//
-// = AUTHOR
-//   Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    interface_ih.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Interfaces in the implementation header
+ *
+ *
+ *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 // ************************************************************
 // Interface visitor for implementation header.

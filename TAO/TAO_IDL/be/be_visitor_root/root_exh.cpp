@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    root_exh.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Root in the CIAO
-//    exec impl header
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    root_exh.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Root in the CIAO
+ *  exec impl header
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 // ********************************
 // Root visitor for CIAO exec impl header

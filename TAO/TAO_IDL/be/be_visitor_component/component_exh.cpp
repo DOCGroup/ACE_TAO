@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    component_exh.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Components in the exec impl header.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    component_exh.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Components in the exec impl header.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 be_visitor_component_exh::be_visitor_component_exh (be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)

@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    valuebox.cpp
-//
-// = DESCRIPTION
-//    Visitor for generation of code for valuebox
-//
-// = AUTHOR
-//    Gary Maxey
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    valuebox.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor for generation of code for valuebox
+ *
+ *
+ *  @author Gary Maxey
+ */
+//=============================================================================
+
 
 be_visitor_valuebox::be_visitor_valuebox (be_visitor_context *ctx)
   : be_visitor_decl (ctx)

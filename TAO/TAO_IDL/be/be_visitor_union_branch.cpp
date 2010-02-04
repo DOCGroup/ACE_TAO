@@ -1,21 +1,16 @@
-//
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_union_branch.cpp
-//
-// = DESCRIPTION
-//    Concrete visitor for the base "BE_Union_Branch" node
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_union_branch.cpp
+ *
+ *  $Id$
+ *
+ *  Concrete visitor for the base "BE_Union_Branch" node
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "be_array.h"
 #include "be_enum.h"

@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_eventtype.cpp
-//
-// = DESCRIPTION
-//    Extension of class AST_EventType and be_valuetype that provides
-//    additional means for C++ mapping of an eventtype.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_eventtype.cpp
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_EventType and be_valuetype that provides
+ *  additional means for C++ mapping of an eventtype.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #include "be_eventtype.h"
 #include "be_visitor.h"

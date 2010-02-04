@@ -1,25 +1,20 @@
-//
-// $Id$
-//
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor.h
-//
-// = DESCRIPTION
-//    Abstract class for back end visitors.
-//
-// = NOTES
-//    This is not a pure abstract class
-//
-// = AUTHOR
-//    Aniruddha Gokhale and Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor.h
+ *
+ *  $Id$
+ *
+ *  Abstract class for back end visitors.
+ *
+ * = NOTES
+ *  This is not a pure abstract class
+ *
+ *
+ *  @author Aniruddha Gokhale and Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #include "be_visitor.h"
 

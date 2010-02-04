@@ -1,23 +1,18 @@
 
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    cdr_op_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating CDR operator declarator for union_branch in the client header
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    cdr_op_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating CDR operator declarator for union_branch in the client header
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // **********************************************
 //  Visitor for union_branch in the client header file.

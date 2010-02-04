@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    structure_ci.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Structure in the inline file.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    structure_ci.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Structure in the inline file.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ******************************************************
 // for client inline

@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    constant_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor for code generation of Constant code in the client stubs file.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    constant_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor for code generation of Constant code in the client stubs file.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ********************************************************************
 // Visitor implementation for the Constant type

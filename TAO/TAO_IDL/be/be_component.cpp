@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_component.cpp
-//
-// = DESCRIPTION
-//    Extension of class AST_Component that provides additional means for C++
-//    mapping of an interface.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_component.cpp
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_Component that provides additional means for C++
+ *  mapping of an interface.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #include "be_component.h"
 #include "be_visitor.h"

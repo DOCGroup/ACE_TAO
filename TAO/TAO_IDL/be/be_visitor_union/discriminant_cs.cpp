@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    discriminant_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for discriminant of the union
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    discriminant_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for discriminant of the union
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // *************************************************************************
 // Visitor for discriminant in client stubs.

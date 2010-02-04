@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    component_init.cpp
-//
-// = DESCRIPTION
-//    Visitor for generation of code for CIAO component attribute
-//    initialization
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    component_init.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor for generation of code for CIAO component attribute
+ *  initialization
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 be_visitor_attribute_component_init::be_visitor_attribute_component_init (
     be_visitor_context *ctx)

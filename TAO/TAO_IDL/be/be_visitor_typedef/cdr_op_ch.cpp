@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    cdr_op_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Cdr operators of a Typedef node
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    cdr_op_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Cdr operators of a Typedef node
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ***************************************************************************
 // Typedef visitor for generating Cdr operator declarations in the client header

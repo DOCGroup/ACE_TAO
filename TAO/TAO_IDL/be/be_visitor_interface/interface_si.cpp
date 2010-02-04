@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    interface_si.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Interfaces in the server inline file
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    interface_si.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Interfaces in the server inline file
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ************************************************************************
 // Interface visitor for server inline

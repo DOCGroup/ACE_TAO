@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    component_svs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Components in the servant source.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    component_svs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Components in the servant source.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 // ******************************************************
 // Component visitor for servant source

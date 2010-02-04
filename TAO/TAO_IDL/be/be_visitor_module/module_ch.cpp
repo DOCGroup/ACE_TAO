@@ -1,21 +1,17 @@
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    module_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Module in the client header
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    module_ch.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Module in the client header
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ******************************************************
 // Module visitor for client header

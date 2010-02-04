@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    post_upcall_ss.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code to do post-processing of arguments following an
-//    upcall.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    post_upcall_ss.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code to do post-processing of arguments following an
+ *  upcall.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ************************************************************************
 //  visitor for doing any post-processing after the upcall is made

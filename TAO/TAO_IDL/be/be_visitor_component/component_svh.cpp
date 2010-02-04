@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    component_svh.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Components in the servant header.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    component_svh.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Components in the servant header.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 // ******************************************************
 // Component visitor for server header

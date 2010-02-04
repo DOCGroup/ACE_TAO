@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    interface_is.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Interfaces in the implementation skeletons file.
-//
-// = AUTHOR
-//   Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    interface_is.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Interfaces in the implementation skeletons file.
+ *
+ *
+ *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 // ************************************************************
 // Interface visitor for implementation skeletons.

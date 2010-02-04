@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    root_ss.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for the Root in the server skeletons file
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    root_ss.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for the Root in the server skeletons file
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ******************************************************
 // Root visitor for server skeletons
