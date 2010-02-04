@@ -68,9 +68,10 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_deadline_miss
   CIAO_DEBUG (10, (LM_DEBUG, CLINFO
               ACE_TEXT ("PublisherListener_T::on_offered_deadline_missed: ")
               ACE_TEXT ("total count <%d> - count change <%d> - ")
-              ACE_TEXT ("last instance handle <%C>\n"),
+              ACE_TEXT ("last instance handle <length <%d> - isValid <%d>>\n"),
               status.total_count, status.total_count_change,
-              translate_instancehandle (status.last_instance_handle)));
+              status.last_instance_handle.length,
+              status.last_instance_handle.isValid));
 
   if (!CORBA::is_nil (this->error_listener_))
     {
@@ -189,11 +190,12 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_publication_matched (
   CIAO_DEBUG (10, (LM_DEBUG, CLINFO
               ACE_TEXT ("PublisherListener_T::on_publication_matched: ")
               ACE_TEXT ("total count <%d> - count change <%d> - ")
-              ACE_TEXT ("current count <%d> - current count change <%d>"),
-              ACE_TEXT ("last publication handle <%C>\n"),
+              ACE_TEXT ("current count <%d> - current count change <%d> ")
+              ACE_TEXT ("last publication handle <length <%d> - isValid <%d>>\n"),
               status.total_count, status.total_count_change,
               status.current_count, status.current_count_change,
-              translate_instancehandle (status.last_subscription_handle)));
+              status.last_subscription_handle.length,
+              status.last_subscription_handle.isValid));
 
   this->on_unexpected_status (the_Writer, ::DDS::PUBLICATION_MATCHED_STATUS);
 }
@@ -209,11 +211,12 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_reliable_reader_activ
   CIAO_DEBUG (10, (LM_DEBUG, CLINFO
               ACE_TEXT ("PublisherListener_T::on_reliable_reader_activity_changed: ")
               ACE_TEXT ("active count <%d> - active change <%d> - ")
-              ACE_TEXT ("not active count <%d> - inactive count change <%d>"),
-              ACE_TEXT ("last instance handle <%C>\n"),
+              ACE_TEXT ("not active count <%d> - inactive count change <%d>")
+              ACE_TEXT ("last instance handle <length <%d> - isValid <%d>>\n"),
               status.active_count, status.active_count_change,
               status.not_active_count, status.inactive_count_change,
-              translate_instancehandle (status.last_instance_handle)));
+              status.last_instance_handle.length,
+              status.last_instance_handle.isValid));
 
   this->on_unexpected_status (the_Writer, ::DDS::RELIABLE_READER_ACTIVITY_CHANGED_STATUS);
 }

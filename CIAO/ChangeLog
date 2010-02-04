@@ -1,3 +1,11 @@
+Thu Feb  4 15:21:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/PortStatusListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Utils.h:
+          Resolved runtime issues regarding logging an instance_handle
+
 Thu Feb  4 14:09:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplication/ComponentAttributesSetter.cpp:
