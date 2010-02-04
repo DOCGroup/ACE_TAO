@@ -703,7 +703,7 @@ public:
    * Set the maximum number of times that ACE_Reactor will
    * iterate and dispatch the ACE_Event_Handlers that are passed in
    * via the notify queue before breaking out of its
-   * <ACE_Message_Queue::dequeue> loop.  By default, this is set to
+   * ACE_Message_Queue::dequeue() loop.  By default, this is set to
    * -1, which means "iterate until the queue is empty."  Setting this
    * to a value like "1 or 2" will increase "fairness" (and thus
    * prevent starvation) at the expense of slightly higher dispatching
@@ -715,7 +715,7 @@ public:
    * Get the maximum number of times that the ACE_Reactor will
    * iterate and dispatch the ACE_Event_Handler's that are passed in
    * via the notify queue before breaking out of its
-   * <ACE_Message_Queue::dequeue> loop.
+   * ACE_Message_Queue::dequeue() loop.
    */
   int max_notify_iterations (void);
 
