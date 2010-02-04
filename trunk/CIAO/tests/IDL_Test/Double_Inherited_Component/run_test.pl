@@ -101,6 +101,9 @@ sub kill_open_processes {
     if ($ns_running == 1) {
         $NS->Kill (); $NS->TimedWait (1);
     }
+    
+    # in case the planlauncher wasn't able to shut everything down as supposed
+    $tg_executor->KillAll ('ciao_componentserver');
 }
 
 sub run_node_daemons {
