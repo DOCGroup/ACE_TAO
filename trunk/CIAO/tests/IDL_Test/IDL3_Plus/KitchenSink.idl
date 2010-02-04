@@ -21,7 +21,7 @@ module mod
 interface iface
 {
   exception iface_excep {};
-  
+
   void iface_op (in string inarg);
 };
 
@@ -31,6 +31,14 @@ eventtype ev
 {
 };
 
+module orange
+{
+  module apple
+  {
+    eventtype Bar;
+    eventtype Bar;
+  };
+};
 
 module GlobalTyped<typename A, typename B>
 {
@@ -50,13 +58,13 @@ module A
     interface XX
     {
     };
-    
+
     union Nested_Union switch (y)
     {
       case 2: string strmem;
       case 0: T Tmem;
     };
-    
+
     enum Nested_Enum
     {
       ZERO,
@@ -75,7 +83,7 @@ module A
     {
       typedef S S_Tdef;
     };
-*/ 
+*/
   };
 
   module Nested<iface, ifaceSeq> Nested_Inst;
@@ -169,9 +177,9 @@ module Ast<typename T,
   valuetype VT_T : V supports T
   {
     private T T_member;
-    
+
     factory make_VT_T ();
-    
+
     factory create_VT_T (in T T_arg,
                          in string str_arg)
       raises (S);
