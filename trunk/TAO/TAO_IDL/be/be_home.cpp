@@ -24,10 +24,6 @@
 #include "global_extern.h"
 #include "utl_err.h"
 
-ACE_RCSID (be,
-           be_home,
-           "$Id$")
-
 be_home::be_home (void)
   : COMMON_Base (),
     AST_Decl (),

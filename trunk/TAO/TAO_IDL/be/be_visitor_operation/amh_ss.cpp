@@ -10,10 +10,6 @@
 */
 //=============================================================================
 
-ACE_RCSID (be_visitor_operation,
-           amh_ss,
-           "$Id$")
-
 #include "ace/SString.h"
 
 be_visitor_amh_operation_ss::be_visitor_amh_operation_ss (

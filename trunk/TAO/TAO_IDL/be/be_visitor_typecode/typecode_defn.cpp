@@ -18,10 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_typecode,
-           typecode_defn,
-           "$Id$")
-
 #include "be_interface_fwd.h"
 
 // This is an implementation of C++ "scoped lock" idiom in order to

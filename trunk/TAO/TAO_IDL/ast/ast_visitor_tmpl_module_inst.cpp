@@ -36,7 +36,7 @@
 #include "ast_union_branch.h"
 #include "ast_enum.h"
 #include "ast_enum_val.h"
-#include "ast_factory.h"
+#include "ast_finder.h"
 #include "ast_param_holder.h"
 #include "ast_expression.h"
 
@@ -58,6 +58,7 @@ ast_visitor_tmpl_module_inst::ast_visitor_tmpl_module_inst (
   : ast_visitor (),
     ctx_ (ctx),
     for_eventtype_ (false),
+    for_finder_ (false),
     ref_only_ (ref_only)
 {
 }
@@ -1137,8 +1138,18 @@ ast_visitor_tmpl_module_inst::visit_factory (AST_Factory *node)
   Identifier id (node->local_name ()->get_string ());
   UTL_ScopedName sn (&id, 0);
 
-  AST_Factory *added_factory =
-    idl_global->gen ()->create_factory (&sn);
+  AST_Factory *added_factory = 0;
+  
+  if (this->for_finder_)
+    {
+      added_factory =
+        idl_global->gen ()->create_finder (&sn);
+    }
+  else
+    {
+      added_factory =
+        idl_global->gen ()->create_factory (&sn);
+    }
 
   idl_global->scopes ().top ()->add_to_scope (added_factory);
 
@@ -1162,7 +1173,17 @@ ast_visitor_tmpl_module_inst::visit_factory (AST_Factory *node)
 
   added_factory->be_add_exceptions (reified_exceps);
 
+  // In case it was set for this call.
+  this->for_finder_ = false;
+  
   return 0;
+}
+
+int
+ast_visitor_tmpl_module_inst::visit_finder (AST_Finder *node)
+{
+  this->for_finder_ = true;
+  return this->visit_factory (node);
 }
 
 AST_Decl *

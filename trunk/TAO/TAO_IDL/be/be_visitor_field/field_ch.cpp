@@ -22,10 +22,6 @@
 #include "be_visitor_sequence/sequence_ch.h"
 #include "nr_extern.h"
 
-ACE_RCSID (be_visitor_field,
-           field_ch,
-           "$Id$")
-
 // **********************************************
 //  Visitor for field in the client header file.
 // **********************************************

@@ -29,10 +29,6 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (be,
-           be_predefined_type,
-           "$Id$")
-
 be_predefined_type::be_predefined_type (void)
   : COMMON_Base (),
     AST_Decl (),

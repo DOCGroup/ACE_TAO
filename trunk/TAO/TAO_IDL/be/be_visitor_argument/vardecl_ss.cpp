@@ -19,11 +19,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_argument,
-           vardecl_ss,
-           "$Id$")
-
-
 // ************************************************************************
 // Visitor to generate code for argument variable declaration
 // ************************************************************************
@@ -74,7 +69,8 @@ int be_visitor_args_vardecl_ss::visit_argument (be_argument *node)
 int be_visitor_args_vardecl_ss::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
+  be_argument *arg =
+    be_argument::narrow_from_decl (this->ctx_->node ());
   be_type *bt = 0;
 
   if (this->ctx_->alias ())
@@ -118,7 +114,8 @@ int be_visitor_args_vardecl_ss::visit_array (be_array *node)
 int be_visitor_args_vardecl_ss::visit_enum (be_enum *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
+  be_argument *arg =
+    be_argument::narrow_from_decl (this->ctx_->node ());
   be_type *bt = 0;
 
   if (this->ctx_->alias ())
@@ -172,7 +169,8 @@ int be_visitor_args_vardecl_ss::visit_valuetype_fwd (be_valuetype_fwd *node)
 int be_visitor_args_vardecl_ss::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
+  be_argument *arg =
+    be_argument::narrow_from_decl (this->ctx_->node ());
   be_type *bt = 0;
 
   if (this->ctx_->alias ())
@@ -257,7 +255,8 @@ int be_visitor_args_vardecl_ss::visit_predefined_type (be_predefined_type *node)
 int be_visitor_args_vardecl_ss::visit_sequence (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
+  be_argument *arg =
+    be_argument::narrow_from_decl (this->ctx_->node ());
   be_type *bt = 0;
 
   if (this->ctx_->alias ())
@@ -289,7 +288,8 @@ int be_visitor_args_vardecl_ss::visit_sequence (be_sequence *node)
 int be_visitor_args_vardecl_ss::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
+  be_argument *arg =
+    be_argument::narrow_from_decl (this->ctx_->node ());
 
   switch (this->direction ())
     {
@@ -385,7 +385,8 @@ int
 be_visitor_args_vardecl_ss::emit_common (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
+  be_argument *arg =
+    be_argument::narrow_from_decl (this->ctx_->node ());
   be_type *bt = 0;
 
   if (this->ctx_->alias ())
@@ -420,7 +421,8 @@ int
 be_visitor_args_vardecl_ss::emit_common2 (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
+  be_argument *arg =
+    be_argument::narrow_from_decl (this->ctx_->node ());
   be_type *bt = 0;
 
   if (this->ctx_->alias ())

@@ -18,10 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_typedef,
-           any_op_cs,
-           "$Id$")
-
 // ***************************************************************************
 // Typedef visitor for generating Any operator declarations in the client
 // stubs file

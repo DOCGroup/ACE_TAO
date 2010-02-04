@@ -18,10 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_component, 
-           cdr_op_cs, 
-           "$Id$")
-
 be_visitor_component_cdr_op_cs::be_visitor_component_cdr_op_cs (
     be_visitor_context *ctx
   )

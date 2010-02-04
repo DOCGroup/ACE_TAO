@@ -22,10 +22,6 @@
 #include "global_extern.h"
 #include "utl_err.h"
 
-ACE_RCSID (be_visitor_exception,
-           exception_ch,
-           "$Id$")
-
 // ******************************************************
 // For client header.
 // ******************************************************

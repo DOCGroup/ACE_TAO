@@ -21,10 +21,6 @@
 #include "be_visitor.h"
 #include "ast_union.h"
 
-ACE_RCSID (be, 
-           be_union_fwd, 
-           "$Id$")
-
 be_union_fwd::be_union_fwd (void)
   : COMMON_Base (),
     AST_Decl (),

@@ -19,10 +19,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_root, 
-           serializer_op, 
-           "$Id$")
-
 // ***************************************************************************
 // Root visitor for generating Serializer operator declarations in the client header
 // and stub

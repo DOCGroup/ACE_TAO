@@ -18,10 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_home,
-           home_svh,
-           "$Id$")
-
 // ******************************************************
 // Home visitor for server header
 // ******************************************************
@@ -96,6 +92,37 @@ be_visitor_home_svh::visit_attribute (be_attribute *node)
 }
 
 int
+be_visitor_home_svh::visit_factory (be_factory *node)
+{
+  os_ << be_nl << be_nl
+      << "virtual ::" << comp_->name () << "_ptr" << be_nl
+      << node->local_name ();
+      
+  // We can reuse this visitor.
+  be_visitor_valuetype_init_arglist_ch v (this->ctx_);
+  
+  if (v.visit_factory (node) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_home_svh::")
+                         ACE_TEXT ("visit_factory - ")
+                         ACE_TEXT ("codegen for argument ")
+                         ACE_TEXT ("list failed\n")),
+                        -1);
+    }
+    
+  os_ << ";";
+    
+  return 0;
+}
+
+int
+be_visitor_home_svh::visit_finder (be_finder *node)
+{
+  return this->visit_factory (node);
+}
+
+int
 be_visitor_home_svh::gen_servant_class (void)
 {
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
@@ -132,126 +159,77 @@ be_visitor_home_svh::gen_servant_class (void)
   os_ << be_nl << be_nl
       << "virtual ~" << lname << "_Servant (void);";
       
-  this->gen_ops_attrs ();
+  AST_Type *pk = node_->primary_key ();
   
-  this->gen_factories ();
-  
-  this->gen_finders ();
-      
-  os_ << be_uidt_nl
-      << "};";
-     
-  return 0;
-}
-
-int
-be_visitor_home_svh::gen_ops_attrs (void)
-{
-  os_ << be_nl << be_nl
-      << "// All operations and attributes.";
-      
-  int status =
-    node_->traverse_inheritance_graph (
-      be_visitor_home_svh::op_attr_decl_helper,
-      &os_);
-      
-  if (status == -1)
+  if (pk != 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_home_svh::")
-                         ACE_TEXT ("gen_ops_attrs - ")
-                         ACE_TEXT ("traverse_inheritance_graph() ")
-                         ACE_TEXT ("failed\n")),
-                        -1);
+      os_ << be_nl << be_nl
+          << "// Implicit home primary key operations - not supported.";
+          
+      os_ << be_nl << be_nl
+          << "virtual ::" << comp_->name () << "_ptr" << be_nl
+          << "create (" << be_idt_nl
+          << "::" << pk->name () << " * key);" << be_uidt;
+          
+      os_ << be_nl << be_nl
+          << "virtual ::" << comp_->name () << "_ptr" << be_nl
+          << "find_by_primary_key (" << be_idt_nl
+          << "::" << pk->name () << " * key);" << be_uidt;
+          
+      os_ << be_nl << be_nl
+          << "virtual void" << be_nl
+          << "remove (" << be_idt_nl
+          << "::" << pk->name () << " * key);" << be_uidt;
+          
+      os_ << be_nl << be_nl
+          << "virtual ::" << pk->name () << " *" << be_nl
+          << "get_primary_key (" << be_idt_nl
+          << "::" << comp_->name () << "_ptr comp);" << be_uidt;
     }
     
-  return 0;
-}
-
-int
-be_visitor_home_svh::gen_factories (void)
-{
-  os_ << be_nl << be_nl
-      << "// Factory operations.";
+  be_home *h = node_;
   
-  return this->gen_factories_r (node_);
-}
-
-int
-be_visitor_home_svh::gen_factories_r (AST_Home *node)
-{
-  if (node == 0)
+  while (h != 0)
     {
-      return 0;
-    }
-    
-  if (this->gen_init_ops_i (node->factories ()) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_home_svh::")
-                         ACE_TEXT ("gen_factories_r - ")
-                         ACE_TEXT ("gen_init_ops_i() failed\n")),
-                        -1);
-    }
-    
-  AST_Home *base = node->base_home ();
-  
-  return this->gen_factories_r (base);
-}
-
-int
-be_visitor_home_svh::gen_finders (void)
-{
-  os_ << be_nl << be_nl
-      << "// Finder operations.";
-  
-  return this->gen_finders_r (node_);
-}
-
-int
-be_visitor_home_svh::gen_finders_r (AST_Home *node)
-{
-  if (node == 0)
-    {
-      return 0;
-    }
-    
-  if (this->gen_init_ops_i (node->finders ()) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_home_svh::")
-                         ACE_TEXT ("gen_finders_r - ")
-                         ACE_TEXT ("gen_init_ops_i() failed\n")),
-                        -1);
-    }
-    
-  AST_Home *base = node->base_home ();
-  
-  return this->gen_finders_r (base);
-}
-
-int
-be_visitor_home_svh::gen_init_ops_i (AST_Home::INIT_LIST & list)
-{
-  AST_Operation **op = 0;
-  
-  for (AST_Home::INIT_LIST::ITERATOR i = list.begin ();
-       !i.done ();
-       i.advance ())
-    {
-      i.next (op);
-      be_operation *bop = be_operation::narrow_from_decl (*op);
-      
-      if (this->visit_operation (bop) == -1)
+      if (this->visit_scope (h) != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_home_svh::")
-                             ACE_TEXT ("gen_init_ops_i - ")
-                             ACE_TEXT ("visit_operation() failed\n")),
+                             ACE_TEXT ("gen_servant_class - ")
+                             ACE_TEXT ("visit_scope() failed\n")),
                             -1);
         }
+        
+      for (long i = 0; i < h->n_inherits (); ++i)
+        {
+          // A closure of all the supported interfaces is stored
+          // in the base class 'pd_inherits_flat' member.
+          be_interface *bi =
+            be_interface::narrow_from_decl (h->inherits ()[i]);
+   
+          int status =
+            bi->traverse_inheritance_graph (
+              be_visitor_home_svh::op_attr_decl_helper,
+              &os_);
+              
+          if (status == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("be_visitor_home_svh::")
+                                 ACE_TEXT ("gen_servant_class - ")
+                                 ACE_TEXT ("traverse_inheritance_graph() ")
+                                 ACE_TEXT ("failed for %s\n"),
+                                 bi->full_name ()),
+                                -1);
+            }
+        }  
+        
+      h = be_home::narrow_from_decl (h->base_home ());
     }
-    
+
+  os_ << be_uidt_nl
+      << "};";
+     
   return 0;
 }
 

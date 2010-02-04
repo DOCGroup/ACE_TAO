@@ -18,11 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_constant,
-           constant_ch,
-           "$Id$")
-
-
 // ********************************************************************
 // Visitor implementation for the Constant type
 // This one for the client header file

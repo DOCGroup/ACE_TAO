@@ -28,10 +28,6 @@
 #include "ast_union_label.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (be,
-           be_union_branch,
-           "$Id$")
-
 be_union_branch::be_union_branch (void)
   : COMMON_Base (),
     AST_Decl (),

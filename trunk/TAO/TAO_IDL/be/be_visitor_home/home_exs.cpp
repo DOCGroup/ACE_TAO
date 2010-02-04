@@ -18,10 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_home,
-           home_exs,
-           "$Id$")
-
 // ******************************************************
 // Home visitor for exec impl source
 // ******************************************************
@@ -93,6 +89,42 @@ be_visitor_home_exs::visit_attribute (be_attribute *node)
 }
 
 int
+be_visitor_home_exs::visit_factory (be_factory *node)
+{
+  AST_Decl *scope = ScopeAsDecl (comp_->defined_in ());
+  ACE_CString sname_str (scope->full_name ());
+  const char *sname = sname_str.c_str ();
+  const char *lname = comp_->local_name ()->get_string ();
+  const char *global = (sname_str == "" ? "" : "::");
+
+  os_ << be_nl << be_nl
+      << "::Components::EnterpriseComponent_ptr" << be_nl
+      << node_->original_local_name ()->get_string ()
+      << "_exec_i::" << node->local_name ();
+
+  be_visitor_operation_arglist visitor (this->ctx_);
+  visitor.unused (true);
+
+  if (visitor.visit_factory (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_home_exs::")
+                         ACE_TEXT ("visit_factory - ")
+                         ACE_TEXT ("codegen for arglist failed\n")),
+                        -1);
+    }
+
+  os_ << be_nl
+      << "{" << be_idt_nl
+      << your_code_here_ << be_nl
+      << "return " << global << sname << "::CCM_"
+      << lname << "::_nil ();" << be_uidt_nl
+      << "}";
+
+  return 0;
+}
+
+int
 be_visitor_home_exs::gen_exec_class (void)
 {
   // No '_cxx_' prefix.
@@ -114,12 +146,54 @@ be_visitor_home_exs::gen_exec_class (void)
       << lname << "_exec_i::~" << lname << "_exec_i (void)" << be_nl
       << "{" << be_nl
       << "}";
+      
+  be_home *h = node_;
+  
+  while (h != 0)
+    {
+      if (this->visit_scope (h) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_home_exs::")
+                             ACE_TEXT ("gen_exec_class - ")
+                             ACE_TEXT ("codegen for scope ")
+                             ACE_TEXT ("failed\n")),
+                            -1);
+        }
+        
+      for (long i = 0; i < h->n_inherits (); ++i)
+        {
+          // A closure of all the supported interfaces is stored
+          // in the base class 'pd_inherits_flat' member.
+          be_interface *bi =
+            be_interface::narrow_from_decl (h->inherits ()[i]);
+   
+          bi->get_insert_queue ().reset ();
+          bi->get_del_queue ().reset ();
+          bi->get_insert_queue ().enqueue_tail (bi);
 
-  this->gen_ops_attrs ();
+          Home_Exec_Op_Attr_Generator op_attr_gen (this);
 
-  this->gen_factories ();
+          int status =
+            bi->traverse_inheritance_graph (op_attr_gen,
+                                            &os_,
+                                            false,
+                                            false);
 
-  this->gen_finders ();
+          if (status == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("be_visitor_home_exs::")
+                                 ACE_TEXT ("gen_exec_class - ")
+                                 ACE_TEXT ("traverse_inheritance_graph() ")
+                                 ACE_TEXT ("failed for %s\n"),
+                                 bi->full_name ()),
+                                -1);
+            }
+        }  
+        
+      h = be_home::narrow_from_decl (h->base_home ());
+    }
 
   os_ << be_nl << be_nl
       << "// Implicit operations.";
@@ -140,150 +214,6 @@ be_visitor_home_exs::gen_exec_class (void)
       << be_uidt_nl << be_nl
       << "return retval;" << be_uidt_nl
       << "}";
-
-  return 0;
-}
-
-int
-be_visitor_home_exs::gen_ops_attrs (void)
-{
-  os_ << be_nl << be_nl
-      << "// All operations and attributes.";
-
-  node_->get_insert_queue ().reset ();
-  node_->get_del_queue ().reset ();
-  node_->get_insert_queue ().enqueue_tail (node_);
-
-  Home_Exec_Op_Attr_Generator op_attr_gen (this);
-
-  int status =
-    node_->traverse_inheritance_graph (op_attr_gen,
-                                       &os_,
-                                       false,
-                                       false);
-
-  if (status == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_home_exs::")
-                         ACE_TEXT ("gen_ops_attrs - ")
-                         ACE_TEXT ("traverse_inheritance_graph() ")
-                         ACE_TEXT ("failed\n")),
-                        -1);
-    }
-
-  return 0;
-}
-
-int
-be_visitor_home_exs::gen_factories (void)
-{
-  os_ << be_nl << be_nl
-      << "// Factory operations.";
-
-  return this->gen_factories_r (node_);
-}
-
-int
-be_visitor_home_exs::gen_factories_r (AST_Home *node)
-{
-  if (node == 0)
-    {
-      return 0;
-    }
-
-  if (this->gen_init_ops_i (node->factories ()) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_home_exs::")
-                         ACE_TEXT ("gen_factories_r - ")
-                         ACE_TEXT ("gen_init_ops_i() failed\n")),
-                        -1);
-    }
-
-  AST_Home *base = node->base_home ();
-
-  return this->gen_factories_r (base);
-}
-
-int
-be_visitor_home_exs::gen_finders (void)
-{
-  os_ << be_nl << be_nl
-      << "// Finder operations.";
-
-  return this->gen_finders_r (node_);
-}
-
-int
-be_visitor_home_exs::gen_finders_r (AST_Home *node)
-{
-  if (node == 0)
-    {
-      return 0;
-    }
-
-  if (this->gen_init_ops_i (node->finders ()) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_home_exs::")
-                         ACE_TEXT ("gen_finders_r - ")
-                         ACE_TEXT ("gen_init_ops_i() failed\n")),
-                        -1);
-    }
-
-  AST_Home *base = node->base_home ();
-
-  return this->gen_finders_r (base);
-}
-
-int
-be_visitor_home_exs::gen_init_ops_i (AST_Home::INIT_LIST & list)
-{
-  AST_Decl *scope = ScopeAsDecl (comp_->defined_in ());
-  ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
-  const char *lname = comp_->local_name ()->get_string ();
-  const char *global = (sname_str == "" ? "" : "::");
-
-  AST_Operation **op = 0;
-
-  for (AST_Home::INIT_LIST::ITERATOR i = list.begin ();
-       !i.done ();
-       i.advance ())
-    {
-      i.next (op);
-      be_operation *bop = be_operation::narrow_from_decl (*op);
-
-      /// Return type for home exec factories and finders is not
-      /// the same as for the corresponding home servant, so we
-      /// generate the return type and op name by hand, then finish
-      /// the operation traversal with an arglist visitor.
-      os_ << be_nl << be_nl
-          << "::Components::EnterpriseComponent_ptr" << be_nl
-          << node_->original_local_name ()->get_string ()
-          << "_exec_i::"
-          << bop->local_name ();
-
-      be_visitor_operation_arglist visitor (this->ctx_);
-      visitor.unused (true);
-
-      if (visitor.visit_operation (bop) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_home_exs::")
-                             ACE_TEXT ("gen_init_ops_i - ")
-                             ACE_TEXT ("visit_operation() failed\n")),
-                            -1);
-        }
-
-      os_ << be_nl
-          << "{" << be_idt_nl
-          << your_code_here_ << be_nl
-          << "return " << global << sname << "::CCM_"
-          << lname << "::_nil ();" << be_uidt_nl
-          << "}";
-    }
 
   return 0;
 }
@@ -321,5 +251,4 @@ Home_Exec_Op_Attr_Generator::emit (be_interface * /* derived_interface */,
 {
   return visitor_->visit_scope (base_interface);
 }
-
 

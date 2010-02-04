@@ -56,6 +56,3 @@
 #include "be_visitor_argument/invoke_cs.cpp"
 #include "be_visitor_argument/paramlist.cpp"
 
-ACE_RCSID (be,
-           be_visitor_argument,
-           "$Id$")

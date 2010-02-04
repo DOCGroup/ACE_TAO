@@ -20,9 +20,6 @@
 //    derived from be_visitor_union_branch/public_ci.cpp
 //
 // ============================================================================
-ACE_RCSID (be_visitor_valuetype,
-           field_cs,
-           "$Id$")
 
 be_visitor_valuetype_field_cs::be_visitor_valuetype_field_cs (
     be_visitor_context *ctx

@@ -31,10 +31,6 @@
 #include "ace/OS_NS_ctype.h"
 #include "../../tao/Version.h"
 
-ACE_RCSID (be,
-           be_helper,
-           "$Id$")
-
 static const char copyright[] =
 "// -*- C++ -*-\n"
 "// $I" "d$\n\n"

@@ -19,11 +19,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_array,
-           any_op_cs,
-           "$Id$")
-
-
 // ***************************************************************************
 // Array visitor for generating Any operator declarations in the client
 // stubs file

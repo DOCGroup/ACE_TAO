@@ -273,6 +273,7 @@
 #include "ast_sequence.h"
 #include "ast_string.h"
 #include "ast_factory.h"
+#include "ast_finder.h"
 #include "ast_exception.h"
 #include "ast_param_holder.h"
 #include "ast_visitor_tmpl_module_inst.h"
@@ -4103,7 +4104,7 @@ tao_yyreduce:
                                         AST_PredefinedType::PT_pseudo,
                                         &n
                                       );
-              (void) s->add_predefined_type (pdt);
+
               s->add_to_scope (pdt);
 
               (tao_yyvsp[(1) - (1)].idval)->destroy ();
@@ -8693,37 +8694,24 @@ tao_yyreduce:
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ((tao_yyvsp[(2) - (2)].idval),
                             0);
-          AST_Operation *o = 0;
+                            
           idl_global->set_parse_state (IDL_GlobalData::PS_OpIDSeen);
 
           /*
-           * Create a node representing a factory operation
+           * Create a node representing a factory
            * and add it to the enclosing scope.
            */
-          if (s != 0)
-            {
-              AST_Home *h = AST_Home::narrow_from_scope (s);
-              
-              o =
-                idl_global->gen ()->create_operation (
-                                        h->managed_component (),
-                                        AST_Operation::OP_noflags,
-                                        &n,
-                                        false,
-                                        false
-                                      );
-                                      
-              h->factories ().enqueue_tail (o);
-            }
+          AST_Factory *f = idl_global->gen ()->create_factory (&n);
+          (void) s->fe_add_factory (f);
 
           (tao_yyvsp[(2) - (2)].idval)->destroy ();
           delete (tao_yyvsp[(2) - (2)].idval);
           (tao_yyvsp[(2) - (2)].idval) = 0;
 
           /*
-           * Push the operation scope onto the scopes stack.
+           * Push the factory scope onto the scopes stack.
            */
-          idl_global->scopes ().push (o);
+          idl_global->scopes ().push (f);
         }
     break;
 
@@ -8740,24 +8728,18 @@ tao_yyreduce:
     {
 //      opt_raises
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Operation *o = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseCompleted);
 
           /*
-           * Add exceptions and context to the operation.
+           * Add exceptions and context to the factory.
            */
-          if (s != 0 && s->scope_node_type () == AST_Decl::NT_op)
+          if ((tao_yyvsp[(6) - (6)].nlval) != 0)
             {
-              o = AST_Operation::narrow_from_scope (s);
-
-              if ((tao_yyvsp[(6) - (6)].nlval) != 0 && o != 0)
-                {
-                  (void) o->fe_add_exceptions ((tao_yyvsp[(6) - (6)].nlval));
-                }
+              (void) s->fe_add_exceptions ((tao_yyvsp[(6) - (6)].nlval));
             }
 
           /*
-           * Done with this operation. Pop its scope from the scopes stack.
+           * Done with this factory. Pop its scope from the scopes stack.
            */
           idl_global->scopes ().pop ();
         }
@@ -8770,28 +8752,18 @@ tao_yyreduce:
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ((tao_yyvsp[(2) - (2)].idval),
                             0);
-          AST_Operation *o = 0;
+
           idl_global->set_parse_state (IDL_GlobalData::PS_OpIDSeen);
 
           /*
-           * Create a node representing a finder operation
+           * Create a node representing a home finder
            * and add it to the enclosing scope.
            */
-          if (s != 0)
-            {
-              AST_Home *h = AST_Home::narrow_from_scope (s);
-              
-              o =
-                idl_global->gen ()->create_operation (
-                  h->managed_component (),
-                  AST_Operation::OP_noflags,
-                  &n,
-                  false,
-                  false);
-                                      
-              h->finders ().enqueue_tail (o);
-            }
-
+          AST_Finder *f =
+            idl_global->gen ()->create_finder (&n);
+          
+          (void) s->fe_add_finder (f);
+          
           (tao_yyvsp[(2) - (2)].idval)->destroy ();
           delete (tao_yyvsp[(2) - (2)].idval);
           (tao_yyvsp[(2) - (2)].idval) = 0;
@@ -8799,7 +8771,7 @@ tao_yyreduce:
           /*
            * Push the operation scope onto the scopes stack.
            */
-          idl_global->scopes ().push (o);
+          idl_global->scopes ().push (f);
         }
     break;
 
@@ -8816,24 +8788,19 @@ tao_yyreduce:
     {
 //      opt_raises
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Operation *o = 0;
+
           idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseCompleted);
 
           /*
-           * Add exceptions and context to the operation.
+           * Add exceptions and context to the finder.
            */
-          if (s != 0 && s->scope_node_type () == AST_Decl::NT_op)
+          if ((tao_yyvsp[(6) - (6)].nlval) != 0)
             {
-              o = AST_Operation::narrow_from_scope (s);
-
-              if ((tao_yyvsp[(6) - (6)].nlval) != 0 && o != 0)
-                {
-                  (void) o->fe_add_exceptions ((tao_yyvsp[(6) - (6)].nlval));
-                }
+              (void) s->fe_add_exceptions ((tao_yyvsp[(6) - (6)].nlval));
             }
 
           /*
-           * Done with this operation. Pop its scope from the scopes stack.
+           * Done with this finder. Pop its scope from the scopes stack.
            */
           idl_global->scopes ().pop ();
         }

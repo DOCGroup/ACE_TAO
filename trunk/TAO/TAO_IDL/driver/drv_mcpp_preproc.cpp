@@ -90,10 +90,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "mcpp_lib.h"
 
-ACE_RCSID (driver,
-           drv_preproc,
-           "$Id$")
-
 // Storage for preprocessor args.
 unsigned long const DRV_MAX_ARGCOUNT = 1024;
 unsigned long DRV_argcount = 0;

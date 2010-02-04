@@ -68,10 +68,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scope.h"
 #include "global_extern.h"
 
-ACE_RCSID (util,
-           utl_stack,
-           "$Id$")
-
 #undef  INCREMENT
 #define  INCREMENT  64
 

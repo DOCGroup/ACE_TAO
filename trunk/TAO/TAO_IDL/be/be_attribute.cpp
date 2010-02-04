@@ -25,10 +25,6 @@
 
 #include "global_extern.h"
 
-ACE_RCSID (be,
-           be_attribute,
-           "$Id$")
-
 be_attribute::be_attribute (void)
   : COMMON_Base (),
     AST_Decl (),

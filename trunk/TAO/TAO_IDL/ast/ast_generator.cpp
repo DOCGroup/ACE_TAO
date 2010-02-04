@@ -104,6 +104,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_typedef.h"
 #include "ast_native.h"
 #include "ast_factory.h"
+#include "ast_finder.h"
 
 #include "utl_identifier.h"
 
@@ -916,6 +917,17 @@ AST_Generator::create_factory (UTL_ScopedName *n)
   AST_Factory *retval = 0;
   ACE_NEW_RETURN (retval,
                   AST_Factory (n),
+                  0);
+
+  return retval;
+}
+
+AST_Finder *
+AST_Generator::create_finder (UTL_ScopedName *n)
+{
+  AST_Finder *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Finder (n),
                   0);
 
   return retval;

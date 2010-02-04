@@ -18,10 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuebox,
-           valuebox_ci,
-           "$Id: valuebox_ci.cpp Exp")
-
 be_visitor_valuebox_ci::be_visitor_valuebox_ci (be_visitor_context *ctx)
   : be_visitor_valuebox (ctx)
 {

@@ -10,10 +10,6 @@
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
-ACE_RCSID (ast, 
-           ast_union_fwd, 
-           "$Id$")
-
 AST_UnionFwd::AST_UnionFwd (void)
   : COMMON_Base (),
     AST_Decl (),

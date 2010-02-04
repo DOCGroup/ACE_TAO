@@ -26,11 +26,6 @@
 #include "be_visitor_union/union.h"
 #include "be_visitor_union/cdr_op_ch.h"
 
-ACE_RCSID (be_visitor_field, 
-           cdr_op_ch, 
-           "$Id$")
-
-
 // **********************************************
 //  Visitor for field in the client header file.
 // **********************************************

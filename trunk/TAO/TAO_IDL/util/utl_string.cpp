@@ -74,10 +74,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/OS_NS_ctype.h"
 
-ACE_RCSID (util,
-           utl_string,
-           "$Id$")
-
 UTL_String::UTL_String (void)
   : p_str (0),
     c_str (0),

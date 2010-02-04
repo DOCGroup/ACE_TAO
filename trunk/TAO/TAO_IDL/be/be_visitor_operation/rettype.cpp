@@ -18,11 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_operation,
-           rettype,
-           "$Id$")
-
-
 // ****************************************************************************
 // Operation visitor for return types. This generates the mapping for a return
 // type in an operation signature

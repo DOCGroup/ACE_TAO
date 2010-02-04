@@ -33,7 +33,8 @@ be_visitor::~be_visitor (void)
 {
 }
 
-// all the visit methods. Concrete visitors will selectively override each one
+// All the visit methods. Concrete visitors will selectively
+// override each one.
 int be_visitor::visit_decl (be_decl *)
 {
   return 0;
@@ -202,6 +203,12 @@ be_visitor::visit_home (be_home *)
 
 int
 be_visitor::visit_factory (be_factory *)
+{
+  return 0;
+}
+
+int
+be_visitor::visit_finder (be_finder *)
 {
   return 0;
 }

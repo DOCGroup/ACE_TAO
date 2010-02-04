@@ -92,7 +92,8 @@ be_visitor_field_serializer_op_cs::visit_array (be_array *node)
   // field.
 
   TAO_OutStream *os = this->ctx_->stream ();
-  be_field *f = this->ctx_->be_node_as_field ();
+  be_field *f =
+    be_field::narrow_from_decl (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -212,7 +213,8 @@ be_visitor_field_serializer_op_cs::visit_enum (be_enum *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f = this->ctx_->be_node_as_field ();
+  be_field *f =
+    be_field::narrow_from_decl (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -262,9 +264,10 @@ int
 be_visitor_field_serializer_op_cs::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_field *f = this->ctx_->be_node_as_field ();
+  be_field *f =
+    be_field::narrow_from_decl (this->ctx_->node ());
 
-  if (!f)
+  if (f == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_serializer_op_cs::"
@@ -335,7 +338,8 @@ be_visitor_field_serializer_op_cs::visit_interface_fwd (be_interface_fwd *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f = this->ctx_->be_node_as_field ();
+  be_field *f =
+    be_field::narrow_from_decl (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -413,9 +417,10 @@ int
 be_visitor_field_serializer_op_cs::visit_valuetype (be_valuetype *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_field *f = this->ctx_->be_node_as_field ();
+  be_field *f =
+    be_field::narrow_from_decl (this->ctx_->node ());
 
-  if (!f)
+  if (f == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_serializer_op_cs::"
@@ -464,7 +469,8 @@ be_visitor_field_serializer_op_cs::visit_valuetype_fwd (be_valuetype_fwd *)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f = this->ctx_->be_node_as_field ();
+  be_field *f =
+    be_field::narrow_from_decl (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -511,12 +517,14 @@ be_visitor_field_serializer_op_cs::visit_eventtype_fwd (be_eventtype_fwd *node)
 
 // Visit predefined type.
 int
-be_visitor_field_serializer_op_cs::visit_predefined_type (be_predefined_type *node)
+be_visitor_field_serializer_op_cs::visit_predefined_type (
+  be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f = this->ctx_->be_node_as_field ();
+  be_field *f =
+    be_field::narrow_from_decl (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -691,7 +699,8 @@ be_visitor_field_serializer_op_cs::visit_sequence (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f = this->ctx_->be_node_as_field ();
+  be_field *f =
+    be_field::narrow_from_decl (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -747,7 +756,8 @@ be_visitor_field_serializer_op_cs::visit_string (be_string *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f = this->ctx_->be_node_as_field ();
+  be_field *f =
+    be_field::narrow_from_decl (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -838,8 +848,9 @@ be_visitor_field_serializer_op_cs::visit_structure (be_structure *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // retrieve the field node.
-  be_field *f = this->ctx_->be_node_as_field ();
+  // Retrieve the field node.
+  be_field *f =
+    be_field::narrow_from_decl (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -935,7 +946,8 @@ be_visitor_field_serializer_op_cs::visit_union (be_union *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f = this->ctx_->be_node_as_field ();
+  be_field *f =
+    be_field::narrow_from_decl (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -1036,7 +1048,8 @@ be_visitor_serializer_op_field_decl::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f = this->ctx_->be_node_as_field ();
+  be_field *f =
+    be_field::narrow_from_decl (this->ctx_->node ());
 
   if (f == 0)
     {

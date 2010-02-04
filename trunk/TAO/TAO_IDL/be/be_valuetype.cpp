@@ -29,10 +29,6 @@
 #include "global_extern.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (be,
-           be_valuetype,
-           "$Id$")
-
 // Default constructor.
 be_valuetype::be_valuetype (void)
   : COMMON_Base (),

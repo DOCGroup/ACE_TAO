@@ -18,10 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_union,
-           serializer_op_cs,
-           "$Id$")
-
 // ***************************************************************************
 // Union visitor for generating Serializer operator declarations in the client
 // stubs file

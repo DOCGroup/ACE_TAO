@@ -71,10 +71,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_enum_val.h"
 #include "ast_visitor.h"
 
-ACE_RCSID (ast,
-           ast_enum_val,
-           "$Id$")
-
 AST_EnumVal::AST_EnumVal (void)
   : COMMON_Base (),
     AST_Decl (),

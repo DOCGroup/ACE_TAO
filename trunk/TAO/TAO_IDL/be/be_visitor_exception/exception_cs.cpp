@@ -20,10 +20,6 @@
 
 #include "be_visitor_typecode/typecode_defn.h"
 
-ACE_RCSID (be_visitor_exception,
-           exception_cs,
-           "$Id$")
-
 // ***************************************************************************
 // For client stubs.
 // ***************************************************************************

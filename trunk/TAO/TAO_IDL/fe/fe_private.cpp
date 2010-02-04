@@ -67,8 +67,4 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_private.h"
 #include "utl_strlist.h"
 
-ACE_RCSID (fe, 
-           fe_private, 
-           "$Id$")
-
 UTL_StrList *DRV_global_pragmas = 0;
