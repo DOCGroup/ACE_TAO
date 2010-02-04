@@ -172,7 +172,7 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
       this->tv_max_ = duration;
     if (duration < this->tv_min_.value () || (this->tv_min_.value () == 0))
       this->tv_min_ = duration;
-    double avg =  this->tv_total_.value () / this->count_.value ();
+  //  double avg =  this->tv_total_.value () / this->count_.value ();
 
 
   /*    ACE_DEBUG((LM_ERROR, "=========\n RECEIVER: record_time\n "
