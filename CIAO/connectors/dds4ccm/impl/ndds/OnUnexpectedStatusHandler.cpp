@@ -4,7 +4,10 @@
 #include "dds4ccm/impl/ndds/OnUnexpectedStatusHandler.h"
 #include "ciao/Logger/Log_Macros.h"
 
-CIAO::DDS4CCM::On_Unexpected_Status_Handler::On_Unexpected_Status_Handler (
+//============================================================
+// On_Unexpected_Status_Handler
+//============================================================
+CIAO::DDS4CCM::OnUnexpectedStatusHandler::OnUnexpectedStatusHandler (
   ::CCM_DDS::ConnectorStatusListener_ptr error_listener,
   ::DDS::Entity_ptr entity,
   ::DDS::StatusKind status_kind) :
@@ -16,12 +19,12 @@ CIAO::DDS4CCM::On_Unexpected_Status_Handler::On_Unexpected_Status_Handler (
     (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 }
 
-CIAO::DDS4CCM::On_Unexpected_Status_Handler::~On_Unexpected_Status_Handler (void)
+CIAO::DDS4CCM::OnUnexpectedStatusHandler::~OnUnexpectedStatusHandler (void)
 {
 }
 
 int
-CIAO::DDS4CCM::On_Unexpected_Status_Handler::handle_exception (ACE_HANDLE)
+CIAO::DDS4CCM::OnUnexpectedStatusHandler::handle_exception (ACE_HANDLE)
 {
   try
     {
@@ -33,6 +36,9 @@ CIAO::DDS4CCM::On_Unexpected_Status_Handler::handle_exception (ACE_HANDLE)
   return 0;
 }
 
+//============================================================
+// OnRequestedOncompatibleQosHandler
+//============================================================
 CIAO::DDS4CCM::OnRequestedOncompatibleQosHandler::OnRequestedOncompatibleQosHandler (
   ::CCM_DDS::ConnectorStatusListener_ptr csl,
   ::DDS::DataReader_ptr dr,
@@ -62,6 +68,9 @@ CIAO::DDS4CCM::OnRequestedOncompatibleQosHandler::handle_exception (ACE_HANDLE)
   return 0;
 }
 
+//============================================================
+// OnSampleRejectedHandler
+//============================================================
 CIAO::DDS4CCM::OnSampleRejectedHandler::OnSampleRejectedHandler (
   ::CCM_DDS::ConnectorStatusListener_ptr csl,
   ::DDS::DataReader_ptr dr,
@@ -91,6 +100,9 @@ CIAO::DDS4CCM::OnSampleRejectedHandler::handle_exception (ACE_HANDLE)
   return 0;
 }
 
+//============================================================
+// OnInconsistentTopicHandler
+//============================================================
 CIAO::DDS4CCM::OnInconsistentTopicHandler::OnInconsistentTopicHandler (
   ::CCM_DDS::ConnectorStatusListener_ptr csl,
   ::DDS::Topic_ptr tp,
@@ -120,6 +132,9 @@ CIAO::DDS4CCM::OnInconsistentTopicHandler::handle_exception (ACE_HANDLE)
   return 0;
 }
 
+//============================================================
+// OnOfferedDeadlineMissedHandler
+//============================================================
 CIAO::DDS4CCM::OnOfferedDeadlineMissedHandler::OnOfferedDeadlineMissedHandler (
   ::CCM_DDS::ConnectorStatusListener_ptr csl,
   ::DDS::DataWriter_ptr dw,
@@ -149,6 +164,9 @@ CIAO::DDS4CCM::OnOfferedDeadlineMissedHandler::handle_exception (ACE_HANDLE)
   return 0;
 }
 
+//============================================================
+// OnOfferedIncompatibleQoSHandler
+//============================================================
 CIAO::DDS4CCM::OnOfferedIncompatibleQoSHandler::OnOfferedIncompatibleQoSHandler (
   ::CCM_DDS::ConnectorStatusListener_ptr csl,
   ::DDS::DataWriter_ptr dw,
@@ -171,6 +189,66 @@ CIAO::DDS4CCM::OnOfferedIncompatibleQoSHandler::handle_exception (ACE_HANDLE)
   try
     {
       this->csl_->on_offered_incompatible_qos (this->dw_, this->status_);
+    }
+  catch (...)
+    {
+    }
+  return 0;
+}
+
+//============================================================
+// OnRequestedDeadlineMissedHandler
+//============================================================
+CIAO::DDS4CCM::OnRequestedDeadlineMissedHandler::OnRequestedDeadlineMissedHandler (
+  ::CCM_DDS::PortStatusListener_ptr psl,
+  ::DDS::DataReader_ptr dr,
+  const ::DDS::RequestedDeadlineMissedStatus & status) :
+    psl_ (::CCM_DDS::ConnectorStatusListener::_duplicate (psl)),
+    dr_ (::DDS::DataReader::_duplicate (dr)),
+    status_ (status)
+{
+}
+
+CIAO::DDS4CCM::OnRequestedDeadlineMissedHandler::~OnRequestedDeadlineMissedHandler ()
+{
+}
+
+int
+CIAO::DDS4CCM::OnRequestedDeadlineMissedHandler::handle_exception (ACE_HANDLE)
+{
+  try
+    {
+      this->port_status_listener_->on_requested_deadline_missed (this->rd_, this->status_);
+    }
+  catch (...)
+    {
+    }
+  return 0;
+}
+
+//============================================================
+// OnSampleLostHandler
+//============================================================
+CIAO::DDS4CCM::OnSampleLostHandler::OnSampleLostHandler (
+  ::CCM_DDS::PortStatusListener_ptr psl,
+  ::DDS::DataReader_ptr dr,
+  const ::DDS::SampleLostStatus & status) :
+    psl_ (::CCM_DDS::ConnectorStatusListener::_duplicate (psl)),
+    dr_ (::DDS::DataReader::_duplicate (dr)),
+    status_ (status)
+{
+}
+
+CIAO::DDS4CCM::OnSampleLostHandler::~OnSampleLostHandler ()
+{
+}
+
+int
+CIAO::DDS4CCM::OnSampleLostHandler::handle_exception (ACE_HANDLE)
+{
+  try
+    {
+      this->port_status_listener_->on_sample_lost (this->rd_, this->status_);
     }
   catch (...)
     {

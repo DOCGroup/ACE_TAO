@@ -30,11 +30,34 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadline_m
 {
   CIAO_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::on_requested_deadline_missed");
 
+  CIAO_DEBUG (10, (LM_DEBUG, CLINFO
+              ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
+              ACE_TEXT ("total count <%d> - total change <%d> - ")
+              ACE_TEXT ("last instance handle <%C>\n"),
+              status.total_count, status.total_count_change,
+              translate_instancehandle (status.last_instance_handle)));
+
   if (!CORBA::is_nil (this->port_status_listener_))
     {
       try
         {
-          this->port_status_listener_->on_requested_deadline_missed (the_reader, status);
+          if (this->reactor_)
+            {
+              ::CIAO::DDS4CCM::OnRequestedDeadlineMissedHandler* rh =
+              new ::CIAO::DDS4CCM::OnRequestedDeadlineMissedHandler (
+                this->port_status_listener_, the_reader, status);
+              ACE_Event_Handler_var safe_handler (rh);
+              if (this->reactor_->notify (rh) != 0)
+                {
+                  ACE_ERROR ((LM_ERROR, CLINFO
+                              ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
+                              ACE_TEXT ("failed to use reactor.\n")));
+                }
+            }
+          else
+            {
+              this->port_status_listener_->on_requested_deadline_missed (the_reader, status);
+            }
         }
       catch (...)
         {
@@ -58,17 +81,37 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
 {
   CIAO_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::on_sample_lost");
 
+  CIAO_DEBUG (10, (LM_DEBUG, CLINFO
+              ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
+              ACE_TEXT ("total count <%d> - total change <%d>\n"),
+              status.total_count, status.total_count_change));
+
   if (!CORBA::is_nil (this->port_status_listener_))
     {
       try
         {
-          this->port_status_listener_->on_sample_lost (the_reader, status);
+          if (this->reactor_)
+            {
+              ::CIAO::DDS4CCM::OnSampleLostHandler* rh =
+              new ::CIAO::DDS4CCM::OnSampleLostHandler (
+                this->port_status_listener_, the_reader, status);
+              ACE_Event_Handler_var safe_handler (rh);
+              if (this->reactor_->notify (rh) != 0)
+                {
+                  ACE_ERROR ((LM_ERROR, CLINFO
+                              ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
+                              ACE_TEXT ("failed to use reactor.\n")));
+                }
+            }
+          else
+            {
+              this->port_status_listener_->on_sample_lost (the_reader, status);
+            }
         }
       catch (...)
         {
-          CIAO_DEBUG (6, (LM_DEBUG,
-                          ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
-                          ACE_TEXT ("DDS Exception caught\n")));
+          CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
+                                 ACE_TEXT ("DDS Exception caught\n")));
         }
     }
   else
