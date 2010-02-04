@@ -36,7 +36,7 @@ namespace CIAO
         ::DDS::Entity_var entity_;
         ::DDS::StatusKind status_kind_;
     };
-    
+
     class DDS4CCM_NDDS_IMPL_Export OnRequestedOncompatibleQosHandler :
       public ACE_Event_Handler
     {
@@ -115,6 +115,38 @@ namespace CIAO
         ::CCM_DDS::ConnectorStatusListener_var csl_;
         ::DDS::DataWriter_var dw_;
         ::DDS::OfferedIncompatibleQosStatus const status_;
+    };
+
+    class DDS4CCM_NDDS_IMPL_Export OnRequestedDeadlineMissedHandler :
+      public ACE_Event_Handler
+    {
+      public:
+        OnRequestedDeadlineMissedHandler (
+            ::CCM_DDS::PortStatusListener_ptr psl,
+            ::DDS::DataReader_ptr dr,
+            const ::DDS::RequestedDeadlineMissedStatus &status);
+        virtual ~OnRequestedDeadlineMissedHandler ();
+        virtual int handle_exception (ACE_HANDLE fc = ACE_INVALID_HANDLE);
+      private:
+        ::CCM_DDS::PortStatusListener_var psl_;
+        ::DDS::DataReader_var dr_;
+        ::DDS::RequestedDeadlineMissedStatus const status_;
+    };
+
+    class DDS4CCM_NDDS_IMPL_Export OnSampleLostHandler :
+      public ACE_Event_Handler
+    {
+      public:
+        OnSampleLostHandler (
+            ::CCM_DDS::PortStatusListener_ptr psl,
+            ::DDS::DataReader_ptr dr,
+            const ::DDS::SampleLostStatus &status);
+        virtual ~OnSampleLostHandler ();
+        virtual int handle_exception (ACE_HANDLE fc = ACE_INVALID_HANDLE);
+      private:
+        ::CCM_DDS::PortStatusListener_var psl_;
+        ::DDS::DataReader_var dr_;
+        ::DDS::SampleLostStatus const status_;
     };
   }
 }
