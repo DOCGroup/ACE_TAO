@@ -186,10 +186,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
 
           break;
         case AST_Expression::EV_char:
-          os->print ("'\\%d'", dv.u.char_val);
-          break;
-        case AST_Expression::EV_wchar:
-          os->print ("L'\\%d'", dv.u.wchar_val);
+          os->print ("'\\%o'", dv.u.char_val);
           break;
         case AST_Expression::EV_bool:
           *os << (dv.u.bool_val == 0 ? "false" : "true");
