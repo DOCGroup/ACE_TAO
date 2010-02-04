@@ -1,3 +1,17 @@
+Thu Feb  4 10:23:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/IDL3_to_IDL2/basic_visitor.cpp
+        * tools/IDL3_to_IDL2/basic_visitor.h
+        * tools/IDL3_to_IDL2/checking_visitor.cpp
+        * tools/IDL3_to_IDL2/checking_visitor.h
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.h
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.h
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.cpp
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.h
+          Merged changes from idl3_plus_backend2 branch to svn head
+
 Thu Feb 4 09:22:31 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Keyed/Receiver/Perf_Keyed_Test_Receiver_exec.cpp:
