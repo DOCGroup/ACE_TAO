@@ -1,3 +1,10 @@
+Thu Feb  4 20:29:52 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * tests/Reactor_Fairness_Test.cpp: Don't try ACE_Dev_Poll_Reactor on
+          platforms without that capability; also added ACE_WFMO_Reactor to
+          the test (which triggered a crash shutting down WFMO_Reactor... I'm
+          looking into it).
+
 Thu Feb  4 15:32:24 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * tests/Reactor_Fairness_Test.cpp:
