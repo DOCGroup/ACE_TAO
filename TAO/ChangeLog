@@ -1,3 +1,13 @@
+Thu Feb  4 09:25:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Merged revision 88756-88826 from idl3_plus_backend2 to svn head.
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+
+          Change IFR loader backend correspondingly with the
+          change above to home factories and finders.
+
 Thu Feb  4 09:15:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/*.cpp:
@@ -29,12 +39,6 @@ Thu Feb  4 08:36:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
           Completed changes to handle home factories and finders
           as part of the home scope rather than in separate list
           members of the home class.
-
-        * orbsvcs/IFR_Service/ifr_adding_visitor.h:
-        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
-
-          Change IFR loader backend correspondingly with the
-          change above to home factories and finders.
 
         Mon Feb  1 22:30:44 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 

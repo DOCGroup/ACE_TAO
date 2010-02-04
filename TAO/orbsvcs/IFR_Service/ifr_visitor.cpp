@@ -205,6 +205,12 @@ ifr_visitor::visit_factory (AST_Factory *)
 }
 
 int
+ifr_visitor::visit_finder (AST_Finder *)
+{
+  return 0;
+}
+
+int
 ifr_visitor::visit_structure (AST_Structure *)
 {
   return 0;
