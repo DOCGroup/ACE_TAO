@@ -334,11 +334,6 @@ basic_visitor::visit_consumes (AST_Consumes *)
 int
 basic_visitor::visit_factory  (AST_Factory *node)
 {
-  if (node->imported ())
-    {
-      return 0;
-    }
-
   *os << be_nl;
 
   *os << "factory "
@@ -833,6 +828,12 @@ basic_visitor::visit_native (AST_Native *node)
       << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
       << ";";
 
+  return 0;
+}
+
+int
+basic_visitor::visit_param_holder (AST_Param_Holder *)
+{
   return 0;
 }
 

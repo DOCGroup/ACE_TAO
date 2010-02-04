@@ -59,6 +59,8 @@ public:
   virtual int visit_eventtype (AST_EventType *node);
   virtual int visit_eventtype_fwd (AST_EventTypeFwd *node);
   virtual int visit_home (AST_Home *node);
+  virtual int visit_factory (AST_Factory *node);
+  virtual int visit_finder (AST_Finder *node);
   virtual int visit_root (AST_Root *node);
   virtual int visit_param_holder(AST_Param_Holder *node);
   
@@ -68,8 +70,9 @@ private:
                                       const char *suffix,
                                       AST_Decl *parent);
   void tranfer_scope_elements (AST_Home *src, AST_Interface &dst);
-  void gen_factories (AST_Home *node, AST_Interface &xplicit);
-  void gen_finders (AST_Home *node, AST_Interface &xplicit);
+  
+private:
+  AST_Home *home_;
 };
 
 #endif /* TAO_IDL3_TO_IDL2_VISITOR_H */

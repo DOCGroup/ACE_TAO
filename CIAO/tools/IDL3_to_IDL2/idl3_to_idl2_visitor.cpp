@@ -15,15 +15,18 @@
 #include "ast_eventtype.h"
 #include "ast_eventtype_fwd.h"
 #include "ast_home.h"
+#include "ast_finder.h"
 #include "ast_operation.h"
 #include "ast_root.h"
+
 #include "utl_exceptlist.h"
 #include "utl_identifier.h"
 #include "global_extern.h"
 #include "nr_extern.h"
 
 idl3_to_idl2_visitor::idl3_to_idl2_visitor (void)
-  : basic_visitor ()
+  : basic_visitor (),
+    home_ (0)
 {
 }
 
@@ -436,6 +439,8 @@ idl3_to_idl2_visitor::visit_home (AST_Home *node)
     {
       return 0;
     }
+    
+  this->home_ = node;
 
   ACE_CString explicit_name = node->original_local_name ()->get_string ();
   explicit_name += "Explicit";
@@ -479,9 +484,6 @@ idl3_to_idl2_visitor::visit_home (AST_Home *node)
 
   // Reset the home's decls to be defined in the explicit home interface.
   this->tranfer_scope_elements (node, xplicit);
-
-  this->gen_factories (node, xplicit);
-  this->gen_finders (node, xplicit);
 
   *os << be_uidt_nl
       << "};" << be_nl << be_nl;
@@ -553,6 +555,45 @@ idl3_to_idl2_visitor::visit_home (AST_Home *node)
       << "};";
 
   return 0;
+}
+
+int
+idl3_to_idl2_visitor::visit_factory (AST_Factory *node)
+{
+  Identifier *id = node->original_local_name ();
+  
+  *os << be_nl << be_nl;
+  
+  if (this->home_ == 0)
+    {
+      *os << "factory ";
+    }
+  else
+    {
+      AST_Component *c = this->home_->managed_component ();
+      
+      *os << IdentifierHelper::orig_sn (c->name ()).c_str ()
+          << " ";
+    }
+    
+  *os << IdentifierHelper::try_escape (id).c_str ()
+      << " (";
+      
+  this->gen_params (node, node->argument_count ());
+  
+  *os << ")";
+  
+  this->gen_exception_list (node->exceptions ());
+  
+  *os << ";";
+          
+  return 0;
+}
+
+int
+idl3_to_idl2_visitor::visit_finder (AST_Finder *node)
+{
+  return this->visit_factory (node);
 }
 
 int
@@ -686,80 +727,3 @@ idl3_to_idl2_visitor::tranfer_scope_elements (AST_Home *src,
         }
     }
 }
-
-void
-idl3_to_idl2_visitor::gen_factories (AST_Home *node,
-                                     AST_Interface &)
-{
-  AST_Operation **item = 0;
-
-  for (ACE_Unbounded_Queue_Iterator<AST_Operation *> i (node->factories ());
-       ! i.done ();
-       i.advance ())
-    {
-      i.next (item);
-
-      *os << be_nl << be_nl
-          << IdentifierHelper::orig_sn (node->managed_component ()->name ()).c_str ()
-          << " "
-          << IdentifierHelper::try_escape ((*item)->original_local_name ()).c_str ()
-          << " (";
-
-      this->gen_params (*item, (*item)->argument_count ());
-
-      *os << ")";
-
-      UTL_ExceptList *exceps = (*item)->exceptions ();
-
-      if (exceps != 0 && exceps->length () > 0)
-        {
-          this->gen_exception_list (exceps, "", false);
-        }
-      else
-        {
-          *os << be_idt_nl
-              << "raises (";
-        }
-
-      *os << "Components::CreateFailure);" << be_uidt;
-    }
-}
-
-void
-idl3_to_idl2_visitor::gen_finders (AST_Home *node,
-                                   AST_Interface &)
-{
-  AST_Operation **item = 0;
-
-  for (ACE_Unbounded_Queue_Iterator<AST_Operation *> i (node->finders ());
-       ! i.done ();
-       i.advance ())
-    {
-      i.next (item);
-
-      *os << be_nl << be_nl
-          << IdentifierHelper::orig_sn (node->managed_component ()->name ()).c_str ()
-          << " "
-          << IdentifierHelper::try_escape( (*item)->original_local_name ()).c_str ()
-          << " (";
-
-      this->gen_params (*item, (*item)->argument_count ());
-
-      *os << ")";
-
-      UTL_ExceptList *exceps = (*item)->exceptions ();
-
-      if (exceps != 0 && exceps->length () > 0)
-        {
-          this->gen_exception_list (exceps, "", false);
-        }
-      else
-        {
-          *os << be_idt_nl
-              << "raises (";
-        }
-
-      *os << "Components::FinderFailure);" << be_uidt;
-    }
-}
-

@@ -157,12 +157,6 @@ checking_visitor::visit_template_module_ref (AST_Template_Module_Ref *)
 }
 
 int
-checking_visitor::visit_param_holder (AST_Param_Holder *)
-{
-  return 0;
-}
-
-int
 checking_visitor::visit_porttype (AST_PortType *)
 {
   return 0;
@@ -243,6 +237,12 @@ checking_visitor::visit_home (AST_Home *node)
 
 int
 checking_visitor::visit_factory (AST_Factory *)
+{
+  return 0;
+}
+
+int
+checking_visitor::visit_finder (AST_Finder *)
 {
   return 0;
 }
@@ -396,6 +396,12 @@ checking_visitor::visit_string (AST_String *)
 
 int
 checking_visitor::visit_typedef (AST_Typedef *)
+{
+  return 0;
+}
+
+int
+checking_visitor::visit_param_holder (AST_Param_Holder *)
 {
   return 0;
 }
