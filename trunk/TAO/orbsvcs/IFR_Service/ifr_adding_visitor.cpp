@@ -17,7 +17,7 @@
 #include "ast_eventtype_fwd.h"
 #include "ast_exception.h"
 #include "ast_expression.h"
-#include "ast_factory.h"
+#include "ast_finder.h"
 #include "ast_field.h"
 #include "ast_home.h"
 #include "ast_interface.h"
@@ -52,16 +52,13 @@
 
 #include "ace/Vector_T.h"
 
-ACE_RCSID (IFR_Service,
-           ifr_adding_visitor,
-           "$Id$")
-
-ifr_adding_visitor::ifr_adding_visitor (AST_Decl *scope,
-                                        bool in_reopened,
-          bool allow_duplicate_typedefs)
+ifr_adding_visitor::ifr_adding_visitor (
+      AST_Decl *scope,
+      bool in_reopened,
+      bool allow_duplicate_typedefs)
   : scope_ (scope),
-  in_reopened_ (in_reopened),
-  allow_duplicate_typedefs_ (allow_duplicate_typedefs)
+    in_reopened_ (in_reopened),
+    allow_duplicate_typedefs_ (allow_duplicate_typedefs)
 {
 }
 
@@ -582,7 +579,7 @@ ifr_adding_visitor::visit_valuetype (AST_ValueType *node)
 
   try
     {
-      // Is this interface already in the respository?
+      // Is this valuetype already in the respository?
       CORBA::Contained_var prev_def =
         be_global->repository ()->lookup_id (node->repoID ());
 
@@ -1622,12 +1619,6 @@ ifr_adding_visitor::visit_home (AST_Home *node)
       return -1;
     }
 
-  return 0;
-}
-
-int
-ifr_adding_visitor::visit_factory (AST_Factory *)
-{
   return 0;
 }
 
@@ -3909,6 +3900,7 @@ ifr_adding_visitor::fill_exceptions (CORBA::ExceptionDefSeq &result,
           return;
         }
       case AST_Decl::NT_factory:
+      case AST_Decl::NT_finder:
         {
           AST_Factory *f = AST_Factory::narrow_from_decl (node);
           this->fill_exceptions (result,
@@ -3956,10 +3948,10 @@ ifr_adding_visitor::fill_exceptions (CORBA::ExceptionDefSeq &result,
 
 void
 ifr_adding_visitor::fill_params (CORBA::ParDescriptionSeq &result,
-                                 AST_Operation *node)
+                                 UTL_Scope *node)
 {
   AST_Argument *arg = 0;
-  CORBA::ULong n_args = static_cast<CORBA::ULong> (node->argument_count ());
+  CORBA::ULong n_args = static_cast<CORBA::ULong> (node->nmembers ());
   result.length (n_args);
   CORBA::ULong index = 0;
   CORBA::Contained_var holder;
@@ -3988,26 +3980,33 @@ void
 ifr_adding_visitor::visit_all_factories (AST_Home *node,
                                          CORBA::ComponentIR::HomeDef_ptr h)
 {
-  AST_Operation **tmp = 0;
   CORBA::Contained_var contained;
   CORBA::ComponentIR::FactoryDef_var new_def;
 
-  for (ACE_Unbounded_Queue_Iterator<AST_Operation *> i (node->factories ());
-       ! i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator h_iter (node,
+                                       UTL_Scope::IK_decls);
+       !h_iter.is_done ();
+       h_iter.next ())
     {
-      i.next (tmp);
+      AST_Decl *d = h_iter.item ();
+      AST_Decl::NodeType nt = d->node_type ();
+      
+      if (nt != AST_Decl::NT_factory)
+        {
+          continue;
+        }
+        
+      AST_Factory *f = AST_Factory::narrow_from_decl (d);
+      
       CORBA::ParDescriptionSeq params;
-      this->fill_params (params,
-                         *tmp);
+      this->fill_params (params, f);
 
       CORBA::ExceptionDefSeq exceptions;
-      this->fill_exceptions (exceptions,
-                             *tmp);
+      this->fill_exceptions (exceptions, f);
 
-      new_def = h->create_factory ((*tmp)->repoID (),
-                                   (*tmp)->local_name ()->get_string (),
-                                   (*tmp)->version (),
+      new_def = h->create_factory (f->repoID (),
+                                   f->local_name ()->get_string (),
+                                   f->version (),
                                    params,
                                    exceptions);
     }
@@ -4017,26 +4016,31 @@ void
 ifr_adding_visitor::visit_all_finders (AST_Home *node,
                                        CORBA::ComponentIR::HomeDef_ptr h)
 {
-  AST_Operation **tmp = 0;
+  AST_Finder *f = 0;
   CORBA::Contained_var contained;
   CORBA::ComponentIR::FinderDef_var new_def;
 
-  for (ACE_Unbounded_Queue_Iterator<AST_Operation *> i (node->finders ());
-       ! i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator h_iter (node,
+                                       UTL_Scope::IK_decls);
+       !h_iter.is_done ();
+       h_iter.next ())
     {
-      i.next (tmp);
+      f = AST_Finder::narrow_from_decl (h_iter.item ());
+      
+      if (f == 0)
+        {
+          continue;
+        }
+
       CORBA::ParDescriptionSeq params;
-      this->fill_params (params,
-                         *tmp);
+      this->fill_params (params, f);
 
       CORBA::ExceptionDefSeq exceptions;
-      this->fill_exceptions (exceptions,
-                             *tmp);
+      this->fill_exceptions (exceptions, f);
 
-      new_def = h->create_finder ((*tmp)->repoID (),
-                                  (*tmp)->local_name ()->get_string (),
-                                  (*tmp)->version (),
+      new_def = h->create_finder (f->repoID (),
+                                  f->local_name ()->get_string (),
+                                  f->version (),
                                   params,
                                   exceptions);
     }
