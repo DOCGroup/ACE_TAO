@@ -1,7 +1,7 @@
 
 //=============================================================================
 /**
- *  @file    operation_smart_proxy_ch.cpp
+ *  @file    smart_proxy_ch.cpp
  *
  *  $Id$
  *

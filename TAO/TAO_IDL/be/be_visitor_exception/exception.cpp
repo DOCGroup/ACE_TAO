@@ -1,7 +1,7 @@
 
 //=============================================================================
 /**
- *  @file    .cpp
+ *  @file    exception.cpp
  *
  *  $Id$
  *
@@ -81,7 +81,7 @@ be_visitor_exception::visit_field (be_field *node)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_exception::"
                            "visit_field - "
-                           "Bad context state\n"), 
+                           "Bad context state\n"),
                           -1);
       }
     }
@@ -91,7 +91,7 @@ be_visitor_exception::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_exception::"
                          "visit_field - "
-                         "failed to accept visitor\n"),  
+                         "failed to accept visitor\n"),
                         -1);
     }
 
