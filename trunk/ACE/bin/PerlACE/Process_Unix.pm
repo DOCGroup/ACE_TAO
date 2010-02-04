@@ -540,7 +540,18 @@ sub kill_all ($)
   my $procmask = shift;
   my $pid = -1;
   my $first = 1;
-  for my $line (`ps w`) {    
+  my $ps_cmd = 'ps xw';
+  my $ps_file = `which ps`;
+  if ((-l $ps_file) and (readlink ($ps_file)) =~ /busybox/) {
+    ## some embedded targets use BusyBox for base tools
+    ## with different arguments
+    $ps_cmd = 'ps w';
+  }
+  if (defined $ENV{'PS_CMD'}) {
+    ## in case a special command is required
+    $ps_cmd = $ENV{'PS_CMD'};
+  }
+  for my $line (`$ps_cmd`) {
     if ($first) {
       # skip first line (headers)
       $first = 0;
