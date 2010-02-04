@@ -371,13 +371,23 @@ run_main (int argc, ACE_TCHAR *argv[])
   }
   fails += results.analyze_reports ();
 
+#if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
   results.reset (opt_nconnections);
   {
     ACE_Dev_Poll_Reactor r;
     run (r, ACE_TEXT ("Dev_Poll Reactor"));
   }
   fails += results.analyze_reports ();
+#endif /* ACE_HAS_EVENT_POLL || ACE_HAS_DEV_POLL */
 
+#if defined (ACE_WIN32)
+  results.reset (opt_nconnections);
+  {
+    ACE_WFMO_Reactor r;
+    run (r, ACE_TEXT ("WFMO Reactor"));
+  }
+  fails += results.analyze_reports ();
+#endif /* ACE_WIN32 */
 
   ACE_END_TEST;
   return fails;
