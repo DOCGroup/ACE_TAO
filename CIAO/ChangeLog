@@ -1,3 +1,9 @@
+Thu Feb  4 13:21:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Utils.h:
+        * connectors/dds4ccm/impl/ndds/Utils.cpp:
+          Resolved compiler issues on windows.
+
 Thu Feb  4 12:42:05 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/PublisherListener_T.cpp:
