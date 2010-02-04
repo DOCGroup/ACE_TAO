@@ -227,55 +227,10 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_data_on_readers(
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-void
-CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadline_missed (
-  ::DDS::DataReader_ptr reader,
-  const ::DDS::RequestedDeadlineMissedStatus & status)
-{
-  CIAO_TRACE ("CIAO::DDS4CCM::SubscriberListener_T::on_requested_deadline_missed");
-
-  CIAO_DEBUG (10, (LM_DEBUG, CLINFO
-              ACE_TEXT ("SubscriberListener_T::on_requested_deadline_missed: ")
-              ACE_TEXT ("total count <%d> - count change <%d> - ")
-              ACE_TEXT ("last instance handle <%C>\n"),
-              status.total_count, status.total_count_change,
-              translate_instancehandle (status.last_instance_handle)));
-
-  this->on_unexpected_status (reader, ::DDS::REQUESTED_DEADLINE_MISSED_STATUS);
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
-CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_data_available (
-  ::DDS::DataReader_ptr reader)
-{
-  CIAO_TRACE ("CIAO::DDS4CCM::SubscriberListener_T::on_data_available");
-  this->on_unexpected_status (reader, ::DDS::DATA_AVAILABLE_STATUS);
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
-CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
-  ::DDS::DataReader_ptr reader,
-  const ::DDS::SampleLostStatus & status)
-{
-  CIAO_TRACE ("CIAO::DDS4CCM::SubscriberListener_T::on_sample_lost");
-
-  CIAO_DEBUG (10, (LM_DEBUG, CLINFO
-            ACE_TEXT ("SubscriberListener_T::on_requested_deadline_missed: ")
-            ACE_TEXT ("total count <%d> - count change <%d>\n"),
-            status.total_count, status.total_count_change));
-
-  this->on_unexpected_status (reader, ::DDS::SAMPLE_LOST_STATUS);
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::StatusMask
 CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::get_mask (void)
 {
   return DDS_REQUESTED_INCOMPATIBLE_QOS_STATUS |
-         DDS_REQUESTED_DEADLINE_MISSED_STATUS |
-         DDS_SAMPLE_LOST_STATUS |
          DDS_SAMPLE_REJECTED_STATUS |
          DDS_LIVELINESS_CHANGED_STATUS |
          DDS_SUBSCRIPTION_MATCHED_STATUS |

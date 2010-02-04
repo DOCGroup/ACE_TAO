@@ -53,15 +53,15 @@ namespace CIAO
         ::DDS::Subscriber* subscriber);
 
       virtual void on_requested_deadline_missed (
-        ::DDS::DataReader_ptr reader,
-        const ::DDS::RequestedDeadlineMissedStatus & status);
+        ::DDS::DataReader_ptr ,
+        const ::DDS::RequestedDeadlineMissedStatus & ) {}
 
       virtual void on_data_available (
-        ::DDS::DataReader_ptr reader);
+        ::DDS::DataReader_ptr ) {}
 
       virtual void on_sample_lost (
-        ::DDS::DataReader_ptr reader,
-        const ::DDS::SampleLostStatus & status);
+        ::DDS::DataReader_ptr ,
+        const ::DDS::SampleLostStatus & ) {}
 
       static ::DDS::StatusMask get_mask (void);
 
