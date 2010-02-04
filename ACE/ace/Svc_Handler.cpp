@@ -111,11 +111,22 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::destroy (void)
   // Only delete ourselves if we're not owned by a module and have
   // been allocated dynamically.
   if (this->mod_ == 0 && this->dynamic_ && this->closing_ == false)
-    // Will call the destructor, which automatically calls <shutdown>.
-    // Note that if we are *not* allocated dynamically then the
-    // destructor will call <shutdown> automatically when it gets run
-    // during cleanup.
-    delete this;
+    {
+      // Will call the destructor, which automatically calls <shutdown>.
+      // Note that if we are *not* allocated dynamically then the
+      // destructor will call <shutdown> automatically when it gets run
+      // during cleanup.
+
+      if (this->reference_counting_policy ().value () ==
+          ACE_Event_Handler::Reference_Counting_Policy::ENABLED)
+        {
+          this->remove_reference ();
+        }
+      else
+        {
+          delete this;
+        }
+    }
 }
 
 template <PR_ST_1, ACE_SYNCH_DECL> void

@@ -1,7 +1,18 @@
+Thu Feb  4 11:15:57 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/Svc_Handler.cpp:
+          Fixed an unconditional delete of Svc_Handler in destroy(). If
+          reference counting is enabled then it has to do remove_reference().
+          This completes the fix for bug#3731.
+
+        * tests/NonBlocking_Conn_Test.cpp:
+          Changed www.pakarmy.gov.pk to www.pakistanarmy.gov.pk. The first
+          URL seems to be dead.
+
 Thu Feb  4 10:53:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * bin/PerlACE/Process_Unix.pm:
-        
+
           Fixed problems concerning correct retrievel of process list.
 
 Thu Feb  3 09:57:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
