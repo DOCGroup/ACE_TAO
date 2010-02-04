@@ -82,15 +82,6 @@ namespace CIAO
       return "***Unknown enum value, update RTI::translate_rejectedstatuskind()";
 #undef RTI_DDS_RETCODE
     }
-
-    inline const char * translate_instancehandle (DDS::InstanceHandle_t hnd)
-    {
-      char * ret = 0;
-      ACE_OS::sprintf (ret,
-                        "length <%l> - isValid <%l>",
-                        hnd.length, hnd.isValid);
-      return ret;
-    }
   }
 }
 

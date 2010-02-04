@@ -33,9 +33,9 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadline_m
   CIAO_DEBUG (10, (LM_DEBUG, CLINFO
               ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
               ACE_TEXT ("total count <%d> - total change <%d> - ")
-              ACE_TEXT ("last instance handle <%C>\n"),
+              ACE_TEXT ("last instance handle <length <%l> - isValid <%l>>\n"),
               status.total_count, status.total_count_change,
-              translate_instancehandle (status.last_instance_handle)));
+              status.last_instance_handle.length, status.last_instance_handle.isValid));
 
   if (!CORBA::is_nil (this->port_status_listener_))
     {
