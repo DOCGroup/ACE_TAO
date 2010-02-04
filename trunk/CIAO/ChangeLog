@@ -1,3 +1,11 @@
+Thu Feb  4 10:25:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Home_Servant_Impl_T.h:
+          Layout changes
+
+        * tests/IDL_Test/Two_Templ_Args/TwoTemplArgs.mpc:
+          New MPC file, this test compiles fine now
+
 Thu Feb  4 10:23:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/IDL3_to_IDL2/basic_visitor.cpp
