@@ -846,13 +846,7 @@ AST_Module::fe_add_interface_fwd (AST_InterfaceFwd *i)
   if ((d = this->lookup_for_add (i, false)) != 0)
     {
       AST_Decl::NodeType nt = d->node_type ();
-/*
-      if (nt == AST_Decl::NT_interface_fwd)
-        {
-          AST_InterfaceFwd *ifwd = AST_InterfaceFwd::narrow_from_decl (d);
-          i->set_full_definition (ifwd->full_definition ());
-        }
-*/
+
       // There used to be another check here ANDed with the one below:
       // d->defined_in () == this. But lookup_for_add calls only
       // lookup_by_name_local(), which does not bump up the scope,
@@ -932,12 +926,6 @@ AST_Module::fe_add_valuetype_fwd (AST_ValueTypeFwd *v)
     {
       AST_Decl::NodeType nt = d->node_type ();
 
-      if (nt == AST_Decl::NT_valuetype_fwd)
-        {
-          AST_ValueTypeFwd *vfwd = AST_ValueTypeFwd::narrow_from_decl (d);
-          v->set_full_definition (vfwd->full_definition ());
-        }
-
       // There used to be another check here ANDed with the one below:
       // d->defined_in () == this. But lookup_for_add calls only
       // lookup_by_name_local(), which does not bump up the scope,
@@ -953,8 +941,6 @@ AST_Module::fe_add_valuetype_fwd (AST_ValueTypeFwd *v)
               return 0;
             }
 
-          // @@ Redefinition of forward. Type check not implemented.
-          v->set_full_definition (vtf);   // @@ Memory leak.
 //          return v;
         }
 
@@ -1007,12 +993,6 @@ AST_Module::fe_add_eventtype_fwd (AST_EventTypeFwd *v)
     {
       AST_Decl::NodeType nt = d->node_type ();
 
-      if (nt == AST_Decl::NT_eventtype_fwd)
-        {
-          AST_EventTypeFwd *efwd = AST_EventTypeFwd::narrow_from_decl (d);
-          v->set_full_definition (efwd->full_definition ());
-        }
-
       // There used to be another check here ANDed with the one below:
       // d->defined_in () == this. But lookup_for_add calls only
       // lookup_by_name_local(), which does not bump up the scope,
@@ -1028,8 +1008,6 @@ AST_Module::fe_add_eventtype_fwd (AST_EventTypeFwd *v)
               return 0;
             }
 
-          // @@ Redefinition of forward. Type check not implemented.
-          v->set_full_definition (vtf);   // @@ Memory leak.
 //          return v;
         }
 
@@ -1082,12 +1060,6 @@ AST_Module::fe_add_component_fwd (AST_ComponentFwd *c)
     {
       AST_Decl::NodeType nt = d->node_type ();
 
-      if (nt == AST_Decl::NT_component_fwd)
-        {
-          AST_ComponentFwd *cfwd = AST_ComponentFwd::narrow_from_decl (d);
-          c->set_full_definition (cfwd->full_definition ());
-        }
-
       // There used to be another check here ANDed with the one below:
       // d->defined_in () == this. But lookup_for_add calls only
       // lookup_by_name_local(), which does not bump up the scope,
@@ -1103,8 +1075,6 @@ AST_Module::fe_add_component_fwd (AST_ComponentFwd *c)
               return 0;
             }
 
-          // @@ Redefinition of forward. Type check not implemented.
-          c->set_full_definition (cf);   // @@ Memory leak.
 //          return c;
         }
 
