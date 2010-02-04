@@ -27,7 +27,7 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
   void
   PerfKeyedTest_Listener_exec_i::on_one_data (
                                   const PerfKeyedTest & an_instance,
-                                  const ::CCM_DDS::ReadInfo & info)
+                                  const ::CCM_DDS::ReadInfo & /*info*/)
   {
 //    ACE_DEBUG ((LM_DEBUG, "SENDER: PerfKeyedTest_Listener_exec_i::on_one_data: \n"
 //                            "key <%C> - ses_num <%d> - latency_ping <%d>\n",
@@ -356,7 +356,7 @@ Sender_exec_i::record_time (unsigned long long nanotime)
       this->tv_max_ = duration;
     if (duration < this->tv_min_.value () || (this->tv_min_.value () == 0L))
       this->tv_min_ = duration;
-    double avg = this->tv_total_.value () / this->count_.value ();
+  //  double avg = this->tv_total_.value () / this->count_.value ();
                 
   
    /* ACE_DEBUG ((LM_ERROR, "Sender Listener_exec_i::on_one_data:\n"
