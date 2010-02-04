@@ -35,8 +35,8 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_unexpected_status (
     {
       if (this->reactor_)
         {
-          ::CIAO::DDS4CCM::On_Unexpected_Status_Handler* rh =
-           new ::CIAO::DDS4CCM::On_Unexpected_Status_Handler (
+          ::CIAO::DDS4CCM::OnUnexpectedStatusHandler* rh =
+           new ::CIAO::DDS4CCM::OnUnexpectedStatusHandler (
             this->error_listener_, entity, status_kind);
           ACE_Event_Handler_var safe_handler (rh);
           if (this->reactor_->notify (rh) != 0)

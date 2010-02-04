@@ -1,3 +1,9 @@
+Thu Feb  4 12:42:05 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.cpp:
+          Resolved compiler errors.
+
 Thu Feb  4 12:37:44 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/OnUnexpectedStatusHandler.h:
