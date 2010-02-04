@@ -72,10 +72,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 #include "utl_indenter.h"
 
-ACE_RCSID (ast,
-           ast_enum,
-           "$Id$")
-
 AST_Enum::AST_Enum (void)
   : COMMON_Base (),
     AST_Decl (),

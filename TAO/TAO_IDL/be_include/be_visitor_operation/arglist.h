@@ -38,19 +38,15 @@ class be_visitor_operation_arglist : public be_visitor_operation
   //
 public:
   be_visitor_operation_arglist (be_visitor_context *ctx);
-  // constructor
 
   ~be_visitor_operation_arglist (void);
-  // destructor
 
   virtual int visit_operation (be_operation *node);
-  // visit the operation
-
+  virtual int visit_factory (be_factory *node);
   virtual int visit_argument (be_argument *node);
-  // visit each argument
 
   virtual int post_process (be_decl *);
-  // stuff to o/p after each element of the scope is handled.
+  // Stuff to output after each element of the scope is handled.
   
   void unused (bool val);
   // Set the member.

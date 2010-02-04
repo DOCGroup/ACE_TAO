@@ -18,11 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_exception, 
-           exception, 
-           "$Id$")
-
-
 // Generic exception visitor.
 be_visitor_exception::be_visitor_exception (be_visitor_context *ctx)
   : be_visitor_scope (ctx)

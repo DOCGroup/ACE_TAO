@@ -25,10 +25,6 @@
 #include "nr_extern.h"
 #include "global_extern.h"
 
-ACE_RCSID (be,
-           be_argument,
-           "$Id$")
-
 be_argument::be_argument (void)
   : COMMON_Base (),
     AST_Decl (),

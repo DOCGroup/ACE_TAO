@@ -19,11 +19,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_enum,
-           serializer_op_cs,
-           "$Id$")
-
-
 // ***************************************************************************
 // Enum visitor for generating Serializer operator declarations in the client
 // stubs file.

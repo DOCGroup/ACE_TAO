@@ -24,11 +24,6 @@
 #include "be_visitor_structure/structure_cs.h"
 #include "be_visitor_union/union_cs.h"
 
-ACE_RCSID (be_visitor_field, 
-           field_cs, 
-           "$Id$")
-
-
 // **********************************************
 //  Visitor for field in the client stubs file.
 // **********************************************

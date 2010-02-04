@@ -1,9 +1,5 @@
 // $Id$
 
-ACE_RCSID (be_visitor_operation,
-           proxy_impl_xh,
-           "$Id$")
-
 be_visitor_operation_proxy_impl_xh::be_visitor_operation_proxy_impl_xh (
     be_visitor_context *ctx
   )

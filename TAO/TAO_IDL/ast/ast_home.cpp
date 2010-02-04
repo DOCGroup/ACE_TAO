@@ -5,6 +5,7 @@
 #include "ast_valuetype.h"
 #include "ast_param_holder.h"
 #include "ast_operation.h"
+#include "ast_finder.h"
 #include "ast_visitor.h"
 
 #include "utl_identifier.h"
@@ -166,18 +167,6 @@ AST_Home::primary_key (void) const
   return this->pd_primary_key;
 }
 
-AST_Home::INIT_LIST &
-AST_Home::factories (void)
-{
-  return this->pd_factories;
-}
-
-AST_Home::INIT_LIST &
-AST_Home::finders (void)
-{
-  return this->pd_finders;
-}
-
 void
 AST_Home::destroy (void)
 {
@@ -270,6 +259,114 @@ int
 AST_Home::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_home (this);
+}
+
+AST_Factory *
+AST_Home::fe_add_factory (AST_Factory *f)
+{
+  AST_Decl *d = 0;
+
+  // Can't add to interface which was not yet defined.
+  if (!this->is_defined ())
+    {
+      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED,
+                                  this,
+                                  f);
+      return 0;
+    }
+
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = this->lookup_for_add (f, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      f,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, f->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      f,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (f->has_ancestor (d))
+        {
+          idl_global->err ()->redefinition_in_scope (f,
+                                                     d);
+          return 0;
+        }
+    }
+
+  // Add it to scope.
+  this->add_to_scope (f);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (f,
+                           false,
+                           f->local_name ());
+
+  return f;
+}
+
+AST_Finder *
+AST_Home::fe_add_finder (AST_Finder *f)
+{
+  AST_Decl *d = 0;
+
+  // Can't add to interface which was not yet defined.
+  if (!this->is_defined ())
+    {
+      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED,
+                                  this,
+                                  f);
+      return 0;
+    }
+
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = this->lookup_for_add (f, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      f,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, f->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      f,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (f->has_ancestor (d))
+        {
+          idl_global->err ()->redefinition_in_scope (f,
+                                                     d);
+          return 0;
+        }
+    }
+
+  // Add it to scope.
+  this->add_to_scope (f);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (f,
+                           false,
+                           f->local_name ());
+
+  return f;
 }
 
   // Narrowing.

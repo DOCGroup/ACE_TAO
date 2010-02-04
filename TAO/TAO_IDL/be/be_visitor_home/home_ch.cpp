@@ -18,10 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_home, 
-           home_ch, 
-           "$Id$")
-
 be_visitor_home_ch::be_visitor_home_ch (
     be_visitor_context *ctx
   )

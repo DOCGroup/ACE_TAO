@@ -44,10 +44,6 @@
 #include "be_visitor_operation/ami_handler_reply_stub_operation_cs.h"
 #include "be_visitor_operation/ami_exception_holder_operation_cs.h"
 
-ACE_RCSID (be, 
-           be_visitor_factory, 
-           "$Id$")
-
 TAO_Visitor_Factory::TAO_Visitor_Factory (void)
 {
 }

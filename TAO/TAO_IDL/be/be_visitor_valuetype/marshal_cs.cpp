@@ -19,10 +19,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype,
-           marshal_cs,
-           "$Id$")
-
 be_visitor_valuetype_marshal_cs::be_visitor_valuetype_marshal_cs (
     be_visitor_context *ctx
   )

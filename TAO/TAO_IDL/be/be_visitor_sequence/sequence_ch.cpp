@@ -18,10 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_sequence,
-           sequence_ch,
-           "$Id$")
-
 // Root visitor for client header.
 be_visitor_sequence_ch::be_visitor_sequence_ch (be_visitor_context *ctx)
   : be_visitor_decl (ctx)

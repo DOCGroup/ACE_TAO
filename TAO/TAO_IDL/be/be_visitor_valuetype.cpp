@@ -99,6 +99,3 @@
 #include "be_visitor_valuetype/valuetype_init_cs.cpp"
 #include "be_visitor_valuetype/valuetype_init_arglist_ch.cpp"
 
-ACE_RCSID (be,
-           be_visitor_valuetype,
-          "$Id$")

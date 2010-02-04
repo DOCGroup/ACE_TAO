@@ -2,10 +2,6 @@
 // $Id$
 //
 
-ACE_RCSID (be_visitor_interface, 
-           remote_proxy_impl_ch, 
-           "$Id$")
-
 be_visitor_interface_remote_proxy_impl_ch::
 be_visitor_interface_remote_proxy_impl_ch (be_visitor_context *ctx)
   : be_visitor_interface (ctx)

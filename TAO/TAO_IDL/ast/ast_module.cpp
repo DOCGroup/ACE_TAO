@@ -868,12 +868,6 @@ AST_Module::fe_add_interface_fwd (AST_InterfaceFwd *i)
               return 0;
             }
 
-          if (i->added () == 0)
-            {
-              i->set_added (true);
-              this->add_to_scope (i);
-            }
-            
           // If the lookup found the full_definition member of another
           // interface_fwd, don't reset this full_definition. Otherwise
           // reset the member and set is_defined_ on i so it itf won't
@@ -892,7 +886,7 @@ AST_Module::fe_add_interface_fwd (AST_InterfaceFwd *i)
               i->set_as_defined ();
             }
             
-          return i;
+//          return i;
         }
 
       if (!can_be_redefined (d)) {
@@ -959,15 +953,9 @@ AST_Module::fe_add_valuetype_fwd (AST_ValueTypeFwd *v)
               return 0;
             }
 
-          if (v->added () == 0)
-            {
-              v->set_added (1);
-              this->add_to_scope (v);
-            }
-
           // @@ Redefinition of forward. Type check not implemented.
           v->set_full_definition (vtf);   // @@ Memory leak.
-          return v;
+//          return v;
         }
 
       if (!can_be_redefined (d)) {
@@ -1040,15 +1028,9 @@ AST_Module::fe_add_eventtype_fwd (AST_EventTypeFwd *v)
               return 0;
             }
 
-          if (v->added () == 0)
-            {
-              v->set_added (1);
-              this->add_to_scope (v);
-            }
-
           // @@ Redefinition of forward. Type check not implemented.
           v->set_full_definition (vtf);   // @@ Memory leak.
-          return v;
+//          return v;
         }
 
       if (!can_be_redefined (d)) {
@@ -1121,15 +1103,9 @@ AST_Module::fe_add_component_fwd (AST_ComponentFwd *c)
               return 0;
             }
 
-          if (c->added () == 0)
-            {
-              c->set_added (1);
-              this->add_to_scope (c);
-            }
-
           // @@ Redefinition of forward. Type check not implemented.
           c->set_full_definition (cf);   // @@ Memory leak.
-          return c;
+//          return c;
         }
 
       if (!can_be_redefined (d)) {
@@ -1373,17 +1349,9 @@ AST_Module::fe_add_union_fwd (AST_UnionFwd *t)
           AST_Union *s = AST_Union::narrow_from_decl (d);
           t->set_full_definition (s);
 
-          if (t->added () == 0)
-            {
-              t->set_added (1);
-              this->add_to_scope (t);
-
-              // Must check later that all struct and union forward declarations
-              // are defined in the same IDL file.
-              AST_record_fwd_decl (t);
-            }
-
-          return t;
+          // Must check later that all struct and union forward declarations
+          // are defined in the same IDL file.
+          AST_record_fwd_decl (t);
         }
       else
         {
@@ -1533,17 +1501,9 @@ AST_Module::fe_add_structure_fwd (AST_StructureFwd *t)
           AST_Structure *s = AST_Structure::narrow_from_decl (d);
           t->set_full_definition (s);
 
-          if (t->added () == 0)
-            {
-              t->set_added (1);
-              this->add_to_scope (t);
-
-              // Must check later that all struct and union forward declarations
-              // are defined in the same IDL file.
-              AST_record_fwd_decl (t);
-            }
-
-          return t;
+          // Must check later that all struct and union forward declarations
+          // are defined in the same IDL file.
+          AST_record_fwd_decl (t);
         }
       else
         {

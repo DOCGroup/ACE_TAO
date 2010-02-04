@@ -67,7 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_FACTORY_AST_FACTORY_HH
 #define _AST_FACTORY_AST_FACTORY_HH
 
-// Representation of OBV factory construct declaration.
+// Representation of OBV and component home factory
+// construct declaration.
 
 #include "ast_decl.h"
 #include "utl_scope.h"

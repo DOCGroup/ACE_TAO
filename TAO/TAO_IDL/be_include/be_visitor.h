@@ -53,6 +53,7 @@ class be_mirror_port;
 class be_connector;
 class be_home;
 class be_factory;
+class be_finder;
 class be_structure;
 class be_structure_fwd;
 class be_exception;
@@ -123,6 +124,7 @@ public:
   virtual int visit_connector (be_connector *node);
   virtual int visit_home (be_home *node);
   virtual int visit_factory (be_factory *node);
+  virtual int visit_finder (be_finder *node);
   virtual int visit_structure (be_structure *node);
   virtual int visit_structure_fwd (be_structure_fwd *node);
   virtual int visit_exception (be_exception *node);

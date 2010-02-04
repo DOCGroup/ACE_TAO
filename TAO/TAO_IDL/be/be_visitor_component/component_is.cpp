@@ -21,10 +21,6 @@
 // Component visitor for implementation skeletons.
 // ************************************************************
 
-ACE_RCSID (be_visitor_component, 
-           component_is, 
-           "$Id$")
-
 be_visitor_component_is::be_visitor_component_is (be_visitor_context *ctx)
   : be_visitor_component (ctx)
 {

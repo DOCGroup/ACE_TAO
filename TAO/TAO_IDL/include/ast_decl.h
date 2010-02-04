@@ -152,7 +152,8 @@ public:
       , NT_native                   // Denotes a native type
                                     // dependent on the programming
                                     // language
-      , NT_factory                  // Denotes a OBV factory construct
+      , NT_factory                  // Denotes a OBV or home factory construct
+      , NT_finder                   // Denotes a home finder construct
       , NT_component                // Denotes a CORBA component
       , NT_component_fwd            // Denotes a forward declared component
       , NT_home                     // Denotes a CORBA component home
@@ -261,9 +262,6 @@ public:
   Identifier *original_local_name (void);
   void original_local_name (Identifier *);
 
-  bool added (void);
-  void set_added (bool is_it);
-
   // Narrowing.
 
   DEF_NARROW_FROM_DECL(AST_Decl);
@@ -356,9 +354,6 @@ private:
 
   Identifier *pd_original_local_name;
   // _cxx_ removed if any.
-
-  bool pd_added;
-  // Already added.
 
   char *full_name_;
   // Our full scoped name.

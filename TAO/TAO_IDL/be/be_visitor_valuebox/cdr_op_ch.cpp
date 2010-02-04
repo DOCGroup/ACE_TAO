@@ -19,10 +19,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuebox,
-           cdr_op_ch,
-           "$Id$")
-
 be_visitor_valuebox_cdr_op_ch::be_visitor_valuebox_cdr_op_ch (
     be_visitor_context *ctx
   )

@@ -69,10 +69,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_concrete_type.h"
 
-ACE_RCSID (ast, 
-           ast_concrete_type, 
-           "$Id$")
-
 // Constructor(s) and destructor.
 AST_ConcreteType::AST_ConcreteType (void)
   : COMMON_Base (),

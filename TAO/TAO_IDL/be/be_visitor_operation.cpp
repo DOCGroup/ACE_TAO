@@ -42,6 +42,7 @@
 #include "be_eventtype.h"
 #include "be_eventtype_fwd.h"
 #include "be_home.h"
+#include "be_factory.h"
 #include "be_extern.h"
 #include "be_helper.h"
 #include "be_identifier_helper.h"
