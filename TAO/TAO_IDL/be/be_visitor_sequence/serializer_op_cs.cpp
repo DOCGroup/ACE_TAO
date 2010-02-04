@@ -1,3 +1,5 @@
+// $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -91,8 +93,8 @@ be_visitor_sequence_serializer_op_cs::visit_sequence (be_sequence *node)
 
   if (be_global->gen_dcps_type_support_only ())
     {
-      *os << be_nl << be_nl 
-          << "#endif /* end of disabling TAO specific code */" 
+      *os << be_nl << be_nl
+          << "#endif /* end of disabling TAO specific code */"
           << be_nl << be_nl;
     }
 
