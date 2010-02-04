@@ -1,3 +1,12 @@
+Thu Feb  4 15:27:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/TimeConversion:
+        * connectors/dds4ccm/tests/TimeConversion/Time_Conversion.mpc:
+        * connectors/dds4ccm/tests/TimeConversion/run_test.pl:
+        * connectors/dds4ccm/tests/TimeConversion/time_conversion.cpp:
+          Added test for testing conversions from and to DDS::Time_t.
+
 Thu Feb  4 15:21:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/PortStatusListener_T.cpp:
