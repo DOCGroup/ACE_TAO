@@ -13,6 +13,7 @@
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "dds4ccm/idl/dds4ccm_ConnectorStatusListenerC.h"
+#include "dds4ccm/idl/dds4ccm_PortStatusListenerC.h"
 #include "ace/Event_Handler.h"
 #include "dds4ccm_ndds_impl_export.h"
 
@@ -20,15 +21,15 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    class DDS4CCM_NDDS_IMPL_Export On_Unexpected_Status_Handler :
+    class DDS4CCM_NDDS_IMPL_Export OnUnexpectedStatusHandler :
       public ACE_Event_Handler
     {
       public:
-        On_Unexpected_Status_Handler (
+        OnUnexpectedStatusHandler (
             ::CCM_DDS::ConnectorStatusListener_ptr error_listener,
             ::DDS::Entity_ptr entity,
             ::DDS::StatusKind status_kind);
-        virtual ~On_Unexpected_Status_Handler ();
+        virtual ~OnUnexpectedStatusHandler ();
 
         virtual int handle_exception (ACE_HANDLE fc = ACE_INVALID_HANDLE);
       private:
