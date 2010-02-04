@@ -64,7 +64,6 @@ public:
   virtual int visit_eventtype (AST_EventType *node);
   virtual int visit_eventtype_fwd (AST_EventTypeFwd *node);
   virtual int visit_home (AST_Home *node);
-  virtual int visit_factory (AST_Factory *node);
   virtual int visit_structure (AST_Structure *node);
   virtual int visit_structure_fwd (AST_StructureFwd *node);
   virtual int visit_exception (AST_Exception *node);
@@ -161,7 +160,7 @@ protected:
                         UTL_ExceptList *list);
 
   void fill_params (CORBA::ParDescriptionSeq &result,
-                    AST_Operation *node);
+                    UTL_Scope *node);
 
   void visit_all_factories (AST_Home *node,
                             CORBA::ComponentIR::HomeDef_ptr h);
