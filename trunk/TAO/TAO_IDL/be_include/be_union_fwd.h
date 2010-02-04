@@ -1,22 +1,19 @@
 /* -*- c++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_union_fwd.h
-//
-// = DESCRIPTION
-//    Extension of class AST_UnionFwd that provides additional
-//    means for C++ mapping of a union.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_union_fwd.h
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_UnionFwd that provides additional
+ *  means for C++ mapping of a union.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef BE_UNION_FWD_H
 #define BE_UNION_FWD_H
@@ -35,18 +32,18 @@ class be_union_fwd : public virtual AST_UnionFwd,
   // =DESCRIPTION
   //   Extensions to the AST_UnionFwd class
 public:
+  /// Default constructor.
   be_union_fwd (void);
-  // Default constructor.
 
+  /// Constructor.
   be_union_fwd (AST_Union *dummy,
                 UTL_ScopedName *n);
-  // Constructor.
 
+  /// Destructor.
   virtual ~be_union_fwd (void);
-  // Destructor.
 
+  /// Cleanup function.
   virtual void destroy (void);
-  // Cleanup function.
 
   // Visiting.
   virtual int accept (be_visitor* visitor);

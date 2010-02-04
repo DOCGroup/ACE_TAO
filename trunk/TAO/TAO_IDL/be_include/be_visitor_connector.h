@@ -1,23 +1,18 @@
 /* -*- c++ -*- */
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_connector.h
-//
-// = DESCRIPTION
-//    Concrete visitors for the Connector
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_connector.h
+ *
+ *  $Id$
+ *
+ *  Concrete visitors for the Connector
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef TAO_BE_VISITOR_CONNECTOR_H
 #define TAO_BE_VISITOR_CONNECTOR_H

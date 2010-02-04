@@ -1,23 +1,19 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    be_template_module.h
-//
-// = DESCRIPTION
-//    Extension of class AST_Template_Module that provides additional means for C++
-//    mapping of a module.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_template_module.h
+ *
+ *  $Id$
+ *
+ *  Extension of class AST_Template_Module that provides additional means for C++
+ *  mapping of a module.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef TAO_BE_TEMPLATE_MODULE_H
 #define TAO_BE_TEMPLATE_MODULE_H

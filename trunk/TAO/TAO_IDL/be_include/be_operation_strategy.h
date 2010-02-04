@@ -1,22 +1,19 @@
 /* -*- c++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_operation_strategy.h
-//
-// = DESCRIPTION
-//    Strategy to cover differences between operations, e.g.
-//    the sendc_ and raise_ operations in the AMI spec.
-//
-// = AUTHOR
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_operation_strategy.h
+ *
+ *  $Id$
+ *
+ *  Strategy to cover differences between operations, e.g.
+ *  the sendc_ and raise_ operations in the AMI spec.
+ *
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 #ifndef TAO_BE_OPERATION_STRATEGY_H
 #define TAO_BE_OPERATION_STRATEGY_H
@@ -42,40 +39,44 @@ public:
 
   virtual ~be_operation_strategy (void);
 
+  /// Return the type of the strategy.
   int strategy_type (void);
-  // Return the type of the strategy.
 
+  /// Change the state if necessary.
   virtual TAO_CodeGen::CG_STATE next_state (
       TAO_CodeGen::CG_STATE current_state,
       int is_extra_state = 0
     ) = 0;
-  // Change the state if necessary.
 
+  /// Returns true if we have to generate extra code.
   virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
-  // Returns true if we have to generate extra code.
 
+  /**
+   * Returns the operation containing special marshaling information,
+   * this makes sense if not all arguments get marshaled, e.g. AMI
+   * sendc_ operations.
+   */
   virtual be_operation *marshaling (void);
-  // Returns the operation containing special marshaling information,
-  // this makes sense if not all arguments get marshaled, e.g. AMI
-  // sendc_ operations.
 
+  /**
+   * Returns a customized arguments list, e.g. AMI sendc_ operations
+   * only use the in and inout arguments but not the out arguments,
+   * also the first argument is the reply handler.
+   */
   virtual be_operation *arguments (void);
-  // Returns a customized arguments list, e.g. AMI sendc_ operations
-  // only use the in and inout arguments but not the out arguments,
-  // also the first argument is the reply handler.
 
+  /// Overrides return a deep copy.
   virtual be_operation_strategy *copy (void);
-  // Overrides return a deep copy.
 
+  /// Cleanup.
   virtual void destroy (void);
-  // Cleanup.
 
 protected:
+  /// The node we strategize.
   be_operation *node_;
-  // The node we strategize.
 
+  /// The type of strategy.
   Strategy_Kind strategy_type_;
-  // The type of strategy.
 };
 
 
@@ -93,8 +94,8 @@ public:
   TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
                                     int is_extra_state = 0);
 
+  /// Returns a deep copy.
   virtual be_operation_strategy *copy (void);
-  // Returns a deep copy.
 };
 
 
@@ -113,11 +114,11 @@ public:
   TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
                                     int is_extra_state = 0);
 
+  /// Returns true if we have to generate extra code.
   virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
-  // Returns true if we have to generate extra code.
 
+  /// Returns a deep copy.
   virtual be_operation_strategy *copy (void);
-  // Returns a deep copy.
 };
 
 
@@ -136,24 +137,28 @@ public:
   TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
                                     int is_extra_state = 0);
 
+  /// Returns true if we have to generate extra code.
   virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
-  // Returns true if we have to generate extra code.
 
+  /**
+   * Returns the operation containing special marshaling information,
+   * this makes sense if not all arguments get marshaled, e.g. AMI
+   * sendc_ operations
+   */
   virtual be_operation *marshaling (void);
-  // Returns the operation containing special marshaling information,
-  // this makes sense if not all arguments get marshaled, e.g. AMI
-  // sendc_ operations
 
+  /**
+   * Returns a customized arguments list, e.g. AMI sendc_ operations
+   * only use the in and inout arguments but not the out arguments,
+   * also the first argument is the reply handler.
+   */
   virtual be_operation *arguments (void);
-  // Returns a customized arguments list, e.g. AMI sendc_ operations
-  // only use the in and inout arguments but not the out arguments,
-  // also the first argument is the reply handler.
 
+  /// Returns a deep copy.
   virtual be_operation_strategy *copy (void);
-  // Returns a deep copy.
 
+  /// Cleanup.
   virtual void destroy (void);
-  // Cleanup.
 
 private:
   be_operation *marshaling_;
@@ -178,8 +183,8 @@ public:
       int is_extra_state = 0
     );
 
+  /// Returns a deep copy.
   virtual be_operation_strategy *copy (void);
-  // Returns a deep copy.
 };
 
 
@@ -200,8 +205,8 @@ public:
 
   virtual be_operation *arguments (void);
 
+  /// Returns a deep copy.
   virtual be_operation_strategy *copy (void);
-  // Returns a deep copy.
 
 private:
   be_operation *arguments_;

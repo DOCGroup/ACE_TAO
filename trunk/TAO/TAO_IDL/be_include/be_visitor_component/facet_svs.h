@@ -1,39 +1,33 @@
-//
-// $Id$
-//
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    facet_svs.h
-//
-// = DESCRIPTION
-//    Concrete visitor for the Component node.
-//    This provides for code generation for the facet servant
-//    class definition
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    facet_svs.h
+ *
+ *  $Id$
+ *
+ *  Concrete visitor for the Component node.
+ *  This provides for code generation for the facet servant
+ *  class definition
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef _BE_COMPONENT_FACET_SVS_H_
 #define _BE_COMPONENT_FACET_SVS_H_
 
+/**
+ * @class be_visitor_facet_svs
+ *
+ * @brief be_visitor_facet_svs
+ *
+ * This is a concrete visitor to generate the facet servant defn
+ * for a component.
+ */
 class be_visitor_facet_svs : public be_visitor_component_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_facet_svs
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate the facet servant defn
-  //   for a component.
-  //
-  //
 public:
   be_visitor_facet_svs (be_visitor_context *ctx);
   

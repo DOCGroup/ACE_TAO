@@ -1,23 +1,18 @@
 /* -*- c++ -*- */
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_exception.h
-//
-// = DESCRIPTION
-//    Concrete visitor for the Exception class
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_exception.h
+ *
+ *  $Id$
+ *
+ *  Concrete visitor for the Exception class
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef TAO_BE_VISITOR_EXCEPTION_H
 #define TAO_BE_VISITOR_EXCEPTION_H

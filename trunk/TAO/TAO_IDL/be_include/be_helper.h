@@ -1,24 +1,19 @@
 /* -*- c++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_helper.h
-//
-// = DESCRIPTION
-//    Defines the abstract class for outputting the C++ mapping. This is a
-//    helper class to the singleton TAO_CodeGen class
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-//    Improvements by Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_helper.h
+ *
+ *  $Id$
+ *
+ *  Defines the abstract class for outputting the C++ mapping. This is a
+ *  helper class to the singleton TAO_CodeGen class
+ *
+ *
+ *  @author Aniruddha Gokhale Improvements by Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #ifndef TAO_BE_OUTSTRM_H
 #define TAO_BE_OUTSTRM_H
@@ -81,17 +76,19 @@ struct TAO_ACE_CHECK
   bool do_return_;
 };
 
+/**
+ * @class TAO_OutStream
+ =TITLE
+ * TAO_OutStream
+ * =DESCRIPTION
+ * Defines an interface by which the backend code generator can
+ * print its output to the underlying I/O handle. This is a
+ * helper class that will be used by the TAO_CodeGen
+ * class. However, this is an abstract class and classes that
+ * understand specific front ends must derive from this class.
+ */
 class TAO_OutStream
 {
-  // =TITLE
-  //   TAO_OutStream
-  //
-  // =DESCRIPTION
-  //    Defines an interface by which the backend code generator can
-  //    print its output to the underlying I/O handle. This is a
-  //    helper class that will be used by the TAO_CodeGen
-  //    class. However, this is an abstract class and classes that
-  //    understand specific front ends must derive from this class.
 public:
 
   // Enumerated type to indicate the stream type
@@ -116,52 +113,52 @@ public:
       CIAO_EXEC_IDL
     };
 
+  /// constructor.
   TAO_OutStream (void);
-  // constructor.
 
+  /// destructor.
   virtual ~TAO_OutStream (void);
-  // destructor.
 
+  /// open the underlying low-level handle for output.
   int open (const char *fname,
             TAO_OutStream::STREAM_TYPE st = TAO_OutStream::TAO_CLI_HDR);
-  // open the underlying low-level handle for output.
 
+  /// set the stream type
   void stream_type (TAO_OutStream::STREAM_TYPE);
-  // set the stream type
 
+  /// return the stream type
   TAO_OutStream::STREAM_TYPE stream_type (void);
-  // return the stream type
 
+  /// Return the underlying lowlevel file pointer.
   FILE *&file (void);
-  // Return the underlying lowlevel file pointer.
 
+  /// increment the indentation level and by default actually indent the output
+  /// accordingly
   int incr_indent (unsigned short flag = 1);
-  // increment the indentation level and by default actually indent the output
-  // accordingly
 
+  /// decrease the indentation level and by default actually indent the output
+  /// accordingly
   int decr_indent (unsigned short flag = 1);
-  // decrease the indentation level and by default actually indent the output
-  // accordingly
 
+  /// reset indentation level to 0
   int reset (void);
-  // reset indentation level to 0
 
+  /// indent starting next line
   int indent (void);
-  // indent starting next line
 
+  /// put a newline and indent on the next line
   int nl (void);
-  // put a newline and indent on the next line
 
+  /// "printf" style variable argument print
   int print (const char *format, ...);
-  // "printf" style variable argument print
 
+  /// generate a #if !defined, #defined macro
   int gen_ifdef_macro (const char *flat_name,
                        const char *suffix = 0,
                        bool add_stream_type_suffix = true);
-  // generate a #if !defined, #defined macro
 
+  /// generate an endif statement
   int gen_endif (void);
-  // generate an endif statement
 
   // =overloaded operators
 
@@ -181,14 +178,14 @@ public:
 
   // The following will be provided by specialized classes
 
+  /// output an Identifier node
   TAO_OutStream &operator<< (Identifier *id);
-  // output an Identifier node
 
+  /// output a scoped name
   TAO_OutStream &operator<< (UTL_IdList *idl);
-  // output a scoped name
 
+  /// output an AST_Expression node
   TAO_OutStream &operator<< (AST_Expression *expr);
-  // output an AST_Expression node
 
   TAO_OutStream &print (Identifier *id);
 
@@ -197,14 +194,14 @@ public:
   TAO_OutStream &print (AST_Expression *idl);
 
 protected:
+  /// the underlying low-level I/O handle
   FILE *fp_;
-  // the underlying low-level I/O handle
 
+  /// stream type
   TAO_OutStream::STREAM_TYPE st_;
-  // stream type
 
+  /// indentation level
   int indent_level_;
-  // indentation level
 };
 
 #endif // if !defined

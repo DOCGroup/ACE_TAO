@@ -1,23 +1,18 @@
-//
-// $Id$
-//
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    connector_dds_exs.h
-//
-// = DESCRIPTION
-//    Concrete visitor for the DDS Connector node.
-//    This provides for code generation in the exec impl source.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    connector_dds_exs.h
+ *
+ *  $Id$
+ *
+ *  Concrete visitor for the DDS Connector node.
+ *  This provides for code generation in the exec impl source.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef _BE_CONNECTOR_CONNECTOR_DDS_EXS_H_
 #define _BE_CONNECTOR_CONNECTOR_DDS_EXS_H_

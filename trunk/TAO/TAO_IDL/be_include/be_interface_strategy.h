@@ -1,22 +1,19 @@
 /* -*- c++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_interface_strategy.h
-//
-// = DESCRIPTION
-//    Strategy to cover differences between operations, e.g.
-//    the sendc_ and raise_ operations in the AMI spec.
-//
-// = AUTHOR
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_interface_strategy.h
+ *
+ *  $Id$
+ *
+ *  Strategy to cover differences between operations, e.g.
+ *  the sendc_ and raise_ operations in the AMI spec.
+ *
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 #ifndef TAO_BE_INTERFACE_STRATEGY_H
 #define TAO_BE_INTERFACE_STRATEGY_H
@@ -43,129 +40,133 @@ public:
 
   virtual ~be_interface_strategy (void);
 
+  /// return the local name
   virtual const char *local_name (void) = 0;
-  // return the local name
 
+  /// return the stringified full name
   virtual const char *full_name (void) = 0;
-  // return the stringified full name
 
+  /// return the flattened full scoped name.
   virtual const char *flat_name (void) = 0;
-  // return the flattened full scoped name.
 
+  /// retrieve the repository ID.
   virtual const char *repoID (void) = 0;
-  // retrieve the repository ID.
 
+  /// retrieve the fully scoped skel class name.
   virtual const char *full_skel_name (void) = 0;
-  // retrieve the fully scoped skel class name.
 
+  /// retrieve the fully qualified collocated class name
   virtual const char *full_coll_name (int) = 0;
-  // retrieve the fully qualified collocated class name
 
+  /// retrieve the fully qualified collocated class name.
   virtual const char *local_coll_name (int) = 0;
-  // retrieve the fully qualified collocated class name.
 
+  /// retrieve the name of the base proxy implementation.
   virtual const char *base_proxy_impl_name (void) = 0;
-  // retrieve the name of the base proxy implementation.
 
+  /// retrieve the fully qualified name of the base proxy
+  /// implementation.
   virtual const char *full_base_proxy_impl_name (void) = 0;
-  // retrieve the fully qualified name of the base proxy
-  // implementation.
 
+  /// retrieve the name of the remote  proxy implementation.
   virtual const char *remote_proxy_impl_name (void) = 0;
-  // retrieve the name of the remote  proxy implementation.
 
+  /// retrieve the fully qualified name of the remote
+  /// proxy implementation.
   virtual const char *full_remote_proxy_impl_name (void) = 0;
-  // retrieve the fully qualified name of the remote
-  // proxy implementation.
 
+  /// retrieve the name of the Directx  proxy implementation.
   virtual const char *direct_proxy_impl_name (void) =0;
-  // retrieve the name of the Directx  proxy implementation.
 
+  /// retrieve the fully qualified name of the Directx  proxy
+  /// implementation.
   virtual const char *full_direct_proxy_impl_name (void) =0;
-  // retrieve the fully qualified name of the Directx  proxy
-  // implementation.
 
+  /// retrieve the name of the base proxy broker.
   virtual const char *base_proxy_broker_name (void) = 0;
-  // retrieve the name of the base proxy broker.
 
+  /// retrieve the fully qualified name of the base proxy broker.
   virtual const char *full_base_proxy_broker_name (void) = 0;
-  // retrieve the fully qualified name of the base proxy broker.
 
+  /// retrieve the name of the remote  proxy broker implementation.
   virtual const char *remote_proxy_broker_name (void) = 0;
-  // retrieve the name of the remote  proxy broker implementation.
 
+  /// retrieve the fully qualified name of the remote  proxy broker
+  /// implementation.
   virtual const char *full_remote_proxy_broker_name (void) = 0;
-  // retrieve the fully qualified name of the remote  proxy broker
-  // implementation.
 
+  /// retrieve the name of the strategized proxy broker implementation.
   virtual const char *strategized_proxy_broker_name (void) = 0;
-  // retrieve the name of the strategized proxy broker implementation.
 
+  /// retrieve the fully qualified name of the strategized proxy broker
+  /// implementation.
   virtual const char *full_strategized_proxy_broker_name (void) = 0;
-  // retrieve the fully qualified name of the strategized proxy broker
-  // implementation.
 
+  /// Return the scope that encloses the client related
+  /// interface.
   virtual const char *client_scope (void) = 0;
-  // Return the scope that encloses the client related
-  // interface.
 
+  /// Return the "flat" version of the scope
+  ///that encloses the interface.
   virtual const char *flat_client_scope (void) = 0;
-  // Return the "flat" version of the scope
-  //that encloses the interface.
 
+  /// Return the scope that encloses the server related
+  /// interface.
   virtual const char *server_scope (void) = 0;
-  // Return the scope that encloses the server related
-  // interface.
 
+  /// Return the "flat" version of the scope
+  ///that encloses the interface.
   virtual const char *flat_server_scope (void) = 0;
-  // Return the "flat" version of the scope
-  //that encloses the interface.
 
+  /// relative skeleton name
   const char *relative_skel_name (const char *skel_name);
-  // relative skeleton name
 
   const char* relative_name (const char *localname,
                              const char *othername);
 
+  /// compute the names using the local prefix and suffix
   void compute_names (const char* name,
                      const char* prefix,
                      const char* suffix,
                      char *&new_name);
-  // compute the names using the local prefix and suffix
 
+  /// compute the collocation names
   void compute_coll_names (int type,
                            const char *prefix,
                            const char *suffix);
-  // compute the collocation names
 
+  /**
+   * return the out stream depending on the strategy
+   * @@ Michael: Right now every strategy behaves
+   * the same way, but it might be in the future that we
+   * have to differentiate.
+   */
   virtual TAO_OutStream *get_out_stream (void);
-  // return the out stream depending on the strategy
-  // @@ Michael: Right now every strategy behaves
-  // the same way, but it might be in the future that we
-  // have to differentiate.
 
+  /**
+   * return the file name of the output stream.
+   * @@ Michael: Right now every strategy behaves the
+   * same way.
+   */
   virtual const char *get_out_stream_fname (void);
-  // return the file name of the output stream.
-  // @@ Michael: Right now every strategy behaves the
-  // same way.
 
+  /// Return the type of the strategy.
   int strategy_type (void);
-  // Return the type of the strategy.
 
+  /// Change the sate if necessary
   virtual TAO_CodeGen::CG_STATE next_state (
       TAO_CodeGen::CG_STATE current_state,
       int is_extra_state = 0);
-  // Change the sate if necessary
 
   virtual int has_extra_code_generation (
       TAO_CodeGen::CG_STATE current_state);
 
+  /// Returns the node, which is used instead of the original node,
+  /// e.g. the reply handler to the actual node.
   virtual be_interface *replacement (void);
-  // Returns the node, which is used instead of the original node,
-  // e.g. the reply handler to the actual node.
   
+  /// Cleanup.
   virtual void destroy (void);
-  // Cleanup.
 
 protected:
   char *local_name_;
@@ -184,14 +185,14 @@ protected:
 
   char *relative_skel_name_;
 
+  /// The node we strategize
   be_interface *node_;
-  // The node we strategize
 
+  /// Current cached collocated name.
   int cached_type_;
-  // Current cached collocated name.
 
+  /// The type of strategy
   Strategy_Kind strategy_type_;
-  // The type of strategy
 };
 
 class be_interface_default_strategy
@@ -204,98 +205,100 @@ public:
 
   virtual ~be_interface_default_strategy (void);
 
+  /// return the local name
   const char * local_name (void);
-  // return the local name
 
+  /// return the stringified full name
   virtual const char *full_name (void);
-  // return the stringified full name
 
+  /// return the flattened full scoped name.
   virtual const char *flat_name (void);
-  // return the flattened full scoped name.
 
+  /// retrieve the repository ID.
   virtual const char *repoID (void);
-  // retrieve the repository ID.
 
+  /// retrieve the fully scoped skel class name.
   virtual const char *full_skel_name (void);
-  // retrieve the fully scoped skel class name.
 
+  /// retrieve the fully qualified collocated class name
   virtual const char *full_coll_name (int);
-  // retrieve the fully qualified collocated class name
 
+  /// retrieve the fully qualified collocated class name.
   virtual const char *local_coll_name (int);
-  // retrieve the fully qualified collocated class name.
 
+  /// retrieve the name of the base proxy implementation.
   virtual const char *base_proxy_impl_name (void);
-  // retrieve the name of the base proxy implementation.
 
+  /// retrieve the fully qualified name of the base proxy
+  /// implementation.
   virtual const char *full_base_proxy_impl_name (void);
-  // retrieve the fully qualified name of the base proxy
-  // implementation.
 
+  /// retrieve the name of the remote  proxy implementation.
   virtual const char *remote_proxy_impl_name (void);
-  // retrieve the name of the remote  proxy implementation.
 
+  /// retrieve the fully qualified name of the remote
+  /// proxy implementation.
   virtual const char *full_remote_proxy_impl_name (void);
-  // retrieve the fully qualified name of the remote
-  // proxy implementation.
 
+  /// retrieve the name of the Directx  proxy implementation.
   virtual const char *direct_proxy_impl_name (void);
-  // retrieve the name of the Directx  proxy implementation.
 
+  /// retrieve the fully qualified name of the Directx  proxy
+  /// implementation.
   virtual const char *full_direct_proxy_impl_name (void);
-  // retrieve the fully qualified name of the Directx  proxy
-  // implementation.
 
+  /// retrieve the name of the base proxy broker.
   virtual const char *base_proxy_broker_name (void);
-  // retrieve the name of the base proxy broker.
 
+  /// retrieve the fully qualified name of the base proxy broker.
   virtual const char *full_base_proxy_broker_name (void);
-  // retrieve the fully qualified name of the base proxy broker.
 
+  /// retrieve the name of the remote  proxy broker implementation.
   virtual const char *remote_proxy_broker_name (void);
-  // retrieve the name of the remote  proxy broker implementation.
 
+  /// retrieve the fully qualified name of the remote  proxy broker
+  /// implementation.
   virtual const char *full_remote_proxy_broker_name (void);
-  // retrieve the fully qualified name of the remote  proxy broker
-  // implementation.
 
+  /// retrieve the name of the strategized proxy broker implementation.
   virtual const char *strategized_proxy_broker_name (void);
-  // retrieve the name of the strategized proxy broker implementation.
 
+  /// retrieve the fully qualified name of the strategized proxy broker
+  /// implementation.
   virtual const char *full_strategized_proxy_broker_name (void);
-  // retrieve the fully qualified name of the strategized proxy broker
-  // implementation.
 
+  /// Return the scope that encloses the client related
+  /// interface.
   virtual const char *client_scope (void);
-  // Return the scope that encloses the client related
-  // interface.
 
+  /// Return the "flat" version of the scope
+  ///that encloses the interface.
   virtual const char *flat_client_scope (void);
-  // Return the "flat" version of the scope
-  //that encloses the interface.
 
+  /// Return the scope that encloses the server related
+  /// interface.
   virtual const char *server_scope (void);
-  // Return the scope that encloses the server related
-  // interface.
 
+  /// Return the "flat" version of the scope
+  ///that encloses the interface.
   virtual const char *flat_server_scope (void);
-  // Return the "flat" version of the scope
-  //that encloses the interface.
   
+  /// Cleanup.
   virtual void destroy (void);
-  // Cleanup.
 
   // end of overridden methods
 
 protected:
 
+  /**
+   * create a new string made by the concatenation
+   * of "str" and "suffix" and using the
+   * "separator" to concatenate the two.
+   */
   char *create_with_prefix_suffix (const char *prefix,
                                    const char *str,
                                    const char *suffix,
                                    const char *separator = "");
-  // create a new string made by the concatenation
-  // of "str" and "suffix" and using the
-  // "separator" to concatenate the two.
 
 protected:
 

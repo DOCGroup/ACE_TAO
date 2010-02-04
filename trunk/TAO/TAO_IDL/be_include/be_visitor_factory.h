@@ -1,21 +1,18 @@
-// $Id$
 
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL Backend
-//
-// = FILENAME
-//    be_visitor_factory.h
-//
-// = DESCRIPTION
-//    Define a visitor Factory which is a singleton.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_factory.h
+ *
+ *  $Id$
+ *
+ *  Define a visitor Factory which is a singleton.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef TAO_BE_VISITOR_FACTORY_H
 #define TAO_BE_VISITOR_FACTORY_H
@@ -26,13 +23,15 @@
 class be_visitor;
 class be_visitor_context;
 
+/**
+ * @class TAO_Visitor_Factory
+ =TITLE
+ * TAO_Visitor_Factory
+ * =DESCRIPTION
+ * Visitor factory class
+ */
 class TAO_Visitor_Factory
 {
-  // =TITLE
-  //   TAO_Visitor_Factory
-  //
-  // =DESCRIPTION
-  //   Visitor factory class
 
 public:
 
@@ -40,8 +39,8 @@ public:
 
   ~TAO_Visitor_Factory (void);
 
+  /// Make a visitor.
   be_visitor *make_visitor (be_visitor_context *);
-  // Make a visitor.
 };
 
 // Singleton instance of the BE Visitor Factory.

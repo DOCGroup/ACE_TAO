@@ -1,38 +1,33 @@
-//
-// $Id$
-//
 
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    be_visitor_xplicit_pre_proc.h
-//
-// = DESCRIPTION
-//    This visitor creates the explicit home interface
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_xplicit_pre_proc.h
+ *
+ *  $Id$
+ *
+ *  This visitor creates the explicit home interface
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef TAO_BE_VISITOR_XPLICIT_PRE_PROC_H
 #define TAO_BE_VISITOR_XPLICIT_PRE_PROC_H
 
 #include "be_visitor_ccm_pre_proc.h"
 
+/**
+ * @class be_visitor_xplicit_pre_proc
+ *
+ * @brief be_visitor_xplicit_pre_proc
+ *
+ * Adds home explicit implied IDL code to the AST.
+ */
 class be_visitor_xplicit_pre_proc : public be_visitor_ccm_pre_proc
 {
-  //
-  // = TITLE
-  //   be_visitor_xplicit_pre_proc
-  //
-  // = DESCRIPTION
-  //   Adds home explicit implied IDL code to the AST.
-  //
 public:
   be_visitor_xplicit_pre_proc (be_visitor_context *ctx);
 

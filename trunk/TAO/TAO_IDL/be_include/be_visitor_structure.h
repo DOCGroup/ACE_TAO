@@ -1,23 +1,18 @@
 /* -*- c++ -*- */
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_structure.h
-//
-// = DESCRIPTION
-//    Concrete visitor for the Structure class
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_structure.h
+ *
+ *  $Id$
+ *
+ *  Concrete visitor for the Structure class
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef TAO_BE_VISITOR_STRUCTURE_H
 #define TAO_BE_VISITOR_STRUCTURE_H

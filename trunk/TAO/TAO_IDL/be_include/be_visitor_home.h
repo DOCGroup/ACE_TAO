@@ -1,23 +1,18 @@
 /* -*- c++ -*- */
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL_BE
-//
-// = FILENAME
-//    be_visitor_home.h
-//
-// = DESCRIPTION
-//    Concrete visitor for the Home class
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_home.h
+ *
+ *  $Id$
+ *
+ *  Concrete visitor for the Home class
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef TAO_BE_VISITOR_HOME_H
 #define TAO_BE_VISITOR_HOME_H

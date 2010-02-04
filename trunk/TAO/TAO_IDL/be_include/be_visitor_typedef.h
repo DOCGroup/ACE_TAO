@@ -1,23 +1,18 @@
 /* -*- c++ -*- */
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_typedef.h
-//
-// = DESCRIPTION
-//    Concrete visitor for the Typedef class
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_visitor_typedef.h
+ *
+ *  $Id$
+ *
+ *  Concrete visitor for the Typedef class
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef TAO_BE_VISITOR_TYPEDEF_H
 #define TAO_BE_VISITOR_TYPEDEF_H

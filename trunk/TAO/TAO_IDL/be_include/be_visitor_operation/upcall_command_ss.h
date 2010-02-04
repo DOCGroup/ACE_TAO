@@ -1,23 +1,19 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    upcall_command_ss.cpp
-//
-// = DESCRIPTION
-//    Visitor that generates operation-specific TAO::Upcall_Command
-//    objects in skeletons.
-//
-// = AUTHOR
-//    Ossama Othman
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    upcall_command_ss.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor that generates operation-specific TAO::Upcall_Command
+ *  objects in skeletons.
+ *
+ *
+ *  @author Ossama Othman
+ */
+//=============================================================================
+
 
 #ifndef _BE_VISITOR_OPERATION_UPCALL_COMMAND_SS_H_
 #define _BE_VISITOR_OPERATION_UPCALL_COMMAND_SS_H_

@@ -1,45 +1,40 @@
-//
-// $Id$
-//
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    cdr_op_cs.h
-//
-// = DESCRIPTION
-//    Concrete visitor for the base "BE_Field" node
-//    This generates code for structure members in the client header.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    cdr_op_cs.h
+ *
+ *  $Id$
+ *
+ *  Concrete visitor for the base "BE_Field" node
+ *  This generates code for structure members in the client header.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef _BE_VISITOR_FIELD_CDR_OP_CS_H_
 #define _BE_VISITOR_FIELD_CDR_OP_CS_H_
 
+/**
+ * @class be_visitor_field_cdr_op_cs
+ *
+ * @brief be_visitor_field_cdr_op_cs
+ *
+ * This is a concrete visitor for the be_field node for the client header.
+ */
 class be_visitor_field_cdr_op_cs : public be_visitor_decl
 {
-  //
-  // = TITLE
-  //    be_visitor_field_cdr_op_cs
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor for the be_field node for the client header.
-  //
 public:
+  /// constructor
   be_visitor_field_cdr_op_cs (be_visitor_context *ctx);
-  // constructor
 
+  /// destructor
   ~be_visitor_field_cdr_op_cs (void);
-  // destructor
 
+  /// visit the field node
   virtual int visit_field (be_field *node);
-  // visit the field node
 
   // =visit operations on all possible data types that a field can be
 
@@ -65,32 +60,32 @@ public:
   int emit_valuetype_common (void);
 };
 
+/**
+ * @class be_visitor_cdr_op_field_decl
+ *
+ * @brief be_visitor_cdr_op_ci_field_decl
+ *
+ * When generating CDR operators for fields of structures and/or
+ * unions it may be necessary to define some local variables (for
+ * instance to hold temporary T_forany objects); this visitor
+ * generates that code.
+ */
 class be_visitor_cdr_op_field_decl : public be_visitor_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_cdr_op_ci_field_decl
-  //
-  // = DESCRIPTION
-  //   When generating CDR operators for fields of structures and/or
-  //   unions it may be necessary to define some local variables (for
-  //   instance to hold temporary T_forany objects); this visitor
-  //   generates that code.
-  //
 public:
+  /// constructor
   be_visitor_cdr_op_field_decl (be_visitor_context *ctx);
-  // constructor
 
+  /// visit the field node
   virtual int visit_field (be_field *node);
-  // visit the field node
 
   // = visit operations for data types that require a local variable.
 
+  /// visit array type
   virtual int visit_array (be_array *node);
-  // visit array type
 
+  /// visit typedef type
   virtual int visit_typedef (be_typedef *node);
-  // visit typedef type
 };
 
 #endif /*  _BE_VISITOR_FIELD_CDR_OP_CS_H_ */
