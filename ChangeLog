@@ -1,3 +1,25 @@
+Thu Feb  4 15:32:24 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/Dev_Poll_Reactor.h: Two performance improvements to resolve
+          Bugzilla #3714:
+            1. The notify handler is no longer suspended/resumed around
+               notify processing. This removes the biggest source of CPU
+               consumption introduced at ACE 5.7 - simply acquiring/releasing
+               the token to handle notifies, each of which triggered another
+               token acquire/notify cycle.
+            2. As I/O handlers are suspended before callback, they are not
+               immediately resumed on callback return. Instead, they are added
+               to a "to be resumed" list that is examined just prior to the
+               next epoll_wait() call; any to-be-resumed handles are added
+               back to the epoll set just before waiting. This removes another
+               need to acquire the token just to resume a handler.
+
+Tue Jan 26 17:02:51 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dev_Poll_Reactor.cpp (unbind_all): When shutting down, call
+          handle_close() on all registered handlers. Fixes Bugzilla 2750.
+
 Thu Dec 31 20:54:51 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * ace/High_Res_Timer.cpp (get_cpuinfo): Don't use a CPU MHz value 0.
