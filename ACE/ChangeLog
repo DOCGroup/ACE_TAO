@@ -1,3 +1,9 @@
+Thu Feb  4 10:53:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/Process_Unix.pm:
+        
+          Fixed problems concerning correct retrievel of process list.
+
 Thu Feb  3 09:57:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Atomic_Op.inl:
