@@ -28,41 +28,34 @@ ComponentAttributesSetter::SetComponentAttributes (ACE_CString /*componentName*/
 
   for (CORBA::ULong i = 0; i < prop.length(); i++)
     {
-      ACE_CString name = prop[i].name.in();
+      ACE_CString const name = prop[i].name.in();
 
       // Ignore configuration properties, since attributes can't have . in them, this seems like a good method.
       if (name.find (".") != ACE_CString::npos)
         {
           continue;
         }
+
       DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                     ACE_TEXT("ComponentAttributesSetter::SetComponentAttributes - ")
-                    ACE_TEXT("Populating attribute name %C\n"), name.c_str()));
+                    ACE_TEXT("Populating attribute name <%C>\n"), name.c_str()));
       ACE_CString method = "_set_";
       method += prop[i].name.in();
 
-      ::CORBA::Request_var req;
-
       try
         {
-          req = obj->_request (method.c_str ());
+          ::CORBA::Request_var req = obj->_request (method.c_str ());
           req->add_in_arg ("x") = prop[i].value;
-
           req->invoke();
-        }
-      catch (const CORBA::BAD_OPERATION &)
-        {
-          DANCE_ERROR (1, (LM_WARNING, DLINFO
-                        ACE_TEXT("ComponentAttributesSetter::SetComponentAttributes - ")
-                        ACE_TEXT("ERROR: BAD_OPERATION while trying to set attribute %C\n"),
-                        name.c_str ()));
         }
       catch (const CORBA::Exception &e)
         {
-          CORBA::release (req);
-          e._tao_print_exception ("ComponentAttributesSetter.cpp::SetComponentAttributes ");
+          DANCE_ERROR (1, (LM_ERROR, DLINFO
+                        ACE_TEXT("ComponentAttributesSetter::SetComponentAttributes - ")
+                        ACE_TEXT("ERROR: Exception while trying to set attribute <%C>\n"),
+                        name.c_str ()));
+          e._tao_print_exception ("ComponentAttributesSetter.cpp::SetComponentAttributes - ");
           throw ::Deployment::StartError();
         }
-      //Question - How exceptions will be processed, rised by invoked method
     }
 }
