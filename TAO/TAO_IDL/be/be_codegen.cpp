@@ -25,10 +25,6 @@
 #include "idl_defines.h"
 #include "ace/OS_NS_ctype.h"
 
-ACE_RCSID (be,
-           be_codegen,
-           "$Id$")
-
 TAO_CodeGen * tao_cg = 0;
 
 TAO_CodeGen::TAO_CodeGen (void)

@@ -6,7 +6,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO IDL
+//    TAO_IDL_BE
 //
 // = FILENAME
 //    be_visitor_ccm_pre_proc.h
@@ -59,12 +59,12 @@ public:
   virtual int visit_eventtype (be_eventtype *node);
   virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
   
-private:
+protected:
   // Utility methods to handle the corresponding IDL declarations.
-  int gen_factories (be_home *node,
-                     AST_Interface *xplicit);
-  int gen_finders (be_home *node,
-                   AST_Interface *xplicit);
+//  int gen_factories (be_home *node,
+//                     AST_Interface *xplicit);
+//  int gen_finders (be_home *node,
+//                   AST_Interface *xplicit);
   int gen_implicit_ops (be_home *node,
                         AST_Interface *implicit);
 
@@ -114,7 +114,7 @@ private:
                                       AST_Decl *parent);
   UTL_NameList *compute_inheritance (be_home *node);
   
-private:
+protected:
   // These are created for operations implied by 'uses multiple' declarations.
   Identifier module_id_;
   be_valuetype *cookie_;

@@ -18,10 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_union,
-           discriminant_cs,
-           "$Id$")
-
 // *************************************************************************
 // Visitor for discriminant in client stubs.
 // *************************************************************************
@@ -41,7 +37,7 @@ int
 be_visitor_union_discriminant_cs::visit_enum (be_enum *node)
 {
   be_union *bu =
-    this->ctx_->be_node_as_union ();  // get the enclosing union backend
+    be_union::narrow_from_decl (this->ctx_->node ());
   be_type *bt = 0;
 
   if (this->ctx_->alias ())

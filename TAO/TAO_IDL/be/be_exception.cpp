@@ -25,10 +25,6 @@
 
 #include "global_extern.h"
 
-ACE_RCSID (be,
-           be_exception,
-           "$Id$")
-
 be_exception::be_exception (void)
   : COMMON_Base (),
     AST_Decl (),

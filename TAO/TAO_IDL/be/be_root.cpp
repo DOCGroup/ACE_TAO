@@ -25,10 +25,6 @@
 #include "ast_string.h"
 #include "ast_array.h"
 
-ACE_RCSID (be, 
-           be_root, 
-           "$Id$")
-
 // Default Constructor.
 be_root::be_root (void)
   : COMMON_Base (),

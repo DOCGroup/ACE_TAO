@@ -27,6 +27,3 @@
 
 #include "be_visitor_structure_fwd/structure_fwd_ch.cpp"
 
-ACE_RCSID (be, 
-           be_visitor_structure_fwd, 
-           "$Id$")

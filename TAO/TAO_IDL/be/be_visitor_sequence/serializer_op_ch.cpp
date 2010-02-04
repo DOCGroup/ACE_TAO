@@ -19,10 +19,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_sequence, 
-           serializer_op_ch, 
-           "$Id$")
-
 // ***************************************************************************
 // Sequence visitor for generating Serializer operator declarations in the client header
 // ***************************************************************************

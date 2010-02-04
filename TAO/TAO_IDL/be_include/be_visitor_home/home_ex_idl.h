@@ -40,10 +40,10 @@ public:
 
   virtual int visit_home (be_home *node);
   
-  /// To regenerate attribute & operation declarations.
   virtual int visit_attribute (be_attribute *node);
   virtual int visit_operation (be_operation *node);
   virtual int visit_argument (be_argument *node);
+  virtual int visit_factory (be_factory *node);
   
   /// To regenerate the name of an anonymous type.
   /// Anonymous arrays are not allowed.
@@ -64,10 +64,6 @@ private:
                            const char *prefix = "",
                            bool init_op = false);
                            
-  void gen_factories (void);
-  void gen_finders (void);
-  void gen_init_ops (AST_Home::INIT_LIST & list);
-                     
   void gen_home_executor (void);
   
   /// The CCM preproc visitor changed the scoped name and the

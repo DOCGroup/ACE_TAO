@@ -19,10 +19,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_module, 
-           any_op, 
-           "$Id$")
-
 // ***************************************************************************
 // Module visitor for generating Any operator declarations in the client header
 // and stub

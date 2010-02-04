@@ -22,10 +22,6 @@
 #include "be_visitor.h"
 #include "global_extern.h"
 
-ACE_RCSID (be,
-           be_valuebox,
-           "be_valuebox.cpp Exp")
-
 // Default constructor.
 be_valuebox::be_valuebox (void)
   : COMMON_Base (),

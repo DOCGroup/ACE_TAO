@@ -19,11 +19,6 @@
 #include "be_native.h"
 #include "be_visitor.h"
 
-ACE_RCSID (be,
-           be_native,
-           "$Id$")
-
-
 be_native::be_native (void)
   : COMMON_Base (),
     AST_Decl (),

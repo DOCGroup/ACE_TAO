@@ -20,10 +20,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_operation, 
-           argument_invoke, 
-           "$Id$")
-
 // ************************************************************
 // operation visitor to handle the passing of arguments to the CDR operators
 // ************************************************************

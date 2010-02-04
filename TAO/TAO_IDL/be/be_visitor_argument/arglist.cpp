@@ -18,11 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_argument,
-           arglist,
-           "$Id$")
-
-
 // ************************************************************
 // be_visitor_args_arglist for parameter list in method declarations and
 // definitions

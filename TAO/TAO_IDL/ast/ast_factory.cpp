@@ -64,7 +64,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-// AST_Factory nodes denote OBV factory construct declarations
+// AST_Factory nodes denote OBV or component home factory
+// construct declarations.
 // AST_Factory is a subclass of AST_Decl (it is not a type!)
 // and of UTL_Scope (the arguments are managed in a scope).
 
@@ -90,8 +91,8 @@ AST_Factory::AST_Factory (void)
 }
 
 AST_Factory::AST_Factory (UTL_ScopedName *n)
-  : COMMON_Base (1,
-                 0), //@@ Always local, never abstract
+  : COMMON_Base (true,
+                 false), //@@ Always local, never abstract
     AST_Decl (AST_Decl::NT_factory,
               n),
     UTL_Scope (AST_Decl::NT_factory),
@@ -323,7 +324,7 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
   return t;
 }
 
-// Dump this AST_Factory node (an OBV factory construct) to the ostream o.
+// Dump this AST_Factory node to the ostream o.
 void
 AST_Factory::dump (ACE_OSTREAM_TYPE &o)
 {
@@ -335,7 +336,7 @@ AST_Factory::dump (ACE_OSTREAM_TYPE &o)
 
   // Iterator must be explicitly advanced inside the loop.
   for (UTL_ScopeActiveIterator i (this, IK_decls);
-       !i.is_done();)
+       !i.is_done ();)
     {
       d = i.item ();
       d->dump (o);
@@ -348,7 +349,6 @@ AST_Factory::dump (ACE_OSTREAM_TYPE &o)
     }
 
   this->dump_i (o, ")");
-
 }
 
 int
@@ -357,7 +357,6 @@ AST_Factory::ast_accept (ast_visitor *visitor)
   return visitor->visit_factory (this);
 }
 
-// Data accessors
-
 IMPL_NARROW_FROM_DECL(AST_Factory)
 IMPL_NARROW_FROM_SCOPE(AST_Factory)
+

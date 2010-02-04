@@ -10,10 +10,6 @@
  */
 //=============================================================================
 
-ACE_RCSID (be_visitor_operation,
-           amh_rh_ss,
-           "$Id$")
-
 be_visitor_amh_rh_operation_ss::be_visitor_amh_rh_operation_ss (
     be_visitor_context *ctx
   )

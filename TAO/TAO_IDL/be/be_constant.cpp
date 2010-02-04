@@ -24,10 +24,6 @@
 #include "utl_scope.h"
 #include "nr_extern.h"
 
-ACE_RCSID (be,
-           be_constant,
-           "$Id$")
-
 be_constant::be_constant (void)
   : COMMON_Base (),
     AST_Decl (),

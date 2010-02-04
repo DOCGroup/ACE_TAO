@@ -34,6 +34,3 @@
 #include "be_visitor_interface_fwd/cdr_op_ch.cpp"
 #include "be_visitor_interface_fwd/any_op_ch.cpp"
 
-ACE_RCSID (be, 
-           be_visitor_interface_fwd, 
-           "$Id$")

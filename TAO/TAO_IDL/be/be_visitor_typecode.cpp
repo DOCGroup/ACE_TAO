@@ -56,7 +56,3 @@
 #include "be_visitor_typecode/union_typecode.cpp"
 #include "be_visitor_typecode/value_typecode.cpp"
 
-
-ACE_RCSID (be,
-           be_visitor_typecode,
-           "$Id$")

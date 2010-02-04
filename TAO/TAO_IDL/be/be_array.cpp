@@ -30,10 +30,6 @@
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (be,
-           be_array,
-           "$Id$")
-
 be_array::be_array (void)
   : COMMON_Base (),
     AST_Decl (),

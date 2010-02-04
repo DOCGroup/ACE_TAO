@@ -98,6 +98,7 @@ public:
   virtual int visit_structure (AST_Structure *node);
   virtual int visit_field (AST_Field *node);
   virtual int visit_factory (AST_Factory *node);
+  virtual int visit_finder (AST_Finder *node);
   
 private:
   // If arg is a param holder, return the matching template arg,
@@ -119,6 +120,10 @@ private:
   // Flag to branch in visit_valuetype() where we create an
   // eventtype or a valuetype.
   bool for_eventtype_;
+  
+  // Flag to branch in visit_factory() where we create a
+  // finder or a factory.
+  bool for_finder_;
   
   // Flag to short_circuit reifying if we are the base class of
   // ast_visitor_tmpl_module_ref.

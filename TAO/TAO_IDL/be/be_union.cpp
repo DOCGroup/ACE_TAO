@@ -33,11 +33,6 @@
 #include "idl_defines.h"
 #include "global_extern.h"
 
-ACE_RCSID (be,
-           be_union,
-           "$Id$")
-
-
 be_union::be_union (void)
   : COMMON_Base (),
     AST_Decl (),

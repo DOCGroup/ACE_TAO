@@ -19,10 +19,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_argument, 
-           post_upcall_ss, 
-           "$Id$")
-
 // ************************************************************************
 //  visitor for doing any post-processing after the upcall is made
 // ************************************************************************
@@ -78,7 +74,8 @@ int be_visitor_args_post_upcall_ss::visit_argument (be_argument *node)
 int be_visitor_args_post_upcall_ss::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
+  be_argument *arg =
+    be_argument::narrow_from_decl (this->ctx_->node ());
 
   // if the current type is an alias, use that
   be_type *bt = node;

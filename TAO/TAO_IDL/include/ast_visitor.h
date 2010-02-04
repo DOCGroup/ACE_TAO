@@ -50,6 +50,7 @@ class AST_EventType;
 class AST_EventTypeFwd;
 class AST_Home;
 class AST_Factory;
+class AST_Finder;
 class AST_Structure;
 class AST_StructureFwd;
 class AST_Exception;
@@ -118,6 +119,7 @@ public:
   virtual int visit_eventtype (AST_EventType *node) = 0;
   virtual int visit_eventtype_fwd (AST_EventTypeFwd *node) = 0;
   virtual int visit_factory (AST_Factory *node) = 0;
+  virtual int visit_finder (AST_Finder *node) = 0;
   virtual int visit_structure (AST_Structure *node) = 0;
   virtual int visit_structure_fwd (AST_StructureFwd *node) = 0;
   virtual int visit_exception (AST_Exception *node) = 0;

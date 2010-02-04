@@ -112,6 +112,48 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
 }
 
 int
+be_visitor_operation_arglist::visit_factory (be_factory *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  bool has_args = node->argument_count () > 0;
+
+  *os << " (";
+  
+  if (has_args)
+    {
+      *os << be_idt_nl;
+    }
+
+  // All we do is hand over code generation to our scope.
+  if (this->visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_operation_arglist::")
+                         ACE_TEXT ("visit_factory - ")
+                         ACE_TEXT ("codegen for scope failed\n")),
+                        -1);
+    }
+
+  if (!has_args)
+    {
+      *os << "void";
+    }
+
+  *os << ")";
+  
+  if (has_args)
+    {
+      *os << be_uidt;
+    }
+    
+  // At present, visit_factory() is called only from the home
+  // servant source visitor, so we don't need to check the state
+  // for semicolon generation.
+
+  return 0;
+}
+
+int
 be_visitor_operation_arglist::visit_argument (be_argument *node)
 {
   // Get the visitor that will dump the argument's mapping in the operation
@@ -122,33 +164,27 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
   // defined. We need this since argument types may very well be declared
   // inside the scope of the interface node. In such cases, we would like to
   // generate the appropriate relative scoped names.
-  be_operation *op = this->ctx_->be_scope_as_operation ();
-
-  if (!op)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_arglist::"
-                         "visit_argument - "
-                         "Bad operation\n"),
-                        -1);
-    }
+  be_operation *op =
+    be_operation::narrow_from_scope (this->ctx_->scope ());
+  be_interface *intf = 0;
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
   // information from the context
-  be_interface *intf = this->ctx_->attribute ()
-    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
-    : be_interface::narrow_from_scope (op->defined_in ());
-
-  if (!intf)
+  if (op == 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_arglist::"
-                         "visit_argument - "
-                         "Bad interface\n"),
-                        -1);
+      be_factory *f =
+        be_factory::narrow_from_scope (this->ctx_->scope ());
+        
+      intf = be_interface::narrow_from_scope (f->defined_in ());
     }
-
+  else
+    {
+      intf = this->ctx_->attribute ()
+        ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
+        : be_interface::narrow_from_scope (op->defined_in ());
+    }
+    
   // Set new scope.
   ctx.scope (intf);
 

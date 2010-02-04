@@ -20,11 +20,6 @@
 
 #include "nr_extern.h"
 
-ACE_RCSID (be_visitor_valuetype,
-           valuetype_ss,
-           "$Id$")
-
-
 // ************************************************************
 // Interface visitor for server skeletons.
 // ************************************************************

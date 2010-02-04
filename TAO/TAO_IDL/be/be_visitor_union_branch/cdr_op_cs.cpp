@@ -85,9 +85,10 @@ be_visitor_union_branch_cdr_op_cs::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
-  be_union_branch *f = this->ctx_->be_node_as_union_branch ();
+  be_union_branch *f =
+    be_union_branch::narrow_from_decl (this->ctx_->node ());
 
-  if (!f)
+  if (f == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_cs::"
@@ -184,9 +185,10 @@ be_visitor_union_branch_cdr_op_cs::visit_enum (be_enum *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the union_branch node
-  be_union_branch *f = this->ctx_->be_node_as_union_branch ();
+  be_union_branch *f =
+    be_union_branch::narrow_from_decl (this->ctx_->node ());
 
-  if (!f)
+  if (f == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_cs::"
@@ -258,9 +260,10 @@ be_visitor_union_branch_cdr_op_cs::visit_interface (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
-  be_union_branch *f = this->ctx_->be_node_as_union_branch ();
+  be_union_branch *f =
+    be_union_branch::narrow_from_decl (this->ctx_->node ());
 
-  if (!f)
+  if (f == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_cs::"
@@ -337,9 +340,10 @@ be_visitor_union_branch_cdr_op_cs::visit_interface_fwd (be_interface_fwd *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
-  be_union_branch *f = this->ctx_->be_node_as_union_branch ();
+  be_union_branch *f =
+    be_union_branch::narrow_from_decl (this->ctx_->node ());
 
-  if (!f)
+  if (f == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_cs::"
@@ -421,9 +425,10 @@ be_visitor_union_branch_cdr_op_cs::emit_valuetype_common (be_type *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
-  be_union_branch *f = this->ctx_->be_node_as_union_branch ();
+  be_union_branch *f =
+    be_union_branch::narrow_from_decl (this->ctx_->node ());
 
-  if (!f)
+  if (f == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_cs::"
@@ -478,9 +483,10 @@ be_visitor_union_branch_cdr_op_cs::visit_predefined_type (
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
-  be_union_branch *f = this->ctx_->be_node_as_union_branch ();
+  be_union_branch *f =
+    be_union_branch::narrow_from_decl (this->ctx_->node ());
 
-  if (!f)
+  if (f == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_cs::"
@@ -665,8 +671,10 @@ be_visitor_union_branch_cdr_op_cs::visit_sequence (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
-  be_union_branch *f = this->ctx_->be_node_as_union_branch ();
-  if (!f)
+  be_union_branch *f =
+    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    
+  if (f == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
@@ -733,9 +741,10 @@ be_visitor_union_branch_cdr_op_cs::visit_string (be_string *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
-  be_union_branch *f = this->ctx_->be_node_as_union_branch ();
+  be_union_branch *f =
+    be_union_branch::narrow_from_decl (this->ctx_->node ());
 
-  if (!f)
+  if (f == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
@@ -855,9 +864,10 @@ be_visitor_union_branch_cdr_op_cs::visit_structure (be_structure *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
-  be_union_branch *f = this->ctx_->be_node_as_union_branch ();
+  be_union_branch *f =
+    be_union_branch::narrow_from_decl (this->ctx_->node ());
 
-  if (!f)
+  if (f == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
@@ -951,9 +961,10 @@ be_visitor_union_branch_cdr_op_cs::visit_union (be_union *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
-  be_union_branch *f = this->ctx_->be_node_as_union_branch ();
+  be_union_branch *f =
+    be_union_branch::narrow_from_decl (this->ctx_->node ());
 
-  if (!f)
+  if (f == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"

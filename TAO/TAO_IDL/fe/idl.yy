@@ -103,6 +103,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_sequence.h"
 #include "ast_string.h"
 #include "ast_factory.h"
+#include "ast_finder.h"
 #include "ast_exception.h"
 #include "ast_param_holder.h"
 #include "ast_visitor_tmpl_module_inst.h"
@@ -1666,7 +1667,7 @@ interface_forward :
                                         AST_PredefinedType::PT_pseudo,
                                         &n
                                       );
-              (void) s->add_predefined_type (pdt);
+
               s->add_to_scope (pdt);
 
               $1->destroy ();
@@ -5869,30 +5870,17 @@ factory_decl :
            * Create a node representing a factory operation
            * and add it to the enclosing scope.
            */
-          if (s != 0)
-            {
-              AST_Home *h = AST_Home::narrow_from_scope (s);
-              
-              o =
-                idl_global->gen ()->create_operation (
-                                        h->managed_component (),
-                                        AST_Operation::OP_noflags,
-                                        &n,
-                                        false,
-                                        false
-                                      );
-                                      
-              h->factories ().enqueue_tail (o);
-            }
+          AST_Factory *f = idl_global->gen ()->create_factory (&n);
+          (void) s->fe_add_factory (f);
 
           $2->destroy ();
           delete $2;
           $2 = 0;
 
           /*
-           * Push the operation scope onto the scopes stack.
+           * Push the factory scope onto the scopes stack.
            */
-          idl_global->scopes ().push (o);
+          idl_global->scopes ().push (f);
         }
         init_parameter_list
         {
@@ -5903,24 +5891,18 @@ factory_decl :
         {
 //      opt_raises
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Operation *o = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseCompleted);
 
           /*
-           * Add exceptions and context to the operation.
+           * Add exceptions and context to the factory.
            */
-          if (s != 0 && s->scope_node_type () == AST_Decl::NT_op)
+          if ($6 != 0)
             {
-              o = AST_Operation::narrow_from_scope (s);
-
-              if ($6 != 0 && o != 0)
-                {
-                  (void) o->fe_add_exceptions ($6);
-                }
+              (void) s->fe_add_exceptions ($6);
             }
 
           /*
-           * Done with this operation. Pop its scope from the scopes stack.
+           * Done with this factory. Pop its scope from the scopes stack.
            */
           idl_global->scopes ().pop ();
         }
@@ -5934,28 +5916,18 @@ finder_decl :
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($2,
                             0);
-          AST_Operation *o = 0;
+
           idl_global->set_parse_state (IDL_GlobalData::PS_OpIDSeen);
 
           /*
-           * Create a node representing a finder operation
+           * Create a node representing a home finder
            * and add it to the enclosing scope.
            */
-          if (s != 0)
-            {
-              AST_Home *h = AST_Home::narrow_from_scope (s);
-              
-              o =
-                idl_global->gen ()->create_operation (
-                                        h->managed_component (),
-                                        AST_Operation::OP_noflags,
-                                        &n,
-                                        false,
-                                        false
-                                      );
-                                      
-              h->finders ().enqueue_tail (o);
-            }
+          AST_Finder *f =
+            idl_global->gen ()->create_finder (&n);
+          
+          (void) s->fe_add_finder (f);
+          
 
           $2->destroy ();
           delete $2;
@@ -5964,7 +5936,7 @@ finder_decl :
           /*
            * Push the operation scope onto the scopes stack.
            */
-          idl_global->scopes ().push (o);
+          idl_global->scopes ().push (f);
         }
         init_parameter_list
         {
@@ -5979,16 +5951,11 @@ finder_decl :
           idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseCompleted);
 
           /*
-           * Add exceptions and context to the operation.
+           * Add exceptions and context to the finder.
            */
-          if (s != 0 && s->scope_node_type () == AST_Decl::NT_op)
+          if ($6 != 0)
             {
-              o = AST_Operation::narrow_from_scope (s);
-
-              if ($6 != 0 && o != 0)
-                {
-                  (void) o->fe_add_exceptions ($6);
-                }
+              (void) s->fe_add_exceptions ($6);
             }
 
           /*

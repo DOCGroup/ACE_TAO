@@ -25,10 +25,6 @@
 #include "be_visitor.h"
 #include "ast_interface.h"
 
-ACE_RCSID (be, 
-           be_valuetype_fwd, 
-           "$Id$")
-
 be_valuetype_fwd::be_valuetype_fwd (void)
   : COMMON_Base (),
     AST_Decl (),

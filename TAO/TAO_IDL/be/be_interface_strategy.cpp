@@ -22,11 +22,6 @@
 #include "be_extern.h"
 #include "utl_identifier.h"
 
-ACE_RCSID (be,
-           be_interface_strategy,
-           "$Id$")
-
-
 be_interface_strategy::be_interface_strategy (be_interface *node,
                                               Strategy_Kind strategy_type)
   : local_name_(0),

@@ -41,19 +41,10 @@ public:
   virtual int visit_home (be_home *node);
   virtual int visit_operation (be_operation *node);
   virtual int visit_attribute (be_attribute *node);
+  virtual int visit_factory (be_factory *node);
   
 private:
   int gen_exec_class (void);
-  
-  int gen_ops_attrs (void);
-  
-  int gen_factories (void);
-  int gen_factories_r (AST_Home *node);
-  
-  int gen_finders (void);
-  int gen_finders_r (AST_Home *node);
-  
-  int gen_init_ops_i (AST_Home::INIT_LIST & list);
   
   void gen_entrypoint (void);
   

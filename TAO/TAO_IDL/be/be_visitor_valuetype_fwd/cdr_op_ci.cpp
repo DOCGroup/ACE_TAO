@@ -20,10 +20,6 @@
 //
 // ================================================================
 
-ACE_RCSID (be_visitor_valuetype_fwd, 
-           cdr_op_ci, 
-           "$Id$")
-
 // ****************************************************************
 // Interface visitor for generating CDR operator declarations in the
 // client header
