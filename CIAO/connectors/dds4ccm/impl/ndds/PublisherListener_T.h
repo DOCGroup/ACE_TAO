@@ -31,20 +31,24 @@ namespace CIAO
         ACE_Reactor* reactor);
 
       virtual void on_offered_deadline_missed (
-        ::DDS::DataWriter *the_writer,
+        ::DDS::DataWriter_ptr the_Writer,
         const ::DDS::OfferedDeadlineMissedStatus & status);
 
       virtual void on_liveliness_lost (
-        ::DDS::DataWriter *the_writer,
+        ::DDS::DataWriter_ptr the_Writer,
         const ::DDS::LivelinessLostStatus & status);
 
       virtual void on_offered_incompatible_qos (
-        ::DDS::DataWriter *the_writer,
+        ::DDS::DataWriter_ptr the_Writer,
         const ::DDS::OfferedIncompatibleQosStatus & status);
 
       virtual void on_publication_matched (
-        ::DDS::DataWriter *the_writer,
+        ::DDS::DataWriter_ptr the_Writer,
         const ::DDS::PublicationMatchedStatus & status);
+
+      virtual void on_reliable_reader_activity_changed (
+        ::DDS::DataWriter_ptr the_Writer,
+        const ::DDS::ReliableReaderActivityChangedStatus & status);
 
       /// Destructor
       virtual ~PublisherListener_T (void);
@@ -52,11 +56,12 @@ namespace CIAO
       static ::DDS::StatusMask get_mask (void);
 
     private:
-      virtual void on_unexpected_status(
-        ::DDS::Entity* entity,
+      virtual void on_unexpected_status (
+        ::DDS::Entity_ptr entity,
         ::DDS::StatusKind status_kind);
 
       ::CCM_DDS::ConnectorStatusListener_var error_listener_;
+
       ACE_Reactor* reactor_;
     };
   }

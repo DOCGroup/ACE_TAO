@@ -15,16 +15,7 @@
 #define DDS4CCM_TIME_UTILITIES_H
 
 #include "ace/Time_Value.h"
-
-/*
-  TIME_T
-  long sec;
-  unsigned long nanosec;
-
-  ACE_TIME_VALUE
-  time_t sec,
-  suseconds_t usec );
-*/
+#include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 
 inline void
 operator<<= (::DDS::Time_t & dds_time, const ::ACE_Time_Value & ace_time)

@@ -65,6 +65,13 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_deadline_miss
 {
   CIAO_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_offered_deadline_missed");
 
+  CIAO_DEBUG (10, (LM_DEBUG, CLINFO
+              ACE_TEXT ("PublisherListener_T::on_offered_deadline_missed: ")
+              ACE_TEXT ("total count <%d> - count change <%d> - ")
+              ACE_TEXT ("last instance handle <%C>\n"),
+              status.total_count, status.total_count_change,
+              translate_instancehandle (status.last_instance_handle)));
+
   if (!CORBA::is_nil (this->error_listener_))
     {
       try
@@ -107,6 +114,20 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_incompatible_
 {
   CIAO_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_offered_incompatible_qos");
 
+  CIAO_DEBUG (10, (LM_DEBUG, CLINFO
+              ACE_TEXT ("PublisherListener_T::on_offered_incompatible_qos: ")
+              ACE_TEXT ("total count <%d> - total change <%d> - ")
+              ACE_TEXT ("last policy id <%d> - policies "),
+              status.total_count, status.total_count_change,
+              status.last_policy_id));
+  for (CORBA::ULong i = 0; i < status.policies.length (); ++i)
+    {
+      CIAO_DEBUG (10, (LM_DEBUG,
+                  ACE_TEXT ("\t\tid <%d> - count <%d>\n"),
+                  status.policies[i].policy_id,
+                  status.policies[i].count));
+    }
+
   if (!CORBA::is_nil (this->error_listener_))
     {
       try
@@ -145,41 +166,58 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_lost (
   ::DDS::DataWriter_ptr the_Writer,
-  const ::DDS::LivelinessLostStatus &)
+  const ::DDS::LivelinessLostStatus & status)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_liveliness_lost");
 
-  if (!CORBA::is_nil (this->error_listener_))
-    {
-      this->on_unexpected_status (the_Writer, ::DDS::LIVELINESS_LOST_STATUS);
-    }
-  else
-    {
-      CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                  ACE_TEXT ("PublisherListener_T::on_liveliness_lost: ")
-                  ACE_TEXT ("No error listener connected\n")));
-    }
+  CIAO_DEBUG (10, (LM_DEBUG, CLINFO
+            ACE_TEXT ("PublisherListener_T::on_liveliness_lost: ")
+            ACE_TEXT ("total count <%d> - count change <%d>\n"),
+            status.total_count, status.total_count_change));
+
+  this->on_unexpected_status (the_Writer, ::DDS::LIVELINESS_LOST_STATUS);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_publication_matched (
   ::DDS::DataWriter_ptr the_Writer,
-  const ::DDS::PublicationMatchedStatus &)
+  const ::DDS::PublicationMatchedStatus & status)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_publication_matched");
 
-  if (!CORBA::is_nil (this->error_listener_))
-    {
-      this->on_unexpected_status (the_Writer, ::DDS::PUBLICATION_MATCHED_STATUS);
-    }
-  else
-    {
-      CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                  ACE_TEXT ("PublisherListener_T::on_publication_matched: ")
-                  ACE_TEXT ("No error listener connected\n")));
-    }
+  CIAO_DEBUG (10, (LM_DEBUG, CLINFO
+              ACE_TEXT ("PublisherListener_T::on_publication_matched: ")
+              ACE_TEXT ("total count <%d> - count change <%d> - ")
+              ACE_TEXT ("current count <%d> - current count change <%d>"),
+              ACE_TEXT ("last publication handle <%C>\n"),
+              status.total_count, status.total_count_change,
+              status.current_count, status.current_count_change,
+              translate_instancehandle (status.last_subscription_handle)));
+
+  this->on_unexpected_status (the_Writer, ::DDS::PUBLICATION_MATCHED_STATUS);
 }
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_reliable_reader_activity_changed (
+  ::DDS::DataWriter_ptr the_Writer,
+  const ::DDS::ReliableReaderActivityChangedStatus & status)
+{
+  CIAO_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_reliable_reader_activity_changed");
+
+  CIAO_DEBUG (10, (LM_DEBUG, CLINFO
+              ACE_TEXT ("PublisherListener_T::on_reliable_reader_activity_changed: ")
+              ACE_TEXT ("active count <%d> - active change <%d> - ")
+              ACE_TEXT ("not active count <%d> - inactive count change <%d>"),
+              ACE_TEXT ("last instance handle <%C>\n"),
+              status.active_count, status.active_count_change,
+              status.not_active_count, status.inactive_count_change,
+              translate_instancehandle (status.last_instance_handle)));
+
+  this->on_unexpected_status (the_Writer, ::DDS::RELIABLE_READER_ACTIVITY_CHANGED_STATUS);
+}
+
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::StatusMask
@@ -188,6 +226,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_mask (void)
   return DDS_OFFERED_DEADLINE_MISSED_STATUS |
          DDS_OFFERED_INCOMPATIBLE_QOS_STATUS |
          DDS_LIVELINESS_LOST_STATUS |
-         DDS_PUBLICATION_MATCHED_STATUS;
+         DDS_PUBLICATION_MATCHED_STATUS |
+         DDS_RELIABLE_READER_ACTIVITY_CHANGED_STATUS;
 }
 

@@ -81,6 +81,11 @@ namespace CIAO
     on_data_on_readers (
       ::DDS::Subscriber_ptr ) {}
 
+    virtual void
+    on_reliable_reader_activity_changed (
+      ::DDS::DataWriter_ptr ,
+      const ::DDS::ReliableReaderActivityChangedStatus & ) {}
+
     private:
       ::CCM_DDS::ConnectorStatusListener_var error_listener_;
     };
