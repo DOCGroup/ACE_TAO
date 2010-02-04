@@ -1,3 +1,9 @@
+Thu Feb 4 09:22:31 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Keyed/Receiver/Perf_Keyed_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender_exec.cpp:
+        Solve some compiler warnings.
+
 Wed Feb  3 15:08:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDS_Update_T.cpp:
