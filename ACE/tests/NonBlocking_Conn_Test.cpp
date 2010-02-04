@@ -39,6 +39,9 @@ Svc_Handler::Svc_Handler (void)
   : status_ (0),
     completion_counter_ (0)
 {
+  // Enable reference counting on the event handler.
+  this->reference_counting_policy ().value (
+    ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 }
 
 void
@@ -72,7 +75,7 @@ typedef ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> CONNECTOR;
 
 static const char* hosts[] = {
   "www.russiantvguide.com:80",
-  "www.pakarmy.gov.pk:80",
+  "www.pakistanarmy.gov.pk:80",
   "www.cnn.com:80",
   "www.waca.com.au:80",
   "www.uganda.co.ug:80",
@@ -80,7 +83,8 @@ static const char* hosts[] = {
   "www.dre.vanderbilt.edu:80",
   "www.dhm.gov.np:80",
   "www.msn.com:80",
-  "www.presidencymaldives.gov.mv:80" };
+  "www.presidencymaldives.gov.mv:80"
+};
 
 static int number_of_connections = 0;
 
