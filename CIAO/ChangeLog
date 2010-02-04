@@ -1,3 +1,8 @@
+Thu Feb  4 14:09:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplication/ComponentAttributesSetter.cpp:
+          Cleanup and log which attribute is causing the exception
+
 Thu Feb  4 13:21:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Utils.h:
