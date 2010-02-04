@@ -1,7 +1,7 @@
 /* -*- c++ -*- */
 //=============================================================================
 /**
- *  @file    valuetype_obv_cs.cpp
+ *  @file    valuetype_obv_cs.h
  *
  *  $Id$
  *
@@ -39,11 +39,11 @@ public:
   virtual int visit_valuetype (be_valuetype *node);
   virtual int visit_eventtype (be_eventtype *node);
   virtual int visit_field (be_field *node);
-  
+
 private:
   /// Generate member assignments for the initializing constructor.
   void gen_obv_init_constructor_inits (be_valuetype *node);
-  
+
   /// Called by method above to generate base class constructor call.
   void gen_obv_init_base_constructor_args (be_valuetype *node,
                                            unsigned long &index);

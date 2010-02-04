@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- *  @file    strategized_proxy_broker_cs.h
+ *  @file    strategized_proxy_broker_ss.h
  *
  *  $Id$
  *
