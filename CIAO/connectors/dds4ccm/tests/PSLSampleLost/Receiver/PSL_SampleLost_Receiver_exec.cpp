@@ -13,8 +13,8 @@
 
 namespace CIAO_PSL_SampleLost_Receiver_Impl
 {
-//============================================================
-  // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
+  //============================================================
+  // ConnectorStatusListener_exec_i
   //============================================================
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (void)
   {
@@ -26,35 +26,44 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
 
   // Operations from ::CCM_DDS::ConnectorStatusListener
   void ConnectorStatusListener_exec_i::on_inconsistent_topic(
-     ::DDS::Topic_ptr /*the_topic*/,
-     const DDS::InconsistentTopicStatus & /*status*/){
-    }
+    ::DDS::Topic_ptr /*the_topic*/,
+    const DDS::InconsistentTopicStatus & /*status*/)
+  {
+  }
 
-  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
+  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos (
     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
-    }
+    const DDS::RequestedIncompatibleQosStatus & /*status*/)
+  {
+  }
 
-  void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::SampleRejectedStatus & /*status*/)  {
-    }
+  void ConnectorStatusListener_exec_i::on_sample_rejected (
+    ::DDS::DataReader_ptr /*the_reader*/,
+    const DDS::SampleRejectedStatus & /*status*/)
+  {
+  }
 
-  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
-     ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedDeadlineMissedStatus & /*status*/)  {
-    }
+  void ConnectorStatusListener_exec_i::on_offered_deadline_missed (
+    ::DDS::DataWriter_ptr /*the_writer*/,
+    const DDS::OfferedDeadlineMissedStatus & /*status*/)
+  {
+  }
 
-  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
-    }
+  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos (
+    ::DDS::DataWriter_ptr /*the_writer*/,
+    const DDS::OfferedIncompatibleQosStatus & /*status*/)
+  {
+  }
 
-  void ConnectorStatusListener_exec_i::on_unexpected_status(
+  void ConnectorStatusListener_exec_i::on_unexpected_status (
     ::DDS::Entity_ptr /*the_entity*/,
-    ::DDS::StatusKind /*status_kind*/)  {
-   }
+    ::DDS::StatusKind /*status_kind*/)
+  {
+  }
 
+  //============================================================
+  // read_action_Generator
+  //============================================================
   read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
     : pulse_callback_ (callback)
   {
@@ -77,10 +86,10 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
       }
     return 0;
   }
-  //============================================================
-  // Facet Executor Implementation Class: TestTopic_RawListener_exec_i
-  //============================================================
 
+  //============================================================
+  // TestTopic_RawListener_exec_i
+  //============================================================
   TestTopic_RawListener_exec_i::TestTopic_RawListener_exec_i (void)
   {
   }
@@ -107,12 +116,19 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
     const ::CCM_DDS::ReadInfoSeq & /* info */)
   {
   }
+
   //============================================================
-  // Facet Executor Implementation Class: PortStatusListener_exec_i
+  // PortStatusListener_exec_i
   //============================================================
-  PortStatusListener_exec_i::PortStatusListener_exec_i (Atomic_Boolean &sample_port_1, Atomic_Boolean &sample_port_2,int port_nr)
+  PortStatusListener_exec_i::PortStatusListener_exec_i (Atomic_Boolean &sample_port_1,
+                                                        Atomic_Boolean &sample_port_2,
+                                                        Atomic_ThreadId &thread_id_1,
+                                                        Atomic_ThreadId &thread_id_2,
+                                                        int port_nr)
     : sample_port_1_(sample_port_1),
       sample_port_2_(sample_port_2),
+      thread_id_1_ (thread_id_1),
+      thread_id_2_ (thread_id_2),
       port_nr_(port_nr)
   {
   }
@@ -134,24 +150,40 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
     ::DDS::DataReader_ptr the_reader,
     const ::DDS::SampleLostStatus & status)
   {
-    if((this->port_nr_ == 1) && (!CORBA::is_nil(the_reader)) && (status.total_count > 0))
-    {
-      this->sample_port_1_ = true;
-    }
-    if((this->port_nr_ == 2) && (!CORBA::is_nil(the_reader)) && (status.total_count > 0))
-    {
-      this->sample_port_2_ = true;
-    }
+    if (this->port_nr_ == 1)
+      {
+        this->thread_id_1_ = ACE_Thread::self ();
+      }
+    if (this->port_nr_ == 2)
+      {
+        this->thread_id_2_ = ACE_Thread::self ();
+      }
+
+    if (this->port_nr_ == 1 &&
+        !CORBA::is_nil(the_reader) &&
+        status.total_count > 0)
+      {
+        this->sample_port_1_ = true;
+      }
+
+    if (this->port_nr_ == 2 &&
+        !CORBA::is_nil(the_reader) &&
+        status.total_count > 0)
+      {
+        this->sample_port_2_ = true;
+      }
   }
 
   //============================================================
-  // Component Executor Implementation Class: Receiver_exec_iTestTopic_RawListener_exec_i ();
+  // Receiver_exec_i
   //============================================================
 
   Receiver_exec_i::Receiver_exec_i (void)
   : rate_ (10),
     sample_port_1_ (false),
-    sample_port_2_ (false)
+    sample_port_2_ (false),
+    thread_id_listener_1_ (0),
+    thread_id_listener_2_ (0)
   {
     this->ticker_ = new read_action_Generator (*this);
   }
@@ -170,29 +202,30 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
       }
     TestTopic_Seq_var TestTopic_infos;
     ::CCM_DDS::ReadInfoSeq_var readinfoseq;
-    try{
-      this->reader_->read_all(TestTopic_infos.out(), readinfoseq.out());
-      for(CORBA::ULong i = 0; i < readinfoseq->length(); ++i)
-        {
-          ACE_Time_Value tv;
-          tv <<= readinfoseq[i].source_timestamp;
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
-                                ACE_TEXT ("-> UTC date =%#T\n"),
-                                &tv));
-        }
-      for(CORBA::ULong i = 0; i < TestTopic_infos->length(); ++i)
-        {
-           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL keyed test info : ")
-                ACE_TEXT ("Number <%d> : received TestTopic_info for <%C> at %u\n"),
-              i,
-              TestTopic_infos[i].key.in (),
-              TestTopic_infos[i].x));
-         }
-    }
+    try
+      {
+        this->reader_->read_all(TestTopic_infos.out(), readinfoseq.out());
+        for(CORBA::ULong i = 0; i < readinfoseq->length(); ++i)
+          {
+            ACE_Time_Value tv;
+            tv <<= readinfoseq[i].source_timestamp;
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
+                                  ACE_TEXT ("-> UTC date =%#T\n"),
+                                  &tv));
+          }
+        for(CORBA::ULong i = 0; i < TestTopic_infos->length(); ++i)
+          {
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL keyed test info : ")
+                  ACE_TEXT ("Number <%d> : received TestTopic_info for <%C> at %u\n"),
+                i,
+                TestTopic_infos[i].key.in (),
+                TestTopic_infos[i].x));
+          }
+      }
     catch (const CCM_DDS::InternalError& )
-    {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("internal error or no data\n")));
-    }
+      {
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("internal error or no data\n")));
+      }
   }
 
   // Component attributes.
@@ -208,14 +241,22 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
   Receiver_exec_i::get_info_out_status (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener get_info_out_status\n")));
-    return new PortStatusListener_exec_i ( this->sample_port_1_,this->sample_port_2_, 1);
+    return new PortStatusListener_exec_i (this->sample_port_1_,
+                                          this->sample_port_2_,
+                                          this->thread_id_listener_1_,
+                                          this->thread_id_listener_2_,
+                                          1);
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_get_status (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener get_info_get_status\n")));
-    return new PortStatusListener_exec_i (this->sample_port_1_,this->sample_port_2_, 2);
+    return new PortStatusListener_exec_i (this->sample_port_1_,
+                                          this->sample_port_2_,
+                                          this->thread_id_listener_1_,
+                                          this->thread_id_listener_2_,
+                                          2);
   }
 
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
@@ -254,7 +295,7 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
         ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw CORBA::INTERNAL ();
       }
-       lc->mode (::CCM_DDS::NOT_ENABLED);
+    lc->mode (::CCM_DDS::NOT_ENABLED);
 
     // calculate the interval time
     long usec = 1000000 / this->rate_;
@@ -295,6 +336,40 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Have received the expected ")
                                ACE_TEXT ("'on_sample_lost' in on DDS_Listen and DDS_GET port Receiver\n")
                     ));
+      }
+    if (this->thread_id_listener_1_.value () == ACE_Thread::self ())
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: "
+                               "Thread switch for PortStatusListener I "
+                               "doesn't seem to work! "
+                               "listener <%u> - component <%u>\n",
+                               this->thread_id_listener_1_.value (),
+                               ACE_Thread::self ()));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "OK : "
+                               "Thread switch for PortStatusListener I seems OK. "
+                               "listener <%u> - component <%u>\n",
+                               this->thread_id_listener_1_.value (),
+                               ACE_Thread::self ()));
+      }
+    if (this->thread_id_listener_2_.value () == ACE_Thread::self ())
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: "
+                               "Thread switch for PortStatusListener II "
+                               "doesn't seem to work! "
+                               "listener <%u> - component <%u>\n",
+                               this->thread_id_listener_2_.value (),
+                               ACE_Thread::self ()));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "OK : "
+                               "Thread switch for PortStatusListener II seems OK. "
+                               "listener <%u> - component <%u>\n",
+                               this->thread_id_listener_2_.value (),
+                               ACE_Thread::self ()));
       }
   }
 
