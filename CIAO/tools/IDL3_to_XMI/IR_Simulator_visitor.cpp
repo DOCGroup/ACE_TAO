@@ -19,7 +19,7 @@
 #include "ast_eventtype.h"
 #include "ast_eventtype_fwd.h"
 #include "ast_exception.h"
-#include "ast_factory.h"
+#include "ast_finder.h"
 #include "ast_field.h"
 #include "ast_home.h"
 #include "ast_operation.h"
@@ -30,6 +30,7 @@
 #include "ast_template_module.h"
 #include "ast_template_module_inst.h"
 #include "ast_template_module_ref.h"
+#include "ast_param_holder.h"
 #include "ast_typedef.h"
 #include "ast_union.h"
 #include "ast_union_branch.h"
@@ -188,33 +189,54 @@ namespace CIAO
     }
 
     int
-    ir_simulator_visitor::visit_template_module (AST_Template_Module *)
+    ir_simulator_visitor::visit_template_module (AST_Template_Module *node)
     {
+      XMI_TRACE ("template module");
+
+      throw Error ("Template modules not supported", node);
+
       return 0;
     }
 
     int
     ir_simulator_visitor::visit_template_module_inst (
-      AST_Template_Module_Inst *)
+      AST_Template_Module_Inst *node)
     {
+      XMI_TRACE ("template module instance");
+
+      throw Error ("Template modules not supported", node);
+
       return 0;
     }
 
     int
-    ir_simulator_visitor::visit_template_module_ref(AST_Template_Module_Ref *)
+    ir_simulator_visitor::visit_template_module_ref (
+      AST_Template_Module_Ref *node)
     {
+      XMI_TRACE ("template module reference");
+
+      throw Error ("Template modules not supported", node);
+
       return 0;
     }
 
     int
-    ir_simulator_visitor::visit_param_holder(AST_Param_Holder *)
+    ir_simulator_visitor::visit_param_holder (AST_Param_Holder *node)
     {
+      XMI_TRACE ("param holder");
+
+      throw Error ("Param holders not supported", node);
+
       return 0;
     }
 
     int
-    ir_simulator_visitor::visit_finder(AST_Finder *)
+    ir_simulator_visitor::visit_finder (AST_Finder *node)
     {
+      XMI_TRACE ("finder");
+
+      throw Error ("Finders not supported", node);
+
       return 0;
     }
 
@@ -626,20 +648,6 @@ namespace CIAO
           if (node->primary_key ())
             {
               node->primary_key ()->ast_accept (this);
-            }
-
-          for (size_t i = 0; i < node->factories ().size (); ++i)
-            {
-              AST_Operation **op = 0;
-              node->factories ().get (op, i);
-              (*op)->ast_accept (this);
-            }
-
-          for (size_t i = 0; i < node->finders ().size (); ++i)
-            {
-              AST_Operation **op = 0;
-              node->finders ().get (op, i);
-              (*op)->ast_accept (this);
             }
 
           this->visit_scope (node);
