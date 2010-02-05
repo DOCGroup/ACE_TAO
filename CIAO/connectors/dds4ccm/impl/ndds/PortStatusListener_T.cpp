@@ -124,8 +124,16 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::StatusMask
-CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask (void)
+CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
+  ::CCM_DDS::PortStatusListener_ptr psl)
 {
-  return DDS_REQUESTED_DEADLINE_MISSED_STATUS |
-         DDS_SAMPLE_LOST_STATUS;
+  if (!CORBA::is_nil (psl) || CIAO_debug_level >= 10)
+    {
+      return DDS_REQUESTED_DEADLINE_MISSED_STATUS |
+             DDS_SAMPLE_LOST_STATUS;
+    }
+  else
+    {
+      return DDS_STATUS_MASK_NONE;
+    }
 }

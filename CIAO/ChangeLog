@@ -1,3 +1,26 @@
+Fri Feb  5 09:38:48 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Read_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/PortStatusListener_T.h:
+        * connectors/dds4ccm/impl/ndds/PortStatusListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.h:
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.h:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/TopicListener_T.h:
+        * connectors/dds4ccm/impl/ndds/TopicListener_T.cpp:
+          Only use the DDS listener callbacks when the listener
+          connection is there or when logging is required.
+
 Fri Feb  5 07:25:43 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/TimeConversion/time_conversion.cpp:

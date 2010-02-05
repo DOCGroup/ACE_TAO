@@ -273,7 +273,8 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_default_topic (ACE_React
         }
       this->topic_->set_listener (
         this->topiclistener_.in (),
-        ::CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+        ::CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
+          this->context_->get_connection_error_listener ()));
     }
   catch (...)
     {
@@ -300,7 +301,8 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_subscriber (ACE_Reactor*
         }
       this->subscriber_->set_listener (
         this->subscriber_listener_.in (),
-        ::CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+        ::CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
+          this->context_->get_connection_error_listener ()));
     }
   catch (...)
     {
@@ -327,7 +329,8 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_publisher (ACE_Reactor* 
         }
       this->publisher_->set_listener (
         this->publisher_listener_.in (),
-        ::CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+        ::CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
+          this->context_->get_connection_error_listener ()));
     }
   catch (...)
     {
