@@ -12,9 +12,11 @@ namespace CIAO_LOBO_Test_Receiver_Impl
   //============================================================
   ListenOneByOneTest_Listener_exec_i::ListenOneByOneTest_Listener_exec_i (
                                               Atomic_ULong &received_one_by_one,
-                                              Atomic_ULong &received_many_by_many)
+                                              Atomic_ULong &received_many_by_many,
+                                              Atomic_ThreadId &thread_id)
     : received_one_by_one_ (received_one_by_one),
-      received_many_by_many_ (received_many_by_many)
+      received_many_by_many_ (received_many_by_many),
+      thread_id_ (thread_id)
   {
   }
 
@@ -27,6 +29,7 @@ namespace CIAO_LOBO_Test_Receiver_Impl
                                   const ListenOneByOneTest & an_instance,
                                   const ::CCM_DDS::ReadInfo & info)
   {
+    this->thread_id_ = ACE_Thread::self ();
     ACE_DEBUG ((LM_DEBUG, "ListenOneByOneTest_Listener_exec_i::on_one_data: "
                             "key <%C> - iteration <%d>\n",
                             an_instance.key.in (),
@@ -120,6 +123,7 @@ namespace CIAO_LOBO_Test_Receiver_Impl
     : received_one_by_one_ (0),
       received_many_by_many_ (0),
       started_ (false),
+      thread_id_listener_ (0),
       iterations_ (10),
       keys_ (5)
   {
@@ -146,7 +150,8 @@ namespace CIAO_LOBO_Test_Receiver_Impl
   {
     return new ListenOneByOneTest_Listener_exec_i (
                 this->received_one_by_one_,
-                this->received_many_by_many_);
+                this->received_many_by_many_,
+                this->thread_id_listener_);
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -257,6 +262,23 @@ namespace CIAO_LOBO_Test_Receiver_Impl
                                "Received only data on "
                                "one_by_one callback. "
                                "Test passed!\n"));
+      }
+    if (this->thread_id_listener_.value () == ACE_Thread::self ())
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: ONE_BY_ONE: "
+                               "Thread switch for ReaderListener "
+                               "doesn't seem to work! "
+                               "listener <%u> - component <%u>\n",
+                               this->thread_id_listener_.value (),
+                               ACE_Thread::self ()));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "ONE_BY_ONE: "
+                               "Thread switch for ReaderListener seems OK. "
+                               "listener <%u> - component <%u>\n",
+                               this->thread_id_listener_.value (),
+                               ACE_Thread::self ()));
       }
   }
 

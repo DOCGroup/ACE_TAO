@@ -1,3 +1,16 @@
+Fri Feb  5 12:10:58 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/docs/TestCoverage.ods:
+          Added new tests.
+
+        * connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver_exec.cpp:
+          Tested thread switch for ConnectorStatusListener.
+
+        * connectors/dds4ccm/tests/ListenOneByOne/Receiver/LOBO_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ListenOneByOne/Receiver/LOBO_Test_Receiver_exec.cpp:
+          Tested thread switch for ReaderListener.
+
 Fri Feb  5 10:07:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDSCallbackStatusHandler.h:
