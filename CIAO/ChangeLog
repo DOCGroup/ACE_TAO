@@ -1,3 +1,15 @@
+Fri Feb  5 19:45:46 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.h:
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.cpp:
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.h:
+        
+          Updates to eliminate build errors due to frontend
+          changes in home factories and finders. Further
+          work is needed for this tool to support home factories
+          and finders.
+
 Fri Feb  5 15:02:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLDeadline/Receiver/CSL_DeadlineTest_Receiver_exec.h:
