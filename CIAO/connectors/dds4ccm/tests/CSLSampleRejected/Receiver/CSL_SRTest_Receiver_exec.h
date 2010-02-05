@@ -13,47 +13,56 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-#include "ace/Task.h"
+#include "ace/OS_NS_Thread.h"
 #include "ace/Reactor.h"
+#include "ace/Task.h"
 
 namespace CIAO_CSL_SRTest_Receiver_Impl
 {
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong > Atomic_ULong;
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
+  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_thread_t > Atomic_ThreadId;
 
-  
+  //============================================================
+  // ConnectorStatusListener_exec_i
+  //============================================================
   class Receiver_exec_i;
   class RECEIVER_EXEC_Export ConnectorStatusListener_exec_i
     : public virtual ::CCM_DDS::CCM_ConnectorStatusListener,
       public virtual ::CORBA::LocalObject
   {
   public:
-    ConnectorStatusListener_exec_i (Atomic_Boolean &);
+    ConnectorStatusListener_exec_i (Atomic_Boolean  &,
+                                    Atomic_ThreadId &);
     virtual ~ConnectorStatusListener_exec_i (void);
-    
+
     virtual
-    void on_inconsistent_topic( ::DDS::Topic_ptr the_topic, 
+    void on_inconsistent_topic (::DDS::Topic_ptr the_topic,
                                 const DDS::InconsistentTopicStatus & status);
     virtual
-    void on_requested_incompatible_qos( ::DDS::DataReader_ptr the_reader,
+    void on_requested_incompatible_qos (::DDS::DataReader_ptr the_reader,
                                         const DDS::RequestedIncompatibleQosStatus & status);
     virtual
-    void on_sample_rejected( ::DDS::DataReader_ptr the_reader, 
+    void on_sample_rejected (::DDS::DataReader_ptr the_reader,
                              const DDS::SampleRejectedStatus & status);
     virtual
-      void on_offered_deadline_missed( ::DDS::DataWriter_ptr the_writer,
-                                     const DDS::OfferedDeadlineMissedStatus & status);
+      void on_offered_deadline_missed (::DDS::DataWriter_ptr the_writer,
+                                       const DDS::OfferedDeadlineMissedStatus & status);
     virtual
-    void on_offered_incompatible_qos( ::DDS::DataWriter_ptr the_writer, 
+    void on_offered_incompatible_qos (::DDS::DataWriter_ptr the_writer,
                                       const DDS::OfferedIncompatibleQosStatus & status);
     virtual
-      void on_unexpected_status( ::DDS::Entity_ptr the_entity,
-       ::DDS::StatusKind  status_kind);
-    private:
+      void on_unexpected_status (::DDS::Entity_ptr the_entity,
+                                 ::DDS::StatusKind status_kind);
+  private:
     Atomic_Boolean &rejected_;
-  
+    Atomic_ThreadId &thread_id_;
   };
-   class read_action_Generator
+
+  //============================================================
+  // read_action_Generator
+  //============================================================
+  class read_action_Generator
     : public ACE_Event_Handler
   {
   public:
@@ -71,6 +80,9 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
 
   };
 
+  //============================================================
+  // TestTopic_Listener_exec_i
+  //============================================================
   class RECEIVER_EXEC_Export TestTopic_Listener_exec_i
     : public virtual ::CCM_DDS::TestTopic::CCM_Listener,
       public virtual ::CORBA::LocalObject
@@ -91,25 +103,9 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
     Atomic_ULong &received_;
   };
 
-  class RECEIVER_EXEC_Export PortStatusListener_exec_i
-    : public virtual ::CCM_DDS::CCM_PortStatusListener,
-      public virtual ::CORBA::LocalObject
-  {
-  public:
-    PortStatusListener_exec_i (void);
-    virtual ~PortStatusListener_exec_i (void);
-
-    virtual void
-    on_requested_deadline_missed (
-      ::DDS::DataReader_ptr the_reader,
-      const ::DDS::RequestedDeadlineMissedStatus & status);
-
-    virtual void
-    on_sample_lost (
-      ::DDS::DataReader_ptr the_reader,
-      const ::DDS::SampleLostStatus & status);
-  };
-
+  //============================================================
+  // Receiver_exec_i
+  //============================================================
   class RECEIVER_EXEC_Export Receiver_exec_i
     : public virtual Receiver_Exec,
       public virtual ::CORBA::LocalObject
@@ -141,10 +137,7 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_out_status (void);
 
-    virtual ::CCM_DDS::CCM_PortStatusListener_ptr
-    get_info_get_status (void);
-
-      virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
+    virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
     get_info_out_connector_status (void);
 
 
@@ -162,12 +155,13 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
   private:
     ::CSL_SRTest::CCM_Receiver_Context_var context_;
     ::CCM_DDS::TestTopic::Reader_var reader_;
- 
+
     read_action_Generator * ticker_;
     CORBA::ULong rate_;
-    CORBA::Boolean  read_data_, raw_listen_;
+    CORBA::Boolean read_data_, raw_listen_;
     Atomic_ULong received_;
     Atomic_Boolean rejected_;
+    Atomic_ThreadId thread_id_listener_;
   };
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_CSL_SRTest_Receiver_Impl (void);
