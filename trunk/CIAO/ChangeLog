@@ -1,3 +1,12 @@
+Fri Feb  5 15:02:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLDeadline/Receiver/CSL_DeadlineTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CSLDeadline/Receiver/CSL_DeadlineTest_Receiver_exec.cpp:
+          Implemented thread switch. Test result was incorrectly printed.
+
+        * connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver_exec.cpp:
+          Code aligning.
+
 Fri Feb  5 14:07:48 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/TimeConversion/Time_Conversion.mpc:
