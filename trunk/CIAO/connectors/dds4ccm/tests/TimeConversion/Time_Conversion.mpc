@@ -1,7 +1,8 @@
 // $Id$
 
-project(DDS_TimeConversion) : taodefaults, acedefaults, ciao_connector_base {
+project(DDS_TimeConversion) : taodefaults, acedefaults, ciao_connector_base, aceexe, taoexe {
   after += DDS4CCM_stub
+  includes += $(CIAO_ROOT)
   libs  += DDS4CCM_stub
   exename = TimeConversion
 
