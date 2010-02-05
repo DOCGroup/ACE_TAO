@@ -13,6 +13,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
+#include "ace/OS_NS_Thread.h"
 #include "ace/Reactor.h"
 #include "ace/Task.h"
 
@@ -24,6 +25,7 @@ namespace CIAO_LOBO_Test_Receiver_Impl
 
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong> Atomic_ULong;
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> Atomic_Bool;
+  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_thread_t> Atomic_ThreadId;
 
   //============================================================
   // ListenOneByOneTest_Listener_exec_i
@@ -35,7 +37,8 @@ namespace CIAO_LOBO_Test_Receiver_Impl
   public:
     ListenOneByOneTest_Listener_exec_i (
                             Atomic_ULong &received_one_by_one,
-                            Atomic_ULong &received_many_by_many);
+                            Atomic_ULong &received_many_by_many,
+                            Atomic_ThreadId &thread_id);
     virtual ~ListenOneByOneTest_Listener_exec_i (void);
 
     virtual void
@@ -49,6 +52,7 @@ namespace CIAO_LOBO_Test_Receiver_Impl
   private:
     Atomic_ULong &received_one_by_one_;
     Atomic_ULong &received_many_by_many_;
+    Atomic_ThreadId &thread_id_;
   };
 
   //============================================================
@@ -63,23 +67,23 @@ namespace CIAO_LOBO_Test_Receiver_Impl
     virtual ~ConnectorStatusListener_exec_i (void);
 
     virtual
-    void on_inconsistent_topic( ::DDS::Topic_ptr ,
-                              const DDS::InconsistentTopicStatus & );
+    void on_inconsistent_topic (::DDS::Topic_ptr ,
+                                const DDS::InconsistentTopicStatus & );
     virtual
-    void on_requested_incompatible_qos( ::DDS::DataReader_ptr ,
-                              const DDS::RequestedIncompatibleQosStatus & );
+    void on_requested_incompatible_qos (::DDS::DataReader_ptr ,
+                                        const DDS::RequestedIncompatibleQosStatus & );
     virtual
-    void on_sample_rejected( ::DDS::DataReader_ptr ,
-                              const DDS::SampleRejectedStatus & );
+    void on_sample_rejected (::DDS::DataReader_ptr ,
+                             const DDS::SampleRejectedStatus & );
     virtual
-    void on_offered_deadline_missed( ::DDS::DataWriter_ptr ,
-                              const DDS::OfferedDeadlineMissedStatus & );
+    void on_offered_deadline_missed (::DDS::DataWriter_ptr ,
+                                     const DDS::OfferedDeadlineMissedStatus & );
     virtual
-    void on_offered_incompatible_qos( ::DDS::DataWriter_ptr ,
-                              const DDS::OfferedIncompatibleQosStatus & );
+    void on_offered_incompatible_qos (::DDS::DataWriter_ptr ,
+                                      const DDS::OfferedIncompatibleQosStatus & );
     virtual
-    void on_unexpected_status( ::DDS::Entity_ptr ,
-                              ::DDS::StatusKind );
+    void on_unexpected_status (::DDS::Entity_ptr ,
+                               ::DDS::StatusKind );
   private:
     Receiver_exec_i &callback_;
   };
@@ -127,9 +131,10 @@ namespace CIAO_LOBO_Test_Receiver_Impl
   private:
     ::LOBO_Test::CCM_Receiver_Context_var context_;
 
-    Atomic_ULong received_one_by_one_;
-    Atomic_ULong received_many_by_many_;
-    Atomic_Bool  started_;
+    Atomic_ULong    received_one_by_one_;
+    Atomic_ULong    received_many_by_many_;
+    Atomic_Bool     started_;
+    Atomic_ThreadId thread_id_listener_;
 
     CORBA::UShort iterations_;
     CORBA::UShort keys_;

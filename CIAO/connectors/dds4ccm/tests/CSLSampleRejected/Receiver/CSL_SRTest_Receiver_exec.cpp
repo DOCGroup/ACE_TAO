@@ -18,8 +18,10 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
 //============================================================
   // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
   //============================================================
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &rejected)
-   : rejected_ (rejected)
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &rejected,
+                                                                  Atomic_ThreadId &thread_id)
+    : rejected_ (rejected),
+      thread_id_ (thread_id)
   {
   }
 
@@ -28,40 +30,47 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
   }
 
   // Operations from ::CCM_DDS::ConnectorStatusListener
-  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
-     ::DDS::Topic_ptr /*the_topic*/,
-     const DDS::InconsistentTopicStatus & /*status*/){
-    }
+  void ConnectorStatusListener_exec_i::on_inconsistent_topic (
+    ::DDS::Topic_ptr /*the_topic*/,
+    const DDS::InconsistentTopicStatus & /*status*/)
+  {
+  }
 
-  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
+  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos (
     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
-    }
+    const DDS::RequestedIncompatibleQosStatus & /*status*/)
+  {
+  }
 
-  void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr the_reader,
-     const DDS::SampleRejectedStatus & status)  {
-     if((status.last_reason == DDS::REJECTED_BY_INSTANCES_LIMIT) &&
-          (!CORBA::is_nil(the_reader)))
-       {
-         this->rejected_ = true;
-       }
-    }
+  void ConnectorStatusListener_exec_i::on_sample_rejected (
+    ::DDS::DataReader_ptr the_reader,
+    const DDS::SampleRejectedStatus & status)
+  {
+    this->thread_id_ = ACE_Thread::self ();
+    if (status.last_reason == DDS::REJECTED_BY_INSTANCES_LIMIT &&
+        !CORBA::is_nil(the_reader))
+      {
+        this->rejected_ = true;
+      }
+  }
 
-  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
-     ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedDeadlineMissedStatus & /*status*/)  {
-    }
+  void ConnectorStatusListener_exec_i::on_offered_deadline_missed (
+    ::DDS::DataWriter_ptr /*the_writer*/,
+    const DDS::OfferedDeadlineMissedStatus & /*status*/)
+  {
+  }
 
-  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
-    }
+  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos (
+    ::DDS::DataWriter_ptr /*the_writer*/,
+    const DDS::OfferedIncompatibleQosStatus & /*status*/)
+  {
+  }
 
-  void ConnectorStatusListener_exec_i::on_unexpected_status(
+  void ConnectorStatusListener_exec_i::on_unexpected_status (
     ::DDS::Entity_ptr /*the_entity*/,
-    ::DDS::StatusKind /*status_kind*/)  {
-    }
+    ::DDS::StatusKind /*status_kind*/)
+  {
+  }
 
   read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
     : pulse_callback_ (callback)
@@ -84,7 +93,6 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
        }
     catch (...)
       {
-        // @todo
       }
     return 0;
   }
@@ -123,34 +131,6 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
   }
 
   //============================================================
-  // Facet Executor Implementation Class: PortStatusListener_exec_i
-  //============================================================
-
-  PortStatusListener_exec_i::PortStatusListener_exec_i (void)
-  {
-  }
-
-  PortStatusListener_exec_i::~PortStatusListener_exec_i (void)
-  {
-  }
-
-  // Operations from ::CCM_DDS::PortStatusListener
-
-  void
-  PortStatusListener_exec_i::on_requested_deadline_missed (
-    ::DDS::DataReader_ptr /* the_reader */,
-    const ::DDS::RequestedDeadlineMissedStatus & /* status */)
-  {
-  }
-
-  void
-  PortStatusListener_exec_i::on_sample_lost (
-    ::DDS::DataReader_ptr /* the_reader */,
-    const ::DDS::SampleLostStatus & /* status */)
-  {
-  }
-
-  //============================================================
   // Component Executor Implementation Class: Receiver_exec_iTestTopic_Listener_exec_i ();
   //============================================================
 
@@ -159,8 +139,8 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
       read_data_ (true),
       raw_listen_ (false),
       received_ (0),
-      rejected_(0)
-
+      rejected_(0),
+      thread_id_listener_ (0)
   {
     this->ticker_ = new read_action_Generator (*this);
   }
@@ -249,21 +229,14 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
-    return new PortStatusListener_exec_i ();
-  }
-
-  ::CCM_DDS::CCM_PortStatusListener_ptr
-  Receiver_exec_i::get_info_get_status (void)
-  {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
-    return new PortStatusListener_exec_i ();
+    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
    ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Receiver_exec_i::get_info_out_connector_status (void)
   {
-    return new ConnectorStatusListener_exec_i (this->rejected_);
+    return new ConnectorStatusListener_exec_i (this->rejected_,
+                                               this->thread_id_listener_);
   }
 
   // Operations from Components::SessionComponent.
@@ -335,6 +308,24 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Have received the expected ")
                                ACE_TEXT ("'on_sample_rejected' in the Receiver\n")
                     ));
+      }
+
+    if (this->thread_id_listener_.value () == ACE_Thread::self ())
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: "
+                               "Thread switch for ConnectorStatusListener "
+                               "doesn't seem to work! "
+                               "listener <%u> - component <%u>\n",
+                               this->thread_id_listener_.value (),
+                               ACE_Thread::self ()));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "OK : "
+                               "Thread switch for ConnectorStatusListener seems OK. "
+                               "listener <%u> - component <%u>\n",
+                               this->thread_id_listener_.value (),
+                               ACE_Thread::self ()));
       }
   }
 
