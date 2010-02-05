@@ -1,6 +1,7 @@
 // $Id$
 
 #include "dds4ccm/impl/ndds/TimeUtilities.h"
+#include "ace/OS_NS_sys_time.h"
 
 int
 ACE_TMAIN(int , ACE_TCHAR **)
