@@ -8,8 +8,8 @@
  * received data from DDS.
  */
 
-#ifndef CIAO_ON_UNEXPECTEDSTATUS_HANDLER_T
-#define CIAO_ON_UNEXPECTEDSTATUS_HANDLER_T
+#ifndef CIAO_DDS_CALLBACK_STATUS_HANDLER
+#define CIAO_DDS_CALLBACK_STATUS_HANDLER
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "dds4ccm/idl/dds4ccm_ConnectorStatusListenerC.h"
@@ -152,4 +152,4 @@ namespace CIAO
   }
 }
 
-#endif
+#endif /* CIAO_DDS_CALLBACK_STATUS_HANDLER */
