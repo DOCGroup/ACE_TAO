@@ -310,7 +310,12 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
                     ));
       }
 
-    if (this->thread_id_listener_.value () == ACE_Thread::self ())
+    if (this->thread_id_listener_.value () == 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: "
+                               "Thread ID for ConnectorStatusListener not set!\n"));
+      }
+    else if (this->thread_id_listener_.value () == ACE_Thread::self ())
       {
         ACE_ERROR ((LM_ERROR, "ERROR: "
                                "Thread switch for ConnectorStatusListener "

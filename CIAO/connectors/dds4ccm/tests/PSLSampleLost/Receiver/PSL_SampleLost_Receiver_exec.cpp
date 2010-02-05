@@ -337,7 +337,12 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
                                ACE_TEXT ("'on_sample_lost' in on DDS_Listen and DDS_GET port Receiver\n")
                     ));
       }
-    if (this->thread_id_listener_1_.value () == ACE_Thread::self ())
+    if (this->thread_id_listener_1_.value () == 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: "
+                               "Thread ID for PortStatusListener I not set!\n"));
+      }
+    else if (this->thread_id_listener_1_.value () == ACE_Thread::self ())
       {
         ACE_ERROR ((LM_ERROR, "ERROR: "
                                "Thread switch for PortStatusListener I "
@@ -354,7 +359,12 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
                                this->thread_id_listener_1_.value (),
                                ACE_Thread::self ()));
       }
-    if (this->thread_id_listener_2_.value () == ACE_Thread::self ())
+    if (this->thread_id_listener_2_.value () == 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: "
+                               "Thread ID for PortStatusListener II not set!\n"));
+      }
+    else if (this->thread_id_listener_2_.value () == ACE_Thread::self ())
       {
         ACE_ERROR ((LM_ERROR, "ERROR: "
                                "Thread switch for PortStatusListener II "
