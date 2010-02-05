@@ -14,6 +14,8 @@
 #include "be_operation.h"
 #include "be_argument.h"
 #include "be_finder.h"
+#include "be_exception.h"
+#include "be_field.h"
 
 #include "ast_module.h"
 
@@ -37,7 +39,6 @@ be_visitor_xplicit_pre_proc::~be_visitor_xplicit_pre_proc (void)
 int
 be_visitor_xplicit_pre_proc::visit_home (be_home *node)
 {
-  this->node_ = node;
   UTL_NameList *parent_list = this->compute_inheritance (node);
 
   FE_InterfaceHeader header (0,
@@ -80,8 +81,8 @@ be_visitor_xplicit_pre_proc::visit_home (be_home *node)
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                         ACE_TEXT ("create_explicit - code generation ")
+                         ACE_TEXT ("be_visitor_xplicit_pre_proc::")
+                         ACE_TEXT ("visit_home - code generation ")
                          ACE_TEXT ("for home scope failed\n")),
                         0);
     }
@@ -126,10 +127,10 @@ be_visitor_xplicit_pre_proc::visit_operation (be_operation *node)
   idl_global->scopes ().top ()->add_to_scope (home_op);
   idl_global->scopes ().push (home_op);
 
-  if (this->visit_scope (home_op) != 0)
+  if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("be_visitor_xplicit_pre_proc::")
                          ACE_TEXT ("visit_operation - code generation ")
                          ACE_TEXT ("for scope failed\n")),
                         -1);
@@ -161,19 +162,18 @@ int
 be_visitor_xplicit_pre_proc::visit_factory (be_factory *node)
 {
   UTL_ScopedName sn (node->local_name (), 0);
+  
+  AST_Home *f_home =
+    AST_Home::narrow_from_scope (node->defined_in ());
 
   be_operation *added_factory = 0;
   ACE_NEW_RETURN (added_factory,
-                  be_operation (this->node_->managed_component (),
+                  be_operation (f_home->managed_component (),
                                 AST_Operation::OP_noflags,
                                 &sn,
                                 false,
                                 false),
                   -1);
-
-  AST_Interface *d =
-    AST_Interface::narrow_from_scope (
-      idl_global->scopes ().top ());
 
   idl_global->scopes ().top ()->add_to_scope (added_factory);
   idl_global->scopes ().push (added_factory);
@@ -181,7 +181,7 @@ be_visitor_xplicit_pre_proc::visit_factory (be_factory *node)
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("be_visitor_xplicit_pre_proc::")
                          ACE_TEXT ("visit_factory - code generation ")
                          ACE_TEXT ("for scope failed\n")),
                         -1);
@@ -197,9 +197,12 @@ be_visitor_xplicit_pre_proc::visit_finder (be_finder *node)
 {
   UTL_ScopedName sn (node->local_name (), 0);
 
+  AST_Home *f_home =
+    AST_Home::narrow_from_scope (node->defined_in ());
+
   be_operation *added_finder = 0;
   ACE_NEW_RETURN (added_finder,
-                  be_operation (this->node_->managed_component (),
+                  be_operation (f_home->managed_component (),
                                 AST_Operation::OP_noflags,
                                 &sn,
                                 false,
@@ -212,7 +215,7 @@ be_visitor_xplicit_pre_proc::visit_finder (be_finder *node)
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("be_visitor_xplicit_pre_proc::")
                          ACE_TEXT ("visit_finder - code generation ")
                          ACE_TEXT ("for scope failed\n")),
                         -1);
@@ -220,6 +223,154 @@ be_visitor_xplicit_pre_proc::visit_finder (be_finder *node)
 
   idl_global->scopes ().pop ();
 
+  return 0;
+}
+
+int
+be_visitor_xplicit_pre_proc::visit_valuebox (be_valuebox *)
+{
+  return 0;
+}
+
+int
+be_visitor_xplicit_pre_proc::visit_valuetype (be_valuetype *)
+{
+  return 0;
+}
+
+int
+be_visitor_xplicit_pre_proc::visit_structure (be_structure *)
+{
+  return 0;
+}
+
+int
+be_visitor_xplicit_pre_proc::visit_structure_fwd (be_structure_fwd *)
+{
+  return 0;
+}
+
+int
+be_visitor_xplicit_pre_proc::visit_exception (be_exception *node)
+{
+  UTL_ScopedName sn (node->local_name (), 0);
+  
+  be_exception *added_excep = 0;
+  ACE_NEW_RETURN (added_excep,
+                  be_exception (&sn,
+                                false,
+                                false),
+                  -1);
+                                          
+  idl_global->scopes ().top ()->add_to_scope (added_excep);
+  idl_global->scopes ().push (added_excep);
+  
+  if (this->visit_scope (node) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_xplicit_pre_proc::")
+                         ACE_TEXT ("visit_exception - code generation ")
+                         ACE_TEXT ("for scope failed\n")),
+                        -1);
+    }
+    
+  idl_global->scopes ().pop ();
+    
+  return 0;
+}
+
+int
+be_visitor_xplicit_pre_proc::visit_enum (be_enum *)
+{
+  return 0;
+}
+
+int
+be_visitor_xplicit_pre_proc::visit_field (be_field *node)
+{
+  UTL_ScopedName sn (node->local_name (), 0);
+  
+  be_field *added_field = 0;
+  ACE_NEW_RETURN (added_field,
+                  be_field (node->field_type (),
+                            &sn,
+                            node->visibility ()),
+                  -1);
+                                    
+  idl_global->scopes ().top ()->add_to_scope (added_field);
+  
+  return 0;
+}
+
+int
+be_visitor_xplicit_pre_proc::visit_attribute (be_attribute *)
+{
+  return 0;
+}
+
+int
+be_visitor_xplicit_pre_proc::visit_union (be_union *)
+{
+  return 0;
+}
+
+int
+be_visitor_xplicit_pre_proc::visit_union_fwd (be_union_fwd *)
+{
+  return 0;
+}
+
+int
+be_visitor_xplicit_pre_proc::visit_union_branch (be_union_branch *)
+{
+  return 0;
+}
+
+int
+be_visitor_xplicit_pre_proc::visit_union_label (be_union_label *)
+{
+  return 0;
+}
+
+int
+be_visitor_xplicit_pre_proc::visit_constant (be_constant *)
+{
+  return 0;
+}
+
+int
+be_visitor_xplicit_pre_proc::visit_enum_val (be_enum_val *)
+{
+  return 0;
+}
+
+int
+be_visitor_xplicit_pre_proc::visit_array (be_array *)
+{
+  return 0;
+}
+
+int
+be_visitor_xplicit_pre_proc::visit_sequence (be_sequence *)
+{
+  return 0;
+}
+
+int
+be_visitor_xplicit_pre_proc::visit_string (be_string *)
+{
+  return 0;
+}
+
+int
+be_visitor_xplicit_pre_proc::visit_typedef (be_typedef *)
+{
+  return 0;
+}
+
+int
+be_visitor_xplicit_pre_proc::visit_native (be_native *)
+{
   return 0;
 }
 

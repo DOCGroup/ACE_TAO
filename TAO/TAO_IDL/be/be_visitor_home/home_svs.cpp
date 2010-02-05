@@ -106,8 +106,15 @@ be_visitor_home_svs::visit_argument (be_argument *node)
 int
 be_visitor_home_svs::visit_factory (be_factory *node)
 {
+  // An inherited factory/finder needs to return the managed
+  // component of the home where it is defined.
+  be_home *h =
+    be_home::narrow_from_scope (node->defined_in ());
+  
+  AST_Component *c = h->managed_component ();
+  
   os_ << be_nl << be_nl
-      << "::" << comp_->name () << "_ptr" << be_nl
+      << "::" << c->name () << "_ptr" << be_nl
       << node_->original_local_name ()->get_string ()
       << "_Servant::" << node->local_name ();
       

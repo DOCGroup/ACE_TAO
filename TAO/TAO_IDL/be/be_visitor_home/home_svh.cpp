@@ -89,8 +89,15 @@ be_visitor_home_svh::visit_attribute (be_attribute *node)
 int
 be_visitor_home_svh::visit_factory (be_factory *node)
 {
+  // An inherited factory/finder needs to return the managed
+  // component of the home where it is defined.
+  be_home *h =
+    be_home::narrow_from_scope (node->defined_in ());
+  
+  AST_Component *c = h->managed_component ();
+  
   os_ << be_nl << be_nl
-      << "virtual ::" << comp_->name () << "_ptr" << be_nl
+      << "virtual ::" << c->name () << "_ptr" << be_nl
       << node->local_name ();
       
   // We can reuse this visitor.
