@@ -40,12 +40,31 @@ public:
   virtual int visit_factory (be_factory *node);
   virtual int visit_finder (be_finder *node);
   
+  virtual int visit_valuebox (be_valuebox *node);
+  virtual int visit_valuetype (be_valuetype *node);
+  virtual int visit_structure (be_structure *node);
+  virtual int visit_structure_fwd (be_structure_fwd *node);
+  virtual int visit_exception (be_exception *node);
+  virtual int visit_enum (be_enum *node);
+  virtual int visit_field (be_field *node);
+  virtual int visit_attribute (be_attribute *node);
+  virtual int visit_union (be_union *node);
+  virtual int visit_union_fwd (be_union_fwd *node);
+  virtual int visit_union_branch (be_union_branch *node);
+  virtual int visit_union_label (be_union_label *node);
+  virtual int visit_constant (be_constant *node);
+  virtual int visit_enum_val (be_enum_val *node);
+  virtual int visit_array (be_array *node);
+  virtual int visit_sequence (be_sequence *node);
+  virtual int visit_string (be_string *node);
+  virtual int visit_typedef (be_typedef *node);
+  virtual int visit_native (be_native *node);
+
   // Member accessor
   be_interface *xplicit (void) const;
   
 private:
   be_interface *xplicit_;
-  be_home *node_;
 };
 
 #endif // TAO_BE_VISITOR_XPLICIT_PRE_PROC_H
