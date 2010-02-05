@@ -1,3 +1,8 @@
+Fri Feb  5 14:07:48 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/TimeConversion/Time_Conversion.mpc:
+          Resolved compiler issues on windows.
+
 Fri Feb  5 13:11:13 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/docs/TestCoverage.ods:
