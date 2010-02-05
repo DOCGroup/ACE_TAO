@@ -56,10 +56,6 @@ public:
   
 protected:
   // Utility methods to handle the corresponding IDL declarations.
-//  int gen_factories (be_home *node,
-//                     AST_Interface *xplicit);
-//  int gen_finders (be_home *node,
-//                   AST_Interface *xplicit);
   int gen_implicit_ops (be_home *node,
                         AST_Interface *implicit);
 

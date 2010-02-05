@@ -1,3 +1,17 @@
+Fri Feb  5 19:20:42 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+        * TAO_IDL/be/be_visitor_home/home_svh.cpp:
+        * TAO_IDL/be/be_visitor_xplicit_pre_proc.cpp:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+        * TAO_IDL/be_include/be_visitor_xplicit_pre_proc.h:
+        
+          Fixed bug introduced by the recent change in handling of
+          home factories and finders, where the return type of an
+          inherited factory or finder was the type of the component
+          managed by the derived home, instead of the managed component
+          of the base home, as it should be.
+
 Thu Feb  4 14:13:32 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * TAO_IDL/be/be_visitor_union/discriminant_ci.cpp:
