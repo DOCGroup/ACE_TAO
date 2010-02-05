@@ -344,6 +344,8 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::create_filter (
       throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
     }
   ::DDS::DataReaderListener_var listener = this->reader_->get_listener ();
+  CCM_DDS::PortStatusListener_ptr psl =
+    dynamic_cast <CCM_DDS::PortStatusListener_ptr> (listener.in ());
   this->reader_->set_listener (::DDS::DataReaderListener::_nil (), 0);
   ::DDS::ReturnCode_t retval = sub->delete_datareader (this->reader_);
   if (retval != ::DDS::RETCODE_OK)
@@ -362,7 +364,8 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::create_filter (
                         this->library_name_.c_str (),
                         this->profile_name_.c_str (),
                         listener,
-                        ::CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+                        ::CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
+                          psl));
     }
   else
     {
@@ -371,7 +374,8 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::create_filter (
                         this->cft_,
                         drqos,
                         listener,
-                        ::CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+                        ::CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
+                          psl));
     }
   if (CORBA::is_nil(reader))
     {

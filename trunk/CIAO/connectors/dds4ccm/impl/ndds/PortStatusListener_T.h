@@ -61,7 +61,9 @@ namespace CIAO
     ::DDS::DataReader_ptr ,
     const ::DDS::SubscriptionMatchedStatus & ) {}
 
-      static ::DDS::StatusMask get_mask (void);
+      static ::DDS::StatusMask get_mask (
+        ::CCM_DDS::PortStatusListener_ptr psl);
+
     private:
       ::CCM_DDS::PortStatusListener_var port_status_listener_;
     protected:

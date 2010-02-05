@@ -53,7 +53,8 @@ namespace CIAO
       /// Destructor
       virtual ~PublisherListener_T (void);
 
-      static ::DDS::StatusMask get_mask (void);
+      static ::DDS::StatusMask get_mask (
+        ::CCM_DDS::ConnectorStatusListener_ptr error_listener);
 
     private:
       virtual void on_unexpected_status (
