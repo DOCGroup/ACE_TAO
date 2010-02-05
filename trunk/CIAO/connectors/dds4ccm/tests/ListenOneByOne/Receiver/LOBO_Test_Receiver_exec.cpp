@@ -263,7 +263,12 @@ namespace CIAO_LOBO_Test_Receiver_Impl
                                "one_by_one callback. "
                                "Test passed!\n"));
       }
-    if (this->thread_id_listener_.value () == ACE_Thread::self ())
+    if (this->thread_id_listener_.value () == 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: "
+                               "Thread ID for ReaderListener not set!\n"));
+      }
+    else if (this->thread_id_listener_.value () == ACE_Thread::self ())
       {
         ACE_ERROR ((LM_ERROR, "ERROR: ONE_BY_ONE: "
                                "Thread switch for ReaderListener "
