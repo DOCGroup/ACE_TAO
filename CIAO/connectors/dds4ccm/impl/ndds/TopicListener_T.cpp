@@ -58,10 +58,18 @@ CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::on_inconsistent_topic (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::StatusMask
-CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::get_mask (void)
+CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
+  CCM_DDS::ConnectorStatusListener_ptr error_listener)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::TopicListener_T::get_mask");
 
-  return DDS_INCONSISTENT_TOPIC_STATUS;
+  if (!CORBA::is_nil (error_listener) || CIAO_debug_level >= 10)
+    {
+      return DDS_INCONSISTENT_TOPIC_STATUS;
+    }
+  else
+    {
+      return DDS_STATUS_MASK_NONE;
+    }
 }
 

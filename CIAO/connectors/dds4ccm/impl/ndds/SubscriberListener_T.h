@@ -63,7 +63,8 @@ namespace CIAO
         ::DDS::DataReader_ptr ,
         const ::DDS::SampleLostStatus & ) {}
 
-      static ::DDS::StatusMask get_mask (void);
+      static ::DDS::StatusMask get_mask (
+        ::CCM_DDS::ConnectorStatusListener_ptr csl);
 
     private:
       typename CCM_TYPE::context_type::_var_type context_;

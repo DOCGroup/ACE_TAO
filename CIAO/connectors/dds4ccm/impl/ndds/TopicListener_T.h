@@ -32,7 +32,8 @@ namespace CIAO
         ::DDS::Topic_ptr the_topic,
         const ::DDS::InconsistentTopicStatus & status);
 
-      static ::DDS::StatusMask get_mask (void);
+      static ::DDS::StatusMask get_mask (
+        CCM_DDS::ConnectorStatusListener_ptr error_listener);
 
     private:
       CCM_DDS::ConnectorStatusListener_var error_listener_;

@@ -36,7 +36,8 @@ namespace CIAO
 
         virtual void on_data_available( ::DDS::DataReader_ptr rdr);
 
-        static ::DDS::StatusMask get_mask (void);
+        static ::DDS::StatusMask get_mask (
+          typename CCM_TYPE::statelistener_type::_ptr_type listener);
 
         void on_data_available_i ( ::DDS::DataReader_ptr rdr);
 

@@ -224,12 +224,20 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_reliable_reader_activ
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::StatusMask
-CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_mask (void)
+CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
+  ::CCM_DDS::ConnectorStatusListener_ptr error_listener)
 {
-  return DDS_OFFERED_DEADLINE_MISSED_STATUS |
-         DDS_OFFERED_INCOMPATIBLE_QOS_STATUS |
-         DDS_LIVELINESS_LOST_STATUS |
-         DDS_PUBLICATION_MATCHED_STATUS |
-         DDS_RELIABLE_READER_ACTIVITY_CHANGED_STATUS;
+  if (!CORBA::is_nil (error_listener) || CIAO_debug_level >= 10)
+    {
+      return DDS_OFFERED_DEADLINE_MISSED_STATUS |
+            DDS_OFFERED_INCOMPATIBLE_QOS_STATUS |
+            DDS_LIVELINESS_LOST_STATUS |
+            DDS_PUBLICATION_MATCHED_STATUS |
+            DDS_RELIABLE_READER_ACTIVITY_CHANGED_STATUS;
+    }
+  else
+    {
+      return DDS_STATUS_MASK_NONE;
+    }
 }
 
