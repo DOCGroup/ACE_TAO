@@ -296,17 +296,16 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-     if(!this->rejected_.value ())
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
-                               ACE_TEXT ("warning 'on_sample_rejected' in the Receiver\n")
-                    ));
-      }
-
-    else
+     if (this->rejected_.value ())
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Have received the expected ")
                                ACE_TEXT ("'on_sample_rejected' in the Receiver\n")
+                    ));
+      }
+    else
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
+                               ACE_TEXT ("warning 'on_sample_rejected' in the Receiver\n")
                     ));
       }
 
