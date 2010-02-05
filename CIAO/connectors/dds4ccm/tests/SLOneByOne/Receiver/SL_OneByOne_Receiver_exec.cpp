@@ -13,8 +13,8 @@
 
 namespace CIAO_SL_OneByOne_Receiver_Impl
 {
-//============================================================
-  // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
+  //============================================================
+  // read_action_Generator
   //============================================================
   read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
     : pulse_callback_ (callback)
@@ -38,17 +38,20 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
       }
     return 0;
   }
+
   //============================================================
-  // Facet Executor Implementation Class: StateListener_exec_i
+  // StateListener_exec_i
   //============================================================
   StateListener_exec_i::StateListener_exec_i (Atomic_Boolean &no_operation,
                                               Atomic_Boolean &on_creation,
                                               Atomic_Boolean &on_one_update,
-                                              Atomic_Boolean &on_deletion)
+                                              Atomic_Boolean &on_deletion,
+                                              Atomic_ThreadId &thread_id)
     :no_operation_(no_operation),
      on_creation_(on_creation),
      on_one_update_(on_one_update),
-     on_deletion_(on_deletion)
+     on_deletion_(on_deletion),
+     thread_id_ (thread_id)
   {
   }
 
@@ -61,7 +64,8 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
   StateListener_exec_i::on_creation (const ::TestTopic & datum,
                                      const ::CCM_DDS::ReadInfo & info)
   {
-    if((!datum.key.in()==0) && (info.instance_status == CCM_DDS::INSTANCE_CREATED))
+    this->thread_id_ = ACE_Thread::self ();
+    if (!datum.key.in() == 0 && info.instance_status == CCM_DDS::INSTANCE_CREATED)
       {
         this->on_creation_ = true;
       }
@@ -71,15 +75,16 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
   StateListener_exec_i::on_one_update (const ::TestTopic & datum,
                                        const ::CCM_DDS::ReadInfo & info)
   {
-    if(info.instance_status != CCM_DDS::INSTANCE_UPDATED)
+    this->thread_id_ = ACE_Thread::self ();
+    if (info.instance_status != CCM_DDS::INSTANCE_UPDATED)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected info.status ")
                               ACE_TEXT ("'CCM_DDS::INSTANCE_UPDATED'")
                               ACE_TEXT ("  with operation 'on_one_update' from StateListener in Receiver\n")
-                    )); 
+                    ));
 
       }
-    if((!datum.key.in()==0) && (info.instance_status == CCM_DDS::INSTANCE_UPDATED))
+    if (!datum.key.in() == 0 && info.instance_status == CCM_DDS::INSTANCE_UPDATED)
       {
         this->on_one_update_ = true;
       }
@@ -96,7 +101,8 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
   StateListener_exec_i::on_deletion (const ::TestTopic & datum,
                                     const ::CCM_DDS::ReadInfo & info)
   {
-     if(info.instance_status != CCM_DDS::INSTANCE_DELETED)
+    this->thread_id_ = ACE_Thread::self ();
+    if (info.instance_status != CCM_DDS::INSTANCE_DELETED)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected info.status ")
                               ACE_TEXT ("'CCM_DDS::INSTANCE_DELETED'")
@@ -104,48 +110,23 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
                     ));
 
       }
-     if((!datum.key.in()==0) && (info.instance_status == CCM_DDS::INSTANCE_DELETED))
-       {
-         this->on_deletion_ = true;
-       }
-  }
-  //============================================================
-  // Facet Executor Implementation Class: PortStatusListener_exec_i
-  //============================================================
-  PortStatusListener_exec_i::PortStatusListener_exec_i ()
-  {
-  }
-
-  PortStatusListener_exec_i::~PortStatusListener_exec_i (void)
-  {
-  }
-
-  // Operations from ::CCM_DDS::PortStatusListener
-  void
-  PortStatusListener_exec_i::on_requested_deadline_missed (
-    ::DDS::DataReader_ptr /* the_reader */,
-    const ::DDS::RequestedDeadlineMissedStatus & /* status */)
-  {
-  }
-
-  void
-  PortStatusListener_exec_i::on_sample_lost (
-    ::DDS::DataReader_ptr /* the_reader */,
-    const ::DDS::SampleLostStatus & /* status */)
-  {
+    if (!datum.key.in() == 0 && info.instance_status == CCM_DDS::INSTANCE_DELETED)
+      {
+        this->on_deletion_ = true;
+      }
   }
 
   //============================================================
-  // Component Executor Implementation Class: Receiver_exec_iTestTopic_RawListener_exec_i ();
+  // Receiver_exec_i
   //============================================================
-
   Receiver_exec_i::Receiver_exec_i (void)
   : rate_ (10),
     no_operation_(true),
     updater_data_(false),
     on_creation_(false),
     on_one_update_(false),
-    on_deletion_(false)
+    on_deletion_(false),
+    thread_id_listener_ (0)
   {
     this->ticker_ = new read_action_Generator (*this); 
   }
@@ -166,7 +147,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
     ::CCM_DDS::ReadInfoSeq_var readinfoseq;
     try
       {
-        this->reader_->read_all(TestTopic_infos.out(), readinfoseq.out());
+        this->reader_->read_all (TestTopic_infos.out(), readinfoseq.out());
         for(CORBA::ULong i = 0; i < readinfoseq->length(); ++i)
           {
             this->updater_data_ = true;
@@ -176,7 +157,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
                                 ACE_TEXT ("-> UTC date =%#T\n"),
                                 &tv));
           }
-        for(CORBA::ULong i = 0; i < TestTopic_infos->length(); ++i)
+        for(CORBA::ULong i = 0; i < TestTopic_infos->length (); ++i)
           {
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL keyed test info : ")
                        ACE_TEXT ("Number <%d> : received TestTopic_info for <%C> at %u\n"),
@@ -197,7 +178,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
   Receiver_exec_i::get_info_out_status (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
-    return new PortStatusListener_exec_i ();
+    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
   ::CCM_DDS::TestTopic::CCM_StateListener_ptr
@@ -206,7 +187,8 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
     return new StateListener_exec_i(this->no_operation_,
                                      this->on_creation_,
                                      this->on_one_update_,
-                                     this->on_deletion_);
+                                     this->on_deletion_,
+                                     this->thread_id_listener_);
   }
 
   // Operations from Components::SessionComponent.
@@ -225,7 +207,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
-    this->reader_ = this->context_->get_connection_info_out_data();
+    this->reader_ = this->context_->get_connection_info_out_data ();
   }
 
   void
@@ -281,7 +263,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
     if(!this->on_one_update_.value  ())
       {
          no_error = false;
-         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR:didn't receive the expected ")
+         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: didn't receive the expected ")
                                ACE_TEXT (" operation 'on_one_update' from StateListener in Receiver\n")
                     ));
       }
@@ -298,6 +280,28 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Have received the  expected ")
                                ACE_TEXT (" operations for ONE_BY_ONE from StateListener in Receiver\n")
                    ));
+      }
+    if (this->thread_id_listener_.value () == 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: "
+                               "Thread ID for StatusListener not set!\n"));
+      }
+    else if (this->thread_id_listener_.value () == ACE_Thread::self ())
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: "
+                               "Thread switch for StatusListener "
+                               "doesn't seem to work! "
+                               "listener <%u> - component <%u>\n",
+                               this->thread_id_listener_.value (),
+                               ACE_Thread::self ()));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "OK : "
+                               "Thread switch for StatusListener seems OK. "
+                               "listener <%u> - component <%u>\n",
+                               this->thread_id_listener_.value (),
+                               ACE_Thread::self ()));
       }
   }
 

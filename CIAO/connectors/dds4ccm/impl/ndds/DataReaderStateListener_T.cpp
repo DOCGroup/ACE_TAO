@@ -200,7 +200,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
   typename CCM_TYPE::statelistener_type::_ptr_type listener)
 {
-  if (!CORBA::is_nil (error_listener) || CIAO_debug_level >= 10)
+  if (!CORBA::is_nil (listener) || CIAO_debug_level >= 10)
     {
       return DDS_DATA_AVAILABLE_STATUS |
             DDS_REQUESTED_DEADLINE_MISSED_STATUS |
