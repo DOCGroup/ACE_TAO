@@ -1,3 +1,15 @@
+Fri Feb  5 10:07:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDSCallbackStatusHandler.h:
+        * connectors/dds4ccm/impl/ndds/DDSCallbackStatusHandler.cpp:
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/TopicListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/ndds_impl.mpc:
+        * connectors/dds4ccm/impl/ndds/OnUnexpectedStatusHandler.h:
+        * connectors/dds4ccm/impl/ndds/OnUnexpectedStatusHandler.cpp:
+          Renamed OnUnexpectedStatusHandler to DDSCallbackStatusHandler.
+
 Fri Feb  5 09:38:48 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDS_Get_T.cpp:
