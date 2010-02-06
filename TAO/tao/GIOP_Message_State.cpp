@@ -215,7 +215,8 @@ TAO_GIOP_Message_State::read_ulong (const char *rd_ptr) const
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
   if (!(this->byte_order_ != ACE_CDR_BYTE_ORDER))
     {
-      x = *reinterpret_cast<ACE_CDR::ULong*> (buf);
+      ACE_CDR::ULong* pul = reinterpret_cast<ACE_CDR::ULong*> (buf);
+      x = *pul;
     }
   else
     {
