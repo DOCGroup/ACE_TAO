@@ -31,6 +31,8 @@ eventtype ev
 {
 };
 
+/*
+Jeff, this gives a redefinition of BarConsumer
 module orange
 {
   module apple
@@ -39,6 +41,7 @@ module orange
     eventtype Bar;
   };
 };
+*/
 
 module GlobalTyped<typename A, typename B>
 {
