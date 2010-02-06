@@ -287,7 +287,8 @@ run (ACE_Reactor_Impl &ri, const ACE_TCHAR *what, bool tp = true)
 
   // Bind acceptor to any port and then find out what the port was.
   ACE_INET_Addr server_addr;
-  if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &), &r) == -1
+  ACE_INET_Addr local_addr (ACE_sap_any_cast (const ACE_INET_Addr &));
+  if (acceptor.open (local_addr, &r) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
     {
       ACE_ERROR ((LM_ERROR,
