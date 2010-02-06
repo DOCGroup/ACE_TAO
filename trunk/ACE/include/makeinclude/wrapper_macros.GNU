@@ -910,6 +910,11 @@ ifeq ($(icecream),1)
     # force LD and DLD to be 'normal' tools
     override LD := $(LD)
     override DLD := $(DLD)
+    # define tools that icecc should call for local jobs
+    ICECC_CC := $(CC)
+    ICECC_CXX := $(CXX)
+    export ICECC_CC ICECC_CXX
+    # let all compilation go through icecc
     CC := $(ICECC_PROG)
     CXX := $(ICECC_PROG)
   endif
