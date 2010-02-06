@@ -888,6 +888,33 @@ ace_uuid      ?= 1
 ace_filecache ?= 1
 acexml        ?= 1
 
+# Icecream distributed compilation support
+ifeq ($(icecream),1)
+  # check availability of icecc
+  ifneq ($(ICECC_ROOT),)
+    ICECC_PROG := $(ICECC_ROOT)/icecc
+  else
+    ICECC_PROG := $(shell which icecc 2>/dev/null)
+  endif
+  ICECC_VERTEST := $(shell test -x "$(ICECC_PROG)" && $(ICECC_PROG) --version)
+  ifneq (ICECC,$(findstring ICECC,$(ICECC_VERTEST)))
+    # not good, try alternative install location
+    ICECC_PROG := /opt/icecream/bin/icecc
+    ICECC_VERTEST := $(shell test -x "$(ICECC_PROG)" && $(ICECC_PROG) --version)
+    ifneq (ICECC,$(findstring ICECC,$(ICECC_VERTEST)))
+      override icecream := 0
+      $(error Cannot locate valid Icecream compiler.)
+    endif
+  endif
+  ifeq ($(icecream),1)
+    # force LD and DLD to be 'normal' tools
+    override LD := $(LD)
+    override DLD := $(DLD)
+    CC := $(ICECC_PROG)
+    CXX := $(ICECC_PROG)
+  endif
+endif
+
 #----------------------------------------------------------------------------
 #      Conditional macro definitions
 #----------------------------------------------------------------------------
