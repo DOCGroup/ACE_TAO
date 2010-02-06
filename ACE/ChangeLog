@@ -1,3 +1,8 @@
+Sat Feb  6 11:28:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/LSOCK.cpp:
+          Fixes for strict-aliasing warnings.
+
 Thu Feb  4 20:29:52 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * tests/Reactor_Fairness_Test.cpp: Don't try ACE_Dev_Poll_Reactor on
