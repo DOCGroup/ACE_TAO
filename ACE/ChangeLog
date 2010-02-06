@@ -1,3 +1,11 @@
+Sat Feb  6 12:58:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Reactor_Performance_Test.cpp:
+        * tests/Reactor_Fairness_Test.cpp:
+        * ASNMP/asnmp/address.cpp:
+        * examples/Reactor/Misc/pingpong.cpp:
+          More fixes for strict-aliasing warnings.
+
 Sat Feb  6 11:28:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * ace/LSOCK.cpp:
