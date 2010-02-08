@@ -105,7 +105,7 @@ project(AMI_Hello_Base_Hello_Sender_exec) : ciao_executor, ami, ami4ccm_stub {
 
 
 project(AMI_Hello_Base_Hello_Sender_svnt) : ciao_servant, ami   {
-  after      += AMI_Hello_Base_skel AMI_Hello_Base_Hello_Sender_lem_stub AMI_Hello_Base_exec AMI_Hello_exec
+  after      += AMI_Hello_Base_skel AMI_Hello_Base_Hello_Sender_lem_stub AMI_Hello_Base_exec AMI_Hello_exec AMI_Hello_skel
   sharedname  = Hello_Sender_svnt
   libs       += Hello_Sender_stub Hello_Sender_lem_stub  \
                 Hello_skel \

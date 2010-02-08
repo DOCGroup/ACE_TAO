@@ -617,7 +617,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: ")
             ACE_TEXT ("Test did not run: Didn't receive ")
-            ACE_TEXT ("the expected number of DATA_ON_READERS")
+            ACE_TEXT ("the expected number of DATA_ON_READERS ")
             ACE_TEXT ("events.\n")));
       }
   }
