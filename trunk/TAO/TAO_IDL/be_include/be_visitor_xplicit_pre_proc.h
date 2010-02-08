@@ -59,12 +59,14 @@ public:
   virtual int visit_string (be_string *node);
   virtual int visit_typedef (be_typedef *node);
   virtual int visit_native (be_native *node);
+  virtual int visit_predefined_type (be_predefined_type *node);
 
   // Member accessor
   be_interface *xplicit (void) const;
   
 private:
   be_interface *xplicit_;
+  be_type *type_holder_;
 };
 
 #endif // TAO_BE_VISITOR_XPLICIT_PRE_PROC_H
