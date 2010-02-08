@@ -1,3 +1,8 @@
+Mon Feb  8 12:03:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.cpp:
+          Shouldn't propagate on_data_on_readers to the user component.
+
 Mon Feb  8 11:35:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataWriterListener_T.h:
