@@ -124,7 +124,7 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-on_requested_incompatible_qos (
+CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_requested_incompatible_qos (
   ::DDS::DataReader_ptr ,
   const ::DDS::RequestedIncompatibleQosStatus & )
 {

@@ -7,8 +7,10 @@
 
 namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
 {
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &inconsistent)
-   : inconsistent_ (inconsistent)
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &inconsistent,
+                                                                  Atomic_ThreadId &thread_id)
+    : inconsistent_ (inconsistent),
+      thread_id_ (thread_id)
   {
   }
 
@@ -18,106 +20,46 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
 
   // Operations from ::CCM_DDS::ConnectorStatusListener
   void ConnectorStatusListener_exec_i::on_inconsistent_topic(
-     ::DDS::Topic_ptr /* the_topic */,
-     const DDS::InconsistentTopicStatus & /* status */)
+    ::DDS::Topic_ptr /* the_topic */,
+    const DDS::InconsistentTopicStatus & /* status */)
   {
+    this->thread_id_ = ACE_Thread::self ();
     this->inconsistent_ = true;
-    //ACE_DEBUG ((LM_DEBUG, "Receiver: ConnectorStatusListener_exec_i::on_inconsistent_topic\n"));
   }
 
   void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::RequestedIncompatibleQosStatus & /*status*/)
+    const DDS::RequestedIncompatibleQosStatus & /*status*/)
   {
-    //ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n"));
   }
 
   void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::SampleRejectedStatus & /*status*/)
+    ::DDS::DataReader_ptr /*the_reader*/,
+    const DDS::SampleRejectedStatus & /*status*/)
   {
-    //ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_sample_rejected\n"));
   }
 
   void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
-     ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedDeadlineMissedStatus & /*status*/)
+    ::DDS::DataWriter_ptr /*the_writer*/,
+    const DDS::OfferedDeadlineMissedStatus & /*status*/)
   {
-    //ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_offered_deadline_missed\n"));
   }
 
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedIncompatibleQosStatus & /*status*/)
+    ::DDS::DataWriter_ptr /*the_writer*/,
+    const DDS::OfferedIncompatibleQosStatus & /*status*/)
   {
-    //ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n"));
   }
 
   void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr /*the_entity*/,
     ::DDS::StatusKind  /*status_kind*/)
   {
-    //ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_unexpected_status\n"));
-  }
-
-  TestTopic_RawListener_exec_i::TestTopic_RawListener_exec_i (void)
-  {
-  }
-
-  TestTopic_RawListener_exec_i::~TestTopic_RawListener_exec_i (void)
-  {
-  }
-
-  // Operations from ::CCM_DDS::TestTopic_RawListener
-
-  void
-  TestTopic_RawListener_exec_i::on_one_data (
-    const TestTopic & /*an_instance*/ ,
-    const ::CCM_DDS::ReadInfo & /* info */)
-  {
-    //ACE_DEBUG ((LM_DEBUG, " receive data ============= %d\n", this->received_));
-  }
-
-  void
-  TestTopic_RawListener_exec_i::on_many_data (
-    const TestTopic_Seq & /*an_instance */,
-    const ::CCM_DDS::ReadInfoSeq & /* info */)
-  {
-    //ACE_DEBUG ((LM_DEBUG, " receive data ============= %d\n", this->received_));
-  }
-
-  //============================================================
-  // Facet Executor Implementation Class: PortStatusListener_exec_i
-  //============================================================
-
-  PortStatusListener_exec_i::PortStatusListener_exec_i (void)
-  {
-  }
-
-  PortStatusListener_exec_i::~PortStatusListener_exec_i (void)
-  {
-  }
-
-  // Operations from ::CCM_DDS::PortStatusListener
-
-  void
-    PortStatusListener_exec_i::on_requested_deadline_missed (
-    ::DDS::DataReader_ptr /* the_reader */,
-    const ::DDS::RequestedDeadlineMissedStatus & /* status */)
-  {
-  }
-
-  void
-  PortStatusListener_exec_i::on_sample_lost (
-    ::DDS::DataReader_ptr /* the_reader */,
-    const ::DDS::SampleLostStatus & /* status */)
-  {
   }
 
   //============================================================
   // Component Executor Implementation Class: Receiver_exec_iTestTopic_RawListener_exec_i ();
   //============================================================
-
   Receiver_exec_i::Receiver_exec_i (void)
     : inconsistent_ (false)
   {
@@ -132,7 +74,7 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new TestTopic RAW listener\n")));
-    return new TestTopic_RawListener_exec_i ();
+    return ::CCM_DDS::TestTopic::CCM_Listener::_nil ();
   }
 
 
@@ -140,13 +82,14 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
   Receiver_exec_i::get_info_out_status (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
-    return new PortStatusListener_exec_i ();
+    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Receiver_exec_i::get_info_out_connector_status (void)
   {
-    return new ConnectorStatusListener_exec_i (this->inconsistent_);
+    return new ConnectorStatusListener_exec_i (this->inconsistent_,
+                                               this->thread_id_listener_);
   }
 
   // Operations from Components::SessionComponent.
@@ -189,19 +132,62 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-    ACE_DEBUG ((LM_DEBUG, "*************in remove Receiver********** \n"));
-    if(!this->inconsistent_.value ())
+    if (!this->inconsistent_.value ())
       {
-         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
                                ACE_TEXT ("error 'on_inconsistent_topic' in Receiver\n")
                     ));
       }
     else
       {
-         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Received the expected ")
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Received the expected ")
                                ACE_TEXT ("'on_inconsistent_topic' in Receiver\n")
                     ));
       }
+    if (this->thread_id_listener_.value () == 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: "
+                              "Thread ID for ConnectorStatusListener not set!\n"));
+      }
+    #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
+    else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
+                                ACE_Thread::self ()))
+      {
+        ACE_DEBUG ((LM_DEBUG, "OK : "
+                              "Thread switch for ConnectorStatusListener seems OK. "
+                              "(DDS uses the CCM thread for its callback) "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_.value (),
+                              ACE_Thread::self ()));
+      }
+    else
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: "
+                              "Thread switch for ConnectorStatusListener "
+                              "doesn't seem to work! "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_.value (),
+                              ACE_Thread::self ()));
+      }
+    #else
+    else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
+                                ACE_Thread::self ()))
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: ConnectorStatusListener: "
+                              "DDS seems to use a CCM thread for its callback: "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_.value (),
+                              ACE_Thread::self ()));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "OK : ConnectorStatusListener: "
+                              "DDS seems to use its own thread for its callback: "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_.value (),
+                              ACE_Thread::self ()));
+      }
+    #endif
   }
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
