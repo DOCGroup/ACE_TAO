@@ -41,7 +41,6 @@ static const char copyright[] =
 " *       University of California at Irvine\n"
 " *       Irvine, CA\n"
 " *       USA\n"
-" *       http://doc.ece.uci.edu/\n"
 " * and\n"
 " *       Institute for Software Integrated Systems\n"
 " *       Vanderbilt University\n"
