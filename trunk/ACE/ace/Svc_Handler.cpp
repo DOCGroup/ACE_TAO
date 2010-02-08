@@ -116,16 +116,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::destroy (void)
       // Note that if we are *not* allocated dynamically then the
       // destructor will call <shutdown> automatically when it gets run
       // during cleanup.
-
-      if (this->reference_counting_policy ().value () ==
-          ACE_Event_Handler::Reference_Counting_Policy::ENABLED)
-        {
-          this->remove_reference ();
-        }
-      else
-        {
-          delete this;
-        }
+      delete this;
     }
 }
 
@@ -313,7 +304,15 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::handle_close (ACE_HANDLE,
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::handle_close");
 
-  this->destroy ();
+  if (this->reference_counting_policy ().value () ==
+      ACE_Event_Handler::Reference_Counting_Policy::ENABLED)
+    {
+      this->remove_reference ();
+    }
+  else
+    {
+      this->destroy ();
+    }
 
   return 0;
 }

@@ -1,3 +1,25 @@
+Mon Feb  8 16:21:06 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/Strategies_T.cpp:
+          Changed the code so that close() is called in case of failure
+          instead of destroy().
+
+        * ace/Connector.cpp:
+          Changed a bit the code added by me on 'Wed Sep  2 14:45:27 UTC 2009'
+          as a fix for bug#3731. After some more thinking it turned out that
+          the original code could result in a crash when reference counting is
+          not enabled and thus svc_handler could be destroyed at the time
+          when there was an attempt to do remove_reference().
+
+        * ace/Svc_Handler.cpp:
+          Moved the code added by me on 'Thu Feb  4 11:15:57 UTC 2010'
+          from destroy() to handle_close().
+
+        * tests/NonBlocking_Conn_Test.h:
+        * tests/NonBlocking_Conn_Test.cpp:
+          Extended the test for using Svc_Handler with and without
+          reference counting.
+
 Mon Feb  8 11:35:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ACETAOCIAO.style:

@@ -32,7 +32,10 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::ACE_NonBlocking_Connect_Handler
     (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 
   if (this->svc_handler_ != 0)
-    this->svc_handler_->add_reference ();
+    {
+      // If reference counting is not enabled then this does nothing.
+      this->svc_handler_->add_reference ();
+    }
 }
 
 template <class SVC_HANDLER> SVC_HANDLER *
@@ -124,16 +127,27 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_timeout
   SVC_HANDLER *svc_handler = 0;
   int const retval = this->close (svc_handler) ? 0 : -1;
 
-  // Forward to the SVC_HANDLER the <arg> that was passed in as a
-  // magic cookie during ACE_Connector::connect().  This gives the
-  // SVC_HANDLER an opportunity to take corrective action (e.g., wait
-  // a few milliseconds and try to reconnect again.
-  if (svc_handler != 0 && svc_handler->handle_timeout (tv, arg) == -1)
-    svc_handler->handle_close (svc_handler->get_handle (),
-                               ACE_Event_Handler::TIMER_MASK);
-
   if (svc_handler != 0)
-    svc_handler->remove_reference ();
+    {
+      ACE_Event_Handler_var ref_count_guard;
+
+      // We have to remove reference only when reference counting is enabled.
+      // Otherwise doing remove_reference() can be unsafe as svc_handler can
+      // be destroyed just before the point where we need to remove reference.
+      if (svc_handler->reference_counting_policy ().value () ==
+          ACE_Event_Handler::Reference_Counting_Policy::ENABLED)
+        {
+          ref_count_guard.reset (svc_handler);
+        }
+
+      // Forward to the SVC_HANDLER the <arg> that was passed in as a
+      // magic cookie during ACE_Connector::connect().  This gives the
+      // SVC_HANDLER an opportunity to take corrective action (e.g., wait
+      // a few milliseconds and try to reconnect again.
+      if (svc_handler->handle_timeout (tv, arg) == -1)
+        svc_handler->handle_close (svc_handler->get_handle (),
+                                   ACE_Event_Handler::TIMER_MASK);
+    }
 
   return retval;
 }
@@ -152,9 +166,18 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_input (ACE_HANDLE)
   // Close Svc_Handler.
   if (svc_handler != 0)
     {
-      svc_handler->close (NORMAL_CLOSE_OPERATION);
+      ACE_Event_Handler_var ref_count_guard;
 
-      svc_handler->remove_reference ();
+      // We have to remove reference only when reference counting is enabled.
+      // Otherwise doing remove_reference() can be unsafe as svc_handler can
+      // be destroyed just before the point where we need to remove reference.
+      if (svc_handler->reference_counting_policy ().value () ==
+          ACE_Event_Handler::Reference_Counting_Policy::ENABLED)
+        {
+          ref_count_guard.reset (svc_handler);
+        }
+
+      svc_handler->close (NORMAL_CLOSE_OPERATION);
     }
 
   return retval;
@@ -173,9 +196,18 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_output (ACE_HANDLE handle)
 
   if (svc_handler != 0)
     {
-      connector.initialize_svc_handler (handle, svc_handler);
+      ACE_Event_Handler_var ref_count_guard;
 
-      svc_handler->remove_reference ();
+      // We have to remove reference only when reference counting is enabled.
+      // Otherwise doing remove_reference() can be unsafe as svc_handler can
+      // be destroyed just before the point where we need to remove reference.
+      if (svc_handler->reference_counting_policy ().value () ==
+          ACE_Event_Handler::Reference_Counting_Policy::ENABLED)
+        {
+          ref_count_guard.reset (svc_handler);
+        }
+
+      connector.initialize_svc_handler (handle, svc_handler);
     }
 
   return retval;
