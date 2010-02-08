@@ -37,7 +37,14 @@ public:
       FAILED
     };
 
-  Svc_Handler (void);
+  enum Completion_Status
+    {
+      YES,
+      NO,
+      IGNORE
+    };
+
+  Svc_Handler (bool is_ref_counted);
 
   void connection_status (Connection_Status &status,
                           int &completion_counter);
