@@ -1,3 +1,8 @@
+Mon Feb  8 11:35:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ACETAOCIAO.style:
+          Updated with version 1.17 of Profactor Sylemanager
+
 Mon Feb  8 10:33:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * ace/ETCL/ETCL_l.cpp:
@@ -8,12 +13,12 @@ Sat Feb  6 18:58:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/wrapper_macros.GNU:
           Fixed missing definitions for Icecream support.
-      
+
 Sat Feb  6 15:03:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/wrapper_macros.GNU:
           Added support for Icecream distributed compile system.
-		  
+
 Sat Feb  6 12:58:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Reactor_Performance_Test.cpp:
