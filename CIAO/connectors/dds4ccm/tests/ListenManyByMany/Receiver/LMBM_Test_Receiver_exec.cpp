@@ -12,12 +12,9 @@ namespace CIAO_LMBM_Test_Receiver_Impl
   //============================================================
   ListenManyByManyTest_Listener_exec_i::ListenManyByManyTest_Listener_exec_i (
                                               Atomic_ULong &received_one_by_one,
-                                              Atomic_ULong &received_many_by_many,
-                                              Atomic_Bool &many_received)
+                                              Atomic_ULong &received_many_by_many)
     : received_one_by_one_ (received_one_by_one),
-      received_many_by_many_ (received_many_by_many),
-      many_received_ (many_received)
-
+      received_many_by_many_ (received_many_by_many)
   {
   }
 
@@ -71,68 +68,6 @@ namespace CIAO_LMBM_Test_Receiver_Impl
           }
       }
     this->received_many_by_many_ += an_instance.length ();
-    if (!this->many_received_.value () && an_instance.length () > 1)
-      {
-        this->many_received_ = true;
-      }
-  }
-
-  //============================================================
-  // ConnectorStatusListener_exec_i
-  //============================================================
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (
-            Receiver_exec_i &callback,
-            const CORBA::ULong &expected)
-    : callback_ (callback),
-      expected_ (expected),
-      received_ (0)
-  {
-  }
-
-  ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
-     ::DDS::Topic_ptr ,
-     const DDS::InconsistentTopicStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
-    ::DDS::DataReader_ptr ,
-     const DDS::RequestedIncompatibleQosStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr ,
-     const DDS::SampleRejectedStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
-     ::DDS::DataWriter_ptr ,
-     const DDS::OfferedDeadlineMissedStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr ,
-     const DDS::OfferedIncompatibleQosStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_unexpected_status(
-    ::DDS::Entity_ptr ,
-    ::DDS::StatusKind  status_kind)
-  {
-    if (status_kind == ::DDS::DATA_ON_READERS_STATUS)
-      ++this->received_;
-      if (this->received_ >= this->expected_)
-      {
-        this->callback_.start ();
-      }
   }
 
   //============================================================
@@ -141,9 +76,6 @@ namespace CIAO_LMBM_Test_Receiver_Impl
   Receiver_exec_i::Receiver_exec_i (void)
     : received_one_by_one_ (0),
       received_many_by_many_ (0),
-      started_ (false),
-      many_received_ (false),
-      expected_ (50),
       iterations_ (10),
       keys_ (5)
   {
@@ -156,13 +88,9 @@ namespace CIAO_LMBM_Test_Receiver_Impl
   void
   Receiver_exec_i::start ()
   {
-    if (!this->started_.value ())
-      {
-        this->started_ = true;
-        ::CCM_DDS::DataListenerControl_var dlc =
-            this->context_->get_connection_info_listen_data_control ();
-        dlc->mode (::CCM_DDS::MANY_BY_MANY);
-      }
+    ::CCM_DDS::DataListenerControl_var dlc =
+        this->context_->get_connection_info_listen_data_control ();
+    dlc->mode (::CCM_DDS::MANY_BY_MANY);
   }
 
   ::CCM_DDS::ListenManyByManyTest::CCM_Listener_ptr
@@ -170,8 +98,7 @@ namespace CIAO_LMBM_Test_Receiver_Impl
   {
     return new ListenManyByManyTest_Listener_exec_i (
                 this->received_one_by_one_,
-                this->received_many_by_many_,
-                this->many_received_);
+                this->received_many_by_many_);
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -183,9 +110,7 @@ namespace CIAO_LMBM_Test_Receiver_Impl
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Receiver_exec_i::get_info_listen_connector_status (void)
   {
-    return new ConnectorStatusListener_exec_i (
-                    *this,
-                    this->expected_);
+    return::CCM_DDS::CCM_ConnectorStatusListener::_nil ();
   }
 
   ::CORBA::UShort
@@ -198,7 +123,6 @@ namespace CIAO_LMBM_Test_Receiver_Impl
   Receiver_exec_i::iterations (::CORBA::UShort iterations)
   {
     this->iterations_ = iterations;
-    this->expected_ = this->keys_ * this->iterations_;
   }
 
   ::CORBA::UShort
@@ -211,7 +135,6 @@ namespace CIAO_LMBM_Test_Receiver_Impl
   Receiver_exec_i::keys (::CORBA::UShort keys)
   {
     this->keys_ = keys;
-    this->expected_ = this->keys_ * this->iterations_;
   }
 
   void
@@ -234,6 +157,7 @@ namespace CIAO_LMBM_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
+    start ();
   }
 
   void
@@ -244,24 +168,24 @@ namespace CIAO_LMBM_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-    this->expected_ = this->keys_ * this->iterations_;
+    CORBA::ULong expected = this->keys_ * this->iterations_;
     if (this->received_many_by_many_.value () == 0)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: MANY_BY_MANY: "
                                "Didn't receive samples on many_by_many "
                                "callback while mode is MANY_BY_MANY "
                                "expected <%u> - received <%u>\n",
-                               this->expected_,
+                               expected,
                                this->received_many_by_many_.value ()));
       }
-    else if (this->expected_ != this->received_many_by_many_.value ())
+    else if (expected != this->received_many_by_many_.value ())
       {
         ACE_ERROR ((LM_ERROR, "ERROR: MANY_BY_MANY: "
                                "Didn't receive the expected "
                                "number of samples on many_by_many "
                                "callback while mode is MANY_BY_MANY "
                                "expected <%u> - received <%u>\n",
-                               this->expected_,
+                               expected,
                                this->received_many_by_many_.value ()));
       }
     if (this->received_one_by_one_.value () > 0)
@@ -272,31 +196,13 @@ namespace CIAO_LMBM_Test_Receiver_Impl
                                "expected <0> - received <%u>\n",
                                this->received_one_by_one_.value ()));
       }
-    if (!this->started_.value ())
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: MANY_BY_MANY: "
-                               "Didn't received DATA_ON_READERS_STATUS on "
-                               "ConnectorStatusListener\n"));
-      }
     if (this->received_one_by_one_.value () == 0   &&
-        this->received_many_by_many_.value () > 0 &&
-        this->started_.value ())
+        this->received_many_by_many_.value () > 0)
       {
-        if (this->many_received_.value ())
-          {
-            ACE_DEBUG ((LM_DEBUG, "MANY_BY_MANY: "
-                                   "Received only data on "
-                                   "many_by_many callback. "
-                                   "Test passed!\n"));
-          }
-        else
-          {
-            ACE_DEBUG ((LM_ERROR, "ERROR: MANY_BY_MANY: "
-                                   "Received only data on "
-                                   "many_by_many callback but "
-                                   "all samples were received "
-                                   "one by one.\n"));
-          }
+        ACE_DEBUG ((LM_DEBUG, "MANY_BY_MANY: "
+                                "Received only data on "
+                                "many_by_many callback. "
+                                "Test passed!\n"));
       }
   }
 

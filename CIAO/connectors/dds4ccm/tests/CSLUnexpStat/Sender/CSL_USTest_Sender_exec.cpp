@@ -63,7 +63,7 @@ namespace CIAO_CSL_USTest_Sender_Impl
     ::DDS::Entity_ptr the_entity,
     ::DDS::StatusKind status_kind)
   {
-    ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_unexpected_status: "
+    ACE_DEBUG ((LM_DEBUG, "SENDER ConnectorStatusListener_exec_i::on_unexpected_status: "
                           "received <%C>\n",
                           CIAO::DDS4CCM::translate_statuskind (status_kind)));
     if (!CORBA::is_nil(the_entity) && status_kind == DDS::SUBSCRIPTION_MATCHED_STATUS)
