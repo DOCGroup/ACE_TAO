@@ -8,6 +8,8 @@
 #ifndef HELLO_BASE_IDL
 #define HELLO_BASE_IDL
 
+#pragma rti typesupport "Base/Hello_BaseSupport.h"
+
 struct DDSHello {
   string hello;
   short iterator;
