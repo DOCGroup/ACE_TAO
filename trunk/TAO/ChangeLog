@@ -1,3 +1,16 @@
+Mon Feb  8 23:23:48 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_union.h:
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_visitor_xplicit_pre_proc.cpp:
+        * TAO_IDL/ast/ast_visitor_reifying.cpp:
+        * TAO_IDL/be_include/be_union.h:
+        * TAO_IDL/be_include/be_visitor_xplicit_pre_proc.h:
+        
+          Added support for all legal home-scope declarations
+          in the generation of implied IDL for the explicit
+          home interface.
+
 Mon Feb  8 17:16:31 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_xplicit_pre_proc.cpp:
