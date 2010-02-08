@@ -1,3 +1,8 @@
+Mon Feb  8 06:58:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/fe/lex.yy.cpp:
+          Fixed Windows CE compile error
+
 Sat Feb  6 13:50:43 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * tao/GIOP_Message_State.cpp:
@@ -10,7 +15,7 @@ Fri Feb  5 19:20:42 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_xplicit_pre_proc.cpp:
         * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
         * TAO_IDL/be_include/be_visitor_xplicit_pre_proc.h:
-        
+
           Fixed bug introduced by the recent change in handling of
           home factories and finders, where the return type of an
           inherited factory or finder was the type of the component
