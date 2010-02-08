@@ -13,8 +13,8 @@
 
 namespace CIAO_SL_Disabled_Receiver_Impl
 {
-//============================================================
-  // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
+  //============================================================
+  // read_action_Generator
   //============================================================
   read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
     : pulse_callback_ (callback)
@@ -38,8 +38,9 @@ namespace CIAO_SL_Disabled_Receiver_Impl
       }
     return 0;
   }
+
   //============================================================
-  // Facet Executor Implementation Class: StateListener_exec_i
+  // StateListener_exec_i
   //============================================================
   StateListener_exec_i::StateListener_exec_i (Atomic_Boolean &no_operation)
     :no_operation_(no_operation)
@@ -74,46 +75,20 @@ namespace CIAO_SL_Disabled_Receiver_Impl
 
   void
   StateListener_exec_i::on_deletion (const ::TestTopic & /*datum*/,
-                                    const ::CCM_DDS::ReadInfo & /*info*/)
+                                     const ::CCM_DDS::ReadInfo & /*info*/)
   {
     this->no_operation_ = false;
   }
-  //============================================================
-  // Facet Executor Implementation Class: PortStatusListener_exec_i
-  //============================================================
-  PortStatusListener_exec_i::PortStatusListener_exec_i ()
-  {
-  }
-
-  PortStatusListener_exec_i::~PortStatusListener_exec_i (void)
-  {
-  }
-
-  // Operations from ::CCM_DDS::PortStatusListener
-  void
-  PortStatusListener_exec_i::on_requested_deadline_missed (
-    ::DDS::DataReader_ptr /* the_reader */,
-    const ::DDS::RequestedDeadlineMissedStatus & /* status */)
-  {
-  }
-
-  void
-  PortStatusListener_exec_i::on_sample_lost (
-    ::DDS::DataReader_ptr /* the_reader */,
-    const ::DDS::SampleLostStatus & /* status */)
-  {
-  }
 
   //============================================================
-  // Component Executor Implementation Class: Receiver_exec_iTestTopic_RawListener_exec_i ();
+  // Receiver_exec_i
   //============================================================
-
   Receiver_exec_i::Receiver_exec_i (void)
   : rate_ (10),
-    no_operation_(true),
-    updater_data_(false)
+    no_operation_ (true),
+    updater_data_ (false)
   {
-    this->ticker_ = new read_action_Generator (*this); 
+    this->ticker_ = new read_action_Generator (*this);
   }
 
   Receiver_exec_i::~Receiver_exec_i (void)
@@ -133,7 +108,7 @@ namespace CIAO_SL_Disabled_Receiver_Impl
     try
       {
         this->reader_->read_all(TestTopic_infos.out(), readinfoseq.out());
-        for(CORBA::ULong i = 0; i < readinfoseq->length(); ++i)
+        for (CORBA::ULong i = 0; i < readinfoseq->length(); ++i)
           {
             this->updater_data_ = true;
             ACE_Time_Value tv;
@@ -142,7 +117,7 @@ namespace CIAO_SL_Disabled_Receiver_Impl
                                   ACE_TEXT ("-> UTC date =%#T\n"),
                                   &tv));
           }
-        for(CORBA::ULong i = 0; i < TestTopic_infos->length(); ++i)
+        for (CORBA::ULong i = 0; i < TestTopic_infos->length(); ++i)
           {
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL keyed test info : ")
                        ACE_TEXT ("Number <%d> : received TestTopic_info for <%C> at %u\n"),
@@ -156,13 +131,13 @@ namespace CIAO_SL_Disabled_Receiver_Impl
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("internal error or no data\n")));
       }
   }
-  // Component attributes.
+
   // Port operations.
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
-    return new PortStatusListener_exec_i ();
+    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
   ::CCM_DDS::TestTopic::CCM_StateListener_ptr
@@ -187,7 +162,7 @@ namespace CIAO_SL_Disabled_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
-    this->reader_ = this->context_->get_connection_info_out_data();
+    this->reader_ = this->context_->get_connection_info_out_data ();
   }
 
   void
@@ -225,18 +200,18 @@ namespace CIAO_SL_Disabled_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-    if(!this->no_operation_.value ()|| !this->updater_data_.value())
+    if (!this->no_operation_.value ()|| !this->updater_data_.value())
       {
 
-         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did receive an unexpected ")
-                               ACE_TEXT (" operation from StateListener or Updater doesn't work in Receiver")
+         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Received an unexpected ")
+                               ACE_TEXT (" operation. StateListener or Updater doesn't work in Receiver")
                     ));
       }
 
     else
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Haven't received tan  unexpected ")
-                               ACE_TEXT (" oparation from StateListener in Receiver")
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Haven't received an  unexpected ")
+                              ACE_TEXT (" oparation from StateListener in Receiver")
                    ));
       }
   }

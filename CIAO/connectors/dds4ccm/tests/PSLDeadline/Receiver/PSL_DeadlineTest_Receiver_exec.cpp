@@ -15,48 +15,9 @@
 
 namespace CIAO_PSL_DeadlineTest_Receiver_Impl
 {
-//============================================================
-  // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
   //============================================================
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (void)
-  {
-  }
-
-  ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
-  {
-  }
-
-  // Operations from ::CCM_DDS::ConnectorStatusListener
-  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
-     ::DDS::Topic_ptr /*the_topic*/, 
-     const DDS::InconsistentTopicStatus & /*status*/){
-    }
-
-  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
-    ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
-    }
-
-  void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr /*the_reader*/, 
-     const DDS::SampleRejectedStatus & /*status*/)  {
-    }
-
-  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
-     ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedDeadlineMissedStatus & /*status*/)  {
-    }
-
-  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr /*the_writer*/, 
-     const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
-    }
-
-  void ConnectorStatusListener_exec_i::on_unexpected_status(
-    ::DDS::Entity_ptr /*the_entity*/,
-    ::DDS::StatusKind /*status_kind*/)  {
-   }
-
+  // read_action_Generator
+  //============================================================
   read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
     : pulse_callback_ (callback)
   {
@@ -79,10 +40,10 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
       }
     return 0;
   }
-  //============================================================
-  // Facet Executor Implementation Class: TestTopic_RawListener_exec_i
-  //============================================================
 
+  //============================================================
+  // TestTopic_RawListener_exec_i
+  //============================================================
   TestTopic_RawListener_exec_i::TestTopic_RawListener_exec_i (void)
   {
   }
@@ -90,8 +51,6 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
   TestTopic_RawListener_exec_i::~TestTopic_RawListener_exec_i (void)
   {
   }
-
-  // Operations from ::CCM_DDS::TestTopic_RawListener
 
   void
   TestTopic_RawListener_exec_i::on_one_data (
@@ -110,13 +69,20 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
     const ::CCM_DDS::ReadInfoSeq & /* info */)
   {
   }
+
   //============================================================
-  // Facet Executor Implementation Class: PortStatusListener_exec_i
+  // PortStatusListener_exec_i
   //============================================================
-  PortStatusListener_exec_i::PortStatusListener_exec_i (Atomic_Boolean &deadline_port_1, Atomic_Boolean &deadline_port_2,int port_nr)
-    : deadline_port_1_(deadline_port_1),
-      deadline_port_2_(deadline_port_2),
-      port_nr_(port_nr)
+  PortStatusListener_exec_i::PortStatusListener_exec_i (Atomic_Boolean &deadline_port_1,
+                                                        Atomic_Boolean &deadline_port_2,
+                                                        Atomic_ThreadId &thread_id_1,
+                                                        Atomic_ThreadId &thread_id_2,
+                                                        int port_nr)
+    : deadline_port_1_ (deadline_port_1),
+      deadline_port_2_ (deadline_port_2),
+      thread_id_1_ (thread_id_1),
+      thread_id_2_ (thread_id_2),
+      port_nr_ (port_nr)
   {
   }
 
@@ -126,17 +92,19 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
 
   // Operations from ::CCM_DDS::PortStatusListener
   void
-    PortStatusListener_exec_i::on_requested_deadline_missed (
+  PortStatusListener_exec_i::on_requested_deadline_missed (
     ::DDS::DataReader_ptr the_reader,
-    const ::DDS::RequestedDeadlineMissedStatus &  status)
+    const ::DDS::RequestedDeadlineMissedStatus & status)
   {
-    if((this->port_nr_ == 1) && (!CORBA::is_nil( the_reader)) && (status.total_count!= 0))       
+    if (this->port_nr_ == 1 && !CORBA::is_nil( the_reader) && status.total_count!= 0)
       {
         this->deadline_port_1_ = true;
+        this->thread_id_1_ = ACE_Thread::self ();
       }
-    if((this->port_nr_ == 2)&& (!CORBA::is_nil( the_reader)) && (status.total_count!= 0)) 
+    if (this->port_nr_ == 2 && !CORBA::is_nil (the_reader) && status.total_count!= 0)
       {
         this->deadline_port_2_ = true;
+        this->thread_id_2_ = ACE_Thread::self ();
       }
   }
 
@@ -148,12 +116,14 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
   }
 
   //============================================================
-  // Component Executor Implementation Class: Receiver_exec_iTestTopic_RawListener_exec_i ();
+  // Receiver_exec_i
   //============================================================
   Receiver_exec_i::Receiver_exec_i (void)
   : rate_ (10),
     deadline_port_1_ (false),
-    deadline_port_2_ (false)
+    deadline_port_2_ (false),
+    thread_id_listener_1_ (0),
+    thread_id_listener_2_ (0)
   {
     this->ticker_ = new read_action_Generator (*this); 
   }
@@ -172,57 +142,60 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
       }
     TestTopic_Seq_var TestTopic_infos;
     ::CCM_DDS::ReadInfoSeq_var readinfoseq;
-    try{
-      this->reader_->read_all(TestTopic_infos.out(), readinfoseq.out());
-      for(CORBA::ULong i = 0; i < readinfoseq->length(); ++i)
-        {
-          ACE_Time_Value tv;
-          tv <<= readinfoseq[i].source_timestamp;
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
-                                ACE_TEXT ("-> UTC date =%#T\n"),
-                                &tv));
-        }
-      for(CORBA::ULong i = 0; i < TestTopic_infos->length(); ++i)
-        {
-           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL keyed test info : ")
-                ACE_TEXT ("Number <%d> : received TestTopic_info for <%C> at %u\n"),
-              i,
-              TestTopic_infos[i].key.in (),
-              TestTopic_infos[i].x));
-        }
-    }
+    try
+      {
+        this->reader_->read_all(TestTopic_infos.out(), readinfoseq.out());
+        for(CORBA::ULong i = 0; i < readinfoseq->length(); ++i)
+          {
+            ACE_Time_Value tv;
+            tv <<= readinfoseq[i].source_timestamp;
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
+                                  ACE_TEXT ("-> UTC date =%#T\n"),
+                                  &tv));
+          }
+        for(CORBA::ULong i = 0; i < TestTopic_infos->length(); ++i)
+          {
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL keyed test info : ")
+                  ACE_TEXT ("Number <%d> : received TestTopic_info for <%C> at %u\n"),
+                i,
+                TestTopic_infos[i].key.in (),
+                TestTopic_infos[i].x));
+          }
+      }
     catch( const CCM_DDS::InternalError& )
-    {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("internal error or no data\n")));
-    }
+      {
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("internal error or no data\n")));
+      }
   }
-  // Component attributes.
+
   // Port operations.
   ::CCM_DDS::TestTopic::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new TestTopic RAW listener\n")));
-    return new TestTopic_RawListener_exec_i (/*this->received_*/);
+    return new TestTopic_RawListener_exec_i ();
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
-    return new PortStatusListener_exec_i ( this->deadline_port_1_,this->deadline_port_2_, 1);
+    return new PortStatusListener_exec_i (this->deadline_port_1_,
+                                          this->deadline_port_2_,
+                                          this->thread_id_listener_1_,
+                                          this->thread_id_listener_2_,
+                                          1);
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_get_status (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
-    return new PortStatusListener_exec_i (this->deadline_port_1_,this->deadline_port_2_,2);
-  }
-
-  ::CCM_DDS::CCM_ConnectorStatusListener_ptr
-  Receiver_exec_i::get_info_out_connector_status (void)
-  {
-    return new ConnectorStatusListener_exec_i ();
+    return new PortStatusListener_exec_i (this->deadline_port_1_,
+                                          this->deadline_port_2_,
+                                          this->thread_id_listener_1_,
+                                          this->thread_id_listener_2_,
+                                          2);
   }
 
   // Operations from Components::SessionComponent.
@@ -232,7 +205,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
   {
     this->context_ =
       ::PSL_DeadlineTest::CCM_Receiver_Context::_narrow (ctx);
-    if ( ::CORBA::is_nil (this->context_.in ()))
+    if (::CORBA::is_nil (this->context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }
@@ -255,7 +228,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
         ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw CORBA::INTERNAL ();
       }
-       lc->mode (::CCM_DDS::NOT_ENABLED);
+    lc->mode (::CCM_DDS::NOT_ENABLED);
 
     // calculate the interval time
     long usec = 1000000 / this->rate_;
@@ -279,19 +252,123 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-     if(!this->deadline_port_1_.value () || !this->deadline_port_2_.value ())
+     if (!this->deadline_port_1_.value ())
       {
 
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
-                               ACE_TEXT (" error 'on_requested_deadline_missed' on DDS_Listen and/or DDS_GET port in Receiver")
+                               ACE_TEXT (" error 'on_requested_deadline_missed' on PortStatusListener I in Receiver")
                     ));
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Have received the expected ")
-                               ACE_TEXT ("'on_requested_deadline_missed' in on DDS_Listen and DDS_GET port Receiver\n")
+                               ACE_TEXT ("'on_requested_deadline_missed' in PortStatusListener I in Receiver\n")
                     ));
       }
+     if (!this->deadline_port_2_.value ())
+      {
+
+         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
+                               ACE_TEXT (" error 'on_requested_deadline_missed' on PortStatusListener II in Receiver")
+                    ));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Have received the expected ")
+                               ACE_TEXT ("'on_requested_deadline_missed' in PortStatusListener II in Receiver\n")
+                    ));
+      }
+    //check thread switch for listener 1
+    if (this->thread_id_listener_1_.value () == 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: "
+                              "Thread ID for PortStatusListener I not set!\n"));
+      }
+    #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
+    else if (ACE_OS::thr_equal (this->thread_id_listener_1_.value (),
+                                ACE_Thread::self ()))
+      {
+        ACE_DEBUG ((LM_DEBUG, "OK : "
+                              "Thread switch for PortStatusListener I seems OK. "
+                              "(DDS uses the CCM thread for its callback) "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_1_.value (),
+                              ACE_Thread::self ()));
+      }
+    else
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: "
+                              "Thread switch for PortStatusListener I "
+                              "doesn't seem to work! "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_1_.value (),
+                              ACE_Thread::self ()));
+      }
+    #else
+    else if (ACE_OS::thr_equal (this->thread_id_listener_1_.value (),
+                                ACE_Thread::self ()))
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: PortStatusListener I: "
+                              "DDS seems to use a CCM thread for its callback: "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_1_.value (),
+                              ACE_Thread::self ()));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "OK : PortStatusListener I: "
+                              "DDS seems to use its own thread for its callback: "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_1_.value (),
+                              ACE_Thread::self ()));
+      }
+    #endif
+
+    //check thread switch for listener 2
+    if (this->thread_id_listener_2_.value () == 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: "
+                              "Thread ID for PortStatusListener II not set!\n"));
+      }
+    #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
+    else if (ACE_OS::thr_equal (this->thread_id_listener_2_.value (),
+                                ACE_Thread::self ()))
+      {
+        ACE_DEBUG ((LM_DEBUG, "OK : "
+                              "Thread switch for PortStatusListener II seems OK. "
+                              "(DDS uses the CCM thread for its callback) "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_2_.value (),
+                              ACE_Thread::self ()));
+      }
+    else
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: "
+                              "Thread switch for PortStatusListener II "
+                              "doesn't seem to work! "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_2_.value (),
+                              ACE_Thread::self ()));
+      }
+    #else
+    else if (ACE_OS::thr_equal (this->thread_id_listener_2_.value (),
+                                ACE_Thread::self ()))
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: PortStatusListener II: "
+                              "DDS seems to use a CCM thread for its callback: "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_2_.value (),
+                              ACE_Thread::self ()));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "OK : PortStatusListener II: "
+                              "DDS seems to use its own thread for its callback: "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_2_.value (),
+                              ACE_Thread::self ()));
+      }
+    #endif
   }
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
