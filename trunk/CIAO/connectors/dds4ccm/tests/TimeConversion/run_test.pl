@@ -18,7 +18,7 @@ if ($program_status != 0) {
     exit 1;
 }
 
-sleep (2);
+sleep ($program->ProcessStartWaitInterval());
 
 $program_status = $PROG->Kill ();
 
