@@ -1,3 +1,8 @@
+Mon Feb  8 13:52:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_helper.cpp:
+          Removed link to website which doesn't seem to exist anymore
+
 Mon Feb  8 11:57:33 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/IDL_Test/IDL_Test.mpc:
