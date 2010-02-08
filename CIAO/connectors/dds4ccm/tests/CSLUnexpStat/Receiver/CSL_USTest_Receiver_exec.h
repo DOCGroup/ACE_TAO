@@ -59,7 +59,11 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   public:
     ConnectorStatusListener_exec_i (Atomic_Boolean &,
                                     Atomic_Boolean &,
+                                    Atomic_Boolean &,
+                                    Atomic_ThreadId &,
+                                    Atomic_ThreadId &,
                                     Atomic_ThreadId &);
+
     virtual ~ConnectorStatusListener_exec_i (void);
 
     virtual
@@ -82,9 +86,12 @@ namespace CIAO_CSL_USTest_Receiver_Impl
                                ::DDS::StatusKind  status_kind);
 
   private:
-    Atomic_Boolean &unexpected_matched_;
-    Atomic_Boolean &unexpected_liveliness_;
-    Atomic_ThreadId &thread_id_;
+    Atomic_Boolean &subscription_matched_received_;
+    Atomic_Boolean &publication_matched_received_;
+    Atomic_Boolean &liveliness_changed_received_;
+    Atomic_ThreadId &thread_id_subcription_matched_;
+    Atomic_ThreadId &thread_id_publication_matched_;
+    Atomic_ThreadId &thread_id_liveliness_changed_;
   };
 
   //============================================================
@@ -123,10 +130,13 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   private:
     ::CSL_USTest::CCM_Receiver_Context_var context_;
 
-    Atomic_Boolean unexpected_matched_;
-    Atomic_Boolean unexpected_liveliness_;
+    Atomic_Boolean subscription_matched_received_;
+    Atomic_Boolean publication_matched_received_;
+    Atomic_Boolean liveliness_changed_received_;
+    Atomic_ThreadId thread_id_listener_subscription_matched_;
+    Atomic_ThreadId thread_id_listener_publication_matched_;
+    Atomic_ThreadId thread_id_listener_liveliness_changed_;
     Atomic_ULong received_;
-    Atomic_ThreadId thread_id_listener_;
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
