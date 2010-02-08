@@ -1,10 +1,15 @@
+Mon Feb  8 07:46:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ComponentServer_Task.cpp:
+          Fixed memory leak
+
 Fri Feb  5 19:45:46 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.h:
         * tools/IDL3_to_XMI/IR_Simulator_visitor.cpp:
         * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
         * tools/IDL3_to_XMI/IR_Simulator_visitor.h:
-        
+
           Updates to eliminate build errors due to frontend
           changes in home factories and finders. Further
           work is needed for this tool to support home factories
