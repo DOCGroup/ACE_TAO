@@ -546,7 +546,7 @@ ACE_CC_YY_MALLOC_DECL
 /* This used to be an fputs(), but since the string might contain NUL's,
  * we now use fwrite().
  */
-#define ACE_CC_ECHO (void) fwrite( ace_cc_yytext, ace_cc_yyleng, 1, ace_cc_yyout )
+#define ACE_CC_ECHO { size_t __dum_ret = fwrite( ace_cc_yytext, ace_cc_yyleng, 1, ace_cc_yyout ); (void) __dum_ret; }
 #endif
 //FUZZ: enable check_for_lack_ACE_OS
 
