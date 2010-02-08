@@ -19,7 +19,6 @@ namespace CIAO_LNE_Test_Receiver_Impl
   class Receiver_exec_i;
 
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong> Atomic_ULong;
-  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> Atomic_Bool;
 
   //============================================================
   // ListenNotEnabledTest_Listener_exec_i
@@ -45,39 +44,6 @@ namespace CIAO_LNE_Test_Receiver_Impl
   private:
     Atomic_ULong &received_one_by_one_;
     Atomic_ULong &received_many_by_many_;
-  };
-
-  //============================================================
-  // ConnectorStatusListener_exec_i
-  //============================================================
-  class RECEIVER_EXEC_Export ConnectorStatusListener_exec_i
-    : public virtual ::CCM_DDS::CCM_ConnectorStatusListener,
-      public virtual ::CORBA::LocalObject
-  {
-  public:
-    ConnectorStatusListener_exec_i (Atomic_Bool &data_received);
-    virtual ~ConnectorStatusListener_exec_i (void);
-
-    virtual
-    void on_inconsistent_topic( ::DDS::Topic_ptr ,
-                              const DDS::InconsistentTopicStatus & );
-    virtual
-    void on_requested_incompatible_qos( ::DDS::DataReader_ptr ,
-                              const DDS::RequestedIncompatibleQosStatus & );
-    virtual
-    void on_sample_rejected( ::DDS::DataReader_ptr ,
-                              const DDS::SampleRejectedStatus & );
-    virtual
-    void on_offered_deadline_missed( ::DDS::DataWriter_ptr ,
-                              const DDS::OfferedDeadlineMissedStatus & );
-    virtual
-    void on_offered_incompatible_qos( ::DDS::DataWriter_ptr ,
-                              const DDS::OfferedIncompatibleQosStatus & );
-    virtual
-    void on_unexpected_status( ::DDS::Entity_ptr ,
-                              ::DDS::StatusKind );
-  private:
-    Atomic_Bool &data_received_;
   };
 
   //============================================================
@@ -115,7 +81,6 @@ namespace CIAO_LNE_Test_Receiver_Impl
 
     Atomic_ULong received_one_by_one_;
     Atomic_ULong received_many_by_many_;
-    Atomic_Bool  data_received_;
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
