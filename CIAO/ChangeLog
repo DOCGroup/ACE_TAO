@@ -1,3 +1,15 @@
+Mon Feb  8 11:35:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataWriterListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DataWriterListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/PortStatusListener_T.h:
+        * connectors/dds4ccm/impl/ndds/PortStatusListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.h:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.cpp:
+          Moved all empty inline methods from header to source file.
+
 Mon Feb  8 11:15:00 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
 

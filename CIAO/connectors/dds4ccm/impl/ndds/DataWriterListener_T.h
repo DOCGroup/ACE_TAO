@@ -28,27 +28,30 @@ namespace CIAO
       /// Destructor
       virtual ~DataWriterListener_T (void);
 
-    virtual void
-    on_offered_deadline_missed (
-      ::DDS::DataWriter_ptr ,
-      const ::DDS::OfferedDeadlineMissedStatus & ) {}
-    virtual void
-    on_offered_incompatible_qos (
-      ::DDS::DataWriter_ptr ,
-      const ::DDS::OfferedIncompatibleQosStatus & ) {}
-    virtual void
-    on_liveliness_lost (
-      ::DDS::DataWriter_ptr ,
-      const ::DDS::LivelinessLostStatus & ) {}
-    virtual void
-    on_publication_matched (
-      ::DDS::DataWriter_ptr ,
-      const ::DDS::PublicationMatchedStatus & ) {}
+      virtual void
+      on_offered_deadline_missed (
+        ::DDS::DataWriter_ptr ,
+        const ::DDS::OfferedDeadlineMissedStatus & );
 
-    virtual void
-    on_reliable_reader_activity_changed (
-      ::DDS::DataWriter_ptr ,
-      const ::DDS::ReliableReaderActivityChangedStatus & ) {}
+      virtual void
+      on_offered_incompatible_qos (
+        ::DDS::DataWriter_ptr ,
+        const ::DDS::OfferedIncompatibleQosStatus & );
+
+      virtual void
+      on_liveliness_lost (
+        ::DDS::DataWriter_ptr ,
+        const ::DDS::LivelinessLostStatus & );
+
+      virtual void
+      on_publication_matched (
+        ::DDS::DataWriter_ptr ,
+        const ::DDS::PublicationMatchedStatus & );
+
+      virtual void
+      on_reliable_reader_activity_changed (
+        ::DDS::DataWriter_ptr ,
+        const ::DDS::ReliableReaderActivityChangedStatus & );
 
       static ::DDS::StatusMask get_mask (void);
     };

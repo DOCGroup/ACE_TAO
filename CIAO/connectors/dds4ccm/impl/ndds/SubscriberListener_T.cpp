@@ -232,6 +232,29 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_data_on_readers(
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadline_missed (
+  ::DDS::DataReader_ptr ,
+  const ::DDS::RequestedDeadlineMissedStatus & )
+{
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_data_available (
+  ::DDS::DataReader_ptr )
+{
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
+  ::DDS::DataReader_ptr ,
+  const ::DDS::SampleLostStatus & )
+{
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::StatusMask
 CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
   ::CCM_DDS::ConnectorStatusListener_ptr csl)
