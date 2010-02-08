@@ -1,3 +1,15 @@
+Mon Feb  8 17:16:31 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_xplicit_pre_proc.cpp:
+        * TAO_IDL/be_include/be_visitor_xplicit_pre_proc.h:
+        
+          In transfer of scope contents from IDL home to the
+          implied IDL explicit interface, added support for
+          typedefs. This change fixes a build problem in
+          CIAO_ROOT/tests/IDL3/Lookup. Support for other
+          constructs legal for declaration inside a home is
+          pending.
+
 Mon Feb  8 14:48:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/component_ch.cpp:

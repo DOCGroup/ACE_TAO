@@ -16,19 +16,24 @@
 #include "be_finder.h"
 #include "be_exception.h"
 #include "be_field.h"
+#include "be_valuebox.h"
+#include "be_valuetype.h"
+#include "be_typedef.h"
+#include "be_predefined_type.h"
 
 #include "ast_module.h"
 
 #include "utl_namelist.h"
 
-#include "fe_interface_header.h"
+#include "fe_obv_header.h"
 #include "nr_extern.h"
 #include "global_extern.h"
 
 be_visitor_xplicit_pre_proc::be_visitor_xplicit_pre_proc (
       be_visitor_context *ctx)
   : be_visitor_ccm_pre_proc (ctx),
-    xplicit_ (0)
+    xplicit_ (0),
+    type_holder_ (0)
 {
 }
 
@@ -363,14 +368,47 @@ be_visitor_xplicit_pre_proc::visit_string (be_string *)
 }
 
 int
-be_visitor_xplicit_pre_proc::visit_typedef (be_typedef *)
+be_visitor_xplicit_pre_proc::visit_typedef (be_typedef *node)
 {
+  be_type *t =
+    be_type::narrow_from_decl (node->field_type ());
+    
+  if (t->accept (this) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_xplicit_pre_proc::")
+                         ACE_TEXT ("visit_typedef - code generation ")
+                         ACE_TEXT ("for base type failed\n")),
+                        -1);
+    }
+    
+  UTL_ScopedName sn (node->local_name (), 0);
+    
+  be_typedef *added_typedef = 0;
+  ACE_NEW_RETURN (added_typedef,
+                  be_typedef (this->type_holder_,
+                              &sn,
+                              false,
+                              false),
+                  -1);
+                  
+  idl_global->scopes ().top ()->add_to_scope (added_typedef);            
+    
   return 0;
 }
 
 int
 be_visitor_xplicit_pre_proc::visit_native (be_native *)
 {
+  return 0;
+}
+
+int
+be_visitor_xplicit_pre_proc::visit_predefined_type (
+  be_predefined_type *node)
+{
+  this->type_holder_ = node;
+  
   return 0;
 }
 
