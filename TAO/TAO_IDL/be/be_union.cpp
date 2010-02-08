@@ -222,49 +222,62 @@ be_union::gen_empty_default_label (void)
     }
 
   AST_ConcreteType *disc = this->disc_type ();
+  if (disc == 0)
+    {
+      return true; // In reality this is an error.
+    }
+
   AST_Decl::NodeType nt = disc->node_type ();
-  unsigned long n_labels = this->nlabels ();
+  ACE_UINT64 n_labels = this->nlabels ();
 
   if (nt == AST_Decl::NT_enum)
     {
-      AST_Enum *e = AST_Enum::narrow_from_decl (disc);
-      
-      if (e == 0)
-        {
-          return true;
-        }
-
-      // If we have an enum and the number of labels if as big as the enum
-      // has members we don't have to generate a default label
-      if (n_labels == static_cast<unsigned long> (e->member_count ()))
-        {
-           return false;
-        }
-      else
-        {
-          return true;
-        }
+      // Enums in CORBA are always 32bits in size, so unless
+      // there are that many enum labels in the set, it is
+      // incomplete (reguardless as to the actual member_count).
+      return (n_labels <= ACE_UINT32_MAX);
     }
 
   AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (disc);
-
   if (pdt == 0)
     {
-      return true;
+      return true; // In reality this is an error.
     }
 
-  if (pdt->pt () == AST_PredefinedType::PT_boolean && n_labels == 2)
+  switch (pdt->pt ())
     {
-      return false;
+    case AST_PredefinedType::PT_boolean:
+      return (n_labels < 2);
+
+    case AST_PredefinedType::PT_char:
+      return (n_labels <= ACE_OCTET_MAX);
+
+    case AST_PredefinedType::PT_short:
+    case AST_PredefinedType::PT_ushort:
+      return (n_labels <= ACE_UINT16_MAX);
+
+    case AST_PredefinedType::PT_long:
+    case AST_PredefinedType::PT_ulong:
+      return (n_labels <= ACE_UINT32_MAX);
+
+    case AST_PredefinedType::PT_longlong:
+    case AST_PredefinedType::PT_ulonglong:
+      // We would wrap to 0 here - we are using a 64 bit count
+      // this case is so marginal as to always be incomplete.
+      return true;
+
+    // Keep fussy compilers happy.
+    default:
+      break;
     }
 
   return true;
 }
 
-unsigned long
+ACE_UINT64
 be_union::nlabels (void)
 {
-  unsigned long retval = 0;
+  ACE_UINT64 retval = 0;
 
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
