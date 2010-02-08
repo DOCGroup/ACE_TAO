@@ -397,8 +397,7 @@ ast_visitor_reifying::visit_array (AST_Array *node)
         }
     }
 
-  UTL_ScopedName sn (node->name ()->last_component ()->copy (),
-                     0);
+  UTL_ScopedName sn (node->local_name (), 0);
 
   AST_Array *arr =
     idl_global->gen ()->create_array (&sn,
@@ -410,7 +409,6 @@ ast_visitor_reifying::visit_array (AST_Array *node)
   // No need to add this new node to any scope - it's anonymous
   // and owned by the node that references it.
 
-  sn.destroy ();
   v_list->destroy ();
   delete v_list;
   v_list = 0;
@@ -487,7 +485,48 @@ ast_visitor_reifying::visit_predefined_type (AST_PredefinedType *node)
 int
 ast_visitor_reifying::visit_string (AST_String *node)
 {
-  this->reified_node_ = node;
+  AST_Expression *b = node->max_size ();
+  AST_Param_Holder *ph = b->param_holder ();
+
+  if (ph != 0)
+    {
+      if (this->visit_param_holder (ph) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("ast_visitor_reifying::")
+                             ACE_TEXT ("visit_string - ")
+                             ACE_TEXT ("visit_param_holder() ")
+                             ACE_TEXT ("failed\n")),
+                            -1);
+        }
+
+      AST_Constant *c =
+        AST_Constant::narrow_from_decl (this->reified_node_);
+
+      b = c->constant_value ();
+    }
+  else if (b->ev ()->u.ulval == 0)
+    {
+      this->reified_node_ = node;
+      return 0;
+    }
+
+  AST_Expression *bound = 0;
+  ACE_NEW_RETURN (bound,
+                  AST_Expression (b,
+                                  AST_Expression::EV_ulong),
+                  -1);
+                  
+  Identifier id ("string");
+  UTL_ScopedName sn (&id, 0);
+  
+  ACE_NEW_RETURN (this->reified_node_,
+                  AST_String (AST_Decl::NT_string,
+                              &sn,
+                              bound,
+                              node->width ()),
+                  -1);
+                  
   return 0;
 }
 

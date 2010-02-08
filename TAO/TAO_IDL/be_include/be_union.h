@@ -57,6 +57,9 @@ public:
   /// constructor, assignment operator, etc. is needed.
   bool gen_empty_default_label (void);
 
+  /// Just a way to get at fe_add_union_branch() from the backend.
+  AST_UnionBranch *be_add_union_branch (AST_UnionBranch *b);
+
   /// Returns total number of labels, useful when the union has
   /// multiple case labels.
   ACE_UINT64 nlabels (void);

@@ -40,6 +40,7 @@ public:
   virtual int visit_factory (be_factory *node);
   virtual int visit_finder (be_finder *node);
   
+  virtual int visit_interface (be_interface *node);
   virtual int visit_valuebox (be_valuebox *node);
   virtual int visit_valuetype (be_valuetype *node);
   virtual int visit_structure (be_structure *node);
@@ -65,8 +66,13 @@ public:
   be_interface *xplicit (void) const;
   
 private:
+  void check_and_store (AST_Decl *node);
+  UTL_ScopedName *xplicit_iface_rel_name (AST_Decl *d);
+  
+private:
   be_interface *xplicit_;
-  be_type *type_holder_;
+  AST_Decl *type_holder_;
+  bool ref_type_;
 };
 
 #endif // TAO_BE_VISITOR_XPLICIT_PRE_PROC_H
