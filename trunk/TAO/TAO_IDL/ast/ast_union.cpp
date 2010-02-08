@@ -567,7 +567,7 @@ AST_Union::compute_default_value (void)
     {
     case AST_Expression::EV_short:
     case AST_Expression::EV_ushort:
-      if (total_case_members == ACE_UINT16_MAX + 1)
+      if (total_case_members > ACE_UINT16_MAX)
         {
           this->default_value_.computed_ = 0;
         }
@@ -575,6 +575,10 @@ AST_Union::compute_default_value (void)
       break;
     case AST_Expression::EV_long:
     case AST_Expression::EV_ulong:
+    case AST_Expression::EV_enum:
+      // Enums in CORBA are always 32bits in size, so unless
+      // there are that many enum labels in the set, it is
+      // incomplete (reguardless as to the actual member_count).
       if (total_case_members > ACE_UINT32_MAX)
         {
           this->default_value_.computed_ = 0;
@@ -593,7 +597,7 @@ AST_Union::compute_default_value (void)
 
       break;
     case AST_Expression::EV_char:
-      if (total_case_members == ACE_OCTET_MAX + 1)
+      if (total_case_members > ACE_OCTET_MAX)
         {
           this->default_value_.computed_ = 0;
         }
@@ -612,38 +616,6 @@ AST_Union::compute_default_value (void)
           this->default_value_.computed_ = 0;
         }
 
-      break;
-    case AST_Expression::EV_enum:
-      // Has to be enum.
-      {
-        AST_Decl *d = AST_Decl::narrow_from_decl (this->disc_type ());
-
-        if (d->node_type () == AST_Decl::NT_typedef)
-          {
-            AST_Typedef *bt = AST_Typedef::narrow_from_decl (d);
-            d = bt->primitive_base_type ();
-          }
-
-        AST_Enum *en = AST_Enum::narrow_from_decl (d);
-
-        if (en != 0)
-          {
-            if (total_case_members == (ACE_UINT64) en->member_count ())
-              {
-                this->default_value_.computed_ = 0;
-              }
-          }
-        else
-          {
-            // Error.
-            this->default_value_.computed_ = -1;
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("(%N:%l) AST_Union::")
-                               ACE_TEXT ("compute_default_value ")
-                               ACE_TEXT ("- disc type not an ENUM\n")),
-                              -1);
-          }
-      }
       break;
     default:
       // Error.
