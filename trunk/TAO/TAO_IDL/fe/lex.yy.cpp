@@ -17,6 +17,7 @@
 
 /* begin standard C headers. */
 #include "ace/os_include/os_stdio.h"
+#include "ace/OS_NS_stdio.h"
 
 /* end standard C headers. */
 
@@ -1129,7 +1130,7 @@ static int input (void );
                 int c = '*'; \
                 size_t n; \
                 for ( n = 0; n < max_size && \
-                             (c = getc( tao_yyin )) != EOF && c != '\n'; ++n ) \
+                             (c = ACE_OS::getc( tao_yyin )) != EOF && c != '\n'; ++n ) \
                         buf[n] = (char) c; \
                 if ( c == '\n' ) \
                         buf[n++] = (char) c; \
@@ -3159,7 +3160,7 @@ idl_store_pragma (char *buf)
   else if (ACE_OS::strncmp (buf + 8, "version", 7) == 0)
     {
       char *tmp = buf + 16;
-      
+
       while (*tmp == ' ' || *tmp == '\t')
         {
           ++tmp;
