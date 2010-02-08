@@ -225,10 +225,10 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_subscription_matched
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_data_on_readers(
-  ::DDS::Subscriber* sub)
+  ::DDS::Subscriber *)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::SubscriberListener_T::on_data_on_readers");
-  this->on_unexpected_status (sub, ::DDS::DATA_ON_READERS_STATUS);
+  //do nothing by design
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
