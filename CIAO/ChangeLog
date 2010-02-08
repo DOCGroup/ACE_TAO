@@ -1,3 +1,8 @@
+Mon Feb  8 13:33:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Fixed incorrect path
+
 Mon Feb  8 13:16:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.cpp
