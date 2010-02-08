@@ -1,3 +1,13 @@
+Mon Feb  8 10:35:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
+        * orbsvcs/tests/Concurrency/lex.CC_command.cpp:
+        * performance-tests/POA/Demux/demux_test_server.cpp:
+        * tests/Exposed_Policies/RT_Properties.cpp:
+        
+          Fixed new GCC 4.4.x warning about ignoring return values of
+          function marked by the new warn_unused_result attribute.
+          
 Mon Feb  8 06:58:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/fe/lex.yy.cpp:
