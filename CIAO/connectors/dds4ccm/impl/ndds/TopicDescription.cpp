@@ -13,13 +13,11 @@ namespace CIAO
   {
     namespace RTI
     {
-      // Implementation skeleton constructor
       RTI_TopicDescription_i::RTI_TopicDescription_i (void)
         : impl_ (0)
       {
       }
 
-      // Implementation skeleton destructor
       RTI_TopicDescription_i::~RTI_TopicDescription_i (void)
       {
       }

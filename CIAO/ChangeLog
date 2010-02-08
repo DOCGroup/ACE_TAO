@@ -1,3 +1,26 @@
+Mon Feb  8 13:16:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.cpp
+        * connectors/dds4ccm/impl/ndds/DataReader.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderListener.cpp
+        * connectors/dds4ccm/impl/ndds/DataWriter.cpp
+        * connectors/dds4ccm/impl/ndds/DataWriterListener.cpp
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/InstanceHandleManager_T.cpp
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp
+        * connectors/dds4ccm/impl/ndds/PublisherListener.cpp
+        * connectors/dds4ccm/impl/ndds/QueryCondition.cpp
+        * connectors/dds4ccm/impl/ndds/ReadCondition.cpp
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp
+        * connectors/dds4ccm/impl/ndds/StatusCondition.cpp
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp
+        * connectors/dds4ccm/impl/ndds/SubscriberListener.cpp
+        * connectors/dds4ccm/impl/ndds/Topic.cpp
+        * connectors/dds4ccm/impl/ndds/TopicDescription.cpp
+        * connectors/dds4ccm/impl/ndds/Writer_T.cpp
+        * DAnCE/TargetManager/ResourceCommitmentManager.cpp
+          Removed generated comments which didn't had any value
+
 Mon Feb  8 13:02:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/PortStatusListener_T.cpp:

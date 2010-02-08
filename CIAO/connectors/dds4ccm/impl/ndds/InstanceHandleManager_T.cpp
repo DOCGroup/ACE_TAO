@@ -5,14 +5,12 @@
 #include "dds4ccm/impl/ndds/InstanceHandle_t.h"
 #include "ciao/Logger/Log_Macros.h"
 
-// Implementation skeleton constructor
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
 CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::InstanceHandleManager_T (void)
   : impl_ (0)
 {
 }
 
-// Implementation skeleton destructor
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
 CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::~InstanceHandleManager_T (void)
 {

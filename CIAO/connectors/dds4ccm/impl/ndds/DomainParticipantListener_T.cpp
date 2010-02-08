@@ -6,7 +6,6 @@
 #include "dds4ccm/impl/ndds/DataReaderHandler_T.h"
 #include "tao/ORB_Core.h"
 
-// Implementation skeleton constructor
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE>::DomainParticipantListener_T (
       ::CCM_DDS::ConnectorStatusListener_ptr error_listener)
@@ -15,7 +14,6 @@ CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE>::DomainParticipan
   CIAO_TRACE ("CIAO::DDS4CCM::DomainParticipantListener_T::DomainParticipantListener_T");
 }
 
-// Implementation skeleton destructor
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE>::~DomainParticipantListener_T (void)
 {

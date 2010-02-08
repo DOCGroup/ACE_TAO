@@ -13,13 +13,11 @@ namespace CIAO
   {
     namespace RTI
     {
-      // Implementation skeleton constructor
       RTI_StatusCondition_i::RTI_StatusCondition_i (void)
         : impl_ (0)
       {
       }
 
-      // Implementation skeleton destructor
       RTI_StatusCondition_i::~RTI_StatusCondition_i (void)
       {
       }

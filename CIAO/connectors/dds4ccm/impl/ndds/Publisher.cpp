@@ -21,14 +21,12 @@ namespace CIAO
   {
     namespace RTI
     {
-      // Implementation skeleton constructor
       RTI_Publisher_i::RTI_Publisher_i (void)
         : impl_ (0)
       {
         CIAO_TRACE ("RTI_Publisher_i::RTI_Publisher_i");
       }
 
-      // Implementation skeleton destructor
       RTI_Publisher_i::~RTI_Publisher_i (void)
       {
         CIAO_TRACE ("RTI_Publisher_i::~RTI_Publisher_i");

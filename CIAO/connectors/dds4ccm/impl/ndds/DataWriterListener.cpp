@@ -13,13 +13,11 @@ namespace CIAO
   {
     namespace RTI
     {
-      // Implementation skeleton constructor
       RTI_DataWriterListener_i::RTI_DataWriterListener_i (::DDS::DataWriterListener_ptr s)
         : impl_ (::DDS::DataWriterListener::_duplicate (s))
       {
       }
 
-      // Implementation skeleton destructor
       RTI_DataWriterListener_i::~RTI_DataWriterListener_i (void)
       {
       }
