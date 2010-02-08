@@ -183,27 +183,23 @@ be_visitor_component_ch::visit_component (be_component *node)
   if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
     {
       *os << be_nl << be_nl
-          << "// These methods traverse the inheritance tree and set the"
+          << "/// This method traverse the inheritance tree and sets the"
           << be_nl
-          << "// parents piece of the given class in the right mode."
+          << "/// parents piece of the given class in the right mode."
           << be_nl
           << "virtual void " << node->flat_name ()
           << "_setup_collocation (void);";
     }
 
   *os << be_nl << be_nl
-      << node->local_name () << " (" << be_idt << be_idt_nl
-      << "::IOP::IOR *ior," << be_nl
-      << "TAO_ORB_Core *orb_core" << be_uidt_nl
-      << ");" << be_uidt;
+      << node->local_name () << " (::IOP::IOR *ior, TAO_ORB_Core *orb_core);";
 
   *os << be_nl << be_nl
       << node->local_name ()
       << " (" << be_idt << be_idt_nl << "TAO_Stub *objref, " << be_nl
       << "::CORBA::Boolean _tao_collocated = false," << be_nl
       << "TAO_Abstract_ServantBase *servant = 0," << be_nl
-      << "TAO_ORB_Core *oc = 0" << be_uidt_nl
-      << ");" << be_uidt;
+      << "TAO_ORB_Core *oc = 0);" << be_uidt << be_uidt;
 
   // Friends declarations.
   *os << be_nl << be_nl

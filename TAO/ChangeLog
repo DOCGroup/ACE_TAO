@@ -1,3 +1,10 @@
+Mon Feb  8 14:48:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+          Layout changes for the generated code
+
 Mon Feb  8 13:52:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_helper.cpp:
