@@ -20,8 +20,13 @@ namespace CIAO_CSL_USTest_Receiver_Impl
 {
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong > Atomic_ULong;
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
+  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_thread_t> Atomic_ThreadId;
+
   class Receiver_exec_i;
 
+  //============================================================
+  // TestTopic_RawListener_exec_i
+  //============================================================
   class RECEIVER_EXEC_Export TestTopic_RawListener_exec_i
     : public virtual ::CCM_DDS::TestTopic::CCM_Listener,
       public virtual ::CORBA::LocalObject
@@ -44,12 +49,17 @@ namespace CIAO_CSL_USTest_Receiver_Impl
     Atomic_ULong &received_;
   };
 
-class RECEIVER_EXEC_Export ConnectorStatusListener_exec_i
+  //============================================================
+  // ConnectorStatusListener_exec_i
+  //============================================================
+  class RECEIVER_EXEC_Export ConnectorStatusListener_exec_i
     : public virtual ::CCM_DDS::CCM_ConnectorStatusListener,
       public virtual ::CORBA::LocalObject
   {
   public:
-    ConnectorStatusListener_exec_i (Atomic_Boolean &,Atomic_Boolean &);
+    ConnectorStatusListener_exec_i (Atomic_Boolean &,
+                                    Atomic_Boolean &,
+                                    Atomic_ThreadId &);
     virtual ~ConnectorStatusListener_exec_i (void);
 
     virtual
@@ -74,8 +84,12 @@ class RECEIVER_EXEC_Export ConnectorStatusListener_exec_i
   private:
     Atomic_Boolean &unexpected_matched_;
     Atomic_Boolean &unexpected_liveliness_;
+    Atomic_ThreadId &thread_id_;
   };
 
+  //============================================================
+  // Receiver_exec_i
+  //============================================================
   class RECEIVER_EXEC_Export Receiver_exec_i
     : public virtual Receiver_Exec,
       public virtual ::CORBA::LocalObject
@@ -108,10 +122,11 @@ class RECEIVER_EXEC_Export ConnectorStatusListener_exec_i
 
   private:
     ::CSL_USTest::CCM_Receiver_Context_var context_;
+
     Atomic_Boolean unexpected_matched_;
     Atomic_Boolean unexpected_liveliness_;
     Atomic_ULong received_;
-    ::CCM_DDS::TestTopic::Reader_var reader_;
+    Atomic_ThreadId thread_id_listener_;
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

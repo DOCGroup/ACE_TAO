@@ -14,11 +14,14 @@
 namespace CIAO_CSL_USTest_Receiver_Impl
 {
 //============================================================
-  // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
+  // ConnectorStatusListener_exec_i
   //============================================================
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &unexpected_matched,Atomic_Boolean &unexpected_liveliness)
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &unexpected_matched,
+                                                                  Atomic_Boolean &unexpected_liveliness,
+                                                                  Atomic_ThreadId &thread_id)
    : unexpected_matched_ (unexpected_matched),
-     unexpected_liveliness_ (unexpected_liveliness)
+     unexpected_liveliness_ (unexpected_liveliness),
+     thread_id_ (thread_id)
   {
   }
 
@@ -27,40 +30,41 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   }
 
   // Operations from ::CCM_DDS::ConnectorStatusListener
-  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
-     ::DDS::Topic_ptr /*the_topic*/,
-     const DDS::InconsistentTopicStatus & /*status*/)
+  void ConnectorStatusListener_exec_i::on_inconsistent_topic (
+    ::DDS::Topic_ptr /*the_topic*/,
+    const DDS::InconsistentTopicStatus & /*status*/)
   {
   }
 
-  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
+  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos (
     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::RequestedIncompatibleQosStatus & /*status*/)
+    const DDS::RequestedIncompatibleQosStatus & /*status*/)
   {
   }
 
-  void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::SampleRejectedStatus & /*status*/)
+  void ConnectorStatusListener_exec_i::on_sample_rejected (
+    ::DDS::DataReader_ptr /*the_reader*/,
+    const DDS::SampleRejectedStatus & /*status*/)
   {
   }
 
-  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
-     ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedDeadlineMissedStatus & /*status*/)
+  void ConnectorStatusListener_exec_i::on_offered_deadline_missed (
+    ::DDS::DataWriter_ptr /*the_writer*/,
+    const DDS::OfferedDeadlineMissedStatus & /*status*/)
   {
   }
 
-  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedIncompatibleQosStatus & /*status*/)
+  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos (
+    ::DDS::DataWriter_ptr /*the_writer*/,
+    const DDS::OfferedIncompatibleQosStatus & /*status*/)
   {
   }
 
-  void ConnectorStatusListener_exec_i::on_unexpected_status(
+  void ConnectorStatusListener_exec_i::on_unexpected_status (
     ::DDS::Entity_ptr the_entity,
     ::DDS::StatusKind  status_kind)
   {
+    this->thread_id_ = ACE_Thread::self ();
     CORBA::ULong kind = status_kind;
     if (!CORBA::is_nil (the_entity) && kind == DDS::SUBSCRIPTION_MATCHED_STATUS)
       {
@@ -73,7 +77,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   }
 
   //============================================================
-  // Facet Executor Implementation Class: TestTopic_RawListener_exec_i
+  // TestTopic_RawListener_exec_i
   //============================================================
   TestTopic_RawListener_exec_i::TestTopic_RawListener_exec_i (Atomic_ULong &received)
       : received_ (received)
@@ -105,12 +109,13 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   }
 
   //============================================================
-  // Component Executor Implementation Class: Receiver_exec_iTestTopic_RawListener_exec_i ();
+  // Receiver_exec_i
   //============================================================
   Receiver_exec_i::Receiver_exec_i (void)
     : unexpected_matched_ (false),
       unexpected_liveliness_ (false),
-      received_(0)
+      received_(0),
+      thread_id_listener_ (0)
   {
   }
 
@@ -118,7 +123,6 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   {
   }
 
-  // Supported operations and attributes.
   // Port operations.
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
@@ -137,7 +141,9 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Receiver_exec_i::get_info_out_connector_status (void)
   {
-    return new ConnectorStatusListener_exec_i (this->unexpected_matched_,this->unexpected_liveliness_);
+    return new ConnectorStatusListener_exec_i (this->unexpected_matched_,
+                                               this->unexpected_liveliness_,
+                                               this->thread_id_listener_);
   }
 
   // Operations from Components::SessionComponent.
@@ -156,13 +162,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
-       this->reader_ = this->context_->get_connection_info_out_data ();
-       if (CORBA::is_nil (this->reader_))
-        {
-          ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Reader is null!\n")));
-          throw CORBA::INTERNAL ();
-        }
-   }
+  }
 
   void
   Receiver_exec_i::ccm_activate (void)
@@ -197,6 +197,50 @@ namespace CIAO_CSL_USTest_Receiver_Impl
                                ACE_TEXT ("'PUBLICATION_MATCHED_STATUS and LIVELINESS_CHANGED_STATUS' in Receiver\n")
                     ));
       }
+    if (this->thread_id_listener_.value () == 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: "
+                              "Thread ID for ConnectorStatusListener not set!\n"));
+      }
+    #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
+    else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
+                                ACE_Thread::self ()))
+      {
+        ACE_DEBUG ((LM_DEBUG, "OK : "
+                              "Thread switch for ConnectorStatusListener seems OK. "
+                              "(DDS uses the CCM thread for its callback) "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_.value (),
+                              ACE_Thread::self ()));
+      }
+    else
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: "
+                              "Thread switch for ConnectorStatusListener "
+                              "doesn't seem to work! "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_.value (),
+                              ACE_Thread::self ()));
+      }
+    #else
+    else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
+                                ACE_Thread::self ()))
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: ConnectorStatusListener: "
+                              "DDS seems to use a CCM thread for its callback: "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_.value (),
+                              ACE_Thread::self ()));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "OK : ConnectorStatusListener: "
+                              "DDS seems to use its own thread for its callback: "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_.value (),
+                              ACE_Thread::self ()));
+      }
+    #endif
   }
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
