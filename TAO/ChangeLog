@@ -1,13 +1,36 @@
+Mon Feb  8 10:58:21 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_3821_Regression/test.cpp:
+        * tests/Bug_3821_Regression/test.idl:
+        * tests/Bug_3821_Regression/Bug_3821_Regression.mpc:
+        * tests/Bug_3821_Regression/run_test.pl:
+        * tests/Bug_3821_Regression/README:
+        * tests/IDL_Test/Bug_3821_Regression.idl:
+        * bin/tao_orb_tests.lst:
+          Added a test for bug#3821 and scheduled it for run. Added the same
+          IDL file to IDL_Test, it can be useful for testing tao_idl's
+          behavior on unions.
+
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_visitor_union/discriminant_ci.cpp:
+        * TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+        * TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDL/be_include/be_union.h:
+          Fixed a bug#3821. In particular it changes how tao_idl generates
+          code for enum discriminated unions. Fixed other minor bugs.
+
 Mon Feb  8 10:35:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
         * orbsvcs/tests/Concurrency/lex.CC_command.cpp:
         * performance-tests/POA/Demux/demux_test_server.cpp:
         * tests/Exposed_Policies/RT_Properties.cpp:
-        
+
           Fixed new GCC 4.4.x warning about ignoring return values of
           function marked by the new warn_unused_result attribute.
-          
+
 Mon Feb  8 06:58:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/fe/lex.yy.cpp:

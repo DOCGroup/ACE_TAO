@@ -69,32 +69,12 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
           << "void " << be_nl
           << bu->name () << "::_default ()" << be_nl
           << "{" << be_idt_nl
-          << "this->_reset ();" << be_nl
-          << "this->disc_ = ";
-
-      be_type* dt =
-        be_type::narrow_from_decl (bu->disc_type ());
-
-      if (dt == 0)
-        {
-          return -1;
-        }
-
-      // Find where was the enum defined, if it was defined in the globa
-      // scope, then it is easy to generate the enum values....
-      be_scope* scope =
-        be_scope::narrow_from_scope (dt->defined_in ());
-
-      if (scope == 0)
-        {
-          *os << node->value_to_name (dv.u.enum_val);
-          return 0;
-        }
-
-      // The function value_to_name() takes care of adding
-      // any necessary scoping to the output.
-      *os << node->value_to_name (dv.u.enum_val);
-      *os << ";" << be_uidt_nl << "}" << be_nl << be_nl;
+          << "this->_reset ();" << be_nl;
+      // Since CORBA defines enums to be 32bits, use MAXINT as the
+      // out-of-bounds value for the _default() function. It MUST not
+      // be any already defined enum label.
+      *os << "this->disc_ = (" << bt->name () << ") -1;" << be_uidt_nl;
+      *os << "}" << be_nl << be_nl;
     }
 
   // the set method

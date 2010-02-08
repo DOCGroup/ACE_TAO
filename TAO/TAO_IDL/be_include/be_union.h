@@ -59,7 +59,7 @@ public:
 
   /// Returns total number of labels, useful when the union has
   /// multiple case labels.
-  unsigned long nlabels (void);
+  ACE_UINT64 nlabels (void);
 
   // Narrowing.
 

@@ -242,7 +242,7 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
   *os << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "::CORBA::Boolean result = 1;" << be_nl << be_nl
+      << "::CORBA::Boolean result = true;" << be_nl << be_nl
       << "switch (_tao_union._d ())" << be_nl
       << "{" << be_idt;
 
@@ -313,7 +313,7 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
   *os << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "::CORBA::Boolean result = 1;" << be_nl << be_nl
+      << "::CORBA::Boolean result = true;" << be_nl << be_nl
       << "switch (_tao_discriminant)" << be_nl
       << "{" << be_idt;
 
@@ -336,7 +336,7 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
     {
       *os << be_nl;
       *os << "default:" << be_idt_nl;
-      *os << "_tao_union._d (_tao_discriminant);" << be_nl;
+      *os << "_tao_union._default ();" << be_nl;
       *os << "break;" << be_uidt;
     }
 
