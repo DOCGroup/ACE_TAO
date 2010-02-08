@@ -281,28 +281,31 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
                                ACE_TEXT (" operations for ONE_BY_ONE from StateListener in Receiver\n")
                    ));
       }
-    if (this->thread_id_listener_.value () == 0)
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: "
-                               "Thread ID for StatusListener not set!\n"));
-      }
-    else if (this->thread_id_listener_.value () == ACE_Thread::self ())
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: "
-                               "Thread switch for StatusListener "
-                               "doesn't seem to work! "
-                               "listener <%u> - component <%u>\n",
-                               this->thread_id_listener_.value (),
-                               ACE_Thread::self ()));
-      }
-    else
-      {
-        ACE_DEBUG ((LM_DEBUG, "OK : "
-                               "Thread switch for StatusListener seems OK. "
-                               "listener <%u> - component <%u>\n",
-                               this->thread_id_listener_.value (),
-                               ACE_Thread::self ()));
-      }
+    #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
+      if (this->thread_id_listener_.value () == 0)
+        {
+          ACE_ERROR ((LM_ERROR, "ERROR: "
+                                "Thread ID for StatusListener not set!\n"));
+        }
+      else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
+                                 ACE_Thread::self ()))
+        {
+          ACE_ERROR ((LM_ERROR, "ERROR: "
+                                "Thread switch for StatusListener "
+                                "doesn't seem to work! "
+                                "listener <%u> - component <%u>\n",
+                                this->thread_id_listener_.value (),
+                                ACE_Thread::self ()));
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "OK : "
+                                "Thread switch for StatusListener seems OK. "
+                                "listener <%u> - component <%u>\n",
+                                this->thread_id_listener_.value (),
+                                ACE_Thread::self ()));
+        }
+    #endif
   }
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
