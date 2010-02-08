@@ -148,6 +148,9 @@ protected:
   virtual int compute_size_type (void);
   // Compute the size type if it is unknown.
 
+  virtual AST_UnionBranch *fe_add_union_branch (AST_UnionBranch *b);
+  // Moved out of private section so it can be called from subclass.
+  
 private:
   // Data.
 
@@ -180,8 +183,6 @@ private:
   // Scope Management Protocol.
 
   virtual AST_Union *fe_add_union (AST_Union *u);
-
-  virtual AST_UnionBranch *fe_add_union_branch (AST_UnionBranch *b);
 
   virtual AST_Structure *fe_add_structure (AST_Structure *s);
 

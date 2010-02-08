@@ -274,6 +274,12 @@ be_union::gen_empty_default_label (void)
   return true;
 }
 
+AST_UnionBranch *
+be_union::be_add_union_branch (AST_UnionBranch *b)
+{
+  return this->fe_add_union_branch (b);
+}
+
 ACE_UINT64
 be_union::nlabels (void)
 {
