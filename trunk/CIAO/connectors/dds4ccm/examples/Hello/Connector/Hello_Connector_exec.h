@@ -22,15 +22,15 @@
 namespace CIAO_Hello_Hello_Connector_Impl
 {
   typedef CIAO::DDS4CCM::RTI::Type_Traits <
-    DDSHello,
-    DDSHelloSeq,
-    DDSHelloTypeSupport,
-    DDSHelloDataWriter,
-    DDSHelloDataReader > DDSHello_DDS_Traits;
+    ::DDSHello,
+    ::DDSHelloSeq,
+    ::DDSHelloTypeSupport,
+    ::DDSHelloDataWriter,
+    ::DDSHelloDataReader > DDSHello_DDS_Traits;
 
   typedef CIAO::DDS4CCM::Connector_Traits <
     ::CIAO_Hello_Hello_Connector_Impl::Hello_Connector_Exec,
-    DDSHello_Seq,
+    ::DDSHello_Seq,
     ::CCM_DDS::Hello::CCM_Writer,
     ::CCM_DDS::Hello::CCM_Updater,
     ::CCM_DDS::Hello::CCM_Getter,
