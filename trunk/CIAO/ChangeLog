@@ -1,3 +1,24 @@
+Mon Feb  8 20:22:40 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/docs/TestCoverage.ods:
+          Updated.
+
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.cpp:
+          Optimized logging.
+
+        * connectors/dds4ccm/tests/ListenManyByMany/Receiver/LMBM_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/ListenManyByMany/Receiver/LMBM_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ListenManyByMany/Receiver/LMBM_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Receiver/LNE_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Receiver/LNE_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Receiver/LNE_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ListenOneByOne/Receiver/LOBO_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/ListenOneByOne/Receiver/LOBO_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ListenOneByOne/Receiver/LOBO_Test_Receiver_exec.cpp:
+          Since on_data_on_readers is not available anymore, these tests
+          didn't start. Resolved this by start listening on ccm_activate.
+
 Mon Feb  8 15:14:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector_exec.h:

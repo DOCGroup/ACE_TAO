@@ -64,65 +64,11 @@ namespace CIAO_LOBO_Test_Receiver_Impl
   }
 
   //============================================================
-  // ConnectorStatusListener_exec_i
-  //============================================================
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (
-            Receiver_exec_i &callback)
-    : callback_ (callback)
-  {
-  }
-
-  ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
-     ::DDS::Topic_ptr ,
-     const DDS::InconsistentTopicStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
-    ::DDS::DataReader_ptr ,
-     const DDS::RequestedIncompatibleQosStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr ,
-     const DDS::SampleRejectedStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
-     ::DDS::DataWriter_ptr ,
-     const DDS::OfferedDeadlineMissedStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr ,
-     const DDS::OfferedIncompatibleQosStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_unexpected_status(
-    ::DDS::Entity_ptr ,
-    ::DDS::StatusKind  status_kind)
-  {
-    if (status_kind == ::DDS::DATA_ON_READERS_STATUS)
-      {
-        this->callback_.start ();
-      }
-  }
-
-  //============================================================
   // Receiver_exec_i
   //============================================================
   Receiver_exec_i::Receiver_exec_i (void)
     : received_one_by_one_ (0),
       received_many_by_many_ (0),
-      started_ (false),
       thread_id_listener_ (0),
       iterations_ (10),
       keys_ (5)
@@ -136,13 +82,9 @@ namespace CIAO_LOBO_Test_Receiver_Impl
   void
   Receiver_exec_i::start ()
   {
-    if (!this->started_.value ())
-      {
-        this->started_ = true;
-        ::CCM_DDS::DataListenerControl_var dlc =
-            this->context_->get_connection_info_listen_data_control ();
-        dlc->mode (::CCM_DDS::ONE_BY_ONE);
-      }
+    ::CCM_DDS::DataListenerControl_var dlc =
+        this->context_->get_connection_info_listen_data_control ();
+    dlc->mode (::CCM_DDS::ONE_BY_ONE);
   }
 
   ::CCM_DDS::ListenOneByOneTest::CCM_Listener_ptr
@@ -163,7 +105,7 @@ namespace CIAO_LOBO_Test_Receiver_Impl
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Receiver_exec_i::get_info_listen_connector_status (void)
   {
-    return new ConnectorStatusListener_exec_i (*this);
+    return ::CCM_DDS::CCM_ConnectorStatusListener::_nil ();
   }
 
   ::CORBA::UShort
@@ -210,6 +152,7 @@ namespace CIAO_LOBO_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
+    start ();
   }
 
   void
@@ -248,15 +191,8 @@ namespace CIAO_LOBO_Test_Receiver_Impl
                                "expected <0> - received <%u>\n",
                                this->received_many_by_many_.value ()));
       }
-    if (!this->started_.value ())
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: ONE_BY_ONE: "
-                               "Didn't received DATA_ON_READERS_STATUS on "
-                               "ConnectorStatusListener\n"));
-      }
     if (this->received_one_by_one_.value () > 0   &&
-        this->received_many_by_many_.value () == 0 &&
-        this->started_.value ())
+        this->received_many_by_many_.value () == 0)
       {
         ACE_DEBUG ((LM_DEBUG, "ONE_BY_ONE: "
                                "Received only data on "
