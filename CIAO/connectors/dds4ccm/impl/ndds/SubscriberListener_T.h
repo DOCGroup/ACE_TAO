@@ -54,14 +54,14 @@ namespace CIAO
 
       virtual void on_requested_deadline_missed (
         ::DDS::DataReader_ptr ,
-        const ::DDS::RequestedDeadlineMissedStatus & ) {}
+        const ::DDS::RequestedDeadlineMissedStatus & );
 
       virtual void on_data_available (
-        ::DDS::DataReader_ptr ) {}
+        ::DDS::DataReader_ptr );
 
       virtual void on_sample_lost (
         ::DDS::DataReader_ptr ,
-        const ::DDS::SampleLostStatus & ) {}
+        const ::DDS::SampleLostStatus & );
 
       static ::DDS::StatusMask get_mask (
         ::CCM_DDS::ConnectorStatusListener_ptr csl);

@@ -123,6 +123,45 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
+void
+on_requested_incompatible_qos (
+  ::DDS::DataReader_ptr ,
+  const ::DDS::RequestedIncompatibleQosStatus & )
+{
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_sample_rejected (
+  ::DDS::DataReader_ptr ,
+  const ::DDS::SampleRejectedStatus & )
+{
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_changed (
+  ::DDS::DataReader_ptr ,
+  const ::DDS::LivelinessChangedStatus & )
+{
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_data_available (
+  ::DDS::DataReader_ptr )
+{
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_subscription_matched (
+  ::DDS::DataReader_ptr ,
+  const ::DDS::SubscriptionMatchedStatus & )
+{
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::StatusMask
 CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
   ::CCM_DDS::PortStatusListener_ptr psl)
