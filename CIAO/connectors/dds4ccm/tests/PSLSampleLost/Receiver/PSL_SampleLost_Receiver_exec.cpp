@@ -337,50 +337,54 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
                                ACE_TEXT ("'on_sample_lost' in on DDS_Listen and DDS_GET port Receiver\n")
                     ));
       }
-    if (this->thread_id_listener_1_.value () == 0)
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: "
-                               "Thread ID for PortStatusListener I not set!\n"));
-      }
-    else if (this->thread_id_listener_1_.value () == ACE_Thread::self ())
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: "
-                               "Thread switch for PortStatusListener I "
-                               "doesn't seem to work! "
-                               "listener <%u> - component <%u>\n",
-                               this->thread_id_listener_1_.value (),
-                               ACE_Thread::self ()));
-      }
-    else
-      {
-        ACE_DEBUG ((LM_DEBUG, "OK : "
-                               "Thread switch for PortStatusListener I seems OK. "
-                               "listener <%u> - component <%u>\n",
-                               this->thread_id_listener_1_.value (),
-                               ACE_Thread::self ()));
-      }
-    if (this->thread_id_listener_2_.value () == 0)
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: "
-                               "Thread ID for PortStatusListener II not set!\n"));
-      }
-    else if (this->thread_id_listener_2_.value () == ACE_Thread::self ())
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: "
-                               "Thread switch for PortStatusListener II "
-                               "doesn't seem to work! "
-                               "listener <%u> - component <%u>\n",
-                               this->thread_id_listener_2_.value (),
-                               ACE_Thread::self ()));
-      }
-    else
-      {
-        ACE_DEBUG ((LM_DEBUG, "OK : "
-                               "Thread switch for PortStatusListener II seems OK. "
-                               "listener <%u> - component <%u>\n",
-                               this->thread_id_listener_2_.value (),
-                               ACE_Thread::self ()));
-      }
+    #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
+      if (this->thread_id_listener_1_.value () == 0)
+        {
+          ACE_ERROR ((LM_ERROR, "ERROR: "
+                                "Thread ID for PortStatusListener I not set!\n"));
+        }
+      else if (ACE_OS::thr_equal (this->thread_id_listener_1_.value (),
+                                 ACE_Thread::self ()))
+        {
+          ACE_ERROR ((LM_ERROR, "ERROR: "
+                                "Thread switch for PortStatusListener I "
+                                "doesn't seem to work! "
+                                "listener <%u> - component <%u>\n",
+                                this->thread_id_listener_1_.value (),
+                                ACE_Thread::self ()));
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "OK : "
+                                "Thread switch for PortStatusListener I seems OK. "
+                                "listener <%u> - component <%u>\n",
+                                this->thread_id_listener_1_.value (),
+                                ACE_Thread::self ()));
+        }
+      if (this->thread_id_listener_2_.value () == 0)
+        {
+          ACE_ERROR ((LM_ERROR, "ERROR: "
+                                "Thread ID for PortStatusListener II not set!\n"));
+        }
+      else if (ACE_OS::thr_equal (this->thread_id_listener_2_.value (),
+                                 ACE_Thread::self ())
+        {
+          ACE_ERROR ((LM_ERROR, "ERROR: "
+                                "Thread switch for PortStatusListener II "
+                                "doesn't seem to work! "
+                                "listener <%u> - component <%u>\n",
+                                this->thread_id_listener_2_.value (),
+                                ACE_Thread::self ()));
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "OK : "
+                                "Thread switch for PortStatusListener II seems OK. "
+                                "listener <%u> - component <%u>\n",
+                                this->thread_id_listener_2_.value (),
+                                ACE_Thread::self ()));
+        }
+    #endif
   }
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
