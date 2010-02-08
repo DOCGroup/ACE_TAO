@@ -1,3 +1,9 @@
+Mon Feb  8 18:53:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Enabled 2609 and 2610 again, let us see how they run with the recent
+          changes from Vladimir
+
 Mon Feb  8 16:21:06 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * ace/Strategies_T.cpp:
