@@ -15,13 +15,11 @@ namespace CIAO
   {
     namespace RTI
     {
-      // Implementation skeleton constructor
       RTI_QueryCondition_i::RTI_QueryCondition_i ()
         : impl_ (0)
       {
       }
 
-      // Implementation skeleton destructor
       RTI_QueryCondition_i::~RTI_QueryCondition_i (void)
       {
       }

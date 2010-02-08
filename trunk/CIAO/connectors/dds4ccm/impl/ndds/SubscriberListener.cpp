@@ -17,14 +17,12 @@ namespace CIAO
   {
     namespace RTI
     {
-      // Implementation skeleton constructor
       RTI_SubscriberListener_i::RTI_SubscriberListener_i (::DDS::SubscriberListener_ptr p)
         : impl_ ( ::DDS::SubscriberListener::_duplicate (p))
       {
         CIAO_TRACE ("RTI_SubscriberListener_i::RTI_SubscriberListener_i");
       }
 
-      // Implementation skeleton destructor
       RTI_SubscriberListener_i::~RTI_SubscriberListener_i (void)
       {
         CIAO_TRACE ("RTI_SubscriberListener_i::~RTI_SubscriberListener_i");

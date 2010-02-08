@@ -8,7 +8,6 @@
 #include "dds4ccm/impl/ndds/QueryCondition.h"
 #include "ciao/Logger/Log_Macros.h"
 
-// Implementation skeleton constructor
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::Reader_T (void)
   : topic_ (0),
@@ -24,7 +23,6 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::Reader_T (void)
   #endif
 }
 
-// Implementation skeleton destructor
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::~Reader_T (void)
 {

@@ -27,13 +27,11 @@ namespace CIAO
   {
     namespace RTI
     {
-      // Implementation skeleton constructor
       RTI_DataReader_i::RTI_DataReader_i (void)
         : impl_ (0)
       {
       }
 
-      // Implementation skeleton destructor
       RTI_DataReader_i::~RTI_DataReader_i (void)
       {
       }
