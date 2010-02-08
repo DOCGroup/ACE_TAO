@@ -202,13 +202,13 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
 {
   if (!CORBA::is_nil (listener) || CIAO_debug_level >= 10)
     {
-      return DDS_DATA_AVAILABLE_STATUS |
-            DDS_REQUESTED_DEADLINE_MISSED_STATUS |
-            DDS_SAMPLE_LOST_STATUS;
+      return ::DDS::DATA_AVAILABLE_STATUS |
+             ::DDS::REQUESTED_DEADLINE_MISSED_STATUS |
+             ::DDS::SAMPLE_LOST_STATUS;
     }
   else
     {
-      return DDS_STATUS_MASK_NONE;
+      return 0;
     }
 }
 

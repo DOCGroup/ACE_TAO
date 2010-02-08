@@ -173,6 +173,6 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
     }
   else
     {
-      return DDS_STATUS_MASK_NONE;
+      return 0;
     }
 }
