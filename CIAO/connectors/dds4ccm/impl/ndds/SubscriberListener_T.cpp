@@ -261,15 +261,14 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
 {
   if (!CORBA::is_nil (csl) || CIAO_debug_level >= 10)
     {
-      return DDS_REQUESTED_INCOMPATIBLE_QOS_STATUS |
-             DDS_SAMPLE_REJECTED_STATUS |
-             DDS_LIVELINESS_CHANGED_STATUS |
-             DDS_SUBSCRIPTION_MATCHED_STATUS |
-             DDS_DATA_ON_READERS_STATUS;
+      return ::DDS::REQUESTED_INCOMPATIBLE_QOS_STATUS |
+             ::DDS::SAMPLE_REJECTED_STATUS |
+             ::DDS::LIVELINESS_CHANGED_STATUS |
+             ::DDS::SUBSCRIPTION_MATCHED_STATUS;
     }
   else
     {
-      return DDS_STATUS_MASK_NONE;
+      return 0;
     }
 }
 

@@ -1,3 +1,17 @@
+Mon Feb  8 12:28:48 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriterListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/PortStatusListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/TopicListener_T.cpp:
+          Replaced DDS_STATUS_MASK_NONE with 0 since DDS_STATUS_MASK_NONE
+          is not part of the DDS spec. Also using the DDS namespace to
+          determine mask.
+
 Mon Feb  8 12:03:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/SubscriberListener_T.cpp:

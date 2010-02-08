@@ -65,11 +65,11 @@ CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
 
   if (!CORBA::is_nil (error_listener) || CIAO_debug_level >= 10)
     {
-      return DDS_INCONSISTENT_TOPIC_STATUS;
+      return ::DDS::INCONSISTENT_TOPIC_STATUS;
     }
   else
     {
-      return DDS_STATUS_MASK_NONE;
+      return 0;
     }
 }
 
