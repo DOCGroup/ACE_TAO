@@ -1,3 +1,12 @@
+Tue Feb  9 10:15:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_RTComponentServer_Task.cpp:
+          Fixed memory leak
+
+        * connectors/ami4ccm/docs/AMI4CCM-explanation.odt:
+        * connectors/ami4ccm/docs/AMI4CCM-spec.odt:
+          Small updates
+
 Tue Feb  9 10:03:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Reader/Base/Reader_Starter.idl:
