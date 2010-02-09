@@ -162,7 +162,7 @@
           <kind>tk_ulong</kind>
         </type>
         <value>
-          <ulong>1000</ulong>
+          <ulong>10000</ulong>
         </value>
       </value>
     </configProperty>
@@ -184,7 +184,7 @@
           <kind>tk_ushort</kind>
         </type>
         <value>
-          <ushort>1</ushort>
+          <ushort>10</ushort>
         </value>
       </value>
     </configProperty>
@@ -195,7 +195,7 @@
           <kind>tk_ushort</kind>
         </type>
         <value>
-          <ushort>100</ushort>
+          <ushort>1000</ushort>
         </value>
       </value>
     </configProperty>
