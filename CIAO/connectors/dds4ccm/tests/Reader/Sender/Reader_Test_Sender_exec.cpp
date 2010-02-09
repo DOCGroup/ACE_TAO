@@ -88,6 +88,7 @@ namespace CIAO_Reader_Test_Sender_Impl
         else
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unable to start the reader\n")));
+            return;
           }
         for (CORBA::UShort iter_key = 1; iter_key < this->keys_ + 1; ++iter_key)
           {
@@ -103,6 +104,7 @@ namespace CIAO_Reader_Test_Sender_Impl
                             key, iter));
               }
           }
+        this->starter_->start_read ();
       }
   }
 

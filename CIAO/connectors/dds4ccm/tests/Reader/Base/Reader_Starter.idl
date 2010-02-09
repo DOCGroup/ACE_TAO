@@ -12,6 +12,7 @@
 
 interface ReaderStarter
 {
+  void start_read ();
   void read_no_data ();
   void set_reader_properties (in unsigned short nr_keys,
                               in unsigned short nr_iterations);
