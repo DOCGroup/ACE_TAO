@@ -118,8 +118,8 @@ namespace CIAO_CSL_QoSTest_Receiver_Impl
 
   private:
     ::CSL_QoSTest::CCM_Receiver_Context_var context_;
-    Atomic_ULong received_;
     Atomic_Boolean incompatible_;
+    Atomic_ULong received_;
     Atomic_ThreadId thread_id_listener_;
   };
 

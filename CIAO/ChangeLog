@@ -1,3 +1,16 @@
+Tue Feb  9 12:02:59 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLQoS/Receiver/CSL_QoSTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CSLQoS/Receiver/CSL_QoSTest_Receiver_exec.cpp:
+          Code alignment and optimized logging.
+
+        * connectors/dds4ccm/tests/CSLQoS/Sender/CSL_QoSTest_Sender_exec.h:
+        * connectors/dds4ccm/tests/CSLQoS/Sender/CSL_QoSTest_Sender_exec.cpp:
+          Added thread switch test.
+
+        * connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver_exec.h:
+          Code aligning.
+
 Tue Feb  9 11:04:46 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver_exec.cpp:
