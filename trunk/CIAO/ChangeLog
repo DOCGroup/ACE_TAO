@@ -1,3 +1,18 @@
+Tue Feb  9 13:27:37 UTC 2010  Marijke Hengstmengelt  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Keyed/Base/Perf_Keyed_Test_Base.idl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan.cdp:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_pub.cdp:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_sub.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/performance-tests/Keyed/Receiver/Perf_Keyed_Test_Receiver.idl:
+        * connectors/dds4ccm/performance-tests/Keyed/Receiver/Perf_Keyed_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Keyed/Receiver/Perf_Keyed_Test_Receiver_exec.h:
+        * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender.idl:
+        * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender_exec.h:
+        Get and print throughput statistics, print latency one way, code optimalizations.
+
 Tue Feb  9 13:27:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.idl:

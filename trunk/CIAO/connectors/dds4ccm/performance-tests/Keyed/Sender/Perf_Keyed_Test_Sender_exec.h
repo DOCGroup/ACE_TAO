@@ -157,9 +157,6 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     void write_one (void);
     void write_one_with_spin (void);
 
-
-
-
   private:
     ::Perf_Keyed_Test::CCM_Sender_Context_var context_;
     CCM_DDS::PerfKeyedTest::Writer_var writer_;
@@ -173,7 +170,6 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     CORBA::UShort sleep_;
     CORBA::UShort spin_;
     CORBA::UShort datalen_;
-
 
     Atomic_Boolean matched_;
     int number_of_subscribers_;
