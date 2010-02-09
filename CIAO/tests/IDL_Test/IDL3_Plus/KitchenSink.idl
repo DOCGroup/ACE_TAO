@@ -248,3 +248,15 @@ module Ast<iface,
            101>
   Ast_Inst;
 
+/*
+Jeff, this causes a crash of TAO_IDL
+module N <typename T>
+{
+  interface A {
+    void do_something (in T arg);
+  };
+};
+
+native NAT;
+module N <NAT> N_NAT;
+*/
