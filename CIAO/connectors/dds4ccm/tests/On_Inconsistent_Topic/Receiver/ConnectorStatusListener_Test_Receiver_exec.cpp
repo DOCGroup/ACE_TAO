@@ -61,7 +61,8 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
   // Component Executor Implementation Class: Receiver_exec_iTestTopic_RawListener_exec_i ();
   //============================================================
   Receiver_exec_i::Receiver_exec_i (void)
-    : inconsistent_ (false)
+    : inconsistent_ (false) ,
+      thread_id_listener_ (0)
   {
   }
 
@@ -134,26 +135,26 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
   {
     if (!this->inconsistent_.value ())
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
-                               ACE_TEXT ("error 'on_inconsistent_topic' in Receiver\n")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("RECEIVER ERROR: did not receive the expected ")
+                              ACE_TEXT ("error 'on_inconsistent_topic'\n")
                     ));
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Received the expected ")
-                               ACE_TEXT ("'on_inconsistent_topic' in Receiver\n")
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("RECEIVER OK: Received the expected ")
+                              ACE_TEXT ("'on_inconsistent_topic'\n")
                     ));
       }
     if (this->thread_id_listener_.value () == 0)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: "
+        ACE_ERROR ((LM_ERROR, "RECEIVER ERROR: "
                               "Thread ID for ConnectorStatusListener not set!\n"));
       }
     #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
     else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
                                 ACE_Thread::self ()))
       {
-        ACE_DEBUG ((LM_DEBUG, "OK : "
+        ACE_DEBUG ((LM_DEBUG, "RECEIVER OK: "
                               "Thread switch for ConnectorStatusListener seems OK. "
                               "(DDS uses the CCM thread for its callback) "
                               "listener <%u> - component <%u>\n",
@@ -162,7 +163,7 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
       }
     else
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: "
+        ACE_ERROR ((LM_ERROR, "RECEIVER ERROR: "
                               "Thread switch for ConnectorStatusListener "
                               "doesn't seem to work! "
                               "listener <%u> - component <%u>\n",
@@ -173,7 +174,7 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
     else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
                                 ACE_Thread::self ()))
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: ConnectorStatusListener: "
+        ACE_ERROR ((LM_ERROR, "RECEIVER ERROR: ConnectorStatusListener: "
                               "DDS seems to use a CCM thread for its callback: "
                               "listener <%u> - component <%u>\n",
                               this->thread_id_listener_.value (),
@@ -181,7 +182,7 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, "OK : ConnectorStatusListener: "
+        ACE_DEBUG ((LM_DEBUG, "RECEIVER OK: ConnectorStatusListener: "
                               "DDS seems to use its own thread for its callback: "
                               "listener <%u> - component <%u>\n",
                               this->thread_id_listener_.value (),
