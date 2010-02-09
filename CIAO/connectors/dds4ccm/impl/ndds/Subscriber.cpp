@@ -315,17 +315,30 @@ namespace CIAO
         ::DDS::SubscriberListener_ptr a_listener,
         ::DDS::StatusMask mask)
       {
-        RTI_SubscriberListener_i* rti_impl_list = new RTI_SubscriberListener_i (a_listener);
+        CIAO_TRACE ("RTI_Subscriber_i::set_listener");
+
+        RTI_SubscriberListener_i* rti_impl_list = 0;
+        if (!CORBA::is_nil (a_listener))
+          {
+            rti_impl_list = new RTI_SubscriberListener_i (a_listener);
+          }
         return this->impl ()->set_listener (rti_impl_list, mask);
       }
 
       ::DDS::SubscriberListener_ptr
       RTI_Subscriber_i::get_listener (void)
       {
-//        DDSSubscriberListener* rti_impl_list = this->impl ()->get_listener ();
-//        ::DDS::SubscriberListener_var retval = new RTI_SubscriberListener_i (rti_impl_list);
-//        return retval._retn ();
-        throw CORBA::NO_IMPLEMENT ();
+        CIAO_TRACE ("RTI_Subscriber_i::get_listener");
+
+        DDSSubscriberListener *rti_impl_list = this->impl ()->get_listener ();
+        RTI_SubscriberListener_i *list_proxy = dynamic_cast <RTI_SubscriberListener_i *> (rti_impl_list);
+        if (!list_proxy)
+          {
+            CIAO_DEBUG (6, (LM_DEBUG, "RTI_Subscriber_i::get_listener - "
+                                      "DDS returned a NIL listener.\n"));
+            return ::DDS::SubscriberListener::_nil ();
+          }
+        return list_proxy->get_subscriber_listener ();
       }
 
       ::DDS::ReturnCode_t
