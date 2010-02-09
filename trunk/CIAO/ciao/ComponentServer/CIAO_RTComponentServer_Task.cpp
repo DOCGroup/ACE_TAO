@@ -205,7 +205,7 @@ namespace CIAO
         {
           CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTComponentServer_Task::run - "
                       "Resolving callback IOR\n"));
-          CORBA::Object_ptr obj =
+          CORBA::Object_var obj =
             this->orb_->string_to_object (this->callback_ior_str_.c_str ());
           ServerActivator_var sa (ServerActivator::_narrow (obj));
 
