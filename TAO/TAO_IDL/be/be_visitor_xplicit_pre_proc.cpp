@@ -164,12 +164,12 @@ int
 be_visitor_xplicit_pre_proc::visit_argument (be_argument *node)
 {
   UTL_ScopedName sn (node->local_name (), 0);
-  
+
   this->ref_type_ = true;
 
   be_type *ft =
     be_type::narrow_from_decl (node->field_type ());
-    
+
   if (ft->accept (this) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -178,11 +178,11 @@ be_visitor_xplicit_pre_proc::visit_argument (be_argument *node)
                          ACE_TEXT ("for arg type failed\n")),
                         -1);
     }
-    
+
   this->ref_type_ = false;
-    
+
   AST_Type *arg_type =
-    AST_Type::narrow_from_decl (this->type_holder_); 
+    AST_Type::narrow_from_decl (this->type_holder_);
 
   be_argument *added_arg = 0;
   ACE_NEW_RETURN (added_arg,
@@ -200,7 +200,7 @@ int
 be_visitor_xplicit_pre_proc::visit_factory (be_factory *node)
 {
   UTL_ScopedName sn (node->local_name (), 0);
-  
+
   AST_Home *f_home =
     AST_Home::narrow_from_scope (node->defined_in ());
 
@@ -270,7 +270,7 @@ be_visitor_xplicit_pre_proc::visit_interface (be_interface *node)
   // Interface can't be declared inside a home, no need to call
   // check_and_store().
   this->type_holder_ = node;
-  
+
   return 0;
 }
 
@@ -280,7 +280,7 @@ be_visitor_xplicit_pre_proc::visit_valuebox (be_valuebox *node)
   // Valuebox can't be declared inside a home, no need to call
   // check_and_store().
   this->type_holder_ = node;
-  
+
   return 0;
 }
 
@@ -290,7 +290,7 @@ be_visitor_xplicit_pre_proc::visit_valuetype (be_valuetype *node)
   // Valuetype can't be declared inside a home, no need to call
   // check_and_store().
   this->type_holder_ = node;
-  
+
   return 0;
 }
 
@@ -302,19 +302,19 @@ be_visitor_xplicit_pre_proc::visit_structure (be_structure *node)
       this->check_and_store (node);
       return 0;
     }
-  
+
   UTL_ScopedName sn (node->local_name (), 0);
-  
+
   be_structure *added_struct = 0;
   ACE_NEW_RETURN (added_struct,
                   be_structure (&sn,
                                 false,
                                 false),
                   -1);
-                  
+
   idl_global->scopes ().top ()->add_to_scope (added_struct);
   idl_global->scopes ().push (added_struct);
-  
+
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -323,7 +323,7 @@ be_visitor_xplicit_pre_proc::visit_structure (be_structure *node)
                          ACE_TEXT ("for scope failed\n")),
                         -1);
     }
-    
+
   return 0;
 }
 
@@ -332,24 +332,24 @@ be_visitor_xplicit_pre_proc::visit_structure_fwd (
   be_structure_fwd *node)
 {
   UTL_ScopedName sn (node->local_name (), 0);
-  
+
   be_structure *dummy = 0;
   ACE_NEW_RETURN (dummy,
                   be_structure (&sn,
                                 false,
                                 false),
                   -1);
-  
+
   be_structure_fwd *added_struct_fwd = 0;
   ACE_NEW_RETURN (added_struct_fwd,
                   be_structure_fwd (dummy,
                                     &sn),
                   -1);
-                  
+
   dummy->fwd_decl (added_struct_fwd);
-  
+
   idl_global->scopes ().top ()->add_to_scope (added_struct_fwd);
-  
+
   return 0;
 }
 
@@ -357,17 +357,17 @@ int
 be_visitor_xplicit_pre_proc::visit_exception (be_exception *node)
 {
   UTL_ScopedName sn (node->local_name (), 0);
-  
+
   be_exception *added_excep = 0;
   ACE_NEW_RETURN (added_excep,
                   be_exception (&sn,
                                 false,
                                 false),
                   -1);
-                                          
+
   idl_global->scopes ().top ()->add_to_scope (added_excep);
   idl_global->scopes ().push (added_excep);
-  
+
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -376,9 +376,9 @@ be_visitor_xplicit_pre_proc::visit_exception (be_exception *node)
                          ACE_TEXT ("for scope failed\n")),
                         -1);
     }
-    
+
   idl_global->scopes ().pop ();
-    
+
   return 0;
 }
 
@@ -390,19 +390,19 @@ be_visitor_xplicit_pre_proc::visit_enum (be_enum *node)
       this->check_and_store (node);
       return 0;
     }
-  
+
   UTL_ScopedName sn (node->local_name (), 0);
-  
+
   be_enum *added_enum = 0;
   ACE_NEW_RETURN (added_enum,
                   be_enum (&sn,
                            false,
                            false),
                   -1);
-                  
+
   idl_global->scopes ().top ()->add_to_scope (added_enum);
   idl_global->scopes ().push (added_enum);
-  
+
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -411,7 +411,7 @@ be_visitor_xplicit_pre_proc::visit_enum (be_enum *node)
                          ACE_TEXT ("for scope failed\n")),
                         -1);
     }
-  
+
   return 0;
 }
 
@@ -419,10 +419,10 @@ int
 be_visitor_xplicit_pre_proc::visit_field (be_field *node)
 {
   this->ref_type_ = true;
-  
+
   be_type *ft =
     be_type::narrow_from_decl (node->field_type ());
-    
+
   if (ft->accept (this) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -431,22 +431,22 @@ be_visitor_xplicit_pre_proc::visit_field (be_field *node)
                          ACE_TEXT ("for field type failed\n")),
                         -1);
     }
-    
+
   this->ref_type_ = false;
-    
+
   UTL_ScopedName sn (node->local_name (), 0);
   AST_Type *field_type =
     AST_Type::narrow_from_decl (this->type_holder_);
-  
+
   be_field *added_field = 0;
   ACE_NEW_RETURN (added_field,
                   be_field (field_type,
                             &sn,
                             node->visibility ()),
                   -1);
-                                    
+
   idl_global->scopes ().top ()->add_to_scope (added_field);
-  
+
   return 0;
 }
 
@@ -455,9 +455,9 @@ be_visitor_xplicit_pre_proc::visit_attribute (be_attribute *node)
 {
   be_type *ft =
     be_type::narrow_from_decl (node->field_type ());
-    
+
   this->ref_type_ = true;
-  
+
   if (ft->accept (this) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -466,14 +466,14 @@ be_visitor_xplicit_pre_proc::visit_attribute (be_attribute *node)
                          ACE_TEXT ("for attribute type failed\n")),
                         -1);
     }
-    
+
   this->ref_type_ = false;
-  
+
   AST_Type *attr_type =
     AST_Type::narrow_from_decl (this->type_holder_);
-    
+
   UTL_ScopedName sn (node->local_name (), 0);
-  
+
   be_attribute *added_attr = 0;
   ACE_NEW_RETURN (added_attr,
                   be_attribute (node->readonly (),
@@ -482,9 +482,9 @@ be_visitor_xplicit_pre_proc::visit_attribute (be_attribute *node)
                                 false,
                                 false),
                   -1);
-                  
+
   idl_global->scopes ().top ()->add_to_scope (added_attr);
-     
+
   return 0;
 }
 
@@ -496,12 +496,12 @@ be_visitor_xplicit_pre_proc::visit_union (be_union *node)
       this->check_and_store (node);
       return 0;
     }
-    
+
   be_type *ud =
     be_type::narrow_from_decl (node->disc_type ());
-    
+
   this->ref_type_ = true;
-    
+
   if (ud->accept (this) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -510,14 +510,14 @@ be_visitor_xplicit_pre_proc::visit_union (be_union *node)
                          ACE_TEXT ("for discriminator type failed\n")),
                         -1);
     }
-    
+
   this->ref_type_ = false;
-  
+
   AST_ConcreteType *disc =
     AST_ConcreteType::narrow_from_decl (this->type_holder_);
-  
+
   UTL_ScopedName sn (node->local_name (), 0);
-  
+
   be_union *added_union = 0;
   ACE_NEW_RETURN (added_union,
                   be_union (disc,
@@ -525,10 +525,10 @@ be_visitor_xplicit_pre_proc::visit_union (be_union *node)
                             false,
                             false),
                   -1);
-                  
+
   idl_global->scopes ().top ()->add_to_scope (added_union);
   idl_global->scopes ().push (added_union);
-  
+
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -537,7 +537,7 @@ be_visitor_xplicit_pre_proc::visit_union (be_union *node)
                          ACE_TEXT ("for scope failed\n")),
                         -1);
     }
-    
+
   return 0;
 }
 
@@ -545,7 +545,7 @@ int
 be_visitor_xplicit_pre_proc::visit_union_fwd (be_union_fwd *node)
 {
   UTL_ScopedName sn (node->local_name (), 0);
-  
+
   be_union *dummy = 0;
   ACE_NEW_RETURN (dummy,
                   be_union (0,
@@ -553,17 +553,17 @@ be_visitor_xplicit_pre_proc::visit_union_fwd (be_union_fwd *node)
                             false,
                             false),
                   -1);
-  
+
   be_union_fwd *added_union_fwd = 0;
   ACE_NEW_RETURN (added_union_fwd,
                   be_union_fwd (dummy,
                                 &sn),
                   -1);
-                  
+
   dummy->fwd_decl (added_union_fwd);
-  
+
   idl_global->scopes ().top ()->add_to_scope (added_union_fwd);
-  
+
   return 0;
 }
 
@@ -573,9 +573,9 @@ be_visitor_xplicit_pre_proc::visit_union_branch (
 {
   be_type *ft =
     be_type::narrow_from_decl (node->field_type ());
-    
+
   this->ref_type_ = true;
-  
+
   if (ft->accept (this) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -584,9 +584,9 @@ be_visitor_xplicit_pre_proc::visit_union_branch (
                          ACE_TEXT ("for branch type failed\n")),
                         -1);
     }
-    
+
   this->ref_type_ = false;
-  
+
   AST_Type *bt =
     AST_Type::narrow_from_decl (this->type_holder_);
 
@@ -625,24 +625,24 @@ be_visitor_xplicit_pre_proc::visit_constant (be_constant *node)
       this->check_and_store (node);
       return 0;
     }
-    
+
   AST_Expression *new_v = 0;
   ACE_NEW_RETURN (new_v,
                   AST_Expression (node->constant_value (),
                                   node->et ()),
                   -1);
-                  
+
   UTL_ScopedName sn (node->local_name (), 0);
-                  
+
   be_constant *added_const = 0;
   ACE_NEW_RETURN (added_const,
                   be_constant (node->et (),
                                new_v,
                                &sn),
                   -1);
-                  
+
   idl_global->scopes ().top ()->add_to_scope (added_const);
-    
+
   return 0;
 }
 
@@ -654,7 +654,7 @@ be_visitor_xplicit_pre_proc::visit_enum_val (be_enum_val *node)
       this->type_holder_ = node;
       return 0;
     }
-    
+
   UTL_ScopedName sn (node->local_name (), 0);
 
   be_enum_val *added_enum_val = 0;
@@ -662,9 +662,9 @@ be_visitor_xplicit_pre_proc::visit_enum_val (be_enum_val *node)
                   be_enum_val (node->constant_value ()->ev ()->u.ulval,
                                &sn),
                   -1);
-                  
+
   idl_global->scopes ().top ()->add_to_scope (added_enum_val);
-  
+
   return 0;
 }
 
@@ -673,10 +673,10 @@ be_visitor_xplicit_pre_proc::visit_array (be_array *node)
 {
   be_type *bt =
     be_type::narrow_from_decl (node->base_type ());
-    
-  bool tmp = this->ref_type_;  
+
+  bool tmp = this->ref_type_;
   this->ref_type_ = true;
-  
+
   if (bt->accept (this) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -685,24 +685,24 @@ be_visitor_xplicit_pre_proc::visit_array (be_array *node)
                          ACE_TEXT ("for base type failed\n")),
                         -1);
     }
-    
+
   this->ref_type_ = tmp;
-  
+
   AST_Expression *v = 0;
   UTL_ExprList *v_list = 0;
-  
+
   for (ACE_CDR::ULong i = 0; i < node->n_dims (); ++i)
     {
       ACE_NEW_RETURN (v,
                       AST_Expression (node->dims ()[i],
                                       AST_Expression::EV_ulong),
                       -1);
-                      
+
       UTL_ExprList *el = 0;
       ACE_NEW_RETURN (el,
                       UTL_ExprList (v, 0),
                       -1);
-                      
+
       if (v_list == 0)
         {
           v_list = el;
@@ -712,9 +712,9 @@ be_visitor_xplicit_pre_proc::visit_array (be_array *node)
           v_list->nconc (el);
         }
     }
-    
+
   UTL_ScopedName sn (node->local_name (), 0);
-  
+
   be_array *added_array = 0;
   ACE_NEW_RETURN (added_array,
                   be_array (&sn,
@@ -723,21 +723,21 @@ be_visitor_xplicit_pre_proc::visit_array (be_array *node)
                             false,
                             false),
                   -1);
-                  
+
   // No need to add this new node to any scope - it's anonymous
   // and owned by the node that references it.
 
   v_list->destroy ();
   delete v_list;
   v_list = 0;
-  
+
   AST_Type *base_type =
     AST_Type::narrow_from_decl (this->type_holder_);
-    
+
   added_array->set_base_type (base_type);
-  
+
   this->type_holder_ = added_array;
-    
+
   return 0;
 }
 
@@ -746,10 +746,10 @@ be_visitor_xplicit_pre_proc::visit_sequence (be_sequence *node)
 {
   be_type *bt =
     be_type::narrow_from_decl (node->base_type ());
-    
+
   bool tmp = this->ref_type_;
   this->ref_type_ = true;
-  
+
   if (bt->accept (this) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -758,9 +758,9 @@ be_visitor_xplicit_pre_proc::visit_sequence (be_sequence *node)
                          ACE_TEXT ("for element type failed\n")),
                         -1);
     }
-    
+
   this->ref_type_ = tmp;
-  
+
   AST_Expression *v = node->max_size ();
 
   AST_Expression *bound = 0;
@@ -768,13 +768,13 @@ be_visitor_xplicit_pre_proc::visit_sequence (be_sequence *node)
                   AST_Expression (v,
                                   AST_Expression::EV_ulong),
                   -1);
-                  
+
   Identifier id ("sequence");
   UTL_ScopedName sn (&id, 0);
-  
+
   AST_Type *ft =
     AST_Type::narrow_from_decl (this->type_holder_);
-  
+
   ACE_NEW_RETURN (this->type_holder_,
                   be_sequence (bound,
                                ft,
@@ -782,7 +782,7 @@ be_visitor_xplicit_pre_proc::visit_sequence (be_sequence *node)
                                false,
                                false),
                   -1);
-    
+
   // No need to add this new node to any scope - it's anonymous
   // and owned by the node that references it.
 
@@ -797,7 +797,7 @@ be_visitor_xplicit_pre_proc::visit_string (be_string *node)
       this->check_and_store (node);
       return 0;
     }
-    
+
   AST_Expression *b = node->max_size ();
 
   if (b->ev ()->u.ulval == 0)
@@ -805,23 +805,23 @@ be_visitor_xplicit_pre_proc::visit_string (be_string *node)
       this->type_holder_ = node;
       return 0;
     }
-    
+
   AST_Expression *bound = 0;
   ACE_NEW_RETURN (bound,
                   AST_Expression (b,
                                   AST_Expression::EV_ulong),
                   -1);
-                  
+
   Identifier id ("string");
   UTL_ScopedName sn (&id, 0);
-  
+
   ACE_NEW_RETURN (this->type_holder_,
                   be_string (AST_Decl::NT_string,
                              &sn,
                              bound,
                              node->width ()),
                   -1);
-     
+
   return 0;
 }
 
@@ -833,12 +833,12 @@ be_visitor_xplicit_pre_proc::visit_typedef (be_typedef *node)
       this->check_and_store (node);
       return 0;
     }
-    
+
   be_type *t =
     be_type::narrow_from_decl (node->field_type ());
-    
+
   this->ref_type_ = true;
-    
+
   if (t->accept (this) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -847,13 +847,13 @@ be_visitor_xplicit_pre_proc::visit_typedef (be_typedef *node)
                          ACE_TEXT ("for base type failed\n")),
                         -1);
     }
-    
+
   this->ref_type_ = false;
-    
+
   UTL_ScopedName sn (node->local_name (), 0);
   AST_Type *bt =
     AST_Type::narrow_from_decl (this->type_holder_);
-    
+
   be_typedef *added_typedef = 0;
   ACE_NEW_RETURN (added_typedef,
                   be_typedef (bt,
@@ -861,9 +861,9 @@ be_visitor_xplicit_pre_proc::visit_typedef (be_typedef *node)
                               false,
                               false),
                   -1);
-                  
-  idl_global->scopes ().top ()->add_to_scope (added_typedef);            
-    
+
+  idl_global->scopes ().top ()->add_to_scope (added_typedef);
+
   return 0;
 }
 
@@ -875,16 +875,16 @@ be_visitor_xplicit_pre_proc::visit_native (be_native *node)
       this->check_and_store (node);
       return 0;
     }
-    
+
   UTL_ScopedName sn (node->local_name (), 0);
-  
+
   be_native *added_native = 0;
   ACE_NEW_RETURN (added_native,
                   be_native (&sn),
                   -1);
-                  
+
   idl_global->scopes ().top ()->add_to_scope (added_native);
-  
+
   return 0;
 }
 
@@ -893,7 +893,7 @@ be_visitor_xplicit_pre_proc::visit_predefined_type (
   be_predefined_type *node)
 {
   this->type_holder_ = node;
-  
+
   return 0;
 }
 
@@ -952,3 +952,4 @@ be_visitor_xplicit_pre_proc::xplicit_iface_rel_name (AST_Decl *d)
 
   return 0;
 }
+
