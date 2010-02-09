@@ -23,10 +23,11 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean> Atomic_Boolean;
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_thread_t> Atomic_ThreadId;
 
+  class Receiver_exec_i;
+
   //============================================================
   // ConnectorStatusListener_exec_i
   //============================================================
-  class Receiver_exec_i;
   class RECEIVER_EXEC_Export ConnectorStatusListener_exec_i
     : public virtual ::CCM_DDS::CCM_ConnectorStatusListener,
       public virtual ::CORBA::LocalObject
@@ -70,14 +71,11 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
 
     ~read_action_Generator ();
 
-    /// Handle the timeout.
     virtual int handle_timeout (const ACE_Time_Value &tv,
                                 const void *arg);
 
   private:
-    /// Maintains a handle that actually process the event
     Receiver_exec_i &pulse_callback_;
-
   };
 
   //============================================================
