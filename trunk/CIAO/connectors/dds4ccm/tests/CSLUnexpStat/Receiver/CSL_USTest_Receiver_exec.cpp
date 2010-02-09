@@ -10,7 +10,6 @@
 #include "ace/OS_NS_time.h"
 #include "dds4ccm/impl/ndds/Utils.h"
 
-
 namespace CIAO_CSL_USTest_Receiver_Impl
 {
 //============================================================
@@ -270,7 +269,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
                               ACE_Thread::self ()));
       }
     #else
-    else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
+    else if (ACE_OS::thr_equal (this->thread_id_listener_subscription_matched_.value (),
                                 ACE_Thread::self ()))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: 'SUBSCRIPTION_MATCHED_STATUS': "
