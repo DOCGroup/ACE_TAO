@@ -13,59 +13,67 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
 {
 
   //============================================================
-  // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
+  // ConnectorStatusListener_exec_i
   //============================================================
-
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &deadline_missed)
-   : deadline_missed_ (deadline_missed)
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &deadline_missed,
+                                                                  Atomic_ThreadId &thread_id)
+    : deadline_missed_ (deadline_missed),
+      thread_id_ (thread_id)
   {
   }
 
   ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
   {
-
   }
 
   // Operations from ::CCM_DDS::ConnectorStatusListener
-  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
+  void ConnectorStatusListener_exec_i::on_inconsistent_topic (
     ::DDS::Topic_ptr /*the_topic*/,
-     const DDS::InconsistentTopicStatus & /*status*/){
-    }
+    const DDS::InconsistentTopicStatus & /*status*/)
+  {
+  }
 
-  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
+  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos (
     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
-    }
+    const DDS::RequestedIncompatibleQosStatus & /*status*/)
+  {
+  }
 
-  void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::SampleRejectedStatus & /*status*/)  {
-    }
+  void ConnectorStatusListener_exec_i::on_sample_rejected (
+    ::DDS::DataReader_ptr /*the_reader*/,
+    const DDS::SampleRejectedStatus & /*status*/)
+  {
+  }
 
   void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
-     ::DDS::DataWriter_ptr the_writer,
-     const DDS::OfferedDeadlineMissedStatus & status)  {
-       if(status.last_instance_handle.isValid && (!CORBA::is_nil (the_writer)))
-       {
-         this->deadline_missed_ = true;
-       }
-    }
- 
+    ::DDS::DataWriter_ptr the_writer,
+    const DDS::OfferedDeadlineMissedStatus & status)
+  {
+    this->thread_id_ = ACE_Thread::self ();
+    if(status.last_instance_handle.isValid && !CORBA::is_nil (the_writer))
+      {
+        this->deadline_missed_ = true;
+      }
+  }
+
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
-    }
+    ::DDS::DataWriter_ptr /*the_writer*/,
+    const DDS::OfferedIncompatibleQosStatus & /*status*/)
+  {
+  }
 
   void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr /*the_entity*/,
-    ::DDS::StatusKind  /*status_kind*/)  {
-    }
-  //============================================================
-  // Component Executor Implementation Class: Sender_exec_i
-  //============================================================
+    ::DDS::StatusKind  /*status_kind*/)
+  {
+  }
 
+  //============================================================
+  // Sender_exec_i
+  //============================================================
   Sender_exec_i::Sender_exec_i (void)
-    : deadline_missed_ (false)
+    : deadline_missed_ (false),
+      thread_id_listener_ (0)
   {
   }
 
@@ -76,11 +84,11 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Sender_exec_i::get_test_topic_connector_status (void)
   {
-    return new ConnectorStatusListener_exec_i (this->deadline_missed_);
+    return new ConnectorStatusListener_exec_i (this->deadline_missed_,
+                                               this->thread_id_listener_);
   }
 
   // Supported operations and attributes.
-
   void
   Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
   {
@@ -104,23 +112,24 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
     //to force an 'offered_deadline_missed'  write the topics with a pause of 2 sec in between and
     //in the profile the deadline is set to 1 sec.
     for (CSL_QoSTest_Table::iterator i = this->_ktests_.begin ();
-            i != this->_ktests_.end ();
-            ++i)
-    {
-      try
+         i != this->_ktests_.end ();
+         ++i)
       {
-        if (!CORBA::is_nil (this->writer_) ) {
-          ACE_OS::sleep (2);
-          ::DDS::InstanceHandle_t hnd = this->writer_->register_instance (i->second);
-          this->writer_->write_one(i->second,hnd);
-        }
+        try
+          {
+            if (!CORBA::is_nil (this->writer_) )
+            {
+              ACE_OS::sleep (2);
+              ::DDS::InstanceHandle_t hnd = this->writer_->register_instance (i->second);
+              this->writer_->write_one(i->second,hnd);
+            }
+          }
+        catch (const CCM_DDS::InternalError& )
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while writing topic for <%C>.\n"),
+                          i->first.c_str ()));
+          }
       }
-      catch (const CCM_DDS::InternalError& )
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while writing topic for <%C>.\n"),
-                        i->first.c_str ()));
-      }
-    }
   }
 
  void
@@ -131,6 +140,7 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
     new_key->x = x;
     this->_ktests_[key] = new_key;
   }
+
   void
   Sender_exec_i::ccm_activate (void)
   {
@@ -150,20 +160,62 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
   void
   Sender_exec_i::ccm_remove (void)
   {
-
-    if(!this->deadline_missed_.value ())
+    if (this->deadline_missed_.value ())
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
-                               ACE_TEXT ("warning 'on_offered_deadline_missed' in Sender\n")
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("SENDER OK: Received the expected ")
+                              ACE_TEXT ("'on_offered_deadline_missed'\n")
                     ));
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Received the expected ")
-                               ACE_TEXT ("'on_offered_deadline_missed' in Sender\n")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("SENDER ERROR: did not receive the expected ")
+                              ACE_TEXT ("error 'on_offered_deadline_missed'\n")
                     ));
       }
-
+    if (this->thread_id_listener_.value () == 0)
+      {
+        ACE_ERROR ((LM_ERROR, "SENDER ERROR: "
+                              "Thread ID for ConnectorStatusListener not set!\n"));
+      }
+    #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
+    else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
+                                ACE_Thread::self ()))
+      {
+        ACE_DEBUG ((LM_DEBUG, "SENDER OK: "
+                              "Thread switch for ConnectorStatusListener seems OK. "
+                              "(DDS uses the CCM thread for its callback) "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_.value (),
+                              ACE_Thread::self ()));
+      }
+    else
+      {
+        ACE_ERROR ((LM_ERROR, "SENDER ERROR: "
+                              "Thread switch for ConnectorStatusListener "
+                              "doesn't seem to work! "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_.value (),
+                              ACE_Thread::self ()));
+      }
+    #else
+    else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
+                                ACE_Thread::self ()))
+      {
+        ACE_ERROR ((LM_ERROR, "SENDER ERROR: ConnectorStatusListener: "
+                              "DDS seems to use a CCM thread for its callback: "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_.value (),
+                              ACE_Thread::self ()));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "SENDER OK: ConnectorStatusListener: "
+                              "DDS seems to use its own thread for its callback: "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_.value (),
+                              ACE_Thread::self ()));
+      }
+    #endif
   }
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
