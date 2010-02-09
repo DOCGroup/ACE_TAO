@@ -8,63 +8,6 @@
 namespace CIAO_Reader_Test_Receiver_Impl
 {
   //============================================================
-  // ConnectorStatusListener_exec_i
-  //============================================================
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Receiver_exec_i &callback)
-    : callback_ (callback),
-      has_run_ (false)
-  {
-  }
-
-  ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
-  {
-  }
-
-  // Operations from ::CCM_DDS::ConnectorStatusListener
-  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
-     ::DDS::Topic_ptr ,
-     const DDS::InconsistentTopicStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
-    ::DDS::DataReader_ptr ,
-     const DDS::RequestedIncompatibleQosStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr ,
-     const DDS::SampleRejectedStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
-     ::DDS::DataWriter_ptr ,
-     const DDS::OfferedDeadlineMissedStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr ,
-     const DDS::OfferedIncompatibleQosStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_unexpected_status(
-    ::DDS::Entity_ptr /*the_entity*/,
-    ::DDS::StatusKind  status_kind)
-  {
-    if (status_kind == ::DDS::DATA_ON_READERS_STATUS &&
-        !this->has_run_ &&
-        this->callback_.check_last ())
-      {
-        this->has_run_ = true;
-        this->callback_.run ();
-      }
-  }
-
-  //============================================================
   // Starter_exec_i
   //============================================================
   Starter_exec_i::Starter_exec_i (Receiver_exec_i & callback)
@@ -82,6 +25,21 @@ namespace CIAO_Reader_Test_Receiver_Impl
   {
     this->callback_.keys (nr_keys);
     this->callback_.iterations (nr_iterations);
+  }
+
+  void
+  Starter_exec_i::start_read ()
+  {
+    ACE_DEBUG ((LM_DEBUG, "Checking if last sample "
+                          "is available in DDS...\n"));
+    while (!this->callback_.check_last ())
+      {
+        ACE_DEBUG ((LM_DEBUG, "Checking if last sample "
+                              "is available in DDS...\n"));
+        ACE_OS::sleep (1);
+      }
+    ACE_DEBUG ((LM_DEBUG, ""));
+    this->callback_.run ();
   }
 
   void
@@ -572,7 +530,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Receiver_exec_i::get_info_out_connector_status (void)
   {
-    return new ConnectorStatusListener_exec_i (*this);
+    return ::CCM_DDS::CCM_ConnectorStatusListener::_nil ();
   }
 
   ::CCM_ReaderStarter_ptr
@@ -617,8 +575,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: ")
             ACE_TEXT ("Test did not run: Didn't receive ")
-            ACE_TEXT ("the expected number of DATA_ON_READERS ")
-            ACE_TEXT ("events.\n")));
+            ACE_TEXT ("the expected number of samples\n")));
       }
   }
 

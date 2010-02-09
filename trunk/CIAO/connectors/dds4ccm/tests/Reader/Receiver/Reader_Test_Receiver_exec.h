@@ -21,41 +21,6 @@ namespace CIAO_Reader_Test_Receiver_Impl
   class Receiver_exec_i;
 
   //============================================================
-  // ConnectorStatusListener_exec_i
-  //============================================================
-  class RECEIVER_EXEC_Export ConnectorStatusListener_exec_i
-    : public virtual ::CCM_DDS::CCM_ConnectorStatusListener,
-      public virtual ::CORBA::LocalObject
-  {
-  public:
-    ConnectorStatusListener_exec_i (Receiver_exec_i &);
-    virtual ~ConnectorStatusListener_exec_i (void);
-
-    virtual
-    void on_inconsistent_topic( ::DDS::Topic_ptr ,
-                              const DDS::InconsistentTopicStatus & );
-    virtual
-    void on_requested_incompatible_qos( ::DDS::DataReader_ptr ,
-                              const DDS::RequestedIncompatibleQosStatus & );
-    virtual
-    void on_sample_rejected( ::DDS::DataReader_ptr ,
-                              const DDS::SampleRejectedStatus & );
-    virtual
-    void on_offered_deadline_missed( ::DDS::DataWriter_ptr ,
-                              const DDS::OfferedDeadlineMissedStatus & );
-    virtual
-    void on_offered_incompatible_qos( ::DDS::DataWriter_ptr ,
-                              const DDS::OfferedIncompatibleQosStatus & );
-    virtual
-    void on_unexpected_status( ::DDS::Entity_ptr ,
-                              ::DDS::StatusKind );
-  private:
-    /// Maintains a handle that actually process the event
-    Receiver_exec_i &callback_;
-    bool has_run_;
-  };
-
-  //============================================================
   // Starter_exec_i
   //============================================================
   class Starter_exec_i
@@ -70,6 +35,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
                   CORBA::UShort nr_iterations);
 
     virtual void read_no_data ();
+    virtual void start_read ();
 
   private:
     Receiver_exec_i &callback_;
@@ -85,9 +51,6 @@ namespace CIAO_Reader_Test_Receiver_Impl
   public:
     Receiver_exec_i (void);
     virtual ~Receiver_exec_i (void);
-
-    // Supported operations and attributes.
-    // Component attributes.
 
     // Port operations.
     virtual ::CCM_DDS::ReaderTest::CCM_Listener_ptr
@@ -127,10 +90,10 @@ namespace CIAO_Reader_Test_Receiver_Impl
 
   private:
     ::Reader_Test::CCM_Receiver_Context_var context_;
-    ::CCM_DDS::ReaderTest::Reader_var       reader_;
-    CORBA::UShort   iterations_;
-    CORBA::UShort   keys_;
-    bool            has_run_;
+    ::CCM_DDS::ReaderTest::Reader_var reader_;
+    CORBA::UShort iterations_;
+    CORBA::UShort keys_;
+    CORBA::Boolean has_run_;
 
     void read_all ();
     void read_last ();
