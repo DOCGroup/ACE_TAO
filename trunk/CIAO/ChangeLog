@@ -1,3 +1,15 @@
+Tue Feb  9 22:57:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.mpc:
+        
+          Added generation of connector export header file, and cosmetic
+          changes.
+          
+        * MPC/config/connectoridldefaults.mpb:
+        
+          Added command line options to trigger generation of connector
+          implementation and connector export header file.
+
 Tue Feb  9 13:27:37 UTC 2010  Marijke Hengstmengelt  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Keyed/Base/Perf_Keyed_Test_Base.idl:
