@@ -46,11 +46,11 @@ RTI Data Distribution Service user manual.
           <history_depth>1000</history_depth>
           <max_samples>LENGTH_UNLIMITED</max_samples>
           <max_samples_per_instance>LENGTH_UNLIMITED</max_samples_per_instance>
-          <max_instances>1000</max_instances>
+          <max_instances>1</max_instances>
         </durability_service>
         <resource_limits>
-          <max_instances>1000</max_instances>
-          <initial_instances>1000</initial_instances>
+          <max_instances>1</max_instances>
+          <initial_instances>1</initial_instances>
           <max_samples>LENGTH_UNLIMITED</max_samples>
           <initial_samples>100</initial_samples>
           <max_samples_per_instance>LENGTH_UNLIMITED</max_samples_per_instance>
@@ -71,15 +71,15 @@ RTI Data Distribution Service user manual.
         </history>
         <resource_limits>
           <initial_samples>100</initial_samples>
-          <initial_instances>100</initial_instances>
+          <initial_instances>1</initial_instances>
           <max_samples>LENGTH_UNLIMITED</max_samples>
-          <max_instances>100</max_instances>
+          <max_instances>1</max_instances>
           <max_samples_per_instance>LENGTH_UNLIMITED</max_samples_per_instance>
         </resource_limits>
         <durability>
           <kind>TRANSIENT_DURABILITY_QOS</kind>
         </durability>
-        </datareader_qos>
+      </datareader_qos>
       
     </qos_profile>
   </qos_library>

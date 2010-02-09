@@ -21,7 +21,7 @@ module Perf_Keyed_Test
     attribute unsigned short keys;
     attribute unsigned long iterations;
     attribute unsigned short latency_count; //number of samples sent before a latency ping packet is sent. default 100000, < sample_count
-    attribute unsigned short sleep; //time to sleep between each send
+    attribute unsigned short sleep; //time in ms to sleep between each send
     attribute unsigned short spin;
     attribute unsigned short datalen;
     provides CCM_DDS::ConnectorStatusListener connector_status;
