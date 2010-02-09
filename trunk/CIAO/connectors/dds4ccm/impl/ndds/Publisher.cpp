@@ -189,17 +189,28 @@ namespace CIAO
       {
         CIAO_TRACE ("RTI_Publisher_i::set_listener");
 
-        RTI_PublisherListener_i* rti_impl_list = new RTI_PublisherListener_i (a_listener);
+        RTI_PublisherListener_i *rti_impl_list  = 0;
+        if (!CORBA::is_nil (a_listener))
+          {
+            rti_impl_list = new RTI_PublisherListener_i (a_listener);
+          }
         return this->impl ()->set_listener (rti_impl_list, mask);
       }
 
       ::DDS::PublisherListener_ptr
       RTI_Publisher_i::get_listener (void)
       {
-/*        DDSPublisherListener* pl = this->impl ()->get_listener ();
-        ::DDS::PublisherListener_var retval = new RTI_PublisherListener_i (pl);
-        return retval._retn ();*/
-        throw CORBA::NO_IMPLEMENT ();
+        CIAO_TRACE ("RTI_Publisher_i::get_listener");
+
+        DDSPublisherListener *rti_pub_list = this->impl ()->get_listener ();
+        RTI_PublisherListener_i *list_proxy = dynamic_cast <RTI_PublisherListener_i *> (rti_pub_list);
+        if (!list_proxy)
+          {
+            CIAO_DEBUG (6, (LM_DEBUG, "RTI_Publisher_i::get_listener - "
+                                      "DDS returned a NIL listener.\n"));
+            return ::DDS::PublisherListener::_nil ();
+          }
+        return list_proxy->get_publisher_listener ();
       }
 
       ::DDS::ReturnCode_t

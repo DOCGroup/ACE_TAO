@@ -46,7 +46,12 @@ namespace CIAO
                                  ::DDS::StatusMask mask)
       {
         CIAO_TRACE ("RTI_Topic_i::set_listener");
-        RTI_TopicListener_i* rti_impl_list = new RTI_TopicListener_i (a_listener);
+
+        RTI_TopicListener_i *rti_impl_list = 0;
+        if (!CORBA::is_nil (a_listener))
+          {
+            rti_impl_list = new RTI_TopicListener_i (a_listener);
+          }
         return this->impl ()->set_listener (rti_impl_list, mask);
       }
 
@@ -54,7 +59,16 @@ namespace CIAO
       RTI_Topic_i::get_listener (void)
       {
         CIAO_TRACE ("RTI_Topic_i::get_listener");
-        throw CORBA::NO_IMPLEMENT ();
+
+        DDSTopicListener *rti_topic_list = this->impl ()->get_listener ();
+        RTI_TopicListener_i *list_proxy = dynamic_cast <RTI_TopicListener_i *> (rti_topic_list);
+        if (!list_proxy)
+          {
+            CIAO_DEBUG (6, (LM_DEBUG, "RTI_Topic_i::get_listener - "
+                                      "DDS returned a NIL listener.\n"));
+            return ::DDS::TopicListener::_nil ();
+          }
+        return list_proxy->get_topiclistener ();
       }
 
       ::DDS::ReturnCode_t
