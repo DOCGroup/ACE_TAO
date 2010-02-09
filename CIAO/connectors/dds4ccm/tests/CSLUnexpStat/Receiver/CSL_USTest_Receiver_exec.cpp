@@ -12,7 +12,7 @@
 
 namespace CIAO_CSL_USTest_Receiver_Impl
 {
-//============================================================
+  //============================================================
   // ConnectorStatusListener_exec_i
   //============================================================
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &subscription_matched_received,
@@ -67,23 +67,23 @@ namespace CIAO_CSL_USTest_Receiver_Impl
 
   void ConnectorStatusListener_exec_i::on_unexpected_status (
     ::DDS::Entity_ptr the_entity,
-    ::DDS::StatusKind  status_kind)
+    ::DDS::StatusKind status_kind)
   {
-    ACE_DEBUG ((LM_DEBUG, "RECEIVER ConnectorStatusListener_exec_i::on_unexpected_status: "
+    ACE_DEBUG ((LM_DEBUG, "RECEIVER\tConnectorStatusListener_exec_i::on_unexpected_status: "
                           "received <%C>\n",
                           CIAO::DDS4CCM::translate_statuskind (status_kind)));
-    CORBA::ULong kind = status_kind;
-    if (!CORBA::is_nil (the_entity) && kind == DDS::SUBSCRIPTION_MATCHED_STATUS)
+
+    if (!CORBA::is_nil (the_entity) && status_kind == DDS::SUBSCRIPTION_MATCHED_STATUS)
       {
         this->subscription_matched_received_ = true;
         this->thread_id_subcription_matched_ = ACE_Thread::self ();
       }
-    else if (!CORBA::is_nil(the_entity) && kind == DDS::LIVELINESS_CHANGED_STATUS)
+    else if (!CORBA::is_nil(the_entity) && status_kind == DDS::LIVELINESS_CHANGED_STATUS)
       {
         this->liveliness_changed_received_ = true;
         this->thread_id_liveliness_changed_ = ACE_Thread::self ();
       }
-    else if (!CORBA::is_nil(the_entity) && kind == DDS::PUBLICATION_MATCHED_STATUS)
+    else if (!CORBA::is_nil(the_entity) && status_kind == DDS::PUBLICATION_MATCHED_STATUS)
       {
         this->publication_matched_received_ = true;
         this->thread_id_publication_matched_ = ACE_Thread::self ();

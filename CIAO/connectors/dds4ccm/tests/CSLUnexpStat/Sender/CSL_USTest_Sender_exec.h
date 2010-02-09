@@ -20,18 +20,25 @@
 namespace CIAO_CSL_USTest_Sender_Impl
 {
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
+  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_thread_t> Atomic_ThreadId;
 
   class Sender_exec_i;
 
-
-class SENDER_EXEC_Export ConnectorStatusListener_exec_i
+  //============================================================
+  // ConnectorStatusListener_exec_i
+  //============================================================
+  class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     : public virtual ::CCM_DDS::CCM_ConnectorStatusListener,
       public virtual ::CORBA::LocalObject
   {
   public:
     ConnectorStatusListener_exec_i (Atomic_Boolean &,
                                     Atomic_Boolean &,
-                                    Atomic_Boolean &);
+                                    Atomic_Boolean &,
+                                    Atomic_ThreadId &,
+                                    Atomic_ThreadId &,
+                                    Atomic_ThreadId &);
+
     virtual ~ConnectorStatusListener_exec_i (void);
 
     virtual
@@ -47,15 +54,19 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     void on_offered_deadline_missed (::DDS::DataWriter_ptr the_writer,
                                      const DDS::OfferedDeadlineMissedStatus & status);
     virtual
-    void on_offered_incompatible_qos (::DDS::DataWriter_ptr the_writer,
+    void on_offered_incompatible_qos( ::DDS::DataWriter_ptr the_writer, 
                                       const DDS::OfferedIncompatibleQosStatus & status);
     virtual
-    void on_unexpected_status (::DDS::Entity_ptr the_entity,
+    void on_unexpected_status( ::DDS::Entity_ptr the_entity,
                                ::DDS::StatusKind  status_kind);
+
   private:
-    Atomic_Boolean &unexpected_pub_matched_;
-    Atomic_Boolean &unexpected_sub_matched_;
-    Atomic_Boolean &unexpected_liveliness_;
+    Atomic_Boolean &subscription_matched_received_;
+    Atomic_Boolean &publication_matched_received_;
+    Atomic_Boolean &liveliness_changed_received_;
+    Atomic_ThreadId &thread_id_subcription_matched_;
+    Atomic_ThreadId &thread_id_publication_matched_;
+    Atomic_ThreadId &thread_id_liveliness_changed_;
   };
 
   class Sender_exec_i
@@ -79,9 +90,12 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
   private:
     ::CSL_USTest::CCM_Sender_Context_var context_;
 
-    Atomic_Boolean unexpected_pub_matched_;
-    Atomic_Boolean unexpected_sub_matched_;
-    Atomic_Boolean unexpected_liveliness_;
+    Atomic_Boolean subscription_matched_received_;
+    Atomic_Boolean publication_matched_received_;
+    Atomic_Boolean liveliness_changed_received_;
+    Atomic_ThreadId thread_id_listener_subscription_matched_;
+    Atomic_ThreadId thread_id_listener_publication_matched_;
+    Atomic_ThreadId thread_id_listener_liveliness_changed_;
  };
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

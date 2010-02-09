@@ -43,7 +43,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
     virtual void
     on_many_data (
       const ::TestTopic_Seq & data,
-      const ::CCM_DDS::ReadInfoSeq & info );
+      const ::CCM_DDS::ReadInfoSeq & info);
 
   private:
     Atomic_ULong &received_;
