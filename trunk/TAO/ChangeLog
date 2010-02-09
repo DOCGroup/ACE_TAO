@@ -1,3 +1,40 @@
+Tue Feb  9 22:55:11 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_root/root_cnh.cpp:
+        * TAO_IDL/be/be_visitor_root/root_cns.cpp:
+        * TAO_IDL/be_include/be_visitor_root/root_cnh.h:
+        * TAO_IDL/be_include/be_visitor_root/root_cns.h:
+
+          New visitors that create the files and streams
+          for the connector header and source implementation
+          generation.
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_component/component.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/ast/ast_connector.cpp:
+        * TAO_IDL/be_include/be_visitor_root/root_exs.h:
+        * TAO_IDL/be_include/be_visitor_root/root_exh.h:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_helper.h:
+        * TAO_IDL/be_include/be_visitor_root.h:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Added beginning support for code generation for
+          connectors.
+
+        * docs/compiler.html:
+
+          Updated IDL compiler docs with info about connector
+          code generation support.
+
 Tue Feb  9 18:12:00 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/astast_visitor_reifying.cpp:

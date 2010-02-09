@@ -122,6 +122,12 @@ public:
   static const char *be_get_ciao_exec_idl_fname (
       bool base_name_only = false);
 
+  static const char *be_get_ciao_conn_hdr_fname (
+      bool base_name_only = false);
+
+  static const char *be_get_ciao_conn_src_fname (
+      bool base_name_only = false);
+
   // Helper functions: obtain the names of each generated file given
   // the IDL file name.
   // The parameter <base_name_only> set to 0 (no base name, but full
@@ -194,6 +200,14 @@ public:
     bool base_name_only = false);
 
   static const char *be_get_ciao_exec_idl (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
+
+  static const char *be_get_ciao_conn_header (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
+
+  static const char *be_get_ciao_conn_source (
     UTL_String *idl_file_name,
     bool base_name_only = false);
 
@@ -275,6 +289,22 @@ public:
   //// Set the name of the include file that contains the CIAO svnt
   //// export macro definition.
   void svnt_export_include (const char* s);
+
+  //// Returns the macro name for exporting CIAO connector
+  //// classes in Win32 DLL.
+  const char* conn_export_macro (void) const;
+
+  //// Set the macro name for export CIAO connector
+  //// classes in Win32 DLL.
+  void conn_export_macro (const char* s);
+
+  //// Returns the name of the include file that contains the CIAO
+  //// connector export macro definition.
+  const char* conn_export_include (void) const;
+
+  //// Set the name of the include file that contains the CIAO
+  //// connector export macro definition.
+  void conn_export_include (const char* s);
 
   //// Returns the name of the include file to be used for precompiled
   //// header support.
@@ -442,6 +472,10 @@ public:
   const char* ciao_exec_stub_header_ending (void) const;
   void ciao_exec_idl_ending (const char* s);
   const char* ciao_exec_idl_ending (void) const;
+  void ciao_conn_header_ending (const char* s);
+  const char* ciao_conn_header_ending (void) const;
+  void ciao_conn_source_ending (const char* s);
+  const char* ciao_conn_source_ending (void) const;
 
   /// For generating TypeSupport header file includes.
   void dds_typesupport_hdr_ending (const char* s);
@@ -717,6 +751,8 @@ public:
   void gen_ciao_exec_idl (bool val);
   bool gen_ciao_exec_impl (void) const;
   void gen_ciao_exec_impl (bool val);
+  bool gen_ciao_conn_impl (void) const;
+  void gen_ciao_conn_impl (bool val);
 
   bool gen_component_swapping (void) const;
   void gen_component_swapping (bool val);
@@ -738,6 +774,9 @@ public:
 
   bool gen_exec_export_hdr_file (void) const;
   void gen_exec_export_hdr_file (bool val);
+
+  bool gen_conn_export_hdr_file (void) const;
+  void gen_conn_export_hdr_file (bool val);
 
   bool gen_lem_force_all (void) const;
   void gen_lem_force_all (bool val);
@@ -788,6 +827,8 @@ private:
   char* exec_export_include_;
   char* svnt_export_macro_;
   char* svnt_export_include_;
+  char* conn_export_macro_;
+  char* conn_export_include_;
 
   char* pch_include_;
   char* pre_include_;
@@ -870,6 +911,12 @@ private:
 
   // CIAO executor IDL file name ending. Default is "E.idl".
   char* ciao_exec_idl_ending_;
+
+  // CIAO connector impl header file name ending. Default is "_conn.h".
+  char* ciao_conn_hdr_ending_;
+
+  // CIAO connector impl source file name ending. Default is "_conn.cpp".
+  char* ciao_conn_src_ending_;
 
   // DDS TypeSupport header file name ending. Default is "Support.h".
   char* dds_typesupport_hdr_ending_;
@@ -1049,6 +1096,10 @@ private:
   bool gen_ciao_svnt_;
   bool gen_ciao_exec_idl_;
   bool gen_ciao_exec_impl_;
+  
+  /// False by default, this flag triggers code generation
+  /// for CCM connector implementations.
+  bool gen_ciao_conn_impl_;
 
   /// Different container #includes, modified servant code.
   bool gen_component_swapping_;
@@ -1065,6 +1116,7 @@ private:
   bool gen_skel_export_hdr_file_;
   bool gen_svnt_export_hdr_file_;
   bool gen_exec_export_hdr_file_;
+  bool gen_conn_export_hdr_file_;
 
   /// Toggles generation of exec IDL for facets with imported
   /// interface types (not in main IDL file).

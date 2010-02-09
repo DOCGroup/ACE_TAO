@@ -240,6 +240,18 @@ BE_produce (void)
       BE_visit_root (root_exs_visitor, "CIAO exec impl source");
     }
     
+  // We can eliminate some overhead in IDL files without connectors.
+  if (be_global->gen_ciao_conn_impl ())// && idl_global->connector_seen_)
+    {
+      ctx.state (TAO_CodeGen::TAO_ROOT_CNH);
+      be_visitor_root_cnh root_cnh_visitor (&ctx);
+      BE_visit_root (root_cnh_visitor, "CIAO conn impl header");
+
+      ctx.state (TAO_CodeGen::TAO_ROOT_CNS);
+      be_visitor_root_cns root_cns_visitor (&ctx);
+      BE_visit_root (root_cns_visitor, "CIAO conn impl source");
+    }
+    
   tao_cg->gen_export_files ();
 
   // Done with this IDL file.

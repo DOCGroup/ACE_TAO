@@ -311,6 +311,7 @@ public:
   bool boolean_seq_seen_;
   bool char_seq_seen_;
   bool component_seen_;
+  bool connector_seen_;
   bool double_seq_seen_;
   bool enum_seen_;
   bool exception_seen_;

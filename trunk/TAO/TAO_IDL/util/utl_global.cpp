@@ -235,6 +235,7 @@ IDL_GlobalData::reset_flag_seen (void)
   boolean_seq_seen_ = false;
   char_seq_seen_ = false;
   component_seen_ = false;
+  connector_seen_ = false;
   double_seq_seen_ = false;
   enum_seen_ = false;
   exception_seen_ = false;
