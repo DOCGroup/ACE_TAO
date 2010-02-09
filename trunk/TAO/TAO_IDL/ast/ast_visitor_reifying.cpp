@@ -25,6 +25,7 @@
 #include "ast_predefined_type.h"
 #include "ast_string.h"
 #include "ast_constant.h"
+#include "ast_native.h"
 #include "ast_param_holder.h"
 #include "ast_template_module.h"
 
@@ -283,8 +284,9 @@ ast_visitor_reifying::visit_root (AST_Root *)
 }
 
 int
-ast_visitor_reifying::visit_native (AST_Native *)
+ast_visitor_reifying::visit_native (AST_Native *node)
 {
+  this->check_and_store (node);
   return 0;
 }
 

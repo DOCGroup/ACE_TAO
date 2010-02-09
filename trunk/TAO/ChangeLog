@@ -1,3 +1,13 @@
+Tue Feb  9 18:12:00 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/astast_visitor_reifying.cpp:
+        
+          Added support for IDL native constructs.
+          
+        * TAO_IDL/be/be_visitor_native/native_ch.cpp:
+        
+          Cosmetic changes.
+
 Tue Feb  9 09:39:10 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * TAO_IDL/be/be_helper.cpp:

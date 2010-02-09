@@ -41,14 +41,21 @@ be_visitor_native_ch::visit_native (be_native *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl << be_nl
+      << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__
+      << be_nl << be_nl;
 
   const char *node_name = node->full_name ();
+  
   if (ACE_OS::strcmp (node_name, "PortableServer::ServantLocator::Cookie") == 0)
-    *os << "typedef void *Cookie;" << be_nl;
+    {
+      *os << "typedef void *Cookie;" << be_nl;
+    }
   else if (ACE_OS::strcmp (node_name, "CORBA::VoidData") == 0)
-    *os << "typedef void *VoidData;" << be_nl;
+    {
+      *os << "typedef void *VoidData;" << be_nl;
+    }
   else if (idl_global->dcps_support_zero_copy_read ()
            && 0 == ACE_OS::strcmp (node->full_name (),"DDS::SampleInfoSeq"))
     {
@@ -68,13 +75,17 @@ be_visitor_native_ch::visit_native (be_native *node)
 
       // strip  the "Seq" ending to get the sample's name
       const size_t max_name_length = 2000;
+      
       if (ACE_OS::strlen (node_name) >= max_name_length)
         {
           return -1;
         }
+        
       char sample_name[max_name_length];
-      ACE_OS::strncpy (sample_name, node_name, ACE_OS::strlen (node_name)-3);
-      sample_name[ACE_OS::strlen (node_name)-3] = '\0';
+      ACE_OS::strncpy (sample_name,
+                       node_name,
+                       ACE_OS::strlen (node_name) - 3);
+      sample_name[ACE_OS::strlen (node_name) - 3] = '\0';
 
       *os << be_nl << be_nl
           << "typedef ::TAO::DCPS::ZeroCopyDataSeq< "
