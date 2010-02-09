@@ -2,5 +2,15 @@
 // $Id$
 
 project : componentidldefaults {
-   idlflags += -I$(CIAO_ROOT)/connectors
+ idlflags += -Gcn -Gxhcn -I$(CIAO_ROOT)/connectors
+   
+  Modify_Custom (IDL) {
+    optional(source_pre_extension) {
+      commandflags(-Gcn) += _conn
+    }
+
+    optional(header_pre_extension) {
+      commandflags(-Gcn) += _conn
+    }
+  }
 }
