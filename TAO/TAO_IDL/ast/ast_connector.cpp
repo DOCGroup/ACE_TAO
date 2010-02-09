@@ -31,6 +31,10 @@ AST_Connector::AST_Connector (
                    0,
                    0)
 {
+  if (!this->imported ())
+    {
+      idl_global->connector_seen_ = true;
+    }
 }
 
 AST_Connector::~AST_Connector (void)

@@ -24,7 +24,7 @@
  *
  * @brief be_visitor_root_exh
  *
- * This is a concrete visitor to generate the CIAO servant
+ * This is a concrete visitor to generate the CIAO executor
  * header for root
  */
 class be_visitor_root_exh : public be_visitor_root

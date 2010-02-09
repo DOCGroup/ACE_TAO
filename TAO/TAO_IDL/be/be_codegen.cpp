@@ -43,6 +43,8 @@ TAO_CodeGen::TAO_CodeGen (void)
     ciao_exec_header_ (0),
     ciao_exec_source_ (0),
     ciao_exec_idl_ (0),
+    ciao_conn_header_ (0),
+    ciao_conn_source_ (0),
     curr_os_ (0),
     gperf_input_filename_ (0),
     visitor_factory_ (0)
@@ -1334,6 +1336,116 @@ TAO_CodeGen::ciao_exec_idl (void)
   return this->ciao_exec_idl_;
 }
 
+int
+TAO_CodeGen::start_ciao_conn_header (const char *fname)
+{
+  // Clean up between multiple files.
+  delete this->ciao_conn_header_;
+
+  ACE_NEW_RETURN (this->ciao_conn_header_,
+                  TAO_OutStream,
+                  -1);
+
+  int status =
+    this->ciao_conn_header_->open (fname,
+                                   TAO_OutStream::CIAO_CONN_HDR);
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("TAO_CodeGen::start_ciao_conn_header - ")
+                         ACE_TEXT ("Error opening file\n")),
+                        -1);
+    }
+
+  TAO_OutStream &os = *this->ciao_conn_header_;
+
+  os << be_nl
+     << "// TAO_IDL - Generated from" << be_nl
+     << "// " << __FILE__ << ":" << __LINE__
+     << be_nl << be_nl;
+
+  // Generate the #ident string, if any.
+  this->gen_ident_string (this->ciao_conn_header_);
+
+  // Generate the #ifndef clause.
+  this->gen_ifndef_string (fname,
+                           this->ciao_conn_header_,
+                           "CIAO_",
+                           "_H_");
+
+  if (be_global->pre_include () != 0)
+    {
+      os << "#include /**/ \""
+         << be_global->pre_include ()
+         << "\"\n";
+    }
+
+  this->gen_standard_include (
+    this->ciao_conn_header_,
+    be_global->be_get_ciao_conn_hdr_fname (true));
+
+  // Some compilers don't optimize the #ifndef header include
+  // protection, but do optimize based on #pragma once.
+  os << "\n\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
+     << "# pragma once\n"
+     << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
+
+  this->gen_conn_hdr_includes ();
+
+  return 0;
+}
+
+TAO_OutStream *
+TAO_CodeGen::ciao_conn_header (void)
+{
+  return this->ciao_conn_header_;
+}
+
+int
+TAO_CodeGen::start_ciao_conn_source (const char *fname)
+{
+  // Clean up between multiple files.
+  delete this->ciao_conn_source_;
+
+  ACE_NEW_RETURN (this->ciao_conn_source_,
+                  TAO_OutStream,
+                  -1);
+
+  int status =
+    this->ciao_conn_source_->open (fname,
+                                   TAO_OutStream::CIAO_CONN_IMPL);
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("TAO_CodeGen::")
+                         ACE_TEXT ("start_ciao_conn_source - ")
+                         ACE_TEXT ("Error opening file\n")),
+                        -1);
+    }
+
+  TAO_OutStream &os = *this->ciao_conn_source_;
+
+  os << be_nl
+     << "// TAO_IDL - Generated from" << be_nl
+     << "// " << __FILE__ << ":" << __LINE__
+     << be_nl;
+
+  // Generate the #ident string, if any.
+  this->gen_ident_string (this->ciao_conn_source_);
+
+  this->gen_conn_src_includes ();
+
+  return 0;
+}
+
+TAO_OutStream *
+TAO_CodeGen::ciao_conn_source (void)
+{
+  return this->ciao_conn_source_;
+}
+
 // Set the server header stream.
 int
 TAO_CodeGen::start_implementation_header (const char *fname)
@@ -1756,6 +1868,29 @@ TAO_CodeGen::end_ciao_exec_idl (void)
   return 0;
 }
 
+int
+TAO_CodeGen::end_ciao_conn_header (void)
+{
+  if (be_global->post_include () != 0)
+    {
+      *this->ciao_conn_header_ << "\n\n#include /**/ \""
+                               << be_global->post_include ()
+                               << "\"";
+    }
+
+  *this->ciao_conn_header_ << "\n\n#endif /* ifndef */\n";
+
+  return 0;
+}
+
+int
+TAO_CodeGen::end_ciao_conn_source (void)
+{
+  *this->ciao_conn_source_ << "\n";
+
+  return 0;
+}
+
 // We use the following helper functions to pass information. This class is the
 // best place to pass such information rather than passing information through
 // global variables spread everywhere. This class is a singleton and is
@@ -1866,6 +2001,14 @@ TAO_CodeGen::gen_export_files (void)
         be_global->exec_export_include (),
         be_global->exec_export_macro (),
         "exec");
+    }
+
+  if (be_global->gen_conn_export_hdr_file ())
+    {
+      this->gen_export_file (
+        be_global->conn_export_include (),
+        be_global->conn_export_macro (),
+        "conn");
     }
 }
 
@@ -3263,6 +3406,7 @@ TAO_CodeGen::gen_exec_idl_includes (void)
     idl_global->stripped_filename ()->get_string ());
 
   char **path_tmp  = 0;
+  
   for (ACE_Unbounded_Queue_Iterator<char *>riter (
             idl_global->ciao_lem_file_names ()
           );
@@ -3274,6 +3418,16 @@ TAO_CodeGen::gen_exec_idl_includes (void)
       // No newline first time for better formatting.
       this->ciao_exec_idl_->print ("\n#include \"%s\"", *path_tmp);
     }
+}
+
+void
+TAO_CodeGen::gen_conn_hdr_includes (void)
+{
+}
+
+void
+TAO_CodeGen::gen_conn_src_includes (void)
+{
 }
 
 void

@@ -110,7 +110,9 @@ public:
       CIAO_SVNT_IMPL,
       CIAO_EXEC_HDR,
       CIAO_EXEC_IMPL,
-      CIAO_EXEC_IDL
+      CIAO_EXEC_IDL,
+      CIAO_CONN_HDR,
+      CIAO_CONN_IMPL
     };
 
   /// constructor.
