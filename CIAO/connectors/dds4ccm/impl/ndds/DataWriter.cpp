@@ -50,16 +50,26 @@ namespace CIAO
       RTI_DataWriter_i::set_listener (::DDS::DataWriterListener_ptr a_listener,
                                       ::DDS::StatusMask mask)
       {
-        RTI_DataWriterListener_i* rti_impl_list = new RTI_DataWriterListener_i (a_listener);
+        RTI_DataWriterListener_i* rti_impl_list = 0;
+        if (!CORBA::is_nil (a_listener))
+          {
+            rti_impl_list = new RTI_DataWriterListener_i (a_listener);
+          }
         return this->impl ()->set_listener (rti_impl_list, mask);
       }
 
       ::DDS::DataWriterListener_ptr
       RTI_DataWriter_i::get_listener (void)
       {
-        DDSDataWriterListener* wr = this->impl ()->get_listener ();
-        RTI_DataWriterListener_i *dwl = dynamic_cast< RTI_DataWriterListener_i *> (wr);
-        return dwl->get_datawriterlistener ();
+        DDSDataWriterListener *wr = this->impl ()->get_listener ();
+        RTI_DataWriterListener_i *list_proxy = dynamic_cast <RTI_DataWriterListener_i *> (wr);
+        if (!list_proxy)
+          {
+            CIAO_DEBUG (6, (LM_DEBUG, "RTI_DataWriter_i::get_listener - "
+                                      "DDS returned a NIL listener.\n"));
+            return ::DDS::DataWriterListener::_nil ();
+          }
+        return list_proxy->get_datawriterlistener ();
       }
 
       ::DDS::Topic_ptr

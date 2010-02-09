@@ -146,15 +146,23 @@ namespace CIAO
         ::DDS::DataReaderListener_ptr a_listener,
         ::DDS::StatusMask mask)
       {
-        RTI_DataReaderListener_i* rti_drl = new RTI_DataReaderListener_i (a_listener);
+        CIAO_TRACE ("RTI_DataReader_i::set_listener");
+
+        RTI_DataReaderListener_i *rti_drl = 0;
+        if (!CORBA::is_nil (a_listener))
+          {
+            rti_drl = new RTI_DataReaderListener_i (a_listener);
+          }
         return this->impl ()->set_listener (rti_drl, mask);
       }
 
       ::DDS::DataReaderListener_ptr
       RTI_DataReader_i::get_listener (void)
       {
-        DDSDataReaderListener * drl = this->impl ()->get_listener ();
-        RTI_DataReaderListener_i * rti_drl = dynamic_cast< RTI_DataReaderListener_i *> (drl);
+        CIAO_TRACE ("RTI_DataReader_i::get_listener");
+
+        DDSDataReaderListener *drl = this->impl ()->get_listener ();
+        RTI_DataReaderListener_i *rti_drl = dynamic_cast <RTI_DataReaderListener_i *> (drl);
         if (!rti_drl)
           {
             CIAO_DEBUG (6, (LM_DEBUG, "RTI_DataReader_i::get_listener - "
