@@ -1,3 +1,11 @@
+Tue Feb  9 13:25:17 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Valuetype_Factories/Cookies.h:
+          Layout change
+
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
+          Added commented out example using native that causes tao_idl to crash
+
 Tue Feb  9 12:49:17 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/PSLDeadline/Sender/PSL_DeadlineTest_Sender_exec.h:
