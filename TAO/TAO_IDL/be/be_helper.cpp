@@ -529,10 +529,7 @@ TAO_OutStream::print (AST_Expression *expr)
             this->TAO_OutStream::print ("'\\''");
 
           // This handles hex and octal escape sequences
-          // that would print out either as weird characters
-          // or as an unsigned number too large for a char.
-          else if ((unsigned char) ev->u.cval > ACE_CHAR_MAX)
-            this->TAO_OutStream::print ("%hd", ev->u.cval);
+          // that would print out as weird characters.
           else if (ACE_OS::ace_isprint (ev->u.cval))
             this->TAO_OutStream::print ("'%c'", ev->u.cval);
           else if (ACE_OS::ace_iscntrl (ev->u.cval))
@@ -563,10 +560,10 @@ TAO_OutStream::print (AST_Expression *expr)
                   this->TAO_OutStream::print ("'?'");
                   break;
               default:
-                this->TAO_OutStream::print ("'\\x%x'", ev->u.cval);
+                this->TAO_OutStream::print ("'\\x%x'", ev->u.oval);
               }
            else
-            this->TAO_OutStream::print ("'\\x%x'", ev->u.cval);
+            this->TAO_OutStream::print ("'\\x%x'", ev->u.oval);
           break;
         case AST_Expression::EV_wchar:
           this->TAO_OutStream::print ("L'%lc'", ev->u.wcval);
