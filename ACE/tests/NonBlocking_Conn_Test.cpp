@@ -78,7 +78,7 @@ typedef ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> CONNECTOR;
 
 static const char* hosts[] = {
   "www.russiantvguide.com:80",
-  "www.pakistanarmy.gov.pk:80",
+  "news.bbc.co.uk:80",
   "www.cnn.com:80",
   "www.waca.com.au:80",
   "www.uganda.co.ug:80",
