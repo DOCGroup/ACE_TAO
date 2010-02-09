@@ -123,13 +123,13 @@ namespace CIAO_CSL_QoSTest_Sender_Impl
     if (!this->incompatible_.value ())
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("SENDER ERROR: did not receive the expected ")
-                               ACE_TEXT ("error 'on_requested_incompatible_Qos' in Receiver\n")
+                               ACE_TEXT ("error 'on_requested_incompatible_Qos'\n")
                     ));
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("SENDER OK: Received the expected ")
-                               ACE_TEXT ("'on_requested_incompatible_Qos' in Receiver\n")
+                               ACE_TEXT ("'on_requested_incompatible_Qos'\n")
                     ));
       }
     if (this->thread_id_listener_.value () == 0)
