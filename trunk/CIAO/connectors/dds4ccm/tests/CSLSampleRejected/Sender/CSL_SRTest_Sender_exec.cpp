@@ -17,8 +17,10 @@ namespace CIAO_CSL_SRTest_Sender_Impl
   //============================================================
   // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
   //============================================================
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &rejected)
-   : rejected_ (rejected)
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &rejected,
+                                                                  Atomic_ThreadId &thread_id)
+    : rejected_ (rejected),
+      thread_id_ (thread_id)
   {
   }
 
@@ -29,41 +31,48 @@ namespace CIAO_CSL_SRTest_Sender_Impl
   // Operations from ::CCM_DDS::ConnectorStatusListener
   void ConnectorStatusListener_exec_i::on_inconsistent_topic(
     ::DDS::Topic_ptr /*the_topic*/,
-     const DDS::InconsistentTopicStatus & /*status*/){
-    }
+     const DDS::InconsistentTopicStatus & /*status*/)
+  {
+  }
 
   void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
-    }
+     const DDS::RequestedIncompatibleQosStatus & /*status*/)
+  {
+  }
 
   void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr the_reader,
-     const DDS::SampleRejectedStatus & status)  {
-       if((status.last_reason == DDS::REJECTED_BY_INSTANCES_LIMIT) &&
-          (!CORBA::is_nil(the_reader)))
-         {
-           this->rejected_ = true;
-         }
-    }
+    ::DDS::DataReader_ptr the_reader,
+    const DDS::SampleRejectedStatus & status)
+  {
+    this->thread_id_ = ACE_Thread::self ();
+    if (status.last_reason == DDS::REJECTED_BY_INSTANCES_LIMIT &&
+        !CORBA::is_nil(the_reader))
+      {
+        this->rejected_ = true;
+      }
+  }
 
   void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
-     ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedDeadlineMissedStatus & /*status*/)  {
-    }
+    ::DDS::DataWriter_ptr /*the_writer*/,
+    const DDS::OfferedDeadlineMissedStatus & /*status*/)
+  {
+  }
 
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
-   }
+    ::DDS::DataWriter_ptr /*the_writer*/,
+    const DDS::OfferedIncompatibleQosStatus & /*status*/)
+  {
+  }
 
   void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr /*the_entity*/,
-    ::DDS::StatusKind  /*status_kind*/)  {
-    }
+    ::DDS::StatusKind  /*status_kind*/)
+  {
+  }
 
   //============================================================
-  // Pulse generator
+  // pulse_Generator
   //============================================================
   pulse_Generator::pulse_Generator (Sender_exec_i &callback)
     : pulse_callback_ (callback)
@@ -77,13 +86,14 @@ namespace CIAO_CSL_SRTest_Sender_Impl
     this->pulse_callback_.tick ();
     return 0;
   }
-  //============================================================
-  // Component Executor Implementation Class: Sender_exec_i
-  //============================================================
 
+  //============================================================
+  // Sender_exec_i
+  //============================================================
   Sender_exec_i::Sender_exec_i (void)
     : rejected_ (false),
-      rate_ (100)
+      rate_ (100),
+      thread_id_listener_ (0)
   {
     this->ticker_ = new pulse_Generator (*this);
   }
@@ -95,7 +105,8 @@ namespace CIAO_CSL_SRTest_Sender_Impl
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Sender_exec_i::get_test_topic_connector_status (void)
   {
-    return new ConnectorStatusListener_exec_i (this->rejected_);
+    return new ConnectorStatusListener_exec_i (this->rejected_,
+                                               this->thread_id_listener_);
   }
 
   // Supported operations and attributes.
@@ -103,21 +114,22 @@ namespace CIAO_CSL_SRTest_Sender_Impl
   Sender_exec_i::tick ()
   {
     for (CSL_SRTest_Table::iterator i = this->_ktests_.begin ();
-        i != this->_ktests_.end ();
-        ++i)
+         i != this->_ktests_.end ();
+         ++i)
       {
-         try
-         {
-           if (!CORBA::is_nil (this->writer_) ) {
-              this->writer_->write_one(i->second,::DDS::HANDLE_NIL);
-              i->second->x++;
-           }
-         }
-         catch (const CCM_DDS::InternalError& )
-         {
-           ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while creating topic for <%C>.\n"),
+        try
+          {
+            if (!CORBA::is_nil (this->writer_))
+              {
+                this->writer_->write_one(i->second,::DDS::HANDLE_NIL);
+                i->second->x++;
+              }
+          }
+        catch (const CCM_DDS::InternalError& )
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while creating topic for <%C>.\n"),
                     i->first.c_str ()));
-         }
+          }
        }
   }
 
@@ -132,10 +144,10 @@ namespace CIAO_CSL_SRTest_Sender_Impl
                 0,
                 ACE_Time_Value (0, usec),
                 ACE_Time_Value (0, usec)) == -1)
-    {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
-                             ACE_TEXT ("Error scheduling timer")));
-    }
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
+                              ACE_TEXT ("Error scheduling timer\n")));
+      }
   }
 
   void
@@ -171,12 +183,13 @@ namespace CIAO_CSL_SRTest_Sender_Impl
     new_key->x = x;
     this->_ktests_[key] = new_key;
   }
+
   void
   Sender_exec_i::ccm_activate (void)
   {
     //add 2 different instances of topic
-    this->add_instance_of_topic ("ONE",1);
-    this->add_instance_of_topic ("TWO",2);
+    this->add_instance_of_topic ("ONE", 1);
+    this->add_instance_of_topic ("TWO", 2);
     this->start ();
   }
 
@@ -189,18 +202,62 @@ namespace CIAO_CSL_SRTest_Sender_Impl
   void
   Sender_exec_i::ccm_remove (void)
   {
-    if(!this->rejected_.value ())
+    if (!this->rejected_.value ())
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
-                               ACE_TEXT ("warning 'on_sample_rejected' in Sender\n")
-                    ));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("SENDER ERROR: did not receive the expected ")
+                              ACE_TEXT ("warning 'on_sample_rejected'\n")
+                  ));
       }
     else
       {
-         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Received the expected ")
-                               ACE_TEXT ("'on_sample_rejected' in Sender\n")
-                    ));
+         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("SENDER OK: ")
+                               ACE_TEXT ("Received the expected 'on_sample_rejected'\n")
+                   ));
       }
+    if (this->thread_id_listener_.value () == 0)
+      {
+        ACE_ERROR ((LM_ERROR, "SENDER ERROR: "
+                              "Thread ID for ConnectorStatusListener not set!\n"));
+      }
+    #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
+    else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
+                                ACE_Thread::self ()))
+      {
+        ACE_DEBUG ((LM_DEBUG, "SENDER OK: "
+                              "Thread switch for ConnectorStatusListener seems OK. "
+                              "(DDS uses the CCM thread for its callback) "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_.value (),
+                              ACE_Thread::self ()));
+      }
+    else
+      {
+        ACE_ERROR ((LM_ERROR, "SENDER ERROR: "
+                              "Thread switch for ConnectorStatusListener "
+                              "doesn't seem to work! "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_.value (),
+                              ACE_Thread::self ()));
+      }
+    #else
+    else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
+                                ACE_Thread::self ()))
+      {
+        ACE_ERROR ((LM_ERROR, "SENDER ERROR: ConnectorStatusListener: "
+                              "DDS seems to use a CCM thread for its callback: "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_.value (),
+                              ACE_Thread::self ()));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "SENDER OK: ConnectorStatusListener: "
+                              "DDS seems to use its own thread for its callback: "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_.value (),
+                              ACE_Thread::self ()));
+      }
+    #endif
   }
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
