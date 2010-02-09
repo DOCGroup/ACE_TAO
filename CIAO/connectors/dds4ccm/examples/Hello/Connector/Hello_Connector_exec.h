@@ -31,13 +31,13 @@ namespace CIAO_Hello_Hello_Connector_Impl
   typedef CIAO::DDS4CCM::Connector_Traits <
     ::CIAO_Hello_Hello_Connector_Impl::Hello_Connector_Exec,
     ::DDSHello_Seq,
-    ::CCM_DDS::Hello::CCM_Writer,
-    ::CCM_DDS::Hello::CCM_Updater,
-    ::CCM_DDS::Hello::CCM_Getter,
-    ::CCM_DDS::Hello::CCM_Reader,
-    ::Hello::CCM_Hello_Connector_Context,
-    ::CCM_DDS::Hello::Listener,
-    ::CCM_DDS::Hello::StateListener,
+    ::Hello::HelloConn::CCM_Writer,
+    ::Hello::HelloConn::CCM_Updater,
+    ::Hello::HelloConn::CCM_Getter,
+    ::Hello::HelloConn::CCM_Reader,
+    Hello::CCM_Hello_Connector_Context,
+    ::Hello::HelloConn::Listener,
+    ::Hello::HelloConn::StateListener,
     ::CCM_DDS::ConnectorStatusListener> DDSHello_Connector_Traits;
 
   class HELLO_CONNECTOR_EXEC_Export Hello_Connector_exec_i :

@@ -14,14 +14,11 @@
 
 #pragma ciao lem "Connector/Hello_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::DDSHello, ::DDSHello_Seq> Hello;
-};
-
 module Hello
 {
-  connector Hello_Connector : ::CCM_DDS::Hello::DDS_Event
+  module ::CCM_DDS::Typed <::DDSHello, ::DDSHello_Seq> HelloConn;
+
+  connector Hello_Connector : HelloConn::DDS_Event
   {
   };
 };
