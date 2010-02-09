@@ -2,13 +2,13 @@
 
 //=============================================================================
 /**
- *  @file    root_exs.h
+ *  @file    root_cns.h
  *
  *  $Id$
  *
  *  Concrete visitor for the Root class
  *  This one provides code generation for elements of the Root node in the
- *  CIAO exec impl source.
+ *  CIAO connector impl source.
  *
  *
  *  @author Jeff Parsons
@@ -16,26 +16,26 @@
 //=============================================================================
 
 
-#ifndef _BE_VISITOR_ROOT_ROOT_EXS_H_
-#define _BE_VISITOR_ROOT_ROOT_EXS_H_
+#ifndef _BE_VISITOR_ROOT_ROOT_CNS_H_
+#define _BE_VISITOR_ROOT_ROOT_CNS_H_
 
 /**
- * @class be_visitor_root_exs
+ * @class be_visitor_root_cns
  *
- * @brief be_visitor_root_exs
+ * @brief be_visitor_root_cns
  *
- * This is a concrete visitor to generate the CIAO executor
+ * This is a concrete visitor to generate the CIAO connector
  * header for root
  */
-class be_visitor_root_exs : public be_visitor_root
+class be_visitor_root_cns : public be_visitor_root
 {
 public:
-  be_visitor_root_exs (be_visitor_context *ctx);
+  be_visitor_root_cns (be_visitor_context *ctx);
 
-  ~be_visitor_root_exs (void);
+  ~be_visitor_root_cns (void);
 
   /// Set the right context and make a visitor.
   virtual int init (void);
 };
 
-#endif /* _BE_VISITOR_ROOT_ROOT_EXS_H_ */
+#endif /* _BE_VISITOR_ROOT_ROOT_CNS_H_ */

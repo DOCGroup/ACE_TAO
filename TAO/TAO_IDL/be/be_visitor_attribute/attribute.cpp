@@ -185,6 +185,9 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = get_op.accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_CNH:
+    case TAO_CodeGen::TAO_ROOT_CNS:
+      break;
     default:
       get_op.destroy ();
       return 0;
@@ -398,6 +401,9 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = set_op.accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_CNH:
+    case TAO_CodeGen::TAO_ROOT_CNS:
+      break;
     default:
       // Error.
       set_op.destroy ();

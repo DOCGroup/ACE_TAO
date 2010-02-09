@@ -371,6 +371,8 @@ be_visitor_module::visit_interface (be_interface *node)
     case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
     case TAO_CodeGen::TAO_ROOT_EXH:
     case TAO_CodeGen::TAO_ROOT_EXS:
+    case TAO_CodeGen::TAO_ROOT_CNH:
+    case TAO_CodeGen::TAO_ROOT_CNS:
       {
         // Nothing to be done for these cases.
         return 0;
@@ -862,6 +864,9 @@ be_visitor_module::visit_component (be_component *node)
         status = node->accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_CNH:
+    case TAO_CodeGen::TAO_ROOT_CNS:
+      break;
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -976,6 +981,9 @@ be_visitor_module::visit_home (be_home *node)
         status = node->accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_CNH:
+    case TAO_CodeGen::TAO_ROOT_CNS:
+      break;
     default:
       return 0; // nothing to be done
     }

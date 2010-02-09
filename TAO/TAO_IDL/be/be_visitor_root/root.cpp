@@ -365,6 +365,8 @@ int be_visitor_root::visit_root (be_root *node)
       case TAO_CodeGen::TAO_ROOT_SVS:
       case TAO_CodeGen::TAO_ROOT_EXH:
       case TAO_CodeGen::TAO_ROOT_EXS:
+      case TAO_CodeGen::TAO_ROOT_CNH:
+      case TAO_CodeGen::TAO_ROOT_CNS:
       case TAO_CodeGen::TAO_ROOT_EX_IDL:
         break;
       default:
@@ -410,6 +412,8 @@ int be_visitor_root::visit_root (be_root *node)
     case TAO_CodeGen::TAO_ROOT_SVS:
     case TAO_CodeGen::TAO_ROOT_EXH:
     case TAO_CodeGen::TAO_ROOT_EXS:
+    case TAO_CodeGen::TAO_ROOT_CNH:
+    case TAO_CodeGen::TAO_ROOT_CNS:
     case TAO_CodeGen::TAO_ROOT_EX_IDL:
     case TAO_CodeGen::TAO_ROOT_CI:
     case TAO_CodeGen::TAO_ROOT_SH:
@@ -463,6 +467,8 @@ int be_visitor_root::visit_root (be_root *node)
     case TAO_CodeGen::TAO_ROOT_SVS:
     case TAO_CodeGen::TAO_ROOT_EXH:
     case TAO_CodeGen::TAO_ROOT_EXS:
+    case TAO_CodeGen::TAO_ROOT_CNH:
+    case TAO_CodeGen::TAO_ROOT_CNS:
     case TAO_CodeGen::TAO_ROOT_EX_IDL:
       break; // nothing to be done
     default:
@@ -539,6 +545,12 @@ int be_visitor_root::visit_root (be_root *node)
       break;
     case TAO_CodeGen::TAO_ROOT_EX_IDL:
       (void) tao_cg->end_ciao_exec_idl ();
+      break;
+    case TAO_CodeGen::TAO_ROOT_CNH:
+      (void) tao_cg->end_ciao_conn_header ();
+      break;
+    case TAO_CodeGen::TAO_ROOT_CNS:
+      (void) tao_cg->end_ciao_conn_source ();
       break;
     default:
       break;
@@ -844,6 +856,8 @@ be_visitor_root::visit_interface (be_interface *node)
     case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
     case TAO_CodeGen::TAO_ROOT_EXH:
     case TAO_CodeGen::TAO_ROOT_EXS:
+    case TAO_CodeGen::TAO_ROOT_CNH:
+    case TAO_CodeGen::TAO_ROOT_CNS:
       {
         return 0; // Nothing to be done.
         break;
@@ -1322,6 +1336,9 @@ be_visitor_root::visit_component (be_component *node)
         status = node->accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_CNH:
+    case TAO_CodeGen::TAO_ROOT_CNS:
+      break;
     default:
       return 0;    // nothing to do.
     }
@@ -1441,6 +1458,9 @@ be_visitor_root::visit_home (be_home *node)
         status = node->accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_CNH:
+    case TAO_CodeGen::TAO_ROOT_CNS:
+      break;
     default:
       return 0; // nothing to be done
     }
@@ -1483,6 +1503,8 @@ be_visitor_root::visit_module (be_module *node)
     case TAO_CodeGen::TAO_ROOT_SVS:
     case TAO_CodeGen::TAO_ROOT_EXH:
     case TAO_CodeGen::TAO_ROOT_EXS:
+    case TAO_CodeGen::TAO_ROOT_CNH:
+    case TAO_CodeGen::TAO_ROOT_CNS:
     case TAO_CodeGen::TAO_ROOT_EX_IDL:
       {
         be_visitor_module visitor (&ctx);

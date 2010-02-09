@@ -144,6 +144,8 @@ public:
       TAO_ROOT_SVS,
       TAO_ROOT_EXH,
       TAO_ROOT_EXS,
+      TAO_ROOT_CNH,
+      TAO_ROOT_CNS,
       TAO_ROOT_EX_IDL,
       TAO_ROOT_ANY_OP_CH,
       TAO_ROOT_ANY_OP_CS,
@@ -274,6 +276,8 @@ public:
   int start_ciao_exec_header (const char *fname);
   int start_ciao_exec_source (const char *fname);
   int start_ciao_exec_idl (const char *fname);
+  int start_ciao_conn_header (const char *fname);
+  int start_ciao_conn_source (const char *fname);
 
   /// Generate code at the end such as the <<= and >>= operators along
   /// with the ending #endif statement.
@@ -317,6 +321,8 @@ public:
   int end_ciao_exec_header (void);
   int end_ciao_exec_source (void);
   int end_ciao_exec_idl (void);
+  int end_ciao_conn_header (void);
+  int end_ciao_conn_source (void);
 
   /// Get the client header stream.
   TAO_OutStream *client_header (void);
@@ -369,8 +375,14 @@ public:
   /// Get the CIAO executor impl source stream.
   TAO_OutStream *ciao_exec_source (void);
 
-  /// Get the CIAO executor impl source stream.
+  /// Get the CIAO executor IDL source stream.
   TAO_OutStream *ciao_exec_idl (void);
+
+  /// Get the CIAO connector impl header stream.
+  TAO_OutStream *ciao_conn_header (void);
+
+  /// Get the CIAO connector impl source stream.
+  TAO_OutStream *ciao_conn_source (void);
 
   /// Set the gperf input file stream.
   void gperf_input_stream (TAO_OutStream *gperf_input);
@@ -452,6 +464,8 @@ private:
   void gen_exec_hdr_includes (void);
   void gen_exec_src_includes (void);
   void gen_exec_idl_includes (void);
+  void gen_conn_hdr_includes (void);
+  void gen_conn_src_includes (void);
   
   void gen_export_file (const char *filename,
                         const char *macro,
@@ -512,6 +526,12 @@ private:
 
   /// Component executor impl source file.
   TAO_OutStream *ciao_exec_idl_;
+
+  /// Component connector impl header file.
+  TAO_OutStream *ciao_conn_header_;
+
+  /// Component connector impl source file.
+  TAO_OutStream *ciao_conn_source_;
 
   /// Currently used out stream.
   TAO_OutStream *curr_os_;

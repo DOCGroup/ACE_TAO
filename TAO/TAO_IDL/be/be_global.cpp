@@ -43,6 +43,8 @@ BE_GlobalData::BE_GlobalData (void)
     exec_export_include_ (0),
     svnt_export_macro_ (0),
     svnt_export_include_ (0),
+    conn_export_macro_ (0),
+    conn_export_include_ (0),
     pch_include_ (0),
     pre_include_ (0),
     post_include_ (0),
@@ -73,6 +75,8 @@ BE_GlobalData::BE_GlobalData (void)
     ciao_exec_src_ending_ (ACE::strnew ("_exec.cpp")),
     ciao_exec_stub_hdr_ending_ (ACE::strnew ("EC.h")),
     ciao_exec_idl_ending_ (ACE::strnew ("E.idl")),
+    ciao_conn_hdr_ending_ (ACE::strnew ("_conn.h")),
+    ciao_conn_src_ending_ (ACE::strnew ("_conn.cpp")),
     dds_typesupport_hdr_ending_ (ACE::strnew ("Support.h")),
     output_dir_ (0),
     skel_output_dir_ (0),
@@ -122,6 +126,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_ciao_svnt_ (false),
     gen_ciao_exec_idl_ (false),
     gen_ciao_exec_impl_ (false),
+    gen_ciao_conn_impl_ (false),
     gen_component_swapping_ (false),
     gen_ciao_static_config_ (false),
     gen_ciao_valuefactory_reg_ (true),
@@ -129,6 +134,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_skel_export_hdr_file_ (false),
     gen_svnt_export_hdr_file_ (false),
     gen_exec_export_hdr_file_ (false),
+    gen_conn_export_hdr_file_ (false),
     gen_lem_force_all_ (false)
 {
 }
@@ -451,6 +457,24 @@ BE_GlobalData::be_get_ciao_exec_idl (
 }
 
 const char *
+BE_GlobalData::be_get_ciao_conn_header (UTL_String *idl_file_name,
+                                        bool base_name_only)
+{
+  return be_change_idl_file_extension (idl_file_name,
+                                       be_global->ciao_conn_header_ending (),
+                                       base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_ciao_conn_source (UTL_String *idl_file_name,
+                                        bool base_name_only)
+{
+  return be_change_idl_file_extension (idl_file_name,
+                                       be_global->ciao_conn_source_ending (),
+                                       base_name_only);
+}
+
+const char *
 BE_GlobalData::be_get_dds_typesupport_header (
   UTL_String *idl_file_name,
   bool base_name_only)
@@ -607,6 +631,22 @@ BE_GlobalData::be_get_ciao_exec_idl_fname (
       base_name_only);
 }
 
+const char *
+BE_GlobalData::be_get_ciao_conn_hdr_fname (
+  bool base_name_only)
+{
+  return be_get_ciao_conn_header (idl_global->stripped_filename (),
+                                  base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_ciao_conn_src_fname (
+  bool base_name_only)
+{
+  return be_get_ciao_conn_source (idl_global->stripped_filename (),
+                                  base_name_only);
+}
+
 const char*
 BE_GlobalData::skel_export_macro (void) const
 {
@@ -760,6 +800,37 @@ BE_GlobalData::svnt_export_include (const char *s)
 {
   ACE::strdelete (this->svnt_export_include_);
   this->svnt_export_include_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::conn_export_macro (void) const
+{
+  if (this->conn_export_macro_ == 0)
+    {
+      return "";
+    }
+
+  return this->conn_export_macro_;
+}
+
+void
+BE_GlobalData::conn_export_macro (const char *s)
+{
+  ACE::strdelete (this->conn_export_macro_);
+  this->conn_export_macro_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::conn_export_include (void) const
+{
+  return this->conn_export_include_;
+}
+
+void
+BE_GlobalData::conn_export_include (const char *s)
+{
+  ACE::strdelete (this->conn_export_include_);
+  this->conn_export_include_ = ACE::strnew (s);
 }
 
 const char*
@@ -1189,6 +1260,32 @@ BE_GlobalData::ciao_exec_idl_ending (void) const
 }
 
 void
+BE_GlobalData::ciao_conn_header_ending (const char* s)
+{
+  ACE::strdelete (this->ciao_conn_hdr_ending_);
+  this->ciao_conn_hdr_ending_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::ciao_conn_header_ending (void) const
+{
+  return this->ciao_conn_hdr_ending_;
+}
+
+void
+BE_GlobalData::ciao_conn_source_ending (const char* s)
+{
+  ACE::strdelete (this->ciao_conn_src_ending_);
+  this->ciao_conn_src_ending_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::ciao_conn_source_ending (void) const
+{
+  return this->ciao_conn_src_ending_;
+}
+
+void
 BE_GlobalData::dds_typesupport_hdr_ending (const char* s)
 {
   ACE::strdelete (this->dds_typesupport_hdr_ending_);
@@ -1550,6 +1647,12 @@ BE_GlobalData::destroy (void)
   ACE::strdelete (this->svnt_export_include_);
   this->svnt_export_include_ = 0;
 
+  ACE::strdelete (this->conn_export_macro_);
+  this->conn_export_macro_ = 0;
+
+  ACE::strdelete (this->conn_export_include_);
+  this->conn_export_include_ = 0;
+
   ACE::strdelete (this->pch_include_);
   this->pch_include_ = 0;
 
@@ -1627,6 +1730,12 @@ BE_GlobalData::destroy (void)
 
   ACE::strdelete (this->ciao_exec_idl_ending_);
   this->ciao_exec_idl_ending_ = 0;
+
+  ACE::strdelete (this->ciao_conn_hdr_ending_);
+  this->ciao_conn_hdr_ending_ = 0;
+
+  ACE::strdelete (this->ciao_conn_src_ending_);
+  this->ciao_conn_src_ending_ = 0;
 
   ACE::strdelete (this->dds_typesupport_hdr_ending_);
   this->dds_typesupport_hdr_ending_ = 0;
@@ -2180,6 +2289,18 @@ BE_GlobalData::gen_ciao_exec_impl (bool val)
 }
 
 bool
+BE_GlobalData::gen_ciao_conn_impl (void) const
+{
+  return this->gen_ciao_conn_impl_;
+}
+
+void
+BE_GlobalData::gen_ciao_conn_impl (bool val)
+{
+  this->gen_ciao_conn_impl_ = val;
+}
+
+bool
 BE_GlobalData::gen_component_swapping (void) const
 {
   return this->gen_component_swapping_;
@@ -2261,6 +2382,18 @@ void
 BE_GlobalData::gen_exec_export_hdr_file (bool val)
 {
   this->gen_exec_export_hdr_file_ = val;
+}
+
+bool
+BE_GlobalData::gen_conn_export_hdr_file (void) const
+{
+  return this->gen_conn_export_hdr_file_;
+}
+
+void
+BE_GlobalData::gen_conn_export_hdr_file (bool val)
+{
+  this->gen_conn_export_hdr_file_ = val;
 }
 
 bool
@@ -2673,6 +2806,20 @@ BE_GlobalData::parse_args (long &i, char **av)
             // Any operators into a separate set of files.
             be_global->gen_anyop_files (true);
           }
+        else if (av[i][2] == 'c' && av[i][3] == 'n')
+          {
+            // CIAO connector impl code generation.
+            be_global->gen_ciao_conn_impl (true);
+
+            break;
+          }
+        else if (av[i][2] == 'e' && av[i][3] == 'x')
+          {
+            // CIAO executor impl code generation.
+            be_global->gen_ciao_exec_impl (true);
+
+            break;
+          }
         else if (av[i][2] == 's')
           {
             if (av[i][3] == 'p')
@@ -2712,25 +2859,6 @@ BE_GlobalData::parse_args (long &i, char **av)
 
             break;
           }
-        else if (av[i][2] == 'e')
-          {
-            if (av[i][3] == 'x')
-              {
-                // CIAO executor impl code generation.
-                be_global->gen_ciao_exec_impl (true);
-              }
-            else
-              {
-                ACE_ERROR ((
-                    LM_ERROR,
-                    ACE_TEXT ("IDL: I don't understand ")
-                    ACE_TEXT ("the '%s' option\n"),
-                    av[i]
-                  ));
-              }
-
-            break;
-          }
         else if (av[i][2] == 'x')
           {
             if (av[i][3] == 'h')
@@ -2764,6 +2892,10 @@ BE_GlobalData::parse_args (long &i, char **av)
                 else if (av[i][4] == 'e' && av[i][5] == 'x')
                   {
                     be_global->gen_exec_export_hdr_file (true);
+                  }
+                else if (av[i][4] == 'c' && av[i][5] == 'n')
+                  {
+                    be_global->gen_conn_export_hdr_file (true);
                   }
                 else
                   {
@@ -3170,6 +3302,8 @@ BE_GlobalData::prep_be_arg (char *s)
   static const char exec_arg_include[]     = "exec_export_include=";
   static const char svnt_arg_macro[]       = "svnt_export_macro=";
   static const char svnt_arg_include[]     = "svnt_export_include=";
+  static const char conn_arg_macro[]       = "conn_export_macro=";
+  static const char conn_arg_include[]     = "conn_export_include=";
   static const char arg_pch_include[]      = "pch_include=";
   static const char arg_pre_include[]      = "pre_include=";
   static const char arg_post_include[]     = "post_include=";
@@ -3247,6 +3381,16 @@ BE_GlobalData::prep_be_arg (char *s)
         {
           char* val = arg + sizeof (svnt_arg_include) - 1;
           be_global->svnt_export_include (val);
+        }
+      else if (ACE_OS::strstr (arg, conn_arg_macro) == arg)
+        {
+          char* val = arg + sizeof (conn_arg_macro) - 1;
+          be_global->conn_export_macro (val);
+        }
+      else if (ACE_OS::strstr (arg, conn_arg_include) == arg)
+        {
+          char* val = arg + sizeof (conn_arg_include) - 1;
+          be_global->conn_export_include (val);
         }
       else if (ACE_OS::strstr (arg, arg_pch_include) == arg)
         {
@@ -3426,6 +3570,18 @@ BE_GlobalData::usage (void) const
       LM_DEBUG,
       ACE_TEXT (" -Wb,exec_export_include=<include path>\t\tsets export ")
       ACE_TEXT ("include file for CIAO executor impl files only, when -Gex ")
+      ACE_TEXT ("option is used\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,conn_export_macro=<macro name>\t\tsets export macro ")
+      ACE_TEXT ("for CIAO connector impl files only, when -Gcn option ")
+      ACE_TEXT ("is used\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,conn_export_include=<include path>\t\tsets export ")
+      ACE_TEXT ("include file for CIAO connector impl files only, when -Gcn ")
       ACE_TEXT ("option is used\n")
     ));
   ACE_DEBUG ((
@@ -3634,6 +3790,11 @@ BE_GlobalData::usage (void) const
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT (" -Gcn\t\t\tgenerate CIAO connector implementation ")
+      ACE_TEXT ("code (not generated by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT (" -Gsw\t\t\tgenerate CIAO code to support component ")
       ACE_TEXT ("swapping (not generated by default)\n")
     ));
@@ -3661,6 +3822,11 @@ BE_GlobalData::usage (void) const
       LM_DEBUG,
       ACE_TEXT (" -Gxhex\t\t\tgenerate export header file ")
       ACE_TEXT ("for CIAO executor (not generated by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gxhcn\t\t\tgenerate export header file ")
+      ACE_TEXT ("for CIAO connector (not generated by default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
