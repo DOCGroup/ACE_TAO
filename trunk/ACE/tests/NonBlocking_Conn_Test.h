@@ -44,7 +44,7 @@ public:
       IGNORE
     };
 
-  Svc_Handler (bool is_ref_counted);
+  Svc_Handler (bool is_ref_counted = false);
 
   void connection_status (Connection_Status &status,
                           int &completion_counter);
