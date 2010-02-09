@@ -207,52 +207,52 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   {
      if (!this->subscription_matched_received_.value ())
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Didn't receive the expected ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("RECEIVER ERROR: Didn't receive the expected ")
                               ACE_TEXT ("'SUBSCRIPTION_MATCHED_STATUS'\n")
                     ));
       }
     else
       {
-         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Received the expected ")
-                               ACE_TEXT ("'SUBSCRIPTION_MATCHED_STATUS' in Receiver\n")
+         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("RECEIVER OK: Received the expected ")
+                               ACE_TEXT ("'SUBSCRIPTION_MATCHED_STATUS'\n")
                     ));
       }
     if (!this->publication_matched_received_.value ())
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Didn't receive the expected ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("RECEIVER ERROR: Didn't receive the expected ")
                               ACE_TEXT ("'PUBLICATION_MATCHED_STATUS'\n")
                     ));
       }
     else
       {
-         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Received the expected ")
-                               ACE_TEXT ("'PUBLICATION_MATCHED_STATUS' in Receiver\n")
+         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("RECEIVER OK: Received the expected ")
+                               ACE_TEXT ("'PUBLICATION_MATCHED_STATUS' \n")
                     ));
       }
     if (!this->liveliness_changed_received_.value ())
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Didn't receive the expected ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("RECEIVER ERROR: Didn't receive the expected ")
                               ACE_TEXT ("'LIVELINESS_CHANGED_STATUS'\n")
                     ));
       }
     else
       {
-         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Received the expected ")
-                               ACE_TEXT ("'LIVELINESS_CHANGED_STATUS' in Receiver\n")
+         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("RECEIVER OK: Received the expected ")
+                               ACE_TEXT ("'LIVELINESS_CHANGED_STATUS' \n")
                     ));
       }
 
     //test thread switch for SUBSCRIPTION_MATCHED_STATUS
     if (this->thread_id_listener_subscription_matched_.value () == 0)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: "
+        ACE_ERROR ((LM_ERROR, "RECEIVER ERROR: "
                               "Thread ID for 'SUBSCRIPTION_MATCHED_STATUS' not set!\n"));
       }
     #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
     else if (ACE_OS::thr_equal (this->thread_id_listener_subscription_matched_.value (),
                                 ACE_Thread::self ()))
       {
-        ACE_DEBUG ((LM_DEBUG, "OK : "
+        ACE_DEBUG ((LM_DEBUG, "RECEIVER OK: "
                               "Thread switch for 'SUBSCRIPTION_MATCHED_STATUS' seems OK. "
                               "(DDS uses the CCM thread for its callback) "
                               "listener <%u> - component <%u>\n",
@@ -261,7 +261,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
       }
     else
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: "
+        ACE_ERROR ((LM_ERROR, "RECEIVER ERROR: "
                               "Thread switch for 'SUBSCRIPTION_MATCHED_STATUS' "
                               "doesn't seem to work! "
                               "listener <%u> - component <%u>\n",
@@ -272,7 +272,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
     else if (ACE_OS::thr_equal (this->thread_id_listener_subscription_matched_.value (),
                                 ACE_Thread::self ()))
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: 'SUBSCRIPTION_MATCHED_STATUS': "
+        ACE_ERROR ((LM_ERROR, "RECEIVER ERROR: 'SUBSCRIPTION_MATCHED_STATUS': "
                               "DDS seems to use a CCM thread for its callback: "
                               "listener <%u> - component <%u>\n",
                               this->thread_id_listener_subscription_matched_.value (),
@@ -280,7 +280,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, "OK : 'SUBSCRIPTION_MATCHED_STATUS': "
+        ACE_DEBUG ((LM_DEBUG, "RECEIVER OK: 'SUBSCRIPTION_MATCHED_STATUS': "
                               "DDS seems to use its own thread for its callback: "
                               "listener <%u> - component <%u>\n",
                               this->thread_id_listener_subscription_matched_.value (),
@@ -291,14 +291,14 @@ namespace CIAO_CSL_USTest_Receiver_Impl
     //test thread switch for PUBLICATION_MATCHED_STATUS
     if (this->thread_id_listener_publication_matched_.value () == 0)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: "
+        ACE_ERROR ((LM_ERROR, "RECEIVER ERROR: "
                               "Thread ID for 'PUBLICATION_MATCHED_STATUS' not set!\n"));
       }
     #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
     else if (ACE_OS::thr_equal (this->thread_id_listener_publication_matched_.value (),
                                 ACE_Thread::self ()))
       {
-        ACE_DEBUG ((LM_DEBUG, "OK : "
+        ACE_DEBUG ((LM_DEBUG, "RECEIVER OK: "
                               "Thread switch for 'PUBLICATION_MATCHED_STATUS' seems OK. "
                               "(DDS uses the CCM thread for its callback) "
                               "listener <%u> - component <%u>\n",
@@ -307,7 +307,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
       }
     else
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: "
+        ACE_ERROR ((LM_ERROR, "RECEIVER ERROR: "
                               "Thread switch for 'PUBLICATION_MATCHED_STATUS' "
                               "doesn't seem to work! "
                               "listener <%u> - component <%u>\n",
@@ -318,7 +318,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
     else if (ACE_OS::thr_equal (this->thread_id_listener_publication_matched_.value (),
                                 ACE_Thread::self ()))
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: 'PUBLICATION_MATCHED_STATUS': "
+        ACE_ERROR ((LM_ERROR, "RECEIVER ERROR: 'PUBLICATION_MATCHED_STATUS': "
                               "DDS seems to use a CCM thread for its callback: "
                               "listener <%u> - component <%u>\n",
                               this->thread_id_listener_publication_matched_.value (),
@@ -326,7 +326,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, "OK : 'PUBLICATION_MATCHED_STATUS': "
+        ACE_DEBUG ((LM_DEBUG, "RECEIVER OK: 'PUBLICATION_MATCHED_STATUS': "
                               "DDS seems to use its own thread for its callback: "
                               "listener <%u> - component <%u>\n",
                               this->thread_id_listener_publication_matched_.value (),
@@ -337,14 +337,14 @@ namespace CIAO_CSL_USTest_Receiver_Impl
     //test thread switch for LIVELINESS_CHANGED_STATUS
     if (this->thread_id_listener_liveliness_changed_.value () == 0)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: "
+        ACE_ERROR ((LM_ERROR, "RECEIVER ERROR: "
                               "Thread ID for 'LIVELINESS_CHANGED_STATUS' not set!\n"));
       }
     #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
     else if (ACE_OS::thr_equal (this->thread_id_listener_liveliness_changed_.value (),
                                 ACE_Thread::self ()))
       {
-        ACE_DEBUG ((LM_DEBUG, "OK : "
+        ACE_DEBUG ((LM_DEBUG, "RECEIVER OK: "
                               "Thread switch for 'LIVELINESS_CHANGED_STATUS' seems OK. "
                               "(DDS uses the CCM thread for its callback) "
                               "listener <%u> - component <%u>\n",
@@ -353,7 +353,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
       }
     else
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: "
+        ACE_ERROR ((LM_ERROR, "RECEIVER ERROR: "
                               "Thread switch for 'LIVELINESS_CHANGED_STATUS' "
                               "doesn't seem to work! "
                               "listener <%u> - component <%u>\n",
@@ -364,7 +364,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
     else if (ACE_OS::thr_equal (this->thread_id_listener_liveliness_changed_.value (),
                                 ACE_Thread::self ()))
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: 'LIVELINESS_CHANGED_STATUS': "
+        ACE_ERROR ((LM_ERROR, "RECEIVER ERROR: 'LIVELINESS_CHANGED_STATUS': "
                               "DDS seems to use a CCM thread for its callback: "
                               "listener <%u> - component <%u>\n",
                               this->thread_id_listener_liveliness_changed_.value (),
@@ -372,7 +372,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, "OK : 'LIVELINESS_CHANGED_STATUS': "
+        ACE_DEBUG ((LM_DEBUG, "RECEIVER OK: 'LIVELINESS_CHANGED_STATUS': "
                               "DDS seems to use its own thread for its callback: "
                               "listener <%u> - component <%u>\n",
                               this->thread_id_listener_liveliness_changed_.value (),
