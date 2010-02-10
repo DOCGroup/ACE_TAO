@@ -32,7 +32,38 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(::DDS::DataReader_ptr rdr)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderStateListener_T::on_data_available");
+  if (this->control_->mode () == ::CCM_DDS::NOT_ENABLED)
+    return;
+
+  ::CIAO::DDS4CCM::RTI::RTI_DataReader_i* rd =
+      dynamic_cast < ::CIAO::DDS4CCM::RTI::RTI_DataReader_i*>(rdr);
+  if (!rd)
+    {
+      /* In this specific case, this will never fail */
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("DataReaderStateListener_T::dynamic_cast failed.\n")));
+      return;
+    }
+  else if (this->reactor_)
+    {
+      ::CIAO::DDS4CCM::RTI::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE>* rh =
+        new  ::CIAO::DDS4CCM::RTI::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE>(this, rdr);
+      ACE_Event_Handler_var safe_handler (rh);
+      if (this->reactor_->notify (rh) != 0)
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("DataReaderStateHandler_T::failed to use reactor.\n")));
+        }
+    }
+  else
+    {
+      this->on_data_available_i (rdr);
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (::DDS::DataReader_ptr rdr)
+{
+  CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderStateListener_T::on_data_available_i");
 
   if (this->control_->mode () == ::CCM_DDS::NOT_ENABLED)
     return;

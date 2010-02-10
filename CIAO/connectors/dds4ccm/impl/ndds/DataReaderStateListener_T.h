@@ -34,12 +34,12 @@ namespace CIAO
         /// Destructor
         virtual ~DataReaderStateListener_T (void);
 
-        virtual void on_data_available( ::DDS::DataReader_ptr rdr);
+        virtual void on_data_available (::DDS::DataReader_ptr rdr);
 
         static ::DDS::StatusMask get_mask (
           typename CCM_TYPE::statelistener_type::_ptr_type listener);
 
-        void on_data_available_i ( ::DDS::DataReader_ptr rdr);
+        void on_data_available_i (::DDS::DataReader_ptr rdr);
 
       private:
         typename CCM_TYPE::statelistener_type::_var_type listener_;
