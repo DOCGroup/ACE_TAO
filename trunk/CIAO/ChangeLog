@@ -1,3 +1,9 @@
+Wed Feb 10 22:22:55 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * connectors/dds4ccm/idl/dds4ccm_Base.idl:
+        
+          Removed the line '#define connector component'
+
 Wed Feb 10 21:36:32 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * examples/Null_Component_Glfa/Null_Interface.mpc:
