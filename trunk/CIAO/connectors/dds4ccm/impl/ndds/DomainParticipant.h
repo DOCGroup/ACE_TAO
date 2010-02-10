@@ -27,20 +27,7 @@ namespace CIAO
   {
     namespace RTI
     {
-      class Ref_Counted_DDSEntity
-      {
-      public:
-        inline Ref_Counted_DDSEntity ()  { this->ref_count_ = 1; }
-        inline ~Ref_Counted_DDSEntity () {}
-        inline void _inc_refcnt () { ++this->ref_count_; }
-        inline void _dec_refcnt () { --this->ref_count_; }
-        inline int refcnt () { return this->ref_count_; }
-      private:
-        int ref_count_;
-      };
-
       class DDS4CCM_NDDS_IMPL_Export RTI_DomainParticipant_i :
-        public virtual Ref_Counted_DDSEntity,
         public virtual ::DDS::CCM_DomainParticipant,
         public virtual ::CORBA::LocalObject
       {

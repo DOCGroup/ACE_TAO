@@ -119,7 +119,6 @@ namespace CIAO
               CIAO_DEBUG (6, (LM_DEBUG, CLINFO "RTI_DomainParticipantFactory_i::create_participant_with_profile - "
                           "Re-using participant for QOS profile <%C>.\n",
                           qos_profile.c_str ()));
-              rti_dp->_inc_refcnt ();
               return ::DDS::DomainParticipant::_duplicate (rti_dp);
             }
         }
@@ -132,7 +131,7 @@ namespace CIAO
         ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
                         this->dps_mutex_, CORBA::INTERNAL ());
 
-        if (part->refcnt () <= 1)
+        if (part->_refcount_value () == 1)
           {
             DomainParticipants::iterator pos;
             for (pos = this->dps_.begin(); pos != this->dps_.end(); ++pos)
@@ -140,7 +139,7 @@ namespace CIAO
                 if (pos->second == part)
                   {
                     CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::remove_participant - "
-                              "Deleting participant for %C.\n",
+                              "Removing participant for %C from list.\n",
                               pos->first.c_str ()));
                     this->dps_.erase (pos->first);
                     break;
@@ -151,9 +150,8 @@ namespace CIAO
           {
             CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::remove_participant - "
                       "Don't delete participant since it's still used - ref_count <%d>\n",
-                      part->refcnt ()));
+                      part->_refcount_value ()));
           }
-        part->_dec_refcnt ();
       }
 
       ::DDS::ReturnCode_t
@@ -176,7 +174,7 @@ namespace CIAO
 
         this->remove_participant (part);
 
-        if (part->refcnt () == 0)
+        if (part->_refcount_value () == 1)
           {
             retval = DDSDomainParticipantFactory::get_instance ()->
                 delete_participant (part->get_impl ());
