@@ -30,7 +30,7 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
     // Record time, not for ping messages , already pinged back.
     if (an_instance.latency_ping != -1L)
     {
-      this->callback_.record_time (an_instance.nanotime, an_instance.data_len);
+      this->callback_.record_time (an_instance.data_len);
     }
 
     // Send back a packet if this is a ping
@@ -130,7 +130,7 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
   }
 
   void 
-  Receiver_exec_i::record_time ( unsigned long long nanotime,unsigned long datalen)
+  Receiver_exec_i::record_time (unsigned long datalen)
   {
     ++this->count_;
     if( datalen == INITIALIZE_SIZE)
