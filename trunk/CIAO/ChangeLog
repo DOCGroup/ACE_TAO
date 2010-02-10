@@ -1,3 +1,10 @@
+Wed Feb 10 10:26:55 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.h:
+          Removed generated headers
+
 Wed Feb 10 10:03:26 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.h:
