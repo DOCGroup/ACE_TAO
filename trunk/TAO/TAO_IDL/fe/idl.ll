@@ -803,6 +803,11 @@ idl_store_pragma (char *buf)
     {
       idl_global->dcps_gen_zero_copy_read (true);
     }
+  else if (ACE_OS::strncmp (buf + 8, "ciao lem", 8) == 0)
+    {
+      char *tmp = idl_get_pragma_string (buf);
+      idl_global->add_ciao_lem_file_names (tmp);
+    }
 }
 
 /*

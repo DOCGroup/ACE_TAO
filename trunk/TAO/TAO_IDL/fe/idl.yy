@@ -5036,7 +5036,7 @@ component_header :
         IDL_COMPONENT
         id
         {
-//      id
+//      component_header: IDL_COMPONENT id
           idl_global->set_parse_state (IDL_GlobalData::PS_ComponentIDSeen);
         }
         component_inheritance_spec

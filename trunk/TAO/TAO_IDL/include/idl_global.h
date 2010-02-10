@@ -595,7 +595,7 @@ public:
 
   void add_ciao_lem_file_names (const char *s);
   ACE_Unbounded_Queue<char *> & ciao_lem_file_names (void);
-  // Accessor/mutator for the ciao_lem_file_names__ member.
+  // Accessor/mutator for the ciao_lem_file_names_ member.
 
   FILE * open_included_file (char const * filename,
                              char const *& directory);
@@ -819,6 +819,5 @@ private:
   ACE_Unbounded_Queue<char *> ciao_lem_file_names_;
   // Files parsed with ciao lem pragma
 };
-
 
 #endif  //_IDL_IDL_GLOBAL_HH
