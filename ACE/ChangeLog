@@ -1,3 +1,20 @@
+Wed Feb 10 18:39:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-g++-common.h:
+        
+          Added logic to detect (usable) support for GCC builtin __sync_XXX
+          atomic op functions.
+          
+        * ace/Atomic_Op.h:
+        * ace/Atomic_Op.inl:
+        
+          Changed autodetection for GCC builtin atomic ops so it will
+          only be used when really wanted.
+          Removed include for stdatomic.h because that has nothing to do with
+          the __sync_XXX builtins but rather with a *proposed* atomic op 
+          implementation for the C++1x standard. The __sync_XXX builtins are 
+          truly intrinsic, i.e. no header files involved.
+
 Wed Feb 10 15:38:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
