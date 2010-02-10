@@ -1,3 +1,11 @@
+Wed Feb 10 21:02:03 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * examples/Null_Component_Glfa/*:
+
+          We should have an example to test the -Glfa feature.
+          This is a place holder for now, more modifications
+          are needed to make this functional.
+
 Wed Feb 10 19:49:13 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DomainParticipant.h:
