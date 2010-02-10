@@ -14,11 +14,6 @@
 # include <vxAtomicLib.h>
 #endif
 
-#if defined (ACE_HAS_GCC_ATOMIC_BUILTINS) && (ACE_HAS_GCC_ATOMIC_BUILTINS == 1)
-// See http://gcc.gnu.org/onlinedocs/gcc-4.4.3/gcc/Atomic-Builtins.html
-# include <stdatomic.h>
-#endif
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -49,7 +44,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator++ (void)
   return ::InterlockedIncrement (const_cast<long *> (&this->value_));
 #elif defined (ACE_HAS_VXATOMICLIB)
   return ::vxAtomicInc (reinterpret_cast <atomic_t*>(const_cast<long *> (&this->value_))) + 1;
-#elif defined (ACE_HAS_GCC_ATOMIC_BUILTINS) && (ACE_HAS_GCC_ATOMIC_BUILTINS == 1)
+#elif defined (ACE_USES_GCC_ATOMIC_BUILTINS) && (ACE_USES_GCC_ATOMIC_BUILTINS == 1)
   return __sync_add_and_fetch (&this->value_, 1);
 #else /* WIN32 */
   return (*increment_fn_) (&this->value_);
@@ -71,7 +66,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator-- (void)
   return ::InterlockedDecrement (const_cast<long *> (&this->value_));
 #elif defined (ACE_HAS_VXATOMICLIB)
   return ::vxAtomicDec (reinterpret_cast <atomic_t*>(const_cast<long *> (&this->value_))) - 1;
-#elif defined (ACE_HAS_GCC_ATOMIC_BUILTINS) && (ACE_HAS_GCC_ATOMIC_BUILTINS == 1)
+#elif defined (ACE_USES_GCC_ATOMIC_BUILTINS) && (ACE_USES_GCC_ATOMIC_BUILTINS == 1)
   return __sync_sub_and_fetch (&this->value_, 1);
 #else /* WIN32 */
   return (*decrement_fn_) (&this->value_);
@@ -95,7 +90,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator+= (long rhs)
                                    rhs) + rhs;
 #elif defined (ACE_HAS_VXATOMICLIB)
   return ::vxAtomicAdd (reinterpret_cast <atomic_t*>(const_cast<long *> (&this->value_)), rhs) + rhs;
-#elif defined (ACE_HAS_GCC_ATOMIC_BUILTINS) && (ACE_HAS_GCC_ATOMIC_BUILTINS == 1)
+#elif defined (ACE_USES_GCC_ATOMIC_BUILTINS) && (ACE_USES_GCC_ATOMIC_BUILTINS == 1)
   return __sync_add_and_fetch (&this->value_, rhs);
 #else /* WIN32 && ACE_HAS_INTERLOCKED_EXCHANGEADD */
   return (*exchange_add_fn_) (&this->value_, rhs) + rhs;
@@ -113,7 +108,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator-= (long rhs)
                                    -rhs) - rhs;
 #elif defined (ACE_HAS_VXATOMICLIB)
   return ::vxAtomicSub (reinterpret_cast <atomic_t*>(const_cast<long *> (&this->value_)), rhs) - rhs;
-#elif defined (ACE_HAS_GCC_ATOMIC_BUILTINS) && (ACE_HAS_GCC_ATOMIC_BUILTINS == 1)
+#elif defined (ACE_USES_GCC_ATOMIC_BUILTINS) && (ACE_USES_GCC_ATOMIC_BUILTINS == 1)
   return __sync_sub_and_fetch (&this->value_, rhs);
 #else /* WIN32 && ACE_HAS_INTERLOCKED_EXCHANGEADD */
   return (*exchange_add_fn_) (&this->value_, -rhs) - rhs;
@@ -165,7 +160,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (long rhs)
   ::InterlockedExchange (const_cast<long *> (&this->value_), rhs);
 #elif defined (ACE_HAS_VXATOMICLIB)
   ::vxAtomicSet (reinterpret_cast <atomic_t*>(const_cast<long *> (&this->value_)), rhs);
-#elif defined (ACE_HAS_GCC_ATOMIC_BUILTINS) && (ACE_HAS_GCC_ATOMIC_BUILTINS == 1)
+#elif defined (ACE_USES_GCC_ATOMIC_BUILTINS) && (ACE_USES_GCC_ATOMIC_BUILTINS == 1)
   __sync_lock_test_and_set (&this->value_, rhs);
 #else /* WIN32 */
   (*exchange_fn_) (&this->value_, rhs);
@@ -183,7 +178,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (
   ::InterlockedExchange (const_cast<long *> (&this->value_), rhs.value_);
 #elif defined (ACE_HAS_VXATOMICLIB)
   ::vxAtomicSet (reinterpret_cast <atomic_t*>(const_cast<long *> (&this->value_)), rhs.value_);
-#elif defined (ACE_HAS_GCC_ATOMIC_BUILTINS) && (ACE_HAS_GCC_ATOMIC_BUILTINS == 1)
+#elif defined (ACE_USES_GCC_ATOMIC_BUILTINS) && (ACE_USES_GCC_ATOMIC_BUILTINS == 1)
   __sync_lock_test_and_set (&this->value_, rhs.value_);
 #else /* WIN32 */
   (*exchange_fn_) (&this->value_, rhs.value_);
@@ -232,7 +227,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator++ (void)
   return static_cast<unsigned long> (::InterlockedIncrement (const_cast<long *> (reinterpret_cast<volatile long *>(&this->value_))));
 #elif defined (ACE_HAS_VXATOMICLIB)
   return static_cast<unsigned long> (::vxAtomicInc (reinterpret_cast <atomic_t*>(const_cast<long *> (reinterpret_cast<volatile long *>(&this->value_))))) + 1;
-#elif defined (ACE_HAS_GCC_ATOMIC_BUILTINS) && (ACE_HAS_GCC_ATOMIC_BUILTINS == 1)
+#elif defined (ACE_USES_GCC_ATOMIC_BUILTINS) && (ACE_USES_GCC_ATOMIC_BUILTINS == 1)
   return __sync_add_and_fetch (&this->value_, 1);
 #else /* WIN32 */
   return static_cast<unsigned long> ((*increment_fn_) (reinterpret_cast<volatile long *> (&this->value_)));
@@ -254,7 +249,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator-- (void)
   return static_cast<unsigned long> (::InterlockedDecrement (const_cast<long *> (reinterpret_cast<volatile long *>(&this->value_))));
 #elif defined (ACE_HAS_VXATOMICLIB)
   return static_cast<unsigned long> (::vxAtomicDec (reinterpret_cast <atomic_t*>(const_cast<long *> (reinterpret_cast<volatile long *>(&this->value_))))) - 1;
-#elif defined (ACE_HAS_GCC_ATOMIC_BUILTINS) && (ACE_HAS_GCC_ATOMIC_BUILTINS == 1)
+#elif defined (ACE_USES_GCC_ATOMIC_BUILTINS) && (ACE_USES_GCC_ATOMIC_BUILTINS == 1)
   return __sync_sub_and_fetch (&this->value_, 1);
 #else /* WIN32 */
   return static_cast<unsigned long> ((*decrement_fn_) (reinterpret_cast<volatile long *> (&this->value_)));
@@ -278,7 +273,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator+= (unsigned long rhs)
                                    rhs)) + rhs;
 #elif defined (ACE_HAS_VXATOMICLIB)
   return static_cast<unsigned long> (::vxAtomicAdd (reinterpret_cast <atomic_t*>(const_cast<long *> (reinterpret_cast<volatile long *>(&this->value_))), rhs)) + rhs;
-#elif defined (ACE_HAS_GCC_ATOMIC_BUILTINS) && (ACE_HAS_GCC_ATOMIC_BUILTINS == 1)
+#elif defined (ACE_USES_GCC_ATOMIC_BUILTINS) && (ACE_USES_GCC_ATOMIC_BUILTINS == 1)
   return __sync_add_and_fetch (&this->value_, rhs);
 #else /* WIN32 && ACE_HAS_INTERLOCKED_EXCHANGEADD */
   return static_cast<unsigned long> ((*exchange_add_fn_) (reinterpret_cast<volatile long *> (&this->value_), rhs)) + rhs;
@@ -296,7 +291,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator-= (unsigned long rhs)
                                    -static_cast<long>(rhs))) - rhs;
 #elif defined (ACE_HAS_VXATOMICLIB)
   return static_cast<unsigned long> (::vxAtomicSub (reinterpret_cast <atomic_t*>(const_cast<long *> (reinterpret_cast<volatile long *>(&this->value_))), rhs)) - rhs;
-#elif defined (ACE_HAS_GCC_ATOMIC_BUILTINS) && (ACE_HAS_GCC_ATOMIC_BUILTINS == 1)
+#elif defined (ACE_USES_GCC_ATOMIC_BUILTINS) && (ACE_USES_GCC_ATOMIC_BUILTINS == 1)
   return __sync_sub_and_fetch (&this->value_, rhs);
 #else /* WIN32 && ACE_HAS_INTERLOCKED_EXCHANGEADD */
   long l_rhs = static_cast<long> (rhs);
@@ -349,7 +344,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator= (unsigned long rhs)
   ::InterlockedExchange (const_cast<long *> (reinterpret_cast<volatile long*> (&this->value_)), rhs);
 #elif defined (ACE_HAS_VXATOMICLIB)
   ::vxAtomicSet (reinterpret_cast <atomic_t*>(const_cast<long *> (reinterpret_cast<volatile long*> (&this->value_))), rhs);
-#elif defined (ACE_HAS_GCC_ATOMIC_BUILTINS) && (ACE_HAS_GCC_ATOMIC_BUILTINS == 1)
+#elif defined (ACE_USES_GCC_ATOMIC_BUILTINS) && (ACE_USES_GCC_ATOMIC_BUILTINS == 1)
   __sync_lock_test_and_set (&this->value_, rhs);
 #else /* WIN32 */
   (*exchange_fn_) (reinterpret_cast<volatile long *> (&this->value_), rhs);
@@ -367,7 +362,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator= (
   ::InterlockedExchange (const_cast<long *> (reinterpret_cast<volatile long*> (&this->value_)), rhs.value_);
 #elif defined (ACE_HAS_VXATOMICLIB)
   ::vxAtomicSet (reinterpret_cast <atomic_t*>(const_cast<long *> (reinterpret_cast<volatile long*> (&this->value_))), rhs.value_);
-#elif defined (ACE_HAS_GCC_ATOMIC_BUILTINS) && (ACE_HAS_GCC_ATOMIC_BUILTINS == 1)
+#elif defined (ACE_USES_GCC_ATOMIC_BUILTINS) && (ACE_USES_GCC_ATOMIC_BUILTINS == 1)
   __sync_lock_test_and_set (&this->value_, rhs.value_);
 #else /* WIN32 */
   (*exchange_fn_) (reinterpret_cast<volatile long *> (&this->value_), rhs.value_);
