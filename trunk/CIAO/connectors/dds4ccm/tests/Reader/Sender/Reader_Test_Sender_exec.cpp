@@ -104,6 +104,7 @@ namespace CIAO_Reader_Test_Sender_Impl
                             key, iter));
               }
           }
+        ACE_OS::sleep (3);
         this->starter_->start_read ();
       }
   }
