@@ -1,3 +1,25 @@
+Wed Feb 10 22:16:15 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        
+          Fixed typo in comment.
+          
+        * TAO_IDL/be/be_codegen.cpp:
+        
+          Added code generation for included files in
+          the connector implementation.
+          
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        
+          Fixed incorrect comment.
+          
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+        
+          Restored code that was added to the cpp file only and
+          got zapped in the last regeneration.
+
 Wed Feb 10 22:02:06 UTC 2010  Yan Dai  <dai_y@ociweb.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:

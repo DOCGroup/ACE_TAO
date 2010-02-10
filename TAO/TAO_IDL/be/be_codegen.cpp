@@ -1383,7 +1383,11 @@ TAO_CodeGen::start_ciao_conn_header (const char *fname)
 
   this->gen_standard_include (
     this->ciao_conn_header_,
-    be_global->be_get_ciao_conn_hdr_fname (true));
+    "dds4ccm/impl/ndds/DDS4CCM_Traits.h");
+
+  this->gen_standard_include (
+    this->ciao_conn_header_,
+    "dds4ccm/impl/ndds/DDS_Event_Connector_T.h");
 
   // Some compilers don't optimize the #ifndef header include
   // protection, but do optimize based on #pragma once.
@@ -3273,12 +3277,6 @@ TAO_CodeGen::gen_exec_hdr_includes (void)
     {
       *this->ciao_exec_header_ << be_nl;
 
-//      this->gen_standard_include (this->ciao_exec_header_,
-//                                  "dds4ccm/impl/ndds/NDDS_Traits.h");
-
-//      this->gen_standard_include (this->ciao_exec_header_,
-//                                  "dds4ccm/impl/ndds/Connector_T.h");
-
       size_t const nfiles = idl_global->n_included_idl_files ();
 
       for (size_t j = 0; j < nfiles; ++j)
@@ -3423,6 +3421,36 @@ TAO_CodeGen::gen_exec_idl_includes (void)
 void
 TAO_CodeGen::gen_conn_hdr_includes (void)
 {
+  if (be_global->conn_export_include () != 0)
+    {
+      this->gen_standard_include (
+        this->ciao_conn_header_,
+        be_global->conn_export_include (),
+        true);
+    
+      *this->ciao_conn_header_ << be_nl;
+    }
+    
+  char **path_tmp  = 0;
+  
+  for (ACE_Unbounded_Queue_Iterator<char *>riter (
+            idl_global->ciao_lem_file_names ()
+          );
+       riter.done () == 0;
+       riter.advance ())
+    {
+      riter.next (path_tmp);
+      ACE_CString lem_str (*path_tmp);
+      lem_str = lem_str.substr (0, lem_str.find (".idl"));
+      lem_str += be_global->client_hdr_ending ();
+
+      this->gen_standard_include (
+        this->ciao_conn_header_,
+        lem_str.c_str ());
+    }
+    
+  *this->ciao_conn_header_ << be_nl;
+
 }
 
 void
