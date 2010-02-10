@@ -1,3 +1,9 @@
+Wed Feb  10 8:10:37 UTC 2010  Marijke Hengstmengelt  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Keyed/Receiver/Perf_Keyed_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Keyed/Receiver/Perf_Keyed_Test_Receiver_exec.h:
+        Removed unused parameter.
+
 Tue Feb  9 22:57:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.mpc:
