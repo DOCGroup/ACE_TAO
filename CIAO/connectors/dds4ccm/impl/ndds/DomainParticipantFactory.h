@@ -22,14 +22,14 @@
 
 #include <map>
 
-class DDSDomainParticipant;
-
 namespace CIAO
 {
   namespace DDS4CCM
   {
     namespace RTI
     {
+      class RTI_DomainParticipant_i;
+
       class DDS4CCM_NDDS_IMPL_Export RTI_DomainParticipantFactory_i :
         public virtual ::DDS::CCM_DomainParticipantFactory,
         public virtual ::CORBA::LocalObject
@@ -79,10 +79,10 @@ namespace CIAO
                                                           const char * library_name,
                                                           const char * profile_name);
       private:
-        void remove_participant (DDSDomainParticipant * part);
+        void remove_participant (RTI_DomainParticipant_i * part);
 
         TAO_SYNCH_MUTEX dps_mutex_;
-        typedef std::map<ACE_CString, DDSDomainParticipant *> DomainParticipants;
+        typedef std::map<ACE_CString, RTI_DomainParticipant_i *> DomainParticipants;
         DomainParticipants dps_;
       private:
         ACE_UNIMPLEMENTED_FUNC (void operator= (const RTI_DomainParticipantFactory_i &))
