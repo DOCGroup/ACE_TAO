@@ -329,9 +329,9 @@ project(*NDDS_Lib): taolib, messaging, gen_ostream, nddslib {
     Bug_3819_Regression.cxx
     Bug_3819_RegressionPlugin.cxx
     Bug_3819_RegressionSupport.cxx
-    Bug_3821_Regression.cxx
-    Bug_3821_RegressionPlugin.cxx
-    Bug_3821_RegressionSupport.cxx
+//    Bug_3821_Regression.cxx
+//    Bug_3821_RegressionPlugin.cxx
+//    Bug_3821_RegressionSupport.cxx
   //  constants.cxx
   //  constantsPlugin.cxx
   //  constantsSupport.cxx
