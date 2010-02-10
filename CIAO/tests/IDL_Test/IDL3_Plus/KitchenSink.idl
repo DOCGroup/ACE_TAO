@@ -248,15 +248,20 @@ module Ast<iface,
            101>
   Ast_Inst;
 
-/*
-Jeff, this causes a crash of TAO_IDL
-module N <typename T>
+module M 
 {
-  interface A {
-    void do_something (in T arg);
+  module N <typename T>
+  {
+    interface A {
+      void do_something (in T arg);
+    };
   };
 };
 
+/*
+Support for native is there, but this results in non compiling code
 native NAT;
-module N <NAT> N_NAT;
+module M {
+  module N <NAT> N_NAT;
+};
 */
