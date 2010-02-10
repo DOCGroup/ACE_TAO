@@ -17,7 +17,6 @@
 
 /* begin standard C headers. */
 #include "ace/os_include/os_stdio.h"
-#include "ace/OS_NS_stdio.h"
 
 /* end standard C headers. */
 
@@ -1130,7 +1129,7 @@ static int input (void );
                 int c = '*'; \
                 size_t n; \
                 for ( n = 0; n < max_size && \
-                             (c = ACE_OS::getc( tao_yyin )) != EOF && c != '\n'; ++n ) \
+                             (c = getc( tao_yyin )) != EOF && c != '\n'; ++n ) \
                         buf[n] = (char) c; \
                 if ( c == '\n' ) \
                         buf[n++] = (char) c; \
@@ -3106,7 +3105,8 @@ idl_store_pragma (char *buf)
           // associated with this file, otherwise we add the prefix.
           char *ext_id = idl_global->filename ()->get_string ();
           char *int_id = 0;
-          int const status = idl_global->file_prefixes ().find (ext_id, int_id);
+          int status = idl_global->file_prefixes ().find (ext_id,
+                                                          int_id);
 
           if (status == 0)
             {
@@ -3267,11 +3267,11 @@ idl_store_pragma (char *buf)
       // split up data type and key strings
       char *sample_type = tmp;
       while (*tmp && !isspace (*tmp))
-        ++tmp;
+        tmp++;
       while (isspace (*tmp))
         {
           *tmp = '\0';
-          ++tmp;
+          tmp++;
         }
       char *key = tmp;
 
@@ -3289,11 +3289,6 @@ idl_store_pragma (char *buf)
     {
       idl_global->dcps_gen_zero_copy_read (true);
     }
-  else if (ACE_OS::strncmp (buf + 8, "ciao lem", 8) == 0)
-    {
-      char *tmp = idl_get_pragma_string (buf);
-      idl_global->add_ciao_lem_file_names (tmp);
-    }
 }
 
 /*
@@ -3302,17 +3297,17 @@ idl_store_pragma (char *buf)
 static ACE_CDR::Long
 idl_atoi(char *s, long b)
 {
-  long r = 0;
+  long    r = 0;
 
   // Skip over the dash and possibly spaces after the dash
   while (*s == '-' || *s == ' ' || *s == '\t')
     {
-      ++s;
+      s++;
     }
 
   if (b == 8 && *s == '0')
     {
-      ++s;
+      s++;
     }
   else if (b == 16 && *s == '0' && (*(s + 1) == 'x' || *(s + 1) == 'X'))
     {
@@ -3352,7 +3347,7 @@ idl_atoui(char *s, long b)
 
   if (b == 8 && *s == '0')
     {
-      ++s;
+      s++;
     }
   else if (b == 16 && *s == '0' && (*(s + 1) == 'x' || *(s + 1) == 'X'))
     {
@@ -3399,37 +3394,37 @@ idl_atof (char *s)
       // Skip over the dash and possibly spaces after the dash
       while (*s == '-' || *s == ' ' || *s == '\t')
         {
-          ++s;
+          s++;
         }
     }
 
   while (*s >= '0' && *s <= '9')
     {
       d = (d * 10) + *s - '0';
-      ++s;
+      s++;
     }
 
   if (*s == '.')
     {
-      ++s;
+      s++;
       e = 10;
 
       while (*s >= '0' && *s <= '9')
         {
           d += (*s - '0') / (e * 1.0);
           e *= 10;
-          ++s;
+          s++;
         }
     }
 
   if (*s == 'e' || *s == 'E')
     {
-      ++s;
+      s++;
 
       if (*s == '-')
         {
             negexp = 1;
-            ++s;
+            s++;
         }
       else if (*s == '+')
         {
@@ -3471,7 +3466,9 @@ idl_atof (char *s)
  * Convert (some) escaped characters into their ascii values
  */
 static char
-idl_escape_reader(char *str)
+idl_escape_reader(
+    char *str
+  )
 {
   if (str[0] != '\\')
     {

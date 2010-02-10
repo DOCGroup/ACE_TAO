@@ -1,8 +1,12 @@
+Wed Feb 10 19:27:58 UTC 2010  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/lex.yy.cpp:
+
 Wed Feb 10 16:34:24 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_xplicit_pre_proc.cpp:
         * TAO_IDL/be_include/be_visitor_xplicit_pre_proc.h:
-        
+
           In the recreation of the home scope in the corresponding
           explicit interface, added support for eventtypes, which
           cannot be declared inside a home, but can be referenced.
