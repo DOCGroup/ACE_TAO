@@ -1,3 +1,9 @@
+Wed Feb 10 22:02:06 UTC 2010  Yan Dai  <dai_y@ociweb.com>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+
+          Added support for ORBKeepalive in SSL mode.
+
 Wed Feb 10 19:27:58 UTC 2010  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/lex.yy.cpp:
