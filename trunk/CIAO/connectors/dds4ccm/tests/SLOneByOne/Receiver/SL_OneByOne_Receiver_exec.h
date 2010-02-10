@@ -35,12 +35,10 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
 
     ~read_action_Generator ();
 
-    /// Handle the timeout.
     virtual int handle_timeout (const ACE_Time_Value &tv,
                                 const void *arg);
 
   private:
-    /// Maintains a handle that actually process the event
     Receiver_exec_i &pulse_callback_;
   };
 
@@ -76,7 +74,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
         const ::TestTopic & datum,
         const ::CCM_DDS::ReadInfo & info);
   private:
-     Atomic_Boolean &no_operation_;
+     Atomic_Boolean &on_many_updates_;
      Atomic_Boolean &on_creation_;
      Atomic_Boolean &on_one_update_;
      Atomic_Boolean &on_deletion_;
@@ -119,13 +117,13 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
     read_action_Generator * ticker_;
     CORBA::ULong rate_;
 
-    Atomic_Boolean no_operation_;
-    Atomic_Boolean updater_data_; 
+    Atomic_Boolean on_many_updates_;
+    Atomic_Boolean updater_data_;
     Atomic_Boolean on_creation_;
     Atomic_Boolean on_one_update_;
     Atomic_Boolean on_deletion_;
     Atomic_ThreadId thread_id_listener_;
-};
+  };
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_SL_OneByOne_Receiver_Impl (void);
 }

@@ -1,3 +1,19 @@
+Wed Feb 10 08:12:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderHandler_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReaderHandler_T.cpp:
+          Preparing thread switch DataReaderStateListener_T.
+
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+          Code alignment.
+
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.cpp:
+          Check on error listeners pointer.
+
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.h:
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.cpp:
+          Optimized logging. Code alignment.
+
 Wed Feb  10 8:10:37 UTC 2010  Marijke Hengstmengelt  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Keyed/Receiver/Perf_Keyed_Test_Receiver_exec.cpp:
@@ -7,12 +23,12 @@ Wed Feb  10 8:10:37 UTC 2010  Marijke Hengstmengelt  <mhengstmengel@remedy.nl>
 Tue Feb  9 22:57:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.mpc:
-        
+
           Added generation of connector export header file, and cosmetic
           changes.
-          
+
         * MPC/config/connectoridldefaults.mpb:
-        
+
           Added command line options to trigger generation of connector
           implementation and connector export header file.
 
