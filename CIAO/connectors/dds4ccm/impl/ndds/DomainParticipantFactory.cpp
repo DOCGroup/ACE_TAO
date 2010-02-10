@@ -85,19 +85,21 @@ namespace CIAO
         qos_profile += ACE_TEXT ("#");
         qos_profile += profile_name;
 
-        DDSDomainParticipant * part = 0;
+        RTI_DomainParticipant_i *rti_dp = 0;
+
+        ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
+                        this->dps_mutex_, CORBA::INTERNAL ());
         {
-          ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
-                          this->dps_mutex_, CORBA::INTERNAL ());
-          //part = this->dps_[qos_profile];
-          if (!part)
+          rti_dp = this->dps_[qos_profile];
+
+          if (!rti_dp)
             {
-              part = DDSDomainParticipantFactory::get_instance ()->
-                create_participant_with_profile (domain_id,
-                                  library_name,
-                                  profile_name,
-                                  rti_dpl,
-                                  mask);
+              DDSDomainParticipant * part = DDSDomainParticipantFactory::get_instance ()->
+                      create_participant_with_profile (domain_id,
+                                        library_name,
+                                        profile_name,
+                                        rti_dpl,
+                                        mask);
               if (!part)
                 {
                   CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipantFactory_i::create_participant_with_profile - "
@@ -105,40 +107,53 @@ namespace CIAO
                   throw CCM_DDS::InternalError (1, 0);
                 }
               part->enable ();
+
+              ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i ();
+              rti_dp = dynamic_cast < RTI_DomainParticipant_i *> (retval.in ());
+              rti_dp->set_impl (part);
+              this->dps_[qos_profile] = rti_dp;
+              return retval._retn ();
             }
-          else CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::create_participant_with_profile - "
-                          "Re-using participant for %C.\n",
+          else
+            {
+              CIAO_DEBUG (6, (LM_DEBUG, CLINFO "RTI_DomainParticipantFactory_i::create_participant_with_profile - "
+                          "Re-using participant for QOS profile <%C>.\n",
                           qos_profile.c_str ()));
-
-          ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i ();
-          RTI_DomainParticipant_i *rti_dp = dynamic_cast < RTI_DomainParticipant_i *> (retval.in ());
-          rti_dp->set_impl (part);
-
-          //this->dps_[qos_profile] = part;
-
-          return retval._retn ();
+              rti_dp->_inc_refcnt ();
+              return ::DDS::DomainParticipant::_duplicate (rti_dp);
+            }
         }
       }
 
       void
-      RTI_DomainParticipantFactory_i::remove_participant (DDSDomainParticipant * part)
+      RTI_DomainParticipantFactory_i::remove_participant (RTI_DomainParticipant_i * part)
       {
         CIAO_TRACE ("RTI_DomainParticipantFactory_i::remove_participant");
         ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
                         this->dps_mutex_, CORBA::INTERNAL ());
 
-        DomainParticipants::iterator pos;
-        for (pos = this->dps_.begin(); pos != this->dps_.end(); ++pos)
+        if (part->refcnt () <= 1)
           {
-            if (pos->second == part)
+            DomainParticipants::iterator pos;
+            for (pos = this->dps_.begin(); pos != this->dps_.end(); ++pos)
               {
-                CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::remove_participant - "
-                          "Deleting participant for %C.\n",
-                          pos->first.c_str ()));
-                this->dps_.erase (pos->first);
-                break;
+                if (pos->second == part)
+                  {
+                    CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::remove_participant - "
+                              "Deleting participant for %C.\n",
+                              pos->first.c_str ()));
+                    this->dps_.erase (pos->first);
+                    break;
+                  }
               }
           }
+        else
+          {
+            CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::remove_participant - "
+                      "Don't delete participant since it's still used - ref_count <%d>\n",
+                      part->refcnt ()));
+          }
+        part->_dec_refcnt ();
       }
 
       ::DDS::ReturnCode_t
@@ -157,19 +172,24 @@ namespace CIAO
         CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::delete_participant - "
                      "Successfully casted provided object reference to servant type.\n"));
 
-        //this->remove_participant (part->get_impl ());
+        DDS_ReturnCode_t retval = DDS_RETCODE_OK;
 
-        DDS_ReturnCode_t const retval = DDSDomainParticipantFactory::get_instance ()->
-            delete_participant (part->get_impl ());
+        this->remove_participant (part);
 
-        if (retval != DDS_RETCODE_OK)
+        if (part->refcnt () == 0)
           {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipantFactory_i::delete_participant - "
-                         "RTI delete_participant returned non-ok error code %C\n",
-                         translate_retcode (retval)));
+            retval = DDSDomainParticipantFactory::get_instance ()->
+                delete_participant (part->get_impl ());
+
+            if (retval != DDS_RETCODE_OK)
+              {
+                CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipantFactory_i::delete_participant - "
+                            "RTI delete_participant returned non-ok error code %C\n",
+                            translate_retcode (retval)));
+              }
+            else CIAO_DEBUG (6, (LM_INFO, CLINFO "RTI_DomainParticipantFactory_i::delete_participant - "
+                              "Successfully deleted provided participant.\n"));
           }
-        else CIAO_DEBUG (6, (LM_INFO, CLINFO "RTI_DomainParticipantFactory_i::delete_participant - "
-                          "Successfully deleted provided participant.\n"));
         return retval;
       }
 
