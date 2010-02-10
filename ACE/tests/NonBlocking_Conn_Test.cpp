@@ -58,7 +58,7 @@ Svc_Handler::connection_status (Connection_Status &status,
 int
 Svc_Handler::open (void *)
 {
-  *this->status_ = Svc_Handler::SUCCEEDED;
+  *this->status_ = Svc_Handler::Conn_SUCCEEDED;
   (*this->completion_counter_)++;
 
   return 0;
@@ -67,7 +67,7 @@ Svc_Handler::open (void *)
 int
 Svc_Handler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask mask)
 {
-  *this->status_ = Svc_Handler::FAILED;
+  *this->status_ = Svc_Handler::Conn_FAILED;
   (*this->completion_counter_)++;
 
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::handle_close (handle,
@@ -127,7 +127,7 @@ test_connect (ACE_Reactor &reactor,
   if (!synch_options[ACE_Synch_Options::USE_REACTOR])
     ACE_ASSERT (completion_counter == number_of_connections);
 
-  if (complete_nonblocking_connections != Svc_Handler::NO)
+  if (complete_nonblocking_connections != Svc_Handler::Comp_NO)
     {
       while (completion_counter != number_of_connections)
         {
@@ -147,10 +147,10 @@ test_connect (ACE_Reactor &reactor,
       ACE_DEBUG ((LM_DEBUG,
                   "Connection to %s %s\n",
                   buffer,
-                  connection_status[i] == Svc_Handler::SUCCEEDED ?
+                  connection_status[i] == Svc_Handler::Conn_SUCCEEDED ?
                   "succeeded" : "failed"));
 
-      if (connection_status[i] == Svc_Handler::SUCCEEDED)
+      if (connection_status[i] == Svc_Handler::Conn_SUCCEEDED)
         {
           svc_handlers[i]->close ();
         }
@@ -196,7 +196,7 @@ test (ACE_Reactor_Impl *impl)
   test_connect (reactor,
                 addresses,
                 blocking_connect,
-                Svc_Handler::IGNORE);
+                Svc_Handler::Comp_IGNORE);
 
   blocking_connect.set (ACE_Synch_Options::USE_TIMEOUT,
                         ACE_Time_Value (0, 50 * 1000));
@@ -207,7 +207,7 @@ test (ACE_Reactor_Impl *impl)
   test_connect (reactor,
                 addresses,
                 blocking_connect,
-                Svc_Handler::IGNORE);
+                Svc_Handler::Comp_IGNORE);
 
   ACE_Synch_Options nonblocking_connect
     (ACE_Synch_Options::USE_REACTOR);
@@ -218,7 +218,7 @@ test (ACE_Reactor_Impl *impl)
   test_connect (reactor,
                 addresses,
                 nonblocking_connect,
-                Svc_Handler::YES);
+                Svc_Handler::Comp_YES);
 
   ACE_DEBUG ((LM_DEBUG,
               "Non-blocking connections (without waiting for completions)...\n"));
@@ -226,7 +226,7 @@ test (ACE_Reactor_Impl *impl)
   test_connect (reactor,
                 addresses,
                 nonblocking_connect,
-                Svc_Handler::NO);
+                Svc_Handler::Comp_NO);
 
   nonblocking_connect.set (ACE_Synch_Options::USE_REACTOR |
                            ACE_Synch_Options::USE_TIMEOUT,
@@ -238,7 +238,7 @@ test (ACE_Reactor_Impl *impl)
   test_connect (reactor,
                 addresses,
                 nonblocking_connect,
-                Svc_Handler::YES);
+                Svc_Handler::Comp_YES);
 
   delete[] addresses;
 }
