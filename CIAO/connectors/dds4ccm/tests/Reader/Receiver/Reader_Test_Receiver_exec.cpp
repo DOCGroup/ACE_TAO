@@ -4,6 +4,7 @@
 
 #include "Reader_Test_Receiver_exec.h"
 #include "ciao/Logger/Log_Macros.h"
+#include "ace/OS_NS_unistd.h"
 
 namespace CIAO_Reader_Test_Receiver_Impl
 {
@@ -68,21 +69,28 @@ namespace CIAO_Reader_Test_Receiver_Impl
   {
     try
       {
-        ReaderTest readertest_info;
-        ::CCM_DDS::ReadInfo readinfo;
-        char key[100];
-        ACE_OS::sprintf (key, "KEY_%d", this->keys_);
-        readertest_info.key = CORBA::string_dup (key);
-        this->reader_->read_one_last (
-                readertest_info,
-                readinfo,
-                ::DDS::HANDLE_NIL);
-        return readertest_info.iteration == this->iterations_;
+        if (!CORBA::is_nil (this->reader_))
+          {
+            ReaderTest readertest_info;
+            ::CCM_DDS::ReadInfo readinfo;
+            char key[100];
+            ACE_OS::sprintf (key, "KEY_%d", this->keys_);
+            readertest_info.key = CORBA::string_dup (key);
+            this->reader_->read_one_last (
+                    readertest_info,
+                    readinfo,
+                    ::DDS::HANDLE_NIL);
+            ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::check_last: "
+                                  "key <%C> - iteration <%d>\n",
+                                  readertest_info.key.in (),
+                                  readertest_info.iteration));
+            return readertest_info.iteration == this->iterations_;
+          }
       }
     catch (...)
       {
-        // no need to catch. An error is given
-        // when this example didn't run at all.
+        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::check_last: "
+                              "Unexpected exception caught\n"));
       }
     return false;
   }
