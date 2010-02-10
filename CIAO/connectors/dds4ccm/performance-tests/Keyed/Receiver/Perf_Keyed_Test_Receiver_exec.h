@@ -93,7 +93,7 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
     virtual ~Receiver_exec_i (void);
 
     void start ();
-    void record_time (unsigned long long nanotime,unsigned long datalen);
+    void record_time (unsigned long datalen);
 
     virtual ::CCM_DDS::PerfKeyedTest::CCM_Listener_ptr
     get_info_listen_data_listener (void);
