@@ -1,3 +1,12 @@
+Wed Feb 10 19:49:13 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+          Using refcounting of CORBA::LocalObject since it's thread safe.
+
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.cpp:
+          Removed unnecessary debug statement.
+
 Wed Feb 10 15:33:37 UTC 2010  Marijke Hengstmengelt  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_pub.cdp:
