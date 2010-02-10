@@ -1,3 +1,18 @@
+Wed Feb 10 14:06:59 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          SharedDomainParticipant tests should work again.
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+          Made DomainParticipant proxy class refcounted. Prevented
+          deleting the DomainParticipant proxy when still in use.
+
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component_exec.cpp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component_exec.cpp:
+          Optimized logging.
+
 Wed Feb 10 10:26:55 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:

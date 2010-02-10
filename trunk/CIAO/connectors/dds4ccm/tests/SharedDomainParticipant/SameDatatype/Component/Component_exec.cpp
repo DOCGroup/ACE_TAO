@@ -104,7 +104,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
   {
     if (this->dds_dp1_ != this->dds_dp2_)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 2 doesn't seem to "
+        ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 2 don't seem to "
                               "share the same DomainParticipant\n"));
       }
     else
