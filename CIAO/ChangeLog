@@ -1,3 +1,14 @@
+Wed Feb 10 09:36:55 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
+          Extended native example
+
+        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.mpc:
+          Added the exec export flags to get svn head to compile
+
+        * connectors/dds4ccm/examples/Hello/Base/Hello_Base.idl:
+          Added another pragma
+
 Wed Feb 10 08:12:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderHandler_T.h:

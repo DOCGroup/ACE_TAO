@@ -10,6 +10,8 @@
 
 #pragma rti typesupport "Base/Hello_BaseSupport.h"
 
+#pragma DCPS_DATA_TYPE "DDSHello"
+
 struct DDSHello {
   string hello;
   short iterator;
