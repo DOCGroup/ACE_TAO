@@ -11,8 +11,6 @@
 
 #pragma ciao lem "connectors/dds4ccm/idl/dds4ccm_BaseE.idl"
 
-#define connector component
-
 module CCM_DDS
 {
   typedef unsigned long DataNumber_t;   // count or index of data
