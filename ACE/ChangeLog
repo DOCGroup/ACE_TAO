@@ -1,3 +1,8 @@
+Wed Feb 10 15:38:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Updated C++ builder support
+
 Wed Feb 10 10:53:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.lst:
