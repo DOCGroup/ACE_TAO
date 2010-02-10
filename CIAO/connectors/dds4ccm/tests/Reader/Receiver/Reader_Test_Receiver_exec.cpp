@@ -39,7 +39,6 @@ namespace CIAO_Reader_Test_Receiver_Impl
                               "is available in DDS...\n"));
         ACE_OS::sleep (1);
       }
-    ACE_DEBUG ((LM_DEBUG, ""));
     this->callback_.run ();
   }
 
