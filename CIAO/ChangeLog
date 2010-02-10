@@ -1,3 +1,9 @@
+Wed Feb 10 21:13:53 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * examples/Null_Component_Glfa/Null_Component.mpc:
+
+          Added -Glfa option to the project.
+
 Wed Feb 10 21:02:03 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * examples/Null_Component_Glfa/*:
