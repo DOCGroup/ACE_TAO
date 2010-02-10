@@ -33,15 +33,15 @@ public:
 
   enum Connection_Status
     {
-      SUCCEEDED,
-      FAILED
+      Conn_SUCCEEDED,
+      Conn_FAILED
     };
 
   enum Completion_Status
     {
-      YES,
-      NO,
-      IGNORE
+      Comp_YES,
+      Comp_NO,
+      Comp_IGNORE
     };
 
   Svc_Handler (bool is_ref_counted = false);
