@@ -189,6 +189,7 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
+    (void) ACE_High_Res_Timer::global_scale_factor ();
     //enable the datalistener
     this->start();
   }

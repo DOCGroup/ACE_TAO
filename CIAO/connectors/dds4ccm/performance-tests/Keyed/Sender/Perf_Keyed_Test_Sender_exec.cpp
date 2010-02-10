@@ -5,8 +5,10 @@
 #include "ace/Guard_T.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "tao/ORB_Core.h"
+#include "ace/Timer_Queue.h"
 #include "ace/Reactor.h"
 #include "ace/High_Res_Timer.h"
+
 
 namespace CIAO_Perf_Keyed_Test_Sender_Impl
 {
@@ -82,7 +84,7 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
      ::DDS::DataWriter_ptr /*the_writer*/,
      const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
     }
-
+//- In ::on_unexpected_status a dynamic_cast is done, this is a corba reference, a corba narrow should be used, also this can return nil
   void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr the_entity,
     ::DDS::StatusKind  status_kind)  {
@@ -90,7 +92,7 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
       if((!CORBA::is_nil(the_entity)) && (kind==DDS::PUBLICATION_MATCHED_STATUS))
         {
           ::DDS::PublicationMatchedStatus_var stat;
-          (dynamic_cast <DDS::DataWriter_ptr> (the_entity))->get_publication_matched_status(stat.out()); 
+          ::DDS::DataWriter::_narrow(the_entity)->get_publication_matched_status(stat.out()); 
           if((stat.in().current_count >= this->number_of_subscribers_)  && !this->matched_.value())      
             {  
               this->matched_ = true;
@@ -99,7 +101,7 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
          }
       }
   //============================================================
-  // WriteManyHandler
+  // WriteTickerHandler
   //============================================================
   WriteTicker::WriteTicker (Sender_exec_i &callback)
     : callback_ (callback)
@@ -113,31 +115,16 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
     this->callback_.write_one ();
     return 0;
   }
-
-  //============================================================
-  // WriteManyHandler
-  //============================================================
-  WriteManyHandler::WriteManyHandler (Sender_exec_i &callback)
-    : callback_ (callback)
-  {
-  }
-
-  int
-  WriteManyHandler::handle_exception (ACE_HANDLE)
-  {
-    this->callback_.write_one (); //???
-    return 0;
-  }
-
+ 
   //============================================================
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
   Sender_exec_i::Sender_exec_i (void)
-    : iterations_ (10),
+    : iterations_ (1000),
       keys_ (1),
       latency_count_(100),
       sleep_(10),
-      spin_(10),
+      spin_(100),
       datalen_(100),
       matched_(false),
       number_of_subscribers_(1),
@@ -183,12 +170,11 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
       this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
       this->timer_ = false;
     }
-    else // if(this->last_key_ != this->samples_.end ())
+    else
       {
         try
           {
             this->last_key_->second->seq_num =  this->number_of_msg_;
-   
             //send some messages (latency_ping = 1L) with indicator that message has to be returned by the subscriber
             // TO DO : use other selection if more then one key is used.  
             if (( this->number_of_msg_ % this->latency_count_) == 0)
@@ -332,6 +318,8 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
     //if sleep and spin both > 0, use sleep value and ignore spin value
     if(this->sleep_ > 0) //use reactor timer to sleep  
       {
+        (void) ACE_High_Res_Timer::global_scale_factor ();
+        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->timer_queue()->gettimeofday (&ACE_High_Res_Timer::gettimeofday_hr);
         if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer(
                     this->ticker_,
                     0,
@@ -341,7 +329,7 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
                                   ACE_TEXT ("Error scheduling timer")));
           }
-        this->timer_ = true; 
+          this->timer_ = true; 
       }
     else //use spin i.o sleep
     {
@@ -501,20 +489,21 @@ Sender_exec_i::record_time (unsigned long long nanotime)
   {
     if (this->timer_.value ())
      this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
+ 
   }
 
   void
   Sender_exec_i::ccm_remove (void)
   {
      
-   ACE_DEBUG ((LM_DEBUG, "SUMMARY SENDER number of messages sent: %u\n ",
+   ACE_DEBUG ((LM_DEBUG, "SUMMARY SENDER number of messages sent: %u\n",
                           this->number_of_msg_));
 
    if( this->count_.value () > 0)
      {
        double avg = this->tv_total_.value () / this->count_.value ();
        ACE_DEBUG ((LM_DEBUG, "SUMMARY SENDER latency time-one way,in usec :\n"
-                            "Total time<%u>,\nNumber of latency messages <%u>,\nAvg <%6.01f>,\nMin <%u>,\nMax <%u> \n",
+                            "Total time<%u>,\nNumber of latency messages <%u>,\nAvg <%6.01f>,\nMin <%u>,\nMax <%u>.\n",
                             this->tv_total_.value ()/2, 
                             this->count_.value (),
                             avg/2,
