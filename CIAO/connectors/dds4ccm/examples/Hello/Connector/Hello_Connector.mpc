@@ -12,7 +12,7 @@ project(DDS_Hello_Connector_idl_gen) : connectoridldefaults {
               -Wb,svnt_export_include=Hello_Connector_svnt_export.h \
               -Wb,conn_export_macro=HELLO_CONNECTOR_CONN_Export \
               -Wb,conn_export_include=Hello_Connector_conn_export.h \
-              -Wb,exec_export_macro=HELLO_CONNECTOR_Exec_Export \
+              -Wb,exec_export_macro=HELLO_CONNECTOR_EXEC_Export \
               -Wb,exec_export_include=Hello_Connector_exec_export.h \
               -I ..
 
