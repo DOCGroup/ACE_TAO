@@ -43,6 +43,7 @@ public:
   virtual int visit_interface (be_interface *node);
   virtual int visit_valuebox (be_valuebox *node);
   virtual int visit_valuetype (be_valuetype *node);
+  virtual int visit_eventtype (be_eventtype *node);
   virtual int visit_structure (be_structure *node);
   virtual int visit_structure_fwd (be_structure_fwd *node);
   virtual int visit_exception (be_exception *node);

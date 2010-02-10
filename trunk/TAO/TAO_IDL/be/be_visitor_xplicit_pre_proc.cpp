@@ -17,7 +17,7 @@
 #include "be_exception.h"
 #include "be_field.h"
 #include "be_valuebox.h"
-#include "be_valuetype.h"
+#include "be_eventtype.h"
 #include "be_typedef.h"
 #include "be_predefined_type.h"
 #include "be_enum.h"
@@ -75,10 +75,11 @@ be_visitor_xplicit_pre_proc::visit_home (be_home *node)
   idl_global->scopes ().push (m);
 
   UTL_ScopedName *explicit_name =
-    this->create_scoped_name ("",
-                              node->local_name (),
-                              "Explicit",
-                              m);
+    this->create_scoped_name (
+      "",
+      node->original_local_name ()->get_string (),
+      "Explicit",
+      m);
 
   be_interface *i = 0;
   ACE_NEW_RETURN (i,
@@ -288,6 +289,16 @@ int
 be_visitor_xplicit_pre_proc::visit_valuetype (be_valuetype *node)
 {
   // Valuetype can't be declared inside a home, no need to call
+  // check_and_store().
+  this->type_holder_ = node;
+
+  return 0;
+}
+
+int
+be_visitor_xplicit_pre_proc::visit_eventtype (be_eventtype *node)
+{
+  // Eventtype can't be declared inside a home, no need to call
   // check_and_store().
   this->type_holder_ = node;
 
