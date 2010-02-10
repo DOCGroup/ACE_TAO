@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #include "Hello_Receiver_exec.h"
@@ -14,7 +13,7 @@ namespace CIAO_Hello_Receiver_Impl
   //============================================================
 
   DDSHello_Listener_exec_i::DDSHello_Listener_exec_i (Atomic_ULong &received,
-                                                            const ACE_CString &name)
+                                                      const ACE_CString &name)
       : received_ (received),
         name_ (name)
   {
