@@ -31,29 +31,38 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_unexpected_status (
 {
   CIAO_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_unexpected_status");
 
-  try
+  if (!CORBA::is_nil (this->error_listener_))
     {
-      if (this->reactor_)
+      try
         {
-          ::CIAO::DDS4CCM::OnUnexpectedStatusHandler* rh =
-           new ::CIAO::DDS4CCM::OnUnexpectedStatusHandler (
-            this->error_listener_, entity, status_kind);
-          ACE_Event_Handler_var safe_handler (rh);
-          if (this->reactor_->notify (rh) != 0)
+          if (this->reactor_)
             {
-              ACE_ERROR ((LM_ERROR, ACE_TEXT ("PublisherListener_T::failed to use reactor.\n")));
+              ::CIAO::DDS4CCM::OnUnexpectedStatusHandler* rh =
+              new ::CIAO::DDS4CCM::OnUnexpectedStatusHandler (
+                this->error_listener_, entity, status_kind);
+              ACE_Event_Handler_var safe_handler (rh);
+              if (this->reactor_->notify (rh) != 0)
+                {
+                  ACE_ERROR ((LM_ERROR, ACE_TEXT ("PublisherListener_T::failed to use reactor.\n")));
+                }
+            }
+          else
+            {
+              this->error_listener_->on_unexpected_status (entity, status_kind);
             }
         }
-      else
+      catch (...)
         {
-          this->error_listener_->on_unexpected_status (entity, status_kind);
+          CIAO_DEBUG (6, (LM_DEBUG,
+              ACE_TEXT ("PublisherListener_T::on_unexpected_status: ")
+              ACE_TEXT ("DDS Exception caught\n")));
         }
     }
-  catch (...)
+  else
     {
-      CIAO_DEBUG (6, (LM_DEBUG,
-          ACE_TEXT ("PublisherListener_T::on_unexpected_status: ")
-          ACE_TEXT ("DDS Exception caught\n")));
+      CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+                  ACE_TEXT ("PublisherListener_T::on_offered_deadline_missed: ")
+                  ACE_TEXT ("No error listener connected\n")));
     }
 }
 
