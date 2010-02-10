@@ -190,7 +190,7 @@ namespace CIAO
         CIAO_TRACE ("RTI_Publisher_i::set_listener");
 
         RTI_PublisherListener_i *rti_impl_list  = 0;
-        if (!CORBA::is_nil (a_listener))
+       if (!CORBA::is_nil (a_listener))
           {
             rti_impl_list = new RTI_PublisherListener_i (a_listener);
           }
