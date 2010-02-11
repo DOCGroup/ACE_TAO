@@ -5,9 +5,33 @@
 #include "Reader_Test_Receiver_exec.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "ace/OS_NS_unistd.h"
+#include "tao/ORB_Core.h"
+#include "ace/Reactor.h"
 
 namespace CIAO_Reader_Test_Receiver_Impl
 {
+  //============================================================
+  // read_action_Generator
+  //============================================================
+  read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
+    : callback_ (callback)
+  {
+  }
+
+  read_action_Generator::~read_action_Generator ()
+  {
+  }
+
+  int
+  read_action_Generator::handle_timeout (const ACE_Time_Value &, const void *)
+  {
+    ACE_DEBUG ((LM_DEBUG, "Checking if last sample "
+                          "is available in DDS...\n"));
+    if (this->callback_.check_last ())
+      this->callback_.run ();
+    return 0;
+  }
+
   //============================================================
   // Starter_exec_i
   //============================================================
@@ -31,15 +55,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
   void
   Starter_exec_i::start_read ()
   {
-    ACE_DEBUG ((LM_DEBUG, "Checking if last sample "
-                          "is available in DDS...\n"));
-    while (!this->callback_.check_last ())
-      {
-        ACE_DEBUG ((LM_DEBUG, "Checking if last sample "
-                              "is available in DDS...\n"));
-        ACE_OS::sleep (1);
-      }
-    this->callback_.run ();
+    this->callback_.start_read ();
   }
 
   void
@@ -56,6 +72,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
       keys_ (5),
       has_run_ (false)
   {
+    this->ticker_ = new read_action_Generator (*this);
   }
 
   Receiver_exec_i::~Receiver_exec_i (void)
@@ -485,6 +502,10 @@ namespace CIAO_Reader_Test_Receiver_Impl
   void
   Receiver_exec_i::run ()
   {
+    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
+    delete this->ticker_;
+    this->ticker_ = 0;
+
     this->has_run_ = true;
     read_all ();
     read_last ();
@@ -495,6 +516,19 @@ namespace CIAO_Reader_Test_Receiver_Impl
     read_one_all (true);
     read_one_last (true);
     test_exception_with_handles ();
+  }
+
+  void
+  Receiver_exec_i::start_read ()
+  {
+    if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
+                                          this->ticker_,
+                                          0,
+                                          ACE_Time_Value(1, 0),
+                                          ACE_Time_Value(1, 0)) == -1)
+      {
+        ACE_ERROR ((LM_ERROR, "Unable to schedule Timer\n"));
+      }
   }
 
   ::CORBA::UShort
@@ -532,12 +566,6 @@ namespace CIAO_Reader_Test_Receiver_Impl
   Receiver_exec_i::get_info_out_status (void)
   {
     return 0;
-  }
-
-  ::CCM_DDS::CCM_ConnectorStatusListener_ptr
-  Receiver_exec_i::get_info_out_connector_status (void)
-  {
-    return ::CCM_DDS::CCM_ConnectorStatusListener::_nil ();
   }
 
   ::CCM_ReaderStarter_ptr
@@ -578,6 +606,14 @@ namespace CIAO_Reader_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
+    if (this->ticker_)
+      {
+        ACE_ERROR ((LM_ERROR, "Still checking DDS upon exit\n"));
+        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
+        delete this->ticker_;
+        this->ticker_ = 0;
+      }
+
     if (!this->has_run_)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: ")

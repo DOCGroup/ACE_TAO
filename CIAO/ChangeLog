@@ -1,8 +1,19 @@
+Thu Feb 11 08:31:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender_exec.cpp:
+          Improved test by using a timer to check for last sample in DDS.
+
+        * connectors/dds4ccm/tests/Reader/descriptors/Plan.cdp:
+          Incremented iterations
+
 Thu Feb 11 02:27:37 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * bin/ciao_tests.lst:
 
-          Add TAO/CIAO/examples/Null_Component_Glfa to the list of 
+          Add TAO/CIAO/examples/Null_Component_Glfa to the list of
           daily tests we run so we can ensure that the feature
           is still functional.
 
