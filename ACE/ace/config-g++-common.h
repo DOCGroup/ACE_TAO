@@ -152,7 +152,8 @@
 // GCC >= 4.1 provides __sync_XXXX builtins for use in atomic operations
 // although the builtins are provided globally they are not supported on all platforms 
 #if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 1))
-# if (defined (__powerpc__) && defined (__PPU__))
+# if defined (__powerpc__)
+//  the builtins seem to be provided for all powerpc platforms
 #   define ACE_HAS_GCC_ATOMIC_BUILTINS 1
 # endif
 #endif
