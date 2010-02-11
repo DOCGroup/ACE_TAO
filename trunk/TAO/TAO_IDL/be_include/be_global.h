@@ -754,9 +754,6 @@ public:
   bool gen_ciao_conn_impl (void) const;
   void gen_ciao_conn_impl (bool val);
 
-  bool gen_component_swapping (void) const;
-  void gen_component_swapping (bool val);
-
   bool gen_ciao_static_config (void) const;
   void gen_ciao_static_config (bool val);
 
@@ -1096,13 +1093,10 @@ private:
   bool gen_ciao_svnt_;
   bool gen_ciao_exec_idl_;
   bool gen_ciao_exec_impl_;
-  
+
   /// False by default, this flag triggers code generation
   /// for CCM connector implementations.
   bool gen_ciao_conn_impl_;
-
-  /// Different container #includes, modified servant code.
-  bool gen_component_swapping_;
 
   /// Suppresses generation of table guards in CIAO servants.
   bool gen_ciao_static_config_;

@@ -29,27 +29,26 @@ class be_visitor_home_svs : public be_visitor_scope
 {
 public:
   be_visitor_home_svs (be_visitor_context *ctx);
-  
+
   ~be_visitor_home_svs (void);
-  
+
   virtual int visit_home (be_home *node);
   virtual int visit_operation (be_operation *node);
   virtual int visit_attribute (be_attribute *node);
   virtual int visit_argument (be_argument *node);
   virtual int visit_factory (be_factory *node);
   virtual int visit_finder (be_finder *node);
-  
+
 private:
   int gen_servant_class (void);
-  
+
   void gen_entrypoint (void);
-  
+
 private:
   be_home *node_;
   AST_Component *comp_;
   TAO_OutStream &os_;
   ACE_CString export_macro_;
-  bool swapping_;
   bool for_finder_;
 };
 
@@ -60,7 +59,7 @@ class Home_Op_Attr_Generator
 {
 public:
   Home_Op_Attr_Generator (be_visitor_scope * visitor);
-  
+
   virtual int emit (be_interface * derived_interface,
                     TAO_OutStream * os,
                     be_interface * base_interface);
@@ -68,6 +67,6 @@ public:
 private:
   be_visitor_scope * visitor_;
 };
-                     
+
 #endif /* _BE_HOME_HOME_SVS_H_ */
 

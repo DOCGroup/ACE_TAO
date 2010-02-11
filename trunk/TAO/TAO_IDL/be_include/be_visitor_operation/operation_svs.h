@@ -38,17 +38,16 @@ public:
 
   virtual int visit_operation (be_operation *node);
   virtual int visit_argument (be_argument *node);
-  
+
   virtual int post_process (be_decl *bd);
-  
+
   void scope (be_interface *node);
-  
+
 private:
   int gen_op_body (be_operation *node);
-  
+
 private:
   be_interface *scope_;
-  bool swapping_;
 };
 
 #endif /* _BE_VISITOR_OPERATION_OPERATION_SVS_H_ */
