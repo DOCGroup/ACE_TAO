@@ -56,6 +56,7 @@ public:
 
   Connection_Status *status_;
   int *completion_counter_;
+  bool is_ref_counted_;
 };
 
 #endif /* NONBLOCKING_CONN_TEST_H */
