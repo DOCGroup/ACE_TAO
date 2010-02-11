@@ -37,9 +37,10 @@ static int result = 0;
 
 Svc_Handler::Svc_Handler (bool is_ref_counted)
   : status_ (0),
-    completion_counter_ (0)
+    completion_counter_ (0),
+    is_ref_counted_ (is_ref_counted)
 {
-  if (is_ref_counted)
+  if (this->is_ref_counted_)
     {
       // Enable reference counting on the event handler.
       this->reference_counting_policy ().value (
@@ -70,8 +71,21 @@ Svc_Handler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask mask)
   *this->status_ = Svc_Handler::Conn_FAILED;
   (*this->completion_counter_)++;
 
-  return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::handle_close (handle,
-                                                                         mask);
+  typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> super;
+
+  bool const is_ref_counted = this->is_ref_counted_;
+
+  int const res = super::handle_close (handle,
+                                       mask);
+
+  if (is_ref_counted)
+    {
+      // If we use reference counting then remove reference
+      // which we own since Svc_Handler creation.
+      this->remove_reference ();
+    }
+
+  return res;
 }
 
 typedef ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> CONNECTOR;
@@ -153,14 +167,6 @@ test_connect (ACE_Reactor &reactor,
       if (connection_status[i] == Svc_Handler::Conn_SUCCEEDED)
         {
           svc_handlers[i]->close ();
-        }
-      else if (with_ref_counting &&
-               complete_nonblocking_connections == Svc_Handler::NO)
-        {
-          // If we use reference counting and don't wait for connections
-          // then they can never succeed and we have to remove
-          // reference manually in order to avoid memory leaks.
-          svc_handlers[i]->remove_reference ();
         }
     }
 
