@@ -3,7 +3,6 @@
 project(DDS_Hello_Base_idl_gen) : taoidldefaults, anytypecode {
   avoids += ace_for_tao
   custom_only = 1
-  idlflags -= -St -Sa
   idlflags += -SS -Gxhst \
               -Wb,stub_export_macro=HELLO_BASE_STUB_Export \
               -Wb,stub_export_include=Hello_Base_stub_export.h
@@ -22,6 +21,17 @@ project(DDS_Hello_Base_ndds_ts_gen) : ndds_ts_defaults {
     Hello_Base.idl
   }
 }
+
+//project(DDS_Hello_Base_opendds_ts_gen) : dcps {
+//  avoids += ace_for_tao
+//  custom_only = 1
+//  after += DDS_Hello_Base_idl_gen
+//
+//  dcps_ts_flags += --export=HELLO_BASE_STUB_Export
+//  TypeSupport_Files {
+//    Hello_Base.idl
+//  }
+//}
 
 project(DDS_Hello_Base_NDDS_TS) : nddslib, taolib {
   avoids += ace_for_tao
