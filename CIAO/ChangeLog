@@ -1,3 +1,11 @@
+Thu Feb 11 02:21:29 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * examples/Null_Component_Glfa/Null_Component.mpc:
+        * examples/Null_Component_Glfa/Null_Interface.mpc:
+
+          Decorated project names with Glfa token so project names
+          won't clash with the Null_Component example.
+
 Wed Feb 10 22:22:55 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * connectors/dds4ccm/idl/dds4ccm_Base.idl:
