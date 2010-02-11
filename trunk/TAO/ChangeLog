@@ -1,3 +1,11 @@
+Thu Feb 11 19:12:11 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Don't generate any E.idl includes with -Glfa. -Glfa means:
+          . Generated E.idl won't depend on any other E.idl
+          . Any required CCM_ local interface for facets, etc will be
+            generated locally.
+
 Thu Feb 11 18:51:11 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp
