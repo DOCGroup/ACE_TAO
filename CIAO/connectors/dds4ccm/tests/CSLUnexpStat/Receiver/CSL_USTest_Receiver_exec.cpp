@@ -194,7 +194,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
         ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw CORBA::INTERNAL ();
       }
-    lc->mode (::CCM_DDS::NOT_ENABLED);
+    lc->mode (::CCM_DDS::ONE_BY_ONE);
   }
 
   void
