@@ -1,3 +1,24 @@
+Thu Feb 11 11:34:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Utils.h:
+          Added RELIABLE_READER_ACTIVITY_CHANGED_STATUS to string
+          conversion.
+
+        * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender_exec.cpp:
+          Layout changes.
+
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.cpp:
+          Enabled listener.
+
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.h:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/CSLUnexpStat/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/CSLUnexpStat/descriptors/USER_QOS_PROFILES.xml:
+          Added ON_LIVELINESS_LOST status test.
+
+        * connectors/dds4ccm/tests/Reader/descriptors/Plan.cdp:
+          Removed ConnectorStatusListener from connection list.
+
 Thu Feb 11 10:42:55 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Null_Component_Glfa/Null_Component.mpc:

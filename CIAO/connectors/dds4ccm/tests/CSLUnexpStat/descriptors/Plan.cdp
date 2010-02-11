@@ -177,6 +177,17 @@
     <source/>
     <implementation xmi:idref="CSL_USTest_ConnectorComponentImplementation" />
     <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>CSL_Library#CSL_Profile</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
       <name>topic_name</name>
       <value>
         <type>
@@ -194,6 +205,17 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="CSL_USTest_ConnectorComponentImplementation" />
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>CSL_Library#CSL_Profile</string>
+        </value>
+      </value>
+    </configProperty>
     <configProperty>
       <name>topic_name</name>
       <value>
