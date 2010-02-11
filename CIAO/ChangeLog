@@ -1,3 +1,11 @@
+Thu Feb 11 15:22:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/docs/TestCoverage.ods:
+          Updated to reflect the latest status.
+
+        * connectors/dds4ccm/tests/CSLDeadline/Receiver/CSL_DeadlineTest_Receiver_exec.cpp:
+          Resolved test errors.
+
 Thu Feb 11 11:34:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Utils.h:
