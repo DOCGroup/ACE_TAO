@@ -3147,8 +3147,7 @@ TAO_CodeGen::gen_svnt_hdr_includes (void)
 
           // Get the constructed IDL file name.
           const char* svnt_hdr =
-            BE_GlobalData::be_get_ciao_svnt_header (&idl_name_str,
-                                                    true);
+            BE_GlobalData::be_get_ciao_svnt_header (&idl_name_str, true);
 
           idl_name_str.destroy ();
 
@@ -3173,28 +3172,20 @@ TAO_CodeGen::gen_svnt_hdr_includes (void)
 
   if (! has_included)
     {
-      bool swapping = be_global->gen_component_swapping ();
+      this->gen_standard_include (
+        this->ciao_svnt_header_,
+        "ciao/Containers/Container_BaseC.h");
 
       this->gen_standard_include (
         this->ciao_svnt_header_,
-        (swapping
-           ? "ciao/Containers/Swapping/Swapping_Container.h"
-           : "ciao/Containers/Container_BaseC.h"));
-
-      this->gen_standard_include (
-        this->ciao_svnt_header_,
-        (swapping
-           ? "cial/Contexts/Swapping/Upgradeable_Context_Impl_T.h"
-           : "ciao/Contexts/Context_Impl_T.h"));
+           "ciao/Contexts/Context_Impl_T.h");
 
       this->gen_standard_include (this->ciao_svnt_header_,
                                   "ciao/Servants/Servant_Impl_T.h");
 
       this->gen_standard_include (
         this->ciao_svnt_header_,
-        (swapping
-           ? "ciao/Servants/Swapping/Swapping_Servant_Home_Impl_T.h"
-           : "ciao/Servants/Home_Servant_Impl_T.h"));
+           "ciao/Servants/Home_Servant_Impl_T.h");
     }
 
   *this->ciao_svnt_header_ << be_nl;
@@ -3220,11 +3211,6 @@ TAO_CodeGen::gen_svnt_src_includes (void)
   this->gen_standard_include (
     this->ciao_svnt_source_,
     "ciao/Containers/CIAO_Servant_ActivatorC.h");
-
-  this->gen_cond_file_include (
-    be_global->gen_component_swapping (),
-    "ciao/Servants/Swapping/Dynamic_Component_Activator.h",
-    this->ciao_svnt_source_);
 
   this->gen_standard_include (
     this->ciao_svnt_source_,
@@ -3353,8 +3339,7 @@ TAO_CodeGen::gen_exec_idl_includes (void)
 
           // Get the constructed IDL file name.
           const char* exec_idl =
-            BE_GlobalData::be_get_ciao_exec_idl (&idl_name_str,
-                                                 true);
+            BE_GlobalData::be_get_ciao_exec_idl (&idl_name_str, true);
 
           idl_name_str.destroy ();
 
@@ -3364,8 +3349,7 @@ TAO_CodeGen::gen_exec_idl_includes (void)
               if (! has_included)
                 {
                   // No newline first time for better formatting.
-                  this->ciao_exec_idl_->print ("#include \"%s\"",
-                                               exec_idl);
+                  this->ciao_exec_idl_->print ("#include \"%s\"", exec_idl);
 
                   has_included = true;
                 }
@@ -3404,7 +3388,7 @@ TAO_CodeGen::gen_exec_idl_includes (void)
     idl_global->stripped_filename ()->get_string ());
 
   char **path_tmp  = 0;
-  
+
   for (ACE_Unbounded_Queue_Iterator<char *>riter (
             idl_global->ciao_lem_file_names ()
           );
@@ -3427,12 +3411,12 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
         this->ciao_conn_header_,
         be_global->conn_export_include (),
         true);
-    
+
       *this->ciao_conn_header_ << be_nl;
     }
-    
+
   char **path_tmp  = 0;
-  
+
   for (ACE_Unbounded_Queue_Iterator<char *>riter (
             idl_global->ciao_lem_file_names ()
           );
@@ -3448,7 +3432,7 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
         this->ciao_conn_header_,
         lem_str.c_str ());
     }
-    
+
   *this->ciao_conn_header_ << be_nl;
 
 }

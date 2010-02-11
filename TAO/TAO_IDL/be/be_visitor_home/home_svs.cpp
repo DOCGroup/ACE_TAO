@@ -23,7 +23,6 @@ be_visitor_home_svs::be_visitor_home_svs (be_visitor_context *ctx)
     comp_ (0),
     os_ (*ctx->stream ()),
     export_macro_ (be_global->svnt_export_macro ()),
-    swapping_ (be_global->gen_component_swapping ()),
     for_finder_ (false)
 {
   /// All existing CIAO examples set the servant export values in the CIDL
@@ -110,14 +109,14 @@ be_visitor_home_svs::visit_factory (be_factory *node)
   // component of the home where it is defined.
   be_home *h =
     be_home::narrow_from_scope (node->defined_in ());
-  
+
   AST_Component *c = h->managed_component ();
-  
+
   os_ << be_nl << be_nl
       << "::" << c->name () << "_ptr" << be_nl
       << node_->original_local_name ()->get_string ()
       << "_Servant::" << node->local_name ();
-      
+
   be_visitor_operation_arglist al_visitor (this->ctx_);
   al_visitor.unused (this->for_finder_);
 
@@ -129,10 +128,10 @@ be_visitor_home_svs::visit_factory (be_factory *node)
                          "codegen for argument list failed\n"),
                         -1);
     }
-                            
+
   os_ << be_nl
       << "{" << be_idt_nl;
-      
+
   if (this->for_finder_)
     {
       os_ << "throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,"
@@ -150,11 +149,11 @@ be_visitor_home_svs::visit_factory (be_factory *node)
       os_ << "::Components::EnterpriseComponent_var _ciao_ec ="
           << be_idt_nl
           << "this->executor_->" << node->local_name () << " (";
-     
+
       if (node->argument_count () > 0)
         {
           os_ << be_idt_nl;
-        
+
           if (this->visit_scope (node) != 0)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -163,10 +162,10 @@ be_visitor_home_svs::visit_factory (be_factory *node)
                                  "codegen for scope failed\n"),
                                 -1);
             }
-            
+
           os_ << be_uidt;
         }
-        
+
       os_ << ");" << be_uidt_nl << be_nl
           << global << comp_sname << "::CCM_" << comp_lname
           << "_var _ciao_comp =" << be_idt_nl
@@ -175,13 +174,13 @@ be_visitor_home_svs::visit_factory (be_factory *node)
           << "return this->_ciao_activate_component "
           << "(_ciao_comp.in ());";
     }
-    
+
   os_ << be_uidt_nl
       << "}";
-    
-  // In case it was set for the call above.  
+
+  // In case it was set for the call above.
   this->for_finder_ = false;
-  
+
   return 0;
 }
 
@@ -213,7 +212,7 @@ be_visitor_home_svs::gen_servant_class (void)
       << "const char * ins_name," << be_nl
       << "::CIAO::Container_ptr c)" << be_uidt_nl
       << ": ::CIAO::Home_Servant_Impl_Base (c)," << be_idt_nl
-      << "::CIAO::" << (swapping_ ? "Swapping_" : "" )
+      << "::CIAO::"
       << "Home_Servant_Impl<" << be_idt_nl
       << "::" << node_->full_skel_name () << "," << be_nl
       << global << sname << "::CCM_" << lname << "," << be_nl
@@ -227,9 +226,9 @@ be_visitor_home_svs::gen_servant_class (void)
       << be_nl
       << "{" << be_nl
       << "}";
-      
+
   AST_Type *pk = node_->primary_key ();
-  
+
   if (pk != 0)
     {
       os_ << be_nl << be_nl
@@ -276,9 +275,9 @@ be_visitor_home_svs::gen_servant_class (void)
           << be_uidt_nl
           << "}";
     }
-    
+
   be_home *h = node_;
-  
+
   while (h != 0)
     {
       if (this->visit_scope (h) != 0)
@@ -289,18 +288,18 @@ be_visitor_home_svs::gen_servant_class (void)
                              ACE_TEXT ("codegen for scope failed\n")),
                             -1);
         }
-        
+
       for (long i = 0; i < h->n_inherits (); ++i)
         {
           // A closure of all the supported interfaces is stored
           // in the base class 'pd_inherits_flat' member.
           be_interface *bi =
             be_interface::narrow_from_decl (h->inherits ()[i]);
-   
+
           bi->get_insert_queue ().reset ();
           bi->get_del_queue ().reset ();
           bi->get_insert_queue ().enqueue_tail (bi);
-          
+
           Home_Op_Attr_Generator op_attr_gen (this);
 
           int status =
@@ -308,7 +307,7 @@ be_visitor_home_svs::gen_servant_class (void)
                                             &os_,
                                             false,
                                             false);
-          
+
           if (status == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -320,8 +319,8 @@ be_visitor_home_svs::gen_servant_class (void)
                                 -1);
             }
 
-        }  
-        
+        }
+
       h = be_home::narrow_from_decl (h->base_home ());
     }
 

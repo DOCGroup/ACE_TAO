@@ -1278,8 +1278,7 @@ UTL_Error::redef_error (const char *b, const char *n)
 
 // Report two or more spellings for an identifier.
 void
-UTL_Error::name_case_error (char *b,
-                            char *n)
+UTL_Error::name_case_error (char *b, char *n)
 {
   idl_error_header (EIDL_NAME_CASE_ERROR,
                     idl_global->lineno (),
