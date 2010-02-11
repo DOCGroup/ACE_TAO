@@ -11,10 +11,8 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
   //============================================================
   // ConnectorStatusListener_exec_i
   //============================================================
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &deadline_missed,
-                                                                  Atomic_ThreadId &thread_id)
-    : deadline_missed_ (deadline_missed),
-      thread_id_ (thread_id)
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &deadline_missed)
+    : deadline_missed_ (deadline_missed)
   {
   }
 
@@ -45,7 +43,6 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
     ::DDS::DataWriter_ptr /*the_writer*/,
     const DDS::OfferedDeadlineMissedStatus & /*status*/)
   {
-    this->thread_id_ = ACE_Thread::self ();
     this->deadline_missed_ = true;
   }
 
@@ -98,8 +95,7 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
   // Receiver_exec_i
   //============================================================
   Receiver_exec_i::Receiver_exec_i (void)
-    : deadline_missed_ (false),
-      thread_id_listener_ (0)
+    : deadline_missed_ (false)
   {
   }
 
@@ -127,8 +123,7 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Receiver_exec_i::get_info_out_connector_status (void)
   {
-    return new ConnectorStatusListener_exec_i (this->deadline_missed_,
-                                               this->thread_id_listener_);
+    return new ConnectorStatusListener_exec_i (this->deadline_missed_);
   }
 
   // Operations from Components::SessionComponent.
@@ -174,60 +169,16 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
   {
      if (!this->deadline_missed_.value ())
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("RECEIVER OK: Didn't receive the expected ")
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("RECEIVER OK: Didn't receive ")
                               ACE_TEXT ("'on_offered_deadline_missed'\n")
                     ));
       }
     else
       {
-         ACE_ERROR ((LM_ERROR, ACE_TEXT ("RECEIVER ERROR: Receive the unexpected ")
+         ACE_ERROR ((LM_ERROR, ACE_TEXT ("RECEIVER ERROR: Received the unexpected ")
                                ACE_TEXT ("'on_offered_deadline_missed'\n")
                     ));
       }
-    if (this->thread_id_listener_.value () == 0)
-      {
-        ACE_ERROR ((LM_ERROR, "RECEIVER ERROR: "
-                              "Thread ID for ConnectorStatusListener not set!\n"));
-      }
-    #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
-    else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
-                                ACE_Thread::self ()))
-      {
-        ACE_DEBUG ((LM_DEBUG, "RECEIVER OK: "
-                              "Thread switch for ConnectorStatusListener seems OK. "
-                              "(DDS uses the CCM thread for its callback) "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_.value (),
-                              ACE_Thread::self ()));
-      }
-    else
-      {
-        ACE_ERROR ((LM_ERROR, "RECEIVER ERROR: "
-                              "Thread switch for ConnectorStatusListener "
-                              "doesn't seem to work! "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_.value (),
-                              ACE_Thread::self ()));
-      }
-    #else
-    else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
-                                ACE_Thread::self ()))
-      {
-        ACE_ERROR ((LM_ERROR, "RECEIVER ERROR: ConnectorStatusListener: "
-                              "DDS seems to use a CCM thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_.value (),
-                              ACE_Thread::self ()));
-      }
-    else
-      {
-        ACE_DEBUG ((LM_DEBUG, "RECEIVER OK: ConnectorStatusListener: "
-                              "DDS seems to use its own thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_.value (),
-                              ACE_Thread::self ()));
-      }
-    #endif
   }
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

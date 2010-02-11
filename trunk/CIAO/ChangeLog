@@ -1,3 +1,11 @@
+Thu Feb 11 15:26:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLDeadline/Receiver/CSL_DeadlineTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CSLDeadline/Receiver/CSL_DeadlineTest_Receiver_exec.cpp:
+          Don't need to test thread switch in the receiver because
+          on_offered_deadline_missed-status is not related to a subsciber and should not
+          be reaceived.
+
 Thu Feb 11 15:22:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/docs/TestCoverage.ods:
