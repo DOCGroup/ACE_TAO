@@ -619,8 +619,8 @@ idl_store_pragma (char *buf)
           // associated with this file, otherwise we add the prefix.
           char *ext_id = idl_global->filename ()->get_string ();
           char *int_id = 0;
-          int status = idl_global->file_prefixes ().find (ext_id,
-                                                          int_id);
+          int const status =
+            idl_global->file_prefixes ().find (ext_id, int_id);
 
           if (status == 0)
             {
@@ -778,15 +778,20 @@ idl_store_pragma (char *buf)
     {
       char *tmp = idl_get_pragma_string (buf);
 
-      // split up data type and key strings
+      // Split up data type and key strings
       char *sample_type = tmp;
+      
       while (*tmp && !isspace (*tmp))
-        tmp++;
+        {
+          ++tmp;
+        }
+        
       while (isspace (*tmp))
         {
           *tmp = '\0';
           tmp++;
         }
+        
       char *key = tmp;
 
       if (!idl_global->add_dcps_data_key (sample_type, key))
@@ -821,12 +826,12 @@ idl_atoi(char *s, long b)
   // Skip over the dash and possibly spaces after the dash
   while (*s == '-' || *s == ' ' || *s == '\t')
     {
-      s++;
+      ++s;
     }
 
   if (b == 8 && *s == '0')
     {
-      s++;
+      ++s;
     }
   else if (b == 16 && *s == '0' && (*(s + 1) == 'x' || *(s + 1) == 'X'))
     {
@@ -866,7 +871,7 @@ idl_atoui(char *s, long b)
 
   if (b == 8 && *s == '0')
     {
-      s++;
+      ++s;
     }
   else if (b == 16 && *s == '0' && (*(s + 1) == 'x' || *(s + 1) == 'X'))
     {
@@ -913,32 +918,32 @@ idl_atof (char *s)
       // Skip over the dash and possibly spaces after the dash
       while (*s == '-' || *s == ' ' || *s == '\t')
         {
-          s++;
+          ++s;
         }
     }
 
   while (*s >= '0' && *s <= '9')
     {
       d = (d * 10) + *s - '0';
-      s++;
+      ++s;
     }
 
   if (*s == '.')
     {
-      s++;
+      ++s;
       e = 10;
 
       while (*s >= '0' && *s <= '9')
         {
           d += (*s - '0') / (e * 1.0);
           e *= 10;
-          s++;
+          ++s;
         }
     }
 
   if (*s == 'e' || *s == 'E')
     {
-      s++;
+      ++s;
 
       if (*s == '-')
         {
@@ -947,7 +952,7 @@ idl_atof (char *s)
         }
       else if (*s == '+')
         {
-          s++;
+          ++s;
         }
 
       e = 0;
@@ -955,7 +960,7 @@ idl_atof (char *s)
       while (*s >= '0' && *s <= '9')
         {
           e = (e * 10) + *s - '0';
-          s++;
+          ++s;
         }
 
       if (e > 0)
@@ -985,13 +990,11 @@ idl_atof (char *s)
  * Convert (some) escaped characters into their ascii values
  */
 static char
-idl_escape_reader(
-    char *str
-  )
+idl_escape_reader (char *str)
 {
   if (str[0] != '\\')
     {
-            return str[0];
+      return str[0];
     }
 
   switch (str[1])

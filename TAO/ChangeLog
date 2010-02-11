@@ -1,3 +1,15 @@
+Thu Feb 11 17:04:59 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/tao_idl_fe.mpc:
+        
+          Changes to restore mods that Johnny Willemsen made to 
+          lex.yy.cpp without corresponding changes to idl.ll and
+          tao_idl_fe.mpc. These changes are in
+          
+          Mon Feb  8 06:58:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
 Wed Feb 10 22:16:15 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/idl_global.h:
@@ -25,10 +37,6 @@ Wed Feb 10 22:02:06 UTC 2010  Yan Dai  <dai_y@ociweb.com>
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
 
           Added support for ORBKeepalive in SSL mode.
-
-Wed Feb 10 19:27:58 UTC 2010  Jeff Parsons  <j.parsons@vanderbilt.edu>
-
-        * TAO_IDL/fe/lex.yy.cpp:
 
 Wed Feb 10 16:34:24 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
