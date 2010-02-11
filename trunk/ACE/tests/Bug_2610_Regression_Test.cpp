@@ -55,6 +55,8 @@ public:
   int handle_close (ACE_HANDLE /*fd*/, ACE_Reactor_Mask /*mask*/)
   {
     TEST_TRACE ("handle_close");
+    // Remove own reference which we own since creation.
+    this->remove_reference ();
     g_semaphore.release();
     return 0;
   }
@@ -75,14 +77,18 @@ protected:
     int rv = super::accept_svc_handler(svc_handler);
     if (g_acceptor_accept_fails)
       {
+        // Remove own reference which we own since creation.
+        svc_handler->remove_reference ();
         g_semaphore.release();
         return -1;
       }
     return rv;
   }
-  int activate_svc_handler (My_Svc_Handler* /*svc_handler*/)
+  int activate_svc_handler (My_Svc_Handler *svc_handler)
   {
     TEST_TRACE ("My_Acceptor::activate_svc_handler");
+    // Remove own reference which we own since creation.
+    svc_handler->remove_reference ();
     g_semaphore.release();
     return -1;
   }

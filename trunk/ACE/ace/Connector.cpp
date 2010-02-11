@@ -736,6 +736,15 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::close (void)
         }
       SVC_HANDLER *svc_handler = nbch->svc_handler ();
 
+      // Since nbch holds a reference to svc_handler we have to
+      // free it here as there will be no other chance to do it.
+      ACE_Event_Handler_var ref_count_guard;
+      if (svc_handler->reference_counting_policy ().value () ==
+          ACE_Event_Handler::Reference_Counting_Policy::ENABLED)
+        {
+          ref_count_guard.reset (svc_handler);
+        }
+
       // Cancel the non-blocking connection.
       this->cancel (svc_handler);
 

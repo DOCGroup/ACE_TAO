@@ -1,18 +1,41 @@
+Thu Feb 11 12:18:24 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/Connector.cpp:
+          Added a call to remove_reference() for a svc handler owned by
+          non-blocking connection handler during connector's close().
+
+        * ace/Svc_Handler.cpp:
+          Removed the code that removes a reference to itself. Svc_Handler
+          doesn't own that reference and thus shouldn't remove it.
+
+        * tests/Bug_2609_Regression_Test.cpp:
+        * tests/NonBlocking_Conn_Test.h:
+        * tests/Bug_2610_Regression_Test.cpp:
+        * tests/NonBlocking_Conn_Test.cpp:
+          Fixed the tests that implicitly assumed ownership of a reference
+          to a svc handler and didn't free it at the end of the test.
+
+        * tests/Process_Strategy_Test.cpp:
+          Fixed the test that was broken by my change on
+          'Mon Feb  8 16:21:06 UTC 2010'. The test incorrectly assumed
+          that close_handle() will not be called for svc handlers in
+          a parent process.
+
 Wed Feb 10 18:39:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-g++-common.h:
-        
+
           Added logic to detect (usable) support for GCC builtin __sync_XXX
           atomic op functions.
-          
+
         * ace/Atomic_Op.h:
         * ace/Atomic_Op.inl:
-        
+
           Changed autodetection for GCC builtin atomic ops so it will
           only be used when really wanted.
           Removed include for stdatomic.h because that has nothing to do with
-          the __sync_XXX builtins but rather with a *proposed* atomic op 
-          implementation for the C++1x standard. The __sync_XXX builtins are 
+          the __sync_XXX builtins but rather with a *proposed* atomic op
+          implementation for the C++1x standard. The __sync_XXX builtins are
           truly intrinsic, i.e. no header files involved.
 
 Wed Feb 10 15:38:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
