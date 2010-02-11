@@ -21,6 +21,24 @@ namespace CIAO_Reader_Test_Receiver_Impl
   class Receiver_exec_i;
 
   //============================================================
+  // read_action_Generator
+  //============================================================
+  class read_action_Generator
+    : public ACE_Event_Handler
+  {
+  public:
+    read_action_Generator (Receiver_exec_i &callback);
+
+    ~read_action_Generator ();
+
+    virtual int handle_timeout (const ACE_Time_Value &tv,
+                                const void *arg);
+  private:
+    Receiver_exec_i &callback_;
+
+  };
+ 
+  //============================================================
   // Starter_exec_i
   //============================================================
   class Starter_exec_i
@@ -62,12 +80,10 @@ namespace CIAO_Reader_Test_Receiver_Impl
     virtual ::CCM_ReaderStarter_ptr
     get_reader_start ();
 
-    virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
-    get_info_out_connector_status (void);
-
+    void read_no_data ();
+    void start_read ();
     bool check_last ();
     void run (void);
-    void read_no_data ();
 
     ::CORBA::UShort iterations (void);
 
@@ -101,6 +117,8 @@ namespace CIAO_Reader_Test_Receiver_Impl
     void read_one_last (bool test_handles = false);
     void test_exception ();
     void test_exception_with_handles ();
+
+    read_action_Generator *ticker_;
 
     typedef std::map<ACE_CString, DDS::InstanceHandle_t> Handle_Table;
     Handle_Table handles_;
