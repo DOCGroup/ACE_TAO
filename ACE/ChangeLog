@@ -1,10 +1,16 @@
+Thu Feb 11 20:29:06 UTC 2010  Steven Stallion  <stallions@ociweb.com>
+
+        * bin/MakeProjectCreator/config/global.features:
+
+          Disabled wireshark feature by default.
+
 Thu Feb 11 19:52:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-g++-common.h:
 
           Expanded autodetected support for GCC builtin __sync_XXX
           atomic op functions to all powerpc platforms.
-          
+
 Thu Feb 11 12:18:24 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * ace/Connector.cpp:
