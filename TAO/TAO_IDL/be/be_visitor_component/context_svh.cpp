@@ -45,7 +45,6 @@ be_visitor_context_svh::visit_component (be_component *node)
   os_ << "class " << export_macro_.c_str () << " " << lname
       << "_Context" << be_idt_nl
       << ": public virtual ::CIAO::"
-      << (swapping_ ? "Upgradeable_" : "")
       << "Context_Impl<" << be_idt << be_idt_nl
       << global << sname << "::CCM_" << lname
       << "_Context," << be_nl
@@ -97,17 +96,6 @@ be_visitor_context_svh::visit_component (be_component *node)
                          ACE_TEXT ("visit_component_scope() ")
                          ACE_TEXT ("failed\n")),
                         -1);
-    }
-
-  if (swapping_)
-    {
-      os_ << be_nl << be_nl
-          << "/// Operation defined in " << sname << "::CCM_"
-          << lname << "_Context" << be_nl
-          << "/// that enable component swapping in the container."
-          << be_nl
-          << "virtual ::Components::ConsumerDescriptions *" << be_nl
-          << "get_registered_consumers (const char * publisher_name);";
     }
 
   os_ << be_uidt_nl

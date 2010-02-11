@@ -5,7 +5,7 @@
  *
  *  $Id$
  *
- *  Base class for visitors that need to visit the scope of a 
+ *  Base class for visitors that need to visit the scope of a
  *  component and its ancestors, if any.
  *
  *
@@ -33,36 +33,35 @@ class be_visitor_component_scope : public be_visitor_scope
 {
 protected:
   be_visitor_component_scope (be_visitor_context *ctx);
-  
+
   virtual ~be_visitor_component_scope (void);
-  
+
 public:
   virtual int visit_extended_port (be_extended_port *node);
   virtual int visit_mirror_port (be_mirror_port *node);
 
   // Automatically recurses to the ancestor scopes, if any.
   int visit_component_scope (be_component *node);
-  
+
   // These two methods are used instead of overriding
   // visit_porttype so we can traverse a porttype only
   // when it is referenced.
-  
+
   int visit_porttype_scope (be_porttype *node);
 
-  // Swaps uses for provides members and vice versa.S 
+  // Swaps uses for provides members and vice versa.S
   int visit_porttype_scope_mirror (be_porttype *node);
-  
+
 protected:
   void gen_svnt_entrypoint_decl (void);
   void gen_svnt_entrypoint_defn (void);
   void gen_exec_entrypoint_decl (void);
   void gen_exec_entrypoint_defn (void);
-  
+
 protected:
   be_component *node_;
   TAO_OutStream &os_;
   ACE_CString export_macro_;
-  bool swapping_;
   bool static_config_;
   ACE_CString port_prefix_;
 };

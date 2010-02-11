@@ -1,34 +1,55 @@
+Thu Feb 11 18:51:11 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp
+        * TAO_IDL/be/be_global.cpp
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp
+        * TAO_IDL/be/be_visitor_component_scope.cpp
+        * TAO_IDL/be/be_visitor_home/home_svh.cpp
+        * TAO_IDL/be/be_visitor_home/home_svs.cpp
+        * TAO_IDL/be/be_visitor_operation/operation_svs.cpp
+        * TAO_IDL/be/be_visitor_root/root.cpp
+        * TAO_IDL/be_include/be_global.h
+        * TAO_IDL/be_include/be_scope.h
+        * TAO_IDL/be_include/be_visitor_component/context_svs.h
+        * TAO_IDL/be_include/be_visitor_component_scope.h
+        * TAO_IDL/be_include/be_visitor_home/home_svs.h
+        * TAO_IDL/be_include/be_visitor_operation/operation_svs.h
+        * TAO_IDL/util/utl_err.cpp
+          Removed swapping container support
+
 Thu Feb 11 17:04:59 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/lex.yy.cpp:
         * TAO_IDL/fe/idl.ll:
         * TAO_IDL/tao_idl_fe.mpc:
-        
-          Changes to restore mods that Johnny Willemsen made to 
+
+          Changes to restore mods that Johnny Willemsen made to
           lex.yy.cpp without corresponding changes to idl.ll and
           tao_idl_fe.mpc. These changes are in
-          
+
           Mon Feb  8 06:58:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Feb 10 22:16:15 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/idl_global.h:
-        
+
           Fixed typo in comment.
-          
+
         * TAO_IDL/be/be_codegen.cpp:
-        
+
           Added code generation for included files in
           the connector implementation.
-          
+
         * TAO_IDL/fe/y.tab.cpp:
         * TAO_IDL/fe/idl.yy:
-        
+
           Fixed incorrect comment.
-          
+
         * TAO_IDL/fe/lex.yy.cpp:
         * TAO_IDL/fe/idl.ll:
-        
+
           Restored code that was added to the cpp file only and
           got zapped in the last regeneration.
 

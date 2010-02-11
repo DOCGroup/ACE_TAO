@@ -45,16 +45,16 @@ be_visitor_home_svh::visit_home (be_home *node)
     {
       return 0;
     }
-    
+
   node_ = node;
   comp_ = node_->managed_component ();
-  
+
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
   os_ << be_nl << be_nl
       << "namespace CIAO_" << comp_->flat_name () << "_Impl" << be_nl
       << "{" << be_idt;
-     
+
   if (this->gen_servant_class () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -63,12 +63,12 @@ be_visitor_home_svh::visit_home (be_home *node)
                          ACE_TEXT ("gen_servant_class() failed\n")),
                         -1);
     }
-    
+
   this->gen_entrypoint ();
 
   os_ << be_uidt_nl
       << "}";
-     
+
   return 0;
 }
 
@@ -93,16 +93,16 @@ be_visitor_home_svh::visit_factory (be_factory *node)
   // component of the home where it is defined.
   be_home *h =
     be_home::narrow_from_scope (node->defined_in ());
-  
+
   AST_Component *c = h->managed_component ();
-  
+
   os_ << be_nl << be_nl
       << "virtual ::" << c->name () << "_ptr" << be_nl
       << node->local_name ();
-      
+
   // We can reuse this visitor.
   be_visitor_valuetype_init_arglist_ch v (this->ctx_);
-  
+
   if (v.visit_factory (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -112,9 +112,9 @@ be_visitor_home_svh::visit_factory (be_factory *node)
                          ACE_TEXT ("list failed\n")),
                         -1);
     }
-    
+
   os_ << ";";
-    
+
   return 0;
 }
 
@@ -130,21 +130,19 @@ be_visitor_home_svh::gen_servant_class (void)
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
-  
+
   // No '_cxx_' prefix.
   const char *lname =
     node_->original_local_name ()->get_string ();
-    
+
   const char *clname = comp_->local_name ()->get_string ();
   const char *global = (sname_str == "" ? "" : "::");
-  bool swapping = be_global->gen_component_swapping ();
-  
+
   os_ << be_nl
       << "class " << export_macro_.c_str () << " " << lname
       << "_Servant" << be_idt_nl
       << ": public virtual" << be_idt << be_idt_nl
       << "::CIAO::"
-      << (swapping ? "Swapping_" : "")
       << "Home_Servant_Impl<" << be_idt_nl
       << "::" << node_->full_skel_name () << "," << be_nl
       << global << sname << "::CCM_" << lname << "," << be_nl
@@ -152,45 +150,45 @@ be_visitor_home_svh::gen_servant_class (void)
       << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl;
-      
+
   os_ << lname << "_Servant (" << be_idt_nl
       << global << sname << "::CCM_" << lname << "_ptr exe," << be_nl
       << "const char * ins_name," << be_nl
       << "::CIAO::Container_ptr c);" << be_uidt;
-      
+
   os_ << be_nl << be_nl
       << "virtual ~" << lname << "_Servant (void);";
-      
+
   AST_Type *pk = node_->primary_key ();
-  
+
   if (pk != 0)
     {
       os_ << be_nl << be_nl
           << "// Implicit home primary key operations - not supported.";
-          
+
       os_ << be_nl << be_nl
           << "virtual ::" << comp_->name () << "_ptr" << be_nl
           << "create (" << be_idt_nl
           << "::" << pk->name () << " * key);" << be_uidt;
-          
+
       os_ << be_nl << be_nl
           << "virtual ::" << comp_->name () << "_ptr" << be_nl
           << "find_by_primary_key (" << be_idt_nl
           << "::" << pk->name () << " * key);" << be_uidt;
-          
+
       os_ << be_nl << be_nl
           << "virtual void" << be_nl
           << "remove (" << be_idt_nl
           << "::" << pk->name () << " * key);" << be_uidt;
-          
+
       os_ << be_nl << be_nl
           << "virtual ::" << pk->name () << " *" << be_nl
           << "get_primary_key (" << be_idt_nl
           << "::" << comp_->name () << "_ptr comp);" << be_uidt;
     }
-    
+
   be_home *h = node_;
-  
+
   while (h != 0)
     {
       if (this->visit_scope (h) != 0)
@@ -201,19 +199,19 @@ be_visitor_home_svh::gen_servant_class (void)
                              ACE_TEXT ("visit_scope() failed\n")),
                             -1);
         }
-        
+
       for (long i = 0; i < h->n_inherits (); ++i)
         {
           // A closure of all the supported interfaces is stored
           // in the base class 'pd_inherits_flat' member.
           be_interface *bi =
             be_interface::narrow_from_decl (h->inherits ()[i]);
-   
+
           int status =
             bi->traverse_inheritance_graph (
               be_visitor_home_svh::op_attr_decl_helper,
               &os_);
-              
+
           if (status == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -224,14 +222,14 @@ be_visitor_home_svh::gen_servant_class (void)
                                  bi->full_name ()),
                                 -1);
             }
-        }  
-        
+        }
+
       h = be_home::narrow_from_decl (h->base_home ());
     }
 
   os_ << be_uidt_nl
       << "};";
-     
+
   return 0;
 }
 
@@ -245,7 +243,7 @@ be_visitor_home_svh::gen_entrypoint (void)
       << "_Servant (" << be_idt_nl
       << "::Components::HomeExecutorBase_ptr p," << be_nl
       << "::CIAO::Container_ptr c," << be_nl
-      << "const char * ins_name);" << be_uidt; 
+      << "const char * ins_name);" << be_uidt;
 }
 
 int
@@ -259,8 +257,8 @@ be_visitor_home_svh::op_attr_decl_helper (be_interface * /* derived */,
   ctx.state (TAO_CodeGen::TAO_ROOT_SVH);
   ctx.stream (os);
   be_visitor_home_svh visitor (&ctx);
-  
-  /// Since this visitor overriddes only visit_operation() and 
+
+  /// Since this visitor overriddes only visit_operation() and
   /// visit_attribute(), we can get away with this for the declarations.
   return visitor.visit_scope (ancestor);
 }

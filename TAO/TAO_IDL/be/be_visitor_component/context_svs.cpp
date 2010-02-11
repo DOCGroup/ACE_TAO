@@ -47,17 +47,6 @@ be_visitor_context_svs::visit_component (be_component *node)
       << lname << "_Context," << be_nl
       << "::" << node->full_name () << "> (h, c, sv, id)";
 
-  if (swapping_)
-    {
-      os_ << "," << be_uidt_nl
-          << "::CIAO::Upgradeable_Context_Impl<" << be_idt_nl
-          << global << sname << "::CCM_" << lname
-          << "_Context," << be_nl
-          << lname << "_Servant," << be_nl
-          << "::" << node_->full_name ()
-          << "> (h, c, sv)";
-    }
-
   os_ << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "}";
@@ -87,50 +76,6 @@ be_visitor_context_svs::visit_component (be_component *node)
                          ACE_TEXT ("visit_component_scope() ")
                          ACE_TEXT ("failed\n")),
                         -1);
-    }
-
-  if (swapping_)
-    {
-      os_ << be_nl << be_nl
-          << "/// Operations defined in " << sname
-          << "::CCM_" << lname << "_Context" << be_nl
-          << "/// that enable component swapping in the container"
-          << be_nl << be_nl
-          << "::Components::ConsumerDescriptions *" << be_nl
-          << lname << "_Context::get_registered_consumers ("
-          << be_idt_nl
-          << "const char * publisher_name)" << be_uidt_nl
-          << "{" << be_idt_nl
-          << "if (publisher_name == 0)" << be_idt_nl
-          << "{" << be_idt_nl
-          << "throw ::Components::InvalidName ();" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl
-          << "::Components::ConsumerDescriptions * tmp = 0;"
-          << be_nl
-          << "::Components::ConsumerDescriptions_var retval;"
-          << be_nl
-          << "::CORBA::ULong _ciao_index = 0UL;" << be_nl
-          << "::CORBA::ULong _ciao_size = 0UL;" << be_nl
-          << "ACE_UNUSED_ARG (tmp);" << be_nl
-          << "ACE_UNUSED_ARG (retval);" << be_nl
-          << "ACE_UNUSED_ARG (_ciao_index);" << be_nl
-          << "ACE_UNUSED_ARG (_ciao_size);";
-
-      be_visitor_swapping_get_consumer v (this->ctx_);
-
-      if (v.visit_component_scope (node) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_context_svs")
-                             ACE_TEXT ("::visit_component - ")
-                             ACE_TEXT ("swapping_get_consumer ")
-                             ACE_TEXT ("visitor failed\n")),
-                            -1);
-        }
-
-      os_ << be_nl << be_nl
-          << "throw ::Components::InvalidName ();" << be_uidt_nl
-          << "}";
     }
 
   return 0;
@@ -737,88 +682,5 @@ be_visitor_context_svs::gen_uses_multiplex (
       << "}" << be_uidt_nl << be_nl
       << "return retv._retn ();" << be_uidt_nl
       << "}";
-}
-
-// ===============================================
-
-be_visitor_swapping_get_consumer::be_visitor_swapping_get_consumer (
-      be_visitor_context *ctx)
-  : be_visitor_component_scope (ctx)
-{
-}
-
-be_visitor_swapping_get_consumer::~be_visitor_swapping_get_consumer (
-  void)
-{
-}
-
-int
-be_visitor_swapping_get_consumer::visit_publishes (
-  be_publishes *node)
-{
-  const char *port_name =
-    node->local_name ()->get_string ();
-
-  os_ << be_nl << be_nl
-      << "if (ACE_OS::strcmp (publisher_name, \""
-      << port_name << "\") == 0)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "_ciao_size = this->_ciao_publishes_"
-      << port_name << "_.size ();" << be_nl << be_nl
-      << "ACE_NEW_THROW_EX (tmp," << be_nl
-      << "                  ::Components::"
-      << "ConsumerDescriptions (_ciao_size)," << be_nl
-      << "                  ::CORBA::NO_MEMORY ());";
-
-  if (! static_config_)
-    {
-      os_ << be_nl << be_nl
-          << "{" << be_idt_nl
-          << "ACE_READ_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
-          << "                       mon," << be_nl
-          << "                       this->" << port_name
-          << "_lock_," << be_nl
-          << "                       0);";
-    }
-
-  os_ << be_nl << be_nl
-      << "for (" << tao_cg->upcase (port_name)
-      << "_TABLE::const_iterator iter =" << be_idt_nl
-      << "     this->ciao_publishes_" << port_name
-      << "_.begin ();" << be_uidt_nl
-      << "     iter != this->ciao_publishes_" << port_name
-      << ".end ();" << be_nl
-      << "     ++iter, ++_ciao_index)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "if ( ::CORBA::is_nil (iter->second.in ()))" << be_idt_nl
-      << "{" << be_idt_nl
-      << "throw ::Components::InvalidConnection ();" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "::Components::ConsumerDescription * cd = 0;" << be_nl
-      << "ACE_NEW_THROW_EX (cd," << be_nl
-      << "                  OBV_Components::ConsumerDescription,"
-      << be_nl
-      << "                  ::CORBA::NO_MEMORY ());"
-      << be_nl << be_nl
-      << "::Components::ConsumerDescription_var safe = cd;"
-      << be_nl
-      << "safe->name (\"\");" << be_nl
-      << "safe->type_id (\"\");" << be_nl
-      << "safe->consumer (iter->second.in ());"
-      << be_nl << be_nl
-      << "retval[_ciao_index] = safe;" << be_uidt_nl
-      << "}" << be_uidt;
-
-  if (! static_config_)
-    {
-      os_ << be_uidt_nl
-          << "}";
-    }
-
-  os_ << be_uidt_nl << be_nl
-      << "return retval._retn ();" << be_uidt_nl
-      << "}";
-
-  return 0;
 }
 

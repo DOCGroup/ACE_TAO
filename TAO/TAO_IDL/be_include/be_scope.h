@@ -8,9 +8,8 @@
  *
  *  Extension of the UTL_Scope CFE class
  *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
+ *  @author Copyright 1994-1995 by Sun Microsystems Int.
+ *  @author and Aniruddha Gokhale
  */
 //=============================================================================
 
@@ -44,8 +43,8 @@ public:
   /// Destructor.
   virtual ~be_scope (void);
 
+  /// To access the protected base class method fe_add_field.
   AST_Field *be_add_field (AST_Field *f);
-  // To access the protected base class method fe_add_field.
 
   /// Overridden in be_operation and be_factory.
   virtual AST_Argument *be_add_argument (AST_Argument *arg);
@@ -62,7 +61,7 @@ public:
   /// Recursively clean up scope members.
   virtual void destroy (void);
 
-  // Visiting.
+  /// Visiting.
   virtual int accept (be_visitor *visitor);
 
   // Narrowing.

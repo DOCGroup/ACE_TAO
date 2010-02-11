@@ -231,7 +231,7 @@ int be_visitor_root::visit_root (be_root *node)
   // Make one more pass over the entire tree and generate the OBV_ namespaces
   // and OBV_ classes.
 
-  bool obv = 1;
+  bool obv = true;
   status = 0;
 
   switch (this->ctx_->state ())
@@ -250,7 +250,7 @@ int be_visitor_root::visit_root (be_root *node)
       break;
     }
 
-  if (obv == 1)
+  if (obv == true)
     {
       be_visitor_obv_module visitor (&ctx);
       status = visitor.visit_scope (node);
