@@ -3126,67 +3126,20 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
 void
 TAO_CodeGen::gen_svnt_hdr_includes (void)
 {
-  bool has_included = false;
+  this->gen_standard_include (
+    this->ciao_svnt_header_,
+    "ciao/Containers/Container_BaseC.h");
 
-  if (be_global->gen_lem_force_all ())
-    {
-      size_t const nfiles = idl_global->n_included_idl_files ();
+  this->gen_standard_include (
+    this->ciao_svnt_header_,
+       "ciao/Contexts/Context_Impl_T.h");
 
-      for (size_t j = 0; j < nfiles; ++j)
-        {
-          char* idl_name = idl_global->included_idl_files ()[j];
+  this->gen_standard_include (this->ciao_svnt_header_,
+                              "ciao/Servants/Servant_Impl_T.h");
 
-          // Make a String out of it.
-          UTL_String idl_name_str = idl_name;
-
-          // No *_svnt.h version of this one.
-          if (ACE_OS::strcmp (idl_name, "Components.idl") == 0)
-            {
-              continue;
-            }
-
-          // Get the constructed IDL file name.
-          const char* svnt_hdr =
-            BE_GlobalData::be_get_ciao_svnt_header (&idl_name_str, true);
-
-          idl_name_str.destroy ();
-
-          // Sanity check and then print.
-          if (svnt_hdr != 0)
-            {
-              this->gen_standard_include (
-                this->ciao_svnt_header_,
-                svnt_hdr);
-
-              has_included = true;
-            }
-          else
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("\nERROR, invalid ")
-                          ACE_TEXT ("file '%C' included"),
-                          svnt_hdr));
-            }
-        }
-    }
-
-  if (! has_included)
-    {
-      this->gen_standard_include (
-        this->ciao_svnt_header_,
-        "ciao/Containers/Container_BaseC.h");
-
-      this->gen_standard_include (
-        this->ciao_svnt_header_,
-           "ciao/Contexts/Context_Impl_T.h");
-
-      this->gen_standard_include (this->ciao_svnt_header_,
-                                  "ciao/Servants/Servant_Impl_T.h");
-
-      this->gen_standard_include (
-        this->ciao_svnt_header_,
-           "ciao/Servants/Home_Servant_Impl_T.h");
-    }
+  this->gen_standard_include (
+    this->ciao_svnt_header_,
+       "ciao/Servants/Home_Servant_Impl_T.h");
 
   *this->ciao_svnt_header_ << be_nl;
 
@@ -3315,67 +3268,8 @@ TAO_CodeGen::gen_exec_src_includes (void)
 void
 TAO_CodeGen::gen_exec_idl_includes (void)
 {
-  bool has_included = false;
-
-  if (be_global->gen_lem_force_all ())
-    {
-      size_t const nfiles = idl_global->n_included_idl_files ();
-
-      for (size_t j = 0; j < nfiles; ++j)
-        {
-          char* idl_name = idl_global->included_idl_files ()[j];
-
-          // Make a String out of it.
-          UTL_String idl_name_str = idl_name;
-
-          // No *E.idl version of this one.
-          if (ACE_OS::strcmp (idl_name, "Components.idl") == 0)
-            {
-              continue;
-            }
-
-          // Make sure this file was actually got included, not
-          // ignored by some #if defined compiler directive.
-
-          // Get the constructed IDL file name.
-          const char* exec_idl =
-            BE_GlobalData::be_get_ciao_exec_idl (&idl_name_str, true);
-
-          idl_name_str.destroy ();
-
-          // Sanity check and then print.
-          if (exec_idl != 0)
-            {
-              if (! has_included)
-                {
-                  // No newline first time for better formatting.
-                  this->ciao_exec_idl_->print ("#include \"%s\"", exec_idl);
-
-                  has_included = true;
-                }
-              else
-                {
-                  this->gen_standard_include (
-                    this->ciao_exec_idl_,
-                    exec_idl);
-                }
-            }
-          else
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("\nERROR, invalid ")
-                          ACE_TEXT ("file '%C' included"),
-                          exec_idl));
-            }
-        }
-    }
-
-  // Otherwise it's included indirectly.
-  if (! has_included)
-    {
-      this->ciao_exec_idl_->print (
-        "#include \"ccm/CCM_Container.idl\"");
-    }
+  this->ciao_exec_idl_->print (
+    "#include \"ccm/CCM_Container.idl\"");
 
   if (be_global->ami4ccm_call_back ())
     {
