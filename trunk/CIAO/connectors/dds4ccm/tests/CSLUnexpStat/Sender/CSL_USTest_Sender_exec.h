@@ -25,6 +25,21 @@ namespace CIAO_CSL_USTest_Sender_Impl
   class Sender_exec_i;
 
   //============================================================
+  // pulse_Generator
+  //============================================================
+  class pulse_Generator :
+    public ACE_Event_Handler
+  {
+  public:
+    pulse_Generator (Sender_exec_i &callback);
+
+    virtual int handle_timeout (const ACE_Time_Value &tv,
+                                const void *arg);
+  private:
+    Sender_exec_i &pulse_callback_;
+  };
+
+  //============================================================
   // ConnectorStatusListener_exec_i
   //============================================================
   class SENDER_EXEC_Export ConnectorStatusListener_exec_i
@@ -35,6 +50,8 @@ namespace CIAO_CSL_USTest_Sender_Impl
     ConnectorStatusListener_exec_i (Atomic_Boolean &,
                                     Atomic_Boolean &,
                                     Atomic_Boolean &,
+                                    Atomic_Boolean &,
+                                    Atomic_ThreadId &,
                                     Atomic_ThreadId &,
                                     Atomic_ThreadId &,
                                     Atomic_ThreadId &);
@@ -64,9 +81,11 @@ namespace CIAO_CSL_USTest_Sender_Impl
     Atomic_Boolean &subscription_matched_received_;
     Atomic_Boolean &publication_matched_received_;
     Atomic_Boolean &liveliness_changed_received_;
+    Atomic_Boolean &liveliness_lost_received_;
     Atomic_ThreadId &thread_id_subcription_matched_;
     Atomic_ThreadId &thread_id_publication_matched_;
     Atomic_ThreadId &thread_id_liveliness_changed_;
+    Atomic_ThreadId &thread_id_liveliness_lost_;
   };
 
   class Sender_exec_i
@@ -83,19 +102,32 @@ namespace CIAO_CSL_USTest_Sender_Impl
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
 
+    void tick (void);
+
     // Port operations.
     virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
     get_test_topic_connector_status (void);
 
   private:
     ::CSL_USTest::CCM_Sender_Context_var context_;
+    CCM_DDS::TestTopic::Writer_var writer_;
 
     Atomic_Boolean subscription_matched_received_;
     Atomic_Boolean publication_matched_received_;
     Atomic_Boolean liveliness_changed_received_;
+    Atomic_Boolean liveliness_lost_received_;
     Atomic_ThreadId thread_id_listener_subscription_matched_;
     Atomic_ThreadId thread_id_listener_publication_matched_;
     Atomic_ThreadId thread_id_listener_liveliness_changed_;
+    Atomic_ThreadId thread_id_listener_liveliness_lost_;
+
+    pulse_Generator * ticker_;
+
+    TAO_SYNCH_MUTEX mutex_;
+    typedef std::map<ACE_CString, TestTopic_var> CSL_SRTest_Table;
+    CSL_SRTest_Table _ktests_;
+
+    void add_instance_of_topic (const char *, int x);
  };
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

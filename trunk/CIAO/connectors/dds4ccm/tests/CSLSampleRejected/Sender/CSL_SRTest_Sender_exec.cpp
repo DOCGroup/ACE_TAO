@@ -15,7 +15,7 @@
 namespace CIAO_CSL_SRTest_Sender_Impl
 {
   //============================================================
-  // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
+  // ConnectorStatusListener_exec_i
   //============================================================
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &rejected,
                                                                   Atomic_ThreadId &thread_id)
@@ -29,19 +29,19 @@ namespace CIAO_CSL_SRTest_Sender_Impl
   }
 
   // Operations from ::CCM_DDS::ConnectorStatusListener
-  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
+  void ConnectorStatusListener_exec_i::on_inconsistent_topic (
     ::DDS::Topic_ptr /*the_topic*/,
      const DDS::InconsistentTopicStatus & /*status*/)
   {
   }
 
-  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
+  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos (
     ::DDS::DataReader_ptr /*the_reader*/,
      const DDS::RequestedIncompatibleQosStatus & /*status*/)
   {
   }
 
-  void ConnectorStatusListener_exec_i::on_sample_rejected(
+  void ConnectorStatusListener_exec_i::on_sample_rejected (
     ::DDS::DataReader_ptr the_reader,
     const DDS::SampleRejectedStatus & status)
   {
@@ -53,19 +53,19 @@ namespace CIAO_CSL_SRTest_Sender_Impl
       }
   }
 
-  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
+  void ConnectorStatusListener_exec_i::on_offered_deadline_missed (
     ::DDS::DataWriter_ptr /*the_writer*/,
     const DDS::OfferedDeadlineMissedStatus & /*status*/)
   {
   }
 
-  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
+  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos (
     ::DDS::DataWriter_ptr /*the_writer*/,
     const DDS::OfferedIncompatibleQosStatus & /*status*/)
   {
   }
 
-  void ConnectorStatusListener_exec_i::on_unexpected_status(
+  void ConnectorStatusListener_exec_i::on_unexpected_status (
     ::DDS::Entity_ptr /*the_entity*/,
     ::DDS::StatusKind  /*status_kind*/)
   {
