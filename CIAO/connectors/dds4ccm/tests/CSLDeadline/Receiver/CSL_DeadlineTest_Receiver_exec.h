@@ -21,7 +21,6 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
 {
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong> Atomic_ULong;
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean> Atomic_Boolean;
-  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_thread_t> Atomic_ThreadId;
 
   class Receiver_exec_i;
 
@@ -59,8 +58,7 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
       public virtual ::CORBA::LocalObject
   {
   public:
-    ConnectorStatusListener_exec_i (Atomic_Boolean &,
-                                    Atomic_ThreadId &);
+    ConnectorStatusListener_exec_i (Atomic_Boolean &);
 
     virtual ~ConnectorStatusListener_exec_i (void);
 
@@ -84,7 +82,6 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
                                 ::DDS::StatusKind  status_kind);
   private:
     Atomic_Boolean &deadline_missed_;
-    Atomic_ThreadId &thread_id_;
   };
 
   //============================================================
@@ -123,7 +120,6 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
     ::CSL_DeadlineTest::CCM_Receiver_Context_var context_;
     Atomic_ULong received_;
     Atomic_Boolean deadline_missed_;
-    Atomic_ThreadId thread_id_listener_;
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
