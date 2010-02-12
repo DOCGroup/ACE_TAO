@@ -1,3 +1,9 @@
+Fri Feb 12 10:36:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-g++-common.h:
+          Expanded autodetected support for GCC builtin __sync_XXX
+          atomic op functions to the IA64 platform
+
 Thu Feb 11 22:23:08 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * THANKS:
