@@ -20,6 +20,9 @@ namespace CIAO_Shapes_Sender_Impl
 {
   class Sender_exec_i;
 
+  //============================================================
+  // pulse_Generator
+  //============================================================
   class pulse_Generator : public ACE_Event_Handler
   {
   public:
@@ -27,14 +30,15 @@ namespace CIAO_Shapes_Sender_Impl
 
     virtual ~pulse_Generator ();
 
-    /// Handle the timeout.
     virtual int handle_timeout (const ACE_Time_Value &tv,
                                 const void *arg);
   private:
-    /// Maintains a handle that actually process the event
     Sender_exec_i &pulse_callback_;
   };
 
+  //============================================================
+  // Sender_exec_i
+  //============================================================
   class Sender_exec_i
     : public virtual Sender_Exec,
       public virtual ::CORBA::LocalObject
@@ -77,7 +81,7 @@ namespace CIAO_Shapes_Sender_Impl
     void start (void);
     void stop (void);
 
-    CCM_DDS::ShapeType::Writer_var writer_;
+    Shapes::ShapeTypeConn::Writer_var writer_;
 
     pulse_Generator * ticker_;
     ::Shapes::CCM_Sender_Context_var context_;
