@@ -94,6 +94,9 @@ namespace CIAO
 
           if (!rti_dp)
             {
+              CIAO_DEBUG (6, (LM_DEBUG, "RTI_DomainParticipantFactory_i::create_participant_with_profile - "
+                                        "Creating participant for <%C>\n",
+                                        qos_profile.c_str ()));
               DDSDomainParticipant * part = DDSDomainParticipantFactory::get_instance ()->
                       create_participant_with_profile (domain_id,
                                         library_name,
