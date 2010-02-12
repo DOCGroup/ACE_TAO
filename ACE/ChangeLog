@@ -1,3 +1,9 @@
+Fri Feb 12 19:19:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Atomic_Op.h:
+        * ace/Containers_T.h:
+          Doxygen changes
+
 Fri Feb 12 17:39:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.lst:
