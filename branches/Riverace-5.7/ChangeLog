@@ -1,3 +1,7 @@
+Fri Feb 12 14:05:21 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dev_Poll_Reactor.cpp: Fix unused variable warning.
+
 Thu Feb  4 15:32:24 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/Dev_Poll_Reactor.cpp:
