@@ -33,18 +33,19 @@ namespace CIAO_Shapes_Receiver_Impl
 
     ~read_action_Generator ();
 
-    /// Handle the timeout.
     virtual int handle_timeout (const ACE_Time_Value &tv,
                                 const void *arg);
 
   private:
-    /// Maintains a handle that actually process the event
     Receiver_exec_i &pulse_callback_;
 
   };
 
+  //============================================================
+  // ShapeType_Listener_exec_i
+  //============================================================
   class RECEIVER_EXEC_Export ShapeType_Listener_exec_i
-    : public virtual ::CCM_DDS::ShapeType::CCM_Listener,
+    : public virtual ::Shapes::ShapeTypeConn::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -112,7 +113,7 @@ namespace CIAO_Shapes_Receiver_Impl
     virtual void raw_listen (::CORBA::Boolean raw_listen);
 
     // Port operations.
-    virtual ::CCM_DDS::ShapeType::CCM_Listener_ptr
+    virtual ::Shapes::ShapeTypeConn::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -120,7 +121,7 @@ namespace CIAO_Shapes_Receiver_Impl
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_get_status (void);
-    
+
     // Operations from Components::SessionComponent.
     virtual void
     set_session_context (
@@ -134,8 +135,8 @@ namespace CIAO_Shapes_Receiver_Impl
 
   private:
     ::Shapes::CCM_Receiver_Context_var context_;
-    ::CCM_DDS::ShapeType::Reader_var reader_;
-    ::CCM_DDS::ShapeType::Getter_var getter_;
+    ::Shapes::ShapeTypeConn::Reader_var reader_;
+    ::Shapes::ShapeTypeConn::Getter_var getter_;
 
     read_action_Generator * ticker_;
     CORBA::ULong rate_;
