@@ -214,8 +214,8 @@ namespace CIAO_CSL_USTest_Sender_Impl
     if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
                 this->ticker_,
                 0,
-                ACE_Time_Value (1, 0),
-                ACE_Time_Value (3, 0)) == -1)
+                ACE_Time_Value (3, 0),
+                ACE_Time_Value (1, 0)) == -1)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
                               ACE_TEXT ("Error scheduling timer\n")));
