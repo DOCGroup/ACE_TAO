@@ -232,9 +232,9 @@ public:
 
 private:
 
-  // This function cannot be supported by this template specialization.
-  // If you need access to an underlying lock, use the ACE_Atomic_Op_Ex
-  // template instead.
+  /// This function cannot be supported by this template specialization.
+  /// If you need access to an underlying lock, use the ACE_Atomic_Op_Ex
+  /// template instead.
   ACE_Thread_Mutex &mutex (void);
 
 private:

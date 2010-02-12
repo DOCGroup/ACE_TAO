@@ -1993,13 +1993,8 @@ class ACE_Array : public ACE_Array_Base<T>
 public:
   // Define a "trait"
   typedef T TYPE;
-
   typedef ACE_Array_Iterator<T> ITERATOR;
-
-  // = Exceptions.
-
-  // = Initialization and termination methods.
-
+  
   /// Dynamically create an uninitialized array.
   /**
    * Initialize an empty array of the specified size using the provided
