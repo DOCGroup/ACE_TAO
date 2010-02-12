@@ -34,13 +34,13 @@ namespace CIAO_CSL_SRTest_CSL_SRTest_Connector_Impl
   typedef CIAO::DDS4CCM::Connector_Traits <
     ::CIAO_CSL_SRTest_CSL_SRTest_Connector_Impl::CSL_SRTest_Connector_Exec,
     TestTopic_Seq,
-    ::CCM_DDS::TestTopic::CCM_Writer,
-    ::CCM_DDS::TestTopic::CCM_Updater,
-    ::CCM_DDS::TestTopic::CCM_Getter,
-    ::CCM_DDS::TestTopic::CCM_Reader,
+    ::CSL_SRTest::TestTopicConn::CCM_Writer,
+    ::CSL_SRTest::TestTopicConn::CCM_Updater,
+    ::CSL_SRTest::TestTopicConn::CCM_Getter,
+    ::CSL_SRTest::TestTopicConn::CCM_Reader,
     ::CSL_SRTest::CCM_CSL_SRTest_Connector_Context,
-    ::CCM_DDS::TestTopic::Listener,
-    ::CCM_DDS::TestTopic::StateListener,
+    ::CSL_SRTest::TestTopicConn::Listener,
+    ::CSL_SRTest::TestTopicConn::StateListener,
     ::CCM_DDS::ConnectorStatusListener> TestTopic_Connector_Traits;
 
   class CSL_SRTEST_CONNECTOR_EXEC_Export CSL_SRTest_Connector_exec_i :

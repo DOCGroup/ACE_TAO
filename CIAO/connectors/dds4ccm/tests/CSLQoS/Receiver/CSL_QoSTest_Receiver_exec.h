@@ -29,7 +29,7 @@ namespace CIAO_CSL_QoSTest_Receiver_Impl
   // TestTopic_RawListener_exec_i
   //============================================================
   class RECEIVER_EXEC_Export TestTopic_RawListener_exec_i
-    : public virtual ::CCM_DDS::TestTopic::CCM_Listener,
+    : public virtual ::CSL_QoSTest::TestTopicConn::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -97,7 +97,7 @@ namespace CIAO_CSL_QoSTest_Receiver_Impl
     virtual ~Receiver_exec_i (void);
 
     // Port operations.
-    virtual ::CCM_DDS::TestTopic::CCM_Listener_ptr
+    virtual ::CSL_QoSTest::TestTopicConn::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
