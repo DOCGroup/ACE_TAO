@@ -1311,8 +1311,16 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
       // notify loops caused by the notify handler requiring a resumption
       // which requires the token, which requires a notify, etc. described
       // in Bugzilla 3714. So, never suspend the notify handler.
+
+      bool reactor_resumes_eh = false;
       if (eh != this->notify_handler_)
-        info->suspended = true;
+        {
+          info->suspended = true;
+
+          reactor_resumes_eh =
+            eh->resume_handler () ==
+            ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER;
+        }
 #endif /* ACE_HAS_DEV_POLL */
 
       int status = 0;   // gets callback status, below.
@@ -1323,10 +1331,6 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
         // the counting policy, it won't do much. Management of the
         // notified handlers themselves is done in the notify handler.
         ACE_Dev_Poll_Handler_Guard eh_guard (eh);
-
-        bool reactor_resumes_eh =
-          eh->resume_handler () ==
-          ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER;
 
         // Release the reactor token before upcall.
         guard.release_token ();
