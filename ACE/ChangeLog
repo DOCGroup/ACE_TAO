@@ -1,3 +1,8 @@
+Fri Feb 12 17:39:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          2610 is working now
+
 Fri Feb 12 14:05:21 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/Dev_Poll_Reactor.cpp: Fix unused variable warning.
