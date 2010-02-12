@@ -813,6 +813,11 @@ idl_store_pragma (char *buf)
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_lem_file_names (tmp);
     }
+  else if (ACE_OS::strncmp (buf + 8, "rti typesupport", 15) == 0)
+    {
+      char *tmp = idl_get_pragma_string (buf);
+      idl_global->add_ciao_rti_ts_file_names (tmp);
+    }
 }
 
 /*

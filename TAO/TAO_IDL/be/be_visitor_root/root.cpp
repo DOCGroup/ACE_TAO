@@ -1478,6 +1478,52 @@ be_visitor_root::visit_home (be_home *node)
 }
 
 int
+be_visitor_root::visit_connector (be_connector *node)
+{
+  // Instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting.
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node);
+  int status = 0;
+
+  switch (this->ctx_->state ())
+    {
+      case TAO_CodeGen::TAO_ROOT_CNH:
+        {
+          be_visitor_connector_dds_exh visitor (&ctx);
+          status = node->accept (&visitor);
+          break;
+        }
+      case TAO_CodeGen::TAO_ROOT_CNS:
+        {
+          be_visitor_connector_dds_exs visitor (&ctx);
+          status = node->accept (&visitor);
+          break;
+        }
+      // Skip these contexts, the connector impl is
+      // generated in a separate pass, using the states
+      // above.
+      case TAO_CodeGen::TAO_ROOT_EXH:
+      case TAO_CodeGen::TAO_ROOT_EXS:
+        break;
+      default:
+        // In all other cases, same as component.
+        return this->visit_component (node);
+    }
+    
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_root::")
+                         ACE_TEXT ("visit_connector - ")
+                         ACE_TEXT ("failed to accept visitor\n")),
+                        -1);
+    }
+    
+  return 0;
+}
+
+int
 be_visitor_root::visit_module (be_module *node)
 {
   // Instantiate a visitor context with a copy of our context. This info

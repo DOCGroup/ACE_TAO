@@ -1381,13 +1381,14 @@ TAO_CodeGen::start_ciao_conn_header (const char *fname)
          << "\"\n";
     }
 
-  this->gen_standard_include (
-    this->ciao_conn_header_,
-    "dds4ccm/impl/ndds/DDS4CCM_Traits.h");
-
-  this->gen_standard_include (
-    this->ciao_conn_header_,
-    "dds4ccm/impl/ndds/DDS_Event_Connector_T.h");
+  // This will almost certainly be true, but just in case...
+  if (be_global->conn_export_include () != 0)
+    {
+      this->gen_standard_include (
+        this->ciao_conn_header_,
+        be_global->conn_export_include (),
+        true);
+    }
 
   // Some compilers don't optimize the #ifndef header include
   // protection, but do optimize based on #pragma once.
@@ -2359,35 +2360,32 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
 
   // Non-abstract interface or keyword 'Object'.
   this->gen_cond_file_include (
-      idl_global->non_local_iface_seen_
+    idl_global->non_local_iface_seen_
       | idl_global->local_iface_seen_
       | idl_global->base_object_seen_,
-      "tao/Object.h",
-      this->client_header_
-    );
+    "tao/Object.h",
+    this->client_header_);
 
   // This is true if we have a typecode or TCKind in the IDL file.
   // If not included here, it will appear in *C.cpp, if TCs not suppressed.
   this->gen_cond_file_include (
-      idl_global->typecode_seen_
+    idl_global->typecode_seen_
       | idl_global->any_seen_,
-      "tao/AnyTypeCode/TypeCode.h",
-      this->client_header_
-    );
+    "tao/AnyTypeCode/TypeCode.h",
+    this->client_header_);
 
   this->gen_cond_file_include (
-      idl_global->any_seen_
+    idl_global->any_seen_
       | idl_global->typecode_seen_,
-      "tao/AnyTypeCode/TypeCode_Constants.h",
-      this->client_header_);
+    "tao/AnyTypeCode/TypeCode_Constants.h",
+    this->client_header_);
 
   // This is true if we have an 'any' in the IDL file.
   // If not included here, it will appear in *C.cpp, if Anys not suppressed.
   this->gen_cond_file_include (
-      idl_global->any_seen_,
-      "tao/AnyTypeCode/Any.h",
-      this->client_header_
-    );
+    idl_global->any_seen_,
+    "tao/AnyTypeCode/Any.h",
+    this->client_header_);
 
   // Generated if (w)string member of struct/union/exception/array/valuetype
   // has been seen.
@@ -2662,26 +2660,30 @@ TAO_CodeGen::gen_skel_src_includes (void)
     {
       case BE_GlobalData::TAO_DYNAMIC_HASH:
         {
-          this->gen_standard_include (this->server_skeletons_,
-                                      "tao/PortableServer/Operation_Table_Dynamic_Hash.h");
+          this->gen_standard_include (
+            this->server_skeletons_,
+            "tao/PortableServer/Operation_Table_Dynamic_Hash.h");
         }
         break;
       case BE_GlobalData::TAO_LINEAR_SEARCH:
         {
-          this->gen_standard_include (this->server_skeletons_,
-                                      "tao/PortableServer/Operation_Table_Linear_Search.h");
+          this->gen_standard_include (
+            this->server_skeletons_,
+            "tao/PortableServer/Operation_Table_Linear_Search.h");
         }
         break;
       case BE_GlobalData::TAO_BINARY_SEARCH:
         {
-          this->gen_standard_include (this->server_skeletons_,
-                                      "tao/PortableServer/Operation_Table_Binary_Search.h");
+          this->gen_standard_include (
+            this->server_skeletons_,
+            "tao/PortableServer/Operation_Table_Binary_Search.h");
         }
         break;
       case BE_GlobalData::TAO_PERFECT_HASH:
         {
-          this->gen_standard_include (this->server_skeletons_,
-                                      "tao/PortableServer/Operation_Table_Perfect_Hash.h");
+          this->gen_standard_include (
+            this->server_skeletons_,
+            "tao/PortableServer/Operation_Table_Perfect_Hash.h");
         }
         break;
     }
@@ -3017,30 +3019,39 @@ TAO_CodeGen::gen_skel_arg_file_includes (TAO_OutStream * stream)
       stream
     );
 
-  this->gen_standard_include (stream,
-                              "tao/PortableServer/TypeCode_SArg_Traits.h");
-  this->gen_standard_include (stream,
-                              "tao/PortableServer/Object_SArg_Traits.h");
+  this->gen_standard_include (
+    stream,
+    "tao/PortableServer/TypeCode_SArg_Traits.h");
+    
+  this->gen_standard_include (
+    stream,
+    "tao/PortableServer/Object_SArg_Traits.h");
 
   if (be_global->gen_thru_poa_collocation ())
     {
       // Thru-POA/skeleton argument selection function templates.
-      this->gen_cond_file_include (idl_global->non_local_iface_seen_,
-                                   "tao/PortableServer/get_arg.h",
-                                   stream);
+      this->gen_cond_file_include (
+        idl_global->non_local_iface_seen_,
+        "tao/PortableServer/get_arg.h",
+        stream);
 
       // We need the stub side argument templates when thru-POA
       // collocation is enabled for type resolution.
       // this->gen_stub_arg_file_includes (stream);
 
-      // Always needed for CORBA::Boolean handling in _is_a() skeleton
-      // code when an unconstrained (non-local) IDL interface is defined.
-      this->gen_cond_file_include (idl_global->non_local_iface_seen_,
-                                   "tao/Special_Basic_Arguments.h",
-                                   stream);
+      // Always needed for CORBA::Boolean
+      // handling in _is_a() skeleton
+      // code when an unconstrained (non-local)
+      // IDL interface is defined.
+      this->gen_cond_file_include (
+        idl_global->non_local_iface_seen_,
+        "tao/Special_Basic_Arguments.h",
+        stream);
 
-      // Always needed for string argument handling in _is_a() skeleton
-      // code when an unconstrained (non-local) IDL interface is defined.
+      // Always needed for string argument
+      // handling in _is_a() skeleton
+      // code when an unconstrained (non-local)
+      // IDL interface is defined.
       this->gen_cond_file_include (idl_global->non_local_iface_seen_,
                                    "tao/UB_String_Arguments.h",
                                    stream);
@@ -3062,65 +3073,74 @@ TAO_CodeGen::gen_cond_file_include (bool condition_green,
 void
 TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
 {
-  this->gen_standard_include (stream,
-                              "tao/AnyTypeCode/Null_RefCount_Policy.h");
+  this->gen_standard_include (
+    stream,
+    "tao/AnyTypeCode/Null_RefCount_Policy.h");
 
-  this->gen_standard_include (stream,
-                              "tao/AnyTypeCode/TypeCode_Constants.h");
+  this->gen_standard_include (
+    stream,
+    "tao/AnyTypeCode/TypeCode_Constants.h");
 
   // Just assume we're going to need alias TypeCodes since there is
   // currently no alias_seen_ or typedef_seen_ flag in idl_global.
-  this->gen_standard_include (stream,
-                              "tao/AnyTypeCode/Alias_TypeCode_Static.h");
-
-  this->gen_cond_file_include (idl_global->enum_seen_,
-                               "tao/AnyTypeCode/Enum_TypeCode_Static.h",
-                               stream);
-
-  this->gen_cond_file_include (idl_global->interface_seen_,
-                               "tao/AnyTypeCode/Objref_TypeCode_Static.h",
-                               stream);
-
-  this->gen_cond_file_include (idl_global->seq_seen_
-                               | idl_global->array_seen_,
-                               "tao/AnyTypeCode/Sequence_TypeCode_Static.h",
-                               stream);
-
-  this->gen_cond_file_include (idl_global->string_seen_,
-                               "tao/AnyTypeCode/String_TypeCode_Static.h",
-                               stream);
+  this->gen_standard_include (
+    stream,
+    "tao/AnyTypeCode/Alias_TypeCode_Static.h");
 
   this->gen_cond_file_include (
-      idl_global->exception_seen_
-      | idl_global->aggregate_seen_,
+    idl_global->enum_seen_,
+    "tao/AnyTypeCode/Enum_TypeCode_Static.h",
+    stream);
+
+  this->gen_cond_file_include (
+    idl_global->interface_seen_,
+    "tao/AnyTypeCode/Objref_TypeCode_Static.h",
+    stream);
+
+  this->gen_cond_file_include (
+    idl_global->seq_seen_ | idl_global->array_seen_,
+    "tao/AnyTypeCode/Sequence_TypeCode_Static.h",
+    stream);
+
+  this->gen_cond_file_include (
+    idl_global->string_seen_,
+    "tao/AnyTypeCode/String_TypeCode_Static.h",
+    stream);
+
+  this->gen_cond_file_include (
+      idl_global->exception_seen_ | idl_global->aggregate_seen_,
       "tao/AnyTypeCode/Struct_TypeCode_Static.h",
       stream);
 
   this->gen_cond_file_include (
-      idl_global->exception_seen_
-      | idl_global->aggregate_seen_,
+      idl_global->exception_seen_ | idl_global->aggregate_seen_,
       "tao/AnyTypeCode/TypeCode_Struct_Field.h",
       stream);
 
-  this->gen_cond_file_include (idl_global->union_seen_,
-                               "tao/AnyTypeCode/TypeCode_Case_T.h",
-                               stream);
+  this->gen_cond_file_include (
+    idl_global->union_seen_,
+    "tao/AnyTypeCode/TypeCode_Case_T.h",
+    stream);
 
-  this->gen_cond_file_include (idl_global->union_seen_,
-                               "tao/AnyTypeCode/Union_TypeCode_Static.h",
-                               stream);
+  this->gen_cond_file_include (
+    idl_global->union_seen_,
+    "tao/AnyTypeCode/Union_TypeCode_Static.h",
+    stream);
 
-  this->gen_cond_file_include (idl_global->valuetype_seen_,
-                               "tao/AnyTypeCode/Value_TypeCode_Static.h",
-                               stream);
+  this->gen_cond_file_include (
+    idl_global->valuetype_seen_,
+    "tao/AnyTypeCode/Value_TypeCode_Static.h",
+    stream);
 
-  this->gen_cond_file_include (idl_global->valuetype_seen_,
-                               "tao/AnyTypeCode/TypeCode_Value_Field.h",
-                               stream);
+  this->gen_cond_file_include (
+    idl_global->valuetype_seen_,
+    "tao/AnyTypeCode/TypeCode_Value_Field.h",
+    stream);
 
-  this->gen_cond_file_include (idl_global->recursive_type_seen_,
-                               "tao/AnyTypeCode/Recursive_Type_TypeCode.h",
-                               stream);
+  this->gen_cond_file_include (
+    idl_global->recursive_type_seen_,
+    "tao/AnyTypeCode/Recursive_Type_TypeCode.h",
+    stream);
 }
 
 void
@@ -3134,12 +3154,13 @@ TAO_CodeGen::gen_svnt_hdr_includes (void)
     this->ciao_svnt_header_,
        "ciao/Contexts/Context_Impl_T.h");
 
-  this->gen_standard_include (this->ciao_svnt_header_,
-                              "ciao/Servants/Servant_Impl_T.h");
+  this->gen_standard_include (
+    this->ciao_svnt_header_,
+    "ciao/Servants/Servant_Impl_T.h");
 
   this->gen_standard_include (
     this->ciao_svnt_header_,
-       "ciao/Servants/Home_Servant_Impl_T.h");
+    "ciao/Servants/Home_Servant_Impl_T.h");
 
   *this->ciao_svnt_header_ << be_nl;
 
@@ -3208,52 +3229,6 @@ TAO_CodeGen::gen_exec_hdr_includes (void)
   this->gen_standard_include (
     this->ciao_exec_header_,
     "tao/LocalObject.h");
-
-  // Placeholder until we get real-world logic in place.
-  bool dds_connector_seen = true;
-
-  if (dds_connector_seen)
-    {
-      *this->ciao_exec_header_ << be_nl;
-
-      size_t const nfiles = idl_global->n_included_idl_files ();
-
-      for (size_t j = 0; j < nfiles; ++j)
-        {
-          char* idl_name = idl_global->included_idl_files ()[j];
-
-          // Make a String out of it.
-          UTL_String idl_name_str = idl_name;
-
-          // No *_svnt.h version of this one.
-          if (ACE_OS::strcmp (idl_name, "Components.idl") == 0)
-            {
-              continue;
-            }
-
-          // Get the constructed IDL file name.
-          const char* ts_hdr =
-            BE_GlobalData::be_get_dds_typesupport_header (
-              &idl_name_str);
-
-          idl_name_str.destroy ();
-
-          // Sanity check and then print.
-          if (ts_hdr != 0)
-            {
-//              this->gen_standard_include (
-//                this->ciao_exec_header_,
-//                ts_hdr);
-            }
-          else
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("\nERROR, invalid ")
-                          ACE_TEXT ("file '%C' included"),
-                          ts_hdr));
-            }
-        }
-    }
 }
 
 void
@@ -3268,8 +3243,15 @@ TAO_CodeGen::gen_exec_src_includes (void)
 void
 TAO_CodeGen::gen_exec_idl_includes (void)
 {
-  this->ciao_exec_idl_->print (
-    "#include \"ccm/CCM_Container.idl\"");
+  ACE_Unbounded_Queue<char *> &lem_file_names =
+    idl_global->ciao_lem_file_names ();
+  
+  // Otherwise it will be included indirectly.
+  if (lem_file_names.size () == 0)
+    {  
+      this->ciao_exec_idl_->print (
+        "#include \"ccm/CCM_Container.idl\"");
+    }
 
   if (be_global->ami4ccm_call_back ())
     {
@@ -3284,36 +3266,45 @@ TAO_CodeGen::gen_exec_idl_includes (void)
   char **path_tmp  = 0;
 
   for (ACE_Unbounded_Queue_Iterator<char *>riter (
-            idl_global->ciao_lem_file_names ()
-          );
+         lem_file_names);
        riter.done () == 0;
        riter.advance ())
     {
       riter.next (path_tmp);
 
-      // No newline first time for better formatting.
-      this->ciao_exec_idl_->print ("\n#include \"%s\"", *path_tmp);
+      this->gen_standard_include (this->ciao_exec_idl_,
+                                  *path_tmp);
     }
 }
 
 void
 TAO_CodeGen::gen_conn_hdr_includes (void)
 {
-  if (be_global->conn_export_include () != 0)
+  // We'll probably need some kind of flag to check
+  // to tell which DDS vendor.
+  this->gen_standard_include (
+    this->ciao_conn_header_,
+    "connectors/dds4ccm/impl/ndds/DDS4CCM_Traits.h");
+
+  // Placeholder for forthcoming real-world logic.
+  bool dds_event_connector = true;
+  
+  if (dds_event_connector)
     {
       this->gen_standard_include (
         this->ciao_conn_header_,
-        be_global->conn_export_include (),
-        true);
-
-      *this->ciao_conn_header_ << be_nl;
+        "connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.h");
     }
 
+  *this->ciao_conn_header_ << be_nl;
+      
+  ACE_Unbounded_Queue<char *> &lem_file_names =
+    idl_global->ciao_lem_file_names ();
+  
   char **path_tmp  = 0;
 
-  for (ACE_Unbounded_Queue_Iterator<char *>riter (
-            idl_global->ciao_lem_file_names ()
-          );
+  for (ACE_Unbounded_Queue_Iterator<char *> riter (
+         lem_file_names);
        riter.done () == 0;
        riter.advance ())
     {
@@ -3327,8 +3318,49 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
         lem_str.c_str ());
     }
 
-  *this->ciao_conn_header_ << be_nl;
+  for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
+    {
+      if (j == 0)
+        {
+          *this->ciao_conn_header_ << be_nl;
+        }
+        
+      char * const idl_name =
+        idl_global->included_idl_files ()[j];
+        
+      if (ACE_OS::strcmp (idl_name, "Components.idl") == 0)
+        {
+          continue;
+        }
+        
+      UTL_String str (idl_name);
+        
+      this->gen_standard_include (
+        this->ciao_conn_header_,   
+        BE_GlobalData::be_get_client_hdr (&str));
+        
+      str.destroy ();
+    }
+    
+  ACE_Unbounded_Queue<char *> &rti_ts_files =
+    idl_global->ciao_rti_ts_file_names ();
+    
+  if (rti_ts_files.size () > 0)
+    {
+      *this->ciao_conn_header_ << be_nl;
+    }
 
+  for (ACE_Unbounded_Queue_Iterator<char *> iter (
+         rti_ts_files);
+       iter.done () == 0;
+       iter.advance ())
+    {
+      iter.next (path_tmp);
+
+      this->gen_standard_include (
+        this->ciao_conn_header_,
+        *path_tmp);
+    }
 }
 
 void

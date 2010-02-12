@@ -1309,6 +1309,18 @@ IDL_GlobalData::ciao_lem_file_names (void)
   return this->ciao_lem_file_names_;
 }
 
+void
+IDL_GlobalData::add_ciao_rti_ts_file_names (const char *s)
+{
+  this->ciao_rti_ts_file_names_.enqueue_tail (ACE::strnew (s));
+}
+
+ACE_Unbounded_Queue<char *> &
+IDL_GlobalData::ciao_rti_ts_file_names (void)
+{
+  return this->ciao_rti_ts_file_names_;
+}
+
 ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex> &
 IDL_GlobalData::file_prefixes (void)
 {

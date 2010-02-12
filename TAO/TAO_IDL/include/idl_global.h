@@ -597,6 +597,10 @@ public:
   ACE_Unbounded_Queue<char *> & ciao_lem_file_names (void);
   // Accessor/mutator for the ciao_lem_file_names_ member.
 
+  void add_ciao_rti_ts_file_names (const char *s);
+  ACE_Unbounded_Queue<char *> & ciao_rti_ts_file_names (void);
+  // Accessor/mutator for the ciao_rti_ts_file_names_ member.
+
   FILE * open_included_file (char const * filename,
                              char const *& directory);
   // Attempt to open file for reading until it is found in one of the
@@ -818,6 +822,9 @@ private:
 
   ACE_Unbounded_Queue<char *> ciao_lem_file_names_;
   // Files parsed with ciao lem pragma
+
+  ACE_Unbounded_Queue<char *> ciao_rti_ts_file_names_;
+  // Files parsed with rti typesupport pragma
 };
 
 #endif  //_IDL_IDL_GLOBAL_HH
