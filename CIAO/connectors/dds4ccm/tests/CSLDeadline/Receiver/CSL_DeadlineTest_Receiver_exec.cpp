@@ -106,7 +106,7 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
   // Supported operations and attributes.
   // Component attributes.
   // Port operations.
-  ::CCM_DDS::TestTopic::CCM_Listener_ptr
+  ::CSL_DeadlineTest::TestTopicConn::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new TestTopic RAW listener\n")));

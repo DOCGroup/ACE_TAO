@@ -34,13 +34,13 @@ namespace CIAO_CSL_DeadlineTest_CSL_DeadlineTest_Connector_Impl
   typedef CIAO::DDS4CCM::Connector_Traits <
     ::CIAO_CSL_DeadlineTest_CSL_DeadlineTest_Connector_Impl::CSL_DeadlineTest_Connector_Exec,
     TestTopic_Seq,
-    ::CCM_DDS::TestTopic::CCM_Writer,
-    ::CCM_DDS::TestTopic::CCM_Updater,
-    ::CCM_DDS::TestTopic::CCM_Getter,
-    ::CCM_DDS::TestTopic::CCM_Reader,
+    ::CSL_DeadlineTest::TestTopicConn::CCM_Writer,
+    ::CSL_DeadlineTest::TestTopicConn::CCM_Updater,
+    ::CSL_DeadlineTest::TestTopicConn::CCM_Getter,
+    ::CSL_DeadlineTest::TestTopicConn::CCM_Reader,
     ::CSL_DeadlineTest::CCM_CSL_DeadlineTest_Connector_Context,
-    ::CCM_DDS::TestTopic::Listener,
-    ::CCM_DDS::TestTopic::StateListener,
+    ::CSL_DeadlineTest::TestTopicConn::Listener,
+    ::CSL_DeadlineTest::TestTopicConn::StateListener,
     ::CCM_DDS::ConnectorStatusListener> TestTopic_Connector_Traits;
 
   class CSL_DEADLINETEST_CONNECTOR_EXEC_Export CSL_DeadlineTest_Connector_exec_i :
