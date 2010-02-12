@@ -17,6 +17,9 @@
 #include "dds4ccm/impl/ndds/DDS4CCM_Traits.h"
 #include "dds4ccm/impl/ndds/DDS_Event_Connector_T.h"
 
+#include "connectors/dds4ccm/idl/ccm_ddsC.h"
+#include "Base/Hello_BaseC.h"
+
 #include "Base/Hello_BaseSupport.h"
 
 namespace CIAO_Hello_Hello_Connector_Impl
