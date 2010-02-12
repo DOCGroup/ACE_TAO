@@ -1,3 +1,33 @@
+Fri Feb 12 11:31:59 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
+          Changed number of RELIABLE_READER_ACTIVITY_CHANGED_STATUS. This now
+          reflects the DDS_RELIABLE_READER_ACTIVITY_CHANGED_STATUS.
+
+        * connectors/dds4ccm/tests/CSLUnexpStat/Connector/CSL_USTest_Connector.idl:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Connector/CSL_USTest_Connector_exec.h:
+          Moved typed connector to the test module.
+
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver.idl:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.cpp:
+          Added a reader. Stopping reading after a while.
+          Also changes related to movement of the connector.
+
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender.idl:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.h:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.cpp:
+          Changed timing.
+
+        * connectors/dds4ccm/tests/CSLUnexpStat/descriptors/Plan.cdp:
+          Added reader connection.
+
+        * connectors/dds4ccm/tests/CSLUnexpStat/descriptors/USER_QOS_PROFILES.xml:
+          Removed some unused settings.
+
+        * connectors/dds4ccm/tests/CSLUnexpStat/descriptors/run_test.pl:
+          Sleeping 20 seconds.
+
 Thu Feb 11 15:41:08 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/docs/TestCoverage.ods:

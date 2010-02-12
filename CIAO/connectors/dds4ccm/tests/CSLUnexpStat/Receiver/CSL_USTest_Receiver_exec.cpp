@@ -13,6 +13,23 @@
 namespace CIAO_CSL_USTest_Receiver_Impl
 {
   //============================================================
+  // Pulser
+  //============================================================
+  Pulser::Pulser (Receiver_exec_i &callback)
+    : callback_ (callback)
+  {
+  }
+
+  int
+  Pulser::handle_timeout (const ACE_Time_Value &, const void *)
+  {
+    // Notify the subscribers
+    this->callback_.read_all ();
+    return 0;
+  }
+
+
+  //============================================================
   // ConnectorStatusListener_exec_i
   //============================================================
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &subscription_matched_received,
@@ -93,8 +110,10 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   //============================================================
   // TestTopic_RawListener_exec_i
   //============================================================
-  TestTopic_RawListener_exec_i::TestTopic_RawListener_exec_i (Atomic_ULong &received)
-      : received_ (received)
+  TestTopic_RawListener_exec_i::TestTopic_RawListener_exec_i (Atomic_ULong &received,
+                                                              Receiver_exec_i &callback)
+      : received_ (received),
+        callback_ (callback)
   {
   }
 
@@ -113,6 +132,8 @@ namespace CIAO_CSL_USTest_Receiver_Impl
             ACE_TEXT ("received test_topic_info for <%C> at %u\n"),
             an_instance.key.in (),
             an_instance.x));
+    if (this->received_ == 10)
+      this->callback_.stop ();
   }
 
   void
@@ -134,6 +155,8 @@ namespace CIAO_CSL_USTest_Receiver_Impl
       thread_id_listener_liveliness_changed_ (0),
       received_(0)
   {
+    this->lc_ = ::CCM_DDS::DataListenerControl::_nil ();
+    this->pulser_= new Pulser (*this);
   }
 
   Receiver_exec_i::~Receiver_exec_i (void)
@@ -142,17 +165,23 @@ namespace CIAO_CSL_USTest_Receiver_Impl
 
   // Port operations.
   ::CCM_DDS::CCM_PortStatusListener_ptr
-  Receiver_exec_i::get_info_out_status (void)
+  Receiver_exec_i::get_info_read_status (void)
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new TestTopic RAW listener\n")));
     return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
-  ::CCM_DDS::TestTopic::CCM_Listener_ptr
+  ::CCM_DDS::CCM_PortStatusListener_ptr
+  Receiver_exec_i::get_info_out_status (void)
+  {
+    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
+  }
+
+  ::CSL_USTest::TestTopicConn::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new TestTopic RAW listener\n")));
-    return new TestTopic_RawListener_exec_i (this->received_);
+    return new TestTopic_RawListener_exec_i (this->received_,
+                                             *this);
   }
 
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
@@ -180,21 +209,90 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   }
 
   void
+  Receiver_exec_i::stop (void)
+  {
+    if (CORBA::is_nil (this->lc_.in ()))
+      {
+        ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
+      }
+    this->lc_->mode (::CCM_DDS::NOT_ENABLED);
+  }
+
+  void
+  Receiver_exec_i::start (void)
+  {
+    this->lc_ = this->context_->get_connection_info_out_data_control ();
+    if (CORBA::is_nil (this->lc_.in ()))
+      {
+        ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
+      }
+    this->lc_->mode (::CCM_DDS::NOT_ENABLED);
+  }
+
+  void
   Receiver_exec_i::configuration_complete (void)
   {
+    this->reader_ = this->context_->get_connection_info_read_data ();
+  }
+
+  void
+  Receiver_exec_i::read_all ()
+  {
+    try
+      {
+        TestTopic_Seq           *readertest_info_seq;
+        ::CCM_DDS::ReadInfoSeq  *readinfo_seq;
+        if (this->received_ < 30)
+          {
+            this->reader_->read_all (
+                    readertest_info_seq,
+                    readinfo_seq);
+            ACE_DEBUG ((LM_DEBUG, "Read %u samples\n",
+                                  readinfo_seq->length ()));
+            this->received_ += readinfo_seq->length ();
+          }
+        else
+          {
+            this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->pulser_);
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::start :Stop reading.\n")));
+            delete this->pulser_;
+          }
+      }
+    catch (const CCM_DDS::NonExistent& ex)
+      {
+        for (CORBA::ULong i = 0; i < ex.indexes.length (); ++i)
+          {
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ALL: ")
+                  ACE_TEXT ("caught expected exception: index <%u>\n"),
+                  ex.indexes[i]));
+          }
+      }
+    catch (const CCM_DDS::InternalError& ex)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ALL: ")
+              ACE_TEXT ("caught InternalError exception: retval <%u>\n"),
+              ex.error_code));
+      }
+    catch (const CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("ERROR: READ ALL: ");
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT ("ERROR: Receiver_exec_i::read_all : Exception caught\n")));
+      }
   }
 
   void
   Receiver_exec_i::ccm_activate (void)
   {
-    ::CCM_DDS::DataListenerControl_var lc =
-    this->context_->get_connection_info_out_data_control ();
-    if (CORBA::is_nil (lc.in ()))
+    if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
+                this->pulser_,
+                0,
+                ACE_Time_Value (6, 0),
+                ACE_Time_Value (3, 0)) == -1)
       {
-        ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
-        throw CORBA::INTERNAL ();
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
+                              ACE_TEXT ("Error scheduling timer\n")));
       }
-    lc->mode (::CCM_DDS::ONE_BY_ONE);
   }
 
   void

@@ -30,28 +30,19 @@ RTI Data Distribution Service user manual.
       <datawriter_qos>
         <reliability>
           <kind>RELIABLE_RELIABILITY_QOS</kind>
-          <max_blocking_time>
-            <sec>1</sec>
-            <nanosec>0</nanosec>
-          </max_blocking_time>
         </reliability>
         <durability>
           <kind>TRANSIENT_DURABILITY_QOS</kind>
         </durability>
         <history>
-          <kind>KEEP_ALL_HISTORY_QOS</kind>
+          <kind>KEEP_LAST_HISTORY_QOS</kind>
+          <depth>200</depth>
         </history>
         <protocol>
           <rtps_reliable_writer>
             <max_heartbeat_retries>1</max_heartbeat_retries>
           </rtps_reliable_writer>
         </protocol>
-        <deadline>
-          <period>
-            <sec>0</sec>
-            <nanosec>10000</nanosec>
-          </period>
-        </deadline>
         <liveliness>
           <kind>DDS_MANUAL_BY_TOPIC_LIVELINESS_QOS</kind>
           <lease_duration>
@@ -66,7 +57,8 @@ RTI Data Distribution Service user manual.
           <kind>RELIABLE_RELIABILITY_QOS</kind>
         </reliability>
         <history>
-          <kind>KEEP_ALL_HISTORY_QOS</kind>
+          <kind>KEEP_LAST_HISTORY_QOS</kind>
+          <depth>20</depth>
         </history>
         <durability>
           <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
