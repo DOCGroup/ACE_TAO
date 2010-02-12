@@ -210,7 +210,7 @@ BE_produce (void)
       BE_visit_root (root_is_visitor, "implementation skeleton");
     }
     
-  if (be_global->gen_ciao_svnt ())
+  if (be_global->gen_ciao_svnt () && idl_global->component_seen_)
     {
       ctx.state (TAO_CodeGen::TAO_ROOT_SVH);
       be_visitor_root_svh root_svh_visitor (&ctx);

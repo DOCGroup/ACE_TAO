@@ -13,13 +13,14 @@
 //=============================================================================
 
 
-be_visitor_component_exh::be_visitor_component_exh (be_visitor_context *ctx)
+be_visitor_component_exh::be_visitor_component_exh (
+      be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
 {
   // This is initialized in the base class to svnt_export_macro()
   // or skel_export_macro(), since there are many more visitor
   // classes generating servant code. So we can just override
-  // all that here
+  // all that here.
   export_macro_ = be_global->exec_export_macro ();
 }
 
