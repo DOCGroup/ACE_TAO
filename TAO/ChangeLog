@@ -1,3 +1,31 @@
+Fri Feb 12 22:08:24 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+        * TAO_IDL/be/be_visitor_module.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be_include/be_visitor_root/root.h:
+        * TAO_IDL/be_include/be_visitor_module/module.h:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/util/utl_global.cpp:
+
+          - Added pragma indicating RTI DDS TypeSupport
+            header file to include in the connector implementation
+            header file.
+
+          - Added generation of client stub header file
+            inclusion in connector implementation header file.
+
+          - Cosmetic changes to be_codegen.cpp
+
+          - Added boilerplate for the spawning of the connector
+            implementation visitors.
+
 Thu Feb 11 19:12:11 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
