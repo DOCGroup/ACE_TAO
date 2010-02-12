@@ -1,3 +1,11 @@
+Fri Feb 12 15:50:36 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+          Reusing topic when reusing a domainparticipant.
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+          Optimized logging.
+
 Fri Feb 12 13:18:06 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl:

@@ -306,20 +306,20 @@ namespace CIAO
           }
 
         DDSTopic *rti_topic = this->impl ()->create_topic (impl_name,
-                                                         type_name,
-                                                         DDS_TOPIC_QOS_DEFAULT,
-                                                         rti_tl,
-                                                         mask);
+                                                        type_name,
+                                                        DDS_TOPIC_QOS_DEFAULT,
+                                                        rti_tl,
+                                                        mask);
         if (rti_topic == 0)
           {
             CIAO_ERROR (1, (LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic - "
-                         "Error: RTI DDS returned a nil topic\n"));
+                        "Error: RTI DDS returned a nil topic\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
 
         CIAO_DEBUG (6, (LM_INFO, CLINFO "DDS_DomainParticipant_i::create_topic - "
-                     "Successfully created topic with name %C and type %C\n",
-                     impl_name, type_name));
+                    "Successfully created topic with name %C and type %C\n",
+                    impl_name, type_name));
 
         ::DDS::Topic_var retval = new RTI_Topic_i ();
         RTI_Topic_i *tp = dynamic_cast < RTI_Topic_i *> (retval.in ());
@@ -357,34 +357,48 @@ namespace CIAO
                      "Attempting to create topic with name %C and type %C\n",
                      impl_name, type_name));
 
-        RTI_TopicListener_i *rti_tl = 0;
-        if (!CORBA::is_nil (a_listener))
+        ::DDS::Duration_t dur;
+        dur.sec = 0;
+        dur.nanosec = 10000;
+        ::DDS::Topic_var tp = this->find_topic (impl_name, dur);
+        if (CORBA::is_nil (tp))
           {
-            rti_tl = new RTI_TopicListener_i (a_listener);
-          }
-        DDSTopic *rti_topic = this->impl ()->create_topic_with_profile (impl_name,
-                                                         type_name,
-                                                         library_name,
-                                                         profile_name,
-                                                         rti_tl,
-                                                         mask);
+            RTI_TopicListener_i *rti_tl = 0;
+            if (!CORBA::is_nil (a_listener))
+              {
+                rti_tl = new RTI_TopicListener_i (a_listener);
+              }
+            DDSTopic *rti_topic = this->impl ()->create_topic_with_profile (impl_name,
+                                                            type_name,
+                                                            library_name,
+                                                            profile_name,
+                                                            rti_tl,
+                                                            mask);
 
-        if (rti_topic == 0)
+            if (rti_topic == 0)
+              {
+                CIAO_ERROR (1, (LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic_with_profile - "
+                            "Error: RTI DDS returned a nil topic\n"));
+                throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+              }
+
+            CIAO_DEBUG (6, (LM_INFO, CLINFO "DDS_DomainParticipant_i::create_topic_with_profile - "
+                        "Successfully created topic with name %C and type %C\n",
+                        impl_name, type_name));
+
+            ::DDS::Topic_var retval = new RTI_Topic_i ();
+            RTI_Topic_i *tp = dynamic_cast < RTI_Topic_i *> (retval.in ());
+            tp->set_impl (rti_topic);
+
+            return retval._retn ();
+          }
+        else
           {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic - "
-                         "Error: RTI DDS returned a nil topic\n"));
-            throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+            CIAO_DEBUG (6, (LM_DEBUG, CLINFO "DDS_DomainParticipant_i::create_topic_with_profile - "
+                        "Re-using topic  with name %C and type %C.\n",
+                        impl_name, type_name));
+            return ::DDS::Topic::_duplicate (tp.in ());
           }
-
-        CIAO_DEBUG (6, (LM_INFO, CLINFO "DDS_DomainParticipant_i::create_topic - "
-                     "Successfully created topic with name %C and type %C\n",
-                     impl_name, type_name));
-
-        ::DDS::Topic_var retval = new RTI_Topic_i ();
-        RTI_Topic_i *tp = dynamic_cast < RTI_Topic_i *> (retval.in ());
-        tp->set_impl (rti_topic);
-
-        return retval._retn ();
       }
 
       ::DDS::ReturnCode_t
@@ -425,10 +439,14 @@ namespace CIAO
         ::DDS_Duration_t ddstimeout;
         ddstimeout <<= timeout;
         ::DDSTopic* rti_topic = this->impl ()->find_topic (impl_name, ddstimeout);
-        ::DDS::Topic_var retval = new RTI_Topic_i ();
-        RTI_Topic_i *tp = dynamic_cast < RTI_Topic_i *> (retval.in ());
-        tp->set_impl (rti_topic);
-        return retval._retn ();
+        if (rti_topic)
+          {
+            ::DDS::Topic_var retval = new RTI_Topic_i ();
+            RTI_Topic_i *tp = dynamic_cast < RTI_Topic_i *> (retval.in ());
+            tp->set_impl (rti_topic);
+            return retval._retn ();
+          }
+        return ::DDS::Topic::_nil ();
       }
 
       ::DDS::TopicDescription_ptr
