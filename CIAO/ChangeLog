@@ -1,3 +1,10 @@
+Fri Feb 12 19:08:36 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dance_applicationmanager.mpb:
+        * MPC/config/dance_applicationmanager_skel.mpb:
+        * MPC/config/dance_applicationmanager_stub.mpb:
+          New base projects for the dance am library
+
 Fri Feb 12 18:49:36 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector_exec.h:
