@@ -101,8 +101,8 @@ namespace CIAO_CSL_SRTest_Sender_Impl
     void start (void);
     void stop (void);
 
-    CCM_DDS::TestTopic::Writer_var writer_;
-   ::CSL_SRTest::CCM_Sender_Context_var context_;
+    ::CSL_SRTest::TestTopicConn::Writer_var writer_;
+    ::CSL_SRTest::CCM_Sender_Context_var context_;
     pulse_Generator * ticker_;
 
     Atomic_Boolean rejected_;

@@ -112,7 +112,7 @@ namespace CIAO_CSL_QoSTest_Receiver_Impl
   {
   }
 
-  ::CCM_DDS::TestTopic::CCM_Listener_ptr
+  ::CSL_QoSTest::TestTopicConn::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new TestTopic RAW listener\n")));

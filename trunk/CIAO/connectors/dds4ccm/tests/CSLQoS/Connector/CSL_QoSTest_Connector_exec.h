@@ -34,13 +34,13 @@ namespace CIAO_CSL_QoSTest_CSL_QoSTest_Connector_Impl
   typedef CIAO::DDS4CCM::Connector_Traits <
     ::CIAO_CSL_QoSTest_CSL_QoSTest_Connector_Impl::CSL_QoSTest_Connector_Exec,
     TestTopic_Seq,
-    ::CCM_DDS::TestTopic::CCM_Writer,
-    ::CCM_DDS::TestTopic::CCM_Updater,
-    ::CCM_DDS::TestTopic::CCM_Getter,
-    ::CCM_DDS::TestTopic::CCM_Reader,
+    ::CSL_QoSTest::TestTopicConn::CCM_Writer,
+    ::CSL_QoSTest::TestTopicConn::CCM_Updater,
+    ::CSL_QoSTest::TestTopicConn::CCM_Getter,
+    ::CSL_QoSTest::TestTopicConn::CCM_Reader,
     ::CSL_QoSTest::CCM_CSL_QoSTest_Connector_Context,
-    ::CCM_DDS::TestTopic::Listener,
-    ::CCM_DDS::TestTopic::StateListener,
+    ::CSL_QoSTest::TestTopicConn::Listener,
+    ::CSL_QoSTest::TestTopicConn::StateListener,
     ::CCM_DDS::ConnectorStatusListener> TestTopic_Connector_Traits;
 
   class CSL_QOSTEST_CONNECTOR_EXEC_Export CSL_QoSTest_Connector_exec_i :
