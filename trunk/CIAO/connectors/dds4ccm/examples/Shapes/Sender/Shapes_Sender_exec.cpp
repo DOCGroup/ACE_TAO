@@ -9,9 +9,8 @@
 namespace CIAO_Shapes_Sender_Impl
 {
   //============================================================
-  // Pulse generator
+  // pulse_Generator
   //============================================================
-
   pulse_Generator::pulse_Generator (Sender_exec_i &callback)
     : pulse_callback_ (callback)
   {
@@ -24,15 +23,13 @@ namespace CIAO_Shapes_Sender_Impl
   int
   pulse_Generator::handle_timeout (const ACE_Time_Value &, const void *)
   {
-    // Notify the subscribers
     this->pulse_callback_.tick ();
     return 0;
   }
 
   //============================================================
-  // Component Executor Implementation Class: Sender_exec_i
+  // Sender_exec_i
   //============================================================
-
   Sender_exec_i::Sender_exec_i (void)
     : rate_ (1),
       max_x_ (100),
