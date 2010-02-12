@@ -1,3 +1,8 @@
+Fri Feb 12 18:31:36 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Null_Component_Glfa/Null_Component.mpc:
+          Removed not needed after
+
 Fri Feb 12 15:50:36 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
