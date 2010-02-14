@@ -1,3 +1,12 @@
+Sun Feb 14 15:57:47 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        
+          Changed include generation for executor IDL files to
+          always generate include of CCM_Container.idl, regardless
+          of whether it is pulled in indirectly or not. An optimizing
+          check may be added at a later date.
+
 Fri Feb 12 22:08:24 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/idl_global.h:
