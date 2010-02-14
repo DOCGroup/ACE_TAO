@@ -1,0 +1,26 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 98-ignore-win32-acdefun-error.dpatch by  <pgquiles@mcpau>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Try to ignore a Win32-specific error about AC_DEFUN and AC_REQUIRE. 
+## DP: This is actually just a hack, the proper fix is finding out why MPC (or 
+## DP: whoever is generating configure.ac) is outputting everything in the 
+## DP: same line instead of starting _LT... in the next line.
+
+@DPATCH@
+
+--- ACE_wrappers/configure.ac.original	2009-12-14 10:32:45.882251067 +0100
++++ ACE_wrappers/configure.ac	2009-12-14 10:39:47.335256641 +0100
+@@ -372,9 +372,9 @@ put the `dlopen' option into LT_INIT's f
+ 
+ 
+ dnl Enable support for "clean" DLLs.
+-AC_REQUIRE(AC_CANONICAL_HOST)_LT_SET_OPTION([LT_INIT],[win32-dll])
+-AC_DIAGNOSE([obsolete],[AC_LIBTOOL_WIN32_DLL: Remove this warning and the call to _LT_SET_OPTION when you
+-put the `win32-dll' option into LT_INIT's first parameter.])
++dnl AC_REQUIRE(AC_CANONICAL_HOST)_LT_SET_OPTION([LT_INIT],[win32-dll])
++dnl AC_DIAGNOSE([obsolete],[AC_LIBTOOL_WIN32_DLL: Remove this warning and the call to _LT_SET_OPTION when you
++dnl put the `win32-dll' option into LT_INIT's first parameter.])
+ 
+ 
+ dnl

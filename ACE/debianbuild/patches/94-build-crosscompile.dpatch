@@ -1,0 +1,21 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 94-build-crosscompile.dpatch by  <pgquiles@elpauer.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Define BUILD_CROSS_COMPILE, meaning we are cross-compiling
+
+@DPATCH@
+
+diff -rupd ACE_wrappers.orig/configure.ac ACE_wrappers/configure.ac
+--- ACE_wrappers.orig/configure.ac	2009-11-05 22:48:00.000000000 +0100
++++ ACE_wrappers/configure.ac	2009-11-06 00:03:42.000000000 +0100
+@@ -135,6 +135,9 @@ AC_LANG([C++])
+ dnl If we are cross compiling disable certain things in the Makefiles.
+ AM_CONDITIONAL([ACE_CROSS_COMPILED], [test X$cross_compiling = Xyes])
+ 
++dnl If we are cross compiling disable certain things in the Makefiles.
++AM_CONDITIONAL([BUILD_CROSS_COMPILE], [test X$cross_compiling = Xyes])
++
+ dnl Look for the best awk-style program available.
+ AC_PROG_AWK
+ 
