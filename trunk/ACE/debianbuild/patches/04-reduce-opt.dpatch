@@ -2,7 +2,8 @@
 ## 04-reduce-opt.dpatch by Thomas Girard <thomas.g.girard@free.fr>
 ##
 ## All lines beginning with `## DP:' are a description of the patch.
-## DP: drop -O3 default optimization level
+## DP: drop -O3 default optimization level. Please note that
+## DP: -O2 level is set when using autoconf method.
 
 @DPATCH@
 --- ACE_wrappers.orig/m4/compiler.m4
