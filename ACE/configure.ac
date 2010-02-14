@@ -135,6 +135,9 @@ AC_LANG([C++])
 dnl If we are cross compiling disable certain things in the Makefiles.
 AM_CONDITIONAL([ACE_CROSS_COMPILED], [test X$cross_compiling = Xyes])
 
+dnl If we are cross compiling disable certain things in the Makefiles.
+AM_CONDITIONAL([BUILD_CROSS_COMPILE], [test X$cross_compiling = Xyes])
+
 dnl Look for the best awk-style program available.
 AC_PROG_AWK
 
