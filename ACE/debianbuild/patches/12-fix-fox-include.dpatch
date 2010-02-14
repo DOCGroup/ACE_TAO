@@ -5,19 +5,19 @@
 ## DP: drop fox/ prefix in include, it's correctly set by fox-config
 
 @DPATCH@
---- ACE_wrappers.orig/ace/FoxReactor/FoxReactor.h
-+++ ACE_wrappers/ace/FoxReactor/FoxReactor.h
-@@ -27,7 +27,7 @@
- 
+--- ACE_wrappers.orig/ace/FoxReactor/FoxReactor.h	2009-12-14 00:42:27.802165159 +0100
++++ ACE_wrappers/ace/FoxReactor/FoxReactor.h	2009-12-14 00:49:07.535266080 +0100
+@@ -28,7 +28,7 @@
  #include "ace/Select_Reactor.h"
+ #include "ace/FoxReactor/ACE_FoxReactor_export.h"
  
 -#include <fox/fx.h>
 +#include <fx.h>
  
  /**
   * @class ACE_FoxReactor
---- ACE_wrappers.orig/TAO/tao/FoxResource/FoxResource_Loader.h
-+++ ACE_wrappers/TAO/tao/FoxResource/FoxResource_Loader.h
+--- ACE_wrappers.orig/TAO/tao/FoxResource/FoxResource_Loader.h	2009-12-14 00:42:09.042167248 +0100
++++ ACE_wrappers/TAO/tao/FoxResource/FoxResource_Loader.h	2009-12-14 00:47:36.175273810 +0100
 @@ -24,7 +24,7 @@
  
  #include "tao/Versioned_Namespace.h"

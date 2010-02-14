@@ -1,7 +1,9 @@
 #! /bin/sh /usr/share/dpatch/dpatch-run
 ## 02-fltk-no-gl.dpatch by Thomas Girard <thomas.g.girard@free.fr>
 ##
-## DP: do not link against libfltk_gl
+## DP: Do not link against libfltk_gl; it's not needed because
+## DP: the fltk reactor does not use any fltk_gl functions. Hence we
+## DP: avoid a useless link.
 
 @DPATCH@
 --- ACE_wrappers.orig/m4/ace.m4
