@@ -1393,6 +1393,7 @@ if test "$no_x" != yes; then
    AC_SUBST(ACE_XT_LIBS)
 fi
 AM_CONDITIONAL([BUILD_ATHENA], true)
+AM_CONDITIONAL([BUILD_ATHENA3D], true)
 AM_CONDITIONAL([BUILD_MOTIF], false)
 ])
 

@@ -1,3 +1,17 @@
+Sun Feb 14 19:46:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+        * m4/ace.m4:
+          Integrated patches from below, created by Pau Garcia i Quiles
+          <pgquiles at elpauer dot org>
+
+        * debianbuild/patches/19-gcc43.dpatch:
+          Removed, not needed anymore
+
+        * debianbuild/patches/94-build-crosscompile.dpatch:
+        * debianbuild/patches/96-build-athena3d.dpatch:
+          Removed, integrated into trunk
+
 Sun Feb 14 07:22:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debianbuild/*:
