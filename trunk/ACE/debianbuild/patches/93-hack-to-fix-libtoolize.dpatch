@@ -1,0 +1,19 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 93-hack-to-fix-libtoolize.dpatch by Pau Garcia i Quiles <pgquiles@elpauer.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Fix 'libtoolize: AC_CONFIG_MACRO_DIR([../m4]) conflicts with 
+## DP: ACLOCAL_AMFLAGS=-I m4.'
+
+@DPATCH@
+--- ACE_wrappers.orig/TAO/Makefile.am   2009-11-05 22:47:19.000000000 +0100
++++ ACE_wrappers/TAO/Makefile.am        2009-11-05 22:48:46.000000000 +0100
+@@ -24,7 +24,7 @@ SUBDIRS += performance-tests interop-tes
+ endif
+  
+ ACLOCAL = @ACLOCAL@
+-ACLOCAL_AMFLAGS = -I m4 -I ../m4
++ACLOCAL_AMFLAGS = -I ../m4
+ AUTOMAKE_OPTIONS = foreign
+    
+ EXTRA_DIST =  \
