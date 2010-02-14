@@ -1,0 +1,20 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 35-autoconf-fix-else-fi.dpatch by Thomas Girard <thomas.g.girard@free.fr>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Remove an invalid empty else fi
+
+@DPATCH@
+--- ACE_wrappers.orig/configure.ac
++++ ACE_wrappers/configure.ac
+@@ -5109,9 +5109,7 @@
+                     AC_DEFINE([ACE_HAS_POSIX_GETPWNAM_R])
+                   fi
+                  ],
+-                 [
+-                  dnl Nothing to do!
+-                 ])
++		 )
+                 ],
+                 [AC_DEFINE([ACE_LACKS_PWD_REENTRANT_FUNCTIONS])])
+ 

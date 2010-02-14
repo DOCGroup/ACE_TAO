@@ -1,0 +1,21 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 97-fix-empty-elseif.dpatch by  <pgquiles@elpauer.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: For some reason, the shell does not grasp empty if-else-fi. Add a dummy 
+## DP: 'echo' to make it happy.
+
+@DPATCH@
+
+diff -rupd ACE_wrappers.orig/configure ACE_wrappers/configure
+--- ACE_wrappers.orig/configure	2009-11-24 03:32:32.000000000 +0100
++++ ACE_wrappers/configure	2009-11-24 03:39:31.000000000 +0100
+@@ -35856,7 +35856,7 @@ if ac_fn_cxx_try_compile "$LINENO"; then
+ 
+ else
+ 
+-
++echo
+ fi
+ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+ 
