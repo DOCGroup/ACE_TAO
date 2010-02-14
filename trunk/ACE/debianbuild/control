@@ -2,10 +2,10 @@ Source: ace
 Section: devel
 Priority: optional
 Maintainer: Debian ACE+TAO maintainers <pkg-ace-devel@lists.alioth.debian.org>
-Uploaders: Konstantinos Margaritis <markos@debian.org>, Brian Nelson <pyro@debian.org>, Thomas Girard <thomas.g.girard@free.fr>
-Build-Depends: debhelper (>= 5), libssl-dev (>= 0.9.7d), dpatch (>= 2.0.10), libxt-dev (>= 4.3.0), libfltk1.1-dev (>= 1.1.4), libqt4-dev (>= 4.4~rc1-4), tk-dev (>= 8.4.7), libfox-1.6-dev, zlib1g-dev, libzzip-dev, docbook-to-man, bzip2, autoconf, automake, libtool, autotools-dev, doxygen
+Uploaders: Thomas Girard <thomas.g.girard@free.fr>, Pau Garcia i Quiles <pgquiles@elpauer.org>
+Build-Depends: debhelper (>= 5), libssl-dev (>= 0.9.7d), dpatch (>= 2.0.10), libxt-dev (>= 4.3.0), libfltk1.1-dev (>= 1.1.4), libqt4-dev (>= 4.4~rc1-4), tk-dev (>= 8.4.7), libfox-1.6-dev, zlib1g-dev, libzzip-dev, docbook-to-man, bzip2, autoconf, automake, libtool, autotools-dev, doxygen, graphviz
 Build-Conflicts: autoconf2.13, automake1.4
-Standards-Version: 3.8.3.0
+Standards-Version: 3.8.3
 Vcs-Svn: svn://svn.debian.org/svn/pkg-ace/trunk
 Vcs-Browser: http://svn.debian.org/wsvn/pkg-ace/trunk
 Homepage: http://www.cs.wustl.edu/~schmidt/ACE.html
