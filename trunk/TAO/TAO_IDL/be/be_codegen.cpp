@@ -3243,20 +3243,15 @@ TAO_CodeGen::gen_exec_src_includes (void)
 void
 TAO_CodeGen::gen_exec_idl_includes (void)
 {
-  ACE_Unbounded_Queue<char *> &lem_file_names =
-    idl_global->ciao_lem_file_names ();
-  
-  // Otherwise it will be included indirectly.
-  if (lem_file_names.size () == 0)
-    {  
-      this->ciao_exec_idl_->print (
-        "#include \"ccm/CCM_Container.idl\"");
-    }
+  this->gen_standard_include (
+    this->ciao_exec_idl_,
+    "ccm/CCM_Container.idl");
 
   if (be_global->ami4ccm_call_back ())
     {
-      this->ciao_exec_idl_->print (
-        "\n#include \"connectors/ami4ccm/ami4ccm/ami4ccm.idl\"");
+      this->gen_standard_include (
+        this->ciao_exec_idl_,
+        "connectors/ami4ccm/ami4ccm/ami4ccm.idl");
     }
 
   this->gen_standard_include (
@@ -3266,7 +3261,7 @@ TAO_CodeGen::gen_exec_idl_includes (void)
   char **path_tmp  = 0;
 
   for (ACE_Unbounded_Queue_Iterator<char *>riter (
-         lem_file_names);
+         idl_global->ciao_lem_file_names ());
        riter.done () == 0;
        riter.advance ())
     {
