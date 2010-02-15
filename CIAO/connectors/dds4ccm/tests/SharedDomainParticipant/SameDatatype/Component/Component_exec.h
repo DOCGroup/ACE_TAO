@@ -18,7 +18,9 @@
 class SharedDPTest1DataWriter;
 class SharedDPTest2DataWriter;
 class SharedDPTest3DataWriter;
+class SharedDPTest4DataWriter;
 class DDSDomainParticipant;
+class DDSTopic;
 
 namespace CIAO_SharedDP_SharedDPComponent_Impl
 {
@@ -44,10 +46,17 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
     SharedDPTest1DataWriter * writer1_;
     SharedDPTest2DataWriter * writer2_;
     SharedDPTest3DataWriter * writer3_;
+    SharedDPTest4DataWriter * writer4_;
 
-    DDSDomainParticipant *  dds_dp1_;
-    DDSDomainParticipant *  dds_dp2_;
-    DDSDomainParticipant *  dds_dp3_;
+    DDSDomainParticipant * dds_dp1_;
+    DDSDomainParticipant * dds_dp2_;
+    DDSDomainParticipant * dds_dp3_;
+    DDSDomainParticipant * dds_dp4_;
+
+    DDSTopic * dds_tp1_;
+    DDSTopic * dds_tp2_;
+    DDSTopic * dds_tp3_;
+    DDSTopic * dds_tp4_;
   };
 
   extern "C" COMPONENT_EXEC_Export ::Components::EnterpriseComponent_ptr

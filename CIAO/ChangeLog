@@ -1,3 +1,15 @@
+Mon Feb 15 09:19:44 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+          Layout changes
+
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component_exec.h:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component_exec.cpp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/run_test.pl:
+          Extend test with two connectors sharing the same topic.
+
 Fri Feb 12 19:08:36 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/dance_applicationmanager.mpb:
