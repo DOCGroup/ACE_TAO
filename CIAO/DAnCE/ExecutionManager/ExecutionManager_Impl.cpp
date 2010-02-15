@@ -6,7 +6,6 @@
 #include "Config_Handlers/DnC_Dump.h"
 #include "DAnCE/Logger/Log_Macros.h"
 
-
 using namespace DAnCE;
 
 ExecutionManager_Impl::ExecutionManager_Impl (CORBA::ORB_ptr orb,
@@ -80,7 +79,7 @@ ExecutionManager_Impl::preparePlan (const ::Deployment::DeploymentPlan & plan,
 }
 
 ::Deployment::DomainApplicationManagers *
-ExecutionManager_Impl::getManagers ()
+ExecutionManager_Impl::getManagers (void)
 {
   DANCE_TRACE ( "ExecutionManager_Impl::getManagers ()");
 
@@ -136,7 +135,7 @@ ExecutionManager_Impl::destroyManager (::Deployment::DomainApplicationManager_pt
 // This one derived from ExecutionManagerDaemon interface
 // for shutdowning DAnCE agent
 void
-ExecutionManager_Impl::shutdown ()
+ExecutionManager_Impl::shutdown (void)
 {
   DANCE_TRACE ("ExecutionManager_Impl::shutdown");
   this->orb_->shutdown();
@@ -144,8 +143,7 @@ ExecutionManager_Impl::shutdown ()
 
 
 void
-ExecutionManager_Impl::add_node_manager (const char *name,
-                                         const char *ior)
+ExecutionManager_Impl::add_node_manager (const char *name, const char *ior)
 {
   DANCE_TRACE ("ExecutionManager_Impl::add_node_manager");
   this->locator_.store_ior (name, ior);

@@ -1,8 +1,8 @@
 // $Id$
 #include "DomainDataManager.h"
+#include "Deployment/Deployment_NodeManagerC.h"
 
 #include "Config_Handlers/DD_Handler.h"
-#include "Config_Handlers/DnC_Dump.h"
 #include "DAnCE/Logger/Log_Macros.h"
 
 #ifdef GEN_OSTREAM_OPS
@@ -58,9 +58,7 @@ int DAnCE::DomainDataManager::update_domain (const ::CORBA::StringSeq &,
   // Update the subset of the domain which the above
   // parameter corresponds to
 
-
-  //check the type of update ..
-
+  // Check the type of update ..
   switch (update_kind)
     {
       case ::Deployment::UpdateAll:
