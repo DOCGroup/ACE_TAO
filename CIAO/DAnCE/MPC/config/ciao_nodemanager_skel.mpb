@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : ciao_nodemanager_stub {
-  libs  += CIAO_NodeManager_skel
-  after += CIAO_NodeManager_skel
-}
