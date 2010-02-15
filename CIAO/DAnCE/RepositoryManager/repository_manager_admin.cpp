@@ -25,7 +25,7 @@ namespace DAnCE
       try
         {
           DANCE_DEBUG (9, (LM_TRACE, DLINFO "Admin::install_package - "
-                        "Installing package with URI: %C, name: %C\n",
+                        "Installing package with URI: %s, name: %s\n",
                         uri, name));
           this->rm_->installPackage (ACE_TEXT_ALWAYS_CHAR (name),
                                      ACE_TEXT_ALWAYS_CHAR (uri),
@@ -36,21 +36,21 @@ namespace DAnCE
       catch (Deployment::NameExists &)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO "Admin::install_package - "
-                        "Package with name %C already installed.\n",
+                        "Package with name %s already installed.\n",
                         name));
           return false;
         }
       catch (Deployment::PackageError &ex)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO "Admin::install_package - "
-                        "Internal error while installing package with name %C: %C - %C\n",
+                        "Internal error while installing package with name %s: %C - %C\n",
                         name, ex.source.in (), ex.reason.in ()));
           return false;
         }
       catch (CORBA::Exception &ex)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO "Admin::install_package - "
-                        "Unexpected CORBA Exception while installing package with name: %C.  Reason: %C\n",
+                        "Unexpected CORBA Exception while installing package with name: %s.  Reason: %C\n",
                         name,
                         ex._info ().c_str ()));
           return false;
@@ -58,7 +58,7 @@ namespace DAnCE
       catch (...)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO "Admin::install_package - "
-                        "Unexpected C++ exception while installing package with name: %C\n",
+                        "Unexpected C++ exception while installing package with name: %s\n",
                         name));
           return false;
         }
@@ -98,14 +98,14 @@ namespace DAnCE
       catch (Deployment::NoSuchName &)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO "Admin::uninstall_package - "
-                        "No package with the given UUID found: %C\n",
+                        "No package with the given UUID found: %s\n",
                         uuid));
           return false;
         }
       catch (CORBA::Exception &ex)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO "Admin::uninstall_package - "
-                        "Unexpected CORBA Exception while uninstalling package with uuid: %C.  Reason: %C\n",
+                        "Unexpected CORBA Exception while uninstalling package with uuid: %s. Reason: %C\n",
                         uuid,
                         ex._info ().c_str ()));
           return false;

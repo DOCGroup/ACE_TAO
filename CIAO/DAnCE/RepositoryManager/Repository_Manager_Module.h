@@ -105,13 +105,6 @@ class DAnCE_RepositoryManager_Module_Export DAnCE_RepositoryManager_Module
 
   void spawn_http (void);
 
-  /// Here we store the servants.
-  typedef ACE_Map_Manager < ACE_CString,
-                            DAnCE::RepositoryManagerDaemon_i *,
-                            ACE_Null_Mutex > Servant_Map;
-
-  Servant_Map rm_map_;
-
   CORBA::ORB_var orb_;
   CosNaming::NamingContext_var domain_nc_;
 

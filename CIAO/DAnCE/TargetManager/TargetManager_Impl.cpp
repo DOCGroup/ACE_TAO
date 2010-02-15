@@ -23,10 +23,6 @@ void TargetManagerDaemon_i::init (const ACE_TCHAR *file)
                                     file);
 }
 
-void TargetManagerDaemon_i::shutdown (void)
-{
-}
-
 ::Deployment::Domain * TargetManagerDaemon_i::getAllResources (void)
 {
   return DAnCE::DOMAIN_DATA_MANAGER->get_initial_domain ();

@@ -34,10 +34,9 @@ using namespace PC_Updater_T;
   //...
 
 
-  /*
-   *  PC_Updater Constructors
-   */
-
+/*
+ *  PC_Updater Constructors
+ */
 PC_Updater::PC_Updater (const char* server_path, const char* package)
 : server_path_ (server_path),
   file_list_ (),
@@ -55,10 +54,9 @@ PC_Updater::PC_Updater (ACE_CString& server_path, ACE_CString& package)
 {
 }
 
-  /*
-   *  PC_Updater - Destructor
-   */
-
+/*
+ *  PC_Updater - Destructor
+ */
 PC_Updater::~PC_Updater ()
 {
   this->clear_list ();
@@ -77,180 +75,173 @@ void PC_Updater::clear_list ()
 }
 
 
-  /*
-   *  PC_Updater - Object update methods
-   */
+/*
+ *  PC_Updater - Object update methods
+ */
 
 
-  // PackageConfiguration
+/// PackageConfiguration
+bool PC_Updater::update (::Deployment::PackageConfiguration &pc)
+{
+  //get the list of files in the package and figure out the names of all necessary files
+  if (!ZIP_Wrapper::file_list_info (const_cast <char*> (this->package_.c_str ()), this->file_list_))
+    return false;
 
-  bool PC_Updater::update (::Deployment::PackageConfiguration &pc)
+  update_sequence (pc.basePackage, this);
+
+  return this->success_;
+}
+
+
+/// ComponentInterfaceDescription
+void PC_Updater::update (::Deployment::ComponentInterfaceDescription &)
+{
+}
+
+/// Requirement
+void PC_Updater::update (::Deployment::Requirement &)
+{
+}
+
+
+/// ComponentExternalPortEndpoint
+void PC_Updater::update (::Deployment::ComponentExternalPortEndpoint &)
+{
+}
+
+/// ImplementationDependency
+void PC_Updater::update (Deployment::ImplementationDependency &)
+{
+}
+
+// ComponentPackageReference
+
+void PC_Updater::update (::Deployment::ComponentPackageReference &)
+{
+}
+
+// SubcomponentInstantiationDescription
+
+void PC_Updater::update (::Deployment::SubcomponentInstantiationDescription &sid)
+{
+  update_sequence (sid.basePackage, this);
+}
+
+// SubcomponentPortEndpoint
+
+void PC_Updater::update (::Deployment::SubcomponentPortEndpoint& )
+{
+}
+
+// AssemblyConnectionDescription
+
+void PC_Updater::update (::Deployment::AssemblyConnectionDescription &)
+{
+}
+
+
+// AssemblyPropertyMapping
+
+void
+PC_Updater::update (::Deployment::AssemblyPropertyMapping &)
+{
+}
+
+// ComponentAssemblyDescription
+
+void PC_Updater::update (::Deployment::ComponentAssemblyDescription& cad)
+{
+  update_sequence (cad.instance, this);
+}
+
+// ImplementationArtifactDescription
+
+void PC_Updater::update (::Deployment::ImplementationArtifactDescription &iad)
+{
+  const char* location = CORBA::string_dup (iad.location[0]);
+
+  //create an iterator
+  ACE_Double_Linked_List_Iterator<ZIP_File_Info> iter (this->file_list_);
+
+  //find the correct path and return
+  while (!iter.done ())
   {
-    //get the list of files in the package and figure out the names of all necessary files
-    if (!ZIP_Wrapper::file_list_info (const_cast <char*> (this->package_.c_str ()), this->file_list_))
-      return false;
+    const char* full_path = iter.next ()->name_.c_str ();
+    //weird. Need to call next to get current ?!?!
 
-    update_sequence (pc.basePackage, this);
-
-    return this->success_;
-  }
-
-
-  // ComponentInterfaceDescription
-
-  void PC_Updater::update (::Deployment::ComponentInterfaceDescription &)
-  {
-  }
-
-  // Requirement
-
-  void PC_Updater::update (::Deployment::Requirement &)
-  {
-  }
-
-
-  // ComponentExternalPortEndpoint
-
-  void PC_Updater::update (::Deployment::ComponentExternalPortEndpoint &)
-  {
-  }
-
-
-
-  // ImplementationDependency
-
-  void PC_Updater::update (Deployment::ImplementationDependency &)
-  {
-  }
-
-  // ComponentPackageReference
-
-  void PC_Updater::update (::Deployment::ComponentPackageReference &)
-  {
-  }
-
-  // SubcomponentInstantiationDescription
-
-  void PC_Updater::update (::Deployment::SubcomponentInstantiationDescription &sid)
-  {
-    update_sequence (sid.basePackage, this);
-  }
-
-  // SubcomponentPortEndpoint
-
-  void PC_Updater::update (::Deployment::SubcomponentPortEndpoint& )
-  {
-  }
-
-  // AssemblyConnectionDescription
-
-  void PC_Updater::update (::Deployment::AssemblyConnectionDescription &)
-  {
-  }
-
-
-  // AssemblyPropertyMapping
-
-  void
-  PC_Updater::update (::Deployment::AssemblyPropertyMapping &)
-  {
-  }
-
-  // ComponentAssemblyDescription
-
-  void PC_Updater::update (::Deployment::ComponentAssemblyDescription& cad)
-  {
-    update_sequence (cad.instance, this);
-  }
-
-  // ImplementationArtifactDescription
-
-  void PC_Updater::update (::Deployment::ImplementationArtifactDescription &iad)
-  {
-    const char* location = CORBA::string_dup (iad.location[0]);
-
-    //create an iterator
-    ACE_Double_Linked_List_Iterator<ZIP_File_Info> iter (this->file_list_);
-
-    //find the correct path and return
-    while (!iter.done ())
+    //is it an implementation artifact?
+    const char* name = ACE_OS::strstr (full_path, "implementations/");
+    if (name)
     {
-      const char* full_path = iter.next ()->name_.c_str ();
-      //weird. Need to call next to get current ?!?!
+      //now check if the name matches
+      name = ACE_OS::strstr (full_path, iad.location[0]);
 
-      //is it an implementation artifact?
-      const char* name = ACE_OS::strstr (full_path, "implementations/");
       if (name)
       {
-        //now check if the name matches
-        name = ACE_OS::strstr (full_path, iad.location[0]);
+        ACE_CString loc (this->server_path_);
+        loc += "/implementations/";
+        loc += location;
 
-        if (name)
-        {
-          ACE_CString loc (this->server_path_);
-          loc += "/implementations/";
-          loc += location;
+        iad.location[0] = CORBA::string_dup (loc.c_str ());
 
-          iad.location[0] = CORBA::string_dup (loc.c_str ());
-
-          //cout << "Location after update: " << iad.location[0] << endl << endl;
-          return;
-        }
+        //cout << "Location after update: " << iad.location[0] << endl << endl;
+        return;
       }
-      iter++;
     }
-
-    DANCE_ERROR (1, (LM_ERROR,
-               "[PC_Updater::update] Unable to update: %s!\n",
-               location));
-
-    this->success_ = false;
+    iter++;
   }
 
-  // NamedImplementationArtifact
+  DANCE_ERROR (1, (LM_ERROR,
+             "[PC_Updater::update] Unable to update: %s!\n",
+             location));
 
-  void PC_Updater::update (::Deployment::NamedImplementationArtifact &nia)
-  {
-    update (nia.referencedArtifact);
-  }
+  this->success_ = false;
+}
 
-  // ImplementationRequirement
-  void PC_Updater::update (::Deployment::ImplementationRequirement &)
-  {
-  }
+// NamedImplementationArtifact
 
-  // MonolithicImplementationDescription
-  void PC_Updater::update (::Deployment::MonolithicImplementationDescription &mid)
-  {
-    update_sequence (mid.primaryArtifact, this);
-  }
+void PC_Updater::update (::Deployment::NamedImplementationArtifact &nia)
+{
+  update (nia.referencedArtifact);
+}
 
-  // Capability
-  void PC_Updater::update (::Deployment::Capability &)
-  {
-  }
+// ImplementationRequirement
+void PC_Updater::update (::Deployment::ImplementationRequirement &)
+{
+}
 
-  // ComponentImplementationDescription
-  void PC_Updater::update (::Deployment::ComponentImplementationDescription &cid)
-  {
-    update_sequence (cid.assemblyImpl, this);
-    update_sequence (cid.monolithicImpl, this);
-  }
+// MonolithicImplementationDescription
+void PC_Updater::update (::Deployment::MonolithicImplementationDescription &mid)
+{
+  update_sequence (mid.primaryArtifact, this);
+}
 
-  // PackagedComponentImplementation
-  void PC_Updater::update (::Deployment::PackagedComponentImplementation &pci)
-  {
-    PC_Updater::update (pci.referencedImplementation);
-  }
+// Capability
+void PC_Updater::update (::Deployment::Capability &)
+{
+}
 
-  // ComponentPackageDescription
-  void PC_Updater::update (::Deployment::ComponentPackageDescription &comppkgdesc)
-  {
-    update_sequence (comppkgdesc.implementation, this);
-  }
+// ComponentImplementationDescription
+void PC_Updater::update (::Deployment::ComponentImplementationDescription &cid)
+{
+  update_sequence (cid.assemblyImpl, this);
+  update_sequence (cid.monolithicImpl, this);
+}
+
+// PackagedComponentImplementation
+void PC_Updater::update (::Deployment::PackagedComponentImplementation &pci)
+{
+  PC_Updater::update (pci.referencedImplementation);
+}
+
+// ComponentPackageDescription
+void PC_Updater::update (::Deployment::ComponentPackageDescription &comppkgdesc)
+{
+  update_sequence (comppkgdesc.implementation, this);
+}
 
 
-  // Property
-  void PC_Updater::update (Deployment::Property& )
-  {
-  }
+// Property
+void PC_Updater::update (Deployment::Property& )
+{
+}
