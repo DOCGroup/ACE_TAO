@@ -1,3 +1,12 @@
+Mon Feb 15 16:32:24 UTC 2010  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          - Changed connector grammar to allow an empty body
+          - Removed unused varables
+          - Added missing AST visitor creation
+
 Mon Feb 15 12:08:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * catior/README
