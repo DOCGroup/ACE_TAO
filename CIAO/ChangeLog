@@ -1,3 +1,12 @@
+Mon Feb 15 09:35:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Changed the startup sequence. Don't use a sleep.
+
+        * connectors/dds4ccm/examples/Hello/descriptors/run_receiver.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_sender.pl:
+          Extended test time.
+
 Mon Feb 15 09:19:44 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:

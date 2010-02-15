@@ -49,14 +49,11 @@ namespace CIAO_Hello_Sender_Impl
     ::DDS::Entity_ptr the_entity,
     ::DDS::StatusKind  status_kind)
   {
-    CORBA::ULong kind = status_kind;
     if(!this->ready_to_start_.value())
       {
-        if((!CORBA::is_nil(the_entity)) && (kind==DDS::PUBLICATION_MATCHED_STATUS))
-          {
-            //DataWriter find a DataReader that Matched the Topic
-            this->ready_to_start_ = true;
-          }
+        // be aware that when only the sender runs, ready_to_start will never
+        // be true.
+        this->ready_to_start_ = kind == DDS::PUBLICATION_MATCHED_STATUS;
       }
   }
 
@@ -127,13 +124,9 @@ namespace CIAO_Hello_Sender_Impl
   void
   Sender_exec_i::tick ()
   {
-    if (this->iteration_ == 0)
-    ACE_OS::sleep (1);
-
     // Start writing after DataWriter find first DataReader that matched the Topic
     // It is stll possible that other Readers aren't yet ready to recieve data, for that case in the
     // profile the durability is set to TRANSIENT_DURABILITY_QOS, so each Raeder should receive each message.
-    //
     if(this->ready_to_start_.value())
       {
         if (this->iteration_ < this->iterations_)
@@ -143,12 +136,16 @@ namespace CIAO_Hello_Sender_Impl
             new_msg->hello = msg.c_str ();
             new_msg->iterator = ++this->iteration_;
             this->writer_->write_one (*new_msg, ::DDS::HANDLE_NIL);
+            ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::tick - "
+                                  "Written sample: <%C> - <%u>\n",
+                                  msg.c_str (),
+                                  new_msg->iterator));
           }
         else
           { //we're done
             this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
           }
-      }
+       }
   }
 
   void
@@ -159,7 +156,7 @@ namespace CIAO_Hello_Sender_Impl
     if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
                 this->ticker_,
                 0,
-                ACE_Time_Value (5, usec),
+                ACE_Time_Value (3, usec),
                 ACE_Time_Value (0, usec)) == -1)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
@@ -220,7 +217,14 @@ namespace CIAO_Hello_Sender_Impl
   void
   Sender_exec_i::rate (::CORBA::ULong rate)
   {
-    this->rate_ = rate;
+    if (rate == 0)
+      {
+        rate = 1;
+      }
+    else
+      {
+        this->rate_ = rate;
+      }
   }
 
   // Port operations.
