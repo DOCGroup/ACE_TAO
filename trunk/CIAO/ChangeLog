@@ -1,3 +1,13 @@
+Mon Feb 15 14:04:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.cpp
+        * DAnCE/TargetManager/DomainDataManager.cpp
+        * DAnCE/TargetManager/DomainDataManager.h
+        * DAnCE/TargetManager/ResourceCommitmentManager.cpp
+        * DAnCE/TargetManager/ResourceCommitmentManager.h
+        * DAnCE/TargetManager/TargetManager_Impl.cpp
+          Various code improvements
+
 Mon Feb 15 13:32:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:

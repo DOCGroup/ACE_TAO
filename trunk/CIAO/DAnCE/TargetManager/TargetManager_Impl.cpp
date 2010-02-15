@@ -12,7 +12,6 @@ TargetManagerDaemon_i::TargetManagerDaemon_i (CORBA::ORB_ptr orb)
 {
 }
 
-// Implementation skeleton destructor
 TargetManagerDaemon_i::~TargetManagerDaemon_i (void)
 {
 }

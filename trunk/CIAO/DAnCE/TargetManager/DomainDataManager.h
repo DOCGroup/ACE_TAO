@@ -47,7 +47,6 @@ namespace DAnCE
      * @brief        This function is called from the Executor code
      *               to get the Original Domain data.
      * @return       Domain* The Initial Domain
-     *
      */
     ::Deployment::Domain* get_initial_domain (void);
 
@@ -69,13 +68,6 @@ namespace DAnCE
      * @brief The function releases the resources held by a plan
      */
     void releaseResources (const ::Deployment::ResourceCommitmentManager_ptr manager);
-
-    /**
-     * The node manager in turn stops the monitor
-     * @brief The function makes a call on the leaveDomain on the
-     *        NodeManager
-     */
-    void stop_monitors (void);
 
     /**
      * @brief The function allocates resources specified in the
