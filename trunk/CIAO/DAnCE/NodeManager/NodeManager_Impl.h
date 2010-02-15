@@ -52,8 +52,6 @@ namespace DAnCE
 
     virtual ::Deployment::Resources * getDynamicResources (void);
 
-    const char* getName(void);
-
   private:
     CORBA::ORB_var orb_;
     PortableServer::POA_var poa_;
