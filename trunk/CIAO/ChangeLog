@@ -1,3 +1,28 @@
+Mon Feb 15 19:48:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/DAnCE
+        * DAnCE/DAnCE/CIAO_Interfaces.mpc
+        * DAnCE/DAnCE/CIAO_NodeManagerDaemon.idl
+        * DAnCE/Deployment/ciao
+        * DAnCE/Deployment/ciao/CIAO_ExecutionManagerDaemon.idl
+        * DAnCE/Deployment/ciao/CIAO_Interfaces.mpc
+        * DAnCE/Deployment/ciao/CIAO_NodeManagerDaemon.idl
+        * DAnCE/Deployment/ciao/Module_Main.h
+        * DAnCE/ExecutionManager/Execution_Manager_Exec.cpp
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.h
+        * DAnCE/MPC/config/ciao_nodemanager_skel.mpb
+        * DAnCE/MPC/config/ciao_nodemanager_stub.mpb
+        * DAnCE/NodeManager/Node_Manager_Exec.cpp
+        * DAnCE/NodeManager/NodeManager_Impl.h
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.h
+        * DAnCE/Plan_Launcher/Plan_Launcher_Exec.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Module.cpp
+        * DAnCE/RepositoryManager/Repository_Manager_Exec.cpp
+        * DAnCE/TargetManager/Target_Manager_Exec.cpp
+        * DAnCE/TargetManager/TM_Client.mpc
+          Moved DAnCE/Deployment/ciao to DAnCE/DAnCE and removed the
+          CIAO_NodeManagerDeamon interface, it was not used at all
+
 Mon Feb 15 19:05:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Deployment/ciao/CIAO_NodeManagerDaemon.idl:
