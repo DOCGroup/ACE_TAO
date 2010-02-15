@@ -19,7 +19,7 @@
 #include "ace/SStringfwd.h"
 #include "orbsvcs/orbsvcs/CosNamingC.h"
 #include "ExecutionManager_Export.h"
-#include "Deployment/ciao/CIAO_ExecutionManagerDaemonS.h"
+#include "DAnCE/CIAO_ExecutionManagerDaemonS.h"
 #include "Deployment/Deployment_NodeManagerC.h"
 #include "DomainApplicationManager/DomainApplicationManager_Impl.h"
 #include "DomainApplicationManager/Node_Locator.h"

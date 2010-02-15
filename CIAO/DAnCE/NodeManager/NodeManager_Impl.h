@@ -26,7 +26,8 @@
 
 namespace DAnCE
 {
-  class NodeManager_Export NodeManager_Impl : public virtual POA_Deployment::NodeManager
+  class NodeManager_Export NodeManager_Impl :
+    public virtual POA_Deployment::NodeManager
   {
   public:
     /// The fixed listener port is caused by the usage of CCM Object locator
