@@ -47,7 +47,7 @@ project (CIAO_NodeManager_idl): ciaoidldefaults, anytypecode {
                   -Wb,skel_export_macro=CIAO_NODEMANAGER_SKEL_Export \
                   -Wb,skel_export_include=CIAO_NodeManager_skel_export.h \
                   -Gxhst -Gxhsk
-                  
+
   IDL_Files {
    CIAO_NodeManagerDaemon.idl
   }

@@ -1,6 +1,6 @@
 // $Id$
-#ifndef NODEMANAGER_IDL
-#define NODEMANAGER_IDL
+#ifndef DEPLOYMENT_NODEMANAGER_IDL
+#define DEPLOYMENT_NODEMANAGER_IDL
 
 #include "DAnCE/Deployment/Deployment.idl"
 #include "DAnCE/Deployment/Deployment_TargetManager.idl"
@@ -31,4 +31,4 @@ module Deployment {
   };
 };
 
-#endif /* NODEMANAGER_IDL */
+#endif /* DEPLOYMENT_NODEMANAGER_IDL */
