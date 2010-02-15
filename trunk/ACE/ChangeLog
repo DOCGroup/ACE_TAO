@@ -1,10 +1,23 @@
+Mon Feb 15 09:44:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debianbuild/patches/02-fltk-no-gl.dpatch
+        * debianbuild/patches/12-fix-fox-include.dpatch
+        * debianbuild/patches/13-fix-fox-errors.dpatch
+        * debianbuild/patches/14-autoconf-tao.dpatch
+        * debianbuild/patches/26-autoupdate.diff
+        * debianbuild/patches/35-autoconf-fix-else-fi.dpatch
+        * debianbuild/patches/36-autoconf-fix-fidone.dpatch
+        * debianbuild/patches/93-hack-to-fix-libtoolize.dpatch
+        * debianbuild/patches/98-ignore-win32-acdefun-error.diff
+        * debianbuild/patches/98-ignore-win32-acdefun-error.dpatch
+          Removed, not needed anymore, merged changes to trunk
+
 Mon Feb 15 09:40:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/platform_linux.GNU:
-        
+
           Added support for modelcpu (-mcpu=) and modeltune (-mtune=) flags.
-        
-        
+
 Mon Feb 15 09:38:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * m4/ace.m4:
