@@ -4570,6 +4570,7 @@ if test "$ace_user_enable_reentrant_funcs" = yes; then
                 [
                   dnl Nothing to do!
                 ]),
+                ],
                 [AC_DEFINE([ACE_LACKS_PWD_REENTRANT_FUNCTIONS])])
 
   AC_CHECK_FUNC([ctime_r],,)
