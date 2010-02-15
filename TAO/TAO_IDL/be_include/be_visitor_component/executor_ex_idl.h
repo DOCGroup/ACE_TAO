@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_COMPONENT_EXECUTOR_EX_IDL_H_
 #define _BE_COMPONENT_EXECUTOR_EX_IDL_H_
 
@@ -34,6 +33,7 @@ public:
   ~be_visitor_executor_ex_idl (void);
 
   virtual int visit_component (be_component *node);
+  virtual int visit_connector (be_connector *node);
 
   /// To regenerate attribute declarations.
   virtual int visit_attribute (be_attribute *node);

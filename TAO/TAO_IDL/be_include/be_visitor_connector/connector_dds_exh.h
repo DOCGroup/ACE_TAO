@@ -20,7 +20,7 @@
 class be_visitor_context;
 
 class be_visitor_connector_dds_exh
-  : public be_visitor_component_scope
+  : public be_visitor_connector_dds_ex_base
 {
   //
   // = TITLE
@@ -37,6 +37,12 @@ public:
   ~be_visitor_connector_dds_exh (void);
   
   virtual int visit_connector (be_connector *node);
+  
+private:
+  // Generate application-specific instantiations of
+  // middleware templates containing traits constructs.
+  void gen_dds_traits (AST_Connector *base);
+  void gen_connector_traits (void);
 };
 
 #endif /* _BE_CONNECTOR_CONNECTOR_DDS_EXH_H_ */

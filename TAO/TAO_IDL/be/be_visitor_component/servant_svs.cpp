@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 be_visitor_servant_svs::be_visitor_servant_svs (be_visitor_context *ctx)
   : be_visitor_component_scope (ctx),
     op_scope_ (0),
@@ -200,6 +199,12 @@ be_visitor_servant_svs::visit_component (be_component *node)
       << "}";
 
   return 0;
+}
+
+int
+be_visitor_servant_svs::visit_connector (be_connector *node)
+{
+  return this->visit_component (node);
 }
 
 int

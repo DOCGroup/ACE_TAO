@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_COMPONENT_FACET_EX_IDL_H_
 #define _BE_COMPONENT_FACET_EX_IDL_H_
 

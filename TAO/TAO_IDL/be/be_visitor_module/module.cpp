@@ -822,18 +822,10 @@ be_visitor_module::visit_component (be_component *node)
         status = node->accept (&visitor);
         break;
       }
+    // Nothing for these with components, they have the executor.  
     case TAO_CodeGen::TAO_ROOT_IH:
-      {
-        be_visitor_component_ih visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
     case TAO_CodeGen::TAO_ROOT_IS:
-      {
-        be_visitor_component_is visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
+      break;
     case TAO_CodeGen::TAO_ROOT_SVH:
       {
         be_visitor_component_svh visitor (&ctx);

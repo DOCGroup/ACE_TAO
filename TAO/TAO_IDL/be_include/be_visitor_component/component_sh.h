@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_COMPONENT_COMPONENT_SH_H_
 #define _BE_COMPONENT_COMPONENT_SH_H_
 
@@ -27,14 +26,12 @@
 class be_visitor_component_sh : public be_visitor_component
 {
 public:
-  /// constructor
   be_visitor_component_sh (be_visitor_context *ctx);
-  
-  /// destructor
   ~be_visitor_component_sh (void);
   
-  /// set the right context and make a visitor
   virtual int visit_component (be_component *node);
+  virtual int visit_connector (be_connector *node);
+  
 protected:
   virtual int generate_amh_classes (be_component *node);
 };

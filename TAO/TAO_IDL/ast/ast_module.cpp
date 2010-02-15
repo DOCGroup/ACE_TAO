@@ -779,13 +779,8 @@ AST_Module::fe_add_connector (AST_Connector *t)
         }
     }
 
-  // Add it to local types.
-  this->add_to_local_types (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
+  // Add it to scope.
+  this->add_to_scope (t);
 
   return t;
 }

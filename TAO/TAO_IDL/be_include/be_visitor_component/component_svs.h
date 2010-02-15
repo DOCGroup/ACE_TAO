@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_COMPONENT_COMPONENT_SVS_H_
 #define _BE_COMPONENT_COMPONENT_SVS_H_
 
@@ -33,6 +32,7 @@ public:
   ~be_visitor_component_svs (void);
   
   virtual int visit_component (be_component *node);
+  virtual int visit_connector (be_connector *node);
   
 private:
   void gen_entrypoint (AST_Component *node);

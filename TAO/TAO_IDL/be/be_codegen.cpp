@@ -3234,7 +3234,7 @@ TAO_CodeGen::gen_exec_hdr_includes (void)
 void
 TAO_CodeGen::gen_exec_src_includes (void)
 {
-  // Generate the include statement for the exec header.
+  // Generate the include statement for the exec source.
   this->gen_standard_include (
     this->ciao_exec_source_,
     be_global->be_get_ciao_exec_hdr_fname (true));
@@ -3361,6 +3361,10 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
 void
 TAO_CodeGen::gen_conn_src_includes (void)
 {
+  // Generate the include statement for the connector exec source.
+  this->gen_standard_include (
+    this->ciao_conn_source_,
+    be_global->be_get_ciao_conn_hdr_fname (true));
 }
 
 void
@@ -3382,6 +3386,8 @@ TAO_CodeGen::destroy (void)
   delete this->ciao_svnt_source_;
   delete this->ciao_exec_header_;
   delete this->ciao_exec_source_;
+  delete this->ciao_conn_header_;
+  delete this->ciao_conn_source_;
   delete this->ciao_exec_idl_;
   delete this->gperf_input_stream_;
   delete [] this->gperf_input_filename_;
