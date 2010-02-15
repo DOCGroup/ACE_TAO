@@ -1,7 +1,18 @@
+Mon Feb 15 09:17:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * m4/tao.m4:
+          Moved to ACE, seems the latest autoconf tools only support one m4
+          directory
+
+        * configure.ac:
+        * Makefile.am:
+        * Release:
+          Updated for move above
+
 Sun Feb 14 15:57:47 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
-        
+
           Changed include generation for executor IDL files to
           always generate include of CCM_Container.idl, regardless
           of whether it is pulled in indirectly or not. An optimizing
