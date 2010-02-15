@@ -1,3 +1,11 @@
+Mon Feb 15 09:56:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Fixed problem with latest autoconf tools
+
+        * patches/97-fix-empty-elseif.dpatch:
+          Removed, not needed anymore
+
 Mon Feb 15 09:44:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debianbuild/patches/02-fltk-no-gl.dpatch
