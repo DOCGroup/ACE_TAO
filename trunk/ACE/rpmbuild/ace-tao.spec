@@ -2356,6 +2356,8 @@ fi
 %doc TAO/PROBLEM-REPORT-FORM
 %doc TAO/VERSION
 %doc TAO/README
+%doc TAO/utils/catior/README.catior
+%doc TAO/utils/catior/README.nslist
 
 # ---------------- tao-cosnaming ----------------
 
