@@ -14,9 +14,8 @@
 #ifndef DOMAIN_DATA_MGRH
 #define DOMAIN_DATA_MGRH
 
-//#include "TargetManagerC.h"
 #include "Deployment/Deployment_TargetDataC.h"
-#include "DAnCE/DomainApplicationManager/Node_Locator.h"
+#include "Deployment/Deployment_TargetManagerC.h"
 
 namespace DAnCE
 {
@@ -50,14 +49,14 @@ namespace DAnCE
      * @return       Domain* The Initial Domain
      *
      */
-    ::Deployment::Domain* get_initial_domain ();
+    ::Deployment::Domain* get_initial_domain (void);
 
     /**
      * @brief       This function is called from the Executor code
      *              to get the Current Domain data.
      * @return      Domain* The Current Domain
      */
-    ::Deployment::Domain* get_current_domain ();
+    ::Deployment::Domain* get_current_domain (void);
 
     /**
      * @brief returns the sequence of node managers
@@ -76,7 +75,7 @@ namespace DAnCE
      * @brief The function makes a call on the leaveDomain on the
      *        NodeManager
      */
-    void stop_monitors ();
+    void stop_monitors (void);
 
     /**
      * @brief The function allocates resources specified in the
@@ -109,12 +108,14 @@ namespace DAnCE
                const ACE_TCHAR *domain_name);
 
   private:
+    /// The different action that can take place
+    enum  Action {commit , release};
 
     /**
      * @brief   It will read the initial Domain data from
      *          XML files.
      */
-    int readin_domain_data ();
+    int readin_domain_data (void);
 
     /**
      * @brief Match the deployed resources to the
@@ -122,8 +123,7 @@ namespace DAnCE
      */
     void match_requirement_resource (
                                      ::Deployment::InstanceResourceDeploymentDescriptions deployed,
-                                     ::Deployment::Resources& available
-                                     );
+                                     ::Deployment::Resources& available);
 
     /**
      * @brief Match the properties of a Requirement to the
@@ -135,9 +135,6 @@ namespace DAnCE
                            ::Deployment::Properties deployed,
                            ::Deployment::SatisfierProperties& available);
 
-
-    /// The different actiona that can take place
-    enum  Action {commit , release};
 
     /**
      * @brief Either commits or releases the given resource
@@ -157,7 +154,7 @@ namespace DAnCE
      * @brief This function calls all NM and gives them
      * the sub-domain
      */
-    int call_all_node_managers ();
+    int call_all_node_managers (void);
 
     /**
      * @brief This function add new elements to the
@@ -227,9 +224,7 @@ namespace DAnCE
     /// at total capacity
     ::Deployment::Domain initial_domain_;
 
-
-    /// The Current Domain - contains resources
-    /// at current capacity
+    /// The Current Domain - contains resources at current capacity
     ::Deployment::Domain current_domain_;
 
     /// The Target Manager Context
@@ -247,8 +242,8 @@ namespace DAnCE
     /// The current action
     Action current_action_;
   };
-  
-  typedef ACE_Singleton <DomainDataManager, ACE_SYNCH_RECURSIVE_MUTEX> 
+
+  typedef ACE_Singleton <DomainDataManager, ACE_SYNCH_RECURSIVE_MUTEX>
   DomainDataManager_Singleton;
 #define DOMAIN_DATA_MANAGER DomainDataManager_Singleton::instance ()
 } // CIAO
