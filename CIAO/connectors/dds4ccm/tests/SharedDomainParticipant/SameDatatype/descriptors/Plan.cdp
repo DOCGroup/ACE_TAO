@@ -150,7 +150,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>SharedDP2</string>
+          <string>SharedDP</string>
         </value>
       </value>
     </configProperty>
@@ -169,6 +169,35 @@
 
   <instance xmi:id="Connector3Instance">
     <name>Connector3Instance</name>
+    <node>ComponentNode</node>
+    <source/>
+    <implementation xmi:idref="ConnectorImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SharedDP1</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Shared_Library#Shared_Profile</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="Connector4Instance">
+    <name>Connector4Instance</name>
     <node>ComponentNode</node>
     <source/>
     <implementation xmi:idref="ConnectorImplementation" />
@@ -260,6 +289,26 @@
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Connector3Instance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>writer_connection4</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>write4_dds_entity</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_dds_entity</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Connector4Instance" />
     </internalEndpoint>
   </connection>
 
