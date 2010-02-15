@@ -61,7 +61,7 @@ NodeApplicationManager_Impl::~NodeApplicationManager_Impl()
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_WARNING, DLINFO
+      DANCE_ERROR (1, (LM_ERROR, DLINFO
                     ACE_TEXT("NodeApplicationManager_Impl::~NodeApplicationManager_Impl - ")
                     ACE_TEXT("Caught exception in NodeApplicationManager destructor\n")));
     }
