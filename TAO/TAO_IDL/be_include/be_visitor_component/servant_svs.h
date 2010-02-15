@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_COMPONENT_SERVANT_SVS_H_
 #define _BE_COMPONENT_SERVANT_SVS_H_
 
@@ -36,6 +35,7 @@ public:
   ~be_visitor_servant_svs (void);
   
   virtual int visit_component (be_component *node);
+  virtual int visit_connector (be_connector *node);
   virtual int visit_operation (be_operation *node);
   virtual int visit_attribute (be_attribute *node);
   virtual int visit_provides (be_provides *node);

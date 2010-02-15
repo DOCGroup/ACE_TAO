@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 be_visitor_servant_svh::be_visitor_servant_svh (be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
 {
@@ -108,6 +107,12 @@ be_visitor_servant_svh::visit_component (be_component *node)
       << "};";
 
   return 0;
+}
+
+int
+be_visitor_servant_svh::visit_connector (be_connector *node)
+{
+  return this->visit_component (node);
 }
 
 int

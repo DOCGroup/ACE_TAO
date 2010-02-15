@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_COMPONENT_FACET_SVS_H_
 #define _BE_COMPONENT_FACET_SVS_H_
 

@@ -24,7 +24,7 @@
 #include "be_valuetype_fwd.h"
 #include "be_eventtype.h"
 #include "be_eventtype_fwd.h"
-#include "be_component.h"
+#include "be_connector.h"
 #include "be_component_fwd.h"
 #include "be_field.h"
 #include "be_union_branch.h"
@@ -282,6 +282,12 @@ int
 be_visitor_traits::visit_component (be_component *node)
 {
   return this->visit_interface (node);
+}
+
+int
+be_visitor_traits::visit_connector (be_connector *node)
+{
+  return this->visit_component (node);
 }
 
 int

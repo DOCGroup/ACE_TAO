@@ -45,6 +45,7 @@ public:
   virtual int visit_root (be_root *node);
   virtual int visit_module (be_module *node);
   virtual int visit_component (be_component *node);
+  virtual int visit_connector (be_connector *node);
   virtual int visit_provides (be_provides *node);
   virtual int visit_uses (be_uses *node);
   virtual int visit_publishes (be_publishes *node);

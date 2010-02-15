@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_COMPONENT_CONTEXT_SVS_H_
 #define _BE_COMPONENT_CONTEXT_SVS_H_
 
@@ -34,6 +33,7 @@ public:
   ~be_visitor_context_svs (void);
 
   virtual int visit_component (be_component *node);
+  virtual int visit_connector (be_connector *node);
   virtual int visit_uses (be_uses *node);
   virtual int visit_publishes (be_publishes *node);
   virtual int visit_emits (be_emits *node);

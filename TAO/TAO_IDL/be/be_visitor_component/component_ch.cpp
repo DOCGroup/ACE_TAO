@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ******************************************************
 // Component visitor for client header
 // ******************************************************
@@ -261,3 +260,10 @@ be_visitor_component_ch::visit_component (be_component *node)
   node->cli_hdr_gen (true);
   return 0;
 }
+
+int
+be_visitor_component_ch::visit_connector (be_connector *node)
+{
+  return this->visit_component (node);
+}
+

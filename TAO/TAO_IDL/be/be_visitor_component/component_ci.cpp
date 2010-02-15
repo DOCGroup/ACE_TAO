@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ******************************************************
 // Component visitor for client inline
 // ******************************************************
@@ -57,3 +56,10 @@ be_visitor_component_ci::visit_component (be_component *node)
   node->cli_inline_gen (true);
   return 0;
 }
+
+int
+be_visitor_component_ci::visit_connector (be_connector *node)
+{
+  return this->visit_component (node);
+}
+

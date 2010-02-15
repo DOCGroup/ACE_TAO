@@ -18,7 +18,7 @@
 #define _BE_CONNECTOR_CONNECTOR_DDS_EXS_H_
 
 class be_visitor_connector_dds_exs
-  : public be_visitor_component_scope
+  : public be_visitor_connector_dds_ex_base
 {
   //
   // = TITLE
