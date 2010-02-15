@@ -1,3 +1,38 @@
+Mon Feb 15 12:50:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Deployment/ciao
+        * DAnCE/Deployment/ciao/CIAO_ExecutionManagerDaemon.idl
+        * DAnCE/Deployment/ciao/CIAO_Interfaces.mpc
+        * DAnCE/Deployment/ciao/CIAO_NodeManagerDaemon.idl
+        * DAnCE/Deployment/ciao/Module_Main.h
+        * DAnCE/Deployment/CIAO_ExecutionManagerDaemon.idl
+        * DAnCE/Deployment/CIAO_Interfaces.mpc
+        * DAnCE/Deployment/CIAO_NodeManagerDaemon.idl
+        * DAnCE/Deployment/DAnCE_Core.mpc
+        * DAnCE/Deployment/Deployment_common.h
+        * DAnCE/Deployment/Deployment_NodeManager.idl
+        * DAnCE/Deployment/Module_Main.h
+        * DAnCE/DomainApplication/Domain_Application_Impl.cpp
+        * DAnCE/DomainApplication/Domain_Application_Impl.h
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/ExecutionManager/Execution_Manager_Exec.cpp
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.h
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp
+        * DAnCE/MPC/config/dance_domainapplicationmanager_skel.mpb
+        * DAnCE/MPC/config/dance_domainapplicationmanager_stub.mpb
+        * DAnCE/MPC/config/dance_nodeapplication_stub.mpb
+        * DAnCE/MPC/config/dance_nodeapplicationmanager_skel.mpb
+        * DAnCE/MPC/config/dance_nodeapplicationmanager_stub.mpb
+        * DAnCE/NodeManager/Node_Manager_Exec.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.h
+        * DAnCE/Plan_Launcher/Plan_Launcher_Exec.cpp
+        * DAnCE/RepositoryManager/Repository_Manager_Exec.cpp
+        * DAnCE/TargetManager/Target_Manager_Exec.cpp
+          Moved the CIAO specific idl/code from DAnCE/Deployment to
+          DAnCE/Deployment/ciao and updated using code. Move
+          ApplicationManager to its own DLL and enabled in some projects
+          AMI.
+
 Mon Feb 15 09:50:57 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.cpp:

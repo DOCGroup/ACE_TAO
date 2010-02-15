@@ -101,7 +101,7 @@ DomainApplicationManager_Impl::destroyApplication (
 
   try
     {
-      for (size_t i = 0; i < this->running_app_.size(); ++i)
+      for (TApplications::size_type i = 0; i < this->running_app_.size(); ++i)
         {
           DomainApplication_Impl* p = this->running_app_[i];
           Deployment::DomainApplication_var app =
@@ -117,7 +117,7 @@ DomainApplicationManager_Impl::destroyApplication (
                            ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
                            ACE_TEXT("deleting application object\n")));
               delete p;
-              for (size_t j = i + 1; j < this->running_app_.size(); ++j)
+              for (TApplications::size_type j = i + 1; j < this->running_app_.size(); ++j)
                 {
                   this->running_app_[j-1] = this->running_app_[j];
                 }
@@ -158,7 +158,7 @@ DomainApplicationManager_Impl::getApplications ()
                     CORBA::NO_MEMORY());
   running_app->length (this->running_app_.size());
   CORBA::ULong index = 0;
-  for (size_t i = 0; i < this->running_app_.size(); ++i)
+  for (TApplications::size_type i = 0; i < this->running_app_.size(); ++i)
     {
       CORBA::Object_var ref = this->poa_->servant_to_reference (this->running_app_[i]);
       (*running_app) [index++] =

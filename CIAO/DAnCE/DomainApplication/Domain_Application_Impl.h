@@ -32,7 +32,6 @@ namespace DAnCE
    * @class DomainApplication_Impl
    *
    * @brief This class implements the DomainApplication interface.
-   *
    **/
   class Domain_Application_Export DomainApplication_Impl
         : public virtual POA_Deployment::DomainApplication
