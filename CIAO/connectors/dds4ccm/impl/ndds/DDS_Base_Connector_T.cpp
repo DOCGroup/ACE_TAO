@@ -81,7 +81,8 @@ void
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::init_default_domain (void)
 {
   CIAO_DEBUG (9, (LM_TRACE, CLINFO "DDS_Base_Connector_T::init_default_domain - "
-                "Configuring default domain\n"));
+                "Configuring default domain <%d>\n",
+                this->domain_id_));
   try
     {
       ACE_Env_Value<int> verbosity (ACE_TEXT("DDS4CCM_NDDS_LOG_VERBOSITY"),
@@ -136,7 +137,8 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::init_default_domain (void)
   catch (...)
     {
       CIAO_ERROR (1, (LM_ERROR, "DDS_Base_Connector_T::init_default_domain: "
-                                "Caught unknown C++ exception while configuring default domain\n"));
+                                "Caught unknown C++ exception while configuring default domain <%d>\n",
+                                this->domain_id_));
       throw CORBA::INTERNAL ();
     }
 }
