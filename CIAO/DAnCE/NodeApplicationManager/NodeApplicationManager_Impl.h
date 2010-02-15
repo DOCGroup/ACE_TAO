@@ -18,7 +18,6 @@
 #include "NodeApplicationManager_Export.h"
 #include "Deployment/Deployment_DeploymentPlanC.h"
 #include "Deployment/Deployment_NodeApplicationManagerS.h"
-#include "Deployment/Deployment_NodeApplicationC.h"
 #include "NodeApplication/NodeApplication_Impl.h"
 
 namespace DAnCE

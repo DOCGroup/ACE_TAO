@@ -38,23 +38,20 @@ namespace DAnCE
                              PortableServer::POA_ptr poa,
                              CosNaming::NamingContext_ptr);
 
-      virtual ~ExecutionManager_Impl();
+      virtual ~ExecutionManager_Impl(void);
 
       virtual ::Deployment::DomainApplicationManager_ptr preparePlan (
         const ::Deployment::DeploymentPlan & plan,
-        ::Deployment::ResourceCommitmentManager_ptr resourceCommitment
-      );
+        ::Deployment::ResourceCommitmentManager_ptr resourceCommitment);
 
-      virtual ::Deployment::DomainApplicationManagers * getManagers (
-      );
+      virtual ::Deployment::DomainApplicationManagers * getManagers (void);
 
       virtual void destroyManager (
-        ::Deployment::DomainApplicationManager_ptr manager
-      );
+        ::Deployment::DomainApplicationManager_ptr manager);
 
       // This one derived from ExecutionManagerDaemon interface
       // for shutdowning DAnCE agent
-      virtual void shutdown ();
+      virtual void shutdown (void);
 
       void add_node_manager (const char *name, const char *ior);
 
