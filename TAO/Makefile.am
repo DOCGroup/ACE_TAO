@@ -24,7 +24,7 @@ SUBDIRS += performance-tests interop-tests tests
 endif
 
 ACLOCAL = @ACLOCAL@
-ACLOCAL_AMFLAGS = -I m4 -I ../m4
+ACLOCAL_AMFLAGS = -I ../m4
 AUTOMAKE_OPTIONS = foreign
 
 EXTRA_DIST =  \
