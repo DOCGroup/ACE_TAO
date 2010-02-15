@@ -33,7 +33,8 @@ namespace CIAO
         CIAO_TRACE ("RTI_DomainParticipantFactory_i::create_participant");
 
         CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::create_participant - "
-                     "Creating domain participant\n"));
+                     "Creating domain participant for domain <%d>\n",
+                     domain_id));
 
         RTI_DomainParticipantListener_i *rti_dpl = 0;
         if (!CORBA::is_nil (a_listener))
@@ -50,7 +51,8 @@ namespace CIAO
         if (!part)
           {
             CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipantFactory_i::create_participant - "
-                         "Error: Unable to create DomainParticipant\n"));
+                         "Error: Unable to create DomainParticipant for domain <%d>\n",
+                         domain_id));
             throw CCM_DDS::InternalError (1, 0);
           }
 
@@ -74,7 +76,8 @@ namespace CIAO
         CIAO_TRACE ("RTI_DomainParticipantFactory_i::create_participant_with_profile");
 
         CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::create_participant_with_profile - "
-                     "Creating domain participant\n"));
+                     "Creating domain participant: profile <%C#%C> - domain <%d>\n",
+                     library_name, profile_name, domain_id));
         RTI_DomainParticipantListener_i *rti_dpl = 0;
         if (!CORBA::is_nil (a_listener))
           {
@@ -95,8 +98,9 @@ namespace CIAO
           if (!rti_dp)
             {
               CIAO_DEBUG (6, (LM_DEBUG, "RTI_DomainParticipantFactory_i::create_participant_with_profile - "
-                                        "Creating participant for <%C>\n",
-                                        qos_profile.c_str ()));
+                                        "Creating participant: profile <%C> - domain <%d>\n",
+                                        qos_profile.c_str (),
+                                        domain_id));
               DDSDomainParticipant * part = DDSDomainParticipantFactory::get_instance ()->
                       create_participant_with_profile (domain_id,
                                         library_name,
@@ -120,8 +124,9 @@ namespace CIAO
           else
             {
               CIAO_DEBUG (6, (LM_DEBUG, CLINFO "RTI_DomainParticipantFactory_i::create_participant_with_profile - "
-                          "Re-using participant for QOS profile <%C>.\n",
-                          qos_profile.c_str ()));
+                          "Re-using participant for QOS profile <%C> and domin <%d>.\n",
+                          qos_profile.c_str (),
+                          domain_id));
               return ::DDS::DomainParticipant::_duplicate (rti_dp);
             }
         }
