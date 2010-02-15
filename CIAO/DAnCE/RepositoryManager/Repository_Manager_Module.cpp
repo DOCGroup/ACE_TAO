@@ -99,13 +99,6 @@ DAnCE_RepositoryManager_Module::DAnCE_RepositoryManager_Module (void)
 DAnCE_RepositoryManager_Module::~DAnCE_RepositoryManager_Module (void)
 {
   DANCE_TRACE ("DAnCE_RepositoryManager_Module::~DAnCE_RepositoryManager_Module");
-
-  for (Servant_Map::iterator it = this->rm_map_.begin ();
-       it != this->rm_map_.end ();
-       ++it)
-    {
-      delete (*it).int_id_;
-    }
 }
 
 const char *
@@ -394,7 +387,7 @@ DAnCE_RepositoryManager_Module::create_object (CORBA::ORB_ptr orb,
       // Binding ior to IOR Table
       adapter->bind (repository_manager_oid.c_str (), ior.in ());
 
-      // Binding repository menager to DomainNC
+      // Binding repository manager to DomainNC
       if (!CORBA::is_nil (this->domain_nc_.in ()))
         {
           ACE_CString ns_name;

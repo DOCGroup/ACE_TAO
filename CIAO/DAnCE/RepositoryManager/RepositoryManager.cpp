@@ -131,7 +131,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
   {
-    //init the ORB
+    // Init the ORB
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
     if (!parse_args (argc, argv))
@@ -143,7 +143,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Downcast to POA type
     PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in ());
 
-    //activate the POA manager
+    // Activate the POA manager
     PortableServer::POAManager_var mgr = root_poa->the_POAManager ();
     mgr->activate ();
 
@@ -156,7 +156,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           CIAO::RepositoryManager::repoman_name_),
                     1);
 
-    //transfer ownership to the POA
+    // Transfer ownership to the POA
     PortableServer::ServantBase_var owner_transfer(repo);
     PortableServer::ObjectId_var id =
       root_poa->activate_object (ci_srv);
@@ -194,17 +194,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     DANCE_DEBUG (6, (LM_DEBUG, "event loop finished\n"));
 
-    // done
-    return 0;
-
     // todo shutdown orb
   }
-  catch (CORBA::Exception &ex) {
+  catch (const CORBA::Exception &ex) {
     cerr << "CORBA Exception: " << ex << endl;
 
     return 1;
   }
-
 
   return 0;
 }

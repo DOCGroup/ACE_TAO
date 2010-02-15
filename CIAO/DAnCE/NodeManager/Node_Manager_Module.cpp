@@ -469,7 +469,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
       // Binding ior to IOR Table
       adapter->bind (node_manager_oid.c_str (), ior.in ());
 
-      // Binding node menager to DomainNC
+      // Binding node manager to DomainNC
       if (!CORBA::is_nil (this->domain_nc_.in ()))
         {
           DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")

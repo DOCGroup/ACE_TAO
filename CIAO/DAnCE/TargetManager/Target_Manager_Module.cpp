@@ -249,7 +249,7 @@ DAnCE_TargetManager_Module::create_object (CORBA::ORB_ptr orb,
       // Binding ior to IOR Table
       adapter->bind (repository_manager_oid.c_str (), ior.in ());
 
-      // Binding repository menager to DomainNC
+      // Binding repository manager to DomainNC
       if (!CORBA::is_nil (this->domain_nc_.in ()))
         {
           ACE_CString ns_name;
