@@ -46,14 +46,14 @@ namespace CIAO_Hello_Sender_Impl
     }
 
   void ConnectorStatusListener_exec_i::on_unexpected_status(
-    ::DDS::Entity_ptr the_entity,
+    ::DDS::Entity_ptr /*the_entity*/,
     ::DDS::StatusKind  status_kind)
   {
     if(!this->ready_to_start_.value())
       {
         // be aware that when only the sender runs, ready_to_start will never
         // be true.
-        this->ready_to_start_ = kind == DDS::PUBLICATION_MATCHED_STATUS;
+        this->ready_to_start_ = status_kind == DDS::PUBLICATION_MATCHED_STATUS;
       }
   }
 
