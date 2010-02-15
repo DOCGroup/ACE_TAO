@@ -52,8 +52,7 @@ public:
    */
   static bool write_to_disk (const char* full_path,
                  ACE_Message_Block& mb,
-                 bool replace = true
-                 );
+                 bool replace = true);
 
   /**
    * Function that writes out a file to a specified location on the hard disk
@@ -72,7 +71,6 @@ public:
    * the lenght on success
    * @retval 0 on failure
    */
-
   static ACE_Message_Block* read_pc_from_disk (const char* full_path,
                                                size_t &length);
 

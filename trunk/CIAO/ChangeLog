@@ -1,3 +1,44 @@
+Mon Feb 15 19:05:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Deployment/ciao/CIAO_NodeManagerDaemon.idl:
+          Fixed comments and removed commented out stuff
+
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/TargetManager/Target_Manager_Module.cpp
+          Fixed typo in comment
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Module.cpp:
+          Fixed warning
+
+        * DAnCE/RepositoryManager/PC_Updater.cpp:
+        * DAnCE/RepositoryManager/PC_Updater.h
+          Layout and documentation fixes
+
+        * DAnCE/RepositoryManager/repository_manager_admin.cpp:
+          Unicode fixes
+
+        * DAnCE/RepositoryManager/Repository_Manager_Module.cpp
+        * DAnCE/RepositoryManager/Repository_Manager_Module.h
+          Removed not used servant map
+
+        * DAnCE/RepositoryManager/RepositoryManager.cpp:
+          Doxygen fixes
+
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h:
+        * DAnCE/RepositoryManager/RM_Helper.cpp
+        * DAnCE/RepositoryManager/RM_Helper.h
+          Layout changes
+
+        * DAnCE/TargetManager/DAnCE_TargetManagerDaemon.idl:
+          Removed, this interface was used, but not implemented at all
+
+        * DAnCE/TargetManager/TargetManager.mpc:
+          Removed obsolete projects
+
+        * DAnCE/TargetManager/TargetManager_Impl.cpp
+        * DAnCE/TargetManager/TargetManager_Impl.h
+          removed not used shutdown
+
 Mon Feb 15 14:04:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/ExecutionManager/ExecutionManager_Impl.cpp

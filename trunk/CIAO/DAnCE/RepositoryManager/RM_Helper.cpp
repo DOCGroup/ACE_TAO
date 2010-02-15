@@ -21,7 +21,6 @@ RM_Helper::cdr_to_pc (Deployment::PackageConfiguration& pc, TAO_InputCDR& cdr)
   cdr >> pc;
 }
 
-
 bool
 RM_Helper::externalize (const Deployment::PackageConfiguration& pc, const char* path)
 {
