@@ -429,7 +429,7 @@ NodeApplication_Impl::configuration_complete_components ()
   bool error = false;
   ::Deployment::StartError exception;
 
-  for (size_t k = 0; k < this->instances_.size (); ++k)
+  for (INSTANCES::size_type k = 0; k < this->instances_.size (); ++k)
     {
       if (this->instances_[k]->type == eHome)
         {
@@ -512,7 +512,7 @@ NodeApplication_Impl::start ()
   bool error (false);
   ::Deployment::StartError exception;
 
-  for (size_t k = 0; k < this->instances_.size (); ++k)
+  for (INSTANCES::size_type k = 0; k < this->instances_.size (); ++k)
     {
       if (this->instances_[k]->type == eHome)
         {
@@ -609,7 +609,7 @@ NodeApplication_Impl::install_home (Container &cont, Instance &inst)
 
   this->instances_[inst.idd_idx] = &inst;
 
-  // need to get significant property values
+  // Need to get significant property values
   const char *entrypt = 0;
   get_property_value (DAnCE::HOME_FACTORY, mdd.execParameter, entrypt);
 
@@ -714,8 +714,10 @@ NodeApplication_Impl::install_component (Container &cont, Instance &inst)
 {
   DANCE_TRACE( "NodeApplication_Impl::install_component");
 
-  const ::Deployment::MonolithicDeploymentDescription &mdd = this->plan_.implementation[inst.mdd_idx];
-  const ::Deployment::InstanceDeploymentDescription &idd = this->plan_.instance[inst.idd_idx];
+  ::Deployment::MonolithicDeploymentDescription const &mdd =
+    this->plan_.implementation[inst.mdd_idx];
+  ::Deployment::InstanceDeploymentDescription const &idd =
+    this->plan_.instance[inst.idd_idx];
 
   DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
                 ACE_TEXT("Starting installation of home %C on node %C\n"),
@@ -838,7 +840,8 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
 {
   DANCE_TRACE("NodeApplication_Impl::install_homed_component (unsigned int index)");
 
-  const ::Deployment::InstanceDeploymentDescription &idd = this->plan_.instance[inst.idd_idx];
+  ::Deployment::InstanceDeploymentDescription const &idd =
+    this->plan_.instance[inst.idd_idx];
   this->instances_[inst.idd_idx] = &inst;
 
   DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::install_homed_component - ")
@@ -978,7 +981,7 @@ NodeApplication_Impl::create_component_server (size_t index)
 
   ComponentServer &server = this->servers_[index];
 
-    try
+  try
     {
       DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::create_component_Server - ")
                    ACE_TEXT("creating component server %u\n"), index));
@@ -986,12 +989,12 @@ NodeApplication_Impl::create_component_server (size_t index)
 
       config_values.length (this->servers_[index].properties.length ());
       for (CORBA::ULong i = 0; i < this->servers_[index].properties.length ();
-     ++i)
-  {
-    config_values[i] = new CIAO::ConfigValue_impl (this->servers_[index].properties[i].name.in (),
-               this->servers_[index].properties[i].value);
+         ++i)
+      {
+        config_values[i] = new CIAO::ConfigValue_impl (this->servers_[index].properties[i].name.in (),
+                   this->servers_[index].properties[i].value);
 
-  }
+      }
 
       server.ref = this->activator_->create_component_server (config_values);
       DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::create_component_server - ")
@@ -1131,7 +1134,8 @@ NodeApplication_Impl::create_colocation_groups (void)
           continue;
         }
 
-      const ::CORBA::ULongSeq &instances = this->plan_.localityConstraint[i].constrainedInstanceRef;
+      ::CORBA::ULongSeq const &instances =
+        this->plan_.localityConstraint[i].constrainedInstanceRef;
 
       for (CORBA::ULong j = 0; j < instances.length (); ++j)
         {
@@ -1306,12 +1310,11 @@ NodeApplication_Impl::passivate_components()
   bool error (false);
   ::Deployment::StopError exception ("unfilled", "unfilled passivate components");
 
-  for (size_t k = 0; k < this->instances_.size (); ++k)
+  for (INSTANCES::size_type k = 0; k < this->instances_.size (); ++k)
     {
       if (this->instances_[k]->type == eHome ||
           this->instances_[k]->type == eInvalid)
         continue;
-
 
       try
         {
@@ -1391,7 +1394,7 @@ NodeApplication_Impl::remove_components()
   ::Deployment::StopError exception ("unfilled", "unfilled remove_components");
 
   // Removing components first.
-  for (size_t k = 0; k < this->instances_.size (); ++k)
+  for (INSTANCES::size_type k = 0; k < this->instances_.size (); ++k)
     {
       try
         {
@@ -1490,7 +1493,7 @@ NodeApplication_Impl::remove_components()
         }
     }
 
-  for (size_t k = 0; k < this->instances_.size (); ++k)
+  for (INSTANCES::size_type k = 0; k < this->instances_.size (); ++k)
     {
       try
         {

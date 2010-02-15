@@ -557,7 +557,7 @@ DAnCE_NodeManager_Module::create_poas (void)
   catch (const PortableServer::POA::AdapterAlreadyExists &)
     {
       DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_poas - ")
-                    ACE_TEXT ("Using exiswting \"Managers\" POA\n")));
+                    ACE_TEXT ("Using existing \"Managers\" POA\n")));
       this->nm_poa_ = this->root_poa_->find_POA ("Managers", 0);
     }
 }

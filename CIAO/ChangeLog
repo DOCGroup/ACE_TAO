@@ -1,3 +1,12 @@
+Mon Feb 15 13:32:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/NodeManager/NodeManager_Impl.h:
+          Various code improvements
+
 Mon Feb 15 13:20:10 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/DomainApplication/Domain_Application_Impl.cpp:
