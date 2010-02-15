@@ -744,6 +744,10 @@ template_module_ref
           delete $2;
           $2 = 0;
 
+          ast_visitor_context ctx;
+          ctx.template_params (ref->template_params ());
+          ast_visitor_tmpl_module_ref v (&ctx);
+
           // The implied IDL resulting from this reference is
           // created here, in the template module scope. Upon
           // instantiation of the enclosing template module, the
@@ -5863,7 +5867,6 @@ factory_decl :
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($2,
                             0);
-          AST_Operation *o = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_OpIDSeen);
 
           /*
@@ -5925,9 +5928,9 @@ finder_decl :
            */
           AST_Finder *f =
             idl_global->gen ()->create_finder (&n);
-          
+
           (void) s->fe_add_finder (f);
-          
+
 
           $2->destroy ();
           delete $2;
@@ -5947,7 +5950,6 @@ finder_decl :
         {
 //      opt_raises
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Operation *o = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseCompleted);
 
           /*
@@ -6727,11 +6729,11 @@ actual_parameter
           UTL_ScopedName *sn = ex->n ();
           AST_Decl *d = 0;
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          
+
           if (sn != 0)
             {
               d = s->lookup_by_name (sn, true);
-              
+
               if (d == 0)
                 {
                   idl_global->err ()->lookup_error (sn);
@@ -6740,12 +6742,12 @@ actual_parameter
               else
                 {
                   AST_Decl::NodeType nt = d->node_type ();
-                  
+
                   if (nt == AST_Decl::NT_enum_val)
                     {
                       $1->evaluate (
                         AST_Expression::EK_const);
-                
+
                       $<dcval>$ =
                         idl_global->gen ()->create_constant (
                           $1->ev ()->et,
@@ -6762,7 +6764,7 @@ actual_parameter
             {
               $1->evaluate (
                 AST_Expression::EK_const);
-                
+
               $<dcval>$ =
                 idl_global->gen ()->create_constant (
                   $1->ev ()->et,
@@ -6847,9 +6849,9 @@ connector_body
 // connector_body " '{'
           idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorSqSeen);
         }
-        at_least_one_connector_export
+        connector_exports
         {
-//        at_least_one_connector_export
+//        connector_exports
           idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorBodySeen);
         }
         '}'
