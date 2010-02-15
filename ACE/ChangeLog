@@ -1,3 +1,9 @@
+Mon Feb 15 09:35:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/FoxReactor/FoxReactor.h:
+          User has to specify the full fox path now, some distributions now ship fox-1.6 and
+          fox-1.4 as directory names
+
 Mon Feb 15 09:20:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * m4/ace_defines.m4:
