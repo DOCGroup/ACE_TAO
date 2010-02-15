@@ -34,7 +34,7 @@ DAnCE::DomainDataManager::init (CORBA::ORB_ptr orb,
   _stream << *dmn << std::endl;
 
   DANCE_DEBUG (9, (LM_TRACE, DLINFO "DAnCE::DomainDataManager::init - "
-                "Contents of Domain:%s\n",
+                "Contents of Domain: %C\n",
                 _stream.str ().c_str ()));
 #endif
 
@@ -401,48 +401,6 @@ void DAnCE::DomainDataManager::commit_release_resource (
     }
 }
 
-void DAnCE::DomainDataManager::stop_monitors ()
-{
-  DANCE_TRACE ("DAnCE::DomainDataManager::stop_monitors");
-
-  CORBA::ULong const length = initial_domain_.node.length ();
-
-  for (CORBA::ULong i=0;i < length;i++)
-    {
-      ::Deployment::NodeManager_var node_manager;
-
-      try
-        {
-//          node_manager =
-            //deployment_config_.get_node_manager
-//            (initial_domain_.node[i].name.in ());
-        }
-      catch (const CORBA::Exception&)
-        {
-          DANCE_ERROR (1, (LM_ERROR, "DANCE::TM (%P|%t) DomainDataManager.cpp: "
-                      "Error in get Node Manager from Deployment Config %s\n",
-                      initial_domain_.node[i].name.in ()));
-          continue;
-        }
-
-      if (!CORBA::is_nil (node_manager.in ()))
-        {
-          try
-            {
-              node_manager->leaveDomain ();
-            }
-          catch (CORBA::Exception& ex)
-            {
-              DANCE_ERROR (1, (LM_ERROR , "TM::Error in calling Leave Domain\n"));
-              ex._tao_print_exception (
-                "Exception caught in ""DomainDataManager::leaveDomain");
-            }
-        }
-    }
-  return;
-
-}
-
 int DAnCE::DomainDataManager::add_to_domain (
     const ::Deployment::Domain& domain)
 {
@@ -492,10 +450,10 @@ bool DAnCE::DomainDataManager::find_in_initial_domain (const char* node_name,
       i++)
   {
     if (ACE_OS::strcmp (node_name, this->initial_domain_.node[i].name.in ()) == 0)
-    {
-      node = this->initial_domain_.node[i];
-      return true;
-    }
+      {
+        node = this->initial_domain_.node[i];
+        return true;
+      }
   }
 
   // not found the node , return a node with an empty name
@@ -513,10 +471,10 @@ bool DAnCE::DomainDataManager::find_in_provisioned_domain (const char* node_name
       i++)
   {
     if (ACE_OS::strcmp (node_name, this->provisioned_data_.node[i].name.in ()) == 0)
-    {
-      node = this->provisioned_data_.node[i];
-      return true;
-    }
+      {
+        node = this->provisioned_data_.node[i];
+        return true;
+      }
   }
 
   // not found the node , return a node with an empty name

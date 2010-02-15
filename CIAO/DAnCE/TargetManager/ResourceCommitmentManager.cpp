@@ -22,8 +22,9 @@ DAnCE::ResourceCommitmentManager_i::commitResources (
 
   DOMAIN_DATA_MANAGER->commitResourceAllocation (resources);
 
-  // commit succesful .. add to commited resource
-  this->add_to_commited_resource (resources);
+  // Commit succesful .. add to commited resource, we get an exception
+  // if the method above fails
+  this->add_to_committed_resource (resources);
 }
 
 void
@@ -32,19 +33,19 @@ DAnCE::ResourceCommitmentManager_i::releaseResources (
 {
   DANCE_TRACE ("DAnCE::ResourceCommitmentManager_i::releaseResources");
 
-  ::Deployment::ResourceAllocations res;
-
-  // if the resources set is null , use the already allocated resources ..
+  // If the resources set is null, use the already allocated resources ..
   if (resources.length () == 0)
-    res = this->resources_;
+    {
+      DOMAIN_DATA_MANAGER->releaseResourceAllocation (this->resources_);
+    }
   else
-    res = resources;
-
-  DOMAIN_DATA_MANAGER->releaseResourceAllocation (res);
+    {
+      DOMAIN_DATA_MANAGER->releaseResourceAllocation (resources);
+    }
 }
 
-int
-DAnCE::ResourceCommitmentManager_i::add_to_commited_resource (
+void
+DAnCE::ResourceCommitmentManager_i::add_to_committed_resource (
     ::Deployment::ResourceAllocations res)
 {
   DANCE_TRACE ("DAnCE::ResourceCommitmentManager_i::add_to_commited_resource");
@@ -54,7 +55,7 @@ DAnCE::ResourceCommitmentManager_i::add_to_commited_resource (
   this->resources_.length (current_length + res.length ());
 
   for (CORBA::ULong i = 0;i < res.length ();i++)
-    this->resources_[current_length + i] = res[i];
-
-  return 0;
+    {
+      this->resources_[current_length + i] = res[i];
+    }
 }

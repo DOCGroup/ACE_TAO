@@ -89,7 +89,7 @@ ExecutionManager_Impl::getManagers (void)
                     CORBA::NO_MEMORY());
 
   managers->length (this->managers_.current_size());
-  unsigned int index = 0;
+  CORBA::ULong index = 0;
   for (TDomainManagers::iterator iter = this->managers_.begin();
        iter != this->managers_.end();
        ++iter)
@@ -121,8 +121,6 @@ ExecutionManager_Impl::destroyManager (::Deployment::DomainApplicationManager_pt
           DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT("ExecutionManager_Impl::destroyManager - deleting DomainApplicationManager\n")));
           delete (*iter).int_id_;
           (*iter).int_id_ = 0;
-          DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT("ExecutionManager_Impl::destroyManager - DomainApplicationManager deleted\n")));
-          //this->managers_.unbind ( (*iter).ext_id_);
           DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT("ExecutionManager_Impl::destroyManager - finished\n")));
           return;
         }
@@ -140,7 +138,6 @@ ExecutionManager_Impl::shutdown (void)
   DANCE_TRACE ("ExecutionManager_Impl::shutdown");
   this->orb_->shutdown();
 }
-
 
 void
 ExecutionManager_Impl::add_node_manager (const char *name, const char *ior)
