@@ -1,3 +1,12 @@
+Mon Feb 15 09:20:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * m4/ace_defines.m4:
+          Fixed fixes with latest releases of tools
+
+        * m4/tao.m4:
+          Added here from TAO to get the distribution to work with the latest
+          versions of autoconf tools
+
 Mon Feb 15 06:49:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * configure.ac:
