@@ -278,7 +278,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
 
     if (no_error)
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Have received the expected ")
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK: Have received the expected ")
                                ACE_TEXT (" operations for ONE_BY_ONE from StateListener in Receiver\n")
                    ));
       }
@@ -292,7 +292,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
     else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
                                 ACE_Thread::self ()))
       {
-        ACE_DEBUG ((LM_DEBUG, "OK : "
+        ACE_DEBUG ((LM_DEBUG, "OK: "
                               "Thread switch for StatusListener seems OK. "
                               "(DDS uses the CCM thread for its callback) "
                               "listener <%u> - component <%u>\n",
@@ -320,7 +320,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, "OK : StatusListener: "
+        ACE_DEBUG ((LM_DEBUG, "OK: StatusListener: "
                               "DDS seems to use its own thread for its callback: "
                               "listener <%u> - component <%u>\n",
                               this->thread_id_listener_.value (),

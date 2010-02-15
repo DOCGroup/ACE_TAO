@@ -33,12 +33,13 @@ namespace DAnCE
           }
         this->node_applications_.unbind_all();
       }
-    catch (CORBA::Exception &e)
+    catch (const CORBA::Exception &e)
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO
                     ACE_TEXT("DomainApplication_Impl::~DomainApplication_Impl - ")
                     ACE_TEXT("caught a CORBA exception %C(%C) \"%C\"\n"),
                     e._name(), e._rep_id(), e._info().c_str()));
+        throw;
       }
     catch(...)
       {

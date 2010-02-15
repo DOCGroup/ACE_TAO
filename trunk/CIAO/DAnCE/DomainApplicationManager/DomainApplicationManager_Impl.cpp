@@ -137,7 +137,7 @@ DomainApplicationManager_Impl::destroyApplication (
     {
       DANCE_ERROR (1, (LM_ERROR, DLINFO
                     ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
-                    ACE_TEXT("Caught unknown exception.")));
+                    ACE_TEXT("Caught unknown exception\n")));
       throw Deployment::StopError();
     }
 

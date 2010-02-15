@@ -338,7 +338,7 @@ bool Plan_Launcher_Base_Impl::teardown_plan(const char *uuid)
       DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::teardown_plan - ")
                     ACE_TEXT("Unable to find DomainApplicationManager ")
                     ACE_TEXT("for plan with uuid: %C\n"), uuid));
-      return false;
+      throw;
     }
 
   return true;
