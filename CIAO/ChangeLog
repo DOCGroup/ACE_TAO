@@ -1,3 +1,28 @@
+Mon Feb 15 13:20:10 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/DomainApplication/Domain_Application_Impl.cpp:
+          Throwing exception when errors occur during shutdown.
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+          New line appended to log message.
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Module.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Module.cpp:
+          Throwing and catching exceptions when errors occur
+          during shutdown. When errors occur, ccm_remove is not
+          invoked and when it isn't, tests seems to be ok while they're
+          not.
+
+        * connectors/dds4ccm/docs/ccm_dds.idl:
+          Layout changes.
+
+        * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.cpp:
+          Added trace.
+
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.cpp:
+          Optimized logging.
+
 Mon Feb 15 13:15:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/TargetManager/TargetManager_exec.cpp:
