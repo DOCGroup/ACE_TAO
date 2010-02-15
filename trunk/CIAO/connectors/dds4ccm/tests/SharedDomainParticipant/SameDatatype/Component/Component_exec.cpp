@@ -1,12 +1,21 @@
 // -*- C++ -*-
 // $Id$
 
+// Test whether Connector 1,2 and 3 are sharing the same DomainParticipant.
+// Connector 4 should have a different DomainParticipant.
+// Also test whether Connector 1 and 2 share the same topic.
+
 #include "Component_exec.h"
 #include "ciao/Logger/Log_Macros.h"
 
 #include "Base/BaseSupport.h"
 
 #include "dds4ccm/impl/ndds/DataWriter.h"
+
+const char * tp_name_conn_1_ = "SharedDP";
+const char * tp_name_conn_2_ = "SharedDP";
+const char * tp_name_conn_3_ = "SharedDP1";
+const char * tp_name_conn_4_ = "StandaloneDP";
 
 namespace CIAO_SharedDP_SharedDPComponent_Impl
 {
@@ -42,6 +51,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
   void
   Component_exec_i::ccm_activate (void)
   {
+    const DDS_Duration_t dur = { 1, 0 };
     try
       {
         DDS::DataWriter_var dw1 =
@@ -51,6 +61,9 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
         DDSDataWriter * dds_dw1 = rti_rd1->get_impl ();
         DDSPublisher * dds_p1 = dds_dw1->get_publisher ();
         this->dds_dp1_ = dds_p1->get_participant ();
+        this->dds_tp1_ = this->dds_dp1_->find_topic (
+                                    CORBA::string_dup (tp_name_conn_1_),
+                                    dur);
       }
     catch (...)
       {
@@ -66,6 +79,9 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
         DDSDataWriter * dds_dw2 = rti_rd2->get_impl ();
         DDSPublisher * dds_p2 = dds_dw2->get_publisher ();
         this->dds_dp2_ = dds_p2->get_participant ();
+        this->dds_tp2_ = this->dds_dp2_->find_topic (
+                                    CORBA::string_dup (tp_name_conn_2_),
+                                    dur);
       }
     catch (...)
       {
@@ -81,6 +97,27 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
         DDSDataWriter * dds_dw3 = rti_rd3->get_impl ();
         DDSPublisher * dds_p3 = dds_dw3->get_publisher ();
         this->dds_dp3_ = dds_p3->get_participant ();
+        this->dds_tp3_ = this->dds_dp3_->find_topic (
+                                    CORBA::string_dup (tp_name_conn_3_),
+                                    dur);
+      }
+    catch (...)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: Unable to create dds_entity for writer3\n"));
+      }
+
+    try
+      {
+        DDS::DataWriter_var dw4 =
+          this->context_->get_connection_write4_dds_entity ();
+        CIAO::DDS4CCM::RTI::RTI_DataWriter_i *rti_rd4 =
+           dynamic_cast <CIAO::DDS4CCM::RTI::RTI_DataWriter_i *> (dw4.in ());
+        DDSDataWriter * dds_dw4 = rti_rd4->get_impl ();
+        DDSPublisher * dds_p4 = dds_dw4->get_publisher ();
+        this->dds_dp4_ = dds_p4->get_participant ();
+        this->dds_tp4_ = this->dds_dp4_->find_topic (
+                                    CORBA::string_dup (tp_name_conn_4_),
+                                    dur);
       }
     catch (...)
       {
@@ -97,11 +134,23 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
       ACE_ERROR ((LM_ERROR, "ERROR: DomainParticipant for Connector 2 seems to be NIL\n"));
     if (!this->dds_dp3_)
       ACE_ERROR ((LM_ERROR, "ERROR: DomainParticipant for Connector 3 seems to be NIL\n"));
+    if (!this->dds_dp4_)
+      ACE_ERROR ((LM_ERROR, "ERROR: DomainParticipant for Connector 4 seems to be NIL\n"));
+
+    if (!this->dds_tp1_)
+      ACE_ERROR ((LM_ERROR, "ERROR: Topic for Connector 1 seems to be NIL\n"));
+    if (!this->dds_tp2_)
+      ACE_ERROR ((LM_ERROR, "ERROR: Topic for Connector 2 seems to be NIL\n"));
+    if (!this->dds_tp3_)
+      ACE_ERROR ((LM_ERROR, "ERROR: Topic for Connector 3 seems to be NIL\n"));
+    if (!this->dds_tp4_)
+      ACE_ERROR ((LM_ERROR, "ERROR: Topic for Connector 4 seems to be NIL\n"));
   }
 
   void
   Component_exec_i::ccm_remove (void)
   {
+    //check shared DomainParticipants
     if (this->dds_dp1_ != this->dds_dp2_)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 2 don't seem to "
@@ -112,15 +161,42 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
         ACE_DEBUG ((LM_DEBUG, "Connector 1 and 2 seems to  "
                               "share the same DomainParticipant\n"));
       }
-    if (this->dds_dp1_ == this->dds_dp3_)
+    if (this->dds_dp1_ == this->dds_dp4_)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 3 seem to "
+        ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 4 seem to "
                               "share the same DomainParticipant\n"));
       }
-    if (this->dds_dp2_ == this->dds_dp3_)
+    if (this->dds_dp2_ == this->dds_dp4_)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: Connector 2 and 3 seem to "
+        ACE_ERROR ((LM_ERROR, "ERROR: Connector 2 and 4 seem to "
                               "share the same DomainParticipant\n"));
+      }
+    if (this->dds_dp3_ == this->dds_dp4_)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: Connector 3 and 4 seem to "
+                              "share the same DomainParticipant\n"));
+      }
+
+    //check shared Topics
+    if (this->dds_tp1_ != this->dds_tp2_)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 2 don't seem to "
+                              "share the same Topic\n"));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "Connector 1 and 2 seems to  "
+                              "share the same Topic\n"));
+      }
+    if (this->dds_tp1_ == this->dds_tp3_)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 3 seem to "
+                              "share the same Topic\n"));
+      }
+    if (this->dds_tp1_ == this->dds_tp4_)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 4 seem to "
+                              "share the same Topic\n"));
       }
   }
 

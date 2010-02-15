@@ -357,9 +357,7 @@ namespace CIAO
                      "Attempting to create topic with name %C and type %C\n",
                      impl_name, type_name));
 
-        ::DDS::Duration_t dur;
-        dur.sec = 0;
-        dur.nanosec = 10000;
+        ::DDS::Duration_t dur = { 0, 1000000 };
         ::DDS::Topic_var tp = this->find_topic (impl_name, dur);
         if (CORBA::is_nil (tp))
           {
