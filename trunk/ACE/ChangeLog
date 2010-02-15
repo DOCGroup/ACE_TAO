@@ -1,3 +1,8 @@
+Mon Feb 15 09:38:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * m4/ace.m4:
+          No need to link ftlk with gl
+
 Mon Feb 15 09:35:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/FoxReactor/FoxReactor.h:

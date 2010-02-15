@@ -1250,8 +1250,8 @@ AC_DEFUN([ACE_PATH_FL],
    fi
  fi
  if test X"${FLTKCONFIG}" != X; then
-   ACE_FLTK_CPPFLAGS=`$FLTKCONFIG --use-gl --cxxflags 2>/dev/null`
-   ACE_FLTK_LIBS=`$FLTKCONFIG --use-gl --ldflags 2>/dev/null`
+   ACE_FLTK_CPPFLAGS=`$FLTKCONFIG --cxxflags 2>/dev/null`
+   ACE_FLTK_LIBS=`$FLTKCONFIG --ldflags 2>/dev/null`
 
    AC_SUBST(ACE_FLTK_CPPFLAGS)
    AC_SUBST(ACE_FLTK_LIBS)
