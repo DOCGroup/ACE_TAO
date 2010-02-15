@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 be_visitor_context_ex_idl::be_visitor_context_ex_idl (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -26,8 +25,7 @@ be_visitor_context_ex_idl::~be_visitor_context_ex_idl (
 }
 
 int
-be_visitor_context_ex_idl::visit_component (
-  be_component *node)
+be_visitor_context_ex_idl::visit_component (be_component *node)
 {
   node_ = node;
 
@@ -80,8 +78,13 @@ be_visitor_context_ex_idl::visit_component (
 }
 
 int
-be_visitor_context_ex_idl::visit_uses (
-  be_uses *node)
+be_visitor_context_ex_idl::visit_connector (be_connector *node)
+{
+  return this->visit_component (node);
+}
+
+int
+be_visitor_context_ex_idl::visit_uses (be_uses *node)
 {
   be_type *impl = node->uses_type ();
 
@@ -135,8 +138,7 @@ be_visitor_context_ex_idl::visit_uses (
 }
 
 int
-be_visitor_context_ex_idl::visit_publishes (
-  be_publishes *node)
+be_visitor_context_ex_idl::visit_publishes (be_publishes *node)
 {
   be_eventtype *impl = node->publishes_type ();
 
@@ -150,8 +152,7 @@ be_visitor_context_ex_idl::visit_publishes (
 }
 
 int
-be_visitor_context_ex_idl::visit_emits (
-  be_emits *node)
+be_visitor_context_ex_idl::visit_emits (be_emits *node)
 {
   be_eventtype *impl = node->emits_type ();
 

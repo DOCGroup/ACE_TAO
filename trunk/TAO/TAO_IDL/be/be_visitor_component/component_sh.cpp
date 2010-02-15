@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ******************************************************
 // Component visitor for server header
 // ******************************************************
@@ -292,6 +291,12 @@ be_visitor_component_sh::visit_component (be_component *node)
     }
 
   return 0;
+}
+
+int
+be_visitor_component_sh::visit_connector (be_connector *node)
+{
+  return this->visit_component (node);
 }
 
 int

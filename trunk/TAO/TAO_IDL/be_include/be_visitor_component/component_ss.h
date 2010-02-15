@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_COMPONENT_COMPONENT_SS_H_
 #define _BE_COMPONENT_COMPONENT_SS_H_
 
@@ -28,14 +27,11 @@
 class be_visitor_component_ss : public be_visitor_component
 {
 public:
-  /// constructor
   be_visitor_component_ss (be_visitor_context *ctx);
-  
-  /// destructor
   ~be_visitor_component_ss (void);
   
-  /// set the right context and make a visitor
   virtual int visit_component (be_component *node);
+  virtual int visit_connector (be_connector *node);
 };
 
 #endif /* _BE_COMPONENT_COMPONENT_SS_H_ */

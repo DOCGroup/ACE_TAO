@@ -1,3 +1,77 @@
+Mon Feb 15 22:35:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_ih.cpp:
+        * TAO_IDL/be/be_visitor_component/component_is.cpp:
+        * TAO_IDL/be_include/be_visitor_component/component_is.h:
+        * TAO_IDL/be_include/be_visitor_component/component_ih.h:
+
+          Removed these visitors, they are not applicable to
+          components since their servants aren't hand-written.
+
+        * TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
+        * TAO_IDL/be_include/be_visitor_connector/connector_dds_ex_base.h:
+
+          Added base class visitor for class be_visitor_connector_dds_exh
+          and class be_visitor_connector_dds_exs, to capture common
+          code.
+
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_connector.cpp:
+        * TAO_IDL/be/be_visitor_component/context_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ci.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_sh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_si.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ss.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/be_include/be_visitor_connector.h:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+        * TAO_IDL/be_include/be_visitor_component/component_sh.h:
+        * TAO_IDL/be_include/be_visitor_component/component_si.h:
+        * TAO_IDL/be_include/be_visitor_component/servant_svh.h:
+        * TAO_IDL/be_include/be_visitor_component/context_svh.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_ex_idl.h:
+        * TAO_IDL/be_include/be_visitor_component/component_ss.h:
+        * TAO_IDL/be_include/be_visitor_component/servant_svs.h:
+        * TAO_IDL/be_include/be_visitor_component/context_svs.h:
+        * TAO_IDL/be_include/be_visitor_component/component_svh.h:
+        * TAO_IDL/be_include/be_visitor_component/component_svs.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_svh.h:
+        * TAO_IDL/be_include/be_visitor_component/context_ex_idl.h:
+        * TAO_IDL/be_include/be_visitor_component/component_ch.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_svs.h:
+        * TAO_IDL/be_include/be_visitor_component/component_ci.h:
+        * TAO_IDL/be_include/be_visitor_component/executor_ex_idl.h:
+        * TAO_IDL/be_include/be_visitor_component/component_ex_idl.h:
+        * TAO_IDL/be_include/be_visitor_component/component_cs.h:
+        * TAO_IDL/be_include/be_visitor_arg_traits.h:
+        * TAO_IDL/be_include/be_visitor_connector/connector_dds_exs.h:
+        * TAO_IDL/be_include/be_visitor_connector/connector_dds_exh.h:
+        * TAO_IDL/be_include/be_visitor_traits.h:
+        * TAO_IDL/be_include/be_visitor_component.h:
+
+          Added visit_connector() methods to all visitors where the
+          code generation for connectors is the same as that for
+          components. The visit_connector() methods simply call
+          visit_component().
+
 Mon Feb 15 16:32:24 UTC 2010  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:

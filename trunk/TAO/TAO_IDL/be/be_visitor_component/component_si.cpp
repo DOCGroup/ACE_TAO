@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ******************************************************
 // Component visitor for server inline
 // ******************************************************
@@ -33,3 +32,10 @@ be_visitor_component_si::visit_component (be_component *node)
   be_visitor_interface_si visitor (&ctx);
   return visitor.visit_interface (node);
 }
+
+int
+be_visitor_component_si::visit_connector (be_connector *node)
+{
+  return this->visit_component (node);
+}
+

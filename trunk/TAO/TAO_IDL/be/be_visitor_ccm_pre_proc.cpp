@@ -22,7 +22,7 @@
 #include "be_template_module_inst.h"
 #include "be_field.h"
 #include "be_typedef.h"
-#include "be_component.h"
+#include "be_connector.h"
 #include "be_provides.h"
 #include "be_uses.h"
 #include "be_publishes.h"
@@ -157,6 +157,12 @@ be_visitor_ccm_pre_proc::visit_component (be_component *node)
     }
 
   return 0;
+}
+
+int
+be_visitor_ccm_pre_proc::visit_connector (be_connector *node)
+{
+  return this->visit_component (node);
 }
 
 int

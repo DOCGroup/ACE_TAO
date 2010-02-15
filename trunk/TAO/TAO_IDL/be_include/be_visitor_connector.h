@@ -24,6 +24,7 @@
 
 #include "be_visitor_component_scope.h"
 
+#include "be_visitor_connector/connector_dds_ex_base.h"
 #include "be_visitor_connector/connector_dds_exh.h"
 #include "be_visitor_connector/connector_dds_exs.h"
 

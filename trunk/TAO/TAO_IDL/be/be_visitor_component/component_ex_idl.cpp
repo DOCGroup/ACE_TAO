@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 be_visitor_component_ex_idl::be_visitor_component_ex_idl (
     be_visitor_context *ctx)
   : be_visitor_decl (ctx),
@@ -102,5 +101,11 @@ be_visitor_component_ex_idl::visit_component (
       << "};";
 
   return 0;
+}
+
+int
+be_visitor_component_ex_idl::visit_connector (be_connector *node)
+{
+  return this->visit_component (node);
 }
 
