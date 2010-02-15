@@ -1,3 +1,9 @@
+Mon Feb 15 09:35:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/FoxResource/FoxResource_Loader.h:
+          User has to specify the full fox path now, some distributions now ship fox-1.6 and
+          fox-1.4 as directory names
+
 Mon Feb 15 09:17:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * m4/tao.m4:
