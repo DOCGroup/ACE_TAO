@@ -4,7 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-#include "tao/TAO_Singleton_Manager.h"
 #include "tao/StringSeqC.h"
 #include "tao/IORTable/IORTable.h"
 #include "tao/Utils/PolicyList_Destroyer.h"

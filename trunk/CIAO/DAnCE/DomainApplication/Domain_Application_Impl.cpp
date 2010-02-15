@@ -103,9 +103,9 @@ namespace DAnCE
 
         this->node_applications_.bind (na, (*iter).ext_id_);
 
-        size_t before = this->connections_.length();
+        CORBA::ULong before = this->connections_.length();
         this->connections_.length (before + conn->length());
-        for (size_t i = 0; i < conn->length(); ++i)
+        for (CORBA::ULong i = 0; i < conn->length(); ++i)
           {
             this->connections_[before+i] = (*conn) [i];
           }
