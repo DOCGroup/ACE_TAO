@@ -30,6 +30,7 @@ CONTROLLED_FILES = \
 	TAO/docs \
 	TAO/examples \
 	TAO/interop-tests \
+        TAO/m4 \
 	TAO/orbsvcs \
 	TAO/performance-tests \
 	TAO/rules.tao.GNU \
