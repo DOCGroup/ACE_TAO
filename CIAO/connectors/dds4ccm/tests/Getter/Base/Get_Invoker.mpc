@@ -2,7 +2,7 @@
 
 project(DDS_Get_Invoker_idl_gen) : componentidldefaults {
   custom_only = 1
-  after += 
+  after +=
   idlflags += -Wb,stub_export_macro=GET_INVOKER_STUB_Export \
               -Wb,stub_export_include=Get_Invoker_stub_export.h \
               -Wb,skel_export_macro=GET_INVOKER_SVNT_Export \
@@ -57,7 +57,7 @@ project(DDS_Get_Invoker_lem_stub) : ccm_svnt, dds4ccm_base  {
 
 project(DDS_Get_Invoker_stub) : ccm_stub, dds4ccm_base {
   after += DDS_Get_Invoker_idl_gen
-  libs  += 
+  libs  +=
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -83,8 +83,8 @@ project(DDS_Get_Invoker_stub) : ccm_stub, dds4ccm_base {
 
 
 project(DDS_Get_Invoker_svnt) : ciao_servant, dds4ccm_base, nddslib {
-  after      +=   DDS_Get_Invoker_lem_stub DDS_Get_Invoker_stub\
-                  DDS4CCM_lem_stub DDS4CCM_skel
+  after      +=   DDS_Get_Invoker_lem_stub DDS_Get_Invoker_stub \
+                  DDS4CCM_lem_stub DDS4CCM_skel DDS_Get_Invoker_idl_gen
   sharedname  = Get_Invoker_svnt
   libs       += Get_Invoker_stub Get_Invoker_lem_stub \
                 DDS4CCM_lem_stub DDS4CCM_skel
