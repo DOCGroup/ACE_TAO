@@ -371,9 +371,6 @@ AC_DISABLE_STATIC
 dnl Enable Libtool module support
 AC_LIBTOOL_DLOPEN
 
-dnl Enable support for "clean" DLLs.
-AC_LIBTOOL_WIN32_DLL
-
 dnl
 dnl  ###### Relies on the as of yet unreleased Libtool 1.6 distribuion ###
 dnl
@@ -4557,11 +4554,11 @@ if test "$ace_user_enable_reentrant_funcs" = yes; then
 #endif
                  ]],
                  [[
-  const char * name;
+  const char * name = 0;
   struct passwd * pwent;
-  char * buffer;
+  char * buffer = 0;
   int buflen;
-  struct passwd * result;
+  struct passwd * result = 0;
 
   int status = getpwnam_r (name, pwent, buffer, buflen, &result);
                  ]])],
@@ -4570,10 +4567,9 @@ if test "$ace_user_enable_reentrant_funcs" = yes; then
                     AC_DEFINE([ACE_HAS_POSIX_GETPWNAM_R])
                   fi
                  ],
-                 [
+                [
                   dnl Nothing to do!
-                 ])
-                ],
+                ]),
                 [AC_DEFINE([ACE_LACKS_PWD_REENTRANT_FUNCTIONS])])
 
   AC_CHECK_FUNC([ctime_r],,)
