@@ -13,79 +13,43 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-#include "ace/Task.h"
+#include "ace/OS_NS_Thread.h"
 #include "ace/Reactor.h"
+#include "ace/Task.h"
 
 namespace CIAO_Updater_Receiver_Impl
 {
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
-  
+  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_thread_t> Atomic_ThreadId;
+
   class Receiver_exec_i;
-   
-  class read_action_Generator
-    : public ACE_Event_Handler
+
+  //============================================================
+  // ListenOneByOneTest_Listener_exec_i
+  //============================================================
+  class RECEIVER_EXEC_Export ListenOneByOneTest_Listener_exec_i
+    : public virtual ::CCM_DDS::TestTopic::CCM_Listener,
+      public virtual ::CORBA::LocalObject
   {
   public:
-    read_action_Generator (Receiver_exec_i &callback);
+    ListenOneByOneTest_Listener_exec_i (Atomic_ThreadId &);
+    virtual ~ListenOneByOneTest_Listener_exec_i (void);
 
-    ~read_action_Generator ();
-
-    /// Handle the timeout.
-    virtual int handle_timeout (const ACE_Time_Value &tv,
-                                const void *arg);
-
+    virtual void
+    on_one_data (
+      const TestTopic& an_instance,
+      const ::CCM_DDS::ReadInfo & info);
+    virtual void
+    on_many_data (
+      const TestTopic_Seq & an_instance,
+      const ::CCM_DDS::ReadInfoSeq & info);
   private:
-    /// Maintains a handle that actually process the event
-    Receiver_exec_i &pulse_callback_;
-
+    Atomic_ThreadId &thread_id_;
   };
-  class RECEIVER_EXEC_Export PortStatusListener_exec_i
-    : public virtual ::CCM_DDS::CCM_PortStatusListener,
-      public virtual ::CORBA::LocalObject
-  {
-  public:
-    PortStatusListener_exec_i (void);
-    virtual ~PortStatusListener_exec_i (void);
 
-    virtual void
-    on_requested_deadline_missed (
-      ::DDS::DataReader_ptr the_reader,
-      const ::DDS::RequestedDeadlineMissedStatus & status);
-
-    virtual void
-    on_sample_lost (
-      ::DDS::DataReader_ptr the_reader,
-      const ::DDS::SampleLostStatus & status);
-  };
-  class RECEIVER_EXEC_Export StateListener_exec_i
-    : public virtual ::CCM_DDS::TestTopic::CCM_StateListener,
-      public virtual ::CORBA::LocalObject
-  {
-  public:
-    StateListener_exec_i (void);
-    virtual ~StateListener_exec_i (void);
-    
-    virtual void
-      on_creation (
-        const ::TestTopic & datum,
-        const ::CCM_DDS::ReadInfo & info);
-
-    virtual void
-      on_one_update (
-        const ::TestTopic & datum,
-        const ::CCM_DDS::ReadInfo & info);
-
-    virtual void
-      on_many_updates (
-        const ::TestTopic_Seq & data,
-        const ::CCM_DDS::ReadInfoSeq & infos);
-
-    virtual void
-      on_deletion (
-        const ::TestTopic & datum,
-        const ::CCM_DDS::ReadInfo & info);
-   };
-
+  //============================================================
+  // Receiver_exec_i
+  //============================================================
   class RECEIVER_EXEC_Export Receiver_exec_i
     : public virtual Receiver_Exec,
       public virtual ::CORBA::LocalObject
@@ -95,7 +59,7 @@ namespace CIAO_Updater_Receiver_Impl
     virtual ~Receiver_exec_i (void);
 
     // Port operations.
-    virtual ::CCM_DDS::TestTopic::CCM_StateListener_ptr
+    virtual ::CCM_DDS::TestTopic::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -111,13 +75,10 @@ namespace CIAO_Updater_Receiver_Impl
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
-    void read_all(void);
 
   private:
     ::Updater::CCM_Receiver_Context_var context_;
-    ::CCM_DDS::TestTopic::Reader_var reader_;
-    read_action_Generator * ticker_;
-    CORBA::ULong rate_;
+    Atomic_ThreadId thread_id_listener_;
 };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
