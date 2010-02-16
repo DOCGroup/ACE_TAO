@@ -1,3 +1,9 @@
+Tue Feb 16 14:22:12 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/narrow/narrow.cpp:
+        
+          Added missing case to cast a connector to a scope.
+
 Tue Feb 16 09:16:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/modules/IDLHelper.pm:
