@@ -1,3 +1,16 @@
+Tue Feb 16 09:45:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.cpp:
+          Improved code for thread switch.
+
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.h:
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.cpp:
+          Removed reader implementation since it's unnecessary. Also
+          optimized logging.
+
+        * connectors/dds4ccm/tests/SLOneByOne/Sender/SL_OneByOne_Sender_exec.cpp:
+          Improved logging.
+
 Tue Feb 16 08:23:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Config_Handlers/Config_Handlers.mpc
