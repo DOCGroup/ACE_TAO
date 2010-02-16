@@ -20,6 +20,9 @@ sub get_output {
   if ($flags =~ /-Gxhsv/ && $flags =~ /-Wb,svnt_export_include=(\S*)/) {
     push(@out, $1);
   }
+  if ($flags =~ /-Gxhcn/ && $flags =~ /-Wb,conn_export_include=(\S*)/) {
+    push(@out, $1);
+  }
 
   return \@out;
 }
