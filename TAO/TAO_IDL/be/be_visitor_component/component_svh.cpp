@@ -38,6 +38,11 @@ be_visitor_component_svh::~be_visitor_component_svh (void)
 int
 be_visitor_component_svh::visit_component (be_component *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
+  
   // Generate the facet servant class declaration.
   be_visitor_facet_svh facet_visitor (this->ctx_);
   

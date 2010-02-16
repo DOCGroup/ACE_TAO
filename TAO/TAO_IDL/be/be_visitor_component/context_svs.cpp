@@ -25,6 +25,10 @@ be_visitor_context_svs::~be_visitor_context_svs (void)
 int
 be_visitor_context_svs::visit_component (be_component *node)
 {
+  // This visitor is spawned by be_visitor_component_svh,
+  // which already does a check for imported node, so none
+  // is needed here.
+  
   node_ = node;
 
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());

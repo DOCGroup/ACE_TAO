@@ -31,6 +31,10 @@ be_visitor_servant_svs::~be_visitor_servant_svs (void)
 int
 be_visitor_servant_svs::visit_component (be_component *node)
 {
+  // This visitor is spawned by be_visitor_component_svh,
+  // which already does a check for imported node, so none
+  // is needed here.
+  
   node_ = node;
 
   n_provides_ = 0UL;
@@ -215,7 +219,7 @@ be_visitor_servant_svs::visit_operation (be_operation *node)
 
   // Components have implied IDL operations added to the AST, but
   // we are interested only in supported interface operations.
-  if (nt == AST_Decl::NT_component)
+  if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {
       return 0;
     }
@@ -1756,7 +1760,9 @@ Component_Op_Attr_Generator::emit (be_interface * /* derived_interface */,
                                    TAO_OutStream * /* os */,
                                    be_interface * base_interface)
 {
-  if (base_interface->node_type () == AST_Decl::NT_component)
+  AST_Decl::NodeType nt = base_interface->node_type ();
+
+  if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {
       return 0;
     }

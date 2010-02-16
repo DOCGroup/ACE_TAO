@@ -17,6 +17,11 @@ be_visitor_connector_dds_exs::be_visitor_connector_dds_exs (
       be_visitor_context *ctx)
   : be_visitor_connector_dds_ex_base (ctx)
 {
+  // This is initialized in the base class to svnt_export_macro()
+  // or skel_export_macro(), since there are many more visitor
+  // classes generating servant code. So we can just override
+  // all that here.
+  export_macro_ = be_global->conn_export_macro ();
 }
 
 be_visitor_connector_dds_exs::~be_visitor_connector_dds_exs (void)
@@ -43,9 +48,16 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
     
   node_ = node;
 
-  // Stores several values in base class members for later use.  
+  // Shaky logic that will have to be improved. If our
+  // base connector does not come from an instantiated
+  // template module, we skip the code generation.
   this->process_template_args (base);
-      
+  
+  if (this->t_args_ == 0)
+    {
+      return 0;
+    }
+    
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
   os_ << be_nl << be_nl
@@ -69,7 +81,7 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
     
   os_ << " <" << be_idt << be_idt_nl
       << this->dds_traits_name_.c_str () << "," << be_nl
-      << this->node_->local_name () << "_Traits> ()"
+      << "DDS" << this->node_->local_name () << "_Traits> ()"
       << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "}";

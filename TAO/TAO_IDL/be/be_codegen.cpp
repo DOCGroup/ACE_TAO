@@ -3275,24 +3275,6 @@ TAO_CodeGen::gen_exec_idl_includes (void)
 void
 TAO_CodeGen::gen_conn_hdr_includes (void)
 {
-  // We'll probably need some kind of flag to check
-  // to tell which DDS vendor.
-  this->gen_standard_include (
-    this->ciao_conn_header_,
-    "connectors/dds4ccm/impl/ndds/DDS4CCM_Traits.h");
-
-  // Placeholder for forthcoming real-world logic.
-  bool dds_event_connector = true;
-  
-  if (dds_event_connector)
-    {
-      this->gen_standard_include (
-        this->ciao_conn_header_,
-        "connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.h");
-    }
-
-  *this->ciao_conn_header_ << be_nl;
-      
   ACE_Unbounded_Queue<char *> &lem_file_names =
     idl_global->ciao_lem_file_names ();
   
@@ -3311,6 +3293,24 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
       this->gen_standard_include (
         this->ciao_conn_header_,
         lem_str.c_str ());
+    }
+
+  *this->ciao_conn_header_ << be_nl;
+      
+  // We'll probably need some kind of flag to check
+  // to tell which DDS vendor.
+  this->gen_standard_include (
+    this->ciao_conn_header_,
+    "connectors/dds4ccm/impl/ndds/DDS4CCM_Traits.h");
+
+  // Placeholder for forthcoming real-world logic.
+  bool dds_event_connector = true;
+  
+  if (dds_event_connector)
+    {
+      this->gen_standard_include (
+        this->ciao_conn_header_,
+        "connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.h");
     }
 
   for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)

@@ -13,8 +13,9 @@
 
 #include "ast_interface.h"
 #include "ast_valuetype.h"
+#include "ast_valuebox.h"
 #include "ast_eventtype.h"
-#include "ast_component.h"
+#include "ast_connector.h"
 #include "ast_home.h"
 #include "ast_exception.h"
 #include "ast_typedef.h"
@@ -81,8 +82,9 @@ ast_visitor_reifying::visit_interface_fwd (AST_InterfaceFwd *)
 }
 
 int
-ast_visitor_reifying::visit_valuebox (AST_ValueBox *)
+ast_visitor_reifying::visit_valuebox (AST_ValueBox *node)
 {
+  this->check_and_store (node);
   return 0;
 }
 
@@ -172,8 +174,9 @@ ast_visitor_reifying::visit_mirror_port (AST_Mirror_Port *)
 }
 
 int
-ast_visitor_reifying::visit_connector (AST_Connector *)
+ast_visitor_reifying::visit_connector (AST_Connector *node)
 {
+  this->check_and_store (node);
   return 0;
 }
 
