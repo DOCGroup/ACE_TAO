@@ -12,150 +12,79 @@
 
 namespace CIAO_Updater_Receiver_Impl
 {
- 
-  read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
-    : pulse_callback_ (callback)
+  //============================================================
+  // ListenOneByOneTest_Listener_exec_i
+  //============================================================
+  ListenOneByOneTest_Listener_exec_i::ListenOneByOneTest_Listener_exec_i (
+                                                      Atomic_ThreadId &thread_id)
+    : thread_id_ (thread_id)
   {
   }
 
-  read_action_Generator::~read_action_Generator ()
+  ListenOneByOneTest_Listener_exec_i::~ListenOneByOneTest_Listener_exec_i (void)
   {
   }
 
-  int
-  read_action_Generator::handle_timeout (const ACE_Time_Value &, const void *)
+  void
+  ListenOneByOneTest_Listener_exec_i::on_one_data (
+                                  const TestTopic & an_instance,
+                                  const ::CCM_DDS::ReadInfo & info)
   {
-    try
+    this->thread_id_ = ACE_Thread::self ();
+    ACE_DEBUG ((LM_DEBUG, "ListenOneByOneTest_Listener_exec_i::on_one_data: "
+                            "key <%C> - iteration <%d>\n",
+                            an_instance.key.in (),
+                            an_instance.x));
+    if (!info.instance_handle.isValid)
       {
-      //   this->pulse_callback_.read_all();
+        ACE_ERROR ((LM_ERROR, "ERROR: ListenOneByOneTest_Listener_exec_i::on_one_data: "
+                            "instance handle seems to be invalid "
+                            "key <%C> - iteration <%d>\n",
+                            an_instance.key.in (),
+                            an_instance.x));
       }
-    catch (...)
+    if (info.source_timestamp.sec == 0 &&
+        info.source_timestamp.nanosec == 0)
       {
-        // @todo
+        ACE_ERROR ((LM_ERROR, "ERROR: ListenOneByOneTest_Listener_exec_i::on_one_data: "
+                            "source timestamp seems to be invalid (nil) "
+                            "key <%C> - iteration <%d>\n",
+                            an_instance.key.in (),
+                            an_instance.x));
       }
-    return 0;
-  }
-  //============================================================
-  // Facet Executor Implementation Class: StateListener_exec_i
-  //============================================================
-  StateListener_exec_i::StateListener_exec_i (void)
-  {
-  }
-
-  StateListener_exec_i::~StateListener_exec_i (void)
-  {
-  }
-
-  // Operations from ::CCM_DDS::StateListener
-  void
-      StateListener_exec_i::on_creation (const ::TestTopic & /*datum*/,
-        const ::CCM_DDS::ReadInfo & /*info*/)
-  {}
-  
-   void
-      StateListener_exec_i::on_one_update (
-        const ::TestTopic & /*datum*/,
-        const ::CCM_DDS::ReadInfo & /*info*/)
-   {}
-      
-   void
-      StateListener_exec_i::on_many_updates (
-        const ::TestTopic_Seq & /*data*/,
-        const ::CCM_DDS::ReadInfoSeq & /*infos*/)
-   {}
-   void
-      StateListener_exec_i::on_deletion (
-        const ::TestTopic & /*datum*/,
-        const ::CCM_DDS::ReadInfo & /*info*/)
-   {}
-  //============================================================
-  // Facet Executor Implementation Class: PortStatusListener_exec_i
-  //============================================================
-  PortStatusListener_exec_i::PortStatusListener_exec_i ()
-  {
-  }
-
-  PortStatusListener_exec_i::~PortStatusListener_exec_i (void)
-  {
-  }
-
-  // Operations from ::CCM_DDS::PortStatusListener
-  void
-    PortStatusListener_exec_i::on_requested_deadline_missed (
-    ::DDS::DataReader_ptr /* the_reader */,
-    const ::DDS::RequestedDeadlineMissedStatus & /* status */)
-  {
   }
 
   void
-  PortStatusListener_exec_i::on_sample_lost (
-    ::DDS::DataReader_ptr /* the_reader */,
-    const ::DDS::SampleLostStatus & /* status */)
+  ListenOneByOneTest_Listener_exec_i::on_many_data (
+                                  const TestTopic_Seq & ,
+                                  const ::CCM_DDS::ReadInfoSeq & )
   {
   }
 
   //============================================================
-  // Component Executor Implementation Class: Receiver_exec_iTestTopic_RawListener_exec_i ();
+  // Receiver_exec_i
   //============================================================
-
   Receiver_exec_i::Receiver_exec_i (void)
-  : rate_ (10)
+    : thread_id_listener_ (0)
   {
-    this->ticker_ = new read_action_Generator (*this); 
   }
 
   Receiver_exec_i::~Receiver_exec_i (void)
   {
   }
 
-  // Supported operations and attributes.
-  void
-  Receiver_exec_i::read_all (void)
-  {
-    if (CORBA::is_nil (this->reader_.in ()))
-      {
-        return;
-      }
-    TestTopic_Seq_var TestTopic_infos;
-    ::CCM_DDS::ReadInfoSeq_var readinfoseq;
-    try{
-      this->reader_->read_all(TestTopic_infos.out(), readinfoseq.out());
-      for(CORBA::ULong i = 0; i < readinfoseq->length(); ++i)
-        {
-          ACE_Time_Value tv;
-          tv <<= readinfoseq[i].source_timestamp;
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
-                                ACE_TEXT ("-> UTC date =%#T\n"),
-                                &tv));
-        }
-      for(CORBA::ULong i = 0; i < TestTopic_infos->length(); ++i)
-        {
-           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL keyed test info : ")
-                ACE_TEXT ("Number <%d> : received TestTopic_info for <%C> at %u\n"),
-              i,
-              TestTopic_infos[i].key.in (),
-              TestTopic_infos[i].x));
-        }
-    }
-    catch( const CCM_DDS::InternalError& )
-    {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("internal error or no data\n")));
-    }
-  }
-  // Component attributes.
   // Port operations.
-  
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
-    return new PortStatusListener_exec_i ();
+    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
-  ::CCM_DDS::TestTopic::CCM_StateListener_ptr
+  ::CCM_DDS::TestTopic::CCM_Listener_ptr
     Receiver_exec_i::get_info_out_data_listener (void)
   {
-    return new StateListener_exec_i();
+    return new ListenOneByOneTest_Listener_exec_i (
+                                  this->thread_id_listener_);
   }
 
   // Operations from Components::SessionComponent.
@@ -174,44 +103,69 @@ namespace CIAO_Updater_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
-    this->reader_ = this->context_->get_connection_info_out_data();
   }
 
   void
   Receiver_exec_i::ccm_activate (void)
   {
-    ::CCM_DDS::StateListenerControl_var lc =
-    this->context_->get_connection_info_out_data_control ();
-
-     if (CORBA::is_nil (lc.in ()))
-      {
-         ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
-        throw CORBA::INTERNAL ();
-      }
-    
-       lc->mode (::CCM_DDS::NOT_ENABLED);
-    // calculate the interval time
-    long usec = 1000000 / this->rate_;
-    if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
-                                          this->ticker_,
-                                          0,
-                                          ACE_Time_Value(3, usec),
-                                          ACE_Time_Value(3, usec)) == -1)
-      {
-        ACE_ERROR ((LM_ERROR, "Unable to schedule Timer\n"));
-      }
+    ::CCM_DDS::DataListenerControl_var dlc =
+        this->context_->get_connection_info_out_data_control ();
+    dlc->mode (::CCM_DDS::ONE_BY_ONE);
   }
 
   void
   Receiver_exec_i::ccm_passivate (void)
   {
-    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
-    delete this->ticker_;
   }
 
   void
   Receiver_exec_i::ccm_remove (void)
   {
+    if (this->thread_id_listener_.value () == 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: "
+                              "Thread ID for ReaderListener not set!\n"));
+      }
+    #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
+    else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
+                                ACE_Thread::self ()))
+      {
+        ACE_DEBUG ((LM_DEBUG, "ONE_BY_ONE: "
+                              "Thread switch for ReaderListener seems OK. "
+                              "(DDS uses the CCM thread for its callback) "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_.value (),
+                              ACE_Thread::self ()));
+      }
+    else
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: ONE_BY_ONE: "
+                              "Thread switch for ReaderListener "
+                              "doesn't seem to work! "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_.value (),
+                              ACE_Thread::self ()));
+      }
+    #else
+    else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
+                                ACE_Thread::self ()))
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: ONE_BY_ONE: ReaderListener: "
+                              "DDS seems to use a CCM thread for its callback: "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_.value (),
+                              ACE_Thread::self ()));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "ONE_BY_ONE: ReaderListener: "
+                              "DDS seems to use its own thread for its callback: "
+                              "listener <%u> - component <%u>\n",
+                              this->thread_id_listener_.value (),
+                              ACE_Thread::self ()));
+      }
+    #endif
+
   }
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

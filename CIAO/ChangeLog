@@ -1,3 +1,12 @@
+Tue Feb 16 10:54:26 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver.idl:
+        * connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Updater/descriptors/Plan.cdp:
+          Added data listener and test thread switch for this
+          data listener.
+
 Tue Feb 16 09:45:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.cpp:
