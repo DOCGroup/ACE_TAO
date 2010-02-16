@@ -1,3 +1,22 @@
+Tue Feb 16 20:04:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Simplified execution manager
+
+        * DAnCE/ExecutionManager/DAnCE_ExecutionManager_Module_Export.h
+        * DAnCE/ExecutionManager/Execution_Manager_Exec.cpp
+        * DAnCE/ExecutionManager/ExecutionManager_Export.h
+          Removed
+
+        * DAnCE/ExecutionManager/Execution_Manager.cpp
+        * DAnCE/ExecutionManager/ExecutionManager.mpc
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.h
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp
+        * DAnCE/ExecutionManager/ExecutionManager_Module.h
+          Simplified
+
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+          Layout changes
+
 Tue Feb 16 19:33:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Simplified the plan_launcher, it was way to complex to

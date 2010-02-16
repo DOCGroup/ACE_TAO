@@ -18,7 +18,6 @@
 #include "ace/Map_Manager.h"
 #include "ace/SStringfwd.h"
 #include "orbsvcs/orbsvcs/CosNamingC.h"
-#include "ExecutionManager_Export.h"
 #include "Deployment/Deployment_ExecutionManagerS.h"
 #include "Deployment/Deployment_NodeManagerC.h"
 #include "DomainApplicationManager/DomainApplicationManager_Impl.h"
@@ -26,7 +25,7 @@
 
 namespace DAnCE
   {
-  class ExecutionManager_Export ExecutionManager_Impl
+  class ExecutionManager_Impl
         : public virtual POA_Deployment::ExecutionManager
     {
     public:
