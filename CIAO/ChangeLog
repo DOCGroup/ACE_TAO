@@ -1,3 +1,8 @@
+Tue Feb 16 15:48:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/DAnCE/DAnCE_Properties.mpc:
+          Added mpc file which should have been committed earlier today
+
 Tue Feb 16 13:08:57 UTC 2010  Marijke Hemgstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Keyed/Base/Perf_Keyed_Test_Base.idl:
@@ -16,7 +21,7 @@ Tue Feb 16 13:08:57 UTC 2010  Marijke Hemgstmengel  <mhengstmengel@remedy.nl>
         * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender.idl:
         * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender_exec.cpp:
         * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender_exec.h:
-        Add attribute number_of_subscribers, made different test scripts.  
+        Add attribute number_of_subscribers, made different test scripts.
 
 Tue Feb 16 12:47:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
