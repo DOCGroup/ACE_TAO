@@ -14,10 +14,8 @@ module Updater
 {
   component Receiver
   {
-    //port CCM_DDS::TestTopic::DDS_Get info_get;
-    port CCM_DDS::TestTopic::DDS_StateListen info_out;
-    //provides CCM_DDS::ConnectorStatusListener info_out_connector_status;
-   };
+    port CCM_DDS::TestTopic::DDS_Listen info_out;
+  };
 };
 
 #endif
