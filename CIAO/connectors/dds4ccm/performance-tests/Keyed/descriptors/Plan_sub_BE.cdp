@@ -140,7 +140,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>HelloTest_Library#LatencyQoS</string>
+          <string>HelloTest_Library#BestEffortQoS</string>
         </value>
       </value>
     </configProperty>
@@ -185,7 +185,8 @@
       <instance xmi:idref="Perf_Keyed_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
-
+  
+  
   <connection>
     <name>info_listen_data_control</name>
     <deployRequirement>

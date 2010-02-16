@@ -133,7 +133,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>HelloTest_Library#LatencyQoS</string>
+          <string>HelloTest_Library#BestEffortQoS</string>
         </value>
       </value>
     </configProperty>
@@ -162,7 +162,7 @@
           <kind>tk_ulong</kind>
         </type>
         <value>
-          <ulong>0</ulong>
+          <ulong>10000</ulong>
         </value>
       </value>
     </configProperty>
@@ -200,15 +200,15 @@
       </value>
     </configProperty>
     <configProperty>
-    <name>number_of_sub</name>
-    <value>
-      <type>
-        <kind>tk_ushort</kind>
-      </type>
+      <name>number_of_sub</name>
       <value>
-        <ushort>1</ushort>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <ushort>3</ushort>
+        </value>
       </value>
-    </value>
     </configProperty>
     <configProperty>
       <name>datalen</name>
