@@ -31,8 +31,8 @@
 #include "tao/PortableServer/POAC.h"
 #include "orbsvcs/CosNamingC.h"
 #include "tao/Object_Loader.h"
-#include "Deployment/DAnCE_Loader.h"
-#include "DAnCE/Deployment/Deployment_common.h"
+#include "DAnCE/DAnCE_Loader.h"
+#include "DAnCE/Deployment_common.h"
 #include "TargetManager_Impl.h"
 
 /**

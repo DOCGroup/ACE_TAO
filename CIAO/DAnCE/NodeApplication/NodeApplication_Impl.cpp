@@ -17,8 +17,9 @@
 #include "Deployment/Deployment_BaseC.h"
 #include "Deployment/Deployment_ApplicationC.h"
 #include "Deployment/Deployment_PlanErrorC.h"
-#include "Deployment/Deployment_common.h"
-#include "Deployment/DAnCE_PropertiesC.h"
+#include "Deployment/Deployment_ApplicationManagerC.h"
+#include "DAnCE/Deployment_common.h"
+#include "DAnCE/DAnCE_PropertiesC.h"
 #include "ComponentAttributesSetter.h"
 #include "Name_Utilities.h"
 

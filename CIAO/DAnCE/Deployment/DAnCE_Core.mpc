@@ -3,33 +3,38 @@
 
 project(Deployment_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream {
   custom_only = 1
-  idlflags     += -Wb,stub_export_macro=Deployment_stub_Export \
+  idlflags     += -Wb,stub_export_macro=DEPLOYMENT_STUB_Export \
                   -Wb,stub_export_include=Deployment_stub_export.h \
-                  -Wb,skel_export_macro=Deployment_svnt_Export \
-                  -Wb,skel_export_include=Deployment_svnt_export.h
+                  -Wb,skel_export_macro=DEPLOYMENT_SKEL_Export \
+                  -Wb,skel_export_include=Deployment_skel_export.h
+  after += DAnCE_Properties_IDL
 
   IDL_Files {
     idlflags += -SS -Sci
     Deployment_Packaging_Data.idl
     Deployment_PlanError.idl
-    DAnCE_Properties.idl
+    Deployment_Connection.idl
+    Deployment_StopError.idl
+    Deployment_StartError.idl
+    Deployment_DeploymentPlan.idl
+    Deployment_Data.idl
+    Deployment_TargetData.idl
+    Deployment.idl
   }
 
   IDL_Files {
     idlflags += -SS
     Deployment_Base.idl
-    Deployment_Connection.idl
-    Deployment_Data.idl
-    Deployment_DeploymentPlan.idl
-    Deployment_TargetData.idl
   }
 
   IDL_Files {
-    Deployment_ResourceCommitmentManager.idl
-    Deployment_StopError.idl
-    Deployment_StartError.idl
+    idlflags += -Gxhst -Gxhsk
     Deployment_Application.idl
-    Deployment.idl
+  }
+
+  IDL_Files {
+    idlflags += -Ssi
+    Deployment_ResourceCommitmentManager.idl
   }
 }
 
@@ -53,7 +58,7 @@ project(Deployment_TargetManager_IDL) : ciaolib_with_idl, dance_output, valuetyp
                   -Wb,stub_export_include=Deployment_TargetManager_stub_export.h \
                   -Wb,skel_export_macro=DEPLOYMENT_TARGETMANAGER_SKEL_Export \
                   -Wb,skel_export_include=Deployment_TargetManager_skel_export.h \
-                  -Gxhst -Gxhsk
+                  -Gxhst -Gxhsk -Ssi
 
   IDL_Files {
     Deployment_TargetManager.idl
@@ -177,7 +182,6 @@ project(Deployment_stub) : ciaolib_with_idl, dance_output, valuetype, ifr_client
     Deployment_PlanErrorC.cpp
     DeploymentC.cpp
     Deployment_ResourceCommitmentManagerC.cpp
-    DAnCE_PropertiesC.cpp
   }
 }
 
@@ -474,7 +478,7 @@ project(Deployment_NodeApplication_skel) : dance_output, dance_deployment_skel, 
 // Please don't remove. dance_deployment_stub,
 project(Deployment_skel) : dance_deployment_stub, dance_output, ciaolib_with_idl, portableserver, valuetype, ifr_client, naming, dance_lib, dance_logger, messaging, gen_ostream {
   sharedname   =  DAnCE_Deployment_skel
-  dynamicflags =  DEPLOYMENT_SVNT_BUILD_DLL
+  dynamicflags =  DEPLOYMENT_SKEL_BUILD_DLL
   after += Deployment_IDL
 
   // This is necessary for MPC to pull in rules.ciao.GNU
@@ -484,10 +488,7 @@ project(Deployment_skel) : dance_deployment_stub, dance_output, ciaolib_with_idl
   }
 
   Source_Files {
-    Deployment_StopErrorS.cpp
-    Deployment_StartErrorS.cpp
     Deployment_ApplicationS.cpp
-    DeploymentS.cpp
     Deployment_ResourceCommitmentManagerS.cpp
   }
 

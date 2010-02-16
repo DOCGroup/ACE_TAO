@@ -26,7 +26,6 @@
 #include "ace/Service_Config.h"
 #include "tao/Object_Loader.h"
 
-
 /**
  * @class Plan_Launcher_Module
  *

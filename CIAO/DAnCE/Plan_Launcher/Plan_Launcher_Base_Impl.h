@@ -11,7 +11,7 @@
 
 #include "Plan_Launcher_Base_Impl_Export.h"
 #include "DAnCE/Deployment/Deployment_DomainApplicationManagerC.h"
-#include "DAnCE/DAnCE/CIAO_ExecutionManagerDaemonC.h"
+#include "DAnCE/Deployment/Deployment_ExecutionManagerC.h"
 #include "DAnCE/Deployment/Deployment_ConnectionC.h"
 #include "ace/Map_Manager.h"
 #include "DAnCE/Deployment/Deployment_DeploymentPlanC.h"
@@ -93,7 +93,7 @@ public:
   CORBA::ORB_var orb_;
 
   /// Object reference of the ExecutionManager
-  ::DAnCE::ExecutionManagerDaemon_var em_;
+  ::Deployment::ExecutionManager_var em_;
 
   ACE_Vector<ACE_CString> cdr_plan_urls_;
   ACE_CString plan_uuid_;

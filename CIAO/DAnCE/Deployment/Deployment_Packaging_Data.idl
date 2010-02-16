@@ -130,6 +130,7 @@ module Deployment {
                 Properties infoProperty;
         };
 
+        // From DDS4CCM
         struct ConnectorImplementationDescription {
                 string label;
                 string UUID;
@@ -158,6 +159,7 @@ module Deployment {
                 Properties infoProperty;
         };
 
+        // From DDS4CCM
         struct ConnectorPackageDescription {
                 string label;
                 string UUID;
@@ -177,10 +179,10 @@ module Deployment {
                 ComponentPackageReferences referencedPackage;
                 ComponentPackageImports importedPackage;
         };
-        
+
         struct ComponentUsageDescription {
                 ComponentPackageDescriptions basePackage;
-                ConnectorPackageDescription baseConnectorPackage;
+                ConnectorPackageDescription baseConnectorPackage; // From DDS4CCM
                 PackageConfigurations specializedConfig;
                 Requirements selectRequirement;
                 Properties configProperty;
@@ -193,7 +195,7 @@ module Deployment {
                 ::CORBA::StringSeq resourceType;
                 SatisfierProperties property;
         };
-        
+
 };
 
 #endif /* PACKAGING_DATA_IDL */

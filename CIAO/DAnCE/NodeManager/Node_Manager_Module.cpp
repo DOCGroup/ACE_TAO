@@ -13,7 +13,7 @@
 #include "ciao/Valuetype_Factories/Cookies.h"
 #include "ciao/ComponentServer/CIAO_PropertiesC.h"
 #include "DAnCE/Logger/Log_Macros.h"
-#include "DAnCE/Deployment/DAnCE_PropertiesC.h"
+#include "DAnCE/DAnCE/DAnCE_PropertiesC.h"
 #include "Node_Manager_Module.h"
 #include "NodeManager_Impl.h"
 
