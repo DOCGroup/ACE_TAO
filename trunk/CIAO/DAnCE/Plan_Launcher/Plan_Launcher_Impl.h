@@ -9,37 +9,27 @@
 #ifndef PLAN_LAUNCHER_IMPL_H
 #define PLAN_LAUNCHER_IMPL_H
 
-#include "Plan_Launcher_Impl_Export.h"
 #include "Plan_Launcher_Base_Impl.h"
 
-namespace DAnCE
+/**
+* @class Plan_Launcher_Impl
+* @brief This class launches and manages deployment plans.
+*/
+class Plan_Launcher_Impl : public Plan_Launcher_Base_Impl
   {
-  namespace Plan_Launcher
-    {
+  public:
+    Plan_Launcher_Impl (CORBA::ORB_ptr orb, int argc, ACE_TCHAR *argv[])
+        : Plan_Launcher_Base_Impl (orb, argc, argv) {};
 
-    /**
-    * @class Plan_Launcher_Impl
-    * @brief This class launches and manages deployment plans.
-    */
-    class Plan_Launcher_Impl_Export Plan_Launcher_Impl : public Plan_Launcher_Base_Impl
-      {
-      public:
-        Plan_Launcher_Impl (CORBA::ORB_ptr orb, int argc, ACE_TCHAR *argv[])
-            : Plan_Launcher_Base_Impl (orb, argc, argv) {};
+    virtual ~Plan_Launcher_Impl(void);
+    
+    void execute(void);
 
-        virtual ~Plan_Launcher_Impl (void) {};
+    static ::Deployment::DeploymentPlan* load_xml_plan (
+      const ACE_TCHAR *deployment_plan_uri);
 
-        void execute(void);
-
-        static ::Deployment::DeploymentPlan* load_xml_plan (
-          const ACE_TCHAR *deployment_plan_uri);
-
-      protected:
-        virtual void stop_plan();
-      }; // class Plan_Launcher_Impl
-
-  } // Plan_Launcher
-} // DAnCE
-
+  protected:
+    virtual void stop_plan();
+  }; // class Plan_Launcher_Impl
 
 #endif /* PLAN_LAUNCHER_IMPL_H */

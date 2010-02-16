@@ -1,19 +1,15 @@
 // $Id$
+
 #include "Plan_Launcher_Impl.h"
-#include "orbsvcs/CosNamingC.h"
+#include "DAnCE/Logger/Log_Macros.h"
 #include "Config_Handlers/XML_File_Intf.h"
 #include "Config_Handlers/DnC_Dump.h"
-#include "ace/Sched_Params.h"
-#include "ccm/CCM_ObjectC.h"
-
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
-#include "DAnCE/Logger/Log_Macros.h"
 
-namespace DAnCE
+Plan_Launcher_Impl::~Plan_Launcher_Impl (void)
 {
-namespace Plan_Launcher
-{
+}
 
 ::Deployment::DeploymentPlan *
 Plan_Launcher_Impl::load_xml_plan(const ACE_TCHAR *deployment_plan_uri)
@@ -104,7 +100,8 @@ void Plan_Launcher_Impl::stop_plan()
         {
           DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Plan_Launcher_Impl::stop_plan - ")
                        ACE_TEXT("Stopping plan by plan file: %C\n"), this->xml_plan_urls_[i].c_str()));
-          ::Deployment::DeploymentPlan_var plan = this->load_xml_plan(ACE_TEXT_CHAR_TO_TCHAR (this->xml_plan_urls_[i].c_str()));
+          ::Deployment::DeploymentPlan_var plan =
+            this->load_xml_plan(ACE_TEXT_CHAR_TO_TCHAR (this->xml_plan_urls_[i].c_str()));
           if (!this->teardown_plan(plan->UUID.in()))
             {
               DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Impl::stop_plan - ")
@@ -115,5 +112,3 @@ void Plan_Launcher_Impl::stop_plan()
   this->Plan_Launcher_Base_Impl::stop_plan();
 }
 
-} // Plan_Launcher
-} // DAnCE

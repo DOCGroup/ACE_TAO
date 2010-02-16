@@ -1,18 +1,10 @@
 // $Id$
+
 #include "Plan_Launcher_Base_Impl.h"
-#include "orbsvcs/CosNamingC.h"
-#include "tao/ORB_Core.h"
-#include "ace/Sched_Params.h"
-#include "ccm/CCM_ObjectC.h"
+#include "DAnCE/Logger/Log_Macros.h"
 #include "ace/Env_Value_T.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
-#include "DAnCE/Logger/Log_Macros.h"
-
-namespace DAnCE
-{
-namespace Plan_Launcher
-{
 
 Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl(CORBA::ORB_ptr orb, int argc,
     ACE_TCHAR *argv[]) :
@@ -31,7 +23,7 @@ Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl(CORBA::ORB_ptr orb, int argc,
   this->parse_args(argc, argv);
 
   DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Plan_Launcher_i::init - em_ior = \"%C\"\n")
-                , is_empty (this->em_ior_) ? "NULL" : this->em_ior_.c_str()));
+                , this->em_ior_.c_str()));
 
   if (this->mode_ & (MODE_START_PLAN | MODE_STOP_PLAN))
     {
@@ -51,7 +43,7 @@ Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl(CORBA::ORB_ptr orb, int argc,
        {
          this->em_ = ::Deployment::ExecutionManager::_narrow (obj.in());
        }
-      catch(CORBA::Exception&)
+      catch(const CORBA::Exception&)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - ")
                         ACE_TEXT("Failed to retrieve EM object from \"%C\"\n"), this->em_ior_.c_str()));
@@ -185,7 +177,7 @@ Plan_Launcher_Base_Impl::launch_plan(const ::Deployment::DeploymentPlan &plan)
                         ACE_TEXT("An exception was thrown during DAM->startLaunch.\n")));
           throw;
         }
-      //Deployment::DomainApplication_var da = Deployment::DomainApplication::_narrow(obj)
+
       if (CORBA::is_nil (da.in()))
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
@@ -355,7 +347,7 @@ Plan_Launcher_Base_Impl::teardown_plan(::Deployment::DomainApplicationManager_pt
       DANCE_DEBUG (6, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::teardown_plan - ")
                    ACE_TEXT("DAM has no application.\n")));
     }
-  for (size_t i = 0; i < apps->length(); ++i)
+  for (CORBA::ULong i = 0; i < apps->length(); ++i)
     {
       dam->destroyApplication(apps[i]);
     }
@@ -364,7 +356,8 @@ Plan_Launcher_Base_Impl::teardown_plan(::Deployment::DomainApplicationManager_pt
   DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::teardown_plan - [success]\n")));
 }
 
-void Plan_Launcher_Base_Impl::destroy_dam(
+void
+Plan_Launcher_Base_Impl::destroy_dam(
     ::Deployment::DomainApplicationManager_ptr dam)
 {
   DANCE_DEBUG (6, (LM_DEBUG, DLINFO
@@ -374,13 +367,9 @@ void Plan_Launcher_Base_Impl::destroy_dam(
   DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::destroy_dam - [success]\n")));
 }
 
-void Plan_Launcher_Base_Impl::usage(const ACE_TCHAR* program)
+void
+Plan_Launcher_Base_Impl::usage(const ACE_TCHAR* program)
 {
-  if (0 == program)
-    {
-      DANCE_ERROR (1, (LM_ERROR, ACE_TEXT ("[(%P|%t) Executor] Usage: %s <options>\n"), program));
-    }
-
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Plan Launcher Options :\n")
           ACE_TEXT ("-k|--em-ior <EXECUTION_MANAGER_IOR>")
           ACE_TEXT (" : Default file://em.ior\n")
@@ -388,13 +377,13 @@ void Plan_Launcher_Base_Impl::usage(const ACE_TCHAR* program)
           ACE_TEXT ("-w|--write-cdr-plan <CDR_DEPLOYMENT_PLAN_URL>\n")
           ACE_TEXT ("-t|--plan-uuid <PLAN_UUID>\n")
                  //          ACE_TEXT ("-a|dam-ior <DOMAIN_APPLICATION_MANAGER_IOR>\n")
-          //                    ACE_TEXT ("-n|--node-mgr : Use naming service to fetch EM\n")
           ACE_TEXT ("-q|--stop-plan : Stop the plan\n")
           ACE_TEXT ("-h|--help : Show this usage information\n")
           ACE_TEXT ("-x|--read-plan <XML_DEPLOYMENT_PLAN_URL>\n\n")));
 }
 
-void Plan_Launcher_Base_Impl::parse_args(int argc, ACE_TCHAR *argv[])
+void
+Plan_Launcher_Base_Impl::parse_args(int argc, ACE_TCHAR *argv[])
 {
   DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("PL options : \"")));
 
@@ -484,10 +473,11 @@ void Plan_Launcher_Base_Impl::parse_args(int argc, ACE_TCHAR *argv[])
   this->check_mode_consistentness();
 }
 
-void Plan_Launcher_Base_Impl::write_dam_ior(
+void
+Plan_Launcher_Base_Impl::write_dam_ior(
     ::Deployment::DomainApplicationManager_ptr dam)
 {
-  if (is_empty (this->dam_ior_))
+  if (this->dam_ior_.length () == 0)
     return;
 
   CORBA::String_var ior = this->orb_->object_to_string(dam);
@@ -509,7 +499,7 @@ void Plan_Launcher_Base_Impl::write_dam_ior(
 }
 
 void
-Plan_Launcher_Base_Impl::stop_plan()
+Plan_Launcher_Base_Impl::stop_plan(void)
 {
   bool stopped = false;
   if (!is_empty (this->plan_uuid_))
@@ -577,7 +567,8 @@ Plan_Launcher_Base_Impl::stop_plan()
     }
 }
 
-void Plan_Launcher_Base_Impl::create_external_connections(
+void
+Plan_Launcher_Base_Impl::create_external_connections(
     const ::Deployment::DeploymentPlan &plan, Deployment::Connections& conn)
 {
   DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("create_external_connections - start\n")));
@@ -612,8 +603,8 @@ void Plan_Launcher_Base_Impl::create_external_connections(
     }
 }
 
-Deployment::DeploymentPlan*Plan_Launcher_Base_Impl::read_cdr_plan_file(
-    const char *cdr_plan_uri)
+Deployment::DeploymentPlan*
+Plan_Launcher_Base_Impl::read_cdr_plan_file(const char *cdr_plan_uri)
 {
   Deployment::DeploymentPlan* res = 0;
   try
@@ -627,12 +618,11 @@ Deployment::DeploymentPlan*Plan_Launcher_Base_Impl::read_cdr_plan_file(
           throw Deployment_Failure (s.c_str());
         }
 
-      size_t buf_size;
+      size_t buf_size = 0;
       ACE_OS::fread (&buf_size, sizeof (buf_size), 1, file);
 
       char * buf = new char[buf_size];
       ACE_OS::fread (buf, 1, buf_size, file);
-
         {
           TAO_InputCDR cdr (buf, buf_size);
           ACE_NEW_THROW_EX (res,
@@ -663,16 +653,22 @@ Plan_Launcher_Base_Impl::write_cdr_plan_file(const char * filename,
           throw Deployment_Failure ("write_cdr_plan_file : failed to open file.");
         }
       TAO_OutputCDR cdr;
-      cdr << plan;
-      size_t buf_size = cdr.total_length();
-      ACE_OS::fwrite (&buf_size, sizeof (buf_size), 1, file);
-      for (const ACE_Message_Block *i = cdr.begin ();
-          i != 0;
-          i = i->cont ())
+      if (cdr << plan)
         {
-          ACE_OS::fwrite (i->rd_ptr (), 1, i->length (), file);
+          size_t buf_size = cdr.total_length();
+          ACE_OS::fwrite (&buf_size, sizeof (buf_size), 1, file);
+          for (const ACE_Message_Block *i = cdr.begin ();
+              i != 0;
+              i = i->cont ())
+            {
+              ACE_OS::fwrite (i->rd_ptr (), 1, i->length (), file);
+            }
+          ACE_OS::fclose (file);
         }
-      ACE_OS::fclose (file);
+      else
+        {
+          throw Deployment_Failure ("write_cdr_plan_file : failed marshal plan.");
+        }
     }
   catch(...)
     {
@@ -722,19 +718,18 @@ Plan_Launcher_Base_Impl::check_mode_consistentness()
 ACE_CString
 Plan_Launcher_Base_Impl::expand_env_vars (const ACE_TCHAR * s)
   {
-    ACE_CString src(ACE_TEXT_ALWAYS_CHAR (s));
-    ACE_CString res;
+    ACE_TString src(s);
+    ACE_TString res;
     size_t pos_done = 0;
     while (pos_done < (size_t) src.length())
       {
         size_t pos_start = src.find ('$', pos_done);
-        if (ACE_CString::npos == pos_start)
+        if (ACE_TString::npos == pos_start)
           {
             res += src.substring (pos_done);
             pos_done = src.length();
           }
         else // take the substring before '$' and append value
-
           {
             if (pos_start > pos_done)
               {
@@ -746,27 +741,28 @@ Plan_Launcher_Base_Impl::expand_env_vars (const ACE_TCHAR * s)
 
             size_t p;
 
-            p = src.find (' ', pos_start + 1);
-            if (ACE_CString::npos != p && pos_end > p) pos_end = p;
+            p = src.find (ACE_TEXT(' '), pos_start + 1);
+            if (ACE_TString::npos != p && pos_end > p) pos_end = p;
 
-            p = src.find ('/', pos_start + 1);
-            if (ACE_CString::npos != p && pos_end > p) pos_end = p;
+            p = src.find (ACE_TEXT('/'), pos_start + 1);
+            if (ACE_TString::npos != p && pos_end > p) pos_end = p;
 
-            p = src.find ('\\', pos_start + 1);
-            if (ACE_CString::npos != p && pos_end > p) pos_end = p;
+            p = src.find (ACE_TEXT('\\'), pos_start + 1);
+            if (ACE_TString::npos != p && pos_end > p) pos_end = p;
 
-            p = src.find ('$', pos_start + 1);
-            if (ACE_CString::npos != p && pos_end > p) pos_end = p;
+            p = src.find (ACE_TEXT('$'), pos_start + 1);
+            if (ACE_TString::npos != p && pos_end > p) pos_end = p;
 
             if (pos_end - pos_start > 1)
               {
-                ACE_Env_Value<const ACE_TCHAR*> val (ACE_TEXT_CHAR_TO_TCHAR (src.substring (pos_start + 1, pos_end - pos_start - 1).c_str()), 0);
-                res += ACE_TEXT_ALWAYS_CHAR (val);
+                ACE_Env_Value<const ACE_TCHAR*> val (src.substring (pos_start + 1, pos_end - pos_start - 1).c_str(), 0);
+                res += val;
                 pos_done = pos_end;
               }
             else
               {
-                DANCE_DEBUG (6, (LM_WARNING, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::expand_env_vars - ")
+                DANCE_DEBUG (6, (LM_WARNING, DLINFO
+                              ACE_TEXT("Plan_Launcher_Base_Impl::expand_env_vars - ")
                               ACE_TEXT("Envvar can not be parsed out at %i in \"<%s>\""),
                               pos_start,
                               src.c_str()));
@@ -776,5 +772,3 @@ Plan_Launcher_Base_Impl::expand_env_vars (const ACE_TCHAR * s)
     return res;
   }
 
-} // Plan_Launcher
-} // DAnCE

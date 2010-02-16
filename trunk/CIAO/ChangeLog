@@ -1,3 +1,30 @@
+Tue Feb 16 19:33:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Simplified the plan_launcher, it was way to complex to
+        build
+
+        * DAnCE/MPC/config/dance_plan_launcher.mpb
+        * DAnCE/MPC/config/dance_plan_launcher_base.mpb
+        * DAnCE/Plan_Launcher/Plan_Launcher.h
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl_Export.h
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Module.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Module.h
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Module_Export.h
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl_Export.h
+        * DAnCE/Plan_Launcher/Plan_Launcher_Module.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Module.h
+        * DAnCE/Plan_Launcher/Plan_Launcher_Module_Export.h
+        * DAnCE/Plan_Launcher/Plan_Launcher_Exec.cpp
+          Deleted, all not used
+
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.h
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h
+          Updated to contain the Plan_Launcher implementation and main
+
 Tue Feb 16 18:45:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Plan_Launcher/launcher.cpp:
