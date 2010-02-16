@@ -12,14 +12,13 @@
  */
 //=============================================================================
 
-
 #include "be_array.h"
 #include "be_enum.h"
 #include "be_enum_val.h"
 #include "be_exception.h"
 #include "be_field.h"
 #include "be_interface.h"
-#include "be_component.h"
+#include "be_connector.h"
 #include "be_home.h"
 #include "be_module.h"
 #include "be_predefined_type.h"
