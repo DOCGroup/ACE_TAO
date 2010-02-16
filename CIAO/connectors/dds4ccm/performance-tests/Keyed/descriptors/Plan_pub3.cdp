@@ -184,7 +184,7 @@
           <kind>tk_ushort</kind>
         </type>
         <value>
-          <ushort>2</ushort>
+          <ushort>10</ushort>
         </value>
       </value>
     </configProperty>
@@ -206,7 +206,7 @@
         <kind>tk_ushort</kind>
       </type>
       <value>
-        <ushort>1</ushort>
+        <ushort>3</ushort>
       </value>
     </value>
     </configProperty>
