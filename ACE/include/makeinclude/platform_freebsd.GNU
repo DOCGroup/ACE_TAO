@@ -84,9 +84,9 @@ PLATFORM_GTK_CPPFLAGS=$(shell gtk-config --cflags)
 PLATFORM_GTK_LIBS    =$(shell gtk-config --libs)
 PLATFORM_GTK_LDFLAGS =
 
-PLATFORM_FOX_CPPFLAGS=
-PLATFORM_FOX_LIBS=-lFOX
-PLATFORM_FOX_LDFLAGS=
+PLATFORM_FOX_CPPFLAGS ?= -I/usr/include/fox
+PLATFORM_FOX_LIBS ?= -lFOX
+PLATFORM_FOX_LDFLAGS ?=
 
 PLATFORM_TK_CPPFLAGS=$(shell . /usr/local/lib/tk8.*/tkConfig.sh && echo -n $$TK_INCLUDE_SPEC)
 PLATFORM_TK_LIBS=$(shell . /usr/local/lib/tk8.*/tkConfig.sh && echo -n $$TK_LIB_FLAG)
