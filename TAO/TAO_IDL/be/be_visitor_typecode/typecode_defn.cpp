@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "be_interface_fwd.h"
 
 // This is an implementation of C++ "scoped lock" idiom in order to
@@ -485,6 +484,12 @@ be_visitor_typecode_defn::visit_interface (be_interface * node)
 
 int
 be_visitor_typecode_defn::visit_component (be_component *node)
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_typecode_defn::visit_connector (be_connector *node)
 {
   return this->visit_interface (node);
 }

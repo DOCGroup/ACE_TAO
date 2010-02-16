@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_TYPECODE_TYPECODE_DEFN_H_
 #define _BE_VISITOR_TYPECODE_TYPECODE_DEFN_H_
 
@@ -37,45 +36,21 @@ class be_interface_fwd;
  */
 class be_visitor_typecode_defn : public be_visitor_scope
 {
-
 public:
-  /// constructor
   be_visitor_typecode_defn (be_visitor_context *ctx);
-
-  /// destructor
   ~be_visitor_typecode_defn (void);
 
-  /// visit a array
   virtual int visit_array (be_array *node);
-
-  /// visit interface
   virtual int visit_interface (be_interface *node);
-
-  /// visit interface
   virtual int visit_interface_fwd (be_interface_fwd *node);
-
-  /// visit component
   virtual int visit_component (be_component *node);
-
-  /// visit a sequence
+  virtual int visit_connector (be_connector *node);
   virtual int visit_sequence (be_sequence *node);
-
-  /// visit a string
   virtual int visit_string (be_string *node);
-
-  /// visit a structure
   virtual int visit_structure (be_structure *node);
-
-  // visit a typedef
   virtual int visit_typedef (be_typedef *node);
-
-  /// visit a union
   virtual int visit_union (be_union *node);
-
-  /// visit a valuetype
   virtual int visit_valuetype (be_valuetype * node);
-
-  /// visit a valuetype
   virtual int visit_eventtype (be_eventtype * node);
 
   // = special methods
