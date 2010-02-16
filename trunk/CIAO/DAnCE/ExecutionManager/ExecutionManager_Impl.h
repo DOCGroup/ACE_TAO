@@ -49,8 +49,8 @@ namespace DAnCE
       virtual void destroyManager (
         ::Deployment::DomainApplicationManager_ptr manager);
 
-      // This one derived from ExecutionManagerDaemon interface
-      // for shutdowning DAnCE agent
+      /// This one derived from ExecutionManagerDaemon interface
+      /// for shutdowning DAnCE agent
       virtual void shutdown (void);
 
       void add_node_manager (const char *name, const char *ior);

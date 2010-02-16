@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : ciao_config_handlers_base, dynamicany, typecodefactory, dance_deployment_stub, dance_logger {
+project : dance_config_handlers_base, dynamicany, typecodefactory, dance_deployment_stub, dance_logger {
   verbatim(gnuace, macros) {
    override no_hidden_visibility = 1
   }
