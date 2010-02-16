@@ -162,6 +162,8 @@ DeclAsScope (AST_Decl *d)
       return AST_Component::narrow_from_decl (d);
     case AST_Decl::NT_porttype:
       return AST_PortType::narrow_from_decl (d);
+    case AST_Decl::NT_connector:
+      return AST_Connector::narrow_from_decl (d);
     case AST_Decl::NT_home:
       return AST_Home::narrow_from_decl (d);
     case AST_Decl::NT_module:
