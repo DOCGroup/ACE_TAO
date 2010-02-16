@@ -5,7 +5,7 @@
 #include "tao/Object.h"
 #include "DAnCE/Logger/Log_Macros.h"
 #include "DAnCE/Logger/Logger_Service.h"
-#include "Plan_Launcher_Impl.h"
+#include "ExecutionManager_Module.h"
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -25,34 +25,36 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       DANCE_DEBUG (6, (LM_TRACE, DLINFO
-                    ACE_TEXT("PlanLauncher - initializing ORB\n")));
+                    ACE_TEXT("ExecutionManager - initializing ORB\n")));
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       DANCE_DEBUG (6, (LM_TRACE, DLINFO
-                   ACE_TEXT("PlanLauncher - initializing module instance\n")));
+                   ACE_TEXT("ExecutionManager - initializing module instance\n")));
 
-      Plan_Launcher_Impl pl (orb.in (), argc, argv);
-      pl.execute();
+      DAnCE_ExecutionManager_Module em;
+      CORBA::Object_var obj = em.init (orb.in (), argc, argv);
+
+      if (!CORBA::is_nil (obj.in ()))
+        {
+          DANCE_DEBUG (6, (LM_TRACE, DLINFO
+                    ACE_TEXT("ExecutionManager - running ORB\n")));
+          orb->run ();
+        }
 
       DANCE_DEBUG (6, (LM_TRACE, DLINFO
-                    ACE_TEXT("PlanLauncher - destroying ORB\n")));
+                    ACE_TEXT("ExecutionManager - destroying ORB\n")));
 
       orb->destroy ();
     }
-  catch (const Plan_Launcher_Impl::Deployment_Failure& e)
-    {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO "PlanLauncher - Error: %C.\n", e.error_.c_str()));
-      retval = -1;
-    }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("PlanLauncher");
+      ex._tao_print_exception ("ExecutionManager");
       retval = -1;
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_ERROR, "PlanLauncher - Error: Unknown exception.\n"));
+      DANCE_ERROR (1, (LM_ERROR, "ExecutionManager - Error: Unknown exception.\n"));
       retval = -1;
     }
 
