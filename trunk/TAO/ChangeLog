@@ -1,3 +1,20 @@
+Tue Feb 16 21:10:35 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be/be_visitor_typecode.cpp:
+        * TAO_IDL/be/be_visitor_component/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_component/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_component/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_component/cdr_op_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_typecode/objref_typecode.h:
+        * TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
+        * TAO_IDL/be_include/be_visitor_component/cdr_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_component/any_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_component/any_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_component/cdr_op_ch.h:
+
+          More missing pieces of connector support.
+
 Tue Feb 16 20:22:15 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_provides.cpp:
