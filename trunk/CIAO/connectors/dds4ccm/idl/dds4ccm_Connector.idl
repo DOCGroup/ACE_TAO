@@ -9,8 +9,6 @@
 
 #pragma ciao lem "connectors/dds4ccm/idl/dds4ccm_ConnectorE.idl"
 
-#define connector component
-
 module CCM_DDS
 {
   connector DDS_Base {

@@ -1,3 +1,20 @@
+Tue Feb 16 20:34:27 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * connectors/dds4ccm/idl/dds4ccm_Connector.idl:
+
+          Removed the line '#define connector component' since we
+          now have backend and frontend connector support.
+
+        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.mpc:
+
+          Modified projects to generate and compile the
+          connector implementation.
+
+        * examples/BasicSP/BMClosedED/BMClosedED.idl:
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
+
+          Cosmetic changes.
+
 Tue Feb 16 20:04:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Simplified execution manager
