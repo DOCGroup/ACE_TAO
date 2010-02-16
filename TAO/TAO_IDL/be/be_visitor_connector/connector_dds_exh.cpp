@@ -21,7 +21,7 @@ be_visitor_connector_dds_exh::be_visitor_connector_dds_exh (
   // or skel_export_macro(), since there are many more visitor
   // classes generating servant code. So we can just override
   // all that here.
-  export_macro_ = be_global->exec_export_macro ();
+  export_macro_ = be_global->conn_export_macro ();
 }
 
 be_visitor_connector_dds_exh::~be_visitor_connector_dds_exh (void)
@@ -48,6 +48,16 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
       
   node_ = node;
 
+  // Shaky logic that will have to be improved. If our
+  // base connector does not come from an instantiated
+  // template module, we skip the code generation.
+  this->process_template_args (base);
+  
+  if (this->t_args_ == 0)
+    {
+      return 0;
+    }
+    
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
   os_ << be_nl << be_nl
@@ -58,8 +68,13 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
   this->gen_dds_traits (base);
   this->gen_connector_traits ();
   
+  if (this->t_args_ == 0)
+    {
+      return 0;
+    }
+  
   os_ << be_nl << be_nl
-      << "class " << this->export_macro_.c_str ()
+      << "class " << this->export_macro_.c_str () << " "
       << this->node_->local_name () << "_exec_i" << be_idt_nl
       << ": public ";
       
@@ -105,8 +120,6 @@ void
 be_visitor_connector_dds_exh::gen_dds_traits (
   AST_Connector *base)
 {
-  this->process_template_args (base);
-    
   // We depend on the DDS datatype being the first template
   // argument for now, this may change.
   AST_Decl **datatype = 0;

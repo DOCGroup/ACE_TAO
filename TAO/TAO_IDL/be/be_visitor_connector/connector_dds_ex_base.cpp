@@ -44,11 +44,10 @@ be_visitor_connector_dds_ex_base::process_template_args (
 
   if (this->t_inst_ == 0)
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("be_visitor_connector_dds_ex_base::")
-                  ACE_TEXT ("process_template_args - ")
-                  ACE_TEXT ("template instance not found\n ")));
-
+      // More shaky logic, but it's the best we have for now.
+      // Depends on the application connector have a base
+      // connector declared in the instantiation of a template
+      // module.
       return;
     }
 

@@ -329,6 +329,7 @@ be_sequence::managed_type (void)
           case AST_Decl::NT_interface_fwd:
           case AST_Decl::NT_component:
           case AST_Decl::NT_component_fwd:
+          case AST_Decl::NT_connector:
             this->mt_ = be_sequence::MNG_OBJREF;
             break;
           case AST_Decl::NT_valuebox:

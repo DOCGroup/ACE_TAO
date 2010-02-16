@@ -36,8 +36,10 @@ be_visitor_interface_base_proxy_impl_ch::visit_interface (be_interface *node)
       << ": ";
 
   int has_concrete_parent = 0;
+  
+  AST_Decl::NodeType nt = node->node_type ();
 
-  if (node->node_type () == AST_Decl::NT_component)
+  if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {
       be_component *bc = be_component::narrow_from_decl (node);
       AST_Component *ac_base = bc->base_component ();

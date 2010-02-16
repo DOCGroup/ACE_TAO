@@ -63,12 +63,14 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << "const " << node->full_name () << "_ptr _tao_objref)" << be_uidt
       << be_uidt_nl
       << "{" << be_idt_nl;
+      
+  AST_Decl::NodeType nt = node->node_type ();
 
   if (node->is_abstract ())
     {
       *os << "::CORBA::AbstractBase_ptr";
     }
-  else if (node->node_type () == AST_Decl::NT_component)
+  else if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {
       *os << "Components::CCMObject_ptr";
     }
@@ -94,7 +96,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
     {
       *os << "::CORBA::AbstractBase_var obj;";
     }
-  else if (node->node_type () == AST_Decl::NT_component)
+  else if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {
       *os << "Components::CCMObject_var obj;";
     }

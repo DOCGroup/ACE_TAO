@@ -141,7 +141,7 @@ be_visitor_component_ch::visit_component (be_component *node)
     }
 
   // If we inherit from both CORBA::Object and CORBA::AbstractBase,
-  // we have to override _add_ref() to avoid ambiguity. A comopnent
+  // we have to override _add_ref() to avoid ambiguity. A component
   // can have mixed parentage if it supports an abstract or mixed-
   // parentage interface.
   if (node->has_mixed_parentage ())

@@ -1,3 +1,47 @@
+Tue Feb 16 20:22:15 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_provides.cpp:
+        * TAO_IDL/be/be_visitor_interface/base_proxy_impl_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_impl_ch.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_scope.cpp:
+        * TAO_IDL/ast/ast_visitor_reifying.cpp:
+
+          - Filled in several small missing pieces of connector
+            support
+
+          - Removed the check for the presence of components or
+            connectors that was restricting the AST passes that
+            generated servant, executor, or connector impl files.
+            As with skeleton files and the presence of interfaces,
+            we will just generate empty files even if the relevant
+            IDL construct is not seen
+
+          - Reversed the order of generation of include files in
+            the connector implementation header file, so that the
+            list of lem stub header files (generated from the list
+            of #pragam ciao lem that is seen in the compilation
+            unit) comes before the include of DDS_Event_Connector_T.h,
+            since the latter contains C++ template declarations,
+            and thus also the associated source file
+
 Tue Feb 16 14:22:12 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/narrow/narrow.cpp:
