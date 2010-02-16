@@ -9,7 +9,6 @@
 #ifndef PLAN_LAUNCHER_BASE_IMPL_H
 #define PLAN_LAUNCHER_BASE_IMPL_H
 
-#include "Plan_Launcher_Base_Impl_Export.h"
 #include "DAnCE/Deployment/Deployment_DomainApplicationManagerC.h"
 #include "DAnCE/Deployment/Deployment_ExecutionManagerC.h"
 #include "DAnCE/Deployment/Deployment_ConnectionC.h"
@@ -17,16 +16,11 @@
 #include "DAnCE/Deployment/Deployment_DeploymentPlanC.h"
 #include "ace/Vector_T.h"
 
-namespace DAnCE
-{
-namespace Plan_Launcher
-{
-
 /**
  * @class Plan_Launcher_Impl
  * @brief This class launches and manages deployment plans.
  */
-class Plan_Launcher_Base_Impl_Export Plan_Launcher_Base_Impl
+class Plan_Launcher_Base_Impl
 {
 public:
   struct Deployment_Failure
@@ -53,8 +47,7 @@ public:
   static void write_cdr_plan_file(const char * filename,
       const Deployment::DeploymentPlan & plan);
 
- protected:
-
+protected:
   /**
    * @brief Launch a plan, given an IDL deployment plan
    * @param plan A valid IDL deployment plan
@@ -109,9 +102,5 @@ public:
   static const unsigned long MODE_WRITE_CDR = 0x0008;
 
 }; // class Plan_Launcher_Impl
-
-} // Plan_Launcher
-} // DAnCE
-
 
 #endif /* PLAN_LAUNCHER_BASE_IMPL_H */
