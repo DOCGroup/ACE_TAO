@@ -11,7 +11,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/orbsvcs/Naming/Naming_Loader.h"
 #include "DAnCE/Logger/Log_Macros.h"
-#include "DAnCE/Deployment/DAnCE_PropertiesC.h"
+#include "DAnCE/DAnCE/DAnCE_PropertiesC.h"
 
 #ifdef DANCE_RM_USES_JAWS
 #include "JAWS/server/HTTP_Server.h"

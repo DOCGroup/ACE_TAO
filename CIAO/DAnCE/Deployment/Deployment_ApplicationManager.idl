@@ -18,6 +18,21 @@ module Deployment {
     string resourceName;
   };
 
+  exception InvalidNodeExecParameter {
+    string name;
+    string reason;
+  };
+
+  exception InvalidComponentExecParameter {
+    string name;
+    string reason;
+  };
+
+  exception InvalidProperty {
+    string name;
+    string reason;
+  };
+
   interface ApplicationManager {
     Application startLaunch (in Properties configProperty,
                              out Connections providedReference)

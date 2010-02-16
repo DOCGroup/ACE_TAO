@@ -20,9 +20,9 @@ module Deployment
 
     void start ()
       raises (StartError);
-    };
+  };
 
-    typedef sequence < Application > Applications;
+  typedef sequence < Application > Applications;
 };
 
 #endif /* DEPLOYMENT_APPLICATION_IDL */

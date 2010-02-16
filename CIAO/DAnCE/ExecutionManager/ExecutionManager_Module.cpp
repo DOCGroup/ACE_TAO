@@ -291,8 +291,8 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
       CORBA::Object_var em_obj = persistent_poa->id_to_reference (oid.in ());
       CORBA::String_var em_ior = orb->object_to_string (em_obj.in ());
 
-      DAnCE::ExecutionManagerDaemon_var em_daemon
-        = DAnCE::ExecutionManagerDaemon::_narrow (em_obj.in ());
+      Deployment::ExecutionManager_var em_daemon
+        = Deployment::ExecutionManager::_narrow (em_obj.in ());
 
       // Binding ior to IOR Table
       adapter->bind ("ExecutionManager", em_ior.in ());

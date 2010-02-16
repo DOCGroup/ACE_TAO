@@ -17,7 +17,7 @@ namespace Plan_Launcher
 Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl(CORBA::ORB_ptr orb, int argc,
     ACE_TCHAR *argv[]) :
       orb_(CORBA::ORB::_duplicate (orb)),
-      em_(DAnCE::ExecutionManagerDaemon::_nil()), em_ior_("file://em.ior") //default
+      em_(Deployment::ExecutionManager::_nil()), em_ior_("file://em.ior") //default
       , mode_(0x0)
 {
   DANCE_TRACE ("Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl");
@@ -49,7 +49,7 @@ Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl(CORBA::ORB_ptr orb, int argc,
         }
       try
        {
-         this->em_ = ::DAnCE::ExecutionManagerDaemon::_narrow (obj.in());
+         this->em_ = ::Deployment::ExecutionManager::_narrow (obj.in());
        }
       catch(CORBA::Exception&)
         {

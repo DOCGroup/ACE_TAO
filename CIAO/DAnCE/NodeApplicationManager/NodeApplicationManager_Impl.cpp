@@ -2,7 +2,7 @@
 
 
 #include "ace/streams.h"
-#include "DAnCE/Deployment/DAnCE_PropertiesC.h"
+#include "DAnCE/DAnCE/DAnCE_PropertiesC.h"
 #include "DAnCE/Logger/Log_Macros.h"
 
 #include "NodeApplicationManager_Impl.h"
