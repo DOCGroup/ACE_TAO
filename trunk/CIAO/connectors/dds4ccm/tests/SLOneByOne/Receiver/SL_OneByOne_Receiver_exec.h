@@ -25,24 +25,6 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
   class Receiver_exec_i;
 
   //============================================================
-  // read_action_Generator
-  //============================================================
-  class read_action_Generator
-    : public ACE_Event_Handler
-  {
-  public:
-    read_action_Generator (Receiver_exec_i &callback);
-
-    ~read_action_Generator ();
-
-    virtual int handle_timeout (const ACE_Time_Value &tv,
-                                const void *arg);
-
-  private:
-    Receiver_exec_i &pulse_callback_;
-  };
-
-  //============================================================
   // StateListener_exec_i
   //============================================================
   class RECEIVER_EXEC_Export StateListener_exec_i
@@ -108,14 +90,9 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
-    void read_all (void);
 
   private:
     ::SL_OneByOne::CCM_Receiver_Context_var context_;
-    ::CCM_DDS::TestTopic::Reader_var reader_;
-
-    read_action_Generator * ticker_;
-    CORBA::ULong rate_;
 
     Atomic_Boolean on_many_updates_;
     Atomic_Boolean updater_data_;
