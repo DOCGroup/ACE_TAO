@@ -27,10 +27,12 @@ namespace DAnCE
         Plan_Launcher_Impl (CORBA::ORB_ptr orb, int argc, ACE_TCHAR *argv[])
             : Plan_Launcher_Base_Impl (orb, argc, argv) {};
 
-        virtual ~Plan_Launcher_Impl () {};
+        virtual ~Plan_Launcher_Impl (void) {};
 
-        void execute();
-        static ::Deployment::DeploymentPlan* load_xml_plan (const ACE_TCHAR *deployment_plan_uri);
+        void execute(void);
+
+        static ::Deployment::DeploymentPlan* load_xml_plan (
+          const ACE_TCHAR *deployment_plan_uri);
 
       protected:
         virtual void stop_plan();
