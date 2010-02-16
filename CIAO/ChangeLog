@@ -1,3 +1,57 @@
+Tue Feb 16 08:23:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Config_Handlers/Config_Handlers.mpc
+        * DAnCE/Config_Handlers/DynAny_Handler/DynAny_Handler.mpc
+        * DAnCE/Config_Handlers/Package_Handlers/Package_Handlers.mpc
+        * DAnCE/Deployment/DAnCE_Core.mpc
+        * DAnCE/DomainApplication/DomainApplication.mpc
+        * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
+        * DAnCE/ExecutionManager/ExecutionManager.mpc
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.h
+        * DAnCE/MPC/config/ciao_config_handlers.mpb
+        * DAnCE/MPC/config/ciao_config_handlers_base.mpb
+        * DAnCE/MPC/config/ciao_nodeapplication.mpb
+        * DAnCE/MPC/config/ciao_nodeapplicationmanager.mpb
+        * DAnCE/MPC/config/ciao_plan_generator.mpb
+        * DAnCE/MPC/config/ciao_targetmanager_stub.mpb
+        * DAnCE/MPC/config/ciao_targetmanager_svnt.mpb
+        * DAnCE/MPC/config/dance_applicationmanager_skel.mpb
+        * DAnCE/MPC/config/dance_component_server.mpb
+        * DAnCE/MPC/config/dance_component_server_svnt.mpb
+        * DAnCE/MPC/config/dance_config_handlers.mpb
+        * DAnCE/MPC/config/dance_config_handlers_base.mpb
+        * DAnCE/MPC/config/dance_deployment_skel.mpb
+        * DAnCE/MPC/config/dance_deployment_svnt.mpb
+        * DAnCE/MPC/config/dance_domainapplication_skel.mpb
+        * DAnCE/MPC/config/dance_executionmanager_skel.mpb
+        * DAnCE/MPC/config/dance_extension_stub.mpb
+        * DAnCE/MPC/config/dance_nodeapplication_skel.mpb
+        * DAnCE/MPC/config/dance_nodemanager_skel.mpb
+        * DAnCE/MPC/config/dance_nodemanager_svnt.mpb
+        * DAnCE/MPC/config/dance_output.mpb
+        * DAnCE/MPC/config/dance_plan_generator.mpb
+        * DAnCE/MPC/config/dance_repositorymanager.mpb
+        * DAnCE/MPC/config/dance_repositorymanager_skel.mpb
+        * DAnCE/MPC/config/dance_targetmanager.mpb
+        * DAnCE/MPC/config/dance_targetmanager_skel.mpb
+        * DAnCE/MPC/config/dance_tm_daemon.mpb
+        * DAnCE/NodeApplication/NodeApplication.mpc
+        * DAnCE/NodeManager/NodeManager.mpc
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc
+        * DAnCE/RepositoryManager/RepositoryManager.mpc
+        * DAnCE/TargetManager/TargetManager.mpc
+        * DAnCE/TargetManager/TM_Client.mpc
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/em_launcher.mpc
+        * DAnCE/tests/CIAO/NodeManager-Deployments/nm_launcher.mpc
+        * DAnCE/tests/Config_Handlers/Config_Handlers.mpc
+        * DAnCE/tests/Config_Handlers/DynAny_Handler/test.mpc
+        * DAnCE/tests/Config_Handlers/Package_Handlers/Package_Handlers.mpc
+        * DAnCE/tests/DeploymentPlanDump/DeploymentPlanDump.mpc
+        * DAnCE/tests/DeploymentPlanTestReferences/DeploymentPlanTestReferences.mpc
+        * DAnCE/tests/DeploymentTest1/DeploymentTest1.mpc
+        * DAnCE/Utils/DAnCE_Utils.mpc
+          Cleanup of DAnCE base projects
+
 Mon Feb 15 19:48:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/DAnCE
