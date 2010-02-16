@@ -77,7 +77,7 @@ write_ior_file (CORBA::ORB_ptr orb,
 {
   CORBA::String_var ior = orb->object_to_string (obj);
 
-  FILE* RMior_file = ACE_OS::fopen (CIAO::RepositoryManager::RMior, "w");
+  FILE* RMior_file = ACE_OS::fopen (DAnCE::RepositoryManager::RMior, "w");
 
   if (RMior_file)
     {
@@ -98,10 +98,10 @@ bool
 register_with_ns (CORBA::ORB_ptr orb,
                   CIAO::RepositoryManagerDaemon_ptr obj)
 {
-  if (ACE_OS::strlen (CIAO::RepositoryManager::repoman_name_) > 0)
+  if (ACE_OS::strlen (DAnCE::RepositoryManager::repoman_name_) > 0)
     {
-      CIAO::RepositoryManager::RMname_service =
-        CIAO::RepositoryManager::repoman_name_;
+      DAnCE::RepositoryManager::RMname_service =
+        DAnCE::RepositoryManager::repoman_name_;
     }
 
   // Naming Service related operations
@@ -116,7 +116,7 @@ register_with_ns (CORBA::ORB_ptr orb,
   name.length (1);
 
   // String dup required for MSVC6
-  name[0].id = CORBA::string_dup (CIAO::RepositoryManager::RMname_service);
+  name[0].id = CORBA::string_dup (DAnCE::RepositoryManager::RMname_service);
 
   // Register the servant with the Naming Service
   naming_context->rebind (name, obj);
@@ -152,8 +152,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_NEW_RETURN (repo,
                     CIAO_RepositoryManagerDaemon_i (
                           orb.in (),
-                          CIAO::RepositoryManager::HTTPserver.c_str (),
-                          CIAO::RepositoryManager::repoman_name_),
+                          DAnCE::RepositoryManager::HTTPserver.c_str (),
+                          DAnCE::RepositoryManager::repoman_name_),
                     1);
 
     // Transfer ownership to the POA
@@ -166,26 +166,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     bool retval = false;
 
-    if (CIAO::RepositoryManager::write_to_ior_)
-    {
-      retval =
-        write_ior_file (orb.in (),
-        RepositoryManagerDaemon.in ());
-    }
-    else if (CIAO::RepositoryManager::register_with_ns_)
-    {
-      retval =
-        register_with_ns (orb.in (),
-        RepositoryManagerDaemon.in ());
-    }
+    if (DAnCE::RepositoryManager::write_to_ior_)
+      {
+        retval = write_ior_file (orb.in (), RepositoryManagerDaemon.in ());
+      }
+    if (retval && DAnCE::RepositoryManager::register_with_ns_)
+      {
+        retval = register_with_ns (orb.in (), RepositoryManagerDaemon.in ());
+      }
 
     if (!retval)
-      return -1;
-
+      {
+        return -1;
+      }
 
     Worker worker (orb.in ());
     if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
-                         CIAO::RepositoryManager::nthreads) != 0)
+                         DAnCE::RepositoryManager::nthreads) != 0)
         DANCE_ERROR_RETURN (1, (LM_ERROR,
                            "Cannot activate worker threads\n"),
                            1);
@@ -219,27 +216,27 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         switch (c)
           {
           case 'o':
-            CIAO::RepositoryManager::write_to_ior_ = true;
-            CIAO::RepositoryManager::register_with_ns_ = false;
+            DAnCE::RepositoryManager::write_to_ior_ = true;
+            DAnCE::RepositoryManager::register_with_ns_ = false;
             break;
           case 'v':
-            CIAO::RepositoryManager::write_to_ior_ = false;
-            CIAO::RepositoryManager::register_with_ns_ = true;
-            CIAO::RepositoryManager::repoman_name_ = get_opts.opt_arg ();
+            DAnCE::RepositoryManager::write_to_ior_ = false;
+            DAnCE::RepositoryManager::register_with_ns_ = true;
+            DAnCE::RepositoryManager::repoman_name_ = get_opts.opt_arg ();
             break;
           case 's':
-            CIAO::RepositoryManager::HTTPserver = get_opts.opt_arg ();
+            DAnCE::RepositoryManager::HTTPserver = get_opts.opt_arg ();
             break;
           case 'n':
-            CIAO::RepositoryManager::nthreads = ACE_OS::atoi (get_opts.opt_arg ());
+            DAnCE::RepositoryManager::nthreads = ACE_OS::atoi (get_opts.opt_arg ());
             break;
           case '?':  // display help for use of the server.
             DANCE_DEBUG (8, (LM_INFO,
-                        "usage:  %s\n"
-                        "-o <using ior file>\n"
-                        "-v <name of naming service>\n"
-                        "-s <IP:PORT for HTTP server>\n"
-                        "-n <number of threads>\n",
+                        ACE_TEXT("usage: %s\n")
+                        ACE_TEXT("-o <using ior file>\n")
+                        ACE_TEXT("-v <name of naming service>\n")
+                        ACE_TEXT("-s <IP:PORT for HTTP server>\n")
+                        ACE_TEXT("-n <number of threads>\n"),
                         argv [0]));
             return false;
             break;

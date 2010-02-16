@@ -130,15 +130,6 @@ ExecutionManager_Impl::destroyManager (::Deployment::DomainApplicationManager_pt
   throw ::Deployment::StopError();
 }
 
-// This one derived from ExecutionManagerDaemon interface
-// for shutdowning DAnCE agent
-void
-ExecutionManager_Impl::shutdown (void)
-{
-  DANCE_TRACE ("ExecutionManager_Impl::shutdown");
-  this->orb_->shutdown();
-}
-
 void
 ExecutionManager_Impl::add_node_manager (const char *name, const char *ior)
 {

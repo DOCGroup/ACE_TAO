@@ -1,3 +1,15 @@
+Tue Feb 16 18:04:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/DAnCE/CIAO_ExecutionManagerDaemon.idl
+        * DAnCE/DAnCE/CIAO_Interfaces.mpc
+        * DAnCE/ExecutionManager/ExecutionManager.mpc
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.cpp
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.h
+        * DAnCE/MPC/config/ciao_executionmanager_skel.mpb
+        * DAnCE/MPC/config/ciao_executionmanager_stub.mpb
+        * DAnCE/RepositoryManager/RepositoryManager.cpp
+          Removed shutdown method, it was not used and a non spec interface
+
 Tue Feb 16 15:48:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/DAnCE/DAnCE_Properties.mpc:
