@@ -123,7 +123,7 @@ namespace CIAO_Writer_Sender_Impl
         if (this->last_key == this->ktests_.end ())
           {
             unregister_handles ();
-            stop ();
+            this->stop ();
           }
       }
   }
@@ -152,9 +152,13 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::stop (void)
   {
-    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
-    delete this->ticker_;
+    if (this->ticker_)
+      {
+        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
+        delete this->ticker_;
+        this->ticker_ = 0;
+      }
   }
 
   ::CORBA::UShort
