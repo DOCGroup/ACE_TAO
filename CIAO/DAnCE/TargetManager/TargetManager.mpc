@@ -1,6 +1,6 @@
 // $Id$
 
-project(DAnCE_TargetManager_Impl) : dance_lib, ciao_config_handlers, naming, iortable, utils, dance_nodemanager_stub, dance_targetmanager_skel, dance_logger {
+project(DAnCE_TargetManager_Impl) : dance_lib, dance_config_handlers, naming, iortable, utils, dance_nodemanager_stub, dance_targetmanager_skel, dance_logger {
   sharedname = DAnCE_TargetManager_Impl
   dynamicflags = DANCE_TARGETMANAGER_IMPL_BUILD_DLL TARGETMANAGER_MODULE_BUILD_DLL
 
@@ -15,7 +15,7 @@ project(DAnCE_TargetManager_Impl) : dance_lib, ciao_config_handlers, naming, ior
   }
 }
 
-project (DAnCE_TargetManager_Exec) : iortable, utils, naming, dance_logger, dance_tm_daemon, dance_nodemanager_stub, dance_targetmanager, dance_exe {
+project (DAnCE_TargetManager_Exec) : iortable, utils, naming, dance_logger, dance_nodemanager_stub, dance_targetmanager, dance_exe {
   exename = dance_target_manager
   IDL_Files {
   }

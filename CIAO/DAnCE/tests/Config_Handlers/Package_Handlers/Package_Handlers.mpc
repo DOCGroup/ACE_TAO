@@ -1,6 +1,6 @@
 // $Id$
 
-project (Package_Config_Handlers_Tests) : dance_deployment_stub, ciao_config_handlers, ifr_client {
+project (Package_Config_Handlers_Tests) : dance_deployment_stub, dance_config_handlers, ifr_client {
   exename = test
   macros   += XML_USE_PTHREADS
   requires += dummy_label

@@ -1,7 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project : dance_deployment_stub, naming, dance_logger {
-  after += Plan_Generator
-  libs += DAnCE_Plan_Generator
+project : ciao_executor {
+  includes += $(CIAO_ROOT)/DAnCE/Plan_Generator
+  libs     += DAnCE_Plan_Generator
+  after    += DAnCE_Plan_Generator
 }
