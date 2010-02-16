@@ -196,8 +196,8 @@ module Ast<typename T,
 
   component Comp_T
   {
-    uses multiple T Comp_T_Recep;
-    mirrorport PT_T Comp_T_Mirror_Port;
+    uses multiple T Comp_T_Recep; 
+    mirrorport PT_T Comp_T_Mirror_Port; 
     provides T Comp_T_Facet;
     emits E Comp_T_Emit;
 
@@ -237,7 +237,6 @@ module Ast<typename T,
   };
 
   typedef T T_array[M][Ast_Const][LC];
-  
 };
 
 module Ast<iface,
