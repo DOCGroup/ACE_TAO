@@ -16,8 +16,8 @@ module Deployment {
                 EventEmitter,
                 EventPublisher,
                 EventConsumer,
-                ExtendedPort,
-                _MirrorPort
+                ExtendedPort, // New from DDS4CCM
+                _MirrorPort   // New from DDS4CCM
         };
 
         struct ComponentPortDescription {
@@ -29,7 +29,7 @@ module Deployment {
                 boolean exclusiveUser;
                 boolean optional;
                 CCMComponentPortKind kind;
-               ::CORBA::StringSeq templateParam;
+               ::CORBA::StringSeq templateParam; // New from DDS4CCM
         };
 
         typedef sequence < ComponentPortDescription > ComponentPortDescriptions;
@@ -107,7 +107,6 @@ module Deployment {
 
         typedef sequence < PlanSubcomponentPortEndpoint > PlanSubcomponentPortEndpoints;
 
-        //@! in DOCGroup provider, portName and supportesType are removed
         struct ExternalReferenceEndpoint {
                 string location;
                 boolean provider;
@@ -180,6 +179,8 @@ module Deployment {
 
         typedef sequence < ArtifactDeploymentDescription > ArtifactDeploymentDescriptions;
 
+        // OMG 06-04-02 has this without Plan prefix but that results in illegal IDL
+        // because LocalityKind also has DifferentProcess as value
         enum PlanLocalityKind {
                 PlanSameProcess,
                 PlanDifferentProcess,
@@ -190,9 +191,9 @@ module Deployment {
                 PlanLocalityKind constraint;
                 ::CORBA::ULongSeq constrainedInstanceRef;
         };
-        //@! in DOCGroup not implemented
+
         typedef sequence < PlanLocality > PlanLocalities;
-        //@! in DOCGroup localityConstraint is commented
+
         struct DeploymentPlan {
                 string label;
                 string UUID;

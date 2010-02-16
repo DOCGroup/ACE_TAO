@@ -13,10 +13,10 @@ module Deployment {
   };
 
   interface NodeManager {
-    void joinDomain (   in Domain theDomain,
-                        in TargetManager manager,
-                        in Logger log,
-                        in long updateInterval);
+    void joinDomain (in Domain theDomain,
+                     in TargetManager manager,
+                     in Logger log,
+                     in long updateInterval);
 
     void leaveDomain ();
 

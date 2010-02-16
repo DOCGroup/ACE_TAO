@@ -31,7 +31,7 @@
 #include "Deployment/Deployment_NodeApplicationS.h"
 #include "Deployment/Deployment_DeploymentPlanC.h"
 #include "Deployment/DeploymentC.h"
-#include "Deployment/Deployment_common.h"
+#include "DAnCE/Deployment_common.h"
 
 #include <map>
 

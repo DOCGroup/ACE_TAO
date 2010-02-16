@@ -1,3 +1,52 @@
+Tue Feb 16 12:47:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Config_Handlers/Config_Handlers.mpc
+        * DAnCE/DAnCE/DAnCE_Loader.h
+        * DAnCE/DAnCE/DAnCE_Properties.idl
+        * DAnCE/DAnCE/Deployment_common.h
+        * DAnCE/Deployment/DAnCE_Core.mpc
+        * DAnCE/Deployment/DAnCE_Loader.h
+        * DAnCE/Deployment/DAnCE_Properties.idl
+        * DAnCE/Deployment/Deployment.idl
+        * DAnCE/Deployment/Deployment_Application.idl
+        * DAnCE/Deployment/Deployment_ApplicationManager.idl
+        * DAnCE/Deployment/Deployment_Base.idl
+        * DAnCE/Deployment/Deployment_common.h
+        * DAnCE/Deployment/Deployment_DeploymentPlan.idl
+        * DAnCE/Deployment/Deployment_NodeManager.idl
+        * DAnCE/Deployment/Deployment_Packaging_Data.idl
+        * DAnCE/Deployment/Deployment_RepositoryManager.idl
+        * DAnCE/Deployment/Deployment_ResourceCommitmentManager.idl
+        * DAnCE/Deployment/Deployment_stub_export.h
+        * DAnCE/Deployment/Deployment_svnt_export.h
+        * DAnCE/Deployment/Deployment_TargetData.idl
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp
+        * DAnCE/NodeApplication/NodeApplication.mpc
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp
+        * DAnCE/NodeApplication/NodeApplication_Impl.h
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        * DAnCE/NodeManager/Node_Manager_Module.cpp
+        * DAnCE/NodeManager/Node_Manager_Module.h
+        * DAnCE/NodeManager/NodeManager_Impl.h
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.h
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Module.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Module.h
+        * DAnCE/RepositoryManager/Repository_Manager_Module.cpp
+        * DAnCE/RepositoryManager/Repository_Manager_Module.h
+        * DAnCE/TargetManager/Target_Manager_Module.cpp
+        * DAnCE/TargetManager/Target_Manager_Module.h
+          Removed DAnCE/Deployment to just contain the spec compliant IDL,
+          non compliant parts have been moved to DAnCE/DAnCE. All using
+          code has been updated. We did found some problems in the OMG IDL
+          07-02-01 which has been reported to the OMG:
+          - LastConfiguration and InvalidReference are listed in 07-02-01
+            but not used at all.
+          - PlanLocalityKind members have a Plan prefix to resolve a conflict
+            with LocalityKind::SameProcess.
+          All extensions for DDS4CCM have now a comment indicating that
+
 Tue Feb 16 12:32:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/DDSWriterEntity/Sender/Writer_Sender_exec.cpp:

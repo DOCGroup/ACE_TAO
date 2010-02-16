@@ -22,7 +22,6 @@
 #endif /* ! ACE_LACKS_PRAGMA_ONCE */
 
 /// A struct which captures the binding information about a component
-
 namespace DAnCE
 {
   typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
