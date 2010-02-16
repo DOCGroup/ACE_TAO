@@ -1,3 +1,23 @@
+Tue Feb 16 13:08:57 UTC 2010  Marijke Hemgstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Keyed/Base/Perf_Keyed_Test_Base.idl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_pub.cdp:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_pub3.cdp:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_pub_BE.cdp:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_sub.cdp:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_sub_BE.cdp:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/README:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_pub3.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_pub_BE.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_sub2.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_sub3.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_sub_BE.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender.idl:
+        * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender_exec.h:
+        Add attribute number_of_subscribers, made different test scripts.  
+
 Tue Feb 16 12:47:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Config_Handlers/Config_Handlers.mpc

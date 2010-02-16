@@ -152,7 +152,7 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
       this->last_key_->second->bin_data = CORBA::string_alloc(0);
 
     }
-    else if( this->number_of_msg_ == ((this->iterations_ * this->keys_) -1))
+    else if((this->iterations_ != 0) && (this->number_of_msg_ == ((this->iterations_ * this->keys_) -1)))
     {
       //last message
       this->last_key_->second->data_len = FINISHED_SIZE;
@@ -165,7 +165,7 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
       this->last_key_->second->bin_data = CORBA::string_alloc(this->datalen_);
     }
     
-    if( this->number_of_msg_ >= (this->iterations_ * this->keys_))
+    if((this->iterations_ != 0) && (this->number_of_msg_ >= (this->iterations_ * this->keys_)))
     {  
       this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
       this->timer_ = false;
@@ -234,7 +234,7 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
               this->last_key_->second->bin_data = CORBA::string_alloc(0);
 
             }
-            else if( this->number_of_msg_ == ((this->iterations_ * this->keys_) -1))
+            else if( (this->iterations_ != 0) && (this->number_of_msg_ == ((this->iterations_ * this->keys_) -1)))
             {
               //last message
               this->last_key_->second->data_len = FINISHED_SIZE;
@@ -246,7 +246,7 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
               this->last_key_->second->data_len = this->datalen_;
               this->last_key_->second->bin_data = CORBA::string_alloc(this->datalen_);
             }
-          try
+            try
           {
             this->last_key_->second->seq_num = loop;
             this->last_key_->second->latency_ping = 0L;
@@ -272,7 +272,7 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
             this->last_key_ = this->samples_.begin ();
           }
           ++this->number_of_msg_;
-        }
+         }
   }
 
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
@@ -426,6 +426,25 @@ Sender_exec_i::record_time (unsigned long long nanotime)
   }
 
   ::CORBA::UShort
+  Sender_exec_i::number_of_sub (void)
+  {
+    return this->number_of_subscribers_;
+  }
+
+  void
+  Sender_exec_i::number_of_sub (::CORBA::UShort number_of_sub)
+  {
+    if (number_of_sub > 0)
+      {
+        this->number_of_subscribers_ = number_of_sub;
+      }
+    else
+      {
+        this->number_of_subscribers_ = 1;
+      }
+  }
+
+  ::CORBA::UShort
   Sender_exec_i::datalen (void)
   {
     return this->datalen_;
@@ -497,7 +516,7 @@ Sender_exec_i::record_time (unsigned long long nanotime)
   {
      
    ACE_DEBUG ((LM_DEBUG, "SUMMARY SENDER number of messages sent: %u\n",
-                          this->number_of_msg_));
+                          (this->number_of_msg_ + 1)));
 
    if( this->count_.value () > 0)
      {

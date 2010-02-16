@@ -127,9 +127,11 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     virtual ::CORBA::UShort spin (void);
     virtual void spin (::CORBA::UShort spin);
 
+    virtual ::CORBA::UShort number_of_sub (void);
+    virtual void number_of_sub (::CORBA::UShort number_of_sub);
+
     virtual ::CORBA::UShort datalen (void);
     virtual void datalen (::CORBA::UShort datalen);
-
 
     virtual void set_session_context (::Components::SessionContext_ptr ctx);
 
@@ -158,12 +160,12 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     CORBA::UShort datalen_;
 
     Atomic_Boolean matched_;
-    int number_of_subscribers_;
+    CORBA::UShort number_of_subscribers_;
     Atomic_Long  tv_total_;
     Atomic_Long  tv_max_;
     Atomic_Long  tv_min_;
     Atomic_Long  count_;
-    int number_of_msg_;
+    CORBA::UShort number_of_msg_;
     Atomic_Boolean timer_;
 
     TAO_SYNCH_MUTEX mutex_;
