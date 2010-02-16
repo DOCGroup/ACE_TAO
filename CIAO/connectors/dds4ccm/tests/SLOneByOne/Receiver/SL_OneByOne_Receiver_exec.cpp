@@ -14,32 +14,6 @@
 namespace CIAO_SL_OneByOne_Receiver_Impl
 {
   //============================================================
-  // read_action_Generator
-  //============================================================
-  read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
-    : pulse_callback_ (callback)
-  {
-  }
-
-  read_action_Generator::~read_action_Generator ()
-  {
-  }
-
-  int
-  read_action_Generator::handle_timeout (const ACE_Time_Value &, const void *)
-  {
-    try
-      {
-        this->pulse_callback_.read_all();
-      }
-    catch (...)
-      {
-        // @todo
-      }
-    return 0;
-  }
-
-  //============================================================
   // StateListener_exec_i
   //============================================================
   StateListener_exec_i::StateListener_exec_i (Atomic_Boolean &on_many_updates,
@@ -69,13 +43,16 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
       {
         this->on_creation_ = true;
       }
+    ACE_DEBUG ((LM_DEBUG, "StateListener_exec_i::on_creation - "
+                          "Received sample: key <%C> - iteration <%d>\n",
+                          datum.key.in (),
+                          datum.x));
   }
 
   void
   StateListener_exec_i::on_one_update (const ::TestTopic & datum,
                                        const ::CCM_DDS::ReadInfo & info)
   {
-    this->thread_id_ = ACE_Thread::self ();
     if (info.instance_status != CCM_DDS::INSTANCE_UPDATED)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected info.status ")
@@ -84,6 +61,11 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
                     ));
 
       }
+
+    ACE_DEBUG ((LM_DEBUG, "StateListener_exec_i::on_one_update - "
+                          "Received sample: key <%C> - iteration <%d>\n",
+                          datum.key.in (),
+                          datum.x));
 
     if (!datum.key.in() == 0 && info.instance_status == CCM_DDS::INSTANCE_UPDATED)
       {
@@ -102,7 +84,6 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
   StateListener_exec_i::on_deletion (const ::TestTopic & datum,
                                     const ::CCM_DDS::ReadInfo & info)
   {
-    this->thread_id_ = ACE_Thread::self ();
     if (info.instance_status != CCM_DDS::INSTANCE_DELETED)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected info.status ")
@@ -115,62 +96,27 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
       {
         this->on_deletion_ = true;
       }
+    ACE_DEBUG ((LM_DEBUG, "StateListener_exec_i::on_deletion - "
+                      "Received sample: key <%C> - iteration <%d>\n",
+                      datum.key.in (),
+                      datum.x));
   }
 
   //============================================================
   // Receiver_exec_i
   //============================================================
   Receiver_exec_i::Receiver_exec_i (void)
-    : rate_ (10),
-      on_many_updates_ (false),
+    : on_many_updates_ (false),
       updater_data_ (false),
       on_creation_ (false),
       on_one_update_ (false),
       on_deletion_ (false),
       thread_id_listener_ (0)
   {
-    this->ticker_ = new read_action_Generator (*this); 
   }
 
   Receiver_exec_i::~Receiver_exec_i (void)
   {
-  }
-
-  // Supported operations and attributes.
-  void
-  Receiver_exec_i::read_all (void)
-  {
-    if (CORBA::is_nil (this->reader_.in ()))
-      {
-        return;
-      }
-    TestTopic_Seq_var TestTopic_infos;
-    ::CCM_DDS::ReadInfoSeq_var readinfoseq;
-    try
-      {
-        this->reader_->read_all (TestTopic_infos.out(), readinfoseq.out());
-        for(CORBA::ULong i = 0; i < readinfoseq->length(); ++i)
-          {
-            this->updater_data_ = true;
-            ACE_Time_Value tv;
-            tv <<= readinfoseq[i].source_timestamp;
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
-                                ACE_TEXT ("-> UTC date =%#T\n"),
-                                &tv));
-          }
-        for(CORBA::ULong i = 0; i < TestTopic_infos->length (); ++i)
-          {
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL keyed test info : ")
-                       ACE_TEXT ("Number <%d> : received TestTopic_info for <%C> at %u\n"),
-                        i,
-                        TestTopic_infos[i].key.in (),
-                        TestTopic_infos[i].x));
-          }
-      }
-    catch (const CCM_DDS::InternalError& )
-      {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("internal error or no data\n")));
-      }
   }
 
   // Component attributes.
@@ -178,7 +124,6 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
     return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
@@ -208,7 +153,6 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
-    this->reader_ = this->context_->get_connection_info_out_data ();
   }
 
   void
@@ -223,23 +167,11 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
         throw CORBA::INTERNAL ();
       }
     lc->mode (::CCM_DDS::ONE_BY_ONE);
-    // calculate the interval time
-    long usec = 1000000 / this->rate_;
-    if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
-                                          this->ticker_,
-                                          0,
-                                          ACE_Time_Value(3, usec),
-                                          ACE_Time_Value(3, usec)) == -1)
-      {
-        ACE_ERROR ((LM_ERROR, "Unable to schedule Timer\n"));
-      }
   }
 
   void
   Receiver_exec_i::ccm_passivate (void)
   {
-    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
-    delete this->ticker_;
   }
 
   void
