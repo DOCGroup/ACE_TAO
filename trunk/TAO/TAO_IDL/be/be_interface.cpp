@@ -1392,7 +1392,8 @@ be_interface::analyze_parentage (void)
   AST_Decl::NodeType nt = this->node_type ();
   bool can_be_mixed = nt == AST_Decl::NT_interface
                           || nt == AST_Decl::NT_component
-                          || nt == AST_Decl::NT_home;
+                          || nt == AST_Decl::NT_home
+                          || nt == AST_Decl::NT_connector;
 
   if (this->has_mixed_parentage_ == 1
       && can_be_mixed
@@ -1475,16 +1476,18 @@ be_interface::traverse_inheritance_graph (
                              "dequeue_head failed\n"),
                             -1);
         }
+        
+      AST_Decl::NodeType nt = intf->node_type ();
 
       // If we are doing a home, we check for a parent.
-      if (intf->node_type () == AST_Decl::NT_home)
+      if (nt == AST_Decl::NT_home)
         {
           this->enqueue_base_home_r (
             AST_Home::narrow_from_decl (intf));
         }
 
       // If we are doing a component, we check for a parent.
-      if (intf->node_type () == AST_Decl::NT_component)
+      if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
         {
           if (add_ccm_object)
             {
@@ -2571,7 +2574,9 @@ be_interface::has_mixed_parentage (void)
 
   AST_Decl::NodeType nt = this->node_type ();
 
-  if (AST_Decl::NT_component == nt || AST_Decl::NT_home == nt)
+  if (AST_Decl::NT_component == nt
+      || AST_Decl::NT_home == nt
+      || AST_Decl::NT_connector == nt)
     {
       return 0;
     }
@@ -2804,7 +2809,9 @@ Facet_Op_Attr_Helper::emit (be_interface * /*derived_interface */,
                             TAO_OutStream *,
                             be_interface *base_interface)
 {
-  if (base_interface->node_type () == AST_Decl::NT_component)
+  AST_Decl::NodeType nt = base_interface->node_type ();
+
+  if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {
       return 0;
     }

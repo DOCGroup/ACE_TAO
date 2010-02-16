@@ -38,6 +38,11 @@ be_visitor_component_svs::~be_visitor_component_svs (void)
 int
 be_visitor_component_svs::visit_component (be_component *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
+  
   be_visitor_facet_svs facet_visitor (this->ctx_);
 
   if (facet_visitor.visit_component_scope (node) == -1)

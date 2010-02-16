@@ -86,7 +86,9 @@ Component_Exec_Op_Attr_Generator::emit (be_interface * /*derived_interface */,
                                         TAO_OutStream * /* os */,
                                         be_interface * base_interface)
 {
-  if (base_interface->node_type () == AST_Decl::NT_component)
+  AST_Decl::NodeType nt = base_interface->node_type ();
+
+  if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {
       return 0;
     }

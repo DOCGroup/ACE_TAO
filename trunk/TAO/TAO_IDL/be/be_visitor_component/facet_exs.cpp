@@ -35,7 +35,7 @@ be_visitor_facet_exs::visit_operation (be_operation *node)
 
   // Components have implied IDL operations added to the AST, but
   // we are interested only in supported interface operations.
-  if (nt == AST_Decl::NT_component)
+  if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {
       return 0;
     }
@@ -53,7 +53,7 @@ be_visitor_facet_exs::visit_attribute (be_attribute *node)
 
   // Components have implied IDL operations added to the AST, but
   // we are interested only in supported interface operations.
-  if (nt == AST_Decl::NT_component)
+  if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {
       return 0;
     }

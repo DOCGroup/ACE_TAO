@@ -35,7 +35,7 @@ be_visitor_executor_exs::visit_operation (be_operation *node)
 
   // Components have implied IDL operations added to the AST, but
   // we are interested only in supported interface operations.
-  if (nt == AST_Decl::NT_component)
+  if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {
       return 0;
     }

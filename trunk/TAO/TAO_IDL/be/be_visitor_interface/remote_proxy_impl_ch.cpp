@@ -39,7 +39,9 @@ be_visitor_interface_remote_proxy_impl_ch::visit_interface (
       << "," << be_idt_nl << "public virtual " 
       << "TAO_Remote_Object_Proxy_Impl";
 
-  if (node->node_type () == AST_Decl::NT_component)
+  AST_Decl::NodeType nt = node->node_type ();
+
+  if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {
       be_component *bc = be_component::narrow_from_decl (node);
       AST_Component *ac_base = bc->base_component ();
