@@ -1,3 +1,8 @@
+Wed Feb 17 10:02:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * html/Stats/index.shtml:
+          Added link for MPC440 Xampler results
+
 Tue Feb 16 09:51:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_freebsd.GNU:
