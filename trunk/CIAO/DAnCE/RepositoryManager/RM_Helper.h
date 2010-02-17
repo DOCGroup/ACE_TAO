@@ -10,7 +10,6 @@
  *  This class aggregates a number of helper functions used by the
  *  CIAO RepositoryManager
  *
- *
  *  @author Stoyan Paunov
  */
 //=============================================================================

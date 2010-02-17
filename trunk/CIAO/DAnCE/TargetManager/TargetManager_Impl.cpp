@@ -28,12 +28,14 @@ void TargetManagerDaemon_i::init (const ACE_TCHAR *file)
   return DAnCE::DOMAIN_DATA_MANAGER->get_initial_domain ();
 }
 
-::Deployment::Domain * TargetManagerDaemon_i::getAvailableResources (void)
+::Deployment::Domain *
+TargetManagerDaemon_i::getAvailableResources (void)
 {
   return DAnCE::DOMAIN_DATA_MANAGER->get_current_domain ();
 }
 
-::Deployment::ResourceCommitmentManager_ptr TargetManagerDaemon_i::createResourceCommitment (
+::Deployment::ResourceCommitmentManager_ptr
+TargetManagerDaemon_i::createResourceCommitment (
   const ::Deployment::ResourceAllocations & resources)
 {
   return DAnCE::DOMAIN_DATA_MANAGER->commitResources (resources);
