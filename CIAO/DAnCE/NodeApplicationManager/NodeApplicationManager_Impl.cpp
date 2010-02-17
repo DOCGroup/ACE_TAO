@@ -146,20 +146,20 @@ NodeApplicationManager_Impl::destroyApplication (Deployment::Application_ptr app
     this->application_ = 0;
   }
   catch (const CORBA::SystemException &)
-  {
-    throw;
-  }
+    {
+      throw;
+    }
   catch (const Deployment::StopError &)
-  {
-    throw;
-  }
+    {
+      throw;
+    }
   catch (const CORBA::UserException &e)
-  {
-    DANCE_ERROR (1, (LM_ERROR, DLINFO
-                 ACE_TEXT("NodeApplicationManager_Impl::destroyApplication failed with UserException %C(%C) \"%C\"\n"),
-                 e._name(), e._rep_id(), e._info().c_str()));
-    throw Deployment::StopError(e._name(), e._info().c_str());
-  }
+    {
+      DANCE_ERROR (1, (LM_ERROR, DLINFO
+                   ACE_TEXT("NodeApplicationManager_Impl::destroyApplication failed with UserException %C(%C) \"%C\"\n"),
+                   e._name(), e._rep_id(), e._info().c_str()));
+      throw Deployment::StopError(e._name(), e._info().c_str());
+    }
   catch (...)
   {
     DANCE_ERROR (1, (LM_ERROR, DLINFO
