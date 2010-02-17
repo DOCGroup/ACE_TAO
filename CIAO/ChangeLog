@@ -1,3 +1,24 @@
+Wed Feb 17 11:40:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Cleanup of the repository manager
+
+        * DAnCE/DAnCE/DAnCE_Loader.h:
+        * DAnCE/MPC/config/dance_repositorymanager.mpb:
+        * DAnCE/RepositoryManager/Repository_Manager_Admin_Export.h
+          Deleted
+
+        * DAnCE/RepositoryManager/PC_Updater.h
+        * DAnCE/RepositoryManager/Repository_Manager.cpp
+        * DAnCE/RepositoryManager/repository_manager_admin.h
+        * DAnCE/RepositoryManager/Repository_Manager_Exec.cpp
+        * DAnCE/RepositoryManager/Repository_Manager_Module.cpp
+        * DAnCE/RepositoryManager/Repository_Manager_Module.h
+        * DAnCE/RepositoryManager/RepositoryManager.mpc
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h
+        * DAnCE/RepositoryManager/RM_Helper.h
+        * DAnCE/RepositoryManager/URL_Parser.h
+          Cleanup
+
 Wed Feb 17 11:20:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Cleanup of the target manager

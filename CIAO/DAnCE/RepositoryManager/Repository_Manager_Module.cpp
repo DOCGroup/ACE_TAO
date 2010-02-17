@@ -9,7 +9,6 @@
 #include "tao/IORTable/IORTable.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/orbsvcs/Naming/Naming_Loader.h"
 #include "DAnCE/Logger/Log_Macros.h"
 #include "DAnCE/DAnCE/DAnCE_PropertiesC.h"
 
@@ -281,17 +280,17 @@ DAnCE_RepositoryManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
 }
 
 CORBA::Object_ptr
-DAnCE_RepositoryManager_Module::create_object (CORBA::ORB_ptr orb,
+DAnCE_RepositoryManager_Module::init (CORBA::ORB_ptr orb,
                                                int argc,
                                                ACE_TCHAR *argv[])
 {
-  DANCE_TRACE ("DAnCE_RepositoryManager_Module::create_object");
+  DANCE_TRACE ("DAnCE_RepositoryManager_Module::init");
 
   try
     {
       if (CORBA::is_nil(orb))
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::init - ")
                        ACE_TEXT("Attempted to create Repository Manager with a nil orb.\n")));
           return CORBA::Object::_nil();
         }
@@ -302,7 +301,7 @@ DAnCE_RepositoryManager_Module::create_object (CORBA::ORB_ptr orb,
 
       if (ACE_OS::strcmp(orb->id(), this->orb_->id()) != 0)
         {
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::init - ")
                        ACE_TEXT("Resetting NM's orb.\n")));
           this->orb_ = CORBA::ORB::_duplicate (orb);
           this->domain_nc_ = CosNaming::NamingContext::_nil();
@@ -322,7 +321,7 @@ DAnCE_RepositoryManager_Module::create_object (CORBA::ORB_ptr orb,
         {
           try
             {
-              DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
+              DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::init - ")
                            ACE_TEXT("Resolving DomainNC.\n")));
               CORBA::Object_var domain_obj = this->orb_->string_to_object (this->options_.domain_nc_);
               if (!CORBA::is_nil (domain_obj.in ()))
@@ -330,7 +329,7 @@ DAnCE_RepositoryManager_Module::create_object (CORBA::ORB_ptr orb,
                   this->domain_nc_ = CosNaming::NamingContext::_narrow (domain_obj.in());
                   if (CORBA::is_nil (this->domain_nc_.in ()))
                     {
-                      DANCE_ERROR (1, (LM_ERROR,DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
+                      DANCE_ERROR (1, (LM_ERROR,DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::init - ")
                                     ACE_TEXT("Narrow to NamingContext return nil for DomainNC.\n")));
                       return CORBA::Object::_nil ();
                     }
@@ -338,13 +337,13 @@ DAnCE_RepositoryManager_Module::create_object (CORBA::ORB_ptr orb,
             }
           catch (const CORBA::Exception&)
             {
-              DANCE_DEBUG (6, (LM_WARNING, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
+              DANCE_DEBUG (6, (LM_WARNING, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::init - ")
                              ACE_TEXT("DomainNC context not found!\n")));
             }
         }
 
 
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::init - ")
                     ACE_TEXT("Initializing the IOR Table\n")));
       // Initialize IOR table
       CORBA::Object_var table_object = orb->resolve_initial_references ("IORTable");
@@ -353,7 +352,7 @@ DAnCE_RepositoryManager_Module::create_object (CORBA::ORB_ptr orb,
 
       if (CORBA::is_nil (adapter.in ()))
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::init - ")
                          ACE_TEXT("Unable to RIR the IORTable.\n")));
           return CORBA::Object::_nil ();
         }
@@ -395,7 +394,7 @@ DAnCE_RepositoryManager_Module::create_object (CORBA::ORB_ptr orb,
             ns_name = "RepositoryManager";
           else ns_name = this->options_.name_;
 
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::init - ")
                        ACE_TEXT("Registering NM in NC as \"%C\".\n"), ns_name.c_str ()));
           CosNaming::Name name (1);
           name.length (1);
@@ -407,10 +406,10 @@ DAnCE_RepositoryManager_Module::create_object (CORBA::ORB_ptr orb,
       // Writing ior to file
       if (0 != this->options_.ior_file_)
         {
-          DANCE_DEBUG (9, (LM_TRACE,  DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
+          DANCE_DEBUG (9, (LM_TRACE,  DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::init - ")
                         ACE_TEXT("Writing RM IOR %C to file %C.\n"), this->options_.ior_file_, ior.in ()));
           if (!DAnCE::Repository_Manager::write_IOR (this->options_.ior_file_, ior.in ()))
-            DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
+            DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::init - ")
                           ACE_TEXT("Error: Unable to write IOR to file %C\n"),
                           this->options_.ior_file_));
         }
@@ -420,10 +419,10 @@ DAnCE_RepositoryManager_Module::create_object (CORBA::ORB_ptr orb,
       mgr->activate ();
 
       // Finishing Deployment part
-      DANCE_DEBUG (6, (LM_NOTICE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
+      DANCE_DEBUG (6, (LM_NOTICE, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::init - ")
                     ACE_TEXT("DAnCE_RepositoryManager is running...\n")));
 
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::create_object - ")
+      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("DAnCE_RepositoryManager_Module::init - ")
                     ACE_TEXT("RepositoryManager IOR: %C\n"), ior.in ()));
 
       return nm_obj._retn ();
@@ -508,6 +507,3 @@ DAnCE_RepositoryManager_Module::spawn_http (void)
   ACE_Service_Config::current ()->process_directive (directive.c_str ());
 }
 
-#ifndef BUILD_REPOSITORY_MANAGER_EXE
-ACE_FACTORY_DEFINE (DAnCE_RepositoryManager_Module, DAnCE_RepositoryManager_Module)
-#endif /*BUILD_REPOSITORY_MANAGER_EXE */
