@@ -1,3 +1,32 @@
+Wed Feb 17 11:20:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Cleanup of the target manager
+
+        * DAnCE/MPC/config/dance_nodemanager.mpb:
+        * DAnCE/MPC/config/dance_targetmanager.mpb
+          Deleted, obsolete
+
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+        * DAnCE/RepositoryManager/RM_Helper.h:
+        * DAnCE/TargetManager/ResourceCommitmentManager.h:
+          layout change
+
+        * DAnCE/NodeManager/NodeManager.mpc:
+          Reduced dependency
+
+        * DAnCE/TargetManager/Target_Manager_Exec.cpp
+        * DAnCE/TargetManager/Target_Manager_Module_export.h
+        * DAnCE/TargetManager/TargetManager_Impl_export.h
+          Deleted from the archive
+
+        * DAnCE/TargetManager/Target_Manager.cpp
+        * DAnCE/TargetManager/Target_Manager_Module.cpp
+        * DAnCE/TargetManager/Target_Manager_Module.h
+        * DAnCE/TargetManager/TargetManager.mpc
+        * DAnCE/TargetManager/TargetManager_Impl.cpp
+        * DAnCE/TargetManager/TargetManager_Impl.h
+          Simplified and cleanup
+
 Wed Feb 17 10:54:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/TargetManager/CmpClient.cpp
