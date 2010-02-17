@@ -1,3 +1,16 @@
+Wed Feb 17 12:09:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeManager/Node_Manager_Module.h:
+          Removed obsolete header
+
+        * DAnCE/MPC/config/dance_utils.mpb
+        * DAnCE/Utils
+        * DAnCE/Utils/DAnCE_Utils.mpc
+        * DAnCE/Utils/DAnCE_Utils_Export.h
+        * DAnCE/Utils/Plan_Handler.cpp
+        * DAnCE/Utils/Plan_Handler.h
+          Removed, not used at all
+
 Wed Feb 17 11:40:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Cleanup of the repository manager
