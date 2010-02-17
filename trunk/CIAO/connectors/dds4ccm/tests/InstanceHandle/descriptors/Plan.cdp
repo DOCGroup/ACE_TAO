@@ -133,17 +133,6 @@
     <source/>
     <implementation xmi:idref="SenderComponentImplementation" />
     <configProperty>
-      <name>rate</name>
-      <value>
-        <type>
-          <kind>tk_ushort</kind>
-        </type>
-        <value>
-          <ushort>10</ushort>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
       <name>keys</name>
       <value>
         <type>

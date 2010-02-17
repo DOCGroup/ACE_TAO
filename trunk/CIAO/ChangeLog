@@ -1,3 +1,21 @@
+Wed Feb 17 09:36:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Check whether the get_listener returns nil.
+
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender.idl:
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender_exec.h:
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/InstanceHandle/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/InstanceHandle/descriptors/run_test.pl:
+          Improved implementation. Sometimes unregister_handles hangs in
+          a never ending loop.
+
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.cpp:
+          Improved implementation. Polling for the last sample in DDS now
+          is done using the reactor thread.
+
 Wed Feb 17 09:21:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector_exec.cpp:

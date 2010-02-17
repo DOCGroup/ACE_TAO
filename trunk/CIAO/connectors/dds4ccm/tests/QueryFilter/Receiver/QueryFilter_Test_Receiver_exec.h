@@ -21,6 +21,26 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   class Receiver_exec_i;
 
   //============================================================
+  // read_action_Generator
+  //============================================================
+  class read_action_Generator
+    : public ACE_Event_Handler
+  {
+  public:
+    read_action_Generator (Receiver_exec_i &callback,
+                           int run);
+
+    ~read_action_Generator ();
+
+    virtual int handle_timeout (const ACE_Time_Value &tv,
+                                const void *arg);
+  private:
+    Receiver_exec_i &callback_;
+    int run_;
+
+  };
+
+  //============================================================
   // ReadHandler
   //============================================================
   class ReadHandler :
@@ -79,6 +99,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     get_reader_start ();
 
     bool check_last ();
+    void start_read (CORBA::UShort run);
     void start (CORBA::UShort run);
     void run (CORBA::UShort run);
 
@@ -111,6 +132,8 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
 
     int current_min_iteration_;
     int current_max_iteration_;
+
+    read_action_Generator *ticker_;
 
     void read_all (void);
     void check_filter (void);

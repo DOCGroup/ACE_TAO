@@ -44,9 +44,9 @@ $tg_executor = 0;
 $status = 0;
 $cdp_file = "Plan.cdp";
 
-# $ENV {'CIAO_TRACE_ENABLE'} = 1;
+$ENV {'CIAO_TRACE_ENABLE'} = 1;
 # $ENV {'DANCE_TRACE_ENABLE'} = 1;
-# $ENV {'CIAO_LOG_LEVEL'} = 3;
+$ENV {'CIAO_LOG_LEVEL'} = 10;
 # $ENV {'DANCE_LOG_LEVEL'} = 3;
 
 sub create_targets {
@@ -223,8 +223,8 @@ for ($i = 0; $i < $nr_daemon; ++$i) {
     }
 }
 
-print "Sleeping 20 seconds to allow task to complete\n";
-sleep (20);
+print "Sleeping 5 seconds to allow task to complete\n";
+sleep (5);
 
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";

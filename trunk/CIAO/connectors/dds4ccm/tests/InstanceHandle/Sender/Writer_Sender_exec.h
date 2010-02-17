@@ -26,19 +26,16 @@ namespace CIAO_Writer_Sender_Impl
   class Sender_exec_i;
 
   //============================================================
-  // pulse_Generator
+  // ReadHandler
   //============================================================
-  class pulse_Generator :
+  class StartHandler :
     public ACE_Event_Handler
   {
   public:
-    pulse_Generator (Sender_exec_i &callback);
-    /// Handle the timeout.
-    virtual int handle_timeout (const ACE_Time_Value &tv,
-                                const void *arg);
+    StartHandler (Sender_exec_i &callback);
+    virtual int handle_exception (ACE_HANDLE fc = ACE_INVALID_HANDLE);
   private:
-    /// Maintains a handle that actually process the event
-    Sender_exec_i &pulse_callback_;
+    Sender_exec_i &callback_;
   };
 
   //============================================================
@@ -52,10 +49,6 @@ namespace CIAO_Writer_Sender_Impl
     Sender_exec_i (void);
     virtual ~Sender_exec_i (void);
 
-    virtual ::CORBA::UShort rate (void);
-
-    virtual void rate (::CORBA::UShort rate);
-
     virtual ::CORBA::UShort keys (void);
 
     virtual void keys (::CORBA::UShort keys);
@@ -68,18 +61,15 @@ namespace CIAO_Writer_Sender_Impl
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
 
-    void tick ();
+    void run ();
 
   private:
     void start (void);
-    void stop (void);
 
     WriterTestDataWriter * dds_writer_;
     CCM_DDS::WriterTest::Writer_var ccm_writer_;
 
-    pulse_Generator * ticker_;
     ::Writer::CCM_Sender_Context_var context_;
-    CORBA::UShort rate_;
     CORBA::UShort keys_;
 
     void register_handles ();
@@ -93,8 +83,6 @@ namespace CIAO_Writer_Sender_Impl
 
     typedef std::map<ACE_CString, ::DDS::InstanceHandle_t> CCM_Handles;
     CCM_Handles handles_;
-
-    Writer_Table::iterator last_key_;
   };
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
