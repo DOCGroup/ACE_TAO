@@ -8,6 +8,8 @@
 #ifndef QUOTER_BASE_IDL
 #define QUOTER_BASE_IDL
 
+#pragma rti typesupport "Base/Quoter_BaseSupport.h"
+
 module Quoter
 {
   struct Stock_Info

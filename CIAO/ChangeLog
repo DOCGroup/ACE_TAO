@@ -1,3 +1,11 @@
+Wed Feb 17 12:10:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.idl:
+          Added pragma
+
+        * DAnCE/RepositoryManager/DAnCE_RepositoryManager_Module_Export.h:
+          Deleted
+
 Wed Feb 17 12:09:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeManager/Node_Manager_Module.h:
