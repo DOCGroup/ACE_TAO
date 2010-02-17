@@ -341,12 +341,6 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   void
   Receiver_exec_i::start (CORBA::UShort run)
   {
-    if (this->ticker_)
-      {
-        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
-        delete this->ticker_;
-        this->ticker_ = 0;
-      }
     ReadHandler *rh = new ReadHandler (*this, run);
     this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (rh);
   }
@@ -354,6 +348,12 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   void
   Receiver_exec_i::run (CORBA::UShort run)
   {
+    if (this->ticker_)
+      {
+        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
+        delete this->ticker_;
+        this->ticker_ = 0;
+      }
     this->has_run_ = true;
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::run - "
                           "Starting run number <%d>\n",
@@ -467,6 +467,10 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
             ACE_TEXT ("Test did not run: Didn't receive ")
             ACE_TEXT ("the expected number of DATA_ON_READER ")
             ACE_TEXT ("events.\n")));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finished query filter test.")));
       }
   }
 
