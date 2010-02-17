@@ -12,11 +12,9 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "TargetManager_Impl_export.h"
-
 namespace DAnCE
 {
-class DAnCE_TargetManager_Impl_Export TargetManagerDaemon_i
+class TargetManagerDaemon_i
   : public virtual POA_Deployment::TargetManager
 {
 public:
@@ -28,11 +26,9 @@ public:
 
   void init (const ACE_TCHAR *file);
 
-  virtual
-  ::Deployment::Domain * getAllResources (void);
+  virtual ::Deployment::Domain * getAllResources (void);
 
-  virtual
-  ::Deployment::Domain * getAvailableResources (void);
+  virtual ::Deployment::Domain * getAvailableResources (void);
 
   virtual
   ::Deployment::ResourceCommitmentManager_ptr createResourceCommitment (
