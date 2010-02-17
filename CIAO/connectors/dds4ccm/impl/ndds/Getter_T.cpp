@@ -257,24 +257,33 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::passivate ()
       CIAO_ERROR (1, (LM_ERROR, CLINFO "Getter_T::passivate - "
                       "Unable to detach read condition from waitset.\n"));
     }
-    else CIAO_DEBUG (6, (LM_INFO, CLINFO "Getter_T::passivate - "
+  else
+    {
+      CIAO_DEBUG (6, (LM_INFO, CLINFO "Getter_T::passivate - "
                       "Read condition succesfully detached from waitset.\n"));
+    }
   retcode = this->ws_->detach_condition (this->gd_);
   if (retcode != DDS_RETCODE_OK)
     {
       CIAO_ERROR (1, (LM_ERROR, CLINFO "Getter_T::passivate - "
                       "Unable to detach guard condition from waitset.\n"));
     }
-    else CIAO_DEBUG (6, (LM_INFO, CLINFO "Getter_T::passivate - "
+  else
+    {
+      CIAO_DEBUG (6, (LM_INFO, CLINFO "Getter_T::passivate - "
                       "Guard condition succesfully detached from waitset.\n"));
+    }
   retcode = this->impl ()->delete_readcondition (this->rd_condition_);
   if (retcode != DDS_RETCODE_OK)
     {
       CIAO_ERROR (1, (LM_ERROR, CLINFO "Getter_T::passivate - "
                       "Unable to delete read condition from DDSDataReader.\n"));
     }
-    else CIAO_DEBUG (6, (LM_INFO, CLINFO "Getter_T::passivate - "
+  else
+    {
+      CIAO_DEBUG (6, (LM_INFO, CLINFO "Getter_T::passivate - "
                       "Read condition succesfully deleted from DDSDataReader.\n"));
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
