@@ -20,14 +20,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Deployment/Deployment_DomainApplicationS.h"
-#include "ace/Map_Manager.h"
-#include "Deployment/Deployment_NodeApplicationC.h"
 #include "Deployment/Deployment_NodeApplicationManagerC.h"
 #include "Deployment/Deployment_NodeManagerC.h"
+#include "ace/Map_Manager.h"
 
 namespace DAnCE
   {
-
   /**
    * @class DomainApplication_Impl
    *
@@ -47,7 +45,8 @@ namespace DAnCE
       DomainApplication_Impl (TNam2Nm& nams,
                               const Deployment::Properties & configProperty,
                               Deployment::Connections& conn);
-      ~DomainApplication_Impl();
+
+      virtual ~DomainApplication_Impl();
 
       void startLaunch (const Deployment::Properties & configProperty);
 

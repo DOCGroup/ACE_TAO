@@ -1,13 +1,10 @@
 // $Id$
 
 #include "Domain_Application_Impl.h"
-
-#include "ace/streams.h"
 #include "DAnCE/Logger/Log_Macros.h"
 
 namespace DAnCE
 {
-
   DomainApplication_Impl::DomainApplication_Impl (
     TNam2Nm & nams,
     const Deployment::Properties & configProperty,
@@ -89,7 +86,6 @@ namespace DAnCE
                       ACE_TEXT("Invoking startLaunch on an application\n")));
         ::Deployment::Connections_var conn;
         Deployment::Application_ptr na = (*iter).ext_id_->startLaunch (configProperty, conn.out());
-        //Deployment::NodeApplication_ptr na = Deployment::NodeApplication::_narrow (a);
         if (CORBA::is_nil (na))
           {
             DANCE_ERROR (1, (LM_ERROR, DLINFO
@@ -104,7 +100,7 @@ namespace DAnCE
 
         this->node_applications_.bind (na, (*iter).ext_id_);
 
-        CORBA::ULong before = this->connections_.length();
+        CORBA::ULong const before = this->connections_.length();
         this->connections_.length (before + conn->length());
         for (CORBA::ULong i = 0; i < conn->length(); ++i)
           {
@@ -117,6 +113,5 @@ namespace DAnCE
                   ACE_TEXT("Received %u connections from applications\n"),
                   this->connections_.length ()));
   }
-
 } // DAnCE
 
