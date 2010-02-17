@@ -31,7 +31,6 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/CosNamingC.h"
 #include "tao/Object_Loader.h"
-#include "DAnCE/DAnCE/DAnCE_Loader.h"
 #include "DAnCE/DAnCE/Deployment_common.h"
 
 namespace DAnCE
