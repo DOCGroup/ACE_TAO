@@ -21,6 +21,29 @@
 namespace CIAO_QueryFilter_Test_Receiver_Impl
 {
   //============================================================
+  // read_action_Generator
+  //============================================================
+  read_action_Generator::read_action_Generator (Receiver_exec_i &callback, int run)
+    : callback_ (callback),
+      run_ (run)
+  {
+  }
+
+  read_action_Generator::~read_action_Generator ()
+  {
+  }
+
+  int
+  read_action_Generator::handle_timeout (const ACE_Time_Value &, const void *)
+  {
+    ACE_DEBUG ((LM_DEBUG, "Checking if last sample "
+                          "is available in DDS...\n"));
+    if (this->callback_.check_last ())
+      this->callback_.run (this->run_);
+    return 0;
+  }
+
+  //============================================================
   // ReadHandler
   //============================================================
   ReadHandler::ReadHandler (Receiver_exec_i &callback,
@@ -60,9 +83,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   void
   Starter_exec_i::start_read (CORBA::UShort run)
   {
-    while (!this->callback_.check_last ())
-      ACE_OS::sleep (1);
-    this->callback_.start (run);
+    this->callback_.start_read (run);
   }
 
   //============================================================
@@ -73,7 +94,8 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
       keys_ (5),
       has_run_ (false),
       current_min_iteration_ (ACE_OS::atoi (MIN_ITERATION_1)),
-      current_max_iteration_ (ACE_OS::atoi (MAX_ITERATION_1))
+      current_max_iteration_ (ACE_OS::atoi (MAX_ITERATION_1)),
+      ticker_ (0)
   {
   }
 
@@ -303,8 +325,28 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   }
 
   void
+  Receiver_exec_i::start_read (CORBA::UShort run)
+  {
+    this->ticker_ = new read_action_Generator (*this, run);
+    if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
+                                          this->ticker_,
+                                          0,
+                                          ACE_Time_Value(1, 0),
+                                          ACE_Time_Value(1, 0)) == -1)
+      {
+        ACE_ERROR ((LM_ERROR, "Unable to schedule Timer\n"));
+      }
+  }
+
+  void
   Receiver_exec_i::start (CORBA::UShort run)
   {
+    if (this->ticker_)
+      {
+        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
+        delete this->ticker_;
+        this->ticker_ = 0;
+      }
     ReadHandler *rh = new ReadHandler (*this, run);
     this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (rh);
   }
