@@ -1,3 +1,16 @@
+Wed Feb 17 15:24:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/PortStatusListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.cpp:
+          Layout changes
+
+        * DAnCE/DomainApplication/Domain_Application_Impl.cpp
+        * DAnCE/DomainApplication/Domain_Application_Impl.h
+        * DAnCE/DomainApplication/DomainApplication.mpc
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h
+          Cleanup
+
 Wed Feb 17 13:57:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.h:
