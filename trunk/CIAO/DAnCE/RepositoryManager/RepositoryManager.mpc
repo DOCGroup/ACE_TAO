@@ -8,7 +8,7 @@ project (DAnCE_RepositoryManagerDaemon_IDL) : taoidldefaults {
   }
 }
 
-project (DAnCE_RepositoryManager_Exec) : dance_logger, dance_config_handlers, ccm_stub, dance_repositorymanagerbase, dance_repositorymanager_skel, naming, iortable, utils, zlib, minizip, dance_logger, dance_exe {
+project (DAnCE_RepositoryManager_Exec) : dance_logger, dance_config_handlers, dance_repositorymanagerbase, dance_repositorymanager_skel, naming, iortable, utils, zlib, minizip, dance_exe {
   exename = dance_repository_manager
   after += DAnCE_RepositoryManagerDaemon_IDL
   requires += zlib
