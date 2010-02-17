@@ -49,7 +49,7 @@ namespace
 
 namespace DAnCE
 {
-  class  RepositoryManagerDaemon_i :
+  class RepositoryManagerDaemon_i :
     public virtual POA_CIAO::RepositoryManagerDaemon
   {
   public:

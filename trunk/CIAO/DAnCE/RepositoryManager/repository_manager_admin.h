@@ -14,8 +14,6 @@
 #include /**/ "ace/pre.h"
 #include "Deployment/Deployment_RepositoryManagerC.h"
 
-#include "Repository_Manager_Admin_Export.h"
-
 namespace DAnCE
 {
   namespace RepositoryManager
@@ -24,7 +22,7 @@ namespace DAnCE
      * @class Admin
      * @brief Implements administrative functions for the Repository Manager.
      */
-    class DAnCE_RepositoryManager_Admin_Export Admin
+    class Admin
     {
     public:
       Admin (Deployment::RepositoryManager_ptr rm);
@@ -58,7 +56,6 @@ namespace DAnCE
 
     private:
       Deployment::RepositoryManager_var rm_;
-
     };
   }
 }

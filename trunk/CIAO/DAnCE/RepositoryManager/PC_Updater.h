@@ -39,7 +39,7 @@
   * goes through the PackageConfiguration and updates the locations of the
   * artifacts, wrt to their location on the HTTP server.
   */
-class  PC_Updater
+class PC_Updater
 {
 public:
 
