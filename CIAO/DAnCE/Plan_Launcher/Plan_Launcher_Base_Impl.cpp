@@ -368,7 +368,7 @@ Plan_Launcher_Base_Impl::destroy_dam(
 }
 
 void
-Plan_Launcher_Base_Impl::usage(const ACE_TCHAR* program)
+Plan_Launcher_Base_Impl::usage(const ACE_TCHAR*)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Plan Launcher Options :\n")
           ACE_TEXT ("-k|--em-ior <EXECUTION_MANAGER_IOR>")

@@ -16,7 +16,6 @@
 #ifndef NODEMANAGER_IMPL_H_
 #define NODEMANAGER_IMPL_H_
 
-#include "NodeManager_Export.h"
 #include "tao/Object.h"
 #include "tao/ORB.h"
 #include "DAnCE/Deployment_common.h"
@@ -26,7 +25,7 @@
 
 namespace DAnCE
 {
-  class NodeManager_Export NodeManager_Impl :
+  class NodeManager_Impl :
     public virtual POA_Deployment::NodeManager
   {
   public:
