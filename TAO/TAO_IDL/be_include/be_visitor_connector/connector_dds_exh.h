@@ -41,7 +41,7 @@ public:
 private:
   // Generate application-specific instantiations of
   // middleware templates containing traits constructs.
-  void gen_dds_traits (AST_Connector *base);
+  void gen_dds_traits (void);
   void gen_connector_traits (void);
 };
 

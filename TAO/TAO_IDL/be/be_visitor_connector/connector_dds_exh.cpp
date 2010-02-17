@@ -48,7 +48,7 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
       
   node_ = node;
 
-  // Shaky logic that will have to be improved. If our
+  // More shaky logic that will have to be improved. If our
   // base connector does not come from an instantiated
   // template module, we skip the code generation.
   this->process_template_args (base);
@@ -65,7 +65,7 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
       << "_Impl" << be_nl
       << "{" << be_idt;
       
-  this->gen_dds_traits (base);
+  this->gen_dds_traits ();
   this->gen_connector_traits ();
   
   if (this->t_args_ == 0)
@@ -117,8 +117,7 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
 }
 
 void
-be_visitor_connector_dds_exh::gen_dds_traits (
-  AST_Connector *base)
+be_visitor_connector_dds_exh::gen_dds_traits (void)
 {
   // We depend on the DDS datatype being the first template
   // argument for now, this may change.
