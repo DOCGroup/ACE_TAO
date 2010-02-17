@@ -1,3 +1,9 @@
+Wed Feb 17 15:13:40 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp(gen_dds_traits):
+        
+          Removed unused parameter.
+
 Tue Feb 16 21:10:35 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
