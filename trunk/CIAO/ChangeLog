@@ -1,3 +1,15 @@
+Wed Feb 17 09:41:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+          Added rti typesupport trait
+
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.mpc:
+          Updated to use tao_idl generated connector
+
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.h:
+          Removed from the archive
+
 Wed Feb 17 09:36:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Reader_T.cpp:

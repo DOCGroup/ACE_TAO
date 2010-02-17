@@ -8,6 +8,8 @@
 #ifndef SHAPES_BASE_IDL
 #define SHAPES_BASE_IDL
 
+#pragma rti typesupport "Base/Shapes_BaseSupport.h"
+
 struct ShapeType {
   string color; //@key
   long x;
