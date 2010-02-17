@@ -1,3 +1,17 @@
+Wed Feb 17 12:14:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/MPC/config/dance_plan_generator.mpb
+        * DAnCE/Plan_Generator/PCVisitor.cpp
+        * DAnCE/Plan_Generator/PCVisitor.h
+        * DAnCE/Plan_Generator/PCVisitorBase.cpp
+        * DAnCE/Plan_Generator/PCVisitorBase.h
+        * DAnCE/Plan_Generator/PCVisitorBase.inl
+        * DAnCE/Plan_Generator/Plan_Generator.mpc
+        * DAnCE/Plan_Generator/Plan_Generator_Impl.cpp
+        * DAnCE/Plan_Generator/Plan_Generator_Impl.h
+        * DAnCE/Plan_Generator/Plan_Generator_Impl_Export.h
+          removed, not used at all
+
 Wed Feb 17 12:10:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.idl:
