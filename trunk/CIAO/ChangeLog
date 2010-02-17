@@ -1,3 +1,9 @@
+Wed Feb 17 10:54:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/TargetManager/CmpClient.cpp
+        * DAnCE/TargetManager/TM_Client.mpc
+          Moved to DAnCE/tests/TargetManager
+
 Wed Feb 17 09:49:35 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.cpp:
