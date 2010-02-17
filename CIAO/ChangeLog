@@ -1,3 +1,15 @@
+Wed Feb 17 13:57:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderStateListener_T.h:
+          Deleted reactor member which is not needed here
+
+        * DAnCE/NodeManager/Node_Manager_Module.h:
+        * DAnCE/RepositoryManager/Repository_Manager_Module.h:
+          Removed not needed include
+
+        * DAnCE/RepositoryManager/RepositoryManager.mpc:
+          Cleanup base projects
+
 Wed Feb 17 12:14:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/MPC/config/dance_plan_generator.mpb
