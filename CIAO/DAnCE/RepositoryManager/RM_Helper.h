@@ -17,7 +17,6 @@
 #ifndef RM_HELPER_H_
 #define RM_HELPER_H_
 
-
 #include "DAnCE/Deployment/Deployment_Packaging_DataC.h"
 #include "tao/CDR.h"
 #include "ace/Message_Block.h"

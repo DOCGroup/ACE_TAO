@@ -18,67 +18,29 @@
 
 #include /**/ "ace/pre.h"
 
-#include "DAnCE_RepositoryManager_Module_Export.h"
+#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Config.h"
 #include "ace/Vector_T.h"
 #include "ace/Map_Manager.h"
 #include "ace/Null_Mutex.h"
 #include "tao/ORB.h"
-#include "tao/PortableServer/POAC.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/CosNamingC.h"
 #include "tao/Object_Loader.h"
-#include "DAnCE/DAnCE_Loader.h"
 #include "DAnCE/Deployment_common.h"
 
 /**
  * @class Repository_Manager_Module
  *
- * @brief The shared object that is instantiated when the node manager
- *        module/library is dynamically loaded.
- *
  * This class runs the node manager instance
  */
-class DAnCE_RepositoryManager_Module_Export DAnCE_RepositoryManager_Module
-  : public DAnCE::DAnCE_Object_Loader
+class DAnCE_RepositoryManager_Module
 {
  public:
-      struct SOptions
-      {
-        const ACE_TCHAR * domain_nc_;
-        const ACE_TCHAR * ior_file_;
-        size_t threads_;
-        const ACE_TCHAR * package_dir_;
-        const ACE_TCHAR * name_;
-        const ACE_TCHAR * server_address_;
-
-        bool spawn_http_;
-        const ACE_TCHAR *http_port_;
-        const ACE_TCHAR *http_threads_;
-        const ACE_TCHAR *http_threading_;
-        const ACE_TCHAR *http_io_;
-        const ACE_TCHAR *http_caching_;
-
-        SOptions() :
-          domain_nc_ (0),
-          ior_file_ (0),
-          threads_ (1),
-          package_dir_ (ACE_TEXT("RepositoryManager_Packages")),
-          server_address_ (0),
-          spawn_http_ (false),
-          http_port_ (ACE_TEXT("5432")),
-          http_threads_ (ACE_TEXT("1")),
-          http_threading_ (ACE_TEXT("POOL")),
-          http_io_ (ACE_TEXT("SYNCH")),
-          http_caching_ (ACE_TEXT("NO_CACHE"))
-        {
-        }
-      };
-
   /// Constructor.
   DAnCE_RepositoryManager_Module (void);
 
@@ -87,15 +49,47 @@ class DAnCE_RepositoryManager_Module_Export DAnCE_RepositoryManager_Module
 
   /// Overload the base class method to create a new instance
   /// of a DAnCE_RepositoryManager_Module object.
-  virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
-                                           int argc,
-                                           ACE_TCHAR *argv []);
-
-  virtual const char * usage (void);
-
-  virtual bool parse_args (int argc, ACE_TCHAR *argv []);
+  CORBA::Object_ptr init (CORBA::ORB_ptr orb,
+                          int argc,
+                          ACE_TCHAR *argv []);
 
  private:
+  struct SOptions
+  {
+    const ACE_TCHAR * domain_nc_;
+    const ACE_TCHAR * ior_file_;
+    size_t threads_;
+    const ACE_TCHAR * package_dir_;
+    const ACE_TCHAR * name_;
+    const ACE_TCHAR * server_address_;
+
+    bool spawn_http_;
+    const ACE_TCHAR *http_port_;
+    const ACE_TCHAR *http_threads_;
+    const ACE_TCHAR *http_threading_;
+    const ACE_TCHAR *http_io_;
+    const ACE_TCHAR *http_caching_;
+
+    SOptions() :
+      domain_nc_ (0),
+      ior_file_ (0),
+      threads_ (1),
+      package_dir_ (ACE_TEXT("RepositoryManager_Packages")),
+      server_address_ (0),
+      spawn_http_ (false),
+      http_port_ (ACE_TEXT("5432")),
+      http_threads_ (ACE_TEXT("1")),
+      http_threading_ (ACE_TEXT("POOL")),
+      http_io_ (ACE_TEXT("SYNCH")),
+      http_caching_ (ACE_TEXT("NO_CACHE"))
+    {
+    }
+  };
+
+  const char * usage (void);
+
+  bool parse_args (int argc, ACE_TCHAR *argv []);
+
   void create_poas (void);
 
   void spawn_http (void);
@@ -108,8 +102,6 @@ class DAnCE_RepositoryManager_Module_Export DAnCE_RepositoryManager_Module
   PortableServer::POA_var root_poa_;
   PortableServer::POA_var rm_poa_;
 };
-
-ACE_FACTORY_DECLARE (DAnCE_RepositoryManager_Module, DAnCE_RepositoryManager_Module)
 
 #include /**/ "ace/post.h"
 
