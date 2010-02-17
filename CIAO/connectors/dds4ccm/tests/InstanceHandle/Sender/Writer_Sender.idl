@@ -17,7 +17,6 @@ module Writer
   component Sender
   {
     port CCM_DDS::WriterTest::DDS_Write info_write;
-    attribute unsigned short rate;
     attribute unsigned short keys;
   };
 };
