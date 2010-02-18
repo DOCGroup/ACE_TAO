@@ -1,3 +1,17 @@
+Thu Feb 18 16:07:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLDeadline/Base/CSL_DeadlineTest_Base.idl
+          Added rti typesupport pragma
+
+        * connectors/dds4ccm/tests/CSLDeadline/Connector/CSL_DeadlineTest_Connector_exec.cpp
+        * connectors/dds4ccm/tests/CSLDeadline/Connector/CSL_DeadlineTest_Connector_exec.h
+          Removed from the archive
+
+        * connectors/dds4ccm/tests/CSLDeadline/Connector/CSL_DeadlineTest_Connector.mpc
+          Updated to generate the connector
+        * connectors/dds4ccm/tests/CSLDeadline/Receiver/CSL_DeadlineTest_Receiver_exec.cpp
+          Layout change
+
 Thu Feb 18 15:47:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/id3p_test/*:

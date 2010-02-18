@@ -1,18 +1,20 @@
 // $Id$
 
 /**
- * @file   CSL_DeadlineTest_Base.idl 
+ * @file   CSL_DeadlineTest_Base.idl
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
  */
 
 #ifndef CSL_DEADLINETEST_BASE_IDL
 #define CSL_DEADLINETEST_BASE_IDL
 
+#pragma rti typesupport "Base/CSL_DeadlineTest_BaseSupport.h"
 
-  struct TestTopic {
-    string key; //@key
-    long x;
-   };
+struct TestTopic {
+  string key; //@key
+  long x;
+};
+
 typedef sequence<TestTopic> TestTopic_Seq;
 
 #endif
