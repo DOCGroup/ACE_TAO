@@ -183,7 +183,7 @@ be_visitor_connector_dds_exh::gen_connector_traits (void)
       << "::CCM_Getter," << be_nl
       << "::" << this->t_inst_->name ()
       << "::CCM_Reader," << be_nl
-      << "::" << ScopeAsDecl (this->t_inst_->defined_in ())->name ()
+      << "::" << ScopeAsDecl (this->node_->defined_in ())->name ()
       << "::CCM_" << this->node_->local_name ()
       << "_Context," << be_nl
       << "::" << this->t_inst_->name ()
