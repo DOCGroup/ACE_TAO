@@ -1,0 +1,18 @@
+// $Id$
+
+/**
+ * @file FSS_Event_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef FIXED_SIZE_STRUCT_EVENT_BASE_IDL
+#define FIXED_SIZE_STRUCT_EVENT_BASE_IDL
+
+struct FixedStructSizeTest {
+  long one;
+  long two;
+};
+
+typedef sequence<FixedStructSizeTest> FixedStructSizeTest_Seq;
+
+#endif
