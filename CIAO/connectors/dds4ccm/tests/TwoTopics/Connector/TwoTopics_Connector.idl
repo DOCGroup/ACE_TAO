@@ -1,0 +1,31 @@
+// $Id$
+
+/**
+ * @file TwoTopics_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef TWOTOPICS_CONNECTOR_IDL_
+#define TWOTOPICS_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/TwoTopics_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Connector/TwoTopics_ConnectorE.idl"
+#pragma rti typesupport "Base/TwoTopics_BaseSupport.h"
+
+module TT_Connector
+{
+  module ::CCM_DDS::Typed < HelloTopic, HelloTopic_Seq> HelloConn;
+  connector TwoTopicsHello_Connector : HelloConn::DDS_Event
+  {
+  };
+
+  module ::CCM_DDS::Typed < GoodbyeTopic, GoodbyeTopic_Seq> GoodbyeConn;
+  connector TwoTopicsGoodbye_Connector : GoodbyeConn::DDS_Event
+  {
+  };
+};
+
+#endif /* TWOTOPICS_CONNECTOR_IDL_ */
