@@ -37,9 +37,10 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_unexpected_status (
         {
           if (this->reactor_)
             {
-              ::CIAO::DDS4CCM::OnUnexpectedStatusHandler* rh =
-              new ::CIAO::DDS4CCM::OnUnexpectedStatusHandler (
-                this->error_listener_, entity, status_kind);
+              ::CIAO::DDS4CCM::OnUnexpectedStatusHandler* rh = 0;
+              ACE_NEW_NORETURN (rh,
+                                ::CIAO::DDS4CCM::OnUnexpectedStatusHandler (
+                                  this->error_listener_, entity, status_kind));
               ACE_Event_Handler_var safe_handler (rh);
               if (this->reactor_->notify (rh) != 0)
                 {
@@ -88,9 +89,10 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_deadline_miss
         {
           if (this->reactor_)
             {
-              ::CIAO::DDS4CCM::OnOfferedDeadlineMissedHandler* rh =
-               new ::CIAO::DDS4CCM::OnOfferedDeadlineMissedHandler (
-                this->error_listener_, the_Writer, status);
+              ::CIAO::DDS4CCM::OnOfferedDeadlineMissedHandler* rh = 0;
+              ACE_NEW_NORETURN (rh,
+                                ::CIAO::DDS4CCM::OnOfferedDeadlineMissedHandler (
+                                  this->error_listener_, the_Writer, status));
               ACE_Event_Handler_var safe_handler (rh);
               if (this->reactor_->notify (rh) != 0)
                 {
@@ -144,9 +146,10 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_incompatible_
         {
           if (this->reactor_)
             {
-              ::CIAO::DDS4CCM::OnOfferedIncompatibleQoSHandler* rh =
-               new ::CIAO::DDS4CCM::OnOfferedIncompatibleQoSHandler (
-                this->error_listener_, the_Writer, status);
+              ::CIAO::DDS4CCM::OnOfferedIncompatibleQoSHandler* rh = 0;
+              ACE_NEW_NORETURN (rh,
+                                ::CIAO::DDS4CCM::OnOfferedIncompatibleQoSHandler (
+                                  this->error_listener_, the_Writer, status));
               ACE_Event_Handler_var safe_handler (rh);
               if (this->reactor_->notify (rh) != 0)
                 {
