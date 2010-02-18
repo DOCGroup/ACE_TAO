@@ -5,6 +5,9 @@
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
+AST_Decl::NodeType const
+AST_EventTypeFwd::NT = AST_Decl::NT_eventtype_fwd;
+
 AST_EventTypeFwd::AST_EventTypeFwd (void)
   : COMMON_Base (),
     AST_Decl (),

@@ -46,6 +46,8 @@ public:
   AST_Template_Module_Ref *fe_add_template_module_ref (
     AST_Template_Module_Ref *m);
 
+  static AST_Decl::NodeType const NT;
+
 protected:
   FE_Utils::T_PARAMLIST_INFO * template_params_;
   

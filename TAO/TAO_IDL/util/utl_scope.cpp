@@ -105,6 +105,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_factory.h"
 #include "ast_visitor.h"
 #include "ast_generator.h"
+#include "ast_extern.h"
 
 #include "nr_extern.h"
 #include "fe_extern.h"
@@ -530,6 +531,199 @@ UTL_Scope::check_for_predef_seq (AST_Decl *d)
 // and don't do a thing. This ensures that runtime errors will discover
 // operations which should have been redefined to allow certain kinds of
 // AST nodes to appear in a given context.
+
+AST_Decl *
+UTL_Scope::fe_add_decl (AST_Decl *t)
+{
+  AST_Decl *d = 0;
+
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = this->lookup_for_add (t, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      ScopeAsDecl (this),
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, t->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      ScopeAsDecl (this),
+                                      d);
+          return 0;
+        }
+
+      if (t->has_ancestor (d))
+        {
+          idl_global->err ()->redefinition_in_scope (t, d);
+          return 0;
+        }
+    }
+  else if (this->inherited_op_attr_clash (t))
+    {
+      return 0;
+    }
+    
+  if (this->arg_specific_error (t))
+    {
+      return 0;
+    }
+  
+  this->smart_local_add (t);
+
+  // Add it to set of locally referenced symbols, unless it is
+  // a home, in which case it will clash when the equivalent
+  // interface is created.
+  if (t->node_type () != AST_Decl::NT_home)
+    {
+      this->add_to_referenced (t,
+                               false,
+                               t->local_name ());
+    }
+
+  return t;
+}
+
+AST_Field *
+UTL_Scope::fe_add_ref_decl (AST_Field *t)
+{
+  AST_Decl *d = this->fe_add_decl (t);
+
+  if (d != 0)
+    {
+      AST_Type *ft = t->field_type ();
+      UTL_ScopedName *mru = ft->last_referenced_as ();
+
+      if (mru != 0)
+        {
+          this->add_to_referenced (ft,
+                                   false,
+                                   mru->first_component ());
+        }
+    }
+    
+  /// Catches struct/union/exception which all maintain a queue
+  /// for fields as distinct from decls and enum values.  
+  AST_Structure *s = AST_Structure::narrow_from_scope (this);
+  
+  if (s != 0)
+    {
+      s->fields ().enqueue_tail (t);
+    }
+
+  return AST_Field::narrow_from_decl (d);
+}
+
+AST_Structure *
+UTL_Scope::fe_add_full_struct_type (AST_Structure *t)
+{
+  AST_Decl *predef = 0;
+
+  if ((predef = this->lookup_for_add (t, false)) != 0)
+    {
+      if (!can_be_redefined (predef))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      ScopeAsDecl (this),
+                                      predef);
+
+          return 0;
+        }
+      else if (referenced (predef, t->local_name ())
+               && !t->is_defined ())
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      ScopeAsDecl (this),
+                                      predef);
+
+          return 0;
+        }
+    }
+
+  AST_Decl::NodeType nt = ScopeAsDecl (this)->node_type ();
+  
+  /// Decls inside a struct or union are also referenced by
+  /// fields, and so must be handled differently.
+  if (nt == AST_Decl::NT_struct || nt == AST_Decl::NT_union)
+    {
+      this->add_to_local_types (t);
+    }
+  else
+    {
+      this->add_to_scope (t);
+    }
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (t,
+                           false,
+                           t->local_name ());
+
+  return t;
+}
+
+AST_StructureFwd *
+UTL_Scope::fe_add_fwd_struct_type (AST_StructureFwd *t)
+{
+  AST_Decl *d = 0;
+
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = this->lookup_for_add (t, false)) != 0)
+    {
+      AST_Decl::NodeType nt = d->node_type ();
+
+      // There used to be another check here ANDed with the one below:
+      // d->defined_in () == this. But lookup_for_add calls only
+      // lookup_by_name_local(), which does not bump up the scope,
+      // and look_in_previous() for modules. If look_in_previous()
+      // finds something, the scopes will NOT be the same pointer
+      // value, but the result is what we want.
+      if (nt == AST_Decl::NT_struct)
+        {
+          AST_Structure *s = AST_Structure::narrow_from_decl (d);
+          t->set_full_definition (s);
+        }
+      else
+        {
+          if (!can_be_redefined (d))
+            {
+              idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                          t,
+                                          ScopeAsDecl (this),
+                                          d);
+              return 0;
+            }
+
+          if (this->referenced (d, t->local_name ()))
+            {
+              idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                          t,
+                                          ScopeAsDecl (this),
+                                          d);
+              return 0;
+            }
+        }
+    }
+
+  // Add it to scope
+  this->add_to_scope (t);
+
+  // Add it to set of locally referenced symbols
+  this->add_to_referenced (t,
+                           false,
+                           t->local_name ());
+
+  // Must check later that all struct and union forward declarations
+  // are defined in the same IDL file.
+  AST_record_fwd_decl (t);
+  return t;
+}
 
 AST_PredefinedType *
 UTL_Scope::fe_add_predefined_type (AST_PredefinedType *)
@@ -1119,9 +1313,11 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
             {
               AST_Decl::NodeType nt = d->node_type ();
 
-              // Special case for forward declared interfaces,
+              // Special case for forward declared types,
               // In this case, we want to return
-              // the full definition member, whether defined yet or not
+              // the full definition member, whether defined yet or not.
+              // NOTE: corresponding full_definition fe_add_* methods
+              // depend on the behavior below!
               if (nt == AST_Decl::NT_interface_fwd
                   || nt == AST_Decl::NT_valuetype_fwd
                   || nt == AST_Decl::NT_component_fwd
@@ -2093,7 +2289,110 @@ UTL_Scope::destroy (void)
   this->pd_referenced_used = 0;
 }
 
+bool
+UTL_Scope::inherited_op_attr_clash (AST_Decl *t)
+{
+  AST_Interface *i = AST_Interface::narrow_from_scope (this);
+  
+  if (i == 0)
+    {
+      return false;
+    }
+    
+  AST_Decl *d = i->look_in_inherited (t->name (), false);
+  
+  if (d != 0)
+    {
+      AST_Decl::NodeType nt = d->node_type ();
+      
+      if (nt == AST_Decl::NT_attr || nt == AST_Decl::NT_op)
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      i,
+                                      d);
+          return true;
+        }
+    }
+    
+  return false;
+}
 
+bool
+UTL_Scope::arg_specific_error (AST_Decl *t)
+{
+  AST_Operation *op = AST_Operation::narrow_from_scope (this);
+  
+  if (op == 0)
+    {
+      return false;
+    }
+    
+  AST_Argument *arg = AST_Argument::narrow_from_decl (t);
+  AST_Argument::Direction d = arg->direction ();
+  AST_Operation::Flags flag = op->flags ();
+  
+  /// Cannot add OUT or INOUT argument to oneway operation.
+  if ((d == AST_Argument::dir_OUT || d == AST_Argument::dir_INOUT)
+      && flag == AST_Operation::OP_oneway)
+    {
+      idl_global->err ()->error2 (UTL_Error::EIDL_ONEWAY_CONFLICT,
+                                  t,
+                                  op);
+      return true;
+    }
+
+  AST_Type *arg_type = arg->field_type ();
+
+  /// This error is not caught in y.tab.cpp so we check for it here.
+  if (arg_type->node_type () == AST_Decl::NT_array
+      && arg_type->anonymous ())
+    {
+      idl_global->err ()->syntax_error (idl_global->parse_state ());
+      return true;
+    }
+    
+  return false;
+}
+
+void
+UTL_Scope::smart_local_add (AST_Decl *t)
+{
+  /// Catches struct, union * exception
+  AST_Structure *s = AST_Structure::narrow_from_scope (this);
+  
+  /// Catches AST_Field and AST_UnionBranch.
+  AST_Field *f = AST_Field::narrow_from_decl (t);
+  
+  /// Decls inside a struct/union/exception are also referenced by
+  /// fields, and so must be handled differently.
+  if (s != 0 && f == 0)
+    {
+      this->add_to_local_types (t);
+    }
+  else
+    {
+      this->add_to_scope (t);
+    }
+    
+  AST_Union *u = AST_Union::narrow_from_scope (this);
+  AST_UnionBranch *ub = AST_UnionBranch::narrow_from_decl (t);
+  
+  // If we have an enum discriminator, add the label names to
+  // the name_referenced list before we add the union branch,
+  // so a branch name clash with a label name will be caught.
+  if (u != 0 && ub != 0)
+    {
+      if (u->udisc_type () == AST_Expression::EV_enum)
+        {
+          ub->add_labels (u);
+        }
+      else
+        {
+          ub->coerce_labels (u);
+        }
+    }
+}
 
 IMPL_NARROW_FROM_SCOPE(UTL_Scope)
 

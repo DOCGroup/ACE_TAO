@@ -3,6 +3,9 @@
 #include "ast_emits.h"
 #include "ast_visitor.h"
 
+AST_Decl::NodeType const
+AST_Emits::NT = AST_Decl::NT_emits;
+
 AST_Emits::AST_Emits (UTL_ScopedName *n,
                       AST_Type *emits_type)
   : COMMON_Base (),

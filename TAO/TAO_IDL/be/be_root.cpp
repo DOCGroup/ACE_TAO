@@ -50,48 +50,6 @@ be_root::~be_root (void)
 {
 }
 
-// We had to provide these since the AST_Root::fe_* method was setting the
-// names of these three to "local type".
-
-// Add this AST_Sequence to the locally defined types in this scope.
-AST_Sequence *
-be_root::fe_add_sequence (AST_Sequence *t)
-{
-  if (t == 0)
-    {
-      return 0;
-    }
-
-  add_to_local_types (t);
-  return t;
-}
-
-// Add this AST_String to the locally defined types in this scope
-AST_String *
-be_root::fe_add_string (AST_String *t)
-{
-  if (t == 0)
-    {
-      return 0;
-    }
-
-  add_to_local_types (t);
-  return t;
-}
-
-// Add this AST_Array to the locally defined types in this scope
-AST_Array *
-be_root::fe_add_array (AST_Array *t)
-{
-  if (t == 0)
-    {
-      return 0;
-    }
-
-  add_to_local_types (t);
-  return t;
-}
-
 void
 be_root::destroy (void)
 {

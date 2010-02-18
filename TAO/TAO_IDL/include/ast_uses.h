@@ -30,6 +30,8 @@ public:
   
   // Cleanup.
   virtual void destroy (void);
+
+  static AST_Decl::NodeType const NT;
   
 private:
   bool is_multiple_;

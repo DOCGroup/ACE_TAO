@@ -82,6 +82,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Constructor(s) and destructor.
 
+AST_Decl::NodeType const
+AST_Array::NT = AST_Decl::NT_array;
+
 AST_Array::AST_Array (void)
   : COMMON_Base (),
     AST_Decl (),

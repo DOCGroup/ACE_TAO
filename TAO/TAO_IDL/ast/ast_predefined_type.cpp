@@ -78,6 +78,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 
+AST_Decl::NodeType const
+AST_PredefinedType::NT = AST_Decl::NT_pre_defined;
+
 AST_PredefinedType::AST_PredefinedType (void)
   : COMMON_Base (),
     AST_Decl (),

@@ -13,6 +13,9 @@
 #include "global_extern.h"
 #include "nr_extern.h"
 
+AST_Decl::NodeType const
+AST_Template_Module::NT = AST_Decl::NT_module;
+
 AST_Template_Module::AST_Template_Module (
       UTL_ScopedName *n,
       FE_Utils::T_PARAMLIST_INFO *template_params)
@@ -150,49 +153,9 @@ AST_Template_Module_Ref *
 AST_Template_Module::fe_add_template_module_ref (
   AST_Template_Module_Ref *m)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (m, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      m,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, m->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      m,
-                                      this,
-                                      d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (m);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (m,
-                           false,
-                           m->local_name ());
-
-  AST_Type *ft = m->field_type ();
-  UTL_ScopedName *mru = ft->last_referenced_as ();
-
-  if (mru != 0)
-    {
-      this->add_to_referenced (ft,
-                               false,
-                               mru->first_component ());
-    }
-
-  return m;
+  return
+    AST_Template_Module_Ref::narrow_from_decl (
+      this->fe_add_ref_decl (m));
 }
 
 void

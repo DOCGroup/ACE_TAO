@@ -151,6 +151,11 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
+  
+  // Accessor for the member.
+  ACE_Unbounded_Queue<AST_Field *> &fields (void);
+
+  static AST_Decl::NodeType const NT;
 
 protected:
   friend int tao_yyparse (void);

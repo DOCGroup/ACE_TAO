@@ -149,6 +149,8 @@ public:
   // Method to add exceptions
   UTL_ExceptList *be_add_exceptions (UTL_ExceptList *t);
 
+  static AST_Decl::NodeType const NT;
+
 protected:
   // Data.
 

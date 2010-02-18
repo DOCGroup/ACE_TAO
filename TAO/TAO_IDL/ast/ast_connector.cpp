@@ -7,6 +7,9 @@
 #include "utl_err.h"
 #include "global_extern.h"
 
+AST_Decl::NodeType const
+AST_Connector::NT = AST_Decl::NT_connector;
+
 AST_Connector::AST_Connector (
       UTL_ScopedName *n,
       AST_Connector *base_connector)
