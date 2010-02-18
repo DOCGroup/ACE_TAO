@@ -1,3 +1,34 @@
+Thu Feb 18 13:26:06 UTC 2010  Marijke Hnegstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Latency:
+        * connectors/dds4ccm/performance-tests/Latency/Base:
+        * connectors/dds4ccm/performance-tests/Latency/Base/Latency_Test_Base.idl:
+        * connectors/dds4ccm/performance-tests/Latency/Base/Latency_Test_Base.mpc:
+        * connectors/dds4ccm/performance-tests/Latency/Connector:
+        * connectors/dds4ccm/performance-tests/Latency/Connector/Latency_Test_Connector.idl:
+        * connectors/dds4ccm/performance-tests/Latency/Connector/Latency_Test_Connector.mpc:
+        * connectors/dds4ccm/performance-tests/Latency/Connector/Latency_Test_Connector_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Latency/Connector/Latency_Test_Connector_exec.h:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/Plan.cdp:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/Plan_pub.cdp:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/Plan_sub.cdp:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/run_pub.pl:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/run_sub.pl:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/run_test.pl:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/performance-tests/Latency/Receiver:
+        * connectors/dds4ccm/performance-tests/Latency/Receiver/Latency_Test_Receiver.idl:
+        * connectors/dds4ccm/performance-tests/Latency/Receiver/Latency_Test_Receiver.mpc:
+        * connectors/dds4ccm/performance-tests/Latency/Receiver/Latency_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Latency/Receiver/Latency_Test_Receiver_exec.h:
+        * connectors/dds4ccm/performance-tests/Latency/Sender:
+        * connectors/dds4ccm/performance-tests/Latency/Sender/Latency_Test_Sender.idl:
+        * connectors/dds4ccm/performance-tests/Latency/Sender/Latency_Test_Sender.mpc:
+        * connectors/dds4ccm/performance-tests/Latency/Sender/Latency_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Latency/Sender/Latency_Test_Sender_exec.h:
+		First base of new latency test dds4ccm.
+
 Thu Feb 18 13:22:43 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.cpp:

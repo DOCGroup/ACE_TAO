@@ -1,0 +1,25 @@
+// $Id$
+
+/**
+ * @file Latency_Test_Base.idl
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ */
+
+#ifndef LATENCY_TEST_BASE_IDL
+#define LATENCY_TEST_BASE_IDL
+
+const short MAX_DATA_SEQUENCE_LENGTH = 8192;
+typedef sequence<octet> OctetSeq;
+
+struct LatencyTest {
+  string key;
+  long seq_num;
+  long ping;
+  OctetSeq data;
+ };
+ //key is temporarily to prevent compile errors, has to be removed
+ //ping  is temporarily, has to be solved in QoS file
+
+typedef sequence<LatencyTest> LatencyTest_Seq;
+
+#endif
