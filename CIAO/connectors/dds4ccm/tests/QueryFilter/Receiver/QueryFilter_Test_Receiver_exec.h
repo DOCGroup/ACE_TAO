@@ -41,21 +41,6 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   };
 
   //============================================================
-  // ReadHandler
-  //============================================================
-  class ReadHandler :
-    public ACE_Event_Handler
-  {
-  public:
-    ReadHandler (Receiver_exec_i &callback,
-                 CORBA::UShort run);
-    virtual int handle_exception (ACE_HANDLE fc = ACE_INVALID_HANDLE);
-  private:
-    Receiver_exec_i &callback_;
-    CORBA::UShort run_;
-  };
-
-  //============================================================
   // Starter_exec_i
   //============================================================
   class Starter_exec_i
@@ -100,7 +85,6 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
 
     bool check_last ();
     void start_read (CORBA::UShort run);
-    void start (CORBA::UShort run);
     void run (CORBA::UShort run);
 
     ::CORBA::UShort iterations (void);
@@ -139,6 +123,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     void check_filter (void);
     void test_exception (void);
     void test_set_query_parameters (void);
+    void set_filter (void);
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

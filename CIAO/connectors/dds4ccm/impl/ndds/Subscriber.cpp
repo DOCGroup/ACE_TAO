@@ -125,7 +125,7 @@ namespace CIAO
         ::DDS::DataReaderListener_ptr a_listener,
         ::DDS::StatusMask mask)
       {
-
+        CIAO_TRACE ("RTI_Subscriber_i::create_datareader");
         DDSDataReaderListener *rti_drl = 0;
         if (!CORBA::is_nil (a_listener))
           {
@@ -157,6 +157,11 @@ namespace CIAO
                          "Error: RTI Topic returned a nil datareader.\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
+        else
+          {
+            CIAO_DEBUG (6, (LM_DEBUG, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
+                         "Successfully created datareader.\n"));
+          }
 
         rti_dr->enable ();
         ::DDS::DataReader_var retval = new RTI_DataReader_i ();
@@ -174,6 +179,7 @@ namespace CIAO
         ::DDS::DataReaderListener_ptr a_listener,
         ::DDS::StatusMask mask)
       {
+        CIAO_TRACE ("RTI_Subscriber_i::create_datareader_with_profile");
         DDSDataReaderListener *rti_drl = 0;
         if (!CORBA::is_nil (a_listener))
           {
@@ -212,6 +218,13 @@ namespace CIAO
             CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
                          "Error: RTI Topic returned a nil datareader.\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          }
+        else
+          {
+            CIAO_DEBUG (6, (LM_DEBUG, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
+                         "Successfully created datareader with profile <%C#%C>.\n",
+                         library_name,
+                         profile_name));
           }
 
         rti_dr->enable ();
