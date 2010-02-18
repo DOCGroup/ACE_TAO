@@ -1,3 +1,20 @@
+Thu Feb 18 08:37:49 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/docs/TestCoverage.ods:
+          Updated
+
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+          Added some more tracing.
+
+        * connectors/dds4ccm/tests/FixedSizeStruct/*:
+          Added test to test fixed size data. Fixed size data is handled
+          in a different way. This'll result in compliler errors when not
+          coded properly.
+
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.cpp:
+          Improved the way the Receiver receives data.
+
 Thu Feb 18 08:30:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
