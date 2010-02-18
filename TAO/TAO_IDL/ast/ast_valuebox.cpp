@@ -7,14 +7,6 @@
 AST_Decl::NodeType const
 AST_ValueBox::NT = AST_Decl::NT_valuebox;
 
-AST_ValueBox::AST_ValueBox (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType () 
-{
-}
-
 AST_ValueBox::AST_ValueBox (UTL_ScopedName *n,
                             AST_Type       *boxed_type)
   : COMMON_Base (),

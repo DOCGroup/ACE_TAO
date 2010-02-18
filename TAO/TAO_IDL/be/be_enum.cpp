@@ -14,25 +14,11 @@
  */
 //=============================================================================
 
-
 #include "be_enum.h"
 #include "be_visitor.h"
 #include "be_helper.h"
 
 #include "global_extern.h"
-
-be_enum::be_enum (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType (),
-    UTL_Scope (),
-    AST_Enum (),
-    be_scope (),
-    be_decl (),
-    be_type ()
-{
-}
 
 be_enum::be_enum (UTL_ScopedName *n,
                   bool local,

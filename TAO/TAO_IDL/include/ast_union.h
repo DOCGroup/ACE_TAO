@@ -80,17 +80,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_Union : public virtual AST_Structure
 {
 public:
-  // Operations.
-
-  // Constructor(s).
-  AST_Union (void);
-
   AST_Union (AST_ConcreteType *disc_type,
              UTL_ScopedName *n,
              bool local,
              bool abstract);
 
-  // Destructor.
   virtual ~AST_Union (void);
 
   // This also calls the base class version.
@@ -106,7 +100,6 @@ public:
   AST_Expression::ExprType udisc_type (void);
 
   // Narrowing.
-
   DEF_NARROW_FROM_DECL(AST_Union);
   DEF_NARROW_FROM_SCOPE(AST_Union);
 

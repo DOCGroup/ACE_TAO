@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_ENUM_H
 #define BE_ENUM_H
 
@@ -30,10 +29,6 @@ class be_enum : public virtual AST_Enum,
                 public virtual be_type
 {
 public:
-  /// Default constructor.
-  be_enum (void);
-
-  /// Constructor.
   be_enum (UTL_ScopedName *n,
            bool local,
            bool abstract);
@@ -49,7 +44,6 @@ public:
   virtual int accept (be_visitor *visitor);
 
   // Narrowing.
-
   DEF_NARROW_FROM_DECL (be_enum);
   DEF_NARROW_FROM_SCOPE (be_enum);
 };

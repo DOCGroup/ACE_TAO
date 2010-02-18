@@ -22,21 +22,6 @@
 AST_Decl::NodeType const
 AST_ValueType::NT = AST_Decl::NT_valuetype;
 
-AST_ValueType::AST_ValueType (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    UTL_Scope (),
-    AST_Interface (),
-    pd_supports (0),
-    pd_n_supports (0),
-    pd_inherits_concrete (0),
-    pd_supports_concrete (0),
-    pd_truncatable (false),
-    pd_custom (false)
-{
-}
-
 AST_ValueType::AST_ValueType (UTL_ScopedName *n,
                               AST_Type **inherits,
                               long n_inherits,

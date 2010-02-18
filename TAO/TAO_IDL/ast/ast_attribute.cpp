@@ -82,17 +82,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 AST_Decl::NodeType const
 AST_Attribute::NT = AST_Decl::NT_attr;
 
-// Constructor(s) and destructor.
-AST_Attribute::AST_Attribute (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Field (),
-    pd_readonly (true),
-    pd_get_exceptions (0),
-    pd_set_exceptions (0)
-{
-}
-
 AST_Attribute::AST_Attribute (bool ro,
                               AST_Type *ft,
                               UTL_ScopedName *n,

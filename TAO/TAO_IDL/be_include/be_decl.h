@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_DECL_H
 #define TAO_BE_DECL_H
 
@@ -35,14 +34,9 @@ class be_type;
 class be_decl : public virtual AST_Decl
 {
 public:
-  /// Default constructor.
-  be_decl (void);
-
-  /// Constructor that sets the node type.
   be_decl (AST_Decl::NodeType type,
            UTL_ScopedName *n);
 
-  /// Destructor.
   ~be_decl (void);
 
   // Methods used by the interface type strategy.

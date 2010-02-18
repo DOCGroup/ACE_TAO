@@ -14,31 +14,11 @@
  */
 //=============================================================================
 
-
 #include "be_attribute.h"
 #include "be_type.h"
 #include "be_visitor.h"
 
 #include "global_extern.h"
-
-be_attribute::be_attribute (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Field (),
-    AST_Attribute (),
-    be_decl (),
-    original_attribute_ (0)
-{
-  be_operation_default_strategy *bods = 0;
-
-  ACE_NEW (bods,
-           be_operation_default_strategy (0));
-  this->get_strategy_ = bods;
-
-  ACE_NEW (bods,
-           be_operation_default_strategy (0));
-  this->set_strategy_ = bods;
-}
 
 be_attribute::be_attribute (bool ro,
                             AST_Type *ft,

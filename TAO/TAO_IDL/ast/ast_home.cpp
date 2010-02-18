@@ -16,18 +16,6 @@
 AST_Decl::NodeType const
 AST_Home::NT = AST_Decl::NT_home;
 
-AST_Home::AST_Home (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    UTL_Scope (),
-    AST_Interface (),
-    pd_base_home (0),
-    pd_managed_component (0),
-    pd_primary_key (0)
-{
-}
-
 AST_Home::AST_Home (UTL_ScopedName *n,
                     AST_Home *base_home,
                     AST_Component *managed_component,

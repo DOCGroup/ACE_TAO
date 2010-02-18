@@ -14,20 +14,11 @@
  */
 //=============================================================================
 
-
 #include "be_field.h"
 #include "be_visitor.h"
 #include "be_type.h"
 #include "global_extern.h"
 #include "ace/Log_Msg.h"
-
-be_field::be_field (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Field (),
-    be_decl ()
-{
-}
 
 be_field::be_field (AST_Type *ft,
                     UTL_ScopedName *n,

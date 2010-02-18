@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #include "be_interface.h"
 #include "be_interface_strategy.h"
 #include "be_component.h"
@@ -42,28 +41,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 
-// Default constructor.
-be_interface::be_interface (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    UTL_Scope (),
-    AST_Interface (),
-    be_scope (),
-    be_type (),
-    var_out_seq_decls_gen_ (0),
-    skel_count_ (0),
-    in_mult_inheritance_ (-1),
-    strategy_ (0),
-    original_interface_ (0),
-    has_mixed_parentage_ (-1),
-    session_component_child_ (-1)
-{
-  ACE_NEW (this->strategy_,
-           be_interface_default_strategy (this));
-}
-
-// Constructor used to build the AST.
 be_interface::be_interface (UTL_ScopedName *n,
                             AST_Type **ih,
                             long nih,
@@ -86,6 +63,8 @@ be_interface::be_interface (UTL_ScopedName *n,
                    local,
                    abstract),
     be_scope (AST_Decl::NT_interface),
+    be_decl (AST_Decl::NT_interface,
+             n),
     be_type (AST_Decl::NT_interface,
              n),
     var_out_seq_decls_gen_ (0),

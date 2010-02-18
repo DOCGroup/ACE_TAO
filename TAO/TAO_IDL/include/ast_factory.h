@@ -80,18 +80,9 @@ class TAO_IDL_FE_Export AST_Factory : public virtual AST_Decl,
                                       public virtual UTL_Scope
 {
 public:
-
-  // Constructor(s).
-  AST_Factory (void);
-
   AST_Factory (UTL_ScopedName *n);
 
-  // Destructor.
   virtual ~AST_Factory (void);
-
-  // Data Accessors.
-
-  // Public operations.
 
   UTL_ExceptList *exceptions (void);
   // Return exception list.

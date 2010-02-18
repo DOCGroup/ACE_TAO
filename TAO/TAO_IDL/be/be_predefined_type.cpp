@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #include "be_predefined_type.h"
 #include "be_visitor.h"
 #include "be_helper.h"
@@ -25,19 +24,9 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
 
-be_predefined_type::be_predefined_type (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType (),
-    AST_PredefinedType (),
-    be_decl (),
-    be_type ()
-{
-}
-
-be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
-                                        UTL_ScopedName *n)
+be_predefined_type::be_predefined_type (
+      AST_PredefinedType::PredefinedType t,
+      UTL_ScopedName *n)
   : COMMON_Base (),
     AST_Decl (AST_Decl::NT_pre_defined,
               n,

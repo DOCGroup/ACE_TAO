@@ -94,19 +94,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 AST_Decl::NodeType const
 AST_Operation::NT = AST_Decl::NT_op;
 
-AST_Operation::AST_Operation (void)
-  : COMMON_Base (),
-    AST_Decl(),
-    UTL_Scope(),
-    pd_return_type (0),
-    pd_flags (OP_noflags),
-    pd_context (0),
-    pd_exceptions (0),
-    argument_count_ (-1),
-    has_native_ (0)
-{
-}
-
 AST_Operation::AST_Operation (AST_Type *rt,
                               Flags fl,
                               UTL_ScopedName *n,

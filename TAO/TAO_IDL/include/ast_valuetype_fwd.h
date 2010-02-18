@@ -11,8 +11,6 @@
 class TAO_IDL_FE_Export AST_ValueTypeFwd : public virtual AST_InterfaceFwd
 {
 public:
-  AST_ValueTypeFwd (void);
-
   AST_ValueTypeFwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 

@@ -104,13 +104,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 AST_Decl::NodeType const
 AST_Module::NT = AST_Decl::NT_module;
 
-AST_Module::AST_Module (void)
- : AST_Decl (),
-   UTL_Scope (),
-   pd_has_nested_valuetype (0)
-{
-}
-
 AST_Module::AST_Module (UTL_ScopedName *n)
  : AST_Decl (AST_Decl::NT_module,
              n),
@@ -157,7 +150,7 @@ AST_Module::fe_add_module (AST_Module *t)
     }
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, false)) != 0)
+  if ((d = this->lookup_for_add (t)) != 0)
     {
       if (!can_be_redefined (d))
         {

@@ -74,13 +74,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 AST_Decl::NodeType const
 AST_EnumVal::NT = AST_Decl::NT_enum_val;
 
-AST_EnumVal::AST_EnumVal (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Constant ()
-{
-}
-
 AST_EnumVal::AST_EnumVal (ACE_CDR::ULong v,
                           UTL_ScopedName *n)
   : COMMON_Base (),

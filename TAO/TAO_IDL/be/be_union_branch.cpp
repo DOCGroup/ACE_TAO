@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #include "be_union_branch.h"
 #include "be_union.h"
 #include "be_type.h"
@@ -23,16 +22,6 @@
 #include "be_helper.h"
 #include "ast_union_label.h"
 #include "ace/Log_Msg.h"
-
-be_union_branch::be_union_branch (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Field (),
-    AST_UnionBranch (),
-    be_decl (),
-    be_field ()
-{
-}
 
 be_union_branch::be_union_branch (UTL_LabelList *ll,
                                   AST_Type *ft,

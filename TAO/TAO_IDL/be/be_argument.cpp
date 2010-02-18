@@ -14,21 +14,11 @@
  */
 //=============================================================================
 
-
 #include "be_argument.h"
 #include "be_type.h"
 #include "be_visitor.h"
 #include "nr_extern.h"
 #include "global_extern.h"
-
-be_argument::be_argument (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Field (),
-    AST_Argument (),
-    be_decl ()
-{
-}
 
 be_argument::be_argument (AST_Argument::Direction d,
                           AST_Type *ft,

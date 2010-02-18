@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #include "be_interface_strategy.h"
 #include "be_interface.h"
 #include "be_extern.h"

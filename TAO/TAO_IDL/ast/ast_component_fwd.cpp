@@ -7,14 +7,6 @@
 AST_Decl::NodeType const
 AST_ComponentFwd::NT = AST_Decl::NT_component_fwd;
 
-AST_ComponentFwd::AST_ComponentFwd (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_InterfaceFwd ()
-{
-}
-
 AST_ComponentFwd::AST_ComponentFwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)
   : COMMON_Base (true,

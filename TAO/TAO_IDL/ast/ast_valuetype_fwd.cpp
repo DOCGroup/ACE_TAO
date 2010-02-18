@@ -8,14 +8,6 @@
 AST_Decl::NodeType const
 AST_ValueTypeFwd::NT = AST_Decl::NT_valuetype_fwd;
 
-AST_ValueTypeFwd::AST_ValueTypeFwd (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_InterfaceFwd ()
-{
-}
-
 AST_ValueTypeFwd::AST_ValueTypeFwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)
   : COMMON_Base (false,

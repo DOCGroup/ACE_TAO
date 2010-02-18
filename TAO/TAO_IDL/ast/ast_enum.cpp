@@ -75,18 +75,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 AST_Decl::NodeType const
 AST_Enum::NT = AST_Decl::NT_enum;
 
-AST_Enum::AST_Enum (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType (),
-    UTL_Scope (),
-    pd_enum_counter (0),
-    member_count_ (-1)
-{
-  this->size_type (AST_Type::FIXED);
-}
-
 AST_Enum::AST_Enum (UTL_ScopedName *n,
                     bool local,
                     bool abstract)
@@ -278,7 +266,7 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
     }
       
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, false)) != 0)
+  if ((d = this->lookup_for_add (t)) != 0)
     {
       if (!can_be_redefined (d))
         {

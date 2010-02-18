@@ -103,22 +103,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 AST_Decl::NodeType const
 AST_Interface::NT = AST_Decl::NT_interface;
 
-AST_Interface::AST_Interface (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    UTL_Scope (),
-    pd_inherits (0),
-    pd_n_inherits (0),
-    pd_inherits_flat (0),
-    pd_n_inherits_flat (0),
-    home_equiv_ (false),
-    fwd_decl_ (0)
-{
-  this->size_type (AST_Type::VARIABLE); // Always the case.
-  this->has_constructor (true);      // Always the case.
-}
-
 AST_Interface::AST_Interface (UTL_ScopedName *n,
                               AST_Type **ih,
                               long nih,
@@ -899,8 +883,7 @@ AST_Interface::look_in_inherited (UTL_ScopedName *e,
 }
 
 AST_Decl *
-AST_Interface::lookup_for_add (AST_Decl *d,
-                               bool /* treat_as_ref */)
+AST_Interface::lookup_for_add (AST_Decl *d)
 {
   if (d == 0)
     {

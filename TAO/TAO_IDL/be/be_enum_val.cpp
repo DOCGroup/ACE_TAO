@@ -14,18 +14,8 @@
  */
 //=============================================================================
 
-
 #include "be_enum_val.h"
 #include "be_visitor.h"
-
-be_enum_val::be_enum_val (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Constant (),
-    AST_EnumVal (),
-    be_decl ()
-{
-}
 
 be_enum_val::be_enum_val (ACE_CDR::ULong v,
                           UTL_ScopedName *n)

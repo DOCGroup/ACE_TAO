@@ -95,14 +95,6 @@ direction_to_string (AST_Argument::Direction d)
 AST_Decl::NodeType const
 AST_Argument::NT = AST_Decl::NT_argument;
 
-AST_Argument::AST_Argument (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Field (),
-    pd_direction (dir_IN)
-{
-}
-
 AST_Argument::AST_Argument (Direction d,
                             AST_Type *ft,
                             UTL_ScopedName *n)

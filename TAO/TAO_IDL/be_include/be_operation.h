@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_OPERATION_H
 #define BE_OPERATION_H
 
@@ -33,17 +32,12 @@ class be_operation : public virtual AST_Operation,
                      public virtual be_decl
 {
 public:
-  /// Default constructor.
-  be_operation (void);
-
-  /// Constructor
   be_operation (AST_Type *rt,
                 AST_Operation::Flags fl,
                 UTL_ScopedName *n,
                 bool local,
                 bool abstract);
 
-  /// Destructor.
   ~be_operation (void);
 
   /// Cleanup method.

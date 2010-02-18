@@ -81,11 +81,6 @@ class AST_Union;
 class TAO_IDL_FE_Export AST_UnionBranch : public virtual AST_Field
 {
 public:
-  // Operations.
-
-  // Constructor(s) and destructor.
-  AST_UnionBranch (void);
-
   AST_UnionBranch (UTL_LabelList *ll,
                    AST_Type *ft,
                    UTL_ScopedName *n);

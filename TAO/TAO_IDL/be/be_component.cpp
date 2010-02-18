@@ -13,28 +13,11 @@
  */
 //=============================================================================
 
-
 #include "be_component.h"
 #include "be_visitor.h"
 
 #include "global_extern.h"
 #include "utl_err.h"
-
-be_component::be_component (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    UTL_Scope (),
-    AST_Interface (),
-    AST_Component (),
-    be_scope (),
-    be_decl (),
-    be_type (),
-    be_interface ()
-{
-  this->size_type (AST_Type::VARIABLE);
-  this->has_constructor (true);
-}
 
 be_component::be_component (UTL_ScopedName *n,
                             AST_Component *base_component,

@@ -17,16 +17,6 @@
 AST_Decl::NodeType const
 AST_Component::NT = AST_Decl::NT_component;
 
-AST_Component::AST_Component (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    UTL_Scope (),
-    AST_Interface (),
-    pd_base_component (0)
-{
-}
-
 AST_Component::AST_Component (UTL_ScopedName *n,
                               AST_Component *base_component,
                               AST_Type **supports,

@@ -81,17 +81,11 @@ class TAO_IDL_FE_Export AST_Module : public virtual AST_Decl,
                                      public virtual UTL_Scope
 {
 public:
-  // Operations.
-
-  // Constructor(s) and destructor.
-  AST_Module (void);
-
   AST_Module (UTL_ScopedName *n);
 
   virtual ~AST_Module (void);
 
   // Narrowing.
-
   DEF_NARROW_FROM_DECL(AST_Module);
   DEF_NARROW_FROM_SCOPE(AST_Module);
 

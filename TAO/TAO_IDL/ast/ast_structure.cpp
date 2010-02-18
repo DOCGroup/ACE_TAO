@@ -80,18 +80,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 #include "utl_indenter.h"
 
-AST_Structure::AST_Structure (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType (),
-    UTL_Scope (),
-    member_count_ (-1),
-    local_struct_ (-1),
-    fwd_decl_ (0)
-{
-}
-
 AST_Structure::AST_Structure (UTL_ScopedName *n,
                               bool local,
                               bool abstract)

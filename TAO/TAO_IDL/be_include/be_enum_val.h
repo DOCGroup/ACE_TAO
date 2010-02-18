@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_ENUM_VAL_H
 #define BE_ENUM_VAL_H
 
@@ -28,10 +27,6 @@ class be_enum_val : public virtual AST_EnumVal,
                     public virtual be_decl
 {
 public:
-  /// Default constructor.
-  be_enum_val (void);
-
-  /// Constructor.
   be_enum_val (ACE_CDR::ULong v,
                UTL_ScopedName *n);
 
@@ -42,7 +37,6 @@ public:
   virtual void destroy (void);
 
   // Narrowing
-
   DEF_NARROW_FROM_DECL (be_enum_val);
 };
 

@@ -80,22 +80,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
 
-// Constructor(s) and destructor.
-
 AST_Decl::NodeType const
 AST_Array::NT = AST_Decl::NT_array;
-
-AST_Array::AST_Array (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType (),
-    pd_n_dims (0),
-    pd_dims (0),
-    pd_base_type (0),
-    owns_base_type_ (false)
-{
-}
 
 AST_Array::AST_Array (UTL_ScopedName *n,
                       ACE_CDR::ULong nd,

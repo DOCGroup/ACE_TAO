@@ -260,8 +260,7 @@ protected:
                                        bool treat_as_ref);
 
   // Lookup based on the local name.
-  AST_Decl *lookup_for_add (AST_Decl *d,
-                            bool treat_as_ref);
+  AST_Decl *lookup_for_add (AST_Decl *d);
 
   // Is there a (case-insensitive) clash between a local name
   // and an IDL keyword?
@@ -483,6 +482,17 @@ private:
   /// Encapsulates the vagaries of adding fields vs decls to
   /// structs/unions vs other types.
   void smart_local_add (AST_Decl *t);
+  
+  /// Quick check on the head of a name to see if it's global.
+  bool is_global_name (Identifier *i);
+
+  /// Helper function for lookup_by_name(). Iterates doing local
+  /// lookups of subsequent components of a scoped name.
+  AST_Decl *
+  iter_lookup_by_name_local (AST_Decl *d,
+                             UTL_ScopedName *e,
+                             long index,
+                             bool full_def_only = false);
 };
 
 // Active iterator for a UTL_Scope node

@@ -16,7 +16,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_INTERFACE_H
 #define TAO_BE_INTERFACE_H
 
@@ -53,11 +52,6 @@ public:
                                    be_interface *,
                                    TAO_OutStream *);
 
-  /// Default constructor.
-  be_interface (void);
-
-  /// Constructor that sets its scoped name <n>, a list of inherited interfaces
-  /// <ih>, the number of inherited interfaces <nih>, and any prgmas <p>.
   be_interface (UTL_ScopedName *n,
                 AST_Type **ih,
                 long nih,

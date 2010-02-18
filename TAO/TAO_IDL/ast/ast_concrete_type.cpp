@@ -69,14 +69,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_concrete_type.h"
 
-// Constructor(s) and destructor.
-AST_ConcreteType::AST_ConcreteType (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type ()
-{
-}
-
 AST_ConcreteType::AST_ConcreteType (AST_Decl::NodeType nt,
                                     UTL_ScopedName *n)
   : COMMON_Base (),

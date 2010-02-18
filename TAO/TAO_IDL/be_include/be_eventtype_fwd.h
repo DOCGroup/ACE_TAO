@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_EVENTTYPE_FWD_H
 #define BE_EVENTTYPE_FWD_H
 
@@ -30,14 +29,9 @@ class be_eventtype_fwd : public virtual be_valuetype_fwd,
   // =DESCRIPTION
   //   Extensions to the be_interface_fwd class
 public:
-  /// Default constructor.
-  be_eventtype_fwd (void);
-
-  /// Constructor.
   be_eventtype_fwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 
-  /// Destructor.
   virtual ~be_eventtype_fwd (void);
 
   // Visiting.
@@ -47,7 +41,6 @@ public:
   virtual void destroy (void);
 
   // Narrowing.
-
   DEF_NARROW_FROM_DECL (be_eventtype_fwd);
 };
 

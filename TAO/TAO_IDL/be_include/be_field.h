@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_FIELD_H
 #define BE_FIELD_H
 
@@ -28,8 +27,6 @@ class be_field : public virtual AST_Field,
                  public virtual be_decl
 {
 public:
-  be_field (void);
-
   be_field (AST_Type *ft,
             UTL_ScopedName *n,
             Visibility vis = vis_NA);

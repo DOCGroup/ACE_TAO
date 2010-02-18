@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #include "be_union.h"
 #include "be_union_branch.h"
 #include "be_union_label.h"
@@ -28,22 +27,6 @@
 #include "utl_identifier.h"
 #include "idl_defines.h"
 #include "global_extern.h"
-
-be_union::be_union (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType (),
-    UTL_Scope (),
-    AST_Structure (),
-    AST_Union (),
-    be_scope (),
-    be_decl (),
-    be_type ()
-{
-  // Always the case.
-  this->has_constructor (true);
-}
 
 be_union::be_union (AST_ConcreteType *dt,
                     UTL_ScopedName *n,

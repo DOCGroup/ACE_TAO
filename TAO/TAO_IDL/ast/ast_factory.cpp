@@ -82,17 +82,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 AST_Decl::NodeType const
 AST_Factory::NT = AST_Decl::NT_factory;
 
-AST_Factory::AST_Factory (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    UTL_Scope (),
-    pd_exceptions (0),
-    pd_n_exceptions (0),
-    argument_count_ (-1),
-    has_native_ (0)
-{
-}
-
 AST_Factory::AST_Factory (UTL_ScopedName *n)
   : COMMON_Base (true,
                  false), //@@ Always local, never abstract

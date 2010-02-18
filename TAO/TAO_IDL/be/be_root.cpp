@@ -14,25 +14,12 @@
  */
 //=============================================================================
 
-
 #include "be_root.h"
 #include "be_visitor.h"
 #include "ast_sequence.h"
 #include "ast_string.h"
 #include "ast_array.h"
 
-// Default Constructor.
-be_root::be_root (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    UTL_Scope (),
-    AST_Root (),
-    be_scope (),
-    be_decl ()
-{
-}
-
-// Constructor used to build the root of the abstract syntax tree (AST).
 be_root::be_root (UTL_ScopedName *n)
   : COMMON_Base (),
     AST_Decl (AST_Decl::NT_root,

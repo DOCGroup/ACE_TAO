@@ -81,12 +81,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scope.h"
 #include "ace/Unbounded_Queue.h"
 
-class TAO_IDL_FE_Export AST_Structure : public virtual AST_ConcreteType,
-                                        public virtual UTL_Scope
+class TAO_IDL_FE_Export AST_Structure
+  : public virtual AST_ConcreteType,
+    public virtual UTL_Scope
 {
 public:
-  AST_Structure (void);
-
   AST_Structure (UTL_ScopedName *n,
                  bool local,
                  bool abstract);
