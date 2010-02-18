@@ -1,3 +1,11 @@
+Thu Feb 18 14:46:16 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp(gen_connector_traits):
+        
+          Fixed bug in code generation of the context class name
+          when it appears as one of the template arguments in the
+          connector traits typedef.
+
 Wed Feb 17 15:13:40 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp(gen_dds_traits):
