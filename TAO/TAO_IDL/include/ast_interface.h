@@ -153,6 +153,9 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
+  static AST_Decl::NodeType const NT;
+  typedef AST_InterfaceFwd FWD_TYPE;
+
 protected:
   // Data.
 
@@ -202,8 +205,6 @@ protected:
   virtual AST_Exception *fe_add_exception (AST_Exception *e);
 
   virtual AST_Attribute *fe_add_attribute (AST_Attribute *a);
-
-  virtual AST_Field *fe_add_field (AST_Field *o);
 
   virtual AST_Operation *fe_add_operation (AST_Operation *o);
 

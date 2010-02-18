@@ -114,7 +114,7 @@ public:
   // Has this node been referenced here already?
   // Override of method in UTL_Scope.
   virtual bool referenced (AST_Decl *e,
-                               Identifier *id = 0);
+                           Identifier *id = 0);
 
   // Add decls from previous opening of this module to the
   // 'previous' set of this module, along with the argument's
@@ -133,6 +133,8 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
+
+  static AST_Decl::NodeType const NT;
 
 private:
   friend void fe_populate_global_scope (AST_Module *m);

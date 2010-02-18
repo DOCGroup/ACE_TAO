@@ -7,6 +7,9 @@
 #include "utl_indenter.h"
 #include "global_extern.h"
 
+AST_Decl::NodeType const
+AST_EventType::NT = AST_Decl::NT_eventtype;
+
 AST_EventType::AST_EventType (void)
   : COMMON_Base (),
     AST_Decl (),

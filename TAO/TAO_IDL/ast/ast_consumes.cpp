@@ -3,6 +3,9 @@
 #include "ast_consumes.h"
 #include "ast_visitor.h"
 
+AST_Decl::NodeType const
+AST_Consumes::NT = AST_Decl::NT_consumes;
+
 AST_Consumes::AST_Consumes (UTL_ScopedName *n,
                             AST_Type *consumes_type)
   : COMMON_Base (false,

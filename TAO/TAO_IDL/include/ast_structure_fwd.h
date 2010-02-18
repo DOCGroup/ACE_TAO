@@ -39,6 +39,8 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
+  static AST_Decl::NodeType const NT;
+
 private:
   AST_Structure *pd_full_definition;
   // The structure this is a forward declaration of.

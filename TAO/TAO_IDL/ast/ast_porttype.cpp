@@ -12,6 +12,9 @@
 #include "utl_indenter.h"
 #include "global_extern.h"
 
+AST_Decl::NodeType const
+AST_PortType::NT = AST_Decl::NT_porttype;
+
 AST_PortType::AST_PortType (UTL_ScopedName *n)
   : COMMON_Base (false,
                  false),
@@ -48,191 +51,42 @@ AST_PortType::ast_accept (ast_visitor *visitor)
 AST_Provides *
 AST_PortType::fe_add_provides (AST_Provides *p)
 {
-  AST_Decl *d = 0;
-
-  // Already defined? Or already used?
-  if ((d = this->lookup_for_add (p, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      p,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, p->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      p,
-                                      this,
-                                      d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (p);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (p,
-                           false,
-                           p->local_name ());
-
-  return p;
+  return
+    AST_Provides::narrow_from_decl (
+      this->fe_add_ref_decl (p));
 }
 
 AST_Uses *
 AST_PortType::fe_add_uses (AST_Uses *u)
 {
-  AST_Decl *d = 0;
-
-  // Already defined? Or already used?
-  if ((d = this->lookup_for_add (u, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      u,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, u->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      u,
-                                      this,
-                                      d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (u);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (u,
-                           false,
-                           u->local_name ());
-
-  return u;
+  return
+    AST_Uses::narrow_from_decl (
+      this->fe_add_ref_decl (u));
 }
 
 AST_Publishes *
 AST_PortType::fe_add_publishes (AST_Publishes *p)
 {
-  AST_Decl *d = 0;
-
-  // Already defined? Or already used?
-  if ((d = this->lookup_for_add (p, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      p,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, p->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      p,
-                                      this,
-                                      d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (p);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (p,
-                           false,
-                           p->local_name ());
-
-  return p;
+  return
+    AST_Publishes::narrow_from_decl (
+      this->fe_add_ref_decl (p));
 }
 
 AST_Emits *
 AST_PortType::fe_add_emits (AST_Emits *e)
 {
-  AST_Decl *d = 0;
-
-  // Already defined? Or already used?
-  if ((d = this->lookup_for_add (e, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      e,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, e->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      e,
-                                      this,
-                                      d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (e);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (e,
-                           false,
-                           e->local_name ());
-
+  return
+    AST_Emits::narrow_from_decl (
+      this->fe_add_ref_decl (e));
   return e;
 }
 
 AST_Consumes *
 AST_PortType::fe_add_consumes (AST_Consumes *c)
 {
-  AST_Decl *d = 0;
-
-  // Already defined? Or already used?
-  if ((d = this->lookup_for_add (c, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      c,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, c->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      c,
-                                      this,
-                                      d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (c);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (c,
-                           false,
-                           c->local_name ());
-
-  return c;
+  return
+    AST_Consumes::narrow_from_decl (
+      this->fe_add_ref_decl (c));
 }
 
 IMPL_NARROW_FROM_DECL (AST_PortType)

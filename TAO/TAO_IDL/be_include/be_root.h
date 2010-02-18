@@ -42,13 +42,6 @@ public:
   
   virtual ~be_root (void);
 
-  // Scope management functions that override the AST scope management methods
-  // since the AST methods set the names of the sequences, strings, and arrays
-  // to a fixed value which interferes with our back-end code generation.
-  AST_Sequence *fe_add_sequence (AST_Sequence *);
-  AST_String *fe_add_string (AST_String *);
-  AST_Array *fe_add_array (AST_Array *);
-
   /// Cleanup method.
   virtual void destroy (void);
 

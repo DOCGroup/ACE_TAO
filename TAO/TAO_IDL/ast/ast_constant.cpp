@@ -122,6 +122,9 @@ AST_Constant::exprtype_to_string (AST_Expression::ExprType et)
   return 0;
 }
 
+AST_Decl::NodeType const
+AST_Constant::NT = AST_Decl::NT_const;
+
 // Constructor(s) and destructor.
 
 // Default constructor.

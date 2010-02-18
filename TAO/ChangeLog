@@ -1,3 +1,136 @@
+Thu Feb 18 20:36:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/utl_tmpl/UTL_Scope_T.cpp:
+
+          New file, containing bodies of some newly
+          added template methods to class UTL_Scope.
+
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+
+          Cosmetic changes.
+
+        * TAO_IDL/include/ast_root.h:
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/ast_valuebox.h:
+        * TAO_IDL/include/ast_union.h:
+        * TAO_IDL/include/ast_param_holder.h:
+        * TAO_IDL/include/ast_structure.h:
+        * TAO_IDL/include/ast_interface_fwd.h:
+        * TAO_IDL/include/ast_component_fwd.h:
+        * TAO_IDL/include/ast_string.h:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_factory.h:
+        * TAO_IDL/include/ast_template_module_ref.h:
+        * TAO_IDL/include/ast_valuetype.h:
+        * TAO_IDL/include/ast_mirror_port.h:
+        * TAO_IDL/include/ast_argument.h:
+        * TAO_IDL/include/ast_eventtype.h:
+        * TAO_IDL/include/ast_native.h:
+        * TAO_IDL/include/ast_home.h:
+        * TAO_IDL/include/ast_union_fwd.h:
+        * TAO_IDL/include/ast_connector.h:
+        * TAO_IDL/include/ast_provides.h:
+        * TAO_IDL/include/ast_structure_fwd.h:
+        * TAO_IDL/include/ast_enum_val.h:
+        * TAO_IDL/include/ast_finder.h:
+        * TAO_IDL/include/ast_sequence.h:
+        * TAO_IDL/include/ast_valuetype_fwd.h:
+        * TAO_IDL/include/ast_template_module.h:
+        * TAO_IDL/include/ast_eventtype_fwd.h:
+        * TAO_IDL/include/ast_exception.h:
+        * TAO_IDL/include/ast_typedef.h:
+        * TAO_IDL/include/ast_attribute.h:
+        * TAO_IDL/include/ast_extended_port.h:
+        * TAO_IDL/include/ast_enum.h:
+        * TAO_IDL/include/ast_union_branch.h:
+        * TAO_IDL/include/ast_template_module_inst.
+        * TAO_IDL/include/ast_uses.h:
+        * TAO_IDL/include/ast_field.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/include/ast_porttype.h:
+        * TAO_IDL/include/ast_constant.h:
+        * TAO_IDL/include/ast_consumes.h:
+        * TAO_IDL/include/ast_publishes.h:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/include/ast_operation.h:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/include/ast_predefined_type.h:
+        * TAO_IDL/include/ast_array.h:
+        * TAO_IDL/include/ast_emits.h:
+        * TAO_IDL/be/be_visitor_union/union.cpp:
+        * TAO_IDL/be/be_root.cpp:
+        * TAO_IDL/ast/ast_home.cpp:
+        * TAO_IDL/ast/ast_union_fwd.cpp:
+        * TAO_IDL/ast/ast_constant.cpp:
+        * TAO_IDL/ast/ast_connector.cpp:
+        * TAO_IDL/ast/ast_provides.cpp:
+        * TAO_IDL/ast/ast_consumes.cpp:
+        * TAO_IDL/ast/ast_publishes.cpp:
+        * TAO_IDL/ast/ast_structure_fwd.cpp:
+        * TAO_IDL/ast/ast_operation.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_component.cpp:
+        * TAO_IDL/ast/ast_enum_val.cpp:
+        * TAO_IDL/ast/ast_predefined_type.cpp:
+        * TAO_IDL/ast/ast_finder.cpp:
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/ast/ast_array.cpp:
+        * TAO_IDL/ast/ast_valuetype_fwd.cpp:
+        * TAO_IDL/ast/ast_template_module.cpp:
+        * TAO_IDL/ast/ast_emits.cpp:
+        * TAO_IDL/ast/ast_root.cpp:
+        * TAO_IDL/ast/ast_eventtype_fwd.cpp:
+        * TAO_IDL/ast/ast_redef.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_valuebox.cpp:
+        * TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDL/ast/ast_param_holder.cpp:
+        * TAO_IDL/ast/ast_exception.cpp:
+        * TAO_IDL/ast/ast_typedef.cpp:
+        * TAO_IDL/ast/ast_interface_fwd.cpp:
+        * TAO_IDL/ast/ast_structure.cpp:
+        * TAO_IDL/ast/ast_component_fwd.cpp:
+        * TAO_IDL/ast/ast_attribute.cpp:
+        * TAO_IDL/ast/ast_enum.cpp:
+        * TAO_IDL/ast/ast_extended_port.cpp:
+        * TAO_IDL/ast/ast_union_branch.cpp:
+        * TAO_IDL/ast/ast_string.cpp:
+        * TAO_IDL/ast/ast_factory.cpp:
+        * TAO_IDL/ast/ast_template_module_ref.cpp:
+        * TAO_IDL/ast/ast_template_module_inst.cpp:
+        * TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/ast/ast_mirror_port.cpp:
+        * TAO_IDL/ast/ast_uses.cpp:
+        * TAO_IDL/ast/ast_argument.cpp:
+        * TAO_IDL/ast/ast_field.cpp:
+        * TAO_IDL/ast/ast_eventtype.cpp:
+        * TAO_IDL/ast/ast_native.cpp:
+        * TAO_IDL/ast/ast_porttype.cpp:
+        * TAO_IDL/be_include/be_root.h:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          - Consolidated common code from all fe_add_*
+            methods into class UTL_Scope. All these
+            methods had large bodies, and most were
+            duplicated over several AST_* classes.
+            To encapsulate the forward declaration and
+            redefinition properties of AST_Interface
+            and it forward-declarable subtypes
+            AST_ValueType, AST_EventType, and
+            AST_Component), some template methods were
+            added to UTL_Scope.
+
+          - Static constants were added to each AST_*
+            class to associated it with its corresponding
+            NodeType enum value, as an aid to template
+            programming.
+
+          - Typedefs were added to forward_declarable
+            types to associate eachtype with its
+            AST_*Fwd counterpart, as an aid to template
+            programming.
+
 Thu Feb 18 14:46:16 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp(gen_connector_traits):

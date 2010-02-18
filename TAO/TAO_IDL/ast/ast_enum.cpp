@@ -72,6 +72,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 #include "utl_indenter.h"
 
+AST_Decl::NodeType const
+AST_Enum::NT = AST_Decl::NT_enum;
+
 AST_Enum::AST_Enum (void)
   : COMMON_Base (),
     AST_Decl (),
@@ -245,7 +248,6 @@ AST_Enum::compute_member_count (void)
   return 0;
 }
 
-// Add an AST_EnumVal node to this scope.
 AST_EnumVal *
 AST_Enum::fe_add_enum_val (AST_EnumVal *t)
 {

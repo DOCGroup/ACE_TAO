@@ -70,6 +70,9 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
+  static AST_Decl::NodeType const NT;
+  typedef AST_ValueTypeFwd FWD_TYPE;
+
 protected:
   AST_Type **pd_supports;
   long pd_n_supports;
@@ -81,6 +84,8 @@ protected:
 
 protected:
   virtual AST_Factory *fe_add_factory (AST_Factory *f);
+  virtual AST_Field *fe_add_field (AST_Field *o);
+
   bool derived_from_primary_key_base (const AST_ValueType *node,
                                       const AST_ValueType *pk_base) const;
   AST_ValueType *lookup_primary_key_base (void) const;

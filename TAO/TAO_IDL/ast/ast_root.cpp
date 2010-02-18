@@ -78,6 +78,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
 
+AST_Decl::NodeType const
+AST_Root::NT = AST_Decl::NT_root;
+
 AST_Root::AST_Root (void)
   : COMMON_Base (),
     AST_Decl (),
@@ -130,18 +133,6 @@ AST_Root::fe_add_sequence (AST_Sequence *t)
       return 0;
     }
 
-  Identifier *id = 0;
-  ACE_NEW_RETURN (id,
-                  Identifier ("local type"),
-                  0);
-
-  UTL_ScopedName *sn = 0;
-  ACE_NEW_RETURN (sn,
-                  UTL_ScopedName (id,
-                                  0),
-                  0);
-
-  t->set_name (sn);
   this->add_to_local_types (t);
   return t;
 }
@@ -155,18 +146,6 @@ AST_Root::fe_add_string (AST_String *t)
       return 0;
     }
 
-  Identifier *id = 0;
-  ACE_NEW_RETURN (id,
-                  Identifier ("local type"),
-                  0);
-
-  UTL_ScopedName *sn = 0;
-  ACE_NEW_RETURN (sn,
-                  UTL_ScopedName (id,
-                                  0),
-                  0);
-
-  t->set_name (sn);
   this->add_to_local_types (t);
   return t;
 }
@@ -180,18 +159,6 @@ AST_Root::fe_add_array (AST_Array *t)
       return 0;
     }
 
-  Identifier *id = 0;
-  ACE_NEW_RETURN (id,
-                  Identifier ("local type"),
-                  0);
-
-  UTL_ScopedName *sn = 0;
-  ACE_NEW_RETURN (sn,
-                  UTL_ScopedName (id,
-                                  0),
-                  0);
-
-  t->set_name (sn);
   this->add_to_local_types (t);
   return t;
 }
@@ -264,8 +231,6 @@ AST_Root::fini (void)
   this->UTL_Scope::destroy ();
   this->AST_Decl::destroy ();
 }
-
-
 
 IMPL_NARROW_FROM_DECL(AST_Root)
 IMPL_NARROW_FROM_SCOPE(AST_Root)

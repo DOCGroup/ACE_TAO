@@ -4,6 +4,9 @@
 #include "ast_template_module.h"
 #include "ast_visitor.h"
 
+AST_Decl::NodeType const
+AST_Template_Module_Inst::NT = AST_Decl::NT_module;
+
 AST_Template_Module_Inst::AST_Template_Module_Inst (
       UTL_ScopedName *n,
       AST_Template_Module *ref,

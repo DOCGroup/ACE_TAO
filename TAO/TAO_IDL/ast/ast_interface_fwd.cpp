@@ -75,6 +75,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
+AST_Decl::NodeType const
+AST_InterfaceFwd::NT = AST_Decl::NT_interface_fwd;
+
 AST_InterfaceFwd::AST_InterfaceFwd (void)
   : COMMON_Base (),
     AST_Decl (),

@@ -34,6 +34,8 @@ public:
   // Cleanup.
   virtual void destroy (void);
 
+  static AST_Decl::NodeType const NT;
+
 protected:
   AST_Type                    *pd_boxed_type;
 };

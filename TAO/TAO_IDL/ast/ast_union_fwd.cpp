@@ -10,6 +10,9 @@
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
+AST_Decl::NodeType const
+AST_UnionFwd::NT = AST_Decl::NT_union_fwd;
+
 AST_UnionFwd::AST_UnionFwd (void)
   : COMMON_Base (),
     AST_Decl (),

@@ -316,7 +316,26 @@ protected:
   friend class AST_Enum;
   friend class IDL_GlobalData;
 
-  // Scope Management Protocol.
+  /// Scope Management Protocol.
+  
+  /// Common code for most basic adding action.
+  AST_Decl *fe_add_decl (AST_Decl *d);
+  
+  /// Specialized for types that reference another type.
+  AST_Field *fe_add_ref_decl (AST_Field *d);
+  
+  template<typename DECL>
+  DECL *fe_add_full_intf_decl (DECL *t);
+  
+  template<typename FULL_DECL>
+  typename FULL_DECL::FWD_TYPE *fe_add_fwd_intf_decl (
+    typename FULL_DECL::FWD_TYPE *t);
+    
+  AST_Structure *fe_add_full_struct_type (AST_Structure *t);
+  AST_StructureFwd *fe_add_fwd_struct_type (AST_StructureFwd *t);
+  
+  /// No-op base class version of the specialized adding actions.
+  
   virtual
   AST_PredefinedType *fe_add_predefined_type (
     AST_PredefinedType *t);
@@ -454,6 +473,16 @@ protected:
 
   virtual
   AST_Mirror_Port *fe_add_mirror_port (AST_Mirror_Port *mp);
+  
+private:
+  /// Checks called from fe_add_decl() specific to interfaces
+  /// (and its subtypes) and operations respectively.
+  bool inherited_op_attr_clash (AST_Decl *t);
+  bool arg_specific_error (AST_Decl *t);
+  
+  /// Encapsulates the vagaries of adding fields vs decls to
+  /// structs/unions vs other types.
+  void smart_local_add (AST_Decl *t);
 };
 
 // Active iterator for a UTL_Scope node
@@ -494,5 +523,13 @@ private:
   // What location in stage?
   long il;
 };
+
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#include "utl_tmpl/UTL_Scope_T.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+#pragma implementation ("utl_tmpl/UTL_Scope_T.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif           // _UTL_SCOPE_UTL_SCOPE_HH

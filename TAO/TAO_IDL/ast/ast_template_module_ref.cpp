@@ -6,6 +6,9 @@
 
 #include "utl_strlist.h"
 
+AST_Decl::NodeType const
+AST_Template_Module_Ref::NT = AST_Decl::NT_module;
+
 AST_Template_Module_Ref::AST_Template_Module_Ref (
       UTL_ScopedName *n,
       AST_Template_Module *ref,

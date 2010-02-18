@@ -3,6 +3,9 @@
 #include "ast_native.h"
 #include "ast_visitor.h"
 
+AST_Decl::NodeType const
+AST_Native::NT = AST_Decl::NT_native;
+
 AST_Native::AST_Native (void)
   : COMMON_Base (),
     AST_Decl (),

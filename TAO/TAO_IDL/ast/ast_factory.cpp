@@ -79,6 +79,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_exceptlist.h"
 #include "utl_namelist.h"
 
+AST_Decl::NodeType const
+AST_Factory::NT = AST_Decl::NT_factory;
+
 AST_Factory::AST_Factory (void)
   : COMMON_Base (),
     AST_Decl (),
@@ -215,51 +218,12 @@ AST_Factory::compute_argument_attr (void)
   return 0;
 }
 
-// Add this AST_Argument node (an factory argument declaration)
-// to this scope.
 AST_Argument *
 AST_Factory::fe_add_argument (AST_Argument *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_by_name_local (t->local_name(), 0)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-
-  return t;
+  return
+    AST_Argument::narrow_from_decl (
+      this->fe_add_ref_decl (t));
 }
 
 UTL_NameList *

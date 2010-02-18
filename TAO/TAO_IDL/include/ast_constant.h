@@ -127,6 +127,8 @@ public:
   // Cleanup.
   virtual void destroy (void);
 
+  static AST_Decl::NodeType const NT;
+
 protected:
   AST_Expression *pd_constant_value;
   // The value.

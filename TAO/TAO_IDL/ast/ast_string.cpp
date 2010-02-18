@@ -78,6 +78,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "idl_defines.h"
 #include "global_extern.h"
 
+// Note we are overlooking the wstring case here.
+AST_Decl::NodeType const
+AST_String::NT = AST_Decl::NT_string;
+
 AST_String::AST_String (void)
   : COMMON_Base (),
     AST_Decl (),

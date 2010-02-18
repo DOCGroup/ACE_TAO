@@ -122,6 +122,8 @@ public:
   // Cleanup.
   virtual void destroy (void);
 
+  static AST_Decl::NodeType const NT;
+
 private:
   // list of labels.
   UTL_LabelList *pd_ll;

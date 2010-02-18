@@ -8,6 +8,9 @@
 #include "utl_indenter.h"
 #include "global_extern.h"
 
+AST_Decl::NodeType const
+AST_Mirror_Port::NT = AST_Decl::NT_mirror_port;
+
 AST_Mirror_Port::AST_Mirror_Port (
     UTL_ScopedName *n,
     AST_PortType *porttype_ref)

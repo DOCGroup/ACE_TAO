@@ -2984,12 +2984,14 @@ idl_parse_line_and_file (char *buf)
 
   UTL_String *fname = idl_global->filename ();
   bool in_main_file = false;
-  bool is_real_filename
-    = fname->compare (idl_global->real_filename ())
-      || same_file (fname->get_string(),
-                    idl_global->real_filename ()->get_string());
+  
+  bool is_real_filename =
+    fname->compare (idl_global->real_filename ())
+    || same_file (fname->get_string(),
+                  idl_global->real_filename ()->get_string());
 
   bool is_main_filename = false;
+  
   if (!is_real_filename)
     {
 #if defined (ACE_OPENVMS)
@@ -3002,10 +3004,10 @@ idl_parse_line_and_file (char *buf)
       is_main_filename = idl_global->path_cmp (idl_global->main_filename ()->get_string (),
                                                full_fname) == 0;
 #else
-      is_main_filename
-        = fname->compare (idl_global->main_filename ())
-          || same_file (fname->get_string(),
-                        idl_global->main_filename ()->get_string());
+      is_main_filename =
+        fname->compare (idl_global->main_filename ())
+        || same_file (fname->get_string(),
+                      idl_global->main_filename ()->get_string());
 #endif
     }
 
@@ -3020,12 +3022,10 @@ idl_parse_line_and_file (char *buf)
   // by the preprocessor.
   if (!(idl_global->in_main_file ()) && idl_global->import ())
     {
-      ACE_NEW (
-          nm,
-          UTL_String (
-              idl_global->stripped_preproc_include (fname->get_string ())
-            )
-        );
+      ACE_NEW (nm,
+               UTL_String (
+                 idl_global->stripped_preproc_include (
+                   fname->get_string ())));
 
       // This call also manages the #pragma prefix.
       idl_global->store_include_file_name (nm);

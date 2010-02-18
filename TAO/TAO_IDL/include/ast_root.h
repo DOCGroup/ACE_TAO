@@ -99,6 +99,8 @@ public:
   // Final cleanup.
   void fini (void);
 
+  static AST_Decl::NodeType const NT;
+
 private:
   friend class FE_Declarator;
   friend int tao_yyparse (void);

@@ -31,6 +31,8 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
+
+  static AST_Decl::NodeType const NT;
 };
 
 #endif /* AST_EXTENDED_PORT_H */

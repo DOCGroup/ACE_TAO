@@ -4,6 +4,9 @@
 #include "ast_interface.h"
 #include "ast_visitor.h"
 
+AST_Decl::NodeType const
+AST_Uses::NT = AST_Decl::NT_uses;
+
 AST_Uses::AST_Uses (UTL_ScopedName *n,
                     AST_Type *uses_type,
                     bool is_multiple)

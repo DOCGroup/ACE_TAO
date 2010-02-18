@@ -71,6 +71,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_enum_val.h"
 #include "ast_visitor.h"
 
+AST_Decl::NodeType const
+AST_EnumVal::NT = AST_Decl::NT_enum_val;
+
 AST_EnumVal::AST_EnumVal (void)
   : COMMON_Base (),
     AST_Decl (),

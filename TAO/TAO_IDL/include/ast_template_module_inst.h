@@ -35,6 +35,8 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
+
+  static AST_Decl::NodeType const NT;
   
 private:
   FE_Utils::T_ARGLIST * template_args_;

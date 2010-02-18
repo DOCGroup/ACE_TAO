@@ -69,6 +69,9 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
+  static AST_Decl::NodeType const NT;
+  typedef AST_ComponentFwd FWD_TYPE;
+  
 protected:
   virtual AST_Provides *fe_add_provides (AST_Provides *p);
 
