@@ -142,7 +142,6 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
-
   }
 
   void
@@ -170,14 +169,12 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
      if (!this->deadline_missed_.value ())
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("RECEIVER OK: Didn't receive ")
-                              ACE_TEXT ("'on_offered_deadline_missed'\n")
-                    ));
+                              ACE_TEXT ("'on_offered_deadline_missed'\n")));
       }
     else
       {
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("RECEIVER ERROR: Received the unexpected ")
-                               ACE_TEXT ("'on_offered_deadline_missed'\n")
-                    ));
+                               ACE_TEXT ("'on_offered_deadline_missed'\n")));
       }
   }
 
