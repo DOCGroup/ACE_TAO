@@ -100,7 +100,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_last (
   typename CCM_TYPE::seq_type::_out_type instances,
   ::CCM_DDS::ReadInfoSeq_out infos)
 {
-  //this function has to return the last sample of all instances
+  // This function has to return the last sample of all instances
   DDS_SampleInfoSeq sample_info;
   typename DDS_TYPE::dds_seq_type data;
 
@@ -129,7 +129,8 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_last (
           ++ix;
         }
     }
-  //return the loan
+
+  // Return the loan
   this->impl ()->return_loan(data,sample_info);
   infos = infoseq._retn ();
   instances = inst_seq._retn();
@@ -141,7 +142,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_all (
           typename CCM_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos)
 {
-  //this function has to return all samples of all instances
+  // This function has to return all samples of all instances
   DDS_SampleInfoSeq sample_info;
   typename DDS_TYPE::dds_seq_type data;
 
@@ -181,8 +182,8 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_all (
 template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_InstanceHandle_t
 CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::check_handle (
-          const typename DDS_TYPE::value_type& an_instance,
-          const ::DDS::InstanceHandle_t & instance_handle)
+  const typename DDS_TYPE::value_type& an_instance,
+  const ::DDS::InstanceHandle_t & instance_handle)
 {
   DDS_InstanceHandle_t hnd = ::DDS_HANDLE_NIL;
   hnd <<= instance_handle;
@@ -230,15 +231,16 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_with_instance (
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_last (
-          typename DDS_TYPE::value_type& an_instance,
-          ::CCM_DDS::ReadInfo_out info,
-          const ::DDS::InstanceHandle_t & instance_handle)
+  typename DDS_TYPE::value_type& an_instance,
+  ::CCM_DDS::ReadInfo_out info,
+  const ::DDS::InstanceHandle_t & instance_handle)
 {
   DDS_InstanceHandle_t lookup_hnd = check_handle (an_instance, instance_handle);
 
   DDS_SampleInfoSeq sample_info;
   typename DDS_TYPE::dds_seq_type data;
-  //for now, only read with instance...
+
+  // For now, only read with instance...
   this->read_with_instance (data, lookup_hnd, sample_info);
 
   ::DDS_Long sample = data.length();
@@ -247,7 +249,9 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_last (
               ACE_TEXT ("total number of samples <%u>\n"),
               sample));
   while (sample >= 0 && !sample_info[sample-1].valid_data)
-    --sample;
+    {
+      --sample;
+    }
   if (sample >= 0)
     {
       if(sample_info[sample-1].valid_data)
@@ -268,7 +272,8 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_all (
   ::CCM_DDS::ReadInfoSeq_out infos,
   const ::DDS::InstanceHandle_t & instance_handle)
 {
-  DDS_InstanceHandle_t const lookup_hnd = check_handle (an_instance, instance_handle);
+  DDS_InstanceHandle_t const lookup_hnd =
+    check_handle (an_instance, instance_handle);
 
   DDS_SampleInfoSeq sample_info;
   typename DDS_TYPE::dds_seq_type data;
@@ -283,8 +288,8 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_all (
                             data.length (),
                             nr_of_valid_samples));
 
-  typename CCM_TYPE::seq_type::_var_type inst_seq = new typename CCM_TYPE::seq_type;
-  ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;
+  typename CCM_TYPE::seq_type::_var_type inst_seq = new typename CCM_TYPE::seq_type (nr_of_valid_samples);
+  ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq (nr_of_valid_samples);
 
   infoseq->length (nr_of_valid_samples);
   inst_seq->length (nr_of_valid_samples);
