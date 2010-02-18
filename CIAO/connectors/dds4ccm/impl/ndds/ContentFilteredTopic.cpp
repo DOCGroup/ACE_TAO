@@ -56,10 +56,11 @@ namespace CIAO
       RTI_ContentFilteredTopic_i::get_related_topic (void)
       {
         CIAO_TRACE ("RTI_ContentFilteredTopic_i::get_related_topic");
-        DDSTopic *topic = this->impl ()->get_related_topic ();
         ::DDS::Topic_var retval = ::DDS::Topic::_nil ();
-        ACE_NEW_NORETURN (retval,
-                          RTI_Topic_i ());
+        ACE_NEW_THROW_EX (retval,
+                          RTI_Topic_i (),
+                          CORBA::NO_MEMORY ());
+        DDSTopic *topic = this->impl ()->get_related_topic ();
         RTI_Topic_i *rti_topic = dynamic_cast < RTI_Topic_i *> (retval.in ());
         rti_topic->set_impl (topic);
         return retval._retn ();
