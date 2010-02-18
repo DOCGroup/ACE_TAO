@@ -45,8 +45,11 @@ namespace CIAO
       ::DDS::DataReader_ptr
       RTI_ReadCondition_i::get_datareader (void)
       {
+        ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
+        ACE_NEW_THROW_EX (retval,
+                          RTI_DataReader_i (),
+                          CORBA::NO_MEMORY ());
         DDSDataReader* rd = this->impl ()->get_datareader ();
-        ::DDS::DataReader_var retval = new RTI_DataReader_i ();
         RTI_DataReader_i *rti_dr = dynamic_cast < RTI_DataReader_i *>(retval.in ());
         rti_dr->set_impl (rd);
 

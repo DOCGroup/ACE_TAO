@@ -39,8 +39,15 @@ namespace CIAO
         RTI_DomainParticipantListener_i *rti_dpl = 0;
         if (!CORBA::is_nil (a_listener))
           {
-            rti_dpl = new RTI_DomainParticipantListener_i (a_listener);
+            ACE_NEW_THROW_EX (rti_dpl,
+                              RTI_DomainParticipantListener_i (a_listener),
+                              CORBA::NO_MEMORY ());
           }
+
+        ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
+        ACE_NEW_THROW_EX (retval,
+                          RTI_DomainParticipant_i (),
+                          CORBA::NO_MEMORY ());
 
         DDSDomainParticipant *part = DDSDomainParticipantFactory::get_instance ()->
           create_participant (domain_id,
@@ -57,7 +64,6 @@ namespace CIAO
           }
 
         part->enable ();
-        ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i ();
         RTI_DomainParticipant_i *rti_dp = dynamic_cast < RTI_DomainParticipant_i *> (retval.in ());
         rti_dp->set_impl (part);
 
@@ -81,7 +87,9 @@ namespace CIAO
         RTI_DomainParticipantListener_i *rti_dpl = 0;
         if (!CORBA::is_nil (a_listener))
           {
-            rti_dpl = new RTI_DomainParticipantListener_i (a_listener);
+            ACE_NEW_THROW_EX (rti_dpl,
+                              RTI_DomainParticipantListener_i (a_listener),
+                              CORBA::NO_MEMORY ());
           }
 
         ACE_CString qos_profile = library_name;
@@ -97,6 +105,11 @@ namespace CIAO
 
           if (!rti_dp)
             {
+              ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
+              ACE_NEW_THROW_EX (retval,
+                                RTI_DomainParticipant_i (),
+                                CORBA::NO_MEMORY ());
+
               CIAO_DEBUG (6, (LM_DEBUG, "RTI_DomainParticipantFactory_i::create_participant_with_profile - "
                                         "Creating participant: profile <%C> - domain <%d>\n",
                                         qos_profile.c_str (),
@@ -115,7 +128,6 @@ namespace CIAO
                 }
               part->enable ();
 
-              ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i ();
               rti_dp = dynamic_cast < RTI_DomainParticipant_i *> (retval.in ());
               rti_dp->set_impl (part);
               this->dps_[qos_profile] = rti_dp;
@@ -202,8 +214,11 @@ namespace CIAO
       ::DDS::DomainParticipant_ptr
       RTI_DomainParticipantFactory_i::lookup_participant (::DDS::DomainId_t domain_id)
       {
+        ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
+        ACE_NEW_THROW_EX (retval,
+                          RTI_DomainParticipant_i (),
+                          CORBA::NO_MEMORY ());
         DDSDomainParticipant* dp = DDSDomainParticipantFactory::get_instance ()->lookup_participant (domain_id);
-        ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i ();
         RTI_DomainParticipant_i *rti_dp = dynamic_cast < RTI_DomainParticipant_i *> (retval.in ());
         rti_dp->set_impl (dp);
         return retval._retn ();
