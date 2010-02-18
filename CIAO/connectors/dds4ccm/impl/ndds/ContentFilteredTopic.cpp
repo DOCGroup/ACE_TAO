@@ -57,7 +57,9 @@ namespace CIAO
       {
         CIAO_TRACE ("RTI_ContentFilteredTopic_i::get_related_topic");
         DDSTopic *topic = this->impl ()->get_related_topic ();
-        ::DDS::Topic_var retval = new RTI_Topic_i ();
+        ::DDS::Topic_var retval = ::DDS::Topic::_nil ();
+        ACE_NEW_NORETURN (retval,
+                          RTI_Topic_i ());
         RTI_Topic_i *rti_topic = dynamic_cast < RTI_Topic_i *> (retval.in ());
         rti_topic->set_impl (topic);
         return retval._retn ();

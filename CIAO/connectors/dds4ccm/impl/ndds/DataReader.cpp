@@ -46,7 +46,10 @@ namespace CIAO
       RTI_DataReader_i::get_statuscondition (void)
       {
         DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
-        ::DDS::StatusCondition_var retval = new RTI_StatusCondition_i ();
+        ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
+        ACE_NEW_RETURN (retval,
+                        RTI_StatusCondition_i (),
+                        ::DDS::StatusCondition::_nil ());
         RTI_StatusCondition_i *rti_sc = dynamic_cast < RTI_StatusCondition_i *> (retval.in ());
         rti_sc->set_impl (sc);
         return retval._retn ();
@@ -74,7 +77,10 @@ namespace CIAO
         ::DDS::InstanceStateMask instance_states)
       {
         DDSReadCondition* rc = this->impl ()->create_readcondition (sample_states, view_states, instance_states);
-        ::DDS::ReadCondition_var retval = new RTI_ReadCondition_i ();
+        ::DDS::ReadCondition_var retval = ::DDS::ReadCondition::_nil ();
+        ACE_NEW_RETURN (retval,
+                        RTI_ReadCondition_i (),
+                        ::DDS::ReadCondition::_nil ());
         RTI_ReadCondition_i *rti_rc = dynamic_cast < RTI_ReadCondition_i *>(retval.in ());
         rti_rc->set_impl (rc);
         return retval._retn ();
@@ -98,7 +104,10 @@ namespace CIAO
                                        query_expression,
                                        parameters);
 
-        ::DDS::QueryCondition_var retval = new RTI_QueryCondition_i ();
+        ::DDS::QueryCondition_var retval = ::DDS::QueryCondition::_nil ();
+        ACE_NEW_RETURN (retval,
+                        RTI_QueryCondition_i (),
+                        ::DDS::QueryCondition::_nil ());
         RTI_QueryCondition_i *rti_qc = dynamic_cast < RTI_QueryCondition_i *> (retval.in ());
         rti_qc->set_impl (qc);
         return retval._retn ();
@@ -151,7 +160,9 @@ namespace CIAO
         RTI_DataReaderListener_i *rti_drl = 0;
         if (!CORBA::is_nil (a_listener))
           {
-            rti_drl = new RTI_DataReaderListener_i (a_listener);
+            ACE_NEW_RETURN (rti_drl,
+                            RTI_DataReaderListener_i (a_listener),
+                            0);
           }
         return this->impl ()->set_listener (rti_drl, mask);
       }
@@ -176,7 +187,10 @@ namespace CIAO
       RTI_DataReader_i::get_topicdescription (void)
       {
         ::DDSTopicDescription* td = this->impl ()->get_topicdescription ();
-        ::DDS::TopicDescription_var dds_td = new RTI_TopicDescription_i ();
+        ::DDS::TopicDescription_var dds_td = ::DDS::TopicDescription::_nil ();
+        ACE_NEW_RETURN (dds_td,
+                        RTI_TopicDescription_i (),
+                        ::DDS::TopicDescription::_nil ());
         RTI_TopicDescription_i *rti_td = dynamic_cast < RTI_TopicDescription_i *>(dds_td.in ());
         rti_td->set_impl (td);
         return dds_td._retn ();
@@ -186,7 +200,10 @@ namespace CIAO
       RTI_DataReader_i::get_subscriber (void)
       {
         ::DDSSubscriber* subscriber = this->impl ()->get_subscriber ();
-        ::DDS::Subscriber_var dds_td = new RTI_Subscriber_i ();
+        ::DDS::Subscriber_var dds_td = ::DDS::Subscriber::_nil ();
+        ACE_NEW_RETURN (dds_td,
+                        RTI_Subscriber_i (),
+                        ::DDS::Subscriber::_nil ());
         RTI_Subscriber_i *sub = dynamic_cast < RTI_Subscriber_i *>(dds_td.in ());
         sub->set_impl (subscriber);
         return dds_td._retn ();
