@@ -113,6 +113,8 @@ public:
   UTL_ExceptList *be_add_get_exceptions (UTL_ExceptList *t);
   UTL_ExceptList *be_add_set_exceptions (UTL_ExceptList *t);
 
+  static AST_Decl::NodeType const NT;
+  
 private:
   // Data.
 

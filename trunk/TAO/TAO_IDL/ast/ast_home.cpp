@@ -13,6 +13,9 @@
 #include "utl_err.h"
 #include "global_extern.h"
 
+AST_Decl::NodeType const
+AST_Home::NT = AST_Decl::NT_home;
+
 AST_Home::AST_Home (void)
   : COMMON_Base (),
     AST_Decl (),
@@ -264,109 +267,17 @@ AST_Home::ast_accept (ast_visitor *visitor)
 AST_Factory *
 AST_Home::fe_add_factory (AST_Factory *f)
 {
-  AST_Decl *d = 0;
-
-  // Can't add to interface which was not yet defined.
-  if (!this->is_defined ())
-    {
-      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED,
-                                  this,
-                                  f);
-      return 0;
-    }
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (f, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      f,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, f->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      f,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (f->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (f,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (f);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (f,
-                           false,
-                           f->local_name ());
-
-  return f;
+  return
+    AST_Factory::narrow_from_decl (
+      this->fe_add_decl (f));
 }
 
 AST_Finder *
 AST_Home::fe_add_finder (AST_Finder *f)
 {
-  AST_Decl *d = 0;
-
-  // Can't add to interface which was not yet defined.
-  if (!this->is_defined ())
-    {
-      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED,
-                                  this,
-                                  f);
-      return 0;
-    }
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (f, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      f,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, f->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      f,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (f->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (f,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (f);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (f,
-                           false,
-                           f->local_name ());
-
-  return f;
+  return
+    AST_Finder::narrow_from_decl (
+      this->fe_add_decl (f));
 }
 
   // Narrowing.

@@ -5,6 +5,9 @@
 
 #include "utl_identifier.h"
 
+AST_Decl::NodeType const
+AST_Param_Holder::NT = AST_Decl::NT_param_holder;
+
 AST_Param_Holder::AST_Param_Holder (UTL_ScopedName *parameter_name,
                                     FE_Utils::T_Param_Info *info)
   : COMMON_Base (false,

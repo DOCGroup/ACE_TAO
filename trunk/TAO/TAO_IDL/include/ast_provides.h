@@ -28,6 +28,8 @@ public:
 
   // Cleanup.
   virtual void destroy (void);
+
+  static AST_Decl::NodeType const NT;
 };
 
 #endif // AST_PROVIDES_H

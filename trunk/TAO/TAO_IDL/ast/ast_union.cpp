@@ -917,228 +917,34 @@ AST_Union::compute_default_index (void)
 
 // Redefinition of inherited virtual operations
 
-// Add this AST_UnionBranch node (a node representing one branch in a
-// union declaration) to this scope
 AST_UnionBranch *
 AST_Union::fe_add_union_branch (AST_UnionBranch *t)
 {
-  AST_Decl *d = 0;
-
-  // If this is a malformed branch, don't do anything with it.
-  if (t == 0 || t->label() == 0)
-    {
-      return 0;
-    }
-
-  // If branch with that label already exists, complain.
-  if (lookup_branch (t) != 0)
-    {
-      idl_global->err ()->error2 (UTL_Error::EIDL_MULTIPLE_BRANCH,
-                                  this,
-                                  t);
-      return 0;
-    }
-
-  // If branch with same field name exists, complain.
-  if ((d = this->lookup_for_add (t, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (t);
-
-  // If we have an enum discriminator, add the label names to
-  // the name_referenced list before we add the union branch,
-  // so a branch name clash with a label name will be caught.
-  if (this->pd_udisc_type == AST_Expression::EV_enum)
-    {
-      t->add_labels (this);
-    }
-  else
-    {
-      t->coerce_labels (this);
-    }
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-
-  AST_Type *ft = t->field_type ();
-  UTL_ScopedName *mru = ft->last_referenced_as ();
-
-  if (mru != 0)
-    {
-      this->add_to_referenced (ft,
-                               false,
-                               mru->first_component ());
-    }
-
-  this->fields_.enqueue_tail (t);
-
-  return t;
+  return
+    AST_UnionBranch::narrow_from_decl (
+      this->fe_add_ref_decl (t));
 }
 
-// Add this AST_Union (manifest union type) to this scope.
 AST_Union *
 AST_Union::fe_add_union (AST_Union *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to local types.
-  this->add_to_local_types (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-
-  return t;
+  return
+    AST_Union::narrow_from_decl (
+      this->fe_add_full_struct_type (t));
 }
 
-// Add this AST_Structure node (manifest struct type) to this scope.
 AST_Structure *
 AST_Union::fe_add_structure (AST_Structure *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to local types.
-  this->add_to_local_types (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-
-  return t;
+  return this->fe_add_full_struct_type (t);
 }
 
-// Add this AST_Enum node (manifest enum type) to this scope.
 AST_Enum *
 AST_Union::fe_add_enum (AST_Enum *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to local types.
-  this->add_to_local_types (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-
-  return t;
+  return
+    AST_Enum::narrow_from_decl (
+      this->fe_add_decl (t));
 }
 
 // Add this AST_EnumVal node (enumerator declaration) to this scope.
@@ -1148,46 +954,9 @@ AST_Union::fe_add_enum (AST_Enum *t)
 AST_EnumVal *
 AST_Union::fe_add_enum_val (AST_EnumVal *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-
-  return t;
+  return
+    AST_EnumVal::narrow_from_decl (
+      this->fe_add_decl (t));
 }
 
 // Dump this AST_Union node to the ostream o.
@@ -1261,8 +1030,6 @@ AST_Union::udisc_type (void)
 {
   return this->pd_udisc_type;
 }
-
-
 
 IMPL_NARROW_FROM_DECL(AST_Union)
 IMPL_NARROW_FROM_SCOPE(AST_Union)

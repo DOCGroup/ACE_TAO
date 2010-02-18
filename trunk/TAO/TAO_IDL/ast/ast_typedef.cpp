@@ -76,6 +76,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/Log_Msg.h"
 
+AST_Decl::NodeType const
+AST_Typedef::NT = AST_Decl::NT_typedef;
+
 AST_Typedef::AST_Typedef (AST_Type *bt,
                           UTL_ScopedName *n,
                           bool local,

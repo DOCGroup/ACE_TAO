@@ -124,6 +124,8 @@ public:
   // Cleanup.
   virtual void destroy (void);
 
+  static AST_Decl::NodeType const NT;
+
 protected:
   virtual int compute_size_type (void);
   // Compute the size type if it is unknown.

@@ -159,7 +159,7 @@ public:
       , NT_home                     // Denotes a CORBA component home
       , NT_eventtype                // Denotes a CCM event source or sink
       , NT_eventtype_fwd            // Denotes a forward declared CCM event
-      , NT_valuebox                 // Denotes an value box
+      , NT_valuebox                 // Denotes a value box
       , NT_type                     // Template interface parameter
       , NT_fixed                    // Denotes (unsupported) fixed type
       , NT_porttype                 // Denotes a port type

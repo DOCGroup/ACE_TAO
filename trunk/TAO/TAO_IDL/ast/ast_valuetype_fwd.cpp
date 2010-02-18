@@ -5,6 +5,9 @@
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
+AST_Decl::NodeType const
+AST_ValueTypeFwd::NT = AST_Decl::NT_valuetype_fwd;
+
 AST_ValueTypeFwd::AST_ValueTypeFwd (void)
   : COMMON_Base (),
     AST_Decl (),

@@ -5,6 +5,9 @@
 
 #include "utl_identifier.h"
 
+AST_Decl::NodeType const
+AST_Finder::NT = AST_Decl::NT_finder;
+
 AST_Finder::AST_Finder (UTL_ScopedName *n)
   : COMMON_Base (true,
                  false), //@@ Always local, never abstract

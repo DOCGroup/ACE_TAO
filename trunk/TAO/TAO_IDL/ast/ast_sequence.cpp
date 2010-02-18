@@ -86,6 +86,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 
+AST_Decl::NodeType const
+AST_Sequence::NT = AST_Decl::NT_sequence;
+
 AST_Sequence::AST_Sequence (void)
   : COMMON_Base (),
     AST_Decl (),
@@ -291,7 +294,5 @@ AST_Sequence::destroy (void)
 
   this->AST_ConcreteType::destroy ();
 }
-
-
 
 IMPL_NARROW_FROM_DECL(AST_Sequence)

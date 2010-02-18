@@ -79,6 +79,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 #include "global_extern.h"
 
+AST_Decl::NodeType const
+AST_Attribute::NT = AST_Decl::NT_attr;
+
 // Constructor(s) and destructor.
 AST_Attribute::AST_Attribute (void)
   : COMMON_Base (),

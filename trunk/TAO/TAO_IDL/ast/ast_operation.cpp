@@ -91,6 +91,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "global_extern.h"
 
+AST_Decl::NodeType const
+AST_Operation::NT = AST_Decl::NT_op;
+
 AST_Operation::AST_Operation (void)
   : COMMON_Base (),
     AST_Decl(),
@@ -437,80 +440,12 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
   return 0;
 }
 
-// Add this AST_Argument node (an operation argument declaration)
-// to this scope.
 AST_Argument *
 AST_Operation::fe_add_argument (AST_Argument *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_by_name_local (t->local_name(), 0)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Cannot add OUT or INOUT argument to oneway operation.
-  if ((t->direction () == AST_Argument::dir_OUT
-       || t->direction() == AST_Argument::dir_INOUT)
-      && pd_flags == OP_oneway)
-    {
-      idl_global->err ()->error2 (UTL_Error::EIDL_ONEWAY_CONFLICT,
-                                  t,
-                                  this);
-      return 0;
-    }
-
-  AST_Type *arg_type = t->field_type ();
-
-  // This error is not caught in y.tab.cpp so we check for it here.
-  if (arg_type->node_type () == AST_Decl::NT_array
-      && arg_type->anonymous () == true)
-    {
-      idl_global->err ()->syntax_error (idl_global->parse_state ());
-    }
-
-  // Add it to scope.
-  this->add_to_scope (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-
-  UTL_ScopedName *mru = arg_type->last_referenced_as ();
-
-  if (mru != 0)
-    {
-      this->add_to_referenced (arg_type,
-                               false,
-                               mru->first_component ());
-    }
-
-  return t;
+  return
+    AST_Argument::narrow_from_decl (
+      this->fe_add_decl (t));
 }
 
 // Dump this AST_Operation node (an operation) to the ostream o.
@@ -623,8 +558,6 @@ AST_Operation::exceptions (void)
 {
   return this->pd_exceptions;
 }
-
-
 
 IMPL_NARROW_FROM_DECL(AST_Operation)
 IMPL_NARROW_FROM_SCOPE(AST_Operation)

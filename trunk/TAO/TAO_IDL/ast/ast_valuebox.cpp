@@ -4,6 +4,9 @@
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
+AST_Decl::NodeType const
+AST_ValueBox::NT = AST_Decl::NT_valuebox;
+
 AST_ValueBox::AST_ValueBox (void)
   : COMMON_Base (),
     AST_Decl (),
@@ -56,8 +59,6 @@ AST_ValueBox::destroy (void)
 {
   this->AST_ConcreteType::destroy ();
 }
-
-
 
 IMPL_NARROW_FROM_DECL(AST_ValueBox)
 

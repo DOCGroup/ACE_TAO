@@ -101,6 +101,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 #include "nr_extern.h"
 
+AST_Decl::NodeType const
+AST_Module::NT = AST_Decl::NT_module;
+
 AST_Module::AST_Module (void)
  : AST_Decl (),
    UTL_Scope (),
@@ -120,55 +123,14 @@ AST_Module::~AST_Module (void)
 {
 }
 
-// Add this AST_PredefinedType node (a predefined type declaration) to
-// this scope.
-
 AST_PredefinedType *
 AST_Module::fe_add_predefined_type (AST_PredefinedType *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err()->redefinition_in_scope (t,
-                                                    d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-
-  return t;
+  return
+    AST_PredefinedType::narrow_from_decl (
+      this->fe_add_decl (t));
 }
 
-// Add this AST_Module node (a module declaration) to this scope.
 AST_Module *
 AST_Module::fe_add_module (AST_Module *t)
 {
@@ -232,23 +194,6 @@ AST_Module::fe_add_module (AST_Module *t)
             {
               d->prefix (const_cast<char *> (this_prefix));
             }
-          // (JP) This could give a bogus error, since typeprefix can
-          // appear any time after the corresponding declaration.
-          // The right way to do this is with a separate traversal
-          // after the entire AST is built.
-          /*
-          else
-            {
-              if (ACE_OS::strcmp (this_prefix, prev_prefix) != 0)
-                {
-                  idl_global->err ()->error2 (UTL_Error::EIDL_PREFIX_CONFLICT,
-                                              this,
-                                              d);
-
-                  return 0;
-                }
-            }
-          */
         }
     }
 
@@ -268,1477 +213,179 @@ AST_Module::fe_add_module (AST_Module *t)
 }
 
 AST_Template_Module_Inst *
-AST_Module::fe_add_template_module_inst (AST_Template_Module_Inst *m)
+AST_Module::fe_add_template_module_inst (AST_Template_Module_Inst *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (m, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      m,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, m->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      m,
-                                      this,
-                                      d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (m);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (m,
-                           false,
-                           m->local_name ());
-
-  AST_Type *ft = m->field_type ();
-  UTL_ScopedName *mru = ft->last_referenced_as ();
-
-  if (mru != 0)
-    {
-      this->add_to_referenced (ft,
-                               false,
-                               mru->first_component ());
-    }
-
-  return m;
+  return
+    AST_Template_Module_Inst::narrow_from_decl (
+      this->fe_add_ref_decl (t));
 }
 
-// Add this AST_Interface node (an interface declaration) to this scope.
 AST_Interface *
 AST_Module::fe_add_interface (AST_Interface *t)
 {
-  if (t->redef_clash ())
-    {
-      return 0;
-    }
-
-  AST_Decl *predef = 0;
-  AST_Interface *fwd = 0;
-
-  // Already defined?
-  if ((predef = this->lookup_for_add (t, false)) != 0)
-    {
-      // Treat fwd declared interfaces specially
-      if (predef->node_type () == AST_Decl::NT_interface)
-        {
-          fwd = AST_Interface::narrow_from_decl (predef);
-
-          if (fwd == 0)
-            {
-              return 0;
-            }
-
-          // Forward declared and not defined yet.
-          if (!fwd->is_defined ())
-            {
-              if (fwd->defined_in () != this)
-                {
-                  idl_global->err ()->error3 (UTL_Error::EIDL_SCOPE_CONFLICT,
-                                              fwd,
-                                              t,
-                                              this);
-
-                  return 0;
-                }
-            }
-          // OK, not illegal redef of forward declaration. Now check whether.
-          // it has been referenced already.
-          else if (this->referenced (predef, t->local_name ()))
-            {
-              idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                          t,
-                                          this,
-                                          predef);
-
-              return 0;
-            }
-
-        }
-      else if (!can_be_redefined (predef))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      predef);
-
-          return 0;
-        }
-      else if (referenced (predef, t->local_name ()) && !t->is_defined ())
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      predef);
-
-          return 0;
-        }
-      else if (t->has_ancestor (predef))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     predef);
-
-          return 0;
-        }
-    }
-
-  // Add it to scope
-  this->add_to_scope (t);
-
-  // We do this for interfaces, valuetypes and components in 
-  // a different place than we do for structs and unions,
-  // since fwd declared structs and unions must be defined in
-  // the same translation unit.
-  AST_InterfaceFwd *fd = t->fwd_decl ();
-
-  if (0 != fd)
-    {
-      fd->set_as_defined ();
-    }
-
-  // Add it to set of locally referenced symbols
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-  return t;
+  return
+    this->fe_add_full_intf_decl<AST_Interface> (t);
 }
 
-
-// Add this AST_ValueBox node (a value type declaration) to this scope.
 AST_ValueBox *
 AST_Module::fe_add_valuebox (AST_ValueBox *t)
 {
-  AST_Decl *predef = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((predef = this->lookup_for_add (t, false)) != 0)
-    {
-      if (!can_be_redefined (predef))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      predef);
-
-          return 0;
-        }
-      else if (referenced (predef, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      predef);
-
-          return 0;
-        }
-      else if (t->has_ancestor (predef))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     predef);
-
-          return 0;
-        }
-    }
-
-  // Add it to scope
-  this->add_to_scope (t);
-
-  // Add it to set of locally referenced symbols
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-  return t;
+  return
+    AST_ValueBox::narrow_from_decl (
+      this->fe_add_decl (t));
 }
 
-
-// Add this AST_ValueType node (a value type declaration) to this scope.
 AST_ValueType *
 AST_Module::fe_add_valuetype (AST_ValueType *t)
 {
-  if (t->redef_clash ())
-    {
-      return 0;
-    }
-
-  AST_Decl *predef = 0;
-  AST_ValueType *fwd = 0;
-
-  // Already defined?
-  if ((predef = this->lookup_for_add (t, false)) != 0)
-    {
-      // Treat fwd declared interfaces specially
-      if (predef->node_type () == AST_Decl::NT_valuetype)
-        {
-          fwd = AST_ValueType::narrow_from_decl (predef);
-
-          if (fwd == 0)
-            {
-              return 0;
-            }
-
-          // Forward declared and not defined yet.
-          if (!fwd->is_defined ())
-            {
-              if (fwd->defined_in () != this)
-                {
-                  idl_global->err ()->error3 (UTL_Error::EIDL_SCOPE_CONFLICT,
-                                              fwd,
-                                              t,
-                                              this);
-
-                  return 0;
-                }
-            }
-          // OK, not illegal redef of forward declaration. Now check whether.
-          // it has been referenced already.
-          else if (this->referenced (predef, t->local_name ()))
-            {
-              idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                          t,
-                                          this,
-                                          predef);
-
-              return 0;
-            }
-        }
-      else if (!can_be_redefined (predef))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      predef);
-
-          return 0;
-        }
-      else if (referenced (predef, t->local_name ()) && !t->is_defined ())
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      predef);
-
-          return 0;
-        }
-      else if (t->has_ancestor (predef))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     predef);
-
-          return 0;
-        }
-    }
-
-  // Add it to scope
-  this->add_to_scope (t);
-
-  // We do this for interfaces, valuetypes and components in 
-  // a different place than we do for structs and unions,
-  // since fwd declared structs and unions must be defined in
-  // the same translation unit.
-  AST_InterfaceFwd *fd = t->fwd_decl ();
-  
-  if (0 != fd)
-    {
-      fd->set_as_defined ();
-    }
-
-  // Add it to set of locally referenced symbols
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-  return t;
+  return
+    this->fe_add_full_intf_decl<AST_ValueType> (t);
 }
 
-// Add this AST_EventType node (an event type declaration) to this scope.
 AST_EventType *
 AST_Module::fe_add_eventtype (AST_EventType *t)
 {
-  if (t->redef_clash ())
-    {
-      return 0;
-    }
-
-  AST_Decl *predef = 0;
-  AST_EventType *fwd = 0;
-
-  // Already defined?
-  if ((predef = this->lookup_for_add (t, false)) != 0)
-    {
-      // Treat fwd declared interfaces specially
-      if (predef->node_type () == AST_Decl::NT_eventtype)
-        {
-          fwd = AST_EventType::narrow_from_decl (predef);
-
-          if (fwd == 0)
-            {
-              return 0;
-            }
-
-          // Forward declared and not defined yet.
-          if (!fwd->is_defined ())
-            {
-              if (fwd->defined_in () != this)
-                {
-                  idl_global->err ()->error3 (UTL_Error::EIDL_SCOPE_CONFLICT,
-                                              fwd,
-                                              t,
-                                              this);
-
-                  return 0;
-                }
-            }
-          // OK, not illegal redef of forward declaration. Now check whether.
-          // it has been referenced already.
-          else if (this->referenced (predef, t->local_name ()))
-            {
-              idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                          t,
-                                          this,
-                                          predef);
-
-              return 0;
-            }
-        }
-      else if (!can_be_redefined (predef))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      predef);
-
-          return 0;
-        }
-      else if (referenced (predef, t->local_name ()) && !t->is_defined ())
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      predef);
-
-          return 0;
-        }
-      else if (t->has_ancestor (predef))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     predef);
-
-          return 0;
-        }
-    }
-
-  // Add it to scope
-  this->add_to_scope (t);
-
-  // Add it to set of locally referenced symbols
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-  return t;
+  return
+    this->fe_add_full_intf_decl<AST_EventType> (t);
 }
 
-// Add this AST_Component node (a value type declaration) to this scope.
 AST_Component *
 AST_Module::fe_add_component (AST_Component *t)
 {
-  if (t->redef_clash ())
-    {
-      return 0;
-    }
-
-  AST_Decl *predef = 0;
-  AST_Component *fwd = 0;
-
-  // Already defined?
-  if ((predef = this->lookup_for_add (t, false)) != 0)
-    {
-      // Treat fwd declared interfaces specially
-      if (predef->node_type () == AST_Decl::NT_component)
-        {
-          fwd = AST_Component::narrow_from_decl (predef);
-
-          if (fwd == 0)
-            {
-              return 0;
-            }
-
-          // Forward declared and not defined yet.
-          if (!fwd->is_defined ())
-            {
-              if (fwd->defined_in () != this)
-                {
-                  idl_global->err ()->error3 (UTL_Error::EIDL_SCOPE_CONFLICT,
-                                              fwd,
-                                              t,
-                                              this);
-
-                  return 0;
-                }
-            }
-          // OK, not illegal redef of forward declaration. Now check whether.
-          // it has been referenced already.
-          else if (this->referenced (predef, t->local_name ()))
-            {
-              idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                          t,
-                                          this,
-                                          predef);
-
-              return 0;
-            }
-        }
-      else if (!can_be_redefined (predef))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      predef);
-
-          return 0;
-        }
-      else if (referenced (predef, t->local_name ()) && !t->is_defined ())
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      predef);
-
-          return 0;
-        }
-      else if (t->has_ancestor (predef))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     predef);
-
-          return 0;
-        }
-    }
-
-  // Add it to scope
-  this->add_to_scope (t);
-  
-  // We do this for interfaces, valuetypes and components in 
-  // a different place than we do for structs and unions,
-  // since fwd declared structs and unions must be defined in
-  // the same translation unit.
-  AST_InterfaceFwd *fd = t->fwd_decl ();
-  
-  if (0 != fd)
-    {
-      fd->set_as_defined ();
-    }
-
-  // Add it to set of locally referenced symbols
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-  return t;
+  return
+    this->fe_add_full_intf_decl<AST_Component> (t);
 }
 
 AST_Connector *
 AST_Module::fe_add_connector (AST_Connector *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (t);
-
-  return t;
+  return
+    AST_Connector::narrow_from_decl (
+      this->fe_add_decl (t));
 }
 
-// Add this AST_Home node (a value type declaration) to this scope.
 AST_Home *
 AST_Module::fe_add_home (AST_Home *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced  (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (t);
-
-  // The home's local name is not added to the referenced list, since
-  // the name will later be mangled to allow a creation of an
-  // equivalent interface with the original name.
-
-  return t;
+  return
+    AST_Home::narrow_from_decl (
+      this->fe_add_decl (t));
 }
 
-// Add this AST_InterfaceFwd node (a forward declaration of an IDL
-// interface) to this scope.
 AST_InterfaceFwd *
-AST_Module::fe_add_interface_fwd (AST_InterfaceFwd *i)
+AST_Module::fe_add_interface_fwd (AST_InterfaceFwd *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (i, false)) != 0)
-    {
-      AST_Decl::NodeType nt = d->node_type ();
-
-      // There used to be another check here ANDed with the one below:
-      // d->defined_in () == this. But lookup_for_add calls only
-      // lookup_by_name_local(), which does not bump up the scope,
-      // and look_in_previous() for modules. If look_in_previous()
-      // finds something, the scopes will NOT be the same pointer
-      // value, but the result is what we want.
-      if (nt == AST_Decl::NT_interface)
-        {
-          AST_Interface *itf = AST_Interface::narrow_from_decl (d);
-
-          if (itf == 0)
-            {
-              return 0;
-            }
-
-          // If the lookup found the full_definition member of another
-          // interface_fwd, don't reset this full_definition. Otherwise
-          // reset the member and set is_defined_ on i so it itf won't
-          // get destroyed twice.  
-          if (itf->is_defined ())
-            {
-              if (!i->is_defined ())
-                {
-                  AST_Interface *prev_fd = i->full_definition ();
-                  prev_fd->destroy ();
-                  // No need to delete prev_fd, the call to 
-                  // set_full_definition() below will do it.
-                }
-                
-              i->set_full_definition (itf);
-              i->set_as_defined ();
-            }
-            
-//          return i;
-        }
-
-      if (!can_be_redefined (d)) {
-
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      i,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      // No need to call referenced() for forward declared interafces,
-      // they can be redeclared after referencing.
-
-      if (i->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope  (i,
-                                                      d);
-          return 0;
-        }
-    }
-
-  // Add it to scope
-  this->add_to_scope (i);
-
-  // Add it to set of locally referenced symbols
-  this->add_to_referenced (i,
-                           false,
-                           i->local_name ());
-
-  return i;
+  return
+    this->fe_add_fwd_intf_decl<AST_Interface> (t);
 }
 
-// Add this AST_ValueTypeFwd node (a forward declaration of an IDL
-// value type) to this scope.
 AST_ValueTypeFwd *
-AST_Module::fe_add_valuetype_fwd (AST_ValueTypeFwd *v)
+AST_Module::fe_add_valuetype_fwd (AST_ValueTypeFwd *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (v, false)) != 0)
-    {
-      AST_Decl::NodeType nt = d->node_type ();
-
-      // There used to be another check here ANDed with the one below:
-      // d->defined_in () == this. But lookup_for_add calls only
-      // lookup_by_name_local(), which does not bump up the scope,
-      // and look_in_previous() for modules. If look_in_previous()
-      // finds something, the scopes will NOT be the same pointer
-      // value, but the result is what we want.
-      if (nt == AST_Decl::NT_valuetype)
-        {
-          AST_ValueType *vtf = AST_ValueType::narrow_from_decl (d);
-
-          if (vtf == 0)
-            {
-              return 0;
-            }
-
-//          return v;
-        }
-
-      if (!can_be_redefined (d)) {
-
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      v,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, v->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      v,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (v->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope  (v,
-                                                      d);
-          return 0;
-        }
-    }
-
-  // Add it to scope
-  this->add_to_scope (v);
-
-  // Add it to set of locally referenced symbols
-  this->add_to_referenced (v,
-                           false,
-                           v->local_name ());
-
-  return v;
+  return
+    this->fe_add_fwd_intf_decl<AST_ValueType> (t);
 }
 
-// Add this AST_EventTypeFwd node (a forward declaration of an IDL
-// event type) to this scope.
 AST_EventTypeFwd *
-AST_Module::fe_add_eventtype_fwd (AST_EventTypeFwd *v)
+AST_Module::fe_add_eventtype_fwd (AST_EventTypeFwd *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (v, false)) != 0)
-    {
-      AST_Decl::NodeType nt = d->node_type ();
-
-      // There used to be another check here ANDed with the one below:
-      // d->defined_in () == this. But lookup_for_add calls only
-      // lookup_by_name_local(), which does not bump up the scope,
-      // and look_in_previous() for modules. If look_in_previous()
-      // finds something, the scopes will NOT be the same pointer
-      // value, but the result is what we want.
-      if (nt == AST_Decl::NT_eventtype)
-        {
-          AST_EventType *vtf = AST_EventType::narrow_from_decl (d);
-
-          if (vtf == 0)
-            {
-              return 0;
-            }
-
-//          return v;
-        }
-
-      if (!can_be_redefined (d)) {
-
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      v,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, v->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      v,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (v->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope  (v,
-                                                      d);
-          return 0;
-        }
-    }
-
-  // Add it to scope
-  this->add_to_scope (v);
-
-  // Add it to set of locally referenced symbols
-  this->add_to_referenced (v,
-                           false,
-                           v->local_name ());
-
-  return v;
+  return
+    this->fe_add_fwd_intf_decl<AST_EventType> (t);
 }
 
-// Add this AST_ComponentFwd node (a forward declaration of an IDL
-// value type) to this scope.
 AST_ComponentFwd *
-AST_Module::fe_add_component_fwd (AST_ComponentFwd *c)
+AST_Module::fe_add_component_fwd (AST_ComponentFwd *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (c, false)) != 0)
-    {
-      AST_Decl::NodeType nt = d->node_type ();
-
-      // There used to be another check here ANDed with the one below:
-      // d->defined_in () == this. But lookup_for_add calls only
-      // lookup_by_name_local(), which does not bump up the scope,
-      // and look_in_previous() for modules. If look_in_previous()
-      // finds something, the scopes will NOT be the same pointer
-      // value, but the result is what we want.
-      if (nt == AST_Decl::NT_component)
-        {
-          AST_Component *cf = AST_Component::narrow_from_decl (d);
-
-          if (cf == 0)
-            {
-              return 0;
-            }
-
-//          return c;
-        }
-
-      if (!can_be_redefined (d)) {
-
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      c,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, c->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      c,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (c->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope  (c,
-                                                      d);
-          return 0;
-        }
-    }
-
-  // Add it to scope
-  this->add_to_scope (c);
-
-  // Add it to set of locally referenced symbols
-  this->add_to_referenced (c,
-                           false,
-                           c->local_name ());
-
-  return c;
+  return
+    this->fe_add_fwd_intf_decl<AST_Component> (t);
 }
 
-// Add this AST_Constant node (a constant declaration) to this scope.
 AST_Constant *
 AST_Module::fe_add_constant (AST_Constant *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-
-  return t;
+  return
+    AST_Constant::narrow_from_decl (
+      this->fe_add_decl (t));
 }
 
-// Add this AST_Exception node (an exception declaration) to this scope
 AST_Exception *
 AST_Module::fe_add_exception (AST_Exception *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced  (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-
-  return t;
+  return
+    AST_Exception::narrow_from_decl (
+      this->fe_add_decl (t));
 }
 
-// Add this AST_Union node (a union declaration) to this scope
 AST_Union *
 AST_Module::fe_add_union (AST_Union *t)
 {
-  AST_UnionFwd *fwd = 0;
-  AST_Decl *predef = this->lookup_for_add (t, false);
-
-  if (predef != 0)
-    {
-      // Treat fwd declared interfaces specially
-      if (predef->node_type () == AST_Decl::NT_union_fwd)
-        {
-          fwd = AST_UnionFwd::narrow_from_decl (predef);
-
-          if (fwd == 0)
-            {
-              return 0;
-            }
-
-          // Forward declared and not defined yet.
-          if (!fwd->is_defined ())
-            {
-              UTL_Scope *s = fwd->defined_in ();
-              UTL_ScopedName *sn = ScopeAsDecl (s)->name ();
-
-              if (fwd->defined_in () == this
-                  || sn->compare (this->name ()) == 0)
-                {
-                  fwd->set_full_definition (t);
-                }
-              else
-                {
-                  idl_global->err ()->error3 (UTL_Error::EIDL_SCOPE_CONFLICT,
-                                              fwd,
-                                              t,
-                                              this);
-
-                  return 0;
-                }
-            }
-          // OK, not illegal redef of forward declaration. Now check whether.
-          // it has been referenced already.
-          else if (this->referenced (predef, t->local_name ()))
-            {
-              idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                          t,
-                                          this,
-                                          predef);
-
-              return 0;
-            }
-        }
-      else if (!can_be_redefined (predef))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      predef);
-
-          return 0;
-        }
-      else if (referenced (predef, t->local_name ()) && !t->is_defined ())
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      predef);
-
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-
-  return t;
+  return
+    AST_Union::narrow_from_decl (
+      this->fe_add_full_struct_type (t));
 }
 
-// Add this AST_UnionFwd node (a forward declaration of an IDL
-// union) to this scope.
 AST_UnionFwd *
 AST_Module::fe_add_union_fwd (AST_UnionFwd *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, false)) != 0)
-    {
-      AST_Decl::NodeType nt = d->node_type ();
-
-      if (nt == AST_Decl::NT_union_fwd)
-        {
-          AST_UnionFwd *ufwd = AST_UnionFwd::narrow_from_decl (d);
-          t->set_full_definition (ufwd->full_definition ());
-        }
-
-      // There used to be another check here ANDed with the one below:
-      // d->defined_in () == this. But lookup_for_add calls only
-      // lookup_by_name_local(), which does not bump up the scope,
-      // and look_in_previous() for modules. If look_in_previous()
-      // finds something, the scopes will NOT be the same pointer
-      // value, but the result is what we want.
-      if (nt == AST_Decl::NT_union)
-        {
-          AST_Union *s = AST_Union::narrow_from_decl (d);
-          t->set_full_definition (s);
-
-          // Must check later that all struct and union forward declarations
-          // are defined in the same IDL file.
-          AST_record_fwd_decl (t);
-        }
-      else
-        {
-          if (!can_be_redefined (d))
-            {
-              idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                          t,
-                                          this,
-                                          d);
-              return 0;
-            }
-
-          if (this->referenced (d, t->local_name ()))
-            {
-              idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                          t,
-                                          this,
-                                          d);
-              return 0;
-            }
-        }
-    }
-
-  // Add it to scope
-  this->add_to_scope (t);
-
-  // Add it to set of locally referenced symbols
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-
-  // Must check later that all struct and union forward declarations
-  // are defined in the same IDL file.
-  AST_record_fwd_decl (t);
-  return t;
+  return
+    AST_UnionFwd::narrow_from_decl (
+      this->fe_add_fwd_struct_type (t));
 }
 
-// Add this AST_Structure node (a struct declaration) to this scope.
 AST_Structure *
 AST_Module::fe_add_structure (AST_Structure *t)
 {
-  AST_Decl *predef = 0;
-  AST_StructureFwd *fwd = 0;
-
-  if ((predef = this->lookup_for_add (t, false)) != 0)
-    {
-      // Treat fwd declared interfaces specially
-      if (predef->node_type () == AST_Decl::NT_struct_fwd)
-        {
-          fwd = AST_StructureFwd::narrow_from_decl (predef);
-
-          if (fwd == 0)
-            {
-              return 0;
-            }
-
-          // Forward declared and not defined yet.
-          if (!fwd->is_defined ())
-            {
-              UTL_Scope *s = fwd->defined_in ();
-              UTL_ScopedName *sn = ScopeAsDecl (s)->name ();
-
-              if (fwd->defined_in () == this
-                  || sn->compare (this->name ()) == 0)
-                {
-                  fwd->set_full_definition (t);
-                }
-              else
-                {
-                  idl_global->err ()->error3 (UTL_Error::EIDL_SCOPE_CONFLICT,
-                                              fwd,
-                                              t,
-                                              this);
-
-                  return 0;
-                }
-            }
-          // OK, not illegal redef of forward declaration. Now check whether.
-          // it has been referenced already.
-          else if (this->referenced (predef, t->local_name ()))
-            {
-              idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                          t,
-                                          this,
-                                          predef);
-
-              return 0;
-            }
-        }
-      else if (!can_be_redefined (predef))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      predef);
-
-          return 0;
-        }
-      else if (referenced (predef, t->local_name ()) && !t->is_defined ())
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      predef);
-
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-
-  return t;
+  return this->fe_add_full_struct_type (t);
 }
 
-// Add this AST_StructureFwd node (a forward declaration of an IDL
-// struct) to this scope.
 AST_StructureFwd *
 AST_Module::fe_add_structure_fwd (AST_StructureFwd *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, false)) != 0)
-    {
-      AST_Decl::NodeType nt = d->node_type ();
-
-      if (nt == AST_Decl::NT_struct_fwd)
-        {
-          AST_StructureFwd *sfwd = AST_StructureFwd::narrow_from_decl (d);
-          t->set_full_definition (sfwd->full_definition ());
-        }
-
-      // There used to be another check here ANDed with the one below:
-      // d->defined_in () == this. But lookup_for_add calls only
-      // lookup_by_name_local(), which does not bump up the scope,
-      // and look_in_previous() for modules. If look_in_previous()
-      // finds something, the scopes will NOT be the same pointer
-      // value, but the result is what we want.
-      if (nt == AST_Decl::NT_struct)
-        {
-          AST_Structure *s = AST_Structure::narrow_from_decl (d);
-          t->set_full_definition (s);
-
-          // Must check later that all struct and union forward declarations
-          // are defined in the same IDL file.
-          AST_record_fwd_decl (t);
-        }
-      else
-        {
-          if (!can_be_redefined (d))
-            {
-              idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                          t,
-                                          this,
-                                          d);
-              return 0;
-            }
-
-          if (this->referenced (d, t->local_name ()))
-            {
-              idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                          t,
-                                          this,
-                                          d);
-              return 0;
-            }
-        }
-    }
-
-  // Add it to scope
-  this->add_to_scope (t);
-
-  // Add it to set of locally referenced symbols
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-
-  // Must check later that all struct and union forward declarations
-  // are defined in the same IDL file.
-  AST_record_fwd_decl (t);
-  return t;
+  return this->fe_add_fwd_struct_type (t);
 }
 
-// Add this AST_Enum node (an enum declaration) to this scope.
 AST_Enum *
 AST_Module::fe_add_enum (AST_Enum *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor(d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-
-  return t;
+  return
+    AST_Enum::narrow_from_decl (
+      this->fe_add_decl (t));
 }
 
-// Add this AST_EnumVal node (an enumerator declaration) to this scope
+// Add an AST_EnumVal node (an enumerator) to this scope.
 // This is done to conform to the C++ scoping rules which declare
 // enumerators in the enclosing scope (in addition to declaring them
 // in the enum itself).
 AST_EnumVal *
 AST_Module::fe_add_enum_val (AST_EnumVal *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add(t, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-
-  return t;
+  return
+    AST_EnumVal::narrow_from_decl (
+      this->fe_add_decl (t));
 }
 
-// Add this AST_Typedef node (a typedef) to this scope.
 AST_Typedef *
 AST_Module::fe_add_typedef (AST_Typedef *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-
-  AST_Type *bt = t->base_type ();
-  UTL_ScopedName *mru = bt->last_referenced_as ();
-
-  if (mru != 0)
-    {
-      this->add_to_referenced (bt,
-                               false,
-                               mru->first_component ());
-    }
-
-  return t;
+  return
+    AST_Typedef::narrow_from_decl (
+      this->fe_add_ref_decl (t));
 }
 
-// Add an AST_Native (a native declaration) to this scope.
 AST_Native *
 AST_Module::fe_add_native (AST_Native *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-
-  return t;
+  return
+    AST_Native::narrow_from_decl (
+      this->fe_add_decl (t));
 }
 
 AST_PortType *
-AST_Module::fe_add_porttype (AST_PortType *pt)
+AST_Module::fe_add_porttype (AST_PortType *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined? Or already used?
-  if ((d = this->lookup_for_add (pt, false)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      pt,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, pt->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      pt,
-                                      this,
-                                      d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (pt);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (pt,
-                           false,
-                           pt->local_name ());
-
-  return pt;
+  return
+    AST_PortType::narrow_from_decl (
+      this->fe_add_decl (t));
 }
 
 // Dump this AST_Module node to the ostream o.

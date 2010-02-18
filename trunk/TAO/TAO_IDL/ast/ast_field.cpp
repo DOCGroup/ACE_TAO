@@ -83,6 +83,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "global_extern.h"
 
+AST_Decl::NodeType const
+AST_Field::NT = AST_Decl::NT_field;
+
 AST_Field::AST_Field (void)
   : COMMON_Base (),
     AST_Decl (),

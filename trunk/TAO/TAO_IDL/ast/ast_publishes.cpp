@@ -3,6 +3,9 @@
 #include "ast_publishes.h"
 #include "ast_visitor.h"
 
+AST_Decl::NodeType const
+AST_Publishes::NT = AST_Decl::NT_publishes;
+
 AST_Publishes::AST_Publishes (UTL_ScopedName *n,
                               AST_Type *publishes_type)
   : COMMON_Base (),
