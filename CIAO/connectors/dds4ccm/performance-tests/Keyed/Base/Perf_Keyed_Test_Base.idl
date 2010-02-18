@@ -8,6 +8,8 @@
 #ifndef PERF_KEYED_TEST_BASE_IDL
 #define PERF_KEYED_TEST_BASE_IDL
 
+#pragma rti typesupport "Base/Perf_Keyed_Test_BaseSupport.h"
+
 // Flag used to indicate message is used for initialization only
 const unsigned long INITIALIZE_SIZE = 1234;
 // Flag used to indicate end of test

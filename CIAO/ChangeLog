@@ -1,8 +1,24 @@
+Thu Feb 18 15:43:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Keyed/Base/Perf_Keyed_Test_Base.idl:
+        * connectors/dds4ccm/performance-tests/Latency/Base/Latency_Test_Base.idl:
+          Added rti typesupport pragma
+
+        * connectors/dds4ccm/performance-tests/Keyed/Connector/Perf_Keyed_Test_Connector_exec.cpp
+        * connectors/dds4ccm/performance-tests/Keyed/Connector/Perf_Keyed_Test_Connector_exec.h
+        * connectors/dds4ccm/performance-tests/Latency/Connector/Latency_Test_Connector_exec.cpp
+        * connectors/dds4ccm/performance-tests/Latency/Connector/Latency_Test_Connector_exec.h
+          Removed from the archive
+
+        * connectors/dds4ccm/performance-tests/Keyed/Connector/Perf_Keyed_Test_Connector.mpc
+        * connectors/dds4ccm/performance-tests/Latency/Connector/Latency_Test_Connector.mpc
+          Updated to generate the connector
+
 Thu Feb 18 15:36:06 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Latency/Sender/Latency_Test_Sender_exec.cpp:
-        Remove some tabs.
-        
+          Remove some tabs.
+
 Thu Feb 18 15:35:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.mpc:
