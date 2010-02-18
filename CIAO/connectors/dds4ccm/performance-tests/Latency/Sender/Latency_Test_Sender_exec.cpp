@@ -394,17 +394,17 @@ Sender_exec_i::record_time (ACE_UINT64  receive_time)
      {
        double avg = this->tv_total_.value () / this->count_.value ();
        ACE_DEBUG ((LM_DEBUG,"Collecting statistics on %d samples with message size %u.\n"
-                            " TO DO: calculate stdev, 50%%,90%%,99%% and 99.99%%\n"
-	   	                    "This is the roundtrip time, *not* the one-way-latency\n"
-	                         "bytes ,stdev us,ave us, min us, 50%% us, 90%% us, 99%% us, 99.99%%, max us\n"
-                          "------,-------,-------,-------,-------,-------,-------,-------,-------\n"
-                          "%6d,-------,%7.1f,%7u,-------,-------,-------,-------,%7u\n",
-                          this->count_.value (),
-                          this->datalen_,
-                          this->datalen_,
-                          avg,
-                          this->tv_min_.value (),
-                          this->tv_max_.value ()));
+         " TO DO: calculate stdev, 50%%,90%%,99%% and 99.99%%\n"
+         "This is the roundtrip time, *not* the one-way-latency\n"
+         "bytes ,stdev us,ave us, min us, 50%% us, 90%% us, 99%% us, 99.99%%, max us\n"
+         "------,-------,-------,-------,-------,-------,-------,-------,-------\n"
+         "%6d,-------,%7.1f,%7u,-------,-------,-------,-------,%7u\n",
+         this->count_.value (),
+         this->datalen_,
+         this->datalen_,
+         avg,
+         this->tv_min_.value (),
+         this->tv_max_.value ()));
      }
    else
      {
