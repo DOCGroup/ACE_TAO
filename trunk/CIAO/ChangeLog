@@ -1,3 +1,14 @@
+Thu Feb 18 08:30:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+          Fixed compile error with fixed size datatypes
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Layout and documentation fixes
+
+        * connectors/dds4ccm/examples/Hello/Base/Hello_Base.mpc:
+          No need for C.inl
+
 Wed Feb 17 15:24:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/PortStatusListener_T.cpp:
