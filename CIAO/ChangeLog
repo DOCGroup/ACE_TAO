@@ -1,3 +1,17 @@
+Thu Feb 18 13:44:59 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/FixedSizeStruct/EventConnector/Connector/FSS_Event_Connector.mpc:
+        * connectors/dds4ccm/tests/FixedSizeStruct/StateConnector/Connector/FSS_State_Connector.mpc:
+          Removed dummy label.
+
+        * connectors/dds4ccm/tests/FixedSizeStruct/EventConnector/Receiver/*:
+        * connectors/dds4ccm/tests/FixedSizeStruct/EventConnector/Sender/*:
+        * connectors/dds4ccm/tests/FixedSizeStruct/EventConnector/descriptors/*:
+        * connectors/dds4ccm/tests/FixedSizeStruct/StateConnector/Receiver/*:
+        * connectors/dds4ccm/tests/FixedSizeStruct/StateConnector/Sender/*:
+        * connectors/dds4ccm/tests/FixedSizeStruct/StateConnector/descriptors/*:
+          Removed these files since this is there to capture compiler errors.
+
 Thu Feb 18 13:26:06 UTC 2010  Marijke Hnegstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Latency:
@@ -27,7 +41,7 @@ Thu Feb 18 13:26:06 UTC 2010  Marijke Hnegstmengel  <mhengstmengel@remedy.nl>
         * connectors/dds4ccm/performance-tests/Latency/Sender/Latency_Test_Sender.mpc:
         * connectors/dds4ccm/performance-tests/Latency/Sender/Latency_Test_Sender_exec.cpp:
         * connectors/dds4ccm/performance-tests/Latency/Sender/Latency_Test_Sender_exec.h:
-		First base of new latency test dds4ccm.
+                First base of new latency test dds4ccm.
 
 Thu Feb 18 13:22:43 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
