@@ -154,11 +154,9 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_many (
 template <typename DDS_TYPE, typename CCM_TYPE >
 bool
 CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
-          typename DDS_TYPE::value_type::_out_type an_instance,
-          ::CCM_DDS::ReadInfo_out info)
+  typename DDS_TYPE::value_type::_out_type an_instance,
+  ::CCM_DDS::ReadInfo_out info)
 {
-  an_instance = new typename DDS_TYPE::value_type;
-
   DDSConditionSeq active_conditions;
   if (!this->wait (active_conditions))
     {
@@ -189,8 +187,9 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
 
           if (retcode == DDS_RETCODE_OK && data.length () >= 1)
             {
-              info <<= sample_info[0]; //retrieves the last sample.
-              *an_instance = data[0];
+              info <<= sample_info[0]; // Retrieves the last sample.
+              DDS_TYPE::value_type::_var_type temp = &data[0];
+              an_instance = temp.out ();
             }
           else
             {
@@ -214,6 +213,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
             }
         }
     }
+    
   return true;
 }
 

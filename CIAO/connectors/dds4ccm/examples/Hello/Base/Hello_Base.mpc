@@ -3,7 +3,7 @@
 project(DDS_Hello_Base_idl_gen) : taoidldefaults, anytypecode {
   avoids += ace_for_tao
   custom_only = 1
-  idlflags += -SS -Gxhst \
+  idlflags += -SS -Gxhst -Sci \
               -Wb,stub_export_macro=HELLO_BASE_STUB_Export \
               -Wb,stub_export_include=Hello_Base_stub_export.h
 
