@@ -44,23 +44,6 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   }
 
   //============================================================
-  // ReadHandler
-  //============================================================
-  ReadHandler::ReadHandler (Receiver_exec_i &callback,
-                            CORBA::UShort run)
-    : callback_ (callback),
-      run_ (run)
-  {
-  }
-
-  int
-  ReadHandler::handle_exception (ACE_HANDLE)
-  {
-    this->callback_.run (this->run_);
-    return 0;
-  }
-
-  //============================================================
   // Starter_exec_i
   //============================================================
   Starter_exec_i::Starter_exec_i (Receiver_exec_i & callback)
@@ -325,6 +308,17 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   }
 
   void
+  Receiver_exec_i::set_filter ()
+  {
+    CCM_DDS::QueryFilter filter;
+    filter.query = CORBA::string_dup (QUERY);
+    filter.query_parameters.length (2);
+    filter.query_parameters[0] = CORBA::string_dup (MIN_ITERATION_1);
+    filter.query_parameters[1] = CORBA::string_dup (MAX_ITERATION_1);
+    this->reader_->filter (filter);
+  }
+
+  void
   Receiver_exec_i::start_read (CORBA::UShort run)
   {
     this->ticker_ = new read_action_Generator (*this, run);
@@ -336,13 +330,6 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
       {
         ACE_ERROR ((LM_ERROR, "Unable to schedule Timer\n"));
       }
-  }
-
-  void
-  Receiver_exec_i::start (CORBA::UShort run)
-  {
-    ReadHandler *rh = new ReadHandler (*this, run);
-    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (rh);
   }
 
   void
@@ -362,6 +349,8 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     {
       case 1:
         {
+          test_exception ();
+          set_filter ();
           read_all ();
           check_filter ();
           test_set_query_parameters ();
@@ -442,15 +431,6 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   {
     this->reader_ = this->context_->get_connection_info_out_data();
     this->restarter_ = this->context_->get_connection_writer_restart ();
-
-    test_exception ();
-
-    CCM_DDS::QueryFilter filter;
-    filter.query = CORBA::string_dup (QUERY);
-    filter.query_parameters.length (2);
-    filter.query_parameters[0] = CORBA::string_dup (MIN_ITERATION_1);
-    filter.query_parameters[1] = CORBA::string_dup (MAX_ITERATION_1);
-    this->reader_->filter (filter);
 }
 
   void
@@ -470,7 +450,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finished query filter test.")));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finished query filter test.\n")));
       }
   }
 
