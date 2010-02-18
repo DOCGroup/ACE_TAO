@@ -98,11 +98,6 @@ public:
       , PT_pseudo       // Predefined type for pseudo objects
     };
 
-  // Operations.
-
-  // Constructor(s).
-  AST_PredefinedType (void);
-
   AST_PredefinedType (PredefinedType t,
                       UTL_ScopedName *n);
 
@@ -112,7 +107,6 @@ public:
   PredefinedType pt (void);
 
   // Narrowing
-
   DEF_NARROW_FROM_DECL(AST_PredefinedType);
 
   // AST Dumping

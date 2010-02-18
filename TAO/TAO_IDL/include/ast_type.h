@@ -88,10 +88,6 @@ public:
   // Indicates if we are fixed size or variable. Most useful for structs,
   // unions, and arrays.
 
-  // Operations.
-
-  AST_Type (void);
-
   AST_Type (AST_Decl::NodeType nt,
             UTL_ScopedName *n);
 

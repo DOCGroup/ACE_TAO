@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_ROOT_H
 #define TAO_BE_ROOT_H
 
@@ -34,10 +33,6 @@ class be_root : public virtual AST_Root,
   // = DESCRIPTION
   //
 public:
-  /// Default constructor.
-  be_root (void);
-
-  /// Constructor that sets its scoped name <n>, and any pragmas <p>.
   be_root (UTL_ScopedName *n);
   
   virtual ~be_root (void);
@@ -49,7 +44,6 @@ public:
   virtual int accept (be_visitor *visitor);
 
   // Narrowing.
-
   DEF_NARROW_FROM_DECL (be_root);
   DEF_NARROW_FROM_SCOPE (be_root);
 };

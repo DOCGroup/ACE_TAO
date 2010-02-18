@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_STRING_H
 #define BE_STRING_H
 
@@ -28,8 +27,6 @@ class be_string : public virtual AST_String,
                   public virtual be_type
 {
 public:
-  be_string (void);
-
   be_string (AST_Decl::NodeType nt,
              UTL_ScopedName *n,
              AST_Expression *v,

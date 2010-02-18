@@ -84,8 +84,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_Constant : public virtual AST_Decl
 {
 public:
-  AST_Constant (void);
-
   AST_Constant (AST_Expression::ExprType et,
                 AST_Decl::NodeType nt,
                 AST_Expression *ev,

@@ -10,16 +10,6 @@
 AST_Decl::NodeType const
 AST_EventType::NT = AST_Decl::NT_eventtype;
 
-AST_EventType::AST_EventType (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    UTL_Scope (),
-    AST_Interface (),
-    AST_ValueType ()
-{
-}
-
 AST_EventType::AST_EventType (UTL_ScopedName *n,
                               AST_Type **inherits,
                               long n_inherits,

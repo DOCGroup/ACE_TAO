@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #include "be_factory.h"
 #include "be_visitor.h"
 
@@ -25,16 +24,6 @@
 #include "utl_exceptlist.h"
 
 #include "global_extern.h"
-
-be_factory::be_factory (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    UTL_Scope (),
-    AST_Factory (),
-    be_scope (),
-    be_decl ()
-{
-}
 
 be_factory::be_factory (UTL_ScopedName *n)
   : COMMON_Base (1,

@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_STRUCTURE_FWD_H
 #define BE_STRUCTURE_FWD_H
 
@@ -33,14 +32,9 @@ class be_structure_fwd : public virtual AST_StructureFwd,
   // =DESCRIPTION
   //   Extensions to the AST_StructureFwd class
 public:
-  /// Default constructor.
-  be_structure_fwd (void);
-
-  /// Constructor.
   be_structure_fwd (AST_Structure *dummy,
                     UTL_ScopedName *n);
 
-  /// Destructor.
   virtual ~be_structure_fwd (void);
 
   /// Cleanup function.
@@ -50,7 +44,6 @@ public:
   virtual int accept (be_visitor* visitor);
 
   // Narrowing.
-
   DEF_NARROW_FROM_DECL (be_structure_fwd);
 };
 

@@ -13,14 +13,6 @@
 AST_Decl::NodeType const
 AST_UnionFwd::NT = AST_Decl::NT_union_fwd;
 
-AST_UnionFwd::AST_UnionFwd (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_StructureFwd ()
-{
-}
-
 AST_UnionFwd::AST_UnionFwd (AST_Union *dummy,
                             UTL_ScopedName *n)
   : COMMON_Base (),

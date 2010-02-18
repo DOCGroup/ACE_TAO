@@ -16,7 +16,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_SEQUENCE_H
 #define BE_SEQUENCE_H
 
@@ -50,8 +49,6 @@ public:
     MNG_VALUE,
     MNG_PSEUDO
   };
-
-  be_sequence (void);
 
   be_sequence (AST_Expression *v,
                AST_Type *bt,

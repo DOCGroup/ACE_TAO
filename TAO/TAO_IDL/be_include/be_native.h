@@ -12,8 +12,6 @@
  */
 //=============================================================================
 
-
-
 #ifndef BE_NATIVE_H
 #define BE_NATIVE_H
 
@@ -33,13 +31,8 @@ class be_native : public virtual AST_Native,
                   public virtual be_exception
 {
 public:
-  /// Default constructor.
-  be_native (void);
-
-  /// Constructor that initializes its scoped name.
   be_native (UTL_ScopedName *n);
 
-  /// Destructor
   virtual ~be_native (void) {}
 
   /// Generate the typecode description.
@@ -55,7 +48,6 @@ public:
   virtual int accept (be_visitor *visitor);
 
   // Narrowing.
-
   DEF_NARROW_FROM_DECL(be_native);
 };
 

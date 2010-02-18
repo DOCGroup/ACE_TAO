@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_TYPEDEF_H
 #define BE_TYPEDEF_H
 
@@ -27,7 +26,6 @@ class be_typedef : public virtual AST_Typedef,
                    public virtual be_type
 {
 public:
-  /// Constructor.
   be_typedef (AST_Type *bt,
               UTL_ScopedName *n,
               bool l,

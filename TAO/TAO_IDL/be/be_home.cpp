@@ -13,27 +13,12 @@
  */
 //=============================================================================
 
-
 #include "be_home.h"
 #include "be_component.h"
 #include "be_interface_strategy.h"
 #include "be_visitor.h"
 #include "global_extern.h"
 #include "utl_err.h"
-
-be_home::be_home (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    UTL_Scope (),
-    AST_Interface (),
-    AST_Home (),
-    be_scope (),
-    be_type (),
-    be_interface ()
-{
-  this->size_type (AST_Type::VARIABLE);
-}
 
 be_home::be_home (UTL_ScopedName *n,
                   AST_Home *base_home,
@@ -66,6 +51,8 @@ be_home::be_home (UTL_ScopedName *n,
               supports_flat,
               n_supports_flat),
     be_scope (AST_Decl::NT_home),
+    be_decl (AST_Decl::NT_home,
+             n),
     be_type (AST_Decl::NT_home,
              n),
     be_interface (n,

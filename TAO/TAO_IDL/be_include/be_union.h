@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_UNION_H
 #define BE_UNION_H
 
@@ -30,8 +29,6 @@ class be_union : public virtual AST_Union,
                  public virtual be_type
 {
 public:
-  be_union (void);
-
   be_union (AST_ConcreteType *dt,
             UTL_ScopedName *n,
             bool local,

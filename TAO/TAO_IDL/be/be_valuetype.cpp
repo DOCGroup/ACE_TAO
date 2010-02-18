@@ -9,10 +9,9 @@
  *  additional means for C++ mapping of an valuetype.
  *
  *
- *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> derived from be_interface.cpp
+ *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  */
 //=============================================================================
-
 
 #include "be_valuetype.h"
 #include "be_visitor.h"
@@ -25,35 +24,6 @@
 #include "global_extern.h"
 #include "ace/Log_Msg.h"
 
-// Default constructor.
-be_valuetype::be_valuetype (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    UTL_Scope (),
-    AST_Interface (),
-    be_scope (),
-    be_decl (),
-    be_type (),
-    be_interface (),
-    AST_ValueType (),
-    full_obv_skel_name_ (0)
-{
-  // Always the case.
-  this->size_type (AST_Type::VARIABLE);
-
-  AST_Module *m = AST_Module::narrow_from_scope (this->defined_in ());
-
-  if (m != 0)
-    {
-      m->set_has_nested_valuetype ();
-    }
-
-  // Always the case.
-  this->has_constructor (true);
-}
-
-// Constructor used to build the AST.
 be_valuetype::be_valuetype (UTL_ScopedName *n,
                             AST_Type **inherits,
                             long n_inherits,

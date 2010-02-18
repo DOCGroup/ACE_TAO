@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_INTERFACE_FWD_H
 #define BE_INTERFACE_FWD_H
 
@@ -34,14 +33,9 @@ class be_interface_fwd : public virtual AST_InterfaceFwd,
   // =DESCRIPTION
   //   Extensions to the AST_InterfaceFwd class
 public:
-  /// Default constructor.
-  be_interface_fwd (void);
-
-  /// Constructor.
   be_interface_fwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 
-  /// Destructor.
   virtual ~be_interface_fwd (void);
 
   /// Mutator overrides for be_type members. If we have been
@@ -56,7 +50,6 @@ public:
   virtual int accept (be_visitor* visitor);
 
   // Narrowing.
-
   DEF_NARROW_FROM_DECL (be_interface_fwd);
 };
 

@@ -13,22 +13,9 @@
  */
 //=============================================================================
 
-
 #include "be_union_fwd.h"
 #include "be_visitor.h"
 #include "ast_union.h"
-
-be_union_fwd::be_union_fwd (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_StructureFwd (),
-    AST_UnionFwd (),
-    be_decl (),
-    be_type (),
-    be_structure_fwd ()
-{
-}
 
 be_union_fwd::be_union_fwd (AST_Union *dummy,
                             UTL_ScopedName *n)

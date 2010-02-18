@@ -13,19 +13,8 @@
  */
 //=============================================================================
 
-
 #include "be_structure_fwd.h"
 #include "be_visitor.h"
-
-be_structure_fwd::be_structure_fwd (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_StructureFwd (),
-    be_decl (),
-    be_type ()
-{
-}
 
 be_structure_fwd::be_structure_fwd (AST_Structure *dummy,
                                     UTL_ScopedName *n)

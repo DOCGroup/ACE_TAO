@@ -14,23 +14,10 @@
  */
 //=============================================================================
 
-
 #include "be_interface_fwd.h"
 #include "be_interface.h"
 #include "be_visitor.h"
 #include "ast_interface.h"
-
-be_interface_fwd::be_interface_fwd (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_InterfaceFwd (),
-    be_decl (),
-    be_type ()
-{
-  // Always the case.
-  this->size_type (AST_Type::VARIABLE);
-}
 
 be_interface_fwd::be_interface_fwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)

@@ -78,11 +78,6 @@ class AST_Expression;
 class TAO_IDL_FE_Export AST_String : public virtual AST_ConcreteType
 {
 public:
-  // Operations.
-
-  // Constructor(s) and destructor
-  AST_String (void);
-
   AST_String (AST_Decl::NodeType nt,
               UTL_ScopedName *n,
               AST_Expression *max_size,
@@ -95,7 +90,6 @@ public:
   long width (void);
 
   // Narrowing.
-
   DEF_NARROW_FROM_DECL(AST_String);
 
   // AST Dumping.

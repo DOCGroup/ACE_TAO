@@ -30,8 +30,6 @@ class be_component : public virtual AST_Component,
   // = DESCRIPTION
   //
 public:
-  be_component (void);
-
   be_component (UTL_ScopedName *n,
                 AST_Component *base_component,
                 AST_Type **supports,

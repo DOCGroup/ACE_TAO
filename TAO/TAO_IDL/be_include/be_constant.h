@@ -28,10 +28,6 @@ class be_constant : public virtual AST_Constant,
                     public virtual be_decl
 {
 public:
-  /// Constructor.
-  be_constant (void);
-
-  /// Constructor.
   be_constant (AST_Expression::ExprType et,
                AST_Expression *v,
                UTL_ScopedName *n);
@@ -43,9 +39,7 @@ public:
   virtual void destroy (void);
 
   // Narrowing.
-
   DEF_NARROW_FROM_DECL (be_constant);
-
 };
 
 #endif // if !defined

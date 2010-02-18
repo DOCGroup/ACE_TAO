@@ -85,8 +85,6 @@ public:
       , UL_label 
     };
 
-  AST_UnionLabel (void);
-
   AST_UnionLabel (UnionLabel lk,
                   AST_Expression *lv);
 

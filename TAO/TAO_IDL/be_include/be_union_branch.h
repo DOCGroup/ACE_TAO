@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_UNION_BRANCH_H
 #define BE_UNION_BRANCH_H
 
@@ -31,10 +30,6 @@ class be_union_branch : public virtual AST_UnionBranch,
                         public virtual be_field
 {
 public:
-  /// default constructor.
-  be_union_branch (void);
-
-  /// Constructor.
   be_union_branch (UTL_LabelList *ll,
                    AST_Type *ft,
                    UTL_ScopedName *n);
@@ -54,7 +49,6 @@ public:
   virtual void destroy (void);
 
   // Narrowing.
-
   DEF_NARROW_FROM_DECL (be_union_branch);
 };
 

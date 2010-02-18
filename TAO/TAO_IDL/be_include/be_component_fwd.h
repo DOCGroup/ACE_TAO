@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_COMPONENT_FWD_H
 #define BE_COMPONENT_FWD_H
 
@@ -30,8 +29,6 @@ class be_component_fwd : public virtual AST_ComponentFwd,
   // =DESCRIPTION
   //   Extensions to the AST_ComponentFwd class
 public:
-  be_component_fwd (void);
-
   be_component_fwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 

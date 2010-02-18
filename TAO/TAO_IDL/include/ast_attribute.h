@@ -76,18 +76,12 @@ class UTL_NameList;
 class TAO_IDL_FE_Export AST_Attribute : public virtual AST_Field
 {
 public:
-  // Operations.
-
-  // Constructor(s).
-  AST_Attribute (void);
-
   AST_Attribute (bool readonly,
                  AST_Type *ft,
                  UTL_ScopedName *n,
                  bool local,
                  bool abstract);
 
-  // Destructor.
   virtual ~AST_Attribute (void);
 
   // Data Accessors.

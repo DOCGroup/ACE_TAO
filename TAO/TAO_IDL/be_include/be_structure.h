@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_STRUCTURE_H
 #define BE_STRUCTURE_H
 
@@ -30,12 +29,15 @@ class be_structure : public virtual AST_Structure,
                      public virtual be_type
 {
 public:
-  be_structure (void);
-
   be_structure (UTL_ScopedName *n,
                 bool local,
                 bool abstract);
 
+  be_structure (AST_Decl::NodeType nt,
+                UTL_ScopedName *n,
+                bool local,
+                bool abstract);
+                
   /// Copy BE-specific values when redefining struct or union
   /// from a forward declaration.
   virtual void redefine (AST_Structure *from);

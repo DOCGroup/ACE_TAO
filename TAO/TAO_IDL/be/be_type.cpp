@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #include "be_type.h"
 #include "be_scope.h"
 #include "be_visitor.h"
@@ -23,18 +22,6 @@
 #include "utl_identifier.h"
 #include "idl_defines.h"
 #include "nr_extern.h"
-
-be_type::be_type (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    be_decl (),
-    tc_name_ (0),
-    common_varout_gen_ (false),
-    seen_in_sequence_ (false),
-    seen_in_operation_ (false)
-{
-}
 
 be_type::be_type (AST_Decl::NodeType nt,
                   UTL_ScopedName *n)

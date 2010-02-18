@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_TYPE_H
 #define BE_TYPE_H
 
@@ -29,14 +28,9 @@ class be_type : public virtual AST_Type,
                 public virtual be_decl
 {
 public:
-  /// Default constructor.
-  be_type (void);
-
-  /// Constructor.
   be_type (AST_Decl::NodeType nt,
            UTL_ScopedName *n);
 
-  /// Destructor.
   virtual ~be_type (void);
 
   /**

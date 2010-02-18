@@ -119,141 +119,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #undef  INCREMENT
 #define INCREMENT 64
 
-// Static variables.
-static Identifier *_global_scope_name = 0;
-static Identifier *_global_scope_root_name = 0;
-
-// Static functions.
-
-// Determines if a name is global.
-static long
-is_global_name (Identifier *i)
-{
-  long comp_result = 0;
-
-  if (i == 0)
-    {
-      return comp_result;
-    }
-
-  if (_global_scope_name == 0)
-    {
-      ACE_NEW_RETURN (_global_scope_name,
-                      Identifier ("::"),
-                      0);
-    }
-
-  if (_global_scope_root_name == 0)
-    {
-      ACE_NEW_RETURN (_global_scope_root_name,
-                      Identifier (""),
-                      0);
-    }
-
-  comp_result = i->compare (_global_scope_name);
-
-  if (comp_result == 0)
-    {
-      comp_result = i->compare (_global_scope_root_name);
-    }
-
-  return comp_result;
-}
-
-// Helper function for lookup_by_name. Iterates doing local lookups of
-// subsequent components of a scoped name.
-static AST_Decl *
-iter_lookup_by_name_local (AST_Decl *d,
-                           UTL_ScopedName *e,
-                           long index,
-                           bool full_def_only = false)
-{
-  AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
-  AST_Decl *result = 0;
-
-  // Remove all the layers of typedefs.
-  while (d != 0 && d->node_type () == AST_Decl::NT_typedef)
-    {
-      if (td == 0)
-        {
-          return 0;
-        }
-
-      d = td->base_type ();
-    }
-    
-  if (d == 0)
-    {
-      return 0;
-    }
-
-  // Try to convert the AST_Decl to a UTL_Scope.
-  UTL_Scope *sc = DeclAsScope (d);
-
-  if (sc == 0)
-    {
-      return 0;
-    }
-
-  if (index < static_cast<long> (sc->nmembers ()))
-    {
-      // Look up the first component of the scoped name.
-      result = sc->lookup_by_name_local (e->head (),
-                                         index,
-                                         full_def_only);
-    }
-  else
-    {
-      return 0;
-    }
-
-  UTL_ScopedName *sn = (UTL_ScopedName *) e->tail ();
-
-  if (result == 0)
-    {
-      if (sn == 0)
-        {
-          result = UTL_Scope::match_param (e);
-        }
-
-      return result;
-    }
-  else
-    {
-      if (sn == 0)
-        {
-          // We're done.
-          return result;
-        }
-      else
-        {
-          // Look up the next component of the scoped name.
-          result = iter_lookup_by_name_local (result,
-                                              sn,
-                                              0,
-                                              full_def_only);
-        }
-
-      if (result != 0)
-        {
-          // We're done.
-          return result;
-        }
-      else
-        {
-          // Maybe we're on the wrong branch of reopened
-          // and/or nested modules, so let's see if there's
-          // another branch. If 'index' gets as high as the
-          // number of members in the scope, the call above
-          // to lookup_by_name_local will catch it and return 0.
-          return iter_lookup_by_name_local (d,
-                                            e,
-                                            index + 1,
-                                            full_def_only);
-        }
-    }
-}
-
 //  Constructors.
 
 UTL_Scope::UTL_Scope (void)
@@ -301,10 +166,9 @@ UTL_Scope::~UTL_Scope (void)
 
 // Special version of lookup which only looks at the local name instead of
 // the fully scoped name, when doing lookups. This version is intended to
-// be used only by the CFE add_xxx functions.
+// be used only by the frontend add_xxx functions.
 AST_Decl *
-UTL_Scope::lookup_for_add (AST_Decl *d,
-                           bool)
+UTL_Scope::lookup_for_add (AST_Decl *d)
 {
   if (d == 0)
     {
@@ -318,8 +182,7 @@ UTL_Scope::lookup_for_add (AST_Decl *d,
       return 0;
     }
 
-  return this->lookup_by_name_local (id,
-                                     0);
+  return this->lookup_by_name_local (id, 0);
 }
 
 int
@@ -538,7 +401,7 @@ UTL_Scope::fe_add_decl (AST_Decl *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, false)) != 0)
+  if ((d = this->lookup_for_add (t)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -624,7 +487,7 @@ UTL_Scope::fe_add_full_struct_type (AST_Structure *t)
 {
   AST_Decl *predef = 0;
 
-  if ((predef = this->lookup_for_add (t, false)) != 0)
+  if ((predef = this->lookup_for_add (t)) != 0)
     {
       if (!can_be_redefined (predef))
         {
@@ -674,12 +537,12 @@ UTL_Scope::fe_add_fwd_struct_type (AST_StructureFwd *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, false)) != 0)
+  if ((d = this->lookup_for_add (t)) != 0)
     {
       AST_Decl::NodeType nt = d->node_type ();
 
       // There used to be another check here ANDed with the one below:
-      // d->defined_in () == this. But lookup_for_add calls only
+      // d->defined_in () == this. But lookup_for_add() calls only
       // lookup_by_name_local(), which does not bump up the scope,
       // and look_in_previous() for modules. If look_in_previous()
       // finds something, the scopes will NOT be the same pointer
@@ -1422,7 +1285,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
     }
 
   // If name starts with "::" or "" start lookup in global scope.
-  if (is_global_name (e->head ()))
+  if (this->is_global_name (e->head ()))
     {
      // Get parent scope.
       d = ScopeAsDecl (this);
@@ -1646,10 +1509,10 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
 
       if (sn != 0)
         {
-          d = iter_lookup_by_name_local (d,
-                                         sn,
-                                         0,
-                                         full_def_only);
+          d = this->iter_lookup_by_name_local (d,
+                                               sn,
+                                               0,
+                                               full_def_only);
         }
 
       // If the start of the scoped name is an interface, and the
@@ -2390,6 +2253,117 @@ UTL_Scope::smart_local_add (AST_Decl *t)
       else
         {
           ub->coerce_labels (u);
+        }
+    }
+}
+
+/// Determines if a name is global.
+bool
+UTL_Scope::is_global_name (Identifier *i)
+{
+  if (i == 0)
+    {
+      return false;
+    }
+    
+  ACE_CString cmp (i->get_string (), 0, false);
+  
+  if (cmp == "" || cmp == "::")
+    {
+      return true;
+    }
+
+  return false;
+}
+
+AST_Decl *
+UTL_Scope::iter_lookup_by_name_local (AST_Decl *d,
+                                      UTL_ScopedName *e,
+                                      long index,
+                                      bool full_def_only)
+{
+  AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
+  AST_Decl *result = 0;
+
+  // Remove all the layers of typedefs.
+  while (d != 0 && d->node_type () == AST_Decl::NT_typedef)
+    {
+      if (td == 0)
+        {
+          return 0;
+        }
+
+      d = td->base_type ();
+    }
+    
+  if (d == 0)
+    {
+      return 0;
+    }
+
+  // Try to convert the AST_Decl to a UTL_Scope.
+  UTL_Scope *sc = DeclAsScope (d);
+
+  if (sc == 0)
+    {
+      return 0;
+    }
+
+  if (index < static_cast<long> (sc->nmembers ()))
+    {
+      // Look up the first component of the scoped name.
+      result = sc->lookup_by_name_local (e->head (),
+                                         index,
+                                         full_def_only);
+    }
+  else
+    {
+      return 0;
+    }
+
+  UTL_ScopedName *sn = (UTL_ScopedName *) e->tail ();
+
+  if (result == 0)
+    {
+      if (sn == 0)
+        {
+          result = UTL_Scope::match_param (e);
+        }
+
+      return result;
+    }
+  else
+    {
+      if (sn == 0)
+        {
+          // We're done.
+          return result;
+        }
+      else
+        {
+          // Look up the next component of the scoped name.
+          result = iter_lookup_by_name_local (result,
+                                              sn,
+                                              0,
+                                              full_def_only);
+        }
+
+      if (result != 0)
+        {
+          // We're done.
+          return result;
+        }
+      else
+        {
+          // Maybe we're on the wrong branch of reopened
+          // and/or nested modules, so let's see if there's
+          // another branch. If 'index' gets as high as the
+          // number of members in the scope, the call above
+          // to lookup_by_name_local will catch it and return 0.
+          return this->iter_lookup_by_name_local (d,
+                                                  e,
+                                                  index + 1,
+                                                  full_def_only);
         }
     }
 }

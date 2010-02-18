@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_FACTORY_H
 #define BE_FACTORY_H
 
@@ -32,8 +31,6 @@ class be_factory : public virtual AST_Factory,
                    public virtual be_decl
 {
 public:
-  be_factory (void);
-
   be_factory (UTL_ScopedName *n);
 
   ~be_factory (void);

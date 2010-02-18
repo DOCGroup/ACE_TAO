@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_ATTRIBUTE_H
 #define BE_ATTRIBUTE_H
 
@@ -29,8 +28,6 @@ class be_attribute : public virtual AST_Attribute,
                      public virtual be_decl
 {
 public:
-  be_attribute (void);
-
   be_attribute (bool ro,
                 AST_Type *ft,
                 UTL_ScopedName *n,
