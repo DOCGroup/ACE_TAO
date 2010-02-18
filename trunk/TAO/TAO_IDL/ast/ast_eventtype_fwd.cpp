@@ -8,15 +8,6 @@
 AST_Decl::NodeType const
 AST_EventTypeFwd::NT = AST_Decl::NT_eventtype_fwd;
 
-AST_EventTypeFwd::AST_EventTypeFwd (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_InterfaceFwd (),
-    AST_ValueTypeFwd ()
-{
-}
-
 AST_EventTypeFwd::AST_EventTypeFwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)
   : COMMON_Base (false,

@@ -84,16 +84,10 @@ public:
       dir_INOUT = 0x04
     };
 
-  // Operations.
-
-  // Constructor(s).
-  AST_Argument (void);
-
   AST_Argument (Direction direction,
                 AST_Type *ft,
                 UTL_ScopedName *n);
 
-  // Destructor.
   virtual ~AST_Argument (void);
 
   // Data Accessors.

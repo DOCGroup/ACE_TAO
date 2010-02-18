@@ -19,6 +19,8 @@ be_mirror_port::be_mirror_port (
                        porttype_ref),
     AST_Mirror_Port (n,
                      porttype_ref),
+    be_decl (AST_Decl::NT_interface,
+             n),
     be_field (porttype_ref,
               n),
     be_extended_port (n,

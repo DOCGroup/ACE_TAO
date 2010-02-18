@@ -91,11 +91,6 @@ public:
       vis_PRIVATE
     };
 
-  // Operations.
-
-  // Constructor(s).
-  AST_Field (void);
-
   AST_Field (AST_Type *field_type,
              UTL_ScopedName *n,
              Visibility vis = vis_NA);

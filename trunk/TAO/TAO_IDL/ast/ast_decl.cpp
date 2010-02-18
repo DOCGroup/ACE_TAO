@@ -130,30 +130,6 @@ COMMON_Base::destroy (void)
 {
 }
 
-// Constructor(s) and destructor.
-
-AST_Decl::AST_Decl (void)
-  : COMMON_Base (),
-    repoID_ (0),
-    flat_name_ (0),
-    contains_wstring_ (-1),
-    pd_imported (false),
-    pd_in_main_file (false),
-    pd_defined_in (0),
-    pd_node_type (NT_module),
-    pd_line (-1),
-    pd_local_name (0),
-    pd_original_local_name (0),
-    full_name_ (0),
-    prefix_ (0),
-    version_ (0),
-    anonymous_ (false),
-    typeid_set_ (false),
-    last_referenced_as_ (0),
-    prefix_scope_ (0)
-{
-}
-
 AST_Decl::AST_Decl (NodeType nt,
                     UTL_ScopedName *n,
                     bool anonymous)

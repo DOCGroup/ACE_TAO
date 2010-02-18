@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #include "be_array.h"
 #include "be_codegen.h"
 #include "be_scope.h"
@@ -25,17 +24,6 @@
 #include "global_extern.h"
 
 #include "ace/Log_Msg.h"
-
-be_array::be_array (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType (),
-    AST_Array (),
-    be_decl (),
-    be_type ()
-{
-}
 
 be_array::be_array (UTL_ScopedName *n,
                     unsigned long ndims,

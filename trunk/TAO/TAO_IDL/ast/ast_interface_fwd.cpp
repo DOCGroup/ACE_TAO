@@ -78,15 +78,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 AST_Decl::NodeType const
 AST_InterfaceFwd::NT = AST_Decl::NT_interface_fwd;
 
-AST_InterfaceFwd::AST_InterfaceFwd (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    pd_full_definition (0),
-    is_defined_ (false)
-{
-}
-
 AST_InterfaceFwd::AST_InterfaceFwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)
   : COMMON_Base (dummy->is_local (),

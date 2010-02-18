@@ -29,8 +29,6 @@ class be_array : public virtual AST_Array,
                  public virtual be_type
 {
 public:
-  be_array (void);
-
   be_array (UTL_ScopedName *n,
             unsigned long ndims,
             UTL_ExprList *dims,

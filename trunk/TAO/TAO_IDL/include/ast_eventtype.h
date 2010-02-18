@@ -9,8 +9,6 @@
 class TAO_IDL_FE_Export AST_EventType : public virtual AST_ValueType
 {
 public:
-  AST_EventType (void);
-
   AST_EventType (UTL_ScopedName *n,
                  AST_Type **inherits,
                  long n_inherits,

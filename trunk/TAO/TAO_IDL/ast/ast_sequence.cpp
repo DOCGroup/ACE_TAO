@@ -89,19 +89,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 AST_Decl::NodeType const
 AST_Sequence::NT = AST_Decl::NT_sequence;
 
-AST_Sequence::AST_Sequence (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType (),
-    pd_max_size (0),
-    pd_base_type (0),
-    owns_base_type_ (false)
-{
-  // A sequence data type is always VARIABLE.
-  this->size_type (AST_Type::VARIABLE);
-}
-
 AST_Sequence::AST_Sequence (AST_Expression *ms,
                             AST_Type *bt,
                             UTL_ScopedName *n,

@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_EVENTTYPE_H
 #define TAO_BE_EVENTTYPE_H
 
@@ -30,11 +29,6 @@ class be_eventtype : public virtual be_valuetype,
   //    Extends be_valuetype.
   //
 public:
-  /// Default constructor.
-  be_eventtype (void);
-
-  /// Constructor that sets its scoped name <n>, a list of inherited valuetypes
-  /// and supported interfaces <ih>, and the number of inherited interfaces <nih>
   be_eventtype (UTL_ScopedName *n,
                 AST_Type **inherits,
                 long n_inherits,
@@ -48,7 +42,6 @@ public:
                 bool truncatable,
                 bool custom);
 
-  /// Destructor.
   ~be_eventtype (void);
 
   // Visiting.
@@ -57,8 +50,7 @@ public:
   // Cleanup.
   virtual void destroy (void);
 
- // Narrowing.
-
+  // Narrowing.
   DEF_NARROW_FROM_DECL (be_eventtype);
   DEF_NARROW_FROM_SCOPE (be_eventtype);
 };

@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #include "be_sequence.h"
 #include "be_typedef.h"
 #include "be_interface.h"
@@ -31,23 +30,6 @@
 #include "global_extern.h"
 
 #include "ace/Log_Msg.h"
-
-be_sequence::be_sequence (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType (),
-    AST_Sequence (),
-    UTL_Scope (),
-    be_scope (),
-    be_decl (),
-    be_type (),
-    mt_ (be_sequence::MNG_UNKNOWN),
-    field_node_ (0)
-{
-  // Always the case.
-  this->has_constructor (true);
-}
 
 be_sequence::be_sequence (AST_Expression *v,
                           AST_Type *t,

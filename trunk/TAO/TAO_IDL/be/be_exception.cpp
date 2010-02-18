@@ -14,29 +14,10 @@
  */
 //=============================================================================
 
-
-
 #include "be_exception.h"
 #include "be_visitor.h"
 
 #include "global_extern.h"
-
-be_exception::be_exception (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType (),
-    UTL_Scope (),
-    AST_Structure (),
-    AST_Exception (),
-    be_scope (),
-    be_decl (),
-    be_type (),
-    be_structure ()
-{
-  // Always the case.
-  this->size_type (AST_Type::VARIABLE);
-}
 
 be_exception::be_exception (UTL_ScopedName *n,
                             bool local,
@@ -62,7 +43,8 @@ be_exception::be_exception (UTL_ScopedName *n,
              n),
     be_type (AST_Decl::NT_except,
              n),
-    be_structure (n,
+    be_structure (AST_Decl::NT_except,
+                  n,
                   local,
                   abstract)
 {

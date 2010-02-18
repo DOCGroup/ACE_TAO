@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_HOME_H
 #define TAO_BE_HOME_H
 
@@ -30,8 +29,6 @@ class be_home : public virtual AST_Home,
   // =DESCRIPTION
   //   Extensions to the AST_Home class
 public:
-  be_home (void);
-
   be_home (UTL_ScopedName *n,
            AST_Home *base_home,
            AST_Component *managed_component,

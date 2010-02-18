@@ -15,24 +15,14 @@
 class TAO_IDL_FE_Export AST_Native : public virtual AST_Exception
 {
 public:
-  // Operations.
-
-  // Constructor(s).
-
-  AST_Native (void);
-  // Default constructor.
-
   AST_Native (UTL_ScopedName *n);
-  // Constructor that initializes the scoped name.
 
   virtual ~AST_Native (void);
-  // Destructor.
   
-  virtual void destroy (void);
   // Cleanup.
+  virtual void destroy (void);
 
   // Narrowing.
-
   DEF_NARROW_FROM_DECL(AST_Native);
 
   // AST Dumping.

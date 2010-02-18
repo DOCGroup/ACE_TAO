@@ -17,6 +17,8 @@ be_extended_port::be_extended_port (
                n),
     AST_Extended_Port (n,
                        porttype_ref),
+    be_decl (AST_Decl::NT_ext_port,
+             n),
     be_field (porttype_ref,
               n)
 {

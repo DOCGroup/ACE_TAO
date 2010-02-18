@@ -14,18 +14,8 @@
  */
 //=============================================================================
 
-
 #include "be_module.h"
 #include "be_visitor.h"
-
-be_module::be_module (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    UTL_Scope (),
-    be_scope (),
-    be_decl ()
-{
-}
 
 be_module::be_module (UTL_ScopedName *n)
   : COMMON_Base (),

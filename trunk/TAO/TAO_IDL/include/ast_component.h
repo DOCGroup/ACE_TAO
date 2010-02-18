@@ -19,8 +19,6 @@ class TAO_IDL_FE_Export AST_Component
   : public virtual AST_Interface
 {
 public:
-  AST_Component (void);
-
   AST_Component (UTL_ScopedName *n,
                  AST_Component *base_component,
                  AST_Type **supports,

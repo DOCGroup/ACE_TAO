@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_MODULE_H
 #define _BE_MODULE_H
 
@@ -30,10 +29,6 @@ class be_module : public virtual AST_Module,
                   public virtual be_decl
 {
 public:
-  /// Default constructor.
-  be_module (void);
-
-  /// Constructor.
   be_module (UTL_ScopedName *n);
 
   /// Cleanup method.
@@ -43,7 +38,6 @@ public:
   virtual int accept (be_visitor *visitor);
 
   // Narrowing.
-
   DEF_NARROW_FROM_DECL (be_module);
   DEF_NARROW_FROM_SCOPE (be_module);
 };

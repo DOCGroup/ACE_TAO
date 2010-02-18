@@ -80,8 +80,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_Exception : public virtual AST_Structure
 {
 public:
-  AST_Exception (void);
-
   AST_Exception (UTL_ScopedName *n,
                  bool local,
                  bool abstract);

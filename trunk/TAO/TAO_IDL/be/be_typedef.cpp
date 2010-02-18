@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #include "be_typedef.h"
 #include "be_visitor.h"
 #include "ace/Log_Msg.h"

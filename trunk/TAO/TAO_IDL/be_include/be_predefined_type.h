@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_PREDEFINED_TYPE_H
 #define _BE_PREDEFINED_TYPE_H
 
@@ -28,8 +27,6 @@ class be_predefined_type : public virtual AST_PredefinedType,
                            public virtual be_type
 {
 public:
-  be_predefined_type (void);
-
   be_predefined_type (AST_PredefinedType::PredefinedType t,
                       UTL_ScopedName *n);
                       
@@ -46,7 +43,6 @@ public:
   virtual void destroy (void);
 
   // Narrowing.
-
   DEF_NARROW_FROM_DECL (be_predefined_type);
 
 protected:

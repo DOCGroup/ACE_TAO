@@ -12,6 +12,8 @@ be_template_module::be_template_module (
               n),
     UTL_Scope (AST_Decl::NT_module),
     AST_Module (n),
+    AST_Type (AST_Decl::NT_module,
+              n),
     AST_Template_Module (n,
                          template_params),
     be_scope (AST_Decl::NT_module),

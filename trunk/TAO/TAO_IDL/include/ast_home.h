@@ -13,8 +13,6 @@ class AST_ValueType;
 class TAO_IDL_FE_Export AST_Home : public virtual AST_Interface
 {
 public:
-  AST_Home (void);
-
   AST_Home (UTL_ScopedName *n,
             AST_Home *base_home,
             AST_Component *managed_component,

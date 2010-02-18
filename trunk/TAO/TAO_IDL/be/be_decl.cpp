@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #include "be_decl.h"
 #include "be_scope.h"
 #include "be_interface.h"
@@ -45,62 +44,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/String_Base.h"
 
-// Default Constructor
-be_decl::be_decl (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    cli_hdr_gen_ (false),
-    cli_stub_gen_ (false),
-    cli_inline_gen_ (false),
-    srv_hdr_gen_ (false),
-    impl_hdr_gen_ (false),
-    srv_skel_gen_ (false),
-    impl_skel_gen_ (false),
-    srv_inline_gen_ (false),
-    tie_skel_gen_ (false),
-    cli_hdr_any_op_gen_ (false),
-    cli_stub_any_op_gen_ (false),
-    cli_hdr_cdr_op_gen_ (false),
-    cli_stub_cdr_op_gen_ (false),
-    cli_inline_cdr_op_gen_ (false),
-    cli_inline_cdr_decl_gen_ (false),
-    cli_hdr_serializer_op_gen_ (false),
-    cli_stub_serializer_op_gen_ (false),
-    cli_inline_serializer_op_gen_ (false),
-    cli_inline_serializer_decl_gen_ (false),
-    cli_traits_gen_ (false),
-    cli_arg_traits_gen_ (false),
-    srv_arg_traits_gen_ (false),
-    srv_sarg_traits_gen_ (false),
-    cli_pragma_inst_gen_ (false),
-    cli_inarg_tmpl_class_gen_ (false),
-    cli_inarg_pragma_inst_gen_ (false),
-    cli_inoutarg_tmpl_class_gen_ (false),
-    cli_inoutarg_pragma_inst_gen_ (false),
-    cli_outarg_tmpl_class_gen_ (false),
-    cli_outarg_pragma_inst_gen_ (false),
-    cli_retarg_tmpl_class_gen_ (false),
-    cli_retarg_pragma_inst_gen_ (false),
-    srv_tmpl_class_gen_ (false),
-    srv_pragma_inst_gen_ (false),
-    srv_inarg_tmpl_class_gen_ (false),
-    srv_inarg_pragma_inst_gen_ (false),
-    srv_inoutarg_tmpl_class_gen_ (false),
-    srv_inoutarg_pragma_inst_gen_ (false),
-    srv_outarg_tmpl_class_gen_ (false),
-    srv_outarg_pragma_inst_gen_ (false),
-    srv_retarg_tmpl_class_gen_ (false),
-    srv_retarg_pragma_inst_gen_ (false),
-    ccm_pre_proc_gen_ (false),
-    ex_idl_facet_gen_ (false),
-    svnt_hdr_facet_gen_ (false),
-    svnt_src_facet_gen_ (false),
-    exec_hdr_facet_gen_ (false),
-    exec_src_facet_gen_ (false)
-{
-}
-
-// Constructor
 be_decl::be_decl (AST_Decl::NodeType type,
                   UTL_ScopedName *n)
   : COMMON_Base (),
@@ -157,7 +100,6 @@ be_decl::be_decl (AST_Decl::NodeType type,
 {
 }
 
-// Destructor
 be_decl::~be_decl (void)
 {
 }

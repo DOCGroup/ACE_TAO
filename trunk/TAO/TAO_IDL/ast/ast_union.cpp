@@ -90,17 +90,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-AST_Union::AST_Union (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType (),
-    UTL_Scope (),
-    AST_Structure (),
-    default_index_ (-2)
-{
-}
-
 AST_Union::AST_Union (AST_ConcreteType *dt,
                       UTL_ScopedName *n,
                       bool local,

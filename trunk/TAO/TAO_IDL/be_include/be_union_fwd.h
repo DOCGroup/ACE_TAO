@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_UNION_FWD_H
 #define BE_UNION_FWD_H
 
@@ -32,14 +31,9 @@ class be_union_fwd : public virtual AST_UnionFwd,
   // =DESCRIPTION
   //   Extensions to the AST_UnionFwd class
 public:
-  /// Default constructor.
-  be_union_fwd (void);
-
-  /// Constructor.
   be_union_fwd (AST_Union *dummy,
                 UTL_ScopedName *n);
 
-  /// Destructor.
   virtual ~be_union_fwd (void);
 
   /// Cleanup function.
@@ -49,7 +43,6 @@ public:
   virtual int accept (be_visitor* visitor);
 
   // Narrowing.
-
   DEF_NARROW_FROM_DECL (be_union_fwd);
 };
 

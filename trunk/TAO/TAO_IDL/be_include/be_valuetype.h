@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_VALUETYPE_H
 #define TAO_BE_VALUETYPE_H
 
@@ -34,11 +33,6 @@ class be_valuetype : public virtual be_interface,
   //    mapping.
   //
 public:
-  /// Default constructor.
-  be_valuetype (void);
-
-  /// Constructor that sets its scoped name <n>, a list of inherited valuetypes
-  /// and supported interfaces <ih>, and the number of inherited interfaces <nih>
   be_valuetype (UTL_ScopedName *n,
                 AST_Type **inherits,
                 long n_inherits,
@@ -52,7 +46,6 @@ public:
                 bool truncatable,
                 bool custom);
 
-  /// Destructor.
   ~be_valuetype (void);
 
   virtual void redefine (AST_Interface *from);

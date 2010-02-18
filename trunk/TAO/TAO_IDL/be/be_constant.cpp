@@ -14,19 +14,10 @@
  */
 //=============================================================================
 
-
 #include "be_constant.h"
 #include "be_visitor.h"
 #include "utl_scope.h"
 #include "nr_extern.h"
-
-be_constant::be_constant (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Constant (),
-    be_decl ()
-{
-}
 
 be_constant::be_constant (AST_Expression::ExprType et,
                           AST_Expression *v,

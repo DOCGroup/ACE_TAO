@@ -11,7 +11,7 @@ UTL_Scope::fe_add_full_intf_decl (DECL *t)
   DECL *fwd = 0;
 
   // Already defined?
-  if ((predef = this->lookup_for_add (t, false)) != 0)
+  if ((predef = this->lookup_for_add (t)) != 0)
     {
       // Treat fwd declared interfaces specially
       if (predef->node_type () == DECL::NT)
@@ -103,12 +103,12 @@ UTL_Scope::fe_add_fwd_intf_decl (typename FULL_DECL::FWD_TYPE *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, false)) != 0)
+  if ((d = this->lookup_for_add (t)) != 0)
     {
       AST_Decl::NodeType nt = d->node_type ();
 
       // There used to be another check here ANDed with the one below:
-      // d->defined_in () == this. But lookup_for_add calls only
+      // d->defined_in () == this. But lookup_for_add() calls only
       // lookup_by_name_local(), which does not bump up the scope,
       // and look_in_previous() for modules. If look_in_previous()
       // finds something, the scopes will NOT be the same pointer

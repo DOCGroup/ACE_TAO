@@ -80,14 +80,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 AST_Decl::NodeType const
 AST_UnionBranch::NT = AST_Decl::NT_union_branch;
 
-AST_UnionBranch::AST_UnionBranch (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Field (),
-    pd_ll (0)
-{
-}
-
 AST_UnionBranch::AST_UnionBranch (UTL_LabelList *ll,
                                   AST_Type *ft,
                                   UTL_ScopedName *n)

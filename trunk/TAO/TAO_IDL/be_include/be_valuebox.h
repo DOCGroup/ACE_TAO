@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_VALUEBOX_H
 #define TAO_BE_VALUEBOX_H
 
@@ -27,10 +26,6 @@ class be_valuebox : public virtual AST_ValueBox,
                     public virtual be_type
 {
 public:
-  /// Default constructor.
-  be_valuebox (void);
-
-  /// Constructor.
   be_valuebox ( AST_Type *boxed_type,
                 UTL_ScopedName *n );
 
@@ -41,7 +36,6 @@ public:
   virtual void destroy (void);
 
   // Narrowing
-
   DEF_NARROW_FROM_DECL (be_valuebox);
 };
 

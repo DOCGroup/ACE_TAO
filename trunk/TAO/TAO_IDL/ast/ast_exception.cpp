@@ -83,16 +83,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 AST_Decl::NodeType const
 AST_Exception::NT = AST_Decl::NT_except;
 
-AST_Exception::AST_Exception (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType (),
-    UTL_Scope (),
-    AST_Structure ()
-{
-}
-
 AST_Exception::AST_Exception (UTL_ScopedName *n,
                               bool local,
                               bool abstract)

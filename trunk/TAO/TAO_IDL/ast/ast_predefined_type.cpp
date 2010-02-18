@@ -81,15 +81,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 AST_Decl::NodeType const
 AST_PredefinedType::NT = AST_Decl::NT_pre_defined;
 
-AST_PredefinedType::AST_PredefinedType (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType (),
-    pd_pt (PT_long)
-{
-}
-
 AST_PredefinedType::AST_PredefinedType (PredefinedType t,
                                         UTL_ScopedName *n)
   : COMMON_Base (),

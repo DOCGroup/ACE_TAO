@@ -95,7 +95,6 @@ class ast_visitor;
 class TAO_IDL_FE_Export COMMON_Base
 {
 public:
-
   COMMON_Base (bool local = false,
                bool abstract = false);
 
@@ -110,9 +109,6 @@ public:
 
   // A no-op, overridden in the child classes.
   virtual void destroy (void);
-
-        // Narrowing.
-
 
 protected:
   bool is_local_;
@@ -173,11 +169,6 @@ public:
       , NT_connector                // Denotes a CCM connector
       , NT_param_holder             // Denotes a template param placeholder
   };
-
-  // Operations.
-
-  // Constructor(s).
-  AST_Decl (void);
 
   AST_Decl (NodeType type,
             UTL_ScopedName *n,

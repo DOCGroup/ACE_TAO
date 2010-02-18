@@ -81,14 +81,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 AST_Decl::NodeType const
 AST_Root::NT = AST_Decl::NT_root;
 
-AST_Root::AST_Root (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    UTL_Scope (),
-    AST_Module ()
-{
-}
-
 AST_Root::AST_Root (UTL_ScopedName *n)
   : COMMON_Base (),
     AST_Decl (AST_Decl::NT_root,

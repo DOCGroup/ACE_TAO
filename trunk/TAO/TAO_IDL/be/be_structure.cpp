@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #include "be_structure.h"
 #include "be_field.h"
 #include "be_codegen.h"
@@ -25,19 +24,6 @@
 #include "utl_identifier.h"
 #include "idl_defines.h"
 #include "global_extern.h"
-
-be_structure::be_structure (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType (),
-    UTL_Scope (),
-    AST_Structure (),
-    be_scope (),
-    be_decl (),
-    be_type ()
-{
-}
 
 be_structure::be_structure (UTL_ScopedName *n,
                             bool local,
@@ -58,6 +44,35 @@ be_structure::be_structure (UTL_ScopedName *n,
     be_decl (AST_Decl::NT_struct,
              n),
     be_type (AST_Decl::NT_struct,
+             n)
+{
+  if (!this->imported ())
+    {
+      idl_global->aggregate_seen_ = true;
+    }
+}
+
+be_structure::be_structure (AST_Decl::NodeType nt,
+                            UTL_ScopedName *n,
+                            bool local,
+                            bool abstract)
+  : COMMON_Base (local,
+                 abstract),
+    AST_Decl (nt,
+              n),
+    AST_Type (nt,
+              n),
+    AST_ConcreteType (nt,
+                      n),
+    UTL_Scope (nt),
+    AST_Structure (nt,
+                   n,
+                   local,
+                   abstract),
+    be_scope (nt),
+    be_decl (nt,
+             n),
+    be_type (nt,
              n)
 {
   if (!this->imported ())

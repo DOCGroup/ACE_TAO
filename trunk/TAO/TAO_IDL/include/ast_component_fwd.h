@@ -11,8 +11,6 @@
 class TAO_IDL_FE_Export AST_ComponentFwd : public virtual AST_InterfaceFwd
 {
 public:
-  AST_ComponentFwd (void);
-
   AST_ComponentFwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 
