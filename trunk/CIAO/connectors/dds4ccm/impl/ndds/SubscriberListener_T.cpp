@@ -51,11 +51,10 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_requested_incompatib
         {
           if (this->reactor_)
             {
-
               ::CIAO::DDS4CCM::OnRequestedOncompatibleQosHandler* rh = 0;
-              ACE_NEW_NORETURN (rh,
-                              ::CIAO::DDS4CCM::OnRequestedOncompatibleQosHandler (
-                                this->error_listener_, reader, status));
+              ACE_NEW (rh,
+                       ::CIAO::DDS4CCM::OnRequestedOncompatibleQosHandler (
+                         this->error_listener_, reader, status));
               ACE_Event_Handler_var safe_handler (rh);
               if (this->reactor_->notify (rh) != 0)
                 {
@@ -98,9 +97,9 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_unexpected_status (
           if (this->reactor_)
             {
               ::CIAO::DDS4CCM::OnUnexpectedStatusHandler* rh = 0;
-              ACE_NEW_NORETURN (rh,
-                                ::CIAO::DDS4CCM::OnUnexpectedStatusHandler (
-                                  this->error_listener_, entity, status_kind));
+              ACE_NEW (rh,
+                       ::CIAO::DDS4CCM::OnUnexpectedStatusHandler (
+                         this->error_listener_, entity, status_kind));
               ACE_Event_Handler_var safe_handler (rh);
               if (this->reactor_->notify (rh) != 0)
                 {
@@ -175,9 +174,9 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_sample_rejected (
           if (this->reactor_)
             {
               ::CIAO::DDS4CCM::OnSampleRejectedHandler* rh = 0;
-              ACE_NEW_NORETURN (rh,
-                                ::CIAO::DDS4CCM::OnSampleRejectedHandler (
-                                  this->error_listener_, reader, status));
+              ACE_NEW (rh,
+                       ::CIAO::DDS4CCM::OnSampleRejectedHandler (
+                       this->error_listener_, reader, status));
               ACE_Event_Handler_var safe_handler (rh);
               if (this->reactor_->notify (rh) != 0)
                 {
