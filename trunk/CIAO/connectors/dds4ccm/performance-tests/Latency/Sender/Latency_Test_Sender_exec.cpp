@@ -28,15 +28,15 @@ namespace CIAO_Latency_Test_Sender_Impl
   void
   LatencyTest_Listener_exec_i::on_one_data (
                                   const LatencyTest & an_instance,
-                                  const ::CCM_DDS::ReadInfo & info)
+                                  const ::CCM_DDS::ReadInfo &)
   {
     ACE_UINT64  receive_time = 0;
- 
+
     //only interested in messages received with a latency_ping = 0 (messages sent beck by receiver)
     if( an_instance.ping == 0)
-    { 
+    {
       ACE_High_Res_Timer::gettimeofday_hr ().to_usec ( receive_time);
-      this->callback_.read(an_instance,  receive_time);
+      this->callback_.read(an_instance, receive_time);
     }
   }
 
@@ -52,7 +52,7 @@ namespace CIAO_Latency_Test_Sender_Impl
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &matched, int number_of_subscribers, Sender_exec_i &callback)
    : callback_ (callback),
     matched_ (matched),
-    number_of_subscribers_ (number_of_subscribers) 
+    number_of_subscribers_ (number_of_subscribers)
   {
   }
 
@@ -94,9 +94,9 @@ namespace CIAO_Latency_Test_Sender_Impl
       if((!CORBA::is_nil(the_entity)) && (kind==DDS::PUBLICATION_MATCHED_STATUS))
         {
           ::DDS::PublicationMatchedStatus_var stat;
-          ::DDS::DataWriter::_narrow(the_entity)->get_publication_matched_status(stat.out()); 
-          if((stat.in().current_count >= (this->number_of_subscribers_ + 1))  && !this->matched_.value())      
-            {  
+          ::DDS::DataWriter::_narrow(the_entity)->get_publication_matched_status(stat.out());
+          if((stat.in().current_count >= (this->number_of_subscribers_ + 1))  && !this->matched_.value())
+            {
               this->matched_ = true;
               this->callback_.start();
             }
@@ -117,7 +117,7 @@ namespace CIAO_Latency_Test_Sender_Impl
     this->callback_.write_one ();
     return 0;
   }
- 
+
   //============================================================
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
@@ -147,15 +147,13 @@ namespace CIAO_Latency_Test_Sender_Impl
   void
   Sender_exec_i::write_one (void)
   {
-     ACE_UINT64 start_time = 0;
-  
     //first message sent always, next messages only as previous sent message is received back
     // TO DO: what if a message is lost?
     if( (this->number_of_msg_ == 0) || ( this->received_.value()))
     {
       // all messages send, stop timer
       if((this->iterations_ != 0) && (this->number_of_msg_ >= (this->iterations_ * this->keys_)))
-        {  
+        {
           this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
           this->timer_ = false;
         }
@@ -184,10 +182,10 @@ namespace CIAO_Latency_Test_Sender_Impl
     }
   }
 
-  void 
+  void
     Sender_exec_i::read(LatencyTest an_instance,ACE_UINT64  receive_time)
   {
-    if ( an_instance.seq_num == this->seq_num_.value())
+    if (an_instance.seq_num == this->seq_num_.value())
     {
       this->record_time( receive_time);
       this->received_ = true;
@@ -197,7 +195,10 @@ namespace CIAO_Latency_Test_Sender_Impl
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Sender_exec_i::get_connector_status (void)
   {
-    return new ConnectorStatusListener_exec_i (this->matched_, this->number_of_subscribers_, *this);
+    return new ConnectorStatusListener_exec_i (
+      this->matched_,
+      this->number_of_subscribers_,
+      *this);
   }
 
   ::CCM_DDS::LatencyTest::CCM_Listener_ptr
@@ -229,7 +230,7 @@ namespace CIAO_Latency_Test_Sender_Impl
         this->samples_[key] = new_key;
       }
     this->last_key_ = this->samples_.begin ();
- 
+
     //this->sleep_ is in ms
     unsigned int sec = this->sleep_/1000;
     unsigned int usec = (this->sleep_ % 1000) * 1000;
@@ -247,7 +248,7 @@ namespace CIAO_Latency_Test_Sender_Impl
       this->timer_ = true;
    }
 
-void 
+void
 Sender_exec_i::record_time (ACE_UINT64  receive_time)
   {
      ACE_UINT64 interval =  ( receive_time  - this->start_time_);
@@ -371,7 +372,7 @@ Sender_exec_i::record_time (ACE_UINT64  receive_time)
       }
     catch (...)
       {
-        ACE_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("ERROR: Sender_exec_i::ccm_activate: Unknown exception caught\n")));
       }
   }
@@ -386,7 +387,7 @@ Sender_exec_i::record_time (ACE_UINT64  receive_time)
   void
   Sender_exec_i::ccm_remove (void)
   {
-     
+
    ACE_DEBUG ((LM_DEBUG, "SUMMARY SENDER number of messages sent: %u\n",
                           (this->number_of_msg_ + 1)));
 
