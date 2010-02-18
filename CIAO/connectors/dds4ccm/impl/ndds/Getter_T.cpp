@@ -188,7 +188,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
           if (retcode == DDS_RETCODE_OK && data.length () >= 1)
             {
               info <<= sample_info[0]; // Retrieves the last sample.
-              DDS_TYPE::value_type::_var_type temp = &data[0];
+              typename DDS_TYPE::value_type::_var_type temp = &data[0];
               an_instance = temp.out ();
             }
           else
@@ -213,7 +213,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
             }
         }
     }
-    
+
   return true;
 }
 
