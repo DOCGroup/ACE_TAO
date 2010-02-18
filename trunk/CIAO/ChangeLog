@@ -1,3 +1,8 @@
+Thu Feb 18 13:48:20 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/TwoTopics/Connector/TwoTopics_Connector.mpc:
+          Removed dummy label to enable compilation.
+
 Thu Feb 18 13:44:59 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/FixedSizeStruct/EventConnector/Connector/FSS_Event_Connector.mpc:
