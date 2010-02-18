@@ -91,7 +91,6 @@ project(DDS_FSS_Event_Connector_exec) : ciao_executor, dds4ccm_impl {
   libout = ../lib
   includes += ..
   dynamicflags   = FIXED_SIZE_STRUCT_EVENT_CONNECTOR_CONN_BUILD_DLL
-  requires += dummy_label
 
   IDL_Files {
   }
