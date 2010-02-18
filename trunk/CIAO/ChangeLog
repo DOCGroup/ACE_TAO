@@ -1,3 +1,14 @@
+Thu Feb 18 14:22:29 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataWriterListener.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+        * connectors/dds4ccm/impl/ndds/PublisherListener.cpp:
+        * connectors/dds4ccm/impl/ndds/QueryCondition.cpp:
+        * connectors/dds4ccm/impl/ndds/ReadCondition.cpp:
+        * connectors/dds4ccm/impl/ndds/TopicDescription.cpp:
+        * connectors/dds4ccm/impl/ndds/TopicListener.cpp:
+          Implemented ACE_NEW_* macros.
+
 Thu Feb 18 13:48:20 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/TwoTopics/Connector/TwoTopics_Connector.mpc:
