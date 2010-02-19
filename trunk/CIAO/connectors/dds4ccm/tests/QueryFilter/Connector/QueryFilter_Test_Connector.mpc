@@ -10,8 +10,8 @@ project(QueryFilter_Test_Connector_idl_gen) : connectoridldefaults {
               -Wb,skel_export_include=QueryFilter_Test_Connector_svnt_export.h \
               -Wb,svnt_export_macro=QUERY_FILTER_TEST_CONNECTOR_SVNT_Export \
               -Wb,svnt_export_include=QueryFilter_Test_Connector_svnt_export.h \
-              -Wb,exec_export_macro=QUERY_FILTER_TEST_CONNECTOR_EXEC_Export \
-              -Wb,exec_export_include=QueryFilter_Test_Connector_exec_export.h \
+              -Wb,conn_export_macro=QUERY_FILTER_TEST_CONNECTOR_CONN_Export \
+              -Wb,conn_export_include=QueryFilter_Test_Connector_conn_export.h \
               -I ..
 
   IDL_Files {
@@ -91,18 +91,18 @@ project(QueryFilter_Test_Connector_exec) : ciao_executor, dds4ccm_impl {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags   = QUERY_FILTER_TEST_CONNECTOR_EXEC_BUILD_DLL
+  dynamicflags   = QUERY_FILTER_TEST_CONNECTOR_CONN_BUILD_DLL
 
   IDL_Files {
   }
 
   Source_Files {
-    QueryFilter_Test_Connector_exec.cpp
+    QueryFilter_Test_Connector_conn.cpp
   }
 
   Header_Files {
-    QueryFilter_Test_Connector_exec.h
-    QueryFilter_Test_Connector_exec_export.h
+    QueryFilter_Test_Connector_conn.h
+    QueryFilter_Test_Connector_conn_export.h
   }
 
   Inline_Files {

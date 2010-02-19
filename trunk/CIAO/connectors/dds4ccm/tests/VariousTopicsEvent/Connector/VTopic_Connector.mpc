@@ -10,8 +10,8 @@ project(DDS_VTopic_Connector_idl_gen) : connectoridldefaults {
               -Wb,skel_export_include=VTopic_Connector_svnt_export.h \
               -Wb,svnt_export_macro=VTOPIC_CONNECTOR_SVNT_Export \
               -Wb,svnt_export_include=VTopic_Connector_svnt_export.h \
-              -Wb,exec_export_macro=VTOPIC_CONNECTOR_EXEC_Export \
-              -Wb,exec_export_include=VTopic_Connector_exec_export.h \
+              -Wb,conn_export_macro=VTOPIC_CONNECTOR_CONN_Export \
+              -Wb,conn_export_include=VTopic_Connector_conn_export.h \
               -I ..
 
   IDL_Files {
@@ -91,18 +91,18 @@ project(DDS_VTopic_Connector_exec) : ciao_executor, dds4ccm_impl {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags   = VTOPIC_CONNECTOR_EXEC_BUILD_DLL
+  dynamicflags   = VTOPIC_CONNECTOR_CONN_BUILD_DLL
 
   IDL_Files {
   }
 
   Source_Files {
-    VTopic_Connector_exec.cpp
+    VTopic_Connector_conn.cpp
   }
 
   Header_Files {
-    VTopic_Connector_exec.h
-    VTopic_Connector_exec_export.h
+    VTopic_Connector_conn.h
+    VTopic_Connector_conn_export.h
   }
 
   Inline_Files {

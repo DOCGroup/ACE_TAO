@@ -1,30 +1,32 @@
 // $Id$
 
 /**
- * @file   VTopic_Base.idl 
+ * @file   VTopic_Base.idl
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
  */
 
 #ifndef VTOPIC_BASE_IDL
 #define VTOPIC_BASE_IDL
 
+#pragma rti typesupport "Base/VTopic_BaseSupport.h"
 
-  struct TestTopic {
-    string key; //@key
-    long x;
-   };
-  //string
-  struct TopicString {
-    string key; //@key
-    string x_str;
-   };
+struct TestTopic {
+  string key; //@key
+  long x;
+};
 
-  //arrays
-  struct TopicArray {
-    string key; //@key
-    octet x_array[5];
-   };
- 
+// String
+struct TopicString {
+  string key; //@key
+  string x_str;
+};
+
+// Arrays
+struct TopicArray {
+  string key; //@key
+  octet x_array[5];
+ };
+
 //unions
 /*  union X_Union switch (short) {
     case 0:
@@ -36,22 +38,22 @@
   struct TopicUnion {
     string key; //@key
     X_Union x_uni;
- 
+
    };
 
  */
 
-  struct test {
-    short x_test;
-    string x_teststr;
-  };
-  typedef sequence<test> test_seq;
+struct test {
+  short x_test;
+  string x_teststr;
+};
+typedef sequence<test> test_seq;
 
-  //sequence
-  struct TopicSeq {
-    string key; //@key
-    test_seq x_seq;
-   };
+// Sequence
+struct TopicSeq {
+  string key; //@key
+  test_seq x_seq;
+};
 
   typedef sequence<TestTopic> TestTopic_Seq;
   typedef sequence<TopicString> TopicString_Seq;

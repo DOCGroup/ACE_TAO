@@ -10,8 +10,8 @@ project(DDS_PSL_SL_Connector_idl_gen) : connectoridldefaults {
               -Wb,skel_export_include=PSL_SampleLost_Connector_svnt_export.h \
               -Wb,svnt_export_macro=PSL_SAMPLELOST_CONNECTOR_SVNT_Export \
               -Wb,svnt_export_include=PSL_SampleLost_Connector_svnt_export.h \
-              -Wb,exec_export_macro=PSL_SAMPLELOST_CONNECTOR_EXEC_Export \
-              -Wb,exec_export_include=PSL_SampleLost_Connector_exec_export.h \
+              -Wb,conn_export_macro=PSL_SAMPLELOST_CONNECTOR_CONN_Export \
+              -Wb,conn_export_include=PSL_SampleLost_Connector_conn_export.h \
               -I ..
 
   IDL_Files {
@@ -91,18 +91,18 @@ project(DDS_PSL_SampleLost_Connector_exec) : ciao_executor, dds4ccm_impl {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags   = PSL_SAMPLELOST_CONNECTOR_EXEC_BUILD_DLL
+  dynamicflags   = PSL_SAMPLELOST_CONNECTOR_CONN_BUILD_DLL
 
   IDL_Files {
   }
 
   Source_Files {
-    PSL_SampleLost_Connector_exec.cpp
+    PSL_SampleLost_Connector_conn.cpp
   }
 
   Header_Files {
-    PSL_SampleLost_Connector_exec.h
-    PSL_SampleLost_Connector_exec_export.h
+    PSL_SampleLost_Connector_conn.h
+    PSL_SampleLost_Connector_conn_export.h
   }
 
   Inline_Files {

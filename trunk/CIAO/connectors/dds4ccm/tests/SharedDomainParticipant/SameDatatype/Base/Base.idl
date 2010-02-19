@@ -8,6 +8,8 @@
 #ifndef BASE_IDL
 #define BASE_IDL
 
+#pragma rti typesupport "Base/BaseSupport.h"
+
 struct SharedDPTest {
   string key;
   long iteration;

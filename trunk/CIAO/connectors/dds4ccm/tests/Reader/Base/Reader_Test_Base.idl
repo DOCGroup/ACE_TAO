@@ -8,6 +8,8 @@
 #ifndef READER_TEST_BASE_IDL
 #define READER_TEST_BASE_IDL
 
+#pragma rti typesupport "Base/Reader_Test_BaseSupport.h"
+
 struct ReaderTest {
   string key; //@key
   long iteration;

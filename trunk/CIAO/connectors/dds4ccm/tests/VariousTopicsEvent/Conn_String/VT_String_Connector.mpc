@@ -10,8 +10,8 @@ project(DDS_VT_STRING_Connector_idl_gen) : connectoridldefaults {
               -Wb,skel_export_include=VT_String_Connector_svnt_export.h \
               -Wb,svnt_export_macro=VT_STRING_CONNECTOR_SVNT_Export \
               -Wb,svnt_export_include=VT_String_Connector_svnt_export.h \
-              -Wb,exec_export_macro=VT_STRING_CONNECTOR_EXEC_Export \
-              -Wb,exec_export_include=VT_String_Connector_exec_export.h \
+              -Wb,conn_export_macro=VT_STRING_CONNECTOR_CONN_Export \
+              -Wb,conn_export_include=VT_String_Connector_conn_export.h \
               -I ..
 
   IDL_Files {
@@ -91,18 +91,18 @@ project(DDS_VT_String_Connector_exec) : ciao_executor, dds4ccm_impl {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags   = VT_STRING_CONNECTOR_EXEC_BUILD_DLL
+  dynamicflags   = VT_STRING_CONNECTOR_CONN_BUILD_DLL
 
   IDL_Files {
   }
 
   Source_Files {
-    VT_String_Connector_exec.cpp
+    VT_String_Connector_conn.cpp
   }
 
   Header_Files {
-    VT_String_Connector_exec.h
-    VT_String_Connector_exec_export.h
+    VT_String_Connector_conn.h
+    VT_String_Connector_conn_export.h
   }
 
   Inline_Files {
