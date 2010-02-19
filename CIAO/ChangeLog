@@ -1,3 +1,8 @@
+Fri Feb 19 08:43:52 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/TwoTopicsDifferentNs/*:
+          Added tests in order to test the TAO_IDL compliler.
+
 Fri Feb 19 08:35:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Connector/Connector_exec.cpp
