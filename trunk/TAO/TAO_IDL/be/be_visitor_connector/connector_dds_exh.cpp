@@ -35,9 +35,9 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
     {
       return 0;
     }
-    
+
   AST_Connector *base = node->base_connector ();
-  
+
   // Hack for the time being to skip codegen for DDS_State
   // and DDS_Event, both of which come along with the template
   // module instantiation.
@@ -45,57 +45,85 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
     {
       return 0;
     }
-      
+
   node_ = node;
 
   // More shaky logic that will have to be improved. If our
   // base connector does not come from an instantiated
   // template module, we skip the code generation.
   this->process_template_args (base);
-  
+
   if (this->t_args_ == 0)
     {
       return 0;
     }
-    
+
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
   os_ << be_nl << be_nl
       << "namespace CIAO_" << node->flat_name ()
       << "_Impl" << be_nl
       << "{" << be_idt;
-      
+
   this->gen_dds_traits ();
   this->gen_connector_traits ();
-  
+
   if (this->t_args_ == 0)
     {
       return 0;
     }
-  
+
   os_ << be_nl << be_nl
       << "class " << this->export_macro_.c_str () << " "
       << this->node_->local_name () << "_exec_i" << be_idt_nl
       << ": public ";
-      
+
   // Placeholder for forthcoming real-world logic.
   bool dds_event_connector = true;
-  
+
   if (dds_event_connector)
     {
       os_ << "DDS_Event_Connector_T";
     }
-    
+
+  AST_Decl **datatype = 0;
+  int status = this->t_args_->get (datatype, 0UL);
+
+  if (status != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("be_visitor_connector_dds_exh::")
+                  ACE_TEXT ("gen_dds_traits - ")
+                  ACE_TEXT ("template arg not found\n ")));
+
+      return -1;
+    }
+
+  UTL_ScopedName *dt_name = (*datatype)->name ();
+
+  AST_Type *ut = AST_Type::narrow_from_decl (*datatype);
+
   os_ << " <" << be_idt << be_idt_nl
       << this->dds_traits_name_.c_str () << "," << be_nl
       << "DDS" << this->node_->local_name ()
-      << "_Traits>" << be_uidt << be_uidt << be_uidt_nl
+      << "_Traits," << be_nl;
+
+  if (ut->size_type () == AST_Type::FIXED)
+    {
+      os_ << "true> ";
+    }
+  else
+    {
+      os_ << "false> ";
+    }
+
+  os_ << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
       << this->node_->local_name () << "_exec_i (void);" << be_nl
       << "virtual ~" << this->node_->local_name ()
       << "_exec_i (void);";
-      
+
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -104,15 +132,15 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
                          ACE_TEXT ("visit_scope() failed\n ")),
                         -1);
     }
-      
+
   os_ << be_uidt_nl
       << "};";
-      
+
   this->gen_exec_entrypoint_decl ();
-     
+
   os_ << be_uidt_nl
       << "}";
-     
+
   return 0;
 }
 
@@ -123,22 +151,22 @@ be_visitor_connector_dds_exh::gen_dds_traits (void)
   // argument for now, this may change.
   AST_Decl **datatype = 0;
   int status = this->t_args_->get (datatype, 0UL);
-  
+
   if (status != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("be_visitor_connector_dds_exh::")
                   ACE_TEXT ("gen_dds_traits - ")
                   ACE_TEXT ("template arg not found\n ")));
-                         
+
       return;
     }
-    
+
   UTL_ScopedName *dt_name = (*datatype)->name ();
-  
+
   // More generic logic TBI.
   bool rti_dds_connector = true;
-  
+
   if (rti_dds_connector)
     {
       os_ << be_nl
@@ -148,8 +176,8 @@ be_visitor_connector_dds_exh::gen_dds_traits (void)
           << "::" << dt_name << "Seq," << be_nl
           << "::" << dt_name << "TypeSupport," << be_nl
           << "::" << dt_name << "DataWriter," << be_nl
-          << "::" << dt_name << "DataReader> "
-          << this->dds_traits_name_.c_str () << ";" << be_uidt;
+          << "::" << dt_name << "DataReader>";
+      os_ << this->dds_traits_name_.c_str () << ";" << be_uidt;
     }
 }
 
@@ -158,17 +186,17 @@ be_visitor_connector_dds_exh::gen_connector_traits (void)
 {
   AST_Decl **item = 0;
   int status = this->t_args_->get (item, 1UL);
-  
+
   if (status != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("be_visitor_connector_dds_exh::")
                   ACE_TEXT ("gen_connector_traits - ")
                   ACE_TEXT ("template arg not found\n ")));
-                         
+
       return;
     }
-    
+
   os_ << be_nl << be_nl
       << "typedef ::CIAO::DDS4CCM::Connector_Traits <"
       << be_idt_nl
