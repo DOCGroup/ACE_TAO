@@ -15,7 +15,7 @@
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::DDS_State_Connector_T (void) :
-    DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>()
+    DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE> ()
 {
 }
 
