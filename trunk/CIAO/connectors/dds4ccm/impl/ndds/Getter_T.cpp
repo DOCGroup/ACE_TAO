@@ -82,12 +82,12 @@ CIAO::DDS4CCM::RTI::Getter_Base_T<DDS_TYPE, CCM_TYPE>::get_many (
   typename DDS_TYPE::dds_seq_type data;
   for (::DDS_Long i = 0; i < active_conditions.length(); i++)
     {
-      if (active_conditions[i] == gd_)
+      if (active_conditions[i] == this->gd_)
         {
-          gd_->set_trigger_value (false);
+          this->gd_->set_trigger_value (false);
         }
 
-      if (active_conditions[i] == rd_condition_)
+      if (active_conditions[i] == this->rd_condition_)
         {
           // Check trigger
           active_conditions[i]->get_trigger_value ();
@@ -230,10 +230,10 @@ CIAO::DDS4CCM::RTI::Getter_Base_T<DDS_TYPE, CCM_TYPE>::set_impl (
   if (::CORBA::is_nil (reader))
     {
       impl_ = 0;
-      delete gd_;
-      gd_ = 0;
-      delete ws_;
-      ws_ = 0;
+      delete this->gd_;
+      this->gd_ = 0;
+      delete this->ws_;
+      this->ws_ = 0;
     }
   else
     {
@@ -292,12 +292,12 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one (
   typename DDS_TYPE::dds_seq_type data;
   for (::DDS_Long i = 0; i < active_conditions.length(); i++)
     {
-      if (active_conditions[i] == gd_)
+      if (active_conditions[i] == this->gd_)
         {
-          gd_->set_trigger_value (false);
+          this->gd_->set_trigger_value (false);
         }
 
-      if (active_conditions[i] == rd_condition_)
+      if (active_conditions[i] == this->rd_condition_)
         {
           // Check trigger
           active_conditions[i]->get_trigger_value ();
@@ -358,12 +358,12 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE, false>::get_one (
   typename DDS_TYPE::dds_seq_type data;
   for (::DDS_Long i = 0; i < active_conditions.length(); i++)
     {
-      if (active_conditions[i] == gd_)
+      if (active_conditions[i] == this->gd_)
         {
-          gd_->set_trigger_value (false);
+          this->gd_->set_trigger_value (false);
         }
 
-      if (active_conditions[i] == rd_condition_)
+      if (active_conditions[i] == this->rd_condition_)
         {
           // Check trigger
           active_conditions[i]->get_trigger_value ();
@@ -387,7 +387,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE, false>::get_one (
               // because after a timeout there should be
               // data.
               CIAO_ERROR (1, (LM_ERROR, CLINFO
-                    "CIAO::DDS4CCM::RTI::Getter_Base_T::Getter_Base_T - "
+                    "CIAO::DDS4CCM::RTI::Getter_T::Getter_T - "
                     "Error while reading from DDS: <%C>\n",
                     translate_retcode (retcode)));
               this->impl ()->return_loan(data,sample_info);
@@ -397,8 +397,8 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE, false>::get_one (
           retcode = this->impl ()->return_loan(data,sample_info);
           if (retcode != DDS_RETCODE_OK)
             {
-              CIAO_ERROR (1, (LM_ERROR,
-                          ACE_TEXT ("return loan error %C\n"),
+              CIAO_ERROR (1, (LM_ERROR, CLINFO
+                          "return loan error %C\n",
                           translate_retcode (retcode)));
             }
         }
