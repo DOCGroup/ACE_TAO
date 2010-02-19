@@ -81,8 +81,12 @@ namespace CIAO
       ::DDS::DomainParticipant_ptr
       RTI_ContentFilteredTopic_i::get_participant (void)
       {
+        ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
+        ACE_NEW_THROW_EX (retval,
+                          RTI_DomainParticipant_i (),
+                          CORBA::NO_MEMORY ());
+
         DDSDomainParticipant* p = this->impl ()->get_participant ();
-        ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i ();
         RTI_DomainParticipant_i *rti_dp = dynamic_cast < RTI_DomainParticipant_i *> (retval.in ());
         rti_dp->set_impl (p);
         return retval._retn ();
