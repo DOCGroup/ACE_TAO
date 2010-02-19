@@ -119,7 +119,7 @@ template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (void)
 {
-  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete ();
+  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete ();
   this->observable_.configuration_complete (
     this->topic_.in (),
     this->publisher_.in (),
@@ -159,7 +159,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_activate (void)
 #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
   reactor = this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ();
 #endif
-  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_activate (reactor);
+  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (reactor);
 
   this->observable_.activate ();
 
@@ -191,7 +191,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_passivate (void)
   this->push_state_observer_.passivate ();
   this->pull_observer_.passivate ();
   this->passive_observer_.passivate ();
-  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_passivate ();
+  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
@@ -203,6 +203,6 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_remove (void)
   this->push_state_observer_.remove (this->subscriber_.in ());
   this->pull_observer_.remove (this->subscriber_.in ());
   this->passive_observer_.remove (this->subscriber_.in ());
-  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_remove ();
+  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove ();
 }
 
