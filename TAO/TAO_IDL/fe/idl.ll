@@ -67,6 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * idl.ll - Lexical scanner for IDL 3.1
  */
 
+#include "global_extern.h"
+#include "nr_extern.h"
 #include "utl_strlist.h"
 #include "utl_exprlist.h"
 #include "utl_labellist.h"
@@ -83,10 +85,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_obv_header.h"
 #include "fe_component_header.h"
 #include "fe_home_header.h"
-#include "global_extern.h"
 #include "fe_private.h"
 #include "fe_extern.h"
-#include "nr_extern.h"
 #include "y.tab.h"
 
 static char *           idl_wstring_escape_reader (char *);

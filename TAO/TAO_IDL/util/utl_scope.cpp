@@ -107,8 +107,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_generator.h"
 #include "ast_extern.h"
 
-#include "nr_extern.h"
 #include "fe_extern.h"
+#include "nr_extern.h"
 #include "global_extern.h"
 
 #include "ace/OS_NS_strings.h"

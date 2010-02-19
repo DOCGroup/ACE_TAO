@@ -2,16 +2,16 @@
 
 #include "fe_obv_header.h"
 
-#include "ast_valuetype.h"
-#include "ast_module.h"
-#include "ast_param_holder.h"
-
 #include "utl_err.h"
 #include "utl_namelist.h"
 
 #include "fe_extern.h"
 #include "nr_extern.h"
 #include "global_extern.h"
+
+#include "ast_valuetype.h"
+#include "ast_module.h"
+#include "ast_param_holder.h"
 
 // @@@ (JP) Here are the rules for interface inheritance and
 // value type inheritance and supports, straight from Jonathan

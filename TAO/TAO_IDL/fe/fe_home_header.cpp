@@ -2,14 +2,14 @@
 
 #include "fe_home_header.h"
 
+#include "global_extern.h"
+#include "utl_err.h"
+#include "fe_extern.h"
+
 #include "ast_home.h"
+#include "ast_component.h"
 #include "ast_valuetype.h"
 #include "ast_param_holder.h"
-
-#include "utl_err.h"
-
-#include "fe_extern.h"
-#include "global_extern.h"
 
 FE_HomeHeader::FE_HomeHeader (UTL_ScopedName *n,
                               UTL_ScopedName *base_home,

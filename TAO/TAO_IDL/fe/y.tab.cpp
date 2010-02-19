@@ -241,6 +241,18 @@
 /* Copy the first part of user declarations.  */
 
 
+#include "utl_identifier.h"
+#include "utl_err.h"
+#include "utl_string.h"
+#include "utl_strlist.h"
+#include "utl_namelist.h"
+#include "utl_exprlist.h"
+#include "utl_labellist.h"
+#include "utl_decllist.h"
+
+#include "global_extern.h"
+#include "nr_extern.h"
+
 #include "ast_argument.h"
 #include "ast_array.h"
 #include "ast_attribute.h"
@@ -286,18 +298,6 @@
 #include "fe_component_header.h"
 #include "fe_home_header.h"
 #include "fe_utils.h"
-
-#include "utl_identifier.h"
-#include "utl_err.h"
-#include "utl_string.h"
-#include "utl_strlist.h"
-#include "utl_namelist.h"
-#include "utl_exprlist.h"
-#include "utl_labellist.h"
-#include "utl_decllist.h"
-
-#include "global_extern.h"
-#include "nr_extern.h"
 
 #if (defined(apollo) || defined(hpux)) && defined(__cplusplus)
 extern  "C" int tao_yywrap();
