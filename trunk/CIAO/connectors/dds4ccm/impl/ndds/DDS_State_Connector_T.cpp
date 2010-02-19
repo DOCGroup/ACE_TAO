@@ -13,113 +13,113 @@
 
 #include "ciao/Logger/Log_Macros.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::DDS_State_Connector_T (void) :
-    DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>()
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::DDS_State_Connector_T (void) :
+    DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>()
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::~DDS_State_Connector_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::~DDS_State_Connector_T (void)
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 typename CCM_TYPE::updater_type::_ptr_type
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::get_observable_data (void)
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_observable_data (void)
 {
   return this->observable_.get_data ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 ::DDS::CCM_DataWriter_ptr
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::get_observable_dds_entity (void)
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_observable_dds_entity (void)
 {
   return this->observable_.get_dds_entity ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 typename CCM_TYPE::reader_type::_ptr_type
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::get_passive_observer_data (void)
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_passive_observer_data (void)
 {
   return this->passive_observer_.get_data ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 ::DDS::CCM_DataReader_ptr
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::get_passive_observer_dds_entity (void)
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_passive_observer_dds_entity (void)
 {
   return this->passive_observer_.get_dds_entity ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 typename CCM_TYPE::reader_type::_ptr_type
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_observer_data (void)
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_observer_data (void)
 {
   return this->pull_observer_.get_data ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 typename CCM_TYPE::getter_type::_ptr_type
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_observer_fresh_data (void)
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_observer_fresh_data (void)
 {
   return this->pull_observer_.get_fresh_data ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 ::DDS::CCM_DataReader_ptr
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_observer_dds_entity (void)
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_observer_dds_entity (void)
 {
   return this->pull_observer_.get_dds_entity ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 typename CCM_TYPE::reader_type::_ptr_type
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_observer_data (void)
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_observer_data (void)
 {
   return this->push_observer_.get_data ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 ::CCM_DDS::CCM_DataListenerControl_ptr
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_observer_data_control (void)
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_observer_data_control (void)
 {
   return this->push_observer_.get_data_control ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 ::DDS::CCM_DataReader_ptr
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_observer_dds_entity (void)
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_observer_dds_entity (void)
 {
   return this->push_observer_.get_dds_entity ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 typename CCM_TYPE::reader_type::_ptr_type
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_state_observer_data (void)
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_state_observer_data (void)
 {
   return this->push_state_observer_.get_data ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 ::CCM_DDS::CCM_StateListenerControl_ptr
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_state_observer_data_control (void)
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_state_observer_data_control (void)
 {
   return this->push_state_observer_.get_data_control ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 ::DDS::CCM_DataReader_ptr
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_state_observer_dds_entity (void)
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_state_observer_dds_entity (void)
 {
   return this->push_state_observer_.get_dds_entity ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (void)
 {
-  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete ();
+  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete ();
   this->observable_.configuration_complete (
     this->topic_.in (),
     this->publisher_.in (),
@@ -151,15 +151,15 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
     this->profile_name_);
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_activate (void)
 {
   ACE_Reactor* reactor = 0;
 #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
   reactor = this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ();
 #endif
-  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (reactor);
+  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_activate (reactor);
 
   this->observable_.activate ();
 
@@ -182,27 +182,27 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
     reactor);
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_passivate (void)
 {
   this->observable_.passivate ();
   this->push_observer_.passivate ();
   this->push_state_observer_.passivate ();
   this->pull_observer_.passivate ();
   this->passive_observer_.passivate ();
-  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate ();
+  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_passivate ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_remove (void)
 {
   this->observable_.remove (this->publisher_.in ());
   this->push_observer_.remove (this->subscriber_.in ());
   this->push_state_observer_.remove (this->subscriber_.in ());
   this->pull_observer_.remove (this->subscriber_.in ());
   this->passive_observer_.remove (this->subscriber_.in ());
-  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove ();
+  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_remove ();
 }
 

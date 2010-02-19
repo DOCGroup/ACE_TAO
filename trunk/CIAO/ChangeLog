@@ -1,3 +1,20 @@
+Fri Feb 19 12:53:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_Get_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Get_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.h
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp
+        * connectors/dds4ccm/impl/ndds/Getter_T.h
+          Added a boolean to the connectors to let the TAO_IDL
+          compiler generate whether we have a fixed or non fixed
+          type. The memory management is different and caused
+          compile and runtime problems with getter::get_one.
+          We now specialized the Getter::get_one method for
+          fixed and for non fixed types
+
 Fri Feb 19 11:53:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.cpp:
