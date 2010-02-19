@@ -1,3 +1,10 @@
+Fri Feb 19 19:34:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/global.features:
+          Set dds4ccm_opendds and dds4ccm_ndds to 0 by default. When
+          generating project files for dds4ccm we now have to enable
+          which dds implementation we want to use
+
 Wed Feb 17 10:02:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * html/Stats/index.shtml:
