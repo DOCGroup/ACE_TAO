@@ -90,8 +90,12 @@ namespace CIAO
       ::DDS::StatusCondition_ptr
       RTI_Topic_i::get_statuscondition (void)
       {
+        ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
+        ACE_NEW_THROW_EX (retval,
+                          RTI_StatusCondition_i (),
+                          CORBA::NO_MEMORY ());
+
         DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
-        ::DDS::StatusCondition_var retval = new RTI_StatusCondition_i ();
         RTI_StatusCondition_i *rti_sc = dynamic_cast < RTI_StatusCondition_i *> (retval.in ());
         rti_sc->set_impl (sc);
         return retval._retn ();
@@ -127,8 +131,12 @@ namespace CIAO
       ::DDS::DomainParticipant_ptr
       RTI_Topic_i::get_participant (void)
       {
+        ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
+        ACE_NEW_THROW_EX (retval,
+                          RTI_DomainParticipant_i (),
+                          CORBA::NO_MEMORY ());
+
         DDSDomainParticipant* p = this->impl ()->get_participant ();
-        ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i ();
         RTI_DomainParticipant_i *rti_dp = dynamic_cast < RTI_DomainParticipant_i *> (retval.in ());
         rti_dp->set_impl (p);
         return retval._retn ();
