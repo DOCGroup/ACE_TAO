@@ -51,6 +51,8 @@ namespace CIAO_CSL_USTest_Sender_Impl
                                     Atomic_Boolean &,
                                     Atomic_Boolean &,
                                     Atomic_Boolean &,
+                                    Atomic_Boolean &,
+                                    Atomic_ThreadId &,
                                     Atomic_ThreadId &,
                                     Atomic_ThreadId &,
                                     Atomic_ThreadId &,
@@ -82,10 +84,12 @@ namespace CIAO_CSL_USTest_Sender_Impl
     Atomic_Boolean &publication_matched_received_;
     Atomic_Boolean &liveliness_changed_received_;
     Atomic_Boolean &liveliness_lost_received_;
+    Atomic_Boolean &reliable_dr_activity_changed_received_;
     Atomic_ThreadId &thread_id_subcription_matched_;
     Atomic_ThreadId &thread_id_publication_matched_;
     Atomic_ThreadId &thread_id_liveliness_changed_;
     Atomic_ThreadId &thread_id_liveliness_lost_;
+    Atomic_ThreadId &thread_id_reliable_dr_activity_changed_;
   };
 
   class Sender_exec_i
@@ -116,10 +120,12 @@ namespace CIAO_CSL_USTest_Sender_Impl
     Atomic_Boolean publication_matched_received_;
     Atomic_Boolean liveliness_changed_received_;
     Atomic_Boolean liveliness_lost_received_;
+    Atomic_Boolean reliable_dr_activity_changed_received_;
     Atomic_ThreadId thread_id_listener_subscription_matched_;
     Atomic_ThreadId thread_id_listener_publication_matched_;
     Atomic_ThreadId thread_id_listener_liveliness_changed_;
     Atomic_ThreadId thread_id_listener_liveliness_lost_;
+    Atomic_ThreadId thread_id_reliable_dr_activity_changed_;
 
     pulse_Generator * ticker_;
 

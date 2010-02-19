@@ -1,3 +1,12 @@
+Fri Feb 19 10:51:49 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
+          Changed value of RELIABLE_READER_ACTIVITY_CHANGED_STATUS.
+
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.h:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.cpp:
+          Prepared the test to receive the RELIABLE_READER_ACTIVITY_CHANGED_STATUS.
+
 Fri Feb 19 08:43:52 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/TwoTopicsDifferentNs/*:
