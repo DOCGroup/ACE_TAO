@@ -3022,7 +3022,7 @@ TAO_CodeGen::gen_skel_arg_file_includes (TAO_OutStream * stream)
   this->gen_standard_include (
     stream,
     "tao/PortableServer/TypeCode_SArg_Traits.h");
-    
+
   this->gen_standard_include (
     stream,
     "tao/PortableServer/Object_SArg_Traits.h");
@@ -3277,7 +3277,7 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
 {
   ACE_Unbounded_Queue<char *> &lem_file_names =
     idl_global->ciao_lem_file_names ();
-  
+
   char **path_tmp  = 0;
 
   for (ACE_Unbounded_Queue_Iterator<char *> riter (
@@ -3296,7 +3296,7 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
     }
 
   *this->ciao_conn_header_ << be_nl;
-      
+
   // We'll probably need some kind of flag to check
   // to tell which DDS vendor.
   this->gen_standard_include (
@@ -3305,12 +3305,22 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
 
   // Placeholder for forthcoming real-world logic.
   bool dds_event_connector = true;
-  
+
   if (dds_event_connector)
     {
       this->gen_standard_include (
         this->ciao_conn_header_,
         "connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.h");
+    }
+
+  // Placeholder for forthcoming real-world logic.
+  bool dds_state_connector = true;
+
+  if (dds_state_connector)
+    {
+      this->gen_standard_include (
+        this->ciao_conn_header_,
+        "connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.h");
     }
 
   for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
@@ -3319,27 +3329,27 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
         {
           *this->ciao_conn_header_ << be_nl;
         }
-        
+
       char * const idl_name =
         idl_global->included_idl_files ()[j];
-        
+
       if (ACE_OS::strcmp (idl_name, "Components.idl") == 0)
         {
           continue;
         }
-        
+
       UTL_String str (idl_name);
-        
+
       this->gen_standard_include (
-        this->ciao_conn_header_,   
+        this->ciao_conn_header_,
         BE_GlobalData::be_get_client_hdr (&str));
-        
+
       str.destroy ();
     }
-    
+
   ACE_Unbounded_Queue<char *> &rti_ts_files =
     idl_global->ciao_rti_ts_file_names ();
-    
+
   if (rti_ts_files.size () > 0)
     {
       *this->ciao_conn_header_ << be_nl;
