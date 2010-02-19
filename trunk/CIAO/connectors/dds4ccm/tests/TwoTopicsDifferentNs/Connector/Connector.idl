@@ -1,0 +1,66 @@
+// $Id$
+
+/**
+ * @file Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef CONNECTOR_IDL_
+#define CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Hello/HelloGoodbye.idl"
+#include "Goodbye/HelloGoodbye.idl"
+
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Connector/ConnectorE.idl"
+#pragma rti typesupport "Hello/HelloGoodbyeSupport.h"
+#pragma rti typesupport "Goodbye/HelloGoodbyeSupport.h"
+
+module Hello
+{
+  // Hello connector
+  module ::CCM_DDS::Typed < HelloGoodbye, HelloGoodbye_Seq> HelloConn;
+  connector Hello_Connector : HelloConn::DDS_Event
+  {
+  };
+};
+
+module Goodbye
+{
+  // Goodbye connector
+  module ::CCM_DDS::Typed < HelloGoodbye, HelloGoodbye_Seq> GoodbyeConn;
+  connector Goodbye_Connector : GoodbyeConn::DDS_Event
+  {
+  };
+};
+
+module HelloGoodbye
+{
+  // Hello connector
+  module ::CCM_DDS::Typed < ::Hello::HelloGoodbye, ::Hello::HelloGoodbye_Seq> HelloConn;
+  connector Hello_Connector : HelloConn::DDS_Event
+  {
+  };
+
+  // Goodbye connector
+  module ::CCM_DDS::Typed < ::Goodbye::HelloGoodbye, ::Goodbye::HelloGoodbye_Seq> GoodbyeConn;
+  connector Goodbye_Connector : GoodbyeConn::DDS_Event
+  {
+  };
+};
+
+// Hello connector
+module ::CCM_DDS::Typed < ::Hello::HelloGoodbye, ::Hello::HelloGoodbye_Seq> HelloConn;
+connector Hello_Connector : HelloConn::DDS_Event
+{
+};
+
+// Goodbye connector
+module ::CCM_DDS::Typed < ::Goodbye::HelloGoodbye, ::Goodbye::HelloGoodbye_Seq> GoodbyeConn;
+connector Goodbye_Connector : GoodbyeConn::DDS_Event
+{
+};
+
+#endif /* CONNECTOR_IDL_ */
