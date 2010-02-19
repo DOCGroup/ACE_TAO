@@ -1,13 +1,43 @@
+Fri Feb 19 15:16:49 UTC 2010  jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exs.cpp:
+
+          Removed unused variable 'dt_name'.
+
+        * TAO_IDL/fe/fe_component_header.cpp:
+        * TAO_IDL/fe/fe_extern.cpp:
+        * TAO_IDL/fe/fe_home_header.cpp:
+        * TAO_IDL/fe/fe_init.cpp:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/fe/fe_obv_header.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/utl_tmpl/UTL_Scope_T.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+        * TAO_IDL/ast/ast_attribute.cpp:
+        * TAO_IDL/ast/ast_check.cpp:
+
+          Reordered #includes to eliminate a circular dependency
+          introduced by the addition of the template source file
+          UTL_Scope_T.cpp.
+
 Fri Feb 19 12:54:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
         * TAO_IDL/be/be_visitor_connector/connector_dds_exs.cpp:
+
           Generate an additional boolean that is used to indicate
           whether we have a fixed or non fixed type
 
 Fri Feb 19 08:53:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
+
           Always generate the state connector header, this needs more tweaks
           in the near future
 
@@ -310,7 +340,7 @@ Thu Feb 18 20:36:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Thu Feb 18 14:46:16 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp(gen_connector_traits):
-        
+
           Fixed bug in code generation of the context class name
           when it appears as one of the template arguments in the
           connector traits typedef.
@@ -318,7 +348,7 @@ Thu Feb 18 14:46:16 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Wed Feb 17 15:13:40 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp(gen_dds_traits):
-        
+
           Removed unused parameter.
 
 Tue Feb 16 21:10:35 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -385,7 +415,7 @@ Tue Feb 16 20:22:15 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue Feb 16 14:22:12 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/narrow/narrow.cpp:
-        
+
           Added missing case to cast a connector to a scope.
 
 Tue Feb 16 09:16:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>

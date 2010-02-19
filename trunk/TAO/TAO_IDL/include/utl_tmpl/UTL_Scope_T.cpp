@@ -1,3 +1,17 @@
+// $Id$
+
+#ifndef TAO_IDL_UTL_SCOPE_T_CPP
+#define TAO_IDL_UTL_SCOPE_T_CPP
+
+#include "utl_scope.h"
+
+#include "nr_extern.h"
+#include "global_extern.h"
+
+#include "utl_err.h"
+
+#include "ast_interface_fwd.h"
+
 template<typename DECL>
 DECL *
 UTL_Scope::fe_add_full_intf_decl (DECL *t)
@@ -130,12 +144,14 @@ UTL_Scope::fe_add_fwd_intf_decl (typename FULL_DECL::FWD_TYPE *t)
             {
               if (!t->is_defined ())
                 {
-                  AST_Interface *prev_fd = t->full_definition ();
+                  FULL_DECL *prev_fd =
+                    FULL_DECL::narrow_from_decl (t->full_definition ());
+
                   prev_fd->destroy ();
                   // No need to delete prev_fd, the call to 
                   // set_full_definition() below will do it.
                 }
-                
+
               t->set_full_definition (itf);
               t->set_as_defined ();
             }
@@ -170,3 +186,5 @@ UTL_Scope::fe_add_fwd_intf_decl (typename FULL_DECL::FWD_TYPE *t)
 
   return t;
 }
+
+#endif // TAO_IDL_UTL_SCOPE_T_CPP

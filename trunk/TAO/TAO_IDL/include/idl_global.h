@@ -76,11 +76,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_expression.h"
 #include "ast_predefined_type.h"
-#include "ast_component.h"
 #include "utl_stack.h"
 #include "fe_utils.h"
 
 class AST_Root;
+class AST_ValueType;
+class AST_Component;
+class AST_Uses;
 class AST_Generator;
 class UTL_Error;
 class UTL_String;

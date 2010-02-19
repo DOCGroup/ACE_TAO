@@ -70,14 +70,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // of AST_Type) and a boolean indicating whether the attribute is
 // readonly.
 
-#include "ast_attribute.h"
-#include "ast_exception.h"
-#include "ast_visitor.h"
 #include "utl_namelist.h"
 #include "utl_exceptlist.h"
 #include "utl_scope.h"
 #include "utl_err.h"
 #include "global_extern.h"
+
+#include "ast_attribute.h"
+#include "ast_exception.h"
+#include "ast_visitor.h"
 
 AST_Decl::NodeType const
 AST_Attribute::NT = AST_Decl::NT_attr;

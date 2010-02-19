@@ -99,8 +99,6 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
       return -1;
     }
 
-  UTL_ScopedName *dt_name = (*datatype)->name ();
-
   AST_Type *ut = AST_Type::narrow_from_decl (*datatype);
 
   os_ << " <" << be_idt << be_idt_nl
