@@ -129,7 +129,9 @@ namespace CIAO
         DDSDataReaderListener *rti_drl = 0;
         if (!CORBA::is_nil (a_listener))
           {
-            rti_drl = new RTI_DataReaderListener_i (a_listener);
+            ACE_NEW_THROW_EX (rti_drl,
+                              RTI_DataReaderListener_i (a_listener),
+                              CORBA::NO_MEMORY ());
           }
 
         DDSDataReader * rti_dr = 0;
@@ -183,7 +185,9 @@ namespace CIAO
         DDSDataReaderListener *rti_drl = 0;
         if (!CORBA::is_nil (a_listener))
           {
-            rti_drl = new RTI_DataReaderListener_i (a_listener);
+            ACE_NEW_THROW_EX (rti_drl,
+                              RTI_DataReaderListener_i (a_listener),
+                              CORBA::NO_MEMORY ());
           }
 
         DDSDataReader * rti_dr = 0;
@@ -333,7 +337,9 @@ namespace CIAO
         RTI_SubscriberListener_i* rti_impl_list = 0;
         if (!CORBA::is_nil (a_listener))
           {
-            rti_impl_list = new RTI_SubscriberListener_i (a_listener);
+            ACE_NEW_THROW_EX (rti_impl_list,
+                              RTI_SubscriberListener_i (a_listener),
+                              CORBA::NO_MEMORY ());
           }
         return this->impl ()->set_listener (rti_impl_list, mask);
       }
