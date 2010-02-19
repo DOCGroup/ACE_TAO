@@ -6,8 +6,8 @@
 
 #include "ciao/Logger/Log_Macros.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE >
-CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::Getter_T (void) :
+template <typename DDS_TYPE, typename CCM_TYPE>
+CIAO::DDS4CCM::RTI::Getter_Base_T<DDS_TYPE, CCM_TYPE>::Getter_Base_T (void) :
    impl_ (0),
    condition_(0),
    time_out_ (),
@@ -16,20 +16,20 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::Getter_T (void) :
    ws_ (0),
    rd_condition_ (0)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Getter_T::Getter_T");
+  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Getter_Base_T::Getter_Base_T");
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE >
-CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::~Getter_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE>
+CIAO::DDS4CCM::RTI::Getter_Base_T<DDS_TYPE, CCM_TYPE>::~Getter_Base_T (void)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Getter_T::~Getter_T");
+  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Getter_Base_T::~Getter_Base_T");
   delete gd_;
   delete ws_;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 typename DDS_TYPE::data_reader *
-CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::impl (void)
+CIAO::DDS4CCM::RTI::Getter_Base_T<DDS_TYPE, CCM_TYPE>::impl (void)
 {
   if (this->impl_)
     {
@@ -41,9 +41,9 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::impl (void)
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE >
+template <typename DDS_TYPE, typename CCM_TYPE>
 bool
-CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::wait (
+CIAO::DDS4CCM::RTI::Getter_Base_T<DDS_TYPE, CCM_TYPE>::wait (
           DDSConditionSeq& active_conditions)
 {
   DDS_Duration_t timeout;
@@ -57,9 +57,9 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::wait (
   return true;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE >
+template <typename DDS_TYPE, typename CCM_TYPE>
 bool
-CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_many (
+CIAO::DDS4CCM::RTI::Getter_Base_T<DDS_TYPE, CCM_TYPE>::get_many (
           typename CCM_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos)
 {
@@ -110,7 +110,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_many (
                       ++number_read;
                     }
                 }
-              CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("Getter_T::get_many: ")
+              CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("Getter_Base_T::get_many: ")
                                 ACE_TEXT ("read <%d> - valid <%d>\n"),
                                 sample_info.length (),
                                 number_read));
@@ -133,7 +133,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_many (
               // because after a timeout there should be
               // data.
               CIAO_ERROR (1, (LM_ERROR, CLINFO
-                    "CIAO::DDS4CCM::RTI::Getter_T::Getter_T - "
+                    "CIAO::DDS4CCM::RTI::Getter_Base_T::Getter_Base_T - "
                     "Error while reading from DDS: <%C>\n",
                     translate_retcode (retcode)));
               this->impl ()->return_loan(data,sample_info);
@@ -151,9 +151,134 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_many (
   return true;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE >
+template <typename DDS_TYPE, typename CCM_TYPE>
+::DDS::Duration_t
+CIAO::DDS4CCM::RTI::Getter_Base_T<DDS_TYPE, CCM_TYPE>::time_out (void)
+{
+  return this->time_out_;
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::RTI::Getter_Base_T<DDS_TYPE, CCM_TYPE>::time_out (
+  const ::DDS::Duration_t & time_out)
+{
+  this->time_out_ = time_out;
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+::CCM_DDS::DataNumber_t
+CIAO::DDS4CCM::RTI::Getter_Base_T<DDS_TYPE, CCM_TYPE>::max_delivered_data (void)
+{
+  return this->max_delivered_data_;
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::RTI::Getter_Base_T<DDS_TYPE, CCM_TYPE>::max_delivered_data (
+  ::CCM_DDS::DataNumber_t max_delivered_data)
+{
+  this->max_delivered_data_ = max_delivered_data;
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::RTI::Getter_Base_T<DDS_TYPE, CCM_TYPE>::passivate ()
+{
+  DDS_ReturnCode_t retcode = this->ws_->detach_condition (this->rd_condition_);
+  if (retcode != DDS_RETCODE_OK)
+    {
+      CIAO_ERROR (1, (LM_ERROR, CLINFO "Getter_Base_T::passivate - "
+                      "Unable to detach read condition from waitset.\n"));
+    }
+  else
+    {
+      CIAO_DEBUG (6, (LM_INFO, CLINFO "Getter_Base_T::passivate - "
+                      "Read condition succesfully detached from waitset.\n"));
+    }
+  retcode = this->ws_->detach_condition (this->gd_);
+  if (retcode != DDS_RETCODE_OK)
+    {
+      CIAO_ERROR (1, (LM_ERROR, CLINFO "Getter_Base_T::passivate - "
+                      "Unable to detach guard condition from waitset.\n"));
+    }
+  else
+    {
+      CIAO_DEBUG (6, (LM_INFO, CLINFO "Getter_Base_T::passivate - "
+                      "Guard condition succesfully detached from waitset.\n"));
+    }
+  retcode = this->impl ()->delete_readcondition (this->rd_condition_);
+  if (retcode != DDS_RETCODE_OK)
+    {
+      CIAO_ERROR (1, (LM_ERROR, CLINFO "Getter_Base_T::passivate - "
+                      "Unable to delete read condition from DDSDataReader.\n"));
+    }
+  else
+    {
+      CIAO_DEBUG (6, (LM_INFO, CLINFO "Getter_Base_T::passivate - "
+                      "Read condition succesfully deleted from DDSDataReader.\n"));
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::RTI::Getter_Base_T<DDS_TYPE, CCM_TYPE>::set_impl (
+  ::DDS::DataReader_ptr reader)
+{
+  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Getter_Base_T::set_impl");
+
+  if (::CORBA::is_nil (reader))
+    {
+      impl_ = 0;
+      delete gd_;
+      gd_ = 0;
+      delete ws_;
+      ws_ = 0;
+    }
+  else
+    {
+      RTI_DataReader_i *rdr = dynamic_cast <RTI_DataReader_i *> (reader);
+      if (!rdr)
+        {
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Getter_Base_T::data_reader - "
+                       "Unable to cast provided DataReader to servant\n"));
+          throw CORBA::INTERNAL ();
+        }
+
+      this->impl_ =  DDS_TYPE::data_reader::narrow (rdr->get_impl ());
+
+      if (!this->impl_)
+        {
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Getter_Base_T::data_reader - "
+                       "Unable to narrow the provided writer entity to the specific "
+                       "type necessary to publish messages\n"));
+          throw CORBA::INTERNAL ();
+        }
+
+      // Now create the waitset conditions
+      this->gd_ = new DDSGuardCondition ();
+      this->ws_ = new DDSWaitSet ();
+      this->rd_condition_ = this->impl ()->create_readcondition (DDS_NOT_READ_SAMPLE_STATE,
+                                                         DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
+                                                         DDS_ALIVE_INSTANCE_STATE | DDS_NOT_ALIVE_INSTANCE_STATE);
+      DDS_ReturnCode_t retcode = this->ws_->attach_condition (this->gd_);
+      if (retcode != DDS_RETCODE_OK)
+        {
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "GETTER: Unable to attach guard condition to waitset.\n"));
+          throw CCM_DDS::InternalError (retcode, 0);
+        }
+      retcode = this->ws_->attach_condition (this->rd_condition_);
+      if (retcode != DDS_RETCODE_OK)
+        {
+          CIAO_ERROR (1, (LM_ERROR, CLINFO "GETTER: Unable to attach read condition to waitset.\n"));
+          throw CCM_DDS::InternalError (retcode, 1);
+        }
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
 bool
-CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
+CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one (
   typename DDS_TYPE::value_type::_out_type an_instance,
   ::CCM_DDS::ReadInfo_out info)
 {
@@ -188,8 +313,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
           if (retcode == DDS_RETCODE_OK && data.length () >= 1)
             {
               info <<= sample_info[0]; // Retrieves the last sample.
-              typename DDS_TYPE::value_type::_var_type temp = &data[0];
-              an_instance = temp.out ();
+              an_instance = data[0];
             }
           else
             {
@@ -197,7 +321,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
               // because after a timeout there should be
               // data.
               CIAO_ERROR (1, (LM_ERROR, CLINFO
-                    "CIAO::DDS4CCM::RTI::Getter_T::Getter_T - "
+                    "CIAO::DDS4CCM::RTI::Getter_Base_T::Getter_Base_T - "
                     "Error while reading from DDS: <%C>\n",
                     translate_retcode (retcode)));
               this->impl ()->return_loan(data,sample_info);
@@ -217,128 +341,69 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
   return true;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE >
-::DDS::Duration_t
-CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::time_out (void)
-{
-  return this->time_out_;
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE >
-void
-CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::time_out (
-  const ::DDS::Duration_t & time_out)
-{
-  this->time_out_ = time_out;
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE >
-::CCM_DDS::DataNumber_t
-CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::max_delivered_data (void)
-{
-  return this->max_delivered_data_;
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE >
-void
-CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::max_delivered_data (
-  ::CCM_DDS::DataNumber_t max_delivered_data)
-{
-  this->max_delivered_data_ = max_delivered_data;
-}
-
 template <typename DDS_TYPE, typename CCM_TYPE>
-void
-CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::passivate ()
+bool
+CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE, false>::get_one (
+  typename DDS_TYPE::value_type::_out_type an_instance,
+  ::CCM_DDS::ReadInfo_out info)
 {
-  DDS_ReturnCode_t retcode = this->ws_->detach_condition (this->rd_condition_);
-  if (retcode != DDS_RETCODE_OK)
+  an_instance = new typename DDS_TYPE::value_type;
+  DDSConditionSeq active_conditions;
+  if (!this->wait (active_conditions))
     {
-      CIAO_ERROR (1, (LM_ERROR, CLINFO "Getter_T::passivate - "
-                      "Unable to detach read condition from waitset.\n"));
+      return false;
     }
-  else
-    {
-      CIAO_DEBUG (6, (LM_INFO, CLINFO "Getter_T::passivate - "
-                      "Read condition succesfully detached from waitset.\n"));
-    }
-  retcode = this->ws_->detach_condition (this->gd_);
-  if (retcode != DDS_RETCODE_OK)
-    {
-      CIAO_ERROR (1, (LM_ERROR, CLINFO "Getter_T::passivate - "
-                      "Unable to detach guard condition from waitset.\n"));
-    }
-  else
-    {
-      CIAO_DEBUG (6, (LM_INFO, CLINFO "Getter_T::passivate - "
-                      "Guard condition succesfully detached from waitset.\n"));
-    }
-  retcode = this->impl ()->delete_readcondition (this->rd_condition_);
-  if (retcode != DDS_RETCODE_OK)
-    {
-      CIAO_ERROR (1, (LM_ERROR, CLINFO "Getter_T::passivate - "
-                      "Unable to delete read condition from DDSDataReader.\n"));
-    }
-  else
-    {
-      CIAO_DEBUG (6, (LM_INFO, CLINFO "Getter_T::passivate - "
-                      "Read condition succesfully deleted from DDSDataReader.\n"));
-    }
-}
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
-CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::set_impl (
-  ::DDS::DataReader_ptr reader)
-{
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Getter_T::set_impl");
-
-  if (::CORBA::is_nil (reader))
+  DDS_SampleInfoSeq sample_info;
+  typename DDS_TYPE::dds_seq_type data;
+  for (::DDS_Long i = 0; i < active_conditions.length(); i++)
     {
-      impl_ = 0;
-      delete gd_;
-      gd_ = 0;
-      delete ws_;
-      ws_ = 0;
-    }
-  else
-    {
-      RTI_DataReader_i *rdr = dynamic_cast <RTI_DataReader_i *> (reader);
-      if (!rdr)
+      if (active_conditions[i] == gd_)
         {
-          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Getter_T::data_reader - "
-                       "Unable to cast provided DataReader to servant\n"));
-          throw CORBA::INTERNAL ();
+          gd_->set_trigger_value (false);
         }
 
-      this->impl_ =  DDS_TYPE::data_reader::narrow (rdr->get_impl ());
+      if (active_conditions[i] == rd_condition_)
+        {
+          // Check trigger
+          active_conditions[i]->get_trigger_value ();
 
-      if (!this->impl_)
-        {
-          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Getter_T::data_reader - "
-                       "Unable to narrow the provided writer entity to the specific "
-                       "type necessary to publish messages\n"));
-          throw CORBA::INTERNAL ();
-        }
+          // Take read condition
+          DDS_ReturnCode_t retcode = this->impl ()->read (data,
+                                    sample_info,
+                                    DDS_LENGTH_UNLIMITED,
+                                    DDS_NOT_READ_SAMPLE_STATE ,
+                                    DDS_ANY_VIEW_STATE,
+                                    DDS_ANY_INSTANCE_STATE);
 
-      // Now create the waitset conditions
-      this->gd_ = new DDSGuardCondition ();
-      this->ws_ = new DDSWaitSet ();
-      this->rd_condition_ = this->impl ()->create_readcondition (DDS_NOT_READ_SAMPLE_STATE,
-                                                         DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-                                                         DDS_ALIVE_INSTANCE_STATE | DDS_NOT_ALIVE_INSTANCE_STATE);
-      DDS_ReturnCode_t retcode = this->ws_->attach_condition (this->gd_);
-      if (retcode != DDS_RETCODE_OK)
-        {
-          CIAO_ERROR (1, (LM_ERROR, CLINFO "GETTER: Unable to attach guard condition to waitset.\n"));
-          throw CCM_DDS::InternalError (retcode, 0);
-        }
-      retcode = this->ws_->attach_condition (this->rd_condition_);
-      if (retcode != DDS_RETCODE_OK)
-        {
-          CIAO_ERROR (1, (LM_ERROR, CLINFO "GETTER: Unable to attach read condition to waitset.\n"));
-          throw CCM_DDS::InternalError (retcode, 1);
+          if (retcode == DDS_RETCODE_OK && data.length () >= 1)
+            {
+              info <<= sample_info[0]; // Retrieves the last sample.
+              *an_instance = data[0];
+            }
+          else
+            {
+              // RETCODE_NO_DATA should be an error
+              // because after a timeout there should be
+              // data.
+              CIAO_ERROR (1, (LM_ERROR, CLINFO
+                    "CIAO::DDS4CCM::RTI::Getter_Base_T::Getter_Base_T - "
+                    "Error while reading from DDS: <%C>\n",
+                    translate_retcode (retcode)));
+              this->impl ()->return_loan(data,sample_info);
+              throw CCM_DDS::InternalError (retcode, 1);
+            }
+
+          retcode = this->impl ()->return_loan(data,sample_info);
+          if (retcode != DDS_RETCODE_OK)
+            {
+              CIAO_ERROR (1, (LM_ERROR,
+                          ACE_TEXT ("return loan error %C\n"),
+                          translate_retcode (retcode)));
+            }
         }
     }
+
+  return true;
 }
 
