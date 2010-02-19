@@ -64,16 +64,18 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-#include "ast_module.h"
-#include "ast_predefined_type.h"
-#include "ast_generator.h"
-#include "ast_root.h"
+#include "ace/Env_Value_T.h"
+#include "ace/UUID.h"
+
 #include "utl_scoped_name.h"
 #include "utl_identifier.h"
 #include "global_extern.h"
 #include "fe_extern.h"
-#include "ace/Env_Value_T.h"
-#include "ace/UUID.h"
+
+#include "ast_module.h"
+#include "ast_predefined_type.h"
+#include "ast_generator.h"
+#include "ast_root.h"
 
 const size_t LOCAL_ESCAPES_BUFFER_SIZE = 1024;
 

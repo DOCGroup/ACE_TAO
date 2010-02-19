@@ -70,12 +70,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "fe_interface_header.h"
 
-#include "ast_interface_fwd.h"
-#include "ast_valuetype.h"
-#include "ast_component.h"
-#include "ast_home.h"
-#include "ast_module.h"
-#include "ast_param_holder.h"
+#include "ace/streams.h"
 
 #include "utl_namelist.h"
 #include "utl_err.h"
@@ -84,7 +79,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 #include "nr_extern.h"
 
-#include "ace/streams.h"
+#include "ast_interface_fwd.h"
+#include "ast_valuetype.h"
+#include "ast_component.h"
+#include "ast_home.h"
+#include "ast_module.h"
+#include "ast_param_holder.h"
 
 #undef  INCREMENT
 #define INCREMENT 512

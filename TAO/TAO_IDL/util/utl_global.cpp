@@ -71,6 +71,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_structure.h"
 #include "ast_sequence.h"
 #include "ast_valuetype.h"
+#include "ast_component.h"
 #include "ast_uses.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"

@@ -2,16 +2,16 @@
 
 #include "fe_component_header.h"
 
-#include "ast_component.h"
-#include "ast_module.h"
-#include "ast_param_holder.h"
+#include "fe_extern.h"
+#include "global_extern.h"
+#include "nr_extern.h"
 
 #include "utl_err.h"
 #include "utl_namelist.h"
 
-#include "fe_extern.h"
-#include "global_extern.h"
-#include "nr_extern.h"
+#include "ast_component.h"
+#include "ast_module.h"
+#include "ast_param_holder.h"
 
 FE_ComponentHeader::FE_ComponentHeader (UTL_ScopedName *n,
                                         UTL_ScopedName *base_component,

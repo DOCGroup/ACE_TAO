@@ -70,10 +70,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 
 #include "fe_extern.h"
-#include "ast_root.h"
+
 #include "global_extern.h"
 #include "utl_err.h"
 #include "utl_indenter.h"
+
+#include "ast_root.h"
+
 #include "ace/UUID.h"
 
 extern int tao_yyparse (void);
