@@ -36,7 +36,8 @@ namespace CIAO
         CIAO_TRACE ("RTI_DataReaderListener_i::on_requested_deadline_missed");
         ::DDS::RequestedDeadlineMissedStatus ddsstatus;
         ddsstatus <<= status;
-        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i ();
+        ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
+        ACE_NEW (dds_reader, RTI_DataReader_i ());
         RTI_DataReader_i *rti_dr = dynamic_cast < RTI_DataReader_i *>(dds_reader.in ());
         rti_dr->set_impl (the_reader);
         this->impl_->on_requested_deadline_missed (dds_reader.in (), ddsstatus);
@@ -50,7 +51,8 @@ namespace CIAO
         CIAO_TRACE ("RTI_DataReaderListener_i::on_requested_incompatible_qos");
         ::DDS::RequestedIncompatibleQosStatus ddsstatus;
         ddsstatus <<= status;
-        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i ();
+        ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
+        ACE_NEW (dds_reader, RTI_DataReader_i ());
         RTI_DataReader_i *rti_dr = dynamic_cast < RTI_DataReader_i *>(dds_reader.in ());
         rti_dr->set_impl (the_reader);
         this->impl_->on_requested_incompatible_qos (dds_reader.in (), ddsstatus);
@@ -64,7 +66,8 @@ namespace CIAO
         CIAO_TRACE ("RTI_DataReaderListener_i::on_sample_rejected");
         ::DDS::SampleRejectedStatus ddsstatus;
         ddsstatus <<= status;
-        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i ();
+        ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
+        ACE_NEW (dds_reader, RTI_DataReader_i ());
         RTI_DataReader_i *rti_dr = dynamic_cast < RTI_DataReader_i *>(dds_reader.in ());
         rti_dr->set_impl (the_reader);
         this->impl_->on_sample_rejected (dds_reader.in (), ddsstatus);
@@ -78,7 +81,8 @@ namespace CIAO
         CIAO_TRACE ("RTI_DataReaderListener_i::on_liveliness_changed");
         ::DDS::LivelinessChangedStatus ddsstatus;
         ddsstatus <<= status;
-        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i ();
+        ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
+        ACE_NEW (dds_reader, RTI_DataReader_i ());
         RTI_DataReader_i *rti_dr = dynamic_cast < RTI_DataReader_i *>(dds_reader.in ());
         rti_dr->set_impl (the_reader);
         this->impl_->on_liveliness_changed (dds_reader.in (), ddsstatus);
@@ -88,7 +92,8 @@ namespace CIAO
       RTI_DataReaderListener_i::on_data_available(::DDSDataReader *the_reader)
       {
         CIAO_TRACE ("RTI_DataReaderListener_i::on_data_available");
-        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i ();
+        ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
+        ACE_NEW (dds_reader, RTI_DataReader_i ());
         RTI_DataReader_i *rti_dr = dynamic_cast < RTI_DataReader_i *>(dds_reader.in ());
         rti_dr->set_impl (the_reader);
         this->impl_->on_data_available (dds_reader.in ());
@@ -102,7 +107,8 @@ namespace CIAO
         CIAO_TRACE ("RTI_DataReaderListener_i::on_subscription_matched");
         ::DDS::SubscriptionMatchedStatus ddsstatus;
         ddsstatus <<= status;
-        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i ();
+        ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
+        ACE_NEW (dds_reader, RTI_DataReader_i ());
         RTI_DataReader_i *rti_dr = dynamic_cast < RTI_DataReader_i *>(dds_reader.in ());
         rti_dr->set_impl (the_reader);
         this->impl_->on_subscription_matched (dds_reader.in (), ddsstatus);
@@ -116,7 +122,8 @@ namespace CIAO
         CIAO_TRACE ("RTI_DataReaderListener_i::on_sample_lost");
         ::DDS::SampleLostStatus ddsstatus;
         ddsstatus <<= status;
-        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i ();
+        ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
+        ACE_NEW (dds_reader, RTI_DataReader_i ());
         RTI_DataReader_i *rti_dr = dynamic_cast < RTI_DataReader_i *>(dds_reader.in ());
         rti_dr->set_impl (the_reader);
         this->impl_->on_sample_lost (dds_reader.in (), ddsstatus);

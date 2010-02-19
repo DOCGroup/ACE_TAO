@@ -49,18 +49,19 @@ namespace CIAO
             throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
           }
 
-        DDSTopic *rti_topic = topic->get_impl ();
         DDSDataWriterListener *rti_drl = 0;
         if (!CORBA::is_nil (a_listener))
           {
-            rti_drl = new RTI_DataWriterListener_i (a_listener);
+            ACE_NEW_THROW_EX (rti_drl,
+                              RTI_DataWriterListener_i (a_listener),
+                              CORBA::NO_MEMORY ());
           }
         DDS_DataWriterQos rti_qos = DDS_DATAWRITER_QOS_DEFAULT;
-//        rti_qos <<= qos;
-        DDSDataWriter *rti_dw = this->impl ()->create_datawriter (rti_topic,
-                                                                rti_qos,
-                                                                rti_drl,
-                                                                mask);
+        DDSDataWriter *rti_dw = this->impl ()->create_datawriter (
+                                                              topic->get_impl (),
+                                                              rti_qos,
+                                                              rti_drl,
+                                                              mask);
 
         if (!rti_dw)
           {
@@ -95,13 +96,15 @@ namespace CIAO
             throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
           }
 
-        DDSTopic *rti_topic = topic->get_impl ();
         DDSDataWriterListener *rti_drl = 0;
         if (!CORBA::is_nil (a_listener))
           {
-            rti_drl = new RTI_DataWriterListener_i (a_listener);
+            ACE_NEW_THROW_EX (rti_drl,
+                              RTI_DataWriterListener_i (a_listener),
+                              CORBA::NO_MEMORY ());
           }
-        DDSDataWriter *rti_dw = this->impl ()->create_datawriter_with_profile (rti_topic,
+        DDSDataWriter *rti_dw = this->impl ()->create_datawriter_with_profile (
+                                                                topic->get_impl (),
                                                                 library_name,
                                                                 profile_name,
                                                                 rti_drl,
@@ -192,7 +195,9 @@ namespace CIAO
         RTI_PublisherListener_i *rti_impl_list  = 0;
        if (!CORBA::is_nil (a_listener))
           {
-            rti_impl_list = new RTI_PublisherListener_i (a_listener);
+            ACE_NEW_THROW_EX (rti_impl_list,
+                              RTI_PublisherListener_i (a_listener),
+                              CORBA::NO_MEMORY ());
           }
         return this->impl ()->set_listener (rti_impl_list, mask);
       }

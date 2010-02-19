@@ -54,7 +54,9 @@ namespace CIAO
         RTI_PublisherListener_i *rti_pl = 0;
         if (!CORBA::is_nil (a_listener))
           {
-            rti_pl = new RTI_PublisherListener_i (a_listener);
+            ACE_NEW_THROW_EX (rti_pl,
+                              RTI_PublisherListener_i (a_listener),
+                              CORBA::NO_MEMORY ());
           }
         DDSPublisher * rti_pub =
           this->impl ()->create_publisher_with_profile (library_name,
@@ -96,7 +98,9 @@ namespace CIAO
         RTI_PublisherListener_i *rti_pl = 0;
         if (!CORBA::is_nil (a_listener))
           {
-            rti_pl = new RTI_PublisherListener_i (a_listener);
+            ACE_NEW_THROW_EX (rti_pl,
+                              RTI_PublisherListener_i (a_listener),
+                              CORBA::NO_MEMORY ());
           }
 
         DDSPublisher * rti_pub =
@@ -166,7 +170,9 @@ namespace CIAO
         RTI_SubscriberListener_i *rti_sl = 0;
         if (!CORBA::is_nil (a_listener))
           {
-            rti_sl = new RTI_SubscriberListener_i (a_listener);
+            ACE_NEW_THROW_EX (rti_sl,
+                              RTI_SubscriberListener_i (a_listener),
+                              CORBA::NO_MEMORY ());
           }
         DDSSubscriber * rti_sub =
           this->impl ()->create_subscriber_with_profile (
@@ -206,7 +212,9 @@ namespace CIAO
         RTI_SubscriberListener_i *rti_sl = 0;
         if (!CORBA::is_nil (a_listener))
           {
-            rti_sl = new RTI_SubscriberListener_i (a_listener);
+            ACE_NEW_THROW_EX (rti_sl,
+                              RTI_SubscriberListener_i (a_listener),
+                              CORBA::NO_MEMORY ());
           }
         DDSSubscriber * rti_sub =
           this->impl ()->create_subscriber (DDS_SUBSCRIBER_QOS_DEFAULT,
@@ -302,7 +310,9 @@ namespace CIAO
         RTI_TopicListener_i *rti_tl = 0;
         if (!CORBA::is_nil (a_listener))
           {
-            rti_tl = new RTI_TopicListener_i (a_listener);
+            ACE_NEW_THROW_EX (rti_tl,
+                              RTI_TopicListener_i (a_listener),
+                              CORBA::NO_MEMORY ());
           }
 
         DDSTopic *rti_topic = this->impl ()->create_topic (impl_name,
@@ -364,7 +374,9 @@ namespace CIAO
             RTI_TopicListener_i *rti_tl = 0;
             if (!CORBA::is_nil (a_listener))
               {
-                rti_tl = new RTI_TopicListener_i (a_listener);
+                ACE_NEW_THROW_EX (rti_tl,
+                                  RTI_TopicListener_i (a_listener),
+                                  CORBA::NO_MEMORY ());
               }
             DDSTopic *rti_topic = this->impl ()->create_topic_with_profile (impl_name,
                                                             type_name,
@@ -562,7 +574,9 @@ namespace CIAO
         RTI_DomainParticipantListener_i* rti_impl_list = 0;
         if (!CORBA::is_nil (a_listener))
           {
-            rti_impl_list = new RTI_DomainParticipantListener_i (a_listener);
+            ACE_NEW_THROW_EX (rti_impl_list,
+                              RTI_DomainParticipantListener_i (a_listener),
+                              CORBA::NO_MEMORY ());
           }
         return this->impl_->set_listener (rti_impl_list, mask);
       }
