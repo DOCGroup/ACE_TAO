@@ -15,7 +15,7 @@
 #include "dds4ccm/impl/ndds/DDS_Update_T.h"
 #include "dds4ccm/impl/ndds/DDS_Read_T.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 class DDS_State_Connector_T
   : public virtual DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>
 {
@@ -87,7 +87,7 @@ private:
    * DDS_Get pull_observer
    */
   //@{
-  DDS_Get_T <DDS_TYPE, CCM_TYPE> pull_observer_;
+  DDS_Get_T <DDS_TYPE, CCM_TYPE, FIXED> pull_observer_;
   //@}
 
   /**

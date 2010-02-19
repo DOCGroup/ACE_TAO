@@ -13,7 +13,7 @@
 #include "dds4ccm/impl/ndds/DDS_Write_T.h"
 #include "dds4ccm/impl/ndds/DDS_Listen_T.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 class DDS_Event_Connector_T
   : public virtual DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>
 {
@@ -80,7 +80,7 @@ private:
    * DDS_Get pull_consumer
    */
   //@{
-  DDS_Get_T <DDS_TYPE, CCM_TYPE> pull_consumer_;
+  DDS_Get_T <DDS_TYPE, CCM_TYPE, FIXED> pull_consumer_;
   //@}
 };
 

@@ -11,94 +11,94 @@
 
 #include "ciao/Logger/Log_Macros.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::DDS_Event_Connector_T (void) :
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::DDS_Event_Connector_T (void) :
     DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>()
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::~DDS_Event_Connector_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::~DDS_Event_Connector_T (void)
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 typename CCM_TYPE::writer_type::_ptr_type
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_supplier_data (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_supplier_data (void)
 {
-  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_supplier_data");
+  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_supplier_data");
 
   return this->supplier_.get_data ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 ::DDS::CCM_DataWriter_ptr
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_supplier_dds_entity (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_supplier_dds_entity (void)
 {
-  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_supplier_dds_entity");
+  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_supplier_dds_entity");
 
   return this->supplier_.get_dds_entity ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 typename CCM_TYPE::getter_type::_ptr_type
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_fresh_data (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_consumer_fresh_data (void)
 {
-  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_fresh_data");
+  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_consumer_fresh_data");
 
   return this->pull_consumer_.get_fresh_data ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 typename CCM_TYPE::reader_type::_ptr_type
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_data (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_consumer_data (void)
 {
-  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_data");
+  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_consumer_data");
 
   return this->push_consumer_.get_data ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 typename CCM_TYPE::reader_type::_ptr_type
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_data (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_consumer_data (void)
 {
-  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_data");
+  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_consumer_data");
 
   return this->pull_consumer_.get_data ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 ::CCM_DDS::CCM_DataListenerControl_ptr
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_data_control (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_consumer_data_control (void)
 {
-  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_data_control");
+  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_consumer_data_control");
 
   return this->push_consumer_.get_data_control ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 ::DDS::CCM_DataReader_ptr
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_dds_entity (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_consumer_dds_entity (void)
 {
-  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_dds_entity");
+  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_consumer_dds_entity");
 
   return this->pull_consumer_.get_dds_entity ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 ::DDS::CCM_DataReader_ptr
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_dds_entity (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_consumer_dds_entity (void)
 {
-  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_dds_entity");
+  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_consumer_dds_entity");
 
   return this->push_consumer_.get_dds_entity ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (void)
 {
-  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
+  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete");
 
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete ();
 
@@ -121,11 +121,11 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
     this->profile_name_);
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_activate (void)
 {
-  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate");
+  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_activate");
   ACE_Reactor* reactor = 0;
 #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
   reactor = this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ();
@@ -144,11 +144,11 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
     reactor);
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_passivate (void)
 {
-  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate");
+  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_passivate");
 
   this->push_consumer_.passivate ();
   this->supplier_.passivate ();
@@ -156,11 +156,11 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_remove (void)
 {
-  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove");
+  CIAO_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_remove");
 
   this->push_consumer_.remove (this->subscriber_.in ());
   this->supplier_.remove (this->publisher_.in ());

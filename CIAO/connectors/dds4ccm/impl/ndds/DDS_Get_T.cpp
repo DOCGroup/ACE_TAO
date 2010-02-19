@@ -9,25 +9,25 @@
 
 #include "ciao/Logger/Log_Macros.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-DDS_Get_T<DDS_TYPE, CCM_TYPE>::DDS_Get_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::DDS_Get_T (void)
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-DDS_Get_T<DDS_TYPE, CCM_TYPE>::~DDS_Get_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::~DDS_Get_T (void)
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
-DDS_Get_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
+DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
   ::DDS::Topic_ptr topic,
   ::DDS::Subscriber_ptr subscriber,
   const char* library_name,
   const char* profile_name)
 {
-  CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
+  CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete");
 
   try
     {
@@ -68,13 +68,13 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
-DDS_Get_T<DDS_TYPE, CCM_TYPE>::activate (
+DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::activate (
   ::CCM_DDS::PortStatusListener_ptr listener,
   ACE_Reactor* reactor)
 {
-  CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE>::activate");
+  CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::activate");
   try
     {
       if (CORBA::is_nil (this->status_.in ()))
@@ -94,11 +94,11 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE>::activate (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
-DDS_Get_T<DDS_TYPE, CCM_TYPE>::passivate (void)
+DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::passivate (void)
 {
-  CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE>::passivate");
+  CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::passivate");
   try
     {
       this->dds_get_.passivate ();
@@ -114,12 +114,12 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE>::passivate (void)
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
-DDS_Get_T<DDS_TYPE, CCM_TYPE>::remove (
+DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::remove (
   ::DDS::Subscriber_ptr subscriber)
 {
-  CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE>::remove");
+  CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::remove");
   try
     {
       subscriber->delete_datareader (this->data_reader_.in ());
@@ -135,29 +135,29 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE>::remove (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 typename CCM_TYPE::getter_type::_ptr_type
-DDS_Get_T<DDS_TYPE, CCM_TYPE>::get_fresh_data (void)
+DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::get_fresh_data (void)
 {
-  CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE>::get_fresh_data");
+  CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::get_fresh_data");
 
   return &this->dds_get_;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 typename CCM_TYPE::reader_type::_ptr_type
-DDS_Get_T<DDS_TYPE, CCM_TYPE>::get_data (void)
+DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::get_data (void)
 {
-  CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE>::get_data");
+  CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::get_data");
 
   return &this->dds_read_;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 ::DDS::CCM_DataReader_ptr
-DDS_Get_T<DDS_TYPE, CCM_TYPE>::get_dds_entity (void)
+DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::get_dds_entity (void)
 {
-  CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE>::get_dds_entity");
+  CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::get_dds_entity");
 
   return &this->rti_reader_;
 }
