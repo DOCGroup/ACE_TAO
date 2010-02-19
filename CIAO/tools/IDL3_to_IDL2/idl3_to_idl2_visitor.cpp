@@ -6,6 +6,7 @@
 #include "be_sunsoft.h"
 #include "be_extern.h"
 
+#include "ast_component.h"
 #include "ast_component_fwd.h"
 #include "ast_provides.h"
 #include "ast_uses.h"
