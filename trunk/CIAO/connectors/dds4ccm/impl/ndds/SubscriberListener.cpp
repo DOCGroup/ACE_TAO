@@ -34,7 +34,8 @@ namespace CIAO
       {
         CIAO_TRACE ("RTI_SubscriberListener_i::on_data_on_readers");
 
-        ::DDS::Subscriber_var sub = new RTI_Subscriber_i ();
+        ::DDS::Subscriber_var sub = ::DDS::Subscriber::_nil ();
+        ACE_NEW (sub, RTI_Subscriber_i ());
         RTI_Subscriber_i *s = dynamic_cast < RTI_Subscriber_i *> (sub.in ());
         s->set_impl (the_subscriber);
         this->impl_->on_data_on_readers (sub.in ());
@@ -50,7 +51,8 @@ namespace CIAO
 
         ::DDS::RequestedDeadlineMissedStatus ddsstatus;
         ddsstatus <<= status;
-        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i ();
+        ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
+        ACE_NEW (dds_reader, RTI_DataReader_i ());
         RTI_DataReader_i *rti_dr = dynamic_cast < RTI_DataReader_i *>(dds_reader.in ());
         rti_dr->set_impl (the_reader);
 
@@ -66,7 +68,8 @@ namespace CIAO
 
         ::DDS::RequestedIncompatibleQosStatus ddsstatus;
         ddsstatus <<= status;
-        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i ();
+        ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
+        ACE_NEW (dds_reader, RTI_DataReader_i ());
         RTI_DataReader_i *rti_dr = dynamic_cast < RTI_DataReader_i *>(dds_reader.in ());
         rti_dr->set_impl (the_reader);
         this->impl_->on_requested_incompatible_qos (dds_reader.in (), ddsstatus);
@@ -81,7 +84,8 @@ namespace CIAO
 
         ::DDS::SampleRejectedStatus ddsstatus;
         ddsstatus <<= status;
-        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i ();
+        ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
+        ACE_NEW (dds_reader, RTI_DataReader_i ());
         RTI_DataReader_i *rti_dr = dynamic_cast < RTI_DataReader_i *>(dds_reader.in ());
         rti_dr->set_impl (the_reader);
         this->impl_->on_sample_rejected (dds_reader.in (), ddsstatus);
@@ -96,7 +100,8 @@ namespace CIAO
 
         ::DDS::LivelinessChangedStatus ddsstatus;
         ddsstatus <<= status;
-        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i ();
+        ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
+        ACE_NEW (dds_reader, RTI_DataReader_i ());
         RTI_DataReader_i *rti_dr = dynamic_cast < RTI_DataReader_i *>(dds_reader.in ());
         rti_dr->set_impl (the_reader);
         this->impl_->on_liveliness_changed (dds_reader.in (), ddsstatus);
@@ -108,7 +113,8 @@ namespace CIAO
       {
         CIAO_TRACE ("RTI_SubscriberListener_i::on_data_available");
 
-        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i ();
+        ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
+        ACE_NEW (dds_reader, RTI_DataReader_i ());
         RTI_DataReader_i *rti_dr = dynamic_cast < RTI_DataReader_i *>(dds_reader.in ());
         rti_dr->set_impl (the_reader);
         this->impl_->on_data_available (dds_reader.in ());
@@ -123,7 +129,8 @@ namespace CIAO
 
         ::DDS::SubscriptionMatchedStatus ddsstatus;
         ddsstatus <<= status;
-        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i ();
+        ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
+        ACE_NEW (dds_reader, RTI_DataReader_i ());
         RTI_DataReader_i *rti_dr = dynamic_cast < RTI_DataReader_i *>(dds_reader.in ());
         rti_dr->set_impl (the_reader);
         this->impl_->on_subscription_matched (dds_reader.in (), ddsstatus);
@@ -138,7 +145,8 @@ namespace CIAO
 
         ::DDS::SampleLostStatus ddsstatus;
         ddsstatus <<= status;
-        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i ();
+        ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
+        ACE_NEW (dds_reader, RTI_DataReader_i ());
         RTI_DataReader_i *rti_dr = dynamic_cast < RTI_DataReader_i *>(dds_reader.in ());
         rti_dr->set_impl (the_reader);
         this->impl_->on_sample_lost (dds_reader.in (), ddsstatus);
