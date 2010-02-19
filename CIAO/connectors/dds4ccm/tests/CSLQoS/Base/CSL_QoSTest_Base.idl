@@ -1,18 +1,20 @@
 // $Id$
 
 /**
- * @file   CSL_QoSTest_Base.idl 
+ * @file   CSL_QoSTest_Base.idl
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
  */
 
 #ifndef CSL_QOSTEST_BASE_IDL
 #define CSL_QOSTEST_BASE_IDL
 
+#pragma rti typesupport "Base/CSL_QoSTest_BaseSupport.h"
 
-  struct TestTopic {
-    string key; //@key
-    long x;
-   };
+struct TestTopic {
+  string key; //@key
+  long x;
+};
+
 typedef sequence<TestTopic> TestTopic_Seq;
 
 #endif

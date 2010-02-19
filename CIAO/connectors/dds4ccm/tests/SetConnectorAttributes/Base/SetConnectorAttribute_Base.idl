@@ -8,6 +8,8 @@
 #ifndef SETCONNECTORATTRIBUTE_BASE_IDL
 #define SETCONNECTORATTRIBUTE_BASE_IDL
 
+#pragma rti typesupport "Base/SetConnectorAttribute_BaseSupport.h"
+
 struct SetConnectorAttributeTest {
   string key;
   long iteration;

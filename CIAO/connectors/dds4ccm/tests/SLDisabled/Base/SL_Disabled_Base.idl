@@ -1,18 +1,20 @@
 // $Id$
 
 /**
- * @file   SL_Disabled_Base.idl 
+ * @file   SL_Disabled_Base.idl
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
  */
 
 #ifndef SL_DISABLED_BASE_IDL
 #define SL_DISABLED_BASE_IDL
 
+#pragma rti typesupport "Base/SL_Disabled_BaseSupport.h"
 
-  struct TestTopic {
-    string key; //@key
-    long x;
-   };
+struct TestTopic {
+  string key; //@key
+  long x;
+};
+
 typedef sequence<TestTopic> TestTopic_Seq;
 
 #endif

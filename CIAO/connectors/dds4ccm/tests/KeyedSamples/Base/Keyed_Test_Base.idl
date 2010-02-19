@@ -8,6 +8,8 @@
 #ifndef KEYED_TEST_BASE_IDL
 #define KEYED_TEST_BASE_IDL
 
+#pragma rti typesupport "Base/Keyed_Test_BaseSupport.h"
+
 struct KeyedTest {
   string key; //@key
   long iteration;
