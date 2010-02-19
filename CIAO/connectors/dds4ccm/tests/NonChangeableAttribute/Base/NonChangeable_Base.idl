@@ -8,6 +8,8 @@
 #ifndef NONCHANGEABLE_BASE_IDL
 #define NONCHANGEABLE_BASE_IDL
 
+#pragma rti typesupport "Base/NonChangeable_BaseSupport.h"
+
 struct NonChangeableTest {
   string key;
   long iteration;

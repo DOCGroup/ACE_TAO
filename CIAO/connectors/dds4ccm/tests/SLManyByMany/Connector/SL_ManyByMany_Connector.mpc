@@ -10,8 +10,8 @@ project(DDS_SL_MBM_Connector_idl_gen) : connectoridldefaults {
               -Wb,skel_export_include=SL_ManyByMany_Connector_svnt_export.h \
               -Wb,svnt_export_macro=SL_MANYBYMANY_CONNECTOR_SVNT_Export \
               -Wb,svnt_export_include=SL_ManyByMany_Connector_svnt_export.h \
-              -Wb,exec_export_macro=SL_MANYBYMANY_CONNECTOR_EXEC_Export \
-              -Wb,exec_export_include=SL_ManyByMany_Connector_exec_export.h \
+              -Wb,conn_export_macro=SL_MANYBYMANY_CONNECTOR_CONN_Export \
+              -Wb,conn_export_include=SL_ManyByMany_Connector_conn_export.h \
               -I ..
 
   IDL_Files {
@@ -91,18 +91,18 @@ project(DDS_SL_ManyByMany_Connector_exec) : ciao_executor, dds4ccm_impl {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags   = SL_MANYBYMANY_CONNECTOR_EXEC_BUILD_DLL
+  dynamicflags   = SL_MANYBYMANY_CONNECTOR_CONN_BUILD_DLL
 
   IDL_Files {
   }
 
   Source_Files {
-    SL_ManyByMany_Connector_exec.cpp
+    SL_ManyByMany_Connector_conn.cpp
   }
 
   Header_Files {
-    SL_ManyByMany_Connector_exec.h
-    SL_ManyByMany_Connector_exec_export.h
+    SL_ManyByMany_Connector_conn.h
+    SL_ManyByMany_Connector_conn_export.h
   }
 
   Inline_Files {

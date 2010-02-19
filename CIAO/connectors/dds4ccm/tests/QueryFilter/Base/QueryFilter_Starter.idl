@@ -8,8 +8,6 @@
 #ifndef QUERYFILTER_STARTER_IDL
 #define QUERYFILTER_STARTER_IDL
 
-#pragma ciao lem "Base/QueryFilter_StarterE.idl"
-
 interface QueryFilterStarter
 {
   void set_reader_properties (in unsigned short nr_keys,

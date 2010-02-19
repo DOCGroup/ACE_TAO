@@ -8,6 +8,8 @@
 #ifndef EVENT_CONNECTION_TEST_BASE_IDL
 #define EVENT_CONNECTION_TEST_BASE_IDL
 
+#pragma rti typesupport "Base/Event_Connection_Test_BaseSupport.h"
+
 struct Event_ConnectionTest {
   string key; //@key
   long iteration;

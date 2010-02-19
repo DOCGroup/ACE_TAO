@@ -1,12 +1,14 @@
 // $Id$
 
 /**
- * @file LOBO_Test_Base.idl
+ * @file TwoTopics_Base.idl
  * @author Marcel Smit <msmit@remedy.nl>
  */
 
 #ifndef TWOTOPICS_BASE_IDL
 #define TWOTOPICS_BASE_IDL
+
+#pragma rti typesupport "Base/TwoTopics_BaseSupport.h"
 
 struct HelloTopic {
   string hello; //@key

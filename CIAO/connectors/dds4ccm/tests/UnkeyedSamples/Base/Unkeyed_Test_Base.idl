@@ -8,6 +8,8 @@
 #ifndef UNKEYED_TEST_BASE_IDL
 #define UNKEYED_TEST_BASE_IDL
 
+#pragma rti typesupport "Base/Unkeyed_Test_BaseSupport.h"
+
 struct UnkeyedTest {
   string key;
   long iteration;

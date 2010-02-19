@@ -1,18 +1,20 @@
 // $Id$
 
 /**
- * @file   SL_ManyByMany_Base.idl 
+ * @file   SL_ManyByMany_Base.idl
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
  */
 
 #ifndef SL_MANYBYMANY_BASE_IDL
 #define SL_MANYBYMANY_BASE_IDL
 
+#pragma rti typesupport "Base/SL_ManyByMany_BaseSupport.h"
 
-  struct TestTopic {
-    string key; //@key
-    long x;
-   };
+struct TestTopic {
+  string key; //@key
+  long x;
+};
+
 typedef sequence<TestTopic> TestTopic_Seq;
 
 #endif

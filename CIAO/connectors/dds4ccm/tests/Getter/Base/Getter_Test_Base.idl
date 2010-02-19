@@ -8,6 +8,8 @@
 #ifndef GETTER_TEST_BASE_IDL
 #define GETTER_TEST_BASE_IDL
 
+#pragma rti typesupport "Base/Getter_Test_BaseSupport.h"
+
 struct GetterTest {
   string key;
   long iteration;
