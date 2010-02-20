@@ -63,6 +63,7 @@ wireshark     = 0
 
 dds4ccm_opendds = 0
 dds4ccm_ndds = 0
+dds4ccm_splice = 0
 
 // Features for various GUI libraries
 
