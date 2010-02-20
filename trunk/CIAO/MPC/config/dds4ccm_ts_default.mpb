@@ -1,0 +1,38 @@
+// $Id$
+
+feature(dds4ccm_opendds) : dcps_ts_defaults, dcps {
+  Define_Custom(DDSGenerator) : TypeSupport {
+    keyword opendds_ts_flags = commandflags
+  }
+}
+
+feature(dds4ccm_splice) : splice_ts_defaults {
+  Define_Custom(DDSGenerator) : SpliceTypeSupport {
+    keyword opendds_ts_flags = commandflags
+  }
+}
+
+feature(dds4ccm_ndds) : ndds_ts_defaults, nddslib {
+  Define_Custom(DDSGenerator) : NDDSTypeSupport {
+  }
+
+  dynamicflags += NDDS_USER_DLL_EXPORT
+
+  verbatim(gnuace, macros) {
+    override no_hidden_visibility = 1
+  }
+}
+
+feature(!dds4ccm_opendds) {
+  // this allows the user's project to reference opendds_ts_flags,
+  // which will simply be ignored
+  Define_Custom(DummyTypeSupport) {
+    keyword opendds_ts_flags
+  }
+}
+
+feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_splice) {
+  Define_Custom(DDSGenerator) {
+  }
+}
+

@@ -1,7 +1,23 @@
+Sat Feb 20 20:31:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm_ts_default.mpb:
+          New base project for dds4ccm dds type support generation. This
+          base project will be soon be used for all dds4ccm examples and
+          tests. The typesupport files will now be linked together with
+          the tao type code to one shared library. dds4ccm should work
+          on the long term with multiple dds implementations, the fact
+          that you have an implementation doesn't mean you want to use
+          it with dds4ccm. with the new features dds4ccm_ndds, dds4ccm_opendds,
+          and dds4ccm_splice you can control which dds vendor dds4ccm
+          should use. At this moment ndds is supported and tested
+
+          Thanks to Adam Mitz for extending MPC to make this base
+          project possible
+
 Fri Feb 19 15:44:38 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
-        
+
           Added #include, newly required due to reordering of
           #includes in the front end.
 
