@@ -1,3 +1,20 @@
+Sun Feb 21 21:25:21 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Time_Value_Test.cpp: Added a test for the new operator<<
+          implementation for ACE_Time_Value.  Thanks to Olivier Langlois
+          <olivier at olivierlanglois dot net> for contributing this.
+
+Sun Feb 21 21:28:03 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_math.{h,inl}: Added support for floor() and ceiling()
+          for long double types.  Thanks to Olivier Langlois <olivier at
+          olivierlanglois dot net> for contributing this.
+  
+        * ace/Time_Value.{h,cpp}: Added support for operator<< and to
+          handle long double values better.  Thanks to Olivier Langlois
+          <olivier at olivierlanglois dot net> for contributing this.
+          This fixes bugid 3818 and 2434.
+  
 Sun Feb 21 16:28:47 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * tests/Recursive_Condition_Test.cpp: Revised this test so that it

@@ -91,9 +91,17 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   double floor (double x);
 
+  /// This method computes the largest integral value not greater than x.
+  ACE_NAMESPACE_INLINE_FUNCTION
+  long double floor (long double x);
+  
   /// This method computes the smallest integral value not less than x.
   ACE_NAMESPACE_INLINE_FUNCTION
   double ceil (double x);
+  
+  /// This method computes the smallest integral value not less than x.
+  ACE_NAMESPACE_INLINE_FUNCTION
+  long double ceil (long double x);
 
   /// This method computes the base-2 logarithm of x.
   ACE_NAMESPACE_INLINE_FUNCTION
