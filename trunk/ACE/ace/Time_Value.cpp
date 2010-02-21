@@ -10,6 +10,12 @@ ACE_RCSID (ace,
 
 #include "ace/Numeric_Limits.h"
 #include "ace/If_Then_Else.h"
+#include "ace/OS_NS_math.h"
+
+#ifdef ACE_HAS_CPP98_IOSTREAMS
+#include <ostream>
+#include <iomanip>
+#endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -162,7 +168,7 @@ ACE_Time_Value::dump (void) const
 }
 
 void
-ACE_Time_Value::normalize (void)
+ACE_Time_Value::normalize (bool bSaturate)
 {
   // // ACE_OS_TRACE ("ACE_Time_Value::normalize");
   // From Hans Rohnert...
@@ -171,23 +177,61 @@ ACE_Time_Value::normalize (void)
     {
       /*! \todo This loop needs some optimization.
        */
-      do
+      if (!bSaturate) // keep the conditionnal expression outside the while loop to minimize performance cost
+      {
+        do
         {
           ++this->tv_.tv_sec;
           this->tv_.tv_usec -= ACE_ONE_SECOND_IN_USECS;
         }
-      while (this->tv_.tv_usec >= ACE_ONE_SECOND_IN_USECS);
+        while (this->tv_.tv_usec >= ACE_ONE_SECOND_IN_USECS);
+      }
+      else
+      {
+        do
+        {
+          if (this->tv_.tv_sec < ACE_Numeric_Limits<time_t>::max())
+          {
+            ++this->tv_.tv_sec;
+            this->tv_.tv_usec -= ACE_ONE_SECOND_IN_USECS;
+          }
+          else
+          {
+            this->tv_.tv_usec = ACE_ONE_SECOND_IN_USECS - 1;
+          }
+        }
+        while (this->tv_.tv_usec >= ACE_ONE_SECOND_IN_USECS);
+      }
     }
   else if (this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS)
     {
       /*! \todo This loop needs some optimization.
        */
-      do
+      if (!bSaturate)
+      {
+        do
         {
           --this->tv_.tv_sec;
           this->tv_.tv_usec += ACE_ONE_SECOND_IN_USECS;
         }
-      while (this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS);
+        while (this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS);
+      }
+      else
+      {
+        do
+        {
+          if (this->tv_.tv_sec > ACE_Numeric_Limits<time_t>::min())
+          {
+            --this->tv_.tv_sec;
+            this->tv_.tv_usec += ACE_ONE_SECOND_IN_USECS;
+          }
+          else
+          {
+            this->tv_.tv_usec = -ACE_ONE_SECOND_IN_USECS + 1;
+          }
+        }
+        while (this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS);
+      }
     }
 
   if (this->tv_.tv_sec >= 1 && this->tv_.tv_usec < 0)
@@ -209,51 +253,117 @@ ACE_Time_Value::normalize (void)
 ACE_Time_Value &
 ACE_Time_Value::operator *= (double d)
 {
-  // The floating type to be used in the computations.  It should be
-  // large enough to hold a time_t.  We actually want a floating type
-  // with enough digits in its mantissa to hold a time_t without
-  // losing precision.  For example, if FLT_RADIX is 2 and
-  // LDBL_MANT_DIG is 64, a long double has a 64 bit wide mantissa,
-  // which would be sufficient to hold a 64 bit time_t value without
-  // losing precision.
+  // To work around the lack of precision of a long double to contain
+  // a 64-bits time_t + 6 digits after the decimal point for the usec part,
+  // we perform the multiplication of the 2 timeval parts separately.
   //
-  // For now we'll simply go with long double if it is larger than
-  // time_t.  We're hosed if long double isn't large enough.
+  // This extra precision step is adding a cost when
+  // transfering the seconds resulting from the usec multiplication.
+  // This operation correspond to the normalization process performed in
+  // normalize() but we must absolutly do it here because the
+  // usec multiplication result value could exceed what can be stored
+  // in a suseconds_t type variable.
+  //
+  // Since this is a costly operation, we try to detect as soon as
+  // possible if we are having a saturation in order to abort the
+  // rest of the computation.
   typedef ACE::If_Then_Else<(sizeof (double) > sizeof (time_t)),
                             double,
                             long double>::result_type float_type;
 
-  float_type time_total =
-    (this->sec ()
-     + static_cast<float_type> (this->usec ()) / ACE_ONE_SECOND_IN_USECS) * d;
-
+  float_type sec_total = this->sec();
+  sec_total *= d;
+  
   // shall we saturate the result?
   static const float_type max_int =
-    ACE_Numeric_Limits<time_t>::max () + 0.999999;
+    ACE_Numeric_Limits<time_t>::max() + 0.999999;
   static const float_type min_int =
-    ACE_Numeric_Limits<time_t>::min () - 0.999999;
+    ACE_Numeric_Limits<time_t>::min() - 0.999999;
+    
+  if (sec_total > max_int)
+  {
+    this->set(ACE_Numeric_Limits<time_t>::max(),ACE_ONE_SECOND_IN_USECS-1);
+  }
+  else if (sec_total < min_int)
+  {
+    this->set(ACE_Numeric_Limits<time_t>::min(),-ACE_ONE_SECOND_IN_USECS+1);
+  }
+  else
+  {
+    time_t time_sec = static_cast<time_t> (sec_total);
+    
+    float_type usec_total = this->usec(); 
+    usec_total *= d;
 
-  if (time_total > max_int)
-    time_total = max_int;
-  if (time_total < min_int)
-    time_total = min_int;
+    // adding usec resulting from tv_sec mult
+    usec_total += (sec_total-time_sec)*ACE_ONE_SECOND_IN_USECS;
+    
+    // extract seconds component of the usec mult
+    sec_total = usec_total / ACE_ONE_SECOND_IN_USECS;
+    // keep remaining usec
+    if (sec_total > 0)
+      usec_total = (sec_total - ACE_OS::floor(sec_total));
+    else
+      usec_total = (sec_total - ACE_OS::ceil(sec_total));
+    
+    sec_total -= usec_total;
+    usec_total *= ACE_ONE_SECOND_IN_USECS;
+    
+    // add the seconds component of the usec mult with the tv_sec mult prod.
+    sec_total += time_sec;
+    
+    // recheck for saturation
+    if (sec_total > max_int)
+    {
+      this->set(ACE_Numeric_Limits<time_t>::max(),ACE_ONE_SECOND_IN_USECS-1);
+    }
+    else if (sec_total < min_int)
+    {
+      this->set(ACE_Numeric_Limits<time_t>::min(),-ACE_ONE_SECOND_IN_USECS+1);
+    }
+    else
+    {
+      time_sec = sec_total;
+      suseconds_t time_usec = static_cast<suseconds_t> (usec_total);
 
-  const time_t time_sec = static_cast<time_t> (time_total);
+      // round up the result to save the last usec
+      if (time_usec > 0 && (usec_total - time_usec) >= 0.5)
+        ++time_usec;
+      else if (time_usec < 0 && (usec_total - time_usec) <= -0.5)
+        --time_usec;
 
-  time_total -= time_sec;
-  time_total *= ACE_ONE_SECOND_IN_USECS;
-
-  suseconds_t time_usec = static_cast<suseconds_t> (time_total);
-
-  // round up the result to save the last usec
-  if (time_usec > 0 && (time_total - time_usec) >= 0.5)
-    ++time_usec;
-  else if (time_usec < 0 && (time_total - time_usec) <= -0.5)
-    --time_usec;
-
-  this->set (time_sec, time_usec);
-
+      this->set(time_sec,time_usec);
+    }
+  }
   return *this;
 }
+
+#ifdef ACE_HAS_CPP98_IOSTREAMS
+ostream &operator<<(ostream &o, const ACE_Time_Value &v)
+{
+    char oldFiller = o.fill();
+    o.fill('0');
+    const timeval *tv = v;
+    if( tv->tv_sec )
+    {
+        o << tv->tv_sec;
+        if( tv->tv_usec )
+            o << '.' << std::setw(6) << abs(tv->tv_usec);
+    }
+    else if( tv->tv_usec < 0 )
+    {
+        o << "-0." << std::setw(6) << -tv->tv_usec;
+    }
+    else
+    {
+        o << '0';
+        if( tv->tv_usec > 0 )
+            o << '.'<< std::setw(6) << tv->tv_usec;
+    }
+
+    o.fill(oldFiller);
+    return o;
+}
+#endif
 
 ACE_END_VERSIONED_NAMESPACE_DECL

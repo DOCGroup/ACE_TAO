@@ -32,6 +32,9 @@ suseconds_t const ACE_ONE_SECOND_IN_USECS = 1000000;
 // needed for ACE_UINT64
 #include "ace/Basic_Types.h"
 
+// needed to determine if iostreams are present
+#include "ace/iosfwd.h"
+
 // This forward declaration is needed by the set() and FILETIME() functions
 #if defined (ACE_LACKS_LONGLONG_T)
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -324,7 +327,7 @@ public:
 
 private:
   /// Put the timevalue into a canonical form.
-  void normalize (void);
+  void normalize (bool bSaturate = false);
 
   /// Store the values as a timeval.
 #if defined (ACE_HAS_TIME_T_LONG_MISMATCH)
@@ -345,6 +348,10 @@ private:
   timeval tv_;
 #endif /* ACE_HAS_TIME_T_LONG_MISMATCH */
 };
+
+#ifdef ACE_HAS_CPP98_IOSTREAMS
+extern ACE_Export ostream &operator<<( ostream &o, const ACE_Time_Value &v );
+#endif
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
