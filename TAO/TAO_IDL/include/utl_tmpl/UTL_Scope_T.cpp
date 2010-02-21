@@ -92,7 +92,7 @@ UTL_Scope::fe_add_full_intf_decl (DECL *t)
   // Add it to scope
   this->add_to_scope (t);
 
-  // We do this for interfaces, valuetypes and components in 
+  // We do this for interfaces, valuetypes and components in
   // a different place than we do for structs and unions,
   // since fwd declared structs and unions must be defined in
   // the same translation unit.
@@ -139,7 +139,7 @@ UTL_Scope::fe_add_fwd_intf_decl (typename FULL_DECL::FWD_TYPE *t)
           // If the lookup found the full_definition member of another
           // interface_fwd, don't reset this full_definition. Otherwise
           // reset the member and set is_defined_ on i so it itf won't
-          // get destroyed twice.  
+          // get destroyed twice.
           if (itf->is_defined ())
             {
               if (!t->is_defined ())
@@ -148,7 +148,7 @@ UTL_Scope::fe_add_fwd_intf_decl (typename FULL_DECL::FWD_TYPE *t)
                     FULL_DECL::narrow_from_decl (t->full_definition ());
 
                   prev_fd->destroy ();
-                  // No need to delete prev_fd, the call to 
+                  // No need to delete prev_fd, the call to
                   // set_full_definition() below will do it.
                 }
 
@@ -188,3 +188,4 @@ UTL_Scope::fe_add_fwd_intf_decl (typename FULL_DECL::FWD_TYPE *t)
 }
 
 #endif // TAO_IDL_UTL_SCOPE_T_CPP
+
