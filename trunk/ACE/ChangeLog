@@ -1,3 +1,16 @@
+Sun Feb 21 16:28:47 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Recursive_Condition_Test.cpp: Revised this test so that it
+          actually uses the ACE_Condition<> template, like it says in the
+          comments..
+
+Sun Feb 21 16:20:35 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Condition_T.cpp (ACE_Condition<MUTEX>::wait): Changed the
+          call to mutex_.lock_ to mutex_.mutex() since lock_ is protected.
+          Thanks to Nick Meyer <nick dot meyer at sensis dot com> for
+          reporting this.
+
 Sun Feb 21 09:24:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ChangeLogs/*:
