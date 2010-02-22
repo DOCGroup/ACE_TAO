@@ -99,13 +99,12 @@ project(DDS_Hello_Connector_exec) : ciao_executor, dds4ccm_impl {
   after  += DDS_Hello_Connector_lem_stub \
             DDS_Hello_Connector_stub \
             DDS4CCM_lem_stub \
-            DDS_Hello_Base_NDDS_TS
+            DDS_Hello_Base_stub
   sharedname = DDS_Hello_Connector_exec
   libs += DDS_Hello_Connector_stub \
           DDS_Hello_Connector_lem_stub \
           DDS_Hello_Base_stub \
-          DDS4CCM_lem_stub \
-          DDS_Hello_Base_NDDS_TS
+          DDS4CCM_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
