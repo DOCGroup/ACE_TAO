@@ -28,6 +28,12 @@ namespace SA_POP {
     const SA_POP::CondID CondIDMax = 999999;
     const SA_POP::Utility GoalUtilMin = -1000;
     const SA_POP::Utility GoalUtilMax = 1000;
+    const SA_POP::Probability CondProbMin = 0.0;
+    const SA_POP::Probability CondProbMax = 1.0;
+    const size_t NumGoalsMin = 1;
+    const size_t NumGoalsMax = 10;
+    const size_t NumKnownCondsMin = 0;
+    const size_t NumKnownCondsMax = 100;
   };  /* SA_POP::Default namespace */
 };  /* SA_POP namespace */
 
@@ -147,7 +153,7 @@ int main (int argc, char* argv[])
 
 //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
 // TO DO:  CREATE QuestionRange template class to replace QuestionInt and use one with a type of double for condition probability.
-    UserInterface::QuestionInt cond_prob_ques ("Initial condition probability (of true):", SA_POP::Default::CondProbMin, SA_POP::Default::CondProbMin);
+    UserInterface::QuestionInt cond_prob_ques ("Initial condition probability (of true):", SA_POP::Default::CondProbMin, SA_POP::Default::CondProbMax);
     if (user_input.ask (cond_prob_ques))
       cond_prob = cond_prob_ques.get_answer_int ();
     else
