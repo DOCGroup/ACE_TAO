@@ -18,5 +18,8 @@ project (DDS_SCABase_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
   DDSGenerator_Files {
     SetConnectorAttribute_Base.idl
   }
+
+  Source_Files {
+  }
 }
 

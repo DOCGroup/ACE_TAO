@@ -18,5 +18,8 @@ project (DDS_Perf_Keyed_Test_Base_stub) : taoidldefaults, anytypecode, dds4ccm_t
   DDSGenerator_Files {
     Perf_Keyed_Test_Base.idl
   }
+
+  Source_Files {
+  }
 }
 

@@ -18,5 +18,8 @@ project (DDS_Hello_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default 
   DDSGenerator_Files {
     Hello_Base.idl
   }
+
+  Source_Files {
+  }
 }
 

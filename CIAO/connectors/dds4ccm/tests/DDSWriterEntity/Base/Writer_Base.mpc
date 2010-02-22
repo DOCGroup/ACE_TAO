@@ -18,5 +18,8 @@ project (DDS_DDSWriterEntityBase_stub) : taoidldefaults, anytypecode, dds4ccm_ts
   DDSGenerator_Files {
     Writer_Base.idl
   }
+
+  Source_Files {
+  }
 }
 

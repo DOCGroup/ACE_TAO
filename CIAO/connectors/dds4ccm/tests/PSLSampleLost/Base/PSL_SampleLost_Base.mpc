@@ -18,5 +18,8 @@ project (DDS_PSL_SampleLost_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts
   DDSGenerator_Files {
     PSL_SampleLost_Base.idl
   }
+
+  Source_Files {
+  }
 }
 

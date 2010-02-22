@@ -18,5 +18,8 @@ project (DDS_Hello_Namespace_Base_stub) : taoidldefaults, anytypecode, dds4ccm_t
   DDSGenerator_Files {
     HelloGoodbye.idl
   }
+
+  Source_Files {
+  }
 }
 
