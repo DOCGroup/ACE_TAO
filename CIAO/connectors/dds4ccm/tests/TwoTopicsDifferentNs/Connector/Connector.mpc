@@ -69,7 +69,6 @@ project(DDS_TTDN_Connector_stub) : ccm_stub, dds4ccm_base {
   includes += ..
   sharedname = DDS_Connector_stub
   dynamicflags   = TWOTOPICSDIFFERENTNS_CONNECTOR_STUB_BUILD_DLL
-  requires += dummy_label
 
   IDL_Files {
   }
