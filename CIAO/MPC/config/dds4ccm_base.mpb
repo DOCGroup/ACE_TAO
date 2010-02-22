@@ -1,7 +1,18 @@
 // -*- MPC -*-
 // $Id$
 
-project : ciao_connector_base {
+feature(dds4ccm_opendds) : ciao_connector_base, dcps {
   after += DDS4CCM_stub DDS4CCM_lem_gen
   libs += DDS4CCM_stub
 }
+
+feature(dds4ccm_splice) : ciao_connector_base {
+  after += DDS4CCM_stub DDS4CCM_lem_gen
+  libs += DDS4CCM_stub
+}
+
+feature(dds4ccm_ndds) : ciao_connector_base {
+  after += DDS4CCM_stub DDS4CCM_lem_gen
+  libs += DDS4CCM_stub
+}
+
