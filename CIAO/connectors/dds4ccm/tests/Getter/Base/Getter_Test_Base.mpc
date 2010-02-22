@@ -1,8 +1,8 @@
 // $Id$
+// This file is generated with "generate_component_mpc.pl -o ../lib -u DDS -n Getter_Test_Base"
 
 project (DDS_Getter_Test_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
   sharedname = *
-    custom_only = 1
   dynamicflags += GETTER_TEST_BASE_STUB_BUILD_DLL
   libout = ../lib
 
