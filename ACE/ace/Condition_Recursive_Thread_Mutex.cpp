@@ -63,7 +63,7 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (ACE_Recursive_Thread_Mutex &mut
                                                  const ACE_Time_Value *abstime)
 {
   ACE_recursive_mutex_state mutex_state_holder;
-  ACE_recursive_thread_mutex_t &recursive_mutex = mutex.mutex ();
+  ACE_recursive_thread_mutex_t &recursive_mutex = mutex.lock ();
 
   if (ACE_OS::recursive_mutex_cond_unlock (&recursive_mutex,
                                            mutex_state_holder) == -1)

@@ -1,3 +1,14 @@
+Mon Feb 22 19:57:02 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Thread_Mutex.inl (ACE_Thread_Mutex::lock): Added a non-const
+          lock() method.  Thanks to Phil for suggesting this.
+
+Mon Feb 22 18:08:20 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Condition_Recursive_Thread_Mutex.cpp (ACE_Condition): Fixed
+          a stray occurrence of the mutex() accessor that should be
+          lock().  Thanks to Phil Mesnier for reporting this.
+
 Mon Feb 22 15:00:11 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Time_Value.{h,cpp}: Reformatted/renamed the code to conform
