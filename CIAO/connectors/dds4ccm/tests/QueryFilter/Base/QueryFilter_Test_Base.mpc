@@ -1,7 +1,7 @@
 // $Id$
 
 project (QueryFilter_Test_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
-  sharedname = *
+  sharedname = QueryFilter_Test_Base_stub
   dynamicflags += QUERY_FILTER_TEST_BASE_STUB_BUILD_DLL
   libout = ../lib
 

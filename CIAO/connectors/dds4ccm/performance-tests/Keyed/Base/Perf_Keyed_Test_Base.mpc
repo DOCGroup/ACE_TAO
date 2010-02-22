@@ -1,8 +1,7 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -o ../lib -u DDS -n Perf_Keyed_Test_Base"
 
 project (DDS_Perf_Keyed_Test_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
-  sharedname = *
+  sharedname = DDS_Perf_Keyed_Test_Base_stub
   dynamicflags += PERF_KEYED_TEST_BASE_STUB_BUILD_DLL
   libout = ../lib
 

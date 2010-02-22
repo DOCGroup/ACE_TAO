@@ -1,7 +1,7 @@
 // $Id$
 
 project (DDS_PSL_DeadlineTest_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
-  sharedname = *
+  sharedname = DDS_PSL_DeadlineTest_Base_stub
   dynamicflags += PSL_DEADLINETEST_BASE_STUB_BUILD_DLL
   libout = ../lib
 

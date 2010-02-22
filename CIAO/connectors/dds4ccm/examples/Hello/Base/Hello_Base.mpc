@@ -1,7 +1,7 @@
 // $Id$
 
 project (DDS_Hello_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
-  sharedname = *
+  sharedname = DDS_Hello_Base_stub
   dynamicflags += HELLO_BASE_STUB_BUILD_DLL
   libout = ../lib
 
