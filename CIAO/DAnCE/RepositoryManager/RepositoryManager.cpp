@@ -191,7 +191,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     DANCE_DEBUG (6, (LM_DEBUG, "event loop finished\n"));
 
-    // todo shutdown orb
+    orb->destroy ();
   }
   catch (const CORBA::Exception &ex) {
     cerr << "CORBA Exception: " << ex << endl;

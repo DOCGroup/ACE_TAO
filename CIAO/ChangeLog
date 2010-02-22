@@ -1,3 +1,15 @@
+Mon Feb 22 08:22:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
+          Layout change
+
+        * DAnCE/RepositoryManager/repository_manager_admin_exec.cpp
+        * DAnCE/RepositoryManager/RepositoryManager.cpp
+          Shutdown the orb
+
+        * MPC/config/connectoridldefaults.mpb:
+          No executor header file for a connector
+
 Mon Feb 22 08:20:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
