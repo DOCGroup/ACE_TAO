@@ -1,9 +1,6 @@
 // $Id$
 
 #include "Null_Component_exec.h"
-#include <iostream>
-
-using namespace std;
 
 namespace CIAO_Null_Component_Impl
 {
@@ -77,7 +74,6 @@ namespace CIAO_Null_Component_Impl
   Null_Component_exec_i::ccm_activate ()
   {
     // Your code here.
-    cout << "Horray, Abdul activating" << endl;
   }
 
   void
