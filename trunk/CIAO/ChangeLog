@@ -1,3 +1,23 @@
+Mon Feb 22 13:39:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Coherent_Changes_Guard.h
+        * connectors/dds4ccm/impl/ndds/DataReader.h
+        * connectors/dds4ccm/impl/ndds/DataWriter.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.h
+        * connectors/dds4ccm/impl/ndds/Duration_t.h
+        * connectors/dds4ccm/impl/ndds/Getter_T.h
+        * connectors/dds4ccm/impl/ndds/InstanceHandle_t.h
+        * connectors/dds4ccm/impl/ndds/QueryCondition.h
+        * connectors/dds4ccm/impl/ndds/Reader_T.h
+        * connectors/dds4ccm/impl/ndds/SampleInfo.h
+        * connectors/dds4ccm/impl/ndds/Subscriber.h
+        * connectors/dds4ccm/impl/ndds/Time_t.h
+        * connectors/dds4ccm/impl/ndds/Topic.h
+          Portability improvements
+
+        * connectors/dds4ccm/tests/Getter/Base/Getter_Test_Base.idl:
+          Updated typesupport
+
 Mon Feb 22 12:47:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/MPC/config/dance_nodeapplication.mpb

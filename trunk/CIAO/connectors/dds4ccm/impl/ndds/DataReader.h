@@ -17,7 +17,11 @@
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_impl_export.h"
 #include "tao/LocalObject.h"
 
-#include "ndds/ndds_cpp.h"
+#if !defined (DDS_MAJOR_VERSION)
+# include "ndds/ndds_cpp.h"
+#else
+typedef ::DDS::DataReader DDSDataReader;
+#endif
 
 namespace CIAO
 {
@@ -70,12 +74,10 @@ namespace CIAO
         delete_contained_entities (void);
 
         virtual ::DDS::ReturnCode_t
-        set_qos (
-          const ::DDS::DataReaderQos & qos);
+        set_qos (const ::DDS::DataReaderQos & qos);
 
         virtual ::DDS::ReturnCode_t
-        get_qos (
-          ::DDS::DataReaderQos & qos);
+        get_qos (::DDS::DataReaderQos & qos);
 
         virtual ::DDS::ReturnCode_t
         set_listener (
@@ -92,8 +94,7 @@ namespace CIAO
         get_subscriber (void);
 
         virtual ::DDS::ReturnCode_t
-        get_sample_rejected_status (
-          ::DDS::SampleRejectedStatus & status);
+        get_sample_rejected_status (::DDS::SampleRejectedStatus & status);
 
         virtual ::DDS::ReturnCode_t
         get_liveliness_changed_status (
@@ -112,12 +113,10 @@ namespace CIAO
           ::DDS::SubscriptionMatchedStatus & status);
 
         virtual ::DDS::ReturnCode_t
-        get_sample_lost_status (
-          ::DDS::SampleLostStatus & status);
+        get_sample_lost_status (::DDS::SampleLostStatus & status);
 
         virtual ::DDS::ReturnCode_t
-        wait_for_historical_data (
-          const ::DDS::Duration_t & max_wait);
+        wait_for_historical_data (const ::DDS::Duration_t & max_wait);
 
         virtual ::DDS::ReturnCode_t
         get_matched_publications (

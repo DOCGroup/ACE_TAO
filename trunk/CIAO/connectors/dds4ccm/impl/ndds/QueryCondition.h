@@ -17,7 +17,12 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_impl_export.h"
 
+#if !defined (DDS_MAJOR_VERSION)
 #include "ndds/ndds_cpp.h"
+#else
+typedef ::DDS::QueryCondition DDSQueryCondition;
+#endif
+
 #include "tao/LocalObject.h"
 
 namespace CIAO
