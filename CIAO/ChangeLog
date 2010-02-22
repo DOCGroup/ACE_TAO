@@ -1,4 +1,19 @@
-Mon Feb 22 14:26:16 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+Mon Feb 22 20:48:36 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * examples/Null_Component/descriptors/NodeMap.dat:
+        * examples/Null_Component_Glfa/descriptors/NodeMap.dat:
+
+          Fixed a small bug in these files.
+
+        * examples/Null_Component/descriptors/run_test_without_ns.pl:
+
+          Added a new test to deploy this example without using the naming service.
+
+        * bin/ciao_tests.lst:
+
+          Add run_test_without_ns.pl to the daily regression tests.
+
+Feb 22 14:26:16 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Getter/Base/Get_Invoker.idl:
         * connectors/dds4ccm/tests/Getter/Base/Getter_Test_Base.idl:
