@@ -130,15 +130,16 @@ public:
   int tryacquire_write (void);
 
   /**
-   * This is only here to make the ACE_Thread_Mutex
-   * interface consistent with the other synchronization APIs.
-   * Assumes the caller has already acquired the mutex using one of
-   * the above calls, and returns 0 (success) always.
+   * This is only here to make the ACE_Thread_Mutex interface
+   * consistent with the other synchronization APIs.  Assumes the
+   * caller has already acquired the mutex using one of the above
+   * calls, and returns 0 (success) always.
    */
   int tryacquire_write_upgrade (void);
 
   /// Return the underlying mutex.
   const ACE_thread_mutex_t &lock (void) const;
+  ACE_thread_mutex_t &lock (void);
 
   /// Dump the state of an object.
   void dump (void) const;
