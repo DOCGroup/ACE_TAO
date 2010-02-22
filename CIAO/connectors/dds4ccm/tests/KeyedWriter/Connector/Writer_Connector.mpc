@@ -85,9 +85,9 @@ project(DDS_KeyedWriterConnector_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(DDS_KeyedWriterConnector_exec) : ciao_executor, dds4ccm_impl {
-  after   += DDS_KeyedWriterConnector_lem_stub DDS_KeyedWriterConnector_stub DDS4CCM_lem_stub DDS_KeyedWriterBase_NDDS_TS
+  after   += DDS_KeyedWriterConnector_lem_stub DDS_KeyedWriterConnector_stub DDS4CCM_lem_stub DDS_KeyedWriterBase_stub
   sharedname = DDS_KeyedWriterConnector_exec
-  libs += DDS_KeyedWriterConnector_stub DDS_KeyedWriterConnector_lem_stub DDS_KeyedWriterBase_stub DDS4CCM_lem_stub DDS_KeyedWriterBase_NDDS_TS
+  libs += DDS_KeyedWriterConnector_stub DDS_KeyedWriterConnector_lem_stub DDS_KeyedWriterBase_stub DDS4CCM_lem_stub DDS_KeyedWriterBase_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
