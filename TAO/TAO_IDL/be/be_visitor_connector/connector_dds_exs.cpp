@@ -69,10 +69,8 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
       << this->node_->local_name () << "_exec_i::"
       << this->node_->local_name () << "_exec_i (void)"
       << be_idt_nl
-      << ": ";
-
-  // Placeholder for forthcoming real-world logic.
-  bool dds_event_connector = true;
+      << ": " << node->base_connector ()->local_name ()
+      << "_Connector_T";
 
   AST_Decl **datatype = 0;
   int status = this->t_args_->get (datatype, 0UL);
@@ -89,12 +87,9 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
 
   AST_Type *ut = AST_Type::narrow_from_decl (*datatype);
 
-
-  if (dds_event_connector)
-    {
-      os_ << "DDS_Event_Connector_T";
-    }
-
+  /// Assumes parent connector exists and is either DDS_State
+  /// or DDS_Event, so we generate inheritance from the
+  /// corresponding template. May have to generalize this logic.
   os_ << " <" << be_idt << be_idt_nl
       << this->dds_traits_name_.c_str () << "," << be_nl
       << "DDS" << this->node_->local_name () << "_Traits," << be_nl;

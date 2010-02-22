@@ -73,18 +73,14 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
       return 0;
     }
 
+  /// Assumes parent connector exists and is either DDS_State
+  /// or DDS_Event, so we generate inheritance from the
+  /// corresponding template. May have to generalize this logic.
   os_ << be_nl << be_nl
       << "class " << this->export_macro_.c_str () << " "
       << this->node_->local_name () << "_exec_i" << be_idt_nl
-      << ": public ";
-
-  // Placeholder for forthcoming real-world logic.
-  bool dds_event_connector = true;
-
-  if (dds_event_connector)
-    {
-      os_ << "DDS_Event_Connector_T";
-    }
+      << ": public " << node->base_connector ()->local_name ()
+      << "_Connector_T";
 
   AST_Decl **datatype = 0;
   int status = this->t_args_->get (datatype, 0UL);
