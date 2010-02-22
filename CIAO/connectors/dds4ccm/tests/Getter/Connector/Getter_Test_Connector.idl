@@ -14,16 +14,17 @@
 
 #pragma ciao lem "Connector/Getter_Test_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::GetterTest, ::GetterTest_Seq> GetterTest;
-};
-
 module Getter_Test
 {
-  connector Getter_Test_Connector : ::CCM_DDS::GetterTest::DDS_Event
+  module ::CCM_DDS::Typed < ::GetterTest, ::GetterTest_Seq> GetterTestConn;
+  connector Getter_Test_Connector : GetterTestConn::DDS_Event
+  {
+  };
+
+  module ::CCM_DDS::Typed < ::GetterFixed, ::GetterFixed_Seq> GetterFixedConn;
+  connector Getter_Fixed_Connector : GetterFixedConn::DDS_Event
   {
   };
 };
 
-#endif /* Getter_Test_CONNECTOR_IDL_ */
+#endif /* GETTER_TEST_CONNECTOR_IDL_ */

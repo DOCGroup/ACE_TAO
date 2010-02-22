@@ -14,7 +14,7 @@ interface GetInvoker
 {
   void start_timeout_get_one ();
   void start_timeout_get_many ();
-  void start_get_one (in string key, in long iteration);
+  void start_get_one (in string key, in long fixed_key, in long iteration);
   void start_get_many (in short keys, in long iterations);
 };
 

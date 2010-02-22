@@ -161,17 +161,25 @@ namespace CIAO_Getter_Test_Sender_Impl
   {
     if (this->last_iter_ <= this->iterations_)
       {
+        GetterFixed  fixed_key;
         GetterTest *new_key = new GetterTest;
         new_key->key = CORBA::string_dup("KEY_1");
+        fixed_key.key = 1;
         this->invoker_->start_get_one (
                         CORBA::string_dup("KEY_1"),
+                        1,
                         last_iter_);
         new_key->iteration = last_iter_;
+        fixed_key.iteration = last_iter_;
+
         ACE_Time_Value tv (0, 50000);
         ACE_OS::sleep (tv);
+
         this->writer_->write_one (*new_key, ::DDS::HANDLE_NIL);
-        ACE_DEBUG ((LM_DEBUG, CLINFO "Written key <%C> with <%d>\n",
-                    new_key->key.in (), last_iter_));
+        this->fixed_->write_one (fixed_key, ::DDS::HANDLE_NIL);
+        ACE_DEBUG ((LM_DEBUG, CLINFO "Written keys <%C> and <%u> with <%d>\n",
+                    new_key->key.in (), fixed_key.key, last_iter_));
+
         ++last_iter_;
      }
    else
@@ -234,6 +242,7 @@ namespace CIAO_Getter_Test_Sender_Impl
     try
       {
         this->writer_ = this->context_->get_connection_info_write_data ();
+        this->fixed_ = this->context_->get_connection_info_fixed_data ();
         this->invoker_ = this->context_->get_connection_invoke_getter ();
         this->ccm_activated_ = true;
       }
