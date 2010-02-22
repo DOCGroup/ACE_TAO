@@ -12,6 +12,13 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
 
+#if defined (DDS_MAJOR_VERSION)
+typedef ::DDS::GuardCondition DDSGuardCondition;
+typedef ::DDS::WaitSet DDSWaitSet;
+typedef ::DDS::ReadCondition DDSReadCondition;
+typedef ::DDS::ConditionSeq DDSConditionSeq;
+#endif
+
 namespace CIAO
 {
   namespace DDS4CCM
@@ -52,9 +59,9 @@ namespace CIAO
         DDSQueryCondition* condition_;
         ::DDS::Duration_t time_out_;
         ::CCM_DDS::DataNumber_t max_delivered_data_;
-        DDSGuardCondition*  gd_;
+        DDSGuardCondition* gd_;
         DDSWaitSet* ws_;
-        DDSReadCondition*   rd_condition_;
+        DDSReadCondition* rd_condition_;
 
         bool wait (DDSConditionSeq& active_conditions);
 

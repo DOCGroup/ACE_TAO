@@ -11,8 +11,13 @@
 #define _CIAO_COHERENT_CHANGES_GUARD
 
 #include "ace/Copy_Disabled.h"
-#include "ndds/ndds_cpp.h"
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_impl_export.h"
+
+#if !defined (DDS_MAJOR_VERSION)
+#include "ndds/ndds_cpp.h"
+#else
+typedef ::DDS::Publisher DDSPublisher;
+#endif
 
 namespace CIAO
 {

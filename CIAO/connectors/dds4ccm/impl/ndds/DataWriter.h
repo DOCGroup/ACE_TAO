@@ -17,7 +17,11 @@
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_impl_export.h"
 #include "tao/LocalObject.h"
 
+#if !defined (DDS_MAJOR_VERSION)
 #include "ndds/ndds_cpp.h"
+#else
+typedef ::DDS::DataWriter DDSDataWriter;
+#endif
 
 namespace CIAO
 {

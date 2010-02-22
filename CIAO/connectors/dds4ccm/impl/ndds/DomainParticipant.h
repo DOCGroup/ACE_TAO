@@ -17,9 +17,13 @@
 
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_impl_export.h"
 
+#if !defined (DDS_MAJOR_VERSION)
 #include "ndds/ndds_cpp.h"
-#include "tao/LocalObject.h"
+#else
+typedef ::DDS::DomainParticipant DDSDomainParticipant;
+#endif
 
+#include "tao/LocalObject.h"
 
 namespace CIAO
 {

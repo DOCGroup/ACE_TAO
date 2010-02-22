@@ -10,6 +10,8 @@
 #ifndef CIAO_RTI_INSTANCEHANDLE_T_H
 #define CIAO_RTI_INSTANCEHANDLE_T_H
 
+#if !defined (DDS_MAJOR_VERSION)
+
 inline void
 operator<<= (::DDS::InstanceHandle_t &ddsinstancehandle, const ::DDS_InstanceHandle_t & instancehandle)
 {
@@ -89,5 +91,15 @@ operator!= (const ::DDS::InstanceHandle_t & ccm_instancehandle, const DDS_Instan
          ccm_instancehandle.isValid != static_cast<CORBA::ULong>(dds_instancehandle.isValid) ||
          ACE_OS::memcmp (ccm_instancehandle.value, dds_instancehandle.keyHash.value, sizeof (ccm_instancehandle.value)) != 0;
 }
+
+#else
+
+inline void
+operator<<= (::DDS::InstanceHandle_t &ddsinstancehandle, const ::DDS_InstanceHandle_t & instancehandle)
+{
+  ddsinstancehandle = instancehandle;
+}
+
+#endif
 
 #endif /* CIAO_RTI_INSTANCEHANDLE_T_H */
