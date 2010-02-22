@@ -9,20 +9,20 @@ use lib "$ENV{'ACE_ROOT'}/bin";
 use PerlACE::TestTarget;
 
 $CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
+$TAO_ROOT = "$ENV{'TAO_ROOT'}";
 $DANCE_ROOT = "$ENV{'DANCE_ROOT'}";
 
 $daemons_running = 0;
 $em_running = 0;
+$ns_running = 0;
 
-$daemons = 1;
-@ports = ( 10000);
-@iorbases = ( "NodeApp1.ior");
+$nr_daemon = 1;
+@ports = ( 60001 );
+@iorbases = ( "NodeApp1.ior" );
 @iorfiles = 0;
 @nodenames = ( "NodeOne" );
 
-$status = 0;
 $dat_file = "NodeMap.dat";
-$cdp_file = "Null_Homed.cdp";
 
 # ior files other than daemon
 $ior_embase = "EM.ior";
@@ -31,6 +31,7 @@ $ior_emfile = 0;
 #  Processes
 $E = 0;
 $EM = 0;
+$NS = 0;
 @DEAMONS = 0;
 
 # targets
@@ -38,12 +39,14 @@ $EM = 0;
 $tg_exe_man = 0;
 $tg_executor = 0;
 
+$status = 0;
+
 $ENV{"DANCE_TRACE_ENABLE"} = 0;
 $ENV{"CIAO_TRACE_ENABLE"} = 0;
 
 sub create_targets {
     #   daemon
-    for ($i = 0; $i < $daemons; ++$i) {
+    for ($i = 0; $i < $nr_daemon; ++$i) {
         $tg_daemons[$i] = PerlACE::TestTarget::create_target ($i+1) || die "Create target for deamon $i failed\n";
         $tg_daemons[$i]->AddLibPath ('..');
     }
@@ -57,7 +60,7 @@ sub create_targets {
 
 sub init_ior_files {
     $ior_emfile = $tg_exe_man->LocalFile ($ior_embase);
-    for ($i = 0; $i < $daemons; ++$i) {
+    for ($i = 0; $i < $nr_daemon; ++$i) {
         $iorfiles[$i] = $tg_daemons[$i]->LocalFile ($iorbases[$i]);
     }
     delete_ior_files ();
@@ -65,37 +68,37 @@ sub init_ior_files {
 
 # Delete if there are any .ior files.
 sub delete_ior_files {
-    for ($i = 0; $i < $daemons; ++$i) {
+    for ($i = 0; $i < $nr_daemon; ++$i) {
         $tg_daemons[$i]->DeleteFile ($iorbases[$i]);
     }
     $tg_exe_man->DeleteFile ($ior_embase);
-    for ($i = 0; $i < $daemons; ++$i) {
+    for ($i = 0; $i < $nr_daemon; ++$i) {
         $iorfiles[$i] = $tg_daemons[$i]->LocalFile ($iorbases[$i]);
     }
 }
 
-sub kill_node_daemons {
-    for ($i = 0; $i < $daemons; ++$i) {
+sub kill_node_daemon {
+    for ($i = 0; $i < $nr_daemon; ++$i) {
         $DEAMONS[$i]->Kill (); $DEAMONS[$i]->TimedWait (1);
     }
 }
 
 sub kill_open_processes {
     if ($daemons_running == 1) {
-        kill_node_daemons ();
+        kill_node_daemon ();
     }
 
     if ($em_running == 1) {
-        $EM->Kill ();
-        $EM->TimedWait (1);
+        $EM->Kill (); $EM->TimedWait (1);
     }
+
     # in case shutdown did not perform as expected
     $tg_executor->KillAll ('ciao_componentserver');
 }
 
 
 sub run_node_daemons {
-    for ($i = 0; $i < $daemons; ++$i) {
+    for ($i = 0; $i < $nr_daemon; ++$i) {
         $iorbase = $iorbases[$i];
         $iorfile = $iorfiles[$i];
         $port = $ports[$i];
@@ -124,64 +127,68 @@ sub run_node_daemons {
     return 0;
 }
 
+if ($#ARGV == -1) {
+    opendir(DIR, ".");
+    @files = grep(/\.cdp$/,readdir(DIR));
+    closedir(DIR);
+}
+else {
+    @files = @ARGV;
+}
+
 create_targets ();
 init_ior_files ();
 
-# Invoke node daemons.
-print "Invoking node daemons\n";
-$status = run_node_daemons ();
+foreach $file (@files) {
+    print "Starting test for deployment $file\n";
 
-if ($status != 0) {
-    print STDERR "ERROR: Unable to execute the node daemons\n";
-    kill_open_processes ();
-    exit 1;
-}
+    # Invoke node daemon.
+    print "Invoking node daemon\n";
+    $status = run_node_daemons ();
 
-$daemons_running = 1;
-
-# Invoke execution manager.
-print "Invoking execution manager (dance_execution_manager.exe) with -e$ior_emfile\n";
-$EM = $tg_exe_man->CreateProcess ("$DANCE_ROOT/bin/dance_execution_manager",
-                                    "-e$ior_emfile --node-map $dat_file");
-$EM->Spawn ();
-
-if ($tg_exe_man->WaitForFileTimed ($ior_embase,
-                                $tg_exe_man->ProcessStartWaitInterval ()) == -1) {
-    print STDERR
-      "ERROR: The ior file of execution manager could not be found\n";
-    kill_open_processes ();
-    exit 1;
-}
-
-$em_running = 1;
-
-# Invoke executor - start the application -.
-print "Invoking executor - launch the application -\n";
-
-print "Start dance_plan_launcher.exe with -x $cdp_file -k file://$ior_emfile\n";
-$E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
-                        "-x $cdp_file -k file://$ior_emfile");
-$E->SpawnWaitKill (2*$tg_executor->ProcessStartWaitInterval ());
-
-for ($i = 0; $i < $$daemons; ++$i) {
-    if ($tg_daemons[$i]->WaitForFileTimed ($iorbases[$i],
-                            $tg_daemons[$i]->ProcessStopWaitInterval ()) == -1) {
-        print STDERR "ERROR: The ior file of daemon $i could not be found\n";
+    if ($status != 0) {
+        print STDERR "ERROR: Unable to execute the node daemons\n";
         kill_open_processes ();
         exit 1;
     }
+
+    $daemons_running = 1;
+
+    # Invoke execution manager.
+    print "Invoking execution manager\n";
+    $EM = $tg_exe_man->CreateProcess ("$DANCE_ROOT/bin/dance_execution_manager",
+                                    "-e$ior_emfile  --node-map $dat_file");
+    $EM->Spawn ();
+
+    if ($tg_exe_man->WaitForFileTimed ($ior_embase,
+                                    $tg_exe_man->ProcessStartWaitInterval ()) == -1) {
+        print STDERR
+          "ERROR: The ior file of execution manager could not be found\n";
+        kill_open_processes ();
+        exit 1;
+    }
+
+    $em_running = 1;
+
+    # Invoke executor - start the application -.
+    print "Invoking executor - launch the application -\n";
+
+    print "Start dance_plan_launcher.exe with -x $file -k file://$ior_emfile\n";
+    $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
+                            "-x $file -k file://$ior_emfile");
+    $E->SpawnWaitKill (2*$tg_executor->ProcessStartWaitInterval ());
+
+    # Invoke executor - stop the application -.
+    print "Invoking executor - stop the application -\n";
+    $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
+                            "-k file://$ior_emfile -x $file -q");
+    $E->SpawnWaitKill ($tg_executor->ProcessStopWaitInterval ());
+
+    print "Executor returned.\n";
+
+    delete_ior_files ();
+    kill_open_processes ();
 }
-
-# Invoke executor - stop the application -.
-print "Invoking executor - stop the application -\n";
-print "by running dance_plan_launcher.exe with -k file://$ior_emfile -x $cdp_file -q\n";
-
-$E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
-                        "-k file://$ior_emfile -x $cdp_file -q");
-$E->SpawnWaitKill ($tg_executor->ProcessStopWaitInterval ());
-
-print "Executor returned.\n";
-print "Shutting down rest of the processes.\n";
 
 delete_ior_files ();
 kill_open_processes ();
