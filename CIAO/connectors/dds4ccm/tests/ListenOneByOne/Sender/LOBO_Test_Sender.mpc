@@ -115,7 +115,7 @@ project(DDS_LOBO_Test_Sender_exec) : ciao_executor, dds4ccm_base {
 }
 
 
-project(DDS_LOBO_Test_Sender_svnt) : ciao_servant, dds4ccm_base, nddslib {
+project(DDS_LOBO_Test_Sender_svnt) : ciao_servant, dds4ccm_base {
   after      += DDS_LOBO_Test_Base_stub  DDS_LOBO_Test_Sender_lem_stub \
                 DDS4CCM_lem_stub DDS4CCM_skel DDS_LOBO_Test_Connector_stub \
                 DDS_LOBO_Test_Connector_svnt DDS_LOBO_Test_Connector_lem_stub

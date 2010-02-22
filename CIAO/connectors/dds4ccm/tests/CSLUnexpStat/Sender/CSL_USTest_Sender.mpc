@@ -109,7 +109,7 @@ project(DDS_CSL_USTest_Sender_exec) : ciao_executor, dds4ccm_base {
 }
 
 
-project(DDS_CSL_USTest_Sender_svnt) : ciao_servant, dds4ccm_base, nddslib {
+project(DDS_CSL_USTest_Sender_svnt) : ciao_servant, dds4ccm_base {
   after      += DDS_CSL_USTest_Base_stub  DDS_CSL_USTest_Sender_lem_stub DDS4CCM_lem_stub DDS4CCM_skel DDS_CSL_USTest_Connector_stub DDS_CSL_USTest_Connector_svnt DDS_CSL_USTest_Connector_lem_stub
   sharedname  = Sender_svnt
   libs       += Sender_stub Sender_lem_stub  \

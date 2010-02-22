@@ -2,7 +2,7 @@
 
 project(DDS_VTopics_Receiver_idl_gen) : componentidldefaults {
   custom_only = 1
-  after += DDS_VTopics_Connector_idl_gen 
+  after += DDS_VTopics_Connector_idl_gen
   idlflags += -Wb,stub_export_macro=RECEIVER_STUB_Export \
               -Wb,stub_export_include=Receiver_stub_export.h \
               -Wb,skel_export_macro=RECEIVER_SVNT_Export \
@@ -107,7 +107,7 @@ project(DDS_VTopics_Receiver_exec) : ciao_executor, dds4ccm_base {
 }
 
 
-project(DDS_VTopics_Receiver_svnt) : ciao_servant, dds4ccm_base, nddslib {
+project(DDS_VTopics_Receiver_svnt) : ciao_servant, dds4ccm_base {
   after      +=   DDS_VTopics_Receiver_lem_stub DDS_VTopics_Base_stub DDS_VTopics_Connector_stub DDS_VTS_String_Connector_stub DDS_VTS_Array_Connector_stub DDS_VTS_Seq_Connector_stub DDS_VTopics_Connector_svnt DDS_VTS_String_Connector_svnt DDS_VTS_Array_Connector_svnt  DDS_VTS_Seq_Connector_svnt  DDS_VTopics_Receiver_exec DDS_VTopics_Connector_lem_stub DDS_VTS_String_Connector_lem_stub DDS_VTS_Array_Connector_lem_stub DDS_VTS_Seq_Connector_lem_stub DDS4CCM_lem_stub DDS4CCM_skel
   sharedname  = Receiver_svnt
   libs       += Receiver_stub Receiver_lem_stub DDS_VTopics_Base_stub \

@@ -11,7 +11,7 @@ feature(dds4ccm_splice) : ciao_connector_base {
   libs += DDS4CCM_stub
 }
 
-feature(dds4ccm_ndds) : ciao_connector_base {
+feature(dds4ccm_ndds) : ciao_connector_base, nddslib {
   after += DDS4CCM_stub DDS4CCM_lem_gen
   libs += DDS4CCM_stub
 }

@@ -85,7 +85,7 @@ project(DDS_DDSWriterEntitySender_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(DDS_DDSWriterEntitySender_exec) : ciao_executor, nddslib, dds4ccm_base, dds4ccm_impl {
+project(DDS_DDSWriterEntitySender_exec) : ciao_executor, dds4ccm_base, dds4ccm_impl {
   after += DDS_DDSWriterEntitySender_lem_stub DDS_DDSWriterEntitySender_stub \
            DDS_DDSWriterEntityConnector_lem_stub DDS_DDSWriterEntityConnector_stub \
            DDS4CCM_lem_stub
@@ -115,7 +115,7 @@ project(DDS_DDSWriterEntitySender_exec) : ciao_executor, nddslib, dds4ccm_base, 
 }
 
 
-project(DDS_DDSWriterEntitySender_svnt) : ciao_servant, dds4ccm_base, nddslib {
+project(DDS_DDSWriterEntitySender_svnt) : ciao_servant, dds4ccm_base {
   after += DDS_DDSWriterEntityBase_stub DDS_DDSWriterEntitySender_lem_stub \
            DDS4CCM_lem_stub DDS4CCM_skel DDS_DDSWriterEntityConnector_stub \
            DDS_DDSWriterEntityConnector_svnt DDS_DDSWriterEntityConnector_lem_stub

@@ -115,7 +115,7 @@ project(DDS_DDSInstanceHandleSender_exec) : ciao_executor, dds4ccm_base, dds4ccm
 }
 
 
-project(DDS_DDSInstanceHandleSender_svnt) : ciao_servant, dds4ccm_base, nddslib {
+project(DDS_DDSInstanceHandleSender_svnt) : ciao_servant, dds4ccm_base {
   after += DDS_DDSInstanceHandleBase_stub DDS_DDSInstanceHandleSender_lem_stub \
            DDS4CCM_lem_stub DDS4CCM_skel DDS_InstanceHandleConnector_stub \
            DDS_InstanceHandleConnector_svnt DDS_InstanceHandleConnector_lem_stub

@@ -109,7 +109,7 @@ project(DDS_VTopic_Sender_exec) : ciao_executor, dds4ccm_base   {
 }
 
 
-project(DDS_VTopic_Sender_svnt) : ciao_servant, dds4ccm_base, nddslib {
+project(DDS_VTopic_Sender_svnt) : ciao_servant, dds4ccm_base {
   after      += DDS_VTopic_Base_stub  DDS_VTopic_Sender_lem_stub DDS4CCM_lem_stub \
                 DDS4CCM_skel DDS_VTopic_Connector_stub DDS_VT_Array_Connector_stub  DDS_VT_String_Connector_stub DDS_VT_Seq_Connector_stub \
                 DDS_VTopic_Connector_svnt DDS_VT_Array_Connector_svnt DDS_VT_String_Connector_svnt DDS_VT_Seq_Connector_svnt \
@@ -126,7 +126,7 @@ project(DDS_VTopic_Sender_svnt) : ciao_servant, dds4ccm_base, nddslib {
                 DDS_VTopic_Connector_svnt \
                 DDS_VT_Array_Connector_svnt \
                 DDS_VT_String_Connector_svnt \
-                DDS_VT_Seq_Connector_svnt 
+                DDS_VT_Seq_Connector_svnt
   libpaths += ../lib
   libout = ../lib
   includes += ..
