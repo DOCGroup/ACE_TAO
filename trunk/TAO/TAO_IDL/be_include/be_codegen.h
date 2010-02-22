@@ -471,6 +471,8 @@ private:
                         const char *macro,
                         const char *msg,
                         bool for_skel = false);
+                        
+  void make_rand_extension (char * const t);
 
 private:
   /// Client header stream.
