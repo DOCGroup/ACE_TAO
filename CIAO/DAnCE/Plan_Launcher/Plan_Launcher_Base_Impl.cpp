@@ -104,7 +104,7 @@ void Plan_Launcher_Base_Impl::execute()
 }
 
 const char *
-Plan_Launcher_Base_Impl::launch_plan(const ::Deployment::DeploymentPlan &plan)
+Plan_Launcher_Base_Impl::launch_plan (const ::Deployment::DeploymentPlan &plan)
 {
   DANCE_TRACE ("Plan_Launcher_Base_Impl::launch_plan");
 
