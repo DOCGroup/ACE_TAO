@@ -8,7 +8,7 @@
 #ifndef SL_DISABLED_BASE_IDL
 #define SL_DISABLED_BASE_IDL
 
-#pragma rti typesupport "Base/SL_Disabled_BaseSupport.h"
+#pragma ndds typesupport "Base/SL_Disabled_BaseSupport.h"
 
 struct TestTopic {
   string key; //@key

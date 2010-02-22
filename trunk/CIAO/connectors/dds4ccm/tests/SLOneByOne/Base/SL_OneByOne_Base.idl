@@ -8,7 +8,7 @@
 #ifndef SL_ONEBYONE_BASE_IDL
 #define SL_ONEBYONE_BASE_IDL
 
-#pragma rti typesupport "Base/SL_OneByOne_BaseSupport.h"
+#pragma ndds typesupport "Base/SL_OneByOne_BaseSupport.h"
 
 struct TestTopic {
   string key; //@key

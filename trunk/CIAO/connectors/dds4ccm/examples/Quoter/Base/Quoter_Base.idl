@@ -8,7 +8,7 @@
 #ifndef QUOTER_BASE_IDL
 #define QUOTER_BASE_IDL
 
-#pragma rti typesupport "Base/Quoter_BaseSupport.h"
+#pragma ndds typesupport "Base/Quoter_BaseSupport.h"
 
 module Quoter
 {

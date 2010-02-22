@@ -3,7 +3,7 @@
 #ifndef CONNECTORSTATUSLISTENER_TEST_BASE_IDL
 #define CONNECTORSTATUSLISTENER_TEST_BASE_IDL
 
-#pragma rti typesupport "Base/ConnectorStatusListener_Test_BaseSupport.h"
+#pragma ndds typesupport "Base/ConnectorStatusListener_Test_BaseSupport.h"
 
 struct TestTopic {
   string key; //@key

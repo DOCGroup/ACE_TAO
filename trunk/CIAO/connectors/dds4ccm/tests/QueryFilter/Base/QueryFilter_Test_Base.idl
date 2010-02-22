@@ -8,7 +8,7 @@
 #ifndef QUERY_FILTER_TEST_BASE_IDL
 #define QUERY_FILTER_TEST_BASE_IDL
 
-#pragma rti typesupport "Base/QueryFilter_Test_BaseSupport.h"
+#pragma ndds typesupport "Base/QueryFilter_Test_BaseSupport.h"
 
 struct QueryFilterTest {
   string symbol; //@key

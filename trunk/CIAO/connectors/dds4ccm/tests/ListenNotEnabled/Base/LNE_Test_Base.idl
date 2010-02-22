@@ -8,7 +8,7 @@
 #ifndef LISTEN_NOT_ENABLED_TEST_BASE_IDL
 #define LISTEN_NOT_ENABLED_TEST_BASE_IDL
 
-#pragma rti typesupport "Base/LNE_Test_BaseSupport.h"
+#pragma ndds typesupport "Base/LNE_Test_BaseSupport.h"
 
 struct ListenNotEnabledTest {
   string key; //@key
