@@ -110,7 +110,7 @@ project(DDS_Latency_Test_Connector_exec) : ciao_executor, dds4ccm_impl {
 }
 
 
-project(DDS_Latency_Test_Connector_svnt) : ciao_servant, dds4ccm_skel, nddslib {
+project(DDS_Latency_Test_Connector_svnt) : ciao_servant, dds4ccm_skel {
   after      += DDS_Lat_Test_Connector_lem_stub DDS_Latency_Test_Connector_exec DDS_Latency_Test_Connector_stub DDS4CCM_lem_stub
   sharedname  = DDS_Latency_Test_Connector_svnt
   libs       += DDS_Latency_Test_Connector_stub \

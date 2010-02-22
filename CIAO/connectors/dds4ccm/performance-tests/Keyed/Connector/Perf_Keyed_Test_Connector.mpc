@@ -110,7 +110,7 @@ project(DDS_Perf_Keyed_Test_Connector_exec) : ciao_executor, dds4ccm_impl {
 }
 
 
-project(DDS_Perf_Keyed_Test_Connector_svnt) : ciao_servant, dds4ccm_skel, nddslib {
+project(DDS_Perf_Keyed_Test_Connector_svnt) : ciao_servant, dds4ccm_skel {
   after      += DDS_PK_Test_Connector_lem_stub DDS_Perf_Keyed_Test_Connector_exec DDS_Perf_Keyed_Test_Connector_stub DDS4CCM_lem_stub
   sharedname  = DDS_Perf_Keyed_Test_Connector_svnt
   libs       += DDS_Perf_Keyed_Test_Connector_stub \

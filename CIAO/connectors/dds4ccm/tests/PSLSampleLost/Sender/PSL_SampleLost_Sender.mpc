@@ -109,7 +109,7 @@ project(DDS_PSL_SampleLost_Sender_exec) : ciao_executor, dds4ccm_base {
 }
 
 
-project(DDS_PSL_SampleLost_Sender_svnt) : ciao_servant, dds4ccm_base, nddslib {
+project(DDS_PSL_SampleLost_Sender_svnt) : ciao_servant, dds4ccm_base {
   after      += DDS_PSL_SampleLost_Base_stub  DDS_PSL_SampleLost_Sender_lem_stub DDS4CCM_lem_stub DDS4CCM_skel DDS_PSL_SampleLost_Connector_stub DDS_PSL_SampleLost_Connector_svnt DDS_PSL_SL_Connector_lem_stub
   sharedname  = Sender_svnt
   libs       += Sender_stub Sender_lem_stub  \

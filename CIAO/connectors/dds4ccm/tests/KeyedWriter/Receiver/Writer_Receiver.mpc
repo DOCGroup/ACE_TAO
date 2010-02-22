@@ -107,7 +107,7 @@ project(DDS_KeyedWriterReceiver_exec) : ciao_executor, dds4ccm_base {
 }
 
 
-project(DDS_KeyedWriterReceiver_svnt) : ciao_servant, dds4ccm_base, nddslib {
+project(DDS_KeyedWriterReceiver_svnt) : ciao_servant, dds4ccm_base {
   after      +=   DDS_KeyedWriterReceiver_lem_stub DDS_KeyedWriterBase_stub DDS_KeyedWriterConnector_stub DDS_KeyedWriterConnector_svnt DDS_KeyedWriterReceiver_exec DDS_KeyedWriterConnector_lem_stub DDS4CCM_lem_stub DDS4CCM_skel
   sharedname  = Receiver_svnt
   libs       += Receiver_stub Receiver_lem_stub DDS_KeyedWriterBase_stub DDS_KeyedWriterConnector_stub DDS_KeyedWriterConnector_svnt Receiver_exec DDS_KeyedWriterConnector_lem_stub DDS4CCM_lem_stub DDS4CCM_skel

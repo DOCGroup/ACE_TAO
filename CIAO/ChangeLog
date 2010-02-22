@@ -1,3 +1,81 @@
+Mon Feb 22 12:30:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.mpc
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker.mpc
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.mpc
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver.mpc
+        * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender.mpc
+        * connectors/dds4ccm/impl/ndds/ndds_impl.mpc
+        * connectors/dds4ccm/performance-tests/Keyed/Connector/Perf_Keyed_Test_Connector.mpc
+        * connectors/dds4ccm/performance-tests/Keyed/Receiver/Perf_Keyed_Test_Receiver.mpc
+        * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender.mpc
+        * connectors/dds4ccm/performance-tests/Latency/Connector/Latency_Test_Connector.mpc
+        * connectors/dds4ccm/performance-tests/Latency/Receiver/Latency_Test_Receiver.mpc
+        * connectors/dds4ccm/performance-tests/Latency/Sender/Latency_Test_Sender.mpc
+        * connectors/dds4ccm/tests/CSLDeadline/Receiver/CSL_DeadlineTest_Receiver.mpc
+        * connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender.mpc
+        * connectors/dds4ccm/tests/CSLQoS/Receiver/CSL_QoSTest_Receiver.mpc
+        * connectors/dds4ccm/tests/CSLQoS/Sender/CSL_QoSTest_Sender.mpc
+        * connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver.mpc
+        * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender.mpc
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver.mpc
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender.mpc
+        * connectors/dds4ccm/tests/DDSWriterEntity/Receiver/Writer_Receiver.mpc
+        * connectors/dds4ccm/tests/DDSWriterEntity/Sender/Writer_Sender.mpc
+        * connectors/dds4ccm/tests/Event_Connection_Test/Receiver/Event_Connection_Test_Receiver.mpc
+        * connectors/dds4ccm/tests/Event_Connection_Test/Sender/Event_Connection_Test_Sender.mpc
+        * connectors/dds4ccm/tests/Getter/Base/Get_Invoker.mpc
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver.mpc
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender.mpc
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender.mpc
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver.mpc
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender.mpc
+        * connectors/dds4ccm/tests/KeyedWriter/Receiver/Writer_Receiver.mpc
+        * connectors/dds4ccm/tests/KeyedWriter/Sender/Writer_Sender.mpc
+        * connectors/dds4ccm/tests/ListenManyByMany/Receiver/LMBM_Test_Receiver.mpc
+        * connectors/dds4ccm/tests/ListenManyByMany/Sender/LMBM_Test_Sender.mpc
+        * connectors/dds4ccm/tests/ListenNotEnabled/Receiver/LNE_Test_Receiver.mpc
+        * connectors/dds4ccm/tests/ListenNotEnabled/Sender/LNE_Test_Sender.mpc
+        * connectors/dds4ccm/tests/ListenOneByOne/Receiver/LOBO_Test_Receiver.mpc
+        * connectors/dds4ccm/tests/ListenOneByOne/Sender/LOBO_Test_Sender.mpc
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Receiver/ConnectorStatusListener_Test_Receiver.mpc
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Sender/ConnectorStatusListener_Test_Sender.mpc
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver.mpc
+        * connectors/dds4ccm/tests/PSLDeadline/Sender/PSL_DeadlineTest_Sender.mpc
+        * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver.mpc
+        * connectors/dds4ccm/tests/PSLSampleLost/Sender/PSL_SampleLost_Sender.mpc
+        * connectors/dds4ccm/tests/QueryFilter/Base/QueryFilter_Starter.mpc
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver.mpc
+        * connectors/dds4ccm/tests/QueryFilter/Sender/QueryFilter_Test_Sender.mpc
+        * connectors/dds4ccm/tests/Reader/Base/Reader_Starter.mpc
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver.mpc
+        * connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender.mpc
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component.mpc
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component.mpc
+        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver.mpc
+        * connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender.mpc
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver.mpc
+        * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender.mpc
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver.mpc
+        * connectors/dds4ccm/tests/SLOneByOne/Sender/SL_OneByOne_Sender.mpc
+        * connectors/dds4ccm/tests/State_Connection_Test/Receiver/State_Connection_Test_Receiver.mpc
+        * connectors/dds4ccm/tests/State_Connection_Test/Sender/State_Connection_Test_Sender.mpc
+        * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver.mpc
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender.mpc
+        * connectors/dds4ccm/tests/UnkeyedWriter/Receiver/Writer_Receiver.mpc
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender.mpc
+        * connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver.mpc
+        * connectors/dds4ccm/tests/Updater/Sender/Updater_Sender.mpc
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Receiver/VTopic_Receiver.mpc
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Sender/VTopic_Sender.mpc
+        * connectors/dds4ccm/tests/VariousTopicsState/Receiver/VTopics_Receiver.mpc
+        * connectors/dds4ccm/tests/VariousTopicsState/Sender/VTopics_Sender.mpc
+          Removed nddslib as base project
+
+        * MPC/config/dds4ccm_base.mpb:
+          Added nddslib as base project
+
 Mon Feb 22 12:25:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Getter_T.h:

@@ -2,7 +2,7 @@
 
 project(DDS_QueryFilter_Starter_idl_gen) : componentidldefaults {
   custom_only = 1
-  after += 
+  after +=
   idlflags += -Wb,stub_export_macro=READER_STARTER_STUB_Export \
               -Wb,stub_export_include=QueryFilter_Starter_stub_export.h \
               -Wb,skel_export_macro=READER_STARTER_SVNT_Export \
@@ -57,7 +57,7 @@ project(DDS_QueryFilter_Starter_lem_stub) : ccm_svnt, dds4ccm_base  {
 
 project(DDS_QueryFilter_Starter_stub) : ccm_stub, dds4ccm_base {
   after += DDS_QueryFilter_Starter_idl_gen
-  libs  += 
+  libs  +=
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -82,7 +82,7 @@ project(DDS_QueryFilter_Starter_stub) : ccm_stub, dds4ccm_base {
 }
 
 
-project(DDS_QueryFilter_Starter_svnt) : ciao_servant, dds4ccm_base, nddslib {
+project(DDS_QueryFilter_Starter_svnt) : ciao_servant, dds4ccm_base {
   after      +=   DDS_QueryFilter_Starter_lem_stub DDS_QueryFilter_Starter_stub\
                   DDS4CCM_lem_stub DDS4CCM_skel
   sharedname  = QueryFilter_Starter_svnt
