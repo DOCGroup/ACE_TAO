@@ -12,6 +12,11 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
 
+#if defined (DDS_MAJOR_VERSION)
+typedef ::DDS::InstanceHandle_t DDS_InstanceHandle_t;
+typedef ::DDS::SampleInfoSeq DDS_SampleInfoSeq;
+#endif
+
 namespace CIAO
 {
   namespace DDS4CCM

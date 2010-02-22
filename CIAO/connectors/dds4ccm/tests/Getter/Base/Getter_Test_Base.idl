@@ -9,6 +9,9 @@
 #define GETTER_TEST_BASE_IDL
 
 #pragma rti typesupport "Base/Getter_Test_BaseSupport.h"
+#pragma opendds typesupport "Base/Getter_Test_BaseTypeSupportC.h"
+
+#pragma DCPS_DATA_TYPE "GetterTest"
 
 struct GetterTest {
   string key;

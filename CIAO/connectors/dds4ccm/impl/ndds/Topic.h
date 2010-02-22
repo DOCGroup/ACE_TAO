@@ -15,6 +15,10 @@
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_impl_export.h"
 #include "tao/LocalObject.h"
 
+#if defined (DDS_MAJOR_VERSION)
+typedef ::DDS::Topic DDSTopic;
+#endif
+
 namespace CIAO
 {
   namespace DDS4CCM
