@@ -17,7 +17,12 @@ struct GetterTest {
   string key;
   long iteration;
 };
-
 typedef sequence<GetterTest> GetterTest_Seq;
+
+struct GetterFixed {
+  long key;
+  long iteration;
+};
+typedef sequence<GetterFixed> GetterFixed_Seq;
 
 #endif

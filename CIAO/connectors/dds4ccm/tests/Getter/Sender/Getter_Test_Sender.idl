@@ -17,7 +17,9 @@ module Getter_Test
 {
   component Sender
   {
-    port CCM_DDS::GetterTest::DDS_Write info_write;
+    port GetterTestConn::DDS_Write info_write;
+    port GetterFixedConn::DDS_Write info_fixed;
+
     provides CCM_DDS::ConnectorStatusListener info_out_connector_status;
 
     uses GetInvoker invoke_getter;

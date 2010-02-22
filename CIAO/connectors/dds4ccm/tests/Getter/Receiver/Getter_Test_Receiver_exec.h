@@ -27,6 +27,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
   public:
     GetOneHandler (Receiver_exec_i &,
                    const char * key,
+                   CORBA::Long fixed_key,
                    CORBA::Long iteration);
     virtual ~GetOneHandler ();
 
@@ -35,6 +36,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
   private:
     Receiver_exec_i &callback_;
     const char * key_;
+    CORBA::Long fixed_key_;
     CORBA::Long iteration_;
   };
 
@@ -73,7 +75,8 @@ namespace CIAO_Getter_Test_Receiver_Impl
     virtual void start_timeout_get_many ();
 
     virtual void start_get_one (const char * key,
-                                     ::CORBA::Long iteration);
+                                ::CORBA::Long fixed_key,
+                                ::CORBA::Long iteration);
     virtual void start_get_many (::CORBA::Short keys , ::CORBA::Long iterations);
 
   private:
@@ -91,25 +94,31 @@ namespace CIAO_Getter_Test_Receiver_Impl
     Receiver_exec_i (void);
     virtual ~Receiver_exec_i (void);
 
-    virtual ::CCM_DDS::GetterTest::CCM_Listener_ptr
+    virtual ::Getter_Test::GetterTestConn::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_get_status (void);
 
+    virtual ::CCM_DDS::CCM_PortStatusListener_ptr
+    get_info_fixed_status (void);
+
     virtual ::CCM_GetInvoker_ptr
     get_getter_invoke ();
 
-    void timeout_get_one ();
-    void timeout_get_many ();
 
     void start_get_one (const char * key,
+                        CORBA::Long fixed_key,
                         CORBA::Long iteration);
+    void timeout_get_one ();
+    void timeout_get_many ();
     void get_one (const char * key,
+                  CORBA::Long fixed_key,
                   CORBA::Long iteration);
 
     void start_get_many (CORBA::Short keys,
                          CORBA::Long iterations);
+
     void get_many (CORBA::Short keys,
                          CORBA::Long iterations);
 
@@ -125,7 +134,16 @@ namespace CIAO_Getter_Test_Receiver_Impl
 
   private:
     ::Getter_Test::CCM_Receiver_Context_var context_;
-    ::CCM_DDS::GetterTest::Getter_var       getter_;
+    ::Getter_Test::GetterTestConn::Getter_var getter_;
+    ::Getter_Test::GetterFixedConn::Getter_var fixed_;
+
+    void timeout_get_one_fixed ();
+    void timeout_get_one_variable ();
+
+    void get_one_fixed (CORBA::Long fixed_key,
+                        CORBA::Long iteration);
+    void get_one_variable (const char * key,
+                           CORBA::Long iteration);
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
