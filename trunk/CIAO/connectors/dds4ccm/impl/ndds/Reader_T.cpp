@@ -112,8 +112,8 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_last (
   CORBA::ULong const nr_of_last_samples = this->get_nr_valid_samples (sample_info, true);
 
   CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_last - ")
-                          ACE_TEXT ("total number of samples <%u> - ")
-                          ACE_TEXT ("last number of samples <%u>\n"),
+                            ACE_TEXT ("total number of samples <%u> - ")
+                            ACE_TEXT ("last number of samples <%u>\n"),
                             data.length(),
                             nr_of_last_samples));
   CORBA::ULong ix = 0;
@@ -152,8 +152,8 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_all (
 
   CORBA::ULong const nr_of_valid_samples = this->get_nr_valid_samples (sample_info);
   CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all - ")
-                          ACE_TEXT ("total number of samples <%u> - ")
-                          ACE_TEXT ("valid number of samples <%u>\n"),
+                            ACE_TEXT ("total number of samples <%u> - ")
+                            ACE_TEXT ("valid number of samples <%u>\n"),
                             data.length (),
                             nr_of_valid_samples));
 
@@ -213,7 +213,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_with_instance (
   DDS_SampleInfoSeq & sample_info)
 {
   CIAO_DEBUG (6, (LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_with_instance - ")
-                        ACE_TEXT ("Reading with instance.\n")));
+                           ACE_TEXT ("Reading with instance.\n")));
   DDS_ReturnCode_t const retval = this->impl ()->read_instance (
                                       data,
                                       sample_info,

@@ -114,7 +114,6 @@ project(DDS_Latency_Test_Sender_exec) : ciao_executor, dds4ccm_base   {
   }
 }
 
-
 project(DDS_Latency_Test_Sender_svnt) : ciao_servant, dds4ccm_base, nddslib {
   after      += DDS_Latency_Test_Base_stub  DDS_Latency_Test_Sender_lem_stub \
                 DDS4CCM_lem_stub DDS4CCM_skel DDS_Latency_Test_Connector_stub \
