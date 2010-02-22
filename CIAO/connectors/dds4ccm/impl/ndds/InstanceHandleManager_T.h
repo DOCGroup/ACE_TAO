@@ -44,7 +44,6 @@ namespace CIAO
 
       private:
         typename DDS_TYPE::data_writer *impl_;
-
       };
     }
   }

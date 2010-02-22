@@ -1,3 +1,10 @@
+Mon Feb 22 12:25:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.h:
+        * connectors/dds4ccm/impl/ndds/InstanceHandleManager_T.h
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp
+          Layout changes
+
 Mon Feb 22 12:11:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Base/Hello_Base.mpc

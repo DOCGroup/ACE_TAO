@@ -65,7 +65,7 @@ namespace CIAO
       class Getter_T;
 
       template <typename DDS_TYPE, typename CCM_TYPE>
-      class Getter_T <DDS_TYPE, CCM_TYPE, false> : 
+      class Getter_T <DDS_TYPE, CCM_TYPE, false> :
         public Getter_Base_T <DDS_TYPE, CCM_TYPE>
       {
       public:
