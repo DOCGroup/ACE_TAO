@@ -1,7 +1,7 @@
 // $Id$
 
 project (DDS_KeyedWriterBase_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
-  sharedname = *
+  sharedname = DDS_KeyedWriterBase_stub
   dynamicflags += WRITER_BASE_STUB_BUILD_DLL
   libout = ../lib
 
