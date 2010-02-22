@@ -5,7 +5,6 @@
 #include "dds4ccm/impl/ndds/DataWriterListener_T.h"
 #include "dds4ccm/impl/ndds/Reader_T.h"
 #include "dds4ccm/impl/ndds/DataListenerControl_T.h"
-#include "dds4ccm/impl/ndds/PortStatusListener_T.h"
 
 #include "ciao/Logger/Log_Macros.h"
 
@@ -79,8 +78,9 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::activate (
     {
       if (CORBA::is_nil (this->status_.in ()))
         {
-          this->status_ = new ::CIAO::DDS4CCM::PortStatusListener_T
-            <DDS_TYPE, CCM_TYPE> (listener, reactor);
+          ACE_NEW_THROW_EX (this->status_,
+                            PortStatusListener (listener, reactor),
+                            CORBA::NO_MEMORY ());
         }
       this->rti_reader_.set_listener (
           this->status_.in (),

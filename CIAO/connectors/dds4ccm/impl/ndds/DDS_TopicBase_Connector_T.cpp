@@ -2,9 +2,6 @@
 // $Id$
 
 #include "ciao/Logger/Log_Macros.h"
-#include "dds4ccm/impl/ndds/TopicListener_T.h"
-#include "dds4ccm/impl/ndds/PublisherListener_T.h"
-#include "dds4ccm/impl/ndds/SubscriberListener_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::DDS_TopicBase_Connector_T (void) :
@@ -124,8 +121,10 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (void)
      }
     }
  */
-  ::DDS::StringSeq_var retval =
-    new ::DDS::StringSeq (this->key_fields_.length ());
+  ::DDS::StringSeq_var retval = 0;
+  ACE_NEW_THROW_EX (retval,
+                    ::DDS::StringSeq (this->key_fields_.length ()),
+                    CORBA::NO_MEMORY ());
   retval->length (this->key_fields_.length ());
 
   for (CORBA::ULong i = 0; i < this->key_fields_.length (); ++i)
@@ -266,10 +265,11 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_default_topic (ACE_React
     {
       if (CORBA::is_nil (this->topiclistener_.in ()))
         {
-          this->topiclistener_ = new ::CIAO::DDS4CCM::TopicListener_T
-            <DDS_TYPE, CCM_TYPE> (
-                this->context_->get_connection_error_listener (),
-                reactor);
+          ACE_NEW_THROW_EX (this->topiclistener_,
+                            TopicListener (
+                              this->context_->get_connection_error_listener (),
+                              reactor),
+                            CORBA::NO_MEMORY ());
         }
       this->topic_->set_listener (
         this->topiclistener_.in (),
@@ -294,10 +294,11 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_subscriber (ACE_Reactor*
     {
       if (CORBA::is_nil (this->subscriber_listener_.in ()))
         {
-          this->subscriber_listener_ = new ::CIAO::DDS4CCM::SubscriberListener_T
-            <DDS_TYPE, CCM_TYPE> (
-              this->context_->get_connection_error_listener (),
-              reactor);
+          ACE_NEW_THROW_EX (this->subscriber_listener_,
+                            SubscriberListener (
+                              this->context_->get_connection_error_listener (),
+                              reactor),
+                            CORBA::NO_MEMORY ());
         }
       this->subscriber_->set_listener (
         this->subscriber_listener_.in (),
@@ -322,10 +323,11 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_publisher (ACE_Reactor* 
     {
       if (CORBA::is_nil (this->publisher_listener_.in ()))
         {
-          this->publisher_listener_ = new ::CIAO::DDS4CCM::PublisherListener_T
-            <DDS_TYPE, CCM_TYPE> (
-              this->context_->get_connection_error_listener (),
-              reactor);
+          ACE_NEW_THROW_EX (this->publisher_listener_,
+                            PublisherListener (
+                              this->context_->get_connection_error_listener (),
+                              reactor),
+                            CORBA::NO_MEMORY ());
         }
       this->publisher_->set_listener (
         this->publisher_listener_.in (),

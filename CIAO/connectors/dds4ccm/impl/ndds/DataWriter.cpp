@@ -77,8 +77,12 @@ namespace CIAO
       ::DDS::Topic_ptr
       RTI_DataWriter_i::get_topic (void)
       {
+        ::DDS::Topic_var retval = ::DDS::Topic::_nil ();
+        ACE_NEW_THROW_EX (retval,
+                          RTI_Topic_i (),
+                          CORBA::NO_MEMORY ());
+
         DDSTopic* t = this->impl ()->get_topic ();
-        ::DDS::Topic_var retval = new RTI_Topic_i ();
         RTI_Topic_i *tp = dynamic_cast < RTI_Topic_i *> (retval.in ());
         tp->set_impl (t);
         return retval._retn ();
@@ -87,8 +91,12 @@ namespace CIAO
       ::DDS::Publisher_ptr
       RTI_DataWriter_i::get_publisher (void)
       {
+        ::DDS::Publisher_var retval = ::DDS::Publisher::_nil ();
+        ACE_NEW_THROW_EX (retval,
+                          RTI_Publisher_i (),
+                          CORBA::NO_MEMORY ());
+
         DDSPublisher* p = this->impl ()->get_publisher ();
-        ::DDS::Publisher_var retval = new RTI_Publisher_i ();
         RTI_Publisher_i *rti_p = dynamic_cast < RTI_Publisher_i *> (retval.in ());
         rti_p->set_impl (p);
         return retval._retn ();
@@ -171,8 +179,12 @@ namespace CIAO
       ::DDS::StatusCondition_ptr
       RTI_DataWriter_i::get_statuscondition (void)
       {
+        ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
+        ACE_NEW_THROW_EX (retval,
+                          RTI_StatusCondition_i (),
+                          CORBA::NO_MEMORY ());
+
         DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
-        ::DDS::StatusCondition_var retval = new RTI_StatusCondition_i ();
         RTI_StatusCondition_i *rti_sc = dynamic_cast < RTI_StatusCondition_i *> (retval.in ());
         rti_sc->set_impl (sc);
         return retval._retn ();

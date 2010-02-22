@@ -39,8 +39,8 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
     {
       if (this->reactor_)
         {
-          ::CIAO::DDS4CCM::RTI::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE>* rh =
-            new  ::CIAO::DDS4CCM::RTI::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE>(this, rdr);
+          drsh* rh = 0;
+          ACE_NEW (rh, drsh (this, rdr));
           ACE_Event_Handler_var safe_handler (rh);
           if (this->reactor_->notify (rh) != 0)
             {
@@ -152,7 +152,7 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
                    sample_info[i].view_state == ::DDS_NEW_VIEW_STATE) ||
                   sample_info[i].instance_state == ::DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
                 {
-                  // new or delete found -> first send out the updated
+                  // sample_new or sample_delete found -> first send out the updated
                   // samples in one go
                   typename CCM_TYPE::seq_type::_var_type  inst_seq = new typename CCM_TYPE::seq_type;
                   ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;

@@ -10,6 +10,9 @@
 
 #include "ace/Copy_Disabled.h"
 #include "dds4ccm/impl/ndds/DDS_Base_Connector_T.h"
+#include "dds4ccm/impl/ndds/TopicListener_T.h"
+#include "dds4ccm/impl/ndds/PublisherListener_T.h"
+#include "dds4ccm/impl/ndds/SubscriberListener_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 class DDS_TopicBase_Connector_T
@@ -59,6 +62,10 @@ protected:
   ::DDS::PublisherListener_var publisher_listener_;
   ::DDS::Subscriber_var subscriber_;
   ::DDS::SubscriberListener_var subscriber_listener_;
+
+typedef ::CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE> TopicListener;
+typedef ::CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE> SubscriberListener;
+typedef ::CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE> PublisherListener;
 };
 
 #include "dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.cpp"

@@ -43,9 +43,10 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadline_m
         {
           if (this->reactor_)
             {
-              ::CIAO::DDS4CCM::OnRequestedDeadlineMissedHandler* rh =
-              new ::CIAO::DDS4CCM::OnRequestedDeadlineMissedHandler (
-                this->port_status_listener_, the_reader, status);
+              ::CIAO::DDS4CCM::OnRequestedDeadlineMissedHandler* rh = 0;
+              ACE_NEW (rh,
+                       ::CIAO::DDS4CCM::OnRequestedDeadlineMissedHandler (
+                         this->port_status_listener_, the_reader, status));
               ACE_Event_Handler_var safe_handler (rh);
               if (this->reactor_->notify (rh) != 0)
                 {
@@ -92,9 +93,12 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
         {
           if (this->reactor_)
             {
-              ::CIAO::DDS4CCM::OnSampleLostHandler* rh =
-              new ::CIAO::DDS4CCM::OnSampleLostHandler (
-                this->port_status_listener_, the_reader, status);
+              ::CIAO::DDS4CCM::OnSampleLostHandler* rh = 0;
+              ACE_NEW (rh,
+                       ::CIAO::DDS4CCM::OnSampleLostHandler (
+                         this->port_status_listener_,
+                         the_reader,
+                         status));
               ACE_Event_Handler_var safe_handler (rh);
               if (this->reactor_->notify (rh) != 0)
                 {
