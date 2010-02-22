@@ -1,3 +1,51 @@
+Mon Feb 22 13:48:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Base/Hello_Base.idl
+        * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.idl
+        * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl
+        * connectors/dds4ccm/performance-tests/Keyed/Base/Perf_Keyed_Test_Base.idl
+        * connectors/dds4ccm/performance-tests/Latency/Base/Latency_Test_Base.idl
+        * connectors/dds4ccm/tests/CSLDeadline/Base/CSL_DeadlineTest_Base.idl
+        * connectors/dds4ccm/tests/CSLQoS/Base/CSL_QoSTest_Base.idl
+        * connectors/dds4ccm/tests/CSLSampleRejected/Base/CSL_SRTest_Base.idl
+        * connectors/dds4ccm/tests/CSLUnexpStat/Base/CSL_USTest_Base.idl
+        * connectors/dds4ccm/tests/DDSWriterEntity/Base/Writer_Base.idl
+        * connectors/dds4ccm/tests/Event_Connection_Test/Base/Event_Connection_Test_Base.idl
+        * connectors/dds4ccm/tests/FixedSizeStruct/EventConnector/Base/FSS_Event_Base.idl
+        * connectors/dds4ccm/tests/FixedSizeStruct/EventConnector/Connector/FSS_Event_Connector.idl
+        * connectors/dds4ccm/tests/FixedSizeStruct/StateConnector/Base/FSS_State_Base.idl
+        * connectors/dds4ccm/tests/FixedSizeStruct/StateConnector/Connector/FSS_State_Connector.idl
+        * connectors/dds4ccm/tests/Getter/Base/Getter_Test_Base.idl
+        * connectors/dds4ccm/tests/InstanceHandle/Base/Writer_Base.idl
+        * connectors/dds4ccm/tests/KeyedSamples/Base/Keyed_Test_Base.idl
+        * connectors/dds4ccm/tests/KeyedWriter/Base/Writer_Base.idl
+        * connectors/dds4ccm/tests/ListenManyByMany/Base/LMBM_Test_Base.idl
+        * connectors/dds4ccm/tests/ListenNotEnabled/Base/LNE_Test_Base.idl
+        * connectors/dds4ccm/tests/ListenOneByOne/Base/LOBO_Test_Base.idl
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Base/NonChangeable_Base.idl
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Base/ConnectorStatusListener_Test_Base.idl
+        * connectors/dds4ccm/tests/PSLDeadline/Base/PSL_DeadlineTest_Base.idl
+        * connectors/dds4ccm/tests/PSLSampleLost/Base/PSL_SampleLost_Base.idl
+        * connectors/dds4ccm/tests/QueryFilter/Base/QueryFilter_Test_Base.idl
+        * connectors/dds4ccm/tests/Reader/Base/Reader_Test_Base.idl
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Base/SetConnectorAttribute_Base.idl
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Base/Base.idl
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Base/Base.idl
+        * connectors/dds4ccm/tests/SLDisabled/Base/SL_Disabled_Base.idl
+        * connectors/dds4ccm/tests/SLManyByMany/Base/SL_ManyByMany_Base.idl
+        * connectors/dds4ccm/tests/SLOneByOne/Base/SL_OneByOne_Base.idl
+        * connectors/dds4ccm/tests/State_Connection_Test/Base/State_Connection_Test_Base.idl
+        * connectors/dds4ccm/tests/TwoTopics/Base/TwoTopics_Base.idl
+        * connectors/dds4ccm/tests/TwoTopics/Connector/TwoTopics_Connector.idl
+        * connectors/dds4ccm/tests/TwoTopicsDifferentNs/Connector/Connector.idl
+        * connectors/dds4ccm/tests/UnkeyedSamples/Base/Unkeyed_Test_Base.idl
+        * connectors/dds4ccm/tests/UnkeyedWriter/Base/Writer_Base.idl
+        * connectors/dds4ccm/tests/Updater/Base/Updater_Base.idl
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Base/VTopic_Base.idl
+        * connectors/dds4ccm/tests/VariousTopicsState/Base/VTopics_Base.idl
+          Updated rti typesupport to ndds typesupport, everywhere we talk
+          about ndds
+
 Mon Feb 22 13:39:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Coherent_Changes_Guard.h

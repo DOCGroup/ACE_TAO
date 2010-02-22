@@ -8,7 +8,7 @@
 #ifndef LATENCY_TEST_BASE_IDL
 #define LATENCY_TEST_BASE_IDL
 
-#pragma rti typesupport "Base/Latency_Test_BaseSupport.h"
+#pragma ndds typesupport "Base/Latency_Test_BaseSupport.h"
 
 const short MAX_DATA_SEQUENCE_LENGTH = 8192;
 typedef sequence<octet> OctetSeq;
