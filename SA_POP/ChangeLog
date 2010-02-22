@@ -1,3 +1,9 @@
+Mon Feb 22 19:34:32 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * Standalone/SA_POP_Demo.cpp:
+
+          Fixed missing UI default values.
+
 Thu Jan 21 06:25:33 UTC 2010  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * experiments/EU_Performance/Exp_Core/Exp_EU_Planner.h:
