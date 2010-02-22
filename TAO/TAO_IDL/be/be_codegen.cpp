@@ -20,7 +20,11 @@
 #include "global_extern.h"
 #include "utl_string.h"
 #include "idl_defines.h"
+
 #include "ace/OS_NS_ctype.h"
+#include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/Numeric_Limits.h"
 
 TAO_CodeGen * tao_cg = 0;
 
@@ -2216,6 +2220,11 @@ TAO_CodeGen::gen_ifndef_string (const char *fname,
           macro_name[i + offset] = '_';
         }
     }
+    
+  ACE_OS::strcat (macro_name, "_XXXXXX");
+  char * const t = ACE_OS::strstr (macro_name, "XXXXXX");
+  
+  this->make_rand_extension (t);
 
   ACE_OS::strcat (macro_name, suffix);
 
@@ -3375,6 +3384,71 @@ TAO_CodeGen::gen_conn_src_includes (void)
   this->gen_standard_include (
     this->ciao_conn_source_,
     be_global->be_get_ciao_conn_hdr_fname (true));
+}
+
+void
+TAO_CodeGen::make_rand_extension (char * const t)
+{
+  size_t const NUM_CHARS = ACE_OS::strlen (t);
+  
+  // Use ACE_Time_Value::msec(ACE_UINT64&) as opposed to
+  // ACE_Time_Value::msec(void) to avoid truncation.
+  ACE_UINT64 msec;
+
+  // Use a const ACE_Time_Value to resolve ambiguity between
+  // ACE_Time_Value::msec (long) and ACE_Time_Value::msec(ACE_UINT64&) const.
+  ACE_Time_Value const now = ACE_OS::gettimeofday ();
+  now.msec (msec);
+
+  // Add the process and thread ids to ensure uniqueness.
+  msec += ACE_OS::getpid ();
+  msec += static_cast<size_t> (ACE_OS::thr_self ());
+
+  // ACE_thread_t may be a char* (returned by ACE_OS::thr_self()) so
+  // we need to use a C-style cast as a catch-all in order to use a
+  // static_cast<> to an integral type.
+  ACE_RANDR_TYPE seed = static_cast<ACE_RANDR_TYPE> (msec);
+
+  // We only care about UTF-8 / ASCII characters in generated
+  // filenames.  A UTF-16 or UTF-32 character could potentially cause
+  // a very large space to be searched in the below do/while() loop,
+  // greatly slowing down this mkstemp() implementation.  It is more
+  // practical to limit the search space to UTF-8 / ASCII characters
+  // (i.e. 127 characters).
+  //
+  // Note that we can't make this constant static since the compiler
+  // may not inline the return value of ACE_Numeric_Limits::max(),
+  // meaning multiple threads could potentially initialize this value
+  // in parallel.
+  float const MAX_VAL =
+    static_cast<float> (ACE_Numeric_Limits<char>::max ());
+
+  // Use high-order bits rather than low-order ones (e.g. rand() %
+  // MAX_VAL).  See Numerical Recipes in C: The Art of Scientific
+  // Computing (William  H. Press, Brian P. Flannery, Saul
+  // A. Teukolsky, William T. Vetterling; New York: Cambridge
+  // University Press, 1992 (2nd ed., p. 277).
+  //
+  // e.g.: MAX_VAL * rand() / (RAND_MAX + 1.0)
+
+  // Factor out the constant coefficient.
+  float const coefficient =
+    static_cast<float> (MAX_VAL / (RAND_MAX + 1.0f));
+
+  for (unsigned int n = 0; n < NUM_CHARS; ++n)
+    {
+      ACE_TCHAR r;
+
+      // This do/while() loop allows this alphanumeric character
+      // selection to work for EBCDIC, as well.
+      do
+        {
+          r = static_cast<ACE_TCHAR> (coefficient * ACE_OS::rand_r (seed));
+        }
+      while (!ACE_OS::ace_isalnum (r));
+
+      t[n] = static_cast<char> (ACE_OS::ace_toupper (r));
+    }
 }
 
 void

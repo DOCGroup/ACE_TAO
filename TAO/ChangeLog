@@ -1,3 +1,20 @@
+Mon Feb 22 21:20:15 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        
+          Added random 6-character string to #ifdef guard generation,
+          to prevent hiding when IDL files have the same name (but
+          are in different directories, the #ifdef guard uses only
+          the local filename).
+          
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+        
+          Added logic to check for inheritance from DDS_State or
+          DDS_Event connectors, to generate inheritance in the
+          connector impl from the correct Base connector template.
+
 Mon Feb 22 13:47:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/fe/idl.ll:
