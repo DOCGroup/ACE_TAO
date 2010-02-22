@@ -87,7 +87,7 @@ ACE_Condition<MUTEX>::wait (void)
 {
   // ACE_TRACE ("ACE_Condition<MUTEX>::wait");
   return ACE_OS::cond_wait (&this->cond_,
-                            &this->mutex_.mutex ());
+                            &this->mutex_.lock ());
 }
 
 template <class MUTEX> int
@@ -97,12 +97,12 @@ ACE_Condition<MUTEX>::wait (MUTEX &mutex,
 // ACE_TRACE ("ACE_Condition<MUTEX>::wait");
   if (abstime == 0)
       return ACE_OS::cond_wait (&this->cond_,
-                                &mutex.mutex ());
+                                &mutex.lock ());
   else
     {
       ACE_Time_Value tv = *abstime;
       return ACE_OS::cond_timedwait (&this->cond_,
-                                     &mutex.mutex (),
+                                     &mutex.lock (),
                                      &tv);
     }
 }
