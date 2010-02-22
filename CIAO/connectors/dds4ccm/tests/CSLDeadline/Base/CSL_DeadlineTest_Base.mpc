@@ -18,5 +18,8 @@ project (DDS_CSL_DeadlineTest_Base_stub) : taoidldefaults, anytypecode, dds4ccm_
   DDSGenerator_Files {
     CSL_DeadlineTest_Base.idl
   }
+
+  Source_Files {
+  }
 }
 

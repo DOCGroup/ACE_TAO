@@ -18,5 +18,8 @@ project (DDS_FSS_Event_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_defa
   DDSGenerator_Files {
     FSS_Event_Base.idl
   }
+
+  Source_Files {
+  }
 }
 

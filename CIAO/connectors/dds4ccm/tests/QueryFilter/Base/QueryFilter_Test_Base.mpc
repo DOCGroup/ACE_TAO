@@ -18,5 +18,8 @@ project (QueryFilter_Test_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_d
   DDSGenerator_Files {
     QueryFilter_Test_Base.idl
   }
+
+  Source_Files {
+  }
 }
 

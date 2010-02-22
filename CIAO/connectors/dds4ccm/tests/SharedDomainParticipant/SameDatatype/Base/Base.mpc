@@ -18,5 +18,8 @@ project (DDS_SharedDPBase_stub) : taoidldefaults, anytypecode, dds4ccm_ts_defaul
   DDSGenerator_Files {
     Base.idl
   }
+
+  Source_Files {
+  }
 }
 

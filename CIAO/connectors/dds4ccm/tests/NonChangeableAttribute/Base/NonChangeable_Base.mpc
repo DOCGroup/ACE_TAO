@@ -18,5 +18,8 @@ project (DDS_NonChangeableBase_stub) : taoidldefaults, anytypecode, dds4ccm_ts_d
   DDSGenerator_Files {
     NonChangeable_Base.idl
   }
+
+  Source_Files {
+  }
 }
 

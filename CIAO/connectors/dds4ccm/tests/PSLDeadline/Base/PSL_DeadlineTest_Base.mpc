@@ -18,5 +18,8 @@ project (DDS_PSL_DeadlineTest_Base_stub) : taoidldefaults, anytypecode, dds4ccm_
   DDSGenerator_Files {
     PSL_DeadlineTest_Base.idl
   }
+
+  Source_Files {
+  }
 }
 
