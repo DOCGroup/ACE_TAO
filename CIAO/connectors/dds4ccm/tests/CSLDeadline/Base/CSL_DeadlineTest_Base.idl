@@ -8,7 +8,7 @@
 #ifndef CSL_DEADLINETEST_BASE_IDL
 #define CSL_DEADLINETEST_BASE_IDL
 
-#pragma rti typesupport "Base/CSL_DeadlineTest_BaseSupport.h"
+#pragma ndds typesupport "Base/CSL_DeadlineTest_BaseSupport.h"
 
 struct TestTopic {
   string key; //@key

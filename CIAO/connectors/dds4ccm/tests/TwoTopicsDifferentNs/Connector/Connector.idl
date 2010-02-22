@@ -15,8 +15,8 @@
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "Connector/ConnectorE.idl"
-#pragma rti typesupport "Hello/HelloGoodbyeSupport.h"
-#pragma rti typesupport "Goodbye/HelloGoodbyeSupport.h"
+#pragma ndds typesupport "Hello/HelloGoodbyeSupport.h"
+#pragma ndds typesupport "Goodbye/HelloGoodbyeSupport.h"
 
 module Hello
 {

@@ -8,7 +8,7 @@
 #ifndef VTOPIC_BASE_IDL
 #define VTOPIC_BASE_IDL
 
-#pragma rti typesupport "Base/VTopic_BaseSupport.h"
+#pragma ndds typesupport "Base/VTopic_BaseSupport.h"
 
 struct TestTopic {
   string key; //@key

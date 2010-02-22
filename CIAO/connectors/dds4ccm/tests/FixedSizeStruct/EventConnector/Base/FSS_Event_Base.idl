@@ -8,7 +8,7 @@
 #ifndef FIXED_SIZE_STRUCT_EVENT_BASE_IDL
 #define FIXED_SIZE_STRUCT_EVENT_BASE_IDL
 
-#pragma rti typesupport "Base/FSS_Event_BaseSupport.h"
+#pragma ndds typesupport "Base/FSS_Event_BaseSupport.h"
 
 struct FixedStructSizeTest {
   long one;

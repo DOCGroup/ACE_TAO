@@ -8,7 +8,7 @@
 #ifndef PSL_DEADLINETEST_BASE_IDL
 #define PSL_DEADLINETEST_BASE_IDL
 
-#pragma rti typesupport "Base/PSL_DeadlineTest_BaseSupport.h"
+#pragma ndds typesupport "Base/PSL_DeadlineTest_BaseSupport.h"
 
 struct TestTopic {
   string key; //@key

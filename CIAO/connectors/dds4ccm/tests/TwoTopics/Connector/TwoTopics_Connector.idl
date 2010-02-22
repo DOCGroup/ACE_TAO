@@ -13,7 +13,7 @@
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "Connector/TwoTopics_ConnectorE.idl"
-#pragma rti typesupport "Base/TwoTopics_BaseSupport.h"
+#pragma ndds typesupport "Base/TwoTopics_BaseSupport.h"
 
 module TT_Connector
 {

@@ -8,7 +8,7 @@
 #ifndef FIXED_SIZE_STRUCT_STATE_BASE_IDL
 #define FIXED_SIZE_STRUCT_STATE_BASE_IDL
 
-#pragma rti typesupport "Base/FSS_State_Base_BaseSupport.h"
+#pragma ndds typesupport "Base/FSS_State_Base_BaseSupport.h"
 
 struct FixedStructSizeTest {
   long one;
