@@ -1,8 +1,7 @@
-Mon Feb 22 14:46:53 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+Mon Feb 22 15:00:11 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * ace/Time_Value.{h,cpp} (ACE_Time_Value::normalize):
-          Reformatted/renamed the code to conform to ACE programming
-          guidelines.
+        * ace/Time_Value.{h,cpp}: Reformatted/renamed the code to conform
+          to ACE programming guidelines.
 
 Mon Feb 22 13:40:14 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
