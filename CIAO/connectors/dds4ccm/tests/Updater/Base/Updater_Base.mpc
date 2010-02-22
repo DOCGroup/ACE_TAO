@@ -2,6 +2,7 @@
 
 project (DDS_Updater_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
   sharedname = *
+  custom_only = 1
   dynamicflags += UPDATER_BASE_STUB_BUILD_DLL
   libout = ../lib
 
