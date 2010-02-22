@@ -12,7 +12,7 @@ use Getopt::Std;
 
 $flags = join (" ", @ARGV);
 
-if (!getopts ('np:l:c:u:b:ho:') || $opt_h) {
+if (!getopts ('np:l:c:u:b:ho:g:') || $opt_h) {
     print "generate_component_mpc.pl [-h] component_name\n";
     print "\n";
     print "    -h         print help message explaining various options\n";
@@ -23,6 +23,7 @@ if (!getopts ('np:l:c:u:b:ho:') || $opt_h) {
     print "    -c         Create a client makefile\n";
     print "    -u         Unique project name prefix (if not defined, name for -p flag will be used). \n";
     print "    -b         common base project(s) for all generated projects\n";
+    print "    -g         use this option when you want to use the -Glfa option of TAO_IDL\n"
     print "\n";
     print "generate_component_mpc creates and save a minimum mpc file\n";
     print "called $com_name.mpc that is needed for a single component implementation\n";

@@ -1,3 +1,10 @@
+Mon Feb 22 19:49:01 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * examples/Null_Component/descriptors/run_test_no_ns.pl:
+
+          Place holder file. We need to get this example working
+          without Naming Service.
+
 Mon Feb 22 14:26:16 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Getter/Base/Get_Invoker.idl:
