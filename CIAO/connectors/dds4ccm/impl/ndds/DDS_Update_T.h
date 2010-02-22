@@ -44,6 +44,7 @@ private:
   ::CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE> dds_update_;
   ::CIAO::DDS4CCM::RTI::RTI_DataWriter_i rti_writer_;
   //@}
+  typedef ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE> DataWriterListener;
 };
 
 #include "dds4ccm/impl/ndds/DDS_Update_T.cpp"

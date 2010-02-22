@@ -1,3 +1,11 @@
+Mon Feb 22 08:29:03 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_Read_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_Read_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Update_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_Update_T.cpp:
+          Created typedefs of templated classes.
+
 Mon Feb 22 08:21:57 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.h:
