@@ -1,3 +1,10 @@
+Mon Feb 22 21:39:08 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * examples/Null_Component/descriptors/Null_PlanLocality_DifferentProcesses.cdp:
+        * examples/Null_Component/descriptors/Null_PlanLocality_SameProcess.cdp:
+
+          Add a couple of deploymeny plans to test the PlanLocality feature.
+
 Mon Feb 22 20:48:36 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * examples/Null_Component/descriptors/NodeMap.dat:
