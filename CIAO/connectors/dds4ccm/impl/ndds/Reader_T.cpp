@@ -17,9 +17,9 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::Reader_T (void)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::Reader_T");
   #if defined DDS4CCM_USES_QUERY_CONDITION
-    this->qc_ = DDS::QueryCondition::_nil ();
+    this->qc_ ::= DDS::QueryCondition::_nil ();
   #else
-    this->cft_ = DDS::ContentFilteredTopic::_nil ();
+    this->cft_ = ::DDS::ContentFilteredTopic::_nil ();
   #endif
 }
 
@@ -48,7 +48,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::impl (void)
 template <typename DDS_TYPE, typename CCM_TYPE>
 CORBA::ULong
 CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::get_nr_valid_samples (
-  const DDS_SampleInfoSeq & sample_info,
+  const DDS_SampleInfoSeq& sample_info,
   bool determine_last)
 {
   CORBA::ULong nr_of_samples = 0;
@@ -56,8 +56,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::get_nr_valid_samples (
     {
       if (determine_last)
         {
-          if (sample_info[i].sample_rank == 0 &&
-              sample_info[i].valid_data)
+          if (sample_info[i].sample_rank == 0 && sample_info[i].valid_data)
             {
               ++nr_of_samples;
             }
@@ -418,7 +417,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
       }
     ::CCM_DDS::QueryFilter * filter = new ::CCM_DDS::QueryFilter();
     filter->query = this->cft_->get_filter_expression ();
-    ::DDS::ReturnCode_t retval = this->cft_->get_expression_parameters (
+    ::DDS::ReturnCode_t const retval = this->cft_->get_expression_parameters (
                                           filter->query_parameters);
     if (retval != DDS::RETCODE_OK)
       {
@@ -470,7 +469,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
   #else
     if (CORBA::is_nil (this->cft_))
       {
-        create_filter (filter);
+        this->create_filter (filter);
       }
     else
       {
