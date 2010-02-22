@@ -73,8 +73,9 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::activate ()
     {
       if (CORBA::is_nil (this->data_listener_.in ()))
         {
-          this->data_listener_ = new ::CIAO::DDS4CCM::DataWriterListener_T
-            <DDS_TYPE, CCM_TYPE> ();
+          ACE_NEW_THROW_EX (this->data_listener_,
+                            DataWriterListener (),
+                            CORBA::NO_MEMORY ());
         }
       this->rti_writer_.set_listener (
         this->data_listener_.in (),

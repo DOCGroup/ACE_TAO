@@ -72,6 +72,7 @@ namespace CIAO
       ::CCM_DDS::PortStatusListener_var port_status_listener_;
     protected:
       ACE_Reactor* reactor_;
+
     };
   }
 }

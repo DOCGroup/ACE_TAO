@@ -3,7 +3,6 @@
 
 #include "dds4ccm/impl/ndds/DataReader.h"
 #include "ciao/Logger/Log_Macros.h"
-#include "dds4ccm/impl/ndds/DataReaderHandler_T.h"
 #include "ace/Reactor.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -39,8 +38,9 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(
     {
       if (this->reactor_)
         {
-          ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>* rh =
-           new  ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>(this, rdr);
+          drh* rh = 0;
+          ACE_NEW (rh, drh (this, rdr));
+
           ACE_Event_Handler_var safe_handler (rh);
           if (this->reactor_->notify (rh) != 0)
             {

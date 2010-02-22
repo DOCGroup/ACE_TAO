@@ -4,7 +4,6 @@
 #include "ciao/Logger/Log_Macros.h"
 #include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
 #include "dds4ccm/impl/ndds/DomainParticipant.h"
-#include "dds4ccm/impl/ndds/DomainParticipantListener_T.h"
 #include "ace/Tokenizer_T.h"
 #include "ace/Env_Value_T.h"
 
@@ -179,9 +178,11 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
     {
       if (CORBA::is_nil (this->domainparticipantlistener_.in ()))
         {
-          this->domainparticipantlistener_ = new ::CIAO::DDS4CCM::DomainParticipantListener_T
-            <DDS_TYPE, CCM_TYPE> (
-              this->context_->get_connection_error_listener ());
+          ACE_NEW_THROW_EX (this->domainparticipantlistener_,
+                            DomainParticipantListener(
+                              this->context_->
+                                get_connection_error_listener ()),
+                            CORBA::NO_MEMORY ());
         }
       this->domain_participant_->set_listener (
         this->domainparticipantlistener_.in (),

@@ -80,12 +80,13 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE>::activate (
     {
       if (CORBA::is_nil (this->data_listener_.in ()))
         {
-          this->data_listener_ = new ::CIAO::DDS4CCM::RTI::DataReaderStateListener_T
-            <DDS_TYPE, CCM_TYPE> (
-              listener,
-              status,
-              data_control_.in (),
-              reactor);
+          ACE_NEW_THROW_EX (this->data_listener_,
+                            DataReaderStateListener (
+                              listener,
+                              status,
+                              data_control_.in (),
+                              reactor),
+                            CORBA::NO_MEMORY ());
         }
       this->rti_reader_.set_listener (
         this->data_listener_.in (),

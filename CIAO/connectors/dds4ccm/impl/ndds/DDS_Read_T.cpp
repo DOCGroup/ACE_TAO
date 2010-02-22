@@ -80,8 +80,10 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE>::activate (
     {
       if (CORBA::is_nil (this->status_.in ()))
         {
-          this->status_ = new ::CIAO::DDS4CCM::PortStatusListener_T
-            <DDS_TYPE, CCM_TYPE> (listener, reactor);
+          ACE_NEW_THROW_EX (this->status_,
+                            ::CIAO::DDS4CCM::PortStatusListener_T
+                              <DDS_TYPE, CCM_TYPE> (listener, reactor),
+                            CORBA::NO_MEMORY ());
         }
       this->rti_reader_.set_listener (
         this->status_.in (),

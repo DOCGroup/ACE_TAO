@@ -72,6 +72,7 @@ namespace CIAO
           {
             CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter - "
                          "Error: RTI Topic returned a nil datawriter.\n"));
+            delete rti_drl;
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
 
@@ -123,6 +124,7 @@ namespace CIAO
           {
             CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter_with_profile - "
                          "Error: RTI Topic returned a nil datawriter.\n"));
+            delete rti_drl;
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
 
