@@ -2984,14 +2984,14 @@ idl_parse_line_and_file (char *buf)
 
   UTL_String *fname = idl_global->filename ();
   bool in_main_file = false;
-  
+
   bool is_real_filename =
     fname->compare (idl_global->real_filename ())
     || same_file (fname->get_string(),
                   idl_global->real_filename ()->get_string());
 
   bool is_main_filename = false;
-  
+
   if (!is_real_filename)
     {
 #if defined (ACE_OPENVMS)
@@ -3266,18 +3266,18 @@ idl_store_pragma (char *buf)
 
       // Split up data type and key strings
       char *sample_type = tmp;
-      
+
       while (*tmp && !isspace (*tmp))
         {
           ++tmp;
         }
-        
+
       while (isspace (*tmp))
         {
           *tmp = '\0';
           tmp++;
         }
-        
+
       char *key = tmp;
 
       if (!idl_global->add_dcps_data_key (sample_type, key))
@@ -3299,7 +3299,7 @@ idl_store_pragma (char *buf)
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_lem_file_names (tmp);
     }
-  else if (ACE_OS::strncmp (buf + 8, "rti typesupport", 15) == 0)
+  else if (ACE_OS::strncmp (buf + 8, "ndds typesupport", 15) == 0)
     {
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_rti_ts_file_names (tmp);
