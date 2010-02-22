@@ -1,4 +1,9 @@
-Mon Feb 22 19:57:02 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+Mon Feb 22 20:01:54 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Time_Value.{h,cpp}: Applied some patches from Olivier Langlois
+          <olivier at olivierlanglois dot net> to fix some warnings.
+
+  Mon Feb 22 19:57:02 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Thread_Mutex.inl (ACE_Thread_Mutex::lock): Added a non-const
           lock() method.  Thanks to Phil for suggesting this.
