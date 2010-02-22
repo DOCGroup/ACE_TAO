@@ -1,76 +1,22 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -o ../lib -u DDS -n Writer_Base"
 
-project(DDS_DDSWriterEntityBase_idl_gen) : taoidldefaults, anytypecode {
-  custom_only = 1
-  idlflags -= -St -Sa
-  idlflags += -SS -Gxhst \
+project (DDS_DDSWriterEntityBase_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
+  sharedname = *
+  dynamicflags += WRITER_BASE_STUB_BUILD_DLL
+  libout = ../lib
+
+  idlflags += -SS -Gxhst -Sci \
               -Wb,stub_export_macro=WRITER_BASE_STUB_Export \
               -Wb,stub_export_include=Writer_Base_stub_export.h
 
   IDL_Files {
     Writer_Base.idl
   }
-}
 
-project(DDS_DDSWriterEntityBase_ndds_ts_gen) : ndds_ts_defaults {
-  custom_only = 1
-  after += DDS_DDSWriterEntityBase_idl_gen
+  opendds_ts_flags += --export=WRITER_BASE_STUB_Export
 
-  NDDSTypeSupport_Files {
+  DDSGenerator_Files {
     Writer_Base.idl
-  }
-}
-
-project(DDS_DDSWriterEntityBase_NDDS_TS) : nddslib, taolib {
-  after += DDS_DDSWriterEntityBase_ndds_ts_gen DDS_DDSWriterEntityBase_stub
-  libs += DDS_DDSWriterEntityBase_stub
-  libout = ../lib
-  libpaths    += ../lib
-  sharedname = DDS_DDSWriterEntityBase_NDDS_TS
-  dynamicflags = NDDS_USER_DLL_EXPORT
-
-  verbatim(gnuace, macros) {
-    override no_hidden_visibility = 1
-  }
-
-  Source_Files {
-    Writer_Base.cxx
-    Writer_BasePlugin.cxx
-    Writer_BaseSupport.cxx
-  }
-
-  Header_Files {
-    Writer_Base.h
-    Writer_BasePlugin.h
-    Writer_BaseSupport.h
-  }
-
-  Inline_Files {
-  }
-}
-
-project(DDS_DDSWriterEntityBase_stub) : ccm_stub {
-  after += DDS_DDSWriterEntityBase_idl_gen
-  libout = ../lib
-  libpaths += ../lib
-  sharedname = DDS_DDSWriterEntityBase_stub
-  dynamicflags = WRITER_BASE_STUB_BUILD_DLL
-
-  IDL_Files {
-  }
-
-  Source_Files {
-    Writer_BaseC.cpp
-  }
-
-  Header_Files {
-    Writer_BaseC.h
-    Writer_Base_stub_export.h
-  }
-
-  Inline_Files {
-    Writer_BaseC.inl
   }
 }
 
