@@ -114,7 +114,7 @@ project(DDS_LMBM_Test_Receiver_exec) : ciao_executor, dds4ccm_base {
 }
 
 
-project(DDS_LMBM_Test_Receiver_svnt) : ciao_servant, dds4ccm_base, nddslib {
+project(DDS_LMBM_Test_Receiver_svnt) : ciao_servant, dds4ccm_base {
   after      +=   DDS_LMBM_Test_Receiver_lem_stub DDS_LMBM_Test_Base_stub \
                   DDS_LMBM_Test_Connector_stub DDS_LMBM_Test_Connector_svnt \
                   DDS_LMBM_Test_Receiver_exec DDS_LMBM_Test_Connector_lem_stub \

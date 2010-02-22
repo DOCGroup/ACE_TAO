@@ -107,7 +107,7 @@ project(DDS_DDSWriterEntityReceiver_exec) : ciao_executor, dds4ccm_base {
 }
 
 
-project(DDS_DDSWriterEntityReceiver_svnt) : ciao_servant, dds4ccm_base, nddslib {
+project(DDS_DDSWriterEntityReceiver_svnt) : ciao_servant, dds4ccm_base {
   after      +=   DDS_DDSWriterEntityReceiver_lem_stub DDS_DDSWriterEntityBase_stub DDS_DDSWriterEntityConnector_stub DDS_DDSWriterEntityConnector_svnt DDS_DDSWriterEntityReceiver_exec DDS_DDSWriterEntityConnector_lem_stub DDS4CCM_lem_stub DDS4CCM_skel
   sharedname  = Receiver_svnt
   libs       += Receiver_stub Receiver_lem_stub DDS_DDSWriterEntityBase_stub DDS_DDSWriterEntityConnector_stub DDS_DDSWriterEntityConnector_svnt Receiver_exec DDS_DDSWriterEntityConnector_lem_stub DDS4CCM_lem_stub DDS4CCM_skel

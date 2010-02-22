@@ -118,7 +118,7 @@ project(QueryFilter_Test_Sender_exec) : ciao_executor, dds4ccm_base {
 }
 
 
-project(QueryFilter_Test_Sender_svnt) : ciao_servant, dds4ccm_base, nddslib {
+project(QueryFilter_Test_Sender_svnt) : ciao_servant, dds4ccm_base {
   after      += QueryFilter_Test_Base_stub  QueryFilter_Test_Sender_lem_stub \
                 DDS4CCM_lem_stub DDS4CCM_skel QueryFilter_Test_Connector_stub \
                 QueryFilter_Test_Connector_svnt QueryFilter_Test_Connector_lem_stub \

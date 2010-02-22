@@ -113,7 +113,7 @@ project(DDS_Hello_Sender_exec) : ciao_executor, dds4ccm_base {
 }
 
 
-project(DDS_Hello_Sender_svnt) : ciao_servant, dds4ccm_base, nddslib {
+project(DDS_Hello_Sender_svnt) : ciao_servant, dds4ccm_base {
   avoids     += ace_for_tao
   after      += DDS_Hello_Base_stub  DDS_Hello_Sender_lem_stub DDS4CCM_lem_stub DDS4CCM_skel DDS_Hello_Connector_stub DDS_Hello_Connector_svnt  DDS_Hello_Connector_lem_stub
   sharedname  = Sender_svnt
