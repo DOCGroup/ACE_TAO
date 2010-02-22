@@ -18,5 +18,8 @@ project (DDS_VTopic_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default
   DDSGenerator_Files {
     VTopic_Base.idl
   }
+
+  Source_Files {
+  }
 }
 

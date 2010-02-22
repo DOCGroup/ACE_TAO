@@ -18,5 +18,8 @@ project (DDS_LMBM_Test_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_defa
   DDSGenerator_Files {
     LMBM_Test_Base.idl
   }
+
+  Source_Files {
+  }
 }
 

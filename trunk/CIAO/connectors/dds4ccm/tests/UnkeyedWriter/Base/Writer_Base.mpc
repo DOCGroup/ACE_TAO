@@ -18,5 +18,8 @@ project (DDS_UnkeyedWriterBase_stub) : taoidldefaults, anytypecode, dds4ccm_ts_d
   DDSGenerator_Files {
     Writer_Base.idl
   }
+
+  Source_Files {
+  }
 }
 

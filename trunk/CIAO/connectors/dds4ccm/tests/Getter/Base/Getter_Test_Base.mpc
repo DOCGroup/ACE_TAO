@@ -21,5 +21,8 @@ project (DDS_Getter_Test_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_de
 
   Source_Files {
   }
+
+  Source_Files {
+  }
 }
 

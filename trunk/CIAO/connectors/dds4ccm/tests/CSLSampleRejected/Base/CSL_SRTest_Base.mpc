@@ -18,5 +18,8 @@ project (DDS_CSL_SRTest_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_def
   DDSGenerator_Files {
     CSL_SRTest_Base.idl
   }
+
+  Source_Files {
+  }
 }
 
