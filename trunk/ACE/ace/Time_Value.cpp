@@ -255,15 +255,15 @@ ACE_Time_Value::operator *= (double d)
     double,
     long double>::result_type float_type;
 
-  float_type sec_total = this->sec();
+  float_type sec_total = static_cast<float_type> (this->sec());
   sec_total *= d;
-  
+
   // shall we saturate the result?
   static const float_type max_int =
     ACE_Numeric_Limits<time_t>::max() + 0.999999;
   static const float_type min_int =
     ACE_Numeric_Limits<time_t>::min() - 0.999999;
-    
+
   if (sec_total > max_int)
     this->set(ACE_Numeric_Limits<time_t>::max(), ACE_ONE_SECOND_IN_USECS-1);
   else if (sec_total < min_int)
@@ -271,13 +271,13 @@ ACE_Time_Value::operator *= (double d)
   else
     {
       time_t time_sec = static_cast<time_t> (sec_total);
-    
-      float_type usec_total = this->usec(); 
+
+      float_type usec_total = this->usec();
       usec_total *= d;
 
       // adding usec resulting from tv_sec mult
       usec_total += (sec_total-time_sec) * ACE_ONE_SECOND_IN_USECS;
-    
+
       // extract seconds component of the usec mult
       sec_total = usec_total / ACE_ONE_SECOND_IN_USECS;
       // keep remaining usec
@@ -285,13 +285,13 @@ ACE_Time_Value::operator *= (double d)
         usec_total = (sec_total - ACE_OS::floor(sec_total));
       else
         usec_total = (sec_total - ACE_OS::ceil(sec_total));
-    
+
       sec_total -= usec_total;
       usec_total *= ACE_ONE_SECOND_IN_USECS;
-    
+
       // add the seconds component of the usec mult with the tv_sec mult prod.
       sec_total += time_sec;
-    
+
       // recheck for saturation
       if (sec_total > max_int)
         this->set (ACE_Numeric_Limits<time_t>::max(), ACE_ONE_SECOND_IN_USECS - 1);
@@ -299,7 +299,7 @@ ACE_Time_Value::operator *= (double d)
         this->set (ACE_Numeric_Limits<time_t>::min(), -ACE_ONE_SECOND_IN_USECS + 1);
       else
         {
-          time_sec = sec_total;
+          time_sec = static_cast<time_t> (sec_total);
           suseconds_t time_usec = static_cast<suseconds_t> (usec_total);
 
           // round up the result to save the last usec
