@@ -1,7 +1,7 @@
 // $Id$
 
 project (DDS_SCABase_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
-  sharedname = *
+  sharedname = DDS_SCABase_stub
   dynamicflags += SETCONNECTORATTRIBUTE_BASE_STUB_BUILD_DLL
   libout = ../lib
 
