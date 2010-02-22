@@ -327,7 +327,7 @@ public:
 
 private:
   /// Put the timevalue into a canonical form.
-  void normalize (bool bSaturate = false);
+  void normalize (bool saturate = false);
 
   /// Store the values as a timeval.
 #if defined (ACE_HAS_TIME_T_LONG_MISMATCH)

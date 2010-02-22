@@ -168,7 +168,7 @@ ACE_Time_Value::dump (void) const
 }
 
 void
-ACE_Time_Value::normalize (bool bSaturate)
+ACE_Time_Value::normalize (bool saturate)
 {
   // // ACE_OS_TRACE ("ACE_Time_Value::normalize");
   // From Hans Rohnert...
@@ -177,61 +177,45 @@ ACE_Time_Value::normalize (bool bSaturate)
     {
       /*! \todo This loop needs some optimization.
        */
-      if (!bSaturate) // keep the conditionnal expression outside the while loop to minimize performance cost
-      {
+      if (!saturate) // keep the conditionnal expression outside the while loop to minimize performance cost
         do
-        {
-          ++this->tv_.tv_sec;
-          this->tv_.tv_usec -= ACE_ONE_SECOND_IN_USECS;
-        }
-        while (this->tv_.tv_usec >= ACE_ONE_SECOND_IN_USECS);
-      }
-      else
-      {
-        do
-        {
-          if (this->tv_.tv_sec < ACE_Numeric_Limits<time_t>::max())
           {
             ++this->tv_.tv_sec;
             this->tv_.tv_usec -= ACE_ONE_SECOND_IN_USECS;
           }
-          else
-          {
-            this->tv_.tv_usec = ACE_ONE_SECOND_IN_USECS - 1;
-          }
-        }
         while (this->tv_.tv_usec >= ACE_ONE_SECOND_IN_USECS);
-      }
+      else
+        do
+          if (this->tv_.tv_sec < ACE_Numeric_Limits<time_t>::max())
+            {
+              ++this->tv_.tv_sec;
+              this->tv_.tv_usec -= ACE_ONE_SECOND_IN_USECS;
+            }
+          else
+            this->tv_.tv_usec = ACE_ONE_SECOND_IN_USECS - 1;
+        while (this->tv_.tv_usec >= ACE_ONE_SECOND_IN_USECS);
     }
   else if (this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS)
     {
       /*! \todo This loop needs some optimization.
        */
-      if (!bSaturate)
-      {
+      if (!saturate)
         do
-        {
-          --this->tv_.tv_sec;
-          this->tv_.tv_usec += ACE_ONE_SECOND_IN_USECS;
-        }
-        while (this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS);
-      }
-      else
-      {
-        do
-        {
-          if (this->tv_.tv_sec > ACE_Numeric_Limits<time_t>::min())
           {
             --this->tv_.tv_sec;
             this->tv_.tv_usec += ACE_ONE_SECOND_IN_USECS;
           }
-          else
-          {
-            this->tv_.tv_usec = -ACE_ONE_SECOND_IN_USECS + 1;
-          }
-        }
         while (this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS);
-      }
+      else
+        do
+          if (this->tv_.tv_sec > ACE_Numeric_Limits<time_t>::min())
+            {
+              --this->tv_.tv_sec;
+              this->tv_.tv_usec += ACE_ONE_SECOND_IN_USECS;
+            }
+          else
+            this->tv_.tv_usec = -ACE_ONE_SECOND_IN_USECS + 1;
+        while (this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS);
     }
 
   if (this->tv_.tv_sec >= 1 && this->tv_.tv_usec < 0)
@@ -239,7 +223,7 @@ ACE_Time_Value::normalize (bool bSaturate)
       --this->tv_.tv_sec;
       this->tv_.tv_usec += ACE_ONE_SECOND_IN_USECS;
     }
-// tv_sec in qnxnto is unsigned
+  // tv_sec in qnxnto is unsigned
 #if !defined ( __QNXNTO__)
   else if (this->tv_.tv_sec < 0 && this->tv_.tv_usec > 0)
     {

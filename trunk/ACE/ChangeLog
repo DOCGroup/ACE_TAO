@@ -1,3 +1,19 @@
+Mon Feb 22 14:46:53 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Time_Value.{h,cpp} (ACE_Time_Value::normalize):
+          Reformatted/renamed the code to conform to ACE programming
+          guidelines.
+
+Mon Feb 22 13:40:14 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Condition_T.cpp: Changed the mutex() accessor to lock() to
+          be consistent.
+
+Mon Feb 22 13:39:09 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Recursive_Thread_Mutex.{h,inl}: Created a new lock() accessor
+          so it's consistent with the other synchronizer accessors in ACE.  
+
 Sun Feb 21 21:25:21 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * tests/Time_Value_Test.cpp: Added a test for the new operator<<
