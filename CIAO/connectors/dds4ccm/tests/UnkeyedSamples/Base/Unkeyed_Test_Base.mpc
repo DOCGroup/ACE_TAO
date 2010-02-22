@@ -2,6 +2,7 @@
 
 project (DDS_Unkeyed_Test_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
   sharedname = *
+  custom_only = 1
   dynamicflags += UNKEYED_TEST_BASE_STUB_BUILD_DLL
   libout = ../lib
 

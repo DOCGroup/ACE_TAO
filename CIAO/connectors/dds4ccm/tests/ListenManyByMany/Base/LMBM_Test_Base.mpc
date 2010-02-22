@@ -2,6 +2,7 @@
 
 project (DDS_LMBM_Test_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
   sharedname = *
+  custom_only = 1
   dynamicflags += LISTEN_MANY_BY_MANY_TEST_BASE_STUB_BUILD_DLL
   libout = ../lib
 

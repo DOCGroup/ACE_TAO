@@ -2,6 +2,7 @@
 
 project (DDS_CSL_USTest_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
   sharedname = *
+  custom_only = 1
   dynamicflags += CSL_USTEST_BASE_STUB_BUILD_DLL
   libout = ../lib
 
