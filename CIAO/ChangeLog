@@ -1,3 +1,19 @@
+Mon Feb 22 08:20:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Layout and const changes
+
+Mon Feb 22 07:18:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Base/Hello_Base.mpc
+        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.mpc
+        * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.mpc
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.mpc
+        * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.mpc
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.mpc
+          Simplified these base projects
+
 Sun Feb 21 09:24:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ChangeLogs/*:

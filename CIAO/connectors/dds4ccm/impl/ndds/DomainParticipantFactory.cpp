@@ -190,9 +190,9 @@ namespace CIAO
         CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::delete_participant - "
                      "Successfully casted provided object reference to servant type.\n"));
 
-        DDS_ReturnCode_t retval = DDS_RETCODE_OK;
-
         this->remove_participant (part);
+
+        DDS_ReturnCode_t retval = DDS_RETCODE_OK;
 
         if (part->_refcount_value () == 1)
           {
