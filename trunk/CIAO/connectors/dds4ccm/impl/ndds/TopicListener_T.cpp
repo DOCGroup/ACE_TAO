@@ -38,9 +38,12 @@ CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::on_inconsistent_topic (
     {
       if (this->reactor_)
         {
-          ::CIAO::DDS4CCM::OnInconsistentTopicHandler* rh =
-           new ::CIAO::DDS4CCM::OnInconsistentTopicHandler (
-            this->error_listener_, the_topic, status);
+          ::CIAO::DDS4CCM::OnInconsistentTopicHandler* rh = 0;
+          ACE_NEW (rh,
+                   ::CIAO::DDS4CCM::OnInconsistentTopicHandler (
+                     this->error_listener_,
+                     the_topic,
+                     status));
           ACE_Event_Handler_var safe_handler (rh);
           if (this->reactor_->notify (rh) != 0)
             {

@@ -11,6 +11,7 @@
 #define DDS4CCM_DATAREADERLISTENER_T_H
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+
 #include "dds4ccm/impl/ndds/PortStatusListener_T.h"
 
 class ACE_Reactor;
@@ -46,6 +47,8 @@ namespace CIAO
       private:
         typename CCM_TYPE::listener_type::_var_type listener_;
         ::CCM_DDS::DataListenerControl_var control_;
+
+        typedef ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE> drh;
       };
     }
   }

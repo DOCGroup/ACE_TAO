@@ -40,8 +40,12 @@ namespace CIAO
       ::DDS::StatusCondition_ptr
       RTI_Subscriber_i::get_statuscondition (void)
       {
+        ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
+        ACE_NEW_THROW_EX (retval,
+                          RTI_StatusCondition_i (),
+                          CORBA::NO_MEMORY ());
+
         DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
-        ::DDS::StatusCondition_var retval = new RTI_StatusCondition_i ();
         RTI_StatusCondition_i *rti_sc = dynamic_cast < RTI_StatusCondition_i *> (retval.in ());
         rti_sc->set_impl (sc);
         return retval._retn ();
@@ -126,6 +130,11 @@ namespace CIAO
         ::DDS::StatusMask mask)
       {
         CIAO_TRACE ("RTI_Subscriber_i::create_datareader");
+        ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
+        ACE_NEW_THROW_EX (retval,
+                          RTI_DataReader_i (),
+                          CORBA::NO_MEMORY ());
+
         DDSDataReaderListener *rti_drl = 0;
         if (!CORBA::is_nil (a_listener))
           {
@@ -145,6 +154,7 @@ namespace CIAO
               {
                 CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader - "
                             "Error: Unable to cast provided topic to one of its servant.\n"));
+                delete rti_drl;
                 throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
               }
             else
@@ -157,6 +167,7 @@ namespace CIAO
           {
             CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader - "
                          "Error: RTI Topic returned a nil datareader.\n"));
+            delete rti_drl;
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
         else
@@ -166,7 +177,6 @@ namespace CIAO
           }
 
         rti_dr->enable ();
-        ::DDS::DataReader_var retval = new RTI_DataReader_i ();
         RTI_DataReader_i *dr = dynamic_cast < RTI_DataReader_i *>(retval.in ());
         dr->set_impl (rti_dr);
 
@@ -182,6 +192,11 @@ namespace CIAO
         ::DDS::StatusMask mask)
       {
         CIAO_TRACE ("RTI_Subscriber_i::create_datareader_with_profile");
+        ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
+        ACE_NEW_THROW_EX (retval,
+                          RTI_DataReader_i (),
+                          CORBA::NO_MEMORY ());
+
         DDSDataReaderListener *rti_drl = 0;
         if (!CORBA::is_nil (a_listener))
           {
@@ -201,6 +216,7 @@ namespace CIAO
               {
                 CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
                             "Error: Unable to cast provided topic to one of its servant.\n"));
+                delete rti_drl;
                 throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
               }
             else
@@ -221,6 +237,7 @@ namespace CIAO
           {
             CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
                          "Error: RTI Topic returned a nil datareader.\n"));
+            delete rti_drl;
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
         else
@@ -232,7 +249,6 @@ namespace CIAO
           }
 
         rti_dr->enable ();
-        ::DDS::DataReader_var retval = new RTI_DataReader_i ();
         RTI_DataReader_i *dr = dynamic_cast < RTI_DataReader_i *>(retval.in ());
         dr->set_impl (rti_dr);
 
@@ -278,8 +294,11 @@ namespace CIAO
       RTI_Subscriber_i::lookup_datareader (
         const char * impl_name)
       {
+        ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
+        ACE_NEW_THROW_EX (retval,
+                          RTI_DataReader_i (),
+                          CORBA::NO_MEMORY ());
         DDSDataReader* dr = this->impl ()->lookup_datareader (impl_name);
-        ::DDS::DataReader_var retval = new RTI_DataReader_i ();
         RTI_DataReader_i *rti_dr = dynamic_cast < RTI_DataReader_i *>(retval.in ());
         rti_dr->set_impl (dr);
         return retval._retn ();
@@ -375,8 +394,11 @@ namespace CIAO
       ::DDS::DomainParticipant_ptr
       RTI_Subscriber_i::get_participant (void)
       {
+        ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
+        ACE_NEW_THROW_EX (retval,
+                          RTI_DomainParticipant_i (),
+                          CORBA::NO_MEMORY ());
         DDSDomainParticipant* p = this->impl ()->get_participant ();
-        ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i ();
         RTI_DomainParticipant_i *rti_dp = dynamic_cast < RTI_DomainParticipant_i *> (retval.in ());
         rti_dp->set_impl (p);
         return retval._retn ();

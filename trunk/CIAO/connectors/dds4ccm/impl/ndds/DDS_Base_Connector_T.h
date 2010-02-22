@@ -9,6 +9,7 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
 #include "tao/LocalObject.h"
+#include "dds4ccm/impl/ndds/DomainParticipantListener_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 class DDS_Base_Connector_T
@@ -49,6 +50,8 @@ protected:
   typename CCM_TYPE::context_type::_var_type context_;
 
   ::CCM_DDS::ConnectorStatusListener_var error_listener_;
+
+  typedef ::CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE> DomainParticipantListener;
 };
 
 #include "dds4ccm/impl/ndds/DDS_Base_Connector_T.cpp"
