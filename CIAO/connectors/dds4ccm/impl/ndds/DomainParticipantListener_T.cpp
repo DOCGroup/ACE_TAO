@@ -122,6 +122,7 @@ CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE>::on_data_on_reade
 {
 }
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE>::on_reliable_reader_activity_changed (
@@ -129,6 +130,7 @@ CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE>::on_reliable_read
   const ::DDS::ReliableReaderActivityChangedStatus & )
 {
 }
+#endif
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::StatusMask

@@ -10,6 +10,10 @@
 #ifndef CIAO_RTI_QOSPOLICYCOUNTSEQ_H
 #define CIAO_RTI_QOSPOLICYCOUNTSEQ_H
 
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::QosPolicyCountSeq DDS_QosPolicyCountSeq;
+#endif
+
 inline void
 operator<<= (::DDS::QosPolicyCountSeq &/*ddsstatus*/, const ::DDS_QosPolicyCountSeq & /*status*/)
 {

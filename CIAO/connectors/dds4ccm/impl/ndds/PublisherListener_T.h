@@ -46,9 +46,11 @@ namespace CIAO
         ::DDS::DataWriter_ptr the_Writer,
         const ::DDS::PublicationMatchedStatus & status);
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       virtual void on_reliable_reader_activity_changed (
         ::DDS::DataWriter_ptr the_Writer,
         const ::DDS::ReliableReaderActivityChangedStatus & status);
+#endif
 
       /// Destructor
       virtual ~PublisherListener_T (void);
