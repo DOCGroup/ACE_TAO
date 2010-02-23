@@ -9,6 +9,7 @@
 #define HELLO_BASE_IDL
 
 #pragma ndds typesupport "Base/Hello_BaseSupport.h"
+#pragma opendds typesupport "Base/Hello_BaseTypeSupportC.h"
 
 #pragma DCPS_DATA_TYPE "DDSHello"
 

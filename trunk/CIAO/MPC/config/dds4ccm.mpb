@@ -1,0 +1,17 @@
+// $Id$
+
+feature(dds4ccm_opendds) : taoidldefaults, dcps {
+  macros += CIAO_DDS4CCM_OPENDDS=1
+  idlflags += -DCIAO_DDS4CCM_OPENDDS=1
+}
+
+feature(dds4ccm_splice) : taoidldefaults {
+  macros += CIAO_DDS4CCM_SPLICE=1
+  idlflags += -DCIAO_DDS4CCM_SPLICE=1
+}
+
+feature(dds4ccm_ndds) : taoidldefaults {
+  macros += CIAO_DDS4CCM_NDDS=1
+  idlflags += -DCIAO_DDS4CCM_NDDS=1
+}
+

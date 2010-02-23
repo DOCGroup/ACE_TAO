@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p QueryFilter_Test_Base -l ../lib -o ../lib -c controller -u DDS Sender"
 
-project(QueryFilter_Test_Sender_idl_gen) : componentidldefaults {
+project(QueryFilter_Test_Sender_idl_gen) : componentidldefaults, dds4ccm {
   after += QueryFilter_Test_Connector_idl_gen DDS_Starter_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SENDER_STUB_Export \
@@ -19,7 +19,7 @@ project(QueryFilter_Test_Sender_idl_gen) : componentidldefaults {
   }
 }
 
-project(QueryFilter_Test_Sender_lem_gen) : ciaoidldefaults {
+project(QueryFilter_Test_Sender_lem_gen) : ciaoidldefaults, dds4ccm {
   after += QueryFilter_Test_Sender_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SENDER_LEM_STUB_Export \

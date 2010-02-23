@@ -1,18 +1,18 @@
 // $Id$
 
-feature(dds4ccm_opendds) : dcps_ts_defaults, dcps {
+feature(dds4ccm_opendds) : dds4ccm, dcps_ts_defaults, dcps {
   Define_Custom(DDSGenerator) : TypeSupport {
     keyword opendds_ts_flags = commandflags
   }
 }
 
-feature(dds4ccm_splice) : splice_ts_defaults {
+feature(dds4ccm_splice) : dds4ccm, splice_ts_defaults {
   Define_Custom(DDSGenerator) : SpliceTypeSupport {
     keyword opendds_ts_flags = commandflags
   }
 }
 
-feature(dds4ccm_ndds) : ndds_ts_defaults, nddslib {
+feature(dds4ccm_ndds) : dds4ccm, ndds_ts_defaults, nddslib {
   Define_Custom(DDSGenerator) : NDDSTypeSupport {
   }
 

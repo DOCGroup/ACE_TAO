@@ -1,3 +1,160 @@
+Tue Feb 23 07:22:49 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Base/Hello_Base.idl
+        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.mpc
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.mpc
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker.mpc
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.mpc
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.mpc
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.mpc
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver.mpc
+        * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender.mpc
+        * connectors/dds4ccm/idl/dds4ccm.mpc
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl
+        * connectors/dds4ccm/idl/dds_rtf2_dcps_i_handle.idl
+        * connectors/dds4ccm/idl/dds_rtf2_dcps_instance_handle.idl
+        * connectors/dds4ccm/idl/dds_rtf2_dcps_instance_handleC.cpp
+        * connectors/dds4ccm/idl/dds_rtf2_dcps_instance_handleC.h
+        * connectors/dds4ccm/impl/ndds/Coherent_Changes_Guard.h
+        * connectors/dds4ccm/impl/ndds/DataReader.h
+        * connectors/dds4ccm/impl/ndds/DataReaderListener.h
+        * connectors/dds4ccm/impl/ndds/DataWriter.h
+        * connectors/dds4ccm/impl/ndds/DataWriterListener.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener.h
+        * connectors/dds4ccm/impl/ndds/InconsistentTopicStatus.h
+        * connectors/dds4ccm/impl/ndds/InstanceHandle_t.h
+        * connectors/dds4ccm/impl/ndds/LivelinessChangedStatus.h
+        * connectors/dds4ccm/impl/ndds/Publisher.h
+        * connectors/dds4ccm/impl/ndds/PublisherListener.h
+        * connectors/dds4ccm/impl/ndds/QosPolicyCountSeq.h
+        * connectors/dds4ccm/impl/ndds/QueryCondition.h
+        * connectors/dds4ccm/impl/ndds/ReadCondition.h
+        * connectors/dds4ccm/impl/ndds/RequestedIncompatibleQosStatus.h
+        * connectors/dds4ccm/impl/ndds/SampleRejectedStatus.h
+        * connectors/dds4ccm/impl/ndds/StatusCondition.h
+        * connectors/dds4ccm/impl/ndds/Subscriber.h
+        * connectors/dds4ccm/impl/ndds/SubscriberListener.h
+        * connectors/dds4ccm/impl/ndds/SubscriptionMatchedStatus.h
+        * connectors/dds4ccm/impl/ndds/TopicDescription.h
+        * connectors/dds4ccm/impl/ndds/TopicListener.h
+        * connectors/dds4ccm/impl/ndds/Utils.h
+        * connectors/dds4ccm/performance-tests/Keyed/Connector/Perf_Keyed_Test_Connector.mpc
+        * connectors/dds4ccm/performance-tests/Keyed/Receiver/Perf_Keyed_Test_Receiver.mpc
+        * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender.mpc
+        * connectors/dds4ccm/performance-tests/Latency/Connector/Latency_Test_Connector.mpc
+        * connectors/dds4ccm/performance-tests/Latency/Receiver/Latency_Test_Receiver.mpc
+        * connectors/dds4ccm/performance-tests/Latency/Sender/Latency_Test_Sender.mpc
+        * connectors/dds4ccm/tests/CSLDeadline/Connector/CSL_DeadlineTest_Connector.mpc
+        * connectors/dds4ccm/tests/CSLDeadline/Receiver/CSL_DeadlineTest_Receiver.mpc
+        * connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender.mpc
+        * connectors/dds4ccm/tests/CSLQoS/Connector/CSL_QoSTest_Connector.mpc
+        * connectors/dds4ccm/tests/CSLQoS/Receiver/CSL_QoSTest_Receiver.mpc
+        * connectors/dds4ccm/tests/CSLQoS/Sender/CSL_QoSTest_Sender.mpc
+        * connectors/dds4ccm/tests/CSLSampleRejected/Connector/CSL_SRTest_Connector.mpc
+        * connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver.mpc
+        * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender.mpc
+        * connectors/dds4ccm/tests/CSLUnexpStat/Connector/CSL_USTest_Connector.mpc
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver.mpc
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender.mpc
+        * connectors/dds4ccm/tests/DDSWriterEntity/Connector/Writer_Connector.mpc
+        * connectors/dds4ccm/tests/DDSWriterEntity/Receiver/Writer_Receiver.mpc
+        * connectors/dds4ccm/tests/DDSWriterEntity/Sender/Writer_Sender.mpc
+        * connectors/dds4ccm/tests/Event_Connection_Test/Connector/Event_Connection_Test_Connector.mpc
+        * connectors/dds4ccm/tests/Event_Connection_Test/Receiver/Event_Connection_Test_Receiver.mpc
+        * connectors/dds4ccm/tests/Event_Connection_Test/Sender/Event_Connection_Test_Sender.mpc
+        * connectors/dds4ccm/tests/FixedSizeStruct/EventConnector/Connector/FSS_Event_Connector.mpc
+        * connectors/dds4ccm/tests/FixedSizeStruct/StateConnector/Connector/FSS_State_Connector.mpc
+        * connectors/dds4ccm/tests/Getter/Base/Get_Invoker.mpc
+        * connectors/dds4ccm/tests/Getter/Base/Getter_Test_Base.idl
+        * connectors/dds4ccm/tests/Getter/Connector/Getter_Test_Connector.mpc
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver.mpc
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender.mpc
+        * connectors/dds4ccm/tests/InstanceHandle/Connector/Writer_Connector.mpc
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender.mpc
+        * connectors/dds4ccm/tests/KeyedSamples/Connector/Keyed_Test_Connector.mpc
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver.mpc
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender.mpc
+        * connectors/dds4ccm/tests/KeyedWriter/Connector/Writer_Connector.mpc
+        * connectors/dds4ccm/tests/KeyedWriter/Receiver/Writer_Receiver.mpc
+        * connectors/dds4ccm/tests/KeyedWriter/Sender/Writer_Sender.mpc
+        * connectors/dds4ccm/tests/ListenManyByMany/Connector/LMBM_Test_Connector.mpc
+        * connectors/dds4ccm/tests/ListenManyByMany/Receiver/LMBM_Test_Receiver.mpc
+        * connectors/dds4ccm/tests/ListenManyByMany/Sender/LMBM_Test_Sender.mpc
+        * connectors/dds4ccm/tests/ListenNotEnabled/Connector/LNE_Test_Connector.mpc
+        * connectors/dds4ccm/tests/ListenNotEnabled/Receiver/LNE_Test_Receiver.mpc
+        * connectors/dds4ccm/tests/ListenNotEnabled/Sender/LNE_Test_Sender.mpc
+        * connectors/dds4ccm/tests/ListenOneByOne/Connector/LOBO_Test_Connector.mpc
+        * connectors/dds4ccm/tests/ListenOneByOne/Receiver/LOBO_Test_Receiver.mpc
+        * connectors/dds4ccm/tests/ListenOneByOne/Sender/LOBO_Test_Sender.mpc
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector.mpc
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Connector/ConnectorStatusListener_Test_Connector.mpc
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Receiver/ConnectorStatusListener_Test_Receiver.mpc
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/SecConnector/ConnectorStatusListener_TestSec_Connector.mpc
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Sender/ConnectorStatusListener_Test_Sender.mpc
+        * connectors/dds4ccm/tests/PSLDeadline/Connector/PSL_DeadlineTest_Connector.mpc
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver.mpc
+        * connectors/dds4ccm/tests/PSLDeadline/Sender/PSL_DeadlineTest_Sender.mpc
+        * connectors/dds4ccm/tests/PSLSampleLost/Connector/PSL_SampleLost_Connector.mpc
+        * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver.mpc
+        * connectors/dds4ccm/tests/PSLSampleLost/Sender/PSL_SampleLost_Sender.mpc
+        * connectors/dds4ccm/tests/QueryFilter/Base/QueryFilter_Starter.mpc
+        * connectors/dds4ccm/tests/QueryFilter/Connector/QueryFilter_Test_Connector.mpc
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver.mpc
+        * connectors/dds4ccm/tests/QueryFilter/Sender/QueryFilter_Test_Sender.mpc
+        * connectors/dds4ccm/tests/Reader/Base/Reader_Starter.mpc
+        * connectors/dds4ccm/tests/Reader/Connector/Reader_Test_Connector.mpc
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver.mpc
+        * connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender.mpc
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Connector/SetConnectorAttribute_Connector.mpc
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component.mpc
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector1/Connector1.mpc
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector2/Connector2.mpc
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector3/Connector3.mpc
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component.mpc
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Connector/Connector.mpc
+        * connectors/dds4ccm/tests/SLDisabled/Connector/SL_Disabled_Connector.mpc
+        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver.mpc
+        * connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender.mpc
+        * connectors/dds4ccm/tests/SLManyByMany/Connector/SL_ManyByMany_Connector.mpc
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver.mpc
+        * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender.mpc
+        * connectors/dds4ccm/tests/SLOneByOne/Connector/SLOneByOne_Connector.mpc
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver.mpc
+        * connectors/dds4ccm/tests/SLOneByOne/Sender/SL_OneByOne_Sender.mpc
+        * connectors/dds4ccm/tests/State_Connection_Test/Connector/State_Connection_Test_Connector.mpc
+        * connectors/dds4ccm/tests/State_Connection_Test/Receiver/State_Connection_Test_Receiver.mpc
+        * connectors/dds4ccm/tests/State_Connection_Test/Sender/State_Connection_Test_Sender.mpc
+        * connectors/dds4ccm/tests/TwoTopics/Connector/TwoTopics_Connector.mpc
+        * connectors/dds4ccm/tests/TwoTopicsDifferentNs/Connector/Connector.mpc
+        * connectors/dds4ccm/tests/UnkeyedSamples/Connector/Unkeyed_Test_Connector.mpc
+        * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver.mpc
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender.mpc
+        * connectors/dds4ccm/tests/UnkeyedWriter/Connector/Writer_Connector.mpc
+        * connectors/dds4ccm/tests/UnkeyedWriter/Receiver/Writer_Receiver.mpc
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender.mpc
+        * connectors/dds4ccm/tests/Updater/Connector/Updater_Connector.mpc
+        * connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver.mpc
+        * connectors/dds4ccm/tests/Updater/Sender/Updater_Sender.mpc
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Array/VT_Array_Connector.mpc
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Seq/VT_Seq_Connector.mpc
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_String/VT_String_Connector.mpc
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Connector/VTopic_Connector.mpc
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Receiver/VTopic_Receiver.mpc
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Sender/VTopic_Sender.mpc
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Array/VTS_Array_Connector.mpc
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Seq/VTS_Seq_Connector.mpc
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_String/VTS_String_Connector.mpc
+        * connectors/dds4ccm/tests/VariousTopicsState/Connector/VTopics_Connector.mpc
+        * connectors/dds4ccm/tests/VariousTopicsState/Receiver/VTopics_Receiver.mpc
+        * connectors/dds4ccm/tests/VariousTopicsState/Sender/VTopics_Sender.mpc
+        * MPC/config/connectoridldefaults.mpb
+        * MPC/config/dds4ccm.mpb
+        * MPC/config/dds4ccm_base.mpb
+        * MPC/config/dds4ccm_ts_default.mpb
+          More portability changes
+
 Tue Feb 23 04:44:49 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/SimpleProcessColocation.cdp:
@@ -68,8 +225,7 @@ Mon Feb 22 21:39:08 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * examples/Null_Component/descriptors/Null_PlanLocality_DifferentProcesses.cdp:
         * examples/Null_Component/descriptors/Null_PlanLocality_SameProcess.cdp:
-
-          Add a couple of deploymeny plans to test the PlanLocality feature.
+          Add a couple of deployment plans to test the PlanLocality feature.
 
 Mon Feb 22 20:48:36 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 

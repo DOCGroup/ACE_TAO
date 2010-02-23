@@ -1,6 +1,6 @@
 // $Id$
 
-project(DDS_LNE_Test_Receiver_idl_gen) : componentidldefaults {
+project(DDS_LNE_Test_Receiver_idl_gen) : componentidldefaults, dds4ccm {
   custom_only = 1
   after += DDS_LNE_Test_Connector_idl_gen
   idlflags += -Wb,stub_export_macro=RECEIVER_STUB_Export \
@@ -17,7 +17,7 @@ project(DDS_LNE_Test_Receiver_idl_gen) : componentidldefaults {
   }
 }
 
-project(DDS_LNE_Test_Receiver_lem_gen) : ciaoidldefaults {
+project(DDS_LNE_Test_Receiver_lem_gen) : ciaoidldefaults, dds4ccm {
   after += DDS_LNE_Test_Receiver_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=RECEIVER_LEM_STUB_Export \

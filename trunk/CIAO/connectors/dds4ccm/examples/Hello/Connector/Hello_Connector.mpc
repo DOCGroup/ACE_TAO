@@ -1,6 +1,6 @@
 // $Id$
 
-project(DDS_Hello_Connector_idl_gen) : connectoridldefaults {
+project(DDS_Hello_Connector_idl_gen) : connectoridldefaults, dds4ccm {
   avoids += ace_for_tao
   after  += DDS4CCM_idl_gen
   custom_only = 1
@@ -19,7 +19,7 @@ project(DDS_Hello_Connector_idl_gen) : connectoridldefaults {
   }
 }
 
-project(DDS_Hello_Connector_lem_gen) : ciaoidldefaults {
+project(DDS_Hello_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   avoids += ace_for_tao
   custom_only = 1
   after += DDS_Hello_Connector_idl_gen

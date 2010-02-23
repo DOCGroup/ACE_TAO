@@ -22,6 +22,7 @@ operator<<= (::DDS::SubscriptionMatchedStatus &ddsstatus, const ::DDS_Subscripti
   ddsstatus.last_publication_handle <<= status.last_publication_handle;
 }
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS_SubscriptionMatchedStatus &ddsstatus, const ::DDS::SubscriptionMatchedStatus & status)
 {
@@ -31,6 +32,7 @@ operator<<= (::DDS_SubscriptionMatchedStatus &ddsstatus, const ::DDS::Subscripti
   ddsstatus.current_count_change = status.current_count_change;
   ddsstatus.last_publication_handle <<= status.last_publication_handle;
 }
+#endif
 
 inline void
 operator>>= (const ::DDS_SubscriptionMatchedStatus &status, ::DDS::SubscriptionMatchedStatus & ddsstatus)
@@ -42,6 +44,7 @@ operator>>= (const ::DDS_SubscriptionMatchedStatus &status, ::DDS::SubscriptionM
   ddsstatus.last_publication_handle <<= status.last_publication_handle;
 }
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator>>= (const ::DDS::SubscriptionMatchedStatus &status, ::DDS_SubscriptionMatchedStatus & ddsstatus)
 {
@@ -51,6 +54,7 @@ operator>>= (const ::DDS::SubscriptionMatchedStatus &status, ::DDS_SubscriptionM
   ddsstatus.current_count_change = status.current_count_change;
   ddsstatus.last_publication_handle <<= status.last_publication_handle;
 }
+#endif
 
 #endif /* CIAO_RTI_SUBSCRIPTIONMATCHEDSTATUS_H */
 

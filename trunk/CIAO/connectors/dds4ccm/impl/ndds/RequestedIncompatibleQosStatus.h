@@ -21,6 +21,7 @@ operator<<= (::DDS::RequestedIncompatibleQosStatus &ddsstatus, const ::DDS_Reque
   ddsstatus.policies <<= status.policies;
 }
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS_RequestedIncompatibleQosStatus &ddsstatus, const ::DDS::RequestedIncompatibleQosStatus & status)
 {
@@ -29,6 +30,7 @@ operator<<= (::DDS_RequestedIncompatibleQosStatus &ddsstatus, const ::DDS::Reque
   ddsstatus.last_policy_id = static_cast <DDS_QosPolicyId_t>(status.last_policy_id);
   ddsstatus.policies <<= status.policies;
 }
+#endif
 
 inline void
 operator>>= (const ::DDS_RequestedIncompatibleQosStatus &status, ::DDS::RequestedIncompatibleQosStatus & ddsstatus)
@@ -39,6 +41,7 @@ operator>>= (const ::DDS_RequestedIncompatibleQosStatus &status, ::DDS::Requeste
   ddsstatus.policies <<= status.policies;
 }
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator>>= (const ::DDS::RequestedIncompatibleQosStatus &status, ::DDS_RequestedIncompatibleQosStatus & ddsstatus)
 {
@@ -47,5 +50,6 @@ operator>>= (const ::DDS::RequestedIncompatibleQosStatus &status, ::DDS_Requeste
   ddsstatus.last_policy_id = static_cast <DDS_QosPolicyId_t>(status.last_policy_id);
   ddsstatus.policies <<= status.policies;
 }
+#endif
 
 #endif /* CIAO_RTI_REQUESTEDINCOMPATIBLEQOSSTATUS_H */
