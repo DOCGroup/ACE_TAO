@@ -34,7 +34,7 @@ if ($server->WaitForFileTimed ($TestCaseC_i,
     exit 1;
 }
 
-$server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
+$server_status = $SV->Kill ($server->ProcessStopWaitInterval());
 
 # Test for the presence of LM_ERROR
 $found = 0 ;
