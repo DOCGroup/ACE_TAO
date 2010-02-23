@@ -13,9 +13,12 @@
 #include "ace/Copy_Disabled.h"
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_impl_export.h"
 
-#if !defined (DDS_MAJOR_VERSION)
-#include "ndds/ndds_cpp.h"
-#else
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+# include "ndds/ndds_cpp.h"
+#endif
+
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+# include "dds/DdsDcpsC.h"
 typedef ::DDS::Publisher DDSPublisher;
 #endif
 

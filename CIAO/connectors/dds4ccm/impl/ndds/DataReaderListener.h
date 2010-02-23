@@ -14,7 +14,20 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "dds4ccm_ndds_impl_export.h"
 
-#include "ndds/ndds_cpp.h"
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+# include "ndds/ndds_cpp.h"
+#endif
+
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::DataReaderListener DDSDataReaderListener;
+typedef ::DDS::DataReader DDSDataReader;
+typedef ::DDS::RequestedDeadlineMissedStatus DDS_RequestedDeadlineMissedStatus;
+typedef ::DDS::LivelinessChangedStatus DDS_LivelinessChangedStatus;
+typedef ::DDS::RequestedIncompatibleQosStatus DDS_RequestedIncompatibleQosStatus;
+typedef ::DDS::SampleRejectedStatus DDS_SampleRejectedStatus;
+typedef ::DDS::SubscriptionMatchedStatus DDS_SubscriptionMatchedStatus;
+typedef ::DDS::SampleLostStatus DDS_SampleLostStatus;
+#endif
 
 namespace CIAO
 {

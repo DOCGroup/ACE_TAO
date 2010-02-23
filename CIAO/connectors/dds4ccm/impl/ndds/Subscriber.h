@@ -19,9 +19,11 @@
 
 #include "tao/LocalObject.h"
 
-#if !defined (DDS_MAJOR_VERSION)
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 #include "ndds/ndds_cpp.h"
-#else
+#endif
+
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::Subscriber DDSSubscriber;
 typedef ::DDS::DataReaderListener DDSDataReaderListener;
 typedef ::DDS::ContentFilteredTopic DDSContentFilteredTopic;

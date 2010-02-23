@@ -22,6 +22,7 @@ operator<<= (::DDS::LivelinessChangedStatus &ddsstatus, const ::DDS_LivelinessCh
   ddsstatus.last_publication_handle <<= status.last_publication_handle;
 }
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS_LivelinessChangedStatus &ddsstatus, const ::DDS::LivelinessChangedStatus & status)
 {
@@ -31,6 +32,7 @@ operator<<= (::DDS_LivelinessChangedStatus &ddsstatus, const ::DDS::LivelinessCh
   ddsstatus.not_alive_count_change = status.not_alive_count_change;
   ddsstatus.last_publication_handle <<= status.last_publication_handle;
 }
+#endif
 
 inline void
 operator>>= (const ::DDS_LivelinessChangedStatus &status, ::DDS::LivelinessChangedStatus & ddsstatus)
@@ -42,6 +44,7 @@ operator>>= (const ::DDS_LivelinessChangedStatus &status, ::DDS::LivelinessChang
   ddsstatus.last_publication_handle <<= status.last_publication_handle;
 }
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator>>= (const ::DDS::LivelinessChangedStatus &status, ::DDS_LivelinessChangedStatus & ddsstatus)
 {
@@ -51,5 +54,6 @@ operator>>= (const ::DDS::LivelinessChangedStatus &status, ::DDS_LivelinessChang
   ddsstatus.not_alive_count_change = status.not_alive_count_change;
   ddsstatus.last_publication_handle <<= status.last_publication_handle;
 }
+#endif
 
 #endif /* CIAO_RTI_LIVELINESSCHANGEDSTATUS_H */

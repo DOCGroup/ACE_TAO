@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p DDS_SharedDPBase -l ../lib -o ../lib -c controller -u DDS Component"
 
-project(DDS_SharedDP_DDComponent_idl_gen) : componentidldefaults   {
+project(DDS_SharedDP_DDComponent_idl_gen) : componentidldefaults, dds4ccm {
   after += DDS_SharedDP_Connector1_idl_gen DDS_SharedDP_Connector2_idl_gen \
            DDS_SharedDP_Connector3_idl_gen
   custom_only = 1
@@ -20,7 +20,7 @@ project(DDS_SharedDP_DDComponent_idl_gen) : componentidldefaults   {
   }
 }
 
-project(DDS_SharedDP_DDComponent_lem_gen) : ciaoidldefaults {
+project(DDS_SharedDP_DDComponent_lem_gen) : ciaoidldefaults, dds4ccm {
   after += DDS_SharedDP_DDComponent_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=COMPONENT_LEM_STUB_Export \

@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p DDS_SCABase -l .. -o ../lib -u DDS SetConnectorAttribute_Connector"
 
-project(DDS_SCAConnector_idl_gen) : connectoridldefaults {
+project(DDS_SCAConnector_idl_gen) : connectoridldefaults, dds4ccm {
   after += DDS4CCM_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SETCONNECTORATTRIBUTE_CONNECTOR_STUB_Export \
@@ -19,7 +19,7 @@ project(DDS_SCAConnector_idl_gen) : connectoridldefaults {
   }
 }
 
-project(DDS_SCAConnector_lem_gen) : ciaoidldefaults {
+project(DDS_SCAConnector_lem_gen) : ciaoidldefaults, dds4ccm {
   custom_only = 1
   after += DDS_SCAConnector_idl_gen
   idlflags += -Wb,stub_export_macro=SETCONNECTORATTRIBUTE_CONNECTOR_LEM_STUB_Export \

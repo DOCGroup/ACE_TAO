@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p DDS_LOBO_Test_Base -l .. -o ../lib -u DDS LOBO_Test_Connector"
 
-project(DDS_LOBO_Test_Connector_idl_gen) : connectoridldefaults {
+project(DDS_LOBO_Test_Connector_idl_gen) : connectoridldefaults, dds4ccm {
   after += DDS4CCM_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=LISTEN_ONE_BY_ONE_TEST_CONNECTOR_STUB_Export \
@@ -19,7 +19,7 @@ project(DDS_LOBO_Test_Connector_idl_gen) : connectoridldefaults {
   }
 }
 
-project(DDS_LOBO_Test_Connector_lem_gen) : ciaoidldefaults {
+project(DDS_LOBO_Test_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   custom_only = 1
   after += DDS_LOBO_Test_Connector_idl_gen
   idlflags += -Wb,stub_export_macro=LISTEN_ONE_BY_ONE_TEST_CONNECTOR_LEM_STUB_Export \

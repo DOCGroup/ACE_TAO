@@ -2,7 +2,7 @@
 // $Id$
 
 project : componentidldefaults {
- idlflags += -Gcn -Gxhcn -I$(CIAO_ROOT)/connectors
+ idlflags += -Gcn -Gxhcn -I$(CIAO_ROOT)/connectors -Sa -St
  idlflags -= -Gxhex
 
   Modify_Custom (IDL) {

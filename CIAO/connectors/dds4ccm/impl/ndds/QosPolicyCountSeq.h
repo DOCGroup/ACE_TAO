@@ -16,19 +16,23 @@ operator<<= (::DDS::QosPolicyCountSeq &/*ddsstatus*/, const ::DDS_QosPolicyCount
   // todo
 }
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS_QosPolicyCountSeq &/*ddsstatus*/, const ::DDS::QosPolicyCountSeq & /*status*/)
 {
 }
+#endif
 
 inline void
 operator>>= (const ::DDS_QosPolicyCountSeq &/*status*/, ::DDS::QosPolicyCountSeq & /*ddsstatus*/)
 {
 }
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator>>= (const ::DDS::QosPolicyCountSeq &/*status*/, ::DDS_QosPolicyCountSeq & /*ddsstatus*/)
 {
 }
+#endif
 
 #endif /* CIAO_RTI_QOSPOLICYCOUNTSEQ_H */
