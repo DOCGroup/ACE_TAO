@@ -1,3 +1,16 @@
+Tue Feb 23 04:44:49 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/SimpleProcessColocation.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/SimpleProcessColocation_2.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/SimpleProcessColocation_Default.cdp:
+
+          Tests to excercise process colocation when passed through the
+          EM.
+
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test.pl:
+
+          Test script was broken and not actually running tests.
+
 Tue Feb 23 04:05:06 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/bin/PythonDAnCE/generator/__init__.py:
@@ -10,7 +23,7 @@ Tue Feb 23 04:05:06 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/bin/PythonDAnCE/generator/internal_endpoint.py:
         * DAnCE/bin/generate_plan.py:
 
-          Improvements to allow more expressive plan generation. 
+          Improvements to allow more expressive plan generation.
 
 Tue Feb 23 04:03:46 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
