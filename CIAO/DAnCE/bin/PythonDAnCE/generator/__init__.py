@@ -44,3 +44,9 @@ import homed_comp_inst
 import home_impl
 import home_inst
 import artifact
+import connection
+import external_reference
+import config_prop
+import internal_endpoint
+import deploy_requirement
+
