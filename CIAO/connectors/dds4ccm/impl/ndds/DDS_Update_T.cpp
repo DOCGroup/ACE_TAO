@@ -6,7 +6,7 @@
 #include "dds4ccm/impl/ndds/Updater_T.h"
 #include "dds4ccm/impl/ndds/DataWriter.h"
 
-#include "ciao/Logger/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_Update_T<DDS_TYPE, CCM_TYPE>::DDS_Update_T (void)
@@ -26,7 +26,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
   const char* library_name,
   const char* profile_name)
 {
-  CIAO_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
+  DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
   if (CORBA::is_nil  (this->data_writer_.in ()))
     {
       try
@@ -58,7 +58,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
         }
       catch (...)
         {
-          CIAO_ERROR (1, (LM_EMERGENCY, "DDS_Update_T::configuration_complete: Caught unknown c++ exception.\n"));
+          DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Update_T::configuration_complete: Caught unknown c++ exception.\n"));
           throw CORBA::INTERNAL ();
         }
     }
@@ -68,7 +68,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_Update_T<DDS_TYPE, CCM_TYPE>::activate ()
 {
-  CIAO_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::activate");
+  DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::activate");
   try
     {
       if (CORBA::is_nil (this->data_listener_.in ()))
@@ -83,7 +83,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::activate ()
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_EMERGENCY, "DDS_Update_T::activate: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Update_T::activate: Caught unknown c++ exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -92,7 +92,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_Update_T<DDS_TYPE, CCM_TYPE>::passivate ()
 {
-  CIAO_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::passivate");
+  DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::passivate");
   try
     {
       this->rti_writer_.set_listener (
@@ -102,7 +102,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::passivate ()
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_EMERGENCY, "DDS_Update_T::passivate: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Update_T::passivate: Caught unknown c++ exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -112,7 +112,7 @@ void
 DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove (
   ::DDS::Publisher_ptr publisher)
 {
-  CIAO_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove");
+  DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove");
   try
     {
       publisher->delete_datawriter (this->data_writer_.in ());
@@ -122,7 +122,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove (
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_EMERGENCY, "DDS_Update_T::remove: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Update_T::remove: Caught unknown c++ exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }

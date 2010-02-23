@@ -4,7 +4,7 @@
 #include "Topic.h"
 #include "StringSeq.h"
 
-#include "ciao/Logger/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 namespace CIAO
 {
@@ -24,7 +24,7 @@ namespace CIAO
       char *
       RTI_ContentFilteredTopic_i::get_filter_expression (void)
       {
-        CIAO_TRACE ("RTI_ContentFilteredTopic_i::get_filter_expression");
+        DDS4CCM_TRACE ("RTI_ContentFilteredTopic_i::get_filter_expression");
         return CORBA::string_dup (this->impl ()->get_filter_expression ());
       }
 
@@ -32,7 +32,7 @@ namespace CIAO
       RTI_ContentFilteredTopic_i::get_expression_parameters (
         ::DDS::StringSeq & expression_parameters)
       {
-        CIAO_TRACE ("RTI_ContentFilteredTopic_i::get_expression_parameters");
+        DDS4CCM_TRACE ("RTI_ContentFilteredTopic_i::get_expression_parameters");
         DDS_StringSeq parameters;
         ::DDS::ReturnCode_t retval = this->impl ()->get_expression_parameters (
                                                                     parameters);
@@ -44,7 +44,7 @@ namespace CIAO
       RTI_ContentFilteredTopic_i::set_expression_parameters (
         const ::DDS::StringSeq & expression_parameters)
       {
-        CIAO_TRACE ("RTI_ContentFilteredTopic_i::set_expression_parameters");
+        DDS4CCM_TRACE ("RTI_ContentFilteredTopic_i::set_expression_parameters");
 
         DDS_StringSeq parameters;
         parameters <<= expression_parameters;
@@ -55,7 +55,7 @@ namespace CIAO
       ::DDS::Topic_ptr
       RTI_ContentFilteredTopic_i::get_related_topic (void)
       {
-        CIAO_TRACE ("RTI_ContentFilteredTopic_i::get_related_topic");
+        DDS4CCM_TRACE ("RTI_ContentFilteredTopic_i::get_related_topic");
         ::DDS::Topic_var retval = ::DDS::Topic::_nil ();
         ACE_NEW_THROW_EX (retval,
                           RTI_Topic_i (),

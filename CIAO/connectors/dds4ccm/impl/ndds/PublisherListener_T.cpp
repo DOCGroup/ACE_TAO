@@ -2,7 +2,7 @@
 #include "dds4ccm/impl/ndds/Utils.h"
 
 #include "dds4ccm/impl/ndds/DataReader.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds4ccm/impl/ndds/DataReaderHandler_T.h"
 #include "dds4ccm/impl/ndds/DDSCallbackStatusHandler.h"
 #include "tao/ORB_Core.h"
@@ -14,13 +14,13 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::PublisherListener_T (
       : error_listener_ (::CCM_DDS::ConnectorStatusListener::_duplicate (error_listener)),
         reactor_ (reactor)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::PublisherListener_T::PublisherListener_T");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::PublisherListener_T::PublisherListener_T");
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::~PublisherListener_T (void)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::PublisherListener_T::~PublisherListener_T");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::PublisherListener_T::~PublisherListener_T");
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -29,7 +29,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_unexpected_status (
   ::DDS::Entity_ptr entity,
   ::DDS::StatusKind status_kind)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_unexpected_status");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_unexpected_status");
 
   if (!CORBA::is_nil (this->error_listener_))
     {
@@ -44,7 +44,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_unexpected_status (
               ACE_Event_Handler_var safe_handler (rh);
               if (this->reactor_->notify (rh) != 0)
                 {
-                  ACE_ERROR ((LM_ERROR, ACE_TEXT ("PublisherListener_T::failed to use reactor.\n")));
+                  DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("PublisherListener_T::failed to use reactor.\n")));
                 }
             }
           else
@@ -54,14 +54,14 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_unexpected_status (
         }
       catch (...)
         {
-          CIAO_DEBUG (6, (LM_DEBUG,
+          DDS4CCM_DEBUG (6, (LM_DEBUG,
               ACE_TEXT ("PublisherListener_T::on_unexpected_status: ")
               ACE_TEXT ("DDS Exception caught\n")));
         }
     }
   else
     {
-      CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+      DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
                   ACE_TEXT ("PublisherListener_T::on_offered_deadline_missed: ")
                   ACE_TEXT ("No error listener connected\n")));
     }
@@ -73,9 +73,9 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_deadline_miss
   ::DDS::DataWriter_ptr the_Writer,
   const ::DDS::OfferedDeadlineMissedStatus & status)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_offered_deadline_missed");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_offered_deadline_missed");
 
-  CIAO_DEBUG (10, (LM_DEBUG, CLINFO
+  DDS4CCM_DEBUG (10, (LM_DEBUG, CLINFO
               ACE_TEXT ("PublisherListener_T::on_offered_deadline_missed: ")
               ACE_TEXT ("total count <%d> - count change <%d> - ")
               ACE_TEXT ("last instance handle <length <%d> - isValid <%d>\n"),
@@ -96,7 +96,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_deadline_miss
               ACE_Event_Handler_var safe_handler (rh);
               if (this->reactor_->notify (rh) != 0)
                 {
-                  ACE_ERROR ((LM_ERROR, ACE_TEXT ("PublisherListener_T::failed to use reactor.\n")));
+                  DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("PublisherListener_T::failed to use reactor.\n")));
                 }
             }
           else
@@ -106,13 +106,13 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_deadline_miss
         }
       catch (...)
         {
-          CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("PublisherListener_T::on_offered_deadline_missed: ")
+          DDS4CCM_DEBUG (6, (LM_DEBUG, ACE_TEXT ("PublisherListener_T::on_offered_deadline_missed: ")
                                  ACE_TEXT ("DDS Exception caught\n")));
         }
     }
   else
     {
-      CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+      DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
                   ACE_TEXT ("PublisherListener_T::on_offered_deadline_missed: ")
                   ACE_TEXT ("No error listener connected\n")));
     }
@@ -124,9 +124,9 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_incompatible_
   ::DDS::DataWriter_ptr the_Writer,
   const ::DDS::OfferedIncompatibleQosStatus & status)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_offered_incompatible_qos");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_offered_incompatible_qos");
 
-  CIAO_DEBUG (10, (LM_DEBUG, CLINFO
+  DDS4CCM_DEBUG (10, (LM_DEBUG, CLINFO
               ACE_TEXT ("PublisherListener_T::on_offered_incompatible_qos: ")
               ACE_TEXT ("total count <%d> - total change <%d> - ")
               ACE_TEXT ("last policy id <%d> - policies "),
@@ -134,7 +134,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_incompatible_
               status.last_policy_id));
   for (CORBA::ULong i = 0; i < status.policies.length (); ++i)
     {
-      CIAO_DEBUG (10, (LM_DEBUG,
+      DDS4CCM_DEBUG (10, (LM_DEBUG,
                   ACE_TEXT ("\t\tid <%d> - count <%d>\n"),
                   status.policies[i].policy_id,
                   status.policies[i].count));
@@ -153,7 +153,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_incompatible_
               ACE_Event_Handler_var safe_handler (rh);
               if (this->reactor_->notify (rh) != 0)
                 {
-                  ACE_ERROR ((LM_ERROR, ACE_TEXT ("PublisherListener_T::failed to use reactor.\n")));
+                  DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("PublisherListener_T::failed to use reactor.\n")));
                 }
             }
           else
@@ -163,13 +163,13 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_incompatible_
         }
       catch (...)
         {
-          CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("PublisherListener_T::on_offered_incompatible_qos: ")
+          DDS4CCM_DEBUG (6, (LM_DEBUG, ACE_TEXT ("PublisherListener_T::on_offered_incompatible_qos: ")
                                  ACE_TEXT ("DDS Exception caught\n")));
         }
     }
   else
     {
-      CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+      DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
                   ACE_TEXT ("PublisherListener_T::on_offered_incompatible_qos: ")
                   ACE_TEXT ("No error listener connected\n")));
     }
@@ -181,9 +181,9 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_lost (
   ::DDS::DataWriter_ptr the_Writer,
   const ::DDS::LivelinessLostStatus & status)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_liveliness_lost");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_liveliness_lost");
 
-  CIAO_DEBUG (10, (LM_DEBUG, CLINFO
+  DDS4CCM_DEBUG (10, (LM_DEBUG, CLINFO
             ACE_TEXT ("PublisherListener_T::on_liveliness_lost: ")
             ACE_TEXT ("total count <%d> - count change <%d>\n"),
             status.total_count, status.total_count_change));
@@ -197,9 +197,9 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_publication_matched (
   ::DDS::DataWriter_ptr the_Writer,
   const ::DDS::PublicationMatchedStatus & status)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_publication_matched");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_publication_matched");
 
-  CIAO_DEBUG (10, (LM_DEBUG, CLINFO
+  DDS4CCM_DEBUG (10, (LM_DEBUG, CLINFO
               ACE_TEXT ("PublisherListener_T::on_publication_matched: ")
               ACE_TEXT ("total count <%d> - count change <%d> - ")
               ACE_TEXT ("current count <%d> - current count change <%d> ")
@@ -218,9 +218,9 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_reliable_reader_activ
   ::DDS::DataWriter_ptr the_Writer,
   const ::DDS::ReliableReaderActivityChangedStatus & status)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_reliable_reader_activity_changed");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_reliable_reader_activity_changed");
 
-  CIAO_DEBUG (10, (LM_DEBUG, CLINFO
+  DDS4CCM_DEBUG (10, (LM_DEBUG, CLINFO
               ACE_TEXT ("PublisherListener_T::on_reliable_reader_activity_changed: ")
               ACE_TEXT ("active count <%d> - active change <%d> - ")
               ACE_TEXT ("not active count <%d> - inactive count change <%d>")
