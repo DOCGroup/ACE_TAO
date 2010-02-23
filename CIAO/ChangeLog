@@ -1,3 +1,9 @@
+Tue Feb 23 21:49:52 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tools/Split_Plan/Split_Plan_impl.cpp:
+
+          Rogue letter was causing a compile error. 
+        
 Tue Feb 23 16:22:42 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/MPC/config/dance_convert_plan.mpb:
@@ -13,7 +19,7 @@ Tue Feb 23 16:22:42 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/tools/Split_Plan/Split_Plan_impl.cpp:
 
           Fuzz fixes.
-        
+
 Tue Feb 23 16:13:24 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:

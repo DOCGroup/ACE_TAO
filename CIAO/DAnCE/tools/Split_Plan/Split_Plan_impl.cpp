@@ -1,4 +1,4 @@
-g// $Id$
+// $Id$
 
 #include "Split_Plan_impl.h"
 #include "DAnCE/Logger/Log_Macros.h"
