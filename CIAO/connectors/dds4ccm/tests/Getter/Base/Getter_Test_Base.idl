@@ -19,6 +19,8 @@ struct GetterTest {
 };
 typedef sequence<GetterTest> GetterTest_Seq;
 
+#pragma DCPS_DATA_TYPE "GetterFixed"
+
 struct GetterFixed {
   long key;
   long iteration;
