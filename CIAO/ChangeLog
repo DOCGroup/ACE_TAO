@@ -7,6 +7,8 @@ Tue Feb 23 13:40:49 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ciao/Logger/Logger_Service.h:
         * DAnCE/Logger/Logger_Service.cpp:
         * DAnCE/Logger/Logger_Service.h:
+          Fixed service config macros which caused this service not
+          to get loaded on linux
 
         * tests/Bug_3832_Regression/*
         * DAnCE/tests/Bug_3832_Regression/*
