@@ -1,3 +1,10 @@
+Tue Feb 23 10:35:39 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/TAO_Internal.cpp:
+          Changed a code layout for return values in forward declarations
+          according to TAO code conventions. Thanks to Johnny Willemsen
+          <jwillemsen at remedy dot nl> for pointing this out.
+
 Tue Feb 23 09:46:57 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Bug_3827_Regression/test.cpp:
