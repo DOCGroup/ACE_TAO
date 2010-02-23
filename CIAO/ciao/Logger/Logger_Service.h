@@ -26,7 +26,9 @@ namespace CIAO
 static int TAO_Requires_CIAO_Logger_Service_Initializer =
   CIAO::Logger_Service::Initializer ();
 
-ACE_STATIC_SVC_DECLARE (Logger_Service)
-ACE_FACTORY_DECLARE (CIAO_Logger, Logger_Service)
+typedef CIAO::Logger_Service CIAO_LOGGER_SERVICE;
+
+ACE_STATIC_SVC_DECLARE (CIAO_LOGGER_SERVICE)
+ACE_FACTORY_DECLARE (CIAO_Logger, CIAO_LOGGER_SERVICE)
 
 #endif /*LOGGER_SERVICE_H_*/
