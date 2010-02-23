@@ -6,8 +6,8 @@ typedef TAO::Transport_Cache_Manager_T<mock_transport, mock_tdi, mock_ps> TCM;
 
 extern TCM* tcm;
 extern int result;
-extern ACE_Thread_Mutex test_lock;
-extern TAO_Condition<ACE_Thread_Mutex> test_condition;
+extern TAO_SYNCH_MUTEX test_lock;
+extern TAO_Condition<TAO_SYNCH_MUTEX> test_condition;
 
 
 class mock_transport
