@@ -69,7 +69,7 @@ def main ():
             
     if opts.components is not None:
         for item in opts.components:
-            retval += generator.comp_inst.template (item)
+            retval += generator.comp_inst.template (item, "", "", "NodeOne")
         
     #artifacts
     if artifacts is not None:

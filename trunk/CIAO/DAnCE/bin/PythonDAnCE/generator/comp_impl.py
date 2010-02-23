@@ -55,4 +55,4 @@ def template (component_name, namespace) :
       </value>
     </execParameter>
   </implementation>
-  """
+"""
