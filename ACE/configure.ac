@@ -3288,6 +3288,8 @@ ACE_CHECK_LACKS_FUNCS(strtoul)
 
 ACE_FUNC_STRTOULL
 
+ACE_CHECK_LACKS_FUNCS(floor ceil floorl ceill)
+
 # swab() comes in a number of forms:
 #   swab (const void*, void*, size_t) is POSIX, XPG4, SUS, SUSv2 standard.
 #   swab (const char*, char*, size_t) is SVID third edition.
