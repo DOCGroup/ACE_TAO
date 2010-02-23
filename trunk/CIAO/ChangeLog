@@ -1,3 +1,9 @@
+Tue Feb 23 15:16:24 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/ExecutionManager/ExecutionManager.mpc:
+
+          Added split_plan base project.
+
 Tue Feb 23 14:54:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender_exec.cpp:
