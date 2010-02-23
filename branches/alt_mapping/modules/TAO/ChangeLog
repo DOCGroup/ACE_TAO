@@ -1,3 +1,19 @@
+Tue Feb 23 17:06:19 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_root/cdr_op.cpp:
+        * TAO_IDL/be/be_visitor_root/any_op.cpp:
+
+          Changes to make the hand-crafted mods to the
+          Param_Test operations test_unbounded_string()
+          and test_long_sequence() appear in generated
+          code.
+
 Mon Jan 11 19:17:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Basic_Arguments.h:

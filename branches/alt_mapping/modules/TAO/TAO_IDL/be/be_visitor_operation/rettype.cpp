@@ -146,9 +146,18 @@ be_visitor_operation_rettype::visit_sequence (be_sequence *node)
 int
 be_visitor_operation_rettype::visit_string (be_string *node)
 {
+  ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
+  
   if (node->width () == (long) sizeof (char))
     {
-      *os << "char *";
+      if (bound == 0)
+        {
+          *os << "std::string";
+        }
+      else
+        {
+          *os << "char *";
+        }
     }
   else
     {
@@ -176,6 +185,13 @@ be_visitor_operation_rettype::visit_structure (be_structure *node)
 int
 be_visitor_operation_rettype::visit_typedef (be_typedef *node)
 {
+  if (ACE_OS::strcmp (node->full_name (), "CORBA::LongSeq") == 0)
+    {
+      *os << "Param_Test::UB_Long_Seq";
+      
+      return 0;
+    }
+    
   // Set the alias node.
   this->ctx_->alias (node);
 

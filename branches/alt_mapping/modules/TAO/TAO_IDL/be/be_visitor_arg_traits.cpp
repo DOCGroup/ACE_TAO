@@ -625,7 +625,7 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
   // This should be generated even for imported nodes. The ifdef
   // guard prevents multiple declarations.
   os->gen_ifdef_macro (alias->flat_name (), guard_suffix.c_str (), false);
-
+  
   *os << be_nl << be_nl
       << "template<>" << be_nl
       << "class "
@@ -638,6 +638,7 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
+
 
   os->gen_endif ();
 
@@ -1091,7 +1092,26 @@ be_visitor_arg_traits::visit_typedef (be_typedef *node)
       this->generated (bt, false);
     }
 
-  if (!bt || (bt->accept (this) == -1))
+  if (ACE_OS::strcmp (node->full_name (), "CORBA::LongSeq") == 0)
+    {
+      TAO_OutStream *os = this->ctx_->stream  ();
+      
+      *os << be_nl << be_nl
+          << "template<>" << be_nl
+          << "class "
+          << this->S_ << "Arg_Traits<"
+          << "Param_Test::UB_Long_Seq" << ">" << be_idt_nl
+          << ": public" << be_idt << be_idt_nl
+          << "Basic_" << this->S_ << "Arg_Traits_T<"
+          << be_idt << be_idt_nl
+          << "Param_Test::UB_Long_Seq" << "," << be_nl
+          << this->insert_policy() << " <"
+          << "Param_Test::UB_Long_Seq" << ">" << be_uidt_nl
+          << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
+          << "{" << be_nl
+          << "};";
+    }
+  else if (!bt || (bt->accept (this) == -1))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_arg_traits::"
