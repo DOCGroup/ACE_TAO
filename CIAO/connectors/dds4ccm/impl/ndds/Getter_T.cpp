@@ -46,7 +46,7 @@ CIAO::DDS4CCM::RTI::Getter_Base_T<DDS_TYPE, CCM_TYPE>::wait (
 {
   DDS_Duration_t timeout;
   timeout <<= this->time_out_;
-  DDS_ReturnCode_t const retcode = ws_->wait (active_conditions, timeout);
+  DDS_ReturnCode_t const retcode = this->ws_->wait (active_conditions, timeout);
   if (retcode == DDS_RETCODE_TIMEOUT)
     {
       DDS4CCM_DEBUG (6, (LM_DEBUG, ACE_TEXT ("Getter: No data available after timeout.\n")));
@@ -247,8 +247,8 @@ CIAO::DDS4CCM::RTI::Getter_Base_T<DDS_TYPE, CCM_TYPE>::set_impl (
       // Now create the waitset conditions
       this->ws_ = new DDSWaitSet ();
       this->rd_condition_ = this->impl ()->create_readcondition (DDS_NOT_READ_SAMPLE_STATE,
-                                                         DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-                                                         DDS_ALIVE_INSTANCE_STATE | DDS_NOT_ALIVE_INSTANCE_STATE);
+                                                       DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
+                                                       DDS_ALIVE_INSTANCE_STATE | DDS_NOT_ALIVE_INSTANCE_STATE);
       DDS_ReturnCode_t retcode = this->ws_->attach_condition (this->rd_condition_);
       if (retcode != DDS_RETCODE_OK)
         {
