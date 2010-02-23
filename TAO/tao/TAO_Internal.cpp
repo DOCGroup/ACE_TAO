@@ -79,10 +79,23 @@ namespace
    * @brief Modifies the argc to reflect any arguments it has
    * "consumed"
    */
-  int
-  parse_svcconf_args_i (int &argc,
-                       ACE_TCHAR **argv,
-                       ACE_ARGV &svc_config_argv);
+  int parse_svcconf_args_i (int &argc,
+                            ACE_TCHAR **argv,
+                            ACE_ARGV &svc_config_argv);
+
+  /**
+   * Checks if there is -ORBGestalt option with non-GLOBAL value.
+   *
+   * @brief Modifies the argc to reflect any arguments it has
+   * "consumed"
+   *
+   * If the first ORB has some special configuration and uses non
+   * GLOBAL gestalt then it's expected the this configuration will
+   * not become default for other ORBs created after it. This function
+   * allows to avoid the above situation.
+   */
+  bool using_global_gestalt_i (int &argc,
+                               ACE_TCHAR **argv);
 
   /**
    * Initialize the ACE Service Configurator with the process-global
@@ -111,11 +124,10 @@ namespace
    * @brief Modifies the argc to reflect any arguments it has
    * "consumed"
    */
-  int
-  parse_private_args_i (int &argc,
-                        ACE_TCHAR **argv,
-                        ACE_ARGV & svc_config_argv,
-                        bool & skip_service_config_open);
+  int parse_private_args_i (int &argc,
+                            ACE_TCHAR **argv,
+                            ACE_ARGV & svc_config_argv,
+                            bool & skip_service_config_open);
 
   /**
    * Initialize ORB-local (private) ACE Service Configurator
@@ -268,12 +280,16 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
          true) == -1)
     return -1;
 
-  bool skip_service_config_open = false; // by default we shouldn't
+  if (using_global_gestalt_i (tmpargc,
+                              tmpargv))
+    {
+      if (parse_svcconf_args_i (tmpargc,
+              tmpargv,
+              global_svc_config_argv) == -1)
+        return -1;
+    }
 
-  if (parse_svcconf_args_i (tmpargc,
-          tmpargv,
-          global_svc_config_argv) == -1)
-    return -1;
+  bool skip_service_config_open = false; // by default we shouldn't
 
   if (parse_private_args_i (tmpargc,
           tmpargv,
@@ -769,6 +785,21 @@ namespace
             svc_config_argv.add (ACE_TEXT ("-f"));
             svc_config_argv.add (current_arg, true);
           }
+        else if (arg_shifter.cur_arg_strncasecmp
+                 (ACE_TEXT ("-ORBSvcConfDirective")) == 0)
+          {
+            const ACE_TCHAR *current_arg =
+              arg_shifter.get_the_parameter (ACE_TEXT ("-ORBSvcConfDirective"));
+
+            // This is used to pass arguments to the Service
+            // Configurator using the "command line" to provide
+            // configuration information rather than using a svc.conf
+            // file.  Pass the "-S" to the service configurator.
+            svc_config_argv.add (ACE_TEXT ("-S"));
+            svc_config_argv.add (current_arg, true); // quote args!
+
+            arg_shifter.consume_arg ();
+          }
         else
           {
             // Any arguments that don't match are ignored so that the
@@ -797,18 +828,6 @@ namespace
             (ACE_TEXT ("-ORBSkipServiceConfigOpen")))
           {
             skip_service_config_open = true;
-
-            arg_shifter.consume_arg ();
-          }
-        else if (0 != (current_arg = arg_shifter.get_the_parameter
-                       (ACE_TEXT ("-ORBSvcConfDirective"))))
-          {
-            // This is used to pass arguments to the Service
-            // Configurator using the "command line" to provide
-            // configuration information rather than using a svc.conf
-            // file.  Pass the "-S" to the service configurator.
-            svc_config_argv.add (ACE_TEXT ("-S"));
-            svc_config_argv.add (current_arg, true); // quote args!
 
             arg_shifter.consume_arg ();
           }
@@ -927,4 +946,43 @@ namespace
       }
     return 0;
   } /* parse_global_args_i */
+
+  bool
+  using_global_gestalt_i (int &argc,
+                          ACE_TCHAR **argv)
+  {
+    bool with_global_gestalt = true;
+
+    ACE_Arg_Shifter arg_shifter (argc, argv);
+
+    while (arg_shifter.is_anything_left ())
+      {
+        if (0 == arg_shifter.cur_arg_strncasecmp (ACE_TEXT ("-ORBGestalt")))
+          {
+            // Skip -ORBGestalt. This option is necessary in later stages.
+            arg_shifter.ignore_arg ();
+
+            // This should set current_arg to the value of ORBGestalt option.
+            const ACE_TCHAR *current_arg = arg_shifter.get_current ();
+
+            if (0 != current_arg &&
+                ACE_OS::strcasecmp (current_arg, ACE_TEXT("GLOBAL")) != 0)
+              {
+                with_global_gestalt = false;
+              }
+
+            // Skip anything that goes after -ORBGestalt.
+            arg_shifter.ignore_arg ();
+          }
+        // Can't interpret this argument.
+        // Move on to the next argument.
+        else
+          {
+            // Any arguments that don't match are ignored so
+            // that the caller can still use them.
+            arg_shifter.ignore_arg ();
+          }
+      }
+    return with_global_gestalt;
+  } /* using_global_gestalt_i */
 } // anonymous namespace.

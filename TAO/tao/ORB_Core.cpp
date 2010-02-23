@@ -2307,8 +2307,12 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion)
     tm->wait ();
 
   // Explicitly destroy the valuetype adapter
-  delete this->valuetype_adapter_;
-  this->valuetype_adapter_ = 0;
+  {
+    ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
+
+    delete this->valuetype_adapter_;
+    this->valuetype_adapter_ = 0;
+  }
 
   // Explicitly destroy the object reference table since it
   // contains references to objects, which themselves may contain
@@ -3469,6 +3473,82 @@ TAO_ORB_Core::valuetype_adapter (void)
 
   return this->valuetype_adapter_;
 }
+
+// *************************************************************
+// Valuetype factory operations
+// *************************************************************
+
+#if !defined(CORBA_E_MICRO)
+CORBA::ValueFactory
+TAO_ORB_Core::register_value_factory (const char *repository_id,
+                                      CORBA::ValueFactory factory)
+{
+  if (this->valuetype_adapter ())
+    {
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+
+      if (this->valuetype_adapter_ == 0)
+        {
+          return 0;
+        }
+
+      int const result =
+        this->valuetype_adapter_->vf_map_rebind (repository_id, factory);
+
+      if (result == 0) // No previous factory found
+        {
+          return 0;
+        }
+
+      if (result == -1)
+        {
+          // Error on bind.
+          throw ::CORBA::MARSHAL ();
+        }
+    }
+
+  return factory;    // previous factory was found
+}
+#endif
+
+#if !defined(CORBA_E_MICRO)
+void
+TAO_ORB_Core::unregister_value_factory (const char *repository_id)
+{
+  if (this->valuetype_adapter ())
+    {
+      ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+
+      if (this->valuetype_adapter_ == 0)
+        {
+          return;
+        }
+
+      // Dont care whther it was successful or not!
+      (void) this->valuetype_adapter_->vf_map_unbind (repository_id);
+    }
+}
+#endif
+
+#if !defined(CORBA_E_MICRO)
+CORBA::ValueFactory
+TAO_ORB_Core::lookup_value_factory (const char *repository_id)
+{
+  if (this->valuetype_adapter ())
+    {
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+
+      if (this->valuetype_adapter_ == 0)
+        {
+          return 0;
+        }
+
+      return this->valuetype_adapter_->vf_map_find (repository_id);
+    }
+
+  return 0;
+}
+#endif
 
 // ****************************************************************
 
