@@ -162,7 +162,7 @@ namespace CIAO_Writer_Sender_Impl
         catch (const CCM_DDS::InternalError& )
           {
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::test_exception: ")
-                        ACE_TEXT ("OK: Expected InternalErr received")));
+                        ACE_TEXT ("OK: Expected InternalErr received\n")));
           }
         ++this->last_key;
       }
