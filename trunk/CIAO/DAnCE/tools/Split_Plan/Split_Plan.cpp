@@ -19,11 +19,11 @@ void
 usage (void)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("usage: dance_split_plan [options]\n")
-	      ACE_TEXT ("Applies the split plan algorithm and saves the result to")
-	      ACE_TEXT ("CDR encoded plans\n")
-	      ACE_TEXT ("\t-c <plan>\t\tCDR Encoded input plan\n")
-	      ACE_TEXT ("\t-x <plan>\t\tXML Encoded input plan\n")
-	      ));
+              ACE_TEXT ("Applies the split plan algorithm and saves the result to")
+              ACE_TEXT ("CDR encoded plans\n")
+              ACE_TEXT ("\t-c <plan>\t\tCDR Encoded input plan\n")
+              ACE_TEXT ("\t-x <plan>\t\tXML Encoded input plan\n")
+              ));
 }
 
 bool
@@ -43,24 +43,24 @@ parse_args (int argc, ACE_TCHAR *argv [])
   while ((c = get_opt ()) != EOF)
     {
       switch (c)
-	{
-	case 'c':
-	  cdr_encoded_ = true;
-	  input_filename = get_opt.opt_arg ();
-	  break;
-	  
-	case 'x':
-	  cdr_encoded_ = false;
-	  input_filename = get_opt.opt_arg ();
-	  break;
+        {
+        case 'c':
+          cdr_encoded_ = true;
+          input_filename = get_opt.opt_arg ();
+          break;
+          
+        case 'x':
+          cdr_encoded_ = false;
+          input_filename = get_opt.opt_arg ();
+          break;
 
-	case 'h':
-	  usage ();
-	  return false;
-	default: 
-	  usage ();
-	  return false;
-	}
+        case 'h':
+          usage ();
+          return false;
+        default: 
+          usage ();
+          return false;
+        }
     }
   
   return true;
@@ -84,50 +84,50 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
         }
       
       DANCE_DEBUG (6, (LM_TRACE, DLINFO
-		       ACE_TEXT("PlanLauncher - initializing ORB\n")));
+                       ACE_TEXT("PlanLauncher - initializing ORB\n")));
       
       // Need an ORB for the Config handlers
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
       
       if (!parse_args (argc, argv))
-	{
-	  return -1;
-	}
+        {
+          return -1;
+        }
 
       auto_ptr<Deployment::DeploymentPlan> plan;
       
       if (!cdr_encoded_)
-	{
-	  plan.reset (DAnCE::Convert_Plan::read_xml_plan (input_filename));
-	}
+        {
+          plan.reset (DAnCE::Convert_Plan::read_xml_plan (input_filename));
+        }
       else 
-	{
-	  plan.reset (DAnCE::Convert_Plan::read_cdr_plan (input_filename));
-	}
+        {
+          plan.reset (DAnCE::Convert_Plan::read_cdr_plan (input_filename));
+        }
       
       if (plan.get () == 0)
-	{
-	  DANCE_ERROR (1, (LM_ERROR, DLINFO "Split_Plan - "
-			   "Unable to convert provided plan into IDL representation\n"));
-	  return 0;
-	}
+        {
+          DANCE_ERROR (1, (LM_ERROR, DLINFO "Split_Plan - "
+                           "Unable to convert provided plan into IDL representation\n"));
+          return 0;
+        }
       
       DAnCE::Split_Plan::TNodePlans plans;
       DAnCE::Split_Plan split (*plan, plans);
       split.split_plan ();
       
       for (DAnCE::Split_Plan::TNodePlans::iterator iter_plans = plans.begin();
-	   iter_plans != plans.end();
-	   ++iter_plans)
-	{
-	  ACE_CString name ((*iter_plans).ext_id_);
-	  DANCE_DEBUG (3, (LM_DEBUG, DLINFO "Split_Plan - "
-			   "Writing sub plan for node %C\n",
-			   name.c_str ()));
+           iter_plans != plans.end();
+           ++iter_plans)
+        {
+          ACE_CString name ((*iter_plans).ext_id_);
+          DANCE_DEBUG (3, (LM_DEBUG, DLINFO "Split_Plan - "
+                           "Writing sub plan for node %C\n",
+                           name.c_str ()));
 
-	  name += input_filename;
-	  DAnCE::Convert_Plan::write_cdr_plan (name.c_str (), (*iter_plans).int_id_);
-	}
+          name += input_filename;
+          DAnCE::Convert_Plan::write_cdr_plan (name.c_str (), (*iter_plans).int_id_);
+        }
     }
   catch (const CORBA::Exception &ex)
     {

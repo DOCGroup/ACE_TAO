@@ -1089,10 +1089,10 @@ NodeApplication_Impl::create_container (size_t server, size_t cont_idx)
     }
 
   DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::create_container - ")
-		   ACE_TEXT("Configuring %u components on container %u on server %u\n"),
-		   container.components.size (),
-		   server, 
-		   cont_idx));
+                   ACE_TEXT("Configuring %u components on container %u on server %u\n"),
+                   container.components.size (),
+                   server, 
+                   cont_idx));
 
   // Configure components
   for (size_t i = 0; i < container.components.size (); ++i)
@@ -1128,12 +1128,12 @@ NodeApplication_Impl::create_colocation_groups (void)
   for (CORBA::ULong i = 0; i < this->plan_.localityConstraint.length (); ++i)
     {
       if (this->plan_.localityConstraint[i].constraint == ::Deployment::PlanNoConstraint)
-	{
-	  DANCE_DEBUG (10, (LM_INFO, DLINFO
-			    ACE_TEXT ("NodeApplication_Impl::create_colocation_groups - ")
-			    ACE_TEXT ("Skipping NoConstraint Colocation group\n")));
-	  continue;
-	}
+        {
+          DANCE_DEBUG (10, (LM_INFO, DLINFO
+                            ACE_TEXT ("NodeApplication_Impl::create_colocation_groups - ")
+                            ACE_TEXT ("Skipping NoConstraint Colocation group\n")));
+          continue;
+        }
       else if (this->plan_.localityConstraint[i].constraint != ::Deployment::PlanSameProcess)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO
@@ -1800,37 +1800,37 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                                     (conn.internalEndpoint[1].kind == ::Deployment::MultiplexReceptacle ||
                                      conn.internalEndpoint[1].kind == ::Deployment::SimplexReceptacle))
                                   {
-				    obj = Components::CCMObject::
-				      _narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->ref.in ());
-					
-				    if (this->is_local_facet (conn))
-				      {
-					::Components::CCMObject_var facet =
-					    ::Components::CCMObject::_narrow (providedReference[i].endpoint[0].in ());
-					
-					::Components::CCMObject_var recep =
-					    ::Components::CCMObject::_narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->ref.in ());
-					
-					::CIAO::Deployment::Container_var cont =
-					    ::CIAO::Deployment::Container::_narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->container->ref.in ());
-					
-					this->connect_receptacle (conn,
-								  facet.in (),
-								  conn.internalEndpoint[0].portName.in (),
-								  obj.in (),
-								  conn.internalEndpoint[1].portName.in(),
-								  cont.in ());
-				      }
-				    else 
-				      {
-					this->connect_receptacle (conn,
-								  obj.in (),
-								  "",
-								  providedReference[i].endpoint[0].in(),
-								  conn.internalEndpoint[1].portName.in(),
-								  ::CIAO::Deployment::Container::_nil());
-				      }
-				  }
+                                    obj = Components::CCMObject::
+                                      _narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->ref.in ());
+                                        
+                                    if (this->is_local_facet (conn))
+                                      {
+                                        ::Components::CCMObject_var facet =
+                                            ::Components::CCMObject::_narrow (providedReference[i].endpoint[0].in ());
+                                        
+                                        ::Components::CCMObject_var recep =
+                                            ::Components::CCMObject::_narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->ref.in ());
+                                        
+                                        ::CIAO::Deployment::Container_var cont =
+                                            ::CIAO::Deployment::Container::_narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->container->ref.in ());
+                                        
+                                        this->connect_receptacle (conn,
+                                                                  facet.in (),
+                                                                  conn.internalEndpoint[0].portName.in (),
+                                                                  obj.in (),
+                                                                  conn.internalEndpoint[1].portName.in(),
+                                                                  cont.in ());
+                                      }
+                                    else 
+                                      {
+                                        this->connect_receptacle (conn,
+                                                                  obj.in (),
+                                                                  "",
+                                                                  providedReference[i].endpoint[0].in(),
+                                                                  conn.internalEndpoint[1].portName.in(),
+                                                                  ::CIAO::Deployment::Container::_nil());
+                                      }
+                                  }
                                  break;
                               }
                             CORBA::Object_var tmp =
@@ -1911,12 +1911,12 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                       {
                         // What we should do with Cookie, returned from connect call???
                         DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - Set for receptacle\n")));
-			if (CORBA::is_nil (providedReference[i].endpoint[0].in ()))
-			  {
-			    DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("NodeApplication_Impl::finishLaunch - ")
-					     ACE_TEXT ("Reference provided from DomainApplication was nil.\n")));
-			    throw 1;
-			  }
+                        if (CORBA::is_nil (providedReference[i].endpoint[0].in ()))
+                          {
+                            DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("NodeApplication_Impl::finishLaunch - ")
+                                             ACE_TEXT ("Reference provided from DomainApplication was nil.\n")));
+                            throw 1;
+                          }
 
                         ::Components::CCMObject_var facet =
                            ::Components::CCMObject::_narrow (providedReference[i].endpoint[0].in ());
@@ -2070,14 +2070,14 @@ NodeApplication_Impl::connect_receptacle (const ::Deployment::PlanConnectionDesc
         {
           DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - ")
                        ACE_TEXT("connect SimplexReceptacle for [%C] started\n"), recep_name.c_str()));
-	  if (CORBA::is_nil (facet))
-	    {
-	      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("NodeApplication_Impl::connect_receptacle - ")
-			       "Object reference for facet to connect to [%C] was nil\n",
-			       recep_name.c_str ()));
-	      throw ::Deployment::InvalidConnection ("",
-						     "Provided facet reference was nil\n");
-	    }
+          if (CORBA::is_nil (facet))
+            {
+              DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("NodeApplication_Impl::connect_receptacle - ")
+                               "Object reference for facet to connect to [%C] was nil\n",
+                               recep_name.c_str ()));
+              throw ::Deployment::InvalidConnection ("",
+                                                     "Provided facet reference was nil\n");
+            }
 
           res = facet->connect (recep_name.c_str(), receptacle);
           DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - connect finished\n")));
