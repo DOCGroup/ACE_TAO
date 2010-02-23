@@ -25,12 +25,7 @@ $ENV {'CIAO_LOG_FILE'} = 'test.log';
 
 $SV = $server->CreateProcess ("../../bin/ciao_componentserver", "");
 
-$server_status = $SV->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    $status = 1;
-}
+$SV->Spawn ();
 
 if ($server->WaitForFileTimed ($TestCaseC_i,
                                $server->ProcessStartWaitInterval()) == -1) {
