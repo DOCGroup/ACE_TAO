@@ -1,3 +1,10 @@
+Tue Feb 23 15:33:33 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * DAnCE/tools/Convert_Plan/Convert_Plan.mpc:
+
+          Added dance_config_handlers as a base project to DAnCE_Convert_Plan
+          project. Thanks to William Otte for the suggestion.
+
 Tue Feb 23 15:16:24 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/ExecutionManager/ExecutionManager.mpc:
