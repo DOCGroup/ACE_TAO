@@ -1,3 +1,13 @@
+Tue Feb 23 02:55:31 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * examples/Hello/descriptors/NodeMap.dat:
+        * examples/Hello/descriptors/PlanLocality_DifferentProcesses.cdp:
+        * examples/Hello/descriptors/PlanLocality_SameProcess.cdp:
+        * examples/Hello/descriptors/run_test_PlanLocality_DifferentProcesses.pl:
+        * examples/Hello/descriptors/run_test_PlanLocality_SameProcess.pl:
+
+          Added the files above to test PlanLocality feature.
+
 Tue Feb 23 02:39:25 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * examples/Hello/Receiver/Receiver_exec.h:
@@ -5,7 +15,7 @@ Tue Feb 23 02:39:25 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
         * examples/Hello/Sender/Sender_exec.h:
         * examples/Hello/Sender/Sender_exec.cpp:
 
-          Update this example. It was out of date and as such, it 
+          Update this example. It was out of date and as such, it
           wouldn't work with CoSMIC generated descriptors (due
           to missing entry points).
 
