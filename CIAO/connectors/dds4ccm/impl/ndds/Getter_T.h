@@ -59,7 +59,6 @@ namespace CIAO
         DDSQueryCondition* condition_;
         ::DDS::Duration_t time_out_;
         ::CCM_DDS::DataNumber_t max_delivered_data_;
-        DDSGuardCondition* gd_;
         DDSWaitSet* ws_;
         DDSReadCondition* rd_condition_;
 

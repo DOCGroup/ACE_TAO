@@ -12,7 +12,6 @@ CIAO::DDS4CCM::RTI::Getter_Base_T<DDS_TYPE, CCM_TYPE>::Getter_Base_T (void) :
    condition_(0),
    time_out_ (),
    max_delivered_data_ (0),
-   gd_ (0),
    ws_ (0),
    rd_condition_ (0)
 {
@@ -23,7 +22,6 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::RTI::Getter_Base_T<DDS_TYPE, CCM_TYPE>::~Getter_Base_T (void)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Getter_Base_T::~Getter_Base_T");
-  delete gd_;
   delete ws_;
 }
 
@@ -82,23 +80,17 @@ CIAO::DDS4CCM::RTI::Getter_Base_T<DDS_TYPE, CCM_TYPE>::get_many (
   typename DDS_TYPE::dds_seq_type data;
   for (::DDS_Long i = 0; i < active_conditions.length(); i++)
     {
-      if (active_conditions[i] == this->gd_)
-        {
-          this->gd_->set_trigger_value (false);
-        }
-
       if (active_conditions[i] == this->rd_condition_)
         {
           // Check trigger
           active_conditions[i]->get_trigger_value ();
 
           // Take read condition
-          DDS_ReturnCode_t retcode = this->impl ()->read (data,
+          DDS_ReturnCode_t retcode = this->impl ()->read_w_condition (
+                                    data,
                                     sample_info,
                                     max_samples,
-                                    DDS_NOT_READ_SAMPLE_STATE ,
-                                    DDS_ANY_VIEW_STATE,
-                                    DDS_ANY_INSTANCE_STATE);
+                                    this->rd_condition_);
 
           if (retcode == DDS_RETCODE_OK && data.length () >= 1)
             {
@@ -133,7 +125,7 @@ CIAO::DDS4CCM::RTI::Getter_Base_T<DDS_TYPE, CCM_TYPE>::get_many (
               // because after a timeout there should be
               // data.
               CIAO_ERROR (1, (LM_ERROR, CLINFO
-                    "CIAO::DDS4CCM::RTI::Getter_Base_T::Getter_Base_T - "
+                    "CIAO::DDS4CCM::RTI::Getter_Base_T::Getter_Base_T::get_many - "
                     "Error while reading from DDS: <%C>\n",
                     translate_retcode (retcode)));
               this->impl ()->return_loan(data,sample_info);
@@ -196,7 +188,6 @@ CIAO::DDS4CCM::RTI::Getter_Base_T<DDS_TYPE, CCM_TYPE>::passivate ()
       CIAO_DEBUG (6, (LM_INFO, CLINFO "Getter_Base_T::passivate - "
                       "Read condition succesfully detached from waitset.\n"));
     }
-  retcode = this->ws_->detach_condition (this->gd_);
   if (retcode != DDS_RETCODE_OK)
     {
       CIAO_ERROR (1, (LM_ERROR, CLINFO "Getter_Base_T::passivate - "
@@ -230,8 +221,6 @@ CIAO::DDS4CCM::RTI::Getter_Base_T<DDS_TYPE, CCM_TYPE>::set_impl (
   if (::CORBA::is_nil (reader))
     {
       impl_ = 0;
-      delete this->gd_;
-      this->gd_ = 0;
       delete this->ws_;
       this->ws_ = 0;
     }
@@ -256,18 +245,11 @@ CIAO::DDS4CCM::RTI::Getter_Base_T<DDS_TYPE, CCM_TYPE>::set_impl (
         }
 
       // Now create the waitset conditions
-      this->gd_ = new DDSGuardCondition ();
       this->ws_ = new DDSWaitSet ();
       this->rd_condition_ = this->impl ()->create_readcondition (DDS_NOT_READ_SAMPLE_STATE,
                                                          DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
                                                          DDS_ALIVE_INSTANCE_STATE | DDS_NOT_ALIVE_INSTANCE_STATE);
-      DDS_ReturnCode_t retcode = this->ws_->attach_condition (this->gd_);
-      if (retcode != DDS_RETCODE_OK)
-        {
-          CIAO_ERROR (1, (LM_ERROR, CLINFO "GETTER: Unable to attach guard condition to waitset.\n"));
-          throw CCM_DDS::InternalError (retcode, 0);
-        }
-      retcode = this->ws_->attach_condition (this->rd_condition_);
+      DDS_ReturnCode_t retcode = this->ws_->attach_condition (this->rd_condition_);
       if (retcode != DDS_RETCODE_OK)
         {
           CIAO_ERROR (1, (LM_ERROR, CLINFO "GETTER: Unable to attach read condition to waitset.\n"));
@@ -288,52 +270,53 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one (
       return false;
     }
 
-  DDS_SampleInfoSeq sample_info;
-  typename DDS_TYPE::dds_seq_type data;
   for (::DDS_Long i = 0; i < active_conditions.length(); i++)
     {
-      if (active_conditions[i] == this->gd_)
-        {
-          this->gd_->set_trigger_value (false);
-        }
-
       if (active_conditions[i] == this->rd_condition_)
         {
-          // Check trigger
-          active_conditions[i]->get_trigger_value ();
+          bool valid_data_read = false;
 
-          // Take read condition
-          DDS_ReturnCode_t retcode = this->impl ()->read (data,
-                                    sample_info,
-                                    DDS_LENGTH_UNLIMITED,
-                                    DDS_NOT_READ_SAMPLE_STATE ,
-                                    DDS_ANY_VIEW_STATE,
-                                    DDS_ANY_INSTANCE_STATE);
-
-          if (retcode == DDS_RETCODE_OK && data.length () >= 1)
+          while (!valid_data_read)
             {
-              info <<= sample_info[0]; // Retrieves the last sample.
-              an_instance = data[0];
-            }
-          else
-            {
-              // RETCODE_NO_DATA should be an error
-              // because after a timeout there should be
-              // data.
-              CIAO_ERROR (1, (LM_ERROR, CLINFO
-                    "CIAO::DDS4CCM::RTI::Getter_Base_T::Getter_Base_T - "
-                    "Error while reading from DDS: <%C>\n",
-                    translate_retcode (retcode)));
-              this->impl ()->return_loan(data,sample_info);
-              throw CCM_DDS::InternalError (retcode, 1);
-            }
-
-          retcode = this->impl ()->return_loan(data,sample_info);
-          if (retcode != DDS_RETCODE_OK)
-            {
-              CIAO_ERROR (1, (LM_ERROR,
-                          ACE_TEXT ("return loan error %C\n"),
-                          translate_retcode (retcode)));
+              DDS_SampleInfoSeq sample_info;
+              typename DDS_TYPE::dds_seq_type data;
+              DDS_ReturnCode_t retcode = this->impl ()->read_w_condition (
+                                                                  data,
+                                                                  sample_info,
+                                                                  1,
+                                                                  this->rd_condition_);
+              if (retcode != DDS_RETCODE_OK)
+                {
+                  CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one - "
+                        "Error while reading from DDS: <%C>\n",
+                        translate_retcode (retcode)));
+                  if (this->impl ()->return_loan (data, sample_info) !=
+                      DDS_RETCODE_OK)
+                    {
+                      CIAO_ERROR (1, (LM_ERROR,
+                                  ACE_TEXT ("CIAO::DDS4CCM::RTI::Getter_T")
+                                  ACE_TEXT ("<DDS_TYPE, CCM_TYPE, true>::get_one - ")
+                                  ACE_TEXT ("return loan error\n")));
+                    }
+                  throw CCM_DDS::InternalError (retcode, 1);
+                }
+              else if (data.length () == 1 &&
+                       sample_info[0].valid_data)
+                {
+                  info <<= sample_info[0];
+                  an_instance = data[0];
+                  valid_data_read = true;
+                }
+              //return the loan of each read.
+              if (this->impl ()->return_loan (data, sample_info) !=
+                  DDS_RETCODE_OK)
+                {
+                  CIAO_ERROR (1, (LM_ERROR,
+                              ACE_TEXT ("CIAO::DDS4CCM::RTI::Getter_T")
+                              ACE_TEXT ("<DDS_TYPE, CCM_TYPE, true>::get_one - ")
+                              ACE_TEXT ("return loan error\n")));
+                }
             }
         }
     }
@@ -358,48 +341,50 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE, false>::get_one (
   typename DDS_TYPE::dds_seq_type data;
   for (::DDS_Long i = 0; i < active_conditions.length(); i++)
     {
-      if (active_conditions[i] == this->gd_)
-        {
-          this->gd_->set_trigger_value (false);
-        }
-
       if (active_conditions[i] == this->rd_condition_)
         {
-          // Check trigger
-          active_conditions[i]->get_trigger_value ();
+          bool valid_data_read = false;
 
-          // Take read condition
-          DDS_ReturnCode_t retcode = this->impl ()->read (data,
-                                    sample_info,
-                                    DDS_LENGTH_UNLIMITED,
-                                    DDS_NOT_READ_SAMPLE_STATE ,
-                                    DDS_ANY_VIEW_STATE,
-                                    DDS_ANY_INSTANCE_STATE);
+          while (!valid_data_read)
+            {
+              DDS_ReturnCode_t retcode = this->impl ()->read_w_condition (
+                                                                      data,
+                                                                      sample_info,
+                                                                      1,
+                                                                      this->rd_condition_);
 
-          if (retcode == DDS_RETCODE_OK && data.length () >= 1)
-            {
-              info <<= sample_info[0]; // Retrieves the last sample.
-              *an_instance = data[0];
-            }
-          else
-            {
-              // RETCODE_NO_DATA should be an error
-              // because after a timeout there should be
-              // data.
-              CIAO_ERROR (1, (LM_ERROR, CLINFO
-                    "CIAO::DDS4CCM::RTI::Getter_T::Getter_T - "
-                    "Error while reading from DDS: <%C>\n",
-                    translate_retcode (retcode)));
-              this->impl ()->return_loan(data,sample_info);
-              throw CCM_DDS::InternalError (retcode, 1);
-            }
-
-          retcode = this->impl ()->return_loan(data,sample_info);
-          if (retcode != DDS_RETCODE_OK)
-            {
-              CIAO_ERROR (1, (LM_ERROR, CLINFO
-                          "return loan error %C\n",
-                          translate_retcode (retcode)));
+              if (retcode != DDS_RETCODE_OK)
+                {
+                  CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one - "
+                        "Error while reading from DDS: <%C>\n",
+                        translate_retcode (retcode)));
+                  if (this->impl ()->return_loan (data, sample_info) !=
+                      DDS_RETCODE_OK)
+                    {
+                      CIAO_ERROR (1, (LM_ERROR,
+                                  ACE_TEXT ("CIAO::DDS4CCM::RTI::Getter_T")
+                                  ACE_TEXT ("<DDS_TYPE, CCM_TYPE, true>::get_one - ")
+                                  ACE_TEXT ("return loan error\n")));
+                    }
+                  throw CCM_DDS::InternalError (retcode, 1);
+                }
+              else if (data.length () == 1 &&
+                       sample_info[0].valid_data)
+                {
+                  info <<= sample_info[0];
+                  *an_instance = data[0];
+                  valid_data_read = true;
+                }
+              //return the loan of each sample
+              if (this->impl ()->return_loan (data, sample_info) !=
+                  DDS_RETCODE_OK)
+                {
+                  CIAO_ERROR (1, (LM_ERROR,
+                              ACE_TEXT ("CIAO::DDS4CCM::RTI::Getter_T")
+                              ACE_TEXT ("<DDS_TYPE, CCM_TYPE, true>::get_one - ")
+                              ACE_TEXT ("return loan error\n")));
+                }
             }
         }
     }
