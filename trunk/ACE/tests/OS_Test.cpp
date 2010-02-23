@@ -1153,7 +1153,11 @@ ceil_test (void)
       result = ACE_OS::ceil (values [i]);
       if (!is_equal(result, results[i]))
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ceil error: input %.1F, output %1F, expected %1F\n"), values [i], result, results [i]));
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("ceil error: input %.1F, output %1F, expected %1F\n"),
+                      values [i],
+                      result,
+                      results [i]));
           error_count++;
         }
     }
@@ -1177,7 +1181,65 @@ floor_test (void)
       result = ACE_OS::floor (values [i]);
       if (!is_equal(result, results[i]))
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("floor error: input %.1F, output %1F, expected %1F\n"), values [i], result, results [i]));
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("floor error: input %.1F, output %1F, expected %1F\n"),
+                      values [i],
+                      result,
+                      results [i]));
+          error_count++;
+        }
+    }
+
+  return error_count;
+}
+
+int
+ceill_test (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Testing ceill method\n")));
+
+  long double values[]  = {-2.5, -1.5, 1.5, 2.5};
+  long double results[] = {-2.0, -1.0, 2.0, 3.0};
+  long double result = 0.0;
+  int error_count = 0;
+
+  for (size_t i = 0 ; i < sizeof (values) / sizeof (long double) ; i++)
+    {
+      result = ACE_OS::ceil (values [i]);
+      if (!is_equal(result, results[i]))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("ceil error: input %.1F, output %1F, expected %1F\n"),
+                      values [i],
+                      result,
+                      results [i]));
+          error_count++;
+        }
+    }
+
+  return error_count;
+}
+
+int
+floorl_test (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Testing floorl method\n")));
+
+  long double values[]  = {-2.5, -1.5, 1.5, 2.5};
+  long double results[] = {-3.0, -2.0, 1.0, 2.0};
+  long double result = 0.0;
+  int error_count = 0;
+
+  for (size_t i = 0 ; i < sizeof (values) / sizeof (long double) ; i++)
+    {
+      result = ACE_OS::floor (values [i]);
+      if (!is_equal(result, results[i]))
+        {
+          ACE_ERROR ((LM_ERROR, 
+                      ACE_TEXT ("floor error: input %.1F, output %1F, expected %1F\n"), 
+                      values [i], result, results [i]));
           error_count++;
         }
     }
@@ -1250,6 +1312,12 @@ run_main (int, ACE_TCHAR *[])
       status = result;
 
   if ((result = floor_test ()) != 0)
+      status = result;
+
+  if ((result = ceill_test ()) != 0)
+      status = result;
+
+  if ((result = floorl_test ()) != 0)
       status = result;
 
   if ((result = log2_test ()) != 0)
