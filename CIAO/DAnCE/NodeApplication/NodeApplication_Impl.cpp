@@ -1089,9 +1089,10 @@ NodeApplication_Impl::create_container (size_t server, size_t cont_idx)
     }
 
   DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::create_container - ")
-                ACE_TEXT("Configuring %u components on container %u on server %u\n"),
-                container.components.size (),
-                server, cont_idx));
+		   ACE_TEXT("Configuring %u components on container %u on server %u\n"),
+		   container.components.size (),
+		   server, 
+		   cont_idx));
 
   // Configure components
   for (size_t i = 0; i < container.components.size (); ++i)
@@ -1795,29 +1796,41 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                           {
                             if (0 == conn.externalReference.length())
                               {
-                                if (conn.internalEndpoint.length () == 2 &&
+                                if (conn.internalEndpoint.length () == 2 && 
                                     (conn.internalEndpoint[1].kind == ::Deployment::MultiplexReceptacle ||
                                      conn.internalEndpoint[1].kind == ::Deployment::SimplexReceptacle))
                                   {
-                                    obj = Components::CCMObject::
-                                      _narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->ref.in ());
-
-                                    ::Components::CCMObject_var facet =
-                                      ::Components::CCMObject::_narrow (providedReference[i].endpoint[0].in ());
-
-                                    ::Components::CCMObject_var recep =
-                                        ::Components::CCMObject::_narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->ref.in ());
-
-                                    ::CIAO::Deployment::Container_var cont =
-                                        ::CIAO::Deployment::Container::_narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->container->ref.in ());
-
-                                    this->connect_receptacle (conn,
-                                                              facet.in (),
-                                                              conn.internalEndpoint[0].portName.in (),
-                                                              obj.in (),
-                                                              conn.internalEndpoint[1].portName.in(),
-                                                              cont.in ());
-                                  }
+				    obj = Components::CCMObject::
+				      _narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->ref.in ());
+					
+				    if (this->is_local_facet (conn))
+				      {
+					::Components::CCMObject_var facet =
+					    ::Components::CCMObject::_narrow (providedReference[i].endpoint[0].in ());
+					
+					::Components::CCMObject_var recep =
+					    ::Components::CCMObject::_narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->ref.in ());
+					
+					::CIAO::Deployment::Container_var cont =
+					    ::CIAO::Deployment::Container::_narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->container->ref.in ());
+					
+					this->connect_receptacle (conn,
+								  facet.in (),
+								  conn.internalEndpoint[0].portName.in (),
+								  obj.in (),
+								  conn.internalEndpoint[1].portName.in(),
+								  cont.in ());
+				      }
+				    else 
+				      {
+					this->connect_receptacle (conn,
+								  obj.in (),
+								  "",
+								  providedReference[i].endpoint[0].in(),
+								  conn.internalEndpoint[1].portName.in(),
+								  ::CIAO::Deployment::Container::_nil());
+				      }
+				  }
                                  break;
                               }
                             CORBA::Object_var tmp =
@@ -1898,10 +1911,17 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                       {
                         // What we should do with Cookie, returned from connect call???
                         DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::finishLaunch - Set for receptacle\n")));
+			if (CORBA::is_nil (providedReference[i].endpoint[0].in ()))
+			  {
+			    DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("NodeApplication_Impl::finishLaunch - ")
+					     ACE_TEXT ("Reference provided from DomainApplication was nil.\n")));
+			    throw 1;
+			  }
+
                         ::Components::CCMObject_var facet =
                            ::Components::CCMObject::_narrow (providedReference[i].endpoint[0].in ());
 
-                        if (conn.internalEndpoint.length () == 2)
+                        if (/*conn.internalEndpoint.length () == 2*/ this->is_local_facet (conn))
                           {
                             ::CIAO::Deployment::Container_var cont =
                                ::CIAO::Deployment::Container::_narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->container->ref.in ());
