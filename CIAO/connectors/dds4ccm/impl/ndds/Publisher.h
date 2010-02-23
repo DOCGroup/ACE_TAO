@@ -21,6 +21,10 @@
 # include "ndds/ndds_cpp.h"
 #endif
 
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::Publisher DDSPublisher;
+#endif
+
 #include "tao/LocalObject.h"
 
 namespace CIAO

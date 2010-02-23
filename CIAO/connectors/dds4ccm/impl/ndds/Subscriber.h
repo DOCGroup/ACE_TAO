@@ -27,6 +27,7 @@
 typedef ::DDS::Subscriber DDSSubscriber;
 typedef ::DDS::DataReaderListener DDSDataReaderListener;
 typedef ::DDS::ContentFilteredTopic DDSContentFilteredTopic;
+typedef ::DDS::Topic DDSTopic;
 #endif
 
 namespace CIAO

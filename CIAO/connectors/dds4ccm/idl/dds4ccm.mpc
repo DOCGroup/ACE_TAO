@@ -1,6 +1,6 @@
 // $Id$
 
-project (DDS4CCM_idl_gen) : dds4ccm, ciaoidldefaults, dds4ccm {
+project (DDS4CCM_idl_gen) : dds4ccm, componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=DDS4CCM_STUB_Export \
               -Wb,stub_export_include=dds4ccm_stub_export.h \
@@ -14,6 +14,7 @@ project (DDS4CCM_idl_gen) : dds4ccm, ciaoidldefaults, dds4ccm {
   }
 
   IDL_Files {
+    idlflags -= -Gxhst -Gxhsk
     dds_rtf2_dcps.idl
     dds_rtf2_dcps_i_handle.idl
     dds4ccm_PortStatusListener.idl
@@ -24,7 +25,7 @@ project (DDS4CCM_idl_gen) : dds4ccm, ciaoidldefaults, dds4ccm {
   }
 }
 
-project (DDS4CCM_lem_gen) : dds4ccm, ciaoidldefaults, dds4ccm {
+project (DDS4CCM_lem_gen) : dds4ccm, ciaoidldefaults {
   custom_only = 1
   after += DDS4CCM_idl_gen
   idlflags += -I$(CIAO_ROOT)/connectors \

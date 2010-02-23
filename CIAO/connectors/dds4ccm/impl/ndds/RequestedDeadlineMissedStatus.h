@@ -20,6 +20,7 @@ operator<<= (::DDS::RequestedDeadlineMissedStatus &ddsstatus, const ::DDS_Reques
   ddsstatus.last_instance_handle <<= status.last_instance_handle;
 }
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS_RequestedDeadlineMissedStatus &ddsstatus, const ::DDS::RequestedDeadlineMissedStatus & status)
 {
@@ -27,6 +28,7 @@ operator<<= (::DDS_RequestedDeadlineMissedStatus &ddsstatus, const ::DDS::Reques
   ddsstatus.total_count_change = status.total_count_change;
   ddsstatus.last_instance_handle <<= status.last_instance_handle;
 }
+#endif
 
 inline void
 operator>>= (const ::DDS_RequestedDeadlineMissedStatus &status, ::DDS::RequestedDeadlineMissedStatus & ddsstatus)
@@ -36,6 +38,7 @@ operator>>= (const ::DDS_RequestedDeadlineMissedStatus &status, ::DDS::Requested
   ddsstatus.last_instance_handle <<= status.last_instance_handle;
 }
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator>>= (const ::DDS::RequestedDeadlineMissedStatus &status, ::DDS_RequestedDeadlineMissedStatus & ddsstatus)
 {
@@ -43,5 +46,6 @@ operator>>= (const ::DDS::RequestedDeadlineMissedStatus &status, ::DDS_Requested
   ddsstatus.total_count_change = status.total_count_change;
   ddsstatus.last_instance_handle <<= status.last_instance_handle;
 }
+#endif
 
 #endif /* CIAO_RTI_REQUESTEDDEADLINEMISSEDSTATUS_H */

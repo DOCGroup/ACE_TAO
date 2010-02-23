@@ -12,6 +12,10 @@
 
 #include "InstanceHandle_t.h"
 
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::InstanceHandleSeq DDS_InstanceHandleSeq;
+#endif
+
 template <typename corbaseq, typename ddsseq>
 void convert_dds_to_corba_sequence(corbaseq & target, const ddsseq& source) {
   target.length (source.length ());
@@ -27,6 +31,7 @@ operator<<= (::DDS::InstanceHandleSeq &ddsinstancehandleseqseq, const ::DDS_Inst
   convert_dds_to_corba_sequence (ddsinstancehandleseqseq, instancehandleseq);
 }
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS_InstanceHandleSeq &ddsinstancehandleseqseq, const ::DDS::InstanceHandleSeq & instancehandleseq)
 {
@@ -36,6 +41,7 @@ operator<<= (::DDS_InstanceHandleSeq &ddsinstancehandleseqseq, const ::DDS::Inst
       ddsinstancehandleseqseq[index] <<= instancehandleseq[index];
     }
 }
+#endif
 
 inline void
 operator>>= (const ::DDS_InstanceHandleSeq &instancehandle, ::DDS::InstanceHandleSeq & ddsinstancehandleseqseq)
@@ -47,6 +53,7 @@ operator>>= (const ::DDS_InstanceHandleSeq &instancehandle, ::DDS::InstanceHandl
     }
 }
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator>>= (const ::DDS::InstanceHandleSeq &instancehandle, ::DDS_InstanceHandleSeq & ddsinstancehandleseqseq)
 {
@@ -56,5 +63,6 @@ operator>>= (const ::DDS::InstanceHandleSeq &instancehandle, ::DDS_InstanceHandl
       ddsinstancehandleseqseq[index] <<= instancehandle[index];
     }
 }
+#endif
 
 #endif /* CIAO_RTI_INSTANCEHANDLESEQ_H */
