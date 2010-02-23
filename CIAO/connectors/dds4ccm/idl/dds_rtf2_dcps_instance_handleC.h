@@ -21,10 +21,14 @@
 // TAO_IDL - Generated from
 // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_root/root_ch.cpp:62
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+
 namespace DDS
 {
   extern DDS4CCM_STUB_Export ::DDS::InstanceHandle_t const HANDLE_NIL;
 }
+
+#endif
 
 #include /**/ "ace/post.h"
 

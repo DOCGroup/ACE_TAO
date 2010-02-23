@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p DDS_ECT_Base -l ../lib -o ../lib -c controller -u DDS Sender"
 
-project(DDS_ECT_Sender_idl_gen) : componentidldefaults {
+project(DDS_ECT_Sender_idl_gen) : componentidldefaults, dds4ccm {
   after += DDS_ECT_Connector_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SENDER_STUB_Export \
@@ -19,7 +19,7 @@ project(DDS_ECT_Sender_idl_gen) : componentidldefaults {
   }
 }
 
-project(DDS_ECT_Sender_lem_gen) : ciaoidldefaults {
+project(DDS_ECT_Sender_lem_gen) : ciaoidldefaults, dds4ccm {
   after += DDS_ECT_Sender_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SENDER_LEM_STUB_Export \

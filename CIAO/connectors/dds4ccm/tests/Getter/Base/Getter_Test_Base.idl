@@ -8,7 +8,7 @@
 #ifndef GETTER_TEST_BASE_IDL
 #define GETTER_TEST_BASE_IDL
 
-#pragma ndds typesupport "Base/Getter_Test_BaseSupport.h"
+#pragma ndds typesupport "Base/Getter_Test_BaseTypeSupportC.h"
 #pragma opendds typesupport "Base/Getter_Test_BaseTypeSupportC.h"
 
 #pragma DCPS_DATA_TYPE "GetterTest"

@@ -21,6 +21,7 @@ operator<<= (::DDS::SampleRejectedStatus &ddsstatus, const ::DDS_SampleRejectedS
   ddsstatus.last_instance_handle <<= status.last_instance_handle;
 }
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS_SampleRejectedStatus &ddsstatus, const ::DDS::SampleRejectedStatus & status)
 {
@@ -29,6 +30,7 @@ operator<<= (::DDS_SampleRejectedStatus &ddsstatus, const ::DDS::SampleRejectedS
   ddsstatus.last_reason = static_cast < ::DDS_SampleRejectedStatusKind> (status.last_reason);
   ddsstatus.last_instance_handle <<= status.last_instance_handle;
 }
+#endif
 
 inline void
 operator>>= (const ::DDS_SampleRejectedStatus &status, ::DDS::SampleRejectedStatus & ddsstatus)
@@ -39,6 +41,7 @@ operator>>= (const ::DDS_SampleRejectedStatus &status, ::DDS::SampleRejectedStat
   ddsstatus.last_instance_handle <<= status.last_instance_handle;
 }
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator>>= (const ::DDS::SampleRejectedStatus &status, ::DDS_SampleRejectedStatus & ddsstatus)
 {
@@ -47,5 +50,6 @@ operator>>= (const ::DDS::SampleRejectedStatus &status, ::DDS_SampleRejectedStat
   ddsstatus.last_reason = static_cast < ::DDS_SampleRejectedStatusKind> (status.last_reason);
   ddsstatus.last_instance_handle <<= status.last_instance_handle; 
 }
+#endif
 
 #endif /* CIAO_RTI_SAMPLEREJECTEDSTATUS_H */

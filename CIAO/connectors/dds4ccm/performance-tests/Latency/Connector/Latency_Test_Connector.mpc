@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p DDS_Latency_Test_Base -l .. -o ../lib -u DDS Latency_Test_Connector"
 
-project(DDS_Latency_Test_Connector_idl_gen) : connectoridldefaults {
+project(DDS_Latency_Test_Connector_idl_gen) : connectoridldefaults, dds4ccm {
   after += DDS4CCM_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=LATENCY_TEST_CONNECTOR_STUB_Export \
@@ -19,7 +19,7 @@ project(DDS_Latency_Test_Connector_idl_gen) : connectoridldefaults {
   }
 }
 
-project(DDS_Latency_Test_Connector_lem_gen) : ciaoidldefaults {
+project(DDS_Latency_Test_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   custom_only = 1
   after += DDS_Latency_Test_Connector_idl_gen
   idlflags += -Wb,stub_export_macro=LATENCY_TEST_CONNECTOR_LEM_STUB_Export \
@@ -32,7 +32,7 @@ project(DDS_Latency_Test_Connector_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(DDS_Lat_Test_Connector_lem_stub) : ccm_svnt, dds4ccm_base   {
+project(DDS_Lat_Test_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
   after += DDS_Latency_Test_Connector_lem_gen DDS_Latency_Test_Connector_stub DDS_Latency_Test_Base_stub DDS4CCM_lem_stub
   libs  += DDS_Latency_Test_Base_stub DDS_Latency_Test_Connector_stub DDS4CCM_lem_stub
   libpaths += ../lib
@@ -58,7 +58,7 @@ project(DDS_Lat_Test_Connector_lem_stub) : ccm_svnt, dds4ccm_base   {
   }
 }
 
-project(DDS_Latency_Test_Connector_stub) : ccm_stub, dds4ccm_base   {
+project(DDS_Latency_Test_Connector_stub) : ccm_stub, dds4ccm_base {
   after += DDS_Latency_Test_Connector_idl_gen DDS_Latency_Test_Base_stub
   libs  += DDS_Latency_Test_Base_stub
   libpaths += ../lib
