@@ -1,3 +1,14 @@
+Tue Feb 23 02:39:25 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * examples/Hello/Receiver/Receiver_exec.h:
+        * examples/Hello/Receiver/Receiver_exec.cpp:
+        * examples/Hello/Sender/Sender_exec.h:
+        * examples/Hello/Sender/Sender_exec.cpp:
+
+          Update this example. It was out of date and as such, it 
+          wouldn't work with CoSMIC generated descriptors (due
+          to missing entry points).
+
 Mon Feb 22 22:13:59 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * examples/Null_Component/descriptors/NodeMap.dat:
@@ -7,7 +18,7 @@ Mon Feb 22 22:13:59 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
         * examples/Null_Component/descriptors/run_test_without_ns.pl:
 
           Enhanced this script so it would deploy all cdps (component deployment plans)
-          that are in the directory. 
+          that are in the directory.
 
 Mon Feb 22 21:39:08 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
