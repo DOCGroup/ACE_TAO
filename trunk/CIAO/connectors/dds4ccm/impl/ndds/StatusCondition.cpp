@@ -5,7 +5,7 @@
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
-#include "ciao/Logger/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 namespace CIAO
 {

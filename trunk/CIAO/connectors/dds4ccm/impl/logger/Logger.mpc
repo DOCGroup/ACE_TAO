@@ -1,0 +1,15 @@
+// -*- MPC -*-
+// $Id$
+
+project(DDS4CCM_Logger): ciao_lib, taolib, acelib {
+  sharedname   = DDS4CCM_Logger
+  dynamicflags = DDS4CCM_LOGGER_BUILD_DLL
+
+  Source_Files {
+    Log_Macros.cpp
+  }
+}
+
+
+
+

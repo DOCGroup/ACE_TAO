@@ -8,7 +8,7 @@
 #include "dds4ccm/impl/ndds/DataListenerControl_T.h"
 #include "dds4ccm/impl/ndds/PortStatusListener_T.h"
 
-#include "ciao/Logger/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_Read_T<DDS_TYPE, CCM_TYPE>::DDS_Read_T (void)
@@ -28,7 +28,7 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
   const char* library_name,
   const char* profile_name)
 {
-  CIAO_TRACE ("DDS_Read_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
+  DDS4CCM_TRACE ("DDS_Read_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
 
   try
     {
@@ -63,7 +63,7 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_EMERGENCY, "DDS_Read_T::configuration_complete: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Read_T::configuration_complete: Caught unknown c++ exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -74,7 +74,7 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE>::activate (
   ::CCM_DDS::PortStatusListener_ptr listener,
   ACE_Reactor* reactor)
 {
-  CIAO_TRACE ("DDS_Read_T<DDS_TYPE, CCM_TYPE>::activate");
+  DDS4CCM_TRACE ("DDS_Read_T<DDS_TYPE, CCM_TYPE>::activate");
 
   try
     {
@@ -91,7 +91,7 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE>::activate (
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_EMERGENCY, "DDS_Read_T::activate: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Read_T::activate: Caught unknown c++ exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -100,7 +100,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_Read_T<DDS_TYPE, CCM_TYPE>::passivate ()
 {
-  CIAO_TRACE ("DDS_Read_T<DDS_TYPE, CCM_TYPE>::passivate");
+  DDS4CCM_TRACE ("DDS_Read_T<DDS_TYPE, CCM_TYPE>::passivate");
 
   try
     {
@@ -109,7 +109,7 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE>::passivate ()
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_EMERGENCY, "DDS_Read_T::passivate: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Read_T::passivate: Caught unknown c++ exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -119,7 +119,7 @@ void
 DDS_Read_T<DDS_TYPE, CCM_TYPE>::remove (
   ::DDS::Subscriber_ptr subscriber)
 {
-  CIAO_TRACE ("DDS_Read_T<DDS_TYPE, CCM_TYPE>::remove");
+  DDS4CCM_TRACE ("DDS_Read_T<DDS_TYPE, CCM_TYPE>::remove");
 
   try
     {
@@ -130,7 +130,7 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE>::remove (
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_EMERGENCY, "DDS_Read_T::remove: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Read_T::remove: Caught unknown c++ exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -139,7 +139,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 typename CCM_TYPE::reader_type::_ptr_type
 DDS_Read_T<DDS_TYPE, CCM_TYPE>::get_data (void)
 {
-  CIAO_TRACE ("DDS_Read_T<DDS_TYPE, CCM_TYPE>::get_data");
+  DDS4CCM_TRACE ("DDS_Read_T<DDS_TYPE, CCM_TYPE>::get_data");
 
   return &this->dds_read_;
 }
@@ -148,7 +148,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::CCM_DataReader_ptr
 DDS_Read_T<DDS_TYPE, CCM_TYPE>::get_dds_entity (void)
 {
-  CIAO_TRACE ("DDS_Read_T<DDS_TYPE, CCM_TYPE>::get_dds_entity");
+  DDS4CCM_TRACE ("DDS_Read_T<DDS_TYPE, CCM_TYPE>::get_dds_entity");
 
   return &this->rti_reader_;
 }

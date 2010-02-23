@@ -9,7 +9,7 @@
 #include "SampleRejectedStatus.h"
 #include "LivelinessChangedStatus.h"
 #include "RequestedIncompatibleQosStatus.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 namespace CIAO
 {
@@ -20,19 +20,19 @@ namespace CIAO
       RTI_SubscriberListener_i::RTI_SubscriberListener_i (::DDS::SubscriberListener_ptr p)
         : impl_ ( ::DDS::SubscriberListener::_duplicate (p))
       {
-        CIAO_TRACE ("RTI_SubscriberListener_i::RTI_SubscriberListener_i");
+        DDS4CCM_TRACE ("RTI_SubscriberListener_i::RTI_SubscriberListener_i");
       }
 
       RTI_SubscriberListener_i::~RTI_SubscriberListener_i (void)
       {
-        CIAO_TRACE ("RTI_SubscriberListener_i::~RTI_SubscriberListener_i");
+        DDS4CCM_TRACE ("RTI_SubscriberListener_i::~RTI_SubscriberListener_i");
       }
 
       void
       RTI_SubscriberListener_i::on_data_on_readers (
           ::DDSSubscriber* the_subscriber)
       {
-        CIAO_TRACE ("RTI_SubscriberListener_i::on_data_on_readers");
+        DDS4CCM_TRACE ("RTI_SubscriberListener_i::on_data_on_readers");
 
         ::DDS::Subscriber_var sub = ::DDS::Subscriber::_nil ();
         ACE_NEW (sub, RTI_Subscriber_i ());
@@ -47,7 +47,7 @@ namespace CIAO
         ::DDSDataReader* the_reader,
         const ::DDS_RequestedDeadlineMissedStatus & status)
       {
-        CIAO_TRACE ("RTI_SubscriberListener_i::on_requested_deadline_missed");
+        DDS4CCM_TRACE ("RTI_SubscriberListener_i::on_requested_deadline_missed");
 
         ::DDS::RequestedDeadlineMissedStatus ddsstatus;
         ddsstatus <<= status;
@@ -64,7 +64,7 @@ namespace CIAO
         ::DDSDataReader* the_reader,
         const ::DDS_RequestedIncompatibleQosStatus & status)
       {
-        CIAO_TRACE ("RTI_SubscriberListener_i::on_requested_incompatible_qos");
+        DDS4CCM_TRACE ("RTI_SubscriberListener_i::on_requested_incompatible_qos");
 
         ::DDS::RequestedIncompatibleQosStatus ddsstatus;
         ddsstatus <<= status;
@@ -80,7 +80,7 @@ namespace CIAO
         ::DDSDataReader* the_reader,
         const ::DDS_SampleRejectedStatus & status)
       {
-        CIAO_TRACE ("RTI_SubscriberListener_i::on_sample_rejected");
+        DDS4CCM_TRACE ("RTI_SubscriberListener_i::on_sample_rejected");
 
         ::DDS::SampleRejectedStatus ddsstatus;
         ddsstatus <<= status;
@@ -96,7 +96,7 @@ namespace CIAO
         ::DDSDataReader* the_reader,
         const ::DDS_LivelinessChangedStatus & status)
       {
-        CIAO_TRACE ("RTI_SubscriberListener_i::on_liveliness_changed");
+        DDS4CCM_TRACE ("RTI_SubscriberListener_i::on_liveliness_changed");
 
         ::DDS::LivelinessChangedStatus ddsstatus;
         ddsstatus <<= status;
@@ -111,7 +111,7 @@ namespace CIAO
       RTI_SubscriberListener_i::on_data_available (
         ::DDSDataReader* the_reader)
       {
-        CIAO_TRACE ("RTI_SubscriberListener_i::on_data_available");
+        DDS4CCM_TRACE ("RTI_SubscriberListener_i::on_data_available");
 
         ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
         ACE_NEW (dds_reader, RTI_DataReader_i ());
@@ -125,7 +125,7 @@ namespace CIAO
         ::DDSDataReader* the_reader,
         const ::DDS_SubscriptionMatchedStatus & status)
       {
-        CIAO_TRACE ("RTI_SubscriberListener_i::on_subscription_matched");
+        DDS4CCM_TRACE ("RTI_SubscriberListener_i::on_subscription_matched");
 
         ::DDS::SubscriptionMatchedStatus ddsstatus;
         ddsstatus <<= status;
@@ -141,7 +141,7 @@ namespace CIAO
         ::DDSDataReader* the_reader,
         const ::DDS_SampleLostStatus & status)
       {
-        CIAO_TRACE ("RTI_SubscriberListener_i::on_sample_lost");
+        DDS4CCM_TRACE ("RTI_SubscriberListener_i::on_sample_lost");
 
         ::DDS::SampleLostStatus ddsstatus;
         ddsstatus <<= status;

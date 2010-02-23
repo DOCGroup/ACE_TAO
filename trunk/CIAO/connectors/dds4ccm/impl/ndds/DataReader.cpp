@@ -19,7 +19,7 @@
 #include "DataReaderQos.h"
 #include "StringSeq.h"
 
-#include "ciao/Logger/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 namespace CIAO
 {
@@ -158,7 +158,7 @@ namespace CIAO
         ::DDS::DataReaderListener_ptr a_listener,
         ::DDS::StatusMask mask)
       {
-        CIAO_TRACE ("RTI_DataReader_i::set_listener");
+        DDS4CCM_TRACE ("RTI_DataReader_i::set_listener");
 
         RTI_DataReaderListener_i *rti_drl = 0;
         if (!CORBA::is_nil (a_listener))
@@ -173,13 +173,13 @@ namespace CIAO
       ::DDS::DataReaderListener_ptr
       RTI_DataReader_i::get_listener (void)
       {
-        CIAO_TRACE ("RTI_DataReader_i::get_listener");
+        DDS4CCM_TRACE ("RTI_DataReader_i::get_listener");
 
         DDSDataReaderListener *drl = this->impl ()->get_listener ();
         RTI_DataReaderListener_i *rti_drl = dynamic_cast <RTI_DataReaderListener_i *> (drl);
         if (!rti_drl)
           {
-            CIAO_DEBUG (6, (LM_DEBUG, "RTI_DataReader_i::get_listener - "
+            DDS4CCM_DEBUG (6, (LM_DEBUG, "RTI_DataReader_i::get_listener - "
                                       "DDS returned a NIL listener.\n"));
             return ::DDS::DataReaderListener::_nil ();
           }

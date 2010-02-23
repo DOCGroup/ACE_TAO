@@ -7,7 +7,7 @@
 #include "LivelinessLostStatus.h"
 #include "OfferedIncompatibleQosStatus.h"
 #include "OfferedDeadlineMissedStatus.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
@@ -20,12 +20,12 @@ namespace CIAO
       RTI_PublisherListener_i::RTI_PublisherListener_i ( ::DDS::PublisherListener_ptr p)
         : impl_ (::DDS::PublisherListener::_duplicate (p))
       {
-        CIAO_TRACE ("RTI_PublisherListener_i::RTI_PublisherListener_i");
+        DDS4CCM_TRACE ("RTI_PublisherListener_i::RTI_PublisherListener_i");
       }
 
       RTI_PublisherListener_i::~RTI_PublisherListener_i (void)
       {
-        CIAO_TRACE ("RTI_PublisherListener_i::~RTI_PublisherListener_i");
+        DDS4CCM_TRACE ("RTI_PublisherListener_i::~RTI_PublisherListener_i");
       }
 
       void
@@ -33,7 +33,7 @@ namespace CIAO
         ::DDSDataWriter* writer,
         const ::DDS_OfferedDeadlineMissedStatus & status)
       {
-        CIAO_TRACE ("RTI_PublisherListener_i::on_offered_deadline_missed");
+        DDS4CCM_TRACE ("RTI_PublisherListener_i::on_offered_deadline_missed");
 
         ::DDS::OfferedDeadlineMissedStatus ddsstatus;
         ddsstatus <<= status;
@@ -49,7 +49,7 @@ namespace CIAO
         ::DDSDataWriter* writer,
         const ::DDS_OfferedIncompatibleQosStatus & status)
       {
-        CIAO_TRACE ("RTI_PublisherListener_i::on_offered_incompatible_qos");
+        DDS4CCM_TRACE ("RTI_PublisherListener_i::on_offered_incompatible_qos");
 
         ::DDS::OfferedIncompatibleQosStatus ddsstatus;
         ddsstatus <<= status;
@@ -65,7 +65,7 @@ namespace CIAO
         ::DDSDataWriter* writer,
         const ::DDS_LivelinessLostStatus & status)
       {
-        CIAO_TRACE ("RTI_PublisherListener_i::on_liveliness_lost");
+        DDS4CCM_TRACE ("RTI_PublisherListener_i::on_liveliness_lost");
 
         ::DDS::LivelinessLostStatus ddsstatus;
         ddsstatus <<= status;
@@ -81,7 +81,7 @@ namespace CIAO
         ::DDSDataWriter* writer,
         const ::DDS_PublicationMatchedStatus & status)
       {
-        CIAO_TRACE ("RTI_PublisherListener_i::on_publication_matched");
+        DDS4CCM_TRACE ("RTI_PublisherListener_i::on_publication_matched");
 
         ::DDS::PublicationMatchedStatus ddsstatus;
         ddsstatus <<= status;

@@ -2,18 +2,18 @@
 #include "dds4ccm/impl/ndds/Utils.h"
 
 #include "dds4ccm/impl/ndds/DataWriter.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::DataWriterListener_T (void)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::DataWriterListener_T::DataWriterListener_T");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DataWriterListener_T::DataWriterListener_T");
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::~DataWriterListener_T (void)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::DataWriterListener_T::~DataWriterListener_T");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DataWriterListener_T::~DataWriterListener_T");
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -60,7 +60,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::StatusMask
 CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::get_mask (void)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::DataWriterListener_T::get_mask");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DataWriterListener_T::get_mask");
   return 0;
 }
 
