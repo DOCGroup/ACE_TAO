@@ -449,14 +449,22 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
   if (bt->node_type () == AST_Decl::NT_typedef)
     {
       alias = AST_Typedef::narrow_from_decl (bt);
+      
+      if (ACE_OS::strcmp (alias->full_name (), "CORBA::LongSeq") == 0)
+        {
+          *os << "Param_Test::UB_Long_Seq";
+          
+          return;
+        }
     }
 
   AST_Decl::NodeType nt = bt->unaliased_type ()->node_type ();
+  ACE_CDR::ULong bound = 0;
 
   if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)
     {
       AST_String *s = AST_String::narrow_from_decl (bt->unaliased_type  ());
-      ACE_CDR::ULong bound = s->max_size ()->ev ()->u.ulval;
+      bound = s->max_size ()->ev ()->u.ulval;
 
       // If the (w)string is unbounded, code is generated below by the
       // last line of this method, whether bt is a typedef or not.
@@ -528,7 +536,21 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
     
   // For types other than the 4 above, don't unalias the type name
   // in case it is a sequence or array.
-  *os << bt->name ();
+  if (nt == AST_Decl::NT_string && bound == 0)
+    {
+      if (ACE_OS::strcmp (this->ctx_->node ()->local_name ()->get_string (), "test_unbounded_string") == 0)
+        {
+          *os << "std::string";
+        }
+      else
+        {
+          *os << "char *";
+        }
+    }
+  else
+    {
+      *os << bt->name ();
+    }
 
   if (nt == AST_Decl::NT_array)
     {

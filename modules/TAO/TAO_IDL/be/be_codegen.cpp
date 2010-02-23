@@ -272,6 +272,9 @@ TAO_CodeGen::start_client_header (const char *fname)
     }
   else
     {
+      *this->client_header_ << "#include <string>";
+      *this->client_header_ << "\n#include <vector>\n";
+
       this->gen_stub_hdr_includes ();
 
       size_t const nfiles = idl_global->n_included_idl_files ();

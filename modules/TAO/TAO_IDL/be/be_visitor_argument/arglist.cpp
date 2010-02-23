@@ -316,6 +316,22 @@ int be_visitor_args_arglist::visit_sequence (be_sequence *node)
 int be_visitor_args_arglist::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
+  ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
+  
+  if (node->width () == (long) sizeof (char) && bound == 0)
+    {
+      switch (this->direction ())
+        {
+          case AST_Argument::dir_IN:
+            *os << "const std::string";
+            break;
+          default:
+            *os << "std::string &";
+            break;
+        }
+        
+      return 0;
+    }
 
   if (node->width () == (long) sizeof (char))
     {
@@ -393,6 +409,13 @@ int be_visitor_args_arglist::visit_union (be_union *node)
 
 int be_visitor_args_arglist::visit_typedef (be_typedef *node)
 {
+  if (ACE_OS::strcmp (node->full_name (), "CORBA::LongSeq") == 0)
+    {
+      *this->ctx_->stream () << "Param_Test::UB_Long_Seq &";
+      
+      return 0;
+    }
+    
   this->ctx_->alias (node);
 
   if (node->primitive_base_type ()->accept (this) == -1)

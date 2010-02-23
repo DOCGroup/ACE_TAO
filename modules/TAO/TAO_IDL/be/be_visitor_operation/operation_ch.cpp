@@ -41,9 +41,6 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
      
-  // Every operation is declared virtual in the client code.
-  *os << "virtual ";
-
   // STEP I: generate the return type.
   be_type *bt = be_type::narrow_from_decl (node->return_type ());
 
@@ -55,6 +52,15 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
                          "Bad return type\n"),
                         -1);
     }
+    
+  if (ACE_OS::strcmp (bt->full_name (), "CORBA::LongSeq") == 0)
+    {
+      *os << "typedef std::vector< ::CORBA::Long> UB_Long_Seq;"
+          << be_nl << be_nl;
+    }
+
+  // Every operation is declared virtual in the client code.
+  *os << "virtual ";
 
   // Grab the right visitor to generate the return type.
   be_visitor_context ctx (*this->ctx_);
