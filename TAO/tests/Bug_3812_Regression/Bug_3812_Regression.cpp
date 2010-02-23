@@ -22,8 +22,8 @@ static int global_purged_count = 0;
 
 static TCM* tcm = 0;
 static int result = 0;
-static ACE_Thread_Mutex test_lock;
-static TAO_Condition<ACE_Thread_Mutex> test_condition(test_lock);
+static TAO_SYNCH_MUTEX test_lock;
+static TAO_Condition<TAO_SYNCH_MUTEX> test_condition(test_lock);
 static int n_threads = 1;
 
 int
@@ -76,7 +76,7 @@ class Client_Task : public ACE_Task_Base
    
   int svc ()
   {
-    ACE_Guard<ACE_Thread_Mutex> lock (test_lock);
+    ACE_Guard<TAO_SYNCH_MUTEX> lock (test_lock);
     process_listen_point ();
     test_condition.signal ();
     return 0;
