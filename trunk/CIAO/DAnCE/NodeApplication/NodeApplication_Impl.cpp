@@ -1126,7 +1126,14 @@ NodeApplication_Impl::create_colocation_groups (void)
 
   for (CORBA::ULong i = 0; i < this->plan_.localityConstraint.length (); ++i)
     {
-      if (this->plan_.localityConstraint[i].constraint != ::Deployment::PlanSameProcess)
+      if (this->plan_.localityConstraint[i].constraint == ::Deployment::PlanNoConstraint)
+	{
+	  DANCE_DEBUG (10, (LM_INFO, DLINFO
+			    ACE_TEXT ("NodeApplication_Impl::create_colocation_groups - ")
+			    ACE_TEXT ("Skipping NoConstraint Colocation group\n")));
+	  continue;
+	}
+      else if (this->plan_.localityConstraint[i].constraint != ::Deployment::PlanSameProcess)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO
                         ACE_TEXT ("NodeApplication_Impl::create_colocation_groups - ")
@@ -1134,7 +1141,7 @@ NodeApplication_Impl::create_colocation_groups (void)
                         i));
           continue;
         }
-
+      
       ::CORBA::ULongSeq const &instances =
         this->plan_.localityConstraint[i].constrainedInstanceRef;
 
@@ -2043,13 +2050,22 @@ NodeApplication_Impl::connect_receptacle (const ::Deployment::PlanConnectionDesc
         {
           DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - ")
                        ACE_TEXT("connect SimplexReceptacle for [%C] started\n"), recep_name.c_str()));
+	  if (CORBA::is_nil (facet))
+	    {
+	      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("NodeApplication_Impl::connect_receptacle - ")
+			       "Object reference for facet to connect to [%C] was nil\n",
+			       recep_name.c_str ()));
+	      throw ::Deployment::InvalidConnection ("",
+						     "Provided facet reference was nil\n");
+	    }
+
           res = facet->connect (recep_name.c_str(), receptacle);
           DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - connect finished\n")));
         }
     }
   catch (const ::Components::InvalidName& )
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_receptacle - ")
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - ")
                    ACE_TEXT("Components::CCMObject_var::connect() returned ::Components::InvalidName exception\n")));
       throw ::Deployment::StartError("",
                                      "Received InvalidName exception while connecting receptacle.");
