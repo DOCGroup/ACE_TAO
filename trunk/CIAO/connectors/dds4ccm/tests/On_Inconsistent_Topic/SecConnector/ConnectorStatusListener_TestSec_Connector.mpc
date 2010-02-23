@@ -97,11 +97,11 @@ project(DDS_OIT_TestSec_Connector_exec) : ciao_executor, dds4ccm_impl {
   }
 
   Source_Files {
-    CSL_TestSec_Connector_conn.cpp
+    ConnectorStatusListener_TestSec_Connector_conn.cpp
   }
 
   Header_Files {
-    CSL_TestSec_Connector_conn.h
+    ConnectorStatusListener_TestSec_Connector_conn.h
     ConnectorStatusListener_TestSec_Connector_conn_export.h
   }
 
