@@ -1,3 +1,17 @@
+Tue Feb 23 13:40:49 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added new 3832 tests
+
+        * ciao/Logger/Logger_Service.cpp:
+        * ciao/Logger/Logger_Service.h:
+        * DAnCE/Logger/Logger_Service.cpp:
+        * DAnCE/Logger/Logger_Service.h:
+
+        * tests/Bug_3832_Regression/*
+        * DAnCE/tests/Bug_3832_Regression/*
+          Added new test for 3832
+
 Tue Feb 23 12:45:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/logger/Log_Macros.h:

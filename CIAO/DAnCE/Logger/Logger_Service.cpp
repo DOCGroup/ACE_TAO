@@ -135,16 +135,15 @@ namespace DAnCE
   int
   Logger_Service::Initializer (void)
   {
-    return ACE_Service_Config::process_directive (ace_svc_desc_Logger_Service);
+    return ACE_Service_Config::process_directive (ace_svc_desc_DANCE_LOGGER_SERVICE);
   }
 } // DAnCE
 
-using namespace DAnCE;
-ACE_STATIC_SVC_DEFINE (Logger_Service,
+ACE_STATIC_SVC_DEFINE (DANCE_LOGGER_SERVICE,
                        ACE_TEXT ("DAnCE_Logger"),
                        ACE_SVC_OBJ_T,
-                       &ACE_SVC_NAME (Logger_Service),
+                       &ACE_SVC_NAME (DANCE_LOGGER_SERVICE),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
-ACE_FACTORY_DEFINE (DAnCE_Logger, Logger_Service)
+ACE_FACTORY_DEFINE (DAnCE_Logger, DANCE_LOGGER_SERVICE)
 
