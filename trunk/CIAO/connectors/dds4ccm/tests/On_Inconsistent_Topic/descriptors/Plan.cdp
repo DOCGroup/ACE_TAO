@@ -123,7 +123,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_ConnectorStatusListener_TestSec_ConnectorStatusListener_TestSec_Connector_Impl</string>
+          <string>create_ConnectorStatusListener_Test_ConnectorStatusListener_TestSec_Connector_Impl</string>
         </value>
       </value>
     </execParameter>
