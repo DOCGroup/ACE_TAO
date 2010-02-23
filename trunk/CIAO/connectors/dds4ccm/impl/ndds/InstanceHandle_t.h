@@ -93,6 +93,7 @@ operator!= (const ::DDS::InstanceHandle_t & ccm_instancehandle, const DDS_Instan
 #endif
 
 #if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::InstanceHandle_t DDS_InstanceHandle_t;
 inline void
 operator<<= (::DDS::InstanceHandle_t &ddsinstancehandle, const ::DDS_InstanceHandle_t & instancehandle)
 {

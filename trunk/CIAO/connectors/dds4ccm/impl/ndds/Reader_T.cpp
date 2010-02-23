@@ -285,8 +285,8 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_all (
   // Count the number of valid samples
   CORBA::ULong const nr_of_valid_samples = this->get_nr_valid_samples (sample_info);
   DDS4CCM_DEBUG (6, (LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all - ")
-                          ACE_TEXT ("total number of samples <%u> - ")
-                          ACE_TEXT ("valid number of samples <%u>\n"),
+                            ACE_TEXT ("total number of samples <%u> - ")
+                            ACE_TEXT ("valid number of samples <%u>\n"),
                             data.length (),
                             nr_of_valid_samples));
 

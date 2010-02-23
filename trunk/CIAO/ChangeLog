@@ -1,3 +1,31 @@
+Tue Feb 23 13:25:49 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Base/Hello_Base.idl
+        * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.idl
+        * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl
+          Added various pragma's
+
+        * connectors/dds4ccm/idl/dds4ccm.mpc
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl
+        * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener_T.h
+        * connectors/dds4ccm/impl/ndds/Getter_T.h
+        * connectors/dds4ccm/impl/ndds/InstanceHandle_t.h
+        * connectors/dds4ccm/impl/ndds/InstanceHandleSeq.h
+        * connectors/dds4ccm/impl/ndds/Publisher.h
+        * connectors/dds4ccm/impl/ndds/PublisherListener.h
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.h
+        * connectors/dds4ccm/impl/ndds/QosPolicyCountSeq.h
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp
+        * connectors/dds4ccm/impl/ndds/RequestedDeadlineMissedStatus.h
+        * connectors/dds4ccm/impl/ndds/StringSeq.h
+        * connectors/dds4ccm/impl/ndds/Subscriber.h
+        * MPC/config/ciaoidldefaults.mpb
+        * MPC/config/componentidldefaults.mpb
+          Portability changes
+
 Tue Feb 23 14:08:20 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc:

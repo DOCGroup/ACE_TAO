@@ -9,6 +9,11 @@
 #ifndef CIAO_RTI_STRINGSEQ_T_H
 #define CIAO_RTI_STRINGSEQ_T_H
 
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::StringSeq DDS_StringSeq;
+typedef long DDS_Long;
+#endif
+
 inline void
 operator<<= (::DDS::StringSeq & string_seq, const ::DDS_StringSeq & dds_string_seq)
 {
@@ -19,6 +24,7 @@ operator<<= (::DDS::StringSeq & string_seq, const ::DDS_StringSeq & dds_string_s
     }
 }
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS_StringSeq & dds_string_seq, const ::DDS::StringSeq & string_seq)
 {
@@ -32,5 +38,6 @@ operator<<= (::DDS_StringSeq & dds_string_seq, const ::DDS::StringSeq & string_s
     dds_string_seq.from_array (parameterlist, string_seq.length ());
     delete [] parameterlist;
 }
+#endif
 
 #endif /* CIAO_RTI_STRINGSEQ_T_H */

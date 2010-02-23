@@ -11,8 +11,13 @@
 
 #include "DomainParticipant.h"
 
+#include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_impl_export.h"
 #include "tao/LocalObject.h"
+
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::ContentFilteredTopic DDSContentFilteredTopic;
+#endif
 
 namespace CIAO
 {
