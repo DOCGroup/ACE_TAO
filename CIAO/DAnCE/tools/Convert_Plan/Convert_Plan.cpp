@@ -16,11 +16,11 @@ void
 usage (void)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("usage: dance_split_plan [options]\n")
-	      ACE_TEXT ("Converts a provided plan to CDR.  If no output file is nominated, ")
-	      ACE_TEXT ("the input XML plan will be validated against schema and the program will exit\n")
-	      ACE_TEXT ("\t-x <plan>\t\tXML Encoded input plan\n")
-	      ACE_TEXT ("\t-o <file>\t\tOutput destination for converted plan\n")
-	      ));
+              ACE_TEXT ("Converts a provided plan to CDR.  If no output file is nominated, ")
+              ACE_TEXT ("the input XML plan will be validated against schema and the program will exit\n")
+              ACE_TEXT ("\t-x <plan>\t\tXML Encoded input plan\n")
+              ACE_TEXT ("\t-o <file>\t\tOutput destination for converted plan\n")
+              ));
 }
 
 bool
@@ -40,22 +40,22 @@ parse_args (int argc, ACE_TCHAR *argv [])
   while ((c = get_opt ()) != EOF)
     {
       switch (c)
-	{
-	case 'x':
-	  input_filename = get_opt.opt_arg ();
-	  break;
-	  
-	case 'o':
-	  output_filename = get_opt.opt_arg ();
-	  break;
+        {
+        case 'x':
+          input_filename = get_opt.opt_arg ();
+          break;
+          
+        case 'o':
+          output_filename = get_opt.opt_arg ();
+          break;
 
-	case 'h':
-	  usage ();
-	  return false;
-	default: 
-	  usage ();
-	  return false;
-	}
+        case 'h':
+          usage ();
+          return false;
+        default: 
+          usage ();
+          return false;
+        }
     }
   
   return true;
@@ -79,38 +79,38 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
         }
       
       DANCE_DEBUG (6, (LM_TRACE, DLINFO
-		       ACE_TEXT("Convert_Plan - initializing ORB\n")));
+                       ACE_TEXT("Convert_Plan - initializing ORB\n")));
       
       // Need an ORB for the Config handlers
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
       
       if (!parse_args (argc, argv))
-	{
-	  return -1;
-	}
+        {
+          return -1;
+        }
       
       if (!input_filename)
-	{
-	  DANCE_ERROR (1, (LM_ERROR, DLINFO "Convert_Plan - " 
-			   "No input filename provided\n"));
-	  return -1;
-	}
+        {
+          DANCE_ERROR (1, (LM_ERROR, DLINFO "Convert_Plan - " 
+                           "No input filename provided\n"));
+          return -1;
+        }
 
       auto_ptr <Deployment::DeploymentPlan> plan (DAnCE::Convert_Plan::read_xml_plan (input_filename));
       
       if (!plan.get ())
-	{
-	  DANCE_ERROR (1, (LM_ERROR, DLINFO "Convert_Plan - "
-			   "Unable to load an XML based plan\n"));
-	  return -1;
-	}
+        {
+          DANCE_ERROR (1, (LM_ERROR, DLINFO "Convert_Plan - "
+                           "Unable to load an XML based plan\n"));
+          return -1;
+        }
       
       if (!output_filename)
-	{
-	  DANCE_DEBUG (2, (LM_DEBUG, DLINFO "Convert_Plan - "
-			   "XML Input file validated correctly with no output file specifed, exiting\n"));
-	  return 0;
-	}
+        {
+          DANCE_DEBUG (2, (LM_DEBUG, DLINFO "Convert_Plan - "
+                           "XML Input file validated correctly with no output file specifed, exiting\n"));
+          return 0;
+        }
 
       DAnCE::Convert_Plan::write_cdr_plan (output_filename, *plan);
     }
