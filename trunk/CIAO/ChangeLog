@@ -1,3 +1,9 @@
+Tue Feb 23 03:02:27 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * bin/ciao_tests.lst:
+
+          Added the test scripts below to the daily regression tests.
+
 Tue Feb 23 02:55:31 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * examples/Hello/descriptors/NodeMap.dat:
