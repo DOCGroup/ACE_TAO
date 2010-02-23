@@ -1,3 +1,30 @@
+Tue Feb 23 09:46:57 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_3827_Regression/test.cpp:
+        * tests/Bug_3827_Regression/Message.idl:
+        * tests/Bug_3827_Regression/run_test.pl:
+        * tests/Bug_3827_Regression/README:
+        * tests/Bug_3827_Regression/Bug_3827_Regression.mpc:
+        * tao/ORB_Core.cpp:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.h:
+          Added a test for bug#3827 and fixed it. Now access or changes to
+          valuetype_adapter_ in ORB_Core is protected by a lock.
+
+        * tests/Bug_3826_Regression/orb_svc.conf:
+        * tests/Bug_3826_Regression/server.cpp:
+        * tests/Bug_3826_Regression/README:
+        * tests/Bug_3826_Regression/Bug_3826_Regression.mpc:
+        * tests/Bug_3826_Regression/run_test.pl:
+        * tao/TAO_Internal.cpp:
+          Added a test for bug#3826 and fixed it. If the first ORB in created
+          with -ORBGestalt LOCAL it will have a local configuration and this
+          configuration will not leak into any ORBs created afterwards.
+
+        * bin/tao_orb_tests.lst:
+          Scheduled tests for bug#3826 and bug#3827 to run in the nightly
+          builds.
+
 Mon Feb 22 23:04:23 UTC 2010  Yan Dai  <dai_y@ociweb.com>
 
 

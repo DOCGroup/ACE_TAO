@@ -820,6 +820,21 @@ public:
   /// Return the valuetype adapter
   TAO_Valuetype_Adapter *valuetype_adapter (void);
 
+#if !defined(CORBA_E_MICRO)
+  // Value factory operations  (CORBA 2.3 ptc/98-10-05 Ch. 4.2 p.4-7)
+  CORBA::ValueFactory register_value_factory (
+    const char *repository_id,
+    CORBA::ValueFactory factory);
+#endif
+
+#if !defined(CORBA_E_MICRO)
+  void unregister_value_factory (const char * repository_id);
+#endif
+
+#if !defined(CORBA_E_MICRO)
+  CORBA::ValueFactory lookup_value_factory (const char *repository_id);
+#endif
+
   /// Get the IOR Interceptor adapter. If not created, this method will try
   /// to create one.
   TAO_IORInterceptor_Adapter *ior_interceptor_adapter (void);

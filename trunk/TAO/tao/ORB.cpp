@@ -1722,25 +1722,9 @@ CORBA::ValueFactory
 CORBA::ORB::register_value_factory (const char *repository_id,
                                     CORBA::ValueFactory factory)
 {
-  TAO_Valuetype_Adapter *vta = this->orb_core ()->valuetype_adapter ();
+  this->check_shutdown ();
 
-  if (vta)
-    {
-      int const result = vta->vf_map_rebind (repository_id, factory);
-
-      if (result == 0) // No previous factory found
-        {
-          return 0;
-        }
-
-      if (result == -1)
-        {
-          // Error on bind.
-          throw ::CORBA::MARSHAL ();
-        }
-    }
-
-  return factory;    // previous factory was found
+  return this->orb_core_->register_value_factory (repository_id, factory);
 }
 #endif
 
@@ -1748,13 +1732,9 @@ CORBA::ORB::register_value_factory (const char *repository_id,
 void
 CORBA::ORB::unregister_value_factory (const char *repository_id)
 {
-  TAO_Valuetype_Adapter *vta = this->orb_core ()->valuetype_adapter ();
+  this->check_shutdown ();
 
-  if (vta)
-    {
-      // Dont care whther it was successful or not!
-      (void) vta->vf_map_unbind (repository_id);
-    }
+  this->orb_core_->unregister_value_factory (repository_id);
 }
 #endif
 
@@ -1762,14 +1742,9 @@ CORBA::ORB::unregister_value_factory (const char *repository_id)
 CORBA::ValueFactory
 CORBA::ORB::lookup_value_factory (const char *repository_id)
 {
-  TAO_Valuetype_Adapter *vta = this->orb_core ()->valuetype_adapter ();
+  this->check_shutdown ();
 
-  if (vta)
-    {
-      return vta->vf_map_find (repository_id);
-    }
-
-  return 0;
+  return this->orb_core_->lookup_value_factory (repository_id);
 }
 #endif
 
