@@ -1,9 +1,10 @@
-Tue Feb 23 03:02:27 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+Tue Feb 23 04:03:46 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
-        * bin/ciao_tests.lst:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
 
-          Added the test scripts below to the daily regression tests.
-
+          Additional error checking, and an improvements to how
+          colocation groups with NoConstraint are handled. 
+        
 Tue Feb 23 02:55:31 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * examples/Hello/descriptors/NodeMap.dat:
