@@ -1,8 +1,23 @@
+Tue Feb 23 14:34:59 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          CSLUnexpStat is not ready, yet.
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+          Layout changes.
+
+        * connectors/dds4ccm/tests/VariousTopicsEvent/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/VariousTopicsState/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/VariousTopicsState/descriptors/run_test.pl:
+          Resolved deployment errors related to generation of the connector
+          code.
+
 Tue Feb 23 14:28:22 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tools/Convert_Plan/DAnCE_Convert_Plan_export.h:
 
-          Missing file. 
+          Missing file.
 
 Tue Feb 23 13:25:49 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
