@@ -1,3 +1,19 @@
+Tue Feb 23 16:22:42 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/MPC/config/dance_convert_plan.mpb:
+        * DAnCE/MPC/config/dance_split_plan.mpb:
+        * DAnCE/MPC/config/dance_tools.mpb:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/tools/Convert_Plan/Convert_Plan.cpp:
+        * DAnCE/tools/Convert_Plan/Convert_Plan.mpc:
+        * DAnCE/tools/Convert_Plan/Convert_Plan_Impl.h:
+        * DAnCE/tools/Convert_Plan/Convert_Plan_Impl.cpp:
+        * DAnCE/tools/Split_Plan/Split_Plan.mpc:
+        * DAnCE/tools/Split_Plan/Split_Plan.cpp:
+        * DAnCE/tools/Split_Plan/Split_Plan_impl.cpp:
+
+          Fuzz fixes.
+        
 Tue Feb 23 16:13:24 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:

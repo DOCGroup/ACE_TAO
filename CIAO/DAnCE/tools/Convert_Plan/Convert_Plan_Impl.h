@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file Convert_Plan_impl.h
+ * @file Convert_Plan_Impl.h
  *
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  */
