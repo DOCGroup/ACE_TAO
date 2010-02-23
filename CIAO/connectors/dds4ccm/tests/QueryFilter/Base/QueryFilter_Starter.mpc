@@ -2,7 +2,6 @@
 
 project(DDS_QueryFilter_Starter_idl_gen) : componentidldefaults, dds4ccm {
   custom_only = 1
-  after +=
   idlflags += -Wb,stub_export_macro=READER_STARTER_STUB_Export \
               -Wb,stub_export_include=QueryFilter_Starter_stub_export.h \
               -Wb,skel_export_macro=READER_STARTER_SVNT_Export \
