@@ -123,7 +123,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_VTS_String_VTS_String_Connector_Impl</string>
+          <string>create_VTopics_VTS_String_Connector_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -175,7 +175,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_VTS_Array_VTS_Array_Connector_Impl</string>
+          <string>create_VTopics_VTS_Array_Connector_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -227,7 +227,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_VTS_Seq_VTS_Seq_Connector_Impl</string>
+          <string>create_VTopics_VTS_Seq_Connector_Impl</string>
         </value>
       </value>
     </execParameter>
