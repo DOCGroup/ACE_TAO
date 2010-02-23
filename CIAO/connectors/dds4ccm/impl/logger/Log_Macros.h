@@ -11,9 +11,7 @@
 
 // default information printed with CIAO logging messages.
 
-#include "ciao/Logger/CIAO_Logger_Export.h"
-
-extern CIAO_Logger_Export unsigned int CIAO_debug_level;
+#include "ciao/Logger/Log_Macros.h"
 
 #if !defined (CLINFO)
 # define CLINFO "(%P|%t) [%M] - %T - "

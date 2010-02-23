@@ -1,3 +1,10 @@
+Tue Feb 23 12:45:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/logger/Log_Macros.h:
+        * connectors/dds4ccm/impl/logger/Log_Macros.cpp:
+          Making use of the CIAO_Debug_Level flag of the
+          CIAO logging framework.
+
 Tue Feb 23 11:54:21 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/dds4ccm_impl.mpb:
