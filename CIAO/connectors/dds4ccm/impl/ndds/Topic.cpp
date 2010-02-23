@@ -7,7 +7,7 @@
 #include "InstanceHandle_t.h"
 #include "InconsistentTopicStatus.h"
 #include "TopicQos.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 namespace CIAO
 {
@@ -45,7 +45,7 @@ namespace CIAO
       RTI_Topic_i::set_listener (::DDS::TopicListener_ptr a_listener,
                                  ::DDS::StatusMask mask)
       {
-        CIAO_TRACE ("RTI_Topic_i::set_listener");
+        DDS4CCM_TRACE ("RTI_Topic_i::set_listener");
 
         RTI_TopicListener_i *rti_impl_list = 0;
         if (!CORBA::is_nil (a_listener))
@@ -60,13 +60,13 @@ namespace CIAO
       ::DDS::TopicListener_ptr
       RTI_Topic_i::get_listener (void)
       {
-        CIAO_TRACE ("RTI_Topic_i::get_listener");
+        DDS4CCM_TRACE ("RTI_Topic_i::get_listener");
 
         DDSTopicListener *rti_topic_list = this->impl ()->get_listener ();
         RTI_TopicListener_i *list_proxy = dynamic_cast <RTI_TopicListener_i *> (rti_topic_list);
         if (!list_proxy)
           {
-            CIAO_DEBUG (6, (LM_DEBUG, "RTI_Topic_i::get_listener - "
+            DDS4CCM_DEBUG (6, (LM_DEBUG, "RTI_Topic_i::get_listener - "
                                       "DDS returned a NIL listener.\n"));
             return ::DDS::TopicListener::_nil ();
           }

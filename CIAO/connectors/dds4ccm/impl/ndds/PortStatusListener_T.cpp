@@ -2,7 +2,7 @@
 #include "dds4ccm/impl/ndds/Utils.h"
 
 #include "dds4ccm/impl/ndds/DataReader.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds4ccm/impl/ndds/DataReaderHandler_T.h"
 #include "tao/ORB_Core.h"
 
@@ -13,13 +13,13 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::PortStatusListener_T (
       : port_status_listener_ (::CCM_DDS::PortStatusListener::_duplicate (port_status_listener)),
         reactor_ (reactor)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::PortStatusListener_T");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::PortStatusListener_T");
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::~PortStatusListener_T (void)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::~PortStatusListener_T");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::~PortStatusListener_T");
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -28,9 +28,9 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadline_m
   ::DDS::DataReader_ptr the_reader,
   const ::DDS::RequestedDeadlineMissedStatus & status)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::on_requested_deadline_missed");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::on_requested_deadline_missed");
 
-  CIAO_DEBUG (10, (LM_DEBUG, CLINFO
+  DDS4CCM_DEBUG (10, (LM_DEBUG, CLINFO
               ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
               ACE_TEXT ("total count <%d> - total change <%d> - ")
               ACE_TEXT ("last instance handle <length <%l> - isValid <%l>\n"),
@@ -50,7 +50,7 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadline_m
               ACE_Event_Handler_var safe_handler (rh);
               if (this->reactor_->notify (rh) != 0)
                 {
-                  ACE_ERROR ((LM_ERROR, CLINFO
+                  DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
                               ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
                               ACE_TEXT ("failed to use reactor.\n")));
                 }
@@ -62,13 +62,13 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadline_m
         }
       catch (...)
         {
-          CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
+          DDS4CCM_DEBUG (6, (LM_DEBUG, ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
                                  ACE_TEXT ("DDS Exception caught\n")));
         }
     }
   else
     {
-      CIAO_DEBUG (6, (LM_DEBUG,
+      DDS4CCM_DEBUG (6, (LM_DEBUG,
                   ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
                   ACE_TEXT ("No portstatus listener installed\n")));
     }
@@ -80,9 +80,9 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
   ::DDS::DataReader_ptr the_reader,
   const ::DDS::SampleLostStatus & status)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::on_sample_lost");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::on_sample_lost");
 
-  CIAO_DEBUG (10, (LM_DEBUG, CLINFO
+  DDS4CCM_DEBUG (10, (LM_DEBUG, CLINFO
               ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
               ACE_TEXT ("total count <%d> - total change <%d>\n"),
               status.total_count, status.total_count_change));
@@ -102,7 +102,7 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
               ACE_Event_Handler_var safe_handler (rh);
               if (this->reactor_->notify (rh) != 0)
                 {
-                  ACE_ERROR ((LM_ERROR, CLINFO
+                  DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
                               ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
                               ACE_TEXT ("failed to use reactor.\n")));
                 }
@@ -114,13 +114,13 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
         }
       catch (...)
         {
-          CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
+          DDS4CCM_DEBUG (6, (LM_DEBUG, ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
                                  ACE_TEXT ("DDS Exception caught\n")));
         }
     }
   else
     {
-      CIAO_DEBUG (6, (LM_DEBUG,
+      DDS4CCM_DEBUG (6, (LM_DEBUG,
                   ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
                   ACE_TEXT ("No portstatus listener installed\n")));
     }

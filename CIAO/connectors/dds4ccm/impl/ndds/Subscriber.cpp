@@ -12,7 +12,7 @@
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
-#include "ciao/Logger/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 namespace CIAO
 {
@@ -23,12 +23,12 @@ namespace CIAO
       RTI_Subscriber_i::RTI_Subscriber_i (void)
         : impl_ (0)
       {
-        CIAO_TRACE ("RTI_Subscriber_i::RTI_Subscriber_i");
+        DDS4CCM_TRACE ("RTI_Subscriber_i::RTI_Subscriber_i");
       }
 
       RTI_Subscriber_i::~RTI_Subscriber_i (void)
       {
-        CIAO_TRACE ("RTI_Subscriber_i::~RTI_Subscriber_i");
+        DDS4CCM_TRACE ("RTI_Subscriber_i::~RTI_Subscriber_i");
       }
 
       ::DDS::ReturnCode_t
@@ -129,7 +129,7 @@ namespace CIAO
         ::DDS::DataReaderListener_ptr a_listener,
         ::DDS::StatusMask mask)
       {
-        CIAO_TRACE ("RTI_Subscriber_i::create_datareader");
+        DDS4CCM_TRACE ("RTI_Subscriber_i::create_datareader");
         ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
         ACE_NEW_THROW_EX (retval,
                           RTI_DataReader_i (),
@@ -152,7 +152,7 @@ namespace CIAO
               dynamic_cast < RTI_ContentFilteredTopic_i * > (a_topic);
             if (!cf_topic)
               {
-                CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader - "
+                DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader - "
                             "Error: Unable to cast provided topic to one of its servant.\n"));
                 delete rti_drl;
                 throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
@@ -165,14 +165,14 @@ namespace CIAO
 
         if (!rti_dr)
           {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader - "
+            DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader - "
                          "Error: RTI Topic returned a nil datareader.\n"));
             delete rti_drl;
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
         else
           {
-            CIAO_DEBUG (6, (LM_DEBUG, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
+            DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
                          "Successfully created datareader.\n"));
           }
 
@@ -191,7 +191,7 @@ namespace CIAO
         ::DDS::DataReaderListener_ptr a_listener,
         ::DDS::StatusMask mask)
       {
-        CIAO_TRACE ("RTI_Subscriber_i::create_datareader_with_profile");
+        DDS4CCM_TRACE ("RTI_Subscriber_i::create_datareader_with_profile");
         ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
         ACE_NEW_THROW_EX (retval,
                           RTI_DataReader_i (),
@@ -214,7 +214,7 @@ namespace CIAO
               dynamic_cast < RTI_ContentFilteredTopic_i * > (a_topic);
             if (!cf_topic)
               {
-                CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
+                DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
                             "Error: Unable to cast provided topic to one of its servant.\n"));
                 delete rti_drl;
                 throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
@@ -235,14 +235,14 @@ namespace CIAO
 
         if (!rti_dr)
           {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
+            DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
                          "Error: RTI Topic returned a nil datareader.\n"));
             delete rti_drl;
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
         else
           {
-            CIAO_DEBUG (6, (LM_DEBUG, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
+            DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
                          "Successfully created datareader with profile <%C#%C>.\n",
                          library_name,
                          profile_name));
@@ -262,23 +262,23 @@ namespace CIAO
         RTI_DataReader_i *dr = dynamic_cast< RTI_DataReader_i *> (a_datareader);
         if (!dr)
           {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::delete_datareader - "
+            DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::delete_datareader - "
                          "Unable to cast provided object reference to servant.\n"));
             return ::DDS::RETCODE_BAD_PARAMETER;
           }
 
-        CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_Subscriber_i::delete_datareader - "
+        DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "RTI_Subscriber_i::delete_datareader - "
                      "Successfully casted provided object reference to servant.\n"));
 
         DDS_ReturnCode_t const retval = this->impl ()->delete_datareader (dr->get_impl ());
 
         if (retval != DDS_RETCODE_OK)
           {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::delete_datareader - "
+            DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::delete_datareader - "
                          "Error: Returned non-ok error code %C\n",
                          translate_retcode (retval)));
           }
-        else CIAO_DEBUG (6, (LM_INFO, CLINFO "RTI_Subscriber_i::delete_datareader - "
+        else DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "RTI_Subscriber_i::delete_datareader - "
                           "Datareader successfully  deleted\n"));
 
         return retval;
@@ -351,7 +351,7 @@ namespace CIAO
         ::DDS::SubscriberListener_ptr a_listener,
         ::DDS::StatusMask mask)
       {
-        CIAO_TRACE ("RTI_Subscriber_i::set_listener");
+        DDS4CCM_TRACE ("RTI_Subscriber_i::set_listener");
 
         RTI_SubscriberListener_i* rti_impl_list = 0;
         if (!CORBA::is_nil (a_listener))
@@ -366,13 +366,13 @@ namespace CIAO
       ::DDS::SubscriberListener_ptr
       RTI_Subscriber_i::get_listener (void)
       {
-        CIAO_TRACE ("RTI_Subscriber_i::get_listener");
+        DDS4CCM_TRACE ("RTI_Subscriber_i::get_listener");
 
         DDSSubscriberListener *rti_impl_list = this->impl ()->get_listener ();
         RTI_SubscriberListener_i *list_proxy = dynamic_cast <RTI_SubscriberListener_i *> (rti_impl_list);
         if (!list_proxy)
           {
-            CIAO_DEBUG (6, (LM_DEBUG, "RTI_Subscriber_i::get_listener - "
+            DDS4CCM_DEBUG (6, (LM_DEBUG, "RTI_Subscriber_i::get_listener - "
                                       "DDS returned a NIL listener.\n"));
             return ::DDS::SubscriberListener::_nil ();
           }

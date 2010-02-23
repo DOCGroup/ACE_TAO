@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-#include "ciao/Logger/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::DDS_TopicBase_Connector_T (void) :
@@ -18,7 +18,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
 {
-  CIAO_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
   DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete ();
   this->init_default_topic ();
   this->init_subscriber ();
@@ -29,7 +29,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (ACE_Reactor* reactor)
 {
-  CIAO_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate");
   DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate ();
   this->activate_default_topic (reactor);
   this->activate_subscriber (reactor);
@@ -40,7 +40,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
 {
-  CIAO_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate");
   this->passivate_default_topic ();
   this->passivate_subscriber ();
   this->passivate_publisher ();
@@ -51,7 +51,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
 {
-  CIAO_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove");
   this->remove_default_topic ();
   this->remove_subscriber ();
   this->remove_publisher ();
@@ -62,7 +62,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 char *
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::topic_name (void)
 {
-  CIAO_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::topic_name");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::topic_name");
   return CORBA::string_dup (this->topic_name_.in ());
 }
 
@@ -71,7 +71,7 @@ void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::topic_name (
   const char * topic_name)
 {
-  CIAO_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::topic_name");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::topic_name");
   if (this->configuration_complete_)
     {
       throw ::CCM_DDS::NonChangeable ();
@@ -87,7 +87,7 @@ void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (
   const ::DDS::StringSeq & key_fields)
 {
-  CIAO_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields");
   if (this->configuration_complete_)
     {
       throw ::CCM_DDS::NonChangeable ();
@@ -106,7 +106,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::StringSeq *
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (void)
 {
-  CIAO_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields");
 /*
     For future use, DDS_TYPE doesn't have get_typecode yet
     ::DDS_TypeCode* ptr = ::DDS_TYPE::type_support::get_typecode ();
@@ -138,7 +138,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::init_default_topic (void)
 {
-  CIAO_TRACE ("DDS_TopicBase_Connector_T::init_default_topic");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::init_default_topic");
 
   if (CORBA::is_nil (this->topic_))
     {
@@ -182,7 +182,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::init_default_topic (void)
         }
       catch (...)
         {
-          CIAO_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::init_default_topic: "
+          DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::init_default_topic: "
                                     "Caught unknown C++ exception.\n"));
           throw CORBA::INTERNAL ();
         }
@@ -193,7 +193,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::init_subscriber (void)
 {
-  CIAO_TRACE ("DDS_TopicBase_Connector_T::init_subscriber");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::init_subscriber");
 
   if (CORBA::is_nil (this->subscriber_.in ()))
     {
@@ -220,7 +220,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::init_subscriber (void)
         }
       catch (...)
         {
-          CIAO_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::init_subscriber: "
+          DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::init_subscriber: "
                                     "Caught unknown C++ exception.\n"));
           throw CORBA::INTERNAL ();
         }
@@ -231,7 +231,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::init_publisher (void)
 {
-  CIAO_TRACE ("DDS_TopicBase_Connector_T::init_publisher");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::init_publisher");
 
   if (CORBA::is_nil (this->publisher_.in ()))
     {
@@ -260,7 +260,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_default_topic (ACE_Reactor* reactor)
 {
-  CIAO_TRACE ("DDS_TopicBase_Connector_T::activate_default_topic");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::activate_default_topic");
   try
     {
       if (CORBA::is_nil (this->topiclistener_.in ()))
@@ -278,7 +278,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_default_topic (ACE_React
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::activate_default_topic: "
+      DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::activate_default_topic: "
                                 "Caught unknown C++ exception.\n"));
       throw CORBA::INTERNAL ();
     }
@@ -288,7 +288,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_subscriber (ACE_Reactor* reactor)
 {
-  CIAO_TRACE ("DDS_TopicBase_Connector_T::activate_subscriber");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::activate_subscriber");
 
   try
     {
@@ -307,7 +307,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_subscriber (ACE_Reactor*
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::activate_subscriber: "
+      DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::activate_subscriber: "
                                 "Caught unknown C++ exception.\n"));
       throw CORBA::INTERNAL ();
     }
@@ -317,7 +317,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_publisher (ACE_Reactor* reactor)
 {
-  CIAO_TRACE ("DDS_TopicBase_Connector_T::activate_publisher");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::activate_publisher");
 
   try
     {
@@ -336,7 +336,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_publisher (ACE_Reactor* 
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::activate_publisher: "
+      DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::activate_publisher: "
                                 "Caught unknown C++ exception.\n"));
       throw CORBA::INTERNAL ();
     }
@@ -346,7 +346,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::passivate_default_topic (void)
 {
-  CIAO_TRACE ("DDS_TopicBase_Connector_T::passivate_default_topic");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::passivate_default_topic");
 
   try
     {
@@ -358,7 +358,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::passivate_default_topic (void)
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::passivate_default_topic: "
+      DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::passivate_default_topic: "
                                 "Caught unknown C++ exception.\n"));
       throw CORBA::INTERNAL ();
     }
@@ -368,7 +368,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::passivate_subscriber (void)
 {
-  CIAO_TRACE ("DDS_TopicBase_Connector_T::passivate_subscriber");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::passivate_subscriber");
 
   try
     {
@@ -379,7 +379,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::passivate_subscriber (void)
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::passivate_subscriber: "
+      DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::passivate_subscriber: "
                                 "Caught unknown C++ exception.\n"));
       throw CORBA::INTERNAL ();
     }
@@ -389,7 +389,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::passivate_publisher (void)
 {
-  CIAO_TRACE ("DDS_TopicBase_Connector_T::passivate_publisher");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::passivate_publisher");
 
   try
     {
@@ -400,7 +400,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::passivate_publisher (void)
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::passivate_default_topic: "
+      DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::passivate_default_topic: "
                                 "Caught unknown C++ exception.\n"));
       throw CORBA::INTERNAL ();
     }
@@ -410,7 +410,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::remove_default_topic (void)
 {
-  CIAO_TRACE ("DDS_TopicBase_Connector_T::remove_default_topic");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::remove_default_topic");
 
   try
     {
@@ -419,7 +419,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::remove_default_topic (void)
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::remove_default_topic: "
+      DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::remove_default_topic: "
                                 "Caught unknown C++ exception.\n"));
       throw CORBA::INTERNAL ();
     }
@@ -429,7 +429,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::remove_subscriber (void)
 {
-  CIAO_TRACE ("DDS_TopicBase_Connector_T::remove_subscriber");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::remove_subscriber");
 
   try
     {
@@ -438,7 +438,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::remove_subscriber (void)
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::remove_subscriber: "
+      DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::remove_subscriber: "
                                 "Caught unknown C++ exception.\n"));
       throw CORBA::INTERNAL ();
     }
@@ -448,7 +448,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::remove_publisher (void)
 {
-  CIAO_TRACE ("DDS_TopicBase_Connector_T::remove_publisher");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::remove_publisher");
 
   try
     {
@@ -457,7 +457,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::remove_publisher (void)
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::remove_publisher: "
+      DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::remove_publisher: "
                                 "Caught unknown C++ exception.\n"));
       throw CORBA::INTERNAL ();
     }

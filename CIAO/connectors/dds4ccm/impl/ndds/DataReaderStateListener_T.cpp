@@ -2,7 +2,7 @@
 #include "dds4ccm/impl/ndds/Utils.h"
 
 #include "dds4ccm/impl/ndds/DataReader.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds4ccm/impl/ndds/DataReaderHandler_T.h"
 #include "tao/ORB_Core.h"
 
@@ -18,21 +18,21 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::DataReaderSta
     listener_ (CCM_TYPE::statelistener_type::_duplicate (listener)),
     control_ (::CCM_DDS::StateListenerControl::_duplicate (control))
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderStateListener_T::DataReaderStateListener_T");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::DataReaderStateListener_T::DataReaderStateListener_T");
 }
 
 // Implementation skeleton destructor
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::~DataReaderStateListener_T (void)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderStateListener_T::~DataReaderStateListener_T");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::DataReaderStateListener_T::~DataReaderStateListener_T");
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(::DDS::DataReader_ptr rdr)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderStateListener_T::on_data_available");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::DataReaderStateListener_T::on_data_available");
   if (CORBA::is_nil (this->control_.in ()) || this->control_->mode () == ::CCM_DDS::NOT_ENABLED)
       return;
   else
@@ -44,7 +44,7 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
           ACE_Event_Handler_var safe_handler (rh);
           if (this->reactor_->notify (rh) != 0)
             {
-              ACE_ERROR ((LM_ERROR, ACE_TEXT ("DataReaderStateHandler_T::failed to use reactor.\n")));
+              DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("DataReaderStateHandler_T::failed to use reactor.\n")));
             }
         }
       else
@@ -58,7 +58,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (::DDS::DataReader_ptr rdr)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderStateListener_T::on_data_available_i");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::DataReaderStateListener_T::on_data_available_i");
 
   if (CORBA::is_nil (this->control_.in ()) || this->control_->mode () == ::CCM_DDS::NOT_ENABLED)
     return;
@@ -68,7 +68,7 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
   if (!rd)
     {
       /* In this specific case, this will never fail */
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("DataReaderStateListener_T::dynamic_cast failed.\n")));
+      DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("DataReaderStateListener_T::dynamic_cast failed.\n")));
       return;
     }
 
@@ -78,7 +78,7 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
   if (!reader)
     {
       /* In this specific case, this will never fail */
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("DataReaderStateListener_T::narrow failed.\n")));
+      DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("DataReaderStateListener_T::narrow failed.\n")));
       return;
     }
 
@@ -105,7 +105,7 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
           return;
       else if (result != DDS_RETCODE_OK)
         {
-          CIAO_ERROR (1, (LM_ERROR, ACE_TEXT ("Unable to take data from data reader, error %d.\n"), result));
+          DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("Unable to take data from data reader, error %d.\n"), result));
         }
       if (this->control_->mode () == ::CCM_DDS::ONE_BY_ONE)
         {

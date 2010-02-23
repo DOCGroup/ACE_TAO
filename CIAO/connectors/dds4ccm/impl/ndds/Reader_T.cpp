@@ -6,7 +6,7 @@
 #include "dds4ccm/impl/ndds/SampleInfo.h"
 #include "dds4ccm/impl/ndds/Subscriber.h"
 #include "dds4ccm/impl/ndds/QueryCondition.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::Reader_T (void)
@@ -15,7 +15,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::Reader_T (void)
     profile_name_ (""),
     impl_ (0)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::Reader_T");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::Reader_T");
   #if defined DDS4CCM_USES_QUERY_CONDITION
     this->qc_ ::= DDS::QueryCondition::_nil ();
   #else
@@ -26,7 +26,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::Reader_T (void)
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::~Reader_T (void)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::~Reader_T");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::~Reader_T");
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -86,7 +86,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_without_instance (
   if (retval != DDS_RETCODE_OK && retval != DDS_RETCODE_NO_DATA)
     {
       this->impl ()->return_loan(data, sample_info);
-      CIAO_ERROR (1, (LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_without_instance - ")
+      DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_without_instance - ")
                             ACE_TEXT ("retval is %C\n"), translate_retcode(retval)));
       throw ::CCM_DDS::InternalError (retval, 0);
     }
@@ -110,7 +110,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_last (
 
   CORBA::ULong const nr_of_last_samples = this->get_nr_valid_samples (sample_info, true);
 
-  CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_last - ")
+  DDS4CCM_DEBUG (6, (LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_last - ")
                             ACE_TEXT ("total number of samples <%u> - ")
                             ACE_TEXT ("last number of samples <%u>\n"),
                             data.length(),
@@ -150,7 +150,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_all (
   this->read_without_instance (data, sample_info);
 
   CORBA::ULong const nr_of_valid_samples = this->get_nr_valid_samples (sample_info);
-  CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all - ")
+  DDS4CCM_DEBUG (6, (LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all - ")
                             ACE_TEXT ("total number of samples <%u> - ")
                             ACE_TEXT ("valid number of samples <%u>\n"),
                             data.length (),
@@ -211,7 +211,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_with_instance (
   const ::DDS_InstanceHandle_t & lookup_hnd,
   DDS_SampleInfoSeq & sample_info)
 {
-  CIAO_DEBUG (6, (LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_with_instance - ")
+  DDS4CCM_DEBUG (6, (LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_with_instance - ")
                            ACE_TEXT ("Reading with instance.\n")));
   DDS_ReturnCode_t const retval = this->impl ()->read_instance (
                                       data,
@@ -224,7 +224,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_with_instance (
   if (retval != DDS_RETCODE_OK && retval != DDS_RETCODE_NO_DATA)
     {
       this->impl ()->return_loan(data, sample_info);
-      CIAO_ERROR (1, (LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_with_instance - ")
+      DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_with_instance - ")
                             ACE_TEXT ("retval is %C\n"), translate_retcode(retval)));
       throw ::CCM_DDS::InternalError (retval, 0);
     }
@@ -246,7 +246,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_last (
   this->read_with_instance (data, lookup_hnd, sample_info);
 
   ::DDS_Long sample = data.length();
-  CIAO_DEBUG (6, (LM_INFO,
+  DDS4CCM_DEBUG (6, (LM_INFO,
               ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_last - ")
               ACE_TEXT ("total number of samples <%u>\n"),
               sample));
@@ -284,7 +284,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_all (
 
   // Count the number of valid samples
   CORBA::ULong const nr_of_valid_samples = this->get_nr_valid_samples (sample_info);
-  CIAO_DEBUG (6, (LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all - ")
+  DDS4CCM_DEBUG (6, (LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all - ")
                           ACE_TEXT ("total number of samples <%u> - ")
                           ACE_TEXT ("valid number of samples <%u>\n"),
                             data.length (),
@@ -320,18 +320,18 @@ void
 CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::create_filter (
   const ::CCM_DDS::QueryFilter & filter)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::create_filter");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::create_filter");
   ::DDS::Subscriber_var sub = this->reader_->get_subscriber ();
   if (CORBA::is_nil (sub))
     {
-      CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::create_filter - "
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::create_filter - "
                     "Error: Unable to get Subscriber.\n"));
       throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
     }
   ::DDS::DomainParticipant_var dp = sub->get_participant ();
   if (CORBA::is_nil (dp))
     {
-      CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::create_filter - "
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::create_filter - "
                     "Error: Unable to get Participant.\n"));
       throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
     }
@@ -343,7 +343,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::create_filter (
                         filter.query_parameters);
   if (CORBA::is_nil (this->cft_))
     {
-      CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::create_filter - "
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::create_filter - "
                     "Error: Unable to create ContentFilteredTopic.\n"));
       throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
     }
@@ -357,7 +357,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::create_filter (
   ::DDS::ReturnCode_t const retval = sub->delete_datareader (this->reader_);
   if (retval != ::DDS::RETCODE_OK)
     {
-      CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::create_filter - "
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::create_filter - "
                     "Error: Unable to delete DataReader.\n"));
     }
   this->reader_ = ::DDS::CCM_DataReader::_nil ();
@@ -386,7 +386,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::create_filter (
     }
   if (CORBA::is_nil(reader))
     {
-      CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::create_filter - "
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::create_filter - "
                     "Error: Unable to create a new DataReader.\n"));
     }
   this->reader_ = ::DDS::CCM_DataReader::_narrow (reader);
@@ -400,7 +400,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
   #if defined DDS4CCM_USES_QUERY_CONDITION
     if (CORBA::is_nil (this->qc_))
       {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+        DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
                       "Error: No QueryCondition set yet. First set a filter.\n"));
         throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
       }
@@ -411,7 +411,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
   #else
     if (CORBA::is_nil (this->cft_))
       {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+        DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
                       "Error: No ContentFilter set yet. First set a filter.\n"));
         throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
       }
@@ -421,7 +421,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
                                           filter->query_parameters);
     if (retval != DDS::RETCODE_OK)
       {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+        DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
                                   "Error getting expression_parameters. "
                                   "Retval is %C\n",
                                   translate_retcode(retval)));
@@ -436,7 +436,7 @@ void
 CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
   const ::CCM_DDS::QueryFilter & filter)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::filter");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::filter");
   #if defined DDS4CCM_USES_QUERY_CONDITION
     if (CORBA::is_nil (this->qc_))
       {
@@ -448,7 +448,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
                                 filter.query_parameters);
         if (CORBA::is_nil (this->qc_))
           {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+            DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
                                       "Error creating query condition."));
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
           }
@@ -459,7 +459,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
                                 filter.query_parameters);
       if (retval != ::DDS::RETCODE_OK)
         {
-          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
                                     "Error setting expression_parameters. "
                                     "Retval is %C\n",
                                     translate_retcode(retval)));
@@ -477,7 +477,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
           filter.query_parameters);
         if (retval != ::DDS::RETCODE_OK)
           {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
+            DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::filter - "
                                       "Error setting expression_parameters. "
                                       "Retval is %C\n",
                                       translate_retcode(retval)));
@@ -504,7 +504,7 @@ void
 CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::set_impl (
   ::DDS::DataReader_ptr reader)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::set_impl");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::set_impl");
 
   if (::CORBA::is_nil (reader))
     {
@@ -517,7 +517,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::set_impl (
 
       if (!rdr)
         {
-          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::data_reader - "
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::data_reader - "
                        "Unable to cast provided DataReader to servant\n"));
           throw ::CORBA::INTERNAL ();
         }
@@ -526,7 +526,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::set_impl (
 
       if (!this->impl ())
         {
-          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::data_reader - "
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::data_reader - "
                        "Unable to narrow the provided reader entity to the specific "
                        "type necessary to publish messages\n"));
           throw ::CORBA::INTERNAL ();

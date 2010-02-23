@@ -3,7 +3,7 @@
 #include "dds4ccm/impl/ndds/DataWriter.h"
 #include "dds4ccm/impl/ndds/Utils.h"
 #include "dds4ccm/impl/ndds/InstanceHandle_t.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
 CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::InstanceHandleManager_T (void)
@@ -14,7 +14,7 @@ CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::Inst
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
 CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::~InstanceHandleManager_T (void)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::InstanceHandleManager_T::~InstanceHandleManager_T");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::InstanceHandleManager_T::~InstanceHandleManager_T");
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
@@ -58,7 +58,7 @@ void
 CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::set_impl (
   ::DDS::DataWriter_ptr writer)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::InstanceHandleManager_T::set_impl");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::InstanceHandleManager_T::set_impl");
 
   if (::CORBA::is_nil (writer))
     {
@@ -70,7 +70,7 @@ CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::set_
 
       if (rdw == 0)
         {
-          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::InstanceHandleManager_T::data_writer - "
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::InstanceHandleManager_T::data_writer - "
                        "Unable to cast provided DataWriter to servant\n"));
           throw ::CORBA::INTERNAL ();
         }
@@ -79,7 +79,7 @@ CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::set_
 
       if (!this->impl_)
         {
-          CIAO_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::InstanceHandleManager_T::data_writer - "
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::InstanceHandleManager_T::data_writer - "
                        "Unable to narrow the provided writer entity to the specific "
                        "type necessary to publish messages\n"));
           throw ::CORBA::INTERNAL ();

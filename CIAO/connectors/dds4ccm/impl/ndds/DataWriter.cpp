@@ -13,7 +13,7 @@
 #include "OfferedDeadlineMissedStatus.h"
 #include "InstanceHandleSeq.h"
 
-#include "ciao/Logger/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 namespace CIAO
 {
@@ -33,7 +33,7 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DataWriter_i::set_qos (const ::DDS::DataWriterQos & /*qos*/)
       {
-        CIAO_TRACE ("RTI_DataWriter_i::set_qos");
+        DDS4CCM_TRACE ("RTI_DataWriter_i::set_qos");
         throw CORBA::NO_IMPLEMENT ();
         // Add your implementation here
       }
@@ -41,7 +41,7 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DataWriter_i::get_qos (::DDS::DataWriterQos & /*qos*/)
       {
-        CIAO_TRACE ("RTI_DataWriter_i::get_qos");
+        DDS4CCM_TRACE ("RTI_DataWriter_i::get_qos");
         throw CORBA::NO_IMPLEMENT ();
         // Add your implementation here
       }
@@ -67,7 +67,7 @@ namespace CIAO
         RTI_DataWriterListener_i *list_proxy = dynamic_cast <RTI_DataWriterListener_i *> (wr);
         if (!list_proxy)
           {
-            CIAO_DEBUG (6, (LM_DEBUG, "RTI_DataWriter_i::get_listener - "
+            DDS4CCM_DEBUG (6, (LM_DEBUG, "RTI_DataWriter_i::get_listener - "
                                       "DDS returned a NIL listener.\n"));
             return ::DDS::DataWriterListener::_nil ();
           }
@@ -165,7 +165,7 @@ namespace CIAO
       RTI_DataWriter_i::get_matched_subscription_data (::DDS::SubscriptionBuiltinTopicData & /*subscription_data*/,
                                                        const ::DDS::InstanceHandle_t & /*subscription_handle*/)
       {
-        CIAO_TRACE ("RTI_DataWriter_i::get_matched_subscription_data");
+        DDS4CCM_TRACE ("RTI_DataWriter_i::get_matched_subscription_data");
         throw CORBA::NO_IMPLEMENT ();
         // Add your implementation here
       }

@@ -6,7 +6,7 @@
 #include "dds4ccm/impl/ndds/Reader_T.h"
 #include "dds4ccm/impl/ndds/DataListenerControl_T.h"
 
-#include "ciao/Logger/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::DDS_Get_T (void)
@@ -26,7 +26,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
   const char* library_name,
   const char* profile_name)
 {
-  CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete");
+  DDS4CCM_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete");
 
   try
     {
@@ -62,7 +62,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_EMERGENCY, "DDS_Get_T::configuration_complete: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Get_T::configuration_complete: Caught unknown c++ exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -73,7 +73,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::activate (
   ::CCM_DDS::PortStatusListener_ptr listener,
   ACE_Reactor* reactor)
 {
-  CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::activate");
+  DDS4CCM_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::activate");
   try
     {
       if (CORBA::is_nil (this->status_.in ()))
@@ -89,7 +89,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::activate (
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_EMERGENCY, "DDS_Get_T::activate: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Get_T::activate: Caught unknown c++ exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -98,7 +98,7 @@ template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
 DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::passivate (void)
 {
-  CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::passivate");
+  DDS4CCM_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::passivate");
   try
     {
       this->dds_get_.passivate ();
@@ -109,7 +109,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::passivate (void)
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_EMERGENCY, "DDS_Get_T::passivate: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Get_T::passivate: Caught unknown c++ exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -119,7 +119,7 @@ void
 DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::remove (
   ::DDS::Subscriber_ptr subscriber)
 {
-  CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::remove");
+  DDS4CCM_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::remove");
   try
     {
       subscriber->delete_datareader (this->data_reader_.in ());
@@ -130,7 +130,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::remove (
     }
   catch (...)
     {
-      CIAO_ERROR (1, (LM_EMERGENCY, "DDS_Get_T::remove: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Get_T::remove: Caught unknown c++ exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -139,7 +139,7 @@ template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 typename CCM_TYPE::getter_type::_ptr_type
 DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::get_fresh_data (void)
 {
-  CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::get_fresh_data");
+  DDS4CCM_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::get_fresh_data");
 
   return &this->dds_get_;
 }
@@ -148,7 +148,7 @@ template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 typename CCM_TYPE::reader_type::_ptr_type
 DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::get_data (void)
 {
-  CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::get_data");
+  DDS4CCM_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::get_data");
 
   return &this->dds_read_;
 }
@@ -157,7 +157,7 @@ template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 ::DDS::CCM_DataReader_ptr
 DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::get_dds_entity (void)
 {
-  CIAO_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::get_dds_entity");
+  DDS4CCM_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::get_dds_entity");
 
   return &this->rti_reader_;
 }

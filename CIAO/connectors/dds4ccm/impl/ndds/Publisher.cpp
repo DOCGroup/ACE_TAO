@@ -13,7 +13,7 @@
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
-#include "ciao/Logger/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 namespace CIAO
 {
@@ -24,12 +24,12 @@ namespace CIAO
       RTI_Publisher_i::RTI_Publisher_i (void)
         : impl_ (0)
       {
-        CIAO_TRACE ("RTI_Publisher_i::RTI_Publisher_i");
+        DDS4CCM_TRACE ("RTI_Publisher_i::RTI_Publisher_i");
       }
 
       RTI_Publisher_i::~RTI_Publisher_i (void)
       {
-        CIAO_TRACE ("RTI_Publisher_i::~RTI_Publisher_i");
+        DDS4CCM_TRACE ("RTI_Publisher_i::~RTI_Publisher_i");
       }
 
       ::DDS::DataWriter_ptr
@@ -38,13 +38,13 @@ namespace CIAO
                                           ::DDS::DataWriterListener_ptr a_listener,
                                           ::DDS::StatusMask mask)
       {
-        CIAO_TRACE ("RTI_Publisher_i::create_datawriter");
+        DDS4CCM_TRACE ("RTI_Publisher_i::create_datawriter");
 
         RTI_Topic_i * topic = dynamic_cast < RTI_Topic_i * > (a_topic);
 
         if (!topic)
           {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter - "
+            DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter - "
                          "Error: Unable to cast provided topic to its servant.\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
           }
@@ -70,7 +70,7 @@ namespace CIAO
 
         if (!rti_dw)
           {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter - "
+            DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter - "
                          "Error: RTI Topic returned a nil datawriter.\n"));
             delete rti_drl;
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
@@ -90,13 +90,13 @@ namespace CIAO
                                           ::DDS::DataWriterListener_ptr a_listener,
                                           ::DDS::StatusMask mask)
       {
-        CIAO_TRACE ("RTI_Publisher_i::create_datawriter");
+        DDS4CCM_TRACE ("RTI_Publisher_i::create_datawriter");
 
         RTI_Topic_i * topic = dynamic_cast < RTI_Topic_i * > (a_topic);
 
         if (!topic)
           {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter_with_profile - "
+            DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter_with_profile - "
                          "Error: Unable to cast provided topic to its servant.\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
           }
@@ -122,7 +122,7 @@ namespace CIAO
 
         if (!rti_dw)
           {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter_with_profile - "
+            DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter_with_profile - "
                          "Error: RTI Topic returned a nil datawriter.\n"));
             delete rti_drl;
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
@@ -138,29 +138,29 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_Publisher_i::delete_datawriter (::DDS::DataWriter_ptr a_datawriter)
       {
-        CIAO_TRACE ("RTI_Publisher_i::delete_datawriter");
+        DDS4CCM_TRACE ("RTI_Publisher_i::delete_datawriter");
 
         RTI_DataWriter_i *top = dynamic_cast< RTI_DataWriter_i *> (a_datawriter);
 
         if (top == 0)
           {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::delete_datawriter - "
+            DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::delete_datawriter - "
                          "Unable to cast provided object reference to servant.\n"));
             return ::DDS::RETCODE_BAD_PARAMETER;
           }
 
-        CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_Publisher_i::delete_datawriter - "
+        DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "RTI_Publisher_i::delete_datawriter - "
                      "Successfully casted provided object reference to servant.\n"));
 
         DDS_ReturnCode_t const retval = this->impl ()->delete_datawriter (top->get_impl ());
 
         if (retval != DDS_RETCODE_OK)
           {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::delete_datawriter - "
+            DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::delete_datawriter - "
                          "Error: RTI delete_datawriter returned non-ok error code %C\n",
                          translate_retcode (retval)));
           }
-        else CIAO_DEBUG (6, (LM_INFO, CLINFO "RTI_Publisher_i::delete_datawriter - "
+        else DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "RTI_Publisher_i::delete_datawriter - "
                           "Provided datawriter successfully deleted\n"));
 
         return retval;
@@ -188,14 +188,14 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_Publisher_i::set_qos (const ::DDS::PublisherQos & /*qos*/)
       {
-        CIAO_TRACE ("RTI_Publisher_i::set_qos");
+        DDS4CCM_TRACE ("RTI_Publisher_i::set_qos");
         throw CORBA::NO_IMPLEMENT ();
       }
 
       ::DDS::ReturnCode_t
       RTI_Publisher_i::get_qos (::DDS::PublisherQos & /* qos*/)
       {
-        CIAO_TRACE ("RTI_Publisher_i::get_qos");
+        DDS4CCM_TRACE ("RTI_Publisher_i::get_qos");
         throw CORBA::NO_IMPLEMENT ();
       }
 
@@ -203,7 +203,7 @@ namespace CIAO
       RTI_Publisher_i::set_listener (::DDS::PublisherListener_ptr a_listener,
                                      ::DDS::StatusMask mask)
       {
-        CIAO_TRACE ("RTI_Publisher_i::set_listener");
+        DDS4CCM_TRACE ("RTI_Publisher_i::set_listener");
 
         RTI_PublisherListener_i *rti_impl_list  = 0;
        if (!CORBA::is_nil (a_listener))
@@ -218,13 +218,13 @@ namespace CIAO
       ::DDS::PublisherListener_ptr
       RTI_Publisher_i::get_listener (void)
       {
-        CIAO_TRACE ("RTI_Publisher_i::get_listener");
+        DDS4CCM_TRACE ("RTI_Publisher_i::get_listener");
 
         DDSPublisherListener *rti_pub_list = this->impl ()->get_listener ();
         RTI_PublisherListener_i *list_proxy = dynamic_cast <RTI_PublisherListener_i *> (rti_pub_list);
         if (!list_proxy)
           {
-            CIAO_DEBUG (6, (LM_DEBUG, "RTI_Publisher_i::get_listener - "
+            DDS4CCM_DEBUG (6, (LM_DEBUG, "RTI_Publisher_i::get_listener - "
                                       "DDS returned a NIL listener.\n"));
             return ::DDS::PublisherListener::_nil ();
           }
@@ -266,7 +266,7 @@ namespace CIAO
       ::DDS::DomainParticipant_ptr
       RTI_Publisher_i::get_participant (void)
       {
-        CIAO_TRACE ("RTI_Publisher_i::get_participant");
+        DDS4CCM_TRACE ("RTI_Publisher_i::get_participant");
         ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
         ACE_NEW_THROW_EX (retval,
                           RTI_DomainParticipant_i (),
@@ -281,14 +281,14 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_Publisher_i::set_default_datawriter_qos (const ::DDS::DataWriterQos & /*qos*/)
       {
-        CIAO_TRACE ("RTI_Publisher_i::set_default_datawriter_qos");
+        DDS4CCM_TRACE ("RTI_Publisher_i::set_default_datawriter_qos");
         throw CORBA::NO_IMPLEMENT ();
       }
 
       ::DDS::ReturnCode_t
       RTI_Publisher_i::get_default_datawriter_qos (::DDS::DataWriterQos & /*qos*/)
       {
-        CIAO_TRACE ("RTI_Publisher_i::get_default_datawriter_qos");
+        DDS4CCM_TRACE ("RTI_Publisher_i::get_default_datawriter_qos");
         throw CORBA::NO_IMPLEMENT ();
       }
 
@@ -296,7 +296,7 @@ namespace CIAO
       RTI_Publisher_i::copy_from_topic_qos (::DDS::DataWriterQos & /*a_dataimpl_qos*/,
                                             const ::DDS::TopicQos & /*a_impl_qos*/)
       {
-        CIAO_TRACE ("RTI_Publisher_i::copy_from_topic_qos");
+        DDS4CCM_TRACE ("RTI_Publisher_i::copy_from_topic_qos");
         throw CORBA::NO_IMPLEMENT ();
       }
 
