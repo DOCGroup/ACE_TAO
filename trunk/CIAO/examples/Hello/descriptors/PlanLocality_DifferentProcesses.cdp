@@ -135,7 +135,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_SenderImpl.ior</string>
+          <string>Sender.ior</string>
         </value>
       </value>
     </configProperty>
