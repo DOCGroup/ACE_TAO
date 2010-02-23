@@ -1,3 +1,10 @@
+Tue Feb 23 09:26:15 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.h:
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+          Refactored get_one, making use of the read_w_condition
+          API method.
+
 Tue Feb 23 08:50:49 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/Getter/Base/Getter_Test_Base.idl:
