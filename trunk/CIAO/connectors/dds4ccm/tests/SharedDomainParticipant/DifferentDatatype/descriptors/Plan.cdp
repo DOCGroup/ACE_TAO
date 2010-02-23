@@ -18,7 +18,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_SharedDP_Connector1_Impl</string>
+          <string>create_SharedDP_Connector1_Connector1_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -69,7 +69,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_SharedDP_Connector2_Impl</string>
+          <string>create_SharedDP_Connector2_Connector2_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -120,7 +120,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_SharedDP_Connector3_Impl</string>
+          <string>create_SharedDP_Connector3_Connector3_Impl</string>
         </value>
       </value>
     </execParameter>
