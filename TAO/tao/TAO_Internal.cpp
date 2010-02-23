@@ -64,10 +64,11 @@ namespace
    * sets apply_values to true
    *
    */
-  int parse_global_args_i (int &argc,
-                           ACE_TCHAR **argv,
-                           ACE_ARGV &svc_config_argv,
-                           bool apply_values);
+  int
+  parse_global_args_i (int &argc,
+                       ACE_TCHAR **argv,
+                       ACE_ARGV &svc_config_argv,
+                       bool apply_values);
 
   /**
    * Parses the supplied command-line arguments to extract any that
@@ -79,9 +80,10 @@ namespace
    * @brief Modifies the argc to reflect any arguments it has
    * "consumed"
    */
-  int parse_svcconf_args_i (int &argc,
-                            ACE_TCHAR **argv,
-                            ACE_ARGV &svc_config_argv);
+  int
+  parse_svcconf_args_i (int &argc,
+                        ACE_TCHAR **argv,
+                        ACE_ARGV &svc_config_argv);
 
   /**
    * Checks if there is -ORBGestalt option with non-GLOBAL value.
@@ -94,8 +96,9 @@ namespace
    * not become default for other ORBs created after it. This function
    * allows to avoid the above situation.
    */
-  bool using_global_gestalt_i (int &argc,
-                               ACE_TCHAR **argv);
+  bool
+  using_global_gestalt_i (int &argc,
+                          ACE_TCHAR **argv);
 
   /**
    * Initialize the ACE Service Configurator with the process-global
@@ -114,8 +117,10 @@ namespace
    *       reentrant meaning that it is really no longer necessary to
    *       do so.
    */
-  void register_global_services_i (ACE_Service_Gestalt * pcfg);
-  void register_additional_services_i (ACE_Service_Gestalt * pcfg);
+  void
+  register_global_services_i (ACE_Service_Gestalt * pcfg);
+  void
+  register_additional_services_i (ACE_Service_Gestalt * pcfg);
 
   /**
    * Parses the supplied command-line arguments to extract any
@@ -124,10 +129,11 @@ namespace
    * @brief Modifies the argc to reflect any arguments it has
    * "consumed"
    */
-  int parse_private_args_i (int &argc,
-                            ACE_TCHAR **argv,
-                            ACE_ARGV & svc_config_argv,
-                            bool & skip_service_config_open);
+  int
+  parse_private_args_i (int &argc,
+                        ACE_TCHAR **argv,
+                        ACE_ARGV & svc_config_argv,
+                        bool & skip_service_config_open);
 
   /**
    * Initialize ORB-local (private) ACE Service Configurator
@@ -136,11 +142,12 @@ namespace
    * @return @c 0 if successful, @c -1 with @c errno set if failure.
    *
    */
-  int open_private_services_i (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
-                               int & argc,
-                               ACE_TCHAR **argv,
-                               bool skip_service_config_open = false,
-                               bool ignore_default_svc_conf_file = false);
+  int
+  open_private_services_i (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
+                           int & argc,
+                           ACE_TCHAR **argv,
+                           bool skip_service_config_open = false,
+                           bool ignore_default_svc_conf_file = false);
 
   /**
    * Number of times open_services() has been called.  Incremented by
