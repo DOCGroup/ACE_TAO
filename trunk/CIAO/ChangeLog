@@ -1,3 +1,11 @@
+Tue Feb 23 08:50:49 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/Getter/Base/Getter_Test_Base.idl:
+          Added missing pragma
+
+        * connectors/dds4ccm/tests/TwoTopicsDifferentNs/Connector/Connector.mpc:
+          Disabled this project for the moment, rtiddsgen can't handle this
+
 Tue Feb 23 07:47:49 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector1/Connector1.mpc
