@@ -1,10 +1,24 @@
+Tue Feb 23 04:05:06 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/bin/PythonDAnCE/generator/__init__.py:
+        * DAnCE/bin/PythonDAnCE/generator/comp_impl.py:
+        * DAnCE/bin/PythonDAnCE/generator/comp_inst.py:
+        * DAnCE/bin/PythonDAnCE/generator/config_prop.py:
+        * DAnCE/bin/PythonDAnCE/generator/connection.py:
+        * DAnCE/bin/PythonDAnCE/generator/deploy_requirement.py:
+        * DAnCE/bin/PythonDAnCE/generator/external_reference.py:
+        * DAnCE/bin/PythonDAnCE/generator/internal_endpoint.py:
+        * DAnCE/bin/generate_plan.py:
+
+          Improvements to allow more expressive plan generation. 
+
 Tue Feb 23 04:03:46 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
 
           Additional error checking, and an improvements to how
-          colocation groups with NoConstraint are handled. 
-        
+          colocation groups with NoConstraint are handled.
+
 Tue Feb 23 02:55:31 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * examples/Hello/descriptors/NodeMap.dat:
