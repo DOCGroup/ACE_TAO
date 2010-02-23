@@ -23,15 +23,13 @@
 #include "Deployment/Deployment_NodeManagerC.h"
 #include "DomainApplication/Domain_Application_Impl.h"
 #include "Deployment/Deployment_DomainApplicationManagerS.h"
+#include "Split_Plan/Split_Plan_impl.h"
 
 namespace DAnCE
   {
   class DomainApplicationManager_Export DomainApplicationManager_Impl
         : public virtual POA_Deployment::DomainApplicationManager
     {
-    private:
-      typedef ACE_Map_Manager<ACE_CString, Deployment::DeploymentPlan, ACE_Null_Mutex> TNodePlans;
-
     public:
       DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
                                      PortableServer::POA_ptr poa,
@@ -58,9 +56,6 @@ namespace DAnCE
       Node_Locator &nodes_;
       typedef ACE_Vector<DomainApplication_Impl*> TApplications;
       TApplications running_app_;
-
-      void split_plan (const Deployment::DeploymentPlan & plan,
-                       TNodePlans & sub_plans);
 
       void preparePlan();
     };
