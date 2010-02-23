@@ -1,3 +1,19 @@
+Tue Feb 23 07:47:49 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector1/Connector1.mpc
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector2/Connector2.mpc
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector3/Connector3.mpc
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Base/Base.mpc
+          Updated to generate connector
+
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector1/Connector1_exec.cpp
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector1/Connector1_exec.h
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector2/Connector2_exec.cpp
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector2/Connector2_exec.h
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector3/Connector3_exec.cpp
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector3/Connector3_exec.h
+          removed
+
 Tue Feb 23 07:22:49 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Base/Hello_Base.idl

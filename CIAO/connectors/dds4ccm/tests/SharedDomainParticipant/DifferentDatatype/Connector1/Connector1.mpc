@@ -9,8 +9,8 @@ project(DDS_SharedDP_Connector1_idl_gen) : connectoridldefaults, dds4ccm {
               -Wb,skel_export_include=Connector1_svnt_export.h \
               -Wb,svnt_export_macro=SHAREDDP_CONNECTOR1_SVNT_Export \
               -Wb,svnt_export_include=Connector1_svnt_export.h \
-              -Wb,exec_export_macro=SHAREDDP_CONNECTOR1_EXEC_Export \
-              -Wb,exec_export_include=Connector1_exec_export.h \
+              -Wb,conn_export_macro=SHAREDDP_CONNECTOR1_CONN_Export \
+              -Wb,conn_export_include=Connector1_conn_export.h \
               -I ..
 
   IDL_Files {
@@ -90,18 +90,18 @@ project(DDS_SharedDP_Connector1_exec) : ciao_executor, dds4ccm_impl {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags   = SHAREDDP_CONNECTOR1_EXEC_BUILD_DLL
+  dynamicflags   = SHAREDDP_CONNECTOR1_CONN_BUILD_DLL
 
   IDL_Files {
   }
 
   Source_Files {
-    Connector1_exec.cpp
+    Connector1_conn.cpp
   }
 
   Header_Files {
-    Connector1_exec.h
-    Connector1_exec_export.h
+    Connector1_conn.h
+    Connector1_conn_export.h
   }
 
   Inline_Files {
