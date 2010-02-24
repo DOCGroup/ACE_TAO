@@ -1,0 +1,13 @@
+// $Id$
+
+project {
+  includes += $(MPI_ROOT)/include $(MPI_ROOT)/include/mpi
+  libpaths += $(MPI_ROOT)/lib
+  requires += mpi
+
+  specific(prop:windows) {
+    lit_libs += mpi
+  } else {
+    lit_libs += mpich
+  }
+}

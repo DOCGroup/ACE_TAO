@@ -1,0 +1,55 @@
+// Current as of 8/14/2009
+// This defines the role of all the template variables specific to the
+// 'vc7' and 'vc71' project types.
+//
+// Please try to keep this alphabetically sorted.
+//
+basicruntimechecks = This corresponds to the C/C++ Code Generation property "Basic Runtime Checks". The numeric value specifies the pull-down value in the IDE.
+buffersecuritycheck = This corresponds to the C/C++ Code Generation property "Buffer Security Check". The boolean value specifies the pull-down value in the IDE.
+charset = This setting specifies the "Character Set" in the General properties. The values 0, 1, and 2 specify Not Set, Unicode, and Multi-Byte respectively.
+common_defines = Specifies macros that are common to all target types.
+configuration_type = This corresponds to the General property "Configuration Type". The values 1, 2, 4, and 10 correspond to Application, Dynamic Library, Static Library, and Utility respectively.
+culture = This corresponds to the Resources General property "Culture". The numeric value corresponds to the pull-down values in the IDE.
+debug_format = This setting specifies the "Debug Information Format" found in the C/C++ General properties. The numeric value specifies the pull-down value in the IDE.
+debug_prj = This is an internally used template variable to determine if the configuration originated as "Debug". In the event that the 'optimize' template variable is overridden, debug_prj allows the correct run-time library to be chosen.
+defines = Macros that are specific to a particular configuration.
+detect64bitportabilityproblems = This corresponds to the C/C++ Code Generation property "Detect 64-bit Portability Issues". The boolean value specifies the pull-down value in the IDE.
+disablespecificwarnings = A space separated list of warning numbers to be disabled.
+enablefunctionlevellinking = This corresponds to the C/C++ Code Generation property "Enable Function-Level Linking". The boolean value specifies the pull-down value in the IDE.
+encoding = Specifies the XML encoding for the generated .vcproj file.
+exceptions = This setting corresponds to the C/C++ Code Generation property "Enable C++ Exceptions". The boolean value specifies the pull-down value in the IDE.
+fixedbaseaddress = This corresponds to the Linker Advanced property "Fixed Base Address". The values 1 and 2 correspond to Relocatable (not fixed) and Load at a Fixed Address respectively.
+forloopscope = This corresponds to the C/C++ Language property "Force Conformance In For Loop Scope". The boolean value specifies the pull-down value in the IDE.
+generatemapfile = This corresponds to the Linker Debugging property "Generate Map File". The boolean value specifies the pull-down value in the IDE.
+guid = The value for this variable is generated during project generation.
+ignore_default_library_names = The value for this is evaluated as a space separated list of default library names to ignore. It corresponds to the Linker Input property "Ignore Specific Library".
+ignorealldefaultlibraries = Ignore all default libraries during linking.
+inlinefunctionexpansion = This corresponds to the C/C++ Optimization property "Inline Function Expansion". A value of 1 indicates /Ob1 (inline only those designated to be inlined). A value of 2 indicates /Ob2 (inline any suitable function).
+link_options = Allows passing arbitrary options to the linker.
+linkincremental = This setting corresponds to the Linker General property "Enable Incremental Linking". The values 1 and 2 correspond to NO and YES respectively.
+machine = This corresponds to the Linker Advanced property "Target Machine". The numeric value corresponds to the pull-down values in the IDE.
+midl_defines = Macros specified here correspond to the MIDL General property "Preprocessor Definitions".
+midl_flags = The value for this variable is passed to the MIDL command as "Additional Options".
+midl_includes = This correspond to the MIDL General property "Additional Include Directories".
+midl_notlb = Suppresses the creation of a type library for the IDL file.
+minimalrebuild = This corresponds to the C/C++ Code Generation property "Enable Minimal Rebuild". The boolean value specifies the pull-down value in the IDE.
+moduledefinitionfile = This setting corresponds to the Linker Input property "Module Definition File".
+opticf = This corresponds to the Linker Optimization property "Enable COMDAT Folding". The value 1 corresponds to "Do Not Remove Redundant COMDATs" and 2 corresponds to "Remove Redundant COMDATs".
+optref = This corresponds to the Linker Optimization property "References". The value 1 corresponds to "Keep Unreferenced Data" and 2 corresponds to "Eliminate Unreferenced Data".
+output_subdir = This is used in determining the sub-directory under which intermediate files will be placed.
+pdbc = If this boolean template variable is set, the C/C++ Output Files property "Program Database File Name" will be set according to the project target.
+pdbl = If this boolean template variable is set, the Linker Debugging property "Generate Program Database File" will be set according to the project target.
+platform = Specifies the target platform.
+rtti = This corresponds to the C/C++ Language property "Enable Run-Time Type Info". The boolean value specifies the pull-down value in the IDE.
+runtime_library = This corresponds to the C/C++ Code Generation property "Runtime Library". If the template variable is set, the numeric value will be used. Otherwise, it will be determined based on the target and debug/optimize configuration. The numeric value specifies the pull-down value in the IDE.
+stringpooling = This corresponds to the C/C++ Code Generation property "Enable String Pooling". The boolean value specifies the pull-down value in the IDE.
+subsystem = This corresponds to the Linker System property "SubSystem".  This variable should not be set directly by the user; instead the project should inherit from 'mfc'.
+unicode = If this boolean template variable is set, the UNICODE and _UNICODE macros are added to the C/C++ Preprocessor property "Preprocessor Definitions".
+unicode_mfc_entry = This corresponds to the Linker Advanced property "Entry Point".  This variable should not be set directly by the user; instead the project should inherit from 'mfc'.
+use_mfc = This corresponds to the General property "Use of MFC".  This variable should not be set directly by the user; instead the project should inherit from 'mfc'.
+UseOfATL = This corresponds to the General property "Use of ATL".
+vcprojecttype = Specifies the ProjectType setting within the generated .vcproj file.
+vcversion = Specifies the version of the generated .vcproj file.  This value is determined by the VC7ProjectCreator or the VC71ProjectCreator.
+warning_level = This setting corresponds to the C/C++ General property "Warning Level". Valid values are 0 through 4.
+wchar_t =  This corresponds to the C/C++ Language property "Treat wchar_t as Built-in Type". The boolean value specifies the pull-down value in the IDE.
+xml_version = Specifies the XML version for the generated .vcproj file.

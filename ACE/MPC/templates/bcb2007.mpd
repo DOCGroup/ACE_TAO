@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{f76f525d-aee9-4af7-a366-e9119e55548d}</ProjectGuid>
+    <ProjectType>CppDynamicLibrary</ProjectType>
+    <Config Condition="'$(Config)'==''">Debug Build</Config>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+    <Base>true</Base>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Config)'=='Debug Build' or '$(Cfg_1)'!=''">
+    <Base>true</Base>
+    <Cfg_1>true</Cfg_1>
+    <CfgParent>Base</CfgParent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Config)'=='Release Build' or '$(Cfg_2)'!=''">
+    <Base>true</Base>
+    <Cfg_2>true</Cfg_2>
+    <CfgParent>Base</CfgParent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Base)'!=''">
+    <OutputExt>dll</OutputExt>
+    <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
+    <DCC_ObjPath><%foreach(includes)%><%include%><%fornotlast(";")%><%endfor%></DCC_ObjPath>
+    <BCC_wccc>false</BCC_wccc>
+    <DynamicRTL>true</DynamicRTL>
+    <BCC_PCHName>$(BDS)\lib\vcl100.csm</BCC_PCHName>
+    <ILINK_GenerateImportLibrary>true</ILINK_GenerateImportLibrary>
+    <ILINK_ObjectSearchPath><%foreach(includes)%><%include%><%fornotlast(";")%><%endfor%></ILINK_ObjectSearchPath>
+    <NoVCL><%if(use_vcl)%>false<%else%>true<%endif%></NoVCL>
+    <BCC_wrvl>false</BCC_wrvl>
+    <PackageImports>vcl.bpi;rtl.bpi;vclx.bpi;dbrtl.bpi;vcldb.bpi;adortl.bpi;dbxcds.bpi;dbexpress.bpi;vclib.bpi;ibxpress.bpi;xmlrtl.bpi;vclactnband.bpi;inet.bpi;IntrawebDB_80_100.bpi;Intraweb_80_100.bpi;vclie.bpi;inetdbbde.bpi;inetdbxpress.bpi;IndyCore.bpi;IndySystem.bpi;bcbofficexp.bpi;bcbsmp.bpi;soaprtl.bpi;dsnap.bpi;IndyProtocols.bpi;bcbie.bpi;bdertl.bpi;teeui.bpi;teedb.bpi;tee.bpi;vcldbx.bpi;dsnapcon.bpi;websnap.bpi;webdsnap.bpi</PackageImports>
+    <DCC_UnitSearchPath><%foreach(includes)%><%include%>;<%endfor%>.\;$(BDS)\lib;$(BDS)\lib\obj</DCC_UnitSearchPath>
+    <ILINK_WinAppType>DLL</ILINK_WinAppType>
+    <BCC_GenerateMultithreaded>true</BCC_GenerateMultithreaded>
+    <BCC_PCHCache>true</BCC_PCHCache>
+    <BCC_IntegerSizedEnums>false</BCC_IntegerSizedEnums>
+    <TASM_IncludePath>$(BDS)\include;$(BDS)\include\dinkumware;$(BDS)\include\vcl;..</TASM_IncludePath>
+    <BRCC_IncludePath>$(BDS)\include;$(BDS)\include\dinkumware;$(BDS)\include\vcl;..</BRCC_IncludePath>
+    <DCC_IncludePath><%foreach(includes)%><%include%>;<%endfor%>;.\;$(BDS)\lib;$(BDS)\lib\obj</DCC_IncludePath>
+    <BCC_IncludePath>$(BDS)\include;$(BDS)\include\dinkumware;$(BDS)\include\vcl;..</BCC_IncludePath>
+    <ILINK_LibraryPath><%foreach(libpaths)%><%libpath%>;<%endfor%>;$(BDS)\lib;$(BDS)\lib\obj;$(BDS)\lib\psdk</ILINK_LibraryPath>
+    <BCC_InternalDefines>NO_STRICT</BCC_InternalDefines>
+    <TASM_Defines><%foreach(defines)%><%define%><%fornotlast(";")%><%endfor%></TASM_Defines>
+    <BRCC_Defines><%foreach(defines)%><%define%><%fornotlast(";")%><%endfor%></BRCC_Defines>
+    <BCC_GenerateDLL>true</BCC_GenerateDLL>
+    <BCC_Defines><%foreach(defines)%><%define%><%fornotlast(";")%><%endfor%></BCC_Defines>
+    <DCC_ResourcePath><%foreach(includes)%><%include%>;<%endfor%></DCC_ResourcePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Cfg_1)'!=''">
+    <DCC_Optimize>false</DCC_Optimize>
+    <DCC_DebugInfoInExe>true</DCC_DebugInfoInExe>
+    <ILINK_FullDebugInfo>true</ILINK_FullDebugInfo>
+    <BCC_InlineFunctionExpansion>false</BCC_InlineFunctionExpansion>
+    <ILINK_DisableIncrementalLinking>true</ILINK_DisableIncrementalLinking>
+    <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+    <BCC_DebugLineNumbers>true</BCC_DebugLineNumbers>
+    <IntermediateOutputDir>Debug_Build</IntermediateOutputDir>
+    <TASM_DisplaySourceLines>true</TASM_DisplaySourceLines>
+    <BCC_StackFrames>true</BCC_StackFrames>
+    <ILINK_LibraryPath>$(BDS)\lib\debug;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+    <BCC_Defines>_DEBUG;$(BCC_Defines)</BCC_Defines>
+    <TASM_Debugging>Full</TASM_Debugging>
+    <BCC_SourceDebuggingOn>true</BCC_SourceDebuggingOn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Cfg_2)'!=''">
+    <BCC_OptimizeForSpeed>true</BCC_OptimizeForSpeed>
+    <DCC_DebugInformation>false</DCC_DebugInformation>
+    <IntermediateOutputDir>Release_Build</IntermediateOutputDir>
+    <ILINK_LibraryPath>$(BDS)\lib\release;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+    <BCC_Defines>NDEBUG;$(BCC_Defines)</BCC_Defines>
+    <TASM_Debugging>None</TASM_Debugging>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <Borland.Personality>CPlusPlusBuilder.Personality</Borland.Personality>
+    <Borland.ProjectType>CppDynamicLibrary</Borland.ProjectType>
+    <BorlandProject>
+<BorlandProject> <CPlusPlusBuilder.Personality>   <VersionInfo>
+      <VersionInfo Name="IncludeVerInfo">False</VersionInfo>
+      <VersionInfo Name="AutoIncBuild">False</VersionInfo>
+      <VersionInfo Name="MajorVer">1</VersionInfo>
+      <VersionInfo Name="MinorVer">0</VersionInfo>
+      <VersionInfo Name="Release">0</VersionInfo>
+      <VersionInfo Name="Build">0</VersionInfo>
+      <VersionInfo Name="Debug">False</VersionInfo>
+      <VersionInfo Name="PreRelease">False</VersionInfo>
+      <VersionInfo Name="Special">False</VersionInfo>
+      <VersionInfo Name="Private">False</VersionInfo>
+      <VersionInfo Name="DLL">False</VersionInfo>
+      <VersionInfo Name="Locale">1043</VersionInfo>
+      <VersionInfo Name="CodePage">1252</VersionInfo>
+    </VersionInfo>
+    <VersionInfoKeys>
+      <VersionInfoKeys Name="CompanyName"></VersionInfoKeys>
+      <VersionInfoKeys Name="FileDescription"></VersionInfoKeys>
+      <VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys>
+      <VersionInfoKeys Name="InternalName"></VersionInfoKeys>
+      <VersionInfoKeys Name="LegalCopyright"></VersionInfoKeys>
+      <VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys>
+      <VersionInfoKeys Name="OriginalFilename"></VersionInfoKeys>
+      <VersionInfoKeys Name="ProductName"></VersionInfoKeys>
+      <VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+      <VersionInfoKeys Name="Comments"></VersionInfoKeys>
+    </VersionInfoKeys>
+    <Debugging>
+      <Debugging Name="DebugSourceDirs"></Debugging>
+    </Debugging>
+    <Parameters>
+      <Parameters Name="RunParams"></Parameters>
+      <Parameters Name="Launcher"></Parameters>
+      <Parameters Name="UseLauncher">False</Parameters>
+      <Parameters Name="DebugCWD"></Parameters>
+      <Parameters Name="HostApplication"></Parameters>
+      <Parameters Name="RemoteHost"></Parameters>
+      <Parameters Name="RemotePath"></Parameters>
+      <Parameters Name="RemoteParams"></Parameters>
+      <Parameters Name="RemoteLauncher"></Parameters>
+      <Parameters Name="UseRemoteLauncher">False</Parameters>
+      <Parameters Name="RemoteCWD"></Parameters>
+      <Parameters Name="RemoteDebug">False</Parameters>
+      <Parameters Name="Debug Symbols Search Path"></Parameters>
+      <Parameters Name="LoadAllSymbols">True</Parameters>
+      <Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
+    </Parameters>
+    <Linker>
+      <Linker Name="LibPrefix"></Linker>
+      <Linker Name="LibSuffix"></Linker>
+      <Linker Name="LibVersion"></Linker>
+    </Linker>
+    <ProjectProperties>
+      <ProjectProperties Name="AutoShowDeps">False</ProjectProperties>
+      <ProjectProperties Name="ManagePaths">True</ProjectProperties>
+      <ProjectProperties Name="VerifyPackages">True</ProjectProperties>
+    </ProjectProperties>
+  </CPlusPlusBuilder.Personality> </BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <Import Project="$(MSBuildBinPath)\Borland.Cpp.Targets" />
+  <ItemGroup>
+<%if(source_files)%>
+<%foreach(source_files)%>
+    <CppCompile Include="<%source_file%>">
+    </CppCompile>
+<%endfor%>
+<%endif%>
+<%if(header_files)%>
+<%foreach(header_files)%>
+    <None Include="<%header_file%>">
+    </None>
+<%endfor%>
+<%endif%>
+<%if(inline_files)%>
+<%foreach(inline_files)%>
+    <None Include="<%inline_file%>">
+    </None>
+<%endfor%>
+<%endif%>
+<%if(template_files)%>
+<%foreach(template_files)%>
+    <None Include="<%template_file%>">
+    </None>
+<%endfor%>
+<%endif%>
+<%if(documentation_files)%>
+<%foreach(documentation_files)%>
+    <None Include="<%documentation_file%>">
+    </None>
+<%endfor%>
+<%endif%>
+<%if(resource_files)%>
+<%foreach(resource_files)%>
+    <ResourceCompile Include="<%resource_file%>">
+    </ResourceCompile>
+<%endfor%>
+<%endif%>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Borland.Cpp.Targets" />
+</Project>

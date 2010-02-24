@@ -1,0 +1,195 @@
+#!gbuild
+#primaryTarget=<%primaryTarget("ppc_integrity.tgt")%>
+<%if(exename)%>
+	[Program]
+	-o <%if(exeout)%><%reltop_exeout%><%else%><%reltop%><%endif%>/<%exename%><%if(use_exe_modifier)%><%lib_modifier%><%endif%><%exe_ext%>
+<%if(need_staticflags)%>
+	{optional} -non_shared
+<%endif%>
+<%else%>
+<%if(sharedname)%>
+	[Shared Object]
+	-o <%if(dllout)%><%reltop_dllout%><%else%><%reltop_libout%><%endif%>/<%lib_prefix%><%libname_prefix%><%sharedname%><%if(use_lib_modifier)%><%lib_modifier%><%endif%><%libext(".so")%>
+<%else%>
+<%if(staticname)%>
+	[Library]
+	-o <%reltop_libout%>/<%lib_prefix%><%libname_prefix%><%staticname%><%if(use_lib_modifier)%><%lib_modifier%><%endif%><%libext(".a")%>
+<%else%>
+	[Subproject]
+<%endif%>
+<%endif%>
+<%endif%>
+<%if(bsp)%>
+	-bsp <%bsp%>
+<%endif%>
+<%if(os_dir)%>
+	-os_dir <%os_dir%>
+<%endif%>
+<%if(optimize)%>
+	-Ospeed
+	-OI
+<%else%>
+	-G
+<%endif%>
+<%if(exceptions)%>
+	--exceptions
+<%endif%>
+<%if(pch_header && !no_use_pch)%>
+	--pch
+<%foreach(pch_defines)%>
+	-D<%pch_define%>
+<%endfor%>
+<%endif%>
+<%foreach(reltop_includes)%>
+	-I<%reltop_include%>
+<%endfor%>
+<%foreach(reltop_libpaths)%>
+	-L<%reltop_libpath%>
+<%endfor%>
+<%if(libs || lit_libs || pure_libs)%>
+<%if(exename || sharedname)%>
+<%foreach(libs)%>
+	-l<%libname_prefix%><%lib%><%if(use_lib_modifier)%><%lib_modifier%><%endif%>
+<%endfor%>
+<%foreach(lit_libs)%>
+	-l<%lit_lib%>
+<%endfor%>
+<%foreach(pure_libs)%>
+	<%pure_lib%>
+<%endfor%>
+<%endif%>
+<%endif%>
+<%if(sharedname)%>
+<%foreach(dynamicflags)%>
+	-D<%dynamicflag%>
+<%endfor%>
+<%endif%>
+<%if(need_staticflags)%>
+<%foreach(staticflags)%>
+	-D<%staticflag%>
+<%endfor%>
+<%endif%>
+<%if(macros)%>
+<%foreach(macros)%>
+	-D<%macro%>
+<%endfor%>
+<%endif%>
+<%if(compile_flags)%>
+<%foreach(compile_flags)%>
+	<%compile_flag%>
+<%endfor%>
+<%endif%>
+<%if(custom_only || !source_files && custom_types)%>
+.custom_build_rule		[HTML Source]
+<%endif%>
+<%scope(enter, escape, \\)%>
+<%foreach(custom_types)%>
+<%foreach(custom_type->input_files)%>
+<%if(!custom_only && source_files)%>
+<%custom_type->input_file%>		[Text]
+<%endif%>
+<%if(custom_type->input_file->output_files)%>
+<%if(custom_type->output_option)%>
+<%foreach(custom_type->input_file->output_files)%>
+<%if(!custom_only && source_files)%>
+<%custom_type->input_file->output_file%>
+<%endif%>
+<%if(flag_overrides(custom_type->input_file, dependent))%>
+<%foreach(dep, flag_overrides(custom_type->input_file, dependent))%>
+	:dependsRelative=<%dep%><%if(!has_extension(dep))%><%exe_ext%><%endif%>
+<%endfor%>
+<%else%>
+<%foreach(custom_type->dependent)%>
+	:dependsRelative=<%custom_type->dependent%><%if(!has_extension(custom_type->dependent))%><%exe_ext%><%endif%>
+<%endfor%>
+<%endif%>
+	:dependsRelative=<%custom_type->input_file%>
+<%if(custom_type->input_file->dependencies)%>
+<%foreach(custom_type->input_file->dependencies)%>
+	:dependsRelative=<%custom_type->input_file->dependencie%>
+<%endfor%>
+<%endif%>
+<%if(flag_overrides(custom_type->input_file, gendir))%>
+	:preexecShell='cd <%reltop%> && <%mkdir%> <%flag_overrides(custom_type->input_file, gendir)%><%postmkdir%>'
+<%endif%>
+	:preexecShell='cd <%reltop%> && <%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%><%if(custom_type->output_option)%> <%custom_type->input_file%> <%custom_type->output_option%> <%custom_type->input_file->output_file%><%else%> <%custom_type->input_file%><%endif%>'
+<%endfor%>
+<%else%>
+<%if(!custom_only && source_files)%>
+<%foreach(custom_type->input_file->source_output_files)%>
+<%if(forfirst)%>
+<%custom_type->input_file->source_output_file%>
+<%endif%>
+<%endfor%>
+<%endif%>
+<%if(flag_overrides(custom_type->input_file, dependent))%>
+<%foreach(dep, flag_overrides(custom_type->input_file, dependent))%>
+	:dependsRelative=<%dep%><%if(!has_extension(dep))%><%exe_ext%><%endif%>
+<%endfor%>
+<%else%>
+<%foreach(custom_type->dependent)%>
+	:dependsRelative=<%custom_type->dependent%><%if(!has_extension(custom_type->dependent))%><%exe_ext%><%endif%>
+<%endfor%>
+<%endif%>
+	:dependsRelative=<%custom_type->input_file%>
+<%if(custom_type->input_file->dependencies)%>
+<%foreach(custom_type->input_file->dependencies)%>
+	:dependsRelative=<%custom_type->input_file->dependencie%>
+<%endfor%>
+<%endif%>
+<%if(flag_overrides(custom_type->input_file, gendir))%>
+	:preexecShell='cd <%reltop%> && <%mkdir%> <%flag_overrides(custom_type->input_file, gendir)%><%postmkdir%>'
+<%endif%>
+	:preexecShell='cd <%reltop%> && <%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%custom_type->input_file%>'
+<%if(flag_overrides(custom_type->input_file, postcommand))%>
+<%foreach(custom_type->input_file)%>
+	:preexecShell='cd <%reltop%> && <%flag_overrides(custom_type->input_file, postcommand)%>'
+<%endfor%>
+<%else%>
+<%if(custom_type->postcommand)%>
+<%foreach(custom_type->input_file)%>
+	:preexecShell='cd <%reltop%> && <%custom_type->postcommand%>'
+<%endfor%>
+<%endif%>
+<%endif%>
+<%if(pch_header && !no_use_pch && custom_type->pch_postrule)%>
+<%foreach(custom_type->input_file->source_output_files)%>
+	:preexecShell='cd <%reltop%> && echo #include "<%pch_header%>" > temporary.src'
+        :preexecShell='cd <%reltop%> && <%cat%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%><%slash%><%basename(custom_type->input_file->source_output_file)%><%else%><%custom_type->input_file->source_output_file%><%endif%> >> temporary.src'
+        :preexecShell='cd <%reltop%> && <%mv%> temporary.src <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%><%slash%><%basename(custom_type->input_file->source_output_file)%><%else%><%custom_type->input_file->source_output_file%><%endif%>'
+<%endfor%>
+<%endif%>
+<%endif%>
+<%foreach(custom_type->input_file->output_files)%>
+	:extraOutputFile=<%custom_type->input_file->output_file%>
+<%endfor%>
+<%if(custom_only || !source_files)%>
+	-c
+	:postexecShell='<%rm%> .c && <%rm%> .h'
+<%endif%>
+<%endif%>
+<%endfor%>
+<%endfor%>
+<%scope(leave)%>
+<%foreach(source_files)%>
+<%source_file%>
+<%if(compile_flags)%>
+	-cxx_compiler.args=<%compile_flags%><%if(flag_overrides(source_file, buildflags))%> <%flag_overrides(source_file, buildflags)%><%endif%>
+<%else%>
+<%if(flag_overrides(source_file, buildflags))%>
+	-cxx_compiler.args=<%flag_overrides(source_file, buildflags)%>
+<%endif%>
+<%endif%>
+<%endfor%>
+<%foreach(header_files)%>
+<%header_file%>
+<%endfor%>
+<%foreach(inline_files)%>
+<%inline_file%>
+<%endfor%>
+<%foreach(resource_files)%>
+<%resource_file%>
+<%endfor%>
+<%foreach(documentation_files)%>
+<%documentation_file%>		[Documentation]
+<%endfor%>

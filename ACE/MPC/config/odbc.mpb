@@ -1,0 +1,23 @@
+// $Id$
+
+project {
+  specific(prop:windows) {
+    // Out of the box, Windows supports ODBC since ODBC originated
+    // on Windows. We, however, need to ensure that UnixODBC and
+    // iODBC are not enabled. We may be able to drop the 'avoids'
+    // statement.
+    avoids += unixodbc iodbc
+    lit_libs += odbc32 odbcbcp odbcCP32
+  }
+}
+
+//=============================================================================
+// Non-Windows support
+
+feature(unixodbc) : unixodbc {
+  avoids += iodbc
+}
+
+feature(iodbc) : iodbc {
+  avoids += unixodbc
+}

@@ -1,0 +1,13 @@
+// $Id$
+project {
+  requires += flex
+  Define_Custom(FLEX) {
+    automatic        = 1
+    command          = flex
+    commandflags     = -t
+    output_option    = >
+    pch_postrule     = 1
+    inputext         = .ll, .l
+    source_outputext = .c, .cpp, .cxx, .cc, .C
+  }
+}

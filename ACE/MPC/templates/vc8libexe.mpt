@@ -1,0 +1,77 @@
+// -*- MPC -*-
+// $Id$
+
+conditional_include "common"
+conditional_include "windowscommon"
+
+configurations     = Debug Release
+common_defines     = WIN32 _CONSOLE _CRT_NONSTDC_NO_WARNINGS
+ConfigurationType  = 1
+SubSystem          = 1
+Detect64BitPortabilityProblems = false
+MinimalRebuild     = false
+
+conditional_include "vc8platforms"
+
+Release {
+  LinkIncremental  = 1
+  optimize         = 2
+  defines          = NDEBUG
+  output_dir       = Static_Release
+  intermediate_dir = Static_Release
+  lib_modifier     = s
+}
+
+Debug {
+  debug_prj        = 1
+  defines          = _DEBUG
+  output_dir       = Static_Debug
+  intermediate_dir = Static_Debug
+  lib_modifier     = sd
+}
+
+Memcheck Release {
+  optimize           = 2
+  defines            = NDEBUG
+  output_dir         = Static_Release
+  intermediate_dir   = Static_Release
+  lib_modifier       = s
+  BasicRuntimeChecks = 0
+  LinkIncremental    = 1
+  FixedBaseAddress   = 1
+}
+
+Memcheck Debug {
+  debug_prj          = 1
+  defines            = _DEBUG
+  output_dir         = Static_Debug
+  intermediate_dir   = Static_Debug
+  lib_modifier       = sd
+  BasicRuntimeChecks = 0
+  LinkIncremental    = 1
+  FixedBaseAddress   = 1
+}
+
+MFC Release {
+  LinkIncremental  = 1
+  optimize          = 2
+  defines           = NDEBUG _AFXDLL
+  output_dir        = Static_MFC_Release
+  intermediate_dir  = Static_MFC_Release
+  lib_modifier      = mfcs
+  UseOfMFC          = 2
+  unicode_mfc_entry = wWinMainCRTStartup
+}
+
+MFC Debug {
+  debug_prj         = 1
+  defines           = _DEBUG _AFXDLL
+  output_dir        = Static_MFC_Debug
+  intermediate_dir  = Static_MFC_Debug
+  lib_modifier      = mfcsd
+  UseOfMFC          = 2
+  unicode_mfc_entry = wWinMainCRTStartup
+}
+
+conditional_include "vcpartialmacros"
+conditional_include "user_vc8libexe"

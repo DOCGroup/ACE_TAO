@@ -1,0 +1,17 @@
+// -*- MPC -*-
+// $Id$
+
+feature(zlib) {
+  includes += "$(ZLIB_ROOT)/include"
+  libpaths += "$(ZLIB_ROOT)/lib"
+  macros   += ZLIB
+
+  // @@ Notice: If you are building with Cygwin, you may need to manually
+  //            change the following library to zlib.
+  specific(prop:windows) {
+    zlibname = zlib
+    lit_libs += $(ZLIBNAME)
+  } else {
+    lit_libs += z
+  }
+}

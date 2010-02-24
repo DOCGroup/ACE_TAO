@@ -1,0 +1,106 @@
+// -*- MPC -*-
+// $Id$
+
+conditional_include "common"
+conditional_include "windowscommon"
+
+configurations     = Debug Release
+common_defines     = WIN32 _CONSOLE
+configuration_type = 1
+subsystem          = 1
+output_subdir      = I386
+
+Release {
+  LinkIncremental  = 1
+  optimize         = 3
+  defines          = NDEBUG
+  output_dir       = Release
+  intermediate_dir = Release
+}
+
+Debug {
+  optimize         =
+  debug_prj        = 1
+  defines          = _DEBUG
+  intermediate_dir = Debug
+  lib_modifier     = d
+  pdbl             = 1
+  pdbc             = 1
+}
+
+Memcheck Release {
+  optimize           = 3
+  defines            = NDEBUG
+  output_dir         = Release
+  intermediate_dir   = Release
+  BasicRuntimeChecks = 0
+  LinkIncremental    = 1
+  FixedBaseAddress   = 1
+  pdbl               = 1
+}
+
+Memcheck Debug {
+  optimize           =
+  debug_prj          = 1
+  defines            = _DEBUG
+  intermediate_dir   = Debug
+  lib_modifier       = d
+  pdbc               = 1
+  BasicRuntimeChecks = 0
+  LinkIncremental    = 1
+  FixedBaseAddress   = 1
+  pdbl               = 1
+}
+
+MFC Release {
+  LinkIncremental   = 1
+  optimize          = 3
+  common_defines    = WIN32 _WINDOWS
+  defines           = NDEBUG _AFXDLL
+  output_dir        = MFC_Release
+  intermediate_dir  = MFC_Release
+  lib_modifier      = mfc
+  use_mfc           = 2
+  unicode_mfc_entry = wWinMainCRTStartup
+}
+
+MFC Debug {
+  optimize          =
+  debug_prj         = 1
+  common_defines    = WIN32 _WINDOWS
+  defines           = _DEBUG _AFXDLL
+  output_dir        = MFC_Debug
+  intermediate_dir  = MFC_Debug
+  lib_modifier      = mfcd
+  pdbl              = 1
+  pdbc              = 1
+  use_mfc           = 2
+  unicode_mfc_entry = wWinMainCRTStartup
+
+}
+
+ETS Release {
+  optimize         = 3
+  defines          = NDEBUG
+  output_dir       = ETS_Release
+  intermediate_dir = ETS_Release
+  runtime_library  = 2
+  GenerateMapFile  = TRUE
+  lit_libs         += etsapi wsock32
+}
+
+ETS Debug {
+  optimize         =
+  defines          = _DEBUG
+  output_dir       = ETS_Debug
+  intermediate_dir = ETS_Debug
+  lib_modifier     = d
+  runtime_library  = 3
+  pdbl             = 1
+  pdbc             = 1
+  GenerateMapFile  = TRUE
+  lit_libs         += etsapi wsock32
+}
+
+conditional_include "vcpartialmacros"
+conditional_include "user_vc7exe"

@@ -1,0 +1,40 @@
+// -*- MPC -*-
+// $Id$
+
+conditional_include "windowscommon"
+
+mcs {
+  main_flag   = -main:
+  out_flag    = -out:
+  lib_flag    = -lib:
+  def_flag    = -define:
+  exe_flag    = -target:exe
+  winexe_flag = -target:winexe
+  opt_flag    = -optimize
+  key_flag    = -keyfile:
+  unsafe_flag = -unsafe
+  shared_flag = -target:library
+  ref_flag    = -r:
+  pkg_flag    = -pkg:
+  mkbundle    = mkbundle
+  resx_flag   = -resource:
+  ico_flag    = -win32icon:
+}
+
+gmcs {
+  main_flag   = -main:
+  out_flag    = -out:
+  lib_flag    = -lib:
+  def_flag    = -define:
+  exe_flag    = -target:exe
+  winexe_flag = -target:winexe
+  opt_flag    = -optimize
+  key_flag    = -keyfile:
+  unsafe_flag = -unsafe
+  shared_flag = -target:library
+  ref_flag    = -r:
+  pkg_flag    = -pkg:
+  mkbundle    = mkbundle2
+  resx_flag   = -resource:
+  ico_flag    = -win32icon:
+}

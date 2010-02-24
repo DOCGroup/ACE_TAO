@@ -1,0 +1,72 @@
+// -*- MPC -*-
+// $Id$
+
+conditional_include "common"
+conditional_include "windowscommon"
+
+configurations     = Debug Release
+common_defines     = WIN32 _WINDOWS _CRT_NONSTDC_NO_WARNINGS
+ConfigurationType  = 2
+Detect64BitPortabilityProblems = false
+MinimalRebuild     = false
+
+conditional_include "vc8platforms"
+
+Release {
+  LinkIncremental  = 1
+  optimize         = 2
+  defines          = NDEBUG
+  output_dir       = Release
+  intermediate_dir = Release
+}
+
+Debug {
+  debug_prj        = 1
+  defines          = _DEBUG
+  output_dir       = .
+  intermediate_dir = Debug
+  lib_modifier     = d
+}
+
+Memcheck Release {
+  optimize           = 2
+  defines            = NDEBUG
+  output_dir         = Release
+  intermediate_dir   = Release
+  BasicRuntimeChecks = 0
+  LinkIncremental    = 1
+  FixedBaseAddress   = 1
+}
+
+Memcheck Debug {
+  debug_prj          = 1
+  defines            = _DEBUG
+  output_dir         = .
+  intermediate_dir   = Debug
+  lib_modifier       = d
+  BasicRuntimeChecks = 0
+  LinkIncremental    = 1
+  FixedBaseAddress   = 1
+}
+
+MFC Release {
+  LinkIncremental  = 1
+  optimize         = 2
+  defines          = NDEBUG
+  output_dir       = MFC_Release
+  intermediate_dir = MFC_Release
+  lib_modifier     = mfc
+  UseOfMFC         = 2
+}
+
+MFC Debug {
+  debug_prj        = 1
+  defines          = _DEBUG
+  output_dir       = MFC_Debug
+  intermediate_dir = MFC_Debug
+  lib_modifier     = mfcd
+  UseOfMFC         = 2
+}
+
+conditional_include "vcpartialmacros"
+conditional_include "user_vc8dll"

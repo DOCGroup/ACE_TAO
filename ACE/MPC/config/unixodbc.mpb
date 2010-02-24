@@ -1,0 +1,10 @@
+// $Id$
+
+project {
+  // Support for UnixODBC (http://www.unixodbc.org). This is one
+  // variant of porting ODBC to non-Windows systems.
+  libpaths += $(UNIXODBC_ROOT)/lib
+  includes += $(UNIXODBC_ROOT)/include
+
+  lit_libs += odbc odbcinst
+}

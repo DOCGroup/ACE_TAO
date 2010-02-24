@@ -1,0 +1,19 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  Define_Custom(SWIG) {
+    automatic         = 1
+    command           = swig
+    commandflags      = -ruby -c++
+    inputext          = .swg, .swig, .i
+    source_outputext  = _wrap.cxx
+  }
+  requires += swig_ruby
+  includes += $(RUBY_INCLUDE)/.
+  libpaths += $(RUBY_LIBPATH)/.
+
+  specific {
+    lib_prefix =
+  }
+}

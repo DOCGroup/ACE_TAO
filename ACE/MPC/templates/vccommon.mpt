@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+// NOTE: This is really only common to vc6 and should remain that way.  The
+//       file is poorly named.  -- Chad Elliott 9/23/2005
+
+midl_defines =
+midl_flags = /nologo /mktyplib203 /win32
+midl_includes =

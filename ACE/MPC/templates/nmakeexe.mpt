@@ -1,0 +1,153 @@
+// -*- MPC -*-
+// $Id$
+
+conditional_include "common"
+conditional_include "windowscommon"
+
+type_description      = "Console Application"
+type_code             = 0x0103
+configurations        = Debug Release "Static Debug" "Static Release"
+platforms             = Win32
+default_configuration = Debug
+common_defines        = WIN32 _CONSOLE
+subsystem             = console
+TreatWChar_tAsBuiltInType = true
+systemlibs            = advapi32.lib user32.lib
+
+Win32 {
+  machine_description = x86
+  machine             = I386
+}
+
+Win64 {
+  machine_description = IA64
+  machine             = IA64
+  cpu_defines         = WIN64
+  add_compile         = /Wp64
+}
+
+x64 {
+  machine_description = x64
+  machine             = AMD64
+  cpu_defines         = _AMD64_
+  add_compile         = /Wp64
+  platform_defines    = _WIN64
+}
+
+Release {
+  use_debug_libraries   = 0
+  optimize              = 1
+  compile_flags         = /W3 /EHsc /MD /GR
+  defines               = NDEBUG
+  compile_flags_removed = /YX
+  output_dir            = Release
+  intermediate_dir      = Release
+  need_staticflags      =
+  debug_switch          =
+}
+
+Debug {
+  use_debug_libraries   = 1
+  optimize              =
+  compile_flags         = /W3 /Gm /EHsc /Zi /MDd /GR /Gy
+  defines               = _DEBUG
+  compile_flags_removed = /YX
+  intermediate_dir      = Debug
+  lib_modifier          = d
+  need_staticflags      =
+  pdbl                  = 1
+  pdbc                  = 1
+}
+
+Static Release {
+  use_debug_libraries   = 0
+  optimize              = 1
+  compile_flags         = /W3 /EHsc /MD /GR
+  defines               = NDEBUG
+  compile_flags_removed = /YX
+  lib_modifier          = s
+  need_staticflags      = 1
+  output_dir            = Static_Release
+  intermediate_dir      = Static_Release
+  debug_switch          =
+}
+
+Static Debug {
+  use_debug_libraries   = 1
+  optimize              =
+  compile_flags         = /W3 /Gm /EHsc /Zi /MDd /GR /Gy
+  defines               = _DEBUG
+  compile_flags_removed = /YX
+  lib_modifier          = sd
+  need_staticflags      = 1
+  output_dir            = Static_Debug
+  intermediate_dir      = Static_Debug
+  pdbl                  = 1
+  pdbc                  = 1
+}
+
+MFC Release {
+  subsystem             = windows
+  use_debug_libraries   = 0
+  optimize              = 1
+  compile_flags         = /W3 /EHsc /MD /GR
+  defines               = NDEBUG _AFXDLL
+  compile_flags_removed = /YX
+  output_dir            = MFC_Release
+  intermediate_dir      = MFC_Release
+  lib_modifier          = mfc
+  need_staticflags      =
+  debug_switch          =
+  unicode_mfc_entry     = wWinMainCRTStartup
+}
+
+MFC Debug {
+  subsystem             = windows
+  use_debug_libraries   = 1
+  optimize              =
+  compile_flags         = /W3 /Gm /EHsc /Zi /MDd /GR /Gy
+  defines               = _DEBUG _AFXDLL
+  compile_flags_removed = /YX
+  output_dir            = MFC_Debug
+  intermediate_dir      = MFC_Debug
+  lib_modifier          = mfcd
+  need_staticflags      =
+  pdbl                  = 1
+  pdbc                  = 1
+  unicode_mfc_entry     = wWinMainCRTStartup
+}
+
+Static MFC Release {
+  subsystem             = windows
+  use_debug_libraries   = 0
+  optimize              = 1
+  compile_flags         = /W3 /EHsc /MD /GR
+  defines               = NDEBUG _AFXDLL
+  compile_flags_removed = /YX
+  lib_modifier          = mfcs
+  need_staticflags      = 1
+  output_dir            = Static_MFC_Release
+  intermediate_dir      = Static_MFC_Release
+  debug_switch          =
+  unicode_mfc_entry     = wWinMainCRTStartup
+}
+
+Static MFC Debug {
+  subsystem             = windows
+  use_debug_libraries   = 1
+  optimize              =
+  compile_flags         = /W3 /Gm /EHsc /Zi /MDd /GR /Gy
+  defines               = _DEBUG _AFXDLL
+  compile_flags_removed = /YX
+  lib_modifier          = mfcsd
+  need_staticflags      = 1
+  output_dir            = Static_MFC_Debug
+  intermediate_dir      = Static_MFC_Debug
+  pdbl                  = 1
+  pdbc                  = 1
+  unicode_mfc_entry     = wWinMainCRTStartup
+}
+
+conditional_include "vcfullmacros"
+conditional_include "user_nmakeexe"
+

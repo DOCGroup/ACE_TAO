@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  includes += $(MPI_ROOT)/include
+  libpaths += $(MPI_ROOT)/lib
+  lit_libs += mpi
+  requires += mpi
+}

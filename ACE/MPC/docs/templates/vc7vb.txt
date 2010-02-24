@@ -1,0 +1,16 @@
+// Current as of 10/26/2006
+// This defines the role of all the template variables specific to the
+// 'vc7' and 'vc71' project types with the vb language.
+//
+// Please try to keep this alphabetically sorted.
+//
+common_defines = Specifies macros that are common to all target types.
+defines = Macros that are specific to a particular configuration.
+guid = The value for this variable is generated during project generation.
+incremental = This setting corresponds to the Configuration Properties Optimizations property "Enable incremental build". The boolean values true and false correspond to enabling or disabling the feature in the IDE.
+prversion = This setting specifies the ProductVersion in the generated .vbproj file.
+scc = This template variable enables or disables the use of Scc.
+schemaversion = This setting specifies the SchemaVersion in the generated .vbproj file.
+startupobject = This corresponds to the Common Properties General property "Startup object".
+trace = This setting corresponds to the Configuration Properties Build property "Define TRACE constant". If this boolean template variable is set, the TRACE constant will be defined.
+winapp = This boolean template variable indicates whether the application target is for the Console or Windows subsystem.

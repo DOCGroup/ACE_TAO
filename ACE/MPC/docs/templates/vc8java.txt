@@ -1,0 +1,18 @@
+// Current as of 3/05/2007
+// This defines the role of all the template variables specific to the
+// 'vc8' project type with the java language.
+//
+// Please try to keep this alphabetically sorted.
+//
+allowunsafeblocks = Enable/disable the use of the unsafe keyword.
+common_defines = Specifies macros that are common to all target types.
+defines = Macros that are specific to a particular configuration.
+guid = The value for this variable is generated during project generation.
+keyfile = Indicate the keyfile to use when signing the assembly.
+prversion = This setting specifies the ProductVersion in the generated .vjsproj file.
+registerforcominterop = This setting corresponds to the Build Output property "Register for COM interop". The boolean values true and false correspond to enabling or disabling the feature in the IDE.
+schemaversion = This setting specifies the SchemaVersion in the generated .vjsproj file.
+startupobject = This corresponds to the Application property "Startup object".
+trace = This setting corresponds to the Build General property "Conditional Compilation Constants". If this boolean template variable is set, the TRACE constant will be defined.
+warning_level = This corresponds to the Build General property "Warning level". Valid values are 0 through 4.
+winapp = This boolean template variable indicates whether the application target is for the Console or Windows subsystem.

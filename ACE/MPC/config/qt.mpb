@@ -1,0 +1,55 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  requires += qt
+  includes += $(QTDIR)/include
+  libpaths += $(QTDIR)/lib $(QTDIR)/lib64
+  macros   += QT_THREAD_SUPPORT
+  lit_libs += qt-mt$(QT_VERSION)
+
+  // Some Linux installations have the includes here.
+  specific(!prop:windows) {
+    includes += /usr/include/qt3
+  }
+
+  Define_Custom(UIC) {
+    automatic        = 1
+    command          = $(QTDIR)/bin/uic
+    output_option    = -o
+    inputext         = .ui
+    header_outputext = .h
+  }
+
+  Define_Custom(UIC_Impl) {
+    automatic        = 1
+    command          = $(QTDIR)/bin/uic
+    commandflags     = -impl <%quote%><%output_noext%>.h<%quote%>
+    dependent        = <%output_noext%>.h
+    output_option    = -o
+    pch_postrule     = 1
+    inputext         = .ui
+    source_outputext = .cpp
+  }
+
+  Define_Custom(MOC) {
+    automatic        = 0
+    command          = $(QTDIR)/bin/moc
+    output_option    = -o
+    pch_postrule     = 1
+    inputext         = .h
+    pre_extension    = _moc
+    source_outputext = .cpp
+  }
+
+  Define_Custom(QRC) {
+    automatic        = 1
+    command          = $(QTDIR)/bin/rcc
+    output_option    =  -o
+    commandflags     = -name <%input_noext%>
+    pch_postrule     = 1
+    inputext         = .qrc
+    pre_extension    = _qrc
+    source_outputext = .cpp
+  }
+}

@@ -1,0 +1,21 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  libs        += dcpsccpp
+  lit_libs    += dcpsgapi ddsdatabase ddsos
+  libpaths    += $(OSPL_HOME)/lib
+  includes    += $(OSPL_HOME)/include \
+                 $(OSPL_HOME)/include/sys \
+                 $(OSPL_HOME)/include/dcps/C++/CCPP \
+                 $(OSPL_HOME)/include/dcps/C++/CCPP/$(SPLICE_ORB) \
+                 $(OSPL_HOME)/custom_lib/ccpp
+
+  specific(prop:microsoft) {
+    DisableSpecificWarnings += 4101
+  }
+  
+  verbatim(gnuace, macros) {
+    override no_hidden_visibility = 1
+  }
+}

@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project: qt4_gui {
+  lit_libs += Qt3Support$(QT_CFG)
+  macros += QT3_SUPPORT
+}

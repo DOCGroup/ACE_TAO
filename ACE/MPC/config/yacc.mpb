@@ -1,0 +1,15 @@
+// $Id$
+project {
+  requires += yacc
+  Define_Custom(YACC) {
+    automatic        = 1
+    command          = yacc
+    commandflags     = -d
+    postcommand      = <%mv%> y.tab.c <%source_file%> <%and%> <%mv%> y.tab.h <%header_file%>
+    pch_postrule     = 1
+    inputext         = .yy, .y
+    pre_extension    = .tab
+    source_outputext = .c, .cpp, .cxx, .cc, .C
+    header_outputext = .h, .hpp, .hxx, .hh
+  }
+}

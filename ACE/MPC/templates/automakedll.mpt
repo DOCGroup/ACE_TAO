@@ -1,0 +1,14 @@
+// -*- MPC -*-
+// $Id$
+
+conditional_include "common"
+
+lib_prefix = lib
+lib_ext    = .la
+dll_ext    = .la
+exe_ext    =
+
+linkflags =
+includedir =
+
+conditional_include "user_automakedll"

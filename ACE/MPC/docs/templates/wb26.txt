@@ -1,0 +1,12 @@
+// Current as of 3/31/2008
+// This defines the role of all the template variables specific to the
+// 'wb26wrproject' template.
+//
+// Please try to keep this alphabetically sorted.
+//
+common_defines = Specifies macros that are common to all target types.
+defines = Macros that are specific to a particular configuration.
+enable_subprojects = Enable the generation of subprojects
+link_groups = A boolean template variable that determines if the GNU linker specific --start-group and --end-group options are used.
+linkflags = Platform specific flags passed during the linking of dynamic libraries and executables.
+standard_build = Specify that you want to use standard build instead of flexible build

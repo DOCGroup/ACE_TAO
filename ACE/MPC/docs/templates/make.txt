@@ -1,0 +1,74 @@
+// Current as of 1/14/2010
+// This defines the role of all the template variables specific to the
+// 'make' project type.
+//
+// Please try to keep this alphabetically sorted.
+//
+ar = The static library creation tool.
+arflags = Flags passed to the static library creation tool.
+arflags64 = The 64-bit version of flags passed to the static library creation tool.
+build64bit = Determine whether this project is built in 64-bit mode.
+chmod = A utility to change permissions on a file.
+clean = Additional files or directories to be "cleaned" when the clean target is invoked.
+compile_option = The option used to specify that the compiler should only compile.
+compilerflags = This holds options specific to a particular compiler.
+compilerflags64 = The 64-bit specific options passed to a particular compiler.
+compilers = Although it is plural, it holds only a single compiler which is used to determine specific flags and default platform.
+copy = A utility to copy a file.
+cpu = This can be used with the Wind River specific compilers to specify the CPU macro.
+cputype = This can be used with the Wind River specific compilers to specify the CPU type.
+cxx = Holds the C/C++ compiler.
+cxxint = This is Green Hills specific and specifies the type of integration.
+delete = A utility to delete a file.
+depgen = A utility to generate make dependencies.
+depgen_flags = Flags to be passed to the dependency generator utility.
+devnull = The null device for a particular platform.
+dld = The linker to create dynamic libraries.
+dmclink = Used by the dmc compiler, this determines if the dmc special mode of linking is used.
+exe_linkflags = Provides additional link flags for binary targets.  The value is eval'ed.
+expanded_variable_assignment = Used to enable the setting of custom library paths.  Be default this is disabled due to lack of support from all make variants.
+extraarflags = Additional, platform specific, flags to be passed to the static library creation tool.
+extracppflags = Additional, platform specific, flags to be passed to the source file compiler.
+genflags = Used to determine the default compile mode (either debug or optimized).
+gnumake = Indicates that GNU Make extensions can be used in the generated Makefile.
+ld = Used to override the default linker and flags for executables.
+ldlibs = Platform specific libraries to be linked into dynamic libraries and executables.
+libgenopt = This is used to pass an option, if necessary, to the static library creation tool to specify the library name.
+libopt = The option used to specify that a library will be linked into dynamic libraries or executables.
+libpathopt = The option used to provide a path to libraries that will be linked into dynamic libraries or executables.
+linkflags = Platform specific flags passed during the linking of dynamic libraries and executables.
+linkflags64 = The 64-bit version of platform specific flags passed during the linking of dynamic libraries and executables.
+make_include = This allows users to "include" arbitrary files into the generated makefiles.
+makedir = A utility to make a directory.
+move = A utility to move a file.
+nm = A utility to generate a symbol listing of an object file or executable.
+obj_dir = If specified, object files will be place in this directory.  It should always end in a slash.
+obj_ext = The object file extension.
+output_option = The option used to specify the output location of various parts of a project such as object file, libraries and executables.
+pchcreate = Options passed to the source compiler to create a precompiled header binary.
+pchext = The extension of the precompiled header binary file.
+pchnobj = If set, the creation of the precompiled header binary does not create an object file.
+pchstop = An optional setting that some compilers use to indicate the last include file to be considered in creating a precompiled header binary.
+pchsupport = Determine if precompiled header support is generated into the makefile.
+pchuse = Options passed to the source compiler to specify that a precompiled header binary be used.
+pic = The position independent code option for a particular compiler.
+postlinkbinary = If specified, the command will be executed at the end of linking a binary executable.
+prelinktarget = Specific to VxWorks, this indicates a file that is compiled prior to linking a shared object library or executable.
+prelinktargetobj = Specific to VxWork, this indicates the object file that is needed prior to linking a shared object library or executable.
+ranlib = A boolean setting to determine if ranlib is needed or not.
+rc = The name of the resource file compiler.
+res_ext = The extension for compiled resource files.
+shflags = Platform specific flags passed during the linking of dynamic libraries.
+slash = The value used to separate directories and files.
+specialscript = Specific to VxWorks, the text in this value is used as a script to generate the 'prelinktarget' file.
+supports_include = A boolean value used to indicate whether the version of make supports inclusion of files that do not yet exist.
+targetoutdir = Specifies a location for all targets and intermediaries within the makefile.  It should always end in a slash.
+tempinc = A compiler specific setting that can be used to dermine a temporary location for template instantiations.
+tempincopt = A compiler specific option to indicate the temporary directory specified by 'tempinc'.
+testdirend = Used in creating intermediate directories.
+testdirstart = Used in creating intermediate directories.
+touch = The utility used to create the initial dependency file.
+type = A utility to display a file on the terminal.
+versupport = A platform specific setting that inidicates if shared library versioning is supported.
+visibility = A boolean setting to determine if visibility options are passed to the compiler.
+visopt = The compiler specific options to enable symbol visibility.

@@ -1,0 +1,18 @@
+// Current as of 10/26/2006
+// This defines the role of all the template variables specific to the
+// 'vc7' and 'vc71' project types with the csharp language.
+//
+// Please try to keep this alphabetically sorted.
+//
+allowunsafeblocks = Enable/disable the use of the unsafe keyword.
+common_defines = Specifies macros that are common to all target types.
+defines = Macros that are specific to a particular configuration.
+guid = The value for this variable is generated during project generation.
+incremental = This setting corresponds to the Configuration Properties Advanced property "Incremental Build". The boolean values true and false correspond to enabling or disabling the feature in the IDE.
+keyfile = Indicate the keyfile to use when signing the assembly.
+prversion = This setting specifies the ProductVersion in the generated .csproj file.
+scc = This template variable enables or disables the use of Scc.
+schemaversion = This setting specifies the SchemaVersion in the generated .csproj file.
+startupobject = This corresponds to the Common Properties General property "Startup Object".
+trace = This setting corresponds to the Configuration Properties Build property "Conditional Compilation Constants". If this boolean template variable is set, the TRACE constant will be defined.
+winapp = This boolean template variable indicates whether the application target is for the Console or Windows subsystem.

@@ -1,0 +1,16 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  requires += mfc
+  macros   += _AFXDLL
+  specific(em3, nmake, vc6) {
+    subsystem = windows
+  } else {
+    subsystem = 2
+  }
+  specific {
+    use_mfc = 2
+    unicode_mfc_entry = wWinMainCRTStartup
+  }
+}

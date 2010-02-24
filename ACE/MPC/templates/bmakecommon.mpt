@@ -1,0 +1,28 @@
+// -*- MPC -*-
+// $Id$
+
+conditional_include "common"
+
+configurations       = Debug Release
+common_defines       = WIN32 _WINDOWS
+common_libs          = import32$(LIB_EXT) cw32mti.lib ws2_32.lib
+common_flags         = -a8
+unicode_flags        = -WU
+unicode_lib_modifier = u
+unicode_exe_modifier = u
+
+obj_ext = .obj
+dll_ext = .dll
+lib_ext = .lib
+exe_ext = .exe
+cc      = bcc32
+rc      = brcc32
+tlib    = tlib
+link    = ilink32
+thflags = -tWM
+dllflags = -Tpd -Gi -x -Gn -w-dup
+libflags = /C
+ccflags  = -q
+exeflags = -Tpe -x -Gn
+warnflags = -w-rvl -w-rch -w-ccc -w-obs -w-aus -w-pia -w-inl
+

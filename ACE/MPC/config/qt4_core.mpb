@@ -1,0 +1,16 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  // If the include files for QT are not relative to the root (for
+  // example, /usr/include/qt4), set the QT4_INCDIR environment variable.
+  expand(QT4_INCDIR) {
+    $QT4_INCDIR
+    $(QTDIR)/include
+  }
+
+  requires += qt4
+  includes += $(QT4_INCDIR)
+  libpaths += $(QTDIR)/lib
+  lit_libs += QtCore$(QT_CFG)
+}

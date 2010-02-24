@@ -1,0 +1,16 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  Define_Custom(SWIG) {
+    automatic             = 1
+    command               = swig
+    commandflags          = -java -c++
+    inputext              = .swg, .swig, .i
+    source_outputext      = _wrap.cxx
+    generic_pre_extension = , JNI
+    generic_outputext     = .java
+  }
+  requires += swig_java
+  includes += $(JAVA_ROOT)/include $(JAVA_ROOT)/include/$(JAVA_PLATFORM)
+}

@@ -1,0 +1,375 @@
+# The file ".wrmakefile" is the template used by the Wind River Workbench to
+# generate the makefiles of this project. Add user-specific build targets and
+# make rules only(!) in this project's ".wrmakefile" file. These will then be
+# automatically dumped into the makefiles.
+
+WIND_HOME := $(subst \,/,$(WIND_HOME))
+WIND_BASE := $(subst \,/,$(WIND_BASE))
+WIND_USR := $(subst \,/,$(WIND_USR))
+ACE_ROOT := $(subst \,/,$(ACE_ROOT))
+TAO_ROOT := $(subst \,/,$(TAO_ROOT))
+CIAO_ROOT := $(subst \,/,$(CIAO_ROOT))
+HOST_ROOT := $(subst \,/,$(HOST_ROOT))
+<%if(sharedname || staticname)%>
+<%if(libout || dllout)%>
+ACE_LIBOUT := <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
+<%endif%>
+<%endif%>
+<%if(exename)%>
+<%if(exeout)%>
+ACE_EXEOUT := <%exeout%>
+<%endif%>
+<%endif%>
+
+<%if(exename)%>
+ACE_TARGET_PREFIX :=
+ACE_TARGET_NAME := <%exename%>
+ACE_TARGET_EXT := <%exe_ext%>
+PROJECT_TARGET=$(filter %<%exe_ext%>,$(PROJECT_TARGETS))
+<%else%>
+<%if(sharedname || staticname)%>
+ACE_TARGET_PREFIX := <%lib_prefix%>
+ACE_TARGET_NAME := <%if(sharedname)%><%sharedname%><%else%><%staticname%><%endif%>
+ACE_TARGET_EXT := <%lib_ext%>
+PROJECT_TARGET=$(filter %<%lib_ext%>,$(PROJECT_TARGETS))
+<%endif%>
+<%endif%>
+<%if(custom_only)%>
+PROJECT_TARGET=CUSTOM_ONLY
+<%endif%>
+
+<%if(standard_build && exename)%>
+DEPLIBS = $(foreach lib,<%foreach(libs)%> <%libname_prefix%><%lib%><%endfor%> <%lit_libs%>, $(foreach libpath,<%foreach(libpaths)%><%if(targetoutdir)%> <%libpath%>/<%targetoutdir%><%endif%> <%libpath%><%endfor%>, $(wildcard $(libpath)/lib$(lib).a)))
+<%endif%>
+
+<%if(standard_build)%>
+all : generate_sources pre_recursion subdirs_all post_recursion pre_build main_all post_build
+<%else%>
+all : generate_sources pre_build main_all post_build
+<%endif%>
+
+<%if(!standard_build)%>
+_clean ::
+	@echo "make: removing targets and objects of `pwd`"
+<%endif%>
+
+%IDE_GENERATED%
+
+<%if(standard_build && exename)%>
+$(OBJ_DIR)/<%exename%>_partialImage.o : $(OBJECTS) $(SUB_OBJECTS) $(DEPLIBS)
+<%endif%>
+
+<%if(!standard_build)%>
+-include $(PRJ_ROOT_DIR)/*.makefile
+<%endif%>
+
+-include *.makefile
+
+<%if(custom_only)%>
+main_all : external_build
+	@echo "make: built targets of `pwd`"
+<%else%>
+<%if(standard_build)%>
+main_all : check_objectdir external_build $(PROJECT_TARGETS)
+<%else%>
+main_all : external_build $(PROJECT_TARGETS)
+<%endif%>
+        @echo "make: built targets of `pwd`"
+<%endif%>
+
+<%if(standard_build)%>
+check_objectdir :
+	@if [ ! -d "$(OBJ_DIR)" ]; then\
+		mkdir -p $(OBJ_DIR);\
+	fi
+
+# main entry point for pre processing prior to the recursion
+pre_recursion ::
+	@echo ""
+
+# main entry point for post processing after the recursion
+post_recursion ::
+	@echo ""
+<%endif%>
+
+# entry point for extending the build
+external_build ::
+	@echo ""
+
+# main entry point for pre processing prior to the build
+<%if(standard_build)%>
+ACE_ALL_OBJECTS := $(SUB_OBJECTS) $(OBJECTS)
+ifneq ($(PROJECT_TARGET),)
+pre_build :: $(PRE_BUILD_STEP)
+	@echo "Create object list $(PRJ_ROOT_DIR)/filelist.txt";\
+	rm -f $(PRJ_ROOT_DIR)/filelist.txt;\
+	for object in _dummy_ $(ACE_ALL_OBJECTS); do\
+		if [ "$$object" = "_dummy_" ]; then\
+			continue ;\
+		fi;\
+		echo "$$object" >> $(PRJ_ROOT_DIR)/filelist.txt;\
+	done
+else
+pre_build :: $(PRE_BUILD_STEP)
+	@echo ""
+endif
+<%else%>
+pre_build :: $(PRE_BUILD_STEP)
+	@echo "Create object list";\
+	rm -f $(PRJ_ROOT_DIR)/filelist.txt;\
+<%if(exename)%>
+	for object in _dummy_ $(OBJECTS_<%exename%>); do\
+<%else%>
+	for object in _dummy_ $(OBJECTS_<%if(sharedname)%><%sharedname%><%else%><%staticname%><%endif%>); do\
+<%endif%>
+		if [ "$$object" = "_dummy_" ]; then\
+			continue ;\
+		fi;\
+		echo "$$object" >> $(PRJ_ROOT_DIR)/filelist.txt ;\
+	done
+<%endif%>
+
+# entry point for generating sources prior to the build
+<%if(standard_build)%>
+ifneq ($(PROJECT_TARGET),)
+<%endif%>
+generate_sources ::
+<%foreach(custom_types)%>
+<%foreach(custom_type->input_files)%>
+<%if(custom_type->input_file->output_files)%>
+		<%if(!standard_build)%><%if(make_coexistence)%>cd ../.. ; <%else%>cd .. ;<%endif%><%endif%><%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%custom_type->input_file%> <%if(custom_type->output_option)%><%custom_type->output_option%> $@<%endif%>
+<%endif%>
+<%endfor%>
+<%endfor%>
+<%if(standard_build)%>
+else
+generate_sources ::
+	@echo ""
+endif
+<%endif%>
+
+# main entry point for post processing after the build
+post_build :: $(POST_BUILD_STEP) deploy_output
+	@echo ""
+
+# entry point for deploying output after the build
+<%if(standard_build)%>
+ifneq ($(PROJECT_TARGET),)
+<%endif%>
+deploy_output ::
+<%if(!standard_build)%>
+<%if(exename)%>
+<%if(exeout)%>
+	if [ $(ACE_EXEOUT) != . ]; then\	
+		if [ ! -d $(ACE_EXEOUT) ]; then\
+			mkdir -p $(ACE_EXEOUT);\
+		fi;\
+		if test -e $(ACE_EXEOUT)/$(ACE_TARGET_PREFIX)$(ACE_TARGET_NAME)$(ACE_TARGET_EXT); then \
+			if test $(ACE_TARGET_NAME)/$(MODE_DIR)/$(ACE_TARGET_PREFIX)$(ACE_TARGET_NAME)$(ACE_TARGET_EXT) -nt $(ACE_EXEOUT)/$(ACE_TARGET_PREFIX)$(ACE_TARGET_NAME)$(ACE_TARGET_EXT); then \
+				cp $(ACE_TARGET_NAME)/$(MODE_DIR)/$(ACE_TARGET_PREFIX)$(ACE_TARGET_NAME)$(ACE_TARGET_EXT) $(ACE_EXEOUT);\
+			fi \
+		else \
+			cp $(ACE_TARGET_NAME)/$(MODE_DIR)/$(ACE_TARGET_PREFIX)$(ACE_TARGET_NAME)$(ACE_TARGET_EXT) $(ACE_EXEOUT);\
+		fi\
+	fi
+<%endif%>
+<%else%>
+<%if(sharedname || staticname)%>
+<%if(libout || dllout)%>
+	if [ $(ACE_LIBOUT) != . ]; then\	
+		if [ ! -d $(ACE_LIBOUT) ]; then\
+			mkdir -p $(ACE_LIBOUT);\
+		fi;\
+		if test -e $(ACE_LIBOUT)/$(ACE_TARGET_PREFIX)$(ACE_TARGET_NAME)$(ACE_TARGET_EXT); then \
+			if test $(ACE_TARGET_NAME)/$(MODE_DIR)/$(ACE_TARGET_PREFIX)$(ACE_TARGET_NAME)$(ACE_TARGET_EXT) -nt $(ACE_LIBOUT)/$(ACE_TARGET_PREFIX)$(ACE_TARGET_NAME)$(ACE_TARGET_EXT); then \
+				cp $(ACE_TARGET_NAME)/$(MODE_DIR)/$(ACE_TARGET_PREFIX)$(ACE_TARGET_NAME)$(ACE_TARGET_EXT) $(ACE_LIBOUT);\
+			fi \
+		else \
+			cp $(ACE_TARGET_NAME)/$(MODE_DIR)/$(ACE_TARGET_PREFIX)$(ACE_TARGET_NAME)$(ACE_TARGET_EXT) $(ACE_LIBOUT);\
+		fi\
+	fi
+<%endif%>
+<%endif%>
+<%endif%>
+<%else%>
+<%if(exename)%>
+<%if(exeout)%>
+	if $(ACE_EXEOUT) != . ]; then\	
+		if [ ! -d $(ACE_EXEOUT) ]; then\
+			mkdir -p $(ACE_EXEOUT);\
+		fi;\
+		if test -e $(ACE_EXEOUT)/$(ACE_TARGET_PREFIX)$(ACE_TARGET_NAME)$(ACE_TARGET_EXT); then \
+			if test $(OBJ_DIR)/$(ACE_TARGET_PREFIX)$(ACE_TARGET_NAME)$(ACE_TARGET_EXT) -nt $(ACE_EXEOUT)/$(ACE_TARGET_PREFIX)$(ACE_TARGET_NAME)$(ACE_TARGET_EXT); then \
+				cp $(OBJ_DIR)/$(ACE_TARGET_PREFIX)$(ACE_TARGET_NAME)$(ACE_TARGET_EXT) $(ACE_EXEOUT);\
+			fi \
+		else \
+			cp $(OBJ_DIR)/$(ACE_TARGET_PREFIX)$(ACE_TARGET_NAME)$(ACE_TARGET_EXT) $(ACE_EXEOUT);\
+		fi\
+	fi
+<%endif%>
+<%else%>
+<%if(sharedname || staticname)%>
+<%if(libout || dllout)%>
+	if [ $(ACE_LIBOUT) != . ]; then\	
+		if [ ! -d $(ACE_LIBOUT) ]; then\
+			mkdir -p $(ACE_LIBOUT);\
+		fi;\
+		if test -e $(ACE_LIBOUT)/$(ACE_TARGET_PREFIX)$(ACE_TARGET_NAME)$(ACE_TARGET_EXT); then \
+			if test $(OBJ_DIR)/$(ACE_TARGET_PREFIX)$(ACE_TARGET_NAME)$(ACE_TARGET_EXT) -nt $(ACE_LIBOUT)/$(ACE_TARGET_PREFIX)$(ACE_TARGET_NAME)$(ACE_TARGET_EXT); then \
+				cp $(OBJ_DIR)/$(ACE_TARGET_PREFIX)$(ACE_TARGET_NAME)$(ACE_TARGET_EXT) $(ACE_LIBOUT);\
+			fi \
+		else \
+				cp $(OBJ_DIR)/$(ACE_TARGET_PREFIX)$(ACE_TARGET_NAME)$(ACE_TARGET_EXT) $(ACE_LIBOUT);\
+		fi\
+	fi
+<%endif%>
+<%endif%>
+<%endif%>
+<%endif%>
+	@echo ""
+<%if(standard_build)%>
+else
+deploy_output ::
+	@echo ""
+endif
+<%endif%>
+
+<%if(standard_build)%>
+
+# order subdirs to use subprojects first
+isSubProject = $(if $(subst $(subst $(CURDIR)/,,$(dir)),,$(dir)),, $(dir))
+SUB_PROJECTS := $(foreach dir, $(SUBDIRS), $(isSubProject))
+isSubFolder = $(if $(subst $(subst $(CURDIR)/,,$(dir)),,$(dir)), $(dir))
+SUB_FOLDERS := $(foreach dir, $(SUBDIRS), $(isSubFolder))
+
+SUBDIRS_ORDERED := $(SUB_PROJECTS) $(SUB_FOLDERS)
+
+# recursive make in SUBDIRS
+subdirs_all :
+	@_PWD=`pwd`;\
+	for dir in _dummy_ $(SUBDIRS_ORDERED); do\
+		if [ "$$dir" = "_dummy_" ]; then\
+			continue ;\
+	fi;\
+		if [ ! -d "$$dir" ]; then\
+			continue ;\
+	fi;\
+	echo "Recursive make: Changing to Directory '$$dir'";\
+	cd "$$dir";\
+		"$(MAKE)" -f "$(MAKEFILE)" $(MFLAGS) all || exit;\
+		echo "Recursive make: Changing back to Directory '$$_PWD'";\
+		cd "$$_PWD";\
+	done
+
+clean ::
+	@_PWD=`pwd`;\
+	for dir in _dummy_ $(SUBDIRS_ORDERED); do\
+		if [ "$$dir" = "_dummy_" ]; then\
+			continue ;\
+		fi;\
+		if [ ! -d "$$dir" ]; then\
+			continue ;\
+		fi;\
+		echo "Recursive make: Changing to Directory '$$dir'";\
+		cd "$$dir";\
+		"$(MAKE)" -f "$(MAKEFILE)" $(MFLAGS) $@ || exit;\
+		echo "Recursive make: Changing back to Directory '$$_PWD'";\
+		cd "$$_PWD";\
+	done
+<%endif%>
+
+clean :: external_clean $(CLEAN_STEP) _clean
+
+# entry point for extending the build clean
+<%if(standard_build)%>
+ifneq ($(PROJECT_TARGET),)
+<%endif%>
+external_clean ::
+<%foreach(custom_types)%>
+<%foreach(custom_type->input_files)%>
+<%if(custom_type->input_file->output_files)%>
+	<%if(make_coexistence)%>cd ../.. ; <%endif%>rm -f <%foreach(custom_type->input_file->output_files)%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endfor%>
+<%endif%>
+<%endfor%>
+<%endfor%>
+<%if(exename)%>
+<%if(exeout)%>
+	rm -f <%exeout%>/$(ACE_TARGET_NAME)$(ACE_TARGET_EXT)
+<%endif%>
+<%else%>
+<%if(sharedname || staticname)%>
+	rm -f <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>/$(ACE_TARGET_PREFIX)$(ACE_TARGET_NAME)$(ACE_TARGET_EXT)
+<%endif%>
+<%endif%>
+	@echo ""
+<%if(standard_build)%>
+else
+external_clean ::
+	@echo ""
+endif
+<%endif%>
+
+
+<%if(standard_build)%>
+_clean :
+	if [ -d $(OBJ_DIR) ]; then\
+		echo "make: removing targets and objects of `pwd`";\
+		rm -f $(OBJECTS) $(PROJECT_TARGETS) $(DEP_FILES) $(wildcard $(OBJ_DIR)/*.unstripped) $(wildcard $(OBJ_DIR)/ctdt.*) \
+		rm -rf $(OBJ_DIR);\
+		rm -f $(PRJ_ROOT_DIR)/filelist.txt;\
+	else\
+		echo "make: removing targets and objects of `pwd`, already done";\
+	fi
+
+build_all_specs :
+	@echo "building target default for ALL build-specs";\
+	for spec in _dummy_ $(ALL_BUILD_SPECS); do\
+		if [ "$$spec" = "_dummy_" ]; then\
+			continue ;\
+		fi;\
+		echo " ";\
+		echo "building all for build-spec '$$spec'";\
+		"$(MAKE)" -f "$(MAKEFILE)" $(MFLAGS) BUILD_SPEC=$$spec DEBUG_MODE=$(DEBUG_MODE) TRACE=$(TRACE) || exit;\
+	done
+
+clean_all_specs :
+	@echo "building target clean for ALL build-specs";\
+	for spec in _dummy_ $(ALL_BUILD_SPECS); do\
+		if [ "$$spec" = "_dummy_" ]; then\
+			continue ;\
+		fi;\
+		echo " ";\
+		echo "building clean for build-spec '$$spec'";\
+		"$(MAKE)" -f "$(MAKEFILE)" $(MFLAGS) BUILD_SPEC=$$spec DEBUG_MODE=$(DEBUG_MODE) TRACE=$(TRACE) clean || exit;\
+	done
+
+build_enabled_specs :
+	@echo "building target default for ENABLED build-specs";\
+	for spec in _dummy_ $(ENABLED_BUILD_SPECS); do\
+		if [ "$$spec" = "_dummy_" ]; then\
+			continue ;\
+		fi;\
+		echo " ";\
+		echo "building all for build-spec '$$spec'";\
+		"$(MAKE)" -f "$(MAKEFILE)" $(MFLAGS) BUILD_SPEC=$$spec DEBUG_MODE=$(DEBUG_MODE) TRACE=$(TRACE) || exit;\
+	done
+
+clean_enabled_specs :
+	@echo "building target clean for ENABLED build-specs";\
+	for spec in _dummy_ $(ENABLED_BUILD_SPECS); do\
+		if [ "$$spec" = "_dummy_" ]; then\
+			continue ;\
+		fi;\
+		echo " ";\
+		echo "building clean for build-spec '$$spec'";\
+		"$(MAKE)" -f "$(MAKEFILE)" $(MFLAGS) BUILD_SPEC=$$spec DEBUG_MODE=$(DEBUG_MODE) TRACE=$(TRACE) clean || exit;\
+	done
+<%endif%>
+
+<%if(standard_build)%>
+<%if(sharedname || staticname)%>
+ifneq ($(PROJECT_TARGET),)
+$(OBJ_DIR)/<%lib_prefix%><%if(sharedname)%><%sharedname%><%else%><%staticname%><%endif%><%lib_ext%> : $(OBJECTS) $(SUB_OBJECTS)
+endif
+<%endif%>
+<%endif%>

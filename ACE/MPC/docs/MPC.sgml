@@ -1,0 +1,560 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.1//EN" [
+  <!ENTITY mpc "mpc.pl">
+  <!ENTITY mwc "mwc.pl">
+]>
+<!-- This file was written by Thomas Girard <thomas.g.girard@free.fr>   -->
+<!-- on May 2006 for the Debian GNU/Linux operating system.             -->
+<!-- It is mainly a plain text to DocBook conversion of the USAGE file. -->
+<refentry>
+  <refmeta>
+    <refentrytitle>MPC</refentrytitle>
+    <manvolnum>1</manvolnum>
+  </refmeta>
+  <refnamediv>
+    <refname>&mpc;, &mwc;</refname>
+    <refpurpose>generate project and workspace files</refpurpose>
+  </refnamediv>
+  <refsynopsisdiv>
+    <cmdsynopsis>
+      <command>&mpc;</command>
+      <arg rep="repeat"><replaceable>OPTION</replaceable></arg>
+      <arg rep="repeat"><replaceable>FILE</replaceable></arg>
+    </cmdsynopsis>
+    <cmdsynopsis>
+      <command>&mwc;</command>
+      <arg rep="repeat"><replaceable>OPTION</replaceable></arg>
+      <arg rep="repeat"><replaceable>FILE</replaceable></arg>
+    </cmdsynopsis>
+  </refsynopsisdiv>
+  <refsect1>
+    <title>DESCRIPTION</title>
+    <para>
+    <command>&mpc;</command> and <command>&mwc;</command>, the Makefile,
+    Project and Workspace Creator generate platform and compiler specific
+    files to automate the compilation process
+    (e.g. <filename>GNUmakefile</filename>
+    and <filename>Makefile.am</filename>).
+    </para>
+    <para>
+    The most common way to use the Make Project Creator is to run the
+    workspace generator (<command>&mwc;</command>).  This script will
+    generate projects and a single workspace that contains the generated
+    projects.  If no input
+    <replaceable>FILE</replaceable> (<filename>.mwc</filename> file)
+    is specified, it will recurse into
+    the directory in which the script was started.  It looks for
+    <filename>.mpc</filename> files and generates a project or projects
+    for each one found.
+    </para>
+    <para>
+    Most of what is stated about <command>&mwc;</command> applies to
+    <command>&mpc;</command> except that it only generates projects.  If an
+    input <replaceable>FILE</replaceable> (<filename>.mpc</filename> file) is
+    not provided, the project creator will attempt to create a default
+    project in the directory from which the script was started.
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term><parameter>-global</parameter> <replaceable>file</replaceable></term>
+        <listitem>
+          <para>
+	  specifies the global input file.  Values stored within this file are
+	  applied to all projects.  If not specified, defaults to
+	  <filename>config/global.mpb</filename>
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-include</parameter> <replaceable>directory</replaceable></term>
+        <listitem>
+          <para>
+	  specifies a directory to search when looking for base projects,
+	  template input files and templates.  This option can be used
+	  multiple times to add directories.  Two include directories
+	  are used by default (<filename class="directory">config</filename>
+	  and <filename class="directory">templates</filename>)
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-recurse</parameter></term>
+        <listitem>
+          <para>
+	  recurse from the current directory and generate from all found
+	  input files.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-ti dll | lib | dll_exe | lib_exe:</parameter><replaceable>file</replaceable></term>
+        <listitem>
+          <para>
+	  specifies the template input file (with no extension) for the
+	  specific type, e.g. <parameter>-ti dll_exe:vc8exe</parameter>.  Each
+	  project creator has a default template input file for each type of
+	  project (<parameter>dll_exe</parameter>, <parameter>lib_exe</parameter>,
+	  <parameter>dll</parameter>, <parameter>lib</parameter>).  You can
+	  override the default template input file name with the
+	  <parameter>-ti</parameter> option.  The file must have a
+	  <filename>mpt</filename> extension and must reside within the
+	  include search directories.  NOTE: the <parameter>lib</parameter>
+	  and the <parameter>lib_exe</parameter> template input files are only
+	  used when MPC is generating static projects
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-hierarchy</parameter></term>
+        <listitem>
+          <para>
+	  generate a workspace in a hierarchical fashion.  Forces the
+	  generation of a hierarchical workspace at each directory level in
+	  between the toplevel directory and the location of the
+	  <filename>.mpc</filename> file that is being processed.  This is the
+	  default for <parameter>make</parameter> based workspace creators.
+	  NOTE: This option has no effect when when used with
+	  <command>&mpc;</command>
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-template</parameter> <replaceable>file</replaceable></term>
+        <listitem>
+          <para>
+	  specifies the template name (with no extension).
+	  <replaceable>file</replaceable> should have a
+	  <filename>.mpd</filename> extension and sit in one of the include
+	  search directories.  NOTE: The <parameter>-template</parameter>
+	  option overrides the template file for all types specified
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-relative</parameter> <replaceable>name</replaceable>=<replaceable>var</replaceable></term>
+        <listitem>
+          <para>
+	  any <varname>$()</varname> variable in an mpc file that is matched to
+	  <replaceable>name</replaceable> is replaced by
+	  <replaceable>var</replaceable> only if
+	  <replaceable>var</replaceable> can be made into a relative path based
+	  on the current working directory
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-base</parameter> <replaceable>project</replaceable></term>
+        <listitem>
+          <para>
+	  add <replaceable>project</replaceable> as a base project to each
+	  generated project file.  Do not provide a file extension, the
+	  <filename>.mpb</filename> extension will be tried first; if that
+	  fails the <filename>.mpc</filename> extension will be tried
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-nocomments</parameter></term>
+        <listitem>
+          <para>
+	  do not place comments in the generated files
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-noreldefs</parameter></term>
+        <listitem>
+          <para>
+	  do not try to generate default relative definitions for
+	  <varname>*_ROOT</varname>, which come from environment variables
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-notoplevel</parameter></term>
+        <listitem>
+          <para>
+	  do not generate the top level target file.  Files are still processed,
+	  but no top level file is created.  For <command>&mwc;</command>, it
+	  says process all projects for a workspace, but do not generate the
+	  top level workspace file.  For <command>&mpc;</command>, it says
+	  process the <filename>.mpc</filename> files, but do not generate
+	  the project files
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-static</parameter></term>
+        <listitem>
+          <para>
+	  specifies that only static projects are generated.  By default,
+	  only dynamic projects will be generated.  This parameter was
+	  previously <parameter>-static_only</parameter>.  Currently,
+	  <command>&mpc;</command> only supports generating dynamic projects
+	  or static projects, but not both during the same run.  To generate
+	  them both you must run <command>&mpc;</command> twice, once with the
+	  <parameter>-static</parameter> option and once without.
+	  Additionally, the <parameter>vc6</parameter>,
+	  <parameter>em3</parameter>, <parameter>vc7</parameter>,
+	  <parameter>vc71</parameter> and <parameter>vc8</parameter> project
+	  names will no longer automatically have
+	  <filename>_Static</filename> appended to the project name when
+	  generating static projects.  This can still be achieved by using the
+	  <parameter>-name_modifier</parameter> option.
+	  </para>
+	  <para>
+	  When generating static projects, inter-project dependencies will
+	  not be generated for libraries within <parameter>vc6</parameter>,
+	  <parameter>em3</parameter>, <parameter>vc7</parameter>,
+	  and <parameter>vc71</parameter>  workspaces.  The reason is due to
+	  the fact that each static library that depended upon another would
+	  be combined at the library creation stage, resulting in extremely
+	  large libraries.  Dependencies are handled correctly by vc8 and
+	  later.  This behavior can be modified by setting the
+	  <envar>MPC_DEPENDENCY_COMBINED_STATIC_LIBRARY</envar> environment
+	  variable.  It will force <command>&mpc;</command> to generate
+	  inter-project dependencies for libraries within a single workspace
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-genins</parameter></term>
+        <listitem>
+          <para>
+	  generate <filename>.ins</filename> files after
+	  processing each project that can be used in conjunction with the
+	  <command>prj_install.pl</command> script to install different
+	  parts of the project (such as header files) into an alternate
+	  location
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-use_env</parameter></term>
+        <listitem>
+          <para>
+	  use environment variables for all uses of
+	  <varname>$()</varname> instead of the relative replacement values
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-value_template</parameter> <replaceable>name</replaceable><parameter>+=</parameter><replaceable>val</replaceable> | <replaceable>name</replaceable><parameter>=</parameter><replaceable>val</replaceable> | <replaceable>name</replaceable><parameter>-=</parameter><replaceable>val</replaceable></term>
+        <listitem>
+          <para>
+	  this option allows modification of a template input name pair.  Use
+	  <parameter>+=</parameter> to add
+	  <replaceable>val</replaceable> to the
+	  <replaceable>name</replaceable>'s value.  Use
+	  <parameter>-=</parameter> to subtract and <parameter>=</parameter> to
+	  override the value.  If a template variable value will contain
+	  spaces, it is best to enclose the whole setting in double quotes
+	  and use single quotes within the value to retain spaces (if it is
+	  necessary)
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-value_project</parameter> <replaceable>name</replaceable><parameter>+=</parameter><replaceable>val</replaceable> | <replaceable>name</replaceable><parameter>=</parameter><replaceable>val</replaceable> | <replaceable>name</replaceable><parameter>-=</parameter><replaceable>val</replaceable></term>
+        <listitem>
+          <para>
+	  this option allows modification of a project variable
+	  assignment.  Use <parameter>+=</parameter> to add
+	  <replaceable>val</replaceable> to the
+	  <replaceable>name</replaceable>'s value.  Use
+	  <parameter>-=</parameter> to subtract and <parameter>=</parameter> to
+	  override the value.  This can be used to introduce new name value
+	  pairs to a project.  However, it must be a valid project assignment
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-make_coexistence</parameter></term>
+        <listitem>
+          <para>
+	  if multiple <command>make</command> based project types are generated,
+	  they will be named such that they can coexist
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-feature_file</parameter> <replaceable>file</replaceable></term>
+        <listitem>
+          <para>
+	  specifies the features file to read before processing.  These
+	  feature names can be anything, but they should correspond
+	  to values used for the <property>requires</property> and
+	  <property>avoids</property> keywords.  If a feature is required and
+	  is not enabled then the project will not be created.  If a feature
+	  is to be avoided and it is enabled then the project will not be
+	  created.  The default feature file is
+	  <filename>default.features</filename> under the
+	  <filename class="directory">config</filename> directory
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-expand_vars</parameter></term>
+        <listitem>
+          <para>
+	  perform direct expansion, instead of performing relative replacement
+	  with either <parameter>-use_env</parameter> or
+	  <parameter>-relative</parameter> options
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-features</parameter> <replaceable>features</replaceable></term>
+        <listitem>
+          <para>
+	  specifies the feature list to set before processing.  Values
+	  specified by this option overwrite values from features files,
+	  e.g. <parameter>-features "qos=1,ssl=0"</parameter>
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-gendot</parameter></term>
+        <listitem>
+          <para>
+	  generate .dot files for use with <command>Graphvis</command>.
+	  This option, which is only useful with <command>&mwc;</command>,
+	  will result in the generation of .dot files for each workspace
+	  processed.  Each .dot file will contain information that can be
+	  fed to Graphvis to display the dependency information for the
+	  various projects found within the workspace.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-exclude</parameter> <replaceable>directories</replaceable></term>
+        <listitem>
+          <para>
+	  use this option to exclude directories or files when searching for
+          input files.  NOTE: This option has no effect when used with
+	  <command>&mpc;</command>
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-name_modifier</parameter> <replaceable>pattern</replaceable></term>
+        <listitem>
+          <para>
+	  modify generated workspace or project names.  The
+	  <replaceable>pattern</replaceable> passed
+	  to this parameter will have the <filename>*</filename> portion
+	  replaced with the actual output name.  For example
+	  <parameter>-name_modifier '*_Static'</parameter> will result in all
+	  workspace and project names ending in <filename>_Static</filename>,
+	  e.g. <filename>FOO_Static.dsw</filename> and
+	  <filename>FOO_Static.dsp</filename>
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-apply_project</parameter></term>
+        <listitem>
+          <para>
+	  when used in conjunction with <parameter>-name_modifier</parameter>,
+	  it applies the name modifier to the project name also.  NOTE: this
+	  option has no effect without the
+	  <parameter>-name_modifier</parameter> option
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-version</parameter></term>
+        <listitem>
+          <para>
+	  print the MPC version and exit
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-into</parameter> <replaceable>directory</replaceable></term>
+        <listitem>
+          <para>
+	  place all output files in a mirrored directory structure starting
+	  at <replaceable>directory</replaceable>
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-gfeature_file</parameter> <replaceable>file</replaceable></term>
+        <listitem>
+          <para>
+	  specifies the global feature file.  The default value is
+	  <filename>global.features</filename> under the
+	  <filename class="directory">config</filename> directory
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-language cplusplus | csharp | java | vb</parameter></term>
+        <listitem>
+          <para>
+	  specify the language preference.  The default is
+	  <parameter>cplusplus</parameter>
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>-type automake | bcb2007 | bcb2009 | bds4 | bmake | cc | em3 | ghs | html | make | nmake | sle | vc6 | vc7 | vc71 | vc8 | vc9 | vc10 | wb26</parameter></term>
+        <listitem>
+          <para>
+	  specifies the type of project file to generate.  This option can
+	  be used multiple times to generate multiple types.  There is no
+          longer a default.  NOTE: The <parameter>-ti</parameter>
+	  option overrides the template input file for all types specified
+          </para>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+    <refsect2>
+      <title>MPC Codebase Configuration File</title>
+      <para>
+      This configuration file can be used to specify alternate locations for the
+      MPC Configuration File.  If a base.cfg is found underneath the 'config'
+      directory where MPC is executed, it will be read to determine the location
+      of MPC.cfg based on the directory in which MPC was started.
+      </para>
+      <para>
+      For example, if $MPC_ROOT/mwc.pl is run under /foo/bar_root/src and
+      $MPC_ROOT/config/base.cfg contained:
+      </para>
+      <para>
+      /foo/bar_root = /foo/bar_root/MPC/config
+      </para>
+      <para>
+      MPC would attempt to open and read /foo/bar_root/MPC/config/MPC.cfg as the
+      MPC Configuration File.  If the base configuration file is not present,
+      MPC will try to use $MPC_ROOT/config/MPC.cfg as the MPC Configuration File.
+      </para>
+      <para>
+      You may reference environment variables, accessed by $NAME, on either side
+      of the equals sign.
+      </para>
+    </refsect2>
+    <refsect2>
+      <title>MPC Configuration File</title>
+      <para>
+      In an effort to move away from the use of environment variables, a
+      configuration file has been introduced.  The configuration file (MPC.cfg)
+      can contain settings to provide command line options, control logging and
+      direct MPC to dynamic project types.
+      </para>
+      <para>
+      The following keywords are allowed in the configuration file, which will
+      be read from the 'config' directory of MPC.
+      </para>
+      <para>
+        <variablelist>
+          <varlistentry>
+            <term><parameter>command_line</parameter></term>
+            <listitem>
+              <para>
+              provide additional command line options to MPC.  The value of
+              this setting will be prepended to the options passed to
+              <command>&mwc;</command> or <command>&mpc;</command>
+              </para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><parameter>default_type</parameter></term>
+            <listitem>
+              <para>
+              provide a single project type (as specified by the -type
+              option) as the default project type
+              </para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><parameter>dynamic_types</parameter></term>
+            <listitem>
+              <para>
+              this comma separated list points to directories in which
+              MPC will search for Perl modules to implement additional
+              MPC project types, base projects or template files.  This
+              setting can be used to augment or replace functionality
+              in MPC.  For each suitable directory found, it will add a
+              <property>modules</property> include path for Perl to find
+              modules, add a <property>config</property> include path to
+              locate base projects and a <property>template</property>
+              include path to find MPC templates.
+              </para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><parameter>includes</parameter></term>
+            <listitem>
+              <para>
+              similar to the -include command line option, it adds the
+              list of comma separated paths to the MPC include search paths.
+              </para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><envar>logging</envar></term>
+            <listitem>
+              <para>
+              if this setting contains
+              <property>info=1</property>, informational
+              messages will be printed.  If it contains
+              <property>warn=1</property>, warning
+              messages will be printed.  If it contains
+              <property>diag=1</property>, diagnostic
+              messages will be printed.  If it contains
+              <property>debug=1</property>, debug
+              messages will be printed.  And lastly, if it contains
+              <property>detail=1</property>,
+              detail messages will be printed.  If it contains none of these,
+              <command>&mpc;</command> will not print out any information or
+              warnings when processing projects or workspaces.  Errors are
+              always printed if any are encountered.
+              </para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><envar>verbose_ordering</envar></term>
+            <listitem>
+              <para>
+              if this is set, <command>&mwc;</command> will warn the user about
+              references to projects in the <property>after</property> keyword
+              that have not been processed
+              </para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </para>
+    </refsect2>
+    <refsect2>
+      <title>ENVIRONMENT VARIABLES</title>
+      <para>
+        The following environment variable could affect
+        <command>&mwc;</command> and <command>&mpc;</command>:
+
+        <variablelist>
+          <varlistentry>
+            <term><envar>MPC_DEPENDENCY_COMBINED_STATIC_LIBRARY</envar></term>
+            <listitem>
+              <para>
+              see the help on <parameter>-static</parameter> parameter above
+              </para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><envar>MPC_GHS_UNIX</envar></term>
+            <listitem>
+              <para>
+              this environment variable is only meaningful when generating
+              the ghs project files.  By default, the ghs type assumes that it is for
+              Windows.  If this is not the case, set this environment variable
+              prior to running MPC
+              </para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </para>
+    </refsect2>
+  </refsect1>
+</refentry>

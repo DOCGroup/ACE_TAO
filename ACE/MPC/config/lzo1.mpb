@@ -1,0 +1,12 @@
+// -*- MPC -*-
+// $Id$
+
+feature(lzo1) {
+  includes += $(LZO1_ROOT)/include
+  libpaths += $(LZO1_ROOT)/lib
+  specific (prop:microsoft) {
+    lit_libs += liblzo
+  } else {
+    lit_libs += lzo
+  }
+}

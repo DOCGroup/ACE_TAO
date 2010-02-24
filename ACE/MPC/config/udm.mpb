@@ -1,0 +1,29 @@
+// -*- MPC -*-
+// $Id$
+
+project : xerces {
+  libs     += UdmDll zlib
+  includes += $(GME_ROOT)/SDK/BON/Common $(GME_ROOT)/SDK/BON $(UDM_PATH)/include .
+  libpaths += $(UDM_PATH)/lib $(UDM_3RDPARTY_PATH)/zlib
+
+  specific {
+     midl_flags += /server none /client none
+     midl_includes += $(GME_ROOT) $(GME_ROOT)/Interfaces .
+  }
+
+  specific(prop:microsoft) {
+    DisableSpecificWarnings += 4251
+  }
+
+  Define_Custom(UDM) {
+    automatic         = 1
+    dependent         = $(UDM_PATH)/bin/Udm
+    command           = <%quote%>$(UDM_PATH)<%quote%>/bin/Udm
+    inputext          = .xml
+    header_outputext  = .h
+    source_outputext  = .cpp
+    generic_outputext = .xsd
+
+    keyword udmflags  = commandflags
+  }
+}

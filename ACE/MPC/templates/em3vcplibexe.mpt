@@ -1,0 +1,108 @@
+// -*- MPC -*-
+// $Id$
+
+conditional_include "common"
+conditional_include "windowscommon"
+
+type_description      = Application
+platforms             = "WCE ARM" "WCE ARMV4" "WCE emulator" "WCE x86"
+default_configuration = Debug
+default_platform      = "WCE ARM"
+configurations        = Debug Release
+common_defines        = UNICODE _UNICODE
+unicode               = 1
+
+WCE x86 {
+  type_code   = 0x8301
+  cpu_id      = D6518FF3-710F-11D3-99F2-00105A0DF099
+  platform_id = 8A9A2F80-6887-11D3-842E-005004848CBA
+  machine     = IX86
+  cpu_defines = _i386_ _X86_ x86
+  ignore_libs = OLDNAMES.lib
+  pure_libs  += $(CEx86Corelibc)
+}
+
+WCE emulator {
+  type_code   = 0xa601
+  cpu_id      = D6518FF3-710F-11D3-99F2-00105A0DF099
+  platform_id = 8A9A2F80-6887-11D3-842E-005004848CBA
+  machine     = IX86
+  cpu_defines = _i386_ _X86_ x86
+  ignore_libs = OLDNAMES.lib
+  pure_libs  += $(CEx86Corelibc)
+}
+
+WCE ARM {
+  type_code   = 0x8501
+  cpu_id      = D6518FFC-710F-11D3-99F2-00105A0DF099
+  platform_id = 8A9A2F80-6887-11D3-842E-005004848CBA
+  machine     = ARM
+  cpp         = clarm.exe
+  cpu_defines = ARM _ARM_
+}
+
+WCE ARMV4 {
+  type_code   = 0xa301
+  cpu_id      = D6518FF3-710F-11D3-99F2-00105A0DF099
+  platform_id = 8A9A2F80-6887-11D3-842E-005004848CBA
+  machine     = ARM
+  cpp         = clarm.exe
+  cpu_defines = ARM _ARM_ ARMV4
+  cpu_options = /QRxscale
+}
+
+Release {
+  use_debug_libraries   =
+  optimize              = 1
+  compile_flags         = /W3 /GR
+  defines               = NDEBUG
+  compile_flags_removed = /YX
+  lib_modifier          = s
+  output_dir            = Static_Release
+  intermediate_dir      = Static_Release
+}
+
+Debug {
+  use_debug_libraries   = 1
+  optimize              =
+  compile_flags         = /W3 /Gm /Zi /GR /Gy
+  defines               = _DEBUG
+  compile_flags_removed = /YX
+  lib_modifier          = sd
+  output_dir            = Static_Debug
+  intermediate_dir      = Static_Debug
+  pdbl                  = 1
+  pdbc                  = 1
+}
+
+MFC Release {
+  use_debug_libraries   =
+  optimize              = 1
+  compile_flags         = /W3 /GR
+  defines               = NDEBUG _AFXDLL
+  compile_flags_removed = /YX
+  lib_modifier          = mfcs
+  output_dir            = Static_MFC_Release
+  intermediate_dir      = Static_MFC_Release
+  use_mfc               = 2
+  unicode_mfc_entry     = wWinMainCRTStartup
+}
+
+MFC Debug {
+  use_debug_libraries   = 1
+  optimize              =
+  compile_flags         = /W3 /Gm /Zi /GR /Gy
+  defines               = _DEBUG _AFXDLL
+  compile_flags_removed = /YX
+  lib_modifier          = mfcsd
+  output_dir            = Static_MFC_Debug
+  intermediate_dir      = Static_MFC_Debug
+  pdbl                  = 1
+  pdbc                  = 1
+  use_mfc               = 2
+  unicode_mfc_entry     = wWinMainCRTStartup
+}
+
+conditional_include "vcpartialmacros"
+conditional_include "user_em3vcplibexe"
+

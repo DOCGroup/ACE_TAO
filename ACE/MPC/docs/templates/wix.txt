@@ -1,0 +1,9 @@
+// Current as of 8/10/2009
+// This defines the role of all the template variables specific to the
+// 'wix' project type.
+//
+// Please try to keep this alphabetically sorted.
+//
+guid = The value for this variable is generated during project generation.
+install_location = A space separated list of installation directories.
+source_directory = The value of either exeout, dllout, or libout with the variable portion converted to a suitable value for WIX.

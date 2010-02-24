@@ -1,0 +1,131 @@
+#----------------------------------------------------------------------------
+#       Macros
+#----------------------------------------------------------------------------
+<%marker(top)%>
+<%foreach(compilers)%>
+
+ICONOPT         =<%foreach(ico_files)%><%if(forfirst)%> <%ico_flag%><%ico_file%><%endif%><%endfor%>
+RESXOPT         =<%foreach(resx_files)%> <%resx_flag%><%resx_file%><%endfor%>
+TARGETDIR       = <%if(exename && exeout)%><%exeout%><%slash%><%targetoutdir%><%else%><%if(sharedname && libout)%><%libout%><%slash%><%targetoutdir%><%else%>.<%slash%><%targetoutdir%><%endif%><%endif%>
+TARGET          =<%if(exename)%> $(TARGETDIR)<%exename%><%exe_ext%><%else%><%if(sharedname)%> $(TARGETDIR)<%lib_prefix%><%libname_prefix%><%sharedname%><%dll_ext%><%endif%><%endif%>
+LDFLAGS         =<%if(libpaths)%> <%lib_flag%><%foreach(libpaths)%><%libpath%><%fornotlast(",")%><%endfor%><%endif%><%if(libs)%> <%ref_flag%><%foreach(libs)%><%lib%><%fornotlast(",")%><%endfor%><%endif%><%if(packages)%> <%pkg_flag%><%foreach(packages)%><%package%><%fornotlast(",")%><%endfor%><%endif%>
+CFLAGS          =<%if(compile_flags)%> <%compile_flags%><%endif%> <%if(optimize)%><%opt_flag%><%else%><%def_flag%>DESIGN,DEBUG<%endif%><%if(trace)%> <%def_flag%>TRACE<%endif%><%if(macros)%> <%def_flag%><%foreach(macros)%><%macro%><%fornotlast(",")%><%endfor%><%endif%><%if(keyfile)%> <%key_flag%><%keyfile%><%endif%><%if(compares(allowunsafeblocks, true))%> <%unsafe_flag%><%endif%>
+TESTDIRSTART    = <%testdirstart("test -d")%>
+TESTDIREND      = <%testdirend("||")%>
+CAT             = <%type("cat")%>
+MV              = <%move("mv -f")%>
+RM              = <%delete("rm -rf")%>
+CP              = <%copy("cp -p")%>
+NUL             = <%devnull("/dev/null")%>
+MKDIR           = <%makedir("mkdir -p")%>
+<%if(custom_types)%>
+GENERATED_DIRTY =<%foreach(custom_types)%><%foreach(custom_type->input_files)%><%if(custom_type->input_file->output_files)%><%foreach(custom_type->input_file->output_files)%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%><%slash%><%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endfor%><%endif%><%endfor%><%endfor%>
+<%endif%>
+<%if(exename)%>
+MONO_ETC        = /etc/mono
+MONO_CONFIG     = $(MONO_ETC)/config
+BIN             = $(TARGETDIR)<%exename%>
+<%endif%>
+<%if(supports_include && make_include)%>
+
+include <%make_include%>
+<%endif%>
+<%marker(macros)%>
+
+#----------------------------------------------------------------------------
+#       Local targets
+#----------------------------------------------------------------------------
+
+all:<%if(prebuild)%> __prebuild__<%endif%> $(GENERATED_DIRTY) $(TARGET)<%if(postbuild)%> __postbuild__<%endif%>
+
+<%if(exename)%>
+$(TARGET): <%source_files%>
+	@$(TESTDIRSTART) "$(TARGETDIR)" $(TESTDIREND) $(MKDIR) "$(TARGETDIR)"
+	<%compiler%> <%if(winapp)%><%winexe_flag%><%else%><%exe_flag%><%endif%> <%out_flag%>$(TARGET) $(CFLAGS) $(LDFLAGS) $(ICONOPT) $(RESXOPT) <%source_files%>
+
+$(BIN): $(TARGET)
+	<%mkbundle%> --static --deps -z --config $(MONO_CONFIG) $(TARGET) $(CONFIG_DIR_OPT) -o $(BIN)
+	strip $(BIN)
+
+bundle: $(BIN)
+
+<%else%>
+<%if(sharedname)%>
+$(TARGET): <%source_files%>
+	@$(TESTDIRSTART) "$(TARGETDIR)" $(TESTDIREND) $(MKDIR) "$(TARGETDIR)"
+	<%compiler%> <%shared_flag%> <%out_flag%>$(TARGET) $(CFLAGS) $(LDFLAGS) $(ICONOPT) $(RESXOPT) <%source_files%>
+
+bundle:
+
+<%endif%>
+<%endif%>
+<%if(custom_types)%>
+<%foreach(custom_types)%>
+<%if(expanded_variable_assignment && custom_type->libpath)%>
+DYLD_LIBRARY_PATH := $(DYLD_LIBRARY_PATH):<%custom_type->libpath%>
+LD_LIBRARY_PATH   := $(LD_LIBRARY_PATH):<%custom_type->libpath%>
+SHLIB_PATH        := $(SHLIB_PATH):<%custom_type->libpath%>
+LIBPATH           := $(LIBPATH):<%custom_type->libpath%>
+PATH              := $(PATH):<%custom_type->libpath%>
+
+<%endif%>
+<%foreach(custom_type->input_files)%>
+<%if(custom_type->input_file->output_files)%>
+<%if(multiple(custom_type->input_file->output_files))%>
+.NOTPARALLEL:
+<%endif%>
+<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%><%slash%><%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%><%if(custom_type->input_file->dependencies)%> <%custom_type->input_file->dependencies%><%endif%><%if(flag_overrides(custom_type->input_file, dependent))%> <%flag_overrides(custom_type->input_file, dependent)%><%else%><%if(custom_type->dependent)%> <%custom_type->dependent%><%endif%><%endif%>
+<%if(flag_overrides(custom_type->input_file, gendir))%>
+	@$(TESTDIRSTART) "<%flag_overrides(custom_type->input_file, gendir)%>" $(TESTDIREND) $(MKDIR) "<%flag_overrides(custom_type->input_file, gendir)%>"
+<%endif%>
+	<%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%if(custom_type->output_option)%><%custom_type->input_file%> <%custom_type->output_option%> "$@"<%else%><%custom_type->input_file%><%endif%>
+<%if(flag_overrides(custom_type->input_file, postcommand))%>
+<%foreach(custom_type->input_file)%>
+	<%flag_overrides(custom_type->input_file, postcommand)%>
+<%endfor%>
+<%else%>
+<%if(custom_type->postcommand)%>
+<%foreach(custom_type->input_file)%>
+	<%custom_type->postcommand%>
+<%endfor%>
+<%endif%>
+<%endif%>
+
+<%endif%>
+<%endfor%>
+<%endfor%>
+.PRECIOUS: $(GENERATED_DIRTY)
+<%endif%>
+generated: $(GENERATED_DIRTY)
+	@-:
+
+clean:
+	-$(RM) $(TARGET)<%if(exename)%> $(BIN)<%endif%><%if(clean)%> <%clean%><%endif%>
+
+realclean: clean
+<%if(custom_types)%>
+	-$(RM) $(GENERATED_DIRTY)
+<%endif%>
+<%if(postclean)%>
+	-<%eval(postclean)%>
+<%endif%>
+
+<%if(prebuild)%>
+__prebuild__:
+	@<%eval(prebuild)%>
+
+<%endif%>
+<%if(postbuild)%>
+__postbuild__:
+	@<%eval(postbuild)%>
+
+<%endif%>
+<%marker(local)%>
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
+
+depend:
+	@-:
+<%endfor%>
+<%marker(bottom)%>

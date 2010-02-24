@@ -1,0 +1,93 @@
+; Code Composer Project File, Version <%ccversion("2.0")%> (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir="<%cwd%>"
+ProjectType=<%if(exename)%>Executable<%else%>Library<%endif%>
+CPUFamily=<%cpufamily("TMS320C64XX")%>
+<%if(exename)%>
+Tool="Linker"
+<%else%>
+Tool="Archiver"
+<%endif%>
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+<%foreach(configurations)%>
+Config="<%configuration%>"
+<%endfor%>
+
+<%if(after)%>
+; MPC ADD DEPENDENCIES
+<%endif%>
+[Source Files]
+<%foreach(source_files)%>
+Source="<%source_file%>"
+<%endfor%>
+
+<%if(prebuild || postbuild)%>
+<%foreach(configurations)%>
+["<%configuration%>" Settings]
+<%if(prebuild)%>
+InitialBuildCmd=<%eval(prebuild)%>;Run=Always
+<%endif%>
+<%if(postbuild)%>
+FinalBuildCmd=<%eval(postbuild)%>;Run=Always
+<%endif%>
+
+<%endfor%>
+<%endif%>
+<%if(custom_types)%>
+[Generated Files]
+<%foreach(custom_types)%>
+<%foreach(custom_type->input_files)%>
+<%foreach(custom_type->input_file->output_files)%>
+Source="<%custom_type->input_file->output_file%>"
+<%endfor%>
+<%endfor%>
+<%endfor%>
+
+<%endif%>
+<%foreach(configurations)%>
+["Compiler" Settings: "<%configuration%>"]
+Options=<%if(optimize)%>-o3<%else%>-g<%endif%> <%if(rtti)%>-rtti <%endif%><%if(compile_flags)%><%compile_flags%> <%endif%>-fr"$(Proj_dir)\<%intermediate_dir%>" <%foreach(includes)%>-i"<%include%>" <%endfor%><%foreach(macros defines)%>-d"<%macro%>" <%endfor%><%if(need_staticflags)%><%foreach(staticflags)%>-d"<%staticflag%>" <%endfor%><%endif%><%if(big_endian)%>-me <%endif%><%target_version("-mv6400")%>
+
+<%endfor%>
+<%foreach(configurations)%>
+<%if(exename)%>
+["Linker" Settings: "<%configuration%>"]
+Options=-c -m"<%if(exeout)%><%exeout%>\<%endif%><%if(windows_style)%><%output_dir%>\<%endif%><%exename%><%if(use_exe_modifier)%><%lib_modifier%><%endif%>.map" -o"<%if(exeout)%><%exeout%>\<%endif%><%if(windows_style)%><%output_dir%>\<%endif%><%exename%><%if(use_exe_modifier)%><%lib_modifier%><%endif%><%exe_ext%>" -w -x<%foreach(libpaths)%> -i"<%libpath%>"<%endfor%><%foreach(libs)%> -l"<%lib%><%if(use_lib_modifier)%><%lib_modifier%><%endif%><%lib_ext%>"<%endfor%><%foreach(lit_libs)%> -l"<%lit_lib%><%lib_ext%>"<%endfor%>
+<%else%>
+["Archiver" Settings: "<%configuration%>"]
+Options=-r -o<%libout%>\<%lib_prefix%><%libname_prefix%><%staticname%><%if(use_lib_modifier)%><%lib_modifier%><%endif%><%lib_ext%>
+<%endif%>
+
+<%endfor%>
+<%foreach(source_files)%>
+<%if(flag_overrides(source_file, buildflags))%>
+<%foreach(configurations)%>
+["<%source_file%>" Settings: "<%configuration%>"]
+Options="Compiler" +{<%flag_overrides(source_file, buildflags)%>}
+
+<%endfor%>
+<%endif%>
+<%endfor%>
+<%foreach(custom_types)%>
+<%foreach(custom_types->input_files)%>
+<%if(ends_with(custom_types->input_file, \.cmd))%>
+<%foreach(configurations)%>
+["<%custom_types->input_file%>" Settings: "<%configuration%>"]
+LinkOrder=1
+
+<%endfor%>
+<%endif%>
+<%endfor%>
+<%endfor%>
+<%foreach(source_files)%>
+<%if(ends_with(source_file, \.cmd))%>
+<%foreach(configurations)%>
+["<%source_file%>" Settings: "<%configuration%>"]
+LinkOrder=1
+
+<%endfor%>
+<%endif%>
+<%endfor%>

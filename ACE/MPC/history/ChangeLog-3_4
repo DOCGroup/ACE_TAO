@@ -1,0 +1,1718 @@
+Thu May 17 16:56:54 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/AutomakeWorkspaceCreator.pm:
+
+          Provide more opportunities for the WorkspaceHelper to add more
+          information to the generated workspace Makefile.am.
+
+Thu May 17 13:36:33 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/global.mpb:
+
+          Don't add '.' to libpaths for automake.  It isn't necessary.
+
+        * docs/README:
+
+          Modified *_pre_extension descriptions to be consistent with the
+          *_pre_filename descriptions.
+
+        * modules/TemplateParser.pm:
+
+          Provide warnings when templates use the scope function
+          incorrectly.
+
+Tue May 15 19:05:59 2007  Steve Huston  <shuston@riverace.com>
+
+        * templates/vc8platforms.mpt: Added iphlpapi.lib to the lit_libs for
+          Windows Mobile 5.0 Smartphone SDK (ARMV4I) to pick up
+          GetAdaptersAddresses.
+
+Thu May 10 05:13:56 UTC 2007  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * templates/vc7.mpd:
+
+          Somehow the UseOfATL was missing a endif statement.
+
+Wed May  9 19:16:24 UTC 2007  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * docs/templates/vc7.txt:
+        * templates/vc7.mpd:
+
+          Added support to configuring the usage of Active Template
+          Library (ATL) in vc7 projects. It uses the template variable
+          UseOfATL.
+
+Wed Apr 18 09:27:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/qt.mpb:
+          Added custom QRC. Thanks to Roland Sun <rolandsun at gmail dot com>
+          for delivering the patch. This is part of bugzilla 2870
+
+Mon Apr 16 15:00:49 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/MakeProjectCreator.pm:
+        * modules/ProjectCreator.pm:
+        * templates/make.mpd:
+        * templates/makedll.mpt:
+
+          Added support for using gcj with the 'java' language type.
+
+Thu Apr  5 19:09:47 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/Creator.pm:
+
+          Fixed a bug where $() vars that appeared after other $() vars
+          would not be expanded with template values.
+
+          Also, added a performance enhancement when replacing $() vars.
+
+Thu Mar 29 13:40:30 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/Creator.pm:
+
+          Fixed a bug where $() vars would not be expanded with template
+          values if no relative replacement values were supplied (either
+          implicitly through default.rel or explicitly through -relative).
+
+Mon Mar 26 16:22:00 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/WorkspaceCreator.pm:
+
+          Added additional code to detect circular dependencies.  Without
+          this, there are situations where MPC will go into an infinite
+          loop.
+
+        * templates/nmake.mpd:
+
+          Change to look for the dependency generator in MPC_ROOT first and
+          then the other places.  Also modified the message to point the
+          user to MPC instead of svn for a dependency generator.
+
+Thu Mar 22 17:48:27 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/WorkspaceCreator.pm:
+
+          Fixed a bug where using the -name_modifier would end up causing
+          the workspace file names to contain previous workspace names.
+
+Thu Mar 22 14:36:53 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * depgen.pl:
+        * modules/Depgen/DependencyEditor.pm:
+        * modules/Depgen/DependencyGenerator.pm:
+        * modules/Depgen/DependencyWriter.pm:
+        * modules/Depgen/DependencyWriterFactory.pm:
+        * modules/Depgen/Driver.pm:
+        * modules/Depgen/MakeDependencyWriter.pm:
+        * modules/Depgen/MakeObjectGenerator.pm:
+        * modules/Depgen/NMakeDependencyWriter.pm:
+        * modules/Depgen/NMakeObjectGenerator.pm:
+        * modules/Depgen/ObjectGenerator.pm:
+        * modules/Depgen/ObjectGeneratorFactory.pm:
+        * modules/Depgen/Preprocessor.pm:
+
+          Brought over my dependency generator from ACE.  The core of this
+          dependency generator will be used by the ACE specific version
+          (just like the core of MPC).
+
+        * modules/Driver.pm:
+
+          Don't perform relative replacement for  MPC_ROOT ever.
+
+        * templates/make.mpd:
+
+          Use the new dependency generator instead of makedepend.
+
+Wed Mar 21 16:54:06 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+
+          Document the way multiple feature names work in feature projects.
+
+        * templates/make.mpd:
+        * templates/makedll.mpt:
+
+          Support multiple configurations within a single makefile.
+
+Thu Mar 15 13:25:09 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/DirectoryManager.pm:
+        * modules/WorkspaceCreator.pm:
+
+          Fixed a bug where a full path to a mpc file specified in an
+          aggregated workspace would not be handled properly.  Thanks to
+          Sumant Tambe <sutambe at dre dot vanderbilt dot edu> for reporting
+          this.
+
+        * modules/VC71WorkspaceCreator.pm:
+
+          Reverted my change from Wed Mar 14 19:20:48 UTC 2007.  It turns
+          out that is wasn't necessary and didn't benefit anyone.
+
+Wed Mar 14 19:20:48 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          When setting the 'static_libs_only' feature, use zero if
+          get_static() returns undef.
+
+        * modules/VC71WorkspaceCreator.pm:
+
+          Added a ProjectSection for WebsiteProperties that is desired by
+          Visual Studio 2005 SP1.  It does not negatively affect Visual
+          Studio 2003 or Visual Studio 2005 (without SP1).
+
+Mon Mar 13 00:22:33 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        From Russell Mora
+        * templates/nmake.mpd:
+        * templates/nmakedll.mpt:
+        * templates/nmakeexe.mpt:
+
+          This option use to be /GX which is now equivalent to /EHsc:
+
+          /GR[-] enable C++ RTTI           /GX[-] enable C++ EH (same as /EHsc)
+          /EHs enable C++ EH (no SEH exc)  /EHa enable C++ EH (w/ SEH exc)
+          /EHc extern "C" defaults to nothrow
+
+          Mon Jul 11 13:26:52 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+                * templates/nmakedll.mpt:
+                * templates/nmakeexe.mpt:
+
+                  Switch from /GX to /EHs (which is supported by vc6) to
+                  avoid build warnings using the Visual Studio 8 compiler
+                  with nmake.
+
+          I don't see why it was changed to /EHs as opposed to /EHsc so
+          changing it to what appears to be correct.
+
+Fri Mar  9 13:43:25 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Set the 'static_libs_only' feature based on whether or not the
+          -static option is used.
+
+Thu Mar 08 19:55:44 2007  Steve Huston  <shuston@riverace.com>
+
+        * templates/vc8dll.mpt:
+        * templates/vc8exe.mpt:
+        * templates/vc8lib.mpt:
+        * templates/vc8libexe.mpt: Replace _CRT_SECURE_NO_DEPRECATE with
+          _CRT_NONSTDC_NO_WARNINGS. We shouldn't defeat the security-related
+          warnings by default, but the _CRT_NONSTDC_NO_WARNINGS are for name
+          changes only (generally a prefixed _) and have no affect on
+          function.
+
+Mon Mar  5 13:31:24 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/templates/vc8java.txt:
+
+          Added documentation for the vc8java template.
+
+        * modules/WorkspaceCreator.pm:
+
+          Fixed a bug where relative paths would come back in "windows"
+          style when generating projects for a windows based project type.
+          All file names need to be in the UNIX style for workspaces.
+
+Fri Mar  2 18:14:56 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/USAGE:
+        * modules/Driver.pm:
+        * modules/MakeWorkspaceBase.pm:
+        * modules/Options.pm:
+        * modules/ProjectCreator.pm:
+        * modules/WorkspaceCreator.pm:
+
+          Added a new option, -for_eclipse, which is useful only to make
+          based project types.  It creates files at the top level that
+          indicate a project to Eclipse.  It is used by importing an
+          existing project into the workspace.
+
+Fri Mar  2 15:57:34 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/Creator.pm:
+
+          Fixed a bug in subtraction where if the element to be subtracted
+          is the first element it would not be removed.
+
+Wed Feb 28 13:50:41 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/AutomakeWorkspaceCreator.pm:
+
+          Since the top-level Makefile is always added to
+          configure.ac.Makefiles, we need to mark '.' as beeing seen so that
+          ./Makefile is not added too.
+
+        * modules/Options.pm:
+
+          Recognize -help so that an error is not printed, but the usage
+          still is.
+
+        * modules/WorkspaceCreator.pm:
+
+          Ignore option errors with no message (in case -help is used on the
+          command line within a workspace).
+
+Tue Feb 27 15:17:35 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * devtools/document_template.pl:
+
+          Modified this script to look one directory up from the templates
+          directory for docs/templates to find documentation for templates
+          that do not reside in the MPC tree.
+
+Tue Feb 27 13:33:42 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/Creator.pm:
+
+          Avoid an infinite loop when processing -value_template foo=$(FOO).
+          Thanks to Steve Huston for reporting this.
+
+Mon Feb 26 17:30:03 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/BDS4WorkspaceCreator.pm:
+        * modules/BMakeWorkspaceCreator.pm:
+        * modules/CCWorkspaceCreator.pm:
+        * modules/NMakeWorkspaceCreator.pm:
+        * modules/VC6WorkspaceCreator.pm:
+        * modules/VC7WorkspaceCreator.pm:
+        * modules/WinWorkspaceBase.pm:
+
+          Added a Windows Workspace base module to override methods that are
+          used in Creator::expand_variables().
+
+        * modules/Options.pm:
+
+          Reverted my change from Wed Jan 24 19:04:58 UTC 2007.  It turns
+          out that the "extra parameter" was still needed.
+
+        * modules/ProjectCreator.pm:
+
+          Corrected a comment about sorting template variable values.
+
+Mon Feb 26 13:09:44 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+
+          Moved the Modify_Custom section down to the end of the
+          Define_Custom section.
+
+        * modules/Creator.pm:
+
+          Fixed a bug in subtraction where a partial subtraction would occur
+          if an element contained the subtracted element plus other text.
+
+        * prj_install.pl:
+
+          Added the -l option to use symbolic links instead of copies.
+
+Fri Feb 16 19:56:13 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/openssl.mpb:
+          Added support for borland template so that we can use the
+          borland template with openssl
+
+Mon Feb 12 13:33:13 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+        * modules/ProjectCreator.pm:
+        * templates/nmake.mpd:
+        * templates/vc7.mpd:
+        * templates/vc8.mpd:
+
+          Changed the source component specific keyword, managed, to be
+          allowed as a project level setting as well.  Also, the value of the
+          'managed' setting can determine different managed c++ levels for
+          vc8 only.
+
+Thu Feb  8 19:45:54 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/global.features:
+
+          By default, disable the ziparchive feature.
+
+        * docs/README:
+        * modules/ProjectCreator.pm:
+        * templates/nmake.mpd:
+        * templates/vc7.mpd:
+        * templates/vc8.mpd:
+
+          Added a new source component specific keyword, managed, which
+          indicates that the source files within the scope of this setting
+          are to be treated as Managed C++ (a Microsoft extension).
+
+        * docs/templates/vc8.txt:
+        * modules/VC8WorkspaceCreator.pm:
+
+          If the 'add_references' template variable is set, the vc8 C++
+          projects will have project references inserted into them based on
+          the 'after' keyword setting.
+
+Fri Feb  2 17:47:09 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/swig_php.mpb:
+
+          Added /. after $(PHP_INCLUDE) in the includes setting.  In case
+          the PHP_INCLUDE environment variable is not set, something is
+          still passed to the -I option.
+
+        * config/ziparchive.mpb:
+
+          Added /. after $(ZIPARCHIVEROOT) in the includes setting.  In case
+          the ZIPARCHIVEROOT environment variable is not set, something is
+          still passed to the -I option.
+
+          And switched to lit_libs.
+
+        * config/zzip.mpb:
+
+          For non-Windows based project types, use lit_libs instead of libs.
+
+        * docs/templates/automake.txt:
+
+          Documented the automake template variables.
+
+        * docs/templates/common.txt:
+
+          Added the definition of the forcount template variable.
+
+        * modules/AutomakeProjectCreator.pm:
+        * templates/automake.mpd:
+
+          Replaced the am_includes template variable with the includes
+          project variable.  In the past, these were different but now they
+          are exactly the same.
+
+Thu Feb  1 18:29:19 UTC 2007  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * docs/templates/vc7.txt:
+        * docs/templates/vc8.txt:
+        * templates/vc7.mpd:
+        * templates/vc8.mpd:
+
+          Added new template variable midl_notlb to suppress the
+          creation of type libraries.
+
+Wed Jan 24 19:04:58 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/CCWorkspaceCreator.pm:
+
+          Fixed a bug in the dependency code that would make the wrong
+          directory when the -into option was used.
+
+        * modules/ConfigParser.pm:
+
+          Provide diagnostic information when an environment variable is
+          used in the configuration file, but is not defined by the user.
+
+        * modules/Driver.pm:
+
+          Keep one more directory level when printing out the configuration
+          file.
+
+        * modules/Options.pm:
+
+          Removed an extra parameter when setting the template variable
+          overrides.  It was no longer necessary due to my change from Fri
+          Jan 12 15:24:27 UTC 2007.
+
+        * modules/ProjectCreator.pm:
+        * modules/TemplateParser.pm:
+
+          Fixed a bug where a scoped assignment would make the original
+          assignment disappear completely.  The original assignment needs to
+          be maintained so that when the assignment is used outside of a
+          scope it has the value specified by the user.
+
+        * modules/VC8WorkspaceCreator.pm:
+        * modules/WorkspaceCreator.pm:
+        * templates/vc8csharp.mpd:
+        * templates/vc8java.mpd:
+        * templates/vc8vb.mpd:
+
+          Provide project references based on the 'after' keyword setting
+          for c#, vb and java projects only.
+
+        * registry.pl:
+
+          Added commands to process .mpc files.
+
+        * templates/cc.mpd:
+
+          Only output the dependency tag if the 'after' keyword has been
+          set.
+
+        * templates/make.mpd:
+        * templates/makedll.mpt:
+
+          Changed the way that output directories are made.  The targets no
+          longer depend on the output directory, they are made on the fly.
+
+Fri Jan 19 15:34:17 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/TemplateParser.pm:
+
+          Fixed a bug where the foreach variable names were not processed
+          correctly if they were mixed case.
+
+Thu Jan 18 19:57:42 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/TemplateParser.pm:
+
+          Provide a new tmeplate function, remove_from, that will find a
+          particular name in any of the valid component sets (e.g.,
+          source_files, header_files, etc.) and remove it from the list.
+          This is used in the change below.
+
+        * templates/vc8csharp.mpd:
+
+          If a source file is of the 'subtype' Form or Component, there may
+          be corresponding .Designer.cs and .resx files that are dependent
+          upon the source file.  If this is the case, the .Designer.cs and
+          .resx files will automatically be marked as dependent upon the
+          originating source file.  In order for this to happen though, the
+          .Designer.cs and .resx files must be in the MPC project either
+          implicitly or explicitly.
+
+Thu Jan 18 16:44:51 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/Creator.pm:
+
+          Fixed a bug when subtracting a value, the value was escaped for
+          use as a regular expression before calling subtraction_core().  It
+          should only happen inside of Creator::subtraction_core().
+
+        * templates/vc8.mpd:
+
+          The DisableSpecificWarnings template variable value should be
+          semi-colon separated.  I'm sure others that will need to change in
+          this same way.
+
+Thu Jan 18 14:24:07 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/swig_perl.mpb:
+
+          Added a specific section for Windows based project types to add
+          $(PERL5_LIB) to lit_libs.
+
+        * modules/ProjectCreator.pm:
+
+          Fixed a bug where output extensions of custom definitions that
+          contain text before the extension (e.g, _i.cpp) would cause files
+          to be skipped instead of automatically added.
+
+        * modules/TemplateParser.pm:
+
+          When splitting parameters, make sure that we match the regular
+          expression at the beginning of the line.
+
+Fri Jan 12 18:24:26 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * templates/vc8csharp.mpd:
+
+          Modified the template to use the basename of LastGenOutput and
+          DependentUpon settings.  Also, when a .settings file is listed as
+          a resx file it will have the SettingsSingleFileGenerator instead
+          of the ResXFileCodeGenerator when the generates_source template
+          variable is set.
+
+Fri Jan 12 15:24:27 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/Creator.pm:
+        * modules/ProjectCreator.pm:
+
+          Fixed a bug where mixing project variables and scoped project
+          variables would result in only the values set as scoped project
+          variables being used.
+
+Thu Jan 11 19:19:55 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/swig_php.mpb:
+        * config/swig_python.mpb:
+        * config/swig_ruby.mpb:
+        * config/swig_tcl.mpb:
+
+          Added SWIG base projects for php, python, ruby, and tcl.
+
+        * generate_export_header.pl:
+
+          Simplified code to determine the output file name.
+
+        * modules/ProjectCreator.pm:
+
+          Fixed a bug where when the -ti option is used within a workspace,
+          subsequent uses of -ti are ignored.
+
+Mon Jan  8 13:39:23 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/AutomakeWorkspaceCreator.pm:
+
+          During post processing, remove any duplicate targets.  Duplicate
+          targets show up as build warnings from automake.
+
+Fri Jan 05 19:06:52 2007  Steve Huston  <shuston@riverace.com>
+
+        * templates/vc7dll.mpt:
+        * templates/vc7exe.mpt:
+        * templates/vc7lib.mpt:
+        * templates/vc7libexe.mpt: Added Pharlap ETS configuration sections
+          to allow generation of Pharlap ETS configurations with VC7.1.
+          Thank you to David Hauck for contributing these changes.
+
+Thu Jan  4 16:08:51 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * devtools/document_template.pl:
+
+          Changed the table style for the html output.
+
+        * docs/templates/vc7.txt:
+
+          Added the output_subdir definition.
+
+        * docs/templates/vc8.txt:
+
+          Began documenting the vc8 template.
+
+        * docs/MPC.sgml:
+        * docs/USAGE:
+        * modules/AutomakeWorkspaceCreator.pm:
+        * modules/BDS4WorkspaceCreator.pm:
+        * modules/Driver.pm:
+        * modules/EM3WorkspaceCreator.pm:
+        * modules/HTMLWorkspaceCreator.pm:
+        * modules/MakeWorkspaceBase.pm:
+        * modules/Options.pm:
+        * modules/ProjectCreator.pm:
+        * modules/VC6WorkspaceCreator.pm:
+        * modules/VC71WorkspaceCreator.pm:
+        * modules/VC7WorkspaceCreator.pm:
+        * modules/VC8WorkspaceCreator.pm:
+        * modules/WorkspaceCreator.pm:
+
+          Added an option, -nocomments, which causes MPC to generate
+          workspaces without comments at the top.
+
+Tue Jan  2 20:07:32 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Fixed a bug where exclusion of more than one file would result in
+          only the last file listed being excluded.
+
+Tue Jan  2 18:05:52 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/zzip.mpb:
+
+          Since zzip requires zlib, inherit from the zlib base project and
+          and have requires += zlib.
+
+        * modules/Driver.pm:
+
+          Simplified determination of workspace or project creators.
+
+        * modules/VC7ProjectCreator.pm:
+        * modules/VC7WorkspaceCreator.pm:
+        * modules/VC8ProjectCreator.pm:
+        * templates/vc7java.mpd:
+        * templates/vc7java.mpt:
+        * templates/vc8java.mpd:
+        * templates/vc8java.mpt:
+
+          Added java support for vc7, vc71 and vc8.
+
+Wed Dec 20 13:02:13 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/BDS4ProjectCreator.pm:
+        * modules/BDS4WorkspaceCreator.pm:
+          Some more rename of bds to bds4
+
+Wed Dec 20 09:25:13 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/BDSProjectCreator.pm:
+        * modules/BDSWorkspaceCreator.pm:
+        * templates/bds.mpd:
+        * templates/bdsdll.mpt:
+        * templates/bdsexe.mpt:
+          Renamed to bds4, this is for Borland Developer Studio 4
+
+        * config/boost_date_time.mpb:
+        * config/boost_filesystem.mpb:
+        * config/boost_iostreams.mpb:
+        * config/boost_prg_exec_monitor.mpb:
+        * config/boost_program_options.mpb:
+        * config/boost_regex.mpb:
+        * config/boost_serialization.mpb:
+        * config/boost_signals.mpb:
+        * config/boost_test_exec_monitor.mpb:
+        * config/boost_thread.mpb:
+        * config/boost_wave.mpb:
+        * config/xerces.mpb:
+        * docs/MPC.sgml:
+        * docs/USAGE:
+          Updated bds to bds4
+
+Tue Dec 19 11:37:13 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * templates/automake.mpd:
+
+          Further whitespace fix so that _SOURCES will be correctly
+          terminated.
+
+Tue Dec 19 10:37:10 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * templates/automake.mpd:
+
+          Fix extra whitespace in generated Makefile.am's to match
+          what was generated before multiple configuration support
+          was added.
+
+Tue Dec 19 18:02:21 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * templates/automake.mpd:
+
+          Fixed a bug where exe LDFLAGS would be overwritten with the
+          LDFLAGS_COMMON even when configurations weren't used.
+
+          Also minimized some of the blank line emissions.
+
+        * templates/vc7.mpd:
+        * templates/vc7dll.mpt:
+        * templates/vc7exe.mpt:
+        * templates/vc7lib.mpt:
+        * templates/vc7libexe.mpt:
+        * templates/vc8platforms.mpt:
+
+          Unified the intermediate directories for nmake, vc7 and vc8 for
+          the various machine types (x86, x64, etc.).
+
+Tue Dec 19 07:41:59 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * templates/automake.mpd:
+
+          If not building separate configurations, define *_CPPFLAGS,
+          *_SOURCES, *_LDFLAGS, etc. directly instead of defining
+          *_CPPFLAGS_COMMON, *_SOURCES_COMMON, *_LDFLAGS_COMMON, etc. and
+          then defining the former in terms of the latter.  This results
+          in generated Makefile.am's closer to what MPC generated before
+          configurations support was added (there are some whitespace
+          differences that still need to be tracked down), and closer
+          to what a hand-written Makefile.am would look like.
+
+Tue Dec 19 03:38:49 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * templates/automake.mpd:
+
+          Fix conditional nesting in *_LDFLAGS* definition so that an
+          empty one isn't emitted.
+
+Tue Dec 19 03:01:22 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * templates/automake.mpd:
+
+          Move configuration-specific definition for *_DEPENDENCIES
+          to immediate follow the definition for *_DEPENDENCIES_COMMON.
+
+Tue Dec 19 02:28:46 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * templates/automake.mpd:
+
+          Extend conditional around the *_PROGRAMS and *_LTLIBRARIES
+          definitions to to include the *_CPPFLAGS*, *_SOURCES*, and
+          *_LDFLAGS*.  This fixes Makefile.am generation for projects that
+          don't build executables or libraries, such as those that compile
+          *.idl files.
+
+Tue Dec 19 02:21:30 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * templates/automake.mpd:
+
+          Move configuration-specific definitions for *_CPPFLAGS,
+          *_SOURCES, and *_LDFLAGS to immediately follow the definitions
+          for *_CPPFLAGS_COMMON, *_SOURCES_COMMON, and *_LDFLAGS_COMMON,
+          as makes the resultant Makefile.am easier to read, and makes
+          it easier to add conditionals that effect both configuration-
+          specific and common definitions.
+
+Tue Dec 19 01:29:01 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * templates/automake.mpd:
+
+          Fix template conditionals around *_LDFLAGS_COMMON definition.
+          When "configurations" support was added, this was mangled and
+          no definition was emitted for library projects.
+
+Mon Dec 18 13:48:15 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/cppunit.mpb:
+
+          Added a comment with a dollar Id.
+
+        * modules/AutomakeWorkspaceCreator.pm:
+
+          Sort the features when creating the configure.ac file for
+          repeatability.
+
+        * modules/NMakeWorkspaceCreator.pm:
+
+          Change the workspace extension from .nmak to .mak.  This is only
+          used when -make_coexistence is used on the command line.
+
+        * modules/ProjectCreator.pm:
+
+          When checking to see if a feature is enabled, we will now
+          explicitly set the feature in the feature parser for later use
+          within the AutomakeWorkspaceCreator.
+
+Fri Dec 15 19:38:00 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/cppunit.mpb:
+
+          Added a base project for cppunit.  Set the CPPUNIT_ROOT
+          environment variable before processing.
+
+        * modules/Creator.pm:
+        * modules/ProjectCreator.pm:
+
+          Fixed a few bugs.
+
+          1) If -feature_file was used in a 'cmdline' setting within a .mwc
+             file, it was silently ignored.
+          2) When setting certain 'cmdline' options within a .mwc file, they
+             would persist outside of the scope in which they were set.
+          3) If the file specified by -feature_file did not contain a full
+             path, it would not be used unless it was in the current
+             directory.  The MPC include paths are now searched if it does
+             not contain a path.
+
+Thu Dec 14 14:30:58 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * PROBLEM-REPORT-FORM:
+
+          Changed to ask for the Operating System and Shell.
+
+        * modules/Creator.pm:
+
+          When expanding variables, warn the user if the value returned from
+          adjust_value() is a hash table.  When this happens, it means that
+          a template scope name collides with a variable name contained
+          within $().
+
+        * templates/make.mpd:
+
+          Added support to perform a post link processing command.
+
+        * templates/makedll.mpt:
+
+          Added a post link processing command to perform the integrate step
+          for Green Hills on Integrity.
+
+Wed Dec 13 17:05:29 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/zlib.mpb:
+
+          Modified this base project to use an intermediate template
+          variable, zlibname, for Windows based project types.  The default
+          remains zlib, but can be overridden on the command line or after
+          this base project has been included.  For instance, the dynamic
+          version of this library is named zdll and would require that the
+          user of such library change the zlibname template variable.
+
+        * modules/Options.pm:
+
+          Provide indication when template variables are set on the command
+          line.
+
+          Also, warn users when -value_template is used for a project
+          keyword.
+
+        * modules/ProjectCreator.pm:
+
+          Modified the evaluation of template variables such that values set
+          on the command line take precedence over those set in projects.
+
+Tue Dec 12 19:46:17 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/MPC.sgml:
+        * docs/USAGE:
+        * modules/Driver.pm:
+        * modules/OutputMessage.pm:
+        * modules/Parser.pm:
+        * modules/WorkspaceCreator.pm:
+
+          Removed deprecated environment variables.  All functionality
+          provided by the environment variables was moved into the MPC
+          configuration file long ago.
+
+Tue Dec 12 14:32:51 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+        * modules/ProjectCreator.pm:
+        * templates/vc8csharp.mpd:
+
+          Added three new C# specific scoped keywords (dependent_upon,
+          generates_source and subtype).  See docs/README for more details.
+
+Mon Dec 11 19:36:13 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/yacc.mpb:
+
+          Fixed the postcommand for the custom rule so that both source and
+          header file are created correctly.
+
+        * modules/ProjectCreator.pm:
+
+          Fixed a bug where defaults source files for custom definitions may
+          result in incorrect file addition if the generated source file is
+          not the default extension (.cpp).
+
+Wed Dec  6 18:08:49 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+        * modules/ProjectCreator.pm:
+        * templates/em3.mpd:
+        * templates/nmake.mpd:
+        * templates/vc6.mpd:
+        * templates/vc7.mpd:
+        * templates/vc8.mpd:
+
+          Added a new source component level setting, no_pch.  When set, it
+          specifies that precompiled headers should not be used for the
+          source files listed within the scope of it's setting.
+
+Tue Dec  5 03:29:14 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/MPC.sgml:
+        * docs/USAGE:
+        * modules/Driver.pm:
+        * modules/MPC.pm:
+        * modules/MWC.pm:
+        * modules/Options.pm:
+        * mpc.pl:
+        * mwc.pl:
+
+          Removed the default project type and simplified the addition of
+          new project/workspace creators.  Now, you must specify a type on
+          the command line or a default type in the MPC.cfg.
+
+Mon Dec  4 16:02:43 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/Driver.pm:
+
+          If no MPC.cfg exists in MPC/config, search the config path from
+          the starting point for mwc.pl (e.g., $ACE_ROOT/bin/mwc.pl).  This
+          precludes the removal of $ACE_ROOT/bin/mwc.pl.
+
+        * config/base.cfg:
+
+          Removed this file.  It is no longer necessary to provide the
+          search paths for ACE related projects.
+
+Mon Dec  4 15:08:19 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/base.cfg:
+
+          Provide default MPC.cfg search paths for ACE related projects.
+
+        * modules/ProjectCreator.pm:
+        * modules/TemplateParser.pm:
+
+          Fixed a bug where grouped generated files would be duplicated due
+          to a problem matching up the generated files when gendir is set to
+          '.'.
+
+Thu Nov 30 15:31:55 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/WorkspaceCreator.pm:
+
+          Fixed bugs where nested scopes and nested workspace aggregation
+          would either not use workspace assignments or not have the right
+          workspace assignments.  Thanks to James Hill
+          <hillj@isis.vanderbilt.edu> for pointing this out.
+
+Wed Nov 29 19:47:15 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/BMakeWorkspaceCreator.pm:
+        * modules/MakeWorkspaceBase.pm:
+        * modules/MakeWorkspaceCreator.pm:
+        * modules/NMakeWorkspaceCreator.pm:
+
+          Factored much of the common code in these workspace types into a
+          single base module.
+
+        * modules/BDSWorkspaceCreator.pm:
+        * modules/CCWorkspaceCreator.pm:
+        * modules/EM3WorkspaceCreator.pm:
+        * modules/HTMLWorkspaceCreator.pm:
+        * modules/SLEWorkspaceCreator.pm:
+        * modules/VC6WorkspaceCreator.pm:
+        * modules/VC7WorkspaceCreator.pm:
+        * modules/WorkspaceCreator.pm:
+
+          Factored out the workspace_file_name method into the
+          WorkspaceCreator.
+
+Wed Nov 29 19:07:38 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/MPC.sgml:
+        * docs/USAGE:
+        * modules/MPC.pm:
+        * modules/MWC.pm:
+        * modules/VC8WebProjectCreator.pm:
+        * modules/VC8WebWorkspaceCreator.pm:
+
+          Removed the vc8web project type.  It has been replace with the
+          'webapp' project keyword in combination with the vc8 projec type.
+
+Wed Nov 29 18:18:54 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/WorkspaceCreator.pm:
+
+          Fixed a bug where an aggregated workspace with scopes (other than
+          exclude) would not be parsed properly.  Thanks to James Hill
+          <hillj@isis.vanderbilt.edu> for bringing this to my attention.
+
+Wed Nov 29 12:52:04 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * templates/automake.mpd:
+
+          Moved the compile_flags portion out of the CPPFLAGS_COMMON section
+          into the specific _CPPFLAGS settings to allow users to put
+          compile_flags settings inside the configuration definitions.
+
+Tue Nov 28 17:37:31 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/AutomakeWorkspaceCreator.pm:
+        * templates/automake.mpd:
+
+          Added the ability to set 'configurations' (as is done for vc6,
+          vc7, etc.) so that different versions of executables and libraries
+          can be built from the same Makefile.am.  By default, the
+          'configurations' template variable is not set.  Thanks to
+          Friedhelm Wolf <Friedhelm.Wolf at homag dot de> for providing the
+          automake template modifications.
+
+Mon Nov 27 16:58:31 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Convert all output files from custom commands if the project type
+          requires slash conversion.
+
+        * templates/vc7csharp.mpd:
+        * templates/vc7vb.mpd:
+        * templates/vc8csharp.mpd:
+        * templates/vc8vb.mpd:
+
+          Made resource files not dependent upon any particular source file.
+          Also, re-removed the .aspx support in the vc8 templates.  See the
+          modification from Tue Jun 20 12:41:49 UTC 2006.
+
+Wed Nov 22 18:07:56 2006  Steve Huston  <shuston@riverace.com>
+
+        * templates/vc8platforms.mpt: Corrected macros and libs for Smartphone
+          WinCE configurations.
+
+Wed Nov 22 20:40:58 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+        * templates/vc8csharp.mpd:
+        * templates/vc8vb.mpd:
+
+          Added support for resource files (.resx or .resources) and .aspx
+          files for both csharp and vb for the vc8 project type.
+
+Wed Nov 22 19:54:01 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/VC8WorkspaceCreator.pm:
+
+          The adjustment of the website project name wasn't correct.  It
+          needed to be the dirname of the project name instead of the
+          basename.
+
+Wed Nov 22 19:34:29 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+        * modules/ProjectCreator.pm:
+        * modules/VC7ProjectCreator.pm:
+        * modules/VC7WorkspaceCreator.pm:
+        * modules/VC8ProjectCreator.pm:
+        * modules/VC8WebWorkspaceCreator.pm:
+        * modules/VC8WorkspaceCreator.pm:
+        * modules/WorkspaceCreator.pm:
+
+          Removed the scope keyword, webapp, from the workspace and added a
+          new project keyword named webapp.  If webapp is set to 1 in the
+          project, it will be considered a Web Application, will not have a
+          project file written for it and will be included in the workspace
+          all if the project type supports Web Applications.  Currently,
+          only the vc8 project type supports them.
+
+Wed Nov 22 13:44:33 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/MPC.sgml:
+        * docs/USAGE:
+        * modules/Driver.pm:
+
+          Added the ability to set the default type in the  MPC
+          configuration file.
+
+        * docs/README:
+        * modules/VC7WorkspaceCreator.pm:
+        * modules/VC8WebWorkspaceCreator.pm:
+        * modules/VC8WorkspaceCreator.pm:
+        * modules/WorkspaceCreator.pm:
+
+          Added a new scope keyword, webapp, to allow users to specify web
+          application directories.  Any directory specified within a webapp
+          scope will be considered as a web application directory.
+          Currently only the vc8 project type supports web application
+          directories.
+
+        * modules/ConfigParser.pm:
+
+          Disallow empty names within the base configuration file (i.e.,
+          $VAR that evaluates to empty).
+
+Wed Nov 22 10:34:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/BMakeWorkspaceCreator.mpc:
+          Give the workspace a .bmak extension when using make_coexistence and
+          simplified workspace_file_name()
+
+        * templates/bmake.mpd:
+        * templates/bmakecommon.mpt:
+          Removed support for the cbx compiler type which was the preview
+          compiler shipped with CBuilderX.
+
+Thu Nov 16 13:34:26 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+        * modules/ProjectCreator.pm:
+
+          Added a new feature, Modify_Custom, that can be used to customize
+          an existing Define_Custom.
+
+Thu Nov 16 12:25:18 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/global.features:
+        * config/xalanc.mpb:
+
+          Added support for Xalan-C++.  The xalanc feature is off by
+          default.
+
+        * modules/ConfigParser.pm:
+
+          Support shell and make style environment variables.
+
+Fri Nov 10 16:48:14 UTC 2006  Kevin Heifner  <heifner_k@ociweb.com>
+
+        * docs/templates/vc7csharp.txt:
+        * docs/templates/vc8csharp.txt:
+        * templates/vc7csharp.mpd:
+        * templates/vc8csharp.mpd:
+
+          Added a new template variable, 'keyfile', to support assembly
+          signing.
+
+Thu Nov  9 13:25:05 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/GHSWorkspaceCreator.pm:
+
+          Removed the -I. from the default project and added
+          --one_instantiation_per_object.
+
+Mon Nov  6 19:27:44 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/CCProjectCreator.pm:
+
+          Code Composer checks the timestamp on the project file.  So, we
+          need to compare the output to ensure that we don't update a
+          project file that doesn't need to be.
+
+        * modules/ProjectCreator.pm:
+
+          Fixed a bug where generated headers, inline files or template
+          files would not be automatically added in the event that the user
+          provided input for those types (i.e., Header_Files, Inline_Files,
+          or Template_Files) that corresponds to a directory.  Now,
+          specifying the following:
+
+          Header_Files {
+            some_dir_name
+          }
+
+          works as if the Header_Files section was not supplied, which is
+          equivalent to the following:
+
+          Header_Files {
+            .
+          }
+
+          This pertains to automatic addition of generated files.
+
+Mon Nov  6 15:11:47 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Fixed a bug where unrecognized lines in 'specific' sections would
+          not be flagged as an error.
+
+        * modules/StringProcessor.pm (parse_assignment):
+
+          Since template variable scopes can have spaces in the names, we
+          must allow scopes to have spaces in the names here as well.
+
+        * modules/Creator.pm:
+        * modules/WorkspaceCreator.pm:
+
+          Put quotes around the variable name when displaying an invalid
+          assignment name.  This allows spacing to be taken into account.
+
+        * templates/make.mpd:
+
+          The implementation for the 'targetoutdir' template variable was
+          incorrect.  'targetoutdir' was not taken into account for the
+          'libpaths' setting.
+
+Thu Oct 26 15:45:18 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/templates/common.txt:
+        * docs/templates/make.txt:
+        * templates/make.mpd:
+        * templates/makedll.mpt:
+
+          Renamed the prelink template variable to prelinktarget to avoid
+          conflicting with prelink used in other templates.
+
+        * docs/templates/vc7.txt:
+        * docs/templates/vc7csharp.txt:
+        * docs/templates/vc7vb.txt:
+        * docs/templates/vc8csharp.txt:
+
+          Documented the template variables for these existing project types
+          and language combinations.
+
+        * docs/templates/vc8vb.txt:
+        * modules/VC8ProjectCreator.pm:
+        * templates/vc8vb.mpd:
+        * templates/vc8vb.mpt:
+
+          Added initial support for Visual Basic with vc8.
+
+        * templates/bmake.mpd:
+        * templates/nmake.mpd:
+
+          Support the prelink template variable as is done in vc7 and vc8.
+
+        * templates/vc7.mpd:
+
+          Modified the template to use PreprocessorDefinitions for
+          midl_defines under the VCMIDLTool section instead of
+          AdditionalOptions.
+
+        * templates/vc7csharp.mpd:
+        * templates/vc7csharp.mpt:
+        * templates/vc7vb.mpd:
+        * templates/vc7vb.mpt:
+        * templates/vc8csharp.mpd:
+        * templates/vc8csharp.mpt:
+
+          Changed the way the 'trace' template variable worked to be
+          consistent between both vb and csharp with vc7 and vc8.
+
+Thu Oct 19 17:29:08 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/GHSWorkspaceCreator.pm:
+
+          Modified to create an integrate file (for Integrity projects) and
+          use it during the integration step.
+
+Mon Oct 16 13:33:46 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/AutomakeWorkspaceCreator.pm:
+        * modules/BDSWorkspaceCreator.pm:
+        * modules/BMakeWorkspaceCreator.pm:
+        * modules/EM3WorkspaceCreator.pm:
+        * modules/HTMLWorkspaceCreator.pm:
+        * modules/MakeWorkspaceCreator.pm:
+        * modules/NMakeWorkspaceCreator.pm:
+        * modules/VC6WorkspaceCreator.pm:
+        * modules/VC71WorkspaceCreator.pm:
+        * modules/VC7WorkspaceCreator.pm:
+        * modules/VC8WorkspaceCreator.pm:
+
+          Use the create_command_line_string() method instead of printing
+          the command line directly.  This opens the door for disabling this
+          functionality.
+
+        * mpc.pl:
+        * mwc.pl:
+
+          Removed the unused Config module.
+
+        * templates/makedll.mpt:
+
+          For wrsppc, wrspentium, and ghsppc compilers, use $(CPUTYPE)
+          instead of hard-coding the processor type.
+
+        * templates/vc8.mpd:
+
+          Remove the 'output_subdir' template value from all library and
+          executable output paths.
+
+Wed Oct  4 17:08:21 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/GHSWorkspaceCreator.pm:
+
+          For Integrity, a bsp file can not be added to the "Program"
+          project, it must be added to the "INTEGRITY Application" project.
+          So, for the ghs project type only, add .bsp files as documentation
+          in the project and the bsp documentation files will be added as bsp
+          files  when the integrate project is created.
+
+Tue Oct  3 11:38:34 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/Creator.pm:
+        * modules/ProjectCreator.pm:
+        * modules/WorkspaceCreator.pm:
+
+          Factored out the relative replacement code from the ProjectCreator
+          into the Creator.  This required the addition of two template
+          methods to get different sets of data for relative replacement to
+          maintain the same functionality in the ProjectCreator and similar
+          functionality in WorkspaceCreator.
+
+        * modules/TemplateParser.pm:
+
+          Fixed a bug where a previous scope of a foreach would hang around
+          even when the scope went away.  This could cause strange results
+          when nesting foreach's.
+
+Tue Sep 26 21:02:46 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/templates/bmake.txt:
+
+          Documented the template variables used by the bmake template.
+
+        * templates/automake.mpd:
+        * templates/bmake.mpd:
+        * templates/em3.mpd:
+        * templates/make.mpd:
+        * templates/nmake.mpd:
+        * templates/vc6.mpd:
+        * templates/vc7.mpd:
+        * templates/vc7csharp.mpd:
+        * templates/vc7vb.mpd:
+        * templates/vc8.mpd:
+        * templates/vc8csharp.mpd:
+
+          If a custom definition has an 'output_option' set, the order of
+          listing the input file changes such that it is listed before the
+          output_option setting in the build rule.
+
+Tue Sep 26 11:49:52 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * devtools/document_template.pl:
+
+          Fixed bugs where complex foreach's (with functions) would not be
+          recognized and default template variable values would be
+          lowercased.
+
+        * docs/README:
+
+          Clarified the 'exclude' usage.
+
+        * docs/USAGE:
+        * docs/templates/cc.txt:
+        * docs/templates/common.txt:
+        * modules/CCProjectCreator.pm:
+        * modules/CCWorkspaceCreator.pm:
+        * modules/MPC.pm:
+        * modules/MWC.pm:
+        * modules/ProjectCreator.pm:
+        * modules/WorkspaceCreator.pm:
+        * templates/cc.mpd:
+        * templates/cccommon.mpt:
+        * templates/ccexe.mpt:
+        * templates/cclib.mpt:
+
+          Added complete support for Code Composer 2.0.  This is an embedded
+          application IDE for Windows only.
+
+Fri Sep 22 14:00:10 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/GHSWorkspaceCreator.pm:
+        * docs/templates/ghs.txt:
+        * templates/ghs.mpd:
+        * templates/ghscommon.mpt:
+
+          Fixed a couple of issues:
+
+          1) Exceptions were hard-coded to be on for all projects.  It is
+             now controlled by the 'exceptions' template variable and is on
+             by default.
+          2) If the primary target is Integrity, Program projects need an
+             intermediate INTEGRITY Application project to perform the
+             integration properly.
+
+        * modules/TemplateParser.pm:
+
+          Fixed a bug where getting the default value of a template variable
+          was not case-insensitive as it should have been.
+
+Wed Sep 20 16:26:48 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/bison.mpb:
+        * config/flex.mpb:
+        * config/lex.mpb:
+        * config/yacc.mpb:
+
+          Added a 'requires' setting for each base project matching the file
+          name (e.g requires += bison in bison.mpb).
+
+        * config/ziparchive.mpb:
+
+          Removed an extraneous comment.
+
+        * templates/ghs.mpd:
+
+          Changed the default primaryTarget to ppc_integrity.tgt and added
+          <%exe_ext%> to <%exename%>.
+
+Tue Sep 19 13:04:15 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/MPC.sgml:
+        * docs/USAGE:
+        * docs/templates/ghs.txt:
+        * modules/GHSProjectCreator.pm:
+        * modules/GHSWorkspaceCreator.pm:
+        * modules/ProjectCreator.pm:
+        * modules/TemplateParser.pm:
+        * templates/ghs.mpd:
+        * templates/ghscommon.mpt:
+
+          Modified the ghs project type to support the 4.x version of the
+          Multi IDE.  With this, the old .bld format has been removed.  This
+          version assumes that Multi is being run on Windows.  If this is
+          not the case, set the MPC_GHS_UNIX environment variable.
+
+        * config/mfc.mpb:
+
+          Used an else on the subsystem specific section instead of
+          explicitly listing out the later versions of Visual C++.  When vc9
+          is released, this file may not need to be modified.
+
+        * config/openssl.mpb:
+
+          Added nmake to the section related to Visual C++.
+
+        * devtools/document_template.pl:
+
+          Fixed a bug where template parser functions were seen as template
+          variables to be documented.
+
+        * docs/README:
+
+          Clarified how the value for 'pure_libs' is interpreted.
+
+        * templates/makedll.mpt:
+
+          Updated support for the GHS compiler.
+
+Wed Sep 13 15:24:45 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * templates/em3.mpd:
+          Fix typo in the base address supplied to the linker. This is
+          necessary to debug WinCE applications.
+
+Wed Sep  6 16:20:27 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Backward compatibility was not complete for the 'install' keyword
+          when scoped in a specific section.  The resolve_alias() method did
+          not take scoping into account.
+
+Thu Aug 31 23:18:57 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * devtools/document_template.pl:
+
+          Fixed a bug where variables found within a <%if()%> were not taken
+          into account.
+
+        * docs/templates/common.txt:
+
+          Added some missing common template variable definitions.
+
+        * docs/templates/make.txt:
+
+          Defined all of the template variables specific to the make
+          template.
+
+        * modules/ProjectCreator.pm:
+
+          Fixed a bug where target output directories (exeout, dllout,
+          libout) were not escaped if they included spaces.
+
+        * templates/make.mpd:
+        * templates/makedll.mpt:
+
+          Renamed dependencies to suppports_include which indicates whether
+          a native version of make supports including files the may not
+          exist at the time of make invocation.
+
+        * templates/bmake.mpd:
+        * templates/em3.mpd:
+        * templates/ghs.mpd:
+        * templates/nmake.mpd:
+        * templates/sle.mpd:
+        * templates/vc6.mpd:
+        * templates/vc7.mpd:
+        * templates/vc8.mpd:
+
+          Fixed a bug where the lib modifier was still applied to libraries
+          specified by the 'libs' project variable even if the
+          'use_lib_modifier' template variable was unset.
+
+        * templates/bmakedll.mpt:
+        * templates/bmakedllexe.mpt:
+        * templates/bmakelib.mpt:
+        * templates/bmakelibexe.mpt:
+        * templates/common.mpt:
+        * templates/em3vcpdll.mpt:
+        * templates/em3vcpdllexe.mpt:
+        * templates/em3vcplib.mpt:
+        * templates/em3vcplibexe.mpt:
+        * templates/nmakedll.mpt:
+        * templates/nmakeexe.mpt:
+        * templates/sledll.mpt:
+        * templates/sleexe.mpt:
+        * templates/vc6dspdll.mpt:
+        * templates/vc6dspdllexe.mpt:
+        * templates/vc6dsplib.mpt:
+        * templates/vc6dsplibexe.mpt:
+        * templates/vc7dll.mpt:
+        * templates/vc7exe.mpt:
+        * templates/vc7lib.mpt:
+        * templates/vc7libexe.mpt:
+        * templates/vc8dll.mpt:
+        * templates/vc8lib.mpt:
+
+          Factored out the 'use_lib_modifier' and 'use_exe_modifier'
+          template variables into common.mpt.
+
+Mon Aug 28 12:09:16 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/MPC.sgml:
+        * docs/README:
+        * docs/USAGE:
+        * modules/Options.pm:
+
+          Updated incorrect documentation and added missing information.
+
+        * modules/Driver.pm:
+
+          Added a warning about the impending default type removal when no
+          type is specified.
+
+        * templates/make.mpd:
+
+          Added the ability to force object files into a specific directory
+          and added the ability to provide a "make include" file to override
+          or augment makefile rules.
+
+        * templates/vc7.mpd:
+        * templates/vc8.mpd:
+
+          Converted whitespace to tabs as Visual Studio would used.
+
+Mon Aug 21 09:12:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/ProjectCreator.pm (get_command_subs):
+          Added crlf to the list, this can then be used in for example the
+          prelink to have a multiline command. Thanks to Kees van Marle
+          <kvmarle at remedy dot nl> for adding this.
+
+Sat Aug 19 17:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/vc7.mpd:
+        * templates/vc8.mpd:
+          Added prelink as template variable, thanks to Kees van Marle
+          <kvmarle at remedy dot nl> for adding this.
+
+Sat Aug 19 01:22:51 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/MPC.sgml:
+
+          Added this SGML document provided by Thomas Girard.  It contains
+          information similar to that which is found in the USAGE file.
+
+        * docs/USAGE:
+        * modules/Options.pm:
+
+          Cosmetic changes to the usage output.
+
+        * modules/Driver.pm:
+
+          Fixed a bug where an MPC configuration file that didn't exist
+          would be chosen from the code base configuration file.
+
+Wed Aug 16 22:22:31 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/USAGE:
+
+          Added information to the logging section about the debug setting.
+
+        * modules/WorkspaceCreator.pm:
+        * modules/WorkspaceHelper.pm:
+
+          Added a method, perform_custom_processing, to WorkspaceHelper to
+          allow users to be able to inject data into the workspace.
+
+Tue Aug 15 23:50:48 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/USAGE:
+
+          Fixed a minor typo.
+
+        * modules/NMakeWorkspaceCreator.pm:
+
+          Prefix the calls to cd with @ so that they are not printed during
+          a make.
+
+        * docs/README:
+        * modules/Creator.pm:
+        * modules/Options.pm:
+        * modules/ProjectCreator.pm:
+        * modules/StringProcessor.pm:
+        * templates/bmake.mpd:
+        * templates/em3.mpd:
+        * templates/ghs.mpd:
+        * templates/html.mpd:
+        * templates/make.mpd:
+        * templates/nmake.mpd:
+        * templates/sle.mpd:
+        * templates/vc6.mpd:
+        * templates/vc7.mpd:
+        * templates/vc7csharp.mpd:
+        * templates/vc7vb.mpd:
+        * templates/vc8.mpd:
+        * templates/vc8csharp.mpd:
+
+          Deprecated the 'install' keyword.  It has been replaced with
+          'exeout' to be consistent with 'dllout' and 'libout'.  The use of
+          'install' will still be accepted.
+
+Wed Aug  9 15:11:23 2006  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * modules/ProjectCreator.pm (expand_variables):
+
+          Corrected a problem where "pre/" and "post/" include slashes
+          were being changed to have the wrong type of slash.
+
+Wed Aug  9 01:14:54 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * devtools/document_template.pl:
+
+          Corrected a bug where multiple variables used within a <%foreach%>
+          would not be recognized correctly.
+
+        * docs/USAGE:
+
+          Clarified the documentation dealing with the MPC configuration
+          files.
+
+        * modules/AutomakeWorkspaceCreator.pm:
+
+          Print out AM_CONDITIONAL's for all of the features known to the
+          FeatureParser.
+
+        * modules/BMakeWorkspaceCreator.pm:
+        * modules/NMakeWorkspaceCreator.pm:
+
+          Fixed a bug where an assumption is made that projects in different
+          directories were assumed to be relative.  When absolute
+          directories are used, the Makefile would get confused about how to
+          get back to the original directory.
+
+        * modules/Driver.pm:
+
+          Compare directories case-insensitively when running on a system
+          that does not support case-sensitive file systems while searching
+          for the correct MPC.cfg.
+
+        * modules/Creator.pm:
+        * modules/DirectoryManager.pm:
+        * modules/Options.pm:
+        * modules/ProjectCreator.pm:
+        * modules/StringProcessor.pm:
+        * modules/WorkspaceCreator.pm:
+
+          Factored out and simplified code dealing with parsing assignments.
+
+        * templates/nmake.mpd:
+
+          Corrected information about getting a dependency generator for
+          nmake.
+
+Thu Aug  3 02:45:12 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/templates:
+        * docs/templates/common.txt:
+        * devtools/document_template.pl:
+
+          The script can be used to document all template variables found
+          within a project template (.mpd file).  Currently, only the
+          template variables that are common to most templates are
+          documented.
+
+        * modules/ProjectCreator.pm:
+        * modules/TemplateParser.pm:
+
+          Added methods to get keywords for use within the devtools scripts.
+
+        * highlight_template.pl:
+        * devtools/highlight_template.pl:
+
+          Moved this file into the devtools directory.
+
+Fri Jul 28 15:13:01 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Corrected a bug introduced by my change from Fri Jul 14 17:25:16
+          UTC 2006.  The original change was intended to deal with Windows'
+          inability to have empty environment variables.  I have changed it
+          to have a special case where then environment variable value of ""
+          is interpreted as the users intent to have an empty string.
+
+Wed Jul 26 22:35:28 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/LICENSE:
+        * docs/README:
+        * docs/USAGE:
+
+          Moved these files from the root directory into the newly created
+          docs directory.
+
+        * modules/TemplateParser.pm:
+        * templates/automake.mpd:
+
+          Added a new template function, keyname_used, that is used in the
+          automake template to handle the situation where a custom input
+          file is used with more than one custom defined type.  If the
+          custom input file caused more than one file to be generated in
+          each custom defintion, the stamp file would be duplicated causing
+          build errors.
+
+Tue Jul 25 15:36:29 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * MPC version 3.4.0 released.
+
+Local Variables:
+add-log-time-format: current-time-string
+indent-tabs-mode: nil
+End:

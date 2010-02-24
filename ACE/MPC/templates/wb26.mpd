@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+        <name><%project_name%></name>
+	<comment></comment>
+<%if(after && enable_subprojects && exename)%>
+	<projects>
+		<!-- MPC ADD DEPENDENCIES -->
+	</projects>
+<%endif%>
+	<buildSpec>
+		<buildCommand>
+			<name>com.windriver.ide.core.wrbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.windriver.ide.core.wrnature</nature>
+		<nature>com.windriver.ide.core.wrcorenature</nature>
+	</natures>
+<%if(!standard_build && make_coexistence)%>
+	<linkedResources>
+<%foreach(source_files)%>
+		<link>
+			<name><%source_file%></name>
+			<type>1</type>
+			<location><%full_path(source_file)%></location>
+		</link>
+<%endfor%>
+<%foreach(header_files)%>
+                <link>
+                        <name><%header_file%></name>
+                        <type>1</type>
+                        <location><%full_path(header_file)%></location>
+                </link>
+<%endfor%>
+<%foreach(inline_files)%>
+                <link>
+                        <name><%inline_file%></name>
+                        <type>1</type>
+                        <location><%full_path(inline_file)%></location>
+                </link>
+<%endfor%>
+<%foreach(template_files)%>
+                <link>
+                        <name><%template_file%></name>
+                        <type>1</type>
+                        <location><%full_path(template_file)%></location>
+                </link>
+<%endfor%>
+	</linkedResources>
+<%endif%>
+</projectDescription>

@@ -1,0 +1,19 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  Define_Custom(SWIG) {
+    automatic           = 1
+    command             = swig
+    commandflags        = -php -c++
+    inputext            = .swg, .swig, .i
+    source_outputext    = _wrap.cpp
+    header_pre_filename = php_
+    header_outputext    = .h
+    generic_outputext   = .php
+  }
+  requires += swig_php
+  includes += $(PHP_INCLUDE)/. $(PHP_INCLUDE)/main $(PHP_INCLUDE)/Zend \
+              $(PHP_INCLUDE)/TSRM
+  libpaths += $(PHP_LIBPATH)/.
+}

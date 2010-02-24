@@ -1,0 +1,5 @@
+// $Id$
+
+project: ixml {
+  lit_libs += threadutil upnp
+}

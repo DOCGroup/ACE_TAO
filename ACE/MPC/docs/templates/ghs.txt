@@ -1,0 +1,14 @@
+bsp = If a bsp is necessary, this variable should be set to the bsp name.
+exceptions = This controls whether exceptions are used or not.  It is on by default.
+libext = Similar to the common lib_ext except that this one is normally left to the default.
+no_use_pch = Set this to disable precompiled header support.
+os_dir = Set this to the full path of the OS directory (ex. C:\GHS\int507).
+postmkdir = Allows arbitrary text after the use of mkdir.
+primarytarget = This specifies the primaryTarget value that is placed in the toplevel workspace.  Some example values are: ppc_integrity.tgt, ppc_linux.tgt, ppc_standalone.tgt and ppc_vxworks.tgt.
+reltop = This is the current directory of the project relative to the top-level directory.
+reltop_dllout = Similar to dllout except that it's relative to the top-level directory.
+reltop_exeout = Similar to exeout except that it's relative to the top-level directory.
+reltop_includes = Similar to includes except that it's relative to the top-level directory.
+reltop_libout = Similar to libout except that it's relative to the top-level directory.
+reltop_libpaths = Similar to libpaths except that it's relative to the top-level directory.
+slash = The value used to separate directories and files.

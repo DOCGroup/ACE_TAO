@@ -1,0 +1,428 @@
+// -*- MPC -*-
+// $Id$
+
+// ***********************************************************************
+// The default compiler for the 'make' project type is gcc (provided by
+// the fill_value() method in MakeProjectCreator.pm).  This can be
+// controlled by setting the compilers template variable.  It may be
+// changed on the MPC command line via the -value_template option.
+// Additionally, each compiler has a default platform.  The default
+// platform for gcc is linux.  This too can be changed via the
+// -value_template option.  Below are some examples.
+//
+// Use SunCC on the default platform (solaris):
+//   mwc.pl -type make -value_template compilers=SunCC
+// Use the default compiler (gcc) on LynxOS:
+//   mwc.pl -type make -value_template platforms=lynxos
+// Use HP-UX aCC on the default platform (HP-UX):
+//   mwc.pl -type make -value_template compilers=aCC
+// ***********************************************************************
+
+conditional_include "common"
+conditional_include "unixcommon"
+
+configurations   = Release
+obj_ext          = .o
+res_ext          = .res
+compile_flags    =
+arflags          =
+pchsupport       = 1
+targetoutdir     =
+libopt           = -l
+build64bit       = 1
+pchext           = .gch
+versupport       = 1
+supports_include = 1
+visibility       =
+depgen_flags     =
+cc               = cc
+
+// ***********************************************************************
+// Configuration Section
+// ***********************************************************************
+
+Debug {
+  lib_modifier = d
+  genflags     = -g
+}
+
+Release {
+  optimize = 1
+  genflags = -O
+}
+
+// ***********************************************************************
+// Compiler Section
+// ***********************************************************************
+
+java {
+  cc             = javac
+  cxx            = javac
+  ld             = :
+  obj_ext        = .class
+  output_option  =
+  compile_option =
+  ar             = jar
+  arflags        = cvf
+  platforms      = jvm
+}
+
+gcj {
+  cc            = gcj
+  cxx           = gcj
+  pic           = -fPIC
+  shflags       = -shared
+  platforms     = linux
+  exe_linkflags = --main=<%main%>
+}
+
+cxx_tru64 {
+  cxx        = cxx
+  clean      = cxx_repository so_locations
+  tempincopt = "-ptr "
+  tempinc    = cxx_repository
+  platforms  = tru64
+  pchcreate  = "-nopch_messages -create_pch "
+  pchuse     = "-nopch_messages -use_pch "
+}
+
+cxx_vms {
+  cxx             = cxx
+  arflags         = r
+  compilerflags   = -ieee -names_as_is_short
+  linkflags       = -threads
+  shflags         = -shared -auto_symvec
+  clean           = cxx_repository
+  tempinc         = cxx_repository
+  platforms       = openvms
+}
+
+dmc {
+  cc           = dmc
+  cxx          = dmc
+  dmclink      = 1
+  ar           = lib
+  arflags      = -c
+  obj_ext      = .obj
+  platforms    = dmc_win
+}
+
+gcc {
+  cc        = gcc
+  cxx       = g++
+  pic       = -fPIC
+  shflags   = -shared
+  platforms = linux
+  pchcreate = "-o "
+  pchnobj   = 1
+  visopt    = -fvisibility=hidden -fvisibility-inlines-hidden
+}
+
+arm_elf_gcc {
+  cc            = arm-elf-gcc
+  cxx           = arm-elf-g++
+  ar            = arm-elf-ar
+  arflags       = rcs
+  compilerflags = -isystem "$(SYSTEMDIR)/arm-elf/include"
+  shflags       = -shared
+  platforms     = nucleus
+  pchcreate     = "-o "
+  pchnobj       = 1
+  visopt        = -fvisibility=hidden -fvisibility-inlines-hidden
+}
+
+Intel {
+  cxx       = icpc
+  pic       = -fPIC
+  shflags   = -shared
+  platforms = linux
+  visopt    = -fvisibility=hidden
+}
+
+SunCC {
+  cxx             = CC
+  pic             = -KPIC
+  shflags         = -G
+  compilerflags64 = -xarch=v9
+  linkflags       = -library=Cstd -library=Crun
+  clean           = SunWS_cache ir.out
+  platforms       = solaris
+  pchcreate       = -xpch=collect:
+  pchuse          = -xpch=use:
+  pchstop         = -xpchstop=
+  pchext          = .Cpch
+  visopt          = -xldscope=hidden
+}
+
+aCC {
+  cxx             = aCC
+  pic             = +Z
+  shflags         = -b
+  platforms       = hpux
+  compilerflags   = -AA -D_RWSTD_MULTI_THREAD +W336
+  compilerflags64 = +DA2.0W +DS2.0W
+  linkflags       = -Wl,+s
+  linkflags64     = -Wl,-x -Wl,+h$(@F) -ldl
+  pchcreate       = "+hdr_create "
+  pchuse          = "+hdr_use "
+}
+
+xlC_r {
+  cc              = xlc_r
+  cxx             = xlC_r
+  arflags64      += -X64 -rv
+  compilerflags64 = -q64
+  platforms       = aix
+  pchcreate       = -qgenpcomp=
+  pchuse          = -qusepcomp=
+}
+
+SGICC {
+  cxx             = CC
+  pic             = -KPIC
+  shflags         = -shared
+  compilerflags64 = -64
+  linkflags       = -Wl,-woff,84
+  clean           = ii_files
+  platforms       = irix
+  pchcreate       = -LANG:create_pch=
+  pchuse          = -diag_suppress 3056 -LANG:use_pch=
+}
+
+wrsppc {
+  cc            = gcc$(CPUTYPE)
+  cxx           = g++$(CPUTYPE)
+  cputype       = ppc
+  cpu           = PPC604
+  ar            = ar$(CPUTYPE)
+  nm            = nm$(CPUTYPE)
+  compilerflags = -mlongcall
+  platforms     = vxworks
+}
+
+wrspentium {
+  cc            = gcc$(CPUTYPE)
+  cxx           = g++$(CPUTYPE)
+  cputype       = pentium
+  cpu           = PENTIUM
+  ar            = ar$(CPUTYPE)
+  nm            = nm$(CPUTYPE)
+  platforms     = vxworks
+}
+
+NCC {
+  cxx       = NCC
+  pic       = -KPIC
+  platforms = tandem
+}
+
+ghsppc {
+  cc            = cc$(CXXINT)$(CPUTYPE)
+  cxx           = cx$(CXXINT)$(CPUTYPE)
+  ar            = cx$(CXXINT)$(CPUTYPE)
+  cputype       = ppc
+  arflags       = --one_instantiation_per_object -archive -o
+  compilerflags = --new_style_casts --one_instantiation_per_object --exceptions --std --long_long
+  platforms     = integrity
+}
+
+// ***********************************************************************
+// Platform Section
+// ***********************************************************************
+
+jvm {
+  versupport =
+  lib_prefix =
+  dll_ext    =
+  lib_ext    = .jar
+}
+
+tru64 {
+  shflags       = -shared /usr/lib/libcxxstd.a
+  ldlibs        = -ltli -lrt
+  extracppflags = -D__USE_STD_IOSTREAM -D_REENTRANT
+}
+
+openvms {
+  // If you want to create shareable images, you can
+  // set dll_ext to .exe using the -value_template option of MPC.
+  versupport    =
+  lib_prefix    =
+  dll_ext       =
+  exe_ext       = .exe
+  ldlibs        = -lpthread
+  extracppflags = -D__USE_STD_IOSTREAM -D_REENTRANT
+}
+
+linux {
+  gnumake       = 1
+  ldlibs        = -ldl $(subst lib,-l,$(sort $(basename $(notdir $(wildcard /usr/lib/librt.so /lib/librt.so))))) -lpthread
+  extracppflags = -D_REENTRANT
+}
+
+nucleus {
+  gnumake       = 1
+  extracppflags = -mcpu=arm7tdmi -msoft-float -mthumb-interwork
+}
+
+solaris {
+  shflags       = -G
+  ldlibs        = -lsocket -ldl -lnsl -lgen -lposix4 -lthread
+  extracppflags = -D_REENTRANT
+}
+
+hpux {
+  dll_ext       = .sl
+  ldlibs        = -lxti -lrt -lpthread -ldld
+  extracppflags = -D_REENTRANT
+}
+
+aix {
+  dll_ext          =
+  ldlibs           = -ldl -lpthread
+  extracppflags    = -D_REENTRANT
+  supports_include =
+}
+
+irix {
+  ldlibs  = -lsocket -lgen -lpthread
+}
+
+lynxos {
+  dll_ext       =
+  extracppflags = -D__NO_INCLUDE_WARN__ -mthreads -mminimal-toc
+}
+
+macos {
+  dld     = libtool
+  ranlib  = 1
+  dll_ext = .dylib
+  shflags = -dynamic
+  ldlibs  = -lcc_dynamic -lstdc++ -lSystem -ldl
+}
+
+unixware {
+  ldlibs        = -lsocket -ldl -lnsl -lgen -lposix4 -lthread
+  extracppflags = -D_REENTRANT
+}
+
+qnx {
+  ldlibs        = -lsocket
+  extracppflags = -D__GCC_BUILTIN
+}
+
+vxworks {
+  versupport       =
+  dll_ext          =
+  exe_ext          = .out
+  specialscript    = "for i in $$3; do for j in $$4; do i=`echo $$i | sed sa\^-laa`;[ -r \"$$j/lib$$i.a\" ] && libs=\"$$libs $$j/lib$$i.a\" && break;done;done;$$1 $$2 $$libs | munch | grep -v \\.cpp > $$6"
+  prelinktarget    = __ctordtor.c
+  prelinktargetobj = __ctordtor$(OBJEXT)
+  clean            = __ctordtor$(OBJEXT)
+  ldlibs           = -L$(WIND_BASE)/target/lib/$(CPUTYPE)/$(CPU)/common$(CPU_SPECIFIC) -larch
+  extracppflags    = -nostdlib -I$(WIND_BASE)/target/h
+  ld               = ld$(CPUTYPE)
+  linkflags        = -X -r
+}
+
+vxworks_rtp {
+  versupport    =
+  dll_ext       =
+  exe_ext       = .vxe
+  extracppflags = -I$(WIND_BASE)/target/usr/h -I$(WIND_BASE)/target/usr/h/wrn/coreip -mrtp
+  ldlibs        = -ldl
+  linkflags     = -L$(WIND_BASE)/target/usr/lib/$(CPUTYPE)/$(CPU)/common
+}
+
+cygwin {
+  gnumake    = 1
+  versupport =
+  dll_ext    = .dll
+  exe_ext    = .exe
+  rc         = windres
+  res_ext    = .o
+  depgen_flags = -t make
+}
+
+// MinGW compiler with the MSYS shell, make, etc.
+mingw_msys {
+  versupport   =
+  lib_prefix   =
+  dll_ext      = .dll
+  lib_ext      = .lib
+  exe_ext      = .exe
+  ldlibs       = -lwsock32 -lnetapi32
+  rc           = rc
+  pic          =
+  depgen_flags = -t make
+}
+
+// MinGW compiler with either:
+// a) a native Windows shell and make, or
+// b) MSYS's make passing --win32 (which will use cmd.exe as its subshell)
+mingw {
+  versupport   =
+  lib_prefix   =
+  dll_ext      = .dll
+  lib_ext      = .lib
+  exe_ext      = .exe
+  ldlibs       = -lwsock32 -lnetapi32
+  rc           = rc
+  devnull      = nul
+  delete       = del /f/s/q
+  type         = type
+  copy         = copy /y
+  makedir      = mkdir
+  move         = move /y
+  testdirstart = if not exist
+  testdirend   =
+  pic          =
+  slash        = \\
+  depgen_flags = -t make
+}
+
+dmc_win {
+  versupport       =
+  lib_prefix       =
+  dll_ext          = .dll
+  lib_ext          = .lib
+  exe_ext          = .exe
+  ldlibs           = wsock32+kernel32
+  rc               = rc
+  devnull          = nul
+  delete           = del /f/s/q
+  type             = type
+  copy             = copy /y
+  makedir          = mkdir
+  move             = move /y
+  supports_include =
+  testdirstart     = if not exist
+  testdirend       =
+  depgen_flags     = -t make
+}
+
+tandem {
+  shflags       = -shared -all
+  ldlibs        = -lsocket -ldl -lnsl -lgen -lthread
+  extracppflags = -D_REENTRANT
+}
+
+// For Integrity, the following should be set as environment variables, on
+// the make command line or within a verbatim section in your mpc file.
+//
+// OS_DIR The full path to your BSP installation.
+// BSP    The BSP name (ex. sim800).
+//
+integrity {
+  cxxint         = int
+  versupport     =
+  dll_ext        =
+  ldlibs         = -lshm_client -lnet -lsocket -lposix
+  extraarflags   = -bsp $(BSP) -os_dir $(OS_DIR) --one_instantiation_per_object
+  extracppflags  = -integrate -dynamic -bsp $(BSP) -os_dir $(OS_DIR) --one_instantiation_per_object -non_shared -Uvector
+  specialscript  = "echo Kernel > $$6; echo Filename DynamicDownload >> $$6;echo EndKernel >> $$6; echo AddressSpace >> $$6;echo Filename $$5 >> $$6;echo Language C++ >> $$6;echo Library libINTEGRITY.so >> $$6;echo Library libc.so >> $$6;echo Library libscxx_e.so >> $$6;echo Task Initial >> $$6;echo StackLength 0x8000 >> $$6;echo EndTask >> $$6;echo EndAddressSpace >> $$6"
+  prelinktarget  = $(notdir $(BIN).int)
+  postlinkbinary = $(MV) $(BIN) $(BIN).tmp && intex -bsp $(BSP) -os_dir $(OS_DIR) -intfile $(notdir $(BIN).int) -o $(BIN) $(BIN).tmp
+}
+
+conditional_include "user_makedll"

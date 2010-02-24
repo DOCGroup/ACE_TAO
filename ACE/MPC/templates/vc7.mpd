@@ -1,0 +1,656 @@
+<?xml version="<%xml_version("1.0")%>" encoding="<%encoding("Windows-1252")%>"?>
+<VisualStudioProject
+	ProjectType="<%vcprojecttype("Visual C++")%>"
+	Version="<%vcversion%>"
+	Name="<%project_name%>"
+	ProjectGUID="{<%guid%>}"
+	SccProjectName=""
+	SccLocalPath="">
+	<Platforms>
+		<Platform
+			Name="<%platform("Win32")%>"/>
+	</Platforms>
+	<Configurations>
+<%foreach(configurations)%>
+		<Configuration
+			Name="<%configuration%>|<%platform%>"
+			OutputDirectory="<%if(type_is_dynamic)%><%if(dllout)%><%dllout%><%else%><%libout%><%endif%><%else%><%if(type_is_static)%><%libout%><%else%><%if(exeout)%><%exeout%><%if(windows_style)%>\<%output_dir("Debug")%><%endif%><%else%><%if(windows_style)%><%output_dir("Debug")%><%else%><%output_dir(".")%><%endif%><%endif%><%endif%><%endif%>"
+			IntermediateDirectory="<%intermediate_dir%>\<%noextension(project_file)%><%if(output_subdir)%>\<%output_subdir%><%endif%>"
+<%if(type_is_static && staticname)%>
+			ConfigurationType="4"
+<%else%>
+<%if(custom_only)%>
+			ConfigurationType="10"
+<%else%>
+			ConfigurationType="<%configuration_type("2")%>"
+<%endif%>
+<%endif%>
+			UseOfMFC="<%use_mfc("0")%>"
+<%if(UseOfATL)%>
+			UseOfATL="<%UseOfATL%>"
+<%endif%>
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+<%if(managed)%>
+			ManagedExtensions="1"
+<%endif%>
+			CharacterSet="<%charset("0")%>">
+<%if(!custom_only)%>
+			<Tool
+				Name="VCCLCompilerTool"
+<%if(compile_flags || DisableSpecificWarnings)%>
+				AdditionalOptions="<%compile_flags%><%foreach(DisableSpecificWarnings)%> /wd<%DisableSpecificWarning%><%endfor%>"
+<%endif%>
+<%if(optimize)%>
+				Optimization="<%optimize%>"
+<%else%>
+				Optimization="0"
+<%endif%>
+<%if(InlineFunctionExpansion)%>
+				InlineFunctionExpansion="<%InlineFunctionExpansion%>"
+<%endif%>
+				AdditionalIncludeDirectories="<%foreach(includes)%><%include%><%fornotlast(",")%><%endfor%>"
+                                PreprocessorDefinitions="<%if(unicode)%>UNICODE;_UNICODE;<%endif%><%if(type_is_dynamic)%><%foreach(dynamicflags)%><%dynamicflag%>;<%endfor%><%endif%><%if(need_staticflags)%><%foreach(staticflags)%><%staticflag%>;<%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%><%pch_define%>;<%endfor%><%endif%><%foreach(defines common_defines macros)%><%define%><%fornotlast(";")%><%endfor%><%if(macro_for_lib_modifier)%><%if(use_lib_modifier)%><%if(lib_modifier)%>;MPC_LIB_MODIFIER=\&quot;<%lib_modifier%>\&quot;<%endif%><%endif%><%endif%>"
+				MinimalRebuild="<%MinimalRebuild("FALSE")%>"
+				ExceptionHandling="<%exceptions("TRUE")%>"
+<%if(!managed)%>
+<%if(optimize)%>
+<%if(BasicRuntimeChecks)%>
+				BasicRuntimeChecks="<%BasicRuntimeChecks%>"
+<%endif%>
+<%else%>
+				BasicRuntimeChecks="<%BasicRuntimeChecks("3")%>"
+<%endif%>
+<%endif%>
+<%if(StringPooling)%>
+				StringPooling="<%StringPooling%>"
+<%endif%>
+<%if(runtime_library)%>
+				RuntimeLibrary="<%runtime_library%>"
+<%else%>
+				RuntimeLibrary="<%if(type_is_static || need_staticflags)%><%if(debug_prj)%>1<%else%>0<%endif%><%else%><%if(debug_prj)%>3<%else%>2<%endif%><%endif%>"
+<%endif%>
+				BufferSecurityCheck="<%BufferSecurityCheck("TRUE")%>"
+				EnableFunctionLevelLinking="<%EnableFunctionLevelLinking("TRUE")%>"
+				TreatWChar_tAsBuiltInType="<%wchar_t("TRUE")%>"
+<%if(forloopscope)%>
+				ForceConformanceInForLoopScope="<%forloopscope%>"
+<%endif%>
+				RuntimeTypeInfo="<%rtti("TRUE")%>"
+<%if(pch_header)%>
+<%if(pch_source)%>
+				UsePrecompiledHeader="3"
+<%else%>
+				UsePrecompiledHeader="2"
+<%endif%>
+				PrecompiledHeaderThrough="<%pch_header%>"
+<%endif%>
+<%if(pdbc)%>
+				ProgramDataBaseFileName="<%if(type_is_static)%><%libout%>\<%libname_prefix%><%staticname%><%if(use_lib_modifier)%><%lib_modifier%><%endif%>.pdb<%else%><%intermediate_dir%>\<%noextension(project_file)%><%if(output_subdir)%>\<%output_subdir%><%endif%>/<%endif%>"
+<%endif%>
+				WarningLevel="<%warning_level("3")%>"
+				SuppressStartupBanner="TRUE"
+				Detect64BitPortabilityProblems="<%Detect64BitPortabilityProblems("FALSE")%>"
+				DebugInformationFormat="<%debug_format("3")%>"/>
+<%endif%>
+			<Tool
+				Name="VCCustomBuildTool"/>
+<%if(!custom_only)%>
+			<Tool
+<%if(type_is_static)%>
+				Name="VCLibrarianTool"
+<%if(staticname)%>
+				OutputFile="<%libout%>\<%libname_prefix%><%staticname%><%if(use_lib_modifier)%><%lib_modifier%><%endif%><%lib_ext%>"
+<%endif%>
+<%else%>
+				Name="VCLinkerTool"
+<%if(!source_files || link_options)%>
+				AdditionalOptions="<%if(!source_files)%>/noentry <%endif%><%if(link_options)%><%link_options%><%endif%>"
+<%endif%>
+<%if(type_is_binary)%>
+				AdditionalDependencies="<%foreach(reverse(libs))%><%fornotfirst(" ")%><%libname_prefix%><%lib%><%if(use_lib_modifier)%><%lib_modifier%><%endif%><%lib_ext%><%endfor%><%foreach(reverse(lit_libs))%> <%lit_lib%>.lib<%endfor%><%foreach(reverse(pure_libs))%> <%pure_lib%><%endfor%>"
+<%endif%>
+<%if(exename || sharedname || staticname)%>
+				OutputFile="$(OutDir)\<%if(type_is_dynamic)%><%libname_prefix%><%sharedname%><%if(use_lib_modifier)%><%lib_modifier%><%endif%><%dll_ext%><%else%><%exename%><%if(use_exe_modifier)%><%lib_modifier%><%endif%><%exe_ext%><%endif%>"
+<%endif%>
+<%if(win_version)%>
+				Version="<%win_version%>"
+<%endif%>
+				LinkIncremental="<%LinkIncremental("2")%>"
+				SuppressStartupBanner="TRUE"
+				AdditionalLibraryDirectories="<%foreach(libpaths)%><%libpath%><%fornotlast(";")%><%endfor%>"
+<%if(ignore_default_library_names)%>
+				IgnoreDefaultLibraryNames="<%foreach(ignore_default_library_names)%><%ignore_default_library_name%><%fornotlast(";")%><%endfor%>"
+<%endif%>
+<%if(IgnoreAllDefaultLibraries)%>
+				IgnoreAllDefaultLibraries="<%IgnoreAllDefaultLibraries%>"
+<%endif%>
+<%if(ModuleDefinitionFile)%>
+                                ModuleDefinitionFile="<%ModuleDefinitionFile%>"
+<%endif%>
+				GenerateDebugInformation="TRUE"
+<%if(pdbl)%>
+<%if(sharedname)%>
+				ProgramDatabaseFile="$(OutDir)\<%libname_prefix%><%sharedname%><%if(use_lib_modifier)%><%lib_modifier%><%endif%>.pdb"
+<%else%>
+<%if(exename)%>
+				ProgramDatabaseFile="$(OutDir)\<%exename%><%if(use_exe_modifier)%><%lib_modifier%><%endif%>.pdb"
+<%endif%>
+<%endif%>
+<%endif%>
+<%if(GenerateMapFile)%>
+				GenerateMapFile="<%GenerateMapFile%>"
+<%endif%>
+				SubSystem="<%subsystem("1")%>"
+<%if(StackReserveSize)%>
+				StackReserveSize="<%StackReserveSize%>"
+<%endif%>
+<%if(StackCommitSize)%>
+				StackCommitSize="<%StackCommitSize%>"
+<%endif%>
+<%if(optimize)%>
+				OptimizeReferences="<%optref("2")%>"
+				EnableCOMDATFolding="<%opticf("2")%>"
+<%endif%>
+<%if(unicode && unicode_mfc_entry && exename && source_files)%>
+				EntryPointSymbol="<%unicode_mfc_entry%>"
+<%endif%>
+<%if(type_is_dynamic && sharedname)%>
+				ImportLibrary="<%libout%>\<%libname_prefix%><%sharedname%><%if(use_lib_modifier)%><%lib_modifier%><%endif%><%lib_ext%>"
+<%endif%>
+<%endif%>
+<%if(FixedBaseAddress || managed)%>
+				FixedBaseAddress="<%FixedBaseAddress("1")%>"
+<%endif%>
+				TargetMachine="<%machine("1")%>"/>
+<%endif%>
+			<Tool
+				Name="VCMIDLTool"
+<%if(midl_flags)%>
+				AdditionalOptions="<%midl_flags%>"
+<%endif%>
+<%if(midl_includes)%>
+				AdditionalIncludeDirectories="<%foreach(midl_includes)%><%midl_include%><%fornotlast(",")%><%endfor%>"
+<%endif%>
+<%if(midl_defines)%>
+				PreprocessorDefinitions="<%foreach(midl_defines)%><%midl_define%><%fornotlast(";")%><%endfor%>"
+<%endif%>
+<%if(midl_notlb)%>
+				GenerateTypeLibrary="FALSE"
+<%endif%>
+				TypeLibraryName="$(InputName).tlb"
+				HeaderFileName="$(InputName).h"
+				InterfaceIdentifierFileName="$(InputName)_i.c"
+				ProxyFileName="$(InputName)_p.c"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+<%if(postbuild)%>
+				CommandLine="<%eval(postbuild)%>"
+<%endif%>
+			/>
+			<Tool
+				Name="VCPreBuildEventTool"
+<%if(prebuild)%>
+				CommandLine="<%eval(prebuild)%>"
+<%endif%>
+			/>
+<%if(!custom_only)%>
+			<Tool
+				Name="VCPreLinkEventTool"
+<%if(prelink)%>
+				CommandLine="<%eval(prelink)%>"
+<%endif%>
+			/>
+<%if(postclean)%>
+			<Tool
+				Name="VCPostCleanEventTool"
+				CommandLine="<%eval(postclean)%>"
+			/>
+<%endif%>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="<%if(unicode)%>UNICODE;_UNICODE;<%endif%><%foreach(defines macros)%><%define%><%fornotlast(";")%><%endfor%>"
+				Culture="<%culture("1033")%>"
+				AdditionalIncludeDirectories="<%foreach(includes)%><%include%><%fornotlast(",")%><%endfor%>"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+<%endif%>
+		</Configuration>
+<%endfor%>
+	</Configurations>
+	<Files>
+<%if(exename || sharedname || staticname)%>
+<%if(source_files)%>
+		<Filter
+			Name="Source Files"
+			Filter="<%foreach(ext, extensions(source_files))%><%ext%><%fornotlast(";")%><%endfor%>">
+<%if(pch_source)%>
+			<File
+				RelativePath="<%pch_source%>">
+<%foreach(configurations)%>
+				<FileConfiguration
+					Name="<%configuration%>|<%platform%>">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"/>
+				</FileConfiguration>
+<%endfor%>
+			</File>
+<%endif%>
+<%if(grouped_source_files)%>
+<%foreach(sort(grouped_source_files))%>
+<%if(compares(grouped_source_file, default_group))%>
+<%foreach(grouped_source_file->files)%>
+			<File
+				RelativePath="<%grouped_source_file->file%>">
+<%if(duplicate_index(grouped_source_file->file))%>
+<%foreach(configurations)%>
+				<FileConfiguration
+					Name="<%configuration%>|<%platform%>">
+					<Tool
+						Name="VCCLCompilerTool"
+<%if(flag_overrides(grouped_source_file->file, buildflags))%>
+						AdditionalOptions="<%flag_overrides(grouped_source_file->file, buildflags)%>"
+<%endif%>
+<%if(flag_overrides(grouped_source_file->file, no_pch))%>
+						UsePrecompiledHeader="0"
+<%endif%>
+<%if(flag_overrides(grouped_source_file->file, managed))%>
+						BasicRuntimeChecks="0"
+						CompileAsManaged="2"
+<%endif%>
+						ObjectFile="$(IntDir)\$(InputName)<%duplicate_index(grouped_source_file->file)%>.obj"/>
+				</FileConfiguration>
+<%endfor%>
+<%else%>
+<%if(flag_overrides(grouped_source_file->file, buildflags) || flag_overrides(grouped_source_file->file, no_pch) || flag_overrides(grouped_source_file->file, managed))%>
+<%foreach(configurations)%>
+				<FileConfiguration
+					Name="<%configuration%>|<%platform%>">
+					<Tool
+						Name="VCCLCompilerTool"
+<%if(flag_overrides(grouped_source_file->file, buildflags))%>
+						AdditionalOptions="<%flag_overrides(grouped_source_file->file, buildflags)%>"
+<%endif%>
+<%if(flag_overrides(grouped_source_file->file, no_pch))%>
+						UsePrecompiledHeader="0"
+<%endif%>
+<%if(flag_overrides(grouped_source_file->file, managed))%>
+						BasicRuntimeChecks="0"
+						CompileAsManaged="2"
+<%endif%>
+					/>
+				</FileConfiguration>
+<%endfor%>
+<%endif%>
+<%endif%>
+			</File>
+<%endfor%>
+<%else%>
+			<Filter
+				Name="<%grouped_source_file%>"
+				Filter="">
+<%foreach(grouped_source_file->files)%>
+				<File
+					RelativePath="<%grouped_source_file->file%>">
+<%if(duplicate_index(grouped_source_file->file))%>
+<%foreach(configurations)%>
+					<FileConfiguration
+						Name="<%configuration%>|<%platform%>">
+						<Tool
+							Name="VCCLCompilerTool"
+<%if(flag_overrides(grouped_source_file->file, buildflags))%>
+							AdditionalOptions="<%flag_overrides(grouped_source_file->file, buildflags)%>"
+<%endif%>
+<%if(flag_overrides(grouped_source_file->file, no_pch))%>
+							UsePrecompiledHeader="0"
+<%endif%>
+<%if(flag_overrides(grouped_source_file->file, managed))%>
+							BasicRuntimeChecks="0"
+							CompileAsManaged="2"
+<%endif%>
+							ObjectFile="$(IntDir)\$(InputName)<%duplicate_index(grouped_source_file->file)%>.obj"/>
+					</FileConfiguration>
+<%endfor%>
+<%else%>
+<%if(flag_overrides(grouped_source_file->file, buildflags) || flag_overrides(grouped_source_file->file, no_pch) || flag_overrides(grouped_source_file->file, managed))%>
+<%foreach(configurations)%>
+					<FileConfiguration
+						Name="<%configuration%>|<%platform%>">
+						<Tool
+							Name="VCCLCompilerTool"
+<%if(flag_overrides(grouped_source_file->file, buildflags))%>
+							AdditionalOptions="<%flag_overrides(grouped_source_file->file, buildflags)%>"
+<%endif%>
+<%if(flag_overrides(grouped_source_file->file, no_pch))%>
+							UsePrecompiledHeader="0"
+<%endif%>
+<%if(flag_overrides(grouped_source_file->file, managed))%>
+							BasicRuntimeChecks="0"
+							CompileAsManaged="2"
+<%endif%>
+						/>
+					</FileConfiguration>
+<%endfor%>
+<%endif%>
+<%endif%>
+				</File>
+<%endfor%>
+			</Filter>
+<%endif%>
+<%endfor%>
+<%else%>
+<%foreach(source_files)%>
+			<File
+				RelativePath="<%source_file%>">
+<%if(duplicate_index(source_file))%>
+<%foreach(configurations)%>
+				<FileConfiguration
+					Name="<%configuration%>|<%platform%>">
+					<Tool
+						Name="VCCLCompilerTool"
+<%if(flag_overrides(source_file, buildflags))%>
+						AdditionalOptions="<%flag_overrides(source_file, buildflags)%>"
+<%endif%>
+<%if(flag_overrides(source_file, no_pch))%>
+						UsePrecompiledHeader="0"
+<%endif%>
+<%if(flag_overrides(source_file, managed))%>
+						BasicRuntimeChecks="0"
+						CompileAsManaged="2"
+<%endif%>
+						ObjectFile="$(IntDir)\$(InputName)<%duplicate_index(source_file)%>.obj"/>
+				</FileConfiguration>
+<%endfor%>
+<%else%>
+<%if(flag_overrides(source_file, buildflags) || flag_overrides(source_file, no_pch) || flag_overrides(source_file, managed))%>
+<%foreach(configurations)%>
+				<FileConfiguration
+					Name="<%configuration%>|<%platform%>">
+					<Tool
+						Name="VCCLCompilerTool"
+<%if(flag_overrides(source_file, buildflags))%>
+						AdditionalOptions="<%flag_overrides(source_file, buildflags)%>"
+<%endif%>
+<%if(flag_overrides(source_file, no_pch))%>
+						UsePrecompiledHeader="0"
+<%endif%>
+<%if(flag_overrides(source_file, managed))%>
+						BasicRuntimeChecks="0"
+						CompileAsManaged="2"
+<%endif%>
+					/>
+				</FileConfiguration>
+<%endfor%>
+<%endif%>
+<%endif%>
+			</File>
+<%endfor%>
+<%endif%>
+		</Filter>
+<%endif%>
+<%endif%>
+<%if(header_files)%>
+		<Filter
+			Name="Header Files"
+			Filter="<%foreach(ext, extensions(header_files))%><%ext%><%fornotlast(";")%><%endfor%>">
+<%if(pch_header)%>
+			<File
+				 RelativePath="<%pch_header%>">
+			</File>
+<%endif%>
+<%if(grouped_header_files)%>
+<%foreach(sort(grouped_header_files))%>
+<%if(compares(grouped_header_file, default_group))%>
+<%foreach(grouped_header_file->files)%>
+			<File
+				RelativePath="<%grouped_header_file->file%>">
+			</File>
+<%endfor%>
+<%else%>
+			<Filter
+				Name="<%grouped_header_file%>"
+				Filter="">
+<%foreach(grouped_header_file->files)%>
+				<File
+					RelativePath="<%grouped_header_file->file%>">
+				</File>
+<%endfor%>
+			</Filter>
+<%endif%>
+<%endfor%>
+<%else%>
+<%foreach(header_files)%>
+			<File
+				RelativePath="<%header_file%>">
+			</File>
+<%endfor%>
+<%endif%>
+		</Filter>
+<%endif%>
+<%foreach(custom_types)%>
+<%if(custom_type->input_files)%>
+		<Filter
+			Name="<%ucw(custom_type)%>"
+			Filter="<%foreach(custom_type->inputexts)%><%custom_type->inputext%><%fornotlast(";")%><%endfor%>">
+<%foreach(custom_type->input_files)%>
+			<File
+				RelativePath="<%custom_type->input_file%>">
+<%foreach(configurations)%>
+				<FileConfiguration
+					Name="<%configuration%>|<%platform%>"
+<%if(!custom_type->input_file->output_files)%>
+					ExcludedFromBuild="TRUE"
+<%endif%>
+				>
+<%if(custom_type->input_file->output_files)%>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Invoking <%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%> on <%custom_type->input_file%>"
+						CommandLine="<%if(custom_type->libpath)%>PATH=%PATH%;<%custom_type->libpath%>&#x0D;&#x0A;<%endif%><%if(flag_overrides(custom_type->input_file, gendir))%>if not exist <%flag_overrides(custom_type->input_file, gendir)%> mkdir <%flag_overrides(custom_type->input_file, gendir)%>&#x0D;&#x0A;<%endif%><%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%if(custom_type->output_option)%>&quot;<%custom_type->input_file%>&quot; <%custom_type->output_option%><%foreach(custom_type->input_file->output_files)%> &quot;<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>&quot;<%endfor%><%else%>&quot;<%custom_type->input_file%>&quot;<%endif%><%if(flag_overrides(custom_type->input_file, postcommand))%><%foreach(custom_type->input_file)%> &amp;&amp; <%flag_overrides(custom_type->input_file, postcommand)%><%endfor%><%else%><%if(custom_type->postcommand)%><%foreach(custom_type->input_file)%> &amp;&amp; <%custom_type->postcommand%><%endfor%><%endif%><%endif%><%if(pch_header)%><%if(custom_type->pch_postrule)%><%foreach(custom_type->input_file->source_output_files)%> &amp;&amp; echo #include &quot;<%pch_header%>&quot; &gt; temporary.src &amp;&amp; type &quot;<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->source_output_file)%><%else%><%custom_type->input_file->source_output_file%><%endif%>&quot; &gt;&gt; temporary.src &amp;&amp; move /y temporary.src &quot;<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->source_output_file)%><%else%><%custom_type->input_file->source_output_file%><%endif%>&quot;<%endfor%><%endif%><%endif%>"
+<%if(flag_overrides(custom_type->input_file, dependent))%>
+						AdditionalDependencies="<%foreach(dep, flag_overrides(custom_type->input_file, dependent))%><%dep%><%if(!has_extension(dep))%><%exe_ext%><%endif%><%fornotlast(";")%><%endfor%><%foreach(custom_type->input_file->dependencies)%>;<%custom_type->input_file->dependencie%><%endfor%>"
+<%else%>
+<%if(custom_type->dependent)%>
+						AdditionalDependencies="<%foreach(custom_type->dependent)%><%custom_type->dependent%><%if(!has_extension(custom_type->dependent))%><%exe_ext%><%endif%><%fornotlast(";")%><%endfor%><%foreach(custom_type->input_file->dependencies)%>;<%custom_type->input_file->dependencie%><%endfor%>"
+<%else%>
+<%if(custom_type->input_file->dependencies)%>
+						AdditionalDependencies="<%foreach(custom_type->input_file->dependencies)%><%custom_type->input_file->dependencie%><%fornotlast(";")%><%endfor%>"
+<%endif%>
+<%endif%>
+<%endif%>
+						Outputs="<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(";")%><%endfor%>"/>
+<%endif%>
+				</FileConfiguration>
+<%endfor%>
+			</File>
+<%endfor%>
+		</Filter>
+<%endif%>
+<%endfor%>
+<%if(inline_files)%>
+		<Filter
+			Name="Inline Files"
+			Filter="<%foreach(ext, extensions(inline_files))%><%ext%><%fornotlast(";")%><%endfor%>">
+<%if(grouped_inline_files)%>
+<%foreach(sort(grouped_inline_files))%>
+<%if(compares(grouped_inline_file, default_group))%>
+<%foreach(grouped_inline_file->files)%>
+			<File
+				RelativePath="<%grouped_inline_file->file%>">
+			</File>
+<%endfor%>
+<%else%>
+			<Filter
+				Name="<%grouped_inline_file%>"
+				Filter="">
+<%foreach(grouped_inline_file->files)%>
+				<File
+					RelativePath="<%grouped_inline_file->file%>">
+				</File>
+<%endfor%>
+			</Filter>
+<%endif%>
+<%endfor%>
+<%else%>
+<%foreach(inline_files)%>
+			<File
+				RelativePath="<%inline_file%>">
+			</File>
+<%endfor%>
+<%endif%>
+		</Filter>
+<%endif%>
+<%if(template_files)%>
+		<Filter
+			Name="Template Files"
+			Filter="">
+<%if(grouped_template_files)%>
+<%foreach(sort(grouped_template_files))%>
+<%if(compares(grouped_template_file, default_group))%>
+<%foreach(grouped_template_file->files)%>
+			<File
+				RelativePath="<%grouped_template_file->file%>">
+<%foreach(configurations)%>
+				<FileConfiguration
+					Name="<%configuration%>|<%platform%>"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+<%endfor%>
+			</File>
+<%endfor%>
+<%else%>
+			<Filter
+				Name="<%grouped_template_file%>"
+				Filter="">
+<%foreach(grouped_template_file->files)%>
+				<File
+					RelativePath="<%grouped_template_file->file%>">
+<%foreach(configurations)%>
+					<FileConfiguration
+						Name="<%configuration%>|<%platform%>"
+						ExcludedFromBuild="TRUE">
+						<Tool
+							Name="VCCLCompilerTool"/>
+					</FileConfiguration>
+<%endfor%>
+				</File>
+<%endfor%>
+			</Filter>
+<%endif%>
+<%endfor%>
+<%else%>
+<%foreach(template_files)%>
+			<File
+				RelativePath="<%template_file%>">
+<%foreach(configurations)%>
+				<FileConfiguration
+					Name="<%configuration%>|<%platform%>"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+<%endfor%>
+			</File>
+<%endfor%>
+<%endif%>
+		</Filter>
+<%endif%>
+<%if(documentation_files)%>
+		<Filter
+			Name="Documentation"
+			Filter="">
+<%if(grouped_documentation_files)%>
+<%foreach(sort(grouped_documentation_files))%>
+<%if(compares(grouped_documentation_file, default_group))%>
+<%foreach(grouped_documentation_file->files)%>
+			<File
+				RelativePath="<%grouped_documentation_file->file%>">
+<%foreach(configurations)%>
+				<FileConfiguration
+					Name="<%configuration%>|<%platform%>"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"/>
+				</FileConfiguration>
+<%endfor%>
+			</File>
+<%endfor%>
+<%else%>
+			<Filter
+				Name="<%grouped_documentation_file%>"
+				Filter="">
+<%foreach(grouped_documentation_file->files)%>
+				<File
+					RelativePath="<%grouped_documentation_file->file%>">
+<%foreach(configurations)%>
+					<FileConfiguration
+						Name="<%configuration%>|<%platform%>"
+						ExcludedFromBuild="TRUE">
+						<Tool
+							Name="VCCustomBuildTool"/>
+					</FileConfiguration>
+<%endfor%>
+				</File>
+<%endfor%>
+			</Filter>
+<%endif%>
+<%endfor%>
+<%else%>
+<%foreach(documentation_files)%>
+			<File
+				RelativePath="<%documentation_file%>">
+<%foreach(configurations)%>
+				<FileConfiguration
+					Name="<%configuration%>|<%platform%>"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"/>
+				</FileConfiguration>
+<%endfor%>
+			</File>
+<%endfor%>
+<%endif%>
+		</Filter>
+<%endif%>
+<%if(resource_files && !type_is_static)%>
+		<Filter
+			Name="Resource Files"
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe">
+<%if(grouped_resource_files)%>
+<%foreach(sort(grouped_resource_files))%>
+<%if(compares(grouped_resource_file, default_group))%>
+<%foreach(grouped_resource_file->files)%>
+			<File
+				RelativePath="<%grouped_resource_file->file%>">
+			</File>
+<%endfor%>
+<%else%>
+			<Filter
+				Name="<%grouped_resource_file%>"
+				Filter="">
+<%foreach(grouped_resource_file->files)%>
+				<File
+					RelativePath="<%grouped_resource_file->file%>">
+				</File>
+<%endfor%>
+			</Filter>
+<%endif%>
+<%endfor%>
+<%else%>
+<%foreach(resource_files)%>
+			<File
+				RelativePath="<%resource_file%>">
+			</File>
+<%endfor%>
+<%endif%>
+		</Filter>
+<%endif%>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

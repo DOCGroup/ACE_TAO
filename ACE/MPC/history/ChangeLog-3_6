@@ -1,0 +1,1248 @@
+Sun May 24 18:43:56 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * devtools/document_template.pl:
+
+          Added code to convert less than and greater than signs into html
+          friendly codes.
+
+Fri May 22 07:51:05 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/vc8platforms.mpt:
+          Added some more WinCE SDKs
+
+Wed May 13 18:03:05 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * modules/VC9ProjectCreator.pm:
+        * templates/vc8csharp.mpd:
+        * docs/templates/vc8csharp.txt:
+
+          Added support for Visual C# with -type vc9 (Visual Studio 2008).
+
+Thu May  7 21:12:17 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * modules/Driver.pm:
+
+          Removed a debugging print statement.
+
+Thu May  7 19:18:24 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ConfigParser.pm:
+        * modules/Driver.pm:
+
+          Modified the locate_dynamic_directories code to only warn the user
+          if the path doesn't contain environment variables or the
+          environment variables that it does contain are set.
+
+        * modules/ProjectCreator.pm:
+
+          Fixed a perl warning about an uninitialized variable.
+
+Thu May  7 15:39:17 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+        * modules/BCB2007ProjectCreator.pm:
+        * modules/BDS4ProjectCreator.pm:
+        * modules/BMakeProjectCreator.pm:
+        * modules/BorlandProjectBase.pm:
+        * modules/GHSProjectCreator.pm:
+        * modules/MakeProjectBase.pm:
+        * modules/NMakeProjectCreator.pm:
+        * modules/ProjectCreator.pm:
+        * modules/VCProjectBase.pm:
+        * modules/WinProjectBase.pm:
+
+          Modified the 'specific' clause to accept "properties" in addition
+          to project types.  Maintaining project type lists within the base
+          projects was getting out of hand.  A simpler approach is to apply
+          properties to groups of project types, such as project types that
+          are only used on Windows.  These properties are referenced within
+          the 'specific' clause instead of project types.  See the README
+          for more details.
+
+        * config/boost_date_time.mpb:
+        * config/boost_filesystem.mpb:
+        * config/boost_iostreams.mpb:
+        * config/boost_prg_exec_monitor.mpb:
+        * config/boost_program_options.mpb:
+        * config/boost_regex.mpb:
+        * config/boost_serialization.mpb:
+        * config/boost_signals.mpb:
+        * config/boost_system.mpb:
+        * config/boost_test_exec_monitor.mpb:
+        * config/boost_thread.mpb:
+        * config/boost_unit_test_framework.mpb:
+        * config/boost_wave.mpb:
+        * config/bzip2.mpb:
+        * config/lzo1.mpb:
+        * config/mpich.mpb:
+        * config/nddslib.mpb:
+        * config/odbc.mpb:
+        * config/openssl.mpb:
+        * config/splicelib.mpb:
+        * config/sqlite3.mpb:
+        * config/swig_perl.mpb:
+        * config/udm.mpb:
+        * config/xerces.mpb:
+        * config/zlib.mpb:
+        * config/zzip.mpb:
+
+          Modified all of these base projects to use properties instead of
+          project types within the 'specific' clauses.
+
+        * modules/VC10ProjectCreator.pm:
+        * modules/VC10WorkspaceCreator.pm:
+        * modules/VC9WorkspaceCreator.pm:
+
+          Removed duplicated code.
+
+Tue May  5 17:37:29 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * config/splicelib.mpb:
+
+          Added verbatim line for gnuace that turns off visibility
+          discrimination. OpenSpliceDDS doesn't yet support versions
+          of g++ that handle hidden visibility.
+
+Fri May  1 14:09:49 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * clone_build_tree.pl:
+
+          Don't skip directories ending in .d since ACE now contains rc.d
+          and init.d directories.
+
+Wed Apr 29 11:39:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/vc8platforms.mpt:
+          Add eBox 2300 and 4300 Windows CE 6
+
+Fri Apr 24 20:37:40 UTC 2009  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * config/udm.mpb:
+
+          Changed 'automatic' to 1.
+
+Fri Apr 17 15:20:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/fm/*:
+          Added FrameMaker 8 files for the MPC pdf file. When making changes
+          make sure track changes is enabled.
+
+          This documentation is based on original work contributed by
+          Object Computing, Inc. (OCI), St. Louis, MO, USA,
+          http://www.ociweb.com.
+
+Thu Apr  9 21:37:52 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * config/udm.mpb:
+
+          Fuzz fix.
+
+Thu Apr  9 16:57:57 UTC 2009  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * config/udm.mpb:
+
+          Mapped 'commandflags' -> 'udmflags'
+
+Thu Apr  9 16:48:31 UTC 2009  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * config/udm.mpb:
+
+          Bug fix in the project specification.
+
+Thu Apr  9 16:42:43 UTC 2009  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * config/udm.mpb:
+
+          UDM base project.
+
+Tue Apr  7 09:33:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/qt4_core.mpb:
+        * config/qt4_designer.mpb:
+        * config/qt4_designercomponents.mpb:
+        * config/qt4_gui.mpb:
+        * config/qt4_network.mpb:
+        * config/qt4_opengl.mpb:
+        * config/qt4_qt3support.mpb:
+        * config/qt4_sql.mpb:
+        * config/qt4_svg.mpb:
+        * config/qt4_test.mpb:
+        * config/qt4_xml.mpb:
+          All Qt4libs are appended with 4
+
+Wed Apr  1 16:10:22 UTC 2009  Ciju John  <johnc at ociweb dot com>
+
+        * config/qt4_core.mpb:
+          Wrong include path got checked in. This fixes it.
+
+Wed Apr  1 15:56:35 UTC 2009  Ciju John  <johnc at ociweb dot com>
+
+        * config/qt4_core.mpb:
+        * config/qt4_gui.mpb:
+          Qt4 libs are appended with '4'.
+
+Thu Mar 26 12:48:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/MakeProjectCreator.pdf:
+          First updates applied
+
+Mon Mar 16 21:33:14 UTC 2009  Steven Stallion  <stallions@ociweb.com>
+
+        * config/erlang.mpb:
+
+          Updated erlang base project to default to typical gnuace
+          behavior for generated artifacts.
+
+Sun Mar 15 19:36:54 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/lzo1.mpb:
+          Fixed lib names
+
+Wed Mar 11 13:51:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/MakeProjectCreator.pdf:
+          This work is based on the TAO 1.4a TAO Developers Guide chapter
+          on MPC published by OCI. The goal is to improve this
+          document with time to serve as the authoritative reference/documentation
+          for MPC users.
+
+          Thanks to OCI for making this chapter publicly available and allowing
+          us to modify it.
+
+Wed Mar 11 09:15:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/bzip2.mpb:
+        * config/lzo1.mpb:
+          Fixed these base projects so that they also work with gnuace
+
+Tue Mar 10 13:34:36 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * modules/GUID.pm:
+
+          Fixed a bug where 64-bit implementations of Perl would generate
+          duplicate GUID values.  (Bugzilla #3614)
+
+Mon Mar  9 07:04:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/bzip2.mpb:
+        * config/lzo1.mpb:
+        * config/lzo2.mpb:
+        * config/zlib.mpb:
+          On windows we need some different library names
+
+Sat Mar  7 18:55:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/lzo1.mpb:
+          Added lzo1 base project
+
+Sat Feb 28 03:46:19 UTC 2009  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * config/pcre.mpb:
+        * config/pcreposix.mpb:
+
+          Base projects for using PCRE.
+
+Tue Feb 24 04:23:34 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * config/xerces.mpb:
+
+          Added !xerces2, !xerces3 feature to disable xerces dependent builds
+          if neither feature is present.
+
+Mon Feb 23 16:03:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/qt4_qt3support.mpb:
+          Added base project for qt4_qt3support
+
+Tue Feb 17 13:17:28 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * config/xerces3.mpb:
+
+          Removed this file.
+
+Wed Feb 11 16:21:48 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * config/global.features:
+        * config/xerces.mpb:
+
+          Disabled xerces{2,3} by default and removed the requires lines
+          from the xerces features.  Thanks to Adam Mitz for pointing this out.
+
+Tue Feb 10 20:36:47 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * config/xerces.mpb:
+
+          Split this base project into two features - xerces2 and xerces3
+          to allow support for both versions.
+
+Mon Jan 19 22:30:47 UTC 2009  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * config/iiopnet.mpb:
+
+          Base project for using IIOP.NET.
+
+Mon Jan 12 11:10:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/nddslib.mpb:
+          Added vc10
+
+Sun Jan 11 17:26:09 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * config/nddslib.mpb:
+
+          Minor enhancement.
+
+Sun Jan 11 17:21:17 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * config/nddslib.mpb:
+
+          Added Visual Studio 2010 (vc10) support
+
+Sun Jan 11 17:09:44 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * config/ndds_ts_defaults.mpb:
+        * config/nddsexe.mpb:
+        * config/nddsexe_with_idl.mpb:
+        * config/nddslib.mpb:
+        * config/nddslib_with_idl.mpb:
+
+          New files, base projects for using RTI's NDDS
+          C++ DDS implementation.
+
+Sat Jan  3 22:02:02 UTC 2009  Steven Stallion  <stallions@ociweb.com>
+
+        * config/erlang.mpb:
+
+          Updated base project type for erlang projects.
+
+Wed Dec 31 23:01:33 UTC 2008  Steven Stallion  <stallions@ociweb.com>
+
+        * config/erlang_otp.mpb:
+
+          Dropped default -I include from erlang_otp projects.
+
+Tue Dec 30 23:23:03 UTC 2008  Steven Stallion  <stallions@ociweb.com>
+
+        * config/erlang.mpb:
+        * config/erlang_otp.mpb:
+
+          Updated Erlang support. Output is now propertly cleaned when
+          the clean target is called on gnuace platforms.
+
+Wed Dec 24 22:20:40 UTC 2008  Steven Stallion  <stallions@ociweb.com>
+
+        * config/erlang.mpb:
+        * config/erlang_otp.mpb:
+
+          Added support for Erlang. Two new projects are available:
+          erlang, and erlang_otp. erlang provides basic Erlang support,
+          and erlang_otp provides support for projects which use the otp
+          layout.
+
+Thu Dec 18 21:39:03 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/MakeWorkspaceCreator.pm:
+
+          Fixed a bug with my change yesterday relating to the "bundle"
+          target.
+
+        * templates/make.net.mpd:
+
+          Added a strip command to the bundle commands.
+
+Thu Dec 18 09:29:36 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * config/xerces3.mpb:
+
+          Base project for Xerces-C 3.x
+
+Tue Dec 16 02:54:55 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/MPC.sgml:
+        * docs/README:
+        * docs/USAGE:
+
+          Updated documentation.
+
+        * modules/Options.pm:
+
+          Sort project types keeping like types in numerical order.
+
+        * modules/MakeWorkspaceCreator.pm:
+        * templates/make.net.mpd:
+        * templates/make.net.mpt:
+
+          Added a bundle target for C# to bundle an executable into a native
+          application.
+
+Fri Nov 28 10:55:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrmakefile.mpd:
+          Don't copy the lib/exe when we need to install them in the current
+          directory
+
+Mon Nov 17 10:50:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/nmake.mpd:
+        * templates/vc7.mpd:
+        * templates/vc8.mpd:
+          Added escape charachter to MPC_LIB_MODIFIER value
+
+Mon Nov 17 08:33:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/templates/common.txt:
+        * templates/nmake.mpd:
+        * templates/vc7.mpd:
+        * templates/vc8.mpd:
+          Add macro_for_lib_modifier. Whis template variable is set the
+          vc7/vc8/vc9/vc10/nmake templatess add MPC_LIB_MODIFIER to the
+          compiler flags with the current lib_modifier as value
+
+Tue Nov 11 10:40:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/boost_base.mpd:
+          Use $(BOOST_ROOT)/. again
+
+Mon Nov 10 10:45:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/boost_date_time.mpb:
+        * config/boost_filesystem.mpb:
+        * config/boost_iostreams.mpb:
+        * config/boost_prg_exec_monitor.mpb:
+        * config/boost_program_options.mpb:
+        * config/boost_regex.mpb:
+        * config/boost_serialization.mpb:
+        * config/boost_signals.mpb:
+        * config/boost_system.mpb:
+        * config/boost_test_exec_monitor.mpb:
+        * config/boost_thread.mpb:
+        * config/boost_unit_test_framework.mpb:
+        * config/boost_wave.mpb:
+        * config/gacutil.mpb:
+        * config/mpich.mpb:
+        * config/odbc.mpb:
+        * config/openssl.mpb:
+        * config/splicelib.mpb:
+        * config/sqlite3.mpb:
+        * config/swig_perl.mpb:
+        * config/xerces.mpb:
+        * docs/README:
+        * docs/USAGE:
+        * modules/VC10ProjectCreator.pm:
+        * modules/VC10WorkspaceCreator.pm:
+          Added Visual Studio 2010 (vc10) support
+
+Fri Nov  7 18:39:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrmakefile.mpd:
+        * templates/wb26wrproject.mpd:
+          Improved standard build support
+
+Fri Nov  7 13:00:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrmakefile.mpd:
+          The OBJECTS variable is dependent on the project name
+
+Thu Nov  6 18:41:58 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * templates/wb26wrmakefile.mpd:
+
+          Fixed pre_build rule by using SUB_OBJECTS instead of OBJECTS_example.
+          Thanks to Laszlo Morocz <laszlo dot morocz at lmco dot com) for providing the fix.
+
+Thu Nov  6 15:42:06 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * config/splice_ts_defaults.mpb:
+        * config/spliceexe.mpb:
+        * config/spliceexe_with_idl.mpb:
+        * config/splicelib.mpb:
+        * config/splicelib_with_idl.mpb:
+
+          New files, base projects for using PrismTech's OpenSplice
+          C++ DDS implementation. Currently, the files are specialized
+          for using OpenSplice integrated with a CORBA implementation,
+          and assume that OpenSplice's custom library for this purpose
+          (in $OSPL_HOME/custom_lib/ccpp) has been compiled after
+          installation.
+
+Thu Nov  6 10:54:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrmakefile.mpd:
+        * templates/wb26wrproject.mpd:
+          Put all object names in a file and pass these to the Librarian to
+          prevent a long command when a lot of objects are linked together
+
+Tue Nov  4 10:01:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/bmake.mpd:
+          Reverted change of yesterday, breaks other things
+
+        * config/boost_base.mpd:
+          Use $(BOOST_ROOT) instead of $(BOOST_ROOT)/., it confused CodeGear
+          C++
+
+Mon Nov  3 21:50:41 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * config/sqlite3.mpb:
+          Added a 'requires' statement to the base project.
+
+Mon Nov  3 19:51:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/bmake.mpd:
+          Use '' around include paths so that we can handle directories
+          with spaces in the name
+
+Sun Oct 26 17:09:42 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * config/sqlite3.mpb:
+
+          Base project for using SQLite. For Windows-based projects, you
+          will need to use LIB to generate the import library for the
+          .dll.
+
+Thu Oct 23 13:01:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/bmake.mpd:
+          Don't print all clean commands on the console
+
+Fri Oct 17 19:07:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/BCB2009ProjectCreator.pm
+        * modules/BCB2009WorkspaceCreator.pm
+        * templates/bcb2009.mpd
+        * templates/bcb2009dll.mpt
+        * templates/bcb2009exe.mpt
+          New generator for C++ Builder 2009
+
+        * templates/bcb2007.mpd
+          Fixed bug in resource_file generation
+
+Wed Oct 15 15:03:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/vc8platforms.mpt:
+          SuperSonic also uses unicode
+
+        * config/openssl.mpb:
+        * config/xerces.mpb:
+          Removed reference to borland template which has been removed
+
+        * config/qt3.mpb:
+          Added this file. Just derived on qt but makes it easier to
+          explicitly derive from qt3 or qt4
+
+Tue Oct 14 11:47:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/vc8platforms.mpt:
+          Updated SuperSonic SDK settings
+
+Fri Oct 10 08:58:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/vc8platforms.mpt:
+          Add iphlpapi to WinCE6
+
+Thu Oct  9 15:14:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/vc8platforms.mpt:
+          Define UNDER_CE as $(CEVER) with WinCE6
+
+Thu Oct  9 09:28:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/vc8platforms.mpt:
+          Added Windows Mobile 6 Professional SDK (ARMV4I)
+
+Tue Oct  7 14:08:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Revert change below, doesn't work as expected
+
+        Tue Oct  7 13:55:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+        * templates/nmakedll.mpt:
+        * templates/nmakeexe.mpt:
+          Include vc8platforms so that we can easily generate nmake projects for
+          WinCE platforms
+
+Tue Oct  7 13:55:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/nmakedll.mpt:
+        * templates/nmakeexe.mpt:
+          Include vc8platforms so that we can easily generate nmake projects for
+          WinCE platforms
+
+        * templates/vc8platforms.mpt:
+          Added new WinCE mobile platform
+
+Sat Oct  4 20:52:22 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/qt.mpb:
+
+          Added support for building 64-bit.
+
+        * modules/ProjectCreator.pm:
+
+          Fixed a bug where Source_File scoped specific variable setting was
+          broken for any language but C++.
+
+        * templates/make.net.mpd:
+
+          Added macro settings for cat, cp, mv and /dev/null.
+
+Mon Sep 29 13:34:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/bmake.mpd:
+        * templates/bmakecommon.mpt:
+          Added a unicode modifier so that the libs do get a u in the name
+          when we build with unicode
+
+Wed Sep 17 02:40:00 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+
+          Fixed a spelling error.
+
+        * modules/MakeProjectCreator.pm:
+        * templates/make.net.mpd:
+        * templates/make.net.mpt:
+
+          Changed the default csharp compiler to gmcs and added support for
+          the libs keyword and the packages template variable.
+
+        * modules/ProjectCreator.pm:
+
+          Always write the project if the user has provided a verbatim
+          within the project.
+
+Tue Sep 16 21:18:01 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * modules/NMakeWorkspaceCreator.pm:
+        * modules/TemplateParser.pm:
+        * modules/VC7WorkspaceCreator.pm:
+        * templates/vc8.mpd:
+
+          These changes all improve support for building cross-compiled
+          WinCE projects using Visual Studio. This specifically allows
+          for the exclusion of native-only apps, such as TAO_IDL from
+          building and deployment on cross compile targets. Also improves
+          the establishment of the correct WinCE 5 or WinCE 6 entry point
+          and sets the character set flag correctly.
+
+Tue Sep 16 08:35:19 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/ruby.mpb:
+          New base project for Ruby.
+
+        * modules/BMakeWorkspaceCreator.pm:
+          Make sure we get unique names when we generate bmake with other
+          project types in one tree
+
+        * templates/bmakedll.mpt:
+        * templates/bmakedllexe.mpt:
+        * templates/bmakelib.mpt:
+        * templates/bmakelibexe.mpt:
+          Changed extensions to get unique names with the bmake
+          so that we don't try to load a msvc dll when it also exists
+
+Mon Sep 15 20:50:19 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * modules/Driver.pm:
+
+          Added quotes around 'dynamic_types' in the diagnostic message.
+
+Sat Sep 13 15:50:22 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * modules/Driver.pm:
+
+          Change a warning to a non-warning diagnostic when a dynamic_types
+          path (from MPC.cfg) can't be found.  This is a normal condition when
+          the dynamic_types path is based on an environment variable that may
+          not be set.
+
+Fri Sep 12 12:56:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted change below, brakes VMS support
+
+        Tue Sep  9 18:46:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+        * mwc.pl:
+        * mpc.pl:
+          Use FindBin::RealScript to get the real script name, that also
+          works when we have a symbolic link with a different name to
+          one of these scripts. This fixes bugzilla 3407
+
+Tue Sep  9 18:46:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * mwc.pl:
+        * mpc.pl:
+          Use FindBin::RealScript to get the real script name, that also
+          works when we have a symbolic link with a different name to
+          one of these scripts. This fixes bugzilla 3407
+
+Fri Aug 22 07:04:17 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * mwc.pl:
+        * mpc.pl:
+          Use RealBin to get the location of this script, that gives the
+          real location also in case we use a symbolic link to these
+          scripts.
+
+Wed Aug 20 19:19:17 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * devtools/document_template.pl:
+        * devtools/highlight_template.pl:
+          Added missing shebang lines to fix rpm packaging warnings
+
+Wed Aug 20 08:33:17 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * clone_build_tree.pl:
+        * combine_dsw.pl:
+        * create_base.pl:
+        * depgen.pl:
+        * generate_export_header.pl:
+        * mpc.pl:
+        * mwc.pl:
+        * prj_install.pl:
+        * registry.pl:
+        * vs_postclean.pl:
+          Added missing shebang lines to fix rpm packaging warnings
+
+Wed Aug 13 19:31:17 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * config/gacutil.mpb:
+
+          Bug fix where the path of the assembly to register, i.e.,
+          the sharedname, was incorrect. This was resolved by using the
+          absolute pathname for the assembly instead of the relative
+          pathname.
+
+Wed Jul 30 14:52:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/lzo2.mbp:
+          Base project for lzo2 compression library
+
+Wed Jul 30 14:43:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrmakefile.mpd:
+          Convert a few environment variables to use / instead of \
+
+Wed Jul 23 10:19:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/gsl.mpb:
+          Added base project for GNU Scientific Library
+
+Fri Jul 18 19:09:10 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/Driver.pm:
+        * modules/FeatureParser.pm:
+        * modules/ProjectCreator.pm:
+        * modules/VC8ProjectCreator.pm:
+        * modules/WorkspaceCreator.pm:
+
+          More non-functional code cleanup changes.
+
+Fri Jul 18 18:22:41 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Fixed a bug with the 'output_basename' template variable.  For
+          Windows based project types, the input file used back-slashes and
+          taking basename() of that sort of text on UNIX will not result in
+          the expected value.  We must ensure that the text passed to
+          basename() always has forward slashes.
+
+Fri Jul 18 17:58:58 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * templates/make.net.mpd:
+
+          Fixed a bug where TARGETDIR was not set if there was no exeout set
+          and the project was an executable.
+
+        * templates/automake.mpd:
+        * templates/bmake.mpd:
+        * templates/cccommon.mpt:
+        * templates/nmake.mpd:
+        * templates/vc7.mpd:
+        * templates/vc8vb.mpd:
+        * templates/wb26wrmakefile.mpd:
+
+          Removed trailing white-space.
+
+Fri Jul 18 17:22:56 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Fixed a bug with the 'output_dirname' template variable.  For
+          Windows based project types, the input file used back-slashes and
+          taking dirname() of that sort of text on UNIX will not result in
+          the expected value.  We must ensure that the text passed to
+          dirname() always has forward slashes.
+
+Fri Jul 18 16:03:52 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * clone_build_tree.pl:
+        * combine_dsw.pl:
+        * create_base.pl:
+        * prj_install.pl:
+        * registry.pl:
+        * vs_postclean.pl:
+        * devtools/document_template.pl:
+        * devtools/highlight_template.pl:
+        * generate_export_header.pl:
+        * modules/AutomakeProjectCreator.pm:
+        * modules/AutomakeWorkspaceCreator.pm:
+        * modules/BCB2007ProjectCreator.pm:
+        * modules/BCB2007WorkspaceCreator.pm:
+        * modules/BDS4ProjectCreator.pm:
+        * modules/BDS4WorkspaceCreator.pm:
+        * modules/BMakeProjectCreator.pm:
+        * modules/BMakeWorkspaceCreator.pm:
+        * modules/CCProjectCreator.pm:
+        * modules/CCWorkspaceCreator.pm:
+        * modules/ConfigParser.pm:
+        * modules/Creator.pm:
+        * modules/DirectoryManager.pm:
+        * modules/Driver.pm:
+        * modules/EM3ProjectCreator.pm:
+        * modules/EM3WorkspaceCreator.pm:
+        * modules/FeatureParser.pm:
+        * modules/GHSProjectCreator.pm:
+        * modules/GHSWorkspaceCreator.pm:
+        * modules/HTMLProjectCreator.pm:
+        * modules/HTMLWorkspaceCreator.pm:
+        * modules/MPC.pm:
+        * modules/MWC.pm:
+        * modules/MakeProjectBase.pm:
+        * modules/MakeProjectCreator.pm:
+        * modules/MakeWorkspaceBase.pm:
+        * modules/MakeWorkspaceCreator.pm:
+        * modules/NMakeProjectCreator.pm:
+        * modules/NMakeWorkspaceCreator.pm:
+        * modules/Options.pm:
+        * modules/OutputMessage.pm:
+        * modules/Parser.pm:
+        * modules/ProjectCreator.pm:
+        * modules/SLEProjectCreator.pm:
+        * modules/SLEWorkspaceCreator.pm:
+        * modules/StringProcessor.pm:
+        * modules/TemplateInputReader.pm:
+        * modules/TemplateParser.pm:
+        * modules/VC6ProjectCreator.pm:
+        * modules/VC6WorkspaceCreator.pm:
+        * modules/VC71ProjectCreator.pm:
+        * modules/VC71WorkspaceCreator.pm:
+        * modules/VC7ProjectCreator.pm:
+        * modules/VC7WorkspaceCreator.pm:
+        * modules/VC8ProjectCreator.pm:
+        * modules/VC8WorkspaceCreator.pm:
+        * modules/VCProjectBase.pm:
+        * modules/WB26ProjectCreator.pm:
+        * modules/WB26WorkspaceCreator.pm:
+        * modules/WinProjectBase.pm:
+        * modules/WinWorkspaceBase.pm:
+        * modules/WorkspaceCreator.pm:
+        * modules/WorkspaceHelper.pm:
+        * modules/XMLProjectBase.pm:
+
+          Cleaned up the code and added comments.  There were no functional
+          changes made.
+
+Thu Jul 17 15:10:48 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          We need to pass the 'commandflags' setting to the command helper,
+          not the hash map containing all of the type settings.
+
+Thu Jul 17 13:50:33 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Fixed a bug where a command helper returns output files for a
+          particular component type and file, but they were not taken into
+          account within the project.
+
+          Also, fixed another bug relating to the group determiniation of
+          automatically added files.  In doing so, the components for other
+          component types were being defined but set to an empty set which
+          was causing problems with automatically adding file to these
+          components.
+
+Wed Jul 16 16:11:33 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/CommandHelper.pm:
+
+          Fixed a comment.
+
+        * modules/ProjectCreator.pm:
+
+          Delay replacing <%...%> that contain project keywords until they
+          are used by the template.  Doing this allows the values to be used
+          regardless of the order in which keywords are processed within the
+          project.
+
+Tue Jul 15 16:08:40 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/CommandHelper.pm:
+
+          Extended the interface to allow the helper to provide "tied"
+          custom files.
+
+        * modules/ProjectCreator.pm:
+
+          Made the following changes:
+
+          1) Added an optimization to generated_source_listed() to avoid
+             attempting to add custom generated files if they couldn't
+             possibly be generated.
+          2) Added the ability for a command helper to "tie" files together
+             so that they are processed closely together.
+          3) Fixed a bug where an output file could end up being listed more
+             than once in the custom output files value.
+
+Fri Jul 11 18:13:36 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * vs_postclean.pl:
+
+          &quot; becomes ", not '.
+
+Fri Jul 11 15:18:27 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * docs/README:
+
+          Cleaned up some typos (stray semicolons)
+
+        * vs_postclean.pl:
+
+          Restore current directory after changing it.
+          Translate &amp;, etc.
+          Added support for solutions, all referenced projects will be cleaned.
+
+Fri Jul 11 14:56:44 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+        * modules/ProjectCreator.pm:
+
+          Added a pseudo template variable, rmdir, which will be defined
+          depending upon the project type.  It will be 'rmdir /s/q' on
+          Windows and 'rm -rf' on UNIX.
+
+        * modules/AutomakeWorkspaceCreator.pm:
+
+          Fixed a bug where the configure.ac.Makefiles did not contain the
+          correct names if the -name_modifier option was used.
+
+        * modules/WorkspaceCreator.pm:
+
+          Reduced op code count.
+
+Fri Jul 11 14:30:53 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+        * modules/ProjectCreator.pm:
+
+          Added a pseudo template variable, slash, which will be defined
+          depending upon the project type.
+
+        * templates/make.net.mpt:
+        * templates/makedll.mpt:
+
+          Rely on the slash psuedo template variable instead of defining one
+          in these template input files.
+
+Fri Jul 11 11:10:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * templates/make.net.mpt:
+
+          Added dollar-Id-dollar to appease a non-MPC related script that, for
+          some reason, insists on applying it's influence on MPC.
+
+Thu Jul 10 22:34:12 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * vs_postclean.pl:
+
+          Added a script to perform the postclean step for Visual Studio
+          projects.
+
+Thu Jul 10 19:03:14 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/Depgen/DependencyEditor.pm:
+        * modules/Depgen/DependencyGenerator.pm:
+        * modules/Depgen/DependencyWriter.pm:
+        * modules/Depgen/DependencyWriterFactory.pm:
+        * modules/Depgen/Driver.pm:
+        * modules/Depgen/MakeDependencyWriter.pm:
+        * modules/Depgen/MakeObjectGenerator.pm:
+        * modules/Depgen/NMakeDependencyWriter.pm:
+        * modules/Depgen/NMakeObjectGenerator.pm:
+        * modules/Depgen/ObjectGenerator.pm:
+        * modules/Depgen/ObjectGeneratorFactory.pm:
+        * modules/Depgen/Preprocessor.pm:
+
+          Cleaned up the code and reduced op code count.
+
+        * templates/vc7.mpd:
+        * templates/vc8.mpd:
+
+          Added a VCPostCleanEventTool, which doesn't exist in Visual
+          Studio, to hold the 'postclean' settings.  This is mainly here to
+          enable another script to come along and perform the postclean
+          function.
+
+Thu Jul 10 18:28:33 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+        * modules/ProjectCreator.pm:
+
+          Added a new feature, pre_dirname, which is similar to pre_filename
+          except that the value is prepended to the output directory for
+          generated files.  If a separate directory is desired, the
+          pre_dirname setting should end in a slash.
+
+Thu Jul 10 15:28:50 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * devtools/document_template.pl:
+
+          Fixed a bug where template variables used within template
+          functions were ignored.
+
+        * docs/README:
+        * modules/ProjectCreator.pm:
+
+          Added the ability to utilize project settings within the
+          Define_Custom command, commandflags, dependent, output_option,
+          and postcommand settings.
+
+Thu Jul 10 14:29:44 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/MakeProjectCreator.pm:
+        * templates/make.net.mpd:
+        * templates/make.net.mpt:
+        * docs/templates/make.net.txt:
+
+          Added support for compiling C# code using Mono.
+
+        * modules/Creator.pm:
+        * modules/ProjectCreator.pm:
+        * modules/StringProcessor.pm:
+        * modules/TemplateParser.pm:
+        * modules/VC9ProjectCreator.pm:
+        * modules/VC9WorkspaceCreator.pm:
+
+          Decreased op code count.
+
+Wed Jul  9 13:46:02 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/AutomakeProjectCreator.pm:
+        * modules/MakeProjectBase.pm:
+        * modules/Parser.pm:
+
+          Reduce op code count.
+
+        * modules/CommandHelper.pm:
+
+          Added a debug message to assist users in figuring out why their
+          helper isn't being picked up.
+
+        * modules/Creator.pm:
+
+          Modified recursive_directory_list() to skip .svn and CVS
+          directories.
+
+        * modules/ProjectCreator.pm:
+
+          Fixed a very old and incorrect assumption that output file names
+          generated as part of a custom definition had to be longer than the
+          length of the input file name.
+
+Tue Jul  8 15:35:29 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * templates/vc8.mpd: Allow a project to be a "make output" type using
+          the VCNMakeTool section instead of the usual compile, link, etc.
+          sections. This allows one to drive nmake-type projects from a
+          VC project. Also, enable setting the DebugInformationFormat even
+          when doing an optimize/Release build. Thanks to Kelly Hickel for
+          contributing these.
+
+Tue Jul  8 13:09:22 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Fixed a bug in my change from Thu Jul  3 11:46:23 UTC 2008.  Files
+          were not being automatically added when they didn't exist on the
+          file system.
+
+Mon Jul  7 17:00:33 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+        * modules/ProjectCreator.pm:
+
+          MPC had always assumed that output files went into the same
+          directory as the input file (unless specified otherwise through
+          gendir).  Now, in the Define_Custom for the command, this
+          assumption can be modified.  If 'output_follows_input' is set to
+          0, it will assume that output files go into the same directory as
+          the project (unless specified otherwise through gendir).
+
+Mon Jul  7 13:10:46 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Modified the behavior of adding to prebuild, postbuild, and
+          postclean.  Values that are added are now separated via the
+          command separator for the project type.  This will assure that
+          multiple commands are executed separately (and unconditionally).
+
+Thu Jul  3 16:36:30 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+        * modules/Creator.pm:
+        * modules/ProjectCreator.pm:
+
+          Added a new keyword, postclean, which is similar to postbuild
+          except that it is executed during the realclean target.
+
+        * templates/bmake.mpd:
+        * templates/html.mpd:
+        * templates/make.mpd:
+        * templates/nmake.mpd:
+
+          Added the use of postclean.
+
+Thu Jul  3 14:49:52 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          For the previous change to generate_default_components(), we only
+          need to do this if the list of component tags was not provided to
+          the method.
+
+Thu Jul  3 11:46:23 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Fixed an issue where a chain of three or more Custom_Define's
+          would not have the right default input/output.
+
+Wed Jul  2 16:35:22 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/CommandHelper.pm:
+        * modules/ProjectCreator.pm:
+
+          Modified the helper to be keyed off of the define custom name
+          instead of the define custom command name.
+
+Wed Jul  2 14:04:39 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/CommandHelper.pm:
+        * modules/ProjectCreator.pm:
+
+          Added a command helper that can be dynamically loaded to assist
+          the project creator in determining which files will be generated
+          by a command.  This is useful when the output of a file can not be
+          represented by the usual Define_Custom syntax.
+
+Mon Jun 30 14:55:51 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/StringProcessor.pm:
+
+          Added a simple fgrep function that will find a string in an array
+          reference.
+
+        * modules/ProjectCreator.pm:
+
+          Fixed a bug where custom defines that generate output that can be
+          used as automatic input to other custom defines did not work
+          properly.  Now, they are automatically added when possible.
+
+Fri Jun 27 12:59:39 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/ixml.mpb:
+        * config/upnp.mpb:
+
+          Added base projects for use with the open source project Linux SDK
+          for UPnP Devices.
+
+        * docs/README:
+        * modules/ProjectCreator.pm:
+
+          Split the functionality of the 'automatic' keyword into to two.
+          'automatic_in' now specifies that input files are automatically
+          added and 'automatic_out' specifies that generated output files
+          are automatically added to the project.  These both default to
+          true as 'automatic' did.  'automatic' is still accepted, but
+          deprecated.
+
+Wed Jun 25 21:38:16 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * docs/README:
+
+          Documented the following changes.
+
+        * modules/ProjectCreator.pm:
+        * modules/VC7ProjectCreator.pm:
+        * modules/WinProjectBase.pm:
+
+          Added the <%cmdsep%> pseudovariable that can be used in prebuild,
+          postbuild, and postcommand.  It works like <%and%> and <%or%> but it
+          unconditionally runs the right-hand side command.
+          For postcommand, added <%input_dirname%> and <%output_dirname%> which
+          work like their <%*_basename%> counterparts but return the directory
+          portion of the file name.
+
+Thu Jun 19 01:27:55 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * config/boost_system.mpb:
+
+          Base project for using the Boost system library.
+
+Tue Jun 17 17:16:07 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/templates/make.txt:
+
+          Document the 'depgen_flags' template variable.
+
+        * combine_dsw.pl:
+        * create_base.pl:
+        * depgen.pl:
+        * generate_export_header.pl:
+        * mpc.pl:
+        * mwc.pl:
+        * prj_install.pl:
+        * registry.pl:
+        * modules/ConfigParser.pm:
+        * modules/Creator.pm:
+        * modules/DirectoryManager.pm:
+        * modules/Driver.pm:
+        * modules/FeatureParser.pm:
+        * modules/GUID.pm:
+        * modules/MakeWorkspaceBase.pm:
+        * modules/Options.pm:
+        * modules/OutputMessage.pm:
+        * modules/Parser.pm:
+        * modules/ProjectCreator.pm:
+        * modules/StringProcessor.pm:
+        * modules/TemplateInputReader.pm:
+        * modules/TemplateParser.pm:
+        * modules/VCProjectBase.pm:
+        * modules/Version.pm:
+        * modules/WinProjectBase.pm:
+        * modules/WinWorkspaceBase.pm:
+        * modules/WorkspaceCreator.pm:
+        * modules/WorkspaceHelper.pm:
+
+          Removed unnecessary parenthesis around variable declarations.
+          This provides a very minor performance increase due to reduced
+          perl op codes.
+
+Tue Jun 10 14:45:18 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * templates/make.mpd:
+        * templates/makedll.mpt:
+
+          Enhanced support for MinGW with "-type make".
+
+Fri May 30 15:54:22 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * MPC version 3.6.0 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv TZ)) (set-time-zone-rule UTC) (setq time (format-time-string %a %b %e %H:%M:%S %Z %Y (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

@@ -1,0 +1,21 @@
+// -*- MPC -*-
+// $Id$
+
+conditional_include "bmakecommon"
+
+Release {
+  optimize         = 1
+  defines          = NDEBUG
+  intermediate_dir = Static_Release
+  lib_modifier     = _bsr
+}
+
+Debug {
+  optimize         =
+  debug_prj        = 1
+  defines          = _DEBUG
+  intermediate_dir = Static_Debug
+  lib_modifier     = _bsd
+}
+
+conditional_include "user_bmakelib"

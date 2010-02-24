@@ -1,0 +1,1120 @@
+Wed Jan 27 11:11:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/ndds_ts_defaults.mpb:
+          Removed -enableEscapeChar as default argument, it is not supported with the
+          4.4 release we have on emulab
+
+Tue Jan 26 12:00:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/ndds_ts_defaults.mpb:
+          Added -enableEscapeChar as default argument
+
+Mon Jan 25 18:55:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/ndds_ts_defaults.mpb:
+          Use the new <%bat%>, on windows this is a batch file, not an
+          executable
+
+Mon Jan 25 18:46:30 UTC 2010  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+        * docs/USAGE:
+        * docs/html/MakeProjectCreator.html:
+        * modules/ProjectCreator.pm:
+
+          Added additional psuedo template variables (bat, cmd and exe) and
+          an optional environment variable to force Windows compatible
+          commands to be used in psuedo template variables.  See the
+          documentation for more on this.
+
+        * templates/make.mpd:
+        * templates/makedll.mpt:
+
+          Modified this template and template input file to use a C compiler
+          on files that have a .c extension instead of always using the C++
+          compiler.
+
+Sat Jan 23 18:32:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/ndds_ts_defaults.mpb:
+          Commented out the dependent setting, with the vc and nmake
+          project types, MPC adds .exe as default extension, but this
+          script is a .bat file on windows. See bugzilla 3816 for some
+          more details.
+
+Thu Jan 21 12:52:48 UTC 2010  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/Depgen/MakeDependencyWriter.pm:
+
+          Move checks to the file level status.
+
+        * modules/TemplateParser.pm:
+
+          Fixed bugs with using a scope inside of a foreach.  Also, fixed
+          bugs where 'flag_overrides' would sometimes end up as an array
+          and would be printed to the project as if it were a string.
+          Finally, a filename ending in a '.' will be considered to have an
+          extension of '.'.
+
+        * templates/automake.mpd:
+          Modified to best handle dependencies with a space or $(...) in
+          them.  Dependencies with spaces in them will be handled at the
+          template level and $(...) dependencies will be dropped.
+
+        * templates/make.mpd:
+
+          Modified to best handle dependencies with a space or $(...) in
+          them.  If the 'gnumake' template variable is set, a GNU make
+          substitute function will be used.  Otherwise, it will be done at
+          the template level for spaces and $(...) dependencies will be
+          dropped.
+
+Mon Jan 18 09:24:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/ndds_ts_defaults.mpb:
+          Add TAO_ROOT and TAO_ROOT/tao to the default include paths to
+          get the same behaviour as with TAO_IDL
+
+Sun Jan 17 19:31:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/loki.mpb:
+          Added base project for loki
+
+Thu Jan 14 17:23:14 UTC 2010  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/templates/common.txt:
+
+          Documented the language template variable.
+
+        * modules/Depgen/MakeDependencyWriter.pm:
+
+          Correctly deal with whitespace in file paths.  Also, convert
+          <drive letter>: to a cygwin path on Windows (even if the user
+          isn't using cygwin).  Otherwise, make will fail.
+
+        * docs/templates/make.txt:
+        * templates/make.mpd:
+
+          Use DEPLIBS to cause an executable to be relinked when a static
+          library on which the executable depends is updated.  This will
+          only be used if the 'gnumake' template variable is set.
+
+        * templates/makedll.mpt:
+
+          Set the 'gnumake' template variable for the linux, nucleus and
+          cygwin platforms.
+
+Wed Jan 13 13:07:57 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * config/ndds_ts_defaults.mpb:
+
+          Use the CORBA Compatability Kit (CCK) by default.
+
+Thu Jan  7 16:29:06 UTC 2010  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/Creator.pm:
+
+          Fixed a bug where template variable modifications made one project
+          would accidentally be retained for future projects.
+
+        * modules/WorkspaceCreator.pm:
+
+          Added a work-around in the create_command_line_string() method for
+          dollar signs in the command line arguments.  On non-Windows
+          platforms, the argument with dollar signs will be wrapped in
+          single quotes.
+
+Tue Jan  5 14:33:11 UTC 2010  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/libpng.mpb:
+        * config/zlib.mpb:
+
+          Put double quotes around settings that contain $(...) so that when
+          it is filled in with something that contains spaces, the value is
+          retained correctly.
+
+          There are probably other base projects that could benefit from
+          this, but I only need these at the moment.
+
+Mon Jan  4 15:48:32 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * config/iodbc.mpb:
+        * config/odbc.mpb:
+        * config/unixodbc.mpb:
+
+          Rewrote the odbc.mpb project in terms of feature specifications
+          for UnixODBC and iODBC.
+
+Mon Jan  4 15:25:54 UTC 2010  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/qt.mpb:
+
+          Added an include path for non-Windows project types.
+
+        * modules/Creator.pm:
+
+          Added a method to replace environment variables within a string.
+          This isn't new code, it's just removal of duplicated code.
+
+        * modules/Depgen/DependencyEditor.pm:
+
+          Don't process directories as if they were files.
+
+        * modules/ProjectCreator.pm:
+
+          Use environment variable replacement method from Creator.
+
+        * modules/WorkspaceCreator.pm:
+
+          Replace environment variables in non-scoped assignments as they
+          are encountered.  This avoids errors in 'cmdline' assignments
+          within aggregated workspaces.
+
+Sat Jan  2 16:37:15 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * config/odbc.mpb:
+
+          Fixed comment in iODBC section.
+
+Mon Dec 21 18:55:57 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/AutomakeWorkspaceCreator.pm:
+
+          Fixed a bug where the conditional 'associate' tag (--) would be
+          used as an AM_CONDITIONAL in the generated configure.ac.
+
+        * templates/makedll.mpt:
+
+          The system directory variable for arm_elf_gcc should have been
+          $(SYSTEMDIR) not $(SYSTEM).
+
+Thu Dec 17 20:45:21 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Fixed a bug where adding a string containing $(...) would not have
+          double quotes which, when used with -expand_vars, could cause
+          invalid values if the variable value had a space in it.
+
+        * templates/makedll.mpt:
+
+          Changed the hard-coded /usr/local to use $(SYSTEM) in the
+          arm_elf_gcc compiler configuration.
+
+Tue Dec  1 15:05:46 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/templates/common.txt:
+        * templates/vc7csharp.mpd:
+        * templates/vc7java.mpd:
+        * templates/vc7vb.mpd:
+        * templates/vc8csharp.mpd:
+        * templates/vc8java.mpd:
+        * templates/vc8vb.mpd:
+
+          Allow the setting of the "DelaySign" value through a template
+          variable.
+
+Mon Nov 30 17:17:30 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/Depgen/NMakeObjectGenerator.pm:
+
+          Moved a comment.
+
+        * templates/make.mpd:
+
+          If the 'targetoutdir' or 'obj_dir' template variables are set, we
+          need to set the VDIR environment variable when calling depgen.pl
+          so that the generated dependencies have the right directory.
+
+Thu Nov 26 08:57:00 UTC 2009  Simon Massey  <sma@prismtech.com>
+
+        * modules/ProjectCreator.pm:
+
+          Reverted allowing double-quote characters to be treated
+          in a project specific way for the. If quotes are to be
+          preserved within "idlflags" inside project mpc files, then
+          explicit <%quote%> must be used. Swapping natual quotes
+          broke other parts of MPC parsing.
+
+Tue Nov 17 15:05:06 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Fixed a problem with my last change.  In some cases, a perl
+          variable wasn't set causing strange template variable results.
+
+Mon Nov 16 02:52:53 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/msgfmt.mpb:
+
+          Added a base project to utilize the msgfmt executable.
+
+        * modules/ProjectCreator.pm:
+
+          Fixed a bug where adding to a scoped template variable nullified
+          the setting of the non-scoped template variable.
+
+Fri Nov 13 15:30:00 UTC 2009  Simon Massey  <sma@prismtech.com>
+
+        * modules/ProjectCreator.pm:
+
+          update_template_variable() now processes values through
+          replace_parameters() and treats double-quote characters
+          in a project specific way. This allows the "tao_idlflags"
+          template variable to contain quoted roots, to allow for
+          spaces within the directory names.
+          Also convert_command_parameters() now also treats
+          double-quote characters in a project specific way for the
+          same reason, to allow " to be used within "idlflags" inside
+          project mpc files.
+
+Wed Nov 11 07:00:20 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/ndds_ts_defaults.mpb:
+
+          Don't use visibility with ndds
+
+Mon Nov  9 15:22:20 UTC 2009  Mike Martinez  <martinez_m@ociweb.com>
+
+        * config/qt4_core.mpb:
+
+          Added QT4_INCDIR to allow user to specify include directory
+          which is not relative to QTDIR (such as distributions that
+          place qt in /usr/include/qt4).
+
+        * config/qt4_gui.mpb:
+
+          Added QRC resource compiler command handling.
+          Added 'ui_' prefix to output filename of UI compiler to match
+          the behavior of 'qmake'.
+
+Fri Nov  6 03:39:51 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/mpich.mpb:
+
+          Added an include path and remove an unnecessary library (for
+          non-windows project types).
+
+Thu Nov  5 19:39:35 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+        * modules/XMLProjectBase.pm:
+
+          Fixed the 'equote' pseudo template variable.  It wasn't actually
+          escaped before.  Now it is.
+
+Mon Nov  2 13:35:00 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/WorkspaceCreator.pm:
+
+          Fixed a bug where an MPC file used in more than one aggregated
+          workspace wouldn't be ignored.
+
+Thu Oct 29 22:55:05 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+        * docs/html/MakeProjectCreator.html:
+        * modules/ProjectCreator.pm:
+
+          Added the current language as a property.  So, prop:cplusplus, for
+          example, can be used within a 'specific' scope.
+
+        * docs/USAGE:
+        * modules/Options.pm:
+
+          Minor change.  Separated languages using commas in usage.
+
+Wed Oct 28 16:00:03 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * templates/make.mpd:
+
+          If a custom 'dependent' setting contains a double quote, then we
+          must make a fake rule that corresponds to it.  Otherwise, make
+          doesn't know how to deal with it.
+
+Fri Oct 23 09:49:30 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/ndds_ts_defaults.mpb:
+          Wrap the command with quotes because NDDSHOME could contain spaces
+
+Wed Oct 21 19:29:58 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/templates/make.txt:
+        * templates/make.mpd:
+
+          Modified to allow the user to override the 'touch' command via
+          -value_template.  For example, if you're using GNU make on Windows
+          you may want to replace 'touch' with 'copy nul' (e.g, mwc.pl
+          -value_template "touch=copy nul").
+
+        * templates/vc8.mpd:
+
+          Replaced spaces with tabs so that the generated project is more
+          like ones created by Visual Studio.
+
+Tue Oct 20 06:31:30 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/ndds_ts_defaults.mpb:
+          Don't wrap the command with quotes, that breaks on linux
+
+Mon Oct 19 12:05:30 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/ndds_ts_defaults.mpb:
+          Wrap the command with quotes
+
+Fri Oct 16 17:42:30 UTC 2009  Steven Stallion  <stallions@ociweb.com>
+
+        * templates/vc7.mpd:
+        * templates/vc8.mpd:
+
+          Reverted changes (r1646):
+          Mon Oct  5 11:38:03 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          Commit broke OpenDDS builds on Windows platforms. Custom commands
+          should not be wrapped in double quotes; some custom commands use
+          compound commands (i.e. dcps_ts.pl).
+
+        * config/udm.mpb:
+        * config/wix.mpb:
+
+          Reverted changes (r1649):
+          Tue Oct 13 13:38:48 UTC 2009  Sumant Tambe  <sutambe@nospam>
+
+          No longer neccessary.
+
+Fri Oct 16 02:25:30 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Reverted my change from Tue Sep  1 12:58:30 UTC 2009 and modified
+          the get_custom_value() method to not add >> files when gendir is
+          set to something other than '.'.  Thanks to Steve Stallion for
+          tracking this down.
+
+Tue Oct 13 13:38:48 UTC 2009  Sumant Tambe  <sutambe@nospam>
+
+        * config/udm.mpb:
+        * config/wix.mpb:
+
+          . Removed quotes because they are no longer necessary. Quotes are
+            generated automatically as per Johnny's changes on Oct 5th.
+
+Tue Oct  6 09:04:03 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/ndds_ts_defaults.mpb:
+          This base project requires ndds
+
+Mon Oct  5 11:38:03 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/vc7.mpd:
+        * templates/vc8.mpd:
+          Generate quotes around a custom command, the tool we execute could
+          be in a path with a space in it
+
+Fri Oct  2 20:31:03 UTC 2009  Steven Stallion  <stallions@ociweb.com>
+
+        * config/global.features:
+
+          Updated support for erlang.
+
+Mon Sep 28 15:18:36 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/global.features:
+        * config/libpng.mpb:
+
+          Added support for libpng.
+
+        * templates/makedll.mpt:
+
+          Added support for gcc on Nucleus OS.
+
+Thu Sep 24 12:38:20 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/vc8platforms.mpt:
+          Added Beckhoff_HMI_600 (x86)
+
+Tue Sep 22 21:12:20 UTC 2009  Sumant Tambe  <sutambe@nospam>
+
+        * config/udm.mpb:
+
+          Added paths for GME 7 and GME 9.
+
+Thu Sep 17 13:52:10 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/pcre.mpb:
+
+          Only add the $(PCRE_VERSION) variable to the library name when not
+          using Microsoft products.  Since the windows version of pcre
+          doesn't have a version number, the variable is always empty and
+          Visual Studio complains.
+
+Wed Sep  9 21:48:19 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+        * docs/html/MakeProjectCreator.html:
+        * modules/ProjectCreator.pm:
+
+          Added a new psuedo variable, 'prj_type', which holds the project
+          type as specified by the -type command line option.
+
+        * config/wix.mpb:
+
+          Modified to use the new 'prj_type' pseudo variable.
+
+        * modules/WorkspaceCreator.pm:
+
+          Changed the duplicate project through workspace aggregation from a
+          warning to information.
+
+Tue Sep  8 04:16:19 UTC 2009  Sumant Tambe  <sutambe@nospam>
+
+        * config/udm.mpb:
+        * config/wix.mpb:
+
+          Added support for VC9 and UDM version 3.2.1.
+
+Tue Sep  8 00:48:45 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/Driver.pm:
+
+          When the -gfeature_file option is used, turn the file path into a
+          full path if it is relative.  This is necessary for when the
+          -recurse option is used and a full path isn't provided to the
+          feature file.
+
+        * modules/ProjectCreator.pm:
+
+          When setting up the 'input_ext' and 'output_ext' pseudo template
+          variables, set them to an empty string if the input and output
+          files do not contain an extension.
+
+Thu Sep  3 19:15:49 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/html/MakeProjectCreator.html:
+
+          Corrected the documentation for the 'remove_from' template
+          function.
+
+        * modules/FeatureParser.pm:
+
+          Sort the feature names as they come out for reproducibility.
+
+        * modules/Options.pm:
+
+          Fixed a bug where an ending /. would not be removed from a
+          relative path on Windows.
+
+        * modules/TemplateParser.pm:
+
+          Added missing 'lc' related functions to have a symmetry with 'uc'.
+
+Thu Sep  3 12:57:41 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/default.rel:
+
+          Added a comment about comma separating the columns.
+
+        * docs/html/MakeProjectCreator.html:
+
+          Added more info about the 'scope' template function.
+
+        * modules/Options.pm:
+
+          Fixed a bug where the valid languages wouldn't be printed in the
+          usage.
+
+        * modules/TemplateParser.pm:
+
+          Added a comment about what we're checking and why after
+          successfully parsing the template.
+
+        * modules/ProjectCreator.pm:
+        * modules/WorkspaceCreator.pm:
+
+          Changed to pass an array reference to the source listing callback
+          instead of passing an array.
+
+        * templates/make.mpd:
+
+          Added slightly better support for multiple platforms.  It's still
+          not fully functional though.
+
+Tue Sep  1 12:58:30 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Removed code that added output files (added via the '>>'
+          construct) when accessing output files from the template.  The
+          code was redundant and when gendir was something other than '.',
+          it would cause duplicate files to be added when the template was
+          generating the output file.
+
+Mon Aug 31 16:41:00 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * PROBLEM-REPORT-FORM:
+
+          Updated URLs.
+
+        * modules/BCB2007ProjectCreator.pm:
+        * modules/BCB2007WorkspaceCreator.pm:
+        * modules/ConfigParser.pm:
+
+          Corrected comments.
+
+        * modules/ProjectCreator.pm:
+
+          Alphabetized the keywords (which makes it easier when updating
+          documentation).  Updated comments and added a minor performance
+          enhancment.
+
+        * modules/TemplateParser.pm:
+
+          Fixed a bug where 'features' used in a template would get confused
+          with template scopes.
+
+        * modules/WB26ProjectCreator.pm:
+
+          If the user overrides the template, still provide a valid project
+          file name in the project_file_name() method.
+
+        * modules/WorkspaceCreator.pm:
+
+          Fixed a bug where duplicate mpc files added by aggregated
+          workspaces would not be correctly ignored.
+
+Tue Aug 25 12:22:59 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/qt4_core.mpb:
+        * config/qt4_designer.mpb:
+        * config/qt4_designercomponents.mpb:
+        * config/qt4_gui.mpb:
+        * config/qt4_network.mpb:
+        * config/qt4_opengl.mpb:
+        * config/qt4_qt3support.mpb:
+        * config/qt4_sql.mpb:
+        * config/qt4_svg.mpb:
+        * config/qt4_test.mpb:
+        * config/qt4_xml.mpb:
+
+          Committing changes from Ciju John.  Removed the hard-coded 4 in
+          the library names and switch from using $(QTDEBUG) to $(QT_CFG).
+
+Mon Aug 24 13:10:16 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/USAGE:
+        * modules/Options.pm:
+
+          Changed VAR to VAL.
+
+        * docs/html/MakeProjectCreator.html:
+
+          Added missing <a name>'s.
+
+        * modules/AutomakeWorkspaceCreator.pm:
+
+          Added associated names to the list of AM_CONDITIONAL.
+
+        * modules/Creator.pm:
+
+          Fixed a bug where $(...) used in an exclude block would cause ./
+          to be prepended to the value.  Also, only remove unmatched $(...)
+          variables after attempting with the secondary relative values.
+
+        * modules/WorkspaceCreator.pm:
+
+          Fixed a bug where $PWD used in a 'cmdline' setting within an
+          exclude block would not be evaluated correctly.
+
+Wed Aug 19 14:28:52 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+        * docs/html/MakeProjectCreator.html:
+        * modules/ProjectCreator.pm:
+
+          Added a 'static' property that can be used within the 'specifc'
+          and 'conditional' clauses.  The 'static' property will only be set
+          if the -static option was used on the command line.
+
+Wed Aug 19 13:49:34 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/VC8WorkspaceCreator.pm:
+
+          We should also avoid adding references to 'custom_only' projects.
+          These also cause warnings in Visual Studio.
+
+Wed Aug 19 02:11:03 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * create_base.pl:
+
+          Added a description of what the script does to the usage.
+
+        * modules/Driver.pm:
+
+          Use DirectoryManager::onVMS() instead of comparing $^O to 'VMS'.
+
+        * modules/Options.pm:
+
+          Removed a redundant exit() call.
+
+        * modules/ProjectCreator.pm:
+
+          Added comments to the get_special_value method.
+
+        * modules/NMakeWorkspaceCreator.pm:
+        * modules/TemplateParser.pm:
+        * modules/VC7WorkspaceCreator.pm:
+
+          Added the 'managed' setting to the saved project info structure.
+
+        * modules/VC8WorkspaceCreator.pm:
+
+          Used the new 'managed' setting in the saved project info structure
+          to avoid adding a reference to a non-managed c++ library.
+
+        * templates/vc8.mpd:
+
+          Removed the use of <%language%> in the MPC ADD DEPENDENCIES
+          comment.  It was not necessary since we have that information
+          available from the saved project info structure.
+
+        * modules/WorkspaceCreator.pm:
+
+          Removed the redundant setting of the 'info' data member.
+
+        * registry.pl:
+
+          Added vc10 and wix types.
+
+        * vs_postclean.pl:
+
+          Changed spaces in a regular expression to \s*.
+
+Fri Aug 14 18:46:11 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/pcre.mpb:
+        * config/pcreposix.mpb:
+
+          Added the ability to specify a version for the pcre libraries.
+
+        * config/udm.mpb:
+
+          Fixed a typo.
+
+        * devtools/document_template.pl:
+
+          Fixed a bug where mixed case template variables used in a foreach
+          would not be handled correctly.
+
+        * docs/templates/vc7.txt:
+
+          Documented the DisableSpecificWarnings template variable.
+
+        * rpm/MPC.spec:
+        * rpm/buildrpm.sh:
+
+          Made packager dynamic based on who's actually creating the RPM.
+
+Fri Aug 14 12:43:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/udm.mpb
+          Use DisableSpecificWarnings
+
+Fri Aug 14 12:17:36 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * templates/em3.mpd:
+        * templates/nmake.mpd:
+        * templates/vc6.mpd:
+        * templates/vc7.mpd:
+
+          Support the DisableSpecificWarnings template variable as it is in
+          vc8 and higher.  Since support isn't built directly into the
+          project format, we use the /wd command line option for each
+          warning number supplied.
+
+Fri Aug 14 02:20:11 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * rpm:
+        * rpm/MPC.spec:
+        * rpm/buildrpm.sh:
+
+          Added the ability to create an RPM file out of the MPC source.
+
+Wed Aug 12 22:29:21 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/BMakeWorkspaceCreator.pm:
+        * modules/WixWorkspaceCreator.pm:
+
+          Cleaned up code.
+
+        * modules/ProjectCreator.pm:
+
+          Reverted one of the performance enhancements from yesterday.  It
+          made a faulty assumption that caused issue with the DDS builds.
+
+        * modules/WB26WorkspaceCreator.pm:
+        * modules/WorkspaceCreator.pm:
+
+          Added a 'requires_make_coexistence' method to always use
+          -make_coexistence without having to pass the option on the command
+          line.
+
+Wed Aug 12 17:56:20 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/gacutil.mpb:
+          Use prop:microsoft
+
+Wed Aug 12 12:48:20 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/html/MakeProjectCreator.html:
+          Fixed broken link
+
+Tue Aug 11 16:08:20 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/html/MakeProjectCreator.html:
+
+          Added an Id tag.
+
+        * modules/ProjectCreator.pm:
+
+          Made minor performance enhancements.
+
+        * modules/WB26WorkspaceCreator.pm:
+
+          Added code to only put top-level dependencies in the project
+          files.  This build tool doesn't handle indirectly duplicated
+          project dependencies very well.
+
+Mon Aug 10 21:40:58 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Return immediately from generate_default_target_names() if the
+          project has custom_only set to 1.  We need not waste time setting
+          the sharedname, staticname or exename.
+
+        * modules/WinVersionTranslator.pm:
+
+          Cleaned up and commented the code.
+
+Mon Aug 10 17:55:53 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/global.features:
+
+          Added disabled features that were missing.
+
+        * devtools/document_template.pl:
+
+          Updated the usage and added automatic language selection for java.
+
+        * docs/README:
+        * docs/USAGE:
+
+          Updated to reflect the current state of MPC.
+
+        * docs/html:
+        * docs/html/MakeProjectCreator.css:
+        * docs/html/MakeProjectCreator.html:
+
+          Converted the Frame Maker source into HTML and updated to reflect
+          the current state of MPC.
+
+        * docs/templates/wix.txt:
+
+          Added incomplete documentation for the WIX template variables.
+
+        * modules/GHSProjectCreator.pm:
+
+          Corrected poorly written code.
+
+        * modules/Options.pm:
+
+          Fixed a bug in the -relative_file portion of the usage output.
+
+        * modules/ProjectCreator.pm:
+
+          Added the ability to use the 'temporary' pseudo template variable
+          outside of a custom_type context.  It will contain a different
+          value than 'temporary' referenced from within the custom_type
+          context.
+
+        * modules/WixProjectCreator.pm:
+
+          Changed to use 'exeout' instead of the deprecated 'install'
+          project variable name.
+
+        * docs/MakeProjectCreator.pdf:
+        * docs/fm:
+        * docs/fm/MakeProjectCreator.fm:
+        * docs/fm/images:
+        * docs/fm/images/OCILOGO_bw_book.eps:
+        * docs/fm/images/mpc.fig:
+        * docs/fm/images/mpc.gif:
+        * docs/fm/images/mpc_mtiff.eps:
+        * docs/fm/images/mwc.fig:
+        * docs/fm/images/mwc.gif:
+        * docs/fm/images/mwc_mtiff.eps:
+        * docs/html/MakeProjectCreator.fm:
+
+          Removed these files.
+
+Fri Aug  7 09:23:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/vc8platforms.mpt:
+          Removed release_link_options for the SuperSonic SDK, the options
+          are not ok
+
+Thu Aug  6 15:11:07 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * devtools/document_template.pl:
+        * modules/CCProjectCreator.pm:
+        * modules/Creator.pm:
+        * modules/MakeProjectCreator.pm:
+        * modules/MakeWorkspaceCreator.pm:
+        * modules/Options.pm:
+        * modules/ProjectCreator.pm:
+        * modules/VC6ProjectCreator.pm:
+        * modules/VC7ProjectCreator.pm:
+        * modules/VC7WorkspaceCreator.pm:
+        * modules/VC8ProjectCreator.pm:
+        * modules/VC8WorkspaceCreator.pm:
+        * modules/WB26ProjectCreator.pm:
+
+          Replaced all language related strings with constants stored in the
+          Creator base class.
+
+          Also, fixed a bug where a project that contained source files or
+          resource files for a language not supported by the project type
+          would be created.  Now, the project will be skipped if the project
+          type does not support the language setting.
+
+Wed Aug  5 18:41:55 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * MPC.ico:
+
+          Updated to use the new MPC logo.
+
+        * docs/README:
+        * modules/ProjectCreator.pm:
+
+          Modified 'conditional' to use properties like 'specific'.
+
+        * modules/WixProjectCreator.pm:
+
+          Inherit from XMLProjectBase and WinProjectBase.  The output is xml
+          and this is a Windows specific project creator.
+
+        * docs/templates/make.net.txt
+        * templates/make.net.mpd:
+        * templates/make.net.mpt:
+
+          Updated to support icon files and resx files, the trace template
+          variable and to set the DESIGN and DEBUG constants in debug mode.
+
+Wed Aug  5 06:21:58 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/vc8.mpd:
+          Added release_link_options. This fixes bugzilla 3527, thank to
+          Chad Elliot for providing the patch
+
+        * templates/vc8platforms.mpt:
+          Use release_link_options for the SuperSonic SDK
+
+        * templates/vc8platforms.mpt:
+          No need to set charset anymore
+
+        * docs/templates/vc8.txt:
+          Document new release_link_options
+
+Tue Aug  4 18:11:58 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+        * modules/TemplateParser.pm:
+
+          Added a new template function, 'extensions', that can be used to
+          get a list of valid extensions based on the component name (e.g,
+          source_files, header_files, inline_files, etc.)
+
+        * templates/em3.mpd:
+        * templates/vc6.mpd:
+        * templates/vc7.mpd:
+        * templates/vc8.mpd:
+        * templates/wb26wrproject.mpd:
+
+          Use the 'extensions' function instead of hard-coded strings.
+
+Tue Aug  4 16:29:11 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/Creator.pm:
+
+          Default the language to 'cplusplus' if it isn't provided during
+          construction.  This ensures that language is always set and we
+          don't have to check it to make sure it's defined elsewhere.
+
+        * modules/ProjectCreator.pm:
+
+          Modified the behavior of dealing with resource files.  The
+          behavior specific to C++ was being applied to all languages.
+
+        * modules/TemplateParser.pm:
+
+          Added implementations of various template functions.  Some were
+          required for the bmake template change below.
+
+        * modules/WixProjectCreator.pm:
+
+          Removed unused code.
+
+        * modules/WixWorkspaceCreator.pm:
+
+          Fixed a the case of the WixProjectCreator name.
+
+        * templates/bmake.mpd:
+        * templates/bmakedll.mpt:
+        * templates/bmakedllexe.mpt:
+
+          Added the ability to build static projects without providing the
+          -static option to MPC.  The static-only projects can still be
+          created with the -static option, but it is no longer necessary.
+
+Tue Aug  4 10:31:40 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/unicode.mpb:
+          Changed this to a feature
+
+Mon Aug  3 16:43:18 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/Driver.pm:
+        * mpc.pl:
+        * mwc.pl:
+
+          Added a pair of constants that will be used in determining which
+          type of creators to use (either workspace or project).
+
+        * modules/ProjectCreator.pm:
+
+          Removed the use of a hard-coded string and simplified some code.
+
+Fri Jul 24 09:29:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/nddslib.mpb:
+          Added requires += ndds. If you want to use RTI DDS you have to
+          add ndds=1 to your default.features file. This way we can add
+          dds4ccm support to CIAO without requiring all users to install
+          RTI DDS
+
+Fri Jul  3 03:25:31 UTC 2009  James H. Hill  <hillj@dre.vanderbilt.edu>
+
+        * templates/wix.mpd:
+
+          Added support for setting the install location of a set of
+          files for a project using 'install_location'. This takes a
+          comma separated list of directories that represent the location
+          for installing the files. The following is a simple example:
+
+            specific (wix) {
+              install_location = etc models
+            }
+
+          The example above will install files for the given project
+          in etc/models directory under the root install directory.
+
+Thu Jul  2 06:37:36 UTC 2009  James H. Hill  <hillj@dre.vanderbilt.edu>
+
+        * templates/wix.mpd:
+
+          Fixed bugs GME section of generated Wix files for vc8.
+
+Sun Jun 28 08:05:20 UTC 2009  James H. Hill  <hillj@dre.vanderbilt.edu>
+
+        * templates/wix.mpd:
+
+          Added support for installing GME components using Wix. In order
+          to include GME components in the installer, you must define the
+          following properties in a *wix* scope:
+
+            gme_install     = [0 | 1]; default is 0
+            gme_register    = [HKLM | HKCU]; default is HKLM
+            gme_progid      = <program id>
+            gme_uuid        = <uuid>
+            gme_paradigms   = <space separated list>
+            gme_has_icon    = [0 | 1]
+            gme_description = <descrption of component>
+            gme_tooltip     = <tooltip for component>
+
+          The values for each of these properties can be found in
+          ComponentConfig.h
+
+Thu Jun 25 06:25:12 UTC 2009  James H. Hill  <hillj@dre.vanderbilt.edu>
+
+        * modules/WixProjectCreator.pm:
+        * templates/wix.mpd:
+
+          Added support to creating a directory if there is no output
+          file specified in the project.
+
+          Disabled skipping projects if there are no useful targets
+          defined.
+
+          Added markers to the top and bottom of the component. The
+          name of the markers are: component_top and component_bottom.
+
+Thu Jun 25 00:39:12 UTC 2009  James H. Hill  <hillj@dre.vanderbilt.edu>
+
+        * modules/WixProjectCreator.pm:
+        * modules/WixWorkspaceCreator.pm:
+
+          Forgot to change the case on the pacakge names.
+
+Wed Jun 24 21:19:36 UTC 2009  James H. Hill  <hillj@dre.vanderbilt.edu>
+
+        * config/wix.mpb:
+        * config/wix_ui.mpb:
+        * config/wix_xml.mpb:
+
+          Base projects for building Wix files.
+
+Wed Jun 24 21:14:20 UTC 2009  James H. Hill  <hillj@dre.vanderbilt.edu>
+
+        * modules/WixProjectCreator.pm:
+        * modules/WixWorkspaceCreator.pm:
+        * templates/wix.mpd:
+        * templates/wix.mpt:
+
+          . First version of the Wix module that is used in conjuction
+            with the Wix toolset that creates .msi files. This project
+            type will generate the include files (.wxi) that can be included
+            in a .wxs configuration file.
+
+            Right now, the installer only can generate files for
+            shared libraries. The next update will include support for
+            executables.
+
+Wed Jun 17 18:37:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/vc8platforms.mpt:
+          Explicitly set charset to get CharacterSet set when using
+          multiple platforms
+
+Tue May 26 19:01:53 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Changed hard-coded 'resource_files' to a call to get_resource_tag,
+          which is a new method on ProjectCreator.  get_resource_tag
+          determines the name of 'resource_files' for the current language
+          based on the %language hash (for C# and VB this is 'resx_files').
+
+Mon May 25 11:03:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/vc8platforms.mpt:
+          Added a new target and corrected some wince versions
+
+Sun May 24 18:46:31 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * MPC version 3.7.0 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv TZ)) (set-time-zone-rule UTC) (setq time (format-time-string %a %b %e %H:%M:%S %Z %Y (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

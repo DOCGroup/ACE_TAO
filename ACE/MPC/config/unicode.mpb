@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+feature (uses_wchar) {
+  specific {
+    unicode = 1
+  }
+}

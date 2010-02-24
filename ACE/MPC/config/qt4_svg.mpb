@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
+project: qt4_xml {
+  lit_libs += QtSvg$(QT_CFG)
+}
