@@ -43,7 +43,7 @@ namespace CIAO
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ACE_UNUSED_ARG (qos);
 
-        RTI_Topic_i * topic = dynamic_cast < RTI_Topic_i * > (a_topic);
+        CCM_DDS_Topic_i * topic = dynamic_cast < CCM_DDS_Topic_i * > (a_topic);
 
         if (!topic)
           {
@@ -103,7 +103,7 @@ namespace CIAO
       {
         DDS4CCM_TRACE ("RTI_Publisher_i::create_datawriter");
 
-        RTI_Topic_i * topic = dynamic_cast < RTI_Topic_i * > (a_topic);
+        CCM_DDS_Topic_i * topic = dynamic_cast < CCM_DDS_Topic_i * > (a_topic);
 
         if (!topic)
           {
@@ -345,19 +345,19 @@ namespace CIAO
       ::DDS::StatusCondition_ptr
       RTI_Publisher_i::get_statuscondition (void)
       {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
-        ACE_NEW_THROW_EX (retval,
-                          RTI_StatusCondition_i (),
-                          CORBA::NO_MEMORY ());
-
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
-        RTI_StatusCondition_i *rti_sc = dynamic_cast < RTI_StatusCondition_i *> (retval.in ());
-        rti_sc->set_impl (sc);
-        return retval._retn ();
+        ACE_NEW_THROW_EX (retval,
+                          CCM_DDS_StatusCondition_i (sc),
+                          CORBA::NO_MEMORY ());
 #else
-        return this->impl ()->get_statuscondition ();
+        ::DDS::StatusCondition_var sc = this->impl ()->get_statuscondition ();
+        ACE_NEW_THROW_EX (retval,
+                          CCM_DDS_StatusCondition_i (sc.in ()),
+                          CORBA::NO_MEMORY ());
 #endif
+        return retval._retn ();
       }
 
       ::DDS::StatusMask

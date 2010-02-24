@@ -31,38 +31,32 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    namespace RTI
+    class DDS4CCM_NDDS_IMPL_Export CCM_DDS_TopicDescription_i :
+      public virtual ::DDS::CCM_TopicDescription,
+      public virtual ::CORBA::LocalObject
     {
-      class DDS4CCM_NDDS_IMPL_Export RTI_TopicDescription_i :
-        public virtual ::DDS::CCM_TopicDescription,
-        public virtual ::CORBA::LocalObject
-      {
-      public:
-        // Constructor
-        RTI_TopicDescription_i (void);
+    public:
+      /// Constructor
+      CCM_DDS_TopicDescription_i (DDSTopicDescription * rc);
 
-        // Destructor
-        virtual ~RTI_TopicDescription_i (void);
+      /// Destructor
+      virtual ~CCM_DDS_TopicDescription_i (void);
 
-        virtual char *
-        get_type_name (void);
+      virtual char * get_type_name (void);
 
-        virtual char *
-          get_name (void);
+      virtual char * get_name (void);
 
-        virtual ::DDS::DomainParticipant_ptr
-          get_participant (void);
+      virtual ::DDS::DomainParticipant_ptr get_participant (void);
 
-        DDSTopicDescription * get_impl (void);
+      DDSTopicDescription * get_impl (void);
 
-        void set_impl (DDSTopicDescription * rc);
+      void set_impl (DDSTopicDescription * rc);
 
-      private:
-        DDSTopicDescription * impl_;
+    private:
+      DDSTopicDescription * impl_;
 
-        DDSTopicDescription * impl (void);
-      };
-    }
+      DDSTopicDescription * impl (void);
+    };
   }
 }
 

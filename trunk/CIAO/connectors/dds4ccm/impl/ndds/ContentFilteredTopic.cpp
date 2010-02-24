@@ -64,31 +64,45 @@ namespace CIAO
       RTI_ContentFilteredTopic_i::get_related_topic (void)
       {
         DDS4CCM_TRACE ("RTI_ContentFilteredTopic_i::get_related_topic");
+
         ::DDS::Topic_var retval = ::DDS::Topic::_nil ();
-        ACE_NEW_THROW_EX (retval,
-                          RTI_Topic_i (),
-                          CORBA::NO_MEMORY ());
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         DDSTopic *topic = this->impl ()->get_related_topic ();
-        RTI_Topic_i *rti_topic = dynamic_cast < RTI_Topic_i *> (retval.in ());
-        rti_topic->set_impl (topic);
+        ACE_NEW_THROW_EX (retval,
+                          CCM_DDS_Topic_i (topic),
+                          CORBA::NO_MEMORY ());
         return retval._retn ();
+#else
+        ::DDS::Topic_var topic = this->impl ()->get_related_topic ();
+        ACE_NEW_THROW_EX (retval,
+                          CCM_DDS_Topic_i (topic.in ()),
+                          CORBA::NO_MEMORY ());
+        return retval._retn ();
+#endif
       }
 
       char *
       RTI_ContentFilteredTopic_i::get_type_name (void)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         return CORBA::string_dup (this->impl ()->get_type_name ());
+#else
+#endif
       }
 
       char *
       RTI_ContentFilteredTopic_i::get_name (void)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         return CORBA::string_dup (this->impl ()->get_name ());
+#else
+#endif
       }
 
       ::DDS::DomainParticipant_ptr
       RTI_ContentFilteredTopic_i::get_participant (void)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
         ACE_NEW_THROW_EX (retval,
                           RTI_DomainParticipant_i (),
@@ -98,6 +112,8 @@ namespace CIAO
         RTI_DomainParticipant_i *rti_dp = dynamic_cast < RTI_DomainParticipant_i *> (retval.in ());
         rti_dp->set_impl (p);
         return retval._retn ();
+#else
+#endif
       }
 
       DDSContentFilteredTopic *

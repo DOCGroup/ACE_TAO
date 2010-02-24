@@ -41,13 +41,17 @@ namespace CIAO
       RTI_Subscriber_i::get_statuscondition (void)
       {
         ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
-        ACE_NEW_THROW_EX (retval,
-                          RTI_StatusCondition_i (),
-                          CORBA::NO_MEMORY ());
-
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
-        RTI_StatusCondition_i *rti_sc = dynamic_cast < RTI_StatusCondition_i *> (retval.in ());
-        rti_sc->set_impl (sc);
+        ACE_NEW_THROW_EX (retval,
+                          CCM_DDS_StatusCondition_i (sc),
+                          CORBA::NO_MEMORY ());
+#else
+        ::DDS::StatusCondition_var sc = this->impl ()->get_statuscondition ();
+        ACE_NEW_THROW_EX (retval,
+                          CCM_DDS_StatusCondition_i (sc.in ()),
+                          CORBA::NO_MEMORY ());
+#endif
         return retval._retn ();
       }
 
@@ -160,7 +164,7 @@ namespace CIAO
           }
 
         DDSDataReader * rti_dr = 0;
-        RTI_Topic_i * topic = dynamic_cast < RTI_Topic_i * > (a_topic);
+        CCM_DDS_Topic_i * topic = dynamic_cast < CCM_DDS_Topic_i * > (a_topic);
 
         if (!topic)
           {
@@ -222,7 +226,7 @@ namespace CIAO
           }
 
         DDSDataReader * rti_dr = 0;
-        RTI_Topic_i * topic = dynamic_cast < RTI_Topic_i * > (a_topic);
+        CCM_DDS_Topic_i * topic = dynamic_cast < CCM_DDS_Topic_i * > (a_topic);
 
         if (!topic)
           {
