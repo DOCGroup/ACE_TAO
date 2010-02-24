@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_DURATION_T_H
-#define CIAO_RTI_DURATION_T_H
+#ifndef DDS4CCM_DURATION_T_H
+#define DDS4CCM_DURATION_T_H
 
 #if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::Duration_t DDS_Duration_t;
@@ -37,5 +37,5 @@ operator>>= (const ::DDS_Duration_t &duration, ::DDS::Duration_t & ddsduration)
 }
 #endif
 
-#endif /* CIAO_RTI_DURATION_T_H */
+#endif /* DDS4CCM_DURATION_T_H */
 

@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_LIVELINESSLOSTSTATUS_H
-#define CIAO_RTI_LIVELINESSLOSTSTATUS_H
+#ifndef DDS4CCM_LIVELINESSLOSTSTATUS_H
+#define DDS4CCM_LIVELINESSLOSTSTATUS_H
 
 #if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::LivelinessLostStatus DDS_LivelinessLostStatus;
@@ -44,4 +44,4 @@ operator>>= (const ::DDS::LivelinessLostStatus &status, ::DDS_LivelinessLostStat
 }
 #endif
 
-#endif /* CIAO_RTI_LIVELINESSLOSTSTATUS_H */
+#endif /* DDS4CCM_LIVELINESSLOSTSTATUS_H */

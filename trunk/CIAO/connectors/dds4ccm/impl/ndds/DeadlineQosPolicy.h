@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_DEADLINEQOSPOLICY_H
-#define CIAO_RTI_DEADLINEQOSPOLICY_H
+#ifndef DDS4CCM_DEADLINEQOSPOLICY_H
+#define DDS4CCM_DEADLINEQOSPOLICY_H
 
 #include "Duration_t.h"
 
@@ -41,4 +41,4 @@ operator>>= (const ::DDS::DeadlineQosPolicy &qos, ::DDS_DeadlineQosPolicy & ddsq
 }
 #endif
 
-#endif /* CIAO_RTI_DEADLINEQOSPOLICY_H */
+#endif /* DDS4CCM_DEADLINEQOSPOLICY_H */

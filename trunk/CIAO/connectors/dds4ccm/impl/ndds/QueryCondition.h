@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_QUERYCONDITION_H
-#define CIAO_RTI_QUERYCONDITION_H
+#ifndef DDS4CCM_QUERYCONDITION_H
+#define DDS4CCM_QUERYCONDITION_H
 
 #include "tao/LocalObject.h"
 
@@ -80,4 +80,4 @@ namespace CIAO
   }
 }
 
-#endif /* CIAO_RTI_QUERYCONDITION_H */
+#endif /* DDS4CCM_QUERYCONDITION_H */

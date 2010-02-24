@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_OFFEREDINCOMPATIBLEQOSSTATUS_H
-#define CIAO_RTI_OFFEREDINCOMPATIBLEQOSSTATUS_H
+#ifndef DDS4CCM_OFFEREDINCOMPATIBLEQOSSTATUS_H
+#define DDS4CCM_OFFEREDINCOMPATIBLEQOSSTATUS_H
 
 #include "QosPolicyCountSeq.h"
 
@@ -54,4 +54,4 @@ operator>>= (const ::DDS::OfferedIncompatibleQosStatus &status, ::DDS_OfferedInc
 }
 #endif
 
-#endif /* CIAO_RTI_OFFEREDINCOMPATIBLEQOSSTATUS_H */
+#endif /* DDS4CCM_OFFEREDINCOMPATIBLEQOSSTATUS_H */

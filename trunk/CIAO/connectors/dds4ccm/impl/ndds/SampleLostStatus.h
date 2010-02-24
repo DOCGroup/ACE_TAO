@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_SAMPLELOSTSTATUS_H
-#define CIAO_RTI_SAMPLELOSTSTATUS_H
+#ifndef DDS4CCM_SAMPLELOSTSTATUS_H
+#define DDS4CCM_SAMPLELOSTSTATUS_H
 
 #if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::SampleLostStatus DDS_SampleLostStatus;
@@ -30,5 +30,5 @@ operator>>= (const ::DDS_SampleLostStatus &status, ::DDS::SampleLostStatus & dds
 }
 #endif
 
-#endif /* CIAO_RTI_SAMPLELOSTSTATUS_H */
+#endif /* DDS4CCM_SAMPLELOSTSTATUS_H */
 

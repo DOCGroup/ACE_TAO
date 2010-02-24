@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_SAMPLEREJECTEDSTATUS_H
-#define CIAO_RTI_SAMPLEREJECTEDSTATUS_H
+#ifndef DDS4CCM_SAMPLEREJECTEDSTATUS_H
+#define DDS4CCM_SAMPLEREJECTEDSTATUS_H
 
 #include "InstanceHandle_t.h"
 
@@ -54,4 +54,4 @@ operator>>= (const ::DDS::SampleRejectedStatus &status, ::DDS_SampleRejectedStat
 }
 #endif
 
-#endif /* CIAO_RTI_SAMPLEREJECTEDSTATUS_H */
+#endif /* DDS4CCM_SAMPLEREJECTEDSTATUS_H */

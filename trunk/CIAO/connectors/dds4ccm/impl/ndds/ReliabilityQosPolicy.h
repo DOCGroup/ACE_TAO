@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_RELIABILITYSQOSPOLICY_H
-#define CIAO_RTI_RELIABILITYSQOSPOLICY_H
+#ifndef DDS4CCM_RELIABILITYSQOSPOLICY_H
+#define DDS4CCM_RELIABILITYSQOSPOLICY_H
 
 #include "Duration_t.h"
 
@@ -45,4 +45,4 @@ operator>>= (const ::DDS::ReliabilityQosPolicy &qos, ::DDS_ReliabilityQosPolicy 
 }
 #endif
 
-#endif /* CIAO_RTI_RELIABILITYSQOSPOLICY_H */
+#endif /* DDS4CCM_RELIABILITYSQOSPOLICY_H */

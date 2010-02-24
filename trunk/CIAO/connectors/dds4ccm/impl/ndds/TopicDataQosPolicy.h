@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_TOPICDATAQOSPOLICY_H
-#define CIAO_RTI_TOPICDATAQOSPOLICY_H
+#ifndef DDS4CCM_TOPICDATAQOSPOLICY_H
+#define DDS4CCM_TOPICDATAQOSPOLICY_H
 
 #if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::TopicDataQosPolicy DDS_TopicDataQosPolicy;
@@ -48,4 +48,4 @@ operator>>= (const ::DDS::TopicDataQosPolicy &qos, ::DDS_TopicDataQosPolicy & dd
 }
 #endif
 
-#endif /* CIAO_RTI_TOPICDATAQOSPOLICY_H */
+#endif /* DDS4CCM_TOPICDATAQOSPOLICY_H */

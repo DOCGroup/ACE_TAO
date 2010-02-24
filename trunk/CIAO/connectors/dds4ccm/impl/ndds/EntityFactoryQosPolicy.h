@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_ENTITYFACTORYQOSPOLICY_H
-#define CIAO_RTI_ENTITYFACTORYQOSPOLICY_H
+#ifndef DDS4CCM_ENTITYFACTORYQOSPOLICY_H
+#define DDS4CCM_ENTITYFACTORYQOSPOLICY_H
 
 #if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::EntityFactoryQosPolicy DDS_EntityFactoryQosPolicy;
@@ -39,4 +39,4 @@ operator>>= (const ::DDS::EntityFactoryQosPolicy &qos, ::DDS_EntityFactoryQosPol
 }
 #endif
 
-#endif /* CIAO_RTI_ENTITYFACTORYQOSPOLICY_H */
+#endif /* DDS4CCM_ENTITYFACTORYQOSPOLICY_H */

@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_TIMEBASEDFILTERQOSPOLICY_H
-#define CIAO_RTI_TIMEBASEDFILTERQOSPOLICY_H
+#ifndef DDS4CCM_TIMEBASEDFILTERQOSPOLICY_H
+#define DDS4CCM_TIMEBASEDFILTERQOSPOLICY_H
 
 #include "Duration_t.h"
 
@@ -41,4 +41,4 @@ operator>>= (const ::DDS::TimeBasedFilterQosPolicy &qos, ::DDS_TimeBasedFilterQo
 }
 #endif
 
-#endif /* CIAO_RTI_TIMEBASEDFILTERQOSPOLICY_H */
+#endif /* DDS4CCM_TIMEBASEDFILTERQOSPOLICY_H */

@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_DATAWRITERQOS_H
-#define CIAO_RTI_DATAWRITERQOS_H
+#ifndef DDS4CCM_DATAWRITERQOS_H
+#define DDS4CCM_DATAWRITERQOS_H
 
 #include "DurabilityQosPolicy.h"
 #include "DurabilityServiceQosPolicy.h"
@@ -111,4 +111,4 @@ operator>>= (const ::DDS::DataWriterQos &qos, ::DDS_DataWriterQos & ddsqos)
 }
 #endif
 
-#endif /* CIAO_RTI_DATAWRITERQOS_H */
+#endif /* DDS4CCM_DATAWRITERQOS_H */

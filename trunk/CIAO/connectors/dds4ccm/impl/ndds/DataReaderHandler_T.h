@@ -8,8 +8,8 @@
  * received data from DDS.
  */
 
-#ifndef CIAO_RTI_DATAREADERHANDLER_T_H
-#define CIAO_RTI_DATAREADERHANDLER_T_H
+#ifndef DDS4CCM_DATAREADERHANDLER_T_H
+#define DDS4CCM_DATAREADERHANDLER_T_H
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Event_Handler.h"

@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_INCONSISTENTTOPICSTATUS_H
-#define CIAO_RTI_INCONSISTENTTOPICSTATUS_H
+#ifndef DDS4CCM_INCONSISTENTTOPICSTATUS_H
+#define DDS4CCM_INCONSISTENTTOPICSTATUS_H
 
 #if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::InconsistentTopicStatus DDS_InconsistentTopicStatus;
@@ -44,4 +44,4 @@ operator>>= (const ::DDS::InconsistentTopicStatus &status, ::DDS_InconsistentTop
 }
 #endif
 
-#endif /* CIAO_RTI_INCONSISTENTTOPICSTATUS_H */
+#endif /* DDS4CCM_INCONSISTENTTOPICSTATUS_H */

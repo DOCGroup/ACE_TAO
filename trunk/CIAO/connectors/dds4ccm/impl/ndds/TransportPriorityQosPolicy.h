@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_TRANSPORTPRIOTITYQOSPOLICY_H
-#define CIAO_RTI_TRANSPORTPRIOTITYQOSPOLICY_H
+#ifndef DDS4CCM_TRANSPORTPRIOTITYQOSPOLICY_H
+#define DDS4CCM_TRANSPORTPRIOTITYQOSPOLICY_H
 
 #if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::TransportPriorityQosPolicy DDS_TransportPriorityQosPolicy;
@@ -39,4 +39,4 @@ operator>>= (const ::DDS::TransportPriorityQosPolicy &qos, ::DDS_TransportPriori
 }
 #endif
 
-#endif /* CIAO_RTI_TRANSPORTPRIOTITYQOSPOLICY_H */
+#endif /* DDS4CCM_TRANSPORTPRIOTITYQOSPOLICY_H */

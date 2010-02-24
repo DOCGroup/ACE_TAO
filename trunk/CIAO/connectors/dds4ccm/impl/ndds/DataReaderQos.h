@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_DATAREADERQOS_H
-#define CIAO_RTI_DATAREADERQOS_H
+#ifndef DDS4CCM_DATAREADERQOS_H
+#define DDS4CCM_DATAREADERQOS_H
 
 #include "DurabilityQosPolicy.h"
 #include "DeadlineQosPolicy.h"
@@ -96,4 +96,4 @@ operator>>= (const ::DDS::DataReaderQos &qos, ::DDS_DataReaderQos & ddsqos)
 }
 #endif
 
-#endif /* CIAO_RTI_DATAREADERQOS_H */
+#endif /* DDS4CCM_DATAREADERQOS_H */

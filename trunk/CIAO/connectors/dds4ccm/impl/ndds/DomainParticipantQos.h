@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_DOMAINPARTICIPANTQOSPOLICY_H
-#define CIAO_RTI_DOMAINPARTICIPANTQOSPOLICY_H
+#ifndef DDS4CCM_DOMAINPARTICIPANTQOSPOLICY_H
+#define DDS4CCM_DOMAINPARTICIPANTQOSPOLICY_H
 
 #include "UserDataQosPolicy.h"
 #include "EntityFactoryQosPolicy.h"
@@ -45,4 +45,4 @@ operator>>= (const ::DDS::DomainParticipantQos &qos, ::DDS_DomainParticipantQos 
 }
 #endif
 
-#endif /* CIAO_RTI_DOMAINPARTICIPANTQOSPOLICY_H */
+#endif /* DDS4CCM_DOMAINPARTICIPANTQOSPOLICY_H */

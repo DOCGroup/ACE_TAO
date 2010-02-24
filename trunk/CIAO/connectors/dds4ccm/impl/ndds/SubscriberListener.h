@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_SUBSCRIBERLISTENER_H
-#define CIAO_RTI_SUBSCRIBERLISTENER_H
+#ifndef DDS4CCM_SUBSCRIBERLISTENER_H
+#define DDS4CCM_SUBSCRIBERLISTENER_H
 
 #include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
 
