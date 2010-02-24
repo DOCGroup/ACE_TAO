@@ -29,6 +29,95 @@ namespace CIAO
       {
       }
 
+      void
+      RTI_DomainParticipantListener_i::on_inconsistent_topic (
+          ::DDS::Topic_ptr,
+          const ::DDS::InconsistentTopicStatus & )
+      {
+      }
+
+      void
+      RTI_DomainParticipantListener_i::on_requested_deadline_missed (
+          ::DDS::DataReader_ptr ,
+          const ::DDS::RequestedDeadlineMissedStatus & )
+      {
+      }
+
+      void
+      RTI_DomainParticipantListener_i::on_requested_incompatible_qos (
+          ::DDS::DataReader_ptr ,
+          const ::DDS::RequestedIncompatibleQosStatus & )
+      {
+      }
+
+      void
+      RTI_DomainParticipantListener_i::on_sample_rejected (
+          ::DDS::DataReader_ptr ,
+          const ::DDS::SampleRejectedStatus & )
+      {
+      }
+
+      void
+      RTI_DomainParticipantListener_i::on_liveliness_changed (
+          ::DDS::DataReader_ptr ,
+          const ::DDS::LivelinessChangedStatus & )
+      {
+      }
+
+      void
+      RTI_DomainParticipantListener_i::on_data_available (
+          ::DDS::DataReader_ptr )
+      {
+      }
+
+      void
+      RTI_DomainParticipantListener_i::on_subscription_matched (
+          ::DDS::DataReader_ptr ,
+          const ::DDS::SubscriptionMatchedStatus & )
+      {
+      }
+
+      void
+      RTI_DomainParticipantListener_i::on_sample_lost (
+          ::DDS::DataReader_ptr ,
+          const ::DDS::SampleLostStatus & )
+      {
+      }
+
+      void
+      RTI_DomainParticipantListener_i::on_offered_deadline_missed (
+          ::DDS::DataWriter_ptr ,
+          const ::DDS::OfferedDeadlineMissedStatus & )
+      {
+      }
+
+      void
+      RTI_DomainParticipantListener_i::on_offered_incompatible_qos (
+          ::DDS::DataWriter_ptr ,
+          const ::DDS::OfferedIncompatibleQosStatus & )
+      {
+      }
+
+      void
+      RTI_DomainParticipantListener_i::on_liveliness_lost (
+          ::DDS::DataWriter_ptr ,
+          const ::DDS::LivelinessLostStatus & )
+      {
+      }
+
+      void
+      RTI_DomainParticipantListener_i::on_publication_matched (
+          ::DDS::DataWriter_ptr ,
+          const ::DDS::PublicationMatchedStatus & )
+      {
+      }
+
+      void
+      RTI_DomainParticipantListener_i::on_data_on_readers (
+          ::DDS::Subscriber_ptr )
+      {
+      }
+
       ::DDS::DomainParticipantListener_ptr
       RTI_DomainParticipantListener_i::get_domainparticipantlistener (void)
       {
