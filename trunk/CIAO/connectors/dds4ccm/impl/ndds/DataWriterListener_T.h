@@ -48,10 +48,12 @@ namespace CIAO
         ::DDS::DataWriter_ptr ,
         const ::DDS::PublicationMatchedStatus & );
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       virtual void
       on_reliable_reader_activity_changed (
         ::DDS::DataWriter_ptr ,
         const ::DDS::ReliableReaderActivityChangedStatus & );
+#endif
 
       static ::DDS::StatusMask get_mask (void);
     };

@@ -538,7 +538,7 @@ namespace CIAO
         }
 #else
       ::DDS::Topic_var topic = this->impl ()->find_topic (impl_name, timeout);
-      if (rti_topic)
+      if (!CORBA::is_nil (topic.in ())
         {
           ACE_NEW_RETURN (retval,
                           CCM_DDS_Topic_i (topic.in ()),
