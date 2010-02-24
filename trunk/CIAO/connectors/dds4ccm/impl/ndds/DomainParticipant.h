@@ -54,7 +54,7 @@ namespace CIAO
           const char *profile_name,
           ::DDS::PublisherListener_ptr a_listener,
           ::DDS::StatusMask mask);
-#endif          
+#endif  
 
         virtual ::DDS::ReturnCode_t delete_publisher (::DDS::Publisher_ptr p);
 

@@ -175,7 +175,7 @@ namespace CIAO
           const char *profile_name,
           DDSDataReaderListener * rti_drl,
           ::DDS::StatusMask mask);
-#endif          
+#endif  
       };
     }
   }

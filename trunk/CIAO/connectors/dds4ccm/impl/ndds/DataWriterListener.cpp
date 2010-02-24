@@ -37,7 +37,7 @@ namespace CIAO
         this->impl_->on_offered_deadline_missed (dds_writer.in (), ddsstatus);
 #else
         this->impl_->on_offered_deadline_missed (the_writer, status);
-#endif        
+#endif
       }
 
       void
@@ -55,7 +55,7 @@ namespace CIAO
         this->impl_->on_offered_incompatible_qos (dds_writer.in (), ddsstatus);
 #else
         this->impl_->on_offered_incompatible_qos (the_writer, status);
-#endif        
+#endif
       }
 
       void
@@ -73,7 +73,7 @@ namespace CIAO
         this->impl_->on_liveliness_lost (dds_writer.in (), ddsstatus);
 #else
         this->impl_->on_liveliness_lost (the_writer, status);
-#endif        
+#endif
       }
 
       void
@@ -91,7 +91,7 @@ namespace CIAO
         this->impl_->on_publication_matched (dds_writer.in (), ddsstatus);
 #else
         this->impl_->on_publication_matched (the_writer, status);
-#endif        
+#endif
       }
 
       ::DDS::DataWriterListener_ptr
