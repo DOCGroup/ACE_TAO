@@ -1,3 +1,8 @@
+Wed Feb 24 22:07:30 UTC 2010  Steven Stallion  <stallions@ociweb.com>
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+          Added support for alternate CC libraries.
+
 Wed Feb 24 15:15:00 UTC 2010  Simon Massey  <sma at prismtech dot com>
 
         * ace/config-lynxos.h:

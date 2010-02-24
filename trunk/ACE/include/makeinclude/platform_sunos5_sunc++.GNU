@@ -43,7 +43,9 @@
 compat4 ?= 0
 debug ?= 1
 distrib ?= 1
+rwtools ?= 0
 stdcpplib ?= 1
+stlport ?= 0
 threads ?= 1
 versioned_so ?= 1
 tk_reactor ?= 0
@@ -71,8 +73,6 @@ CC_VERSION := $(shell $(CXX) -V 2>&1)
 ifeq (C++ 5.4,$(findstring C++ 5.4,$(CC_VERSION)))
   ACE_CC_PREPROCESSOR = cc
 endif
-
-PLATFORM_STLPORT_CPPFLAGS = -library=stlport4
 
 ifeq ($(atomic_ops_sparc),1)
   CFLAGS += -DACE_HAS_BUILTIN_ATOMIC_OP -DACE_INCLUDE_ATOMIC_OP_SPARC
@@ -125,20 +125,7 @@ ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
     CCFLAGS += -compat=4
     CCFLAGS += -features=rtti
   else
-    #### Use old iostreams.
-    ifeq (C++ 5.0,$(findstring C++ 5.0,$(CC_VERSION)))
-      ifeq (1,$(stdcpplib))
-        CCFLAGS += -library=Cstd
-      else
-        CCFLAGS += -library=iostream,no%Cstd
-        CPPFLAGS += -DACE_USES_OLD_IOSTREAMS
-      endif # stdcpplib
-    else
-      ifeq (0,$(stdcpplib))
-        CCFLAGS += -library=iostream
-        CPPFLAGS += -DACE_USES_OLD_IOSTREAMS
-      endif # stdcpplib
-
+    ifneq (C++ 5.0,$(findstring C++ 5.0,$(CC_VERSION)))
       # If 64-bit build is desired, turn that on. If no code gen options
       # are given to Forte 6, the default build is 32-bit, even when
       # building on a 64-bit system. Specifying xarch=v9 generates code
@@ -227,11 +214,27 @@ include $(ACE_ROOT)/include/makeinclude/platform_sunos5_common.GNU
 
 LIBS            += -lsocket -lrt -laio -ldl -lnsl -lgen -lposix4 -ladm
 
-# Sun Studio will not create a default dependency on libCrun and
-# libCstd when building a shared library with the -G option.
-stlport ?= 0
-ifeq ($(stlport),0)
-  LIBS          += -lCrun -lCstd
+# Support alternate CC libraries (i.e. STLport, Tools.h++, Cstd)
+# See: http://docs.sun.com/app/docs/doc/820-7599/bkaty?a=view
+ifeq ($(stlport),1)
+  PLATFORM_STLPORT_CPPFLAGS += -library=stlport4
+else
+  ifeq ($(rwtools),1)
+    ifeq ($(stdcpplib),1)
+      CC_LIBRARY = rwtools7_std
+    else
+      CC_LIBRARY = rwtools7,iostream
+      CPPFLAGS += -DACE_USES_OLD_IOSTREAMS
+    endif
+  else  # default
+    ifeq ($(stdcpplib),1)
+      CC_LIBRARY = Cstd
+    else
+      CC_LIBRARY = no%Cstd,iostream 
+      CPPFLAGS += -DACE_USES_OLD_IOSTREAMS
+    endif
+  endif
+  CPPFLAGS += -library=$(CC_LIBRARY)
 endif
 
 ### CC 5.10 enables annotation support by default; allow user to override
