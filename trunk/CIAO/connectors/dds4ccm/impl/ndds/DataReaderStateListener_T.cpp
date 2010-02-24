@@ -63,8 +63,8 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
   if (CORBA::is_nil (this->control_.in ()) || this->control_->mode () == ::CCM_DDS::NOT_ENABLED)
     return;
 
-  ::CIAO::DDS4CCM::RTI::RTI_DataReader_i* rd =
-      dynamic_cast < ::CIAO::DDS4CCM::RTI::RTI_DataReader_i*>(rdr);
+  ::CIAO::DDS4CCM::RTI::CCM_DDS_DataReader_i* rd =
+      dynamic_cast < ::CIAO::DDS4CCM::RTI::CCM_DDS_DataReader_i*>(rdr);
   if (!rd)
     {
       /* In this specific case, this will never fail */

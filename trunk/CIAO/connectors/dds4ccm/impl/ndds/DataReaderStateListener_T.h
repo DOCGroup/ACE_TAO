@@ -45,8 +45,7 @@ namespace CIAO
         typename CCM_TYPE::statelistener_type::_var_type listener_;
         ::CCM_DDS::StateListenerControl_var control_;
 
-        typedef ::CIAO::DDS4CCM::RTI::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE> drsh;
-
+        typedef ::CIAO::DDS4CCM::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE> drsh;
       };
     }
   }

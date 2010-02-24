@@ -53,8 +53,8 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
                   ::DDS::DataReaderListener::_nil (),
                   0);
             }
-          ::CIAO::DDS4CCM::RTI::RTI_DataReader_i *rd =
-            dynamic_cast < ::CIAO::DDS4CCM::RTI::RTI_DataReader_i *> (reader.in ());
+          ::CIAO::DDS4CCM::RTI::CCM_DDS_DataReader_i *rd =
+            dynamic_cast < ::CIAO::DDS4CCM::RTI::CCM_DDS_DataReader_i *> (reader.in ());
           this->rti_reader_.set_impl (rd->get_impl ());
           this->data_ = ::DDS::CCM_DataReader::_narrow (reader);
           this->dds_read_.set_impl (reader);

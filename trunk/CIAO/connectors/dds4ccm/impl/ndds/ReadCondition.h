@@ -31,44 +31,41 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    namespace RTI
+    class DDS4CCM_NDDS_IMPL_Export CCM_DDS_ReadCondition_i :
+      public virtual ::DDS::CCM_ReadCondition,
+      public virtual ::CORBA::LocalObject
     {
-      class DDS4CCM_NDDS_IMPL_Export RTI_ReadCondition_i :
-        public virtual ::DDS::CCM_ReadCondition,
-        public virtual ::CORBA::LocalObject
-      {
-      public:
-        // Constructor
-        RTI_ReadCondition_i (void);
+    public:
+      /// Constructor
+      CCM_DDS_ReadCondition_i (void);
 
-        // Destructor
-        virtual ~RTI_ReadCondition_i (void);
+      /// Destructor
+      virtual ~CCM_DDS_ReadCondition_i (void);
 
-        virtual ::CORBA::Boolean
-        get_trigger_value (void);
+      virtual ::CORBA::Boolean
+      get_trigger_value (void);
 
-        virtual ::DDS::SampleStateMask
-        get_sample_state_mask (void);
+      virtual ::DDS::SampleStateMask
+      get_sample_state_mask (void);
 
-        virtual ::DDS::ViewStateMask
-        get_view_state_mask (void);
+      virtual ::DDS::ViewStateMask
+      get_view_state_mask (void);
 
-        virtual ::DDS::InstanceStateMask
-        get_instance_state_mask (void);
+      virtual ::DDS::InstanceStateMask
+      get_instance_state_mask (void);
 
-        virtual ::DDS::DataReader_ptr
-        get_datareader (void);
+      virtual ::DDS::DataReader_ptr
+      get_datareader (void);
 
-        DDSReadCondition * get_impl (void);
+      DDSReadCondition * get_impl (void);
 
-        void set_impl (DDSReadCondition * rc);
+      void set_impl (DDSReadCondition * rc);
 
-      private:
-        DDSReadCondition *impl_;
+    private:
+      DDSReadCondition *impl_;
 
-        DDSReadCondition * impl (void);
-      };
-    }
+      DDSReadCondition * impl (void);
+    };
   }
 }
 

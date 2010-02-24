@@ -58,8 +58,8 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
                     ::DDS::DataReaderListener::_nil (),
                     0);
             }
-          ::CIAO::DDS4CCM::RTI::RTI_DataReader_i *rd =
-            dynamic_cast < ::CIAO::DDS4CCM::RTI::RTI_DataReader_i *> (reader.in ());
+          ::CIAO::DDS4CCM::CCM_DDS_DataReader_i *rd =
+            dynamic_cast < ::CIAO::DDS4CCM::CCM_DDS_DataReader_i *> (reader.in ());
           this->rti_reader_.set_impl (rd->get_impl ());
           this->data_reader_ = ::DDS::CCM_DataReader::_narrow (reader);
           this->dds_read_.set_impl (this->data_reader_.in ());
@@ -95,7 +95,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE>::activate (
         }
       this->rti_reader_.set_listener (
         this->data_listener_.in (),
-        ::CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
+        ::CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
           listener));
     }
   catch (...)

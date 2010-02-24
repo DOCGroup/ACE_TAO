@@ -6,56 +6,56 @@
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::Updater_T (void)
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::Updater_T (void)
   : InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, typename CCM_TYPE::updater_type> (),
     is_global_scope_ (false),
     is_coherent_write_ (false)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::Updater_T");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::Updater_T");
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::~Updater_T (void)
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::~Updater_T (void)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::~Updater_T");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::~Updater_T");
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 bool
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::is_global_scope ()
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::is_global_scope ()
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::is_global_scope");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::is_global_scope");
   return this->is_global_scope_;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 bool
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::is_coherent_write ()
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::is_coherent_write ()
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::is_coherent_write");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::is_coherent_write");
   return this->is_coherent_write_;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::is_coherent_write (bool value)
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::is_coherent_write (bool value)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::is_coherent_write");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::is_coherent_write");
   this->is_coherent_write_ = value;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::create_i (
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::create_i (
   const typename DDS_TYPE::value_type & an_instance,
   ::CCM_DDS::DataNumber_t index)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::create_i");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::create_i");
   DDS_InstanceHandle_t const hnd = this->impl ()->register_instance (an_instance);
   if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
     {
       DDS4CCM_ERROR (1, (LM_ERROR,
-                  ACE_TEXT ("CIAO::DDS4CCM::RTI::Updater_T::create_i: ")
+                  ACE_TEXT ("CIAO::DDS4CCM::Updater_T::create_i: ")
                   ACE_TEXT ("Unable to unregister instance, nil handle.\n")));
       throw CCM_DDS::InternalError (::DDS_RETCODE_ERROR, index);
     }
@@ -63,7 +63,7 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::create_i (
   if (result != DDS_RETCODE_OK)
     {
       DDS4CCM_ERROR (1, (LM_ERROR,
-                  ACE_TEXT ("CIAO::DDS4CCM::RTI::Updater_T::create_i: ")
+                  ACE_TEXT ("CIAO::DDS4CCM::Updater_T::create_i: ")
                   ACE_TEXT ("Unable to update data, error %C.\n"),
                   translate_retcode (result)));
       throw CCM_DDS::InternalError (result, index);
@@ -72,10 +72,10 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::create_i (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::create_one (
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::create_one (
   const typename DDS_TYPE::value_type & an_instance)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::create_one");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::create_one");
   DDS_InstanceHandle_t const hnd = this->impl ()->lookup_instance (an_instance);
   if (!DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
     {
@@ -87,19 +87,19 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::create_one (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::update_i (
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::update_i (
   const typename DDS_TYPE::value_type & an_instance,
   const ::DDS::InstanceHandle_t & instance_handle,
   ::CCM_DDS::DataNumber_t index)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::update_i");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::update_i");
   DDS_InstanceHandle_t hnd = ::DDS_HANDLE_NIL;
   hnd <<= instance_handle;
   ::DDS_ReturnCode_t const result  = this->impl ()->write (an_instance, hnd);
   if (result != DDS_RETCODE_OK)
     {
       DDS4CCM_ERROR (1, (LM_ERROR,
-                  ACE_TEXT ("CIAO::DDS4CCM::RTI::Updater_T::update_i: ")
+                  ACE_TEXT ("CIAO::DDS4CCM::Updater_T::update_i: ")
                   ACE_TEXT ("Unable to update data, error %C.\n"),
                   translate_retcode (result)));
       throw CCM_DDS::InternalError (result, index);
@@ -108,11 +108,11 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::update_i (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::update_one (
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::update_one (
   const typename DDS_TYPE::value_type & an_instance,
   const ::DDS::InstanceHandle_t & instance_handle)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::update_one");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::update_one");
   DDS_InstanceHandle_t hnd = ::DDS_HANDLE_NIL;
   hnd <<= instance_handle;
   if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
@@ -140,19 +140,19 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::update_one (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::delete_i (
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::delete_i (
   const typename DDS_TYPE::value_type & an_instance,
   const ::DDS::InstanceHandle_t & instance_handle,
   ::CCM_DDS::DataNumber_t index)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::delete_i");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::delete_i");
   DDS_InstanceHandle_t hnd = ::DDS_HANDLE_NIL;
   hnd <<= instance_handle;
   ::DDS_ReturnCode_t result = this->impl ()->dispose (an_instance, hnd);
   if (result != DDS_RETCODE_OK)
     {
       DDS4CCM_ERROR (1, (LM_ERROR,
-                  ACE_TEXT ("CIAO::DDS4CCM::RTI::Updater_T::delete_i: ")
+                  ACE_TEXT ("CIAO::DDS4CCM::Updater_T::delete_i: ")
                   ACE_TEXT ("Unable to dispose instance, error %C.\n"),
                   translate_retcode (result)));
       throw CCM_DDS::InternalError (result, index);
@@ -162,7 +162,7 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::delete_i (
   if (result != DDS_RETCODE_OK)
     {
       DDS4CCM_ERROR (1, (LM_ERROR,
-                  ACE_TEXT ("CIAO::DDS4CCM::RTI::Updater_T::delete_i: ")
+                  ACE_TEXT ("CIAO::DDS4CCM::Updater_T::delete_i: ")
                   ACE_TEXT ("Unable to unregister instance, error %C.\n"),
                   translate_retcode (result)));
       throw CCM_DDS::InternalError (result, index);
@@ -171,11 +171,11 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::delete_i (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::delete_one (
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::delete_one (
   const typename DDS_TYPE::value_type & an_instance,
   const ::DDS::InstanceHandle_t & instance_handle)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::delete_one");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::delete_one");
   DDS_InstanceHandle_t hnd = ::DDS_HANDLE_NIL;
   hnd <<= instance_handle;
   if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
@@ -203,10 +203,10 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::delete_one (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::create_many (
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::create_many (
   const typename CCM_TYPE::seq_type& data)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::create_many");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::create_many");
 
   // Check for existance of instances
   this->check_already_created (data);
@@ -222,7 +222,7 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::create_many (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::check_existent (
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::check_existent (
   const typename CCM_TYPE::seq_type& data)
 {
   ::CCM_DDS::NonExistent exception;
@@ -245,7 +245,7 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::check_existent (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::check_already_created (
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::check_already_created (
   const typename CCM_TYPE::seq_type& data)
 {
   ::CCM_DDS::AlreadyCreated exception;
@@ -268,10 +268,10 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::check_already_created (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::update_many (
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::update_many (
   const typename CCM_TYPE::seq_type& data)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::update_many");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::update_many");
 
   // Check for existance of instances
   this->check_existent (data);
@@ -286,10 +286,10 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::update_many (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::delete_many (
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::delete_many (
   const typename CCM_TYPE::seq_type& data)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::delete_many");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::delete_many");
 
   // Check for existance of instances
   this->check_existent (data);

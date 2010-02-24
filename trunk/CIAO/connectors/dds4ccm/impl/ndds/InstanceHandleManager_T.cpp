@@ -6,20 +6,20 @@
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
-CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::InstanceHandleManager_T (void)
+CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::InstanceHandleManager_T (void)
   : impl_ (0)
 {
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
-CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::~InstanceHandleManager_T (void)
+CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::~InstanceHandleManager_T (void)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::InstanceHandleManager_T::~InstanceHandleManager_T");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::InstanceHandleManager_T::~InstanceHandleManager_T");
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
 typename DDS_TYPE::data_writer *
-CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::impl (void)
+CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::impl (void)
 {
   if (this->impl_)
     {
@@ -33,7 +33,7 @@ CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::impl
 
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
 ::DDS::InstanceHandle_t
-CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::
+CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::
   register_instance (const typename DDS_TYPE::value_type & datum)
 {
   ::DDS::InstanceHandle_t dds_handle;
@@ -44,7 +44,7 @@ CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::
 
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
 void
-CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::unregister_instance (
+CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::unregister_instance (
   const typename DDS_TYPE::value_type & datum,
   const ::DDS::InstanceHandle_t & instance_handle)
 {
@@ -55,10 +55,10 @@ CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::unre
 
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
 void
-CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::set_impl (
+CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::set_impl (
   ::DDS::DataWriter_ptr writer)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::InstanceHandleManager_T::set_impl");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::InstanceHandleManager_T::set_impl");
 
   if (::CORBA::is_nil (writer))
     {
@@ -66,11 +66,11 @@ CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::set_
     }
   else
     {
-      RTI_DataWriter_i *rdw = dynamic_cast <RTI_DataWriter_i *> (writer);
+      CCM_DDS_DataWriter_i *rdw = dynamic_cast <CCM_DDS_DataWriter_i *> (writer);
 
       if (rdw == 0)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::InstanceHandleManager_T::data_writer - "
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::InstanceHandleManager_T::data_writer - "
                        "Unable to cast provided DataWriter to servant\n"));
           throw ::CORBA::INTERNAL ();
         }
@@ -79,7 +79,7 @@ CIAO::DDS4CCM::RTI::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::set_
 
       if (!this->impl_)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::InstanceHandleManager_T::data_writer - "
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::InstanceHandleManager_T::data_writer - "
                        "Unable to narrow the provided writer entity to the specific "
                        "type necessary to publish messages\n"));
           throw ::CORBA::INTERNAL ();

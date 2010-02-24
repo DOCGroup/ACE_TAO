@@ -1,7 +1,7 @@
 // $Id$
 #include "dds4ccm/impl/ndds/Coherent_Changes_Guard.h"
 
-CIAO::DDS4CCM::RTI::Coherent_Changes_Guard::Coherent_Changes_Guard (DDSPublisher* p, bool coherent_write) : p_ (p), coherent_write_ (coherent_write)
+CIAO::DDS4CCM::Coherent_Changes_Guard::Coherent_Changes_Guard (DDSPublisher* p, bool coherent_write) : p_ (p), coherent_write_ (coherent_write)
 {
   if (this->coherent_write_)
     {
@@ -9,7 +9,7 @@ CIAO::DDS4CCM::RTI::Coherent_Changes_Guard::Coherent_Changes_Guard (DDSPublisher
     }
 }
 
-CIAO::DDS4CCM::RTI::Coherent_Changes_Guard::~Coherent_Changes_Guard ()
+CIAO::DDS4CCM::Coherent_Changes_Guard::~Coherent_Changes_Guard ()
 {
   if (this->coherent_write_)
     {

@@ -36,43 +36,40 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    namespace RTI
+    class DDS4CCM_NDDS_IMPL_Export CCM_DDS_PublisherListener_i :
+      public virtual ::DDSPublisherListener
     {
-      class DDS4CCM_NDDS_IMPL_Export RTI_PublisherListener_i :
-        public virtual ::DDSPublisherListener
-      {
-      public:
-        // Constructor
-        RTI_PublisherListener_i (::DDS::PublisherListener_ptr p);
+    public:
+      /// Constructor
+      CCM_DDS_PublisherListener_i (::DDS::PublisherListener_ptr p);
 
-        // Destructor
-        virtual ~RTI_PublisherListener_i (void);
+      /// Destructor
+      virtual ~CCM_DDS_PublisherListener_i (void);
 
-        virtual void
-        on_offered_deadline_missed (
-          ::DDSDataWriter *writer,
-          const ::DDS_OfferedDeadlineMissedStatus & status);
+      virtual void
+      on_offered_deadline_missed (
+        ::DDSDataWriter *writer,
+        const ::DDS_OfferedDeadlineMissedStatus & status);
 
-        virtual void
-        on_offered_incompatible_qos (
-          ::DDSDataWriter *writer,
-          const ::DDS_OfferedIncompatibleQosStatus & status);
+      virtual void
+      on_offered_incompatible_qos (
+        ::DDSDataWriter *writer,
+        const ::DDS_OfferedIncompatibleQosStatus & status);
 
-        virtual void
-        on_liveliness_lost (
-          ::DDSDataWriter* writer,
-          const ::DDS_LivelinessLostStatus & status);
+      virtual void
+      on_liveliness_lost (
+        ::DDSDataWriter* writer,
+        const ::DDS_LivelinessLostStatus & status);
 
-        virtual void
-        on_publication_matched (
-          ::DDSDataWriter *writer,
-          const ::DDS_PublicationMatchedStatus & status);
+      virtual void
+      on_publication_matched (
+        ::DDSDataWriter *writer,
+        const ::DDS_PublicationMatchedStatus & status);
 
-        ::DDS::PublisherListener_ptr get_publisher_listener (void);
-      private:
-        ::DDS::PublisherListener_var impl_;
-      };
-    }
+      ::DDS::PublisherListener_ptr get_publisher_listener (void);
+    private:
+      ::DDS::PublisherListener_var impl_;
+    };
   }
 }
 
