@@ -9,7 +9,7 @@
 #include <vector>
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::DataReaderStateListener_T (
+CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::DataReaderStateListener_T (
   typename CCM_TYPE::statelistener_type::_ptr_type listener,
   ::CCM_DDS::PortStatusListener_ptr port_status_listener,
   ::CCM_DDS::StateListenerControl_ptr control,
@@ -18,21 +18,21 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::DataReaderSta
     listener_ (CCM_TYPE::statelistener_type::_duplicate (listener)),
     control_ (::CCM_DDS::StateListenerControl::_duplicate (control))
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::DataReaderStateListener_T::DataReaderStateListener_T");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderStateListener_T::DataReaderStateListener_T");
 }
 
 // Implementation skeleton destructor
 template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::~DataReaderStateListener_T (void)
+CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::~DataReaderStateListener_T (void)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::DataReaderStateListener_T::~DataReaderStateListener_T");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderStateListener_T::~DataReaderStateListener_T");
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(::DDS::DataReader_ptr rdr)
+CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(::DDS::DataReader_ptr rdr)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::DataReaderStateListener_T::on_data_available");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderStateListener_T::on_data_available");
   if (CORBA::is_nil (this->control_.in ()) || this->control_->mode () == ::CCM_DDS::NOT_ENABLED)
       return;
   else
@@ -56,15 +56,15 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (::DDS::DataReader_ptr rdr)
+CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (::DDS::DataReader_ptr rdr)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::DataReaderStateListener_T::on_data_available_i");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderStateListener_T::on_data_available_i");
 
   if (CORBA::is_nil (this->control_.in ()) || this->control_->mode () == ::CCM_DDS::NOT_ENABLED)
     return;
 
-  ::CIAO::DDS4CCM::RTI::CCM_DDS_DataReader_i* rd =
-      dynamic_cast < ::CIAO::DDS4CCM::RTI::CCM_DDS_DataReader_i*>(rdr);
+  ::CIAO::DDS4CCM::CCM_DDS_DataReader_i* rd =
+      dynamic_cast < ::CIAO::DDS4CCM::CCM_DDS_DataReader_i*>(rdr);
   if (!rd)
     {
       /* In this specific case, this will never fail */
@@ -223,7 +223,7 @@ CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_avail
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::StatusMask
-CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
+CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
   typename CCM_TYPE::statelistener_type::_ptr_type listener)
 {
   if (!CORBA::is_nil (listener) || CIAO_debug_level >= 10)
