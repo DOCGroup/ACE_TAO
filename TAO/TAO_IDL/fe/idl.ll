@@ -818,6 +818,16 @@ idl_store_pragma (char *buf)
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_rti_ts_file_names (tmp);
     }
+  else if (ACE_OS::strncmp (buf + 8, "opendds typesupport", 18) == 0)
+    {
+      char *tmp = idl_get_pragma_string (buf);
+      idl_global->add_ciao_oci_ts_file_names (tmp);
+    }
+  else if (ACE_OS::strncmp (buf + 8, "splice typesupport", 17) == 0)
+    {
+      char *tmp = idl_get_pragma_string (buf);
+      idl_global->add_ciao_spl_ts_file_names (tmp);
+    }
 }
 
 /*

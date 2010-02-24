@@ -1978,7 +1978,9 @@ TAO_CodeGen::gen_ident_string (TAO_OutStream *stream) const
 void
 TAO_CodeGen::gen_export_files (void)
 {
-  if (be_global->gen_stub_export_hdr_file ())
+  if (be_global->gen_stub_export_hdr_file ()
+      && be_global->stub_export_macro ()  != 0
+      && be_global->stub_export_include () != 0)
     {
       this->gen_export_file (
         be_global->stub_export_include (),
@@ -1986,7 +1988,9 @@ TAO_CodeGen::gen_export_files (void)
         "stub");
     }
 
-  if (be_global->gen_skel_export_hdr_file ())
+  if (be_global->gen_skel_export_hdr_file ()
+      && be_global->skel_export_macro () != 0
+      && be_global->skel_export_include () != 0)
     {
       this->gen_export_file (
         be_global->skel_export_include (),
@@ -1996,6 +2000,7 @@ TAO_CodeGen::gen_export_files (void)
     }
 
   if (be_global->gen_svnt_export_hdr_file ()
+      && be_global->svnt_export_macro () != 0
       && be_global->svnt_export_include () != 0)
     {
       this->gen_export_file (
@@ -2004,7 +2009,9 @@ TAO_CodeGen::gen_export_files (void)
         "svnt");
     }
 
-  if (be_global->gen_exec_export_hdr_file ())
+  if (be_global->gen_exec_export_hdr_file ()
+      && be_global->exec_export_macro () != 0
+      && be_global->exec_export_include () != 0)
     {
       this->gen_export_file (
         be_global->exec_export_include (),
@@ -2012,7 +2019,9 @@ TAO_CodeGen::gen_export_files (void)
         "exec");
     }
 
-  if (be_global->gen_conn_export_hdr_file ())
+  if (be_global->gen_conn_export_hdr_file ()
+      && be_global->conn_export_macro () != 0
+      && be_global->conn_export_include () != 0)
     {
       this->gen_export_file (
         be_global->conn_export_include (),
@@ -2067,16 +2076,7 @@ TAO_CodeGen::gen_export_file (const char *filename,
       file_str += output_path;
       file_str += '/';
     }
-
-  if (filename == 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO_CodeGen::gen_export_file() - ")
-                  ACE_TEXT ("%C export include not initialized\n"),
-                  msg));
-      return;
-    }
-
+    
   file_str += filename;
 
   TAO_OutStream os;
@@ -3356,16 +3356,18 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
       str.destroy ();
     }
 
-  ACE_Unbounded_Queue<char *> &rti_ts_files =
+  // This will be replaced with something to implement DDS
+  // vendor portability.
+  ACE_Unbounded_Queue<char *> &ts_files =
     idl_global->ciao_rti_ts_file_names ();
 
-  if (rti_ts_files.size () > 0)
+  if (ts_files.size () > 0)
     {
       *this->ciao_conn_header_ << be_nl;
     }
 
   for (ACE_Unbounded_Queue_Iterator<char *> iter (
-         rti_ts_files);
+         ts_files);
        iter.done () == 0;
        iter.advance ())
     {
