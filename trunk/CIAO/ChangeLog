@@ -1,3 +1,9 @@
+Wed Feb 24 14:36:37 UTC 2010  William R. Otte <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tools/Split_Plan/Split_Plan_impl.h:
+
+          Fuzz fix.
+
 Wed Feb 24 13:21:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:

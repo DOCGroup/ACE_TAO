@@ -22,7 +22,7 @@ namespace DAnCE
     typedef ACE_Map_Manager<ACE_CString, Deployment::DeploymentPlan, ACE_Null_Mutex> TNodePlans;
 
     Split_Plan (const Deployment::DeploymentPlan &plan,
-		TNodePlans &sub_plans);
+                TNodePlans &sub_plans);
 
     void split_plan ();
     
