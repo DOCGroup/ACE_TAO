@@ -85,6 +85,7 @@ namespace CIAO
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       return CORBA::string_dup (this->impl ()->get_type_name ());
 #else
+      return this->impl ()->get_type_name ();
 #endif
     }
 
@@ -94,6 +95,7 @@ namespace CIAO
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       return CORBA::string_dup (this->impl ()->get_name ());
 #else
+      return this->impl ()->get_name ();
 #endif
     }
 
