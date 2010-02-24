@@ -1,3 +1,16 @@
+Wed Feb 24 13:21:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
+          Removed all lem interfaces
+
+        * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+          Fixed compile errors
+
+        * connectors/dds4ccm/impl/ndds/DataWriterListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriterListener_T.h:
+          Some callbacks are ndds specific
+
 Wed Feb 24 11:43:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/dds4ccm_ts_default.mpb:
