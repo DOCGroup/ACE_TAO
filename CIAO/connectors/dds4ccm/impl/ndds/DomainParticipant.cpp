@@ -525,7 +525,7 @@ namespace CIAO
         ACE_NEW_RETURN (retval,
                         RTI_Topic_i (),
                         ::DDS::Topic::_nil ());
-        ::DDSTopic* rti_topic = this->impl ()->find_topic (impl_name, timeout);
+        ::DDSTopic* rti_topic = this->impl ()->find_topic (impl_name, ddstimeout);
         if (rti_topic)
           {
             RTI_Topic_i *tp = dynamic_cast < RTI_Topic_i *> (retval.in ());
