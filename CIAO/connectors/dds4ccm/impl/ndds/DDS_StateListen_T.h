@@ -53,9 +53,9 @@ private:
   ::CCM_DDS::CCM_StateListenerControl_var data_control_;
   ::DDS::DataReaderListener_var data_listener_;
   ::CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> dds_read_;
-  ::CIAO::DDS4CCM::RTI::RTI_DataReader_i rti_reader_;
+  ::CIAO::DDS4CCM::CCM_DDS_DataReader_i rti_reader_;
   //@}
-  typedef ::CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE> DataReaderStateListener;
+  typedef ::CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE> DataReaderStateListener;
 };
 
 #include "dds4ccm/impl/ndds/DDS_StateListen_T.cpp"

@@ -7,8 +7,8 @@
 
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::DataReaderHandler_T (
-            typename CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>* drl,
+CIAO::DDS4CCM::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::DataReaderHandler_T (
+            typename CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>* drl,
             ::DDS::DataReader_ptr dr)
       : drl_ (drl),
         dr_ (::DDS::DataReader::_duplicate (dr))
@@ -18,13 +18,13 @@ CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::DataReaderHandler_T
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::~DataReaderHandler_T (void)
+CIAO::DDS4CCM::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::~DataReaderHandler_T (void)
 {
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 int
-CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::handle_exception (ACE_HANDLE)
+CIAO::DDS4CCM::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::handle_exception (ACE_HANDLE)
 {
   try
     {
@@ -37,8 +37,8 @@ CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::handle_exception (A
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::RTI::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE>::DataReaderStateHandler_T (
-            typename CIAO::DDS4CCM::RTI::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>* drl,
+CIAO::DDS4CCM::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE>::DataReaderStateHandler_T (
+            typename CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>* drl,
             ::DDS::DataReader_ptr dr)
       : drl_ (drl),
         dr_ (::DDS::DataReader::_duplicate (dr))
@@ -48,13 +48,13 @@ CIAO::DDS4CCM::RTI::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE>::DataReaderStat
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::RTI::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE>::~DataReaderStateHandler_T (void)
+CIAO::DDS4CCM::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE>::~DataReaderStateHandler_T (void)
 {
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 int
-CIAO::DDS4CCM::RTI::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE>::handle_exception (ACE_HANDLE)
+CIAO::DDS4CCM::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE>::handle_exception (ACE_HANDLE)
 {
   try
     {

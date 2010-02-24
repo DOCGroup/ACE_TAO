@@ -35,61 +35,58 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    namespace RTI
+    class DDS4CCM_NDDS_IMPL_Export CCM_DDS_SubscriberListener_i :
+      public virtual ::DDSSubscriberListener
     {
-      class DDS4CCM_NDDS_IMPL_Export RTI_SubscriberListener_i :
-        public virtual ::DDSSubscriberListener
-      {
-      public:
-        // Constructor
-        RTI_SubscriberListener_i ( ::DDS::SubscriberListener_ptr s);
+    public:
+      /// Constructor
+      CCM_DDS_SubscriberListener_i ( ::DDS::SubscriberListener_ptr s);
 
-        // Destructor
-        virtual ~RTI_SubscriberListener_i (void);
+      /// Destructor
+      virtual ~CCM_DDS_SubscriberListener_i (void);
 
-        virtual void
-        on_requested_deadline_missed (
-          ::DDSDataReader* the_reader,
-          const ::DDS_RequestedDeadlineMissedStatus & status);
+      virtual void
+      on_requested_deadline_missed (
+        ::DDSDataReader* the_reader,
+        const ::DDS_RequestedDeadlineMissedStatus & status);
 
-        virtual void
-        on_requested_incompatible_qos (
-          ::DDSDataReader* the_reader,
-          const ::DDS_RequestedIncompatibleQosStatus & status);
+      virtual void
+      on_requested_incompatible_qos (
+        ::DDSDataReader* the_reader,
+        const ::DDS_RequestedIncompatibleQosStatus & status);
 
-        virtual void
-        on_sample_rejected (
-          ::DDSDataReader* the_reader,
-          const ::DDS_SampleRejectedStatus & status);
+      virtual void
+      on_sample_rejected (
+        ::DDSDataReader* the_reader,
+        const ::DDS_SampleRejectedStatus & status);
 
-        virtual void
-        on_liveliness_changed (
-          ::DDSDataReader* the_reader,
-          const ::DDS_LivelinessChangedStatus & status);
+      virtual void
+      on_liveliness_changed (
+        ::DDSDataReader* the_reader,
+        const ::DDS_LivelinessChangedStatus & status);
 
-        virtual void
-        on_data_available (
-          ::DDSDataReader* the_reader);
+      virtual void
+      on_data_available (
+        ::DDSDataReader* the_reader);
 
-        virtual void
-        on_subscription_matched (
-          ::DDSDataReader* the_reader,
-          const ::DDS_SubscriptionMatchedStatus & status);
+      virtual void
+      on_subscription_matched (
+        ::DDSDataReader* the_reader,
+        const ::DDS_SubscriptionMatchedStatus & status);
 
-        virtual void
-        on_sample_lost (
-          ::DDSDataReader* the_reader,
-          const ::DDS_SampleLostStatus & status);
+      virtual void
+      on_sample_lost (
+        ::DDSDataReader* the_reader,
+        const ::DDS_SampleLostStatus & status);
 
-        virtual void
-        on_data_on_readers (
-          ::DDSSubscriber* the_subscriber);
+      virtual void
+      on_data_on_readers (
+        ::DDSSubscriber* the_subscriber);
 
-        ::DDS::SubscriberListener_ptr get_subscriber_listener (void);
-      private:
-        ::DDS::SubscriberListener_var impl_;
-      };
-    }
+      ::DDS::SubscriberListener_ptr get_subscriber_listener (void);
+    private:
+      ::DDS::SubscriberListener_var impl_;
+    };
   }
 }
 

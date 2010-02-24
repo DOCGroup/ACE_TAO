@@ -54,7 +54,7 @@ private:
   ::DDS::DataReaderListener_var status_;
   ::CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE, FIXED> dds_get_;
   ::CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> dds_read_;
-  ::CIAO::DDS4CCM::RTI::RTI_DataReader_i rti_reader_;
+  ::CIAO::DDS4CCM::CCM_DDS_DataReader_i rti_reader_;
   //@}
 
   typedef ::CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE> PortStatusListener;

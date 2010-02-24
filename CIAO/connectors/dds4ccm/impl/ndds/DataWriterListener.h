@@ -34,39 +34,36 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    namespace RTI
+    class DDS4CCM_NDDS_IMPL_Export CCM_DDS_DataWriterListener_i :
+      public virtual ::DDSDataWriterListener
     {
-      class DDS4CCM_NDDS_IMPL_Export RTI_DataWriterListener_i :
-        public virtual ::DDSDataWriterListener
-      {
-      public:
-        // Constructor
-        RTI_DataWriterListener_i (::DDS::DataWriterListener_ptr p);
+    public:
+      /// Constructor
+      CCM_DDS_DataWriterListener_i (::DDS::DataWriterListener_ptr p);
 
-        // Destructor
-        virtual ~RTI_DataWriterListener_i (void);
+      /// Destructor
+      virtual ~CCM_DDS_DataWriterListener_i (void);
 
-        virtual void on_offered_deadline_missed (
-          ::DDSDataWriter *the_writer,
-          const ::DDS_OfferedDeadlineMissedStatus & status);
+      virtual void on_offered_deadline_missed (
+        ::DDSDataWriter *the_writer,
+        const ::DDS_OfferedDeadlineMissedStatus & status);
 
-        virtual void on_offered_incompatible_qos (
-          ::DDSDataWriter *the_writer,
-          const ::DDS_OfferedIncompatibleQosStatus & status);
+      virtual void on_offered_incompatible_qos (
+        ::DDSDataWriter *the_writer,
+        const ::DDS_OfferedIncompatibleQosStatus & status);
 
-        virtual void on_liveliness_lost (
-          ::DDSDataWriter *the_writer,
-          const ::DDS_LivelinessLostStatus & status);
+      virtual void on_liveliness_lost (
+        ::DDSDataWriter *the_writer,
+        const ::DDS_LivelinessLostStatus & status);
 
-        virtual void on_publication_matched (
-          ::DDSDataWriter *the_writer,
-          const ::DDS_PublicationMatchedStatus & status);
+      virtual void on_publication_matched (
+        ::DDSDataWriter *the_writer,
+        const ::DDS_PublicationMatchedStatus & status);
 
-        ::DDS::DataWriterListener_ptr get_datawriterlistener (void);
-      private:
-        ::DDS::DataWriterListener_var impl_;
-      };
-    }
+      ::DDS::DataWriterListener_ptr get_datawriterlistener (void);
+    private:
+      ::DDS::DataWriterListener_var impl_;
+    };
   }
 }
 

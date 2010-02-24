@@ -226,7 +226,7 @@ CIAO::DDS4CCM::RTI::Getter_Base_T<DDS_TYPE, CCM_TYPE>::set_impl (
     }
   else
     {
-      RTI_DataReader_i *rdr = dynamic_cast <RTI_DataReader_i *> (reader);
+      CCM_DDS_DataReader_i *rdr = dynamic_cast <CCM_DDS_DataReader_i *> (reader);
       if (!rdr)
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Getter_Base_T::data_reader - "

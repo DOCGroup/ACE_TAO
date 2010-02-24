@@ -45,16 +45,14 @@ namespace CIAO
     {
       ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      ACE_NEW_THROW_EX (retval,
-                        ::CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i (),
-                        CORBA::NO_MEMORY ());
       DDSDomainParticipant* p = this->impl ()->get_participant ();
-      ::CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i *rti_dp = dynamic_cast < ::CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i *> (retval.in ());
-      rti_dp->set_impl (p);
+      ACE_NEW_THROW_EX (retval,
+                        CCM_DDS_DomainParticipant_i (p),
+                        CORBA::NO_MEMORY ());
 #else
       ::DDS::DomainParticipant_var p = this->impl ()->get_participant ();
       ACE_NEW_THROW_EX (retval,
-                        RTI_DomainParticipant_i (p.in ()),
+                        CCM_DDS_DomainParticipant_i (p.in ()),
                         CORBA::NO_MEMORY ());
 #endif
       return retval._retn ();
