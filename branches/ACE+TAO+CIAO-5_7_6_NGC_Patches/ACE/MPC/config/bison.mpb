@@ -1,0 +1,14 @@
+// $Id$
+project {
+  requires += bison
+  Define_Custom(BISON) {
+    automatic        = 1
+    command          = bison
+    commandflags     = -d
+    pch_postrule     = 1
+    inputext         = .yy, .y
+    pre_extension    = .tab
+    source_outputext = .c, .cpp, .cxx, .cc, .C
+    header_outputext = .h, .hpp, .hxx, .hh
+  }
+}

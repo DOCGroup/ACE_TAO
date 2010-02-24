@@ -1,0 +1,11 @@
+// $Id$
+
+project {
+  Define_Custom(PO) {
+    command = msgfmt
+    commandflags = -c
+    output_option = -o
+    inputext = .po
+    generic_outputext = .mo
+  }
+}

@@ -1,0 +1,176 @@
+// -*- MPC -*-
+// $Id$
+//
+// Any of these platforms can set using value_template platforms=
+// when generating solutions/projects.
+//
+//platforms = Win32 x64 "Pocket PC 2003 (ARMV4)" "Smartphone 2003 (ARMV4)" \
+//  "Windows Mobile 5.0 Pocket PC SDK (ARMV4I)" "Windows Mobile 5.0 Smartphone SDK (ARMV4I)" \
+//  "Windows Mobile 6 Standard SDK (ARMV4I)"
+
+platforms = Win32 x64
+default_platform = Win32
+
+Win32 {
+  output_subdir    = I386
+}
+
+x64 {
+  output_subdir    = AMD64
+  cpu_defines      = _AMD64_
+  platform_defines = _WIN64
+  TargetMachine    = "17"
+  link_options     = /machine:AMD64
+}
+
+Pocket PC 2003 (ARMV4) {
+  output_subdir    = PocketPC2003_ARMV4
+  cpu_defines      = $(ARCHFAM) $(_ARCHFAM_)
+  platform_defines = UNDER_CE=$(CEVER) _WIN32_WCE=$(CEVER) WINCE $(PLATFORMDEFINES) _WINDOWS _UNICODE UNICODE POCKETPC2003_UI_MODEL
+  link_options     = /subsystem:windowsce,4.20 /machine:ARM /ARMPADCODE
+  lit_libs        += ccrtrtti iphlpapi
+  subsystem        = "0"
+  EnableFunctionLevelLinking = "true"
+  TargetMachine    = "3"
+}
+
+Smartphone 2003 (ARMV4) {
+  output_subdir    = Smartphone2003_ARMV4
+  cpu_defines      = $(ARCHFAM) $(_ARCHFAM_)
+  platform_defines = UNDER_CE=$(CEVER) _WIN32_WCE=$(CEVER) WINCE $(PLATFORMDEFINES) _WINDOWS _UNICODE UNICODE SMARTPHONE2003_UI_MODEL
+  link_options     = /subsystem:windowsce,4.20 /machine:ARM /ARMPADCODE
+  lit_libs        += ccrtrtti iphlpapi
+  subsystem        = "0"
+  EnableFunctionLevelLinking = "true"
+  TargetMachine    = "3"
+}
+
+Windows Mobile 5.0 Pocket PC SDK (ARMV4I) {
+  output_subdir    = WinMobile50_PocketPC_ARMV4I
+  cpu_defines      = $(ARCHFAM) $(_ARCHFAM_)
+  platform_defines = UNDER_CE=$(CEVER) _WIN32_WCE=$(CEVER) WINCE $(PLATFORMDEFINES) _WINDOWS _UNICODE UNICODE POCKETPC2003_UI_MODEL
+  link_options     = /subsystem:windowsce,5.01 /machine:THUMB
+  lit_libs        += iphlpapi
+  subsystem        = "0"
+  TargetMachine    = "3"
+}
+
+Windows Mobile 5.0 Smartphone SDK (ARMV4I) {
+  output_subdir    = WinMobile50_Smartphone_ARMV4I
+  cpu_defines      = $(ARCHFAM) $(_ARCHFAM_)
+  platform_defines = UNDER_CE=$(CEVER) _WIN32_WCE=$(CEVER) WINCE $(PLATFORMDEFINES) _WINDOWS _UNICODE UNICODE SMARTPHONE2005_UI_MODEL
+  link_options     = /subsystem:windowsce,5.01 /machine:THUMB
+  lit_libs        += iphlpapi
+  subsystem        = "0"
+  TargetMachine    = "3"
+}
+
+Windows Mobile 6 Standard SDK (ARMV4I) {
+  unicode          = 1
+  output_subdir    = WinMobile60_SDK_ARMV4I
+  cpu_defines      = $(ARCHFAM) $(_ARCHFAM_)
+  platform_defines = _WIN32_WCE=$(CEVER) UNDER_CE=$(CEVER) WINCE _WINDOWS $(PLATFORMDEFINES)
+  link_options     = /subsystem:windowsce,5.02
+  lit_libs        += iphlpapi
+  subsystem        = "0"
+  TargetMachine    = "0"
+}
+
+Windows Mobile 6 Professional SDK (ARMV4I) {
+  unicode          = 1
+  output_subdir    = WinMobile60_SDK_ARMV4I
+  cpu_defines      = $(ARCHFAM) $(_ARCHFAM_)
+  platform_defines = _WIN32_WCE=$(CEVER) UNDER_CE=$(CEVER) WINCE _WINDOWS $(PLATFORMDEFINES)
+  link_options     = /subsystem:windowsce,5.02
+  lit_libs        += iphlpapi
+  subsystem        = "0"
+  TargetMachine    = "0"
+}
+
+SuperSonic_CE6 (ARMV4I) {
+  unicode              = 1
+  output_subdir        = SUPERSONIC_CE6_ARMV4I
+  cpu_defines          = $(ARCHFAM) $(_ARCHFAM_)
+  platform_defines     = UNDER_CE=$(CEVER) _WIN32_WCE=$(CEVER) WINCE _WINDOWS _UNICODE UNICODE
+  link_options         = /subsystem:windowsce,6.0 /machine:THUMB
+  lit_libs            += iphlpapi
+  subsystem            = "0"
+  TargetMachine        = "3"
+}
+
+eBox4300_WINCE600_SDK (x86) {
+  unicode          = 1
+  output_subdir    = eBox4300_WINCE600_SDK
+  cpu_defines      = $(ARCHFAM) $(_ARCHFAM_)
+  platform_defines = UNDER_CE=$(CEVER) _WIN32_WCE=$(CEVER) WINCE _WINDOWS _UNICODE UNICODE
+  link_options     = /subsystem:windowsce,6.0
+  lit_libs        += iphlpapi
+  subsystem        = "0"
+  TargetMachine    = "0"
+}
+
+eBox2300_WINCE600_SDK (x86) {
+  unicode          = 1
+  output_subdir    = eBox2300_WINCE600_SDK
+  cpu_defines      = $(ARCHFAM) $(_ARCHFAM_)
+  platform_defines = UNDER_CE=$(CEVER) _WIN32_WCE=$(CEVER) WINCE _WINDOWS _UNICODE UNICODE
+  link_options     = /subsystem:windowsce,6.0
+  lit_libs        += iphlpapi
+  subsystem        = "0"
+  TargetMachine    = "0"
+}
+
+Beckhoff_HMI_500 (x86) {
+  unicode          = 1
+  output_subdir    = Beckhoff_HMI_500 (x86)
+  cpu_defines      = $(ARCHFAM) $(_ARCHFAM_)
+  platform_defines = UNDER_CE=$(CEVER) _WIN32_WCE=$(CEVER) WINCE _WINDOWS _UNICODE UNICODE
+  link_options     = /subsystem:windowsce,5.00
+  lit_libs        += iphlpapi
+  subsystem        = "0"
+  TargetMachine    = "0"
+}
+
+Beckhoff_HMI_500 (ARMV4I) {
+  unicode          = 1
+  output_subdir    = Beckhoff_HMI_500 (ARMV4i)
+  cpu_defines      = $(ARCHFAM) $(_ARCHFAM_)
+  platform_defines = UNDER_CE=$(CEVER) _WIN32_WCE=$(CEVER) WINCE _WINDOWS _UNICODE UNICODE
+  link_options     = /subsystem:windowsce,5.00
+  lit_libs        += iphlpapi
+  subsystem        = "0"
+  TargetMachine    = "0"
+}
+
+Beckhoff_HMI_600 (x86) {
+  unicode          = 1
+  output_subdir    = Beckhoff_HMI_600 (x86)
+  cpu_defines      = $(ARCHFAM) $(_ARCHFAM_)
+  platform_defines = UNDER_CE=$(CEVER) _WIN32_WCE=$(CEVER) WINCE _WINDOWS _UNICODE UNICODE
+  link_options     = /subsystem:windowsce,6.00
+  lit_libs        += iphlpapi
+  subsystem        = "0"
+  TargetMachine    = "0"
+}
+
+BR APC620 PPC700 CE 5.00 V1.2 (x86) {
+  unicode          = 1
+  output_subdir    = BR APC620 + PPC700 CE 5.00 V1.2 (x86)
+  cpu_defines      = $(ARCHFAM) $(_ARCHFAM_)
+  platform_defines = UNDER_CE=$(CEVER) _WIN32_WCE=$(CEVER) WINCE _WINDOWS _UNICODE UNICODE
+  link_options     = /subsystem:windowsce,5.00
+  lit_libs        += iphlpapi
+  subsystem        = "0"
+  TargetMachine    = "0"
+}
+
+STANDARDSDK_500 (x86) {
+  unicode          = 1
+  output_subdir    = STANDARDSDK_500_x86
+  cpu_defines      = $(ARCHFAM) $(_ARCHFAM_)
+  platform_defines = UNDER_CE=$(CEVER) _WIN32_WCE=$(CEVER) WINCE _WINDOWS _UNICODE UNICODE
+  link_options     = /subsystem:windowsce,5.00
+  lit_libs        += iphlpapi
+  subsystem        = "0"
+  TargetMachine    = "0"
+}

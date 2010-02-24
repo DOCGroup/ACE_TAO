@@ -1,0 +1,15 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  requires += ndds
+  libs     += nddscpp nddsc nddscore
+  libpaths += $(NDDSHOME)/lib/$(NDDSARCHITECTURE)
+  includes += $(NDDSHOME)/include $(NDDSHOME)/include/ndds
+
+  specific(prop:windows) {
+    macros += RTI_WIN32 NDDS_DLL_VARIABLE
+  } else {
+    macros += RTI_UNIX
+  }
+}

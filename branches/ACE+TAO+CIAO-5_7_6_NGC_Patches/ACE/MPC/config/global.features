@@ -1,0 +1,39 @@
+// The global features file contains the default feature settings.
+// By default, if a feature isn't listed here then it is enabled.
+// If it is listed, then the value assigned to the feature is interpreted
+// as a boolean value.  You really shouldn't have to edit this file except
+// to change the defaults.  If you want to override these values you can do
+// one of two things.
+//
+// 1) Create a default.features in this directory with the features you
+//    want enabled or disabled.
+// 2) Create a feature file anywhere you like with the features you want and
+//    use the -feature_file option to specify where it is located.
+//
+// Feature definitions from this file are always overridden by the -features
+// option.
+//
+// By default we disable these.
+boost         = 0
+bzip2         = 0
+erlang        = 0
+java          = 0
+mfc           = 0
+libpng        = 0
+python        = 0
+qt            = 0
+rpc           = 0
+swig_java     = 0
+swig_perl     = 0
+swig_php      = 0
+swig_python   = 0
+swig_ruby     = 0
+swig_tcl      = 0
+uses_wchar    = 0 // i.e., unicode
+xalanc        = 0
+xerces        = 0
+xerces2       = 0
+xerces3       = 0
+ziparchive    = 0
+zlib          = 0
+zzip          = 0

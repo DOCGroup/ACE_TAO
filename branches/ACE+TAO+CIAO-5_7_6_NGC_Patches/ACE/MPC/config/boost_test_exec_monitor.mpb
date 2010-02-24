@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+project: boost_base {
+  specific(!prop:windows) {
+    lit_libs += $(BOOST_STATIC_LIB_PREFIX)boost_test_exec_monitor$(BOOST_CFG)
+  }
+}

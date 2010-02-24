@@ -1,0 +1,37 @@
+//
+// Document template variables that are common to all or most templates.
+// Please try to keep this alphabetically sorted.
+//
+compile_flags = This holds flags passed to the compiler for source files.
+configurations = This determines build configurations (ex. Debug, Release, etc.)
+cwd = The current working directory of the project.
+delaysign = Set this to true or false to enable delay signing.
+dll_ext = The dynamic library extension.  The value for this depends on the project type.
+exe_ext = The executable extension.  The value for this depends on the project type.
+forcount = The count of the number of times iteration has occurred within the current foreach loop.  The base value is determined by the foreach declaration.
+intermediate_dir = A configuration specific location where object files are placed.
+language = The MPC language setting at the time of project generation.
+lib_ext = The static or impl library extension.  The value for this depends on the project type.
+lib_modifier = Used to modifier a library name.  The value of this is appendend to the library name before the extension is added.
+lib_prefix = The dynamic and static library prefix.  The value for this depends on the project type.
+libname_prefix = This is a prefix that will be prepended to the actual library name (ex. libXY.so where X is libname_prefix and Y is sharedname).
+linkflags = Flags that are passed during the creation of dynamic libraries and executables.
+macro_for_lib_modifier = A boolean value to determine whether the lib_modifier is added as MPC_LIB_MODIFIER to the compiler flags
+make_coexistence = This will be true if the -make_coexistence option was passed to MPC.
+need_staticflags = This will be true if the project is a static project.
+optimize = Indicate if the project will be optimized or not.
+output_dir = A configuration specific output directory for output targets.
+pch_defines = C preprocessor macros that indicate that precompiled headers will be used.
+platforms = This determines for which platform the project will be built.
+prelink = If supported by the build tool, this specifies a command to run prior to linking the target.
+project_file = The name of the current project file being created.
+project_name = The name of the current project being processed.
+stackcommitsize = The Stack Commit Size for Windows executables.
+stackreservesize = The Stack Reserve Size for Windows executables.
+type_is_binary = This will be true is the project is a dynamic library or an executable.
+type_is_dynamic = This will be true if the project is a dynamic library.
+type_is_static = This will be true if the project is a static project.
+use_lib_modifier = A boolean value to determine whether the 'lib_modifier' setting will be appended to the library name.
+use_exe_modifier = A boolean value to determine whether the 'lib_modifier' setting will be appended to the executable name.
+win_version = This is a variation of the 'version' project value that has been translated into a value usable on Windows.
+windows_style = Controls the location of Debug executables and all installed executables.  If it is set, the Debug executable is placed in the Debug directory.

@@ -1,0 +1,19 @@
+// $Id$
+
+project {
+  custom_only = 1
+
+  specific {
+    IIOPNET_BIN = $(IIOPNET_ROOT)/bin/IDLToCLSCompiler
+    IIOPNET_DEP = $(IIOPNET_ROOT)/bin/IDLToCLSCompiler
+  }
+
+  Define_Custom (IDL) {
+    automatic             = 0
+    command               = <%quote%>$(IIOPNET_BIN)<%quote%>
+    dependent             = <%quote%>$(IIOPNET_DEP)<%quote%>
+    inputext              = .idl
+    generic_outputext     = .dll
+    keyword iiopnetflags  = commandflags
+  }
+}

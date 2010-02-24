@@ -1,0 +1,29 @@
+// -*- MPC -*-
+// $Id$
+
+conditional_include "common"
+
+lib_prefix =
+lib_ext    = .lib
+dll_ext    = .dll
+exe_ext    = .out
+
+configurations = Debug Release
+common_defines =
+rtti           = 1
+big_endian     =
+windows_style  = 1
+
+Release {
+  optimize         = 1
+  output_dir       = Release
+  intermediate_dir = Release
+}
+
+Debug {
+  optimize         =
+  defines          = _DEBUG
+  output_dir       = Debug
+  intermediate_dir = Debug
+  lib_modifier     = d
+}

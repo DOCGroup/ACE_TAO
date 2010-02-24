@@ -1,0 +1,11 @@
+// -*- MPC -*-
+// $Id$
+
+// This project also requires Qt, however it will work with both
+// Qt 3.3.x and Qt 4.x so we will leave it up to the user to pull
+// in the right Qt base projects.
+project {
+  includes += $(QWT_ROOT)/include
+  libpaths += $(QWT_ROOT)/lib
+  lit_libs += qwt
+}

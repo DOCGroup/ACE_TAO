@@ -1,0 +1,306 @@
+Running the Workspace Generator
+-------------------------------
+
+The most common way to use the Make Project Creator is to run the
+workspace generator (mwc.pl).  This script will generate projects and a
+single workspace that contains the generated projects.  If no input file
+(.mwc file) is specified, it will recurse into the directory in which the
+script was started.  It looks for .mpc files and generates a project or
+projects for each one found.
+
+
+Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
+              [-ti <dll | lib | dll_exe | lib_exe>:<file>] [-hierarchy]
+              [-template <file>] [-relative NAME=VAL] [-base <project>]
+              [-noreldefs] [-notoplevel] [-static] [-genins] [-use_env]
+              [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
+              [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
+              [-make_coexistence] [-feature_file <file name>]
+              [-expand_vars] [-features <feature definitions>] [-gendot]
+              [-exclude <directories>] [-name_modifier <pattern>]
+              [-apply_project] [-version] [-into <directory>]
+              [-gfeature_file <file name>] [-nocomments] [-for_eclipse]
+              [-relative_file <file name>]
+              [-language <cplusplus | csharp | java | vb>]
+              [-type <automake | bcb2007 | bcb2009 | bds4 | bmake | cc | em3 |
+                      ghs |html | make | nmake | sle | vc6 | vc7 | vc71 |
+                      vc8 |vc9 | vc10 | wb26>]
+              [files]
+
+       -base           Add <project> as a base project to each generated
+                       project file.  Do not provide a file extension, the
+                       .mpb extension will be tried first; if that fails the
+                       .mpc extension will be tried.
+       -exclude        Use this option to exclude directories or files when
+                       searching for input files.
+       -expand_vars    Perform direct expansion, instead of performing relative
+                       replacement with either -use_env or -relative options.
+       -feature_file   Specifies the feature file to read before processing.
+                       The default feature file is default.features under the
+                       config directory.
+       -features       Specifies the feature list to set before processing.
+       -for_eclipse    Generate files for use with eclipse.  This is only
+                       useful for make based project types.
+       -gendot         Generate .dot files for use with Graphviz.
+       -genins         Generate .ins files for use with prj_install.pl.
+       -gfeature_file  Specifies the global feature file.  The
+                       default value is global.features under the
+                       config directory.
+       -global         Specifies the global input file.  Values stored
+                       within this file are applied to all projects.
+       -hierarchy      Generate a workspace in a hierarchical fashion.
+       -include        Specifies a directory to search when looking for base
+                       projects, template input files and templates.  This
+                       option can be used multiple times to add directories.
+       -into           Place all output files in a mirrored directory
+                       structure starting at <directory>.  This should be a
+                       full path.
+       -language       Specify the language preference; possible values are
+                       [cplusplus, csharp, java, vb].  The default is
+                       cplusplus.
+       -make_coexistence If multiple 'make' based project types are
+                       generated, they will be named such that they can coexist.
+       -name_modifier  Modify output names.  The pattern passed to this
+                       parameter will have the '*' portion replaced with the
+                       actual output name.  Ex. *_Static
+       -apply_project  When used in conjunction with -name_modifier, it applies
+                       the name modifier to the project name also.
+       -nocomments     Do not place comments in the generated files.
+       -noreldefs      Do not try to generate default relative definitions.
+       -notoplevel     Do not generate the top level target file.  Files
+                       are still process, but no top level file is created.
+       -recurse        Recurse from the current directory and generate from
+                       all found input files.
+       -relative       Any $() variable in an mpc file that is matched to NAME
+                       is replaced by VAL only if VAL can be made into a
+                       relative path based on the current working directory.
+                       This option can be used multiple times to add multiple
+                       variables.
+       -relative_file  Specifies the relative file to read before processing.
+                       The default feature file is default.rel under the
+                       config directory.
+       -static         Specifies that only static projects will be generated.
+                       By default, only dynamic projects are generated.
+       -template       Specifies the template name (with no extension).
+       -ti             Specifies the template input file (with no extension)
+                       for the specific type (ex. -ti dll_exe:vc8exe).
+       -type           Specifies the type of project file to generate.  This
+                       option can be used multiple times to generate multiple
+                       types.  There is no longer a default.
+       -use_env        Use environment variables for all uses of $() instead
+                       of the relative replacement values.
+       -value_project  This option allows modification of a project variable
+                       assignment .  Use += to add VAL to the NAME's value.
+                       Use -= to subtract and = to override the value.
+                       This can be used to introduce new name value pairs to
+                       a project.  However, it must be a valid project
+                       assignment.
+       -value_template This option allows modification of a template input
+                       name value pair.  Use += to add VAL to the NAME's
+                       value.  Use -= to subtract and = to override the value.
+       -version        Print the MPC version and exit.
+
+The default global input file (config/global.mpb) is used if -global
+is not specified on the command line.
+
+Two include directories are used by default (config and templates).
+
+Each project creator has a default template input file for each type of
+project (dll_exe, lib_exe, dll, lib).  You can override the default template
+input file name with the -ti option.  The file must have a 'mpt' extension
+and must reside within the include search directories.  NOTE: the 'lib' and
+the 'lib_exe' template input files are only used when MPC is generating
+static projects.
+
+The -exclude option is used to exclude directories when searching for input
+files.  NOTE: This option has no effect when used with mpc.pl.
+
+The -gendot option (useful only to mwc.pl) will result in the generation of
+.dot files for each workspace processed.  Each .dot file will contain
+information that can be fed to Graphvis to display the dependency
+information for the various projects found within the workspace.
+
+The -genins option will cause MPC to generate an "install" file after
+processing each project that can be used in conjunction with the
+prj_install.pl script to install different parts of the project (such as
+header files) into an alternate location.
+
+The -hierarchy option is used to force the generation of a hierarchical
+workspace at each directory level in between the toplevel directory and the
+location of the mpc file that is being processed.  This is the default for
+"make" based workspace creators.  NOTE: This option only has an effect when
+passed to mwc.pl.
+
+The -template option is used to override the default template name.  This
+file should have a .mpd extension and sit in one of the include search
+directories.  NOTE: The -template option overrides the template file for all
+types specified.
+
+The -static option can be used to generate only static project files.
+
+The -static_only option has been replaced by the -static option.  Currently,
+MPC only supports generating dynamic projects or static projects, but not
+both during the same run.  To generate them both you must run MPC twice, once
+with the -static option and once without.  Additionally, the vc6, em3, vc7,
+vc71 and vc8 project names will no longer automatically have _Static
+appended to the project name when generating static projects.  This can
+still be achieved by using the -name_modifier option.
+
+When generating static projects, inter-project dependencies will not be
+generated for libraries within vc6, em3, vc7 and vc71 workspaces.  The
+reason is due to the fact that each static library that depended upon another
+would be combined at the library creation stage, resulting in extremely large
+libraries.  Dependencies are handled correctly by vc8 and later.
+
+This behavior can be modified by setting the
+MPC_DEPENDENCY_COMBINED_STATIC_LIBRARY environment variable.  It will force
+MPC to generate inter-project dependencies for libraries within a single
+workspace.
+
+The -name_modifier option can be used to modify the generated workspace or
+project name.  The parameter to the -name_modifier option is a pattern where
+an asterisk (*) within the pattern is replaced by the actual workspace or
+project name.  Thus, passing -name_modifier '*_Static' to mwc.pl will result
+in all workspace and project names ending in _Static. (Ex. FOO_Static.dsw,
+FOO_Static.dsp, etc.)
+
+The -apply_project option, when used in conjunction with the -name_modifier
+option, causes MPC to apply the name modifier to the project name in
+addition to the workspace and project file names.  This option has no effect
+outside the scope of the -name_modifier option.
+
+The -noreldefs option says not to generate default relative definitions for
+*_ROOT (which comes from environment variables).
+
+The -notoplevel option tells mwc.pl to generate all projects for a
+workspace, but do not generate the top level workspace file.  For mpc.pl, it
+says process the mpc files, but do not generate the project files.
+
+The -recurse option is used to search for all files that could be processed
+from the current directory and its sub-directories.  If directories are
+passed in a comma separated list (e.g -recurse=examples,apps,TAO), then
+those directories will be excluded when searching for project or workspace
+files.
+
+The -type option can be used multiple times on the same command line to
+generate projects of different types per mpc file.  The default type for
+this version of MPC is 'make'.  NOTE: The -ti option overrides the template
+input file for all types specified.
+
+The -feature_file specifies a file to be read that enables or disables
+features.  These feature names can be anything, but they should correspond
+to values used for the 'requires' and 'avoids' keywords.  If a feature is
+required and is not enable then the project will not be created.  If a
+feature is to be avoided and it is enabled then the project will not be
+created.
+
+The -features specifies additional list of features values. Values
+specified by this option overwrite values from features files.
+Example:
+mwc.pl -features "qos=1,ssl=0" ace.mwc
+
+The -value_template option can be used to set various template variables.
+If a template variable value will contain spaces, it is best to enclose the
+whole setting in double quotes and use single quotes within the value to
+retain spaces (if it is necessary).  Below is an example where the value
+will have spaces and some spaces need to be retained.
+
+mwc.pl -value_template "configurations=Debug Release 'Memcheck Debug' 'Memcheck Release'"
+
+
+Running only the Project Generator
+----------------------------------
+
+Most of what is stated about the Workspace Generator applies to the Project
+Generator except that it only generates projects.  If an input file (.mpc
+file) is not provided, the project creator will attempt to create a default
+project in the directory from which the script was started.
+
+
+MPC Codebase Configuration File
+-------------------------------
+This configuration file can be used to specify alternate locations for the
+MPC Configuration File.  If a base.cfg is found underneath the 'config'
+directory where MPC is executed, it will be read to determine the location
+of MPC.cfg based on the directory in which MPC was started.
+
+For example, if $MPC_ROOT/mwc.pl is run under /foo/bar_root/src and
+$MPC_ROOT/config/base.cfg contained:
+
+/foo/bar_root = /foo/bar_root/MPC/config
+
+MPC would attempt to open and read /foo/bar_root/MPC/config/MPC.cfg as the
+MPC Configuration File.  If the base configuration file is not present,
+MPC will try to use $MPC_ROOT/config/MPC.cfg as the MPC Configuration File.
+
+You may reference environment variables, accessed by $NAME, on either side of
+the equals sign.
+
+
+MPC Configuration File
+----------------------
+In an effort to move away from the use of environment variables, a
+configuration file has been introduced.  The configuration file (MPC.cfg)
+can contain settings to provide command line options, control logging and
+direct MPC to dynamic project types.
+
+The following keywords are allowed in the configuration file, which will be
+read from the 'config' directory of MPC.
+
+command_line     - Provide additional command line options to MPC.  The
+                   value of this setting will be prepended to the options
+                   passed to mwc.pl or mpc.pl.
+default_type     - Provide a single project type (as specified by the -type
+                   option) as the default project type.
+dynamic_types    - This comma separated list points to directories in which
+                   MPC will search for Perl modules to implement additional
+                   MPC project types, base projects or template files.  This
+                   setting can be used to augment or replace functionality
+                   in MPC.  For each suitable directory found, it will add a
+                   'modules' include path for Perl to find modules, add a
+                   'config' include path to locate base projects and a
+                   'template' include path to find MPC templates.
+includes         - Similar to the -include command line option, it adds the
+                   list of comma separated paths to the MPC include search
+                   paths.
+logging          - If this setting contains info=1, informational messages
+                   will be printed.  If it contains warn=1, warning messages
+                   will be printed.  If it contains diag=1, diagnostic
+                   messages will be printed.  If it contains debug=1, debug
+                   message will be printed.  And lastly, if it contains
+                   detail=1, detail messages will be printed.  If it
+                   contains none of these, MPC will not print out any
+                   information or warnings when processing projects or
+                   workspaces.  Errors are always printed if any are
+                   encountered.  The default is warn=1 diag=1 detail=1.
+main_functions   - Provide additional main functions to be recognized in
+                   conjunction with automatic executable project
+                   recognition.  The value assigned should be of the form
+                   <language>:<func name>[, <language>:<func name>]*.  A
+                   function can be specified for all languages by only
+                   providing the function name.
+verbose_ordering - If this is set, mwc.pl will warn the user about
+                   references to projects in the 'after' keyword that have
+                   not been processed.
+
+Below is an example configuration file:
+
+// MPC configuration file
+dynamic_types = $ACE_ROOT/bin/MakeProjectCreator
+logging = info=1 warn=1
+verbose_ordering = 1
+
+
+Environment Variables
+---------------------
+
+MPC_DEPENDENCY_COMBINED_STATIC_LIBRARY - See the -static section above.
+
+MPC_GHS_UNIX - This environment variable is only meaningful when generating
+the ghs project files.  By default, the ghs type assumes that it is for
+Windows.  If this is not the case, set this environment variable prior to
+running MPC.
+
+MPC_USE_WIN_COMMANDS - Setting this causes the Windows related pseudo
+template variables to be used regardless of the type of project being
+generated.

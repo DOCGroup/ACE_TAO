@@ -1,0 +1,32 @@
+// -*- MPC -*-
+// $Id$
+
+// openssl is a completely different feature than ssl.
+// Currently ssl uses openssl, and openssl is enabled by
+// default. If we ever add a new ssl library, then you
+// would likely enable only one ssl library feature.
+feature(openssl) {
+  includes += $(SSL_ROOT)/include
+  libpaths += $(SSL_ROOT)/lib
+
+  specific(prop:windows) {
+    lit_libs += libeay32 ssleay32
+    includes += $(SSL_ROOT)/inc32
+    libpaths += $(SSL_ROOT)/out32dll $(SSL_ROOT)/out32
+  } else {
+    lit_libs += ssl crypto
+
+    // Some Linux OpenSSL installations compile in Kerberos support.  Add
+    // the Kerberos include path to preprocessor include path.
+    includes += /usr/kerberos/include
+  }
+
+  // Some prepackaged installations of OpenSSL have libraries in different
+  // locations.
+  specific(prop:borland) {
+    libpaths += $(SSL_ROOT)/lib/Builder5
+  }
+  specific(prop:microsoft) {
+    libpaths += $(SSL_ROOT)/lib/VC
+  }
+}

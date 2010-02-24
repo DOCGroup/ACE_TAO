@@ -1,0 +1,11 @@
+// -*- MPC -*-
+// $Id$
+
+project: boost_base {
+  // Starting with boost 1.34 auto linking is enabled.
+  // vc6 and vc7 are added to this list because it is likely that
+  // any vc6 or vc7 users are using an older pre-auto-linking version.
+  specific(!prop:windows, vc6, vc7) {
+    lit_libs += $(BOOST_STATIC_LIB_PREFIX)boost_unit_test_framework$(BOOST_CFG)
+  }
+}

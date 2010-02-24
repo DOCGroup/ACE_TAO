@@ -1,0 +1,20 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  Define_Custom(SWIG) {
+    automatic         = 1
+    command           = swig
+    commandflags      = -python -c++
+    inputext          = .swg, .swig, .i
+    source_outputext  = _wrap.cxx
+    generic_outputext = .py
+  }
+  requires += swig_python
+  includes += $(PYTHON_INCLUDE)/.
+  libpaths += $(PYTHON_LIBPATH)/.
+
+  specific {
+    lib_prefix =
+  }
+}

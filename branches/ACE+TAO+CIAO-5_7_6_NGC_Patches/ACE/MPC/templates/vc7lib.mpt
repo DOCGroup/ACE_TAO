@@ -1,0 +1,97 @@
+// -*- MPC -*-
+// $Id$
+
+conditional_include "common"
+conditional_include "windowscommon"
+
+configurations     = Debug Release
+common_defines     = WIN32 _WINDOWS
+configuration_type = 4
+output_subdir      = I386
+
+Release {
+  optimize         = 3
+  defines          = NDEBUG
+  output_dir       = Static_Release
+  intermediate_dir = Static_Release
+  lib_modifier     = s
+}
+
+Debug {
+  optimize         =
+  debug_prj        = 1
+  defines          = _DEBUG
+  output_dir       = Static_Debug
+  intermediate_dir = Static_Debug
+  lib_modifier     = sd
+  pdbc             = 1
+}
+
+Memcheck Release {
+  optimize           = 3
+  defines            = NDEBUG
+  output_dir         = Static_Release
+  intermediate_dir   = Static_Release
+  lib_modifier       = s
+  BasicRuntimeChecks = 0
+  FixedBaseAddress   = 1
+}
+
+Memcheck Debug {
+  optimize           =
+  debug_prj          = 1
+  defines            = _DEBUG
+  output_dir         = Static_Debug
+  intermediate_dir   = Static_Debug
+  lib_modifier       = sd
+  pdbc               = 1
+  BasicRuntimeChecks = 0
+  FixedBaseAddress   = 1
+}
+
+MFC Release {
+  optimize         = 3
+  defines          = NDEBUG
+  output_dir       = Static_MFC_Release
+  intermediate_dir = Static_MFC_Release
+  lib_modifier     = mfcs
+  use_mfc          = 2
+}
+
+MFC Debug {
+  optimize         =
+  debug_prj        = 1
+  defines          = _DEBUG
+  output_dir       = Static_MFC_Debug
+  intermediate_dir = Static_MFC_Debug
+  lib_modifier     = mfcsd
+  pdbc             = 1
+  use_mfc          = 2
+}
+
+ETS Release {
+  optimize         = 3
+  defines          = NDEBUG
+  output_dir       = ETS_Release
+  intermediate_dir = ETS_Release
+  lib_modifier     = s
+  runtime_library  = 2
+  GenerateMapFile  = TRUE
+  lit_libs         += etsapi wsock32
+}
+
+ETS Debug {
+  optimize         =
+  defines          = _DEBUG
+  output_dir       = ETS_Debug
+  intermediate_dir = ETS_Debug
+  lib_modifier     = sd
+  runtime_library  = 3
+  pdbl             = 1
+  pdbc             = 1
+  GenerateMapFile  = TRUE
+  lit_libs         += etsapi wsock32
+}
+
+conditional_include "vcpartialmacros"
+conditional_include "user_vc7lib"

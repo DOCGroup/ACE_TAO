@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+project: boost_base {
+  specific(!prop:windows) {
+    lit_libs += $(BOOST_STATIC_LIB_PREFIX)boost_serialization$(BOOST_CFG)
+  }
+}

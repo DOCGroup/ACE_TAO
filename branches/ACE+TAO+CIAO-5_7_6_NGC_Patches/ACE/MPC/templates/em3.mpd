@@ -1,0 +1,395 @@
+# Microsoft eMbedded Visual Tools Project File - Name="<%project_name%>" - Package Owner=<4>
+# Microsoft eMbedded Visual Tools Generated Build File, Format Version 6.02
+# ** DO NOT EDIT **
+
+<%foreach(platforms)%>
+# TARGTYPE "<%operating_system("Win32")%> (<%platform%>) <%if(exename || sharedname || staticname)%><%if(type_is_static && staticname)%>Static Library<%else%><%type_description%><%endif%><%else%>Dynamic-Link Library<%endif%>" <%type_code%>
+<%endfor%>
+
+CFG=<%project_name%> - <%operating_system("Win32")%> (<%default_platform%>) <%default_configuration%>
+!MESSAGE This is not a valid makefile. To build this project using NMAKE,
+!MESSAGE run the tool that generated this project file and specify the
+!MESSAGE nmake output type.  You can then use the following command:
+!MESSAGE
+!MESSAGE NMAKE.
+!MESSAGE
+!MESSAGE You can specify a configuration when running NMAKE
+!MESSAGE by defining the macro CFG on the command line. For example:
+!MESSAGE
+!MESSAGE NMAKE CFG="<%project_name%> - <%operating_system%> (<%default_platform%>) <%default_configuration%>"
+!MESSAGE
+!MESSAGE Possible choices for configuration are:
+!MESSAGE
+<%foreach(platforms)%>
+<%foreach(configurations)%>
+!MESSAGE "<%project_name%> - <%operating_system%> (<%platform%>) <%configuration%>" (based on "<%operating_system%> (<%platform%>) <%if(exename || sharedname || staticname)%><%if(type_is_static && staticname)%>Static Library<%else%><%type_description%><%endif%><%else%>Dynamic-Link Library<%endif%>")
+<%endfor%>
+<%endfor%>
+!MESSAGE
+
+# Begin Project
+# PROP AllowPerConfigDependencies 0
+# PROP Scc_ProjName ""
+# PROP Scc_LocalPath ""
+# PROP ATL_Project <%atl_project("2")%>
+
+<%foreach(platforms)%>
+<%foreach(configurations)%>
+!<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%project_name%> - <%operating_system%> (<%platform%>) <%configuration%>"
+
+# PROP Use_MFC <%use_mfc("0")%>
+# PROP Use_Debug_Libraries <%if(use_debug_libraries)%><%use_debug_libraries%><%else%>0<%endif%>
+<%if(exename)%>
+# PROP Output_Dir "<%if(windows_style)%><%output_dir("Debug")%><%else%><%output_dir(".")%><%endif%>\<%machine%>"
+<%endif%>
+<%if(type_is_static)%>
+# PROP Output_Dir "<%output_dir%>\<%machine%>"
+<%endif%>
+<%if(type_is_dynamic)%>
+# PROP Output_Dir "<%libout%>\<%machine%>"
+<%endif%>
+# PROP Intermediate_Dir "<%intermediate_dir%>\<%noextension(project_file)%>\<%machine%>"
+# PROP CPU_ID "{<%cpu_id%>}"
+# PROP Platform_ID "{<%platform_id%>}"
+<%if(type_is_dynamic)%>
+# PROP Ignore_Export_Lib 0
+<%endif%>
+# PROP Target_Dir ""
+<%if(type_is_static)%>
+LINK32=link.exe -lib
+<%endif%>
+RSC=rc.exe
+# ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "$(CePlatform)"<%foreach(defines common_defines cpu_defines macros)%> /d <%define%><%endfor%><%foreach(includes)%> /i "<%include%>"<%endfor%> /r
+CPP=<%cpp("cl.exe")%>
+# ADD CPP /nologo <%if(optimize)%>/O2<%else%>/Ob0<%endif%> <%compile_flags%><%foreach(DisableSpecificWarnings)%> /wd<%DisableSpecificWarning%><%endfor%><%if(pdbc)%> /Fd"<%if(type_is_static)%><%libout%>\<%libname_prefix%><%staticname%><%if(use_lib_modifier)%><%lib_modifier%><%endif%>.pdb<%else%><%intermediate_dir%>\<%noextension(project_file)%>\<%machine%>/<%endif%>"<%endif%> <%cpu_options%> <%foreach(includes)%>/I "<%include%>" <%endfor%>/D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) <%foreach(defines common_defines cpu_defines macros)%>/D <%define%> <%endfor%><%if(type_is_dynamic)%><%foreach(dynamicflags)%>/D <%dynamicflag%> <%endfor%><%endif%><%if(need_staticflags)%><%foreach(staticflags)%>/D <%staticflag%> <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%> <%endfor%><%if(pch_source)%>/Yu<%else%>/YX<%endif%>"<%pch_header%>" /Fp"<%intermediate_dir%>\<%noextension(project_file)%>\<%machine%>\<%noextension(pch_header)%>.pch" <%endif%> /FD /Gy /c
+<%if(compile_flags_removed)%>
+# SUBTRACT CPP <%compile_flags_removed%>
+<%endif%>
+BSC32=bscmake.exe
+# ADD BSC32 /nologo <%if(sharedname || staticname)%>/o"<%libout%>\<%libname_prefix%><%if(sharedname)%><%sharedname%><%else%><%staticname%><%endif%>.bsc"<%endif%>
+<%if(type_is_binary)%>
+LINK32=link.exe
+# ADD LINK32 <%systemlibs("winsock.lib commctrl.lib coredll.lib iphlpapi.lib")%><%if(link_options)%> <%link_options%><%endif%> /INCREMENTAL:<%incremental("NO")%> <%foreach(reverse(libs))%><%libname_prefix%><%lib%><%if(use_lib_modifier)%><%lib_modifier%><%endif%><%lib_ext%> <%endfor%><%foreach(reverse(lit_libs))%><%lit_lib%>.lib <%endfor%><%foreach(reverse(pure_libs))%><%pure_lib%> <%endfor%><%foreach(libpaths)%>/libpath:"<%libpath%>\<%machine%>" <%endfor%>/nologo /base:"<%base("0x00010000")%>" <%if(type_is_dynamic)%> /implib:"<%libout%>\<%machine%>\<%libname_prefix%><%sharedname%><%if(use_lib_modifier)%><%lib_modifier%><%endif%><%lib_ext%>" /entry:"_DllMainCRTStartup"<%endif%> /nodefaultlib:"$(CENoDefaultLib)<%foreach(ignore_libs)%>,<%ignore_lib%><%endfor%>"<%if(win_version)%> /version:<%win_version%><%endif%><%if(StackReserveSize)%> /stack:<%StackReserveSize%><%if(StackCommitSize)%>,<%StackCommitSize%><%endif%><%endif%> /subsystem:$(CESubsystem) /align:"<%align("4096")%>"<%if(pdbl)%><%if(sharedname)%> /pdb:"<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>\<%machine%>\<%libname_prefix%><%sharedname%><%if(use_lib_modifier)%><%lib_modifier%><%endif%>.pdb"<%else%><%if(exename)%> /pdb:"<%if(exeout)%><%exeout%><%if(windows_style)%>\<%output_dir%><%endif%><%else%><%output_dir%><%endif%>\<%machine%>\<%exename%><%if(use_exe_modifier)%><%lib_modifier%><%endif%>.pdb"<%endif%><%endif%><%else%> /pdb:none<%endif%> <%if(type_is_dynamic)%> <%if(!source_files)%>/noentry <%endif%>/dll<%endif%> <%if(unicode && unicode_mfc_entry && exename && source_files)%>/entry:"<%unicode_mfc_entry%>" <%endif%><%if(use_debug_libraries)%>/debug <%endif%>/machine:<%machine%> /out:"<%if(sharedname)%><%if(dllout)%><%dllout%><%else%><%libout%><%endif%>\<%machine%>\<%libname_prefix%><%sharedname%><%if(use_lib_modifier)%><%lib_modifier%><%endif%><%dll_ext%><%endif%><%if(exename)%><%if(exeout)%><%exeout%><%if(windows_style)%>\<%output_dir%><%endif%><%else%><%output_dir%><%endif%>\<%machine%>\<%exename%><%if(use_exe_modifier)%><%lib_modifier%><%endif%><%exe_ext%><%endif%>"
+<%if(link_flags_removed)%>
+# SUBTRACT LINK32 <%link_flags_removed%>
+<%endif%>
+<%endif%>
+<%if(type_is_static)%>
+LIB32=link.exe -lib
+# ADD LIB32 /nologo /out:"<%libout%>\<%machine%>\<%libname_prefix%><%staticname%><%if(use_lib_modifier)%><%lib_modifier%><%endif%><%lib_ext%>"
+<%endif%>
+<%if(postbuild)%>
+# Begin Special Build Tool
+SOURCE="$(InputPath)"
+PostBuild_Cmds=<%eval(postbuild)%>
+# End Special Build Tool
+<%endif%>
+
+<%endfor%>
+!ENDIF
+<%endfor%>
+
+
+# Begin Target
+
+<%foreach(platforms)%>
+<%foreach(configurations)%>
+# Name "<%project_name%> - <%operating_system%> (<%platform%>) <%configuration%>"
+<%endfor%>
+<%endfor%>
+<%if(exename || sharedname || staticname)%>
+# Begin Group "Source Files"
+
+# PROP Default_Filter "<%foreach(ext, extensions(source_files))%><%ext%><%fornotlast(";")%><%endfor%>"
+<%if(pch_source)%>
+<%if(pch_header)%>
+# Begin Source File
+
+SOURCE="<%pch_source%>"
+# ADD CPP /Yc"<%pch_header%>"
+# End Source File
+<%endif%>
+<%endif%>
+<%if(grouped_source_files)%>
+<%foreach(sort(grouped_source_files))%>
+# Begin Group "<%grouped_source_file%>"
+
+# PROP Default_Filter ""
+<%foreach(grouped_source_file->files)%>
+# Begin Source File
+
+SOURCE="<%grouped_source_file->file%>"
+<%if(duplicate_index(grouped_source_file->file))%>
+<%foreach(platforms)%>
+<%foreach(configurations)%>
+!<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%project_name%> - <%operating_system%> (<%platform%>) <%configuration%>"
+# ADD CPP <%if(flag_overrides(grouped_source_file->file, buildflags))%><%flag_overrides(grouped_source_file->file, buildflags)%> <%endif%>/Fo"<%intermediate_dir%>\<%noextension(project_file)%>\<%machine%>\<%basenoextension(grouped_source_file->file)%><%duplicate_index(grouped_source_file->file)%>.obj"
+<%if(flag_overrides(grouped_source_file->file, no_pch))%>
+# SUBTRACT CPP /YX /Yc /Yu
+<%endif%>
+<%endfor%>
+!ENDIF
+<%endfor%>
+<%else%>
+<%if(flag_overrides(grouped_source_file->file, buildflags))%>
+# ADD CPP <%flag_overrides(grouped_source_file->file, buildflags)%>
+<%endif%>
+<%if(flag_overrides(grouped_source_file->file, no_pch))%>
+# SUBTRACT CPP /YX /Yc /Yu
+<%endif%>
+<%endif%>
+# End Source File
+<%endfor%>
+# End Group
+<%endfor%>
+<%else%>
+<%foreach(source_files)%>
+# Begin Source File
+
+SOURCE="<%source_file%>"
+<%if(duplicate_index(source_file))%>
+<%foreach(platforms)%>
+<%foreach(configurations)%>
+!<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%project_name%> - <%operating_system%> (<%platform%>) <%configuration%>"
+# ADD CPP <%if(flag_overrides(source_file, buildflags))%><%flag_overrides(source_file, buildflags)%> <%endif%>/Fo"<%intermediate_dir%>\<%noextension(project_file)%>\<%machine%>\<%basenoextension(source_file)%><%duplicate_index(source_file)%>.obj"
+<%if(flag_overrides(source_file, no_pch))%>
+# SUBTRACT CPP /YX /Yc /Yu
+<%endif%>
+<%endfor%>
+!ENDIF
+<%endfor%>
+<%else%>
+<%if(flag_overrides(source_file, buildflags))%>
+# ADD CPP <%flag_overrides(source_file, buildflags)%>
+<%endif%>
+<%if(flag_overrides(source_file, no_pch))%>
+# SUBTRACT CPP /YX /Yc /Yu
+<%endif%>
+<%endif%>
+# End Source File
+<%endfor%>
+<%endif%>
+# End Group
+<%endif%>
+<%if(header_files)%>
+# Begin Group "Header Files"
+
+# PROP Default_Filter "<%foreach(ext, extensions(header_files))%><%ext%><%fornotlast(";")%><%endfor%>"
+<%if(pch_header)%>
+# Begin Source File
+
+SOURCE="<%pch_header%>"
+# End Source File
+<%endif%>
+<%if(grouped_header_files)%>
+<%foreach(sort(grouped_header_files))%>
+# Begin Group "<%grouped_header_file%>"
+
+# PROP Default_Filter ""
+<%foreach(grouped_header_file->files)%>
+# Begin Source File
+
+SOURCE="<%grouped_header_file->file%>"
+# End Source File
+<%endfor%>
+# End Group
+<%endfor%>
+<%else%>
+<%foreach(header_files)%>
+# Begin Source File
+
+SOURCE="<%header_file%>"
+# End Source File
+<%endfor%>
+<%endif%>
+# End Group
+<%endif%>
+<%if(inline_files)%>
+# Begin Group "Inline Files"
+
+# PROP Default_Filter "<%foreach(ext, extensions(inline_files))%><%ext%><%fornotlast(";")%><%endfor%>"
+<%if(grouped_inline_files)%>
+<%foreach(sort(grouped_inline_files))%>
+# Begin Group "<%grouped_inline_file%>"
+
+# PROP Default_Filter ""
+<%foreach(grouped_inline_file->files)%>
+# Begin Source File
+
+SOURCE="<%grouped_inline_file->file%>"
+# End Source File
+<%endfor%>
+# End Group
+<%endfor%>
+<%else%>
+<%foreach(inline_files)%>
+# Begin Source File
+
+SOURCE="<%inline_file%>"
+# End Source File
+<%endfor%>
+<%endif%>
+# End Group
+<%endif%>
+<%if(template_files)%>
+# Begin Group "Template Files"
+
+# PROP Default_Filter ""
+<%if(grouped_template_files)%>
+<%foreach(sort(grouped_template_files))%>
+# Begin Group "<%grouped_template_file%>"
+
+# PROP Default_Filter ""
+<%foreach(grouped_template_file->files)%>
+# Begin Source File
+
+SOURCE="<%grouped_template_file->file%>"
+# PROP Exclude_From_Build 1
+# End Source File
+<%endfor%>
+# End Group
+<%endfor%>
+<%else%>
+<%foreach(template_files)%>
+# Begin Source File
+
+SOURCE="<%template_file%>"
+# PROP Exclude_From_Build 1
+# End Source File
+<%endfor%>
+<%endif%>
+# End Group
+<%endif%>
+<%if(documentation_files)%>
+# Begin Group "Documentation"
+
+# PROP Default_Filter ""
+<%if(grouped_documentation_files)%>
+<%foreach(sort(grouped_documentation_files))%>
+# Begin Group "<%grouped_documentation_file%>"
+
+# PROP Default_Filter ""
+<%foreach(grouped_documentation_file->files)%>
+# Begin Source File
+
+SOURCE="<%grouped_documentation_file->file%>"
+# End Source File
+<%endfor%>
+# End Group
+<%endfor%>
+<%else%>
+<%foreach(documentation_files)%>
+# Begin Source File
+
+SOURCE="<%documentation_file%>"
+# End Source File
+<%endfor%>
+<%endif%>
+# End Group
+<%endif%>
+<%if(resource_files && !type_is_static)%>
+# Begin Group "Resource Files"
+
+# PROP Default_Filter "rc;ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
+<%if(grouped_resource_files)%>
+<%foreach(sort(grouped_resource_files))%>
+# Begin Group "<%grouped_resource_file%>"
+
+# PROP Default_Filter ""
+<%foreach(grouped_resource_file->files)%>
+# Begin Source File
+
+SOURCE="<%grouped_resource_file->file%>"
+# End Source File
+<%endfor%>
+# End Group
+<%endfor%>
+<%else%>
+<%foreach(resource_files)%>
+# Begin Source File
+
+SOURCE="<%resource_file%>"
+# End Source File
+<%endfor%>
+<%endif%>
+# End Group
+<%endif%>
+<%foreach(custom_types)%>
+<%if(custom_type->input_files)%>
+# Begin Group "<%ucw(custom_type)%>"
+
+# PROP Default_Filter "<%foreach(custom_type->inputexts)%><%custom_type->inputext%><%fornotlast(";")%><%endfor%>"
+<%foreach(custom_type->input_files)%>
+# Begin Source File
+
+SOURCE="<%custom_type->input_file%>"
+<%if(custom_type->input_file->output_files)%>
+
+<%foreach(platforms)%>
+<%foreach(configurations)%>
+!<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%project_name%> - <%operating_system%> (<%platform%>) <%configuration%>"
+
+<%if(flag_overrides(custom_type->input_file, dependent))%>
+USERDEP__<%basenoextension(custom_type->input_file)%>=<%foreach(dep, flag_overrides(custom_type->input_file, dependent))%>"<%dep%><%if(!has_extension(dep))%><%exe_ext%><%endif%>"<%fornotlast(" ")%><%endfor%><%foreach(custom_type->input_file->dependencies)%> "<%custom_type->input_file->dependencie%>"<%endfor%>
+<%else%>
+<%if(custom_type->dependent)%>
+USERDEP__<%basenoextension(custom_type->input_file)%>=<%foreach(custom_type->dependent)%>"<%custom_type->dependent%><%if(!has_extension(custom_type->dependent))%><%exe_ext%><%endif%>"<%fornotlast(" ")%><%endfor%><%foreach(custom_type->input_file->dependencies)%> "<%custom_type->input_file->dependencie%>"<%endfor%>
+<%else%>
+<%if(custom_type->input_file->dependencies)%>
+USERDEP__<%basenoextension(custom_type->input_file)%>=<%foreach(custom_type->input_file->dependencies)%>"<%custom_type->input_file->dependencie%>"<%fornotlast(" ")%><%endfor%>
+<%endif%>
+<%endif%>
+<%endif%>
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking <%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%> on $(InputPath)
+InputPath="<%custom_type->input_file%>"
+
+BuildCmds= \
+<%if(custom_type->libpath)%>
+	PATH=%PATH%;<%custom_type->libpath%> \
+<%endif%>
+<%if(flag_overrides(custom_type->input_file, gendir))%>
+	mkdir <%flag_overrides(custom_type->input_file, gendir)%> 2> nul \
+<%endif%>
+	<%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%if(custom_type->output_option)%>$(InputPath) <%custom_type->output_option%><%foreach(custom_type->input_file->output_files)%> "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>"<%endfor%><%else%>$(InputPath)<%endif%> \
+<%if(flag_overrides(custom_type->input_file, postcommand))%>
+<%foreach(custom_type->input_file)%>
+	<%flag_overrides(custom_type->input_file, postcommand)%> \
+<%endfor%>
+<%else%>
+<%if(custom_type->postcommand)%>
+<%foreach(custom_type->input_file)%>
+	<%custom_type->postcommand%> \
+<%endfor%>
+<%endif%>
+<%endif%>
+<%if(pch_header)%>
+<%if(custom_type->pch_postrule)%>
+<%foreach(custom_type->input_file->source_output_files)%>
+	echo #include "<%pch_header%>" > temporary.src \
+	type "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->source_output_file)%><%else%><%custom_type->input_file->source_output_file%><%endif%>" >> temporary.src \
+	move /y temporary.src "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->source_output_file)%><%else%><%custom_type->input_file->source_output_file%><%endif%>"
+<%endfor%>
+<%endif%>
+<%endif%>
+<%foreach(custom_type->input_file->output_files)%>
+
+"<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+<%endfor%>
+# End Custom Build
+
+<%endfor%>
+!ENDIF
+<%endfor%>
+
+<%else%>
+# PROP Exclude_From_Build 1
+<%endif%>
+# End Source File
+<%endfor%>
+# End Group
+<%endif%>
+<%endfor%>
+# End Target
+# End Project

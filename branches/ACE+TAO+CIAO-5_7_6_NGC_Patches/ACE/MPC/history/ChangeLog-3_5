@@ -1,0 +1,1397 @@
+Fri May 30 15:48:49 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/templates/vc8.txt:
+
+          Document the template variables used by the vc8 (and vc9)
+          template.
+
+        * templates/vc8.mpd:
+
+          Modified the 'ImportLibrary' template variable to override the
+          setting of the ImportLibrary instead of duplicating the
+          ImportLibrary setting which is controled by the 'type_is_dynamic'
+          template variable and the 'sharedname' project setting.
+
+Wed May 21 11:43:19 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * clone_build_tree.pl:
+
+          Removed cloned directories that had files previously, but have now
+          become empty.
+
+        * prj_install.pl:
+
+          Added support for installing MinGW libraries.
+
+Mon May 19 18:53:21 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrmakefile.mpd:
+          Added dependencies so that the executable gets relinked when
+          one of the libraries change
+
+Mon May 19 14:29:21 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrmakefile.mpd:
+          Build subdirs before subprojects
+
+Wed May 14 18:32:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26.mpd:
+        * templates/wb26wrproject.mpd:
+          Limit the cases subprojects are used
+
+Tue May 13 18:32:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrproject.mpd:
+          Removed SUB_OBJECTS again, it only works when the libs are specified
+          with a full path
+
+        * templates/wb26wrmakefile.mpd:
+          Generate DEPLIBS, should be added to the dependencies of the
+          partialImage but we have to figure out where to plug this into
+          the workbench
+
+Tue May 13 16:47:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrmakefile.mpd:
+          Improved clean speed
+
+Tue May 13 14:28:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrproject.mpd:
+          When generating with standard_build set SUB_OBJECTS to PARTIAL_LIBS
+          this way an executable is dependent on its libs, when the libs
+          change the executable gets relinked. Also moved some settings
+          to the global settings instead of storing them per build spec
+
+Sun May 11 19:38:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/templates/wb26.txt:
+        * templates/wb26.mpd:
+        * templates/wb26wrproject.mpd:
+          Added enable_subprojects which has to be set as value_template
+          to turn on the generation of subprojects because subprojects
+          can cause long compile/clean times when using standard
+          build support
+
+Wed May  7 13:30:37 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/WB26WorkspaceCreator.pm:
+
+          Removed unnecessary and repeated code.
+
+Wed May  7 08:01:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/WB26WorkspaceCreator.pm:
+          Improved getting the location of the .project/.wrproject file
+          at the moment environment variables are used
+
+Tue May  6 18:05:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/WB26WorkspaceCreator.pm:
+          When we find MPC ADD DIRECTIVES set write to 1 so that when a
+          project has no dependencies we remove this MPC ADD DIRECTIVES
+          from the generated files
+
+        * templates/wb26.mpd:
+          Use tabs instead of space
+
+Tue May  6 13:40:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/WB26WorkspaceCreator.pm
+        * templates/wb26.mpd:
+          Also generate the referenced projects in the .project file
+
+Tue May  6 12:26:09 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/WB26WorkspaceCreator.pm:
+
+          Updated the code to work with the .wrproject.
+
+        * templates/wb26wrproject.mpd:
+
+          Added the lines to allow MPC to add dependencies after the
+          workspace has been created.
+
+Tue May  6 07:12:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/WB26WorkspaceCreator.pm:
+          Added helper to create subprojects
+
+Mon May  5 15:45:04 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/mpich.mpb:
+
+          Use MPI_ROOT instead of MPICH_ROOT.  This is in keeping with the
+          generic-ness of the environment variables to allow drop-in
+          replacements for different implementations.
+
+        * config/openmpi.mpb:
+
+          Added "requires += mpi".
+
+        * modules/ProjectCreator.pm:
+
+          Fixed a bug where files added through a directory would not be
+          removed as duplicate if the generated files had the 'gendir' value
+          set on them with one or more slash.  This only affected Windows
+          project types.
+
+        * registry.pl:
+
+          Fixed the registry value remove option.
+
+Mon May  5 07:40:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * clone_build_tree.pl:
+          Don't clone wb26/vxtest generated files, .d files and Makefiles
+          in subdirectories
+
+Fri May  2 11:57:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26dll.mpt:
+          Added PPC85XXgnu buildspec
+
+Thu May  1 14:32:09 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Added a template method to allow project creators to disable the
+          "no useful targets" warning.
+
+Wed Apr 30 18:59:45 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/openmpi.mpb:
+
+          Added a very simple base project for Open MPI.
+
+        * templates/make.mpd:
+
+          Add the .NOTPARALLEL target if there is multiple files generated
+          by a custom command.
+
+Wed Apr 30 11:36:17 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Fixed two different bugs:
+
+          1) Using ^ with a wildcard did not function properly if the
+             generated files were not already there.  Now, the wildcard
+             expansion (prefixed by ^) is not done until the end and
+             performed on the list of added files instead of the file
+             system.
+
+          2) Flag overrides, such as recurse, gendir, etc., specified for
+             directories were not propagated to the files located within
+             that directory.  Now, they are copied over to files found
+             within the traversed directory.
+
+Sun Apr 27 18:49:45 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * templates/wb26wrproject.mpd:
+
+          Minor change to the following commit:
+          Sun Apr 27 18:15:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          Make sure the quote is closed after it is opened. Workbench complains
+          otherwise.
+
+Sun Apr 27 18:15:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrproject.mpd:
+          Set correct tool with standard build
+
+Fri Apr 25 19:05:59 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * clone_build_tree.pl:
+
+          Added a -s option that allows the user to specify a starting
+          directory instead of using the current directory.  Thanks to
+          Hubert Talbot <Hubert dot Talbot at criq dot qc dot ca> for
+          providing the idea and original implementation.
+
+        * docs/USAGE:
+
+          Document the default logging settings.
+
+Fri Apr 25 09:12:00 UTC 2008  Simon Massey  <sma at pristmech dot com>
+
+        * config/global.features:
+        * config/unicode.mpb:
+          Feature name "uses_wchar" already used within ACE/TAO. Replaces
+          the "unicode" feature name. Template / project name within MPC
+          still named unicode.
+
+Thu Apr 24 09:55:00 UTC 2008  Simon Massey  <sma at pristmech dot com>
+
+        * config/unicode.mpb:
+          Dose not depend upon MFC. Use together if needed for Unicode MFC apps.
+
+Thu Apr 24 07:06:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrmakefile.mpd:
+          With a custom only project set the PROJECT_TARGET value so that
+          the custom rules are triggered
+
+Wed Apr 23 14:36:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26.mpd:
+        * templates/wb26wrproject.mpd:
+          Added support for source_dirs
+
+Wed Apr 23 14:31:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Merging in the changes from the wb26 branch
+
+        * docs/templates/common.txt:
+          Document the new make_coexistence
+
+        * docs/templates/wb26.txt:
+        * docs/templates/wb26wrproject.txt:
+          Renamed wb26wrproject to wb26
+
+        * modules/ProjectCreator.pm:
+          Changed from Chad Elliott to make the make_coexistence
+          commandline flag available in the template
+
+        * modules/WB26ProjectCreator.pm:
+          Use make_coexistence and added template input files
+
+        * modules/WB26WorkspaceCreator.pm:
+          Supports make_coexistence
+
+        * templates/nmakedll.mpt:
+        * templates/nmakeexe.mpt
+          Removed _M_AMD64, this is a define that is set by the
+          compiler
+
+        * templates/vc8platforms.mpt:
+          Removed _M_IX86_, this is set by the msvc compiler, we shouldn't
+          set this. This fixes bugzilla 3293, thanks to David Highley
+          <dhighley at highley-recommended dot com> for reporting this
+
+        * templates/wb26.mpd:
+        * templates/wb26dll.mpt:
+        * templates/wb26exe.mpt:
+        * templates/wb26wrmakefile.mpd:
+        * templates/wb26wrproject.mpd:
+          By default we now generate the project files in the same
+          directory as the mpc file, this means you can only have one
+          project in a directory. If you don't want this, use
+          -make_coexistence on the commandline. Also support
+          -value_template standard_build=1 to support a standard build,
+          but this support is not ready yet.
+
+Mon Mar  7 08:24:46 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/templates/wb26wrproject.txt:
+          Added linkflags
+
+Fri Apr  4 17:42:43 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/templates/vc7.txt:
+        * docs/templates/vc8.txt:
+
+          Added documentation for the IgnoreAllDefaultLibraries template
+          variable.
+
+        * templates/vc7.mpd:
+
+          Added a template variable, IgnoreAllDefaultLibraries, as is
+          provided in the vc8 template to set this property in the project.
+          Thanks to Terry Cordes <terry dot cordes at gmail dot com>.
+
+Fri Apr  4 11:26:34 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/boost_unit_test_framework.mpb:
+
+          Committing this on behalf of Kevin Heifner <heifnerk@ociweb.com>.
+
+          Starting with Boost 1.34 unit_test has had auto linking on
+          Windows.  Starting with Boost 1.35 having the explicit along with
+          the auto linking caused crashing on exit of compiled applications.
+          This change removes the explict lib for most Window compilers.
+          vc6 and vc7 will still use explicit linking on the grounds that
+          they will likely be using a pre-1.34 version of Boost.
+
+        * modules/WorkspaceCreator.pm:
+
+          When printing the MPC options into the workspace, enclose the
+          parameter in double quotes if it contains a '*' charater too.
+
+Thu Mar  3 07:02:46 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrproject.mpd:
+          Don't add -ansi to the cflags
+
+Wed Apr  2 14:48:51 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * config/xsc_base.mpb:
+        * config/xsc_cxx.mpb:
+        * config/xsc_idl.mpb:
+        * config/xscrt.mpb:
+        * config/xscrt_utils.mpb:
+
+          Moved these files to XSC distribution.
+
+Wed Mar  2 18:58:46 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrproject.mpd:
+          Added support for linkflags
+
+Mon Mar 31 13:46:46 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/Creator.pm:
+
+          Modified expand_variables() to convert back slashes to forward
+          slashes if the the 'convert_slashes' or the
+          'requires_forward_slashes' data members are set to true.  This is
+          the case for the wb26 project type.
+
+Mon Mar 31 12:36:58 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/templates/wb26wrproject.txt:
+
+          Added documentation for the template variables for the
+          wb26wrproject template.
+
+Fri Mar 28 15:30:00 UTC 2008  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * config/unicode.mpb:
+        * config/global.features:
+          Allow for the already built-in unicode feature support to be recognised.
+
+Tue Mar 25 14:35:19 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrproject.mpd:
+          Added support for link_group
+
+Tue Mar 25 11:43:40 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+
+          Documented the new third and optional parameter to verbatim which
+          allows the addition of verbatim sections instead of overwriting.
+
+        * modules/ProjectCreator.pm:
+
+          Require a parameter to verbatim to enable the verbatim addition
+          feature.  Some existing ACE and TAO MPC files rely on the
+          overwriting behavior of verbatim.
+
+Mon Mar 24 17:10:23 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Changed 'verbatim' to add to existing verbatim settings instead of
+          overwritting them.
+
+Mon Mar 24 15:18:28 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/USAGE:
+
+          Document the 'main_functions' configuration file setting.
+
+        * modules/Driver.pm:
+        * modules/ProjectCreator.pm:
+
+          Support the ability to specify additional "main" functions to work
+          with automatic executable project recognition.
+
+Fri Mar 21 16:06:00 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/MakeWorkspaceBase.pm:
+
+          Fixed the post_workspace() parameters.  The file handle (which is
+          unused in the method) was not shifted.
+
+        * modules/WorkspaceCreator.pm:
+
+          Provide a mechanism for creating multiple output files per
+          workspace.
+
+        * modules/WB26WorkspaceCreator.pm:
+
+          Use the above mechanism for the wb26projects.lst file.
+
+Thu Mar 20 15:23:06 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+        * modules/ProjectCreator.pm:
+
+          A project will now be marked custom_only if it contains no source
+          or resource files, but does contain custom input files.
+
+Thu Mar 20 13:29:19 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrproject.mpd:
+          No need to use full_path for the includes. Within the workbench
+          we can define the environment variables
+
+Thu Mar 20 13:26:19 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Convert slashes on values provided to back_to_variable() to ensure
+          that they match the relative values supplied implicitly through
+          environment variables or explicitly through the -relative option.
+
+Thu Mar 20 12:46:46 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/Creator.pm:
+        * modules/ProjectCreator.pm:
+
+          Moved the recursive_includes and recursive_libpaths functionality
+          out of Creator and into ProjectCreator.  In the process, I fixed
+          the following bugs:
+
+          1) Setting and subtracting from recursive_* would cause the value
+             to be added instead of the performing desired function.
+          2) When values are added in the form of $(VAR)/dir, they are
+             expanded, recursed and then the recursed values are turned back
+             into the form of $(VAR)/...
+
+        * modules/DirectoryManager.pm:
+
+          Changed function parameter code from shifting off of the
+          default array to assigning from the default array.
+
+        * modules/TemplateParser.pm:
+
+          Modified to use the DirectoryManager::path_is_relative() function
+          instead of rolling my own regular expression to check for relative
+          paths.
+
+Wed Mar 19 14:19:14 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/AutomakeWorkspaceCreator.pm:
+
+          Fixed a bug where filenames or paths were used directly within a
+          regular expression.  Thanks to Thomas Girard
+          <thomas dot g dot girard at free dot fr> for reporting it and
+          providing a patch.
+
+Wed Mar 19 13:47:47 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+        * modules/ProjectCreator.pm:
+
+          Added the ability to use <%gendir%> in custom sections.  This
+          variable will contain the 'gendir' setting if provided and '.' if
+          it is not.
+
+        * modules/TemplateParser.pm:
+
+          Fixed a bug where the 'full_path' function would use the current
+          directory if the value passed to it was a Windows style path.
+
+        * templates/wb26wrproject.mpd:
+
+          Added the 'full_path' usage back now that the function has been
+          fixed.
+
+Wed Mar 19 12:27:53 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Fixed a bug where multiple projects within a single MPC file and a
+          project type with multiple templates would cause problems due to
+          project information being updated for each template.  The fix is
+          to only update project info for the visible template.
+
+        * modules/TemplateParser.pm:
+
+          Modified the 'full_path' template function to allow relative paths
+          to be converted to full paths even if they don't exist.  Relative
+          paths are assumed to be relative from the current working
+          directory (which is the directory of the MPC file).
+
+        * modules/WorkspaceCreator.pm:
+
+          Added a comment about the progress indicator.
+
+Tue Mar 18 18:56:35 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Modified to write out N files per MPC project.  Now, a file will
+          be written out per template file associated with the project type.
+          However, the workspace can only "know" about one project file
+          (which is determined by the sub-classed project creator).
+
+        * modules/WB26ProjectCreator.pm:
+        * modules/WB26WorkspaceCreator.pm:
+
+          Combined all of the functionality from WB26WR* into these modules.
+          The project creator causes 3 files per project to be written and 2
+          files per workspace.
+
+        * modules/WB26WRMAKEFILEProjectCreator.pm:
+        * modules/WB26WRMAKEFILEWorkspaceCreator.pm:
+        * modules/WB26WRPROJECTProjectCreator.pm:
+        * modules/WB26WRPROJECTWorkspaceCreator.pm:
+
+          Removed these files.
+
+Fri Mar 14 16:43:24 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+
+          Update documentation on which options can not be used with
+          'cmdline'.
+
+        * modules/Driver.pm:
+        * modules/Options.pm:
+
+          Renamed the option data member from 'coexistence' to
+          'make_coexistence' to be consistent with the option name.
+
+        * modules/WorkspaceCreator.pm:
+
+          Fixed a bug where -into passed to the 'cmdline' setting could
+          cause serious problems for the resulting generated project files.
+
+          Also, simplified the code used for warning about ignored options
+          provided to 'cmdline'.
+
+Thu Mar 13 14:49:45 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/Creator.pm:
+
+          Fixed an incorrect comment.
+
+        * modules/Driver.pm:
+
+          Changed to add command line options to the front of the argument
+          array so that options provided at the end by the user that require
+          a parameter (but are not given one) do not gobble up the added
+          options.
+
+Thu Mar 13 02:07:59 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/global.features:
+
+          Disable the java feature.
+
+        * config/xsc_base.mpb:
+
+          Removed the empty source_outputext setting.
+
+        * modules/ProjectCreator.pm:
+
+          Allow the setting of *_outputext to empty to have output files
+          that are similar to the input name, but without an extension.
+
+          Also, changed function parameter code from shifting off of the
+          default array to assigning from the default array.
+
+Sun Mar  9 19:31:25 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/ProjectCreator.pm:
+          Also _t.* files are template files, needed for the VMS build
+
+Sun Mar  9 07:54:25 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/WB26WRPROJECTWorkspaceCreator.pm:
+          Make sure we always generate a full path for the project files
+
+Sat Mar  8 06:59:25 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/WorkspaceCreator.pm:
+          Reverted the changes to make the workspace creator case
+          insensitive, it doesn't work for all case, probably because
+          part of the lookup is done on hashed values. I am going to
+          explicitly list a project name in the files that cause
+          the problems on VMS
+
+Fri Mar  7 20:27:25 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrproject.mpd:
+          Don't use fullpath for includes
+
+        * modules/WB26WRPROJECTWorkspaceCreator.pm:
+          Generate a wb26projects.lst that lists the projects that are
+          generated
+
+Fri Mar  7 18:17:25 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/WorkspaceCreator.pm:
+          When we give a warning, make sure we present the user the
+          mixed case name, thanks to Adam Mitz for noticing this
+
+Fri Mar  7 14:51:25 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/WorkspaceCreator.pm:
+          Only retrieve the onVMS value only once. Made the handling
+          of the after keyword case insensitive. If you have a project
+          idl and after += IDL this will work now. This is needed
+          because on OpenVMS all filenames are returned lower case by perl
+          and the after specified by the user is mixed case which
+          resulted in the fact that the after just didn't work
+          on OpenVMS. Thanks to Chad Elliott for reviewing the patches
+          and point out the possible performance problems of my
+          original changes
+
+Thu Mar  6 15:16:25 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/WorkspaceCreator.pm:
+          Use method from base class to check whether we run on VMS or not
+
+Wed Mar  5 14:40:20 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * config/xsc_base.mpb:
+        * config/xsc_cxx.mpb:
+        * config/xsc_idl.mpb:
+        * config/xscrt.mpb:
+        * config/xscrt_utils.mpb:
+
+          Base projects for using XSC.
+
+Mon Mar  3 14:19:25 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/log4cplus.mpb:
+          Added base project for log4cplus
+
+Sat Feb 29 11:51:25 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/Creator.pm:
+          Strip out ^ from filenames on OpenVMS.
+
+Fri Feb 28 13:36:25 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/WorkspaceCreator.pm:
+          Strip out ^ from directory names on OpenVMS. Fixes bugzilla
+          3237.
+
+Wed Feb 27 14:09:25 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/Driver.pm:
+          On OpenVMS all filenames are returned lower case. The dynamic loading
+          of creators then fails. Addressed this by opening the creator file
+          and read the first line, it normally starts with package and after
+          that the package name. Thanks to Chad Elliott for this idea and
+          reviewing the proposed change.
+
+Fri Feb 22 14:49:25 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * modules/TemplateParser.pm:
+
+          Added a new template function, <%full_path()%>, which will expand
+          environment variables and resolve relative paths to absolute paths.
+          Template authors should only use this when the target build system
+          requires it, since it limits the MPC user's flexibility in deciding
+          when and how env vars are expanded, and removes "portability" of
+          generated project files (by which I mean the ability to move them
+          around in a filesystem, or even move them to different machines).
+
+        * templates/wb26.mpd:
+        * templates/wb26wrproject.mpd:
+
+          Made use of the new <%full_path()%> function.  Thanks to Johnny and
+          Chad for testing and reviewing this work.  This resolves the
+          enhancement request documented in bugzilla bug# 3218.
+
+Mon Feb 11 15:21:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/README:
+        * docs/USAGE:
+        * modules/Driver.pm:
+        * modules/Options.pm:
+        * modules/ProjectCreator.pm:
+        * modules/WorkspaceCreator.pm:
+          Extend MPC with a -relative_file commandline argument. By default
+          the default.rel file is loaded which specific which environment
+          variables are expanded. With -relative_file the user can specify
+          that a differnt file has to be loaded. This fixes bugzilla
+          3224
+
+Mon Feb 11 06:23:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrmakefile.mpd:
+          Make sure libs are installed correctly
+
+Sun Feb 10 19:44:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrmakefile.mpd:
+          Don't depend on windriver make variables for the postbuild and
+          clean step, just generate our own
+
+Fri Feb  8 19:50:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrmakefile.mpd:
+          Corrected clean of installed executables and libraries
+
+Fri Feb  8 09:35:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrmakefile.mpd:
+          Generate custom clean commands. Now IDL generated files will
+          be removed as part of the clean step
+
+Thu Feb  7 19:02:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrmakefile.mpd:
+          Also generate the post build and clean steps when we generate a
+          static project
+
+Thu Feb  7 18:49:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrmakefile.mpd:
+          Generate a clean step which removes an installed library of executable
+
+Sun Feb  3 19:10:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrmakefile.mpd:
+          Replaced some spaces with a tab to fix GNU make errors
+
+Fri Feb  1 14:39:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configs/build_files.mpb:
+          Also add mwc files to the build files section.
+
+Fri Feb  1 09:37:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrmakefile.mpd:
+          Corrected copying of the library/executable to their location
+
+Wed Jan 30 19:28:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configs/build_files.mpb:
+          New base project to add mpc/mpb files to a project as build
+          files.
+
+Sat Jan 26 07:10:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/WB26WRMAKEFILEProjectCreator.pm:
+        * modules/WB26WRPROJECTProjectCreator.pm:
+          Cleanup
+
+Thu Jan 24 20:36:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrproject.mpd:
+          Further improvements for partial image support
+
+Thu Jan 24 19:51:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrproject.mpd:
+          Added a second build target when building an executable. We
+          first build a partial image which we then link with all
+          the other libraries. This matches more the way we build
+          using the GNU makefiles. At the end we want to get rid of
+          the libraries as project contents but that still seems to
+          be needed.
+
+Thu Jan 24 19:07:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrproject.mpd:
+          When building an executable also add the libraries used to the
+          project contents. Only at that moment they are also added to
+          the list of files that need to be munched. The other option
+          would be to use the ADDED_OBJECTS in the .wrmakefile file but
+          to nmppc we have to pass the full path of all the libraries
+          and we don't have that information.
+
+Thu Jan 24 16:11:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrproject.mpd:
+          Fixed contents generation because the project name got changed
+
+Thu Jan 24 16:01:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/WB26ProjectCreator.pm:
+        * modules/WorkspaceCreator.pm:
+          Committed fix of Chad Elliott so that the generation of the build
+          order for the wb26 project type does work.
+
+        * modules/WB26WorkspaceCreator.pm:
+          Fixed comment about location of the file
+
+Thu Jan 24 13:46:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/WB26WorkspaceCreator.pm:
+          The build order is stored in an eclipse file, generate this
+          file so that we can control the build order easily. By
+          placing this file in the following workspace directory
+          .metadata\.plugins\org.eclipse.core.runtime\.settings
+
+Thu Jan 24 12:49:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrproject.mpd:
+          Corrected order of the generated libs
+
+Wed Jan 23 14:58:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrmakefile.mpd:
+          Added support for custom only projects
+
+Wed Jan 23 14:15:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26.mpd:
+          Use project_name, that is also set for projects that only generate
+          IDL files
+
+Wed Jan 23 08:45:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/WB26WRMAKEFILEProjectCreator.pm:
+          Also the wrmakefile requires paths to use forward slashes
+
+        * templates/wb26wrmakefile.mpd:
+          Go to the real directory where the commands should be started.
+          The workbench sets a subdirectory as current directory
+
+Tue Jan 22 20:26:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrmakefile.mpd:
+          Generate custom build commands which are for example used for
+          triggering the IDL compiler
+
+Tue Jan 22 19:47:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrmakefile.mpd:
+          Generate a post build command that copies the libraries and
+          executables to the location specified through the mpc file
+
+Tue Jan 22 19:34:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26.mpd:
+          Also generate inline, header, and template files into the project
+
+Tue Jan 22 08:48:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/Creator.pm:
+        * modules/ProjectCreator.pm:
+        * modules/WB26WRPROJECTProjectCreator.pm:
+        * modules/WB26WRPROJECTWorkspaceCreator.pm:
+        * modules/WinWorkspaceBase.pm:
+        * modules/WorkspaceCreator.pm:
+          The WindRiver workbench requires all paths to have forward slashes,
+          also on Windows. Added a requires_forward_slashes method so that
+          the project creator can indicate that forward slashes has to be
+          used. Thanks to Chad Elliott for helping with this, this fixes
+          bugzilla 3201
+
+Tue Jan 22 08:27:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/Creator.pm:
+          Fixed recursive_includes and recursive_libs
+
+Mon Jan 21 15:36:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrproject.mpd:
+          Add -mlongcall to CC_ARCH_SPEC
+
+Mon Jan 21 14:51:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrproject.mpd:
+          Added missing -mlongcall flags
+
+Mon Jan 21 14:45:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrproject.mpd:
+          Give libraries a lib prefix
+
+Mon Jan 21 14:30:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/WB26WorkspaceCreator.pm:
+        * modules/WB26WRMAKEFILEWorkspaceCreator.pm:
+        * modules/WB26WRPROJECTWorkspaceCreator.pm:
+          Use different base
+
+        * templates/wb26wrproject.mpd:
+          Improved support for building libraries and executables
+
+Mon Jan 21 06:25:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/WB26WorkspaceCreator.pm:
+          No workspace can be generated for the wb26 at this moment
+
+        * modules/WB26WRMAKEFILEProjectCreator.pm:
+        * modules/WB26WRMAKEFILEWorkspaceCreator.pm:
+        * modules/WB26WRPROJECTProjectCreator.pm:
+        * modules/WB26WRPROJECTWorkspaceCreator.pm:
+          For the wb26 type we need to have multiple files generated but
+          MPC can only generate one file for a type at this moment. Added
+          two generators so that we just can generate the files for the
+          wb26 with 3 generations. When MPC has been extended these
+          files will go away.
+
+Sun Jan 13 18:34:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrproject.mpd:
+          Use a different workbench project type when building a shared
+          or static library
+
+Wed Jan  9 20:05:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrproject.mpd:
+          Use the Librarian tool when building a library
+
+Wed Jan  9 19:53:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/WB26ProjectCreator.pm:
+          The workbench needs unix style paths
+
+Wed Jan  9 19:34:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrproject.mpd:
+          Generate include paths, do note that for the moment you must
+          use -expand_vars when generating the project files, the full
+          path must be generated
+
+Wed Jan  9 19:23:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrproject.mpd:
+          Generate information for the linker
+
+Wed Jan  9 19:12:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrmakefile.mpd:
+          Template for the .wrmakefile needed for the VxWorks Workbench
+
+Wed Jan  9 10:31:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrproject.mpd:
+          Added generation of libpaths and libs
+
+Wed Jan  9 09:10:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * templates/wb26wrproject.mpd:
+          New file, first version of the generator of the .wrproject file
+          needed for the WindRiver workbench
+
+        * modules/WB26ProjectCreator.pm:
+          Overruled get_template so that we easily can enable the
+          wb26wrproject file
+
+Mon Jan  7 15:16:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/WB26ProjectCreator.pm:
+        * modules/WB26WorkspaceCreator.pm:
+        * templates/wb26.mpd:
+          First initial commit for a new generator for VxWorks 6.4/Workbench 2.6.
+          A lot of more work has to be done on this generator before it is
+          complete, but this is the first starting point. Because the Workbench
+          has the restriction that the project file always has to be named
+          .project for each project in a directory we create a subdirectory
+          and in this directory we place the .project file. Then for each
+          source file we use the linked file feature of the workbench. This
+          has the current restriction that it must be a full path, no relative
+          paths are supported.
+
+        * docs/MPC.sgml:
+        * docs/USAGE:
+          Added missing vc9 and new wb26
+
+Mon Jan  7 14:59:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/.cvsignore:
+          Removed, we are not using cvs anymore
+
+Mon Jan  7 14:57:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * registry.pl:
+          Added vc9
+
+Tue Dec 18 20:21:28 UTC 2007  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * config/mpich.mpb:
+
+          Added a requires statement to the base project.
+
+Thu Dec 13 16:48:51 UTC 2007  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * config/mpich.mpb:
+
+          The import libraries on Windows are different than the
+          libraries on non-Windows systems.
+
+Wed Dec 12 02:03:59 UTC 2007  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * config/mpich.mpb:
+
+          Base project that will set the necessary project settings
+          for using MPICH, a freely available implementation of the
+          Message Passing Interface (MPI).
+
+Tue Dec 11 21:36:44 UTC 2007  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * config/odbc.mpb:
+
+          Base project that will set the necessary project settings
+          for using ODBC. On non-Windows systems, the base project
+          supports UnixODBC and iODBC.
+
+Tue Dec 11 17:56:47 UTC 2007  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * config/gacutil.mpb:
+
+          Base project that will register .NET binaries, i.e.,
+          executables and shared libraries, with the Global Assembly
+          Cache (GAC) after creation. This is very useful if you
+          need to creating stand-alone assemblies that reference
+          each other, but have no way of adding their dependency,
+          such as a web application.
+
+Thu Nov 29 00:13:52 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Modified the 'optional' syntax to allow assignments in addition to
+          additon assignments.  This is mainly useful in Modify_Custom's.
+
+Tue Nov 27 13:12:55 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/VC9ProjectCreator.pm:
+        * modules/VC9WorkspaceCreator.pm:
+
+          Removed duplicated code.  It will be inherited from
+          VC8ProjectCreator and VC8WorkspaceCreator respectively.
+
+Tue Nov 27 12:23:48 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/WorkspaceCreator.pm:
+
+          Fixed a bug in number_target_deps() where project types with
+          dependency names are not the same as file names would not be
+          numbered.
+
+Thu Nov 22 19:25:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * Modules/VC9WorkspaceCreator.pm:
+          Corrected generation
+
+Thu Nov 22 15:48:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * Modules/VC9WorkspaceCreator.pm:
+          Corrected generation
+
+Thu Nov 22 13:35:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config/boost_date_time.mpb:
+        * config/boost_filesystem.mpb:
+        * config/boost_iostreams.mpb:
+        * config/boost_prg_exec_monitor.mpb:
+        * config/boost_program_options.mpb:
+        * config/boost_regex.mpb:
+        * config/boost_serialization.mpb:
+        * config/boost_signals.mpb:
+        * config/boost_test_exec_monitor.mpb:
+        * config/boost_thread.mpb:
+        * config/boost_wave.mpb:
+        * config/openssl.mpb:
+        * config/swig_perl.mpb:
+        * config/xerces.mpb:
+        * docs/README:
+        * modules/VC9ProjectCreator.pm:
+        * modules/VC9WorkspaceCreator.pm:
+          Added support for vc9
+
+Thu Nov 15 13:18:35 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/templates/vc7csharp.txt:
+        * docs/templates/vc7java.txt:
+        * docs/templates/vc8csharp.txt:
+        * docs/templates/vc8java.txt:
+
+          Documented the AllowUnsafeBlocks template variable.
+
+        * templates/vc7csharp.mpd:
+        * templates/vc7java.mpd:
+        * templates/vc8csharp.mpd:
+        * templates/vc8java.mpd:
+
+          Added the ability to set the AllowUnsafeBlocks attribute for
+          csharp and java projects through the 'AllowUnsafeBlocks' template
+          variable.
+
+Tue Nov  6 13:01:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * modules/Creator.pm:
+        * modules/ProjectCreator.pm:
+        * docs/README:
+          Added support for recursive_libpaths and recursive_includes.
+          These can be used like libpaths and includes, but they recursively
+          add also all subdirectories to libpaths/includes. Thanks
+          to Chad Elliott for assisting with the implementation of these
+          features.
+
+Mon Oct 22 12:11:13 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+
+          Documented variable scopes.
+
+        * modules/ProjectCreator.pm:
+
+          Fixed a bug where any type of error in a base feature project
+          would be reported as if the end of the feature project was not
+          found.
+
+          Also, fixed a bug where a scoped template variable addition would
+          be evaluated multiple times resulting in a repeition of the added
+          value.
+
+Thu Oct 11 17:42:54 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * templates/vc8csharp.mpd:
+
+          Fixed a problem where too many .resx files were being grouped to a
+          "matching" 'Form' source file.
+
+Thu Oct 11 15:34:23 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+
+          Document a requirement of a <%foreach%> that uses a function call
+          with commas.  In this case a variable name and base count is
+          necessary.
+
+        * docs/templates/make.txt:
+
+          Documented missing template variables.
+
+        * modules/TemplateParser.pm:
+
+          Modified the 'remove_from' template function to work in a foreach
+          and to allow better string manipulation.
+
+        * templates/vc8csharp.mpd:
+
+          Use the 'remove_from' function to group .resx files that fully or
+          partially match a 'Form' source file.
+
+Tue Sep 25 16:03:41 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/README:
+        * templates/vc8csharp.mpd:
+
+          Changed the way generates_source works.  See the README for more
+          details.
+
+Thu Sep 13 18:02:23 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * create_base.pl:
+
+          Added a script to create base projects based on MPC library
+          projects.
+
+        * modules/ProjectCreator.pm:
+
+          Changed an informational message to provide more data.
+
+Wed Sep 12 18:55:35 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/qwt.mpb:
+
+          Added a base project for Qwt.
+
+        * modules/WorkspaceCreator.pm:
+
+          Fixed a bug where a perl undefined value warning could occur when
+          duplicate project names are encountered.
+
+Wed Sep 12 13:13:52 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/mysql.mpb:
+        * config/mysqlpp.mpb:
+
+          Added base projects for MySQL and MySQL++.
+
+Fri Sep  7 13:41:43 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+        * modules/TemplateParser.pm:
+
+          Fixed a bug where using two different custom types in the same
+          project, both with 'commandflags' mapped to a new keyword, would
+          cause scoped settings from one project type to be applied to the
+          other project type.
+
+Tue Aug 21 15:27:52 UTC 2007  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * templates/vc8.mpd:
+        * templates/vc8platforms.mpt:
+
+          Added support for the Windows Mobile 6 platform. This platform
+          is targeted specifying the "Windows Mobile 6 Standard SDK (ARMV4I)"
+          platform.
+
+Thu Aug 16 12:01:28 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * prj_install.pl:
+
+          Fixed a bug where copying an executable didn't set the execute
+          permissions on the new file.  Also, unnecessary intermediate
+          directories are no longer made during installation.
+
+Fri Aug 10 18:15:22 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/USAGE:
+        * modules/Options.pm:
+
+          Fixed the misspelling of Graphviz.
+
+        * modules/AutomakeWorkspaceCreator.pm:
+
+          Fixed a couple of issues:
+
+          1) Makefile.am is no longer overwritten if the only difference is
+             in a comment.
+          2) The existing configure.ac is edited to contain all of the new
+             Makefiles.  If configure.ac doesn't exist, it is created and
+             the Makefile list is written out to configure.ac.Makefiles.
+          3) @NAME@ substitutions now only happen in the top-level
+             workspace.
+
+        * modules/ConfigParser.pm:
+
+          Only warn the user once about each undefined environment variable.
+
+        * modules/Creator.pm:
+        * modules/ProjectCreator.pm:
+        * modules/WorkspaceCreator.pm:
+
+          Factored the file comparison out into a single method on the
+          Creator base class.
+
+Wed Aug  8 15:18:04 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/AutomakeWorkspaceCreator.pm:
+
+          Set the required automake version back to 1.9.
+
+        * modules/Creator.pm:
+
+          When subtracting, split the subtracted value into elements so that
+          they can be removed in any order.
+
+Wed Aug  8 12:29:46 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/AutomakeWorkspaceCreator.pm:
+
+          Added a code to handle a special associate key to support
+          conditional substitutions in the SUBDIRS setting.
+
+Fri Aug  3 13:49:08 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Fixed a bug where adding to a mapped keyword as a scoped template
+          variable would wipe out the original setting instead of adding to
+          it.
+
+Fri Aug  3 11:53:48 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/global.mpb:
+        * config/mpb.mpb:
+
+          Removed the MPB Define_Custom out of global and into it's own base
+          project.  Users can have their base projects inherit from mpb if
+          they want to use it.
+
+Tue Jul 31 13:57:54 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * docs/README:
+
+          Fixed a few instances where mpd was mistakenly used in place of mpt.
+
+Mon Jul 30 13:47:13 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/global.mpb:
+
+          Added a define custom to allow users to explicitly list .mpb files
+          in their projects.
+
+        * prj_install.pl:
+
+          By default, install all .mpb files.
+
+Mon Jul 30 11:33:43 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * modules/ProjectCreator.pm:
+
+          Support setting a mapped custom defined keyword as a scoped
+          template variable.
+
+Wed Jul 11 14:52:02 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * templates/nmake.mpd:
+        * templates/nmakedll.mpt:
+        * templates/nmakeexe.mpt:
+
+          Moved the default libraries advapi32.lib and user32.lib out of the
+          template and into the template-input files using the variable name
+          systemlibs.  This allows -value_template systemlibs+=FOO to work.
+
+Fri Jun 29 18:24:22 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * modules/Depgen/Driver.pm:
+
+          Removed assigment of () to %types since it was sometimes
+          clobbering the value already there (from the BEGIN block).
+
+        * modules/Depgen/NMakeObjectGenerator.pm:
+        * depgen.pl:
+
+          Generate dependencies targeting object files instead of cpp files.
+          This matches how it's done for GNU make.
+
+        * modules/NMakeWorkspaceCreator.pm:
+
+          Provide output regarding which projects are being built.
+
+        * templates/nmake.mpd:
+
+          Changed how intermediate and ouptut directories are handled, to
+          match the change to make.mpd in:
+          Wed Jan 24 19:04:58 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+Wed Jun 27 11:28:50 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * config/boost_base.mpb:
+
+          Use a new environment variable, BOOST_ROOT_LIB, to determine the
+          location of boost libraries.  If this isn't set, it will be
+          expanded to $(BOOST_ROOT)/lib which is the default location.
+
+        * docs/README:
+        * modules/WorkspaceCreator.pm:
+
+          Added a new workspace feature, associate, that associates a name
+          with one or more directories.  It does not add directories to the
+          workspace, it only makes an association.
+
+        * modules/AutomakeWorkspaceCreator.pm:
+
+          Utilize the associate feature to allow conditional building of
+          groups of directories.
+
+        * docs/USAGE:
+        * modules/Options.pm:
+
+          Document the fact that the directory parameter for the -into
+          option should be a full path.
+
+        * modules/ProjectCreator.pm:
+
+          Removed duplicate code from the add_explicit_output() method.
+
+Wed Jun 27 06:27:11 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/USAGE:
+        * modules/BCB2007ProjectCreator.pm:
+        * modules/BCB2007WorkspaceCreator.pm:
+        * templates/bcb2007.mpd:
+        * templates/bcb2007dll.mpt:
+        * templates/bcb2007exe.mpt:
+          New template for C++Builder 2007
+
+Fri May 18 11:17:11 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * MPC version 3.5.0 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv TZ)) (set-time-zone-rule UTC) (setq time (format-time-string %a %b %e %H:%M:%S %Z %Y (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

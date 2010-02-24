@@ -1,0 +1,19 @@
+// Current as of 2/2/2007
+// This defines the role of all the template variables specific to the
+// 'automake' project type.
+//
+// Please try to keep this alphabetically sorted.
+//
+am_release = Provides the value to use with the -release option when creating a shared library.
+am_version = Provides an automake'ized version string based on the 'version' project variable.
+common_defines = Specifies macros that are common to all target types.
+defines = Macros that are specific to a particular configuration.
+idl_files = When a Define_Custom(IDL) is used, they will be accessible through this variable name.
+includedir = Specifies the include directory for the specific project.
+install_headers = If set, header, inline, template, idl, and pidl files will be installed.
+install_this_target = If set, script files, executables and library targets will be installed.  For libraries, it also determines if it will be dynamic (set) or static (not set).
+man_files = When a Define_Custom(MAN) is used, they will be accessible through this variable name.
+pidl_files = When a Define_Custom(PIDL) is used, they will be accessible through this variable name.
+pkgconfig_files = When a Define_Custom(pkgconfig) is used, they will be accessible through this variable name.
+script_files = When a Define_Custom(Script) is used, they will be accessible through this variable name.
+use_lib_modifier_for_lit_libs = If this template variable is set, the 'lib_modifier' template variable value will be appended to the library names of those specified by the 'lit_libs' project variable.

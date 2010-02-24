@@ -1,0 +1,17 @@
+// $Id$
+
+project {
+  requires += pcre
+  includes += $(PCRE_ROOT)/include
+  libpaths += $(PCRE_ROOT)/lib
+
+  // At this point in time (9/17/2009) the windows version of pcre does not
+  // have a version number.  And since Visual Studio complains about empty
+  // environment variables, we're not adding the version variable to the
+  // library.  This may have to change in the future.
+  specific(prop:microsoft) {
+    lit_libs += pcre
+  } else {
+    lit_libs += pcre$(PCRE_VERSION)
+  }
+}

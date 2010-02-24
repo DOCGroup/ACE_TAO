@@ -1,0 +1,64 @@
+// -*- MPC -*-
+// $Id$
+
+conditional_include "common"
+conditional_include "vccommon"
+conditional_include "windowscommon"
+
+type_description      = "Static Library"
+type_code             = 0x0104
+configurations        = Debug Release
+common_defines        = WIN32 _WINDOWS
+
+Release {
+  use_debug_libraries   = 0
+  optimize              = 1
+  compile_flags         = /W3 /GX /MD /GR
+  defines               = NDEBUG
+  compile_flags_removed = /YX
+  output_dir            = Static_Release
+  intermediate_dir      = Static_Release
+  lib_modifier          = s
+  debug_switch          =
+}
+
+Debug {
+  use_debug_libraries   = 1
+  optimize              =
+  compile_flags         = /W3 /Gm /GX /Zi /MDd /GR /Gy
+  defines               = _DEBUG
+  compile_flags_removed = /Fr /YX
+  output_dir            = Static_Debug
+  intermediate_dir      = Static_Debug
+  lib_modifier          = sd
+  pdbc                  = 1
+}
+
+MFC Release {
+  use_debug_libraries   = 0
+  optimize              = 1
+  compile_flags         = /W3 /GX /MD /GR
+  defines               = NDEBUG
+  compile_flags_removed = /YX
+  output_dir            = Static_MFC_Release
+  intermediate_dir      = Static_MFC_Release
+  lib_modifier          = mfcs
+  debug_switch          =
+  use_mfc               = 2
+}
+
+MFC Debug {
+  use_debug_libraries   = 1
+  optimize              =
+  compile_flags         = /W3 /Gm /GX /Zi /MDd /GR /Gy
+  defines               = _DEBUG
+  compile_flags_removed = /Fr /YX
+  output_dir            = Static_MFC_Debug
+  intermediate_dir      = Static_MFC_Debug
+  lib_modifier          = mfcsd
+  pdbc                  = 1
+  use_mfc               = 2
+}
+
+conditional_include "vcpartialmacros"
+conditional_include "user_vc6dsplib"

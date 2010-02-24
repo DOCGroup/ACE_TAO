@@ -1,0 +1,27 @@
+// -*- MPC -*-
+// $Id$
+
+conditional_include "bmakecommon"
+
+startup_letter = x
+
+Release {
+  optimize         = 1
+  defines          = NDEBUG
+  output_dir       = Static_Release
+  intermediate_dir = Static_Release
+  lib_modifier     = _bsr
+  postlinkrmext    = .tds
+}
+
+Debug {
+  optimize         =
+  debug_prj        = 1
+  defines          = _DEBUG
+  output_dir       = Static_Debug
+  intermediate_dir = Static_Debug
+  lib_modifier     = _bsd
+  postlinkrmext    = .tds
+}
+
+conditional_include "user_bmakelibexe"

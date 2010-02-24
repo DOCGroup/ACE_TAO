@@ -1,0 +1,7 @@
+// $Id$
+
+project {
+  includes += $(UPNP_ROOT)/include
+  libpaths += $(UPNP_ROOT)/lib
+  lit_libs += ixml
+}

@@ -1,0 +1,8 @@
+// $Id$
+
+project {
+  specific(prop:microsoft) {
+    postbuild += \
+      gacutil -nologo -i <%cwd%>\<%dllout%>\<%libname_prefix%><%sharedname%><%if(use_lib_modifier)%><%lib_modifier%><%endif%><%dll_ext%> -f
+  }
+}

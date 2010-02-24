@@ -1,0 +1,24 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  Define_Custom(NDDSTypeSupport) {
+    automatic             = 1
+    command               = <%quote%>$(NDDSHOME)/scripts/rtiddsgen<%quote%>
+    commandflags          = -language C++ -replace -namespace -corba <%input_noext%>C.h -orb ACE_TAO1.7 -I$(TAO_ROOT) -I$(TAO_ROOT)/tao
+
+    dependent             = <%quote%>$(NDDSHOME)/scripts/rtiddsgen<%bat%><%quote%>
+
+    source_pre_extension  = , Support, Plugin
+    source_outputext      = .cxx
+    header_pre_extension  = , Support, Plugin
+    header_outputext      = .h
+    keyword ndds_ts_flags = commandflags
+  }
+
+  requires += ndds
+
+  verbatim(gnuace, macros) {
+    override no_hidden_visibility = 1
+  }
+}

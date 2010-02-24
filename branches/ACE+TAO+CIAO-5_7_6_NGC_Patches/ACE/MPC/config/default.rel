@@ -1,0 +1,6 @@
+// This is the default relative definitions.  Wildcards are acceptable.
+//
+// The first column is the name for which we create a relative definition.
+// The second (optional) column, which must be comma separated, is the value
+// to build up if it isn't defined as an environmenment variable.
+*_ROOT

@@ -1,0 +1,32 @@
+// Current as of 9/25/2006
+// This defines the role of all the template variables specific to the
+// 'bmake' project type.
+//
+// Please try to keep this alphabetically sorted.
+//
+binary_compile_flags = Compiler flags passed to both dynamic libraries and executables
+cc = The name of the C++ compiler.
+cflags = C compiler flags to be use during compilation and linking.
+ccflags = C++ compiler flags specific to a particular compiler.
+common_defines = Macros that are common to all configurations.
+common_flags = Compiler flags that are common to all configurations.
+common_libs = Libraries that are common to all configurations.
+compilers = The list of possible compilers.
+cppdir = The list of directories to be searched when locating C++ files. This is determined by the BMakeProjectCreator.
+debug_macros = Macros that are only set for debug builds.
+debug_prj = Indicates that the current template configuration is debug.  This is different than negating the 'optimize' template variable.
+defines = Macros that are specific to a particular configuration.
+dllflags = Linker flags that are required to create a dynamic library.
+exeflags = Linker flags that are required to create an executable.
+libflags = Flags that are required to create a static library.
+link = The name of the tool used to create dynamic libraries and executables.
+obj_ext = The extension given to object files.
+postlinkrmext = A configuration specific extension applied to the 'exename' and removed during cleanup.
+rc = The name of the resource compiler.
+rcdir = The list of directories to be searched when locating resource files. This is determined by the BMakeProjectCreator.
+startup_letter = The text used during the creation of the startup object file.
+thflags = Thread related compiler flags.
+tlib = The name of the tool used to create static libraries.
+unicode_flags = Compiler flags used to create Unicode targets.
+use_vcl = A binary value indicating the use of VCL.
+warnflags = Compiler flags to set the warning levels.

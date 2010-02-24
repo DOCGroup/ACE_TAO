@@ -1,0 +1,362 @@
+#----------------------------------------------------------------------------
+#       Macros
+#----------------------------------------------------------------------------
+<%marker(top)%>
+<%if(multiple(configurations) || multiple(platforms))%>
+<%foreach(configurations)%>
+<%if(forfirst)%>
+<%if(multiple(platforms))%>
+<%foreach(platforms)%>
+<%if(forfirst)%>
+CFG = <%platform%> <%configuration%>
+<%endif%>
+<%endfor%>
+<%else%>
+CFG = <%configuration%>
+<%endif%>
+
+<%endif%>
+<%endfor%>
+<%endif%>
+<%foreach(compilers)%>
+<%foreach(platforms)%>
+<%foreach(configurations)%>
+<%if(multiple(platforms))%>
+ifeq ($(CFG), <%platform%> <%configuration%>)
+<%else%>
+<%if(multiple(configurations))%>
+ifeq ($(CFG), <%configuration%>)
+<%endif%>
+<%endif%>
+CC            = <%cc%>
+CXX           = <%cxx%>
+<%if(ld)%>
+LD            = <%ld%>
+<%else%>
+LD            = $(CXX) $(CCFLAGS) $(CPPFLAGS)
+<%endif%>
+AR            = <%ar("ar")%>
+<%if(nm)%>
+NM            = <%nm%>
+<%endif%>
+<%if(cxxint)%>
+CXXINT        = <%cxxint%>
+<%endif%>
+<%if(cputype)%>
+CPUTYPE       = <%cputype%>
+<%endif%>
+<%if(cpu)%>
+CPU           = <%cpu%>
+<%endif%>
+<%if(dll_ext && pic)%>
+PICFLAGS      = <%pic%>
+<%endif%>
+CPPFLAGS      = <%if(visibility && visopt)%><%visopt%> <%endif%>$(PICFLAGS) $(GENFLAGS)<%if(compile_flags)%> <%compile_flags%><%endif%><%if(cpu)%> -DCPU=$(CPU)<%endif%><%if(tempincopt)%> <%tempincopt%>$(TEMPINCDIR)<%endif%><%if(compilerflags)%> <%compilerflags%><%endif%><%if(build64bit && compilerflags64)%> <%compilerflags64%><%endif%><%if(pch_source && pchsupport)%><%foreach(pch_defines)%> -D<%pch_define%><%endfor%><%endif%><%if(extracppflags)%><%foreach(extracppflags)%><%if(!starts_with(extracppflag, -D) || !contains(language, java))%> <%extracppflag%><%endif%><%endfor%><%endif%><%if(includes)%><%foreach(includes)%> -I"<%include%>"<%endfor%><%endif%><%if(!contains(language, java) && macros)%><%foreach(macros)%> -D<%macro%><%endfor%><%endif%>
+OBJEXT        = <%obj_ext%>
+OUTPUT_OPTION = <%output_option(-o \"$@\")%>
+COMPILE.c     = $(CC) $(CCFLAGS) $(CPPFLAGS) <%compile_option("-c")%>
+COMPILE.cc    = $(CXX) $(CCFLAGS) $(CPPFLAGS) <%compile_option%>
+<%if(rc)%>
+RESEXT        = <%res_ext%>
+<%endif%>
+<%if(build64bit && arflags64)%>
+ARFLAGS       = <%if(extraarflags)%><%extraarflags%> <%endif%><%arflags64%>
+<%else%>
+<%if(arflags)%>
+ARFLAGS       = <%if(extraarflags)%><%extraarflags%> <%endif%><%arflags%>
+<%endif%>
+<%endif%>
+<%if(tempinc)%>
+TEMPINCDIR    = <%tempinc%><%if(tempincopt)%><%slash%><%project_name%><%endif%>
+<%endif%>
+LDFLAGS       =<%if(libpaths)%><%foreach(libpaths)%><%if(targetoutdir)%> <%libpathopt(-L)%>"<%libpath%><%slash%><%targetoutdir%>"<%endif%> <%libpathopt(-L)%>"<%libpath%>"<%endfor%><%endif%><%if(linkflags)%> <%linkflags%><%endif%><%if(build64bit && linkflags64)%> <%linkflags64%><%endif%>
+CCC           = $(CXX)
+MAKEFILE      = <%project_file%>
+DEPENDENCIES  = <%if(supports_include)%>.depend.<%endif%>$(MAKEFILE)
+<%if(exename)%>
+BTARGETDIR    = <%if(exeout)%><%exeout%><%else%>.<%endif%><%slash%><%targetoutdir%>
+BIN           = $(BTARGETDIR)<%exename%>$(EXESUFFIX)$(EXEEXT)
+<%else%>
+LTARGETDIR    = <%libout%><%slash%><%targetoutdir%>
+<%endif%>
+CAT           = <%type("cat")%>
+MV            = <%move("mv -f")%>
+RM            = <%delete("rm -rf")%>
+CP            = <%copy("cp -p")%>
+NUL           = <%devnull("/dev/null")%>
+MKDIR         = <%makedir("mkdir -p")%>
+TESTDIRSTART  = <%testdirstart("test -d")%>
+TESTDIREND    = <%testdirend("||")%>
+TOUCH         = <%touch("touch")%>
+EXEEXT        = <%exe_ext%>
+LIBPREFIX     = <%lib_prefix%><%libname_prefix%>
+<%if(use_lib_modifier)%>
+LIBSUFFIX     = <%lib_modifier%>
+<%endif%>
+<%if(use_exe_modifier)%>
+EXESUFFIX     = <%lib_modifier%>
+<%endif%>
+GENFLAGS      =<%if(!contains(configuration, Release) || optimize)%> <%genflags%><%endif%>
+LDLIBS        =<%foreach(libs)%> <%libopt%>"<%libname_prefix%><%lib%>$(LIBSUFFIX)"<%endfor%><%foreach(lit_libs)%> <%libopt%>"<%lit_lib%>"<%endfor%><%foreach(pure_libs)%> "<%pure_lib%>"<%endfor%> <%ldlibs%>
+OBJS          =<%if(pch_source && pchsupport)%> <%targetoutdir%><%obj_dir%><%noextension(pch_source)%>$(OBJEXT)<%endif%><%foreach(source_files)%> <%targetoutdir%><%obj_dir%><%noextension(source_file)%>$(OBJEXT)<%endfor%><%if(rc)%><%foreach(resource_files)%> <%targetoutdir%><%obj_dir%><%resource_file%>$(RESEXT)<%endfor%><%endif%>
+<%if(lib_ext)%>
+<%if(staticname)%>
+AREXT         = <%lib_ext%>
+LIB           = $(LTARGETDIR)$(LIBPREFIX)<%staticname%>$(LIBSUFFIX)$(AREXT)
+<%endif%>
+<%endif%>
+<%if(dll_ext && sharedname)%>
+SOEXT         = <%dll_ext%>
+SHTARGETDIR   = <%if(dllout)%><%dllout%><%else%><%libout%><%endif%><%slash%><%targetoutdir%>
+<%if(version && versupport)%>
+SHLIB_BASE    = $(LIBPREFIX)<%sharedname%>$(LIBSUFFIX)$(SOEXT)
+<%endif%>
+SHLIB         = $(SHTARGETDIR)$(LIBPREFIX)<%sharedname%>$(LIBSUFFIX)$(SOEXT)
+<%if(shflags)%>
+SHFLAGS       = <%shflags%>
+<%endif%>
+<%endif%>
+SRC           =<%if(pch_source && pchsupport)%> <%pch_source%><%endif%> <%source_files%>
+LINK.cc       = $(LD) $(LDFLAGS)
+<%if(!contains(language, java))%>
+<%if(dynamicflags)%>
+DYNAMICFLAGS  =<%foreach(dynamicflags)%> -D<%dynamicflag%><%endfor%>
+<%endif%>
+<%if(staticflags)%>
+STATICFLAGS   =<%foreach(staticflags)%> -D<%staticflag%><%endfor%>
+<%endif%>
+EXPORTFLAGS   = <%if(exename)%><%if(need_staticflags)%>$(STATICFLAGS)<%endif%><%else%><%if(dll_ext && sharedname)%>$(DYNAMICFLAGS)<%else%>$(STATICFLAGS)<%endif%><%endif%>
+<%endif%>
+<%if(gnumake && exename && libpaths && need_staticflags)%>
+DEPLIBS       = $(foreach lib,<%foreach(libs)%> <%libname_prefix%><%lib%><%endfor%> <%lit_libs%>, $(foreach libpath,<%foreach(libpaths)%><%if(targetoutdir)%> <%libpath%>/<%targetoutdir%><%endif%> <%libpath%><%endfor%>, $(wildcard $(libpath)/lib$(lib).a)))
+<%endif%>
+<%if(multiple(configurations) || multiple(platforms))%>
+endif
+<%endif%>
+<%endfor%>
+<%if(supports_include && make_include)%>
+
+include <%make_include%>
+<%endif%>
+<%marker(macros)%>
+
+#----------------------------------------------------------------------------
+#       Local targets
+#----------------------------------------------------------------------------
+
+<%if(exename)%>
+all:<%if(prebuild)%> __prebuild__<%endif%> $(BIN)<%if(postbuild)%> __postbuild__<%endif%>
+
+<%if(specialscript)%>
+specialscript:
+	@echo '<%specialscript%>' > $@
+	@<%chmod("chmod")%> 755 $@
+
+<%endif%>
+<%if(prelinktarget)%>
+<%prelinktarget%>: specialscript $(OBJS)
+	@specialscript "$(NM)" "$(OBJS)" "$(LDLIBS)" "<%if(libpaths)%><%foreach(libpaths)%><%if(targetoutdir)%><%libpath%><%slash%><%targetoutdir%> <%endif%><%libpath%><%fornotlast(" ")%><%endfor%><%else%>.<%endif%>" "$(BIN)" "$@"
+	@$(RM) specialscript
+
+<%if(prelinktargetobj)%>
+<%targetoutdir%><%obj_dir%><%prelinktargetobj%>: <%prelinktarget%>
+	$(COMPILE.cc) $(OUTPUT_OPTION) <%prelinktarget%>
+	@$(RM) <%prelinktarget%>
+
+<%endif%>
+<%endif%>
+$(BIN):<%if(tempinc)%> $(TEMPINCDIR)<%endif%><%if(prelinktargetobj)%> <%targetoutdir%><%obj_dir%><%prelinktargetobj%><%else%><%if(prelinktarget)%> <%prelinktarget%><%endif%><%endif%> $(OBJS)<%if(gnumake && exename && libpaths && need_staticflags)%> $(DEPLIBS)<%endif%>
+	@$(TESTDIRSTART) "$(BTARGETDIR)" $(TESTDIREND) $(MKDIR) "$(BTARGETDIR)"
+<%if(prelink)%>
+	<%eval(prelink)%>
+<%endif%>
+	$(LINK.cc) $(OBJS) $(LDLIBS)<%if(exe_linkflags)%> <%eval(exe_linkflags)%><%endif%> $(OUTPUT_OPTION)
+<%if(postlinkbinary)%>
+	<%postlinkbinary%>
+<%endif%>
+
+<%endif%>
+<%if(dll_ext && sharedname)%>
+all:<%if(prebuild)%> __prebuild__<%endif%><%if(version && versupport)%> $(SHLIB).<%version%><%endif%> $(SHLIB)<%if(postbuild)%> __postbuild__<%endif%>
+
+<%if(version && versupport)%>
+$(SHLIB):
+	cd $(SHTARGETDIR) && ln -s $(SHLIB_BASE).<%version%> $(SHLIB_BASE)
+
+<%endif%>
+$(SHLIB)<%if(version && versupport)%>.<%version%><%endif%>: <%if(tempinc)%>$(TEMPINCDIR) <%endif%>$(OBJS)
+	@$(TESTDIRSTART) "$(SHTARGETDIR)" $(TESTDIREND) $(MKDIR) "$(SHTARGETDIR)"
+<%if(prelink)%>
+	<%eval(prelink)%>
+<%endif%>
+<%if(dmclink)%>
+	link /impl <%if(pch_source && pchsupport)%><%targetoutdir%><%obj_dir%><%noextension(pch_source)%>$(OBJEXT)+<%endif%><%foreach(source_files)%><%targetoutdir%><%obj_dir%><%noextension(source_file)%>$(OBJEXT)<%fornotlast("+")%><%endfor%>,$@,<%ldlibs%><%if(rc)%><%foreach(resource_files)%><%forfirst(",,")%><%targetoutdir%><%obj_dir%><%resource_file%>$(RESEXT)<%fornotlast("+")%><%endfor%><%endif%>
+<%else%>
+	<%if(dld)%><%dld%> $(LDFLAGS)<%else%>$(LINK.cc)<%endif%> $(SHFLAGS) $(OBJS) $(LDLIBS) $(OUTPUT_OPTION)
+<%endif%>
+
+<%else%>
+<%if(staticname)%>
+all:<%if(prebuild)%> __prebuild__<%endif%> $(LIB)<%if(postbuild)%> __postbuild__<%endif%>
+
+<%endif%>
+<%endif%>
+<%if(staticname)%>
+$(LIB): <%if(tempinc)%>$(TEMPINCDIR) <%endif%>$(OBJS)
+	@$(TESTDIRSTART) "$(LTARGETDIR)" $(TESTDIREND) $(MKDIR) "$(LTARGETDIR)"
+	$(AR) $(ARFLAGS) <%libgenopt%>$(LIB) $(OBJS)<%if(tempinc)%> `find $(TEMPINCDIR) -name \*.o\*`<%endif%>
+<%if(ranlib)%>
+	ranlib $(LIB)
+<%endif%>
+
+<%endif%>
+<%if(custom_types)%>
+<%if(gnumake)%>
+SPACE           = $(should_be_unset) $(should_be_unset)
+<%endif%>
+GENERATED_DIRTY =<%foreach(custom_types)%><%foreach(custom_type->input_files)%><%if(custom_type->input_file->output_files)%><%foreach(custom_type->input_file->output_files)%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%><%slash%><%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endfor%><%endif%><%endfor%><%endfor%>
+
+<%foreach(custom_types)%>
+<%if(expanded_variable_assignment && custom_type->libpath)%>
+DYLD_LIBRARY_PATH := $(DYLD_LIBRARY_PATH):<%custom_type->libpath%>
+LD_LIBRARY_PATH   := $(LD_LIBRARY_PATH):<%custom_type->libpath%>
+SHLIB_PATH        := $(SHLIB_PATH):<%custom_type->libpath%>
+LIBPATH           := $(LIBPATH):<%custom_type->libpath%>
+PATH              := $(PATH):<%custom_type->libpath%>
+
+<%endif%>
+<%foreach(custom_type->input_files)%>
+<%if(custom_type->input_file->output_files)%>
+<%if(multiple(custom_type->input_file->output_files))%>
+.NOTPARALLEL:
+<%endif%>
+<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%><%slash%><%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%><%if(custom_type->input_file->dependencies)%><%foreach(custom_type->input_file->dependencies)%><%if(gnumake)%><%if(contains(custom_type->input_file->dependencie, \$))%> $(subst $(SPACE),\$(SPACE),<%custom_type->input_file->dependencie%>)<%else%> <%scope(enter, escape, \\s)%><%custom_type->input_file->dependencie%><%scope(leave)%><%endif%><%else%><%if(!contains(custom_type->input_file->dependencie, \$))%> <%scope(enter, escape, \\s)%><%custom_type->input_file->dependencie%><%scope(leave)%><%endif%><%endif%><%endfor%><%endif%><%if(flag_overrides(custom_type->input_file, dependent))%><%foreach(dep, flag_overrides(custom_type->input_file, dependent))%><%if(gnumake)%><%if(contains(dep, \$))%> $(subst $(SPACE),\$(SPACE),<%dep%>)<%else%> <%scope(enter, escape, \\s)%><%dep%><%scope(leave)%><%endif%><%else%><%if(!contains(dep, \$))%> <%scope(enter, escape, \\s)%><%dep%><%scope(leave)%><%endif%><%endif%><%endfor%><%else%><%if(custom_type->dependent)%><%foreach(custom_type->dependent)%><%if(gnumake)%><%if(contains(custom_type->dependent, \$))%> $(subst $(SPACE),\$(SPACE),<%custom_type->dependent%>)<%else%> <%scope(enter, escape, \\s)%><%custom_type->dependent%><%scope(leave)%><%endif%><%else%><%if(!contains(custom_type->dependent, \$))%> <%scope(enter, escape, \\s)%><%custom_type->dependent%><%scope(leave)%><%endif%><%endif%><%endfor%><%endif%><%endif%>
+<%if(flag_overrides(custom_type->input_file, gendir))%>
+	@$(TESTDIRSTART) "<%flag_overrides(custom_type->input_file, gendir)%>" $(TESTDIREND) $(MKDIR) "<%flag_overrides(custom_type->input_file, gendir)%>"
+<%endif%>
+	<%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%if(custom_type->output_option)%><%custom_type->input_file%> <%custom_type->output_option%> "$@"<%else%><%custom_type->input_file%><%endif%>
+<%if(flag_overrides(custom_type->input_file, postcommand))%>
+<%foreach(custom_type->input_file)%>
+	<%flag_overrides(custom_type->input_file, postcommand)%>
+<%endfor%>
+<%else%>
+<%if(custom_type->postcommand)%>
+<%foreach(custom_type->input_file)%>
+	<%custom_type->postcommand%>
+<%endfor%>
+<%endif%>
+<%endif%>
+<%if(pch_header)%>
+<%if(custom_type->pch_postrule)%>
+<%foreach(custom_type->input_file->source_output_files)%>
+	@echo '#include "<%pch_header%>"' > temp.$$$$ && $(CAT) <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%><%slash%><%basename(custom_type->input_file->source_output_file)%><%else%><%custom_type->input_file->source_output_file%><%endif%> >> temp.$$$$ && $(MV) temp.$$$$ <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%><%slash%><%basename(custom_type->input_file->source_output_file)%><%else%><%custom_type->input_file->source_output_file%><%endif%>
+<%endfor%>
+<%endif%>
+<%endif%>
+
+<%endif%>
+<%endfor%>
+<%endfor%>
+.PRECIOUS: $(GENERATED_DIRTY)
+<%if(source_files)%>
+$(OBJS): $(GENERATED_DIRTY)
+<%else%>
+all:<%if(prebuild)%> __prebuild__<%endif%> $(GENERATED_DIRTY)<%if(postbuild)%> __postbuild__<%endif%>
+<%endif%>
+
+<%endif%>
+generated: $(GENERATED_DIRTY)
+	@-:
+
+<%if(tempinc)%>
+$(TEMPINCDIR):
+	@-$(TESTDIRSTART) "$(TEMPINCDIR)" $(TESTDIREND) $(MKDIR) "$(TEMPINCDIR)" 2> $(NUL)
+
+<%endif%>
+<%if(pch_source && pchsupport)%>
+<%targetoutdir%><%obj_dir%><%noextension(pch_source)%>$(OBJEXT): <%pch_source%>
+<%if(targetoutdir || obj_dir)%>
+	@$(TESTDIRSTART) "<%targetoutdir%><%obj_dir%><%dirname(pch_source)%>" $(TESTDIREND) $(MKDIR) "<%targetoutdir%><%obj_dir%><%dirname(pch_source)%>"
+<%endif%>
+	<%if(ends_with(pch_source, \.c))%>$(COMPILE.c)<%else%>$(COMPILE.cc)<%endif%> <%if(pchcreate)%><%pchcreate%><%targetoutdir%><%obj_dir%><%pch_header%><%pchext%> <%endif%>$(EXPORTFLAGS)<%if(!pchnobj)%> $(OUTPUT_OPTION)<%endif%> <%pch_source%>
+<%if(pchnobj)%>
+	@$(CP) <%targetoutdir%><%obj_dir%><%pch_header%><%pchext%> <%targetoutdir%><%obj_dir%><%noextension(pch_source)%>$(OBJEXT)
+<%endif%>
+
+<%endif%>
+<%foreach(source_files)%>
+<%targetoutdir%><%obj_dir%><%noextension(source_file)%>$(OBJEXT): <%source_file%>
+<%if(targetoutdir || obj_dir)%>
+	@$(TESTDIRSTART) "<%targetoutdir%><%obj_dir%><%dirname(source_file)%>" $(TESTDIREND) $(MKDIR) "<%targetoutdir%><%obj_dir%><%dirname(source_file)%>"
+<%endif%>
+	<%if(ends_with(source_file, \.c))%>$(COMPILE.c)<%else%>$(COMPILE.cc)<%endif%> <%if(flag_overrides(source_file, buildflags))%><%flag_overrides(source_file, buildflags)%> <%endif%><%if(pchuse && pch_source && pchsupport)%><%pchuse%><%pch_header%><%pchext%> <%if(pchstop)%><%pchstop%><%pch_header%><%endif%><%endif%>$(EXPORTFLAGS) $(OUTPUT_OPTION) <%source_file%>
+
+<%endfor%>
+<%if(resource_files)%>
+<%if(rc)%>
+<%foreach(resource_files)%>
+<%targetoutdir%><%obj_dir%><%resource_file%>$(RESEXT):
+<%if(targetoutdir || obj_dir)%>
+	@$(TESTDIRSTART) "<%targetoutdir%><%obj_dir%><%dirname(resource_file)%>" $(TESTDIREND) $(MKDIR) "<%targetoutdir%><%obj_dir%><%dirname(resource_file)%>"
+<%endif%>
+	<%rc%><%foreach(includes)%> -I<%include%><%endfor%> <%resource_file%> <%targetoutdir%><%obj_dir%><%resource_file%>$(RESEXT)
+
+<%endfor%>
+<%endif%>
+<%endif%>
+clean:
+	-$(RM) $(OBJS)
+<%if(pch_source && pchsupport)%>
+	-$(RM) <%targetoutdir%><%obj_dir%><%pch_header%><%pchext%>
+<%endif%>
+<%if(clean)%>
+	-$(RM) <%clean%><%if(sharedname)%><%foreach(dir, clean)%> $(SHTARGETDIR)<%dir%><%endfor%><%endif%><%if(staticname || sharedname)%><%foreach(dir, clean)%> $(LTARGETDIR)<%dir%><%endfor%><%endif%><%if(exename)%><%foreach(dir, clean)%> $(BTARGETDIR)<%dir%><%endfor%><%endif%>
+<%endif%>
+
+realclean: clean
+	-$(RM) <%if(exename)%>$(BIN)<%else%><%if(dll_ext && sharedname && version && versupport)%>$(SHLIB).<%version%> <%endif%>$(SHLIB) $(LIB)<%endif%>
+<%if(custom_types)%>
+	-$(RM) $(GENERATED_DIRTY)
+<%endif%>
+<%if(obj_dir)%>
+	-$(RM) <%targetoutdir%><%obj_dir%>
+<%endif%>
+<%if(postclean)%>
+	-<%eval(postclean)%>
+<%endif%>
+
+<%if(prebuild)%>
+__prebuild__:
+	@<%eval(prebuild)%>
+
+<%endif%>
+<%if(postbuild)%>
+__postbuild__:
+	@<%eval(postbuild)%>
+
+<%endif%>
+<%marker(local)%>
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
+
+$(DEPENDENCIES):
+	@$(TOUCH) $(DEPENDENCIES)
+
+depend:
+<%if(source_files || pch_source)%>
+	-<%if(targetoutdir || obj_dir)%>VDIR=<%targetoutdir%><%obj_dir%> <%endif%><%depgen("$(MPC_ROOT)/depgen.pl")%> <%depgen_flags%> $(CFLAGS) $(CCFLAGS) $(CPPFLAGS) -f $(DEPENDENCIES) $(SRC) 2> $(NUL)
+<%else%>
+	@-:
+<%endif%>
+
+<%if(forlast)%>
+<%if(supports_include)%>
+include $(DEPENDENCIES)
+<%else%>
+# DO NOT DELETE THIS LINE
+<%endif%>
+<%endif%>
+<%endfor%>
+<%endfor%>
+<%marker(bottom)%>

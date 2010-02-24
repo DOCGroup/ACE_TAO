@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title><%project_name%></title>
+  <style type="text/css">
+    p {font: 9pt verdana, lucida; width:800px; color: slategray;}
+    h1 {font: 36pt verdana, lucida; width: 800px; color: darkcyan;}
+    h2 {font: 16pt "trebuchet ms", helvetica; color: white; padding: 3px; background-color: teal;}
+    a {text-decoration: none; }
+    td {font: 12pt verdana, lucida; color: white; padding: 3px; background-color: cadetblue;}
+    td.sub {font: 12pt verdana, lucida; color: white; padding: 3px; background-color: darkcyan;}
+    td.subsub {font: 12pt verdana, lucida; color: white; padding: 3px; padding-left: 12px; background-color: darkcyan;}
+    thead tr td {font: 16pt "trebuchet ms", helvetica; color: white; padding: 3px; background-color: teal;}
+    th {font: 14pt bold verdana, lucida; background-color: teal; color: white; padding: 3px;}
+
+    div {
+      font: bold 12pt verdana, lucida;
+      color: white;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      border: 2px outset darkgray;
+      margin: 3px;
+      width: 3in;
+      padding: 2px;
+      padding-left: 6px;
+    }
+<%foreach(tree_styles)%>
+    <%tree_style%>
+<%endfor%>
+  </style>
+  <script type="text/javascript">
+  <!--
+  function popup(mylink, windowname) {
+    if (!window.focus) {
+      return true;
+    }
+    else {
+      var href;
+      if (typeof(mylink) == 'string') {
+        href=mylink;
+      }
+      else {
+        href=mylink.href;
+      }
+      window.open(href, windowname, 'width=535,height=465,scrollbars=yes,menubar=yes,resizable=yes');
+      return false;
+    }
+  }
+  //-->
+  </script>
+</head>
+<body>
+<h1><%project_name%></h1>
+
+<%foreach(inheritance_nodes)%>
+<%forfirst("<h2>MPC Inheritance Hierarchy</h2>")%>
+<%inheritance_node%>
+<%forlast("<br>")%>
+<%endfor%>
+
+<table style="table-layout:fixed" width="800" summary="MPC Project Information">
+<col width="200">
+<col width="600">
+<thead>
+<tr><td colspan="2">MPC Project Settings</td></tr>
+<tr><th>Name</th><th>Value</th></tr>
+</thead>
+<tbody>
+<tr><td>after</td><td><%after%></td></tr>
+<tr><td>avoids</td><td><%avoids%></td></tr>
+<tr><td>custom_only</td><td><%custom_only%></td></tr>
+<tr><td>dllout</td><td><%dllout%></td></tr>
+<tr><td>dynamicflags</td><td><%dynamicflags%></td></tr>
+<tr><td>exename</td><td><%exename%></td></tr>
+<tr><td>includes</td><td><%includes%></td></tr>
+<tr><td>exeout</td><td><%exeout%></td></tr>
+<tr><td>libout</td><td><%libout%></td></tr>
+<tr><td>libpaths</td><td><%libpaths%></td></tr>
+<tr><td>libs</td><td><%foreach(libs)%><%libname_prefix%><%lib%><%fornotlast(" ")%><%endfor%></td></tr>
+<tr><td>lit_libs</td><td><%lit_libs%></td></tr>
+<tr><td>macros</td><td><%macros%></td></tr>
+<tr><td>pch_header</td><td><%pch_header%></td></tr>
+<tr><td>pch_source</td><td><%pch_source%></td></tr>
+<tr><td>prebuild</td><td><%prebuild%></td></tr>
+<tr><td>postbuild</td><td><%postbuild%></td></tr>
+<tr><td>postclean</td><td><%postclean%></td></tr>
+<tr><td>pure_libs</td><td><%pure_libs%></td></tr>
+<tr><td>recurse</td><td><%recurse%></td></tr>
+<tr><td>requires</td><td><%requires%></td></tr>
+<tr><td>sharedname</td><td><%libname_prefix%><%sharedname%></td></tr>
+<tr><td>staticflags</td><td><%staticflags%></td></tr>
+<tr><td>staticname</td><td><%libname_prefix%><%staticname%></td></tr>
+<tr><td>tagname *</td><td><%tagname%></td></tr>
+<tr><td>tagchecks *</td><td><%tagchecks%></td></tr>
+<tr><td>version</td><td><%version%></td></tr>
+</tbody>
+<thead>
+<tr><td colspan="2">MPC Project Files</td></tr>
+<tr><th>Name</th><th>Value</th></tr>
+</thead>
+<tbody>
+<tr><td>Source Files</td><td><%source_files%></td></tr>
+<tr><td>Header Files</td><td><%header_files%></td></tr>
+<tr><td>Inline Files</td><td><%inline_files%></td></tr>
+<tr><td>Template Files</td><td><%template_files%></td></tr>
+<tr><td>Resource Files</td><td><%resource_files%></td></tr>
+<tr><td>Documentation Files</td><td><%documentation_files%></td></tr>
+<%foreach(custom_types)%>
+<tr><td><%ucw(custom_type)%></td><td><%custom_type->input_files%></td></tr>
+<%endfor%>
+<%if(configurations || pch_defines)%>
+</tbody>
+<thead>
+<tr><td colspan="2">MPC Template Settings</td></tr>
+<tr><th>Name</th><th>Value</th></tr>
+</thead>
+<tbody>
+<%comment("common to all mpt files")%>
+<%if(pch_defines)%>
+<tr><td>pch_defines</td><td><%pch_defines%></td></tr>
+<%endif%>
+<%foreach(configurations)%>
+<tr><td class="sub" colspan="2">Configuration: <%configuration%></td></tr>
+<%comment("borland, nmake, va4, em3, vc6, vc7 and vc71 mpt files")%>
+<%if(defines || common_defines)%>
+<tr><td>defines</td><td><%defines%> <%common_defines%></td></tr>
+<%endif%>
+<%if(compile_flags)%>
+<tr><td>compile_flags</td><td><%compile_flags%></td></tr>
+<%endif%>
+<%comment("make mpt files")%>
+<%if(cxx)%>
+<tr><td>cxx</td><td><%cxx%></td></tr>
+<%endif%>
+<%if(compilerflags)%>
+<tr><td>compilerflags</td><td><%compilerflags%></td></tr>
+<%endif%>
+<%if(linkflags)%>
+<tr><td>linkflags</td><td><%linkflags%></td></tr>
+<%endif%>
+<%foreach(platforms)%>
+<tr><td class="subsub" colspan="2">Platform: <%platform%></td></tr>
+<%if(shflags)%>
+<tr><td>shflags</td><td><%shflags%></td></tr>
+<%endif%>
+<%if(ldlibs)%>
+<tr><td>ldlibs</td><td><%ldlibs%></td></tr>
+<%endif%>
+<%if(extracppflags)%>
+<tr><td>extracppflags</td><td><%extracppflags%></td></tr>
+<%endif%>
+<%if(dll_ext)%>
+<tr><td>dll_ext</td><td><%dll_ext%></td></tr>
+<%endif%>
+<%comment("em3 mpt files")%>
+<%if(cpu_id)%>
+<tr><td>cpu_id</td><td><%cpu_id%></td></tr>
+<%endif%>
+<%if(platform_id)%>
+<tr><td>platform_id</td><td><%platform_id%></td></tr>
+<%endif%>
+<%if(cpu_defines)%>
+<tr><td>cpu_defines</td><td><%cpu_defines%></td></tr>
+<%endif%>
+<%endfor%>
+<%endfor%>
+<%endif%>
+</tbody>
+</table>
+
+<p>
+*   This keyword is specific to the gnuace project type.
+</p>
+
+</body>
+</html>

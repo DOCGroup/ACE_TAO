@@ -1,0 +1,355 @@
+# @file <%project_file%>
+#
+# $Id$
+<%marker(top)%>
+<%if(requires || avoids)%>
+
+<%foreach(uniq(requires))%>
+if BUILD_<%uc(require)%>
+<%endfor%>
+<%foreach(uniq(avoids))%>
+if !BUILD_<%uc(avoid)%>
+<%endfor%>
+<%endif%>
+<%marker(macros)%>
+<%if(man_files)%>
+
+man_MANS += <%man_files%>
+<%endif%>
+<%if(script_files)%>
+
+<%if(install_this_target)%>bin<%else%>noinst<%endif%>_SCRIPTS += <%script_files%>
+<%endif%>
+<%if(custom_types)%>
+<%foreach(custom_types)%>
+<%foreach(custom_type->input_files)%>
+<%if(custom_type->input_file->output_files)%>
+
+BUILT_SOURCES += \
+<%foreach(output_file, sort(custom_type->input_file->output_files))%>
+  <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(output_file)%><%else%><%output_file%><%endif%><%fornotlast(" \\")%>
+<%endfor%>
+
+CLEANFILES += \
+<%if(multiple(custom_type->input_file->output_files))%>
+  <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basenoextension(custom_type->input_file)%><%else%><%noextension(custom_type->input_file)%><%endif%>-stamp<%keyname_used(custom_type->input_file, first)%> \
+<%endif%>
+<%foreach(output_file, sort(custom_type->input_file->output_files))%>
+  <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(output_file)%><%else%><%output_file%><%endif%><%fornotlast(" \\")%>
+<%endfor%>
+
+<%if(multiple(custom_type->input_file->output_files))%>
+<%foreach(output_file, sort(custom_type->input_file->output_files))%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(output_file)%><%else%><%output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basenoextension(custom_type->input_file)%><%else%><%noextension(custom_type->input_file)%><%endif%>-stamp<%keyname_used(custom_type->input_file, second)%>
+
+<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basenoextension(custom_type->input_file)%><%else%><%noextension(custom_type->input_file)%><%endif%>-stamp<%keyname_used(custom_type->input_file, third)%>: $(srcdir)/<%custom_type->input_file%><%if(custom_type->input_file->dependencies)%><%foreach(custom_type->input_file->dependencies)%> <%scope(enter, escape, \\s)%><%custom_type->input_file->dependencie%><%scope(leave)%><%endfor%><%endif%><%if(flag_overrides(custom_type->input_file, dependent))%><%foreach(dep, flag_overrides(custom_type->input_file, dependent))%> <%scope(enter, escape, \\s)%><%dep%><%scope(leave)%><%endfor%><%else%><%if(custom_type->dependent)%><%foreach(custom_type->dependent)%> <%scope(enter, escape, \\s)%><%custom_type->dependent%><%scope(leave)%><%endfor%><%endif%><%endif%>
+<%else%>
+<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: $(srcdir)/<%custom_type->input_file%><%if(custom_type->input_file->dependencies)%><%foreach(custom_type->input_file->dependencies)%> <%scope(enter, escape, \\s)%><%custom_type->input_file->dependencie%><%scope(leave)%><%endfor%><%endif%><%if(flag_overrides(custom_type->input_file, dependent))%><%foreach(dep, flag_overrides(custom_type->input_file, dependent))%> <%scope(enter, escape, \\s)%><%dep%><%scope(leave)%><%endfor%><%else%><%if(custom_type->dependent)%><%foreach(custom_type->dependent)%> <%scope(enter, escape, \\s)%><%custom_type->dependent%><%scope(leave)%><%endfor%><%endif%><%endif%>
+<%endif%>
+<%if(flag_overrides(custom_type->input_file, gendir))%>
+	mkdir -p <%flag_overrides(custom_type->input_file, gendir)%>
+<%endif%>
+	<%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%if(custom_type->output_option)%>$(srcdir)/<%custom_type->input_file%> <%custom_type->output_option%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_files)%><%else%><%custom_type->input_file->output_files%><%endif%><%else%>$(srcdir)/<%custom_type->input_file%><%endif%>
+<%if(flag_overrides(custom_type->input_file, postcommand))%>
+<%foreach(custom_type->input_file)%>
+	<%flag_overrides(custom_type->input_file, postcommand)%>
+<%endfor%>
+<%else%>
+<%if(custom_type->postcommand)%>
+<%foreach(custom_type->input_file)%>
+	<%custom_type->postcommand%>
+<%endfor%>
+<%endif%>
+<%endif%>
+<%if(multiple(custom_type->input_file->output_files))%>
+	@touch "$@"
+<%endif%>
+<%endif%>
+<%endfor%>
+<%endfor%>
+<%endif%>
+<%marker(local)%>
+<%if(exename || sharedname || staticname)%>
+<%if(source_files)%>
+
+<%if(configurations)%>
+<%foreach(configurations)%>
+<%if(exename)%>
+<%if(install_this_target)%>bin<%else%>noinst<%endif%>_PROGRAMS += <%exename%><%lib_modifier%>
+<%configuration%> : <%exename%><%lib_modifier%>
+<%else%>
+<%if(install_this_target)%>lib<%else%>noinst<%endif%>_LTLIBRARIES += lib<%libname_prefix%><%if(sharedname)%><%sharedname%><%else%><%staticname%><%endif%><%lib_modifier%>.la
+<%configuration%> : lib<%libname_prefix%><%if(sharedname)%><%sharedname%><%else%><%staticname%><%endif%><%lib_modifier%>.la
+<%endif%>
+<%endfor%>
+<%else%>
+<%if(exename)%>
+<%if(install_this_target)%>bin<%else%>noinst<%endif%>_PROGRAMS += <%exename%>
+<%else%>
+<%if(install_this_target)%>lib<%else%>noinst<%endif%>_LTLIBRARIES += lib<%libname_prefix%><%if(sharedname)%><%sharedname%><%else%><%staticname%><%endif%>.la
+<%endif%>
+<%endif%>
+<%endif%>
+<%if(includes || defines || common_defines || macros || need_staticflags || dynamicflags || compile_flags)%>
+
+<%if(exename)%>
+<%normalize(exename)%>_CPPFLAGS<%if(configurations)%>_COMMON<%endif%> = \
+<%else%>
+lib<%libname_prefix%><%if(sharedname)%><%normalize(sharedname)%><%else%><%normalize(staticname)%><%endif%><%if(!configurations)%>_la<%endif%>_CPPFLAGS<%if(configurations)%>_COMMON<%endif%> = \
+<%endif%>
+<%foreach(includes)%>
+  -I<%include%><%if(defines || common_defines || macros || need_staticflags || dynamicflags || compile_flags && !configurations)%> \<%else%><%fornotlast(" \\")%><%endif%>
+<%endfor%>
+<%foreach(defines common_defines macros)%>
+  -D<%define%><%if(need_staticflags || dynamicflags || compile_flags && !configurations)%> \<%else%><%fornotlast(" \\")%><%endif%>
+<%endfor%>
+<%if(compile_flags && !configurations)%>
+<%foreach(compile_flags)%>
+  <%compile_flag%><%if(need_staticflags || dynamicflags)%> \<%else%><%fornotlast(" \\")%><%endif%>
+<%endfor%>
+<%endif%>
+<%if(need_staticflags)%>
+<%if(staticflags)%>
+<%foreach(staticflags)%>
+  -D<%staticflag%><%fornotlast(" \\")%>
+<%endfor%>
+<%else%>
+  -D__NO_STATIC_FLAGS_AVAILABLE__
+<%endif%>
+<%else%>
+<%foreach(dynamicflags)%>
+  -D<%dynamicflag%><%fornotlast(" \\")%>
+<%endfor%>
+<%endif%>
+<%if(configurations)%>
+
+<%foreach(configurations)%>
+<%if(exename)%>
+<%normalize(exename)%><%lib_modifier%>_CPPFLAGS = $(<%normalize(exename)%>_CPPFLAGS_COMMON)<%if(compile_flags)%> <%compile_flags%><%endif%>
+<%else%>
+lib<%libname_prefix%><%if(sharedname)%><%normalize(sharedname)%><%else%><%normalize(staticname)%><%endif%><%lib_modifier%>_la_CPPFLAGS = $(lib<%libname_prefix%><%if(sharedname)%><%normalize(sharedname)%><%else%><%normalize(staticname)%><%endif%>_CPPFLAGS_COMMON)<%if(compile_flags)%> <%compile_flags%><%endif%>
+<%endif%>
+<%endfor%>
+<%endif%>
+<%endif%>
+<%if(source_files)%>
+
+<%if(exename)%>
+<%normalize(exename)%>_SOURCES<%if(configurations)%>_COMMON<%endif%> = \
+<%else%>
+lib<%libname_prefix%><%if(sharedname)%><%normalize(sharedname)%><%else%><%normalize(staticname)%><%endif%><%if(!configurations)%>_la<%endif%>_SOURCES<%if(configurations)%>_COMMON<%endif%> = \
+<%endif%>
+<%foreach(source_file, sort(source_files))%>
+<%if(!flag_overrides(source_file, buildflags))%>
+  <%source_file%> \
+<%endif%>
+<%endfor%>
+<%if(exename)%>
+<%foreach(header_file, sort(header_files inline_files))%>
+  <%header_file%><%fornotlast(" \\")%>
+<%endfor%>
+<%endif%>
+<%if(configurations)%>
+
+<%foreach(configurations)%>
+<%if(exename)%>
+<%normalize(exename)%><%lib_modifier%>_SOURCES = $(<%normalize(exename)%>_SOURCES_COMMON)
+<%else%>
+lib<%libname_prefix%><%if(sharedname)%><%normalize(sharedname)%><%else%><%normalize(staticname)%><%endif%><%lib_modifier%>_la_SOURCES = $(lib<%libname_prefix%><%if(sharedname)%><%normalize(sharedname)%><%else%><%normalize(staticname)%><%endif%>_SOURCES_COMMON)
+<%endif%>
+<%endfor%>
+<%endif%>
+<%if(libpaths && contains(libpaths, \.\./))%>
+
+<%foreach(libpaths)%>
+<%if(contains(libpath, \.\./))%>
+<%libpath%>:
+	mkdir -p <%libpath%>
+
+<%endif%>
+<%endfor%>
+
+<%if(exename)%>
+<%normalize(exename)%>_DEPENDENCIES<%if(configurations)%>_COMMON<%endif%> = \
+<%else%>
+lib<%libname_prefix%><%if(sharedname)%><%normalize(sharedname)%><%else%><%normalize(staticname)%><%endif%><%if(!configurations)%>_la<%endif%>_DEPENDENCIES<%if(configurations)%>_COMMON<%endif%> = \
+<%endif%>
+<%foreach(libpaths)%><%if(contains(libpath, \.\./))%> <%libpath%><%endif%><%endfor%>
+<%if(configurations)%>
+
+<%foreach(configurations)%>
+<%if(exename)%>
+<%normalize(exename)%><%lib_modifier%>_DEPENDENCIES += $(<%normalize(exename)%>_DEPENDENCIES_COMMON)
+<%else%>
+lib<%libname_prefix%><%if(sharedname)%><%normalize(sharedname)%><%else%><%normalize(staticname)%><%endif%><%lib_modifier%>_la_DEPENDENCIES += \
+ $(lib<%libname_prefix%><%if(sharedname)%><%normalize(sharedname)%><%else%><%normalize(staticname)%><%endif%>_DEPENDENCIES_COMMON)
+<%endif%>
+<%endfor%>
+<%endif%>
+<%endif%>
+<%if(exename)%>
+<%if(linkflags || libpaths)%>
+
+<%normalize(exename)%>_LDFLAGS<%if(configurations)%>_COMMON<%endif%> = \
+ <%linkflags%><%foreach(libpaths)%> -L<%libpath%><%endfor%>
+<%if(configurations)%>
+
+<%foreach(configurations)%>
+<%normalize(exename)%><%lib_modifier%>_LDFLAGS = $(<%normalize(exename)%>_LDFLAGS_COMMON)
+<%endfor%>
+<%endif%>
+<%endif%>
+<%else%>
+<%if(linkflags || libpaths || am_version && install_this_target || am_release && install_this_target)%>
+
+lib<%libname_prefix%><%if(sharedname)%><%normalize(sharedname)%><%else%><%normalize(staticname)%><%endif%><%if(!configurations)%>_la<%endif%>_LDFLAGS<%if(configurations)%>_COMMON<%endif%> = \
+<%if(am_version && install_this_target)%> -version-number <%am_version%><%else%><%if(am_release && install_this_target)%> -release <%am_release%><%endif%><%endif%><%if(linkflags)%> <%linkflags%><%endif%><%foreach(libpaths)%> -L<%libpath%><%endfor%>
+<%if(configurations)%>
+
+<%foreach(configurations)%>
+lib<%libname_prefix%><%if(sharedname)%><%normalize(sharedname)%><%else%><%normalize(staticname)%><%endif%><%lib_modifier%>_la_LDFLAGS = $(lib<%libname_prefix%><%if(sharedname)%><%normalize(sharedname)%><%else%><%normalize(staticname)%><%endif%>_LDFLAGS_COMMON)
+<%endfor%>
+<%endif%>
+<%endif%>
+<%endif%>
+<%endif%>
+<%if(configurations)%>
+<%foreach(configurations)%>
+<%if(exename)%>
+<%if(libs || pure_libs || lit_libs)%>
+
+<%normalize(exename)%><%lib_modifier%>_LDADD = \
+<%foreach(libs)%>
+  lib<%libname_prefix%><%lib%><%lib_modifier%>.la<%if(lit_libs || pure_libs)%> \<%else%><%fornotlast(" \\")%><%endif%>
+<%endfor%>
+<%foreach(lit_libs)%>
+  -l<%lit_lib%><%if(use_lib_modifier_for_lit_libs)%><%lib_modifier%><%endif%><%if(pure_libs)%> \<%else%><%fornotlast(" \\")%><%endif%>
+<%endfor%>
+<%foreach(pure_libs)%>
+  <%pure_lib%><%fornotlast(" \\")%>
+<%endfor%>
+<%endif%>
+<%else%>
+<%if(install_this_target)%>
+<%if(libs || pure_libs || lit_libs)%>
+
+lib<%libname_prefix%><%if(sharedname)%><%normalize(sharedname)%><%else%><%normalize(staticname)%><%endif%><%lib_modifier%>_la_LIBADD = \
+<%foreach(libs)%>
+  lib<%libname_prefix%><%lib%><%lib_modifier%>.la<%if(lit_libs || pure_libs)%> \<%else%><%fornotlast(" \\")%><%endif%>
+<%endfor%>
+<%foreach(lit_libs)%>
+  -l<%lit_lib%><%if(use_lib_modifier_for_lit_libs)%><%lib_modifier%><%endif%><%if(pure_libs)%> \<%else%><%fornotlast(" \\")%><%endif%>
+<%endfor%>
+<%foreach(pure_libs)%>
+  <%pure_lib%><%fornotlast(" \\")%>
+<%endfor%>
+<%endif%>
+<%endif%>
+<%endif%>
+<%endfor%>
+<%else%>
+<%if(exename)%>
+<%if(libs || pure_libs || lit_libs)%>
+
+<%normalize(exename)%>_LDADD = \
+<%foreach(libs)%>
+  lib<%libname_prefix%><%lib%>.la<%if(lit_libs || pure_libs)%> \<%else%><%fornotlast(" \\")%><%endif%>
+<%endfor%>
+<%foreach(lit_libs)%>
+  -l<%lit_lib%><%if(use_lib_modifier_for_lit_libs)%><%lib_modifier%><%endif%><%if(pure_libs)%> \<%else%><%fornotlast(" \\")%><%endif%>
+<%endfor%>
+<%foreach(pure_libs)%>
+  <%pure_lib%><%fornotlast(" \\")%>
+<%endfor%>
+<%endif%>
+<%else%>
+<%if(install_this_target)%>
+<%if(libs || pure_libs || lit_libs)%>
+
+lib<%libname_prefix%><%if(sharedname)%><%normalize(sharedname)%><%else%><%normalize(staticname)%><%endif%><%lib_modifier%>_la_LIBADD = \
+<%foreach(libs)%>
+  lib<%libname_prefix%><%lib%><%lib_modifier%>.la<%if(lit_libs || pure_libs)%> \<%else%><%fornotlast(" \\")%><%endif%>
+<%endfor%>
+<%foreach(lit_libs)%>
+  -l<%lit_lib%><%if(use_lib_modifier_for_lit_libs)%><%lib_modifier%><%endif%><%if(pure_libs)%> \<%else%><%fornotlast(" \\")%><%endif%>
+<%endfor%>
+<%foreach(pure_libs)%>
+  <%pure_lib%><%fornotlast(" \\")%>
+<%endfor%>
+<%endif%>
+<%endif%>
+<%endif%>
+<%endif%>
+<%endif%>
+<%if(!exename)%>
+<%if(header_files || inline_files || template_files || idl_files || pidl_files)%>
+
+<%if(includedir)%>
+<%project_name%>_includedir = <%includedir%>
+
+<%endif%>
+<%if(install_headers)%><%project_name%>_include<%else%>noinst<%endif%>_HEADERS += \
+<%foreach(header, sort(header_files inline_files template_files idl_files pidl_files))%>
+  <%header%><%fornotlast(" \\")%>
+<%endfor%>
+<%endif%>
+<%endif%>
+<%if(pkgconfig_files)%>
+
+pkgconfig_DATA += \
+<%foreach(pkgconfig_files)%>
+  <%basenoextension(pkgconfig_file)%><%fornotlast(" \\")%>
+<%endfor%>
+
+CLEANFILES += \
+<%foreach(pkgconfig_files)%>
+  <%basenoextension(pkgconfig_file)%><%fornotlast(" \\")%>
+<%endfor%>
+<%foreach(pkgconfig_files)%>
+
+<%basenoextension(pkgconfig_file)%>: ${top_builddir}/config.status ${srcdir}/<%pkgconfig_file%>
+	${top_builddir}/config.status --file "$@":${srcdir}/<%pkgconfig_file%>
+<%endfor%>
+<%endif%>
+<%foreach(sort(source_files))%>
+<%if(flag_overrides(source_file, buildflags))%>
+
+<%if(configurations)%>
+<%foreach(configurations)%>
+<%if(exename)%><%normalize(exename)%><%lib_modifier%>_LDADD<%else%>lib<%libname_prefix%><%if(sharedname)%><%normalize(sharedname)%><%else%><%normalize(staticname)%><%endif%><%lib_modifier%>_la_LIBADD<%endif%> += lib<%normalize(source_file)%>_convenience<%forcount%><%lib_modifier%>.la
+noinst_LTLIBRARIES += lib<%normalize(source_file)%>_convenience<%forcount%><%lib_modifier%>.la
+lib<%normalize(source_file)%>_convenience<%forcount%><%lib_modifier%>_la_SOURCES = <%source_file%>
+lib<%normalize(source_file)%>_convenience<%forcount%><%lib_modifier%>_la_CPPFLAGS = $(<%if(exename)%><%normalize(exename)%><%lib_modifier%><%else%>lib<%libname_prefix%><%if(sharedname)%><%normalize(sharedname)%><%else%><%normalize(staticname)%><%endif%><%lib_modifier%>_la<%endif%>_CPPFLAGS) <%flag_overrides(source_file, buildflags)%><%if(compile_flags)%> <%compile_flags%><%endif%>
+<%endfor%>
+<%else%>
+<%if(exename)%><%normalize(exename)%>_LDADD<%else%>lib<%libname_prefix%><%if(sharedname)%><%normalize(sharedname)%><%else%><%normalize(staticname)%><%endif%>_la_LIBADD<%endif%> += lib<%normalize(source_file)%>_convenience<%forcount%>.la
+noinst_LTLIBRARIES += lib<%normalize(source_file)%>_convenience<%forcount%>.la
+lib<%normalize(source_file)%>_convenience<%forcount%>_la_SOURCES = <%source_file%>
+lib<%normalize(source_file)%>_convenience<%forcount%>_la_CPPFLAGS = $(<%if(exename)%><%normalize(exename)%><%else%>lib<%libname_prefix%><%if(sharedname)%><%normalize(sharedname)%><%else%><%normalize(staticname)%><%endif%>_la<%endif%>_CPPFLAGS) <%flag_overrides(source_file, buildflags)%><%if(compile_flags)%> <%compile_flags%><%endif%>
+<%endif%>
+<%endif%>
+<%endfor%>
+<%if(postbuild)%>
+
+all: __postbuild__
+
+__postbuild__:
+	@<%eval(postbuild)%>
+<%endif%>
+<%if(avoids || requires)%>
+
+<%foreach(reverse(uniq(avoids)))%>
+endif !BUILD_<%uc(avoid)%>
+<%endfor%>
+<%foreach(reverse(uniq(requires)))%>
+endif BUILD_<%uc(require)%>
+<%endfor%>
+<%endif%>
+<%if(pkgconfig_files || resource_files)%>
+
+EXTRA_DIST += \
+<%foreach(extra_dist, sort(pkgconfig_files resource_files))%>
+  <%extra_dist%><%fornotlast(" \\")%>
+<%endfor%>
+
+<%endif%>
+<%marker(bottom)%>

@@ -1,0 +1,30 @@
+Documentation for MPC can be found at the following location.
+
+  http://downloads.ociweb.com/MPC/docs/html/MakeProjectCreator.html
+
+Please consult the documentation to ensure that you are using MPC correctly.
+
+If you are still having a problem getting MPC to do what you want, please
+consult the FAQ before sending a support request.
+
+  http://www.ociweb.com/products/mpc/mpc-faq
+
+When requesting MPC support please provide the following items:
+
+  MPC version (using mwc.pl -version):
+
+  Perl version (using perl --version):
+
+  Operating System and Shell:
+
+  ACE or TAO version (if using either):
+
+  The contents of default.features (if any):
+
+  MPC command line options:
+
+  Problem description (please be as detailed as possible):
+
+Finally, send support requests to support@ociweb.com.  You may send
+questions to the author (elliott_c@ociweb.com), but a response is not
+guaranteed.

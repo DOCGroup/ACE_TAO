@@ -1,0 +1,12 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  // By default send all libraries to the same directory as the project
+  libout = .
+
+  // Automake doesn't need the project directory in the libpaths
+  specific(!automake) {
+    libpaths = .
+  }
+}

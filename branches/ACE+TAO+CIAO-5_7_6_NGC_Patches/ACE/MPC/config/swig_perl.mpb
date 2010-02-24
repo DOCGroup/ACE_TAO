@@ -1,0 +1,19 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  Define_Custom(SWIG) {
+    automatic         = 1
+    command           = swig
+    commandflags      = -perl -c++
+    inputext          = .swg, .swig, .i
+    source_outputext  = _wrap.cxx
+    generic_outputext = .pm
+  }
+  requires += swig_perl
+  includes += $(PERL5_INCLUDE)/.
+  libpaths += $(PERL5_INCLUDE)/.
+  specific(prop:windows) {
+    lit_libs += $(PERL5_LIB)
+  }
+}

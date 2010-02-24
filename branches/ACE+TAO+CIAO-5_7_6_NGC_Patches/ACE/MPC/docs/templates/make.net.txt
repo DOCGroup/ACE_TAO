@@ -1,0 +1,40 @@
+// Current as of 8/5/2009 - Happy Birthday Molly!
+// This defines the role of all the template variables specific to the
+// 'make' project type using the csharp language.
+//
+// Please try to keep this alphabetically sorted.
+//
+allowunsafeblocks = Enable/disable the use of the unsafe keyword.
+clean = Additional files or directories to be "cleaned" when the clean target is invoked.
+compilers = Although it is plural, it holds only a single compiler which is used to determine specific flags.
+copy = A utility to copy a file.
+def_flag = Compiler specific flag to define a macro.
+delete = A utility to delete a file.
+devnull = The null device for a particular platform.
+exe_flag = Compiler specific flag to create an executable.
+expanded_variable_assignment = Used to enable the setting of custom library paths.  Be default this is disabled due to lack of support from all make variants.
+ico_flag = Compiler specific flag for specifying the icon file.
+key_flag = Compiler specific flag to specify the keyfile.
+keyfile = Indicate the keyfile to use when signing the assembly.
+lib_flag = Compiler specific flag to set the library search paths.
+make_include = This allows users to "include" arbitrary files into the generated makefiles.
+makedir = A utility to make a directory.
+mkbundle = The command to create a native bundled executable.
+move = A utility to move a file.
+opt_flag = Compiler specific flag to optimize the compilation.
+out_flag = Compiler specific flag to specify the output type.
+packages = Packages to reference from within the binary target.
+pkg_flag = Compiler specific flag to specify the package file.
+ref_flag = Compiler specific flag to specify a reference assembly.
+resx_flag = Compiler specific flag to specify the resource file.
+shared_flag = Compiler specific flag to create a shared library.
+slash = The value used to separate directories and files.
+supports_include = A boolean value used to indicate whether the version of make supports inclusion of files that do not yet exist.
+targetoutdir = Specifies a location for all targets and intermediaries within the makefile.  It should always end in a slash.
+testdirend = Used in creating intermediate directories.
+testdirstart = Used in creating intermediate directories.
+trace = If this boolean template variable is set, the TRACE constant will be defined.
+type = A utility to display a file on the terminal.
+unsafe_flag = Compiler specific flag to enable the use of the unsafe keyword.
+winapp = This boolean template variable indicates whether the application target is for the Console or Windows subsystem.
+winexe_flag = Compiler specific flag to create a Windows executable.

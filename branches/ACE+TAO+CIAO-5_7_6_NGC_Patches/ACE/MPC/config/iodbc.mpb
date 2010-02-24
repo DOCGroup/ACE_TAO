@@ -1,0 +1,12 @@
+// $Id$
+
+project {
+  // Support for iODBC (http://www.iodbc.org). This is one
+  // variant of porting ODBC to non-Windows systems.
+  avoids += unixodbc
+
+  libpaths += $(IODBC_ROOT)/lib
+  includes += $(IODBC_ROOT)/include
+
+  lit_libs += iodbc iodbcinst
+}

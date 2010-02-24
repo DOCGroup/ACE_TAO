@@ -1,0 +1,15 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  requires += boost
+  includes += $(BOOST_ROOT)/include/$(BOOST_VERSION) $(BOOST_ROOT)/.
+
+  // If the libraries for boost are not installed in a location relative to
+  // the include files, set the BOOST_ROOT_LIB environment variable
+  expand(BOOST_ROOT_LIB) {
+    $BOOST_ROOT_LIB
+    $(BOOST_ROOT)/lib
+  }
+  libpaths += $(BOOST_ROOT_LIB)
+}

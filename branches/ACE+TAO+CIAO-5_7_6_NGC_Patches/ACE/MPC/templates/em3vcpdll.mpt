@@ -1,0 +1,104 @@
+// -*- MPC -*-
+// $Id$
+
+conditional_include "common"
+conditional_include "windowscommon"
+
+type_description      = "Dynamic-Link Library"
+configurations        = Debug Release
+platforms             = "WCE ARM" "WCE ARMV4" "WCE emulator" "WCE x86"
+default_configuration = Debug
+default_platform      = "WCE ARM"
+common_defines        = UNICODE _UNICODE
+unicode               = 1
+
+WCE x86 {
+  type_code   = 0x8302
+  cpu_id      = D6518FF3-710F-11D3-99F2-00105A0DF099
+  platform_id = 8A9A2F80-6887-11D3-842E-005004848CBA
+  machine     = IX86
+  cpu_defines = _i386_ _X86_ x86
+  ignore_libs = OLDNAMES.lib
+  pure_libs  += $(CEx86Corelibc)
+}
+
+WCE emulator {
+  type_code   = 0xa602
+  cpu_id      = D6518FF3-710F-11D3-99F2-00105A0DF099
+  platform_id = 8A9A2F80-6887-11D3-842E-005004848CBA
+  machine     = IX86
+  cpu_defines = _i386_ _X86_ x86
+  ignore_libs = OLDNAMES.lib
+  pure_libs  += $(CEx86Corelibc)
+}
+
+WCE ARM {
+  type_code   = 0x8502
+  cpu_id      = D6518FFC-710F-11D3-99F2-00105A0DF099
+  platform_id = 8A9A2F80-6887-11D3-842E-005004848CBA
+  machine     = ARM
+  cpp         = clarm.exe
+  cpu_defines = ARM _ARM_
+}
+
+WCE ARMV4 {
+  type_code   = 0xa302
+  cpu_id      = D6518FF3-710F-11D3-99F2-00105A0DF099
+  platform_id = 8A9A2F80-6887-11D3-842E-005004848CBA
+  machine     = ARM
+  cpp         = clarm.exe
+  cpu_defines = ARM _ARM_ ARMV4
+  cpu_options = /QRxscale
+}
+
+Release {
+  use_debug_libraries   =
+  optimize              = 1
+  compile_flags         = /W3 /GR
+  defines               = NDEBUG
+  compile_flags_removed = /YX
+  output_dir            = Release
+  intermediate_dir      = Release
+}
+
+Debug {
+  use_debug_libraries   = 1
+  optimize              =
+  compile_flags         = /W3 /Gm /Zi /GR /Gy
+  defines               = _DEBUG
+  compile_flags_removed = /Fr /YX
+  output_dir            = .
+  intermediate_dir      = Debug
+  lib_modifier          = d
+  pdbl                  = 1
+  pdbc                  = 1
+}
+
+MFC Release {
+  use_debug_libraries   =
+  optimize              = 1
+  compile_flags         = /W3 /GR
+  defines               = NDEBUG
+  compile_flags_removed = /YX
+  output_dir            = MFC_Release
+  intermediate_dir      = MFC_Release
+  lib_modifier          = mfc
+  use_mfc               = 2
+}
+
+MFC Debug {
+  use_debug_libraries   = 1
+  optimize              =
+  compile_flags         = /W3 /Gm /Zi /GR /Gy
+  defines               = _DEBUG
+  compile_flags_removed = /Fr /YX
+  output_dir            = MFC_Debug
+  intermediate_dir      = MFC_Debug
+  lib_modifier          = mfcd
+  pdbl                  = 1
+  pdbc                  = 1
+  use_mfc               = 2
+}
+
+conditional_include "vcpartialmacros"
+conditional_include "user_em3vcpdll"

@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
+project: qt4_core {
+  lit_libs += QtSql$(QT_CFG)
+}

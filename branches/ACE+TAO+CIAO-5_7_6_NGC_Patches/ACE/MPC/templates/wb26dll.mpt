@@ -1,0 +1,151 @@
+// -*- MPC -*-
+// $Id$
+
+conditional_include "common"
+
+lib_prefix = lib
+lib_ext    = .a
+dll_ext    =
+exe_ext    = .out
+
+cxx_derivedsigs = *.o
+ass_derivedsigs = *.o
+c_derivedsigs = *.o
+part_derivedsigs = *.o
+ar_derivedsigs = .a
+
+platform = VxWorks
+platform_name = vxworks-6.4
+project_type = DownloadableKernelModuleProject
+
+linkflags =
+includedir =
+
+// ***********************************************************************
+// Build Specs Section
+// ***********************************************************************
+
+buildspecs = PPC604gnu PPC603gnu PENTIUM4gnu PPC85XXgnu
+default_buildspec = PPC604gnu
+
+PPC603gnu {
+  cc_arch_spec = -mcpu=603 -mstrict-align -mno-implicit-fp -D_WRS_HARDWARE_FP -mlongcall
+  cpu = PPC603
+  tool_family = gnu
+  tool = gnu
+  vx_cpu_family = ppc
+  cxx = ccppc
+  ar = arppc
+  nm = nmppc
+  munchflag = ppc
+  cxx_flags = -ansi -Wall -MD -MP -fexceptions -frtti -fweak -Wunused
+  cxx_dbgflags = -g
+  cxx_nondbgflags = -O2 -fstrength-reduce -fno-builtin
+  ass_flags = -ansi -xassembler-with-cpp -MD -MP
+  ass_dbgflags = -g
+  ass_nondbgflags = -O2 -fstrength-reduce -fno-builtin
+  c_flags = -Wall -MD -MP
+  c_dbgflags = -g
+  c_nondbgflags = -O2 -fstrength-reduce -fno-builtin
+  ar_flags = crus
+  ar_dbgflags =
+  ar_nondbgflags =
+  part_flags =
+  part_dbgflags =
+  part_nondbgflags =
+  linker_flags = -T $(WIND_BASE)/target/h/tool/gnu/ldscripts/link.OUT
+  linker_dbgflags = -g
+  linker_nondbgflags = -O2 -fstrength-reduce -fno-builtin
+}
+
+PPC85XXgnu {
+  cc_arch_spec = -mcpu=8540 -mstrict-align -msoft-float -mabi=no-spe -mlongcall
+  cpu = PPC85XX
+  tool_family = gnu
+  tool = gnu
+  vx_cpu_family = ppc
+  cxx = ccppc
+  ar = arppc
+  nm = nmppc
+  munchflag = ppc
+  cxx_flags = -ansi -Wall -MD -MP -fexceptions -frtti -fweak -Wunused
+  cxx_dbgflags = -g
+  cxx_nondbgflags = -O2 -fstrength-reduce -fno-builtin
+  ass_flags = -ansi -xassembler-with-cpp -MD -MP
+  ass_dbgflags = -g
+  ass_nondbgflags = -O2 -fstrength-reduce -fno-builtin
+  c_flags = -Wall -MD -MP
+  c_dbgflags = -g
+  c_nondbgflags = -O2 -fstrength-reduce -fno-builtin
+  ar_flags = crus
+  ar_dbgflags =
+  ar_nondbgflags =
+  part_flags =
+  part_dbgflags =
+  part_nondbgflags =
+  linker_flags = -T $(WIND_BASE)/target/h/tool/gnu/ldscripts/link.OUT
+  linker_dbgflags = -g
+  linker_nondbgflags = -O2 -fstrength-reduce -fno-builtin
+}
+
+PPC604gnu {
+  cc_arch_spec = -mcpu=604 -mstrict-align -mno-implicit-fp -mlongcall
+  cpu = PPC604
+  tool_family = gnu
+  tool = gnu
+  vx_cpu_family = ppc
+  cxx = ccppc
+  ar = arppc
+  nm = nmppc
+  munchflag = ppc
+  cxx_flags = -ansi -Wall -MD -MP -fexceptions -frtti -fweak -Wunused
+  cxx_dbgflags = -g
+  cxx_nondbgflags = -O2 -fstrength-reduce -fno-builtin
+  ass_flags = -ansi -xassembler-with-cpp -MD -MP
+  ass_dbgflags = -g
+  ass_nondbgflags = -O2 -fstrength-reduce -fno-builtin
+  c_flags = -Wall -MD -MP
+  c_dbgflags = -g
+  c_nondbgflags = -O2 -fstrength-reduce -fno-builtin
+  ar_flags = crus
+  ar_dbgflags =
+  ar_nondbgflags =
+  part_flags =
+  part_dbgflags =
+  part_nondbgflags =
+  linker_flags = -T $(WIND_BASE)/target/h/tool/gnu/ldscripts/link.OUT
+  linker_dbgflags = -g
+  linker_nondbgflags = -O2 -fstrength-reduce -fno-builtin
+}
+
+PENTIUM4gnu {
+  cc_arch_spec = -mtune=pentium4 -march=pentium4
+  cpu = PENTIUM4
+  tool_family = gnu
+  tool = gnu
+  vx_cpu_family = pentium
+  cxx = ccpentium
+  ar = arpentium
+  nm = nmpentium
+  munchflag = pentium
+  cxx_flags = -ansi -Wall -MD -MP -fexceptions -frtti -fweak -Wunused
+  cxx_dbgflags = -g
+  cxx_nondbgflags = -O2 -nostdlib -fno-builtin -fno-defer-pop -mno-sse -mno-sse2
+  ass_flags = -ansi -xassembler-with-cpp -MD -MP
+  ass_dbgflags = -g
+  ass_nondbgflags = -O2 -nostdlib -fno-builtin -fno-defer-pop -mno-sse -mno-sse2
+  c_flags = -Wall -MD -MP
+  c_dbgflags = -g
+  c_nondbgflags = -O2 -nostdlib -fno-builtin -fno-defer-pop -mno-sse -mno-sse2
+  ar_flags = crus
+  ar_dbgflags =
+  ar_nondbgflags =
+  part_flags =
+  part_dbgflags =
+  part_nondbgflags =
+  linker_flags = -T $(WIND_BASE)/target/h/tool/gnu/ldscripts/link.OUT
+  linker_dbgflags = -g
+  linker_nondbgflags = -O2 -nostdlib -fno-builtin -fno-defer-pop -mno-sse -mno-sse2
+}
+
+conditional_include "user_wb26dll"

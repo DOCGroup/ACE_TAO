@@ -1,0 +1,981 @@
+.:: 3/13/2002 ::.
+
+The Makefile, Project and Workspace Creator.
+Designed by Justin Michel (michel_j@ociweb.com) and Chad Elliott.
+Implemented by Chad Elliott (elliott_c@ociweb.com).
+
+A single tool (MPC) can be used to generate tool specific input (i.e.,
+Makefile, dsp, vcproj, etc.)  The generator takes platform and building
+tool generic files (mpc files) as input which describe basic information
+needed to generate a "project" file for various build tools.  These tools
+include Make, NMake, Visual C++ 6, Visual C++ 7, etc.
+
+One of the many unique and useful features of the Makefile, Project and
+Workspace Creator is that the project definition files can employ the idea
+of inheritance.  This feature allows a user to set up a basic base project
+(mpb file) that can contain information that is applicable to all
+sub-projects.  Things such as include paths, library paths and inter-project
+dependencies could be described in this base project and any project that
+inherits from it would contain this information as well.
+
+Another set of files, known as template input files (mpt files), provides
+the generator with the necessary information to fill platform and build tool
+specific information for dynamic and static library and binary executable
+projects.
+
+Together, the generic input files and the template input files are applied
+toward a platform and build specific template (mpd file) to create the final
+product (a build tool specific input file).  These templates contain
+"variables" that are filled in by the project creator with information
+gathered through the mpc and mpt files and possibly by default values set
+within the template itself.
+
+Workspaces are defined by providing a list of mpc files in a single (mwc)
+file.  For each mpc file specified, the workspace creator (mwc.pl) calls
+upon the project creator to generate the project.  After all of the projects
+are successfully generated, the tool specific workspace is generated
+containing the projects and any defined inter-project dependency information
+(if supported by the build tool).  If no workspace files are provided to the
+workspace creator, then the current directory is traversed and any mpc files
+located will be part of the workspace that is generated.
+
+
+Workspace Declarations
+----------------------
+
+workspace(workspace_name) {
+  file.mpc
+  directory
+  relative/path/to/another/mwc_file
+}
+
+Workspaces can contain individual mpc files, directories or other mwc files.
+In the case of a directory, the workspace creator will traverse it and use
+any mpc files that are found.  If another workspace file is listed in the
+workspace files, it will be aggregated into the workspace with paths relative
+to the directory in which the main workspace is found.  These "aggregated"
+workspaces should not inherit from any other base workspace.  The workspace
+files should have an 'mwc' extension.
+
+You can exclude directories and .mpc files from a workspace using the 'exclude'
+scope operator:
+
+workspace {
+  dir1
+  dir2
+
+  // exclude this_dir for all project types
+  exclude {
+    dir2/this_dir
+  }
+
+  // exclude other_dir for vc6, vc71, vc8, and vc9 types
+  exclude(vc6, vc71, vc8, vc9) {
+    dir2/other_dir
+  }
+
+  // exclude unix_only for every type except gnuace and make
+  exclude(!gnuace, !make) {
+    dir2/unix_only
+  }
+
+  dir3
+
+  // Associate the name "other" with dir3
+  associate(other) {
+    dir3
+  }
+}
+
+The associate scope associates a name with one or more directories.  This
+does not add directories to a workspace, it only makes an association.  This
+may or may not have an effect on the generated workspace; it depends solely
+upon whether the project type supports associations.
+
+Currently automake is the only project type that supports associations.
+Each directory listed under an association is grouped together and built
+conditionally based on the association name.
+
+Project Declarations
+--------------------
+
+project(project_name) : baseproject, anotherbaseproject {
+  exename   = foo
+  includes += "."
+  libpaths  = directory
+
+  Source_Files {
+    file1.cpp
+    file2.cpp
+    .
+    .
+    fileN.cpp
+  }
+
+  Header_Files {
+    file1.h
+    file2.h
+    .
+    .
+    fileN.h
+  }
+}
+
+
+MPC expects all files to be listed with forward slashes (/) if a file name
+contains a directory.  Providing files with back slashes (\) can cause
+unexpected results during generation.
+
+When listing files within components (Source_Files, Header_Files, etc.), you
+can use wild cards (*?[]) to include groups of files as can be done in shells.
+You can exclude files by preceding the name (or wild card) with the '!', but
+this sort of exclusion only pertains to files that exist in the directory at
+the time of project generation.  There is an additional syntax similar to
+the '!' ('^') which works the same as the '!' except that after all of the
+source files are added to the list (after automatic custom generated files
+are added) these files are explicitly removed from the list.
+
+The (project_name) part of the project declaration is optional.  If it is
+left off, the project name will default to the name of the mpc file without
+the extension.  Inheritance is optional.
+
+If the project name or workspace name contains an asterisk (*) then the
+default project (workspace) name will be used in its place.  For example, if
+the mpc file is named example.mpc and it contains the following:
+
+project(*client) {
+
+The project name will be example_client.  If the any part of the modified
+project (workspace) name contains a capital letter then each word will be
+capitalized.  For instance, if the above mpc file example was named
+Example.mpc, then the modified project name would be Example_Client.
+
+If the value set for exename contains an asterisk then the asterisk portion
+of the name will be replaced with the current project name.  The same logic
+applies to sharedname and staticname.
+
+If multiple projects are going to be contained within a single workspace
+(using mwc.pl), there can be no duplication of project names.  This is
+disallowed due to limitations of some workspace tools.
+
+Project Keywords
+----------------
+exename         Specifies the name of the executable that will be created
+sharedname      Specifies the name of the shared library that will be created
+staticname      Specifies the name of the static library that will be created
+buildflags      This keyword can only be used as a source component scoped
+                setting (ie. inside the scope of Source_Files).  It
+                specifies additional build flags that will be passed to the
+                compiler as the source files are being compiled.
+dllout          If defined, specifies where the dynamic libraries will be
+                placed.  This overrides libout in the dynamic case.
+libout          Specifies where the dynamic and static libraries will be placed
+exeout          Specifies where executables will be placed (Previously known
+                as install)
+managed         This keyword can be used as a global setting or as a source
+                component scoped setting (ie. inside the scope of
+                Source_Files).  It specifies that the source files should be
+                compiled as managed C++.  Since this is Microsoft specific, it
+                is only supported by the nmake, vc7, vc71, vc8, vc9, vc10
+                project types.
+no_pch          This keyword can only be used as a source component scoped
+                setting (ie. inside the scope of Source_Files).  It
+                specifies that precompiled headers should not be used for
+                the source files listed within the scope of it's setting.
+pch_header      Specifies the precompiled header file name
+pch_source      Specifies the precompiled source file name
+postbuild       If this is defined in the project, the value will be
+                interpreted as commands to run after the project has been
+                successfully built.  The <%..%> construct can be used within
+                this value to access template variables and functions of the
+                template parser. In addition, the following pseudo variables
+                can be used.
+
+                  <%cat%>    - Platform non-specific command to cat a file.
+                  <%cmp%>    - Platform non-specific compare command.
+                  <%cp%>     - Platform non-specific copy command.
+                  <%mkdir%>  - Platform non-specific mkdir command.
+                  <%mv%>     - Platform non-specific move command.
+                  <%os%>     - Returns either win32 or unix.
+                  <%rm%>     - Platform non-specific delete command.
+                  <%rmdir%>  - Platform non-specific recursive directory
+                               delete command.
+                  <%nul%>    - Platform non-specific null device.
+                  <%gt%>     - Project non-specific greater than sign.
+                  <%lt%>     - Project non-specific less than sign.
+                  <%and%>    - Project non-specific and sign.
+                  <%or%>     - Project non-specific or sign.
+                  <%quote%>  - Project non-specific double quote.
+                  <%slash%>  - Platform non-specific directory separator.
+                  <%equote%> - Project non-specific escaped quote.
+                  <%crlf%>   - Platform non-specific line ending.
+                  <%cmdsep%> - Project/platform non-specific command separator
+                               which always runs the right-hand side command.
+prebuild        This is similar to postbuild except that it will be
+                performed before the build instead of after.
+postclean       This is similar to postbuild except that it will be
+                performed after cleaning up the project (the realclean
+                target for make based project types).  NOTE: This is not
+                used in the IDE based project types since there is no hook
+                for such an action.
+recurse         If set to 1, MPC will recurse into directories listed under
+                component listings and add any component corresponding files
+                to the list.  This keyword can be used as a global project
+                setting or a component scoped setting.
+version         Specifies the version number for the library or executable
+macros          These values will be passed as macros to the compiler.
+libpaths        Specifies 1 or more locations to find libraries
+recursive_libpaths Specifies 1 or more locations to find libraries which will
+                be added recursively.
+includes        Specifies 1 or more locations to find include files
+libs            Specifies 1 or more libraries to link into the exe or library
+recursive_includes Specifies 1 or more locations to find include files which
+                will be added recursively.
+lit_libs        Specifies 1 or more libraries to link into the exe or library.
+                If libraries receive a library decorator, then these will not.
+pure_libs       Specifies 1 or more libraries to link into the exe or library.
+                The values specified for this variable are passed to the
+                linker unmodified.
+after           Specifies that this project must be built after 1 or more
+                project names listed.
+custom_only     Create a project that contains only custom generation
+                targets (any file type described by a Define_Custom section).
+                This will automatically be set to 1 when a project contains
+                no source or resource files, but does contain custom input
+                files.
+dynamicflags    Specifies preprocessor flags needed for dynamic libraries
+staticflags     Specifies preprocessor flags needed for static libraries
+
+verbatim        This allows arbitrary information to be place in a generated
+                project file.  The syntax is as follows:
+
+                verbatim(<project type>, <location>[, 1]) {
+                  ..
+                  ..
+                }
+
+                When MPC is generating a project of type <project type> and
+                comes upon a marker that matches the <location> name, it
+                will place the text found inside the construct directly into
+                the generated project.  If the third and optional parameter is
+                passed and is true, the verbatim section will be added to
+                existing verbatim settings at the same location.  If you need
+                to preserve white space, the line or lines should be placed
+                inside double quotes.
+
+specific        This scope allows assignments that are specific to a
+                particular project type or property.  The syntax is as
+                follows:
+
+                specific(<proj_type|prop:prop_name> [, <proj_type|prop:prop_name> ...]) {
+                  lit_libs += c
+                  ...
+                }
+
+                or
+
+                specific(<proj_type|prop:prop_name> [, <proj_type|prop:prop_name> ...]) {
+                  lit_libs += c
+                  ...
+                } else {
+                  list_libs += c_other
+                  ...
+                }
+
+                If the else is provided, it is required to be on
+                the same line as the closing curly brace.  You may
+                also negate the project type (using '!') which will cause
+                the specific to be evaluated for all types except the type
+                specified.
+
+                The following property names are available: borland, make,
+                microsoft, windows, and static.  The table below shows which
+                properties apply to which project types.  The static
+                property will be set if the -static option was supplied.
+                Additionally, a property that corresponds to the  language
+                will be set (e.g., cplusplus, csharp, java, vb).
+
+                         | borland | make | microsoft | windows |
+                ---------+---------+------+-----------+---------|
+                automake |         |  X   |           |         |
+                bcb2007  |    X    |      |           |    X    |
+                bcb2009  |    X    |      |           |    X    |
+                bds4     |    X    |      |           |    X    |
+                bmake    |    X    |  X   |           |    X    |
+                cc       |         |      |           |    X    |
+                em3      |         |      |     X     |    X    |
+                ghs      |         |      |           |    ?    |
+                make     |         |  X   |           |         |
+                nmake    |         |  X   |     X     |    X    |
+                vc6      |         |      |     X     |    X    |
+                vc7      |         |      |     X     |    X    |
+                vc71     |         |      |     X     |    X    | 
+                vc8      |         |      |     X     |    X    |
+                vc9      |         |      |     X     |    X    |
+                vc10     |         |      |     X     |    X    |
+                wix      |         |      |           |    X    |
+
+                ? - indicates that this is controled by the MPC_GHS_UNIX
+                environment variable.
+
+                If a keyword is not recognized as a valid MPC keyword, it is
+                interpreted as a template value modifier.  In this
+                situation, this construct has the exact same restrictions as
+                the -value_template command line option.  See the USAGE file
+                for more information.
+
+                Scopes are available in some of the MPC templates.  These
+                scopes are created by using a template variable within a
+                <%foreach%> context.  The scope will be, one at a time, each
+                space separated words within the template variable value.
+                Variables can be modified using a scope modifier.  For
+                example, the word 'FOO' will be added to the template
+                variable 'defines' when it is seen in the 'Debug' scope:
+
+                specific {
+                  Debug::defines += FOO
+                }
+
+expand          This scope allows the specification for a variable that is
+                found within $() to be expanded from the list of possible
+                values.  These possible values can contain environment
+                variables (specified by $VAR_NAME) and plain text.  If a
+                possible value contains an environment variable and that
+                variable is defined then this value is used to expand the
+                $() variable.  If the environment variable is not defined
+                then this possible value is not used.  The syntax is as
+                follows:
+
+                expand(<variable name>) {
+                  <possible value 1>
+                  .
+                  .
+                  <possible value n>
+                }
+
+conditional     This scope allows addition of source files conditionally
+                based on a particular project type or property as describe
+                in the 'specific' section.  The syntax is as follows:
+
+                conditional(<proj_type|prop:prop_name> [, <proj_type|prop:prop_name> ...]) {
+                  source1.cpp
+                  ...
+                }
+
+                or
+
+                conditional(<proj_type|prop:prop_name> [, <proj_type|prop:prop_name> ...]) {
+                  source1.cpp
+                  ...
+                } else {
+                  source2.cpp
+                  ...
+                }
+
+                If the else is provided, it is required to be on
+                the same line as the closing curly brace.  You may
+                also negate the project type (using '!') which will cause
+                the conditional to be evaluated for all types except the
+                type specified.
+
+requires        Specifies which features should be enabled in order to
+                generate the project file.
+avoids          Specifies which features should be disabled in order to
+                generate the project file.
+webapp          Determines whether the project is a Web Application or not.
+                A web application project will have no project file written
+                but the information will be included in the workspace (if
+                web applications are supported by the project type).
+
+C# Specific Project Keywords
+----------------------------
+dependent_upon  This can only be applied to source and resx components.  It
+                determines which file the source or resx file is dependent
+                upon for vc8, vc9, and vc10 only.
+generates_source This can only be applied to resx components.  It indicates
+                that the resx file or files auto generates a source file for
+                vc8, vc9, and vc10 only.  A value of '1' indicates that the
+                resx file generates a source file and the default generator is
+                used. Any other value indicates that the resx file generates a
+                source file and the generator name is taken from the value
+                supplied.  The auto generated name is created by taking the
+                resx file without the extension and appending .Designer.cs.
+subtype         This can only be applied to source and resx components.  It
+                determines the SubType setting for vc8, vc9, and vc10 only.
+
+Custom File Definitions
+-----------------------
+In order to support a variety of custom build rules, MPC allows you to
+define your own custom file types.  Below is an example of a custom
+definition.
+
+project {
+  Define_Custom(MOC) {
+    automatic_in     = 0
+    automatic_out    = 0
+    command          = $(QTDIR)/bin/moc
+    postcommand      = echo <%quote%>#include <%lt%>some.h<%gt%><%quote%> <%gt%> <%temporary%> <%and%> \
+                       <%cat%> <%output%> <%gt%><%gt%> <%temporary%> <%and%> \
+                       <%mv%> <%temporary%> <%output%>
+    output_option    = -o
+    inputext         = .h
+    pre_extension    = _moc
+    source_outputext = .cpp
+  }
+
+  MOC_Files {
+    QtReactor.h
+  }
+
+  Source_Files {
+    QtReactor_moc.cpp
+  }
+}
+
+The above example defines a custom file type "MOC" which describes basic
+information about how to process the input files and what output files are
+created.  Once the custom file type is defined, MOC_Files can be defined in
+order to specify the input files for this new file type.
+
+Here is a list of keywords that can be used within the scope of
+Define_Custom or Modify_Custom:
+
+automatic           This keyword is deprecated.  Use automatic_in and
+                    automatic_out instead.
+automatic_in        If set to 1, then attempt to automatically determine
+                    which files belong to the set of input files for the
+                    custom type.  If set to 0, then no files are
+                    automatically added to the input files.  If omitted,
+                    automatic_in is assumed to be 1.
+automatic_out       If set to 1, then attempt to automatically determine
+                    which generated files belong to the set of components
+                    (e.g., Source_Files, Header_Files, etc.) based on the
+                    type of file generated from the custom command.  If set
+                    to 0, then no files are automatically added to the
+                    various components.  If omitted, automatic_out is
+                    assumed to be 1.
+command             The name of the command that should be used to process
+                    the input files for the custom type.
+commandflags        Any options that should be passed to the command go here.
+dependent           If this is given a value, then a dependency upon that
+                    value will be given to all of the generated files.
+                    The default for this is unset and no dependency will be
+                    generated.
+inputext            This is a comma separated list of input file extensions
+                    that belong to the command.
+keyword             This is a special assignment that takes the form of the
+                    following:
+
+                    keyword newname = existing_custom_name
+
+                    This has the effect of mapping newname to be the
+                    same as existing_custom_name.  existing_custom_name,
+                    which is optional, corresponds to one of the keywords
+                    available within a Define_Custom scope (except for
+                    keyword).  This function puts newname into the project
+                    level scope such that it can be used outside of the
+                    scope of the particular custom file type being defined.
+                    It should be noted that the mapped keywords can not be
+                    used within the scope of a 'specific' clause.  It does
+                    not cause an error, but it has absolutely no affect.
+                    If existing_custom_name is not supplied, then the only
+                    way to utilize the newname value is from within the
+                    template code. ex. <%newname%>
+libpath             If the command requires an additional library path, add
+                    it here.
+output_option       If the command takes an option to specify only a single
+                    file output name, then set it here.  Otherwise, this
+                    should be omitted.
+output_follows_input This setting defaults to 1 and indicates that output
+                    files from the custom command will end up in the same
+                    directory as the input files.  If this is set to 0, it
+                    is assumed that the output files will go into the same
+                    directory as the .mpc file.
+pch_postrule        If this is set to 1, then a rule will be added to the
+                    custom rule that will modify the source output files to
+                    include the precompiled header file.
+postcommand         Allows a user to execute arbitrary commands after
+                    the main command is run to generate the output file.
+                    The following pseudo variables can be accessed from
+                    within the postcommand assignment:
+                    <%input%>     - The input file for the original command.
+                    <%output%>    - The output created by the original command.
+                    <%input_basename%>  - The basename of the input file.
+                    <%input_dirname%>   - The directory of the input file.
+                    <%input_noext%>     - The input file with no extension.
+                    <%output_basename%> - The basename of the output file.
+                    <%output_dirname%>  - The directory of the output file.
+                    <%output_noext%>    - The output file with no extension.
+                      The output file can be referenced as a generic output
+                      file using <%output%> or can be referenced as a
+                      component file (if it matches the particular type)
+                      using one of the following:
+
+                        <%source_file%>
+                        <%template_file%>
+                        <%header_file%>
+                        <%inline_file%>
+                        <%documentation_file%>
+                        <%resource_file%>
+
+                      The output file without an extension can be referenced
+                      as a generic output file using <%output_noext%> or can
+                      be referenced as a component file (if it matches the
+                      particular type) using one of the following:
+
+                        <%source_file_noext%>
+                        <%template_file_noext%>
+                        <%header_file_noext%>
+                        <%inline_file_noext%>
+                        <%documentation_file_noext%>
+                        <%resource_file_noext%>
+
+                      The following are also available for use within the
+                      postcommand setting.  They return the extension (if
+                      there is any) of the input and output files
+                      respectively:
+
+                        <%input_ext%>
+                        <%output_ext%>
+
+                    The following pseudo template variables, in addition to
+                    all project settings, are valid for use within the
+                    command, commandflags, dependent, postcommand and
+                    output_option settings:
+
+                    <%and%>       - Project non-specific and sign.
+                    <%cat%>       - Platform non-specific command to cat a file.
+                    <%cmdsep%>    - Project/platform non-specific command
+                                    separator which always runs the right-hand
+                                    side command.
+                    <%cp%>        - Platform non-specific copy command.
+                    <%gendir%>    - The output directory specified by the
+                                    gendir setting.
+                    <%gt%>        - Project non-specific greater than sign.
+                    <%lt%>        - Project non-specific less than sign.
+                    <%nul%>       - Platform non-specific null device.
+                    <%mkdir%>     - Platform non-specific mkdir command.
+                    <%mv%>        - Platform non-specific move command.
+                    <%or%>        - Project non-specific or sign.
+                    <%quote%>     - Project non-specific double quote.
+                    <%rm%>        - Platform non-specific delete command.
+                    <%temporary%> - A temporary file name.
+                    <%prj_type%>  - The project type supplied by the -type
+                                    option.
+
+                    The following psuedo template variables will be set to
+                    the known extension for Windows and empty on non-Windows
+                    based project types.
+
+                    <%bat%>       - The extension for batch files.
+                    <%cmd%>       - The extension for command files.
+                    <%exe%>       - The extension for executable files.
+
+                    If any referenced pseudo template variable does
+                    not contain a value, then the particular setting
+                    (command, commandflags, dependent, postcommand or
+                    output_option) will not be used.
+
+                    It should also be noted that use of automatically
+                    generated project settings, such as sharedname, exename,
+                    etc., may not exist at the time that a project setting
+                    is evaluated and will end up empty.  To avoid this
+                    situation, explicitly set project settings that are
+                    going to be used within this context.
+pre_extension       If the command produces multiple files of the same
+                    extension, this comma separated list can be used to
+                    specify them.  For example, tao_idl creates two types of
+                    files per extension (C.h, S.h, C.cpp, S.cpp, etc).
+source_pre_extension        This is the same as pre_extension except that it
+                            only applies to source files.
+inline_pre_extension        This is the same as pre_extension except that it
+                            only applies to inline files.
+header_pre_extension        This is the same as pre_extension except that it
+                            only applies to header files.
+template_pre_extension      This is the same as pre_extension except that it
+                            only applies to template files.
+resource_pre_extension      This is the same as pre_extension except that it
+                            only applies to resource files.
+documentation_pre_extension This is the same as pre_extension except that it
+                            only applies to documentation files.
+generic_pre_extension       This is the same as pre_extension except that it
+                            only applies to generic files.
+pre_filename                This is similar to pre_extension except that the values
+                            are prepended to the file name instead of the extension.
+source_pre_filename         This is the same as pre_filename except that it
+                            only applies to source files.
+inline_pre_filename         This is the same as pre_filename except that it
+                            only applies to inline files.
+header_pre_filename         This is the same as pre_filename except that it
+                            only applies to header files.
+template_pre_filename       This is the same as pre_filename except that it
+                            only applies to template files.
+resource_pre_filename       This is the same as pre_filename except that it
+                            only applies to resource files.
+documentation_pre_filename  This is the same as pre_filename except that it
+                            only applies to documentation files.
+generic_pre_filename        This is the same as pre_filename except that it
+                            only applies to generic files.
+pre_dirname                 This is similar to pre_filename except that the
+                            value is prepended to the directory portion of
+                            the file name instead of the file name itself.
+                            If a separate directory is desired, the
+                            pre_dirname setting should end in a slash.
+source_pre_dirname          This is the same as pre_dirname except that it
+                            only applies to source files.
+inline_pre_dirname          This is the same as pre_dirname except that it
+                            only applies to inline files.
+header_pre_dirname          This is the same as pre_dirname except that it
+                            only applies to header files.
+template_pre_dirname        This is the same as pre_dirname except that it
+                            only applies to template files.
+resource_pre_dirname        This is the same as pre_dirname except that it
+                            only applies to resource files.
+documentation_pre_dirname   This is the same as pre_dirname except that it
+                            only applies to documentation files.
+generic_pre_dirname         This is the same as pre_dirname except that it
+                            only applies to generic files.
+source_outputext    This is a comma separated list of possible source file
+                    output extensions.  If the command does not produce
+                    source files, then this can be omitted.
+inline_outputext    This is a comma separated list of possible inline file
+                    output extensions.  If the command does not produce
+                    inline files, then this can be omitted.
+header_outputext    This is a comma separated list of possible header file
+                    output extensions.  If the command does not produce
+                    header files, then this can be omitted.
+template_outputext  This is a comma separated list of possible template file
+                    output extensions.  If the command does not produce
+                    template files, then this can be omitted.
+resource_outputext  This is a comma separated list of possible resource file
+                    output extensions.  If the command does not produce
+                    resource files, then this can be omitted.
+documentation_outputext  This is a comma separated list of possible
+                         documentation file output extensions.  If the
+                         command does not produce documentation files, then
+                         this can be omitted.
+generic_outputext   If the command does not generate any of the other output
+                    types listed above, then the extensions should be listed
+                    under this.
+
+If the custom output can not be represented with the above output extension
+keywords (*_outputext) and you have knowledge of the output files a priori,
+you can represent them with the '>>' construct.
+
+Below is an example that demonstrates the use of '>>'.  The command takes an
+input file name of foo.prp and produces two files that have completely
+unrelated filenames (i.e. foo !~ hello).
+
+project {
+  Define_Custom(Quogen) {
+    automatic_in        = 0
+    automatic_out       = 0
+    command             = perl quogen.pl
+    commandflags        = --debuglevel=1 --language=c++ \
+                          --kernel_language=c++
+    inputext            = .prp
+    keyword quogenflags = commandflags
+  }
+
+  Quogen_Files {
+    foo.prp >> hello.h hello.cpp
+  }
+
+  Source_Files {
+    hello.cpp
+  }
+}
+
+You can use the '<<' construct to represent dependencies for specific custom
+input file.  For instance, in the above example, assume that foo.prp depends
+upon foo.in, we would represent this by adding << foo.in as shown below.
+
+  Quogen_Files {
+    foo.prp >> hello.h hello.cpp << foo.in
+  }
+
+There is a construct that can be used within a Define_Custom section
+called 'optional' and can be used to represent optional custom output
+dependent upon particular command line parameters passed to the custom
+command.
+
+project {
+  Define_Custom(TEST) {
+    optional(keyword) {
+      flag_keyword(option) += value [, value]
+    }
+  }
+}
+
+In the above example, keyword can be any of the pre_extension, pre_filename
+or keywords that end in _outputext.  flag_keyword can be any of the custom
+definition keywords, however only commandflags really make any sense.
+Inside the parenthesis, the flag_keyword value is searched for the 'option'
+value.  If it is found, then the 'value' after the += is added to the list
+specified by 'keyword'.  This can also be negated by prefixing 'option' with
+an exclamation point (!).
+
+project {
+  Define_Custom(IDL) {
+    source_pre_extension = C, S
+    optional(source_pre_extension) {
+      commandflags(-GA) += A
+    }
+  }
+}
+
+In the preceding example, the source_pre_extension contains C and S.  The
+optional clause can be read as follows: If 'commandflags' contains -GA then
+add A to source_pre_extension.
+
+Particular output extensions are not required.  However at least one output
+extension type is required in order for MPC to generate a target.  Within
+graphical build environments, the custom input file will be listed
+regardless of the presence of an extension definition.  In this case, the
+input file will be "excluded" from the build.
+
+For custom file types, there are a few keywords that can be used within the
+custom file type input lists: command, commandflags, dependent, gendir and
+postcommand.  These keywords (except for gendir) can be used to augment or
+override the values of the same name defined in a Define_Custom section.
+gendir can be used to specify the directory in which the generated
+output will go.  Below is an example:
+
+  MOC_Files {
+    commandflags += -nw
+    gendir = moc_generated
+    QtReactor.h
+  }
+
+  Source_Files {
+    moc_generated/QtReactor_moc.cpp
+  }
+
+In the above example, the generated file (QtReactor_moc.cpp) is placed in
+the moc_generated directory and the -nw option is added to commandflags.
+It should be noted that if the custom file definition does not set the
+output_option then you must provide the necessary options in
+commandflags to ensure that the generated output goes into the directory
+specified by gendir.
+
+The following example illustrates the use of the keyword mapping capability
+of the Define_Custom:
+
+project {
+  Define_Custom(CIDL) {
+    automatic_in      = 0
+    automatic_out     = 0
+    command           = $(CIAO_ROOT)/bin/cidlc
+    commandflags      = -I$(TAO_ROOT)/tao -I$(TAO_ROOT)/orbsvcs/orbsvcs --
+    inputext          = .cidl
+    source_outputext  = _svnt.cpp
+    generic_outputext = E.idl
+
+    // Allow cidlflags to be used outside the scope of CIDL_Files
+    keyword cidlflags = commandflags
+  }
+
+  // This will get added to all commandflags for CIDL_Files
+  cidlflags += --some_option
+
+  CIDL_Files {
+    // This will have a combination of the original commandflags plus
+    // the value added to cidlflags above.
+    file.cidl
+  }
+
+  CIDL_Files {
+    // This will have a combination of the original commandflags plus
+    // the value added to cidlflags above plus the value added to
+    // cidlflags here.
+    cidlflags += --another_option
+    another_file.cidl
+  }
+}
+
+A Modify_Custom section can be used to modify an existing custom definition.
+The Define_Custom must be processed prior to processing a Modify_Custom
+section; otherwise, an error will occur.
+
+Special type of feature project
+-------------------------------
+A feature project contains information as a project would, but can only
+be a base project and will only be added to a sub project if the features
+that it requires (or avoids) are present.
+
+A feature definition requires at least one feature name.  A name by itself
+specifies that the feature is required.  A '!' in front of the feature name
+indicates that the feature must be disabled.  There may be more than one
+feature listed between the parenthesis and they must be comma separated.
+Each feature will be logically anded together.
+
+The following feature definition requires that the qt feature be enabled.
+
+feature(qt) {
+  Define_Custom(MOC) {
+    automatic_in     = 0
+    automatic_out    = 0
+    command          = $(QTDIR)/bin/moc
+    output_option    = -o
+    inputext         = .h
+    pre_extension    = _moc
+    source_outputext = .cpp
+  }
+
+  MOC_Files {
+    QtSpecific.h
+  }
+
+  Source_Files {
+    QtSpecific_moc.cpp
+  }
+}
+
+Assuming that the above feature definition is stored in a file named
+qt_specific.mpb, an mpc project could inherit from it and would only receive
+the feature definition if the qt feature was enabled.
+
+project: qt_specific {
+  ...
+}
+
+
+Feature Files
+-------------
+Features are enabled and disable within feature files or through the use of
+the -features option (see USAGE for more details).  The first feature file
+read is always global.features found in the config directory.  The second
+feature file read is the project type name with .features appended
+(ex. vc71.features, make.features, etc.) which must be located in the same
+directory as the global.features file.  Lastly, the file specified by the
+-feature_file option is read if this option is used.
+
+Each successive feature file has precedence over the previous.  That is,
+if a feature has already been set previously it is overridden.  The
+-features option has precedence over feature files.
+
+Special Keywords Available to Templates
+---------------------------------------
+project_name    This contains the name of the project.
+project_file    This contains the name of the output file.
+guid            This is used by the VC7 project and workspace creator.
+configurations  When used within a foreach context, this info (each
+                configuration) is gathered for use with the VC7 workspace
+                creator.
+flag_overrides  Used to determine flags that have been overridden on a per
+                file basis.
+custom_types    The list of custom file types that may have been defined
+                in the mpc file or a base project.
+fornotlast      Insert the text on every foreach iteration except the last.
+forlast         Insert the text only on the last foreach iteration.
+fornotfirst     Insert the text on every foreach iteration except the first.
+forfirst        Insert the text only on the first foreach iteration.
+forcount        By default, a one based index number of the foreach
+                iterations.  The base can be modified by providing a base
+                number in the foreach as in the following examples:
+
+<%foreach(4, includes)%>
+  ...
+<%endfor%>
+
+
+<%foreach(include, 4, includes)%>
+  ...
+<%endfor%>
+
+If the list variable ('includes' in the above example) is a function call,
+it is necessary to provide both a variable name and a base count number.
+
+Project Variable and Template Input Variable Interaction
+--------------------------------------------------------
+Project variables and template input variables are separate entities and in
+the context of the TemplateParser, template input variables have precedence
+over project variables.
+
+This means that if the project keyword 'libout' is set in an MPC project and
+is set as a template input variable, the template input variable value will
+be used.  There are exceptions to this rule.  The following list shows the
+project keywords that have their MPC project value appended to the template
+input value (if there is a template input value).
+
+libpaths
+includes
+libs
+lit_libs
+pure_libs
+dynamicflags
+staticflags
+requires
+avoids
+macros
+
+Workspaces
+----------
+Workspaces (mwc files) can have assignments similar to projects.  There are
+currently only two assignments allowed.
+
+The first is 'cmdline'.  The values given to the cmdline assignment will be
+processed as command line options, but only to the projects that are
+contained within the workspace (or the scope of the assignment).  All
+command line options are valid for cmdline, except for the following:
+-exclude, -for_eclipse, -gendot, -gfeature_file, -into, -make_coexistence,
+-noreldefs, and -recurse.
+
+The second assignment is 'implicit'.  This assignment takes two different
+types of values.  It takes a boolean value (0 or 1) to indicate that an
+implicit project should be created in directories that contain no mpc file,
+but contain project related files (source, headers, etc.).  The default
+value for implicit is 0.  It also takes a character string that represents a
+base project (similar to the -base option).  In this case, implicit is
+enabled and each implicitly generate project file will have the base project
+or base projects (when addition is used) when the project is created.
+
+Defaulting Behavior
+-------------------
+1) If a project name is not specified:
+
+   it will be defaulted to the name of the mpc file without the extension
+
+2) If a particular list is not specified (Source_Files, Header_Files, etc.):
+
+   all of the files in the directory will be added to the corresponding list
+   by extension
+
+3) If the custom type is automatic (both input and output) and custom files
+   (ex., idl files) exist in the directory and the custom files components
+   (ex., IDL_Files) are left defaulted (i.e. not listed) or the custom files
+   components are specified and none of the custom generated files are listed
+   in the corresponding lists:
+
+   the custom files are added to the custom files component list if they
+   weren't specified and all of the (would be) generated files will be added
+   to the front of the corresponding lists (source, inline and header lists)
+
+4) If files are listed in the Source_Files list and a corresponding header or
+   inline file exists:
+
+   the corresponding file will be added to the corresponding list (if it
+   isn't already there)
+
+5) If a sharedname is specified and staticname is not:
+
+   staticname is assigned the sharedname value (the same applies if
+   staticname is specified and sharedname is not)
+
+6) If exename is specified then the project target is considered an
+   executable.  If neither exename, sharedname or staticname are used and
+   any of the source files listed contains a language dependent "main", then
+   the project target is considered an executable, otherwise it is considered
+   a library.
+
+7) If pch_header is not specified and a header file matches *_pch.h:
+
+   it is assumed to be the precompiled header file (the same applies to
+   pch_source)
+
+Processing Order
+----------------
+1) Project file is read
+2) Template input file is read
+3) Template file is read
+4) Output project is written

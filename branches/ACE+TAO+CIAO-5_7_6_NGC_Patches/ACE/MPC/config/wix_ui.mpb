@@ -1,0 +1,8 @@
+// $Id$
+
+project : wix {
+  specific {
+    wix_flags   += -ext WixUIExtension
+    light_flags += '-ext WixUIExtension'
+  }
+}

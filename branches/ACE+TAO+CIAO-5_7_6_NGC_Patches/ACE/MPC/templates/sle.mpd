@@ -1,0 +1,254 @@
+<!DOCTYPE Project SYSTEM "http://www.slickedit.com/dtd/vse/8.1/vpj.dtd">
+<Project
+	Version="8.1"
+	VendorName="SlickEdit"
+	WorkingDir="."
+	BuildSystem="vsbuild">
+	<Config
+		Name="Debug"
+		Type="gnuc"
+		DebugCallbackName="gdb"
+		Version="1"
+                OutputFile="<%if(sharedname)%><%if(dllout)%><%dllout%><%else%><%libout%><%endif%>\<%libname_prefix%><%sharedname%><%if(use_lib_modifier)%><%lib_modifier%><%endif%><%dll_ext%><%endif%><%if(exename)%><%if(exeout)%><%exeout%><%else%><%output_dir%><%endif%>\<%exename%><%if(use_exe_modifier)%><%lib_modifier%><%endif%><%exe_ext%><%endif%>">
+		<Menu>
+			<Target
+				Name="Compile"
+				MenuCaption="&amp;Compile"
+				Dialog="_gnuc_options_form Compile"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				OutputExts="*.o"
+				SaveOption="SaveCurrent"
+				RunFromDir="%rw">
+				<Exec
+					CmdLine='g++ -c %xup -g -o "%bd%n%oe" %i "%f" %~other'
+                                        OtherOptions="-W -Wall -Wpointer-arith -mcpu=pentiumpro -mthreads -pipe -fno-exceptions -fcheck-new <%compile_flags%> <%foreach(includes)%>-I'<%include%>' <%endfor%><%foreach(defines common_defines macros)%>-D<%define%> <%endfor%><%if(type_is_dynamic)%><%foreach(dynamicflags)%>-D <%dynamicflag%> <%endfor%><%endif%><%if(need_staticflags)%><%foreach(staticflags)%>-D <%staticflag%> <%endfor%><%endif%>"/>
+			</Target>
+			<Target
+				Name="Link"
+				MenuCaption="&amp;Link"
+				ShowOnMenu="Never"
+				Dialog="_gnuc_options_form Link"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveCurrent"
+				RunFromDir="%rw">
+				<Exec
+					CmdLine='g++ %xup -g -o "%o" %f %libs %~other'
+                                        OtherOptions="-Wl,--enable-auto-import -Wl,-E -lws2_32 -lmswsock -lwsock32 -lnetapi32 <%foreach(libs)%>-l<%libname_prefix%><%lib%><%if(use_lib_modifier)%><%lib_modifier%><%endif%><%lib_ext%> <%endfor%><%foreach(lit_libs)%>-l<%lit_lib%>.lib <%endfor%><%foreach(pure_libs)%>-l<%pure_lib%> <%endfor%><%foreach(libpaths)%>-L'<%libpath%>' <%endfor%>"/>
+			</Target>
+			<Target
+				Name="Build"
+				MenuCaption="&amp;Build"
+				Dialog="_gnuc_options_form Compile"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%(VSLICKBIN1)vsbuild" "%w" "%r" -t build'/>
+			</Target>
+			<Target
+				Name="Rebuild"
+				MenuCaption="&amp;Rebuild"
+				Dialog="_gnuc_options_form Compile"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%(VSLICKBIN1)vsbuild" "%w" "%r" -t rebuild'/>
+			</Target>
+			<Target
+				Name="Debug"
+				MenuCaption="&amp;Debug"
+				Dialog="_gnuc_options_form Run/Debug"
+				BuildFirst="1"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveNone"
+				RunFromDir="%rw">
+				<Exec CmdLine='vsdebugio -prog "%o"'/>
+			</Target>
+			<Target
+				Name="Execute"
+				MenuCaption="E&amp;xecute"
+				Dialog="_gnuc_options_form Run/Debug"
+				BuildFirst="1"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%o"'/>
+			</Target>
+			<Target
+				Name="dash"
+				MenuCaption="-"
+				Deletable="0">
+				<Exec/>
+			</Target>
+			<Target
+				Name="GNU C Options"
+				MenuCaption="GNU C &amp;Options..."
+				ShowOnMenu="HideIfNoCmdLine"
+				Deletable="0"
+				SaveOption="SaveNone">
+				<Exec
+					CmdLine="gnucoptions"
+					Type="Slick-C"/>
+			</Target>
+		</Menu>
+		<Libs/>
+		<Includes/>
+	</Config>
+	<Config
+		Name="Release"
+		Type="gnuc"
+		DebugCallbackName="gdb"
+		Version="1"
+                OutputFile="<%if(sharedname)%><%if(dllout)%><%dllout%><%else%><%libout%><%endif%>\<%libname_prefix%><%sharedname%><%if(use_lib_modifier)%><%lib_modifier%><%endif%><%dll_ext%><%endif%><%if(exename)%><%if(exeout)%><%exeout%><%else%><%output_dir%><%endif%>\<%exename%><%if(use_exe_modifier)%><%lib_modifier%><%endif%><%exe_ext%><%endif%>">
+		<Menu>
+			<Target
+				Name="Compile"
+				MenuCaption="&amp;Compile"
+				Dialog="_gnuc_options_form Compile"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				OutputExts="*.o"
+				SaveOption="SaveCurrent"
+				RunFromDir="%rw">
+				<Exec
+					CmdLine='g++ -c %xup -o "%bd%n%oe" %i "%f" %~other'
+                                        OtherOptions="-W -Wall -Wpointer-arith -mcpu=pentiumpro -mthreads -pipe -fno-exceptions -fcheck-new <%foreach(includes)%>-I'<%include%>' <%endfor%><%foreach(defines common_defines macros)%>-D<%define%> <%endfor%><%if(type_is_dynamic)%><%foreach(dynamicflags)%>-D <%dynamicflag%> <%endfor%><%endif%><%if(need_staticflags)%><%foreach(staticflags)%>-D <%staticflag%> <%endfor%><%endif%>"/>
+			</Target>
+			<Target
+				Name="Link"
+				MenuCaption="&amp;Link"
+				ShowOnMenu="Never"
+				Dialog="_gnuc_options_form Link"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveCurrent"
+				RunFromDir="%rw">
+				<Exec
+					CmdLine='g++ %xup -o "%o" %f %libs %~other'
+                                        OtherOptions="-Wl,--enable-auto-import -Wl,-E -lws2_32 -lmswsock -lwsock32 -lnetapi32 <%foreach(libs)%>-l<%libname_prefix%><%lib%><%if(use_lib_modifier)%><%lib_modifier%><%endif%><%lib_ext%> <%endfor%><%foreach(lit_libs)%>-l<%lit_lib%>.lib <%endfor%><%foreach(pure_libs)%>-l<%pure_lib%> <%endfor%><%foreach(libpaths)%>-L'<%libpath%>' <%endfor%>"/>
+			</Target>
+			<Target
+				Name="Build"
+				MenuCaption="&amp;Build"
+				Dialog="_gnuc_options_form Compile"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%(VSLICKBIN1)vsbuild" "%w" "%r" -t build'/>
+			</Target>
+			<Target
+				Name="Rebuild"
+				MenuCaption="&amp;Rebuild"
+				Dialog="_gnuc_options_form Compile"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%(VSLICKBIN1)vsbuild" "%w" "%r" -t rebuild'/>
+			</Target>
+			<Target
+				Name="Debug"
+				MenuCaption="&amp;Debug"
+				Dialog="_gnuc_options_form Run/Debug"
+				BuildFirst="1"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveNone"
+				RunFromDir="%rw">
+				<Exec CmdLine='vsdebugio -prog "%o"'/>
+			</Target>
+			<Target
+				Name="Execute"
+				MenuCaption="E&amp;xecute"
+				Dialog="_gnuc_options_form Run/Debug"
+				BuildFirst="1"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%o"'/>
+			</Target>
+			<Target
+				Name="dash"
+				MenuCaption="-"
+				Deletable="0">
+				<Exec/>
+			</Target>
+			<Target
+				Name="GNU C Options"
+				MenuCaption="GNU C &amp;Options..."
+				ShowOnMenu="HideIfNoCmdLine"
+				Deletable="0"
+				SaveOption="SaveNone">
+				<Exec
+					CmdLine="gnucoptions"
+					Type="Slick-C"/>
+			</Target>
+		</Menu>
+		<Libs/>
+		<Includes/>
+	</Config>
+	<Files>
+		<Folder
+			Name="Source Files"
+			Filters="*.c;*.C;*.cc;*.cpp;*.cp;*.cxx;*.prg;*.pas;*.dpr;*.asm;*.s;*.bas;*.java;*.sc;*.e;*.cob;*.html;*.rc;*.tcl;*.py;*.pl">
+<%foreach(source_files)%>
+                        <F N="<%source_file%>"/>
+<%endfor%>
+		</Folder>
+<%if(header_files)%>
+		<Folder
+			Name="Header Files"
+                        Filters="*.h;*.H;*.hh;*.hpp;*.hxx;*.inc;*.sh;*.cpy;*.if">
+<%if(pch_header)%>
+                        <F N="<%pch_header%>"/>
+<%endif%>
+<%foreach(header_files)%>
+                        <F N="<%header_file%>"/>
+<%endfor%>
+                </Folder>
+<%endif%>
+<%if(inline_files)%>
+                <Folder
+                        Name="Inline Files"
+                        Filters="*.i;*.inl">
+<%foreach(inline_files)%>
+                        <F N="<%inline_file%>"/>
+<%endfor%>
+                </Folder>
+<%endif%>
+<%if(template_files)%>
+                <Folder
+                        Name="Template Files"
+                        Filters="*_T.cpp">
+<%foreach(template_files)%>
+                        <F N="<%template_file%>"/>
+<%endfor%>
+                </Folder>
+<%endif%>
+<%if(documentation_files)%>
+                <Folder
+                        Name="Documentation Files"
+                        Filters="*.txt;*.doc">
+<%foreach(documentation_files)%>
+                        <F N="<%documentation_file%>"/>
+<%endfor%>
+                </Folder>
+<%endif%>
+<%if(resource_files)%>
+                <Folder
+                        Name="Resource Files"
+                        Filters="*.rc">
+<%foreach(resource_files)%>
+                        <F N="<%resource_file%>"/>
+<%endfor%>
+                </Folder>
+<%endif%>
+	</Files>
+</Project>

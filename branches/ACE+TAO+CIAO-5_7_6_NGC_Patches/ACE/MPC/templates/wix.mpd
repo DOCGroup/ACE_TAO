@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<Include>
+<%marker(top)%>
+  <Fragment Id="<%project_name%>">
+<%if(sharedname || exename || install_location)%>
+    <DirectoryRef Id="INSTALLDIR">
+<%foreach(name, install_location)%>
+        <Directory Id="<%project_name%>.<%name%>" Name="<%name%>">
+<%endfor%>
+
+        <Component Id="<%project_name%>" Guid="<%guid%>">
+<%marker(component_top)%>
+<%if(install_binary(1))%>
+          <File Id="file.<%project_name%>" Name="<%if(type_is_dynamic)%><%sharedname%>.dll<%else%><%exename%>.exe<%endif%>"
+                Source="<%source_directory%>/<%if(type_is_dynamic)%><%sharedname%>.dll<%else%><%exename%>.exe<%endif%>"
+                DiskId="<%diskid(1)%>" />
+<%endif%>
+<%if(install_resources)%>
+<%foreach(resource_files)%>
+          <File Id="file.resource.<%resource_file%>" Name="<%resource_file%>"
+                Source="<%full_path(resource_file)%>"
+                DiskId="<%diskid(1)%>" />
+
+<%endfor%>
+<%endif%>
+<%if(gme_install)%>
+
+          <!-- registry information for GME component -->
+          <RegistryKey Root="<%gme_register(HKLM)%>" Key="SOFTWARE\GME\Components\<%gme_progid%>" Action="createAndRemoveOnUninstall">
+            <RegistryValue Name="Description" Type="string" Value="<%gme_description%>" Action="write" />
+<%if(gme_has_icon)%>
+            <RegistryValue Name="Icon" Type="string" Value="<%gme_icon(,IDI_COMPICON)%>" Action="write" />
+<%endif%>
+            <RegistryValue Name="Paradigm" Type="string" Value="<%foreach(gme_paradigms)%><%gme_paradigm%><%fornotlast(",")%><%endfor%>" Action="write" />
+            <RegistryValue Name="Tooltip" Type="string" Value="<%gme_tooltip%>" Action="write" />
+            <RegistryValue Name="Type" Type="integer" Value="<%gme_component_type(1)%>" Action="write" />
+          </RegistryKey>
+
+          <RegistryKey Root="<%gme_register(HKLM)%>" Key="SOFTWARE\GME\Components\<%gme_progid%>\Associated" Action="create">
+<%foreach(gme_paradigms)%>
+            <RegistryValue Name="<%gme_paradigm%>" Type="string" Action="write" Value="" />
+<%endfor%>
+          </RegistryKey>
+
+          <RegistryKey Root="<%gme_register(HKLM)%>" Key="SOFTWARE\Classes\<%gme_progid%>" Action="createAndRemoveOnUninstall">
+            <RegistryValue Type="string" Value="<%gme_description%>" />
+          </RegistryKey>
+
+          <RegistryKey Root="<%gme_register(HKLM)%>" Key="SOFTWARE\Classes\<%gme_progid%>\CLSID" Action="create">
+            <RegistryValue Type="string" Value="{<%gme_uuid%>}" />
+          </RegistryKey>
+
+          <RegistryKey Root="<%gme_register(HKLM)%>" Key="SOFTWARE\Classes\CLSID\{<%gme_uuid%>}" Action="createAndRemoveOnUninstall">
+            <RegistryValue Type="string" Value="<%gme_description%>" />
+          </RegistryKey>
+
+          <RegistryKey Root="<%gme_register(HKLM)%>" Key="SOFTWARE\Classes\CLSID\{<%gme_uuid%>}\InProcServer32" Action="create">
+            <RegistryValue Type="string" Value="[INSTALLDIR]<%foreach(name, install_location)%><%name%>\\<%endfor%><%sharedname%>.dll" />
+          </RegistryKey>
+
+          <RegistryKey Root="<%gme_register(HKLM)%>" Key="SOFTWARE\Classes\CLSID\{<%gme_uuid%>}\ProgID" Action="create">
+            <RegistryValue Type="string" Value="<%gme_progid%>" />
+          </RegistryKey>
+<%endif%>
+<%marker(component_bottom)%>
+        </Component>
+<%foreach(name, install_location)%>
+        </Directory>
+<%endfor%>
+    </DirectoryRef>
+<%endif%>
+  </Fragment>
+<%marker(bottom)%>
+</Include>

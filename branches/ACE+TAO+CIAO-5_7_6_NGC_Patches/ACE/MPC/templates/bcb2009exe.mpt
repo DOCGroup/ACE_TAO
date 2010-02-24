@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+conditional_include "common"
+conditional_include "windowscommon"
+
+common_defines  = WIN32
+
+conditional_include "user_bdsexe"

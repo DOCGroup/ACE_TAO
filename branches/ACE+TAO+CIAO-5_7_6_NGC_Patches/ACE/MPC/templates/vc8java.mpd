@@ -1,0 +1,109 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion><%prversion("8.0.50727")%></ProductVersion>
+    <SchemaVersion><%schemaversion("2.0")%></SchemaVersion>
+    <ProjectGuid>{<%guid%>}</ProjectGuid>
+<%foreach(configurations)%>
+<%if(forfirst)%>
+    <Configuration Condition=" '$(Configuration)' == '' "><%configuration%></Configuration>
+<%endif%>
+<%endfor%>
+<%foreach(platforms)%>
+<%if(forfirst)%>
+    <Platform Condition=" '$(Platform)' == '' "><%platform%></Platform>
+<%endif%>
+<%endfor%>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+<%if(exename || sharedname || staticname)%>
+    <AssemblyName><%if(exename)%><%exename%><%else%><%libname_prefix%><%if(sharedname)%><%sharedname%><%else%><%staticname%><%endif%><%endif%></AssemblyName>
+<%endif%>
+    <AssemblyOriginatorKeyFile><%keyfile%></AssemblyOriginatorKeyFile>
+<%if(keyfile)%>
+    <SignAssembly>true</SignAssembly>
+<%endif%>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign><%DelaySign("false")%></DelaySign>
+<%if(exename || sharedname || staticname)%>
+    <OutputType><%if(exename)%><%if(winapp)%>Win<%endif%>Exe<%else%>Library<%endif%></OutputType>
+<%endif%>
+    <RootNamespace>
+    </RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject><%startupobject%></StartupObject>
+    <ReferencePath><%foreach(libpaths)%><%libpath%><%fornotlast(";")%><%endfor%></ReferencePath>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+<%foreach(platforms)%>
+<%foreach(configurations)%>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == '<%configuration%>|<%platform%>' ">
+<%if(exename || sharedname || staticname)%>
+    <OutputPath><%if(exename)%><%if(exeout)%><%exeout%><%if(windows_style)%>\<%output_dir%><%endif%><%else%>.\<%output_dir%><%endif%><%else%><%if(dllout)%><%dllout%><%else%><%libout%><%endif%>\<%output_dir%><%endif%>\</OutputPath>
+<%endif%>
+    <AllowUnsafeBlocks><%allowunsafeblocks(false)%></AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants><%foreach(defines common_defines macros)%><%define%>;<%endfor%><%if(!optimize)%>DESIGN;DEBUG;<%endif%><%if(trace)%>TRACE<%endif%></DefineConstants>
+    <DebugSymbols><%if(optimize)%>false<%else%>true<%endif%></DebugSymbols>
+    <NoWarn>
+    </NoWarn>
+    <Optimize><%if(optimize)%>true<%else%>false<%endif%></Optimize>
+    <RegisterForComInterop><%RegisterForComInterop("false")%></RegisterForComInterop>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel><%warning_level("4")%></WarningLevel>
+    <DebugType><%if(optimize)%>none<%else%>full<%endif%></DebugType>
+  </PropertyGroup>
+<%endfor%>
+<%endfor%>
+  <ItemGroup>
+<%if(after)%>
+    <!-- MPC ADD DEPENDENCIES -->
+<%endif%>
+<%foreach(libs)%>
+    <Reference Include="<%libname_prefix%><%lib%>">
+      <Name><%libname_prefix%><%lib%></Name>
+    </Reference>
+<%endfor%>
+<%foreach(lib, sort(lit_libs pure_libs))%>
+    <Reference Include="<%lib%>">
+      <Name><%lib%></Name>
+    </Reference>
+<%endfor%>
+  </ItemGroup>
+  <ItemGroup>
+<%foreach(source_files)%>
+    <Compile Include="<%source_file%>">
+      <SubType><%if(flag_overrides(source_file, subtype))%><%flag_overrides(source_file, subtype)%><%else%>Code<%endif%></SubType>
+<%if(flag_overrides(source_file, dependent_upon))%>
+      <DependentUpon><%flag_overrides(source_file, dependent_upon)%></DependentUpon>
+<%endif%>
+    </Compile>
+<%endfor%>
+<%foreach(custom_types)%>
+<%foreach(custom_type->input_files)%>
+<%if(custom_type->input_file->output_files)%>
+    <Compile Include="<%custom_type->input_file%>">
+      <Generator><%if(custom_type->libpath)%>PATH=%PATH%;<%custom_type->libpath%>&#x0D;&#x0A;<%endif%><%if(flag_overrides(custom_type->input_file, gendir))%>if not exist <%flag_overrides(custom_type->input_file, gendir)%> mkdir <%flag_overrides(custom_type->input_file, gendir)%>&#x0D;&#x0A;<%endif%><%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%if(custom_type->output_option)%><%custom_type->input_file%> <%custom_type->output_option%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_files)%><%else%><%custom_type->input_file->output_files%><%endif%><%else%><%custom_type->input_file%><%endif%><%if(flag_overrides(custom_type->input_file, postcommand))%><%foreach(custom_type->input_file)%>&amp;&amp;<%flag_overrides(custom_type->input_file, postcommand)%><%endfor%><%else%><%if(custom_type->postcommand)%><%foreach(custom_type->input_file)%>&amp;&amp;<%custom_type->postcommand%><%endfor%><%endif%><%endif%></Generator>
+    </Compile>
+<%else%>
+    <None Include="<%custom_type->input_file%>" />
+<%endif%>
+<%endfor%>
+<%endfor%>
+<%foreach(documentation_files)%>
+    <None Include="<%documentation_file%>" />
+<%endfor%>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualJSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent><%if(prebuild)%><%eval(prebuild)%><%endif%></PreBuildEvent>
+    <PostBuildEvent><%if(postbuild)%><%eval(postbuild)%><%endif%></PostBuildEvent>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,16 @@
+// Current as of 10/26/2006
+// This defines the role of all the template variables specific to the
+// 'vc8' project type with the vb language.
+//
+// Please try to keep this alphabetically sorted.
+//
+common_defines = Specifies macros that are common to all target types.
+defines = Macros that are specific to a particular configuration.
+guid = The value for this variable is generated during project generation.
+prversion = This setting specifies the ProductVersion in the generated .vbproj file.
+registerforcominterop = This setting corresponds to the Compile property "Register for COM interop". The boolean values true and false correspond to enabling or disabling the feature in the IDE.
+schemaversion = This setting specifies the SchemaVersion in the generated .vbproj file.
+startupobject = This corresponds to the Application property "Startup object".
+trace = This setting corresponds to the Compile Advanced Compile Options property "Define TRACE constant". If this boolean template variable is set, the TRACE constant will be defined.
+warning_level = This setting corresponds to the Compile property "Disable all warnings". Valid values are 0 and 1.
+winapp = This boolean template variable indicates whether the application target is for the Console or Windows subsystem.
