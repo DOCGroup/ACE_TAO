@@ -1,3 +1,9 @@
+Wed Feb 24 08:09:43 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+          Resolved compiler warnings on Linux.
+
 Wed Feb 24 08:06:47 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.cpp:
