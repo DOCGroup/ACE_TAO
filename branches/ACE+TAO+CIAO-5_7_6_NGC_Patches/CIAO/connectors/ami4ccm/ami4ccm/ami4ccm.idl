@@ -1,0 +1,21 @@
+// $Id$
+
+#if !defined (AMI4CCM_IDL_H)
+#define AMI4CCM_IDL_H
+
+module CCM_AMI
+{
+  native UserExceptionBase;
+
+  local interface ExceptionHolder
+  {
+    void raise_exception() raises (UserExceptionBase);
+  };
+
+  /// Base interface for the Callback model
+  local interface ReplyHandler
+  {
+  };
+};
+
+#endif /* AMI4CCM_IDL_H */

@@ -1,0 +1,39 @@
+//
+// $Id$
+//
+
+/// A simple module to avoid namespace pollution
+module Test
+{
+  /// Use a timestamp to measure the roundtrip delay
+  typedef unsigned long long Timestamp;
+
+  interface Session;
+  interface Callback;
+
+  /// Create sessions to measure roundtrip delays
+  interface Session_Factory
+  {
+    /// Return a new session
+    Session create_new_session (in Callback the_callback);
+
+    /// Shutdown the server
+    void shutdown ();
+  };
+
+  /// Each experiment is ran using completely separate
+  interface Session
+  {
+    /// Run one iteration of the experiment
+    void sample (in Timestamp the_timestamp);
+
+    /// Destroy the session
+    void shutdown ();
+  };
+
+  interface Callback
+  {
+    /// Measure one iteration
+    void sample (in Timestamp the_timestamp);
+  };
+};

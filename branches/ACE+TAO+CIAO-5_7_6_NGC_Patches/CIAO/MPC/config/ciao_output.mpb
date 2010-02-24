@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  libout = $(ACE_ROOT)/lib
+}
+

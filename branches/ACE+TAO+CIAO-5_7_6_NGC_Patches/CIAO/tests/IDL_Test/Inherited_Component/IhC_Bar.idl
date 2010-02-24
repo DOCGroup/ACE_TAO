@@ -1,0 +1,8 @@
+// $Id$
+
+#include <Components.idl>
+#include "IhC_Foo.idl"
+
+component Bar : Foo
+{
+};

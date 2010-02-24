@@ -1,0 +1,30 @@
+// $Id$
+
+module Hello
+{
+  exception InternalErrorA
+    {
+    };
+  exception InternalErrorB
+    {
+    };
+
+  // Sender/Receiver interface
+  interface MyFoo
+    {
+      attribute short rw_attrib
+        getraises (InternalErrorA)
+        setraises (InternalErrorB);
+
+      attribute short rw_attrib_reverted
+        getraises (InternalErrorB)
+        setraises (InternalErrorA);
+
+      attribute short rw_attribB
+        getraises (InternalErrorB);
+
+      readonly attribute short ro_attrib
+        raises (InternalErrorB);
+    };
+};
+
