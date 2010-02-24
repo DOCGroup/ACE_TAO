@@ -1806,7 +1806,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                                     if (this->is_local_facet (conn))
                                       {
                                         ::Components::CCMObject_var facet =
-                                            ::Components::CCMObject::_narrow (providedReference[i].endpoint[0].in ());
+                                          ::Components::CCMObject::_narrow (providedReference[i].endpoint[0].in ());
                                         
                                         ::Components::CCMObject_var recep =
                                             ::Components::CCMObject::_narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->ref.in ());
@@ -1915,13 +1915,14 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                           {
                             DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("NodeApplication_Impl::finishLaunch - ")
                                              ACE_TEXT ("Reference provided from DomainApplication was nil.\n")));
-                            throw 1;
+                            throw Deployment::InvalidConnection ("",
+                                                                 "Nil provided reference from DomainApplication");
                           }
 
                         ::Components::CCMObject_var facet =
                            ::Components::CCMObject::_narrow (providedReference[i].endpoint[0].in ());
 
-                        if (/*conn.internalEndpoint.length () == 2*/ this->is_local_facet (conn))
+                        if (this->is_local_facet (conn))
                           {
                             ::CIAO::Deployment::Container_var cont =
                                ::CIAO::Deployment::Container::_narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->container->ref.in ());
@@ -1934,12 +1935,24 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                           }
                         else
                           {
+                            CORBA::Object_var portref = CORBA::Object::_duplicate (providedReference[i].endpoint[0].in());
+                            
+                            if (0 != conn.externalReference.length ())
+                              {
+                                ::Components::CCMObject_var facet = 
+                                  ::Components::CCMObject::_narrow (providedReference[i].endpoint[0].in ());
+                                
+                                if (!CORBA::is_nil (facet.in ()))
+                                  portref = facet->provide_facet (conn.externalReference[0].portName.in ());
+                              }
+                            
                             this->connect_receptacle (conn,
                                                       obj.in (),
                                                       "",
-                                                      providedReference[i].endpoint[0].in(),
+                                                      portref.in (),
                                                       conn.internalEndpoint[0].portName.in(),
                                                       ::CIAO::Deployment::Container::_nil());
+                                
                           }
 
                         break;
