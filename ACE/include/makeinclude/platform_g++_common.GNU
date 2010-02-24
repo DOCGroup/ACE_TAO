@@ -68,6 +68,10 @@ ifeq ($(GNU_LD),1)
   STATIC_LINK_FLAG ?= -static
 endif # GNU_LD
 
+ifeq ($(no_strict_aliasing), 1)
+  CCFLAGS += -fno-strict-aliasing
+endif
+
 ifeq ($(shared_libs), 1)
   ifneq ($(static_libs_only), 1)
     # Add all symbols to the dynamic symbol table.  Needed to enable
