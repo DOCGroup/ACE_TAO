@@ -1,3 +1,9 @@
+Wed Feb 24 15:15:00 UTC 2010  Simon Massey  <sma at prismtech dot com>
+
+        * ace/config-lynxos.h:
+          #define ACE_LACKS_CEILL & ACE_LACKS_FLOORL
+          Correct placement of these defines for the version of Lynxos
+
 Wed Feb 24 11:41:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_g++_common.GNU:
