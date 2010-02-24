@@ -1322,6 +1322,30 @@ IDL_GlobalData::ciao_rti_ts_file_names (void)
   return this->ciao_rti_ts_file_names_;
 }
 
+void
+IDL_GlobalData::add_ciao_spl_ts_file_names (const char *s)
+{
+  this->ciao_spl_ts_file_names_.enqueue_tail (ACE::strnew (s));
+}
+
+ACE_Unbounded_Queue<char *> &
+IDL_GlobalData::ciao_spl_ts_file_names (void)
+{
+  return this->ciao_spl_ts_file_names_;
+}
+
+void
+IDL_GlobalData::add_ciao_oci_ts_file_names (const char *s)
+{
+  this->ciao_oci_ts_file_names_.enqueue_tail (ACE::strnew (s));
+}
+
+ACE_Unbounded_Queue<char *> &
+IDL_GlobalData::ciao_oci_ts_file_names (void)
+{
+  return this->ciao_oci_ts_file_names_;
+}
+
 ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex> &
 IDL_GlobalData::file_prefixes (void)
 {

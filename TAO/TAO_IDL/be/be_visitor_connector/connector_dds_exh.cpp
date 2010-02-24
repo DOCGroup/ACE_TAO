@@ -170,7 +170,7 @@ be_visitor_connector_dds_exh::gen_dds_traits (void)
           << "::" << dt_name << "Seq," << be_nl
           << "::" << dt_name << "TypeSupport," << be_nl
           << "::" << dt_name << "DataWriter," << be_nl
-          << "::" << dt_name << "DataReader>";
+          << "::" << dt_name << "DataReader> ";
       os_ << this->dds_traits_name_.c_str () << ";" << be_uidt;
     }
 }
