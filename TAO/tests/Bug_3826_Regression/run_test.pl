@@ -35,6 +35,19 @@ if ($server_status != 0) {
     exit 1;
 }
 
+print STDOUT "Testing with default svc.conf\n";
+
+$SV = $server->CreateProcess ("server",
+    "-a \"AAA -ORBdebuglevel $debug_level -ORBGestalt LOCAL\" " .
+    "-b \"BBB\"");
+
+$server_status = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    exit 1;
+}
+
 print STDOUT "Testing with -ORBSvcConfDirective\n";
 
 $SV = $server->CreateProcess ("server",
