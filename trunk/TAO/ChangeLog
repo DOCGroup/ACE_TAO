@@ -1,12 +1,23 @@
+Wed Feb 24 16:29:51 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_3826_Regression/svc.conf:
+        * tests/Bug_3826_Regression/run_test.pl:
+        * tao/TAO_Internal.cpp:
+          Extended the fix for bug#3826 and adjusted the test. Initial fix
+          was not complete. If there is a svc.conf which is processed by
+          ACE unconditionally then it's processed in a global gestalt even
+          if -ORBGestalt LOCAL is provided. Current change must fix this
+          behaviour.
+
 Tue Feb 23 18:55:21 UTC 2010  Yan Dai  <dai_y@ociweb.com>
 
         * bin/tao_orb_tests.lst:
 
           Added Bug_3812_Regression as not fixed test.
-          
+
         * tests/Bug_3812_Regression/Bug_3812_Regression.cpp:
         * tests/Bug_3812_Regression/mock_transport.h:
-        
+
           Fixed fuzz errors.
 
 Tue Feb 23 10:35:39 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
