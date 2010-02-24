@@ -50,11 +50,6 @@ namespace CIAO
           throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
         }
 
-      ::DDS::DataWriter_var retval = ::DDS::DataWriter::_nil ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_DataWriter_i (),
-                        CORBA::NO_MEMORY ());
-
       DDSDataWriterListener *rti_drl = 0;
       if (!CORBA::is_nil (a_listener))
         {
@@ -76,6 +71,11 @@ namespace CIAO
           delete rti_drl;
           throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
+
+      ::DDS::DataWriter_var retval = ::DDS::DataWriter::_nil ();
+      ACE_NEW_THROW_EX (retval,
+                        CCM_DDS_DataWriter_i (rti_dw),
+                        CORBA::NO_MEMORY ());
 
       rti_dw->enable ();
       CCM_DDS_DataWriter_i *dw = dynamic_cast< CCM_DDS_DataWriter_i * > (retval.in ());
@@ -110,11 +110,6 @@ namespace CIAO
           throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
         }
 
-      ::DDS::DataWriter_var retval = ::DDS::DataWriter::_nil ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_DataWriter_i (),
-                        CORBA::NO_MEMORY ());
-
       DDSDataWriterListener *rti_drl = 0;
       if (!CORBA::is_nil (a_listener))
         {
@@ -136,6 +131,11 @@ namespace CIAO
           delete rti_drl;
           throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
+
+      ::DDS::DataWriter_var retval = ::DDS::DataWriter::_nil ();
+      ACE_NEW_THROW_EX (retval,
+                        CCM_DDS_DataWriter_i (rti_dw),
+                        CORBA::NO_MEMORY ());
 
       rti_dw->enable ();
       CCM_DDS_DataWriter_i *dw = dynamic_cast< CCM_DDS_DataWriter_i * > (retval.in ());
@@ -183,18 +183,19 @@ namespace CIAO
     ::DDS::DataWriter_ptr
     CCM_DDS_Publisher_i::lookup_datawriter (const char * impl_name)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS::DataWriter_var retval = ::DDS::DataWriter::_nil ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_DataWriter_i (),
-                        CORBA::NO_MEMORY ());
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDSDataWriter* dw = this->impl ()->lookup_datawriter (impl_name);
-      CCM_DDS_DataWriter_i *rti_dw = dynamic_cast< CCM_DDS_DataWriter_i * > (retval.in ());
-      rti_dw->set_impl (dw);
-      return retval._retn ();
+      ACE_NEW_THROW_EX (retval,
+                        CCM_DDS_DataWriter_i (dw),
+                        CORBA::NO_MEMORY ());
 #else
-      return this->impl ()->lookup_datawriter (impl_name);
+      ::DDS::DataWriter_var dw = this->impl ()->lookup_datawriter (impl_name);
+      ACE_NEW_THROW_EX (retval,
+                        CCM_DDS_DataWriter_i (dw.in ()),
+                        CORBA::NO_MEMORY ());
 #endif
+      return retval._retn ();
     }
 
     ::DDS::ReturnCode_t
