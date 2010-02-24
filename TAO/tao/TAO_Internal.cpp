@@ -30,6 +30,7 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Static_Object_Lock.h"
+#include "ace/OS_NS_sys_stat.h"
 
 ACE_RCSID (tao,
            TAO_Internal,
@@ -98,7 +99,8 @@ namespace
    */
   bool
   using_global_gestalt_i (int &argc,
-                          ACE_TCHAR **argv);
+                          ACE_TCHAR **argv,
+                          bool &skip_service_config_open);
 
   /**
    * Initialize the ACE Service Configurator with the process-global
@@ -287,16 +289,17 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
          true) == -1)
     return -1;
 
+  bool skip_service_config_open = false; // by default we shouldn't
+
   if (using_global_gestalt_i (tmpargc,
-                              tmpargv))
+                              tmpargv,
+                              skip_service_config_open))
     {
       if (parse_svcconf_args_i (tmpargc,
               tmpargv,
               global_svc_config_argv) == -1)
         return -1;
     }
-
-  bool skip_service_config_open = false; // by default we shouldn't
 
   if (parse_private_args_i (tmpargc,
           tmpargv,
@@ -956,7 +959,8 @@ namespace
 
   bool
   using_global_gestalt_i (int &argc,
-                          ACE_TCHAR **argv)
+                          ACE_TCHAR **argv,
+                          bool &skip_service_config_open)
   {
     bool with_global_gestalt = true;
 
@@ -976,6 +980,17 @@ namespace
                 ACE_OS::strcasecmp (current_arg, ACE_TEXT("GLOBAL")) != 0)
               {
                 with_global_gestalt = false;
+
+                ACE_stat exists;
+                if (ACE_OS::stat (ACE_DEFAULT_SVC_CONF, &exists) == 0)
+                  {
+                    // In case svc.conf exists and we are asked for a local
+                    // gestalt then no matter whether -ORBSvcConf or
+                    // -ORBSvcConfDirective are provided or not we ignore them
+                    // while setting up a global gestalt. They will be
+                    // processed later in a local gestalt.
+                    skip_service_config_open = true;
+                  }
               }
 
             // Skip anything that goes after -ORBGestalt.
