@@ -10,6 +10,11 @@
 #ifndef CIAO_RTI_SAMPLELOSTSTATUS_H
 #define CIAO_RTI_SAMPLELOSTSTATUS_H
 
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::SampleLostStatus DDS_SampleLostStatus;
+#endif
+
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::SampleLostStatus &ddsstatus, const ::DDS_SampleLostStatus & status)
 {
@@ -23,6 +28,7 @@ operator>>= (const ::DDS_SampleLostStatus &status, ::DDS::SampleLostStatus & dds
   ddsstatus.total_count = status.total_count;
   ddsstatus.total_count_change = status.total_count_change;
 }
+#endif
 
 #endif /* CIAO_RTI_SAMPLELOSTSTATUS_H */
 

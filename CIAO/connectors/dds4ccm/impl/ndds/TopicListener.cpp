@@ -28,6 +28,7 @@ namespace CIAO
         ::DDSTopic* the_topic,
         const ::DDS_InconsistentTopicStatus & status)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS::InconsistentTopicStatus ddsstatus;
         ddsstatus <<= status;
         ::DDS::Topic_var dds_topic = ::DDS::Topic::_nil ();
@@ -35,6 +36,9 @@ namespace CIAO
         RTI_Topic_i *tp = dynamic_cast < RTI_Topic_i *> (dds_topic.in ());
         tp->set_impl (the_topic);
         this->impl_->on_inconsistent_topic (dds_topic.in (), ddsstatus);
+#else   
+        this->impl_->on_inconsistent_topic (the_topic, status);
+#endif     
       }
 
       ::DDS::TopicListener_ptr

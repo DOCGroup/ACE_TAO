@@ -44,18 +44,24 @@ namespace CIAO
         virtual ~RTI_DomainParticipantFactory_i (void);
 
       public:
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+        virtual ::DDS::DomainParticipantFactory_ptr get_instance (void);
+#endif
+
         virtual
           ::DDS::DomainParticipant_ptr create_participant (::DDS::DomainId_t domain_id,
                                                            const ::DDS::DomainParticipantQos & qos,
                                                            ::DDS::DomainParticipantListener_ptr a_listener,
                                                            ::DDS::StatusMask mask);
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         virtual
           ::DDS::DomainParticipant_ptr create_participant_with_profile (::DDS::DomainId_t domain_id,
                                                           const char * library_name,
                                                           const char * profile_name,
                                                            ::DDS::DomainParticipantListener_ptr a_listener,
                                                            ::DDS::StatusMask mask);
+#endif
 
         virtual
           ::DDS::ReturnCode_t delete_participant (::DDS::DomainParticipant_ptr a_participant);
@@ -75,9 +81,12 @@ namespace CIAO
         virtual
           ::DDS::ReturnCode_t get_qos (::DDS::DomainParticipantFactoryQos & qos);
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         virtual ::DDS::ReturnCode_t set_default_participant_qos_with_profile(
                                                           const char * library_name,
                                                           const char * profile_name);
+#endif
+                                                          
       private:
         void remove_participant (RTI_DomainParticipant_i * part);
 

@@ -6,12 +6,17 @@
  *
  * Wrapper facade for NDDS.
  */
- 
+
 #ifndef CIAO_RTI_SAMPLEREJECTEDSTATUS_H
 #define CIAO_RTI_SAMPLEREJECTEDSTATUS_H
 
 #include "InstanceHandle_t.h"
 
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::SampleRejectedStatus DDS_SampleRejectedStatus;
+#endif
+
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::SampleRejectedStatus &ddsstatus, const ::DDS_SampleRejectedStatus & status)
 {
@@ -21,7 +26,6 @@ operator<<= (::DDS::SampleRejectedStatus &ddsstatus, const ::DDS_SampleRejectedS
   ddsstatus.last_instance_handle <<= status.last_instance_handle;
 }
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS_SampleRejectedStatus &ddsstatus, const ::DDS::SampleRejectedStatus & status)
 {
@@ -30,7 +34,6 @@ operator<<= (::DDS_SampleRejectedStatus &ddsstatus, const ::DDS::SampleRejectedS
   ddsstatus.last_reason = static_cast < ::DDS_SampleRejectedStatusKind> (status.last_reason);
   ddsstatus.last_instance_handle <<= status.last_instance_handle;
 }
-#endif
 
 inline void
 operator>>= (const ::DDS_SampleRejectedStatus &status, ::DDS::SampleRejectedStatus & ddsstatus)
@@ -41,14 +44,13 @@ operator>>= (const ::DDS_SampleRejectedStatus &status, ::DDS::SampleRejectedStat
   ddsstatus.last_instance_handle <<= status.last_instance_handle;
 }
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator>>= (const ::DDS::SampleRejectedStatus &status, ::DDS_SampleRejectedStatus & ddsstatus)
 {
   ddsstatus.total_count = status.total_count;
   ddsstatus.total_count_change = status.total_count_change;
   ddsstatus.last_reason = static_cast < ::DDS_SampleRejectedStatusKind> (status.last_reason);
-  ddsstatus.last_instance_handle <<= status.last_instance_handle; 
+  ddsstatus.last_instance_handle <<= status.last_instance_handle;
 }
 #endif
 

@@ -15,3 +15,7 @@ feature(dds4ccm_ndds) : taoidldefaults {
   idlflags += -DCIAO_DDS4CCM_NDDS=1
 }
 
+feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_splice) {
+  requires += dummy_label
+}
+

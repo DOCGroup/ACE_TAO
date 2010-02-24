@@ -11,6 +11,11 @@
 
 #include "Duration_t.h"
 
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::TimeBasedFilterQosPolicy DDS_TimeBasedFilterQosPolicy;
+#endif
+
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::TimeBasedFilterQosPolicy &ddsqos, const ::DDS_TimeBasedFilterQosPolicy & qos)
 {
@@ -34,5 +39,6 @@ operator>>= (const ::DDS::TimeBasedFilterQosPolicy &qos, ::DDS_TimeBasedFilterQo
 {
   ddsqos.minimum_separation <<= qos.minimum_separation;
 }
+#endif
 
 #endif /* CIAO_RTI_TIMEBASEDFILTERQOSPOLICY_H */

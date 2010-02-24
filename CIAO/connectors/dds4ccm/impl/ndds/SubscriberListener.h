@@ -22,6 +22,13 @@
 #if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::SubscriberListener DDSSubscriberListener;
 typedef ::DDS::DataReader DDSDataReader;
+typedef ::DDS::Subscriber DDSSubscriber;
+typedef ::DDS::RequestedDeadlineMissedStatus DDS_RequestedDeadlineMissedStatus;
+typedef ::DDS::LivelinessChangedStatus DDS_LivelinessChangedStatus;
+typedef ::DDS::RequestedIncompatibleQosStatus DDS_RequestedIncompatibleQosStatus;
+typedef ::DDS::SampleRejectedStatus DDS_SampleRejectedStatus;
+typedef ::DDS::SubscriptionMatchedStatus DDS_SubscriptionMatchedStatus;
+typedef ::DDS::SampleLostStatus DDS_SampleLostStatus;
 #endif
 
 namespace CIAO

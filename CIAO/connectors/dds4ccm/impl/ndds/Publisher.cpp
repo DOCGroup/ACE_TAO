@@ -34,12 +34,13 @@ namespace CIAO
 
       ::DDS::DataWriter_ptr
       RTI_Publisher_i::create_datawriter (::DDS::Topic_ptr a_topic,
-                                          const ::DDS::DataWriterQos & /*qos*/,
+                                          const ::DDS::DataWriterQos & qos,
                                           ::DDS::DataWriterListener_ptr a_listener,
                                           ::DDS::StatusMask mask)
       {
         DDS4CCM_TRACE ("RTI_Publisher_i::create_datawriter");
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         RTI_Topic_i * topic = dynamic_cast < RTI_Topic_i * > (a_topic);
 
         if (!topic)
@@ -81,8 +82,16 @@ namespace CIAO
         dw->set_impl (rti_dw);
 
         return retval._retn ();
+#else
+        return this->impl ()->create_datawriter (
+                                                              a_topic,
+                                                              qos,
+                                                              a_listener,
+                                                              mask);
+#endif
       }
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS::DataWriter_ptr
       RTI_Publisher_i::create_datawriter_with_profile (::DDS::Topic_ptr a_topic,
                                           const char* library_name,
@@ -134,12 +143,14 @@ namespace CIAO
 
         return retval._retn ();
       }
+#endif
 
       ::DDS::ReturnCode_t
       RTI_Publisher_i::delete_datawriter (::DDS::DataWriter_ptr a_datawriter)
       {
         DDS4CCM_TRACE ("RTI_Publisher_i::delete_datawriter");
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         RTI_DataWriter_i *top = dynamic_cast< RTI_DataWriter_i *> (a_datawriter);
 
         if (top == 0)
@@ -164,11 +175,15 @@ namespace CIAO
                           "Provided datawriter successfully deleted\n"));
 
         return retval;
+#else
+        return this->impl ()->delete_datawriter (a_datawriter);
+#endif
       }
 
       ::DDS::DataWriter_ptr
       RTI_Publisher_i::lookup_datawriter (const char * impl_name)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS::DataWriter_var retval = ::DDS::DataWriter::_nil ();
         ACE_NEW_THROW_EX (retval,
                           RTI_DataWriter_i (),
@@ -177,6 +192,9 @@ namespace CIAO
         RTI_DataWriter_i *rti_dw = dynamic_cast< RTI_DataWriter_i * > (retval.in ());
         rti_dw->set_impl (dw);
         return retval._retn ();
+#else
+        return this->impl ()->lookup_datawriter (impl_name);
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -205,14 +223,18 @@ namespace CIAO
       {
         DDS4CCM_TRACE ("RTI_Publisher_i::set_listener");
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         RTI_PublisherListener_i *rti_impl_list  = 0;
-       if (!CORBA::is_nil (a_listener))
+        if (!CORBA::is_nil (a_listener))
           {
             ACE_NEW_THROW_EX (rti_impl_list,
                               RTI_PublisherListener_i (a_listener),
                               CORBA::NO_MEMORY ());
           }
         return this->impl ()->set_listener (rti_impl_list, mask);
+#else
+        return this->impl ()->set_listener (a_listener, mask);
+#endif
       }
 
       ::DDS::PublisherListener_ptr
@@ -220,6 +242,7 @@ namespace CIAO
       {
         DDS4CCM_TRACE ("RTI_Publisher_i::get_listener");
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         DDSPublisherListener *rti_pub_list = this->impl ()->get_listener ();
         RTI_PublisherListener_i *list_proxy = dynamic_cast <RTI_PublisherListener_i *> (rti_pub_list);
         if (!list_proxy)
@@ -229,6 +252,9 @@ namespace CIAO
             return ::DDS::PublisherListener::_nil ();
           }
         return list_proxy->get_publisher_listener ();
+#else
+        return this->impl ()->get_listener ();
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -258,15 +284,20 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_Publisher_i::wait_for_acknowledgments (const ::DDS::Duration_t & max_wait)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         DDS_Duration_t rti_dds_duration;
         rti_dds_duration <<= max_wait;
         return this->impl ()->wait_for_acknowledgments (rti_dds_duration);
+#else
+        return this->impl ()->wait_for_acknowledgments (max_wait);
+#endif
       }
 
       ::DDS::DomainParticipant_ptr
       RTI_Publisher_i::get_participant (void)
       {
         DDS4CCM_TRACE ("RTI_Publisher_i::get_participant");
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
         ACE_NEW_THROW_EX (retval,
                           RTI_DomainParticipant_i (),
@@ -276,6 +307,9 @@ namespace CIAO
         RTI_DomainParticipant_i *rti_dp = dynamic_cast < RTI_DomainParticipant_i *> (retval.in ());
         rti_dp->set_impl (p);
         return retval._retn ();
+#else
+        return this->impl ()->get_participant ();
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -309,6 +343,7 @@ namespace CIAO
       ::DDS::StatusCondition_ptr
       RTI_Publisher_i::get_statuscondition (void)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
         ACE_NEW_THROW_EX (retval,
                           RTI_StatusCondition_i (),
@@ -318,6 +353,9 @@ namespace CIAO
         RTI_StatusCondition_i *rti_sc = dynamic_cast < RTI_StatusCondition_i *> (retval.in ());
         rti_sc->set_impl (sc);
         return retval._retn ();
+#else
+        return this->impl ()->get_statuscondition ();
+#endif
       }
 
       ::DDS::StatusMask
@@ -329,10 +367,14 @@ namespace CIAO
       ::DDS::InstanceHandle_t
       RTI_Publisher_i::get_instance_handle (void)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS_InstanceHandle_t const rtihandle = this->impl ()->get_instance_handle ();
         ::DDS::InstanceHandle_t handle;
         handle <<= rtihandle;
         return handle;
+#else
+        return this->impl ()->get_instance_handle ();
+#endif
       }
 
       DDSPublisher *

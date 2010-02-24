@@ -9,8 +9,11 @@
 #ifndef CIAO_RTI_PARTITIONQOSPOLICY_H
 #define CIAO_RTI_PARTITIONQOSPOLICY_H
 
-/// @todo
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::PartitionQosPolicy DDS_PartitionQosPolicy;
+#endif
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::PartitionQosPolicy &ddsqos, const ::DDS_PartitionQosPolicy & qos)
 {
@@ -42,5 +45,6 @@ operator>>= (const ::DDS::PartitionQosPolicy &qos, ::DDS_PartitionQosPolicy & dd
   ACE_UNUSED_ARG (qos);
 //  ddsqos.name <<= qos.name;
 }
+#endif
 
 #endif /* CIAO_RTI_PARTITIONQOSPOLICY_H */

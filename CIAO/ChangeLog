@@ -1,9 +1,90 @@
+Wed Feb 24 07:28:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl
+        * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.cpp
+        * connectors/dds4ccm/impl/ndds/DataReader.cpp
+        * connectors/dds4ccm/impl/ndds/DataReader.h
+        * connectors/dds4ccm/impl/ndds/DataReaderListener.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderQos.h
+        * connectors/dds4ccm/impl/ndds/DataWriter.cpp
+        * connectors/dds4ccm/impl/ndds/DataWriter.h
+        * connectors/dds4ccm/impl/ndds/DataWriterListener.cpp
+        * connectors/dds4ccm/impl/ndds/DataWriterListener.h
+        * connectors/dds4ccm/impl/ndds/DataWriterQos.h
+        * connectors/dds4ccm/impl/ndds/DeadlineQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/DestinationOrderQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactoryQos.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipantQos.h
+        * connectors/dds4ccm/impl/ndds/DurabilityQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/DurabilityServiceQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/Duration_t.h
+        * connectors/dds4ccm/impl/ndds/EntityFactoryQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/GroupDataQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/HistoryQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/InconsistentTopicStatus.h
+        * connectors/dds4ccm/impl/ndds/InstanceHandle_t.h
+        * connectors/dds4ccm/impl/ndds/InstanceHandleSeq.h
+        * connectors/dds4ccm/impl/ndds/LatencyBudgetQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/LifespanQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/LivelinessChangedStatus.h
+        * connectors/dds4ccm/impl/ndds/LivelinessLostStatus.h
+        * connectors/dds4ccm/impl/ndds/LivelinessQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/OfferedDeadlineMissedStatus.h
+        * connectors/dds4ccm/impl/ndds/OfferedIncompatibleQosStatus.h
+        * connectors/dds4ccm/impl/ndds/OwnershipQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/OwnershipStrengthQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/PartitionQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/PresentationQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/PublicationMatchedStatus.h
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp
+        * connectors/dds4ccm/impl/ndds/PublisherListener.cpp
+        * connectors/dds4ccm/impl/ndds/PublisherListener.h
+        * connectors/dds4ccm/impl/ndds/PublisherQos.h
+        * connectors/dds4ccm/impl/ndds/QosPolicyCountSeq.h
+        * connectors/dds4ccm/impl/ndds/QueryCondition.cpp
+        * connectors/dds4ccm/impl/ndds/ReaderDataLifecycleQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/ReliabilityQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/RequestedDeadlineMissedStatus.h
+        * connectors/dds4ccm/impl/ndds/RequestedIncompatibleQosStatus.h
+        * connectors/dds4ccm/impl/ndds/ResourceLimitsQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/SampleInfo.h
+        * connectors/dds4ccm/impl/ndds/SampleLostStatus.h
+        * connectors/dds4ccm/impl/ndds/SampleRejectedStatus.h
+        * connectors/dds4ccm/impl/ndds/StringSeq.h
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp
+        * connectors/dds4ccm/impl/ndds/Subscriber.h
+        * connectors/dds4ccm/impl/ndds/SubscriberListener.cpp
+        * connectors/dds4ccm/impl/ndds/SubscriberListener.h
+        * connectors/dds4ccm/impl/ndds/SubscriberQos.h
+        * connectors/dds4ccm/impl/ndds/SubscriptionMatchedStatus.h
+        * connectors/dds4ccm/impl/ndds/Time_t.h
+        * connectors/dds4ccm/impl/ndds/TimeBasedFilterQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/TimeUtilities.h
+        * connectors/dds4ccm/impl/ndds/Topic.cpp
+        * connectors/dds4ccm/impl/ndds/TopicDataQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/TopicDescription.h
+        * connectors/dds4ccm/impl/ndds/TopicListener.cpp
+        * connectors/dds4ccm/impl/ndds/TopicQos.h
+        * connectors/dds4ccm/impl/ndds/TransportPriorityQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/UserDataQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/WriterDataLifecycleQosPolicy.h
+          Guarded all RTI specific code
+
+        * MPC/config/dds4ccm.mpb:
+          Don't compile anything related to dds4ccm when we don't have
+          a dds vendor installed
+
 Tue Feb 23 21:49:52 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tools/Split_Plan/Split_Plan_impl.cpp:
 
-          Rogue letter was causing a compile error. 
-        
+          Rogue letter was causing a compile error.
+
 Tue Feb 23 16:22:42 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/MPC/config/dance_convert_plan.mpb:

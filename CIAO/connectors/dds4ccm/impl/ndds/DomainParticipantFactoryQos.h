@@ -11,6 +11,11 @@
 
 #include "EntityFactoryQosPolicy.h"
 
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::DomainParticipantFactoryQos DDS_DomainParticipantFactoryQos;
+#endif
+
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::DomainParticipantFactoryQos &ddsqos, const ::DDS_DomainParticipantFactoryQos & qos)
 {
@@ -34,5 +39,6 @@ operator>>= (const ::DDS::DomainParticipantFactoryQos &qos, ::DDS_DomainParticip
 {
   ddsqos.entity_factory <<= qos.entity_factory;
 }
+#endif
 
 #endif /* CIAO_RTI_DOMAINPARTICIPANTFACTORYQOSPOLICY_H */

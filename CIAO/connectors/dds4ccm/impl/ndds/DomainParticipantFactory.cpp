@@ -8,6 +8,10 @@
 #include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef  ::DDS::DomainParticipantFactory DDSDomainParticipantFactory;
+#endif
+
 namespace CIAO
 {
   namespace DDS4CCM
@@ -26,12 +30,13 @@ namespace CIAO
 
       ::DDS::DomainParticipant_ptr
       RTI_DomainParticipantFactory_i::create_participant (::DDS::DomainId_t domain_id,
-                                                          const ::DDS::DomainParticipantQos & /*qos*/,
+                                                          const ::DDS::DomainParticipantQos & qos,
                                                           ::DDS::DomainParticipantListener_ptr a_listener,
                                                           ::DDS::StatusMask mask)
       {
         DDS4CCM_TRACE ("RTI_DomainParticipantFactory_i::create_participant");
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipantFactory_i::create_participant - "
                      "Creating domain participant for domain <%d>\n",
                      domain_id));
@@ -68,9 +73,16 @@ namespace CIAO
         rti_dp->set_impl (part);
 
         return retval._retn ();
+#else
+        return DDSDomainParticipantFactory::get_instance ()->
+          create_participant (domain_id,
+                              qos,
+                              a_listener,
+                              mask);
+#endif        
       }
 
-
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS::DomainParticipant_ptr
       RTI_DomainParticipantFactory_i::create_participant_with_profile (
         ::DDS::DomainId_t domain_id,
@@ -143,11 +155,14 @@ namespace CIAO
             }
         }
       }
+#endif
 
       void
       RTI_DomainParticipantFactory_i::remove_participant (RTI_DomainParticipant_i * part)
       {
         DDS4CCM_TRACE ("RTI_DomainParticipantFactory_i::remove_participant");
+
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
                         this->dps_mutex_, CORBA::INTERNAL ());
 
@@ -172,6 +187,8 @@ namespace CIAO
                       "Don't delete participant since it's still used - ref_count <%d>\n",
                       part->_refcount_value ()));
           }
+#else
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -179,6 +196,7 @@ namespace CIAO
       {
         DDS4CCM_TRACE ("RTI_DomainParticipantFactory_i::delete_participant");
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         RTI_DomainParticipant_i *part = dynamic_cast< RTI_DomainParticipant_i * > (a_participant);
 
         if (!part)
@@ -192,14 +210,14 @@ namespace CIAO
 
         this->remove_participant (part);
 
-        DDS_ReturnCode_t retval = DDS_RETCODE_OK;
+        DDS::ReturnCode_t retval = DDS::RETCODE_OK;
 
         if (part->_refcount_value () == 1)
           {
             retval = DDSDomainParticipantFactory::get_instance ()->
                 delete_participant (part->get_impl ());
 
-            if (retval != DDS_RETCODE_OK)
+            if (retval != DDS::RETCODE_OK)
               {
                 DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "RTI_DomainParticipantFactory_i::delete_participant - "
                             "RTI delete_participant returned non-ok error code %C\n",
@@ -209,11 +227,16 @@ namespace CIAO
                               "Successfully deleted provided participant.\n"));
           }
         return retval;
+#else
+        return DDSDomainParticipantFactory::get_instance ()->
+                delete_participant (a_participant);
+#endif
       }
 
       ::DDS::DomainParticipant_ptr
       RTI_DomainParticipantFactory_i::lookup_participant (::DDS::DomainId_t domain_id)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
         ACE_NEW_THROW_EX (retval,
                           RTI_DomainParticipant_i (),
@@ -222,6 +245,9 @@ namespace CIAO
         RTI_DomainParticipant_i *rti_dp = dynamic_cast < RTI_DomainParticipant_i *> (retval.in ());
         rti_dp->set_impl (dp);
         return retval._retn ();
+#else
+        return DDSDomainParticipantFactory::get_instance ()->lookup_participant (domain_id);
+#endif        
       }
 
       ::DDS::ReturnCode_t
@@ -256,6 +282,7 @@ namespace CIAO
         throw CORBA::NO_IMPLEMENT ();
       }
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS::ReturnCode_t
       RTI_DomainParticipantFactory_i::set_default_participant_qos_with_profile (
                                                           const char * library_name,
@@ -265,6 +292,15 @@ namespace CIAO
 
         return DDSDomainParticipantFactory::get_instance ()->set_default_participant_qos_with_profile (library_name, profile_name);
       }
+#endif
+      
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+      ::DDS::DomainParticipantFactory_ptr
+      RTI_DomainParticipantFactory_i::get_instance (void)
+      {
+        return 0;
+      }
+#endif
     }
   }
 }
