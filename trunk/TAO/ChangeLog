@@ -1,3 +1,34 @@
+Wed Feb 24 21:00:11 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+        
+          Added additional lists to store the filenames gathered
+          from pragmas specifying DDS typesupport files from
+          various DDS vendors to include in generated code.
+          
+        * TAO_IDL/be/be_codegen.cpp:
+        
+          Added more checks for the generation of export header
+          files. Now a given export header file won't be 
+          generated unless all the command line options are
+          present for
+          
+          - generating the export header file
+          - specifying the export macro
+          - specifying the export header file name
+          
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+        
+          Minor change to the format of generated code.
+          
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+        
+          Added pragmas for including typesupport files from
+          other DDS vendors, to ultimately make the generated
+          connector code portable to any of the C++ DDS vendors.
+
 Wed Feb 24 16:53:55 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_scope.cpp:
