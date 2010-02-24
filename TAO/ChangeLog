@@ -1,3 +1,15 @@
+Wed Feb 24 16:53:55 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_scope.cpp:
+        
+          Fixed bug introduced by consolidation of fe_add_*
+          methods for exceptions.
+          
+        * TAO_IDL/be/be_codegen.cpp:
+        
+          Fixed compile error on MacOSX due to inappropriate
+          C++-style cast.
+
 Wed Feb 24 16:29:51 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Bug_3826_Regression/svc.conf:

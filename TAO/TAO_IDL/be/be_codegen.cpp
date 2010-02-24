@@ -3391,18 +3391,19 @@ TAO_CodeGen::make_rand_extension (char * const t)
 {
   size_t const NUM_CHARS = ACE_OS::strlen (t);
   
-  // Use ACE_Time_Value::msec(ACE_UINT64&) as opposed to
-  // ACE_Time_Value::msec(void) to avoid truncation.
+  /// Use ACE_Time_Value::msec(ACE_UINT64&) as opposed to
+  /// ACE_Time_Value::msec(void) to avoid truncation.
   ACE_UINT64 msec;
 
-  // Use a const ACE_Time_Value to resolve ambiguity between
-  // ACE_Time_Value::msec (long) and ACE_Time_Value::msec(ACE_UINT64&) const.
+  /// Use a const ACE_Time_Value to resolve ambiguity between
+  /// ACE_Time_Value::msec (long) and ACE_Time_Value::msec(ACE_UINT64&) const.
   ACE_Time_Value const now = ACE_OS::gettimeofday ();
   now.msec (msec);
 
-  // Add the process and thread ids to ensure uniqueness.
+  /// Add the process and thread ids to ensure uniqueness. Must use
+  // C-style cast, since thr_self() returns a pointer on some platforms.
   msec += ACE_OS::getpid ();
-  msec += static_cast<size_t> (ACE_OS::thr_self ());
+  msec += (size_t) ACE_OS::thr_self ();
 
   // ACE_thread_t may be a char* (returned by ACE_OS::thr_self()) so
   // we need to use a C-style cast as a catch-all in order to use a
