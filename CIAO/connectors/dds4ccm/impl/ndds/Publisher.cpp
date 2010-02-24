@@ -41,6 +41,8 @@ namespace CIAO
         DDS4CCM_TRACE ("RTI_Publisher_i::create_datawriter");
 
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+        ACE_UNUSED_ARG (qos);
+
         RTI_Topic_i * topic = dynamic_cast < RTI_Topic_i * > (a_topic);
 
         if (!topic)
