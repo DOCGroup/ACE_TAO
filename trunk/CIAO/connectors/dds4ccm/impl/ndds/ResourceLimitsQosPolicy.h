@@ -9,6 +9,11 @@
 #ifndef CIAO_RTI_RESOURCELIMITSQOSPOLICY_H
 #define CIAO_RTI_RESOURCELIMITSQOSPOLICY_H
 
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::ResourceLimitsQosPolicy DDS_ResourceLimitsQosPolicy;
+#endif
+
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::ResourceLimitsQosPolicy &ddsqos, const ::DDS_ResourceLimitsQosPolicy & qos)
 {
@@ -40,5 +45,6 @@ operator>>= (const ::DDS::ResourceLimitsQosPolicy &qos, ::DDS_ResourceLimitsQosP
   ddsqos.max_instances = qos.max_instances;
   ddsqos.max_samples_per_instance = qos.max_samples_per_instance;
 }
+#endif
 
 #endif /* CIAO_RTI_RESOURCELIMITSQOSPOLICY_H */

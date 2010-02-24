@@ -12,6 +12,11 @@
 
 #include "QosPolicyCountSeq.h"
 
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::RequestedIncompatibleQosStatus DDS_RequestedIncompatibleQosStatus;
+#endif
+
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::RequestedIncompatibleQosStatus &ddsstatus, const ::DDS_RequestedIncompatibleQosStatus & status)
 {
@@ -21,7 +26,6 @@ operator<<= (::DDS::RequestedIncompatibleQosStatus &ddsstatus, const ::DDS_Reque
   ddsstatus.policies <<= status.policies;
 }
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS_RequestedIncompatibleQosStatus &ddsstatus, const ::DDS::RequestedIncompatibleQosStatus & status)
 {
@@ -30,7 +34,6 @@ operator<<= (::DDS_RequestedIncompatibleQosStatus &ddsstatus, const ::DDS::Reque
   ddsstatus.last_policy_id = static_cast <DDS_QosPolicyId_t>(status.last_policy_id);
   ddsstatus.policies <<= status.policies;
 }
-#endif
 
 inline void
 operator>>= (const ::DDS_RequestedIncompatibleQosStatus &status, ::DDS::RequestedIncompatibleQosStatus & ddsstatus)
@@ -41,7 +44,6 @@ operator>>= (const ::DDS_RequestedIncompatibleQosStatus &status, ::DDS::Requeste
   ddsstatus.policies <<= status.policies;
 }
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator>>= (const ::DDS::RequestedIncompatibleQosStatus &status, ::DDS_RequestedIncompatibleQosStatus & ddsstatus)
 {

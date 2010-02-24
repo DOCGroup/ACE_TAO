@@ -15,6 +15,7 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
 
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_impl_export.h"
+#include "dds4ccm/impl/ndds/InstanceHandle_t.h"
 #include "tao/LocalObject.h"
 
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
@@ -51,7 +52,7 @@ namespace CIAO
         virtual ::DDS::StatusMask
         get_status_changes (void);
 
-        virtual ::DDS::InstanceHandle_t
+        virtual DDS_INSTANCE_HANDLE_T_RETN
         get_instance_handle (void);
 
         virtual ::DDS::ReadCondition_ptr
@@ -127,7 +128,7 @@ namespace CIAO
         virtual ::DDS::ReturnCode_t
         get_matched_publication_data (
           ::DDS::PublicationBuiltinTopicData & publication_data,
-          const ::DDS::InstanceHandle_t & publication_handle);
+          DDS_INSTANCE_HANDLE_T_IN publication_handle);
 
         DDSDataReader * get_impl (void);
 

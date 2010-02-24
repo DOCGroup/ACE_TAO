@@ -33,10 +33,15 @@ namespace CIAO
         ::DDS::StringSeq & expression_parameters)
       {
         DDS4CCM_TRACE ("RTI_ContentFilteredTopic_i::get_expression_parameters");
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         DDS_StringSeq parameters;
         ::DDS::ReturnCode_t retval = this->impl ()->get_expression_parameters (
                                                                     parameters);
         expression_parameters <<= parameters;
+#else
+        ::DDS::ReturnCode_t retval = this->impl ()->get_expression_parameters (
+                                                                    expression_parameters);
+#endif        
         return retval;
       }
 
@@ -46,10 +51,13 @@ namespace CIAO
       {
         DDS4CCM_TRACE ("RTI_ContentFilteredTopic_i::set_expression_parameters");
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         DDS_StringSeq parameters;
         parameters <<= expression_parameters;
-
         return this->impl ()->set_expression_parameters (parameters);
+#else
+        return this->impl ()->set_expression_parameters (expression_parameters);
+#endif        
       }
 
       ::DDS::Topic_ptr

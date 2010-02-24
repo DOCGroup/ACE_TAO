@@ -22,6 +22,11 @@
 #include "TimeBasedFilterQosPolicy.h"
 #include "ReaderDataLifecycleQosPolicy.h"
 
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::DataReaderQos DDS_DataReaderQos;
+#endif
+
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::DataReaderQos &ddsqos, const ::DDS_DataReaderQos & qos)
 {
@@ -89,5 +94,6 @@ operator>>= (const ::DDS::DataReaderQos &qos, ::DDS_DataReaderQos & ddsqos)
   ddsqos.time_based_filter <<= qos.time_based_filter;
   ddsqos.reader_data_lifecycle <<= qos.reader_data_lifecycle;
 }
+#endif
 
 #endif /* CIAO_RTI_DATAREADERQOS_H */

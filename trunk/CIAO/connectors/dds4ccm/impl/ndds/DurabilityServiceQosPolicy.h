@@ -11,6 +11,11 @@
 
 #include "Duration_t.h"
 
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::DurabilityServiceQosPolicy DDS_DurabilityServiceQosPolicy;
+#endif
+
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::DurabilityServiceQosPolicy &ddsqos, const ::DDS_DurabilityServiceQosPolicy & qos)
 {
@@ -54,5 +59,6 @@ operator>>= (const ::DDS::DurabilityServiceQosPolicy &qos, ::DDS_DurabilityServi
   ddsqos.max_instances = qos.max_instances;
   ddsqos.max_samples_per_instance = qos.max_samples_per_instance;
 }
+#endif
 
 #endif /* CIAO_RTI_DURABILITYSERVICEQOSPOLICY_H */

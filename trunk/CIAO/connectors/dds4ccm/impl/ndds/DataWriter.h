@@ -15,6 +15,7 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
 
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_impl_export.h"
+#include "dds4ccm/impl/ndds/InstanceHandle_t.h"
 #include "tao/LocalObject.h"
 
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
@@ -84,7 +85,7 @@ namespace CIAO
 
         virtual
           ::DDS::ReturnCode_t get_matched_subscription_data (::DDS::SubscriptionBuiltinTopicData & subscription_data,
-                                                             const ::DDS::InstanceHandle_t & subscription_handle);
+                                                             DDS_INSTANCE_HANDLE_T_IN subscription_handle);
 
         virtual
           ::DDS::ReturnCode_t enable (void);
@@ -96,7 +97,7 @@ namespace CIAO
           ::DDS::StatusMask get_status_changes (void);
 
         virtual
-          ::DDS::InstanceHandle_t get_instance_handle (void);
+          DDS_INSTANCE_HANDLE_T_RETN get_instance_handle (void);
 
         DDSDataWriter * get_impl (void);
 

@@ -14,6 +14,7 @@ typedef ::DDS::StringSeq DDS_StringSeq;
 typedef long DDS_Long;
 #endif
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::StringSeq & string_seq, const ::DDS_StringSeq & dds_string_seq)
 {
@@ -24,7 +25,6 @@ operator<<= (::DDS::StringSeq & string_seq, const ::DDS_StringSeq & dds_string_s
     }
 }
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS_StringSeq & dds_string_seq, const ::DDS::StringSeq & string_seq)
 {

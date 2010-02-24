@@ -9,6 +9,11 @@
 #ifndef CIAO_RTI_TRANSPORTPRIOTITYQOSPOLICY_H
 #define CIAO_RTI_TRANSPORTPRIOTITYQOSPOLICY_H
 
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::TransportPriorityQosPolicy DDS_TransportPriorityQosPolicy;
+#endif
+
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::TransportPriorityQosPolicy &ddsqos, const ::DDS_TransportPriorityQosPolicy & qos)
 {
@@ -32,5 +37,6 @@ operator>>= (const ::DDS::TransportPriorityQosPolicy &qos, ::DDS_TransportPriori
 {
   ddsqos.value <<= qos.value;
 }
+#endif
 
 #endif /* CIAO_RTI_TRANSPORTPRIOTITYQOSPOLICY_H */

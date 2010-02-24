@@ -9,6 +9,11 @@
 #ifndef CIAO_RTI_OWNERSHIPSTRENGTHQOSPOLICY_H
 #define CIAO_RTI_OWNERSHIPSTRENGTHQOSPOLICY_H
 
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::OwnershipStrengthQosPolicy DDS_OwnershipStrengthQosPolicy;
+#endif
+
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::OwnershipStrengthQosPolicy &ddsqos, const ::DDS_OwnershipStrengthQosPolicy & qos)
 {
@@ -32,5 +37,6 @@ operator>>= (const ::DDS::OwnershipStrengthQosPolicy &qos, ::DDS_OwnershipStreng
 {
   ddsqos.value = qos.value;
 }
+#endif
 
 #endif /* CIAO_RTI_OWNERSHIPSTRENGTHQOSPOLICY_H */

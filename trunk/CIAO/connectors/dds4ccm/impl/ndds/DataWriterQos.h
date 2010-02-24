@@ -25,6 +25,11 @@
 #include "OwnershipStrengthQosPolicy.h"
 #include "WriterDataLifecycleQosPolicy.h"
 
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::DataWriterQos DDS_DataWriterQos;
+#endif
+
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::DataWriterQos &ddsqos, const ::DDS_DataWriterQos & qos)
 {
@@ -104,5 +109,6 @@ operator>>= (const ::DDS::DataWriterQos &qos, ::DDS_DataWriterQos & ddsqos)
   ddsqos.ownership_strength <<= qos.ownership_strength;
   ddsqos.writer_data_lifecycle <<= qos.writer_data_lifecycle;
 }
+#endif
 
 #endif /* CIAO_RTI_DATAWRITERQOS_H */

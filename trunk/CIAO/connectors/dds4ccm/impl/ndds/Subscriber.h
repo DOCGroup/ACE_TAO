@@ -26,6 +26,7 @@
 #if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::Subscriber DDSSubscriber;
 typedef ::DDS::DataReaderListener DDSDataReaderListener;
+typedef ::DDS::DataReader DDSDataReader;
 typedef ::DDS::ContentFilteredTopic DDSContentFilteredTopic;
 typedef ::DDS::Topic DDSTopic;
 #endif
@@ -66,6 +67,7 @@ namespace CIAO
           ::DDS::DataReaderListener_ptr a_listener,
           ::DDS::StatusMask mask);
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         virtual ::DDS::DataReader_ptr
         create_datareader_with_profile (
           ::DDS::TopicDescription_ptr a_topic,
@@ -73,6 +75,7 @@ namespace CIAO
           const char *profile_name,
           ::DDS::DataReaderListener_ptr a_listener,
           ::DDS::StatusMask mask);
+#endif
 
         virtual ::DDS::ReturnCode_t
         delete_datareader (
@@ -154,6 +157,7 @@ namespace CIAO
           DDSDataReaderListener * rti_drl,
           ::DDS::StatusMask mask);
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         DDSDataReader *
         create_datareader_with_profile (
           DDSContentFilteredTopic * topic,
@@ -161,7 +165,9 @@ namespace CIAO
           const char *profile_name,
           DDSDataReaderListener * rti_drl,
           ::DDS::StatusMask mask);
+#endif
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         DDSDataReader *
         create_datareader_with_profile (
           DDSTopic * topic,
@@ -169,6 +175,7 @@ namespace CIAO
           const char *profile_name,
           DDSDataReaderListener * rti_drl,
           ::DDS::StatusMask mask);
+#endif          
       };
     }
   }

@@ -9,6 +9,11 @@
 #ifndef CIAO_RTI_ENTITYFACTORYQOSPOLICY_H
 #define CIAO_RTI_ENTITYFACTORYQOSPOLICY_H
 
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::EntityFactoryQosPolicy DDS_EntityFactoryQosPolicy;
+#endif
+
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::EntityFactoryQosPolicy &ddsqos, const ::DDS_EntityFactoryQosPolicy & qos)
 {
@@ -32,5 +37,6 @@ operator>>= (const ::DDS::EntityFactoryQosPolicy &qos, ::DDS_EntityFactoryQosPol
 {
   ddsqos.autoenable_created_entities = qos.autoenable_created_entities;
 }
+#endif
 
 #endif /* CIAO_RTI_ENTITYFACTORYQOSPOLICY_H */

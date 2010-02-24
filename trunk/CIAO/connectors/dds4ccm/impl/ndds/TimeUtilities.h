@@ -45,6 +45,4 @@ operator>>= (const ::ACE_Time_Value & ace_time, ::DDS::Time_t &dds_time)
   dds_time.nanosec = ace_time.usec () * 1000;
 }
 
-
-
 #endif /* DDS4CCM_TIME_UTILITIES_H */

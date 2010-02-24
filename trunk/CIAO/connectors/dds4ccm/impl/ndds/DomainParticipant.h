@@ -13,6 +13,7 @@
 #include "tao/LocalObject.h"
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
+#include "dds4ccm/impl/ndds/InstanceHandle_t.h"
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_impl_export.h"
 
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
@@ -47,11 +48,13 @@ namespace CIAO
           ::DDS::PublisherListener_ptr a_listener,
           ::DDS::StatusMask mask);
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         virtual ::DDS::Publisher_ptr create_publisher_with_profile (
           const char* library_name,
           const char *profile_name,
           ::DDS::PublisherListener_ptr a_listener,
           ::DDS::StatusMask mask);
+#endif          
 
         virtual ::DDS::ReturnCode_t delete_publisher (::DDS::Publisher_ptr p);
 
@@ -60,11 +63,13 @@ namespace CIAO
           ::DDS::SubscriberListener_ptr a_listener,
           ::DDS::StatusMask mask);
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         virtual ::DDS::Subscriber_ptr create_subscriber_with_profile(
           const char* library_name,
           const char *profile_name,
           ::DDS::SubscriberListener_ptr a_listener,
           ::DDS::StatusMask mask);
+#endif
 
         virtual ::DDS::ReturnCode_t delete_subscriber (::DDS::Subscriber_ptr s);
 
@@ -77,6 +82,7 @@ namespace CIAO
           ::DDS::TopicListener_ptr a_listener,
           ::DDS::StatusMask mask);
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         virtual ::DDS::Topic_ptr create_topic_with_profile (
           const char * impl_name,
           const char * type_name,
@@ -84,6 +90,7 @@ namespace CIAO
           const char *profile_name,
           ::DDS::TopicListener_ptr a_listener,
           ::DDS::StatusMask mask);
+#endif
 
         virtual ::DDS::ReturnCode_t delete_topic (::DDS::Topic_ptr a_topic);
 
@@ -127,16 +134,16 @@ namespace CIAO
         virtual ::DDS::DomainParticipantListener_ptr get_listener (void);
 
         virtual ::DDS::ReturnCode_t ignore_participant (
-          const ::DDS::InstanceHandle_t & handle);
+          DDS_INSTANCE_HANDLE_T_IN handle);
 
         virtual ::DDS::ReturnCode_t ignore_topic (
-          const ::DDS::InstanceHandle_t & handle);
+          DDS_INSTANCE_HANDLE_T_IN handle);
 
         virtual ::DDS::ReturnCode_t ignore_publication (
-          const ::DDS::InstanceHandle_t & handle);
+          DDS_INSTANCE_HANDLE_T_IN handle);
 
         virtual ::DDS::ReturnCode_t ignore_subscription (
-          const ::DDS::InstanceHandle_t & handle);
+          DDS_INSTANCE_HANDLE_T_IN handle);
 
         virtual ::DDS::DomainId_t get_domain_id (void);
 
@@ -165,17 +172,17 @@ namespace CIAO
 
         virtual ::DDS::ReturnCode_t get_discovered_participant_data (
           ::DDS::ParticipantBuiltinTopicData & impl_data,
-          const ::DDS::InstanceHandle_t & impl_handle);
+          DDS_INSTANCE_HANDLE_T_IN impl_handle);
 
         virtual ::DDS::ReturnCode_t get_discovered_topics (
           ::DDS::InstanceHandleSeq & impl_handles);
 
         virtual ::DDS::ReturnCode_t get_discovered_topic_data (
           ::DDS::TopicBuiltinTopicData & impl_data,
-          const ::DDS::InstanceHandle_t & impl_handle);
+          DDS_INSTANCE_HANDLE_T_IN impl_handle);
 
         virtual ::CORBA::Boolean contains_entity (
-          const ::DDS::InstanceHandle_t & a_handle);
+          DDS_INSTANCE_HANDLE_T_IN a_handle);
 
         virtual ::DDS::ReturnCode_t get_current_time (
           ::DDS::Time_t & current_time);
@@ -186,7 +193,7 @@ namespace CIAO
 
         virtual ::DDS::StatusMask get_status_changes (void);
 
-        virtual ::DDS::InstanceHandle_t get_instance_handle (void);
+        virtual DDS_INSTANCE_HANDLE_T_RETN get_instance_handle (void);
 
         DDSDomainParticipant * get_impl (void);
 
