@@ -20,6 +20,7 @@ feature(dds4ccm_ndds) : dds4ccm, ndds_ts_defaults, nddslib {
 
   verbatim(gnuace, macros) {
     override no_hidden_visibility = 1
+    override no_strict_aliasing = 1
   }
 }
 
