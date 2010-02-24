@@ -11,8 +11,8 @@
 #define CIAO_RTI_INSTANCEHANDLE_T_H
 
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-#define DDS_INSTANCE_HANDLE_T_IN DDS_InstanceHandle_t
-#define DDS_INSTANCE_HANDLE_T_RETN DDS_InstanceHandle_t
+#define DDS_INSTANCE_HANDLE_T_IN const ::DDS::InstanceHandle_t &
+#define DDS_INSTANCE_HANDLE_T_RETN ::DDS::InstanceHandle_t
 #endif
 
 #if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
