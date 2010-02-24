@@ -1,3 +1,15 @@
+Wed Feb 24 11:39:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataWriter.cpp
+        * connectors/dds4ccm/impl/ndds/DataWriter.h
+        * connectors/dds4ccm/impl/ndds/DataWriterListener.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Write_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Write_T.h
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp
+        * connectors/dds4ccm/impl/ndds/PublisherListener.cpp
+        * connectors/dds4ccm/impl/ndds/TopicDescription.h
+          More cleanup
+
 Wed Feb 24 11:26:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Coherent_Changes_Guard.cpp

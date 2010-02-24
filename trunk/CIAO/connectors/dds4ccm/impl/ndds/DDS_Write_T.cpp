@@ -9,7 +9,8 @@
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-DDS_Write_T<DDS_TYPE, CCM_TYPE>::DDS_Write_T (void)
+DDS_Write_T<DDS_TYPE, CCM_TYPE>::DDS_Write_T (void) :
+  ccm_dds_writer_i (0)
 {
 }
 
@@ -53,7 +54,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
             }
           ::CIAO::DDS4CCM::CCM_DDS_DataWriter_i  *rw =
             dynamic_cast < ::CIAO::DDS4CCM::CCM_DDS_DataWriter_i  *> (dwv_tmp.in ());
-          this->rti_writer_.set_impl (rw->get_impl ());
+          this->ccm_dds_writer_i.set_impl (rw->get_impl ());
           this->data_writer_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
           this->writer_t_.set_impl (dwv_tmp);
         }
@@ -77,7 +78,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::activate ()
                             DataWriterListener (),
                             CORBA::NO_MEMORY ());
         }
-      this->rti_writer_.set_listener (
+      this->ccm_dds_writer_i.set_listener (
         this->data_listener_.in (),
         ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
     }
@@ -95,7 +96,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::passivate ()
   DDS4CCM_TRACE ("DDS_Write_T<DDS_TYPE, CCM_TYPE>::passivate");
   try
     {
-      this->rti_writer_.set_listener (
+      this->ccm_dds_writer_i.set_listener (
         ::DDS::DataWriterListener::_nil (),
         0);
       this->data_listener_ = ::DDS::DataWriterListener::_nil ();
@@ -116,7 +117,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::remove (
   try
     {
       publisher->delete_datawriter (this->data_writer_.in ());
-      this->rti_writer_.set_impl (0);
+      this->ccm_dds_writer_i.set_impl (0);
       this->data_writer_ = ::DDS::CCM_DataWriter::_nil ();
       this->writer_t_.set_impl (0);
     }
@@ -143,6 +144,6 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::get_dds_entity (void)
 {
   DDS4CCM_TRACE ("DDS_Write_T<DDS_TYPE, CCM_TYPE>::get_dds_entity");
 
-  return &this->rti_writer_;
+  return &this->ccm_dds_writer_i;
 }
 

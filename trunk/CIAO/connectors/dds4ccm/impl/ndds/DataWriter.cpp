@@ -19,8 +19,8 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    CCM_DDS_DataWriter_i::CCM_DDS_DataWriter_i (void)
-      : impl_ (0)
+    CCM_DDS_DataWriter_i::CCM_DDS_DataWriter_i (DDSDataWriter * dw)
+      : impl_ (dw)
     {
     }
 
