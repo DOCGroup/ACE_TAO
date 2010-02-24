@@ -1,6 +1,14 @@
+Wed Feb 24 08:01:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/NonBlocking_Conn_Test.cpp:
+          Unicode fixes
+
+        * tests/Atomic_Op_Test.cpp:
+          Calculate how long each test takes and print this to the log
+
 Wed Feb 24 02:48:37 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * ace/config-sunos5.5.h: 
+        * ace/config-sunos5.5.h:
           #define ACE_LACKS_CEILL & ACE_LACKS_FLOORL
 
 Tue Feb 23 19:45:39 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
