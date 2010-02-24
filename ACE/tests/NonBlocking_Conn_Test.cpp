@@ -159,10 +159,10 @@ test_connect (ACE_Reactor &reactor,
                                    1);
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Connection to %s %s\n",
+                  ACE_TEXT ("Connection to %s %s\n"),
                   buffer,
                   connection_status[i] == Svc_Handler::Conn_SUCCEEDED ?
-                  "succeeded" : "failed"));
+                  ACE_TEXT("succeeded") : ACE_TEXT("failed")));
 
       if (connection_status[i] == Svc_Handler::Conn_SUCCEEDED)
         {
