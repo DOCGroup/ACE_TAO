@@ -9,7 +9,8 @@
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-DDS_Update_T<DDS_TYPE, CCM_TYPE>::DDS_Update_T (void)
+DDS_Update_T<DDS_TYPE, CCM_TYPE>::DDS_Update_T (void) :
+  rti_writer_ (0)
 {
 }
 
