@@ -514,7 +514,9 @@ UTL_Scope::fe_add_full_struct_type (AST_Structure *t)
   
   /// Decls inside a struct or union are also referenced by
   /// fields, and so must be handled differently.
-  if (nt == AST_Decl::NT_struct || nt == AST_Decl::NT_union)
+  if (nt == AST_Decl::NT_struct
+      || nt == AST_Decl::NT_union
+      || nt == AST_Decl::NT_except)
     {
       this->add_to_local_types (t);
     }
