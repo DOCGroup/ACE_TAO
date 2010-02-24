@@ -1,17 +1,17 @@
 // -*- MPC -*-
 // $Id$
 
-feature(dds4ccm_opendds) : dds4ccm_skel, dds4ccm_logger, dcps {
+feature(dds4ccm_opendds) : dds4ccm_skel, ciao_logger, dcps {
   after += CIAO_DDS4CCM_NDDS_Impl
   libs += CIAO_DDS4CCM_NDDS_Impl
 }
 
-feature(dds4ccm_splice) : dds4ccm_skel {
+feature(dds4ccm_splice) : dds4ccm_skel, ciao_logger {
   after += CIAO_DDS4CCM_NDDS_Impl
   libs += CIAO_DDS4CCM_NDDS_Impl
 }
 
-feature(dds4ccm_ndds) : dds4ccm_skel, dds4ccm_logger, nddslib {
+feature(dds4ccm_ndds) : dds4ccm_skel, ciao_logger, nddslib {
   after += CIAO_DDS4CCM_NDDS_Impl
   libs += CIAO_DDS4CCM_NDDS_Impl
 }
