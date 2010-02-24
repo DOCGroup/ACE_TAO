@@ -1,3 +1,9 @@
+Wed Feb 24 22:08:45 UTC 2010  William R. Otte <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+
+          Additional cleanup.
+
 Wed Feb 24 15:23:40 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/DDSWriterEntity/Sender/Writer_Sender_exec.cpp:
