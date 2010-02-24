@@ -9,6 +9,11 @@
 #ifndef CIAO_RTI_READERDATALIFECYCLEQOSPOLICY_H
 #define CIAO_RTI_READERDATALIFECYCLEQOSPOLICY_H
 
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::ReaderDataLifecycleQosPolicy DDS_ReaderDataLifecycleQosPolicy;
+#endif
+
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::ReaderDataLifecycleQosPolicy &ddsqos, const ::DDS_ReaderDataLifecycleQosPolicy & qos)
 {
@@ -36,5 +41,6 @@ operator>>= (const ::DDS::ReaderDataLifecycleQosPolicy &qos, ::DDS_ReaderDataLif
   ddsqos.autopurge_nowriter_samples_delay <<= qos.autopurge_nowriter_samples_delay;
   ddsqos.autopurge_disposed_samples_delay <<= qos.autopurge_disposed_samples_delay;
 }
+#endif
 
 #endif /* CIAO_RTI_READERDATALIFECYCLEQOSPOLICY_H */

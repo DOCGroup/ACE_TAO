@@ -11,6 +11,11 @@
 
 #include "Duration_t.h"
 
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::LatencyBudgetQosPolicy DDS_LatencyBudgetQosPolicy;
+#endif
+
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::LatencyBudgetQosPolicy &ddsqos, const ::DDS_LatencyBudgetQosPolicy & qos)
 {
@@ -34,5 +39,6 @@ operator>>= (const ::DDS::LatencyBudgetQosPolicy &qos, ::DDS_LatencyBudgetQosPol
 {
   ddsqos.duration <<= qos.duration;
 }
+#endif
 
 #endif /* CIAO_RTI_LATENCYBUDGETQOSPOLICY_H */

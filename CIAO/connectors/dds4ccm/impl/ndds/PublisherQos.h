@@ -14,6 +14,11 @@
 #include "GroupDataQosPolicy.h"
 #include "EntityFactoryQosPolicy.h"
 
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::PublisherQos DDS_PublisherQos;
+#endif
+
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::PublisherQos &ddsqos, const ::DDS_PublisherQos & qos)
 {
@@ -49,5 +54,6 @@ operator>>= (const ::DDS::PublisherQos &qos, ::DDS_PublisherQos & ddsqos)
   ddsqos.group_data <<= qos.group_data;
   ddsqos.entity_factory <<= qos.entity_factory;
 }
+#endif
 
 #endif /* CIAO_RTI_PUBLISHERQOS_H */

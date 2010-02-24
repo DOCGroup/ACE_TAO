@@ -21,6 +21,15 @@
 # include "ndds/ndds_cpp.h"
 #endif
 
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::DataWriterListener DDSDataWriterListener;
+typedef ::DDS::DataWriter DDSDataWriter;
+typedef ::DDS::OfferedDeadlineMissedStatus DDS_OfferedDeadlineMissedStatus;
+typedef ::DDS::OfferedIncompatibleQosStatus DDS_OfferedIncompatibleQosStatus;
+typedef ::DDS::LivelinessLostStatus DDS_LivelinessLostStatus;
+typedef ::DDS::PublicationMatchedStatus DDS_PublicationMatchedStatus;
+#endif
+
 namespace CIAO
 {
   namespace DDS4CCM

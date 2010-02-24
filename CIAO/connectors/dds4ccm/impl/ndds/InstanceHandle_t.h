@@ -11,6 +11,16 @@
 #define CIAO_RTI_INSTANCEHANDLE_T_H
 
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#define DDS_INSTANCE_HANDLE_T_IN DDS_InstanceHandle_t
+#define DDS_INSTANCE_HANDLE_T_RETN DDS_InstanceHandle_t
+#endif
+
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+#define DDS_INSTANCE_HANDLE_T_IN ::DDS::InstanceHandle_t
+#define DDS_INSTANCE_HANDLE_T_RETN ::DDS::InstanceHandle_t
+#endif
+
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::InstanceHandle_t &ddsinstancehandle, const ::DDS_InstanceHandle_t & instancehandle)
 {
@@ -89,15 +99,6 @@ operator!= (const ::DDS::InstanceHandle_t & ccm_instancehandle, const DDS_Instan
   return ccm_instancehandle.length  != dds_instancehandle.keyHash.length  ||
          ccm_instancehandle.isValid != static_cast<CORBA::ULong>(dds_instancehandle.isValid) ||
          ACE_OS::memcmp (ccm_instancehandle.value, dds_instancehandle.keyHash.value, sizeof (ccm_instancehandle.value)) != 0;
-}
-#endif
-
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
-typedef ::DDS::InstanceHandle_t DDS_InstanceHandle_t;
-inline void
-operator<<= (::DDS::InstanceHandle_t &ddsinstancehandle, const ::DDS_InstanceHandle_t & instancehandle)
-{
-  ddsinstancehandle = instancehandle;
 }
 #endif
 

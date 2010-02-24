@@ -39,6 +39,7 @@ namespace CIAO
         DDS4CCM_TRACE ("RTI_DomainParticipant_i::~RTI_DomainParticipant_i");
       }
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS::Publisher_ptr
       RTI_DomainParticipant_i::create_publisher_with_profile (
         const char* library_name,
@@ -85,13 +86,15 @@ namespace CIAO
 
         return retval._retn ();
       }
+#endif
 
       ::DDS::Publisher_ptr
       RTI_DomainParticipant_i::create_publisher (
-        const ::DDS::PublisherQos & /*qos*/,
+        const ::DDS::PublisherQos & qos,
         ::DDS::PublisherListener_ptr a_listener,
         ::DDS::StatusMask mask)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_publisher");
 
         DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipant_i::create_publisher - "
@@ -132,11 +135,15 @@ namespace CIAO
         rti_p->set_impl (rti_pub);
 
         return retval._retn ();
+#else
+        return this->impl ()->create_publisher (qos, a_listener, mask);
+#endif
       }
 
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::delete_publisher (::DDS::Publisher_ptr p)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         RTI_Publisher_i *rti_pub = dynamic_cast < RTI_Publisher_i * > (p);
 
         if (!rti_pub)
@@ -161,8 +168,12 @@ namespace CIAO
                           "Provided publisher successfully deleted\n"));
 
         return retval;
+#else
+        return this->impl ()->delete_publisher (p);
+#endif        
       }
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS::Subscriber_ptr
       RTI_DomainParticipant_i::create_subscriber_with_profile (
         const char* library_name,
@@ -211,14 +222,16 @@ namespace CIAO
 
         return retval._retn ();
       }
+#endif
 
       ::DDS::Subscriber_ptr
-      RTI_DomainParticipant_i::create_subscriber (const ::DDS::SubscriberQos & /*qos*/,
+      RTI_DomainParticipant_i::create_subscriber (const ::DDS::SubscriberQos & qos,
                                                   ::DDS::SubscriberListener_ptr a_listener,
                                                   ::DDS::StatusMask mask)
       {
         DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_subscriber");
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipant_i::create_subscriber - "
                      "Creating Subscriber\n"));
 
@@ -255,11 +268,17 @@ namespace CIAO
         rti_s->set_impl (rti_sub);
 
         return retval._retn ();
+#else
+        return this->impl ()->create_subscriber (qos,
+                                            a_listener,
+                                            mask);
+#endif
       }
 
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::delete_subscriber (::DDS::Subscriber_ptr s)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         RTI_Subscriber_i *rti_sub = dynamic_cast < RTI_Subscriber_i * > (s);
 
         if (!rti_sub)
@@ -284,11 +303,15 @@ namespace CIAO
                           "Provided subscriber successfully deleted\n"));
 
         return retval;
+#else
+        return this->impl ()->delete_subscriber (s);
+#endif
       }
 
       ::DDS::Subscriber_ptr
       RTI_DomainParticipant_i::get_builtin_subscriber (void)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS::Subscriber_var retval = ::DDS::Subscriber::_nil ();
         ACE_NEW_THROW_EX (retval,
                           RTI_Subscriber_i (),
@@ -298,17 +321,21 @@ namespace CIAO
         RTI_Subscriber_i *rti_s = dynamic_cast < RTI_Subscriber_i *> (retval.in ());
         rti_s->set_impl (rti_sub);
         return retval._retn ();
+#else
+        return this->impl ()->get_builtin_subscriber ();
+#endif
       }
 
       ::DDS::Topic_ptr
       RTI_DomainParticipant_i::create_topic (const char * impl_name,
                                              const char * type_name,
-                                             const ::DDS::TopicQos & /*qos*/,
+                                             const ::DDS::TopicQos & qos,
                                              ::DDS::TopicListener_ptr a_listener,
                                              ::DDS::StatusMask mask)
       {
         DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_topic");
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         if (impl_name == 0)
           {
             DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic - "
@@ -363,8 +390,16 @@ namespace CIAO
         tp->set_impl (rti_topic);
 
         return retval._retn ();
+#else
+        return this->impl ()->create_topic (impl_name,
+                                                        type_name,
+                                                        qos,
+                                                        a_listener,
+                                                        mask);
+#endif
       }
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS::Topic_ptr
       RTI_DomainParticipant_i::create_topic_with_profile (
           const char *impl_name,
@@ -442,12 +477,14 @@ namespace CIAO
             return ::DDS::Topic::_duplicate (tp.in ());
           }
       }
+#endif
 
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::delete_topic (::DDS::Topic_ptr a_topic)
       {
         DDS4CCM_TRACE ("DDS_DomainParticipant_i::delete_topic");
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         RTI_Topic_i *top = dynamic_cast< RTI_Topic_i *> (a_topic);
 
         if (top == 0)
@@ -472,19 +509,23 @@ namespace CIAO
                           "Provided topic successfully deleted\n"));
 
         return retval;
+#else
+        return this->impl ()->delete_topic (a_topic);
+#endif
       }
 
       ::DDS::Topic_ptr
       RTI_DomainParticipant_i::find_topic (const char * impl_name,
                                            const ::DDS::Duration_t & timeout)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS_Duration_t ddstimeout;
         ddstimeout <<= timeout;
         ::DDS::Topic_var retval = ::DDS::Topic::_nil ();
         ACE_NEW_RETURN (retval,
                         RTI_Topic_i (),
                         ::DDS::Topic::_nil ());
-        ::DDSTopic* rti_topic = this->impl ()->find_topic (impl_name, ddstimeout);
+        ::DDSTopic* rti_topic = this->impl ()->find_topic (impl_name, timeout);
         if (rti_topic)
           {
             RTI_Topic_i *tp = dynamic_cast < RTI_Topic_i *> (retval.in ());
@@ -492,11 +533,15 @@ namespace CIAO
             return retval._retn ();
           }
         return ::DDS::Topic::_nil ();
+#else
+        return this->impl ()->find_topic (impl_name, timeout);
+#endif
       }
 
       ::DDS::TopicDescription_ptr
       RTI_DomainParticipant_i::lookup_topicdescription (const char * name)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS::TopicDescription_var retval = ::DDS::TopicDescription::_nil ();
         ACE_NEW_THROW_EX (retval,
                           RTI_TopicDescription_i (),
@@ -505,6 +550,9 @@ namespace CIAO
         RTI_TopicDescription_i *rti_td = dynamic_cast < RTI_TopicDescription_i *>(retval.in ());
         rti_td->set_impl (rti_topic);
         return retval._retn ();
+#else
+        return this->impl ()->lookup_topicdescription (name);
+#endif
       }
 
       ::DDS::ContentFilteredTopic_ptr
@@ -515,6 +563,7 @@ namespace CIAO
       {
         DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_contentfilteredtopic");
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         RTI_Topic_i *top = dynamic_cast< RTI_Topic_i *> (related_topic);
         if (!top)
           {
@@ -560,6 +609,13 @@ namespace CIAO
         tp->set_impl (rti_cft);
 
         return retval._retn ();
+#else
+        return this->impl ()->create_contentfilteredtopic (
+                                                                    name,
+                                                                    related_topic,
+                                                                    filter_expression,
+                                                                    expression_parameters);
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -617,6 +673,7 @@ namespace CIAO
       RTI_DomainParticipant_i::set_listener (::DDS::DomainParticipantListener_ptr a_listener,
                                              ::DDS::StatusMask mask)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         RTI_DomainParticipantListener_i* rti_impl_list = 0;
         if (!CORBA::is_nil (a_listener))
           {
@@ -625,6 +682,9 @@ namespace CIAO
                               CORBA::NO_MEMORY ());
           }
         return this->impl_->set_listener (rti_impl_list, mask);
+#else
+        return this->impl_->set_listener (a_listener, mask);
+#endif        
       }
 
       ::DDS::DomainParticipantListener_ptr
@@ -632,6 +692,7 @@ namespace CIAO
       {
         DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_listener");
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         DDSDomainParticipantListener *rti_dp_list = this->impl ()->get_listener ();
         RTI_DomainParticipantListener_i *list_proxy = dynamic_cast <RTI_DomainParticipantListener_i *> (rti_dp_list);
         if (!list_proxy)
@@ -641,39 +702,57 @@ namespace CIAO
             return ::DDS::DomainParticipantListener::_nil ();
           }
         return list_proxy->get_domainparticipantlistener ();
+#else
+        return this->impl ()->get_listener ();
+#endif        
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipant_i::ignore_participant (const ::DDS::InstanceHandle_t & handle)
+      RTI_DomainParticipant_i::ignore_participant (DDS_INSTANCE_HANDLE_T_IN handle)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS_InstanceHandle_t rti_handle;
         rti_handle <<= handle;
         return this->impl ()->ignore_participant (rti_handle);
-
+#else
+        return this->impl ()->ignore_participant (handle);
+#endif
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipant_i::ignore_topic (const ::DDS::InstanceHandle_t & handle)
+      RTI_DomainParticipant_i::ignore_topic (DDS_INSTANCE_HANDLE_T_IN handle)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS_InstanceHandle_t rti_handle;
         rti_handle <<= handle;
         return this->impl ()->ignore_topic (rti_handle);
+#else
+        return this->impl ()->ignore_topic (handle);
+#endif        
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipant_i::ignore_publication (const ::DDS::InstanceHandle_t & handle)
+      RTI_DomainParticipant_i::ignore_publication (DDS_INSTANCE_HANDLE_T_IN handle)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS_InstanceHandle_t rti_handle;
         rti_handle <<= handle;
         return this->impl ()->ignore_publication (rti_handle);
+#else
+        return this->impl ()->ignore_publication (handle);
+#endif
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipant_i::ignore_subscription (const ::DDS::InstanceHandle_t & handle)
+      RTI_DomainParticipant_i::ignore_subscription (DDS_INSTANCE_HANDLE_T_IN handle)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS_InstanceHandle_t rti_handle;
         rti_handle <<= handle;
         return this->impl ()->ignore_subscription (rti_handle);
+#else
+        return this->impl ()->ignore_subscription (handle);
+#endif
       }
 
       ::DDS::DomainId_t
@@ -739,15 +818,19 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::get_discovered_participants (::DDS::InstanceHandleSeq & impl_handles)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS_InstanceHandleSeq rtiseq;
         ::DDS::ReturnCode_t const retval = this->impl ()->get_discovered_participants (rtiseq);
         rtiseq >>= impl_handles;
         return retval;
+#else
+        return this->impl ()->get_discovered_participants (impl_handles);
+#endif
       }
 
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::get_discovered_participant_data (::DDS::ParticipantBuiltinTopicData & /*impl_data*/,
-                                                                const ::DDS::InstanceHandle_t & /*impl_handle*/)
+                                                                DDS_INSTANCE_HANDLE_T_IN /*impl_handle*/)
       {
         DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_discovered_participant_data");
         throw CORBA::NO_IMPLEMENT ();
@@ -757,15 +840,19 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::get_discovered_topics (::DDS::InstanceHandleSeq & impl_handles)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS_InstanceHandleSeq rtiseq;
         ::DDS::ReturnCode_t const retval = this->impl ()->get_discovered_topics (rtiseq);
         rtiseq >>= impl_handles;
         return retval;
+#else
+        return this->impl ()->get_discovered_topics (impl_handles);
+#endif
       }
 
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::get_discovered_topic_data (::DDS::TopicBuiltinTopicData & /*impl_data*/,
-                                                          const ::DDS::InstanceHandle_t & /*impl_handle*/)
+                                                          DDS_INSTANCE_HANDLE_T_IN /*impl_handle*/)
       {
         DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_discovered_topic_data");
         throw CORBA::NO_IMPLEMENT ();
@@ -773,22 +860,28 @@ namespace CIAO
       }
 
       ::CORBA::Boolean
-      RTI_DomainParticipant_i::contains_entity (const ::DDS::InstanceHandle_t & a_handle)
+      RTI_DomainParticipant_i::contains_entity (DDS_INSTANCE_HANDLE_T_IN a_handle)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS_InstanceHandle_t rti_handle;
         rti_handle <<= a_handle;
         return this->impl ()->contains_entity (rti_handle);
-
+#else
+        return this->impl ()->contains_entity (a_handle);
+#endif
       }
 
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::get_current_time (::DDS::Time_t & current_time)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         DDS_Time_t rti_time;
         ::DDS::ReturnCode_t const retval = this->impl ()->get_current_time (rti_time);
         rti_time >>= current_time;
         return retval;
-
+#else
+        return this->impl ()->get_current_time (current_time);
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -800,6 +893,7 @@ namespace CIAO
       ::DDS::StatusCondition_ptr
       RTI_DomainParticipant_i::get_statuscondition (void)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
         ACE_NEW_THROW_EX (retval,
                           RTI_StatusCondition_i (),
@@ -808,6 +902,9 @@ namespace CIAO
         RTI_StatusCondition_i *rti_sc = dynamic_cast < RTI_StatusCondition_i *> (retval.in ());
         rti_sc->set_impl (sc);
         return retval._retn ();
+#else
+        return this->impl ()->get_statuscondition ();
+#endif
       }
 
       ::DDS::StatusMask
@@ -816,13 +913,17 @@ namespace CIAO
         return this->impl ()->get_status_changes ();
       }
 
-      ::DDS::InstanceHandle_t
+      DDS_INSTANCE_HANDLE_T_RETN
       RTI_DomainParticipant_i::get_instance_handle (void)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS_InstanceHandle_t const rtihandle = this->impl ()->get_instance_handle ();
         ::DDS::InstanceHandle_t handle;
         handle <<= rtihandle;
         return handle;
+#else
+        return this->impl ()->get_instance_handle ();
+#endif        
       }
 
       DDSDomainParticipant *

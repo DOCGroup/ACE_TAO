@@ -23,6 +23,10 @@
 
 #include "tao/LocalObject.h"
 
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::TopicDescription DDSTopicDescription;
+#endif
+
 namespace CIAO
 {
   namespace DDS4CCM

@@ -60,10 +60,14 @@ namespace CIAO
       ::DDS::InstanceHandle_t
       RTI_Subscriber_i::get_instance_handle (void)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS_InstanceHandle_t const rtihandle = this->impl ()->get_instance_handle ();
         ::DDS::InstanceHandle_t handle;
         handle <<= rtihandle;
         return handle;
+#else
+        return this->impl ()->get_instance_handle ();
+#endif        
       }
 
       DDSDataReader *
@@ -72,7 +76,11 @@ namespace CIAO
                     DDSDataReaderListener * rti_drl,
                     ::DDS::StatusMask mask)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         DDS_DataReaderQos rti_qos = DDS_DATAREADER_QOS_DEFAULT;
+#else
+        ::DDS::DataReaderQos rti_qos;
+#endif        
         return this->impl ()->create_datareader (topic,
                                                  rti_qos,
                                                  rti_drl,
@@ -85,13 +93,18 @@ namespace CIAO
                     DDSDataReaderListener * rti_drl,
                     ::DDS::StatusMask mask)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         DDS_DataReaderQos rti_qos = DDS_DATAREADER_QOS_DEFAULT;
+#else
+        DDS::DataReaderQos rti_qos;
+#endif        
         return this->impl ()->create_datareader (topic,
                                                  rti_qos,
                                                  rti_drl,
                                                  mask);
       }
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDSDataReader *
       RTI_Subscriber_i::create_datareader_with_profile (
                     DDSContentFilteredTopic * topic,
@@ -106,7 +119,9 @@ namespace CIAO
                                                               rti_drl,
                                                               mask);
       }
+#endif
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDSDataReader *
       RTI_Subscriber_i::create_datareader_with_profile (
                     DDSTopic * topic,
@@ -121,6 +136,7 @@ namespace CIAO
                                                               rti_drl,
                                                               mask);
       }
+#endif
 
       ::DDS::DataReader_ptr
       RTI_Subscriber_i::create_datareader (
@@ -338,7 +354,7 @@ namespace CIAO
         ::DDS::SubscriberQos & /*qos*/)
       {
         DDS_SubscriberQos rti_impl_qos;
-        DDS_ReturnCode_t const rti_retcode = this->impl ()->get_qos (rti_impl_qos);
+        ::DDS::ReturnCode_t const rti_retcode = this->impl ()->get_qos (rti_impl_qos);
         /*qos.presentation = rti_impl_qos.presentation;
         qos.partition = rti_impl_qos.partition;
         qos.group_data = rti_impl_qos.group_data;

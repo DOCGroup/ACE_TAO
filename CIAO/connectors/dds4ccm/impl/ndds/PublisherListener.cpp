@@ -35,6 +35,7 @@ namespace CIAO
       {
         DDS4CCM_TRACE ("RTI_PublisherListener_i::on_offered_deadline_missed");
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS::OfferedDeadlineMissedStatus ddsstatus;
         ddsstatus <<= status;
         ::DDS::DataWriter_var dds_writer = ::DDS::DataWriter::_nil ();
@@ -42,6 +43,9 @@ namespace CIAO
         RTI_DataWriter_i *dw = dynamic_cast< RTI_DataWriter_i * > (dds_writer.in ());
         dw->set_impl (writer);
         this->impl_->on_offered_deadline_missed (dds_writer.in (), ddsstatus);
+#else
+        this->impl_->on_offered_deadline_missed (writer, status);
+#endif        
       }
 
       void
@@ -51,6 +55,7 @@ namespace CIAO
       {
         DDS4CCM_TRACE ("RTI_PublisherListener_i::on_offered_incompatible_qos");
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS::OfferedIncompatibleQosStatus ddsstatus;
         ddsstatus <<= status;
         ::DDS::DataWriter_var dds_writer = ::DDS::DataWriter::_nil ();
@@ -58,6 +63,9 @@ namespace CIAO
         RTI_DataWriter_i *dw = dynamic_cast< RTI_DataWriter_i * > (dds_writer.in ());
         dw->set_impl (writer);
         this->impl_->on_offered_incompatible_qos (dds_writer.in (), ddsstatus);
+#else
+        this->impl_->on_offered_incompatible_qos (writer, status);
+#endif        
       }
 
       void
@@ -67,6 +75,7 @@ namespace CIAO
       {
         DDS4CCM_TRACE ("RTI_PublisherListener_i::on_liveliness_lost");
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS::LivelinessLostStatus ddsstatus;
         ddsstatus <<= status;
         ::DDS::DataWriter_var dds_writer = ::DDS::DataWriter::_nil ();
@@ -74,6 +83,9 @@ namespace CIAO
         RTI_DataWriter_i *dw = dynamic_cast< RTI_DataWriter_i * > (dds_writer.in ());
         dw->set_impl (writer);
         this->impl_->on_liveliness_lost (dds_writer.in (), ddsstatus);
+#else
+        this->impl_->on_liveliness_lost (writer, status);
+#endif        
       }
 
       void
@@ -83,6 +95,7 @@ namespace CIAO
       {
         DDS4CCM_TRACE ("RTI_PublisherListener_i::on_publication_matched");
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS::PublicationMatchedStatus ddsstatus;
         ddsstatus <<= status;
         ::DDS::DataWriter_var dds_writer = ::DDS::DataWriter::_nil ();
@@ -90,6 +103,9 @@ namespace CIAO
         RTI_DataWriter_i *dw = dynamic_cast< RTI_DataWriter_i * > (dds_writer.in ());
         dw->set_impl (writer);
         this->impl_->on_publication_matched (dds_writer.in (), ddsstatus);
+#else
+        this->impl_->on_publication_matched (writer, status);
+#endif        
       }
 
       ::DDS::PublisherListener_ptr

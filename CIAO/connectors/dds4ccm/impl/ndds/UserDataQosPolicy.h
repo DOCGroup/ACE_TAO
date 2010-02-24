@@ -9,8 +9,11 @@
 #ifndef CIAO_RTI_USERDATAQOSPOLICY_H
 #define CIAO_RTI_USERDATAQOSPOLICY_H
 
-/// @todo
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::UserDataQosPolicy DDS_UserDataQosPolicy;
+#endif
 
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::UserDataQosPolicy &ddsqos, const ::DDS_UserDataQosPolicy & qos)
 {
@@ -42,5 +45,6 @@ operator>>= (const ::DDS::UserDataQosPolicy &qos, ::DDS_UserDataQosPolicy & ddsq
   ACE_UNUSED_ARG (qos);
 //  ddsqos.value <<= qos.value;
 }
+#endif
 
 #endif /* CIAO_RTI_USERDATAQOSPOLICY_H */

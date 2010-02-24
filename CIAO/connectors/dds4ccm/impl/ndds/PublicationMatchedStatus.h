@@ -12,6 +12,11 @@
 
 #include "InstanceHandle_t.h"
 
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::PublicationMatchedStatus DDS_PublicationMatchedStatus;
+#endif
+
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::PublicationMatchedStatus &ddsstatus, const ::DDS_PublicationMatchedStatus & status)
 {
@@ -51,5 +56,6 @@ operator>>= (const ::DDS::PublicationMatchedStatus &status, ::DDS_PublicationMat
   ddsstatus.current_count_change = status.current_count_change;
   ddsstatus.last_subscription_handle <<= status.last_subscription_handle;
 }
+#endif
 
 #endif /* CIAO_RTI_PUBLICATIONMATCHEDSTATUS_H */

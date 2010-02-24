@@ -129,12 +129,16 @@ module DDS
 
 module DDS
 {
-  local interface ContentFilteredTopic {};
+  local interface CCM_ContentFilteredTopic : ::DDS::ContentFilteredTopic
+  {
+  };
 };
 
 module DDS
 {
-  local interface MultiTopic {};
+  local interface CCM_MultiTopic : ::DDS::MultiTopic
+  {
+  };
 };
 
 module DDS

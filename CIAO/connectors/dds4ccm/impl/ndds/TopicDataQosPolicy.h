@@ -9,6 +9,11 @@
 #ifndef CIAO_RTI_TOPICDATAQOSPOLICY_H
 #define CIAO_RTI_TOPICDATAQOSPOLICY_H
 
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::TopicDataQosPolicy DDS_TopicDataQosPolicy;
+#endif
+
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::TopicDataQosPolicy &ddsqos, const ::DDS_TopicDataQosPolicy & qos)
 {
@@ -41,5 +46,6 @@ operator>>= (const ::DDS::TopicDataQosPolicy &qos, ::DDS_TopicDataQosPolicy & dd
   ACE_UNUSED_ARG (qos);
 //  ddsqos.value = qos.value;
 }
+#endif
 
 #endif /* CIAO_RTI_TOPICDATAQOSPOLICY_H */

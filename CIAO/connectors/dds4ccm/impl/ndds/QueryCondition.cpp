@@ -51,6 +51,7 @@ namespace CIAO
       ::DDS::DataReader_ptr
       RTI_QueryCondition_i::get_datareader (void)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
         ACE_NEW_THROW_EX (dds_reader,
                           RTI_DataReader_i (),
@@ -60,32 +61,47 @@ namespace CIAO
         rti_dr->set_impl (reader);
 
         return dds_reader._retn ();
+#else
+        return this->impl ()->get_datareader ();
+#endif        
       }
 
       char *
       RTI_QueryCondition_i::get_query_expression (void)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         return ::CORBA::string_dup (this->impl ()->get_query_expression ());
+#else
+        return this->impl ()->get_query_expression ();
+#endif        
       }
 
       ::DDS::ReturnCode_t
       RTI_QueryCondition_i::get_query_parameters (
         ::DDS::StringSeq & query_parameters)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         DDS_StringSeq parameters;
         ::DDS::ReturnCode_t retval = this->impl ()->get_query_parameters (
                                                            parameters);
         query_parameters <<= parameters;
         return retval;
+#else
+        return this->impl ()->get_query_parameters (query_parameters);
+#endif        
       }
 
       ::DDS::ReturnCode_t
       RTI_QueryCondition_i::set_query_parameters (
         const ::DDS::StringSeq & query_parameters)
       {
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         DDS_StringSeq parameters;
         parameters <<= query_parameters;
         return this->impl ()->set_query_parameters (parameters);
+#else
+        return this->impl ()->set_query_parameters (query_parameters);
+#endif        
       }
 
       DDSQueryCondition *
