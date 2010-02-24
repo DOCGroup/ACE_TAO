@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef CIAO_RTI_STRINGSEQ_T_H
-#define CIAO_RTI_STRINGSEQ_T_H
+#ifndef DDS4CCM_STRINGSEQ_T_H
+#define DDS4CCM_STRINGSEQ_T_H
 
 #if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::StringSeq DDS_StringSeq;
@@ -40,4 +40,4 @@ operator<<= (::DDS_StringSeq & dds_string_seq, const ::DDS::StringSeq & string_s
 }
 #endif
 
-#endif /* CIAO_RTI_STRINGSEQ_T_H */
+#endif /* DDS4CCM_STRINGSEQ_T_H */

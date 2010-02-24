@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_DESTINATIONORDERQOSPOLICY_H
-#define CIAO_RTI_DESTINATIONORDERQOSPOLICY_H
+#ifndef DDS4CCM_DESTINATIONORDERQOSPOLICY_H
+#define DDS4CCM_DESTINATIONORDERQOSPOLICY_H
 
 #include "Duration_t.h"
 
@@ -41,4 +41,4 @@ operator>>= (const ::DDS::DestinationOrderQosPolicy &qos, ::DDS_DestinationOrder
 }
 #endif
 
-#endif /* CIAO_RTI_DESTINATIONORDERQOSPOLICY_H */
+#endif /* DDS4CCM_DESTINATIONORDERQOSPOLICY_H */

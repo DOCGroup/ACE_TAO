@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_INSTANCEHANDLESEQ_H
-#define CIAO_RTI_INSTANCEHANDLESEQ_H
+#ifndef DDS4CCM_INSTANCEHANDLESEQ_H
+#define DDS4CCM_INSTANCEHANDLESEQ_H
 
 #include "InstanceHandle_t.h"
 
@@ -63,4 +63,4 @@ operator>>= (const ::DDS::InstanceHandleSeq &instancehandle, ::DDS_InstanceHandl
 }
 #endif
 
-#endif /* CIAO_RTI_INSTANCEHANDLESEQ_H */
+#endif /* DDS4CCM_INSTANCEHANDLESEQ_H */

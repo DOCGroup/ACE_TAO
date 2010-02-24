@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_USERDATAQOSPOLICY_H
-#define CIAO_RTI_USERDATAQOSPOLICY_H
+#ifndef DDS4CCM_USERDATAQOSPOLICY_H
+#define DDS4CCM_USERDATAQOSPOLICY_H
 
 #if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::UserDataQosPolicy DDS_UserDataQosPolicy;
@@ -19,7 +19,7 @@ operator<<= (::DDS::UserDataQosPolicy &ddsqos, const ::DDS_UserDataQosPolicy & q
 {
   ACE_UNUSED_ARG (ddsqos);
   ACE_UNUSED_ARG (qos);
-//  ddsqos.value <<= qos.value;
+//   ACE_OS::memcpy (ddsqos.value, qos.value, sizeof (qos.value));
 }
 
 inline void
@@ -27,7 +27,7 @@ operator<<= (::DDS_UserDataQosPolicy &ddsqos, const ::DDS::UserDataQosPolicy & q
 {
   ACE_UNUSED_ARG (ddsqos);
   ACE_UNUSED_ARG (qos);
-//  ddsqos.value <<= qos.value;
+//   ACE_OS::memcpy (ddsqos.value, qos.value, sizeof (qos.value));
 }
 
 inline void
@@ -35,7 +35,7 @@ operator>>= (const ::DDS_UserDataQosPolicy &qos, ::DDS::UserDataQosPolicy & ddsq
 {
   ACE_UNUSED_ARG (ddsqos);
   ACE_UNUSED_ARG (qos);
-//  ddsqos.value <<= qos.value;
+//   ACE_OS::memcpy (ddsqos.value, qos.value, sizeof (qos.value));
 }
 
 inline void
@@ -43,8 +43,8 @@ operator>>= (const ::DDS::UserDataQosPolicy &qos, ::DDS_UserDataQosPolicy & ddsq
 {
   ACE_UNUSED_ARG (ddsqos);
   ACE_UNUSED_ARG (qos);
-//  ddsqos.value <<= qos.value;
+//   ACE_OS::memcpy (qos.value, ddsqos.value, sizeof (ddsqos.value));
 }
 #endif
 
-#endif /* CIAO_RTI_USERDATAQOSPOLICY_H */
+#endif /* DDS4CCM_USERDATAQOSPOLICY_H */

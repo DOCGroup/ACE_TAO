@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_SUBSCRIBERQOS_H
-#define CIAO_RTI_SUBSCRIBERQOS_H
+#ifndef DDS4CCM_SUBSCRIBERQOS_H
+#define DDS4CCM_SUBSCRIBERQOS_H
 
 #include "EntityFactoryQosPolicy.h"
 
@@ -53,4 +53,4 @@ operator>>= (const ::DDS::SubscriberQos &qos, ::DDS_SubscriberQos & ddsqos)
 }
 #endif
 
-#endif /* CIAO_RTI_SUBSCRIBERQOS_H */
+#endif /* DDS4CCM_SUBSCRIBERQOS_H */

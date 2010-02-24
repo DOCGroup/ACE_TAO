@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_SUBSCRIPTIONMATCHEDSTATUS_H
-#define CIAO_RTI_SUBSCRIPTIONMATCHEDSTATUS_H
+#ifndef DDS4CCM_SUBSCRIPTIONMATCHEDSTATUS_H
+#define DDS4CCM_SUBSCRIPTIONMATCHEDSTATUS_H
 
 #include "InstanceHandle_t.h"
 
@@ -58,5 +58,5 @@ operator>>= (const ::DDS::SubscriptionMatchedStatus &status, ::DDS_SubscriptionM
 }
 #endif
 
-#endif /* CIAO_RTI_SUBSCRIPTIONMATCHEDSTATUS_H */
+#endif /* DDS4CCM_SUBSCRIPTIONMATCHEDSTATUS_H */
 

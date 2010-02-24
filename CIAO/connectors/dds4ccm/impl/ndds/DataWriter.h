@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_DATAWRITER_H
-#define CIAO_RTI_DATAWRITER_H
+#ifndef DDS4CCM_DATAWRITER_H
+#define DDS4CCM_DATAWRITER_H
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 

@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_OFFEREDDEADLINEMISSEDSTATUS_H
-#define CIAO_RTI_OFFEREDDEADLINEMISSEDSTATUS_H
+#ifndef DDS4CCM_OFFEREDDEADLINEMISSEDSTATUS_H
+#define DDS4CCM_OFFEREDDEADLINEMISSEDSTATUS_H
 
 #include "InstanceHandle_t.h"
 
@@ -50,4 +50,4 @@ operator>>= (const ::DDS::OfferedDeadlineMissedStatus &status, ::DDS_OfferedDead
 }
 #endif
 
-#endif /* CIAO_RTI_OFFEREDDEADLINEMISSEDSTATUS_H */
+#endif /* DDS4CCM_OFFEREDDEADLINEMISSEDSTATUS_H */

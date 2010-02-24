@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_LATENCYBUDGETQOSPOLICY_H
-#define CIAO_RTI_LATENCYBUDGETQOSPOLICY_H
+#ifndef DDS4CCM_LATENCYBUDGETQOSPOLICY_H
+#define DDS4CCM_LATENCYBUDGETQOSPOLICY_H
 
 #include "Duration_t.h"
 
@@ -41,4 +41,4 @@ operator>>= (const ::DDS::LatencyBudgetQosPolicy &qos, ::DDS_LatencyBudgetQosPol
 }
 #endif
 
-#endif /* CIAO_RTI_LATENCYBUDGETQOSPOLICY_H */
+#endif /* DDS4CCM_LATENCYBUDGETQOSPOLICY_H */
