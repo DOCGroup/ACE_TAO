@@ -23,52 +23,48 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    namespace RTI
+    class DDS4CCM_NDDS_IMPL_Export CCM_DDS_ContentFilteredTopic_i :
+      public virtual ::DDS::CCM_ContentFilteredTopic,
+      public virtual ::CORBA::LocalObject
     {
-      class DDS4CCM_NDDS_IMPL_Export RTI_ContentFilteredTopic_i :
-        public virtual ::DDS::CCM_ContentFilteredTopic,
-        public virtual ::CORBA::LocalObject
-      {
-      public:
-        // Constructor
-        RTI_ContentFilteredTopic_i (void);
+    public:
+      /// Constructor
+      CCM_DDS_ContentFilteredTopic_i (DDSContentFilteredTopic * dw);
 
-        // Destructor
-        virtual ~RTI_ContentFilteredTopic_i (void);
+      /// Destructor
+      virtual ~CCM_DDS_ContentFilteredTopic_i (void);
 
-        virtual
-        char * get_filter_expression (void);
+      virtual char * get_filter_expression (void);
 
-        virtual
-        ::DDS::ReturnCode_t get_expression_parameters (
-            ::DDS::StringSeq & expression_parameters);
+      virtual
+      ::DDS::ReturnCode_t get_expression_parameters (
+          ::DDS::StringSeq & expression_parameters);
 
-        virtual
-        ::DDS::ReturnCode_t set_expression_parameters (
-            const ::DDS::StringSeq & expression_parameters);
+      virtual
+      ::DDS::ReturnCode_t set_expression_parameters (
+          const ::DDS::StringSeq & expression_parameters);
 
-        virtual
-        ::DDS::Topic_ptr get_related_topic (void);
+      virtual
+      ::DDS::Topic_ptr get_related_topic (void);
 
-        virtual
-        char * get_type_name (void);
+      virtual
+      char * get_type_name (void);
 
-        virtual
-        char * get_name (void);
+      virtual
+      char * get_name (void);
 
-        virtual
-        ::DDS::DomainParticipant_ptr get_participant (void);
+      virtual
+      ::DDS::DomainParticipant_ptr get_participant (void);
 
-        DDSContentFilteredTopic * get_impl (void);
+      DDSContentFilteredTopic * get_impl (void);
 
-        void set_impl (DDSContentFilteredTopic * dw);
+      void set_impl (DDSContentFilteredTopic * dw);
 
-      private:
-        DDSContentFilteredTopic * impl_;
+    private:
+      DDSContentFilteredTopic * impl_;
 
-        DDSContentFilteredTopic * impl (void);
-      };
-    }
+      DDSContentFilteredTopic * impl (void);
+    };
   }
 }
 

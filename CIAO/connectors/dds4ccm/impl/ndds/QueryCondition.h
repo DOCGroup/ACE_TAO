@@ -31,55 +31,52 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    namespace RTI
+    class DDS4CCM_NDDS_IMPL_Export CCM_DDS_QueryCondition_i :
+      public virtual ::DDS::CCM_QueryCondition,
+      public virtual ::CORBA::LocalObject
     {
-      class DDS4CCM_NDDS_IMPL_Export RTI_QueryCondition_i :
-        public virtual ::DDS::CCM_QueryCondition,
-        public virtual ::CORBA::LocalObject
-      {
-      public:
-        // Constructor
-        RTI_QueryCondition_i (void);
+    public:
+      /// Constructor
+      CCM_DDS_QueryCondition_i (void);
 
-        // Destructor
-        virtual ~RTI_QueryCondition_i (void);
+      /// Destructor
+      virtual ~CCM_DDS_QueryCondition_i (void);
 
-        virtual ::CORBA::Boolean
-        get_trigger_value (void);
+      virtual ::CORBA::Boolean
+      get_trigger_value (void);
 
-        virtual ::DDS::SampleStateMask
-        get_sample_state_mask (void);
+      virtual ::DDS::SampleStateMask
+      get_sample_state_mask (void);
 
-        virtual ::DDS::ViewStateMask
-        get_view_state_mask (void);
+      virtual ::DDS::ViewStateMask
+      get_view_state_mask (void);
 
-        virtual ::DDS::InstanceStateMask
-        get_instance_state_mask (void);
+      virtual ::DDS::InstanceStateMask
+      get_instance_state_mask (void);
 
-        virtual ::DDS::DataReader_ptr
-        get_datareader (void);
+      virtual ::DDS::DataReader_ptr
+      get_datareader (void);
 
-        virtual char *
-        get_query_expression (void);
+      virtual char *
+      get_query_expression (void);
 
-        virtual ::DDS::ReturnCode_t
-        get_query_parameters (
-          ::DDS::StringSeq & query_parameters);
+      virtual ::DDS::ReturnCode_t
+      get_query_parameters (
+        ::DDS::StringSeq & query_parameters);
 
-        virtual ::DDS::ReturnCode_t
-        set_query_parameters (
-          const ::DDS::StringSeq & query_parameters);
+      virtual ::DDS::ReturnCode_t
+      set_query_parameters (
+        const ::DDS::StringSeq & query_parameters);
 
-        DDSQueryCondition * get_impl (void);
+      DDSQueryCondition * get_impl (void);
 
-        void set_impl (DDSQueryCondition * qc);
+      void set_impl (DDSQueryCondition * qc);
 
-      private:
-        DDSQueryCondition * impl_;
+    private:
+      DDSQueryCondition * impl_;
 
-        DDSQueryCondition * impl ();
-      };
-    }
+      DDSQueryCondition * impl ();
+    };
   }
 }
 

@@ -513,7 +513,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::set_impl (
   else
     {
       this->reader_ = reader;
-      RTI_DataReader_i *rdr = dynamic_cast <RTI_DataReader_i *> (reader);
+      CCM_DDS_DataReader_i *rdr = dynamic_cast <CCM_DDS_DataReader_i *> (reader);
 
       if (!rdr)
         {

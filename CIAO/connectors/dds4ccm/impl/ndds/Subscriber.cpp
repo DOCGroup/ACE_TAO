@@ -18,458 +18,460 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    namespace RTI
+    CCM_DDS_Subscriber_i::CCM_DDS_Subscriber_i (DDSSubscriber * sub)
+      : impl_ (sub)
     {
-      RTI_Subscriber_i::RTI_Subscriber_i (void)
-        : impl_ (0)
-      {
-        DDS4CCM_TRACE ("RTI_Subscriber_i::RTI_Subscriber_i");
-      }
+      DDS4CCM_TRACE ("CCM_DDS_Subscriber_i::CCM_DDS_Subscriber_i");
+    }
 
-      RTI_Subscriber_i::~RTI_Subscriber_i (void)
-      {
-        DDS4CCM_TRACE ("RTI_Subscriber_i::~RTI_Subscriber_i");
-      }
+    CCM_DDS_Subscriber_i::~CCM_DDS_Subscriber_i (void)
+    {
+      DDS4CCM_TRACE ("CCM_DDS_Subscriber_i::~CCM_DDS_Subscriber_i");
+    }
 
-      ::DDS::ReturnCode_t
-      RTI_Subscriber_i::enable (void)
-      {
-        return this->impl ()->enable ();
-      }
+    ::DDS::ReturnCode_t
+    CCM_DDS_Subscriber_i::enable (void)
+    {
+      return this->impl ()->enable ();
+    }
 
-      ::DDS::StatusCondition_ptr
-      RTI_Subscriber_i::get_statuscondition (void)
-      {
-        ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
+    ::DDS::StatusCondition_ptr
+    CCM_DDS_Subscriber_i::get_statuscondition (void)
+    {
+      ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-        DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
-        ACE_NEW_THROW_EX (retval,
-                          CCM_DDS_StatusCondition_i (sc),
-                          CORBA::NO_MEMORY ());
+      DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
+      ACE_NEW_THROW_EX (retval,
+                        CCM_DDS_StatusCondition_i (sc),
+                        CORBA::NO_MEMORY ());
 #else
-        ::DDS::StatusCondition_var sc = this->impl ()->get_statuscondition ();
-        ACE_NEW_THROW_EX (retval,
-                          CCM_DDS_StatusCondition_i (sc.in ()),
-                          CORBA::NO_MEMORY ());
+      ::DDS::StatusCondition_var sc = this->impl ()->get_statuscondition ();
+      ACE_NEW_THROW_EX (retval,
+                        CCM_DDS_StatusCondition_i (sc.in ()),
+                        CORBA::NO_MEMORY ());
 #endif
-        return retval._retn ();
-      }
+      return retval._retn ();
+    }
 
-      ::DDS::StatusMask
-      RTI_Subscriber_i::get_status_changes (void)
-      {
-        return this->impl ()->get_status_changes ();
-      }
+    ::DDS::StatusMask
+    CCM_DDS_Subscriber_i::get_status_changes (void)
+    {
+      return this->impl ()->get_status_changes ();
+    }
 
-      ::DDS::InstanceHandle_t
-      RTI_Subscriber_i::get_instance_handle (void)
-      {
+    ::DDS::InstanceHandle_t
+    CCM_DDS_Subscriber_i::get_instance_handle (void)
+    {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-        ::DDS_InstanceHandle_t const rtihandle = this->impl ()->get_instance_handle ();
-        ::DDS::InstanceHandle_t handle;
-        handle <<= rtihandle;
-        return handle;
+      ::DDS_InstanceHandle_t const rtihandle = this->impl ()->get_instance_handle ();
+      ::DDS::InstanceHandle_t handle;
+      handle <<= rtihandle;
+      return handle;
 #else
-        return this->impl ()->get_instance_handle ();
+      return this->impl ()->get_instance_handle ();
 #endif
-      }
+    }
 
-      DDSDataReader *
-      RTI_Subscriber_i::create_datareader (
-                    DDSContentFilteredTopic * topic,
-                    DDSDataReaderListener * rti_drl,
-                    ::DDS::StatusMask mask)
-      {
+    DDSDataReader *
+    CCM_DDS_Subscriber_i::create_datareader (
+                  DDSContentFilteredTopic * topic,
+                  DDSDataReaderListener * rti_drl,
+                  ::DDS::StatusMask mask)
+    {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-        DDS_DataReaderQos rti_qos = DDS_DATAREADER_QOS_DEFAULT;
+      DDS_DataReaderQos rti_qos = DDS_DATAREADER_QOS_DEFAULT;
 #else
-        ::DDS::DataReaderQos rti_qos;
+      ::DDS::DataReaderQos rti_qos;
 #endif
-        return this->impl ()->create_datareader (topic,
-                                                 rti_qos,
-                                                 rti_drl,
-                                                 mask);
-      }
+      return this->impl ()->create_datareader (topic,
+                                               rti_qos,
+                                               rti_drl,
+                                               mask);
+    }
 
-      DDSDataReader *
-      RTI_Subscriber_i::create_datareader (
-                    DDSTopic * topic,
-                    DDSDataReaderListener * rti_drl,
-                    ::DDS::StatusMask mask)
-      {
+    DDSDataReader *
+    CCM_DDS_Subscriber_i::create_datareader (
+                  DDSTopic * topic,
+                  DDSDataReaderListener * rti_drl,
+                  ::DDS::StatusMask mask)
+    {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-        DDS_DataReaderQos rti_qos = DDS_DATAREADER_QOS_DEFAULT;
+      DDS_DataReaderQos rti_qos = DDS_DATAREADER_QOS_DEFAULT;
 #else
-        DDS::DataReaderQos rti_qos;
+      DDS::DataReaderQos rti_qos;
 #endif
-        return this->impl ()->create_datareader (topic,
-                                                 rti_qos,
-                                                 rti_drl,
-                                                 mask);
-      }
+      return this->impl ()->create_datareader (topic,
+                                               rti_qos,
+                                               rti_drl,
+                                               mask);
+    }
 
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      DDSDataReader *
-      RTI_Subscriber_i::create_datareader_with_profile (
-                    DDSContentFilteredTopic * topic,
-                    const char * library_name,
-                    const char * profile_name,
-                    DDSDataReaderListener * rti_drl,
-                    ::DDS::StatusMask mask)
-      {
-        return this->impl ()->create_datareader_with_profile (topic,
-                                                              library_name,
-                                                              profile_name,
-                                                              rti_drl,
-                                                              mask);
-      }
+    DDSDataReader *
+    CCM_DDS_Subscriber_i::create_datareader_with_profile (
+                  DDSContentFilteredTopic * topic,
+                  const char * library_name,
+                  const char * profile_name,
+                  DDSDataReaderListener * rti_drl,
+                  ::DDS::StatusMask mask)
+    {
+      return this->impl ()->create_datareader_with_profile (topic,
+                                                            library_name,
+                                                            profile_name,
+                                                            rti_drl,
+                                                            mask);
+    }
 #endif
 
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      DDSDataReader *
-      RTI_Subscriber_i::create_datareader_with_profile (
-                    DDSTopic * topic,
-                    const char * library_name,
-                    const char * profile_name,
-                    DDSDataReaderListener * rti_drl,
-                    ::DDS::StatusMask mask)
-      {
-        return this->impl ()->create_datareader_with_profile (topic,
-                                                              library_name,
-                                                              profile_name,
-                                                              rti_drl,
-                                                              mask);
-      }
+    DDSDataReader *
+    CCM_DDS_Subscriber_i::create_datareader_with_profile (
+                  DDSTopic * topic,
+                  const char * library_name,
+                  const char * profile_name,
+                  DDSDataReaderListener * rti_drl,
+                  ::DDS::StatusMask mask)
+    {
+      return this->impl ()->create_datareader_with_profile (topic,
+                                                            library_name,
+                                                            profile_name,
+                                                            rti_drl,
+                                                            mask);
+    }
 #endif
 
-      ::DDS::DataReader_ptr
-      RTI_Subscriber_i::create_datareader (
-        ::DDS::TopicDescription_ptr a_topic,
-        const ::DDS::DataReaderQos & /*qos*/,
-        ::DDS::DataReaderListener_ptr a_listener,
-        ::DDS::StatusMask mask)
-      {
-        DDS4CCM_TRACE ("RTI_Subscriber_i::create_datareader");
-        ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
-        ACE_NEW_THROW_EX (retval,
-                          RTI_DataReader_i (),
-                          CORBA::NO_MEMORY ());
+    ::DDS::DataReader_ptr
+    CCM_DDS_Subscriber_i::create_datareader (
+      ::DDS::TopicDescription_ptr a_topic,
+      const ::DDS::DataReaderQos & /*qos*/,
+      ::DDS::DataReaderListener_ptr a_listener,
+      ::DDS::StatusMask mask)
+    {
+      DDS4CCM_TRACE ("CCM_DDS_Subscriber_i::create_datareader");
+      ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
+      ACE_NEW_THROW_EX (retval,
+                        CCM_DDS_DataReader_i (),
+                        CORBA::NO_MEMORY ());
 
-        DDSDataReaderListener *rti_drl = 0;
-        if (!CORBA::is_nil (a_listener))
-          {
-            ACE_NEW_THROW_EX (rti_drl,
-                              RTI_DataReaderListener_i (a_listener),
-                              CORBA::NO_MEMORY ());
-          }
+      DDSDataReaderListener *rti_drl = 0;
+      if (!CORBA::is_nil (a_listener))
+        {
+          ACE_NEW_THROW_EX (rti_drl,
+                            CCM_DDS_DataReaderListener_i (a_listener),
+                            CORBA::NO_MEMORY ());
+        }
 
-        DDSDataReader * rti_dr = 0;
-        CCM_DDS_Topic_i * topic = dynamic_cast < CCM_DDS_Topic_i * > (a_topic);
+      DDSDataReader * rti_dr = 0;
+      CCM_DDS_Topic_i * topic = dynamic_cast < CCM_DDS_Topic_i * > (a_topic);
 
-        if (!topic)
-          {
-            RTI_ContentFilteredTopic_i * cf_topic =
-              dynamic_cast < RTI_ContentFilteredTopic_i * > (a_topic);
-            if (!cf_topic)
-              {
-                DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader - "
-                            "Error: Unable to cast provided topic to one of its servant.\n"));
-                delete rti_drl;
-                throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
-              }
-            else
-              rti_dr = this->create_datareader (cf_topic->get_impl (), rti_drl, mask);
-          }
-        else
-          rti_dr = this->create_datareader (topic->get_impl (), rti_drl, mask);
+      if (!topic)
+        {
+          CCM_DDS_ContentFilteredTopic_i * cf_topic =
+            dynamic_cast < CCM_DDS_ContentFilteredTopic_i * > (a_topic);
+          if (!cf_topic)
+            {
+              DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Subscriber_i::create_datareader - "
+                          "Error: Unable to cast provided topic to one of its servant.\n"));
+              delete rti_drl;
+              throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
+            }
+          else
+            rti_dr = this->create_datareader (cf_topic->get_impl (), rti_drl, mask);
+        }
+      else
+        rti_dr = this->create_datareader (topic->get_impl (), rti_drl, mask);
 
-        if (!rti_dr)
-          {
-            DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader - "
-                         "Error: RTI Topic returned a nil datareader.\n"));
-            delete rti_drl;
-            throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
-          }
-        else
-          {
-            DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
-                         "Successfully created datareader.\n"));
-          }
+      if (!rti_dr)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Subscriber_i::create_datareader - "
+                       "Error: RTI Topic returned a nil datareader.\n"));
+          delete rti_drl;
+          throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+        }
+      else
+        {
+          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_Subscriber_i::create_datareader_with_profile - "
+                       "Successfully created datareader.\n"));
+        }
 
-        rti_dr->enable ();
-        RTI_DataReader_i *dr = dynamic_cast < RTI_DataReader_i *>(retval.in ());
-        dr->set_impl (rti_dr);
+      rti_dr->enable ();
+      CCM_DDS_DataReader_i *dr = dynamic_cast < CCM_DDS_DataReader_i *>(retval.in ());
+      dr->set_impl (rti_dr);
 
-        return retval._retn ();
-      }
+      return retval._retn ();
+    }
 
-      ::DDS::DataReader_ptr
-      RTI_Subscriber_i::create_datareader_with_profile (
-        ::DDS::TopicDescription_ptr a_topic,
-        const char * library_name,
-        const char * profile_name,
-        ::DDS::DataReaderListener_ptr a_listener,
-        ::DDS::StatusMask mask)
-      {
-        DDS4CCM_TRACE ("RTI_Subscriber_i::create_datareader_with_profile");
-        ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
-        ACE_NEW_THROW_EX (retval,
-                          RTI_DataReader_i (),
-                          CORBA::NO_MEMORY ());
+    ::DDS::DataReader_ptr
+    CCM_DDS_Subscriber_i::create_datareader_with_profile (
+      ::DDS::TopicDescription_ptr a_topic,
+      const char * library_name,
+      const char * profile_name,
+      ::DDS::DataReaderListener_ptr a_listener,
+      ::DDS::StatusMask mask)
+    {
+      DDS4CCM_TRACE ("CCM_DDS_Subscriber_i::create_datareader_with_profile");
+      ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
+      ACE_NEW_THROW_EX (retval,
+                        CCM_DDS_DataReader_i (),
+                        CORBA::NO_MEMORY ());
 
-        DDSDataReaderListener *rti_drl = 0;
-        if (!CORBA::is_nil (a_listener))
-          {
-            ACE_NEW_THROW_EX (rti_drl,
-                              RTI_DataReaderListener_i (a_listener),
-                              CORBA::NO_MEMORY ());
-          }
+      DDSDataReaderListener *rti_drl = 0;
+      if (!CORBA::is_nil (a_listener))
+        {
+          ACE_NEW_THROW_EX (rti_drl,
+                            CCM_DDS_DataReaderListener_i (a_listener),
+                            CORBA::NO_MEMORY ());
+        }
 
-        DDSDataReader * rti_dr = 0;
-        CCM_DDS_Topic_i * topic = dynamic_cast < CCM_DDS_Topic_i * > (a_topic);
+      DDSDataReader * rti_dr = 0;
+      CCM_DDS_Topic_i * topic = dynamic_cast < CCM_DDS_Topic_i * > (a_topic);
 
-        if (!topic)
-          {
-            RTI_ContentFilteredTopic_i * cf_topic =
-              dynamic_cast < RTI_ContentFilteredTopic_i * > (a_topic);
-            if (!cf_topic)
-              {
-                DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
-                            "Error: Unable to cast provided topic to one of its servant.\n"));
-                delete rti_drl;
-                throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
-              }
-            else
-              rti_dr = this->create_datareader_with_profile (cf_topic->get_impl (),
-                                                             library_name,
-                                                             profile_name,
-                                                             rti_drl,
-                                                             mask);
-          }
-        else
-          rti_dr = this->create_datareader_with_profile (topic->get_impl (),
-                                                             library_name,
-                                                             profile_name,
-                                                             rti_drl,
-                                                             mask);
+      if (!topic)
+        {
+          CCM_DDS_ContentFilteredTopic_i * cf_topic =
+            dynamic_cast < CCM_DDS_ContentFilteredTopic_i * > (a_topic);
+          if (!cf_topic)
+            {
+              DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Subscriber_i::create_datareader_with_profile - "
+                          "Error: Unable to cast provided topic to one of its servant.\n"));
+              delete rti_drl;
+              throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
+            }
+          else
+            rti_dr = this->create_datareader_with_profile (cf_topic->get_impl (),
+                                                           library_name,
+                                                           profile_name,
+                                                           rti_drl,
+                                                           mask);
+        }
+      else
+        rti_dr = this->create_datareader_with_profile (topic->get_impl (),
+                                                           library_name,
+                                                           profile_name,
+                                                           rti_drl,
+                                                           mask);
 
-        if (!rti_dr)
-          {
-            DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
-                         "Error: RTI Topic returned a nil datareader.\n"));
-            delete rti_drl;
-            throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
-          }
-        else
-          {
-            DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "RTI_Subscriber_i::create_datareader_with_profile - "
-                         "Successfully created datareader with profile <%C#%C>.\n",
-                         library_name,
-                         profile_name));
-          }
+      if (!rti_dr)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Subscriber_i::create_datareader_with_profile - "
+                       "Error: RTI Topic returned a nil datareader.\n"));
+          delete rti_drl;
+          throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+        }
+      else
+        {
+          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_Subscriber_i::create_datareader_with_profile - "
+                       "Successfully created datareader with profile <%C#%C>.\n",
+                       library_name,
+                       profile_name));
+        }
 
-        rti_dr->enable ();
-        RTI_DataReader_i *dr = dynamic_cast < RTI_DataReader_i *>(retval.in ());
-        dr->set_impl (rti_dr);
+      rti_dr->enable ();
+      CCM_DDS_DataReader_i *dr = dynamic_cast < CCM_DDS_DataReader_i *>(retval.in ());
+      dr->set_impl (rti_dr);
 
-        return retval._retn ();
-      }
+      return retval._retn ();
+    }
 
-      ::DDS::ReturnCode_t
-      RTI_Subscriber_i::delete_datareader (
-        ::DDS::DataReader_ptr a_datareader)
-      {
-        RTI_DataReader_i *dr = dynamic_cast< RTI_DataReader_i *> (a_datareader);
-        if (!dr)
-          {
-            DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::delete_datareader - "
-                         "Unable to cast provided object reference to servant.\n"));
-            return ::DDS::RETCODE_BAD_PARAMETER;
-          }
+    ::DDS::ReturnCode_t
+    CCM_DDS_Subscriber_i::delete_datareader (
+      ::DDS::DataReader_ptr a_datareader)
+    {
+      CCM_DDS_DataReader_i *dr = dynamic_cast< CCM_DDS_DataReader_i *> (a_datareader);
+      if (!dr)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Subscriber_i::delete_datareader - "
+                       "Unable to cast provided object reference to servant.\n"));
+          return ::DDS::RETCODE_BAD_PARAMETER;
+        }
 
-        DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "RTI_Subscriber_i::delete_datareader - "
-                     "Successfully casted provided object reference to servant.\n"));
+      DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_Subscriber_i::delete_datareader - "
+                   "Successfully casted provided object reference to servant.\n"));
 
-        DDS_ReturnCode_t const retval = this->impl ()->delete_datareader (dr->get_impl ());
+      DDS_ReturnCode_t const retval = this->impl ()->delete_datareader (dr->get_impl ());
 
-        if (retval != DDS_RETCODE_OK)
-          {
-            DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "RTI_Subscriber_i::delete_datareader - "
-                         "Error: Returned non-ok error code %C\n",
-                         translate_retcode (retval)));
-          }
-        else DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "RTI_Subscriber_i::delete_datareader - "
-                          "Datareader successfully  deleted\n"));
+      if (retval != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Subscriber_i::delete_datareader - "
+                       "Error: Returned non-ok error code %C\n",
+                       translate_retcode (retval)));
+        }
+      else DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_Subscriber_i::delete_datareader - "
+                        "Datareader successfully  deleted\n"));
 
-        return retval;
-      }
+      return retval;
+    }
 
-      ::DDS::ReturnCode_t
-      RTI_Subscriber_i::delete_contained_entities (void)
-      {
-        return this->impl ()->delete_contained_entities ();
-      }
+    ::DDS::ReturnCode_t
+    CCM_DDS_Subscriber_i::delete_contained_entities (void)
+    {
+      return this->impl ()->delete_contained_entities ();
+    }
 
-      ::DDS::DataReader_ptr
-      RTI_Subscriber_i::lookup_datareader (
-        const char * impl_name)
-      {
-        ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
-        ACE_NEW_THROW_EX (retval,
-                          RTI_DataReader_i (),
-                          CORBA::NO_MEMORY ());
-        DDSDataReader* dr = this->impl ()->lookup_datareader (impl_name);
-        RTI_DataReader_i *rti_dr = dynamic_cast < RTI_DataReader_i *>(retval.in ());
-        rti_dr->set_impl (dr);
-        return retval._retn ();
-      }
+    ::DDS::DataReader_ptr
+    CCM_DDS_Subscriber_i::lookup_datareader (
+      const char * impl_name)
+    {
+      ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
+      ACE_NEW_THROW_EX (retval,
+                        CCM_DDS_DataReader_i (),
+                        CORBA::NO_MEMORY ());
+      DDSDataReader* dr = this->impl ()->lookup_datareader (impl_name);
+      CCM_DDS_DataReader_i *rti_dr = dynamic_cast < CCM_DDS_DataReader_i *>(retval.in ());
+      rti_dr->set_impl (dr);
+      return retval._retn ();
+    }
 
-      ::DDS::ReturnCode_t
-      RTI_Subscriber_i::get_datareaders (
-        ::DDS::DataReaderSeq & /*readers*/,
-        ::DDS::SampleStateMask /*sample_states*/,
-        ::DDS::ViewStateMask /*view_states*/,
-        ::DDS::InstanceStateMask /*instance_states*/)
-      {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
-      }
+    ::DDS::ReturnCode_t
+    CCM_DDS_Subscriber_i::get_datareaders (
+      ::DDS::DataReaderSeq & /*readers*/,
+      ::DDS::SampleStateMask /*sample_states*/,
+      ::DDS::ViewStateMask /*view_states*/,
+      ::DDS::InstanceStateMask /*instance_states*/)
+    {
+      throw CORBA::NO_IMPLEMENT ();
+      // Add your implementation here
+    }
 
-      ::DDS::ReturnCode_t
-      RTI_Subscriber_i::notify_datareaders (void)
-      {
-        return this->impl ()->notify_datareaders ();
-      }
+    ::DDS::ReturnCode_t
+    CCM_DDS_Subscriber_i::notify_datareaders (void)
+    {
+      return this->impl ()->notify_datareaders ();
+    }
 
-      ::DDS::ReturnCode_t
-      RTI_Subscriber_i::set_qos (
-        const ::DDS::SubscriberQos & /*qos*/)
-      {
-        DDS_SubscriberQos rti_impl_qos;
+    ::DDS::ReturnCode_t
+    CCM_DDS_Subscriber_i::set_qos (
+      const ::DDS::SubscriberQos & /*qos*/)
+    {
+      DDS_SubscriberQos rti_impl_qos;
 /*        rti_impl_qos.presentation = qos.presentation;
-        rti_impl_qos.partition = qos.partition;
-        rti_impl_qos.group_data = qos.group_data;
-        rti_impl_qos.entity_factory = qos.entity_factory;*/
-        return this->impl ()->set_qos (rti_impl_qos);
-      }
+      rti_impl_qos.partition = qos.partition;
+      rti_impl_qos.group_data = qos.group_data;
+      rti_impl_qos.entity_factory = qos.entity_factory;*/
+      return this->impl ()->set_qos (rti_impl_qos);
+    }
 
-      ::DDS::ReturnCode_t
-      RTI_Subscriber_i::get_qos (
-        ::DDS::SubscriberQos & /*qos*/)
-      {
-        DDS_SubscriberQos rti_impl_qos;
-        ::DDS::ReturnCode_t const rti_retcode = this->impl ()->get_qos (rti_impl_qos);
-        /*qos.presentation = rti_impl_qos.presentation;
-        qos.partition = rti_impl_qos.partition;
-        qos.group_data = rti_impl_qos.group_data;
-        qos.entity_factory = rti_impl_qos.entity_factory;*/
-        return rti_retcode;
-      }
+    ::DDS::ReturnCode_t
+    CCM_DDS_Subscriber_i::get_qos (
+      ::DDS::SubscriberQos & /*qos*/)
+    {
+      DDS_SubscriberQos rti_impl_qos;
+      ::DDS::ReturnCode_t const rti_retcode = this->impl ()->get_qos (rti_impl_qos);
+      /*qos.presentation = rti_impl_qos.presentation;
+      qos.partition = rti_impl_qos.partition;
+      qos.group_data = rti_impl_qos.group_data;
+      qos.entity_factory = rti_impl_qos.entity_factory;*/
+      return rti_retcode;
+    }
 
-      ::DDS::ReturnCode_t
-      RTI_Subscriber_i::set_listener (
-        ::DDS::SubscriberListener_ptr a_listener,
-        ::DDS::StatusMask mask)
-      {
-        DDS4CCM_TRACE ("RTI_Subscriber_i::set_listener");
+    ::DDS::ReturnCode_t
+    CCM_DDS_Subscriber_i::set_listener (
+      ::DDS::SubscriberListener_ptr a_listener,
+      ::DDS::StatusMask mask)
+    {
+      DDS4CCM_TRACE ("CCM_DDS_Subscriber_i::set_listener");
 
-        RTI_SubscriberListener_i* rti_impl_list = 0;
-        if (!CORBA::is_nil (a_listener))
-          {
-            ACE_NEW_THROW_EX (rti_impl_list,
-                              RTI_SubscriberListener_i (a_listener),
-                              CORBA::NO_MEMORY ());
-          }
-        return this->impl ()->set_listener (rti_impl_list, mask);
-      }
+      CCM_DDS_SubscriberListener_i* rti_impl_list = 0;
+      if (!CORBA::is_nil (a_listener))
+        {
+          ACE_NEW_THROW_EX (rti_impl_list,
+                            CCM_DDS_SubscriberListener_i (a_listener),
+                            CORBA::NO_MEMORY ());
+        }
+      return this->impl ()->set_listener (rti_impl_list, mask);
+    }
 
-      ::DDS::SubscriberListener_ptr
-      RTI_Subscriber_i::get_listener (void)
-      {
-        DDS4CCM_TRACE ("RTI_Subscriber_i::get_listener");
+    ::DDS::SubscriberListener_ptr
+    CCM_DDS_Subscriber_i::get_listener (void)
+    {
+      DDS4CCM_TRACE ("CCM_DDS_Subscriber_i::get_listener");
 
-        DDSSubscriberListener *rti_impl_list = this->impl ()->get_listener ();
-        RTI_SubscriberListener_i *list_proxy = dynamic_cast <RTI_SubscriberListener_i *> (rti_impl_list);
-        if (!list_proxy)
-          {
-            DDS4CCM_DEBUG (6, (LM_DEBUG, "RTI_Subscriber_i::get_listener - "
-                                      "DDS returned a NIL listener.\n"));
-            return ::DDS::SubscriberListener::_nil ();
-          }
-        return list_proxy->get_subscriber_listener ();
-      }
+      DDSSubscriberListener *rti_impl_list = this->impl ()->get_listener ();
+      CCM_DDS_SubscriberListener_i *list_proxy = dynamic_cast <CCM_DDS_SubscriberListener_i *> (rti_impl_list);
+      if (!list_proxy)
+        {
+          DDS4CCM_DEBUG (6, (LM_DEBUG, "CCM_DDS_Subscriber_i::get_listener - "
+                                    "DDS returned a NIL listener.\n"));
+          return ::DDS::SubscriberListener::_nil ();
+        }
+      return list_proxy->get_subscriber_listener ();
+    }
 
-      ::DDS::ReturnCode_t
-      RTI_Subscriber_i::begin_access (void)
-      {
-        return this->impl ()->begin_access ();
-      }
+    ::DDS::ReturnCode_t
+    CCM_DDS_Subscriber_i::begin_access (void)
+    {
+      return this->impl ()->begin_access ();
+    }
 
-      ::DDS::ReturnCode_t
-      RTI_Subscriber_i::end_access (void)
-      {
-        return this->impl ()->end_access ();
-      }
+    ::DDS::ReturnCode_t
+    CCM_DDS_Subscriber_i::end_access (void)
+    {
+      return this->impl ()->end_access ();
+    }
 
-      ::DDS::DomainParticipant_ptr
-      RTI_Subscriber_i::get_participant (void)
-      {
-        ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
-        ACE_NEW_THROW_EX (retval,
-                          RTI_DomainParticipant_i (),
-                          CORBA::NO_MEMORY ());
-        DDSDomainParticipant* p = this->impl ()->get_participant ();
-        RTI_DomainParticipant_i *rti_dp = dynamic_cast < RTI_DomainParticipant_i *> (retval.in ());
-        rti_dp->set_impl (p);
-        return retval._retn ();
-      }
+    ::DDS::DomainParticipant_ptr
+    CCM_DDS_Subscriber_i::get_participant (void)
+    {
+      ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      DDSDomainParticipant* p = this->impl ()->get_participant ();
+      ACE_NEW_THROW_EX (retval,
+                        CCM_DDS_DomainParticipant_i (p),
+                        CORBA::NO_MEMORY ());
+#else
+      ::DDS::DomainParticipant_var p = this->impl ()->get_participant ();
+      ACE_NEW_THROW_EX (retval,
+                        CCM_DDS_DomainParticipant_i (p.in ()),
+                        CORBA::NO_MEMORY ());
+#endif
+      return retval._retn ();
+    }
 
-      ::DDS::ReturnCode_t
-      RTI_Subscriber_i::set_default_datareader_qos (
-        const ::DDS::DataReaderQos & /*qos*/)
-      {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
-      }
+    ::DDS::ReturnCode_t
+    CCM_DDS_Subscriber_i::set_default_datareader_qos (
+      const ::DDS::DataReaderQos & /*qos*/)
+    {
+      throw CORBA::NO_IMPLEMENT ();
+      // Add your implementation here
+    }
 
-      ::DDS::ReturnCode_t
-      RTI_Subscriber_i::get_default_datareader_qos (
-        ::DDS::DataReaderQos & /*qos*/)
-      {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
-      }
+    ::DDS::ReturnCode_t
+    CCM_DDS_Subscriber_i::get_default_datareader_qos (
+      ::DDS::DataReaderQos & /*qos*/)
+    {
+      throw CORBA::NO_IMPLEMENT ();
+      // Add your implementation here
+    }
 
-      ::DDS::ReturnCode_t
-      RTI_Subscriber_i::copy_from_topic_qos (
-        ::DDS::DataReaderQos & /*a_datareader_qos*/,
-        const ::DDS::TopicQos & /*a_impl_qos*/)
-      {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
-      }
+    ::DDS::ReturnCode_t
+    CCM_DDS_Subscriber_i::copy_from_topic_qos (
+      ::DDS::DataReaderQos & /*a_datareader_qos*/,
+      const ::DDS::TopicQos & /*a_impl_qos*/)
+    {
+      throw CORBA::NO_IMPLEMENT ();
+      // Add your implementation here
+    }
 
-      DDSSubscriber *
-      RTI_Subscriber_i::get_impl (void)
-      {
-        return this->impl_;
-      }
+    DDSSubscriber *
+    CCM_DDS_Subscriber_i::get_impl (void)
+    {
+      return this->impl_;
+    }
 
-      void
-      RTI_Subscriber_i::set_impl (DDSSubscriber * sub)
-      {
-        this->impl_ = sub;
-      }
+    void
+    CCM_DDS_Subscriber_i::set_impl (DDSSubscriber * sub)
+    {
+      this->impl_ = sub;
+    }
 
-      DDSSubscriber *
-      RTI_Subscriber_i::impl (void)
-      {
-        if (!this->impl_)
-          {
-            throw ::CORBA::BAD_INV_ORDER ();
-          }
-        return this->impl_;
-      }
+    DDSSubscriber *
+    CCM_DDS_Subscriber_i::impl (void)
+    {
+      if (!this->impl_)
+        {
+          throw ::CORBA::BAD_INV_ORDER ();
+        }
+      return this->impl_;
     }
   }
 }

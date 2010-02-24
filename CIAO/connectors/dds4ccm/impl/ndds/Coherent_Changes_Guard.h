@@ -26,19 +26,16 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    namespace RTI
+    class DDS4CCM_NDDS_IMPL_Export Coherent_Changes_Guard :
+      private ACE_Copy_Disabled
     {
-      class DDS4CCM_NDDS_IMPL_Export Coherent_Changes_Guard :
-        private ACE_Copy_Disabled
-      {
-        public:
-          Coherent_Changes_Guard (::DDSPublisher* p, bool coherent_write);
-          ~Coherent_Changes_Guard ();
-        private:
-          ::DDSPublisher* p_;
-          bool const coherent_write_;
-      };
-    }
+      public:
+        Coherent_Changes_Guard (::DDSPublisher* p, bool coherent_write);
+        ~Coherent_Changes_Guard ();
+      private:
+        ::DDSPublisher* p_;
+        bool const coherent_write_;
+    };
   }
 }
 

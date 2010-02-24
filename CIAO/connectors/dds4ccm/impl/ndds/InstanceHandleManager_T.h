@@ -16,36 +16,33 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    namespace RTI
+    template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
+    class InstanceHandleManager_T :
+      public virtual BASE_TYPE,
+      public virtual ::CORBA::LocalObject,
+      private virtual ACE_Copy_Disabled
     {
-      template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
-      class InstanceHandleManager_T :
-        public virtual BASE_TYPE,
-        public virtual ::CORBA::LocalObject,
-        private virtual ACE_Copy_Disabled
-      {
-      public:
-        /// Constructor
-        InstanceHandleManager_T (void);
+    public:
+      /// Constructor
+      InstanceHandleManager_T (void);
 
-        /// Destructor
-        virtual ~InstanceHandleManager_T (void);
+      /// Destructor
+      virtual ~InstanceHandleManager_T (void);
 
-        virtual ::DDS::InstanceHandle_t register_instance (
-          const typename DDS_TYPE::value_type & datum);
+      virtual ::DDS::InstanceHandle_t register_instance (
+        const typename DDS_TYPE::value_type & datum);
 
-        virtual void unregister_instance (
-          const typename DDS_TYPE::value_type & datum,
-          const ::DDS::InstanceHandle_t & instance_handle);
+      virtual void unregister_instance (
+        const typename DDS_TYPE::value_type & datum,
+        const ::DDS::InstanceHandle_t & instance_handle);
 
-        void set_impl (::DDS::DataWriter_ptr writer);
+      void set_impl (::DDS::DataWriter_ptr writer);
 
-        typename DDS_TYPE::data_writer * impl (void);
+      typename DDS_TYPE::data_writer * impl (void);
 
-      private:
-        typename DDS_TYPE::data_writer *impl_;
-      };
-    }
+    private:
+      typename DDS_TYPE::data_writer *impl_;
+    };
   }
 }
 
