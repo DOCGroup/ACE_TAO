@@ -33,7 +33,7 @@ namespace CIAO
         return this->impl ()->set_qos (ddsqos);
 #else
         return this->impl ()->set_qos (qos);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -46,7 +46,7 @@ namespace CIAO
         return retval;
 #else
         return this->impl ()->get_qos (qos);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -66,7 +66,7 @@ namespace CIAO
         return this->impl ()->set_listener (rti_impl_list, mask);
 #else
         return this->impl ()->set_listener (a_listener, mask);
-#endif        
+#endif
       }
 
       ::DDS::TopicListener_ptr
@@ -86,7 +86,7 @@ namespace CIAO
         return list_proxy->get_topiclistener ();
 #else
         return this->impl ()->get_listener ();
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -98,7 +98,7 @@ namespace CIAO
         return this->impl ()->get_inconsistent_topic_status (ddsstatus);
 #else
         return this->impl ()->get_inconsistent_topic_status (a_status);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -122,7 +122,7 @@ namespace CIAO
         return retval._retn ();
 #else
         return this->impl ()->get_statuscondition ();
-#endif        
+#endif
       }
 
       ::DDS::StatusMask
@@ -141,7 +141,7 @@ namespace CIAO
         return handle;
 #else
         return this->impl ()->get_instance_handle ();
-#endif        
+#endif
       }
 
       char *
@@ -151,7 +151,7 @@ namespace CIAO
         return CORBA::string_dup (this->impl ()->get_type_name ());
 #else
         return this->impl ()->get_type_name ();
-#endif        
+#endif
       }
 
       char *
@@ -161,7 +161,7 @@ namespace CIAO
         return CORBA::string_dup (this->impl ()->get_name ());
 #else
         return this->impl ()->get_name ();
-#endif        
+#endif
       }
 
       ::DDS::DomainParticipant_ptr
@@ -179,7 +179,7 @@ namespace CIAO
         return retval._retn ();
 #else
         return this->impl ()->get_participant ();
-#endif        
+#endif
       }
 
       DDSTopic *

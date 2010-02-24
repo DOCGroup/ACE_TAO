@@ -42,7 +42,7 @@ namespace CIAO
         this->impl_->on_data_on_readers (sub.in ());
 #else
         this->impl_->on_data_on_readers (the_subscriber);
-#endif        
+#endif
         the_subscriber->notify_datareaders ();
       }
 
@@ -63,7 +63,7 @@ namespace CIAO
         this->impl_->on_requested_deadline_missed (dds_reader.in (), ddsstatus);
 #else
         this->impl_->on_requested_deadline_missed (the_reader, status);
-#endif        
+#endif
       }
 
       void
@@ -83,7 +83,7 @@ namespace CIAO
         this->impl_->on_requested_incompatible_qos (dds_reader.in (), ddsstatus);
 #else
         this->impl_->on_requested_incompatible_qos (the_reader, status);
-#endif        
+#endif
       }
 
       void
@@ -103,7 +103,7 @@ namespace CIAO
         this->impl_->on_sample_rejected (dds_reader.in (), ddsstatus);
 #else
         this->impl_->on_sample_rejected (the_reader, status);
-#endif        
+#endif
       }
 
       void
@@ -123,7 +123,7 @@ namespace CIAO
         this->impl_->on_liveliness_changed (dds_reader.in (), ddsstatus);
 #else
         this->impl_->on_liveliness_changed (the_reader, status);
-#endif        
+#endif
       }
 
       void
@@ -140,7 +140,7 @@ namespace CIAO
         this->impl_->on_data_available (dds_reader.in ());
 #else
         this->impl_->on_data_available (the_reader);
-#endif        
+#endif
       }
 
       void
@@ -160,7 +160,7 @@ namespace CIAO
         this->impl_->on_subscription_matched (dds_reader.in (), ddsstatus);
 #else
         this->impl_->on_subscription_matched (the_reader, status);
-#endif        
+#endif
       }
 
       void
@@ -180,7 +180,7 @@ namespace CIAO
         this->impl_->on_sample_lost (dds_reader.in (), ddsstatus);
 #else
         this->impl_->on_sample_lost (the_reader, status);
-#endif        
+#endif
       }
 
       ::DDS::SubscriberListener_ptr

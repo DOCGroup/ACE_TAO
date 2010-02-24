@@ -79,7 +79,7 @@ namespace CIAO
                               qos,
                               a_listener,
                               mask);
-#endif        
+#endif
       }
 
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
@@ -247,7 +247,7 @@ namespace CIAO
         return retval._retn ();
 #else
         return DDSDomainParticipantFactory::get_instance ()->lookup_participant (domain_id);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t

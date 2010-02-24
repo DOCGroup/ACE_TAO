@@ -33,25 +33,27 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DataWriter_i::set_qos (const ::DDS::DataWriterQos & qos)
       {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         DDS4CCM_TRACE ("RTI_DataWriter_i::set_qos");
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+        ACE_UNUSED_ARG (qos);
         throw CORBA::NO_IMPLEMENT ();
         // Add your implementation here
 #else
         return this->impl ()->set_qos (qos);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
       RTI_DataWriter_i::get_qos (::DDS::DataWriterQos & qos)
       {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         DDS4CCM_TRACE ("RTI_DataWriter_i::get_qos");
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+        ACE_UNUSED_ARG (qos);
         throw CORBA::NO_IMPLEMENT ();
         // Add your implementation here
 #else
         return this->impl ()->get_qos (qos);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -69,7 +71,7 @@ namespace CIAO
         return this->impl ()->set_listener (rti_impl_list, mask);
 #else
         return this->impl ()->set_listener (a_listener, mask);
-#endif        
+#endif
       }
 
       ::DDS::DataWriterListener_ptr
@@ -87,7 +89,7 @@ namespace CIAO
         return list_proxy->get_datawriterlistener ();
 #else
         return this->impl ()->get_listener ();
-#endif        
+#endif
       }
 
       ::DDS::Topic_ptr
@@ -105,7 +107,7 @@ namespace CIAO
         return retval._retn ();
 #else
         return this->impl ()->get_topic ();
-#endif        
+#endif
       }
 
       ::DDS::Publisher_ptr
@@ -123,7 +125,7 @@ namespace CIAO
         return retval._retn ();
 #else
         return this->impl ()->get_publisher ();
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -135,7 +137,7 @@ namespace CIAO
        return this->impl ()->wait_for_acknowledgments (rtiduration);
 #else
        return this->impl ()->wait_for_acknowledgments (max_wait);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -148,7 +150,7 @@ namespace CIAO
         return retval;
 #else
         return this->impl ()->get_liveliness_lost_status (status);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -161,7 +163,7 @@ namespace CIAO
         return retval;
 #else
         return this->impl ()->get_offered_deadline_missed_status (status);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -174,7 +176,7 @@ namespace CIAO
         return retval;
 #else
         return this->impl ()->get_offered_incompatible_qos_status (status);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -187,7 +189,7 @@ namespace CIAO
         return retval;
 #else
         return this->impl ()->get_publication_matched_status (status);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -206,7 +208,7 @@ namespace CIAO
         return retval;
 #else
         return this->impl ()->get_matched_subscriptions (subscription_handles);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -215,11 +217,13 @@ namespace CIAO
       {
         DDS4CCM_TRACE ("RTI_DataWriter_i::get_matched_subscription_data");
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+        ACE_UNUSED_ARG (subscription_data);
+        ACE_UNUSED_ARG (subscription_handle);
         throw CORBA::NO_IMPLEMENT ();
         // Add your implementation here
 #else
         return this->impl ()->get_matched_subscription_data (subscription_data, subscription_handle);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -243,7 +247,7 @@ namespace CIAO
         return retval._retn ();
 #else
         return this->impl ()->get_statuscondition ();
-#endif        
+#endif
       }
 
       ::DDS::StatusMask
@@ -262,7 +266,7 @@ namespace CIAO
         return handle;
 #else
         return this->impl ()->get_instance_handle ();
-#endif        
+#endif
       }
 
       DDSDataWriter *

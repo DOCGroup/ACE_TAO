@@ -63,7 +63,7 @@ namespace CIAO
         return dds_reader._retn ();
 #else
         return this->impl ()->get_datareader ();
-#endif        
+#endif
       }
 
       char *
@@ -73,7 +73,7 @@ namespace CIAO
         return ::CORBA::string_dup (this->impl ()->get_query_expression ());
 #else
         return this->impl ()->get_query_expression ();
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -88,7 +88,7 @@ namespace CIAO
         return retval;
 #else
         return this->impl ()->get_query_parameters (query_parameters);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -101,7 +101,7 @@ namespace CIAO
         return this->impl ()->set_query_parameters (parameters);
 #else
         return this->impl ()->set_query_parameters (query_parameters);
-#endif        
+#endif
       }
 
       DDSQueryCondition *
