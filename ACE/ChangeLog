@@ -1,3 +1,8 @@
+Wed Feb 24 08:45:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          2434 should run now
+
 Wed Feb 24 08:41:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-hpux-11.00.h:
