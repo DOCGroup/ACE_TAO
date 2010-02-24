@@ -94,8 +94,10 @@ namespace CIAO
         ::DDS::PublisherListener_ptr a_listener,
         ::DDS::StatusMask mask)
       {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_publisher");
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+
+        ACE_UNUSED_ARG (qos);
 
         DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipant_i::create_publisher - "
                      "Creating Publisher\n"));
@@ -170,7 +172,7 @@ namespace CIAO
         return retval;
 #else
         return this->impl ()->delete_publisher (p);
-#endif        
+#endif
       }
 
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
@@ -232,6 +234,8 @@ namespace CIAO
         DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_subscriber");
 
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+        ACE_UNUSED_ARG (qos);
+
         DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "RTI_DomainParticipant_i::create_subscriber - "
                      "Creating Subscriber\n"));
 
@@ -336,6 +340,8 @@ namespace CIAO
         DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_topic");
 
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+        ACE_UNUSED_ARG (qos);
+
         if (impl_name == 0)
           {
             DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic - "
@@ -684,7 +690,7 @@ namespace CIAO
         return this->impl_->set_listener (rti_impl_list, mask);
 #else
         return this->impl_->set_listener (a_listener, mask);
-#endif        
+#endif
       }
 
       ::DDS::DomainParticipantListener_ptr
@@ -704,7 +710,7 @@ namespace CIAO
         return list_proxy->get_domainparticipantlistener ();
 #else
         return this->impl ()->get_listener ();
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -728,7 +734,7 @@ namespace CIAO
         return this->impl ()->ignore_topic (rti_handle);
 #else
         return this->impl ()->ignore_topic (handle);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -923,7 +929,7 @@ namespace CIAO
         return handle;
 #else
         return this->impl ()->get_instance_handle ();
-#endif        
+#endif
       }
 
       DDSDomainParticipant *

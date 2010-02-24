@@ -98,7 +98,7 @@ namespace CIAO
       on_reliable_reader_activity_changed (
         ::DDS::DataWriter_ptr ,
         const ::DDS::ReliableReaderActivityChangedStatus & );
-#endif        
+#endif
 
     private:
       ::CCM_DDS::ConnectorStatusListener_var error_listener_;

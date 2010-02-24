@@ -57,7 +57,7 @@ namespace CIAO
         return retval._retn ();
 #else
         return this->impl ()->get_statuscondition ();
-#endif        
+#endif
       }
 
       ::DDS::StatusMask
@@ -76,7 +76,7 @@ namespace CIAO
         return handle;
 #else
         return this->impl ()->get_instance_handle ();
-#endif        
+#endif
       }
 
       ::DDS::ReadCondition_ptr
@@ -97,7 +97,7 @@ namespace CIAO
         return retval._retn ();
 #else
         return this->impl ()->create_readcondition (sample_states, view_states, instance_states);
-#endif        
+#endif
       }
 
       ::DDS::QueryCondition_ptr
@@ -134,7 +134,7 @@ namespace CIAO
                                        instance_states,
                                        query_expression,
                                        query_parameters);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -150,7 +150,7 @@ namespace CIAO
         return this->impl ()->delete_readcondition (rc->get_impl ());
 #else
         return this->impl ()->delete_readcondition (a_condition);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -169,7 +169,7 @@ namespace CIAO
         return this->impl ()->set_qos (ddsqos);
 #else
         return this->impl ()->set_qos (qos);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -183,7 +183,7 @@ namespace CIAO
         return retval;
 #else
         return this->impl ()->get_qos (qos);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -204,7 +204,7 @@ namespace CIAO
         return this->impl ()->set_listener (rti_drl, mask);
 #else
         return this->impl ()->set_listener (a_listener, mask);
-#endif        
+#endif
       }
 
       ::DDS::DataReaderListener_ptr
@@ -224,7 +224,7 @@ namespace CIAO
         return rti_drl->get_datareaderlistener ();
 #else
         return this->impl ()->get_listener ();
-#endif        
+#endif
       }
 
       ::DDS::TopicDescription_ptr
@@ -242,7 +242,7 @@ namespace CIAO
         return dds_td._retn ();
 #else
         return this->impl ()->get_topicdescription ();
-#endif        
+#endif
       }
 
       ::DDS::Subscriber_ptr
@@ -260,7 +260,7 @@ namespace CIAO
         return dds_td._retn ();
 #else
         return this->impl ()->get_subscriber ();
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -274,7 +274,7 @@ namespace CIAO
         return retval;
 #else
         return this->impl ()->get_sample_rejected_status (status);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -288,7 +288,7 @@ namespace CIAO
         return retval;
 #else
         return this->impl ()->get_liveliness_changed_status (status);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -302,7 +302,7 @@ namespace CIAO
         return retval;
 #else
         return this->impl ()->get_requested_deadline_missed_status (status);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -316,7 +316,7 @@ namespace CIAO
         return retval;
 #else
         return this->impl ()->get_requested_incompatible_qos_status (status);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -330,7 +330,7 @@ namespace CIAO
         return retval;
 #else
         return this->impl ()->get_subscription_matched_status (status);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -344,7 +344,7 @@ namespace CIAO
         return retval;
 #else
         return this->impl ()->get_sample_lost_status (status);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -357,7 +357,7 @@ namespace CIAO
        return this->impl ()->wait_for_historical_data (rtiduration);
 #else
        return this->impl ()->wait_for_historical_data (max_wait);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -371,7 +371,7 @@ namespace CIAO
         return retval;
 #else
         return this->impl ()->get_matched_publications (publication_handles);
-#endif        
+#endif
       }
 
       ::DDS::ReturnCode_t
@@ -380,11 +380,13 @@ namespace CIAO
         DDS_INSTANCE_HANDLE_T_IN publication_handle)
       {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+        ACE_UNUSED_ARG (publication_data);
+        ACE_UNUSED_ARG (publication_handle);
         throw CORBA::NO_IMPLEMENT ();
         // Add your implementation here
 #else
         return this->impl ()->get_matched_publication_data (publication_data, publication_handle);
-#endif        
+#endif
       }
 
       DDSDataReader *

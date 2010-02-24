@@ -67,7 +67,7 @@ namespace CIAO
         return handle;
 #else
         return this->impl ()->get_instance_handle ();
-#endif        
+#endif
       }
 
       DDSDataReader *
@@ -80,7 +80,7 @@ namespace CIAO
         DDS_DataReaderQos rti_qos = DDS_DATAREADER_QOS_DEFAULT;
 #else
         ::DDS::DataReaderQos rti_qos;
-#endif        
+#endif
         return this->impl ()->create_datareader (topic,
                                                  rti_qos,
                                                  rti_drl,
@@ -97,7 +97,7 @@ namespace CIAO
         DDS_DataReaderQos rti_qos = DDS_DATAREADER_QOS_DEFAULT;
 #else
         DDS::DataReaderQos rti_qos;
-#endif        
+#endif
         return this->impl ()->create_datareader (topic,
                                                  rti_qos,
                                                  rti_drl,

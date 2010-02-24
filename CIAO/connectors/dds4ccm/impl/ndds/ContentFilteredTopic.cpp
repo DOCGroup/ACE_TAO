@@ -41,7 +41,7 @@ namespace CIAO
 #else
         ::DDS::ReturnCode_t retval = this->impl ()->get_expression_parameters (
                                                                     expression_parameters);
-#endif        
+#endif
         return retval;
       }
 
@@ -57,7 +57,7 @@ namespace CIAO
         return this->impl ()->set_expression_parameters (parameters);
 #else
         return this->impl ()->set_expression_parameters (expression_parameters);
-#endif        
+#endif
       }
 
       ::DDS::Topic_ptr

@@ -242,13 +242,15 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
 {
   if (!CORBA::is_nil (error_listener) || CIAO_debug_level >= 10)
     {
-      return ::DDS::OFFERED_DEADLINE_MISSED_STATUS |
+      return DDS_STATUS_MASK_ALL;
+/*      
+              ::DDS::OFFERED_DEADLINE_MISSED_STATUS |
              ::DDS::OFFERED_INCOMPATIBLE_QOS_STATUS |
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
              ::DDS::RELIABLE_READER_ACTIVITY_CHANGED_STATUS |
 #endif
              ::DDS::LIVELINESS_LOST_STATUS |
-             ::DDS::PUBLICATION_MATCHED_STATUS;
+             ::DDS::PUBLICATION_MATCHED_STATUS;*/
     }
   else
     {
