@@ -28,26 +28,24 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    namespace RTI
+    class DDS4CCM_NDDS_IMPL_Export CCM_DDS_TopicListener_i :
+      public virtual ::DDSTopicListener
     {
-      class DDS4CCM_NDDS_IMPL_Export RTI_TopicListener_i :
-        public virtual ::DDSTopicListener
-      {
-      public:
-        // Constructor
-        RTI_TopicListener_i (::DDS::TopicListener_ptr p);
+    public:
+      /// Constructor
+      CCM_DDS_TopicListener_i (::DDS::TopicListener_ptr p);
 
-        // Destructor
-        virtual ~RTI_TopicListener_i (void);
+      /// Destructor
+      virtual ~CCM_DDS_TopicListener_i (void);
 
-        virtual void on_inconsistent_topic(::DDSTopic* topic,
-          const ::DDS_InconsistentTopicStatus& status);
+      virtual void on_inconsistent_topic(
+        ::DDSTopic* topic,
+        const ::DDS_InconsistentTopicStatus& status);
 
-        ::DDS::TopicListener_ptr get_topiclistener (void);
-      private:
-        ::DDS::TopicListener_var impl_;
-      };
-    }
+      ::DDS::TopicListener_ptr get_topiclistener (void);
+    private:
+      ::DDS::TopicListener_var impl_;
+    };
   }
 }
 

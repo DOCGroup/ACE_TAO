@@ -12,7 +12,7 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
 
-#if defined (DDS_MAJOR_VERSION)
+#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::InstanceHandle_t DDS_InstanceHandle_t;
 typedef ::DDS::SampleInfoSeq DDS_SampleInfoSeq;
 #endif

@@ -45,19 +45,19 @@ namespace CIAO
       ::DDS::StatusCondition_ptr
       RTI_DataReader_i::get_statuscondition (void)
       {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
-        ACE_NEW_THROW_EX (retval,
-                          RTI_StatusCondition_i (),
-                          CORBA::NO_MEMORY ());
-
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
-        RTI_StatusCondition_i *rti_sc = dynamic_cast < RTI_StatusCondition_i *> (retval.in ());
-        rti_sc->set_impl (sc);
-        return retval._retn ();
+        ACE_NEW_THROW_EX (retval,
+                          CCM_DDS_StatusCondition_i (sc),
+                          CORBA::NO_MEMORY ());
 #else
-        return this->impl ()->get_statuscondition ();
+        ::DDS::StatusCondition_var sc = this->impl ()->get_statuscondition ();
+        ACE_NEW_THROW_EX (retval,
+                          CCM_DDS_StatusCondition_i (sc.in ()),
+                          CORBA::NO_MEMORY ());
 #endif
+        return retval._retn ();
       }
 
       ::DDS::StatusMask
@@ -230,19 +230,19 @@ namespace CIAO
       ::DDS::TopicDescription_ptr
       RTI_DataReader_i::get_topicdescription (void)
       {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDS::TopicDescription_var dds_td = ::DDS::TopicDescription::_nil ();
-        ACE_NEW_THROW_EX (dds_td,
-                          RTI_TopicDescription_i (),
-                          CORBA::NO_MEMORY ());
-
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
         ::DDSTopicDescription* td = this->impl ()->get_topicdescription ();
-        RTI_TopicDescription_i *rti_td = dynamic_cast < RTI_TopicDescription_i *>(dds_td.in ());
-        rti_td->set_impl (td);
-        return dds_td._retn ();
+        ACE_NEW_THROW_EX (dds_td,
+                          CCM_DDS_TopicDescription_i (td),
+                          CORBA::NO_MEMORY ());
 #else
-        return this->impl ()->get_topicdescription ();
+        ::DDS::TopicDescription_var td = this->impl ()->get_topicdescription ();
+        ACE_NEW_THROW_EX (dds_td,
+                          CCM_DDS_TopicDescription_i (td.in ()),
+                          CORBA::NO_MEMORY ());
 #endif
+        return dds_td._retn ();
       }
 
       ::DDS::Subscriber_ptr

@@ -31,42 +31,33 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    namespace RTI
+    class DDS4CCM_NDDS_IMPL_Export CCM_DDS_StatusCondition_i :
+      public virtual ::DDS::CCM_StatusCondition,
+      public virtual ::CORBA::LocalObject
     {
-      class DDS4CCM_NDDS_IMPL_Export RTI_StatusCondition_i :
-        public virtual ::DDS::CCM_StatusCondition,
-        public virtual ::CORBA::LocalObject
-      {
-      public:
-        // Constructor
-        RTI_StatusCondition_i (void);
+    public:
+      /// Constructor
+      CCM_DDS_StatusCondition_i (DDSStatusCondition *sc);
 
-        // Destructor
-        virtual ~RTI_StatusCondition_i (void);
+      /// Destructor
+      virtual ~CCM_DDS_StatusCondition_i (void);
 
-        virtual ::CORBA::Boolean
-        get_trigger_value (void);
+      virtual ::CORBA::Boolean get_trigger_value (void);
 
-        virtual ::DDS::StatusMask
-        get_enabled_statuses (void);
+      virtual ::DDS::StatusMask get_enabled_statuses (void);
 
-        virtual ::DDS::ReturnCode_t
-        set_enabled_statuses (
-          ::DDS::StatusMask mask);
+      virtual ::DDS::ReturnCode_t set_enabled_statuses (::DDS::StatusMask mask);
 
-        virtual ::DDS::Entity_ptr
-        get_entity (void);
+      virtual ::DDS::Entity_ptr get_entity (void);
 
-        DDSStatusCondition * get_impl (void);
+      DDSStatusCondition * get_impl (void);
 
-        void set_impl (DDSStatusCondition * sc);
+      void set_impl (DDSStatusCondition * sc);
 
-      private:
-        DDSStatusCondition * impl_;
-
-        DDSStatusCondition * impl (void);
-      };
-    }
+    private:
+      DDSStatusCondition * impl_;
+      DDSStatusCondition * impl (void);
+    };
   }
 }
 
