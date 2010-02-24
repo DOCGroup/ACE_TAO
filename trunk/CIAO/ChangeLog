@@ -1,3 +1,22 @@
+Wed Feb 24 10:45:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.cpp
+        * connectors/dds4ccm/impl/ndds/DataReader.cpp
+        * connectors/dds4ccm/impl/ndds/DataWriter.cpp
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp
+        * connectors/dds4ccm/impl/ndds/Reader_T.h
+        * connectors/dds4ccm/impl/ndds/StatusCondition.cpp
+        * connectors/dds4ccm/impl/ndds/StatusCondition.h
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp
+        * connectors/dds4ccm/impl/ndds/Topic.cpp
+        * connectors/dds4ccm/impl/ndds/Topic.h
+        * connectors/dds4ccm/impl/ndds/TopicDescription.cpp
+        * connectors/dds4ccm/impl/ndds/TopicDescription.h
+        * connectors/dds4ccm/impl/ndds/TopicListener.cpp
+        * connectors/dds4ccm/impl/ndds/TopicListener.h
+          Cleaning up the implementation
+
 Wed Feb 24 08:09:43 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
