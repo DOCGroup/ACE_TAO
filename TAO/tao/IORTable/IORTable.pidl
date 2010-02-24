@@ -23,9 +23,6 @@
  */
 // ================================================================
 
-#ifndef TAO_IORTABLE_IORTABLE_PIDL
-#define TAO_IORTABLE_IORTABLE_PIDL
-
 /// Define a module to avoid namespace pollution
 module IORTable
 {
@@ -80,5 +77,3 @@ module IORTable
       raises (NotFound);
   };
 };
-
-#endif /* TAO_IORTABLE_IORTABLE_PIDL */

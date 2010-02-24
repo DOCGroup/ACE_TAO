@@ -1,22 +1,29 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    interface_svh.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Interfaces in the
- *  CIAO servant header file.
- *
- *
- *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO_IDL_BE
+//
+// = FILENAME
+//    interface_svh.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Interfaces in the
+//    CIAO servant header file.
+//
+// = AUTHOR
+//   Jeff Parsons <j.parsons@vanderbilt.edu>
+//
+// ============================================================================
 
 // ************************************************************
 // Interface visitor for CIAO servant header.
 // ************************************************************
+
+ACE_RCSID (be_visitor_interface,
+           interface_svh,
+           "$Id$")
 
 be_visitor_interface_svh::be_visitor_interface_svh (
   be_visitor_context *ctx)

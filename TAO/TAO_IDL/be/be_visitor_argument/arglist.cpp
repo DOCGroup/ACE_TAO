@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    arglist.cpp
- *
- *  $Id$
- *
- *  Visitor that generates the parameters in an Operation signature
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    arglist.cpp
+//
+// = DESCRIPTION
+//    Visitor that generates the parameters in an Operation signature
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_argument,
+           arglist,
+           "$Id$")
 
 
 // ************************************************************

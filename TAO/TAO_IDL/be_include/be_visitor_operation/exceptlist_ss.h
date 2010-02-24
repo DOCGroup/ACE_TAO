@@ -1,19 +1,23 @@
 // -*- C++ -*-
+//
+// $Id$
 
-//=============================================================================
-/**
- *  @file    exceptlist_ss.h
- *
- *  $Id$
- *
- *  Generates the array of user exception TypeCodes used by the
- *  skeletons.
- *
- *
- *  @author Ossama Othman
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    exceptlist_ss.h
+//
+// = DESCRIPTION
+//    Generates the array of user exception TypeCodes used by the
+//    skeletons.
+//
+// = AUTHOR
+//    Ossama Othman
+//
+// ============================================================================
 
 #ifndef _BE_VISITOR_OPERATION_EXCEPTIONLIST_SS_H_
 #define _BE_VISITOR_OPERATION_EXCEPTIONLIST_SS_H_
@@ -23,16 +27,17 @@
 // skeletons.
 // ***************************************************************************
 
-/**
- * @class be_visitor_operation_exceptlist_ss
- *
- * @brief be_visitor_operaion_exceptlist_ss
- *
- * This is a visitor to generate operation exception TypeCode list
- * to be used by the skeletons.
- */
 class be_visitor_operation_exceptlist_ss : public be_visitor_decl
 {
+  //
+  // = TITLE
+  //   be_visitor_operaion_exceptlist_ss
+  //
+  // = DESCRIPTION
+  //   This is a visitor to generate operation exception TypeCode list
+  //   to be used by the skeletons.
+  //
+  //
 public:
 
   /// constructor

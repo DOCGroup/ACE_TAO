@@ -2,6 +2,10 @@
 // $Id$
 //
 
+ACE_RCSID (be_visitor_interface, 
+           remote_proxy_impl_ch, 
+           "$Id$")
+
 be_visitor_interface_remote_proxy_impl_ch::
 be_visitor_interface_remote_proxy_impl_ch (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
@@ -39,9 +43,7 @@ be_visitor_interface_remote_proxy_impl_ch::visit_interface (
       << "," << be_idt_nl << "public virtual " 
       << "TAO_Remote_Object_Proxy_Impl";
 
-  AST_Decl::NodeType nt = node->node_type ();
-
-  if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
+  if (node->node_type () == AST_Decl::NT_component)
     {
       be_component *bc = be_component::narrow_from_decl (node);
       AST_Component *ac_base = bc->base_component ();

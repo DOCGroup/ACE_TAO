@@ -1,18 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_union.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_Union that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_union.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_Union that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_union.h"
 #include "be_union_branch.h"
@@ -27,6 +32,27 @@
 #include "utl_identifier.h"
 #include "idl_defines.h"
 #include "global_extern.h"
+
+ACE_RCSID (be,
+           be_union,
+           "$Id$")
+
+
+be_union::be_union (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType (),
+    UTL_Scope (),
+    AST_Structure (),
+    AST_Union (),
+    be_scope (),
+    be_decl (),
+    be_type ()
+{
+  // Always the case.
+  this->has_constructor (true);
+}
 
 be_union::be_union (AST_ConcreteType *dt,
                     UTL_ScopedName *n,
@@ -205,68 +231,49 @@ be_union::gen_empty_default_label (void)
     }
 
   AST_ConcreteType *disc = this->disc_type ();
-  if (disc == 0)
-    {
-      return true; // In reality this is an error.
-    }
-
   AST_Decl::NodeType nt = disc->node_type ();
-  ACE_UINT64 n_labels = this->nlabels ();
+  unsigned long n_labels = this->nlabels ();
 
   if (nt == AST_Decl::NT_enum)
     {
-      // Enums in CORBA are always 32bits in size, so unless
-      // there are that many enum labels in the set, it is
-      // incomplete (reguardless as to the actual member_count).
-      return (n_labels <= ACE_UINT32_MAX);
+      AST_Enum *e = AST_Enum::narrow_from_decl (disc);
+      
+      if (e == 0)
+        {
+          return true;
+        }
+
+      // If we have an enum and the number of labels if as big as the enum
+      // has members we don't have to generate a default label
+      if (n_labels == static_cast<unsigned long> (e->member_count ()))
+        {
+           return false;
+        }
+      else
+        {
+          return true;
+        }
     }
 
   AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (disc);
+
   if (pdt == 0)
     {
-      return true; // In reality this is an error.
+      return true;
     }
 
-  switch (pdt->pt ())
+  if (pdt->pt () == AST_PredefinedType::PT_boolean && n_labels == 2)
     {
-    case AST_PredefinedType::PT_boolean:
-      return (n_labels < 2);
-
-    case AST_PredefinedType::PT_char:
-      return (n_labels <= ACE_OCTET_MAX);
-
-    case AST_PredefinedType::PT_short:
-    case AST_PredefinedType::PT_ushort:
-      return (n_labels <= ACE_UINT16_MAX);
-
-    case AST_PredefinedType::PT_long:
-    case AST_PredefinedType::PT_ulong:
-      return (n_labels <= ACE_UINT32_MAX);
-
-    case AST_PredefinedType::PT_longlong:
-    case AST_PredefinedType::PT_ulonglong:
-      // We would wrap to 0 here - we are using a 64 bit count
-      // this case is so marginal as to always be incomplete.
-      return true;
-
-    // Keep fussy compilers happy.
-    default:
-      break;
+      return false;
     }
 
   return true;
 }
 
-AST_UnionBranch *
-be_union::be_add_union_branch (AST_UnionBranch *b)
-{
-  return this->fe_add_union_branch (b);
-}
-
-ACE_UINT64
+unsigned long
 be_union::nlabels (void)
 {
-  ACE_UINT64 retval = 0;
+  unsigned long retval = 0;
 
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();

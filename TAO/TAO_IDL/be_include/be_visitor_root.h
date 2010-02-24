@@ -1,18 +1,23 @@
 /* -*- c++ -*- */
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    be_visitor_root.h
- *
- *  $Id$
- *
- *  Concrete visitor for the Root class
- *
- *
- *  @author Aniruddha Gokhale and Carlos O'Ryan
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_root.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the Root class
+//
+// = AUTHOR
+//    Aniruddha Gokhale and Carlos O'Ryan
+//
+// ============================================================================
 
 #ifndef TAO_BE_VISITOR_ROOT_H
 #define TAO_BE_VISITOR_ROOT_H
@@ -33,8 +38,6 @@
 #include "be_visitor_root/root_ex_idl.h"
 #include "be_visitor_root/root_exh.h"
 #include "be_visitor_root/root_exs.h"
-#include "be_visitor_root/root_cnh.h"
-#include "be_visitor_root/root_cns.h"
 #include "be_visitor_root/any_op.h"
 #include "be_visitor_root/cdr_op.h"
 #include "be_visitor_root/serializer_op.h"

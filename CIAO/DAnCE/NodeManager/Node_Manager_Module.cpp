@@ -4,14 +4,16 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
+#include "tao/TAO_Singleton_Manager.h"
 #include "tao/StringSeqC.h"
 #include "tao/IORTable/IORTable.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/Naming/Naming_Loader.h"
 #include "ciao/Valuetype_Factories/Cookies.h"
 #include "ciao/ComponentServer/CIAO_PropertiesC.h"
 #include "DAnCE/Logger/Log_Macros.h"
-#include "DAnCE/DAnCE/DAnCE_PropertiesC.h"
+#include "DAnCE/Deployment/DAnCE_PropertiesC.h"
 #include "Node_Manager_Module.h"
 #include "NodeManager_Impl.h"
 
@@ -242,7 +244,7 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
 }
 
 CORBA::Object_ptr
-DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
+DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
                                          int argc,
                                          ACE_TCHAR *argv[])
 {
@@ -250,20 +252,20 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
     {
       if (CORBA::is_nil(orb))
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("DAnCE_NodeManager_Module::init - ")
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("DAnCE_NodeManager_Module::create_object - ")
                        ACE_TEXT("Attempted to create Node Manager with a nil orb.\n")));
           return CORBA::Object::_nil();
         }
 
       if (CORBA::is_nil(this->orb_.in()))
         {
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_NodeManager_Module::init - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_NodeManager_Module::create_object - ")
                        ACE_TEXT("NM's orb is nil.\n")));
           this->orb_ = CORBA::ORB::_duplicate (orb);
         }
       else if (ACE_OS::strcmp(orb->id(), this->orb_->id()) != 0)
         {
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_NodeManager_Module::init - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_NodeManager_Module::create_object - ")
                        ACE_TEXT("Resetting NM's orb.\n")));
           this->orb_ = CORBA::ORB::_duplicate (orb);
           this->domain_nc_ = CosNaming::NamingContext::_nil();
@@ -281,7 +283,7 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
         {
           try
             {
-              DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_NodeManager_Module::init - ")
+              DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_NodeManager_Module::create_object - ")
                            ACE_TEXT("Resolving DomainNC.\n")));
               CORBA::Object_var domain_obj = this->orb_->string_to_object (this->options_.domain_nc_);
               if (!CORBA::is_nil (domain_obj.in ()))
@@ -289,7 +291,7 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
                   this->domain_nc_ = CosNaming::NamingContext::_narrow (domain_obj.in());
                   if (CORBA::is_nil (this->domain_nc_.in ()))
                     {
-                      DANCE_ERROR (1, (LM_ERROR,DLINFO ACE_TEXT("DAnCE_NodeManager_Module::init - ")
+                      DANCE_ERROR (1, (LM_ERROR,DLINFO ACE_TEXT("DAnCE_NodeManager_Module::create_object - ")
                                     ACE_TEXT("Narrow to NamingContext return nil for DomainNC.\n")));
                       return CORBA::Object::_nil ();
                     }
@@ -297,19 +299,19 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
             }
           catch (const CORBA::Exception&)
             {
-              DANCE_DEBUG (6, (LM_WARNING, DLINFO ACE_TEXT("DAnCE_NodeManager_Module::init - ")
+              DANCE_DEBUG (6, (LM_WARNING, DLINFO ACE_TEXT("DAnCE_NodeManager_Module::create_object - ")
                              ACE_TEXT("DomainNC context not found!\n")));
             }
         }
 
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_NodeManager_Module::init - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_NodeManager_Module::create_object - ")
                     ACE_TEXT("Resolving plan NS naming context.\n")));
       CosNaming::NamingContext_var rebind_nc;
       if (this->options_.rebind_plan_ns_)
         {
           if (!this->options_.create_plan_ns_)
             {
-              DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
+              DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
                            ACE_TEXT ("Rebind_plan_ns option is enabled but Create_plan_ns is not.\n")));
               return CORBA::Object::_nil();
             }
@@ -323,7 +325,7 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
             {
               if (CORBA::is_nil (this->domain_nc_.in ()))
                 {
-                  DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
+                  DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
                                 ACE_TEXT ("The rebind plan is enabled but neither NC ")
                                 ACE_TEXT ("nor DomainNC are not supplied. No rebinding will be done.\n")
                                 ACE_TEXT ("Use the \"-rebind-plan-ns NC ior\" ")
@@ -341,16 +343,17 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
 
       if (CORBA::is_nil (adapter.in ()))
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
                         ACE_TEXT ("Unable to RIR the IORTable.\n")));
           return CORBA::Object::_nil ();
         }
 
       // Creating in process nameservice
       CosNaming::NamingContext_var plan_nc;
+      TAO_Naming_Loader loader;
       if (this->options_.create_plan_ns_)
         {
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
                         ACE_TEXT ("Resolving plan-specific naming context.\n")));
           CORBA::Object_var naming_obj;
           if (0 != this->options_.create_plan_ns_ior_)
@@ -359,7 +362,7 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
               plan_nc = CosNaming::NamingContext::_narrow (naming_obj.in());
               if (CORBA::is_nil (plan_nc.in()))
                 {
-                  DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
+                  DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
                                 ACE_TEXT ("Failed trying to narrow naming context ")
                                 ACE_TEXT ("for dance creating plan NC.\n")
                                 ACE_TEXT ("Use the \"--create-plan-ns NC ior\" ")
@@ -381,7 +384,7 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
               plan_nc = CosNaming::NamingContext::_narrow (naming_obj.in ());
               if (CORBA::is_nil (plan_nc.in ()))
                 {
-                  DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
+                  DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
                                 ACE_TEXT ("Fails trying to narrow naming context ")
                                 ACE_TEXT ("for dance creating plan NC.\n")
                                 ACE_TEXT ("Use the \"--create-plan-ns NC ior\" ")
@@ -391,7 +394,7 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
             }
           else if (CORBA::is_nil (this->domain_nc_.in ()))
             {
-              DANCE_ERROR (1, (LM_ERROR,DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
+              DANCE_ERROR (1, (LM_ERROR,DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
                             ACE_TEXT ("The create plan is enabled but neither NC ior ")
                             ACE_TEXT ("nor --process-ns or DomainNC option are not supplied.\n")
                             ACE_TEXT ("Use the \"--create-plan-ns NC ior\", \"--process-ns\" ")
@@ -407,12 +410,12 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
       // Make sure that we have only one Node Manager
       if (this->options_.node_managers_.size () != 1)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
                         ACE_TEXT ("For now only one node manager creation is supported.\n")));
           return CORBA::Object::_nil ();
         }
 
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
+      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
                     ACE_TEXT ("DAnCE_NodeManager::run_main - creating NodeManager for node %C\n"),
                     this->options_.node_managers_[0].c_str()));
 
@@ -426,7 +429,7 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
           node_name = node_name.substring (0, npos);
         }
 
-      DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
+      DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
                     ACE_TEXT ("Creating node named '%s' and outputting ior to file '%s'\n"),
                     node_name.c_str (),
                     node_file.c_str ()));
@@ -435,7 +438,7 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
       DAnCE::NodeManager_Impl * nm = 0;
       if (this->nm_map_.find (node_name, nm) == -1)
         {
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
                         ACE_TEXT ("Allocating new NodeManger servant instance for NodeManager\n")));
           int size = 64;
           DAnCE::PROPERTY_MAP properties (size);
@@ -447,7 +450,7 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
                                                    ACE_TEXT_ALWAYS_CHAR (node_name.c_str()),
                                                    properties),
                           CORBA::Object::_nil ());
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
                         ACE_TEXT ("New NodeManger servant instance for NodeManager allocated.\n")));
           this->nm_map_.bind (node_name, nm);
         }
@@ -466,10 +469,10 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
       // Binding ior to IOR Table
       adapter->bind (node_manager_oid.c_str (), ior.in ());
 
-      // Binding node manager to DomainNC
+      // Binding node menager to DomainNC
       if (!CORBA::is_nil (this->domain_nc_.in ()))
         {
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
                        ACE_TEXT ("Registering NM in NC as \"%C.NodeManager\".\n"), node_name.c_str ()));
           CosNaming::Name name (1);
           name.length (1);
@@ -481,10 +484,10 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
       // Writing ior to file
       if (0 != node_file.length ())
         {
-          DANCE_DEBUG (9, (LM_TRACE,  DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
+          DANCE_DEBUG (9, (LM_TRACE,  DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
                         ACE_TEXT ("Writing node IOR %C to file %C.\n"), node_file.c_str (), ior.in ()));
           if (!DAnCE::Node_Manager::write_IOR (node_file.c_str (), ior.in ()))
-            DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
+            DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
                           ACE_TEXT ("Error: Unable to write IOR to file %C\n"),
                           node_file.c_str ()));
         }
@@ -495,11 +498,11 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
 
       // Finishing Deployment part
       DANCE_DEBUG (6, (LM_NOTICE, DLINFO
-                    ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
+                    ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
                     ACE_TEXT ("DAnCE_NodeManager is running...\n")));
 
       DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                    ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
+                    ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
                     ACE_TEXT ("NodeManager IOR: %C\n"), ior.in ()));
 
       return nm_obj._retn ();
@@ -515,7 +518,7 @@ void
 DAnCE_NodeManager_Module::register_value_factories (void)
 {
   DANCE_TRACE("DAnCE_Node_Manager_Module::register_value_factories (void)");
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
+  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
                 ACE_TEXT ("Registering Cookie value factory.\n")));
   CORBA::ValueFactory_var vf = new Components::Cookie_init();
   vf = this->orb_->register_value_factory ("IDL:omg.org/Components/Cookie:1.0", vf.in());
@@ -554,7 +557,7 @@ DAnCE_NodeManager_Module::create_poas (void)
   catch (const PortableServer::POA::AdapterAlreadyExists &)
     {
       DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_poas - ")
-                    ACE_TEXT ("Using existing \"Managers\" POA\n")));
+                    ACE_TEXT ("Using exiswting \"Managers\" POA\n")));
       this->nm_poa_ = this->root_poa_->find_POA ("Managers", 0);
     }
 }
@@ -596,3 +599,6 @@ DAnCE_NodeManager_Module::create_nm_properties (DAnCE::PROPERTY_MAP &props)
     }
 }
 
+#ifndef BUILD_NODE_MANAGER_EXE
+ACE_FACTORY_DEFINE (DAnCE_NodeManager_Module, DAnCE_NodeManager_Module)
+#endif /*BUILD_NODE_MANAGER_EXE */

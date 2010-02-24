@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Echo_Caller.h"
+#include "tao/Messaging/Messaging.h"
 #include "tao/Utils/Servant_Var.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"

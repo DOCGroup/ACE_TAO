@@ -76,13 +76,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_expression.h"
 #include "ast_predefined_type.h"
+#include "ast_component.h"
 #include "utl_stack.h"
 #include "fe_utils.h"
 
 class AST_Root;
-class AST_ValueType;
-class AST_Component;
-class AST_Uses;
 class AST_Generator;
 class UTL_Error;
 class UTL_String;
@@ -313,7 +311,6 @@ public:
   bool boolean_seq_seen_;
   bool char_seq_seen_;
   bool component_seen_;
-  bool connector_seen_;
   bool double_seq_seen_;
   bool enum_seen_;
   bool exception_seen_;
@@ -597,11 +594,7 @@ public:
 
   void add_ciao_lem_file_names (const char *s);
   ACE_Unbounded_Queue<char *> & ciao_lem_file_names (void);
-  // Accessor/mutator for the ciao_lem_file_names_ member.
-
-  void add_ciao_rti_ts_file_names (const char *s);
-  ACE_Unbounded_Queue<char *> & ciao_rti_ts_file_names (void);
-  // Accessor/mutator for the ciao_rti_ts_file_names_ member.
+  // Accessor/mutator for the ciao_lem_file_names__ member.
 
   FILE * open_included_file (char const * filename,
                              char const *& directory);
@@ -824,9 +817,7 @@ private:
 
   ACE_Unbounded_Queue<char *> ciao_lem_file_names_;
   // Files parsed with ciao lem pragma
-
-  ACE_Unbounded_Queue<char *> ciao_rti_ts_file_names_;
-  // Files parsed with rti typesupport pragma
 };
+
 
 #endif  //_IDL_IDL_GLOBAL_HH

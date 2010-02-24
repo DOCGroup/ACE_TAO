@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    component_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Components in the client header.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    component_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Components in the client header.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_component,
+           component_ch,
+           "$Id$")
 
 // ******************************************************
 // Component visitor for client header
@@ -141,7 +151,7 @@ be_visitor_component_ch::visit_component (be_component *node)
     }
 
   // If we inherit from both CORBA::Object and CORBA::AbstractBase,
-  // we have to override _add_ref() to avoid ambiguity. A component
+  // we have to override _add_ref() to avoid ambiguity. A comopnent
   // can have mixed parentage if it supports an abstract or mixed-
   // parentage interface.
   if (node->has_mixed_parentage ())
@@ -182,23 +192,27 @@ be_visitor_component_ch::visit_component (be_component *node)
   if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
     {
       *os << be_nl << be_nl
-          << "/// This method traverse the inheritance tree and sets the"
+          << "// These methods traverse the inheritance tree and set the"
           << be_nl
-          << "/// parents piece of the given class in the right mode."
+          << "// parents piece of the given class in the right mode."
           << be_nl
           << "virtual void " << node->flat_name ()
           << "_setup_collocation (void);";
     }
 
   *os << be_nl << be_nl
-      << node->local_name () << " (::IOP::IOR *ior, TAO_ORB_Core *orb_core);";
+      << node->local_name () << " (" << be_idt << be_idt_nl
+      << "::IOP::IOR *ior," << be_nl
+      << "TAO_ORB_Core *orb_core" << be_uidt_nl
+      << ");" << be_uidt;
 
   *os << be_nl << be_nl
       << node->local_name ()
       << " (" << be_idt << be_idt_nl << "TAO_Stub *objref, " << be_nl
       << "::CORBA::Boolean _tao_collocated = false," << be_nl
       << "TAO_Abstract_ServantBase *servant = 0," << be_nl
-      << "TAO_ORB_Core *oc = 0);" << be_uidt << be_uidt;
+      << "TAO_ORB_Core *oc = 0" << be_uidt_nl
+      << ");" << be_uidt;
 
   // Friends declarations.
   *os << be_nl << be_nl
@@ -260,10 +274,3 @@ be_visitor_component_ch::visit_component (be_component *node)
   node->cli_hdr_gen (true);
   return 0;
 }
-
-int
-be_visitor_component_ch::visit_connector (be_connector *node)
-{
-  return this->visit_component (node);
-}
-

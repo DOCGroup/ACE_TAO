@@ -776,6 +776,7 @@ Philipp Slusallek <slusallek at graphics dot stanford dot edu>
 Matthew Davis <matthew dot davis at solers dot com>
 Janusz Stopa <jstopa at bear dot com>
 Rusty Conover <rconover at zootweb dot com>
+Alex Mintz <amintz at bear dot com>
 Phillippe Merle <Philippe dot Merle at lifl dot fr>
 Mark Winrock <mwinrock at nortelnetworks dot com>
 Boris Kaminer <boris_kaminer at mail dot ru>
@@ -2313,12 +2314,6 @@ Sail Zeng <sailzeng at tencent dot com>
 Dirk Bonekaemper <dirk dot bonekaemper at dfs dot de>
 Sreejith <sreejithsmadhavan at gmail dot com>
 Guillaume Lahaye <Guillaume dot Lahaye at nuance dot com>
-Andrew Kaplan <alexande dot kaplan at tafcorp dot com>
-Alexander Mintz <alexande dot mintz at tafcorp dot com>
-Jennifer Kahng <jennifer dot kahng at lmco dot com>
-Trent Nadeau <Trent dot Nadeau at ngc dot com>
-Nick Meyer <nick dot meyer at sensis dot com>
-Olivier Langlois <olivier at olivierlanglois dot net>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

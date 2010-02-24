@@ -5,7 +5,6 @@
 #include "ast_valuetype.h"
 #include "ast_param_holder.h"
 #include "ast_operation.h"
-#include "ast_finder.h"
 #include "ast_visitor.h"
 
 #include "utl_identifier.h"
@@ -13,8 +12,17 @@
 #include "utl_err.h"
 #include "global_extern.h"
 
-AST_Decl::NodeType const
-AST_Home::NT = AST_Decl::NT_home;
+AST_Home::AST_Home (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    UTL_Scope (),
+    AST_Interface (),
+    pd_base_home (0),
+    pd_managed_component (0),
+    pd_primary_key (0)
+{
+}
 
 AST_Home::AST_Home (UTL_ScopedName *n,
                     AST_Home *base_home,
@@ -158,6 +166,18 @@ AST_Home::primary_key (void) const
   return this->pd_primary_key;
 }
 
+AST_Home::INIT_LIST &
+AST_Home::factories (void)
+{
+  return this->pd_factories;
+}
+
+AST_Home::INIT_LIST &
+AST_Home::finders (void)
+{
+  return this->pd_finders;
+}
+
 void
 AST_Home::destroy (void)
 {
@@ -250,22 +270,6 @@ int
 AST_Home::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_home (this);
-}
-
-AST_Factory *
-AST_Home::fe_add_factory (AST_Factory *f)
-{
-  return
-    AST_Factory::narrow_from_decl (
-      this->fe_add_decl (f));
-}
-
-AST_Finder *
-AST_Home::fe_add_finder (AST_Finder *f)
-{
-  return
-    AST_Finder::narrow_from_decl (
-      this->fe_add_decl (f));
 }
 
   // Narrowing.

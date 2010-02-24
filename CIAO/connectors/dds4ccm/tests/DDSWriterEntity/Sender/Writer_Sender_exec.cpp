@@ -123,7 +123,7 @@ namespace CIAO_Writer_Sender_Impl
         if (this->last_key == this->ktests_.end ())
           {
             unregister_handles ();
-            this->stop ();
+            stop ();
           }
       }
   }
@@ -152,13 +152,9 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::stop (void)
   {
-    if (this->ticker_)
-      {
-        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
-        delete this->ticker_;
-        this->ticker_ = 0;
-      }
+    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
+    delete this->ticker_;
   }
 
   ::CORBA::UShort
@@ -214,8 +210,8 @@ namespace CIAO_Writer_Sender_Impl
   {
     DDS::DataWriter_var dds_dw =
       this->context_->get_connection_info_write_dds_entity ();
-    CIAO::DDS4CCM::CCM_DDS_DataWriter_i *rti_rd =
-      dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_i *> (dds_dw.in ());
+    CIAO::DDS4CCM::RTI::RTI_DataWriter_i *rti_rd =
+      dynamic_cast <CIAO::DDS4CCM::RTI::RTI_DataWriter_i *> (dds_dw.in ());
     DDSDataWriter * p = rti_rd->get_impl ();
     this->writer_ = dynamic_cast <WriterTestDataWriter *> (p);
   }

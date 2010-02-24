@@ -7,9 +7,6 @@
 #include "utl_err.h"
 #include "global_extern.h"
 
-AST_Decl::NodeType const
-AST_Connector::NT = AST_Decl::NT_connector;
-
 AST_Connector::AST_Connector (
       UTL_ScopedName *n,
       AST_Connector *base_connector)
@@ -34,10 +31,6 @@ AST_Connector::AST_Connector (
                    0,
                    0)
 {
-  if (!this->imported ())
-    {
-      idl_global->connector_seen_ = true;
-    }
 }
 
 AST_Connector::~AST_Connector (void)

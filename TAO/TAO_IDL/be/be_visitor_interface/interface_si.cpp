@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    interface_si.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Interfaces in the server inline file
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    interface_si.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Interfaces in the server inline file
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_interface,
+           interface_si,
+           "$Id$")
 
 
 // ************************************************************************

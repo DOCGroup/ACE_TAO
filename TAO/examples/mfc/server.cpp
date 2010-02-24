@@ -61,7 +61,7 @@ spawn_my_orb_thread (void *)
       // Initializing the NamingService
       W32_Test_Impl myservant;
       W32_Test_Interface_var orb_servant =
-        myservant._this ();
+        myservant._this (ACE_TRY_CHECK);
 
       CORBA::String_var ior =
         the_orb->object_to_string (orb_servant.in ());

@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    structure_fwd_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for be_structure_fwd node in the client header.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    structure_fwd_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for be_structure_fwd node in the client header.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_structure_fwd, 
+           structure_fwd_ch, 
+           "$Id$")
 
 be_visitor_structure_fwd_ch::be_visitor_structure_fwd_ch (
     be_visitor_context *ctx

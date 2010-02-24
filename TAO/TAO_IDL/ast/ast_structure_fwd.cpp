@@ -10,8 +10,18 @@
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
-AST_Decl::NodeType const
-AST_StructureFwd::NT = AST_Decl::NT_struct_fwd;
+ACE_RCSID( ast,
+           ast_structure_fwd,
+           "$Id$")
+
+AST_StructureFwd::AST_StructureFwd (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    pd_full_definition (0),
+    is_defined_ (false)
+{
+}
 
 AST_StructureFwd::AST_StructureFwd (AST_Structure *full_defn,
                                     UTL_ScopedName *n)

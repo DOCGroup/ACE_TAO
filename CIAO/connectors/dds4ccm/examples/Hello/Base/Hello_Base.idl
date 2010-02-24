@@ -8,12 +8,6 @@
 #ifndef HELLO_BASE_IDL
 #define HELLO_BASE_IDL
 
-#pragma ndds typesupport "Base/Hello_BaseSupport.h"
-#pragma opendds typesupport "Base/Hello_BaseTypeSupportC.h"
-#pragma splice typesupport "Base/Hello_BaseDcpsC.h"
-
-#pragma DCPS_DATA_TYPE "DDSHello"
-
 struct DDSHello {
   string hello;
   short iterator;

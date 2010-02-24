@@ -16,7 +16,7 @@
 /* First, we deal with  platform-specific or compiler-specific issues. */
 
 /* begin standard C headers. */
-#include "ace/OS_NS_stdio.h"
+#include "ace/os_include/os_stdio.h"
 
 /* end standard C headers. */
 
@@ -987,8 +987,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * idl.ll - Lexical scanner for IDL 3.1
  */
 
-#include "global_extern.h"
-#include "nr_extern.h"
 #include "utl_strlist.h"
 #include "utl_exprlist.h"
 #include "utl_labellist.h"
@@ -1005,8 +1003,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_obv_header.h"
 #include "fe_component_header.h"
 #include "fe_home_header.h"
+#include "global_extern.h"
 #include "fe_private.h"
 #include "fe_extern.h"
+#include "nr_extern.h"
 #include "y.tab.h"
 
 static char *           idl_wstring_escape_reader (char *);
@@ -1129,7 +1129,7 @@ static int input (void );
                 int c = '*'; \
                 size_t n; \
                 for ( n = 0; n < max_size && \
-                             (c = ACE_OS::getc( tao_yyin )) != EOF && c != '\n'; ++n ) \
+                             (c = getc( tao_yyin )) != EOF && c != '\n'; ++n ) \
                         buf[n] = (char) c; \
                 if ( c == '\n' ) \
                         buf[n++] = (char) c; \
@@ -2984,14 +2984,12 @@ idl_parse_line_and_file (char *buf)
 
   UTL_String *fname = idl_global->filename ();
   bool in_main_file = false;
-
-  bool is_real_filename =
-    fname->compare (idl_global->real_filename ())
-    || same_file (fname->get_string(),
-                  idl_global->real_filename ()->get_string());
+  bool is_real_filename
+    = fname->compare (idl_global->real_filename ())
+      || same_file (fname->get_string(),
+                    idl_global->real_filename ()->get_string());
 
   bool is_main_filename = false;
-
   if (!is_real_filename)
     {
 #if defined (ACE_OPENVMS)
@@ -3004,10 +3002,10 @@ idl_parse_line_and_file (char *buf)
       is_main_filename = idl_global->path_cmp (idl_global->main_filename ()->get_string (),
                                                full_fname) == 0;
 #else
-      is_main_filename =
-        fname->compare (idl_global->main_filename ())
-        || same_file (fname->get_string(),
-                      idl_global->main_filename ()->get_string());
+      is_main_filename
+        = fname->compare (idl_global->main_filename ())
+          || same_file (fname->get_string(),
+                        idl_global->main_filename ()->get_string());
 #endif
     }
 
@@ -3022,10 +3020,12 @@ idl_parse_line_and_file (char *buf)
   // by the preprocessor.
   if (!(idl_global->in_main_file ()) && idl_global->import ())
     {
-      ACE_NEW (nm,
-               UTL_String (
-                 idl_global->stripped_preproc_include (
-                   fname->get_string ())));
+      ACE_NEW (
+          nm,
+          UTL_String (
+              idl_global->stripped_preproc_include (fname->get_string ())
+            )
+        );
 
       // This call also manages the #pragma prefix.
       idl_global->store_include_file_name (nm);
@@ -3105,8 +3105,7 @@ idl_store_pragma (char *buf)
           // associated with this file, otherwise we add the prefix.
           char *ext_id = idl_global->filename ()->get_string ();
           char *int_id = 0;
-          int const status =
-            idl_global->file_prefixes ().find (ext_id, int_id);
+          int const status = idl_global->file_prefixes ().find (ext_id, int_id);
 
           if (status == 0)
             {
@@ -3160,7 +3159,7 @@ idl_store_pragma (char *buf)
   else if (ACE_OS::strncmp (buf + 8, "version", 7) == 0)
     {
       char *tmp = buf + 16;
-
+      
       while (*tmp == ' ' || *tmp == '\t')
         {
           ++tmp;
@@ -3264,20 +3263,15 @@ idl_store_pragma (char *buf)
     {
       char *tmp = idl_get_pragma_string (buf);
 
-      // Split up data type and key strings
+      // split up data type and key strings
       char *sample_type = tmp;
-
       while (*tmp && !isspace (*tmp))
-        {
-          ++tmp;
-        }
-
+        ++tmp;
       while (isspace (*tmp))
         {
           *tmp = '\0';
-          tmp++;
+          ++tmp;
         }
-
       char *key = tmp;
 
       if (!idl_global->add_dcps_data_key (sample_type, key))
@@ -3299,11 +3293,6 @@ idl_store_pragma (char *buf)
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_lem_file_names (tmp);
     }
-  else if (ACE_OS::strncmp (buf + 8, "ndds typesupport", 15) == 0)
-    {
-      char *tmp = idl_get_pragma_string (buf);
-      idl_global->add_ciao_rti_ts_file_names (tmp);
-    }
 }
 
 /*
@@ -3312,7 +3301,7 @@ idl_store_pragma (char *buf)
 static ACE_CDR::Long
 idl_atoi(char *s, long b)
 {
-  long    r = 0;
+  long r = 0;
 
   // Skip over the dash and possibly spaces after the dash
   while (*s == '-' || *s == ' ' || *s == '\t')
@@ -3439,11 +3428,11 @@ idl_atof (char *s)
       if (*s == '-')
         {
             negexp = 1;
-            s++;
+            ++s;
         }
       else if (*s == '+')
         {
-          ++s;
+          s++;
         }
 
       e = 0;
@@ -3451,7 +3440,7 @@ idl_atof (char *s)
       while (*s >= '0' && *s <= '9')
         {
           e = (e * 10) + *s - '0';
-          ++s;
+          s++;
         }
 
       if (e > 0)
@@ -3481,11 +3470,11 @@ idl_atof (char *s)
  * Convert (some) escaped characters into their ascii values
  */
 static char
-idl_escape_reader (char *str)
+idl_escape_reader(char *str)
 {
   if (str[0] != '\\')
     {
-      return str[0];
+            return str[0];
     }
 
   switch (str[1])

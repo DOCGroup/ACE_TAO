@@ -1,19 +1,28 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    argument_invoke.cpp
- *
- *  $Id$
- *
- *  Visitor to pass arguments to the CDR operators. This one helps in
- *  generating the && and the , at the right place. This one is for the
- *  client stub side.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    argument_invoke.cpp
+//
+// = DESCRIPTION
+//    Visitor to pass arguments to the CDR operators. This one helps in
+//    generating the && and the , at the right place. This one is for the
+//    client stub side.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_operation, 
+           argument_invoke, 
+           "$Id$")
 
 // ************************************************************
 // operation visitor to handle the passing of arguments to the CDR operators

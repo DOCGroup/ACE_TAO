@@ -24,7 +24,7 @@
 #include "be_valuetype_fwd.h"
 #include "be_eventtype.h"
 #include "be_eventtype_fwd.h"
-#include "be_connector.h"
+#include "be_component.h"
 #include "be_component_fwd.h"
 #include "be_field.h"
 #include "be_union_branch.h"
@@ -40,6 +40,10 @@
 #include "idl_defines.h"
 
 #include "ace/Log_Msg.h"
+
+ACE_RCSID (be,
+           be_visitor_traits,
+           "$Id$")
 
 be_visitor_traits::be_visitor_traits (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
@@ -122,13 +126,16 @@ be_visitor_traits::visit_interface (be_interface *node)
           << "{" << be_idt_nl
           << "static ::" << node->name () << "_ptr duplicate ("
           << be_idt << be_idt_nl
-          << "::" << node->name () << "_ptr p);" << be_uidt << be_uidt_nl
+          << "::" << node->name () << "_ptr p" << be_uidt_nl
+          << ");" << be_uidt_nl
           << "static void release (" << be_idt << be_idt_nl
-          << "::" << node->name () << "_ptr p);" << be_uidt << be_uidt_nl
+          << "::" << node->name () << "_ptr p" << be_uidt_nl
+          << ");" << be_uidt_nl
           << "static ::" << node->name () << "_ptr nil (void);" << be_nl
           << "static ::CORBA::Boolean marshal (" << be_idt << be_idt_nl
           << "const ::" << node->name () << "_ptr p," << be_nl
-          << "TAO_OutputCDR & cdr);" << be_uidt  << be_uidt << be_uidt_nl
+          << "TAO_OutputCDR & cdr" << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl
           << "};";
 
       os->gen_endif ();
@@ -282,12 +289,6 @@ int
 be_visitor_traits::visit_component (be_component *node)
 {
   return this->visit_interface (node);
-}
-
-int
-be_visitor_traits::visit_connector (be_connector *node)
-{
-  return this->visit_component (node);
 }
 
 int

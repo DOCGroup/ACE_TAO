@@ -6,14 +6,9 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDS4CCM_TOPICDATAQOSPOLICY_H
-#define DDS4CCM_TOPICDATAQOSPOLICY_H
+#ifndef CIAO_RTI_TOPICDATAQOSPOLICY_H
+#define CIAO_RTI_TOPICDATAQOSPOLICY_H
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
-typedef ::DDS::TopicDataQosPolicy DDS_TopicDataQosPolicy;
-#endif
-
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::TopicDataQosPolicy &ddsqos, const ::DDS_TopicDataQosPolicy & qos)
 {
@@ -46,6 +41,5 @@ operator>>= (const ::DDS::TopicDataQosPolicy &qos, ::DDS_TopicDataQosPolicy & dd
   ACE_UNUSED_ARG (qos);
 //  ddsqos.value = qos.value;
 }
-#endif
 
-#endif /* DDS4CCM_TOPICDATAQOSPOLICY_H */
+#endif /* CIAO_RTI_TOPICDATAQOSPOLICY_H */

@@ -24,10 +24,10 @@ namespace DAnCE
    : public virtual POA_Deployment::ResourceCommitmentManager
     {
       public:
-        /// Constructor
+        // Constructor
         ResourceCommitmentManager_i (void);
 
-        /// Destructor
+        // Destructor
         virtual ~ResourceCommitmentManager_i (void);
 
         /**
@@ -38,22 +38,26 @@ namespace DAnCE
          * sequence. If the resource cannot be allocated throws a
          * ResourceCommitmentFailed exception
          */
-        virtual void commitResources (
+        virtual
+          void commitResources (
               const ::Deployment::ResourceAllocations& resources);
 
-        virtual void releaseResources (
+        virtual
+          void releaseResources (
               const ::Deployment::ResourceAllocations & resources);
 
       private:
+
         /**
          * @brief This function adds the res to already commited resources.
          *        This is to be called from within commitResources
          */
-        void add_to_committed_resource (::Deployment::ResourceAllocations res);
+        int add_to_commited_resource (::Deployment::ResourceAllocations res);
 
         /// The commited resource
         ::Deployment::ResourceAllocations resources_;
     };
+
 }
 
 #endif /* DEPLOYMENT_RESOURCECOMMITMENTMANAGERI_H_  */

@@ -76,6 +76,8 @@ class AST_Interface;
 class TAO_IDL_FE_Export AST_InterfaceFwd : public virtual AST_Type
 {
 public:
+  AST_InterfaceFwd (void);
+
   AST_InterfaceFwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 
@@ -105,8 +107,6 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-
-  static AST_Decl::NodeType const NT;
 
 private:
   AST_Interface *pd_full_definition;

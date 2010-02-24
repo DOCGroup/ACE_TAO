@@ -11,9 +11,8 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "dds4ccm/impl/ndds/Reader_T.h"
 #include "dds4ccm/impl/ndds/Getter_T.h"
-#include "dds4ccm/impl/ndds/PortStatusListener_T.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+template <typename DDS_TYPE, typename CCM_TYPE>
 class DDS_Get_T
 {
 public:
@@ -38,8 +37,7 @@ public:
     const char* profile_name);
 
   void activate (
-    ::CCM_DDS::PortStatusListener_ptr listener,
-    ACE_Reactor* reactor);
+    ::CCM_DDS::PortStatusListener_ptr listener);
 
   void passivate (void);
 
@@ -52,12 +50,10 @@ private:
   //@{
   ::DDS::CCM_DataReader_var data_reader_;
   ::DDS::DataReaderListener_var status_;
-  ::CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE, FIXED> dds_get_;
+  ::CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE> dds_get_;
   ::CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> dds_read_;
-  ::CIAO::DDS4CCM::CCM_DDS_DataReader_i rti_reader_;
+  ::CIAO::DDS4CCM::RTI::RTI_DataReader_i rti_reader_;
   //@}
-
-  typedef ::CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE> PortStatusListener;
 };
 
 #include "dds4ccm/impl/ndds/DDS_Get_T.cpp"

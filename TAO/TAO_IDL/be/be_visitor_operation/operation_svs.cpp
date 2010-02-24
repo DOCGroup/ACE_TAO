@@ -1,22 +1,28 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    operation_svs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Operation in the CIAO servants file.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO_IDL_BE
+//
+// = FILENAME
+//    operation_svs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Operation in the CIAO servants file.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 be_visitor_operation_svs::be_visitor_operation_svs (
       be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    scope_ (0)
+    scope_ (0),
+    swapping_ (be_global->gen_component_swapping ())
 {
 }
 
@@ -88,6 +94,11 @@ be_visitor_operation_svs::gen_op_body (be_operation *node)
 
   os << be_nl
      << "{" << be_idt_nl;
+
+  if (swapping_)
+    {
+      os << "this->activate_component ();" << be_nl;
+    }
 
   os << "if ( ::CORBA::is_nil (this->executor_.in ()))" << be_idt_nl
      << "{"<< be_idt_nl

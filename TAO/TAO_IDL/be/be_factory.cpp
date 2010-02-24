@@ -1,18 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_factory.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_Factory that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Boris Kolpackov <bosk@ipmce.ru>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_factory.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_Factory that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Boris Kolpackov <bosk@ipmce.ru>
+//
+// ============================================================================
 
 #include "be_factory.h"
 #include "be_visitor.h"
@@ -24,6 +29,16 @@
 #include "utl_exceptlist.h"
 
 #include "global_extern.h"
+
+be_factory::be_factory (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    UTL_Scope (),
+    AST_Factory (),
+    be_scope (),
+    be_decl ()
+{
+}
 
 be_factory::be_factory (UTL_ScopedName *n)
   : COMMON_Base (1,

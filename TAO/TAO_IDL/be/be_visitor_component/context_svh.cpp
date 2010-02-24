@@ -1,17 +1,23 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    context_svh.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for a context class in the
- *  servant header.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    context_svh.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for a context class in the
+//    servant header.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 be_visitor_context_svh::be_visitor_context_svh (be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -25,10 +31,6 @@ be_visitor_context_svh::~be_visitor_context_svh (void)
 int
 be_visitor_context_svh::visit_component (be_component *node)
 {
-  // This visitor is spawned by be_visitor_component_svh,
-  // which already does a check for imported node, so none
-  // is needed here.
-  
   node_ = node;
 
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
@@ -48,6 +50,7 @@ be_visitor_context_svh::visit_component (be_component *node)
   os_ << "class " << export_macro_.c_str () << " " << lname
       << "_Context" << be_idt_nl
       << ": public virtual ::CIAO::"
+      << (swapping_ ? "Upgradeable_" : "")
       << "Context_Impl<" << be_idt << be_idt_nl
       << global << sname << "::CCM_" << lname
       << "_Context," << be_nl
@@ -101,16 +104,21 @@ be_visitor_context_svh::visit_component (be_component *node)
                         -1);
     }
 
+  if (swapping_)
+    {
+      os_ << be_nl << be_nl
+          << "/// Operation defined in " << sname << "::CCM_"
+          << lname << "_Context" << be_nl
+          << "/// that enable component swapping in the container."
+          << be_nl
+          << "virtual ::Components::ConsumerDescriptions *" << be_nl
+          << "get_registered_consumers (const char * publisher_name);";
+    }
+
   os_ << be_uidt_nl
       << "};";
 
   return 0;
-}
-
-int
-be_visitor_context_svh::visit_connector (be_connector *node)
-{
-  return this->visit_component (node);
 }
 
 int

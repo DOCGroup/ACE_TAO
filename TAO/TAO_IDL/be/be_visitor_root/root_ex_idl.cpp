@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    root_ex_idl.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Root in the CIAO executor IDL
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    root_ex_idl.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Root in the CIAO executor IDL
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_root,
+           root_ex_idl,
+           "$Id$")
 
 // ********************************
 // Root visitor for CIAO executor IDL

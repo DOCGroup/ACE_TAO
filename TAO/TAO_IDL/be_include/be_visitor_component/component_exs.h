@@ -1,18 +1,23 @@
+//
+// $Id$
+//
 /* -*- c++ -*- */
-//=============================================================================
-/**
- *  @file    component_exs.h
- *
- *  $Id$
- *
- *  Concrete visitor for the Component node.
- *  This provides for code generation in the exec impl source
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO_IDL_BE
+//
+// = FILENAME
+//    component_exs.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the Component node.
+//    This provides for code generation in the exec impl source
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #ifndef _BE_COMPONENT_COMPONENT_EXS_H_
 #define _BE_COMPONENT_COMPONENT_EXS_H_

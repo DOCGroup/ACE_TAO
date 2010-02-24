@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    exception_ctor.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for the special constructor for Exceptions
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    exception_ctor.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for the special constructor for Exceptions
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_exception,
+           exception_ctor,
+           "$Id$")
 
 
 // ************************************************************************

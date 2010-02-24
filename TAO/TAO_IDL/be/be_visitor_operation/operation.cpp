@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    operation.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Operation in the stubs file.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    operation.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Operation in the stubs file.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_operation,
+           operation,
+           "$Id$")
 
 // ************************************************************
 // Generic Operation visitor

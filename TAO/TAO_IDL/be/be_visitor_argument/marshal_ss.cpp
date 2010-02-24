@@ -1,17 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    marshal_ss.cpp
- *
- *  $Id$
- *
- *  Visitor that generates code that passes the argument variable to the
- *  marshal operations.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    marshal_ss.cpp
+//
+// = DESCRIPTION
+//    Visitor that generates code that passes the argument variable to the
+//    marshal operations.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_argument,
+           marshal_ss,
+           "$Id$")
 
 
 // ************************************************************************
@@ -130,8 +140,7 @@ int be_visitor_args_marshal_ss::visit_argument (be_argument *node)
 int be_visitor_args_marshal_ss::visit_array (be_array *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
@@ -176,8 +185,7 @@ int be_visitor_args_marshal_ss::visit_array (be_array *)
 int be_visitor_args_marshal_ss::visit_enum (be_enum *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
@@ -245,8 +253,7 @@ int be_visitor_args_marshal_ss::visit_predefined_type (
   )
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
@@ -404,8 +411,7 @@ int be_visitor_args_marshal_ss::visit_predefined_type (
 int be_visitor_args_marshal_ss::visit_sequence (be_sequence *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
@@ -448,8 +454,7 @@ int be_visitor_args_marshal_ss::visit_sequence (be_sequence *)
 int be_visitor_args_marshal_ss::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
@@ -602,11 +607,10 @@ be_visitor_args_marshal_ss::visit_home (
 }
 
 int
-be_visitor_args_marshal_ss::emit_common (void)
+be_visitor_args_marshal_ss::emit_common ()
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
@@ -648,8 +652,7 @@ int
 be_visitor_args_marshal_ss::emit_common2 (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {

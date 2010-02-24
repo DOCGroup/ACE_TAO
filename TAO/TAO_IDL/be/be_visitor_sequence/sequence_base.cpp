@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    sequence_base.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for the base type of the Sequence
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    sequence_base.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for the base type of the Sequence
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_sequence,
+           sequence_base,
+           "$Id$")
 
 // ****************************************************************
 // We have to generate the parameters for the template that implements

@@ -1,16 +1,25 @@
-//=============================================================================
-/**
- *  @file    root_is.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for the Root in the implementation skeletons file
- *
- *
- *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
- */
-//=============================================================================
+//
+// $Id$
+//
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    root_is.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for the Root in the implementation skeletons file
+//
+// = AUTHOR
+//   Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_root, 
+           root_is, 
+           "$Id$")
 
 // ******************************************************
 // Root visitor for implementation  skeletons

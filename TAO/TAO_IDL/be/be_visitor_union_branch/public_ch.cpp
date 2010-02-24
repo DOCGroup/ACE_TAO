@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    public_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Union_branch in the public part.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    public_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Union_branch in the public part.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_union_branch,
+           public_ch,
+           "$Id$")
 
 // **********************************************
 //  Visitor for union_branch in the client header file.

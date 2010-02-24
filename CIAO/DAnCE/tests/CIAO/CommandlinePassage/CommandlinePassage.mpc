@@ -28,7 +28,7 @@ project(CommandlinePassage_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(CommandlinePassage_lem_stub) : ccm_svnt {
+project(CommandlinePassage_lem_stub) : ccm_svnt, dds4ccm_base   {
   after += CommandlinePassage_lem_gen CommandlinePassage_stub
   libs  += CommandlinePassage_stub
   sharedname = CommandlinePassage_lem_stub
@@ -51,7 +51,7 @@ project(CommandlinePassage_lem_stub) : ccm_svnt {
   }
 }
 
-project(CommandlinePassage_stub) : ccm_stub {
+project(CommandlinePassage_stub) : ccm_stub, dds4ccm_base   {
   after += CommandlinePassage_idl_gen
   libs  +=
   sharedname = CommandlinePassage_stub
@@ -74,7 +74,7 @@ project(CommandlinePassage_stub) : ccm_stub {
   }
 }
 
-project(CommandlinePassage_exec) : ciao_executor {
+project(CommandlinePassage_exec) : ciao_executor, dds4ccm_base   {
   after   += CommandlinePassage_lem_stub CommandlinePassage_stub
   sharedname = CommandlinePassage_exec
   libs += CommandlinePassage_stub CommandlinePassage_lem_stub
@@ -97,10 +97,11 @@ project(CommandlinePassage_exec) : ciao_executor {
 }
 
 
-project(CommandlinePassage_svnt) : ciao_servant {
-  after      += CommandlinePassage_lem_stub
+project(CommandlinePassage_svnt) : ciao_servant, dds4ccm_base, nddslib {
+  after      += CommandlinePassage_lem_stub DDS4CCM_lem_stub DDS4CCM_skel
   sharedname  = CommandlinePassage_svnt
-  libs       += CommandlinePassage_stub CommandlinePassage_lem_stub
+  libs       += CommandlinePassage_stub CommandlinePassage_lem_stub  \
+                DDS4CCM_lem_stub DDS4CCM_skel
   dynamicflags = COMMANDLINEPASSAGE_SVNT_BUILD_DLL
 
   IDL_Files {

@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuetype_sh.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for value types in the server header
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuetype_sh.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for value types in the server header
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_sh,
+           "$Id$")
 
 
 // ************************************************************

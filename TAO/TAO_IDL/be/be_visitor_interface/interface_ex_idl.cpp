@@ -1,18 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    interface_ex_idl.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Interfaces in the
- *  CIAO executor IDL file.
- *
- *
- *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO_IDL_BE
+//
+// = FILENAME
+//    interface_ex_idl.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Interfaces in the
+//    CIAO executor IDL file.
+//
+// = AUTHOR
+//   Jeff Parsons <j.parsons@vanderbilt.edu>
+//
+// ============================================================================
 
 // ************************************************************
 // Interface visitor for CIAO executor IDL.

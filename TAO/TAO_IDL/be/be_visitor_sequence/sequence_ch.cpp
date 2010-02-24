@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    sequence_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Sequence in the client header
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    sequence_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Sequence in the client header
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_sequence,
+           sequence_ch,
+           "$Id$")
 
 // Root visitor for client header.
 be_visitor_sequence_ch::be_visitor_sequence_ch (be_visitor_context *ctx)

@@ -48,11 +48,9 @@ private:
   //@{
   ::DDS::CCM_DataWriter_var data_writer_;
   ::DDS::DataWriterListener_var data_listener_;
-  ::CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE> writer_t_;
-  ::CIAO::DDS4CCM::CCM_DDS_DataWriter_i ccm_dds_writer_i;
+  ::CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE> writer_t_;
+  ::CIAO::DDS4CCM::RTI::RTI_DataWriter_i rti_writer_;
   //@}
-
-  typedef ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE> DataWriterListener;
 };
 
 #include "dds4ccm/impl/ndds/DDS_Write_T.cpp"

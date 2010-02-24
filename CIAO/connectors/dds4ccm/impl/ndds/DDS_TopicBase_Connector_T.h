@@ -10,9 +10,6 @@
 
 #include "ace/Copy_Disabled.h"
 #include "dds4ccm/impl/ndds/DDS_Base_Connector_T.h"
-#include "dds4ccm/impl/ndds/TopicListener_T.h"
-#include "dds4ccm/impl/ndds/PublisherListener_T.h"
-#include "dds4ccm/impl/ndds/SubscriberListener_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 class DDS_TopicBase_Connector_T
@@ -32,7 +29,7 @@ public:
 
   virtual void configuration_complete (void);
   virtual void ccm_remove (void);
-  virtual void ccm_activate (ACE_Reactor* reactor);
+  virtual void ccm_activate (void);
   virtual void ccm_passivate (void);
 
 protected:
@@ -40,9 +37,9 @@ protected:
   void init_publisher (void);
   void init_subscriber (void);
 
-  void activate_default_topic (ACE_Reactor* reactor);
-  void activate_publisher (ACE_Reactor* reactor);
-  void activate_subscriber (ACE_Reactor* reactor);
+  void activate_default_topic (void);
+  void activate_publisher (void);
+  void activate_subscriber (void);
 
   void passivate_default_topic (void);
   void passivate_publisher (void);
@@ -62,10 +59,6 @@ protected:
   ::DDS::PublisherListener_var publisher_listener_;
   ::DDS::Subscriber_var subscriber_;
   ::DDS::SubscriberListener_var subscriber_listener_;
-
-typedef ::CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE> TopicListener;
-typedef ::CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE> SubscriberListener;
-typedef ::CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE> PublisherListener;
 };
 
 #include "dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.cpp"

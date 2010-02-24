@@ -83,9 +83,16 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "global_extern.h"
 
-AST_Decl::NodeType const
-AST_Field::NT = AST_Decl::NT_field;
+AST_Field::AST_Field (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    ref_type_ (0),
+    visibility_ (vis_NA),
+    owns_base_type_ (false)
+{
+}
 
+// To be used when constructing an AST_Field node.
 AST_Field::AST_Field (AST_Type *ft,
                       UTL_ScopedName *n,
                       Visibility vis)

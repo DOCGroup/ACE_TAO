@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    public_constructor_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Union Branch for the constructor operator
- *
- *
- *  @author Johnny Willemsen
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    public_constructor_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Union Branch for the constructor operator
+//
+// = AUTHOR
+//    Johnny Willemsen
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_union_branch,
+           public_constructor_cs,
+           "$Id$")
 
 // **********************************************
 //  visitor for union_branch in the client stubs file generating the code for
@@ -68,9 +77,9 @@ int
 be_visitor_union_branch_public_constructor_cs::visit_array (be_array *node)
 {
   be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    this->ctx_->be_node_as_union_branch (); // get union branch
   be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
+    this->ctx_->be_scope_as_union ();  // get the enclosing union backend
   be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.
@@ -140,9 +149,9 @@ be_visitor_union_branch_public_constructor_cs::visit_predefined_type (
   )
 {
   be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    this->ctx_->be_node_as_union_branch (); // get union branch
   be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
+    this->ctx_->be_scope_as_union ();  // get the enclosing union backend
   be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.
@@ -186,9 +195,9 @@ int
 be_visitor_union_branch_public_constructor_cs::visit_sequence (be_sequence *node)
 {
   be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    this->ctx_->be_node_as_union_branch (); // get union branch
   be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
+    this->ctx_->be_scope_as_union ();  // get the enclosing union backend
   be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.
@@ -223,9 +232,9 @@ int
 be_visitor_union_branch_public_constructor_cs::visit_structure (be_structure *node)
 {
   be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    this->ctx_->be_node_as_union_branch (); // get union branch
   be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
+    this->ctx_->be_scope_as_union ();  // get the enclosing union backend
   be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.
@@ -285,9 +294,9 @@ int
 be_visitor_union_branch_public_constructor_cs::visit_union (be_union *node)
 {
   be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    this->ctx_->be_node_as_union_branch (); // get union branch
   be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
+    this->ctx_->be_scope_as_union ();  // get the enclosing union backend
   be_type *bt = 0;
 
   // Check if we are visiting this node via a visit to a typedef node.

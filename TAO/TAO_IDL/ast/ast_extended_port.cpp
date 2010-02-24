@@ -7,9 +7,6 @@
 #include "utl_indenter.h"
 #include "global_extern.h"
 
-AST_Decl::NodeType const
-AST_Extended_Port::NT = AST_Decl::NT_ext_port;
-
 AST_Extended_Port::AST_Extended_Port (
     UTL_ScopedName *n,
     AST_PortType *porttype_ref)

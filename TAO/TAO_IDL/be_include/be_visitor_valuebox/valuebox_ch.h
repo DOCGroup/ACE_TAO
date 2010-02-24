@@ -1,68 +1,74 @@
 /* -*- c++ -*- */
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuebox_ch.h
- *
- *  $Id$
- *
- *  Concrete visitor for the Valuebox node.
- *  This provides code generation for valueboxes in the client header.
- *
- *
- *  @author Gary Maxey
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuebox_ch.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the Valuebox node.
+//    This provides code generation for valueboxes in the client header.
+//
+// = AUTHOR
+//    Gary Maxey
+//
+// ============================================================================
 
 #ifndef _BE_VISITOR_VALUEBOX_CH_H_
 #define _BE_VISITOR_VALUEBOX_CH_H_
 
-/**
- * @class be_visitor_valuebox_ch
- *
- * @brief be_visitor_valuebox_ch
- *
- * This is a concrete visitor to generate the client header for valuebox
- */
 class be_visitor_valuebox_ch : public be_visitor_valuebox
 {
+  //
+  // = TITLE
+  //   be_visitor_valuebox_ch
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor to generate the client header for valuebox
+  //
+  //
 public:
-  /// constructor
   be_visitor_valuebox_ch (be_visitor_context *ctx);
+  // constructor
 
-  /// destructor
   ~be_visitor_valuebox_ch (void);
+  // destructor
 
-  /// visit valuebox.
   virtual int visit_valuebox (be_valuebox *node);
+  // visit valuebox.
 
-  /// visit array.
   virtual int visit_array (be_array *node);
+  // visit array.
 
-  /// visit enum.
   virtual int visit_enum (be_enum *node);
+  // visit enum.
 
-  /// visit interface.
   virtual int visit_interface (be_interface *node);
+  // visit interface.
 
-  /// visit predefined type.
   virtual int visit_predefined_type (be_predefined_type *node);
+  // visit predefined type.
 
-  /// visit sequence.
   virtual int visit_sequence (be_sequence *node);
+  // visit sequence.
 
-  /// visit string.
   virtual int visit_string (be_string *node);
+  // visit string.
 
-  /// visit structure.
   virtual int visit_structure (be_structure *node);
+  // visit structure.
 
-  /// visit typedef.
   virtual int visit_typedef (be_typedef *node);
+  // visit typedef.
 
-  /// visit union.
   virtual int visit_union (be_union *node);
+  // visit union.
 
 private:
   int emit_for_predef_enum(be_type *node,

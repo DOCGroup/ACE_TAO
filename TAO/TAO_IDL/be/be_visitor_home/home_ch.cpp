@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    home_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Component Home node in the client header.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    home_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Component Home node in the client header.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_home, 
+           home_ch, 
+           "$Id$")
 
 be_visitor_home_ch::be_visitor_home_ch (
     be_visitor_context *ctx

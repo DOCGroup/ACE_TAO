@@ -1,6 +1,6 @@
 // $Id$
 
-project(CIAO_DDS4CCM_NDDS_Impl) : dds4ccm_skel, taolib, ciao_output, ccm_stub, ciao_logger {
+project(CIAO_DDS4CCM_NDDS_Impl) : dds4ccm_skel, taolib, ciao_output, nddslib, ccm_stub, ciao_logger {
 
   after += DDS4CCM_lem_stub
   libs += DDS4CCM_lem_stub
@@ -36,6 +36,5 @@ project(CIAO_DDS4CCM_NDDS_Impl) : dds4ccm_skel, taolib, ciao_output, ccm_stub, c
     QueryCondition.cpp
     Utils.cpp
     TopicListener.cpp
-    DDSCallbackStatusHandler.cpp
   }
 }

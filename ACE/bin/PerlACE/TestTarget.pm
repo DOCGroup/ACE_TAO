@@ -339,11 +339,4 @@ sub GetStderrLog ($)
     return;
 }
 
-sub KillAll ($)
-{
-    my $self = shift;
-    my $procmask = shift;
-    PerlACE::Process::kill_all ($procmask);    
-}
-
 1;

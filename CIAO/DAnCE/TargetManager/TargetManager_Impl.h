@@ -6,16 +6,18 @@
 #ifndef TARGETMANAGERDAEMONI_H_
 #define TARGETMANAGERDAEMONI_H_
 
-#include "Deployment/Deployment_TargetManagerS.h"
+#include "DAnCE_TargetManagerDaemonS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "TargetManager_Impl_export.h"
+
 namespace DAnCE
 {
-class TargetManagerDaemon_i
-  : public virtual POA_Deployment::TargetManager
+class DAnCE_TargetManager_Impl_Export TargetManagerDaemon_i
+  : public virtual POA_DAnCE::TargetManagerDaemon
 {
 public:
   /// Constructor
@@ -26,9 +28,13 @@ public:
 
   void init (const ACE_TCHAR *file);
 
-  virtual ::Deployment::Domain * getAllResources (void);
+  virtual void shutdown (void);
 
-  virtual ::Deployment::Domain * getAvailableResources (void);
+  virtual
+  ::Deployment::Domain * getAllResources (void);
+
+  virtual
+  ::Deployment::Domain * getAvailableResources (void);
 
   virtual
   ::Deployment::ResourceCommitmentManager_ptr createResourceCommitment (

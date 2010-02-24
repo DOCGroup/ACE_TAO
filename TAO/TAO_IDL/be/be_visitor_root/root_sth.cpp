@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    root_sth.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Root in the server template header
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    root_sth.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Root in the server template header
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_root,
+           root_sth,
+           "$Id$")
 
 // ****************************************
 // Root visitor for server template header

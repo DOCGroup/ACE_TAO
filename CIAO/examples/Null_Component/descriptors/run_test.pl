@@ -101,9 +101,6 @@ sub kill_open_processes {
     if ($ns_running == 1) {
         $NS->Kill (); $NS->TimedWait (1);
     }
-
-    # in case shutdown did not perform as expected
-    $tg_executor->KillAll ('ciao_componentserver');
 }
 
 

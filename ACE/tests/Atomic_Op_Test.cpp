@@ -25,8 +25,6 @@ ACE_RCSID(tests, Atomic_Op_Test, "$Id$")
 
 #include "ace/Atomic_Op.h"
 #include "ace/Synch_Traits.h"
-#include "ace/Time_Value.h"
-#include "ace/OS_NS_sys_time.h"
 
 enum { TEST_ITERATIONS = 1000000 };
 
@@ -71,10 +69,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_ASSERT (foo == 7);
   ACE_ASSERT (foo2 == 7);
 
-  ACE_UINT64 usec;
-
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <long> assignment %D\n")));
-  ACE_Time_Value diff = ACE_OS::gettimeofday ();
   int i;
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
@@ -83,12 +78,9 @@ run_main (int, ACE_TCHAR *[])
       foo = 3;
       foo = 4;
     }
-  diff = ACE_OS::gettimeofday () - diff;
-  diff.to_usec (usec);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <long> assignment %D, took %Q\n"), usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <long> assignment %D\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <long> increment %D\n")));
-  diff = ACE_OS::gettimeofday ();
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
       ++foo;
@@ -96,12 +88,9 @@ run_main (int, ACE_TCHAR *[])
       ++foo;
       ++foo;
     }
-  diff = ACE_OS::gettimeofday () - diff;
-  diff.to_usec (usec);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <long> increment %D, took %Q\n"), usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <long> increment %D\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <long> decrement %D\n")));
-  diff = ACE_OS::gettimeofday ();
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
       --foo;
@@ -109,12 +98,9 @@ run_main (int, ACE_TCHAR *[])
       --foo;
       --foo;
     }
-  diff = ACE_OS::gettimeofday () - diff;
-  diff.to_usec (usec);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <long> decrement %D, took %Q\n"), usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <long> decrement %D\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <long> addition %D\n")));
-  diff = ACE_OS::gettimeofday ();
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
       foo += 5;
@@ -122,12 +108,9 @@ run_main (int, ACE_TCHAR *[])
       foo += 5;
       foo += 5;
     }
-  diff = ACE_OS::gettimeofday () - diff;
-  diff.to_usec (usec);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <long> addition %D, took %Q\n"), usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <long> addition %D\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <long> subtraction %D\n")));
-  diff = ACE_OS::gettimeofday ();
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
       foo -= 5;
@@ -135,9 +118,7 @@ run_main (int, ACE_TCHAR *[])
       foo -= 5;
       foo -= 5;
     }
-  diff = ACE_OS::gettimeofday () - diff;
-  diff.to_usec (usec);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <long> subtraction %D, took %Q\n"), usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <long> subtraction %D\n")));
 
   ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned long> foo_unsigned (5);
 
@@ -176,7 +157,6 @@ run_main (int, ACE_TCHAR *[])
   ACE_ASSERT (foo_unsigned2 == 7);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned long> assignment %D\n")));
-  diff = ACE_OS::gettimeofday ();
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
       foo_unsigned = 1;
@@ -184,12 +164,9 @@ run_main (int, ACE_TCHAR *[])
       foo_unsigned = 3;
       foo_unsigned = 4;
     }
-  diff = ACE_OS::gettimeofday () - diff;
-  diff.to_usec (usec);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned long> assignment %D, took %Q\n"), usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned long> assignment %D\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned long> increment %D\n")));
-  diff = ACE_OS::gettimeofday ();
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
       ++foo_unsigned;
@@ -197,12 +174,9 @@ run_main (int, ACE_TCHAR *[])
       ++foo_unsigned;
       ++foo_unsigned;
     }
-  diff = ACE_OS::gettimeofday () - diff;
-  diff.to_usec (usec);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned long> increment %D, took %Q\n"), usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned long> increment %D\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned long> decrement %D\n")));
-  diff = ACE_OS::gettimeofday ();
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
       --foo_unsigned;
@@ -210,12 +184,9 @@ run_main (int, ACE_TCHAR *[])
       --foo_unsigned;
       --foo_unsigned;
     }
-  diff = ACE_OS::gettimeofday () - diff;
-  diff.to_usec (usec);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned long> decrement %D, took %Q\n"), usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned long> decrement %D\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned long> addition %D\n")));
-  diff = ACE_OS::gettimeofday ();
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
       foo_unsigned += 5;
@@ -223,12 +194,9 @@ run_main (int, ACE_TCHAR *[])
       foo_unsigned += 5;
       foo_unsigned += 5;
     }
-  diff = ACE_OS::gettimeofday () - diff;
-  diff.to_usec (usec);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned long> addition %D, took %Q\n"), usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned long> addition %D\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned long> subtraction %D\n")));
-  diff = ACE_OS::gettimeofday ();
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
       foo_unsigned -= 5;
@@ -236,9 +204,7 @@ run_main (int, ACE_TCHAR *[])
       foo_unsigned -= 5;
       foo_unsigned -= 5;
     }
-  diff = ACE_OS::gettimeofday () - diff;
-  diff.to_usec (usec);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned long> subtraction %D, took %Q\n"), usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned long> subtraction %D\n")));
 
   ACE_Atomic_Op <ACE_SYNCH_MUTEX, int> bar (5);
 
@@ -277,7 +243,6 @@ run_main (int, ACE_TCHAR *[])
   ACE_ASSERT (bar2 == 7);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <int> assignment %D\n")));
-  diff = ACE_OS::gettimeofday ();
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
       bar = 1;
@@ -285,12 +250,9 @@ run_main (int, ACE_TCHAR *[])
       bar = 3;
       bar = 4;
     }
-  diff = ACE_OS::gettimeofday () - diff;
-  diff.to_usec (usec);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <int> assignment %D, took %Q\n"), usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <int> assignment %D\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <int> increment %D\n")));
-  diff = ACE_OS::gettimeofday ();
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
       ++bar;
@@ -298,12 +260,9 @@ run_main (int, ACE_TCHAR *[])
       ++bar;
       ++bar;
     }
-  diff = ACE_OS::gettimeofday () - diff;
-  diff.to_usec (usec);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <int> increment %D, took %Q\n"), usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <int> increment %D\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <int> decrement %D\n")));
-  diff = ACE_OS::gettimeofday ();
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
       --bar;
@@ -311,12 +270,9 @@ run_main (int, ACE_TCHAR *[])
       --bar;
       --bar;
     }
-  diff = ACE_OS::gettimeofday () - diff;
-  diff.to_usec (usec);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <int> decrement %D, took %Q\n"), usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <int> decrement %D\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <int> addition %D\n")));
-  diff = ACE_OS::gettimeofday ();
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
       bar += 5;
@@ -324,12 +280,9 @@ run_main (int, ACE_TCHAR *[])
       bar += 5;
       bar += 5;
     }
-  diff = ACE_OS::gettimeofday () - diff;
-  diff.to_usec (usec);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <int> addition %D, took %Q\n"), usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <int> addition %D\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <int> subtraction %D\n")));
-  diff = ACE_OS::gettimeofday ();
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
       bar -= 5;
@@ -337,9 +290,7 @@ run_main (int, ACE_TCHAR *[])
       bar -= 5;
       bar -= 5;
     }
-  diff = ACE_OS::gettimeofday () - diff;
-  diff.to_usec (usec);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <int> subtraction %D, took %Q\n"), usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <int> subtraction %D\n")));
 
   ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned int> unsigned_bar (5);
 
@@ -378,7 +329,6 @@ run_main (int, ACE_TCHAR *[])
   ACE_ASSERT (unsigned_bar2 == 7);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned int> assignment %D\n")));
-  diff = ACE_OS::gettimeofday ();
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
       unsigned_bar = 1;
@@ -386,12 +336,9 @@ run_main (int, ACE_TCHAR *[])
       unsigned_bar = 3;
       unsigned_bar = 4;
     }
-  diff = ACE_OS::gettimeofday () - diff;
-  diff.to_usec (usec);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned int> assignment %D, took %Q\n"), usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned int> assignment %D\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned int> increment %D\n")));
-  diff = ACE_OS::gettimeofday ();
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
       ++unsigned_bar;
@@ -399,12 +346,9 @@ run_main (int, ACE_TCHAR *[])
       ++unsigned_bar;
       ++unsigned_bar;
     }
-  diff = ACE_OS::gettimeofday () - diff;
-  diff.to_usec (usec);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned int> increment %D, took %Q\n"), usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned int> increment %D\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned int> decrement %D\n")));
-  diff = ACE_OS::gettimeofday ();
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
       --unsigned_bar;
@@ -412,12 +356,9 @@ run_main (int, ACE_TCHAR *[])
       --unsigned_bar;
       --unsigned_bar;
     }
-  diff = ACE_OS::gettimeofday () - diff;
-  diff.to_usec (usec);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned int> decrement %D, took %Q\n"), usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned int> decrement %D\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned int> addition %D\n")));
-  diff = ACE_OS::gettimeofday ();
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
       unsigned_bar += 5;
@@ -425,12 +366,9 @@ run_main (int, ACE_TCHAR *[])
       unsigned_bar += 5;
       unsigned_bar += 5;
     }
-  diff = ACE_OS::gettimeofday () - diff;
-  diff.to_usec (usec);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned int> addition %D, took %Q\n"), usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned int> addition %D\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned int> subtraction %D\n")));
-  diff = ACE_OS::gettimeofday ();
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
       unsigned_bar -= 5;
@@ -438,9 +376,8 @@ run_main (int, ACE_TCHAR *[])
       unsigned_bar -= 5;
       unsigned_bar -= 5;
     }
-  diff = ACE_OS::gettimeofday () - diff;
-  diff.to_usec (usec);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned int> subtraction %D, took %Q\n"), usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned int> subtraction %D\n")));
+
 
   ACE_END_TEST;
   return 0;

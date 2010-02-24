@@ -7,16 +7,11 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDS4CCM_OFFEREDINCOMPATIBLEQOSSTATUS_H
-#define DDS4CCM_OFFEREDINCOMPATIBLEQOSSTATUS_H
+#ifndef CIAO_RTI_OFFEREDINCOMPATIBLEQOSSTATUS_H
+#define CIAO_RTI_OFFEREDINCOMPATIBLEQOSSTATUS_H
 
 #include "QosPolicyCountSeq.h"
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
-typedef ::DDS::OfferedIncompatibleQosStatus DDS_OfferedIncompatibleQosStatus;
-#endif
-
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::OfferedIncompatibleQosStatus &ddsstatus, const ::DDS_OfferedIncompatibleQosStatus & status)
 {
@@ -52,6 +47,5 @@ operator>>= (const ::DDS::OfferedIncompatibleQosStatus &status, ::DDS_OfferedInc
   ddsstatus.last_policy_id = static_cast <DDS_QosPolicyId_t>(status.last_policy_id);
   ddsstatus.policies <<= status.policies;
 }
-#endif
 
-#endif /* DDS4CCM_OFFEREDINCOMPATIBLEQOSSTATUS_H */
+#endif /* CIAO_RTI_OFFEREDINCOMPATIBLEQOSSTATUS_H */

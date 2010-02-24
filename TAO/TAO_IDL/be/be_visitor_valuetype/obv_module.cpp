@@ -1,19 +1,28 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    obv_module.cpp
- *
- *  $Id$
- *
- *  Concrete visitor for the Module class
- *  This provides code generation for the module in the header
- *  for the OBV_ namespace (see C++ mapping OMG 20.17)
- *
- *
- *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    obv_module.cpp
+//
+// = DESCRIPTION
+//    Concrete visitor for the Module class
+//    This provides code generation for the module in the header
+//    for the OBV_ namespace (see C++ mapping OMG 20.17)
+//
+// = AUTHOR
+//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_obv_module, 
+           obv_module, 
+           "$Id$")
 
 // ************************************************************
 // OBV module visitor for server header.

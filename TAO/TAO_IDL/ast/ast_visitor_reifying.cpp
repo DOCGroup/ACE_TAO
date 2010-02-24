@@ -13,9 +13,8 @@
 
 #include "ast_interface.h"
 #include "ast_valuetype.h"
-#include "ast_valuebox.h"
 #include "ast_eventtype.h"
-#include "ast_connector.h"
+#include "ast_component.h"
 #include "ast_home.h"
 #include "ast_exception.h"
 #include "ast_typedef.h"
@@ -26,7 +25,6 @@
 #include "ast_predefined_type.h"
 #include "ast_string.h"
 #include "ast_constant.h"
-#include "ast_native.h"
 #include "ast_param_holder.h"
 #include "ast_template_module.h"
 
@@ -82,9 +80,8 @@ ast_visitor_reifying::visit_interface_fwd (AST_InterfaceFwd *)
 }
 
 int
-ast_visitor_reifying::visit_valuebox (AST_ValueBox *node)
+ast_visitor_reifying::visit_valuebox (AST_ValueBox *)
 {
-  this->check_and_store (node);
   return 0;
 }
 
@@ -174,9 +171,8 @@ ast_visitor_reifying::visit_mirror_port (AST_Mirror_Port *)
 }
 
 int
-ast_visitor_reifying::visit_connector (AST_Connector *node)
+ast_visitor_reifying::visit_connector (AST_Connector *)
 {
-  this->check_and_store (node);
   return 0;
 }
 
@@ -189,12 +185,6 @@ ast_visitor_reifying::visit_home (AST_Home *node)
 
 int
 ast_visitor_reifying::visit_factory (AST_Factory *)
-{
-  return 0;
-}
-
-int
-ast_visitor_reifying::visit_finder (AST_Finder *)
 {
   return 0;
 }
@@ -287,9 +277,8 @@ ast_visitor_reifying::visit_root (AST_Root *)
 }
 
 int
-ast_visitor_reifying::visit_native (AST_Native *node)
+ast_visitor_reifying::visit_native (AST_Native *)
 {
-  this->check_and_store (node);
   return 0;
 }
 
@@ -402,7 +391,8 @@ ast_visitor_reifying::visit_array (AST_Array *node)
         }
     }
 
-  UTL_ScopedName sn (node->local_name (), 0);
+  UTL_ScopedName sn (node->name ()->last_component ()->copy (),
+                     0);
 
   AST_Array *arr =
     idl_global->gen ()->create_array (&sn,
@@ -414,6 +404,7 @@ ast_visitor_reifying::visit_array (AST_Array *node)
   // No need to add this new node to any scope - it's anonymous
   // and owned by the node that references it.
 
+  sn.destroy ();
   v_list->destroy ();
   delete v_list;
   v_list = 0;
@@ -490,48 +481,7 @@ ast_visitor_reifying::visit_predefined_type (AST_PredefinedType *node)
 int
 ast_visitor_reifying::visit_string (AST_String *node)
 {
-  AST_Expression *b = node->max_size ();
-  AST_Param_Holder *ph = b->param_holder ();
-
-  if (ph != 0)
-    {
-      if (this->visit_param_holder (ph) != 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("ast_visitor_reifying::")
-                             ACE_TEXT ("visit_string - ")
-                             ACE_TEXT ("visit_param_holder() ")
-                             ACE_TEXT ("failed\n")),
-                            -1);
-        }
-
-      AST_Constant *c =
-        AST_Constant::narrow_from_decl (this->reified_node_);
-
-      b = c->constant_value ();
-    }
-  else if (b->ev ()->u.ulval == 0)
-    {
-      this->reified_node_ = node;
-      return 0;
-    }
-
-  AST_Expression *bound = 0;
-  ACE_NEW_RETURN (bound,
-                  AST_Expression (b,
-                                  AST_Expression::EV_ulong),
-                  -1);
-                  
-  Identifier id ("string");
-  UTL_ScopedName sn (&id, 0);
-  
-  ACE_NEW_RETURN (this->reified_node_,
-                  AST_String (AST_Decl::NT_string,
-                              &sn,
-                              bound,
-                              node->width ()),
-                  -1);
-                  
+  this->reified_node_ = node;
   return 0;
 }
 

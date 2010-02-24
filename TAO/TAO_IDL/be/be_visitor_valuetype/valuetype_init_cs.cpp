@@ -1,18 +1,28 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuetype_init_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Valuetypes factory in the client header
- *  (see IDL to C++ mapping)
- *
- *
- *  @author Boris Kolpackov <bosk@ipmce.ru>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuetype_init_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Valuetypes factory in the client header
+//    (see IDL to C++ mapping)
+//
+// = AUTHOR
+//   Boris Kolpackov <bosk@ipmce.ru>
+//
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_init_cs,
+           "$Id$")
 
 be_visitor_valuetype_init_cs::be_visitor_valuetype_init_cs (
     be_visitor_context *ctx

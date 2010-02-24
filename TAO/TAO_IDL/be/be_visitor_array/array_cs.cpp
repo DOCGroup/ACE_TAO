@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    array_cs.cpp
- *
- *  $Id$
- *
- *  Visitor for code generation of Arrays in the client stubs
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    array_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor for code generation of Arrays in the client stubs
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_array,
+           array_cs,
+           "$Id$")
 
 // ************************************************************************
 //  visitor for array declaration in client stubs

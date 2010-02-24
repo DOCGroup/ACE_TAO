@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    structure_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Structure in the client header.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    structure_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Structure in the client header.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_structure,
+           structure_ch,
+           "$Id$")
 
 // ******************************************************
 // for client header

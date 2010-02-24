@@ -1,47 +1,52 @@
 /* -*- c++ -*- */
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_cs.h
- *
- *  $Id$
- *
- *  Concrete visitor for the Structure class
- *  This one provides code generation for the CDR operators for the structure
- *  in the client stub.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_ch.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the Structure class
+//    This one provides code generation for the CDR operators for the structure
+//    in the client stub.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #ifndef _BE_VISITOR_STRUCTURE_CDR_OP_CS_H_
 #define _BE_VISITOR_STRUCTURE_CDR_OP_CS_H_
 
-/**
- * @class be_visitor_structure_cdr_op_cs
- *
- * @brief be_visitor_structure_cdr_op_cs
- *
- * This is a concrete visitor for structure that generates the CDR operator
- * implementations
- */
 class be_visitor_structure_cdr_op_cs : public be_visitor_structure
 {
+  //
+  // = TITLE
+  //   be_visitor_structure_cdr_op_cs
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor for structure that generates the CDR operator
+  //   implementations
+  //
 
 public:
-  /// constructor
   be_visitor_structure_cdr_op_cs (be_visitor_context *ctx);
+  // constructor
 
-  /// destructor
   ~be_visitor_structure_cdr_op_cs (void);
+  // destructor
 
-  /// visit structure
   virtual int visit_structure (be_structure *node);
+  // visit structure
 
-  /// any post processing that needs to be done after a scope element is handled
   virtual int post_process (be_decl *);
+  // any post processing that needs to be done after a scope element is handled
 };
 
 #endif /* _BE_VISITOR_STRUCTURE_CDR_OP_CS_H_ */

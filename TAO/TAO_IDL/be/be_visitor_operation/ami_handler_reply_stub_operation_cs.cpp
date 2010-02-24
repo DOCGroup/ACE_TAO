@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    ami_handler_reply_stub_operation_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Operation in the stubs file.
- *
- *
- *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    ami_handler_reply_stub_operation_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Operation in the stubs file.
+//
+// = AUTHOR
+//    Alexander Babu Arulanthu <alex@cs.wustl.edu>
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_operation,
+           ami_handler_reply_stub_operation_cs,
+           "$Id$")
 
 // ************************************************************
 // Operation visitor for client stubs.

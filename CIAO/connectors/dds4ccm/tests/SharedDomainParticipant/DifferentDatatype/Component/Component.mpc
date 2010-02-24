@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p DDS_SharedDPBase -l ../lib -o ../lib -c controller -u DDS Component"
 
-project(DDS_SharedDP_DDComponent_idl_gen) : componentidldefaults, dds4ccm {
+project(DDS_SharedDP_DDComponent_idl_gen) : componentidldefaults   {
   after += DDS_SharedDP_Connector1_idl_gen DDS_SharedDP_Connector2_idl_gen \
            DDS_SharedDP_Connector3_idl_gen
   custom_only = 1
@@ -20,7 +20,7 @@ project(DDS_SharedDP_DDComponent_idl_gen) : componentidldefaults, dds4ccm {
   }
 }
 
-project(DDS_SharedDP_DDComponent_lem_gen) : ciaoidldefaults, dds4ccm {
+project(DDS_SharedDP_DDComponent_lem_gen) : ciaoidldefaults {
   after += DDS_SharedDP_DDComponent_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=COMPONENT_LEM_STUB_Export \
@@ -86,7 +86,7 @@ project(DDS_SharedDP_DDComponent_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(DDS_SharedDP_DDComponent_exec) : ciao_executor, dds4ccm_base, dds4ccm_impl {
+project(DDS_SharedDP_DDComponent_exec) : ciao_executor, nddslib, dds4ccm_base {
   after   += DDS_SharedDP_DDComponent_lem_stub DDS_SharedDP_DDComponent_stub \
              DDS_SharedDP_Connector1_lem_stub DDS_SharedDP_Connector1_stub \
              DDS_SharedDP_Connector2_lem_stub DDS_SharedDP_Connector2_stub \
@@ -97,7 +97,7 @@ project(DDS_SharedDP_DDComponent_exec) : ciao_executor, dds4ccm_base, dds4ccm_im
           DDS_Connector1_lem_stub DDS_Connector1_stub \
           DDS_Connector2_lem_stub DDS_Connector2_stub \
           DDS_Connector3_lem_stub DDS_Connector3_stub \
-          DDS4CCM_lem_stub
+          DDS4CCM_lem_stub CIAO_DDS4CCM_NDDS_Impl
   libpaths += ../lib
   includes += ..
   libout = ../lib
@@ -120,7 +120,7 @@ project(DDS_SharedDP_DDComponent_exec) : ciao_executor, dds4ccm_base, dds4ccm_im
 }
 
 
-project(DDS_SharedDP_DDComponent_svnt) : ciao_servant, dds4ccm_base {
+project(DDS_SharedDP_DDComponent_svnt) : ciao_servant, dds4ccm_base, nddslib {
   after      += DDS_SharedDP_DDBase_stub  DDS_SharedDP_DDComponent_lem_stub \
                 DDS4CCM_lem_stub DDS4CCM_skel \
                 DDS_SharedDP_Connector1_stub DDS_SharedDP_Connector1_svnt  DDS_SharedDP_Connector1_lem_stub \

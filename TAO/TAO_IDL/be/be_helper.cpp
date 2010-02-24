@@ -1,17 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_helper.cpp
- *
- *  $Id$
- *
- * Provides helper classes to print generated code to the output
- *
- *
- *  @author Aniruddha Gokhale Improvements by Carlos O'Ryan
- */
-//=============================================================================
-
+// ============================================================================
+//
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_helper.cpp
+//
+// = DESCRIPTION
+//   Provides helper classes to print generated code to the output
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+//    Improvements by Carlos O'Ryan
+//
+// ============================================================================
 
 #include "be_helper.h"
 #include "be_codegen.h"
@@ -24,6 +30,10 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 #include "../../tao/Version.h"
+
+ACE_RCSID (be,
+           be_helper,
+           "$Id$")
 
 static const char copyright[] =
 "// -*- C++ -*-\n"
@@ -41,6 +51,7 @@ static const char copyright[] =
 " *       University of California at Irvine\n"
 " *       Irvine, CA\n"
 " *       USA\n"
+" *       http://doc.ece.uci.edu/\n"
 " * and\n"
 " *       Institute for Software Integrated Systems\n"
 " *       Vanderbilt University\n"
@@ -529,7 +540,10 @@ TAO_OutStream::print (AST_Expression *expr)
             this->TAO_OutStream::print ("'\\''");
 
           // This handles hex and octal escape sequences
-          // that would print out as weird characters.
+          // that would print out either as weird characters
+          // or as an unsigned number too large for a char.
+          else if ((unsigned char) ev->u.cval > ACE_CHAR_MAX)
+            this->TAO_OutStream::print ("%hd", ev->u.cval);
           else if (ACE_OS::ace_isprint (ev->u.cval))
             this->TAO_OutStream::print ("'%c'", ev->u.cval);
           else if (ACE_OS::ace_iscntrl (ev->u.cval))
@@ -560,10 +574,10 @@ TAO_OutStream::print (AST_Expression *expr)
                   this->TAO_OutStream::print ("'?'");
                   break;
               default:
-                this->TAO_OutStream::print ("'\\x%x'", ev->u.oval);
+                this->TAO_OutStream::print ("'\\x%x'", ev->u.cval);
               }
            else
-            this->TAO_OutStream::print ("'\\x%x'", ev->u.oval);
+            this->TAO_OutStream::print ("'\\x%x'", ev->u.cval);
           break;
         case AST_Expression::EV_wchar:
           this->TAO_OutStream::print ("L'%lc'", ev->u.wcval);

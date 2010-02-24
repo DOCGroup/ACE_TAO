@@ -1,17 +1,22 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    facet_ex_idl.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for facets in the CIAO executor IDL.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    facet_ex_idl.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for facets in the CIAO executor IDL.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 be_visitor_facet_ex_idl::be_visitor_facet_ex_idl (
       be_visitor_context *ctx)

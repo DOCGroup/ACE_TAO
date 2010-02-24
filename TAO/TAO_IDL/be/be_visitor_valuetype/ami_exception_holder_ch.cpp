@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    ami_exception_holder_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating exception holders for the AMI callback model.
- *
- *
- *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    ami_exception_holder_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating exception holders for the AMI callback model.
+//
+// = AUTHOR
+//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuetype,
+           ami_exception_holder_ch,
+           "$Id$")
 
 // ******************************************************
 // Interface visitor for client header.

@@ -1,18 +1,22 @@
 
+// $Id$
+//
 /* -*- c++ -*- */
-//=============================================================================
-/**
- *  @file    be_visitor_interface.h
- *
- *  $Id$
- *
- *  Concrete visitor for the Interface class
- *
- *
- *  @author Carlos O'Ryan and Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_interface.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the Interface class
+//
+// = AUTHOR
+//    Carlos O'Ryan and Aniruddha Gokhale
+//
+// ============================================================================
 
 #ifndef TAO_BE_VISITOR_INTERFACE_H
 #define TAO_BE_VISITOR_INTERFACE_H

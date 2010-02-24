@@ -95,6 +95,7 @@ class ast_visitor;
 class TAO_IDL_FE_Export COMMON_Base
 {
 public:
+
   COMMON_Base (bool local = false,
                bool abstract = false);
 
@@ -109,6 +110,9 @@ public:
 
   // A no-op, overridden in the child classes.
   virtual void destroy (void);
+
+        // Narrowing.
+
 
 protected:
   bool is_local_;
@@ -148,14 +152,13 @@ public:
       , NT_native                   // Denotes a native type
                                     // dependent on the programming
                                     // language
-      , NT_factory                  // Denotes a OBV or home factory construct
-      , NT_finder                   // Denotes a home finder construct
+      , NT_factory                  // Denotes a OBV factory construct
       , NT_component                // Denotes a CORBA component
       , NT_component_fwd            // Denotes a forward declared component
       , NT_home                     // Denotes a CORBA component home
       , NT_eventtype                // Denotes a CCM event source or sink
       , NT_eventtype_fwd            // Denotes a forward declared CCM event
-      , NT_valuebox                 // Denotes a value box
+      , NT_valuebox                 // Denotes an value box
       , NT_type                     // Template interface parameter
       , NT_fixed                    // Denotes (unsupported) fixed type
       , NT_porttype                 // Denotes a port type
@@ -169,6 +172,11 @@ public:
       , NT_connector                // Denotes a CCM connector
       , NT_param_holder             // Denotes a template param placeholder
   };
+
+  // Operations.
+
+  // Constructor(s).
+  AST_Decl (void);
 
   AST_Decl (NodeType type,
             UTL_ScopedName *n,
@@ -252,6 +260,9 @@ public:
 
   Identifier *original_local_name (void);
   void original_local_name (Identifier *);
+
+  bool added (void);
+  void set_added (bool is_it);
 
   // Narrowing.
 
@@ -345,6 +356,9 @@ private:
 
   Identifier *pd_original_local_name;
   // _cxx_ removed if any.
+
+  bool pd_added;
+  // Already added.
 
   char *full_name_;
   // Our full scoped name.

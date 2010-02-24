@@ -7,16 +7,11 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDS4CCM_SUBSCRIPTIONMATCHEDSTATUS_H
-#define DDS4CCM_SUBSCRIPTIONMATCHEDSTATUS_H
+#ifndef CIAO_RTI_SUBSCRIPTIONMATCHEDSTATUS_H
+#define CIAO_RTI_SUBSCRIPTIONMATCHEDSTATUS_H
 
 #include "InstanceHandle_t.h"
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
-typedef ::DDS::SubscriptionMatchedStatus DDS_SubscriptionMatchedStatus;
-#endif
-
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::SubscriptionMatchedStatus &ddsstatus, const ::DDS_SubscriptionMatchedStatus & status)
 {
@@ -56,7 +51,6 @@ operator>>= (const ::DDS::SubscriptionMatchedStatus &status, ::DDS_SubscriptionM
   ddsstatus.current_count_change = status.current_count_change;
   ddsstatus.last_publication_handle <<= status.last_publication_handle;
 }
-#endif
 
-#endif /* DDS4CCM_SUBSCRIPTIONMATCHEDSTATUS_H */
+#endif /* CIAO_RTI_SUBSCRIPTIONMATCHEDSTATUS_H */
 

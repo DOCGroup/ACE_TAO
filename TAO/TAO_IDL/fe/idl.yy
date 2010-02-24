@@ -71,18 +71,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 /* Declarations */
 
 %{
-#include "utl_identifier.h"
-#include "utl_err.h"
-#include "utl_string.h"
-#include "utl_strlist.h"
-#include "utl_namelist.h"
-#include "utl_exprlist.h"
-#include "utl_labellist.h"
-#include "utl_decllist.h"
-
-#include "global_extern.h"
-#include "nr_extern.h"
-
 #include "ast_argument.h"
 #include "ast_array.h"
 #include "ast_attribute.h"
@@ -115,7 +103,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_sequence.h"
 #include "ast_string.h"
 #include "ast_factory.h"
-#include "ast_finder.h"
 #include "ast_exception.h"
 #include "ast_param_holder.h"
 #include "ast_visitor_tmpl_module_inst.h"
@@ -128,6 +115,18 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_component_header.h"
 #include "fe_home_header.h"
 #include "fe_utils.h"
+
+#include "utl_identifier.h"
+#include "utl_err.h"
+#include "utl_string.h"
+#include "utl_strlist.h"
+#include "utl_namelist.h"
+#include "utl_exprlist.h"
+#include "utl_labellist.h"
+#include "utl_decllist.h"
+
+#include "global_extern.h"
+#include "nr_extern.h"
 
 #if (defined(apollo) || defined(hpux)) && defined(__cplusplus)
 extern  "C" int yywrap();
@@ -743,10 +742,6 @@ template_module_ref
           $2->destroy ();
           delete $2;
           $2 = 0;
-
-          ast_visitor_context ctx;
-          ctx.template_params (ref->template_params ());
-          ast_visitor_tmpl_module_ref v (&ctx);
 
           // The implied IDL resulting from this reference is
           // created here, in the template module scope. Upon
@@ -1671,7 +1666,7 @@ interface_forward :
                                         AST_PredefinedType::PT_pseudo,
                                         &n
                                       );
-
+              (void) s->add_predefined_type (pdt);
               s->add_to_scope (pdt);
 
               $1->destroy ();
@@ -5040,7 +5035,7 @@ component_header :
         IDL_COMPONENT
         id
         {
-//      component_header: IDL_COMPONENT id
+//      id
           idl_global->set_parse_state (IDL_GlobalData::PS_ComponentIDSeen);
         }
         component_inheritance_spec
@@ -5867,23 +5862,37 @@ factory_decl :
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($2,
                             0);
+          AST_Operation *o = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_OpIDSeen);
 
           /*
            * Create a node representing a factory operation
            * and add it to the enclosing scope.
            */
-          AST_Factory *f = idl_global->gen ()->create_factory (&n);
-          (void) s->fe_add_factory (f);
+          if (s != 0)
+            {
+              AST_Home *h = AST_Home::narrow_from_scope (s);
+              
+              o =
+                idl_global->gen ()->create_operation (
+                                        h->managed_component (),
+                                        AST_Operation::OP_noflags,
+                                        &n,
+                                        false,
+                                        false
+                                      );
+                                      
+              h->factories ().enqueue_tail (o);
+            }
 
           $2->destroy ();
           delete $2;
           $2 = 0;
 
           /*
-           * Push the factory scope onto the scopes stack.
+           * Push the operation scope onto the scopes stack.
            */
-          idl_global->scopes ().push (f);
+          idl_global->scopes ().push (o);
         }
         init_parameter_list
         {
@@ -5894,18 +5903,24 @@ factory_decl :
         {
 //      opt_raises
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Operation *o = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseCompleted);
 
           /*
-           * Add exceptions and context to the factory.
+           * Add exceptions and context to the operation.
            */
-          if ($6 != 0)
+          if (s != 0 && s->scope_node_type () == AST_Decl::NT_op)
             {
-              (void) s->fe_add_exceptions ($6);
+              o = AST_Operation::narrow_from_scope (s);
+
+              if ($6 != 0 && o != 0)
+                {
+                  (void) o->fe_add_exceptions ($6);
+                }
             }
 
           /*
-           * Done with this factory. Pop its scope from the scopes stack.
+           * Done with this operation. Pop its scope from the scopes stack.
            */
           idl_global->scopes ().pop ();
         }
@@ -5919,18 +5934,28 @@ finder_decl :
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($2,
                             0);
-
+          AST_Operation *o = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_OpIDSeen);
 
           /*
-           * Create a node representing a home finder
+           * Create a node representing a finder operation
            * and add it to the enclosing scope.
            */
-          AST_Finder *f =
-            idl_global->gen ()->create_finder (&n);
-
-          (void) s->fe_add_finder (f);
-
+          if (s != 0)
+            {
+              AST_Home *h = AST_Home::narrow_from_scope (s);
+              
+              o =
+                idl_global->gen ()->create_operation (
+                                        h->managed_component (),
+                                        AST_Operation::OP_noflags,
+                                        &n,
+                                        false,
+                                        false
+                                      );
+                                      
+              h->finders ().enqueue_tail (o);
+            }
 
           $2->destroy ();
           delete $2;
@@ -5939,7 +5964,7 @@ finder_decl :
           /*
            * Push the operation scope onto the scopes stack.
            */
-          idl_global->scopes ().push (f);
+          idl_global->scopes ().push (o);
         }
         init_parameter_list
         {
@@ -5950,14 +5975,20 @@ finder_decl :
         {
 //      opt_raises
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Operation *o = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseCompleted);
 
           /*
-           * Add exceptions and context to the finder.
+           * Add exceptions and context to the operation.
            */
-          if ($6 != 0)
+          if (s != 0 && s->scope_node_type () == AST_Decl::NT_op)
             {
-              (void) s->fe_add_exceptions ($6);
+              o = AST_Operation::narrow_from_scope (s);
+
+              if ($6 != 0 && o != 0)
+                {
+                  (void) o->fe_add_exceptions ($6);
+                }
             }
 
           /*
@@ -6729,11 +6760,11 @@ actual_parameter
           UTL_ScopedName *sn = ex->n ();
           AST_Decl *d = 0;
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-
+          
           if (sn != 0)
             {
               d = s->lookup_by_name (sn, true);
-
+              
               if (d == 0)
                 {
                   idl_global->err ()->lookup_error (sn);
@@ -6742,12 +6773,12 @@ actual_parameter
               else
                 {
                   AST_Decl::NodeType nt = d->node_type ();
-
+                  
                   if (nt == AST_Decl::NT_enum_val)
                     {
                       $1->evaluate (
                         AST_Expression::EK_const);
-
+                
                       $<dcval>$ =
                         idl_global->gen ()->create_constant (
                           $1->ev ()->et,
@@ -6764,7 +6795,7 @@ actual_parameter
             {
               $1->evaluate (
                 AST_Expression::EK_const);
-
+                
               $<dcval>$ =
                 idl_global->gen ()->create_constant (
                   $1->ev ()->et,
@@ -6849,9 +6880,9 @@ connector_body
 // connector_body " '{'
           idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorSqSeen);
         }
-        connector_exports
+        at_least_one_connector_export
         {
-//        connector_exports
+//        at_least_one_connector_export
           idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorBodySeen);
         }
         '}'

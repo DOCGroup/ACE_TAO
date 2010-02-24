@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    rettype.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for return type of the Operation node
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    rettype.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for return type of the Operation node
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_operation,
+           rettype,
+           "$Id$")
 
 
 // ****************************************************************************

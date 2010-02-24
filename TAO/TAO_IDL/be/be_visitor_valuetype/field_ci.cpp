@@ -1,19 +1,28 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    field_ci.cpp
- *
- *  $Id$
- *
- *   Visitor for the Valuetype class.
- *   This one generates code for accessor and modifier functions of
- *   valuetype state members (in the inline file).
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    field_ci.cpp
+//
+// = DESCRIPTION
+//     Visitor for the Valuetype class.
+//     This one generates code for accessor and modifier functions of
+//     valuetype state members (in the inline file).
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuetype,
+           field_ci,
+           "$Id$")
 
 be_visitor_valuetype_field_ci::be_visitor_valuetype_field_ci (
     be_visitor_context *ctx

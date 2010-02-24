@@ -1,21 +1,31 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    field_ci.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Field in the client inline file
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    field_ci.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Field in the client inline file
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_visitor_array/array_ci.h"
 #include "be_visitor_structure/structure_ci.h"
 #include "be_visitor_union/union_ci.h"
+
+ACE_RCSID (be_visitor_field, 
+           field_ci, 
+           "$Id$")
+
 
 be_visitor_field_ci::be_visitor_field_ci (be_visitor_context *ctx)
   : be_visitor_decl (ctx)

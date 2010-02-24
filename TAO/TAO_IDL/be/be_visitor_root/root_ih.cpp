@@ -1,17 +1,24 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    root_ih.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Root in the server implementation header
- *
- *
- *  @author Yamuna  Krishnamurthy (yamuna@cs.wustl.edu)
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    root_ih.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Root in the server implementation header
+//
+// = AUTHOR
+//   Yamuna  Krishnamurthy (yamuna@cs.wustl.edu)
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_root, 
+           root_ih, 
+           "$Id$")
 
 // ***********************************
 // Root visitor for implementation header

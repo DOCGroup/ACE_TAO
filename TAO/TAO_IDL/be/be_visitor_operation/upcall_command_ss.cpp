@@ -1,18 +1,26 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    upcall_command_ss.cpp
- *
- *  $Id$
- *
- *  Visitor that generates operation-specific TAO::Upcall_Command
- *  objects in skeletons.
- *
- *
- *  @author Ossama Othman
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    upcall_command_ss.cpp
+//
+// = DESCRIPTION
+//    Visitor that generates operation-specific TAO::Upcall_Command
+//    objects in skeletons.
+//
+// = AUTHOR
+//    Ossama Othman
+//
+// ============================================================================
 
+
+ACE_RCSID (be_visitor_operation,
+           upcall_command_ss,
+           "$Id$")
 
 be_visitor_operation_upcall_command_ss
 ::be_visitor_operation_upcall_command_ss (

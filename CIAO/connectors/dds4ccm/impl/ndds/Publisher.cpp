@@ -13,391 +13,315 @@
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
-#include "dds4ccm/impl/logger/Log_Macros.h"
+#include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO
 {
   namespace DDS4CCM
   {
-    CCM_DDS_Publisher_i::CCM_DDS_Publisher_i (DDSPublisher * dw)
-      : impl_ (dw)
+    namespace RTI
     {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i::CCM_DDS_Publisher_i");
-    }
+      // Implementation skeleton constructor
+      RTI_Publisher_i::RTI_Publisher_i (void)
+        : impl_ (0)
+      {
+        CIAO_TRACE ("RTI_Publisher_i::RTI_Publisher_i");
+      }
 
-    CCM_DDS_Publisher_i::~CCM_DDS_Publisher_i (void)
-    {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i::~CCM_DDS_Publisher_i");
-    }
+      // Implementation skeleton destructor
+      RTI_Publisher_i::~RTI_Publisher_i (void)
+      {
+        CIAO_TRACE ("RTI_Publisher_i::~RTI_Publisher_i");
+      }
 
-    ::DDS::DataWriter_ptr
-    CCM_DDS_Publisher_i::create_datawriter (::DDS::Topic_ptr a_topic,
-                                        const ::DDS::DataWriterQos & qos,
-                                        ::DDS::DataWriterListener_ptr a_listener,
-                                        ::DDS::StatusMask mask)
-    {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i::create_datawriter");
+      ::DDS::DataWriter_ptr
+      RTI_Publisher_i::create_datawriter (::DDS::Topic_ptr a_topic,
+                                          const ::DDS::DataWriterQos & /*qos*/,
+                                          ::DDS::DataWriterListener_ptr a_listener,
+                                          ::DDS::StatusMask mask)
+      {
+        CIAO_TRACE ("RTI_Publisher_i::create_datawriter");
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      ACE_UNUSED_ARG (qos);
+        RTI_Topic_i * topic = dynamic_cast < RTI_Topic_i * > (a_topic);
 
-      CCM_DDS_Topic_i * topic = dynamic_cast < CCM_DDS_Topic_i * > (a_topic);
+        if (!topic)
+          {
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter - "
+                         "Error: Unable to cast provided topic to its servant.\n"));
+            throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
+          }
 
-      if (!topic)
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Publisher_i::create_datawriter - "
-                       "Error: Unable to cast provided topic to its servant.\n"));
-          throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
-        }
+        DDSTopic *rti_topic = topic->get_impl ();
+        DDSDataWriterListener *rti_drl = 0;
+        if (!CORBA::is_nil (a_listener))
+          {
+            rti_drl = new RTI_DataWriterListener_i (a_listener);
+          }
+        DDS_DataWriterQos rti_qos = DDS_DATAWRITER_QOS_DEFAULT;
+//        rti_qos <<= qos;
+        DDSDataWriter *rti_dw = this->impl ()->create_datawriter (rti_topic,
+                                                                rti_qos,
+                                                                rti_drl,
+                                                                mask);
 
-      DDSDataWriterListener *rti_drl = 0;
-      if (!CORBA::is_nil (a_listener))
-        {
-          ACE_NEW_THROW_EX (rti_drl,
-                            CCM_DDS_DataWriterListener_i (a_listener),
-                            CORBA::NO_MEMORY ());
-        }
-      DDS_DataWriterQos rti_qos = DDS_DATAWRITER_QOS_DEFAULT;
-      DDSDataWriter *rti_dw = this->impl ()->create_datawriter (
-                                                            topic->get_impl (),
-                                                            rti_qos,
-                                                            rti_drl,
-                                                            mask);
+        if (!rti_dw)
+          {
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter - "
+                         "Error: RTI Topic returned a nil datawriter.\n"));
+            throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          }
 
-      if (!rti_dw)
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Publisher_i::create_datawriter - "
-                       "Error: RTI Topic returned a nil datawriter.\n"));
-          delete rti_drl;
-          throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
-        }
+        rti_dw->enable ();
+        ::DDS::DataWriter_var retval = new RTI_DataWriter_i ();
+        RTI_DataWriter_i *dw = dynamic_cast< RTI_DataWriter_i * > (retval.in ());
+        dw->set_impl (rti_dw);
 
-      ::DDS::DataWriter_var retval = ::DDS::DataWriter::_nil ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_DataWriter_i (rti_dw),
-                        CORBA::NO_MEMORY ());
+        return retval._retn ();
+      }
 
-      rti_dw->enable ();
-      CCM_DDS_DataWriter_i *dw = dynamic_cast< CCM_DDS_DataWriter_i * > (retval.in ());
-      dw->set_impl (rti_dw);
+      ::DDS::DataWriter_ptr
+      RTI_Publisher_i::create_datawriter_with_profile (::DDS::Topic_ptr a_topic,
+                                          const char* library_name,
+                                          const char *profile_name,
+                                          ::DDS::DataWriterListener_ptr a_listener,
+                                          ::DDS::StatusMask mask)
+      {
+        CIAO_TRACE ("RTI_Publisher_i::create_datawriter");
 
-      return retval._retn ();
-#else
-      return this->impl ()->create_datawriter (
-                                                            a_topic,
-                                                            qos,
-                                                            a_listener,
-                                                            mask);
-#endif
-    }
+        RTI_Topic_i * topic = dynamic_cast < RTI_Topic_i * > (a_topic);
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-    ::DDS::DataWriter_ptr
-    CCM_DDS_Publisher_i::create_datawriter_with_profile (::DDS::Topic_ptr a_topic,
-                                        const char* library_name,
-                                        const char *profile_name,
-                                        ::DDS::DataWriterListener_ptr a_listener,
-                                        ::DDS::StatusMask mask)
-    {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i::create_datawriter");
+        if (!topic)
+          {
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter_with_profile - "
+                         "Error: Unable to cast provided topic to its servant.\n"));
+            throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
+          }
 
-      CCM_DDS_Topic_i * topic = dynamic_cast < CCM_DDS_Topic_i * > (a_topic);
+        DDSTopic *rti_topic = topic->get_impl ();
+        DDSDataWriterListener *rti_drl = 0;
+        if (!CORBA::is_nil (a_listener))
+          {
+            rti_drl = new RTI_DataWriterListener_i (a_listener);
+          }
+        DDSDataWriter *rti_dw = this->impl ()->create_datawriter_with_profile (rti_topic,
+                                                                library_name,
+                                                                profile_name,
+                                                                rti_drl,
+                                                                mask);
 
-      if (!topic)
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Publisher_i::create_datawriter_with_profile - "
-                       "Error: Unable to cast provided topic to its servant.\n"));
-          throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
-        }
+        if (!rti_dw)
+          {
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter_with_profile - "
+                         "Error: RTI Topic returned a nil datawriter.\n"));
+            throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          }
 
-      DDSDataWriterListener *rti_drl = 0;
-      if (!CORBA::is_nil (a_listener))
-        {
-          ACE_NEW_THROW_EX (rti_drl,
-                            CCM_DDS_DataWriterListener_i (a_listener),
-                            CORBA::NO_MEMORY ());
-        }
-      DDSDataWriter *rti_dw = this->impl ()->create_datawriter_with_profile (
-                                                              topic->get_impl (),
-                                                              library_name,
-                                                              profile_name,
-                                                              rti_drl,
-                                                              mask);
+        rti_dw->enable ();
+        ::DDS::DataWriter_var retval = new RTI_DataWriter_i ();
+        RTI_DataWriter_i *dw = dynamic_cast< RTI_DataWriter_i * > (retval.in ());
+        dw->set_impl (rti_dw);
 
-      if (!rti_dw)
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Publisher_i::create_datawriter_with_profile - "
-                       "Error: RTI Topic returned a nil datawriter.\n"));
-          delete rti_drl;
-          throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
-        }
+        return retval._retn ();
+      }
 
-      ::DDS::DataWriter_var retval = ::DDS::DataWriter::_nil ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_DataWriter_i (rti_dw),
-                        CORBA::NO_MEMORY ());
+      ::DDS::ReturnCode_t
+      RTI_Publisher_i::delete_datawriter (::DDS::DataWriter_ptr a_datawriter)
+      {
+        CIAO_TRACE ("RTI_Publisher_i::delete_datawriter");
 
-      rti_dw->enable ();
-      CCM_DDS_DataWriter_i *dw = dynamic_cast< CCM_DDS_DataWriter_i * > (retval.in ());
-      dw->set_impl (rti_dw);
+        RTI_DataWriter_i *top = dynamic_cast< RTI_DataWriter_i *> (a_datawriter);
 
-      return retval._retn ();
-    }
-#endif
+        if (top == 0)
+          {
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::delete_datawriter - "
+                         "Unable to cast provided object reference to servant.\n"));
+            return ::DDS::RETCODE_BAD_PARAMETER;
+          }
 
-    ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i::delete_datawriter (::DDS::DataWriter_ptr a_datawriter)
-    {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i::delete_datawriter");
+        CIAO_DEBUG (9, (LM_TRACE, CLINFO "RTI_Publisher_i::delete_datawriter - "
+                     "Successfully casted provided object reference to servant.\n"));
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      CCM_DDS_DataWriter_i *top = dynamic_cast< CCM_DDS_DataWriter_i *> (a_datawriter);
+        DDS_ReturnCode_t const retval = this->impl ()->delete_datawriter (top->get_impl ());
 
-      if (top == 0)
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Publisher_i::delete_datawriter - "
-                       "Unable to cast provided object reference to servant.\n"));
-          return ::DDS::RETCODE_BAD_PARAMETER;
-        }
+        if (retval != DDS_RETCODE_OK)
+          {
+            CIAO_ERROR (1, (LM_ERROR, CLINFO "RTI_Publisher_i::delete_datawriter - "
+                         "Error: RTI delete_datawriter returned non-ok error code %C\n",
+                         translate_retcode (retval)));
+          }
+        else CIAO_DEBUG (6, (LM_INFO, CLINFO "RTI_Publisher_i::delete_datawriter - "
+                          "Provided datawriter successfully deleted\n"));
 
-      DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_Publisher_i::delete_datawriter - "
-                   "Successfully casted provided object reference to servant.\n"));
+        return retval;
+      }
 
-      DDS_ReturnCode_t const retval = this->impl ()->delete_datawriter (top->get_impl ());
+      ::DDS::DataWriter_ptr
+      RTI_Publisher_i::lookup_datawriter (const char * impl_name)
+      {
+        DDSDataWriter* dw = this->impl ()->lookup_datawriter (impl_name);
+        ::DDS::DataWriter_var retval = new RTI_DataWriter_i ();
+        RTI_DataWriter_i *rti_dw = dynamic_cast< RTI_DataWriter_i * > (retval.in ());
+        rti_dw->set_impl (dw);
+        return retval._retn ();
+      }
 
-      if (retval != DDS_RETCODE_OK)
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Publisher_i::delete_datawriter - "
-                       "Error: RTI delete_datawriter returned non-ok error code %C\n",
-                       translate_retcode (retval)));
-        }
-      else DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_Publisher_i::delete_datawriter - "
-                        "Provided datawriter successfully deleted\n"));
+      ::DDS::ReturnCode_t
+      RTI_Publisher_i::delete_contained_entities (void)
+      {
+        return this->impl ()->delete_contained_entities ();
+      }
 
-      return retval;
-#else
-      return this->impl ()->delete_datawriter (a_datawriter);
-#endif
-    }
+      ::DDS::ReturnCode_t
+      RTI_Publisher_i::set_qos (const ::DDS::PublisherQos & /*qos*/)
+      {
+        CIAO_TRACE ("RTI_Publisher_i::set_qos");
+        throw CORBA::NO_IMPLEMENT ();
+      }
 
-    ::DDS::DataWriter_ptr
-    CCM_DDS_Publisher_i::lookup_datawriter (const char * impl_name)
-    {
-      ::DDS::DataWriter_var retval = ::DDS::DataWriter::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      DDSDataWriter* dw = this->impl ()->lookup_datawriter (impl_name);
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_DataWriter_i (dw),
-                        CORBA::NO_MEMORY ());
-#else
-      ::DDS::DataWriter_var dw = this->impl ()->lookup_datawriter (impl_name);
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_DataWriter_i (dw.in ()),
-                        CORBA::NO_MEMORY ());
-#endif
-      return retval._retn ();
-    }
+      ::DDS::ReturnCode_t
+      RTI_Publisher_i::get_qos (::DDS::PublisherQos & /* qos*/)
+      {
+        CIAO_TRACE ("RTI_Publisher_i::get_qos");
+        throw CORBA::NO_IMPLEMENT ();
+      }
 
-    ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i::delete_contained_entities (void)
-    {
-      return this->impl ()->delete_contained_entities ();
-    }
+      ::DDS::ReturnCode_t
+      RTI_Publisher_i::set_listener (::DDS::PublisherListener_ptr a_listener,
+                                     ::DDS::StatusMask mask)
+      {
+        CIAO_TRACE ("RTI_Publisher_i::set_listener");
 
-    ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i::set_qos (const ::DDS::PublisherQos & /*qos*/)
-    {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i::set_qos");
-      throw CORBA::NO_IMPLEMENT ();
-    }
+        RTI_PublisherListener_i* rti_impl_list = new RTI_PublisherListener_i (a_listener);
+        return this->impl ()->set_listener (rti_impl_list, mask);
+      }
 
-    ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i::get_qos (::DDS::PublisherQos & /* qos*/)
-    {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i::get_qos");
-      throw CORBA::NO_IMPLEMENT ();
-    }
+      ::DDS::PublisherListener_ptr
+      RTI_Publisher_i::get_listener (void)
+      {
+/*        DDSPublisherListener* pl = this->impl ()->get_listener ();
+        ::DDS::PublisherListener_var retval = new RTI_PublisherListener_i (pl);
+        return retval._retn ();*/
+        throw CORBA::NO_IMPLEMENT ();
+      }
 
-    ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i::set_listener (::DDS::PublisherListener_ptr a_listener,
-                                   ::DDS::StatusMask mask)
-    {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i::set_listener");
+      ::DDS::ReturnCode_t
+      RTI_Publisher_i::suspend_publications (void)
+      {
+        return this->impl ()->suspend_publications ();
+      }
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      CCM_DDS_PublisherListener_i *rti_impl_list  = 0;
-      if (!CORBA::is_nil (a_listener))
-        {
-          ACE_NEW_THROW_EX (rti_impl_list,
-                            CCM_DDS_PublisherListener_i (a_listener),
-                            CORBA::NO_MEMORY ());
-        }
-      return this->impl ()->set_listener (rti_impl_list, mask);
-#else
-      return this->impl ()->set_listener (a_listener, mask);
-#endif
-    }
+      ::DDS::ReturnCode_t
+      RTI_Publisher_i::resume_publications (void)
+      {
+        return this->impl ()->resume_publications ();
+      }
 
-    ::DDS::PublisherListener_ptr
-    CCM_DDS_Publisher_i::get_listener (void)
-    {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i::get_listener");
+      ::DDS::ReturnCode_t
+      RTI_Publisher_i::begin_coherent_changes (void)
+      {
+        return this->impl ()->begin_coherent_changes ();
+      }
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      DDSPublisherListener *rti_pub_list = this->impl ()->get_listener ();
-      CCM_DDS_PublisherListener_i *list_proxy = dynamic_cast <CCM_DDS_PublisherListener_i *> (rti_pub_list);
-      if (!list_proxy)
-        {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, "CCM_DDS_Publisher_i::get_listener - "
-                                    "DDS returned a NIL listener.\n"));
-          return ::DDS::PublisherListener::_nil ();
-        }
-      return list_proxy->get_publisher_listener ();
-#else
-      return this->impl ()->get_listener ();
-#endif
-    }
+      ::DDS::ReturnCode_t
+      RTI_Publisher_i::end_coherent_changes (void)
+      {
+        return this->impl ()->end_coherent_changes ();
+      }
 
-    ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i::suspend_publications (void)
-    {
-      return this->impl ()->suspend_publications ();
-    }
+      ::DDS::ReturnCode_t
+      RTI_Publisher_i::wait_for_acknowledgments (const ::DDS::Duration_t & max_wait)
+      {
+        DDS_Duration_t rti_dds_duration;
+        rti_dds_duration <<= max_wait;
+        return this->impl ()->wait_for_acknowledgments (rti_dds_duration);
+      }
 
-    ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i::resume_publications (void)
-    {
-      return this->impl ()->resume_publications ();
-    }
+      ::DDS::DomainParticipant_ptr
+      RTI_Publisher_i::get_participant (void)
+      {
+        CIAO_TRACE ("RTI_Publisher_i::get_participant");
+        DDSDomainParticipant* p = this->impl ()->get_participant ();
+        ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i ();
+        RTI_DomainParticipant_i *rti_dp = dynamic_cast < RTI_DomainParticipant_i *> (retval.in ());
+        rti_dp->set_impl (p);
+        return retval._retn ();
+      }
 
-    ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i::begin_coherent_changes (void)
-    {
-      return this->impl ()->begin_coherent_changes ();
-    }
+      ::DDS::ReturnCode_t
+      RTI_Publisher_i::set_default_datawriter_qos (const ::DDS::DataWriterQos & /*qos*/)
+      {
+        CIAO_TRACE ("RTI_Publisher_i::set_default_datawriter_qos");
+        throw CORBA::NO_IMPLEMENT ();
+      }
 
-    ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i::end_coherent_changes (void)
-    {
-      return this->impl ()->end_coherent_changes ();
-    }
+      ::DDS::ReturnCode_t
+      RTI_Publisher_i::get_default_datawriter_qos (::DDS::DataWriterQos & /*qos*/)
+      {
+        CIAO_TRACE ("RTI_Publisher_i::get_default_datawriter_qos");
+        throw CORBA::NO_IMPLEMENT ();
+      }
 
-    ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i::wait_for_acknowledgments (const ::DDS::Duration_t & max_wait)
-    {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      DDS_Duration_t rti_dds_duration;
-      rti_dds_duration <<= max_wait;
-      return this->impl ()->wait_for_acknowledgments (rti_dds_duration);
-#else
-      return this->impl ()->wait_for_acknowledgments (max_wait);
-#endif
-    }
+      ::DDS::ReturnCode_t
+      RTI_Publisher_i::copy_from_topic_qos (::DDS::DataWriterQos & /*a_dataimpl_qos*/,
+                                            const ::DDS::TopicQos & /*a_impl_qos*/)
+      {
+        CIAO_TRACE ("RTI_Publisher_i::copy_from_topic_qos");
+        throw CORBA::NO_IMPLEMENT ();
+      }
 
-    ::DDS::DomainParticipant_ptr
-    CCM_DDS_Publisher_i::get_participant (void)
-    {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i::get_participant");
-      ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      DDSDomainParticipant* p = this->impl ()->get_participant ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_DomainParticipant_i (p),
-                        CORBA::NO_MEMORY ());
-#else
-      ::DDS::DomainParticipant_var p = this->impl ()->get_participant ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_DomainParticipant_i (p.in ()),
-                        CORBA::NO_MEMORY ());
-#endif
-      return retval._retn ();
-    }
+      ::DDS::ReturnCode_t
+      RTI_Publisher_i::enable (void)
+      {
+        return this->impl ()->enable ();
+      }
 
-    ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i::set_default_datawriter_qos (const ::DDS::DataWriterQos & /*qos*/)
-    {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i::set_default_datawriter_qos");
-      throw CORBA::NO_IMPLEMENT ();
-    }
+      ::DDS::StatusCondition_ptr
+      RTI_Publisher_i::get_statuscondition (void)
+      {
+        DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
+        ::DDS::StatusCondition_var retval = new RTI_StatusCondition_i ();
+        RTI_StatusCondition_i *rti_sc = dynamic_cast < RTI_StatusCondition_i *> (retval.in ());
+        rti_sc->set_impl (sc);
+        return retval._retn ();
+      }
 
-    ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i::get_default_datawriter_qos (::DDS::DataWriterQos & /*qos*/)
-    {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i::get_default_datawriter_qos");
-      throw CORBA::NO_IMPLEMENT ();
-    }
+      ::DDS::StatusMask
+      RTI_Publisher_i::get_status_changes (void)
+      {
+        return this->impl ()->get_status_changes ();
+      }
 
-    ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i::copy_from_topic_qos (::DDS::DataWriterQos & /*a_dataimpl_qos*/,
-                                          const ::DDS::TopicQos & /*a_impl_qos*/)
-    {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i::copy_from_topic_qos");
-      throw CORBA::NO_IMPLEMENT ();
-    }
+      ::DDS::InstanceHandle_t
+      RTI_Publisher_i::get_instance_handle (void)
+      {
+        ::DDS_InstanceHandle_t const rtihandle = this->impl ()->get_instance_handle ();
+        ::DDS::InstanceHandle_t handle;
+        handle <<= rtihandle;
+        return handle;
+      }
 
-    ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i::enable (void)
-    {
-      return this->impl ()->enable ();
-    }
+      DDSPublisher *
+      RTI_Publisher_i::get_impl (void)
+      {
+        return this->impl_;
+      }
 
-    ::DDS::StatusCondition_ptr
-    CCM_DDS_Publisher_i::get_statuscondition (void)
-    {
-      ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_StatusCondition_i (sc),
-                        CORBA::NO_MEMORY ());
-#else
-      ::DDS::StatusCondition_var sc = this->impl ()->get_statuscondition ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_StatusCondition_i (sc.in ()),
-                        CORBA::NO_MEMORY ());
-#endif
-      return retval._retn ();
-    }
+      void
+      RTI_Publisher_i::set_impl (DDSPublisher * dw)
+      {
+        this->impl_ = dw;
+      }
 
-    ::DDS::StatusMask
-    CCM_DDS_Publisher_i::get_status_changes (void)
-    {
-      return this->impl ()->get_status_changes ();
-    }
+      DDSPublisher *
+      RTI_Publisher_i::impl (void)
+      {
+        if (!this->impl_)
+          {
+            throw ::CORBA::BAD_INV_ORDER ();
+          }
+        return this->impl_;
+      }
 
-    ::DDS::InstanceHandle_t
-    CCM_DDS_Publisher_i::get_instance_handle (void)
-    {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      ::DDS_InstanceHandle_t const rtihandle = this->impl ()->get_instance_handle ();
-      ::DDS::InstanceHandle_t handle;
-      handle <<= rtihandle;
-      return handle;
-#else
-      return this->impl ()->get_instance_handle ();
-#endif
-    }
-
-    DDSPublisher *
-    CCM_DDS_Publisher_i::get_impl (void)
-    {
-      return this->impl_;
-    }
-
-    void
-    CCM_DDS_Publisher_i::set_impl (DDSPublisher * dw)
-    {
-      this->impl_ = dw;
-    }
-
-    DDSPublisher *
-    CCM_DDS_Publisher_i::impl (void)
-    {
-      if (!this->impl_)
-        {
-          throw ::CORBA::BAD_INV_ORDER ();
-        }
-      return this->impl_;
     }
   }
 }

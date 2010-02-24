@@ -1,17 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    operation_ss.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Operation in the server skeleton
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    operation_ss.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Operation in the server skeleton
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+
+ACE_RCSID (be_visitor_operation,
+           operation_ss,
+           "$Id$")
 
 // ************************************************************
 // Operation visitor for server skeletons

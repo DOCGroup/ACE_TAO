@@ -64,8 +64,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-// AST_Factory nodes denote OBV or component home factory
-// construct declarations.
+// AST_Factory nodes denote OBV factory construct declarations
 // AST_Factory is a subclass of AST_Decl (it is not a type!)
 // and of UTL_Scope (the arguments are managed in a scope).
 
@@ -79,12 +78,20 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_exceptlist.h"
 #include "utl_namelist.h"
 
-AST_Decl::NodeType const
-AST_Factory::NT = AST_Decl::NT_factory;
+AST_Factory::AST_Factory (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    UTL_Scope (),
+    pd_exceptions (0),
+    pd_n_exceptions (0),
+    argument_count_ (-1),
+    has_native_ (0)
+{
+}
 
 AST_Factory::AST_Factory (UTL_ScopedName *n)
-  : COMMON_Base (true,
-                 false), //@@ Always local, never abstract
+  : COMMON_Base (1,
+                 0), //@@ Always local, never abstract
     AST_Decl (AST_Decl::NT_factory,
               n),
     UTL_Scope (AST_Decl::NT_factory),
@@ -207,12 +214,51 @@ AST_Factory::compute_argument_attr (void)
   return 0;
 }
 
+// Add this AST_Argument node (an factory argument declaration)
+// to this scope.
 AST_Argument *
 AST_Factory::fe_add_argument (AST_Argument *t)
 {
-  return
-    AST_Argument::narrow_from_decl (
-      this->fe_add_ref_decl (t));
+  AST_Decl *d = 0;
+
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = lookup_by_name_local (t->local_name(), 0)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, t->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (t->has_ancestor (d))
+        {
+          idl_global->err ()->redefinition_in_scope (t,
+                                                     d);
+          return 0;
+        }
+    }
+
+  // Add it to scope.
+  this->add_to_scope (t);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (t,
+                           false,
+                           t->local_name ());
+
+  return t;
 }
 
 UTL_NameList *
@@ -277,7 +323,7 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
   return t;
 }
 
-// Dump this AST_Factory node to the ostream o.
+// Dump this AST_Factory node (an OBV factory construct) to the ostream o.
 void
 AST_Factory::dump (ACE_OSTREAM_TYPE &o)
 {
@@ -289,7 +335,7 @@ AST_Factory::dump (ACE_OSTREAM_TYPE &o)
 
   // Iterator must be explicitly advanced inside the loop.
   for (UTL_ScopeActiveIterator i (this, IK_decls);
-       !i.is_done ();)
+       !i.is_done();)
     {
       d = i.item ();
       d->dump (o);
@@ -302,6 +348,7 @@ AST_Factory::dump (ACE_OSTREAM_TYPE &o)
     }
 
   this->dump_i (o, ")");
+
 }
 
 int
@@ -310,6 +357,7 @@ AST_Factory::ast_accept (ast_visitor *visitor)
   return visitor->visit_factory (this);
 }
 
+// Data accessors
+
 IMPL_NARROW_FROM_DECL(AST_Factory)
 IMPL_NARROW_FROM_SCOPE(AST_Factory)
-

@@ -13,6 +13,8 @@ class AST_Structure;
 class TAO_IDL_FE_Export AST_StructureFwd : public virtual AST_Type
 {
 public:
+  AST_StructureFwd (void);
+
   AST_StructureFwd (AST_Structure *full_defn,
                     UTL_ScopedName *n);
 
@@ -36,8 +38,6 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-
-  static AST_Decl::NodeType const NT;
 
 private:
   AST_Structure *pd_full_definition;

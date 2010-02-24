@@ -1,17 +1,21 @@
+// $Id$
+//
 /* -*- c++ -*- */
-//=============================================================================
-/**
- *  @file    be_visitor_interface.cpp
- *
- *  $Id$
- *
- *  Visitors for generation of code for Interface
- *
- *
- *  @author Aniruddha Gokhale and Carlos O'Ryan
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_interface.cpp
+//
+// = DESCRIPTION
+//    Visitors for generation of code for Interface
+//
+// = AUTHOR
+//    Aniruddha Gokhale and Carlos O'Ryan
+//
+// ============================================================================
 
 #include "be_argument.h"
 #include "be_interface.h"

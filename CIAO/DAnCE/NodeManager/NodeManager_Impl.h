@@ -16,17 +16,17 @@
 #ifndef NODEMANAGER_IMPL_H_
 #define NODEMANAGER_IMPL_H_
 
+#include "NodeManager_Export.h"
 #include "tao/Object.h"
 #include "tao/ORB.h"
-#include "DAnCE/Deployment_common.h"
+#include "Deployment/Deployment_common.h"
 #include "Deployment/Deployment_NodeManagerS.h"
 #include "NodeApplicationManager/NodeApplicationManager_Impl.h"
 #include "ace/Map_Manager.h"
 
 namespace DAnCE
 {
-  class NodeManager_Impl :
-    public virtual POA_Deployment::NodeManager
+  class NodeManager_Export NodeManager_Impl : public virtual POA_Deployment::NodeManager
   {
   public:
     /// The fixed listener port is caused by the usage of CCM Object locator
@@ -51,6 +51,8 @@ namespace DAnCE
     virtual void destroyManager (::Deployment::NodeApplicationManager_ptr appManager);
 
     virtual ::Deployment::Resources * getDynamicResources (void);
+
+    const char* getName(void);
 
   private:
     CORBA::ORB_var orb_;

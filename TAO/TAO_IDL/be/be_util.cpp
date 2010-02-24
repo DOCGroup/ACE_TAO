@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_util.cpp
- *
- *  $Id$
- *
- *  Static helper methods used by multiple visitors.
- *
- *
- *  @author Gary Maxey
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_util.cpp
+//
+// = DESCRIPTION
+//    Static helper methods used by multiple visitors.
+//
+// = AUTHOR
+//    Gary Maxey, Jeff Parsons
+//
+// ============================================================================
 
 #include "be_util.h"
 #include "be_helper.h"

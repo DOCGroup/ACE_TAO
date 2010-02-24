@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    typecode_defn.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for TypeCode definitions for types.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    typecode_defn.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for TypeCode definitions for types.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_typecode,
+           typecode_defn,
+           "$Id$")
 
 #include "be_interface_fwd.h"
 
@@ -484,12 +494,6 @@ be_visitor_typecode_defn::visit_interface (be_interface * node)
 
 int
 be_visitor_typecode_defn::visit_component (be_component *node)
-{
-  return this->visit_interface (node);
-}
-
-int
-be_visitor_typecode_defn::visit_connector (be_connector *node)
 {
   return this->visit_interface (node);
 }

@@ -1,20 +1,25 @@
+//
+// $Id$
+//
 /* -*- c++ -*- */
-//=============================================================================
-/**
- *  @file    be_visitor.cpp
- *
- *  $Id$
- *
- *  Abstract class for back end visitors.
- *
- * = NOTES
- *  This is not a pure abstract class
- *
- *
- *  @author Aniruddha Gokhale and Carlos O'Ryan
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor.h
+//
+// = DESCRIPTION
+//    Abstract class for back end visitors.
+//
+// = NOTES
+//    This is not a pure abstract class
+//
+// = AUTHOR
+//    Aniruddha Gokhale and Carlos O'Ryan
+//
+// ============================================================================
 
 #include "be_visitor.h"
 
@@ -28,8 +33,7 @@ be_visitor::~be_visitor (void)
 {
 }
 
-// All the visit methods. Concrete visitors will selectively
-// override each one.
+// all the visit methods. Concrete visitors will selectively override each one
 int be_visitor::visit_decl (be_decl *)
 {
   return 0;
@@ -198,12 +202,6 @@ be_visitor::visit_home (be_home *)
 
 int
 be_visitor::visit_factory (be_factory *)
-{
-  return 0;
-}
-
-int
-be_visitor::visit_finder (be_finder *)
 {
   return 0;
 }

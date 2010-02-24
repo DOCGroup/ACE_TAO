@@ -1,24 +1,42 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_argument.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_Argument that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_argument.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_Argument that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_argument.h"
 #include "be_type.h"
 #include "be_visitor.h"
 #include "nr_extern.h"
 #include "global_extern.h"
+
+ACE_RCSID (be,
+           be_argument,
+           "$Id$")
+
+be_argument::be_argument (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Field (),
+    AST_Argument (),
+    be_decl ()
+{
+}
 
 be_argument::be_argument (AST_Argument::Direction d,
                           AST_Type *ft,

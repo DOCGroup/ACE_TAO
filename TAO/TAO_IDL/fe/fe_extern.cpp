@@ -70,14 +70,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 
 #include "fe_extern.h"
-
+#include "ast_root.h"
 #include "global_extern.h"
 #include "utl_err.h"
 #include "utl_indenter.h"
-
-#include "ast_root.h"
-
 #include "ace/UUID.h"
+
+ACE_RCSID (fe,
+           fe_extern,
+           "$Id$")
 
 extern int tao_yyparse (void);
 
@@ -94,6 +95,11 @@ FE_yyparse (void)
 {
   int const result = tao_yyparse ();
 
+  if (0 == idl_global->err_count ())
+    {
+      idl_global->root ()->call_add ();
+    }
+    
 #ifdef USE_MCPP_BUFFER_LEXING
   ACE_OS::free (tao_preproc_buffer);
   tao_preproc_buffer_length = 0;

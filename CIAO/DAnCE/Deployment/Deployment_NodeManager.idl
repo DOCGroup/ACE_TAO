@@ -1,6 +1,6 @@
 // $Id$
-#ifndef DEPLOYMENT_NODEMANAGER_IDL
-#define DEPLOYMENT_NODEMANAGER_IDL
+#ifndef NODEMANAGER_IDL
+#define NODEMANAGER_IDL
 
 #include "DAnCE/Deployment/Deployment.idl"
 #include "DAnCE/Deployment/Deployment_TargetManager.idl"
@@ -13,10 +13,10 @@ module Deployment {
   };
 
   interface NodeManager {
-    void joinDomain (in Domain theDomain,
-                     in TargetManager manager,
-                     in Logger log,
-                     in long updateInterval);
+    void joinDomain (   in Domain theDomain,
+                        in TargetManager manager,
+                        in Logger log,
+                        in long updateInterval);
 
     void leaveDomain ();
 
@@ -31,4 +31,4 @@ module Deployment {
   };
 };
 
-#endif /* DEPLOYMENT_NODEMANAGER_IDL */
+#endif /* NODEMANAGER_IDL */

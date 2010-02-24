@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuebox_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for valueboxes in the client stub file
- *
- *
- *  @author Gary Maxey
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuebox_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for valueboxes in the client stub file
+//
+// = AUTHOR
+//    Gary Maxey
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuebox,
+           valuebox_cs,
+           "$Id: valuebox_cs.cpp Exp")
 
 be_visitor_valuebox_cs::be_visitor_valuebox_cs (be_visitor_context *ctx)
   : be_visitor_valuebox (ctx)

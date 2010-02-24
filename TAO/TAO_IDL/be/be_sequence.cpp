@@ -1,18 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_sequence.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_Sequence that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_sequence.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_Sequence that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_sequence.h"
 #include "be_typedef.h"
@@ -30,6 +35,23 @@
 #include "global_extern.h"
 
 #include "ace/Log_Msg.h"
+
+be_sequence::be_sequence (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType (),
+    AST_Sequence (),
+    UTL_Scope (),
+    be_scope (),
+    be_decl (),
+    be_type (),
+    mt_ (be_sequence::MNG_UNKNOWN),
+    field_node_ (0)
+{
+  // Always the case.
+  this->has_constructor (true);
+}
 
 be_sequence::be_sequence (AST_Expression *v,
                           AST_Type *t,
@@ -183,6 +205,7 @@ be_sequence::gen_name (void)
       // template and non-template implementations of IDL sequences.
       UTL_Scope *parent = this->defined_in ();
       seq->set_defined_in (parent);
+      parent->add_sequence (seq);
       char *seq_name = seq->gen_name ();
 
       ACE_OS::sprintf (namebuf,
@@ -311,7 +334,6 @@ be_sequence::managed_type (void)
           case AST_Decl::NT_interface_fwd:
           case AST_Decl::NT_component:
           case AST_Decl::NT_component_fwd:
-          case AST_Decl::NT_connector:
             this->mt_ = be_sequence::MNG_OBJREF;
             break;
           case AST_Decl::NT_valuebox:

@@ -1,19 +1,28 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    argument_marshal.cpp
- *
- *  $Id$
- *
- *  Visitor to pass arguments to the CDR operators. This one helps in
- *  generating the && and the , at the right place. This one is for the
- *  skeleton side.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    argument_marshal.cpp
+//
+// = DESCRIPTION
+//    Visitor to pass arguments to the CDR operators. This one helps in
+//    generating the && and the , at the right place. This one is for the
+//    skeleton side.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_operation, 
+           argument_marshal, 
+           "$Id$")
 
 // ************************************************************
 // operation visitor to handle the passing of arguments to the CDR operators
@@ -190,8 +199,7 @@ be_visitor_args_decl::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // retrieve the field node
-  be_argument *f =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+  be_argument *f = this->ctx_->be_node_as_argument ();
 
   if (f == 0)
     {

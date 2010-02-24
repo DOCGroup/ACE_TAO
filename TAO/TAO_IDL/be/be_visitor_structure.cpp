@@ -1,17 +1,22 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    be_visitor_structure.cpp
- *
- *  $Id$
- *
- *  Visitors for generation of code for Structure
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_structure.cpp
+//
+// = DESCRIPTION
+//    Visitors for generation of code for Structure
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_field.h"
 #include "be_structure.h"

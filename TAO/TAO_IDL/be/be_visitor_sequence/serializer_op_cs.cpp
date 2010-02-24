@@ -1,5 +1,3 @@
-// $Id$
-
 // ============================================================================
 //
 // = LIBRARY
@@ -16,6 +14,10 @@
 //    Scott Harris <harris_s@ociweb.com> based on code by Aniruddha Gokhale
 //
 // ============================================================================
+
+ACE_RCSID (be_visitor_sequence,
+           serializer_op_cs,
+           "$Id$")
 
 // ***************************************************************************
 // Sequence visitor for generating Serializer operator declarations in the client
@@ -93,8 +95,8 @@ be_visitor_sequence_serializer_op_cs::visit_sequence (be_sequence *node)
 
   if (be_global->gen_dcps_type_support_only ())
     {
-      *os << be_nl << be_nl
-          << "#endif /* end of disabling TAO specific code */"
+      *os << be_nl << be_nl 
+          << "#endif /* end of disabling TAO specific code */" 
           << be_nl << be_nl;
     }
 
@@ -364,10 +366,9 @@ be_visitor_sequence_serializer_op_cs::visit_enum (be_enum *node)
   // the total length of the sequence as a cross product of the
   // dimensions.
 
-  be_sequence *sequence =
-    be_sequence::narrow_from_decl (this->ctx_->node ());
+  be_sequence *sequence = this->ctx_->be_node_as_sequence ();
 
-  if (sequence == 0)
+  if (!sequence)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_serializer_op_cs::"
@@ -501,10 +502,9 @@ be_visitor_sequence_serializer_op_cs::visit_predefined_type (
   // the total length of the sequence as a cross product of the
   // dimensions.
 
-  be_sequence *sequence =
-    be_sequence::narrow_from_decl (this->ctx_->node ());
+  be_sequence *sequence = this->ctx_->be_node_as_sequence ();
 
-  if (sequence == 0)
+  if (!sequence)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_serializer_op_cs::"
@@ -750,10 +750,9 @@ int
 be_visitor_sequence_serializer_op_cs::visit_node (be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_sequence *node =
-    be_sequence::narrow_from_decl (this->ctx_->node ());
+  be_sequence *node = this->ctx_->be_node_as_sequence ();
 
-  if (node == 0)
+  if (!node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_serializer_op_cs::"

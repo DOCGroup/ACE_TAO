@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    typedef_ci.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Typedefs in the client inline file.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    typedef_ci.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Typedefs in the client inline file.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_typedef,
+           typedef_ci,
+           "$Id$")
 
 // ******************************************************
 // Typedef visitor for client inline

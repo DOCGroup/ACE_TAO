@@ -1,19 +1,22 @@
 /* -*- c++ -*- */
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_param_holder.h
- *
- *  $Id$
- *
- *  Place holder referenced by AST_Field (or subclass) 
- *  representing a corresponding template parameter in IDL.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_param_holder.h
+//
+// = DESCRIPTION
+//    Place holder referenced by AST_Field (or subclass) 
+//    representing a corresponding template parameter in IDL.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #ifndef TAO_BE_PARAM_HOLDER_H
 #define TAO_BE_PARAM_HOLDER_H

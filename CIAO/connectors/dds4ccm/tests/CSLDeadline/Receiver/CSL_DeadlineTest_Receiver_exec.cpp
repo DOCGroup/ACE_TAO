@@ -8,59 +8,56 @@
 namespace CIAO_CSL_DeadlineTest_Receiver_Impl
 {
 
+//============================================================
+  // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
   //============================================================
-  // ConnectorStatusListener_exec_i
-  //============================================================
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &deadline_missed)
-    : deadline_missed_ (deadline_missed)
+
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &incompatible)
+   : incompatible_ (incompatible)
   {
   }
 
   ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
   {
+
   }
 
   // Operations from ::CCM_DDS::ConnectorStatusListener
-  void ConnectorStatusListener_exec_i::on_inconsistent_topic (
-    ::DDS::Topic_ptr /*the_topic*/,
-    const DDS::InconsistentTopicStatus & /*status*/)
-  {
-  }
+  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
+     ::DDS::Topic_ptr /*the_topic*/,
+     const DDS::InconsistentTopicStatus & /*status*/){
+    }
 
-  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos (
+  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
     ::DDS::DataReader_ptr /*the_reader*/,
-    const DDS::RequestedIncompatibleQosStatus & /*status*/)
-  {
-  }
+     const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
+    }
 
-  void ConnectorStatusListener_exec_i::on_sample_rejected (
-    ::DDS::DataReader_ptr /*the_reader*/,
-    const DDS::SampleRejectedStatus & /*status*/)
-  {
-  }
+  void ConnectorStatusListener_exec_i::on_sample_rejected(
+     ::DDS::DataReader_ptr /*the_reader*/,
+     const DDS::SampleRejectedStatus & /*status*/)  {
+    }
 
-  void ConnectorStatusListener_exec_i::on_offered_deadline_missed (
-    ::DDS::DataWriter_ptr /*the_writer*/,
-    const DDS::OfferedDeadlineMissedStatus & /*status*/)
-  {
-    this->deadline_missed_ = true;
-  }
+  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
+     ::DDS::DataWriter_ptr /*the_writer*/,
+     const DDS::OfferedDeadlineMissedStatus & /*status*/)  {
+     this->incompatible_ = true;
+    }
 
-  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos (
-    ::DDS::DataWriter_ptr /*the_writer*/,
-    const DDS::OfferedIncompatibleQosStatus & /*status*/)
-  {
-  }
+  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
+     ::DDS::DataWriter_ptr /*the_writer*/,
+     const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
+   }
 
-  void ConnectorStatusListener_exec_i::on_unexpected_status (
+  void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr /*the_entity*/,
-    ::DDS::StatusKind /*status_kind*/)
-  {
-  }
+    ::DDS::StatusKind /*status_kind*/)  {
+    }
 
   //============================================================
-  // TestTopic_RawListener_exec_i
+  // Facet Executor Implementation Class: TestTopic_RawListener_exec_i
   //============================================================
+
   TestTopic_RawListener_exec_i::TestTopic_RawListener_exec_i (Atomic_ULong &received)
       : received_ (received)
   {
@@ -90,12 +87,39 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
     const ::CCM_DDS::ReadInfoSeq & /* info */)
   {
   }
+  //============================================================
+  // Facet Executor Implementation Class: PortStatusListener_exec_i
+  //============================================================
+
+  PortStatusListener_exec_i::PortStatusListener_exec_i (void)
+  {
+  }
+
+  PortStatusListener_exec_i::~PortStatusListener_exec_i (void)
+  {
+  }
+
+  // Operations from ::CCM_DDS::PortStatusListener
+
+  void
+    PortStatusListener_exec_i::on_requested_deadline_missed (
+    ::DDS::DataReader_ptr /* the_reader */,
+    const ::DDS::RequestedDeadlineMissedStatus & /* status */)
+  {
+  }
+
+  void
+  PortStatusListener_exec_i::on_sample_lost (
+    ::DDS::DataReader_ptr /* the_reader */,
+    const ::DDS::SampleLostStatus & /* status */)
+  {
+  }
 
   //============================================================
-  // Receiver_exec_i
+  // Component Executor Implementation Class: Receiver_exec_iTestTopic_RawListener_exec_i ();
   //============================================================
   Receiver_exec_i::Receiver_exec_i (void)
-    : deadline_missed_ (false)
+    : incompatible_ (false)
   {
   }
 
@@ -106,7 +130,7 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
   // Supported operations and attributes.
   // Component attributes.
   // Port operations.
-  ::CSL_DeadlineTest::TestTopicConn::CCM_Listener_ptr
+  ::CCM_DDS::TestTopic::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new TestTopic RAW listener\n")));
@@ -117,13 +141,13 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
   Receiver_exec_i::get_info_out_status (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
-    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
+    return new PortStatusListener_exec_i ();
   }
 
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Receiver_exec_i::get_info_out_connector_status (void)
   {
-    return new ConnectorStatusListener_exec_i (this->deadline_missed_);
+    return new ConnectorStatusListener_exec_i (this->incompatible_);
   }
 
   // Operations from Components::SessionComponent.
@@ -142,6 +166,7 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
+
   }
 
   void
@@ -166,15 +191,17 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-     if (!this->deadline_missed_.value ())
+     if(this->incompatible_.value ())
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("RECEIVER OK: Didn't receive ")
-                              ACE_TEXT ("'on_offered_deadline_missed'\n")));
+         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did receive the unexpected ")
+                               ACE_TEXT (" error 'on_offered_deadline_missed' in Receiver")
+                    ));
       }
     else
       {
-         ACE_ERROR ((LM_ERROR, ACE_TEXT ("RECEIVER ERROR: Received the unexpected ")
-                               ACE_TEXT ("'on_offered_deadline_missed'\n")));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Haven't received the un-expected ")
+                              ACE_TEXT ("'on_offered_deadline_missed' in Receiver\n")
+                    ));
       }
   }
 

@@ -1,16 +1,22 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    component_ex_idl.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Components in the CIAO executor IDL.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    component_ex_idl.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Components in the CIAO executor IDL.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 be_visitor_component_ex_idl::be_visitor_component_ex_idl (
     be_visitor_context *ctx)
@@ -101,11 +107,5 @@ be_visitor_component_ex_idl::visit_component (
       << "};";
 
   return 0;
-}
-
-int
-be_visitor_component_ex_idl::visit_connector (be_connector *node)
-{
-  return this->visit_component (node);
 }
 

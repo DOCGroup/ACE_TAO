@@ -1,21 +1,28 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    interface_is.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Interfaces in the implementation skeletons file.
- *
- *
- *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    interface_is.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Interfaces in the implementation skeletons file.
+//
+// = AUTHOR
+//   Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
+//
+// ============================================================================
 
 // ************************************************************
 // Interface visitor for implementation skeletons.
 // ************************************************************
+
+ACE_RCSID (be_visitor_interface,
+           interface_is,
+           "$Id$")
 
 be_visitor_interface_is::be_visitor_interface_is (be_visitor_context *ctx)
   : be_visitor_interface (ctx)

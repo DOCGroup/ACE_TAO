@@ -42,7 +42,8 @@ namespace CIAO
     Cookie_Impl (ptrdiff_t const &key);
 
     /// Extract the @c CORBA::ULong
-    static bool extract (Components::Cookie const * const c, ptrdiff_t &key);
+    static bool extract (Components::Cookie const * const c,
+                         ptrdiff_t &key);
   };
 
   /**

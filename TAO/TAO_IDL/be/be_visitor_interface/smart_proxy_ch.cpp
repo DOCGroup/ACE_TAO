@@ -1,16 +1,26 @@
-//=============================================================================
-/**
- *  @file    smart_proxy_ch.cpp
- *
- *  $Id$
- *
- *  This provides code generation for smart proxy classes for an
- *  interface in the client header.
- *
- *
- *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
- */
-//=============================================================================
+//
+// $Id$
+//
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    smart_proxy_ch.cpp
+//
+// = DESCRIPTION
+//    This provides code generation for smart proxy classes for an
+//    interface in the client header.
+//
+// = AUTHOR
+//    Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_interface,
+           smart_proxy_ch,
+           "$Id$")
 
 
 // ************************************************************

@@ -1,20 +1,18 @@
 // $Id$
 
 /**
- * @file   SL_OneByOne_Base.idl
+ * @file   SL_OneByOne_Base.idl 
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
  */
 
 #ifndef SL_ONEBYONE_BASE_IDL
 #define SL_ONEBYONE_BASE_IDL
 
-#pragma ndds typesupport "Base/SL_OneByOne_BaseSupport.h"
 
-struct TestTopic {
-  string key; //@key
-  long x;
-};
-
+  struct TestTopic {
+    string key; //@key
+    long x;
+   };
 typedef sequence<TestTopic> TestTopic_Seq;
 
 #endif

@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for CDR operators for exceptions
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for CDR operators for exceptions
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_exception, 
+           cdr_op_cs, 
+           "$Id$")
 
 be_visitor_exception_cdr_op_cs::be_visitor_exception_cdr_op_cs (
     be_visitor_context *ctx

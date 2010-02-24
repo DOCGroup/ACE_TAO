@@ -343,11 +343,6 @@
 #define ACE_LACKS_SETENV
 #define ACE_LACKS_UNSETENV
 
-#if !defined (__ia64)
-# define ACE_LACKS_CEILL
-# define ACE_LACKS_FLOORL
-#endif
-
 // Shared library name/path components
 #if defined (__ia64)
 #  define ACE_DLL_SUFFIX  ACE_TEXT (".so")

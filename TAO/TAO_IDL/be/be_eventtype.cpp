@@ -1,23 +1,45 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_eventtype.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_EventType and be_valuetype that provides
- *  additional means for C++ mapping of an eventtype.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_eventtype.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_EventType and be_valuetype that provides
+//    additional means for C++ mapping of an eventtype.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #include "be_eventtype.h"
 #include "be_visitor.h"
 
 #include "global_extern.h"
 
+// Default constructor.
+be_eventtype::be_eventtype (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    UTL_Scope (),
+    AST_Interface (),
+    be_scope (),
+    be_decl (),
+    be_type (),
+    be_interface (),
+    AST_ValueType (),
+    be_valuetype (),
+    AST_EventType ()
+{
+}
+
+// Constructor used to build the AST.
 be_eventtype::be_eventtype (UTL_ScopedName *n,
                             AST_Type **inherits,
                             long n_inherits,

@@ -15,6 +15,7 @@ module LNE_Test
   component Receiver
   {
     port CCM_DDS::ListenNotEnabledTest::DDS_Listen info_listen;
+    provides CCM_DDS::ConnectorStatusListener info_listen_connector_status;
   };
 };
 

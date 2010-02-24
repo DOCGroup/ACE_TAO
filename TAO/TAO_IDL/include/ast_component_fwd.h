@@ -11,6 +11,8 @@
 class TAO_IDL_FE_Export AST_ComponentFwd : public virtual AST_InterfaceFwd
 {
 public:
+  AST_ComponentFwd (void);
+
   AST_ComponentFwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 
@@ -28,8 +30,6 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-
-  static AST_Decl::NodeType const NT;
 };
 
 #endif           // _AST_COMPONENT_FWD_AST_COMPONENT_FWD_HH

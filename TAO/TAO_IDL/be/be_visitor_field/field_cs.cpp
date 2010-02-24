@@ -1,23 +1,33 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    field_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Field in the client stubs file.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    field_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Field in the client stubs file.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_visitor_array/array_cs.h"
 #include "be_visitor_enum/enum_cs.h"
 #include "be_visitor_sequence/sequence_cs.h"
 #include "be_visitor_structure/structure_cs.h"
 #include "be_visitor_union/union_cs.h"
+
+ACE_RCSID (be_visitor_field, 
+           field_cs, 
+           "$Id$")
+
 
 // **********************************************
 //  Visitor for field in the client stubs file.

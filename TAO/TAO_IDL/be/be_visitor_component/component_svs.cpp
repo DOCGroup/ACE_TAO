@@ -1,16 +1,22 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    component_svs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Components in the servant source.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    component_svs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Components in the servant source.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 // ******************************************************
 // Component visitor for servant source
@@ -38,11 +44,6 @@ be_visitor_component_svs::~be_visitor_component_svs (void)
 int
 be_visitor_component_svs::visit_component (be_component *node)
 {
-  if (node->imported ())
-    {
-      return 0;
-    }
-  
   be_visitor_facet_svs facet_visitor (this->ctx_);
 
   if (facet_visitor.visit_component_scope (node) == -1)
@@ -89,12 +90,6 @@ be_visitor_component_svs::visit_component (be_component *node)
       << "}";
 
   return 0;
-}
-
-int
-be_visitor_component_svs::visit_connector (be_connector *node)
-{
-  return this->visit_component (node);
 }
 
 void

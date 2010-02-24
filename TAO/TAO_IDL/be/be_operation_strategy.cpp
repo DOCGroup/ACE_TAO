@@ -1,20 +1,28 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_operation_strategy.cpp
- *
- *  $Id$
- *
- *  A strategy to cover the differences between various variants
- *  of an operations, e.g. AMI sendc_, AMI raise_
- *
- *
- *  @author Michael Kircher
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_operation_strategy.cpp
+//
+// = DESCRIPTION
+//    A strategy to cover the differences between various variants
+//    of an operations, e.g. AMI sendc_, AMI raise_
+//
+// = AUTHOR
+//    Michael Kircher
+//
+// ============================================================================
 
 #include "be_operation_strategy.h"
 #include "be_operation.h"
+
+ACE_RCSID (be,
+           be_operation_strategy,
+           "$Id$")
 
 be_operation_strategy::be_operation_strategy (be_operation *node,
                                               Strategy_Kind strategy_type)
@@ -164,7 +172,6 @@ be_operation_ami_sendc_strategy::marshaling (void)
 {
   return marshaling_;
 }
-
 
 be_operation*
 be_operation_ami_sendc_strategy::arguments (void)
@@ -353,8 +360,7 @@ be_operation_amh_strategy::arguments (void)
 
 int
 be_operation_amh_strategy::has_extra_code_generation (
-    TAO_CodeGen::CG_STATE
-  )
+    TAO_CodeGen::CG_STATE)
 {
   return 0;
 }

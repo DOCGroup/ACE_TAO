@@ -1,20 +1,29 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_ch.cpp
- *
- *  $Id$
- *
- *  Visitor for code generation of Arrays for the Cdr operators in the client
- *  header.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor for code generation of Arrays for the Cdr operators in the client
+//    header.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_visitor_sequence/cdr_op_ch.h"
+
+ACE_RCSID (be_visitor_array,
+           cdr_op_ch,
+           "$Id$")
 
 // ***************************************************************************
 // Array visitor for generating CDR operator declarations in the client header

@@ -1,5 +1,9 @@
 // $Id$
 
+ACE_RCSID (be_visitor_operation,
+           be_visitor_operation_remote_proxy_impl_cs,
+           "$Id$")
+
 // ************************************************************
 // Operation visitor for client stubs
 // ************************************************************

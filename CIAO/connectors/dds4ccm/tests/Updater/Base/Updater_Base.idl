@@ -8,8 +8,6 @@
 #ifndef UPDATER_BASE_IDL
 #define UPDATER_BASE_IDL
 
-#pragma ndds typesupport "Base/Updater_BaseSupport.h"
-
 struct TestTopic {
   string key; //@key
   long x;

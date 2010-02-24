@@ -1,17 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    upcall_ss.cpp
- *
- *  $Id$
- *
- *  Visitor that generates code that passes argument variables to the
- *  upcall.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    upcall_ss.cpp
+//
+// = DESCRIPTION
+//    Visitor that generates code that passes argument variables to the
+//    upcall.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_argument, 
+           upcall_ss, 
+           "$Id$")
 
 
 // ************************************************************************
@@ -62,8 +72,7 @@ int be_visitor_args_upcall_ss::visit_argument (be_argument *node)
 int be_visitor_args_upcall_ss::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   switch (this->direction ())
     {
@@ -109,8 +118,7 @@ int be_visitor_args_upcall_ss::visit_array (be_array *node)
 int be_visitor_args_upcall_ss::visit_enum (be_enum *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   switch (this->direction ())
     {
@@ -145,18 +153,15 @@ int be_visitor_args_upcall_ss::visit_valuetype (be_valuetype *)
   return this->emit_common ();
 }
 
-int be_visitor_args_upcall_ss::visit_valuetype_fwd (
-  be_valuetype_fwd *)
+int be_visitor_args_upcall_ss::visit_valuetype_fwd (be_valuetype_fwd *)
 {
   return this->emit_common ();
 }
 
-int be_visitor_args_upcall_ss::visit_predefined_type (
-  be_predefined_type *node)
+int be_visitor_args_upcall_ss::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+  be_argument *arg = this->ctx_->be_node_as_argument ();
   AST_PredefinedType::PredefinedType pt = node->pt ();
 
   if (pt == AST_PredefinedType::PT_any)
@@ -244,8 +249,7 @@ int be_visitor_args_upcall_ss::visit_predefined_type (
 int be_visitor_args_upcall_ss::visit_sequence (be_sequence *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   switch (this->direction ())
     {
@@ -338,8 +342,7 @@ be_visitor_args_upcall_ss::visit_eventtype_fwd (
 int be_visitor_args_upcall_ss::emit_common (void)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   switch (this->direction ())
     {
@@ -387,8 +390,7 @@ int be_visitor_args_upcall_ss::emit_common (void)
 int be_visitor_args_upcall_ss::emit_common2 (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   switch (this->direction ())
     {

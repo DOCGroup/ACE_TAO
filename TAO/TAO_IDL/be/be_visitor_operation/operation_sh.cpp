@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    operation_sh.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Operation in the server header
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    operation_sh.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Operation in the server header
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_operation,
+           operation_sh,
+           "$Id$")
 
 // ************************************************************
 // Operation visitor for server header

@@ -274,7 +274,8 @@ namespace CIAO
     }
 
     int
-    idl3_to_xmi_visitor::visit_template_module (AST_Template_Module *)
+    idl3_to_xmi_visitor::visit_template_module (
+      AST_Template_Module *)
     {
       return 0;
     }
@@ -287,19 +288,15 @@ namespace CIAO
     }
 
     int
-    idl3_to_xmi_visitor::visit_template_module_ref (AST_Template_Module_Ref *)
+    idl3_to_xmi_visitor::visit_template_module_ref(
+      AST_Template_Module_Ref *)
     {
       return 0;
     }
 
     int
-    idl3_to_xmi_visitor::visit_param_holder (AST_Param_Holder *)
-    {
-      return 0;
-    }
-
-    int
-    idl3_to_xmi_visitor::visit_finder (AST_Finder *)
+    idl3_to_xmi_visitor::visit_param_holder(
+      AST_Param_Holder *)
     {
       return 0;
     }
@@ -772,9 +769,7 @@ namespace CIAO
                 ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
                 ACE_TEXT_CHAR_TO_TCHAR (node->base_home ()->repoID ())));
             }
-/*
- * @@@ (JP) This code will be moved to the appropriate visit_* methods
- *
+
           if (node->factories ().size () != 0)
             {
               ES_Guard noe_guard (LITERALS[OWNEDELEMENT_TAG], this);
@@ -791,7 +786,7 @@ namespace CIAO
             {
               throw Error ("home finders not supported", node);
             }
-*/
+
           this->add_managed_component (
             ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
             ACE_TEXT_CHAR_TO_TCHAR (node->managed_component ()->repoID ()));

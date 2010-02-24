@@ -33,7 +33,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * preserve designators.  Does not allow special characters, yet
  * (e.g., printf ("\"like a quoted string\"")).
  */
-template <class ACE_CHAR_T>
+template <class CHAR>
 class ACE_Tokenizer_T
 {
 public:
@@ -47,7 +47,7 @@ public:
    * \sa preserve_designators
    * \sa preserve_designators
    */
-  ACE_Tokenizer_T (ACE_CHAR_T *buffer);
+  ACE_Tokenizer_T (CHAR *buffer);
 
   /**
    * \a d is a delimiter.
@@ -70,7 +70,7 @@ public:
       Joseph/Hagins
       Hagins \endverbatim
    */
-  int delimiter (ACE_CHAR_T d);
+  int delimiter (CHAR d);
 
   /**
    * \a d is a delimiter and, when found, will be replaced by
@@ -94,7 +94,7 @@ public:
        Joseph
        Hagins \endverbatim
  */
-  int delimiter_replace (ACE_CHAR_T d, ACE_CHAR_T replacement);
+  int delimiter_replace (CHAR d, CHAR replacement);
 
   /**
    * Extract string between a pair of designator characters.
@@ -139,10 +139,10 @@ public:
       Joseph
       Hagins \endverbatim
    */
-  int preserve_designators (ACE_CHAR_T start, ACE_CHAR_T stop, int strip=1);
+  int preserve_designators (CHAR start, CHAR stop, int strip=1);
 
   /// Returns the next token.
-  ACE_CHAR_T *next (void);
+  CHAR *next (void);
 
   enum {
     MAX_DELIMITERS=16,
@@ -152,16 +152,16 @@ public:
 protected:
   /// Returns 1 if @a d is a delimiter, 0 otherwise.  If @a d should be
   /// replaced with @a r, @a replace is set to 1, otherwise 0.
-  int is_delimiter (ACE_CHAR_T d, int &replace, ACE_CHAR_T &r);
+  int is_delimiter (CHAR d, int &replace, CHAR &r);
 
   /**
    * If @a start is a start preserve designator, returns 1 and sets
    * @a stop to the stop designator.  Returns 0 if @a start is not a
    * preserve designator.
    */
-  int is_preserve_designator (ACE_CHAR_T start, ACE_CHAR_T &stop, int &strip);
+  int is_preserve_designator (CHAR start, CHAR &stop, int &strip);
 
-  ACE_CHAR_T *buffer_;
+  CHAR *buffer_;
   int index_;
 
   /**
@@ -184,8 +184,8 @@ protected:
      * E.g., ")".
      * Whether the designators should be removed from the token.
      */
-    ACE_CHAR_T start_;
-    ACE_CHAR_T stop_;
+    CHAR start_;
+    CHAR stop_;
     int strip_;
   };
 
@@ -212,8 +212,8 @@ protected:
      * with a technique that sets replacement_ = delimiter by
      * default.  I'll do that next iteration.
      */
-    ACE_CHAR_T delimiter_;
-    ACE_CHAR_T replacement_;
+    CHAR delimiter_;
+    CHAR replacement_;
     int replace_;
   };
 

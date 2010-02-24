@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    sequence_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Sequences in the client stubs file
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    sequence_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Sequences in the client stubs file
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_sequence,
+           sequence_cs,
+           "$Id$")
 
 // ************************************************************
 // Root visitor for client stub class

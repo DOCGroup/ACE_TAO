@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    interface.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Interfaces. This is a generic visitor.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    interface.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Interfaces. This is a generic visitor.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_interface,
+           interface,
+           "$Id$")
 
 // ******************************************************
 // Generic Interface visitor

@@ -1,19 +1,22 @@
 /* -*- c++ -*- */
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_component.h
- *
- *  $Id$
- *
- *  Extension of class AST_Component that provides additional means for C++
- *  mapping of an interface.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_component.h
+//
+// = DESCRIPTION
+//    Extension of class AST_Component that provides additional means for C++
+//    mapping of an interface.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #ifndef TAO_BE_COMPONENT_H
 #define TAO_BE_COMPONENT_H
@@ -30,6 +33,8 @@ class be_component : public virtual AST_Component,
   // = DESCRIPTION
   //
 public:
+  be_component (void);
+
   be_component (UTL_ScopedName *n,
                 AST_Component *base_component,
                 AST_Type **supports,
@@ -39,12 +44,12 @@ public:
 
   ~be_component (void);
   
-  /// Override of the AST method to eliminate narrowing of
-  /// the return value. Non-virtual.
   be_component *base_component (void) const;
+  // Override of the AST method to eliminate narrowing of
+  // the return value. Non-virtual.
 
-  /// Catch BE-specific members before delegating to the base class.
   virtual void redefine (AST_Interface *from);
+  // Catch BE-specific members before delegating to the base class.
 
   // Cleanup function.
   virtual void destroy (void);

@@ -1,18 +1,27 @@
 
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating CDR operator declarator for union_branch in the client header
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating CDR operator declarator for union_branch in the client header
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_union_branch, 
+           cdr_op_ch, 
+           "$Id$")
 
 // **********************************************
 //  Visitor for union_branch in the client header file.

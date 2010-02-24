@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDS4CCM_TOPICQOS_H
-#define DDS4CCM_TOPICQOS_H
+#ifndef CIAO_RTI_TOPICQOS_H
+#define CIAO_RTI_TOPICQOS_H
 
 #include "TopicDataQosPolicy.h"
 #include "DurabilityQosPolicy.h"
@@ -23,11 +23,6 @@
 #include "LifespanQosPolicy.h"
 #include "OwnershipQosPolicy.h"
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
-typedef ::DDS::TopicQos DDS_TopicQos;
-#endif
-
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::TopicQos &ddsqos, const ::DDS_TopicQos & qos)
 {
@@ -99,6 +94,5 @@ operator>>= (const ::DDS::TopicQos &qos, ::DDS_TopicQos & ddsqos)
   ddsqos.lifespan <<= qos.lifespan;
   ddsqos.ownership <<= qos.ownership;
 }
-#endif
 
-#endif /* DDS4CCM_TOPICQOS_H */
+#endif /* CIAO_RTI_TOPICQOS_H */

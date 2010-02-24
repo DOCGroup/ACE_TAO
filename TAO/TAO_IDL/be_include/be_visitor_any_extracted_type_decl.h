@@ -1,18 +1,23 @@
+//
+// $Id$
+//
 /* -*- c++ -*- */
-//=============================================================================
-/**
- *  @file    be_visitor_any_extracted_type_decl.h
- *
- *  $Id$
- *
- *  Encapsulation of rules for declaring variables
- *  for Any extraction
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO_IDL_BE
+//
+// = FILENAME
+//    be_visitor_any_extracted_type_decl.h
+//
+// = DESCRIPTION
+//    Encapsulation of rules for declaring variables
+//    for Any extraction
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #ifndef BE_VISITOR_ANY_EXTRACTED_TYPE_DECL_H
 #define BE_VISITOR_ANY_EXTRACTED_TYPE_DECL_H
@@ -21,16 +26,17 @@
 
 class TAO_OutStream;
 
-/**
- * @class be_visitor_any_extracted_type_decl
- *
- * @brief be_visitor_any_extracted_type_decl
- *
- * Contains overloaded methods that generate declarations of
- * CORBA typenames for Any extraction
- */
 class be_visitor_any_extracted_type_decl : public be_visitor_decl
 {
+  //
+  // = TITLE
+  //   be_visitor_any_extracted_type_decl
+  //
+  // = DESCRIPTION
+  //   Contains overloaded methods that generate declarations of
+  //   CORBA typenames for Any extraction
+  //
+  //
 public:
   be_visitor_any_extracted_type_decl (be_visitor_context *ctx);
   virtual ~be_visitor_any_extracted_type_decl (void);

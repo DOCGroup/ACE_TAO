@@ -14,55 +14,50 @@
 namespace CIAO_PSL_DeadlineTest_Sender_Impl
 {
   //============================================================
-  // ConnectorStatusListener_exec_i
+  // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
   //============================================================
+  
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i ()
   {
   }
-
+  
   ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
   {
   }
-
+  
   // Operations from ::CCM_DDS::ConnectorStatusListener
-  void ConnectorStatusListener_exec_i::on_inconsistent_topic (
+  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
     ::DDS::Topic_ptr /*the_topic*/, 
-     const DDS::InconsistentTopicStatus & /*status*/)
-  {
-  }
+     const DDS::InconsistentTopicStatus & /*status*/){
+   }
 
-  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos (
+  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
     ::DDS::DataReader_ptr /*the_reader*/,
-    const DDS::RequestedIncompatibleQosStatus & /*status*/)
-  {
-  }
+     const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
+    }
 
-  void ConnectorStatusListener_exec_i::on_sample_rejected (
-    ::DDS::DataReader_ptr /*the_reader*/,
-    const DDS::SampleRejectedStatus & /*status*/)
-  {
-  }
+  void ConnectorStatusListener_exec_i::on_sample_rejected(
+     ::DDS::DataReader_ptr /*the_reader*/, 
+     const DDS::SampleRejectedStatus & /*status*/)  {
+   }
 
-  void ConnectorStatusListener_exec_i::on_offered_deadline_missed (
-    ::DDS::DataWriter_ptr /*the_writer*/,
-    const DDS::OfferedDeadlineMissedStatus & /*status*/)
-  {
-  }
+  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
+     ::DDS::DataWriter_ptr /*the_writer*/,
+     const DDS::OfferedDeadlineMissedStatus & /*status*/)  {
+    }
 
-  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos (
-   ::DDS::DataWriter_ptr /*the_writer*/,
-   const DDS::OfferedIncompatibleQosStatus & /*status*/)
-  {
-  }
+  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
+     ::DDS::DataWriter_ptr /*the_writer*/, 
+     const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
+    }
 
-  void ConnectorStatusListener_exec_i::on_unexpected_status (
+  void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr /*the_entity*/,
-    ::DDS::StatusKind  /*status_kind*/)
-  {
-  }
+    ::DDS::StatusKind  /*status_kind*/)  {
+    }
 
   //============================================================
-  // pulse_Generator
+  // Pulse generator
   //============================================================
   pulse_Generator::pulse_Generator (Sender_exec_i &callback)
     : pulse_callback_ (callback)
@@ -72,13 +67,14 @@ namespace CIAO_PSL_DeadlineTest_Sender_Impl
   int
   pulse_Generator::handle_timeout (const ACE_Time_Value &, const void *)
   {
+    // Notify the subscribers
     this->pulse_callback_.tick ();
     return 0;
   }
+  //============================================================
+  // Component Executor Implementation Class: Sender_exec_i
+  //============================================================
 
-  //============================================================
-  // Sender_exec_i
-  //============================================================
   Sender_exec_i::Sender_exec_i (void)
   {
     this->ticker_ = new pulse_Generator (*this);
@@ -95,12 +91,13 @@ namespace CIAO_PSL_DeadlineTest_Sender_Impl
   }
 
   // Supported operations and attributes.
+
   void
   Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
   {
     this->context_ = ::PSL_DeadlineTest::CCM_Sender_Context::_narrow (ctx);
 
-    if (::CORBA::is_nil (this->context_.in ()))
+    if ( ::CORBA::is_nil (this->context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }
@@ -116,22 +113,21 @@ namespace CIAO_PSL_DeadlineTest_Sender_Impl
   Sender_exec_i::tick ()
   {
     for (PSL_DLTest_Table::iterator i = this->_ktests_.begin ();
-         i != this->_ktests_.end ();
-         ++i)
+        i != this->_ktests_.end ();
+        ++i)
       {
          try
-          {
-            if (!CORBA::is_nil (this->writer_))
-              {
-                this->writer_->write_one(i->second,::DDS::HANDLE_NIL);
-                i->second->x++;
-              }
-          }
+         {
+           if (!CORBA::is_nil (this->writer_) ) {
+              this->writer_->write_one(i->second,::DDS::HANDLE_NIL);
+              i->second->x++;
+           }
+         }
          catch (const CCM_DDS::InternalError& )
-          {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while creating topic for <%C>.\n"),
+         {
+           ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while creating topic for <%C>.\n"),
                     i->first.c_str ()));
-          }
+         }
        }
   }
 
@@ -145,10 +141,10 @@ namespace CIAO_PSL_DeadlineTest_Sender_Impl
                 0,
                 ACE_Time_Value (sec, usec),
                 ACE_Time_Value (sec, usec)) == -1)
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
                              ACE_TEXT ("Error scheduling timer")));
-      }
+    }
   }
 
   void
@@ -159,7 +155,7 @@ namespace CIAO_PSL_DeadlineTest_Sender_Impl
     delete this->ticker_;
   }
 
-  void
+ void
   Sender_exec_i::add_instance_of_topic (const char * key, int x)
   {
     TestTopic *new_key = new TestTopic;

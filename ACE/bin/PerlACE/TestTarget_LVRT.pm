@@ -288,11 +288,4 @@ sub RebootReset ($)
     }
 }
 
-sub KillAll ($)
-{
-    my $self = shift;
-    my $procmask = shift;
-    PerlACE::ProcessLVRT::kill_all ($procmask);    
-}
-
 1;

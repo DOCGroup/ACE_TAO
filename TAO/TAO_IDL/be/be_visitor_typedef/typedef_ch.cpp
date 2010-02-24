@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    typedef_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Typedef in the client header
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    typedef_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Typedef in the client header
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID(be_visitor_typedef,
+          typedef_ch,
+          "$Id$")
 
 // ******************************************************
 // Typedef visitor for client header

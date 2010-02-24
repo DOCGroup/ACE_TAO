@@ -24,7 +24,7 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULongLong> Atomic_ULongLong;
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong> Atomic_ULong;
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> Atomic_Bool;
-  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Long> Atomic_Long;
+    typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Long> Atomic_Long;
 
 
   //============================================================
@@ -58,7 +58,7 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
       public virtual ::CORBA::LocalObject
   {
   public:
-    ConnectorStatusListener_exec_i (void);
+    ConnectorStatusListener_exec_i (Receiver_exec_i &callback);
     virtual ~ConnectorStatusListener_exec_i (void);
 
     virtual
@@ -79,6 +79,8 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
     virtual
     void on_unexpected_status( ::DDS::Entity_ptr ,
                               ::DDS::StatusKind );
+  private:
+    Receiver_exec_i &callback_;
   };
 
   //============================================================
@@ -93,7 +95,16 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
     virtual ~Receiver_exec_i (void);
 
     void start ();
-    void record_time (unsigned long datalen);
+    void record_time (const ACE_Time_Value &now,
+                      const ACE_Time_Value &ccm);
+
+    virtual ::CORBA::UShort iterations (void);
+
+    virtual void iterations (::CORBA::UShort iterations);
+
+    virtual ::CORBA::UShort keys (void);
+
+    virtual void keys (::CORBA::UShort keys);
 
     virtual ::CCM_DDS::PerfKeyedTest::CCM_Listener_ptr
     get_info_listen_data_listener (void);
@@ -109,26 +120,25 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
       ::Components::SessionContext_ptr ctx);
 
     virtual void configuration_complete (void);
+
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
-
-    void write_one (PerfKeyedTest an_instance);
+  
+    void write_one (const PerfKeyedTest & an_instance);
+   
 
   private:
     ::Perf_Keyed_Test::CCM_Receiver_Context_var context_;
     CCM_DDS::PerfKeyedTest::Writer_var writer_;
 
+    Atomic_Long  tv_total_;
+    Atomic_Long  tv_max_;
+    Atomic_Long  tv_min_;
     Atomic_ULong  count_;
-    ACE_UINT64 interval_time_;
-    Atomic_Long interval_messages_received_;
-    Atomic_Long messages_received_;
-    Atomic_Long interval_bytes_received_;
-    Atomic_Long bytes_received_;
-    Atomic_Long interval_data_length_;
-    ACE_UINT64 first_time_;
-    Atomic_Bool   finished_;
-
+    Atomic_Bool   started_;
+    CORBA::UShort iterations_;
+    CORBA::UShort keys_;
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

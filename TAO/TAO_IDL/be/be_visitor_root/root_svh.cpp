@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    root_svh.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Root in the CIAO servant header
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    root_svh.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Root in the CIAO servant header
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_root,
+           root_svh,
+           "$Id$")
 
 // ********************************
 // Root visitor for CIAO servant header

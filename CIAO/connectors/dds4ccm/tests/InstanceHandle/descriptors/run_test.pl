@@ -44,6 +44,11 @@ $tg_executor = 0;
 $status = 0;
 $cdp_file = "Plan.cdp";
 
+# $ENV {'CIAO_TRACE_ENABLE'} = 1;
+# $ENV {'DANCE_TRACE_ENABLE'} = 1;
+# $ENV {'CIAO_LOG_LEVEL'} = 3;
+# $ENV {'DANCE_LOG_LEVEL'} = 3;
+
 sub create_targets {
     #   naming service
     $tg_naming = PerlACE::TestTarget::create_target (1) || die "Create target for ns failed\n";
@@ -100,8 +105,6 @@ sub kill_open_processes {
     if ($ns_running == 1) {
         $NS->Kill (); $NS->TimedWait (1);
     }
-    # in case shutdown did not perform as expected
-    $tg_executor->KillAll ('ciao_componentserver');
 }
 
 sub run_node_daemons {
@@ -218,8 +221,8 @@ for ($i = 0; $i < $nr_daemon; ++$i) {
     }
 }
 
-print "Sleeping 5 seconds to allow task to complete\n";
-sleep (5);
+print "Sleeping 20 seconds to allow task to complete\n";
+sleep (20);
 
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";

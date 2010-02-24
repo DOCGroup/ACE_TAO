@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDS4CCM_DATAWRITERQOS_H
-#define DDS4CCM_DATAWRITERQOS_H
+#ifndef CIAO_RTI_DATAWRITERQOS_H
+#define CIAO_RTI_DATAWRITERQOS_H
 
 #include "DurabilityQosPolicy.h"
 #include "DurabilityServiceQosPolicy.h"
@@ -25,11 +25,6 @@
 #include "OwnershipStrengthQosPolicy.h"
 #include "WriterDataLifecycleQosPolicy.h"
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
-typedef ::DDS::DataWriterQos DDS_DataWriterQos;
-#endif
-
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::DataWriterQos &ddsqos, const ::DDS_DataWriterQos & qos)
 {
@@ -109,6 +104,5 @@ operator>>= (const ::DDS::DataWriterQos &qos, ::DDS_DataWriterQos & ddsqos)
   ddsqos.ownership_strength <<= qos.ownership_strength;
   ddsqos.writer_data_lifecycle <<= qos.writer_data_lifecycle;
 }
-#endif
 
-#endif /* DDS4CCM_DATAWRITERQOS_H */
+#endif /* CIAO_RTI_DATAWRITERQOS_H */

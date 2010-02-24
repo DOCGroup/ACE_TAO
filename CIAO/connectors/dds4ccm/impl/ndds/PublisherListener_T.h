@@ -13,8 +13,6 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
 
-class ACE_Reactor;
-
 namespace CIAO
 {
   namespace DDS4CCM
@@ -27,45 +25,33 @@ namespace CIAO
     public:
       /// Constructor
       PublisherListener_T (
-        ::CCM_DDS::ConnectorStatusListener_ptr error_listener,
-        ACE_Reactor* reactor);
+        typename CCM_TYPE::context_type::_ptr_type context,
+        ::CCM_DDS::ConnectorStatusListener_ptr error_listener);
 
       virtual void on_offered_deadline_missed (
-        ::DDS::DataWriter_ptr the_Writer,
+        ::DDS::DataWriter *the_writer,
         const ::DDS::OfferedDeadlineMissedStatus & status);
 
       virtual void on_liveliness_lost (
-        ::DDS::DataWriter_ptr the_Writer,
+        ::DDS::DataWriter *the_writer,
         const ::DDS::LivelinessLostStatus & status);
 
       virtual void on_offered_incompatible_qos (
-        ::DDS::DataWriter_ptr the_Writer,
+        ::DDS::DataWriter *the_writer,
         const ::DDS::OfferedIncompatibleQosStatus & status);
 
       virtual void on_publication_matched (
-        ::DDS::DataWriter_ptr the_Writer,
+        ::DDS::DataWriter *the_writer,
         const ::DDS::PublicationMatchedStatus & status);
-
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      virtual void on_reliable_reader_activity_changed (
-        ::DDS::DataWriter_ptr the_Writer,
-        const ::DDS::ReliableReaderActivityChangedStatus & status);
-#endif
 
       /// Destructor
       virtual ~PublisherListener_T (void);
 
-      static ::DDS::StatusMask get_mask (
-        ::CCM_DDS::ConnectorStatusListener_ptr error_listener);
+      static ::DDS::StatusMask get_mask (void);
 
     private:
-      virtual void on_unexpected_status (
-        ::DDS::Entity_ptr entity,
-        ::DDS::StatusKind status_kind);
-
+      typename CCM_TYPE::context_type::_var_type context_;
       ::CCM_DDS::ConnectorStatusListener_var error_listener_;
-
-      ACE_Reactor* reactor_;
     };
   }
 }

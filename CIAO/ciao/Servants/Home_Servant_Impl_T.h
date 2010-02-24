@@ -33,6 +33,7 @@ namespace CIAO
   class Container;
   typedef Container *Container_ptr;
 
+
   /**
    * @class Home_Servant_Impl
    *
@@ -59,10 +60,10 @@ namespace CIAO
     virtual void remove_component (Components::CCMObject_ptr comp);
 
     // Operations for keyless home interface.
-    virtual ::Components::CCMObject_ptr create_component (void);
+    virtual ::Components::CCMObject_ptr create_component ();
 
     // Operations for implicit home interface.
-    virtual typename COMP_SVNT::_stub_ptr_type create (void);
+    virtual typename COMP_SVNT::_stub_ptr_type create ();
 
     virtual void update_component_map (PortableServer::ObjectId &oid);
 

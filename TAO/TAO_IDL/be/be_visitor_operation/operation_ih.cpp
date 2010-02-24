@@ -1,17 +1,24 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    operation_ih.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Operation in the implementation header
- *
- *
- *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    operation_ih.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Operation in the implementation header
+//
+// = AUTHOR
+//   Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_operation, 
+           operation_ih, 
+           "$Id$")
 
 // ************************************************************
 // Operation visitor for implementation header.

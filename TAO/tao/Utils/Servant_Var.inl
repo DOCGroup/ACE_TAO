@@ -179,7 +179,7 @@ TAO::Utils::Servant_Var<T>::_retn (void)
   return rval;
 }
 
-#if !defined (ACE_LACKS_MEMBER_TEMPLATES)
+#ifndef ACE_LACKS_MEMBER_TEMPLATES
 template <class X, class Y>
 ACE_INLINE bool
 operator== (typename TAO::Utils::Servant_Var<X> const & x,

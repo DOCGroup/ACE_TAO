@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    component_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Components in the client stub.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    component_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Components in the client stub.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_component,
+           component_cs,
+           "$Id$")
 
 // ******************************************************
 // Component visitor for client stub
@@ -335,10 +345,3 @@ be_visitor_component_cs::visit_component (be_component *node)
 
   return 0;
 }
-
-int
-be_visitor_component_cs::visit_connector (be_connector *node)
-{
-  return this->visit_component (node);
-}
-

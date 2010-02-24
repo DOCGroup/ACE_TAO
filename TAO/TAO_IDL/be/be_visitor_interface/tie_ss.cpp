@@ -1,17 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    tie_ss.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for TIE classes for the Interface node in the
- *  inline file.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    tie_ss.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for TIE classes for the Interface node in the
+//    inline file.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_interface,
+           tie_ss,
+           "$Id$")
 
 
 // ************************************************************************

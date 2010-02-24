@@ -1,22 +1,31 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_interface_strategy.cpp
- *
- *  $Id$
- *
- *  A strategy to cover the differences between various variants
- *  of an interface
- *
- *
- *  @author Michael Kircher
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_interface_strategy.cpp
+//
+// = DESCRIPTION
+//    A strategy to cover the differences between various variants
+//    of an interface
+//
+// = AUTHOR
+//    Michael Kircher
+//
+// ============================================================================
 
 #include "be_interface_strategy.h"
 #include "be_interface.h"
 #include "be_extern.h"
 #include "utl_identifier.h"
+
+ACE_RCSID (be,
+           be_interface_strategy,
+           "$Id$")
+
 
 be_interface_strategy::be_interface_strategy (be_interface *node,
                                               Strategy_Kind strategy_type)

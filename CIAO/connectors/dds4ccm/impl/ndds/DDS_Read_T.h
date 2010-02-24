@@ -34,8 +34,7 @@ public:
     const char* profile_name);
 
   void activate (
-    ::CCM_DDS::PortStatusListener_ptr listener,
-    ACE_Reactor* reactor);
+    ::CCM_DDS::PortStatusListener_ptr listener);
 
   void passivate (void);
 
@@ -50,9 +49,8 @@ private:
   ::DDS::CCM_DataReader_var data_;
   ::DDS::DataReaderListener_var status_;
   ::CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> dds_read_;
-  ::CIAO::DDS4CCM::CCM_DDS_DataReader_i rti_reader_;
+  ::CIAO::DDS4CCM::RTI::RTI_DataReader_i rti_reader_;
   //@}
-  typedef ::CIAO::DDS4CCM::PortStatusListener_T <DDS_TYPE, CCM_TYPE> PortStatusListener;
 };
 
 #include "dds4ccm/impl/ndds/DDS_Read_T.cpp"

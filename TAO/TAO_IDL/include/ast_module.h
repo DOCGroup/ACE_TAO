@@ -81,11 +81,17 @@ class TAO_IDL_FE_Export AST_Module : public virtual AST_Decl,
                                      public virtual UTL_Scope
 {
 public:
+  // Operations.
+
+  // Constructor(s) and destructor.
+  AST_Module (void);
+
   AST_Module (UTL_ScopedName *n);
 
   virtual ~AST_Module (void);
 
   // Narrowing.
+
   DEF_NARROW_FROM_DECL(AST_Module);
   DEF_NARROW_FROM_SCOPE(AST_Module);
 
@@ -108,7 +114,7 @@ public:
   // Has this node been referenced here already?
   // Override of method in UTL_Scope.
   virtual bool referenced (AST_Decl *e,
-                           Identifier *id = 0);
+                               Identifier *id = 0);
 
   // Add decls from previous opening of this module to the
   // 'previous' set of this module, along with the argument's
@@ -127,8 +133,6 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-
-  static AST_Decl::NodeType const NT;
 
 private:
   friend void fe_populate_global_scope (AST_Module *m);

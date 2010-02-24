@@ -1,21 +1,26 @@
+//
+// $Id$
+//
 
 /* -*- c++ -*- */
-//=============================================================================
-/**
- *  @file    ast_visitor_reifying.h
- *
- *  $Id$
- *
- *  This visitor visits an AST_Param_Holder, finds the corresponding
- *  template argument, looks up or creates the type, and stores
- *  it for retrieval and use in the template module
- *  instantiation visitor
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    ast_visitor_reifying.h
+//
+// = DESCRIPTION
+//    This visitor visits an AST_Param_Holder, finds the corresponding
+//    template argument, looks up or creates the type, and stores
+//    it for retrieval and use in the template module
+//    instantiation visitor
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #ifndef TAO_AST_VISITOR_REIFYING_H
 #define TAO_AST_VISITOR_REIFYING_H
@@ -28,20 +33,20 @@ class AST_Decl;
 class AST_Param_Holder;
 class ast_visitor_context;
 
-/**
- * @class ast_visitor_reifying
- *
- * @brief ast_visitor_reifying
- *
- * Reifies a template argument that has been substituted for
- * a template parameter reference. Complete reification may
- * include further reification, for example of array
- * dimensions, sequence bound or (w)string bound
- * for addition to the scope of the template module
- * instantiation.
- */
 class ast_visitor_reifying : public ast_visitor
 {
+  //
+  // = TITLE
+  //   ast_visitor_reifying
+  //
+  // = DESCRIPTION
+  //   Reifies a template argument that has been substituted for
+  //   a template parameter reference. Complete reification may
+  //   include further reification, for example of array
+  //   dimensions, sequence bound or (w)string bound
+  //   for addition to the scope of the template module
+  //   instantiation.
+  //
 public:
   ast_visitor_reifying (ast_visitor_context *ctx);
 
@@ -71,7 +76,6 @@ public:
   virtual int visit_connector (AST_Connector *node);
   virtual int visit_eventtype_fwd (AST_EventTypeFwd *node);
   virtual int visit_factory (AST_Factory *node);
-  virtual int visit_finder (AST_Finder *node);
   virtual int visit_structure (AST_Structure *node);
   virtual int visit_structure_fwd (AST_StructureFwd *node);
   virtual int visit_expression (AST_Expression *node);

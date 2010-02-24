@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Cdr operators in the client stubs
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Cdr operators in the client stubs
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_typedef,
+           cdr_op_cs,
+           "$Id$")
 
 // ***************************************************************************
 // Typedef visitor for generating CDR operator declarations in the client

@@ -1,18 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for CDR operators for sequences. This uses
- *  compiled marshaling.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for CDR operators for sequences. This uses
+//    compiled marshaling.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_sequence,
+           cdr_op_ch,
+           "$Id$")
 
 // ***************************************************************************
 // Sequence visitor for generating CDR operator declarations in the client header

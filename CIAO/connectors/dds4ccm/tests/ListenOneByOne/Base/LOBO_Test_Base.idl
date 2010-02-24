@@ -8,8 +8,6 @@
 #ifndef LISTEN_ONE_BY_ONE_TEST_BASE_IDL
 #define LISTEN_ONE_BY_ONE_TEST_BASE_IDL
 
-#pragma ndds typesupport "Base/LOBO_Test_BaseSupport.h"
-
 struct ListenOneByOneTest {
   string key; //@key
   long iteration;

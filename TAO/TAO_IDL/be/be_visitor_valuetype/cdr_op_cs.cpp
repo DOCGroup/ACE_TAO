@@ -1,18 +1,29 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_cs.cpp
- *
- *  $Id$
- *
- *  Concrete visitor for valuetypes.
- *  This one provides code generation for the CDR operators.
- *
- *
- *  @author Boris Kolpackov <bosk@ipmce.ru> based on code from Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on code from Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_cs.cpp
+//
+// = DESCRIPTION
+//    Concrete visitor for valuetypes.
+//    This one provides code generation for the CDR operators.
+//
+// = AUTHOR
+//    Boris Kolpackov <bosk@ipmce.ru>
+//    based on code from Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+//    based on code from Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_cdr_op_cs,
+           "$Id$")
 
 be_visitor_valuetype_cdr_op_cs::be_visitor_valuetype_cdr_op_cs (
     be_visitor_context *ctx

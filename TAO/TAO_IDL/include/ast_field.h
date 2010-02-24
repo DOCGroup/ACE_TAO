@@ -91,6 +91,11 @@ public:
       vis_PRIVATE
     };
 
+  // Operations.
+
+  // Constructor(s).
+  AST_Field (void);
+
   AST_Field (AST_Type *field_type,
              UTL_ScopedName *n,
              Visibility vis = vis_NA);
@@ -126,8 +131,6 @@ public:
   
   // Cleanup.
   virtual void destroy (void);
-
-  static AST_Decl::NodeType const NT;
 
 protected:
   // Data.

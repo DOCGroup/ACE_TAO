@@ -1,45 +1,51 @@
 /* -*- c++ -*- */
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    sequence_base.h
- *
- *  $Id$
- *
- *  Concrete visitor for the Sequence class
- *  This one provides code generation for the base typ of the Sequence node.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    sequence_base.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the Sequence class
+//    This one provides code generation for the base typ of the Sequence node.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #ifndef _BE_VISITOR_SEQUENCE_SEQUENCE_BASE_H_
 #define _BE_VISITOR_SEQUENCE_SEQUENCE_BASE_H_
 
-/**
- * @class be_visitor_sequence_base
- *
- * @brief be_visitor_sequence_base
- *
- * This is a concrete visitor to generate the template parameters
- * for a TAO_*_Sequence instantiation.
- * = BUGS
- * The class name is misleading, eventually this class could be
- * used to generate code in other files, not only the client
- * header.
- * The visitor factory should provide a factory method that builds
- * this class on the fly.
- */
 class be_visitor_sequence_base : public be_visitor_decl
 {
+  //
+  // = TITLE
+  //    be_visitor_sequence_base
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor to generate the template parameters
+  //   for a TAO_*_Sequence instantiation.
+  //
+  // = BUGS
+  //   The class name is misleading, eventually this class could be
+  //   used to generate code in other files, not only the client
+  //   header.
+  //   The visitor factory should provide a factory method that builds
+  //   this class on the fly.
+  //
 public:
-  /// Constructor
   be_visitor_sequence_base (be_visitor_context *ctx);
+  // Constructor
 
-  /// destructor
   ~be_visitor_sequence_base (void);
+  // destructor
 
   // = Visitor methods.
   virtual int visit_predefined_type (be_predefined_type *node);
@@ -60,30 +66,29 @@ public:
   virtual int visit_typedef (be_typedef *node);
 
 protected:
-  /// helper that does the common job
   int visit_node (be_type *);
+  // helper that does the common job
 
 };
 
-/**
- * @class be_visitor_sequence_base_template_args:
- =TITLE
- * be_visitor_sequnce_base_template_args
- * =Description
- * This is a derived class just used to override the method
- * visit_interface that generates the arguments for the
- * templates. This is necessary as the same visitor was being used
- * by the idl compiler to generate the template arguments and the
- * return arguments for some of the methods.
- */
 class be_visitor_sequence_base_template_args: public be_visitor_sequence_base
 {
+  //
+  // =TITLE
+  // be_visitor_sequnce_base_template_args
+  //
+  // =Description
+  // This is a derived class just used to override the method
+  // visit_interface that generates the arguments for the
+  // templates. This is necessary as the same visitor was being used
+  // by the idl compiler to generate the template arguments and the
+  // return arguments for some of the methods.
 public:
   be_visitor_sequence_base_template_args (be_visitor_context *ctx,
                                           be_sequence *node );
 
-  ///Dtor
   ~be_visitor_sequence_base_template_args (void);
+  //Dtor
 
   //= Visit methods
   virtual int visit_interface (be_interface *node);

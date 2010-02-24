@@ -1,21 +1,26 @@
+//
+// $Id$
+//
 
 /* -*- c++ -*- */
-//=============================================================================
-/**
- *  @file    be_visitor_ami_pre_proc.cpp
- *
- *  $Id$
- *
- *  This visitor creates for AMI implied IDL constructs
- *  the appropriate AST (Abstract Syntax Tree) node,
- *  sets the corresponding interface or operation strategy
- *  on it and enteres the nodes into the AST.
- *
- *
- *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_ami_pre_proc.cpp
+//
+// = DESCRIPTION
+//    This visitor creates for AMI implied IDL constructs
+//    the appropriate AST (Abstract Syntax Tree) node,
+//    sets the corresponding interface or operation strategy
+//    on it and enteres the nodes into the AST.
+//
+// = AUTHOR
+//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
+//
+// ============================================================================
 
 #include "be_visitor_ami_pre_proc.h"
 #include "be_visitor_context.h"
@@ -36,6 +41,11 @@
 #include "nr_extern.h"
 #include "global_extern.h"
 #include "ace/Log_Msg.h"
+
+ACE_RCSID (be,
+           be_visitor_ami_pre_proc,
+           "$Id$")
+
 
 be_visitor_ami_pre_proc::be_visitor_ami_pre_proc (be_visitor_context *ctx)
   : be_visitor_scope (ctx)

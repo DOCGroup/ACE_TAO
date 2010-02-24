@@ -45,7 +45,6 @@ libTAO_IDL_FE_la_SOURCES = \
   ast/ast_extended_port.cpp \
   ast/ast_factory.cpp \
   ast/ast_field.cpp \
-  ast/ast_finder.cpp \
   ast/ast_generator.cpp \
   ast/ast_home.cpp \
   ast/ast_interface.cpp \
@@ -139,7 +138,6 @@ noinst_HEADERS = \
   include/ast_extern.h \
   include/ast_factory.h \
   include/ast_field.h \
-  include/ast_finder.h \
   include/ast_generator.h \
   include/ast_home.h \
   include/ast_interface.h \
@@ -240,7 +238,6 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_extended_port.cpp \
   be/be_factory.cpp \
   be/be_field.cpp \
-  be/be_finder.cpp \
   be/be_generator.cpp \
   be/be_global.cpp \
   be/be_helper.cpp \
@@ -325,8 +322,7 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_visitor_union_fwd.cpp \
   be/be_visitor_valuebox.cpp \
   be/be_visitor_valuetype.cpp \
-  be/be_visitor_valuetype_fwd.cpp \
-  be/be_visitor_xplicit_pre_proc.cpp
+  be/be_visitor_valuetype_fwd.cpp
 
 noinst_HEADERS += \
   be_include/TAO_IDL_BE_Export.h \
@@ -351,7 +347,6 @@ noinst_HEADERS += \
   be_include/be_extern.h \
   be_include/be_factory.h \
   be_include/be_field.h \
-  be_include/be_finder.h \
   be_include/be_generator.h \
   be_include/be_global.h \
   be_include/be_helper.h \
@@ -433,8 +428,7 @@ noinst_HEADERS += \
   be_include/be_visitor_union_fwd.h \
   be_include/be_visitor_valuebox.h \
   be_include/be_visitor_valuetype.h \
-  be_include/be_visitor_valuetype_fwd.h \
-  be_include/be_visitor_xplicit_pre_proc.h
+  be_include/be_visitor_valuetype_fwd.h
 
 ## Makefile.TAO_IDL_EXE.am
 

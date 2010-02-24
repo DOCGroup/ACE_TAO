@@ -17,34 +17,31 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE>
-    class DataReaderStateListener_T :
-      public PortStatusListener_T <DDS_TYPE, CCM_TYPE>
+    namespace RTI
     {
-    public:
-      /// Constructor
-      DataReaderStateListener_T (
-                    typename CCM_TYPE::statelistener_type::_ptr_type listener,
-                    ::CCM_DDS::PortStatusListener_ptr port_status_listener,
-                    ::CCM_DDS::StateListenerControl_ptr control,
-                    ACE_Reactor* reactor);
+      template <typename DDS_TYPE, typename CCM_TYPE>
+      class DataReaderStateListener_T :
+        public PortStatusListener_T <DDS_TYPE, CCM_TYPE>
+      {
+      public:
+        /// Constructor
+        DataReaderStateListener_T (
+                      typename CCM_TYPE::statelistener_type::_ptr_type listener,
+                      ::CCM_DDS::PortStatusListener_ptr port_status_listener,
+                      ::CCM_DDS::StateListenerControl_ptr control);
 
-      /// Destructor
-      virtual ~DataReaderStateListener_T (void);
+        /// Destructor
+        virtual ~DataReaderStateListener_T (void);
 
-      virtual void on_data_available (::DDS::DataReader_ptr rdr);
+        virtual void on_data_available( ::DDS::DataReader *rdr);
 
-      static ::DDS::StatusMask get_mask (
-        typename CCM_TYPE::statelistener_type::_ptr_type listener);
+        static ::DDS::StatusMask get_mask (void);
 
-      void on_data_available_i (::DDS::DataReader_ptr rdr);
-
-    private:
-      typename CCM_TYPE::statelistener_type::_var_type listener_;
-      ::CCM_DDS::StateListenerControl_var control_;
-
-      typedef ::CIAO::DDS4CCM::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE> drsh;
-    };
+      private:
+        typename CCM_TYPE::statelistener_type::_var_type listener_;
+        ::CCM_DDS::StateListenerControl_var control_;
+      };
+    }
   }
 }
 

@@ -72,11 +72,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 class AST_EnumVal;
 
-class TAO_IDL_FE_Export AST_Enum
-  : public virtual AST_ConcreteType,
-    public virtual UTL_Scope
+class TAO_IDL_FE_Export AST_Enum : public virtual AST_ConcreteType,
+                                   public virtual UTL_Scope
 {
 public:
+  AST_Enum (void);
   AST_Enum (UTL_ScopedName *n,
             bool local,
             bool abstract);
@@ -108,8 +108,6 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-
-  static AST_Decl::NodeType const NT;
 
 private:
   friend int tao_yyparse (void);

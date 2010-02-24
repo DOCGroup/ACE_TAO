@@ -14,10 +14,14 @@
 
 #pragma ciao lem "Connector/CSL_DeadlineTest_ConnectorE.idl"
 
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopic_Seq> TestTopic;
+};
+
 module CSL_DeadlineTest
 {
-  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopic_Seq> TestTopicConn;
-  connector CSL_DeadlineTest_Connector : TestTopicConn::DDS_Event
+  connector CSL_DeadlineTest_Connector : ::CCM_DDS::TestTopic::DDS_Event
   {
   };
 };

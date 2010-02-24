@@ -1,4 +1,5 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "Hello_Receiver_exec.h"
@@ -13,7 +14,7 @@ namespace CIAO_Hello_Receiver_Impl
   //============================================================
 
   DDSHello_Listener_exec_i::DDSHello_Listener_exec_i (Atomic_ULong &received,
-                                                      const ACE_CString &name)
+                                                            const ACE_CString &name)
       : received_ (received),
         name_ (name)
   {
@@ -208,7 +209,7 @@ namespace CIAO_Hello_Receiver_Impl
   }
 
   // Port operations.
-  ::Hello::HelloConn::CCM_Listener_ptr
+  ::CCM_DDS::Hello::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new DDSHello RAW listener\n")));

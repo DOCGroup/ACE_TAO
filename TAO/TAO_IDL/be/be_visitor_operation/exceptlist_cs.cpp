@@ -1,18 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    exceptlist_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for the list of exceptions that an operation
- *  raises.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    exceptlist_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for the list of exceptions that an operation
+//    raises.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_operation,
+           exceptlist_cs,
+           "$Id$")
 
 // ****************************************************************************
 // visitor to generate the exception list for operations

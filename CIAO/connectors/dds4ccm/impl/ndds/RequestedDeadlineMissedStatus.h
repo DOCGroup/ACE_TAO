@@ -7,16 +7,11 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDS4CCM_REQUESTEDDEADLINEMISSEDSTATUS_H
-#define DDS4CCM_REQUESTEDDEADLINEMISSEDSTATUS_H
+#ifndef CIAO_RTI_REQUESTEDDEADLINEMISSEDSTATUS_H
+#define CIAO_RTI_REQUESTEDDEADLINEMISSEDSTATUS_H
 
 #include "InstanceHandle_t.h"
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
-typedef ::DDS::RequestedDeadlineMissedStatus DDS_RequestedDeadlineMissedStatus;
-#endif
-
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::RequestedDeadlineMissedStatus &ddsstatus, const ::DDS_RequestedDeadlineMissedStatus & status)
 {
@@ -48,6 +43,5 @@ operator>>= (const ::DDS::RequestedDeadlineMissedStatus &status, ::DDS_Requested
   ddsstatus.total_count_change = status.total_count_change;
   ddsstatus.last_instance_handle <<= status.last_instance_handle;
 }
-#endif
 
-#endif /* DDS4CCM_REQUESTEDDEADLINEMISSEDSTATUS_H */
+#endif /* CIAO_RTI_REQUESTEDDEADLINEMISSEDSTATUS_H */

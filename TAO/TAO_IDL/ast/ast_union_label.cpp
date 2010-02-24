@@ -76,6 +76,16 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
+ACE_RCSID (ast, 
+           ast_union_label, 
+           "$Id$")
+
+AST_UnionLabel::AST_UnionLabel (void)
+  : pd_label_kind (UL_default),
+          pd_label_val (0)
+{
+}
+
 AST_UnionLabel::AST_UnionLabel (UnionLabel lk,
                                 AST_Expression *lv)
   : pd_label_kind (lk),

@@ -1,18 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    any_op_ch.cpp
- *
- *  $Id$
- *
- *  Visitor for code generation of Arrays for the Any operators in the client
- *  header.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    any_op_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor for code generation of Arrays for the Any operators in the client
+//    header.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_array,
+           any_op_ch,
+           "$Id$")
 
 // ***************************************************************************
 // Array visitor for generating Any operator declarations in the client header

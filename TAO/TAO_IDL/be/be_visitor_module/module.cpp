@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    module.cpp
- *
- *  $Id$
- *
- *  Generic visitor generating code for Module
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    module.cpp
+//
+// = DESCRIPTION
+//    Generic visitor generating code for Module
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_module,
+           module,
+           "$Id$")
 
 
 // ******************************************************
@@ -371,8 +381,6 @@ be_visitor_module::visit_interface (be_interface *node)
     case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
     case TAO_CodeGen::TAO_ROOT_EXH:
     case TAO_CodeGen::TAO_ROOT_EXS:
-    case TAO_CodeGen::TAO_ROOT_CNH:
-    case TAO_CodeGen::TAO_ROOT_CNS:
       {
         // Nothing to be done for these cases.
         return 0;
@@ -822,10 +830,18 @@ be_visitor_module::visit_component (be_component *node)
         status = node->accept (&visitor);
         break;
       }
-    // Nothing for these with components, they have the executor.  
     case TAO_CodeGen::TAO_ROOT_IH:
+      {
+        be_visitor_component_ih visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_ROOT_IS:
-      break;
+      {
+        be_visitor_component_is visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_ROOT_SVH:
       {
         be_visitor_component_svh visitor (&ctx);
@@ -856,9 +872,6 @@ be_visitor_module::visit_component (be_component *node)
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ROOT_CNH:
-    case TAO_CodeGen::TAO_ROOT_CNS:
-      break;
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -973,9 +986,6 @@ be_visitor_module::visit_home (be_home *node)
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ROOT_CNH:
-    case TAO_CodeGen::TAO_ROOT_CNS:
-      break;
     default:
       return 0; // nothing to be done
     }
@@ -989,43 +999,6 @@ be_visitor_module::visit_home (be_home *node)
                         -1);
     }
 
-  return 0;
-}
-
-int
-be_visitor_module::visit_connector (be_connector *node)
-{
-  // Instantiate a visitor context with a copy of our context. This info
-  // will be modified based on what type of node we are visiting.
-  be_visitor_context ctx (*this->ctx_);
-  ctx.node (node);
-  int status = 0;
-
-  switch (this->ctx_->state ())
-    {
-      case TAO_CodeGen::TAO_ROOT_CNH:
-        {
-          be_visitor_connector_dds_exh visitor (&ctx);
-          status = node->accept (&visitor);
-          break;
-        }
-      case TAO_CodeGen::TAO_ROOT_CNS:
-        {
-          be_visitor_connector_dds_exs visitor (&ctx);
-          status = node->accept (&visitor);
-          break;
-        }
-      // Skip these contexts, the connector impl is
-      // generated in a separate pass, using the states
-      // above.
-      case TAO_CodeGen::TAO_ROOT_EXH:
-      case TAO_CodeGen::TAO_ROOT_EXS:
-        break;
-      default:
-        // In all other cases, same as component.
-        return this->visit_component (node);
-    }
-    
   return 0;
 }
 

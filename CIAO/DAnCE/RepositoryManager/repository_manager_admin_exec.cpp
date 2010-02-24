@@ -432,8 +432,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
           if (!admin.shutdown ())
             retval = -1;
         }
-
-      orb->destroy ();
     }
   catch (CORBA::Exception &ex)
     {

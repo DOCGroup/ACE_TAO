@@ -1,18 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    ctor_assign.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for the special CTOR and assignment operator for
- *  Exceptions.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    ctor_assign.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for the special CTOR and assignment operator for
+//    Exceptions.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_exception,
+           ctor_assign,
+           "$Id$")
 
 // ************************************************************************
 // Used for the body of the assignment operator and the copy constructor.

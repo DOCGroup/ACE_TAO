@@ -1,17 +1,22 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    attribute.cpp
- *
- *  $Id$
- *
- *  Visitor for generation of code for Attribute
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    attribute.cpp
+//
+// = DESCRIPTION
+//    Visitor for generation of code for Attribute
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 // Attribute gets mapped to one or possibly two operations based on whether
 // it is readonly or not. The two operations "get" and "set" the value of the
@@ -185,9 +190,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = get_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ROOT_CNH:
-    case TAO_CodeGen::TAO_ROOT_CNS:
-      break;
     default:
       get_op.destroy ();
       return 0;
@@ -401,9 +403,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = set_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ROOT_CNH:
-    case TAO_CodeGen::TAO_ROOT_CNS:
-      break;
     default:
       // Error.
       set_op.destroy ();

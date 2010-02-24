@@ -13,8 +13,6 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
 
-class ACE_Reactor;
-
 namespace CIAO
 {
   namespace DDS4CCM
@@ -27,14 +25,14 @@ namespace CIAO
     public:
       /// Constructor
       SubscriberListener_T (
-        ::CCM_DDS::ConnectorStatusListener_ptr error_listener,
-        ACE_Reactor* reactor);
+        typename CCM_TYPE::context_type::_ptr_type context,
+        ::CCM_DDS::ConnectorStatusListener_ptr error_listener);
 
       /// Destructor
       virtual ~SubscriberListener_T (void);
 
       virtual void on_requested_incompatible_qos (
-        ::DDS::DataReader_ptr reader,
+        ::DDS::DataReader_ptr the_reader,
         const ::DDS::RequestedIncompatibleQosStatus & status);
 
       virtual void on_liveliness_changed(
@@ -52,30 +50,23 @@ namespace CIAO
       virtual void on_data_on_readers(
         ::DDS::Subscriber* subscriber);
 
-      virtual void on_requested_deadline_missed (
-        ::DDS::DataReader_ptr ,
-        const ::DDS::RequestedDeadlineMissedStatus & );
+    virtual void
+    on_requested_deadline_missed (
+      ::DDS::DataReader_ptr ,
+      const ::DDS::RequestedDeadlineMissedStatus & ) {}
+    virtual void
+    on_data_available (
+      ::DDS::DataReader_ptr ) {}
+    virtual void
+    on_sample_lost (
+      ::DDS::DataReader_ptr ,
+      const ::DDS::SampleLostStatus & ) {}
 
-      virtual void on_data_available (
-        ::DDS::DataReader_ptr );
-
-      virtual void on_sample_lost (
-        ::DDS::DataReader_ptr ,
-        const ::DDS::SampleLostStatus & );
-
-      static ::DDS::StatusMask get_mask (
-        ::CCM_DDS::ConnectorStatusListener_ptr csl);
+      static ::DDS::StatusMask get_mask (void);
 
     private:
-      typename CCM_TYPE::context_type::_var_type context_;
-
-      virtual void on_unexpected_status(
-        ::DDS::Entity_ptr entity,
-        ::DDS::StatusKind status_kind);
-
+    typename CCM_TYPE::context_type::_var_type context_;
       ::CCM_DDS::ConnectorStatusListener_var error_listener_;
-
-      ACE_Reactor* reactor_;
     };
   }
 }

@@ -4,8 +4,17 @@
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
-AST_Decl::NodeType const
-AST_ComponentFwd::NT = AST_Decl::NT_component_fwd;
+ACE_RCSID( ast,
+           ast_component_fwd,
+           "$Id$")
+
+AST_ComponentFwd::AST_ComponentFwd (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_InterfaceFwd ()
+{
+}
 
 AST_ComponentFwd::AST_ComponentFwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)

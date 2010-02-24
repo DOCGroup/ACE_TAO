@@ -14,10 +14,14 @@
 
 #pragma ciao lem "Connector/Shapes_ConnectorE.idl"
 
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::ShapeType, ::ShapeType_Seq> ShapeType;
+};
+
 module Shapes
 {
-  module ::CCM_DDS::Typed < ::ShapeType, ::ShapeType_Seq> ShapeTypeConn;
-  connector Shapes_Connector : ShapeTypeConn::DDS_Event
+  connector Shapes_Connector : ::CCM_DDS::ShapeType::DDS_Event
   {
   };
 };

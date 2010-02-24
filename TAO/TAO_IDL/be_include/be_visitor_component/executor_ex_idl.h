@@ -1,16 +1,22 @@
+//
+// $Id$
+//
 /* -*- c++ -*- */
-//=============================================================================
-/**
- *  @file    executor_ex_idl.h
- *
- *  $Id$
- *
- *  Provides code generation for components in the CIAO executor IDL.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    executor_ex_idl.h
+//
+// = DESCRIPTION
+//    Provides code generation for components in the CIAO executor IDL.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #ifndef _BE_COMPONENT_EXECUTOR_EX_IDL_H_
 #define _BE_COMPONENT_EXECUTOR_EX_IDL_H_
@@ -33,7 +39,6 @@ public:
   ~be_visitor_executor_ex_idl (void);
 
   virtual int visit_component (be_component *node);
-  virtual int visit_connector (be_connector *node);
 
   /// To regenerate attribute declarations.
   virtual int visit_attribute (be_attribute *node);

@@ -78,6 +78,23 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_Memory.h"
 
+ACE_RCSID (ast,
+           ast_type,
+           "$Id$")
+
+AST_Type::AST_Type (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    ifr_added_ (0),
+    ifr_fwd_added_ (0),
+    size_type_ (AST_Type::SIZE_UNKNOWN),
+    has_constructor_ (0),
+    nested_type_name_ (0),
+    in_recursion_ (-1),
+    recursing_in_legal_pk_ (false)
+{
+}
+
 AST_Type::AST_Type (AST_Decl::NodeType nt,
                     UTL_ScopedName *n)
   : COMMON_Base (),

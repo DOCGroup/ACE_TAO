@@ -11,8 +11,8 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template <class ACE_CHAR_T>
-ACE_Tokenizer_T<ACE_CHAR_T>::ACE_Tokenizer_T (ACE_CHAR_T *buffer)
+template <class CHAR>
+ACE_Tokenizer_T<CHAR>::ACE_Tokenizer_T (CHAR *buffer)
   : buffer_ (buffer),
     index_ (0),
     preserves_index_ (0),
@@ -20,9 +20,9 @@ ACE_Tokenizer_T<ACE_CHAR_T>::ACE_Tokenizer_T (ACE_CHAR_T *buffer)
 {
 }
 
-template <class ACE_CHAR_T>
+template <class CHAR>
 int
-ACE_Tokenizer_T<ACE_CHAR_T>::delimiter (ACE_CHAR_T d)
+ACE_Tokenizer_T<CHAR>::delimiter (CHAR d)
 {
   if (delimiter_index_ == MAX_DELIMITERS)
     return -1;
@@ -33,10 +33,10 @@ ACE_Tokenizer_T<ACE_CHAR_T>::delimiter (ACE_CHAR_T d)
   return 0;
 }
 
-template <class ACE_CHAR_T>
+template <class CHAR>
 int
-ACE_Tokenizer_T<ACE_CHAR_T>::delimiter_replace (ACE_CHAR_T d,
-                                  ACE_CHAR_T replacement)
+ACE_Tokenizer_T<CHAR>::delimiter_replace (CHAR d,
+                                  CHAR replacement)
 {
   // Make it possible to replace delimiters on-the-fly, e.g., parse
   // string until certain token count and then copy rest of the
@@ -59,10 +59,10 @@ ACE_Tokenizer_T<ACE_CHAR_T>::delimiter_replace (ACE_CHAR_T d,
   return 0;
 }
 
-template <class ACE_CHAR_T>
+template <class CHAR>
 int
-ACE_Tokenizer_T<ACE_CHAR_T>::preserve_designators (ACE_CHAR_T start,
-                                     ACE_CHAR_T stop,
+ACE_Tokenizer_T<CHAR>::preserve_designators (CHAR start,
+                                     CHAR stop,
                                      int strip)
 {
   if (preserves_index_ == MAX_PRESERVES)
@@ -75,11 +75,11 @@ ACE_Tokenizer_T<ACE_CHAR_T>::preserve_designators (ACE_CHAR_T start,
   return 0;
 }
 
-template <class ACE_CHAR_T>
+template <class CHAR>
 int
-ACE_Tokenizer_T<ACE_CHAR_T>::is_delimiter (ACE_CHAR_T d,
+ACE_Tokenizer_T<CHAR>::is_delimiter (CHAR d,
                              int &replace,
-                             ACE_CHAR_T &r)
+                             CHAR &r)
 {
   replace = 0;
 
@@ -97,10 +97,10 @@ ACE_Tokenizer_T<ACE_CHAR_T>::is_delimiter (ACE_CHAR_T d,
   return 0;
 }
 
-template <class ACE_CHAR_T>
+template <class CHAR>
 int
-ACE_Tokenizer_T<ACE_CHAR_T>::is_preserve_designator (ACE_CHAR_T start,
-                                       ACE_CHAR_T &stop,
+ACE_Tokenizer_T<CHAR>::is_preserve_designator (CHAR start,
+                                       CHAR &stop,
                                        int &strip)
 {
   for (int x = 0; x < preserves_index_; x++)
@@ -114,9 +114,9 @@ ACE_Tokenizer_T<ACE_CHAR_T>::is_preserve_designator (ACE_CHAR_T start,
   return 0;
 }
 
-template <class ACE_CHAR_T>
-ACE_CHAR_T *
-ACE_Tokenizer_T<ACE_CHAR_T>::next (void)
+template <class CHAR>
+CHAR *
+ACE_Tokenizer_T<CHAR>::next (void)
 {
   // Check if the previous pass was the last one in the buffer.
   if (index_ == -1)
@@ -124,16 +124,16 @@ ACE_Tokenizer_T<ACE_CHAR_T>::next (void)
       index_ = 0;
       return 0;
     }
- 
+    
   // Check if a buffer has been passed
   if (!buffer_)
     {
       return 0;
     }
 
-  ACE_CHAR_T replacement = 0;
+  CHAR replacement = 0;
   int replace;
-  ACE_CHAR_T *next_token = 0;
+  CHAR *next_token = 0;
 
   // Skip all leading delimiters.
   for (;;)
@@ -159,7 +159,7 @@ ACE_Tokenizer_T<ACE_CHAR_T>::next (void)
   next_token = buffer_ + index_;
 
   // A preserved region is it's own token.
-  ACE_CHAR_T stop;
+  CHAR stop;
   int strip;
   if (this->is_preserve_designator (buffer_[index_],
                                     stop,

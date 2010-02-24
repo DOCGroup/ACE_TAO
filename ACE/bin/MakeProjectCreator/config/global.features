@@ -59,11 +59,6 @@ xerces3       = 0
 ofccm         = 0
 ndds          = 0
 mcpp          = 0
-wireshark     = 0
-
-dds4ccm_opendds = 0
-dds4ccm_ndds = 0
-dds4ccm_splice = 0
 
 // Features for various GUI libraries
 

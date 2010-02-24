@@ -21,8 +21,6 @@ module mod
 interface iface
 {
   exception iface_excep {};
-
-  void iface_op (in string inarg);
 };
 
 typedef sequence<iface> ifaceSeq;
@@ -30,18 +28,6 @@ typedef sequence<iface> ifaceSeq;
 eventtype ev
 {
 };
-
-/*
-Jeff, this gives a redefinition of BarConsumer
-module orange
-{
-  module apple
-  {
-    eventtype Bar;
-    eventtype Bar;
-  };
-};
-*/
 
 module GlobalTyped<typename A, typename B>
 {
@@ -60,19 +46,6 @@ module A
 
     interface XX
     {
-    };
-
-    union Nested_Union switch (y)
-    {
-      case 2: string strmem;
-      case 0: T Tmem;
-    };
-
-    enum Nested_Enum
-    {
-      ZERO,
-      ONE,
-      TWO
     };
 
     // A regular module may be nested inside a template module,
@@ -155,8 +128,6 @@ module V
   };
 };
 
-module B::second_B<iface, ifaceSeq> second_B_Inst;
-
 module Ast<typename T,
            eventtype E,
            exception S,
@@ -166,26 +137,15 @@ module Ast<typename T,
 {
   interface Foo : T
   {
-    attribute T Foo_Attr getraises (S);
+    attribute T Foo_Attr;
 
-    void Foo_Op (inout long inoutarg,
-                 in T inarg,
-                 out T outarg,
-                 in TSeq seq_inarg)
-      raises (S);
+    void Foo_Op (in TSeq inarg) raises (S);
   };
 
   alias second<T, S> second_ref;
 
   valuetype VT_T : V supports T
   {
-    private T T_member;
-
-    factory make_VT_T ();
-
-    factory create_VT_T (in T T_arg,
-                         in string str_arg)
-      raises (S);
   };
 
   porttype PT_T
@@ -196,8 +156,8 @@ module Ast<typename T,
 
   component Comp_T
   {
-    uses multiple T Comp_T_Recep; 
-    mirrorport PT_T Comp_T_Mirror_Port; 
+    uses multiple T Comp_T_Recep;
+    mirrorport PT_T Comp_T_Mirror_Port;
     provides T Comp_T_Facet;
     emits E Comp_T_Emit;
 
@@ -227,13 +187,11 @@ module Ast<typename T,
 
   const unsigned long Ast_Const = M;
   const unsigned long LC = 7;
-
   typedef sequence<T, M> AnotherTSeq;
 
   struct boo
   {
     T T_field;
-    Foo Foo_field;
   };
 
   typedef T T_array[M][Ast_Const][LC];
@@ -247,20 +205,3 @@ module Ast<iface,
            101>
   Ast_Inst;
 
-module M 
-{
-  module N <typename T>
-  {
-    interface A {
-      void do_something (in T arg);
-    };
-  };
-};
-
-/*
-Support for native is there, but this results in non compiling code
-native NAT;
-module M {
-  module N <NAT> N_NAT;
-};
-*/

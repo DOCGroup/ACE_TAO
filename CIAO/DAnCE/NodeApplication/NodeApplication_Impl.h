@@ -31,7 +31,7 @@
 #include "Deployment/Deployment_NodeApplicationS.h"
 #include "Deployment/Deployment_DeploymentPlanC.h"
 #include "Deployment/DeploymentC.h"
-#include "DAnCE/Deployment_common.h"
+#include "Deployment/Deployment_common.h"
 
 #include <map>
 
@@ -40,8 +40,7 @@ namespace DAnCE
 
   class NodeManager_Impl;
 
-  class NodeApplication_Export NodeApplication_Impl :
-    public virtual POA_Deployment::NodeApplication
+  class NodeApplication_Export NodeApplication_Impl : public virtual POA_Deployment::NodeApplication
   {
   public:
     NodeApplication_Impl (CORBA::ORB_ptr orb,
@@ -55,17 +54,18 @@ namespace DAnCE
     virtual void finishLaunch (const ::Deployment::Connections & providedReference,
                                ::CORBA::Boolean start);
 
-    virtual void start (void);
+    virtual void start ();
 
-    ::Deployment::Connections * getAllConnections(void);
+    ::Deployment::Connections * getAllConnections();
 
-    void init_components(void);
+    //TODO Exception specification should be customized
+    void init_components();
 
-    void configuration_complete_components (void);
+    void configuration_complete_components ();
 
-    void passivate_components (void);
+    void passivate_components ();
 
-    void remove_components (void);
+    void remove_components ();
 
     enum ERequestType
     {
@@ -94,8 +94,10 @@ namespace DAnCE
       eInvalidState
     };
 
+
   protected:
-    void init(void);
+    //TODO Add throw specification
+    void init();
 
     struct Container;
 

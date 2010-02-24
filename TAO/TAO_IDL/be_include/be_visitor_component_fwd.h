@@ -1,18 +1,23 @@
 /* -*- c++ -*- */
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    be_visitor_component_fwd.h
- *
- *  $Id$
- *
- *  Concrete visitor for the forward declared component class.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_component_fwd.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the forward declared component class.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #ifndef TAO_BE_VISITOR_COMPONENT_FWD_H
 #define TAO_BE_VISITOR_COMPONENT_FWD_H

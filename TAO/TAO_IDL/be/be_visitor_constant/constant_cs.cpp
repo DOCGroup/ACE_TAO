@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    constant_cs.cpp
- *
- *  $Id$
- *
- *  Visitor for code generation of Constant code in the client stubs file.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    constant_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor for code generation of Constant code in the client stubs file.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_constant,
+           constant_cs,
+           "$Id$")
 
 
 // ********************************************************************

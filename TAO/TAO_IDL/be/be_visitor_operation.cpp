@@ -1,17 +1,22 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    be_visitor_operation.cpp
- *
- *  $Id$
- *
- *  Visitors for generation of code for Operation
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO_IDL_BE
+//
+// = FILENAME
+//    be_visitor_operation.cpp
+//
+// = DESCRIPTION
+//    Visitors for generation of code for Operation
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_argument.h"
 #include "be_array.h"
@@ -37,7 +42,6 @@
 #include "be_eventtype.h"
 #include "be_eventtype_fwd.h"
 #include "be_home.h"
-#include "be_factory.h"
 #include "be_extern.h"
 #include "be_helper.h"
 #include "be_identifier_helper.h"

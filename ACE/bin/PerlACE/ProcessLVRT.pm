@@ -345,12 +345,4 @@ CHECK:
     return -1;
 }
 
-###
-
-sub kill_all ($)
-{
-  my $procmask = shift;
-  ## NOT IMPLEMENTED YET
-}
-
 1;

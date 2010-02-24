@@ -78,9 +78,21 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "idl_defines.h"
 #include "global_extern.h"
 
-// Note we are overlooking the wstring case here.
-AST_Decl::NodeType const
-AST_String::NT = AST_Decl::NT_string;
+ACE_RCSID (ast,
+           ast_string,
+           "$Id$")
+
+AST_String::AST_String (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType (),
+    pd_max_size (0),
+    pd_width (sizeof (char))
+{
+  // Always the case.
+  this->size_type (AST_Type::VARIABLE);
+}
 
 AST_String::AST_String (AST_Decl::NodeType nt,
                         UTL_ScopedName *n,

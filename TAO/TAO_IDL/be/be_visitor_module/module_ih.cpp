@@ -1,17 +1,24 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    module_ih.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Module in the implementation header
- *
- *
- *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    module_ih.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Module in the implementation header
+//
+// = AUTHOR
+//    Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_module, 
+           module_ih, 
+           "$Id$")
 
 // ************************************************************
 // Module visitor for server header

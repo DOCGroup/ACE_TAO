@@ -107,8 +107,6 @@ sub kill_open_processes {
     if ($ns_running == 1) {
         $NS->Kill (); $NS->TimedWait (1);
     }
-    # in case shutdown did not perform as expected
-    $tg_executor->KillAll ('ciao_componentserver');
 }
 
 sub run_node_daemons {
@@ -208,8 +206,8 @@ for ($i = 0; $i < $nr_daemon; ++$i) {
     }
 }
 
-print "Sleeping 120 seconds to allow task to complete\n";
-sleep (120);
+print "Sleeping 30 seconds to allow task to complete\n";
+sleep (30);
 
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";

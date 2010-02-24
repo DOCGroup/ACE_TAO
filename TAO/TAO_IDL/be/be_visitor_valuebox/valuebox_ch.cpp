@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuebox_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for valueboxes in the client header
- *
- *
- *  @author Gary Maxey
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuebox_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for valueboxes in the client header
+//
+// = AUTHOR
+//    Gary Maxey
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuebox,
+           valuebox_ch,
+           "$Id: valuebox_ch.cpp Exp")
 
 // ******************************************************
 // Valuebox visitor for client header

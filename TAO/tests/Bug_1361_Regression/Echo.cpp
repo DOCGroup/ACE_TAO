@@ -49,4 +49,5 @@ Echo::echo_payload_out (Test::Payload_out data)
       // Kill the app
       ACE::terminate_process (ACE_OS::getpid ());
     }
+
 }

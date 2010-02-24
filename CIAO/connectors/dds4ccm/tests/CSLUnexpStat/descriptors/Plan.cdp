@@ -177,17 +177,6 @@
     <source/>
     <implementation xmi:idref="CSL_USTest_ConnectorComponentImplementation" />
     <configProperty>
-      <name>qos_profile</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>CSL_Library#CSL_Profile</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
       <name>topic_name</name>
       <value>
         <type>
@@ -205,17 +194,6 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="CSL_USTest_ConnectorComponentImplementation" />
-    <configProperty>
-      <name>qos_profile</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>CSL_Library#CSL_Profile</string>
-        </value>
-      </value>
-    </configProperty>
     <configProperty>
       <name>topic_name</name>
       <value>
@@ -271,6 +249,25 @@
       <portName>push_consumer_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
+      <instance xmi:idref="CSL_USTest_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>_portstatuslistener</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_out_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_status</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
       <instance xmi:idref="CSL_USTest_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
@@ -348,26 +345,6 @@
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="CSL_USTest_ConnectorComponentInstance" />
-    </internalEndpoint>
-  </connection>
-
-  <connection>
-    <name>info_read_data</name>
-    <deployRequirement>
-      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
-      <resourceType>Local_Interface</resourceType>
-    </deployRequirement>
-    <internalEndpoint>
-      <portName>info_read_data</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>push_consumer_data</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="CSL_USTest_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
 

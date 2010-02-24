@@ -21,25 +21,19 @@
 namespace CIAO_QueryFilter_Test_Receiver_Impl
 {
   //============================================================
-  // read_action_Generator
+  // ReadHandler
   //============================================================
-  read_action_Generator::read_action_Generator (Receiver_exec_i &callback, int run)
+  ReadHandler::ReadHandler (Receiver_exec_i &callback,
+                            CORBA::UShort run)
     : callback_ (callback),
       run_ (run)
   {
   }
 
-  read_action_Generator::~read_action_Generator ()
-  {
-  }
-
   int
-  read_action_Generator::handle_timeout (const ACE_Time_Value &, const void *)
+  ReadHandler::handle_exception (ACE_HANDLE)
   {
-    ACE_DEBUG ((LM_DEBUG, "Checking if last sample "
-                          "is available in DDS...\n"));
-    if (this->callback_.check_last ())
-      this->callback_.run (this->run_);
+    this->callback_.run (this->run_);
     return 0;
   }
 
@@ -66,7 +60,9 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   void
   Starter_exec_i::start_read (CORBA::UShort run)
   {
-    this->callback_.start_read (run);
+    while (!this->callback_.check_last ())
+      ACE_OS::sleep (1);
+    this->callback_.start (run);
   }
 
   //============================================================
@@ -77,8 +73,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
       keys_ (5),
       has_run_ (false),
       current_min_iteration_ (ACE_OS::atoi (MIN_ITERATION_1)),
-      current_max_iteration_ (ACE_OS::atoi (MAX_ITERATION_1)),
-      ticker_ (0)
+      current_max_iteration_ (ACE_OS::atoi (MAX_ITERATION_1))
   {
   }
 
@@ -308,39 +303,15 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::set_filter ()
+  Receiver_exec_i::start (CORBA::UShort run)
   {
-    CCM_DDS::QueryFilter filter;
-    filter.query = CORBA::string_dup (QUERY);
-    filter.query_parameters.length (2);
-    filter.query_parameters[0] = CORBA::string_dup (MIN_ITERATION_1);
-    filter.query_parameters[1] = CORBA::string_dup (MAX_ITERATION_1);
-    this->reader_->filter (filter);
-  }
-
-  void
-  Receiver_exec_i::start_read (CORBA::UShort run)
-  {
-    this->ticker_ = new read_action_Generator (*this, run);
-    if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
-                                          this->ticker_,
-                                          0,
-                                          ACE_Time_Value(1, 0),
-                                          ACE_Time_Value(1, 0)) == -1)
-      {
-        ACE_ERROR ((LM_ERROR, "Unable to schedule Timer\n"));
-      }
+    ReadHandler *rh = new ReadHandler (*this, run);
+    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (rh);
   }
 
   void
   Receiver_exec_i::run (CORBA::UShort run)
   {
-    if (this->ticker_)
-      {
-        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
-        delete this->ticker_;
-        this->ticker_ = 0;
-      }
     this->has_run_ = true;
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::run - "
                           "Starting run number <%d>\n",
@@ -349,8 +320,6 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     {
       case 1:
         {
-          test_exception ();
-          set_filter ();
           read_all ();
           check_filter ();
           test_set_query_parameters ();
@@ -431,6 +400,15 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   {
     this->reader_ = this->context_->get_connection_info_out_data();
     this->restarter_ = this->context_->get_connection_writer_restart ();
+
+    test_exception ();
+
+    CCM_DDS::QueryFilter filter;
+    filter.query = CORBA::string_dup (QUERY);
+    filter.query_parameters.length (2);
+    filter.query_parameters[0] = CORBA::string_dup (MIN_ITERATION_1);
+    filter.query_parameters[1] = CORBA::string_dup (MAX_ITERATION_1);
+    this->reader_->filter (filter);
 }
 
   void
@@ -447,10 +425,6 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
             ACE_TEXT ("Test did not run: Didn't receive ")
             ACE_TEXT ("the expected number of DATA_ON_READER ")
             ACE_TEXT ("events.\n")));
-      }
-    else
-      {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finished query filter test.\n")));
       }
   }
 

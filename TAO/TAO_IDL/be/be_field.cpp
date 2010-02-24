@@ -1,24 +1,41 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_field.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_Field that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_field.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_Field that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_field.h"
 #include "be_visitor.h"
 #include "be_type.h"
 #include "global_extern.h"
 #include "ace/Log_Msg.h"
+
+ACE_RCSID (be, 
+           be_field, 
+           "$Id$")
+
+be_field::be_field (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Field (),
+    be_decl ()
+{
+}
 
 be_field::be_field (AST_Type *ft,
                     UTL_ScopedName *n,

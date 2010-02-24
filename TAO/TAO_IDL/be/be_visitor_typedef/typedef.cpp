@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    typedef.cpp
- *
- *  $Id$
- *
- *  Generic visitor generating code for Typedefs
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    typedef.cpp
+//
+// = DESCRIPTION
+//    Generic visitor generating code for Typedefs
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_typedef, 
+           typedef, 
+           "$Id$")
 
 // ******************************************************
 // Generic typedef visitor.

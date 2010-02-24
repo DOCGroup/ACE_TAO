@@ -1,17 +1,22 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    be_visitor_component_scope.cpp
- *
- *  $Id$
- *
- *  Abstract visitor providing ancestor scope visitation.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_component_scope.cpp
+//
+// = DESCRIPTION
+//    Abstract visitor providing ancestor scope visitation.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #include "be_visitor_component_scope.h"
 #include "be_visitor_context.h"
@@ -33,6 +38,7 @@ be_visitor_component_scope::be_visitor_component_scope (
     node_ (0),
     os_ (*ctx->stream ()),
     export_macro_ (be_global->svnt_export_macro ()),
+    swapping_ (be_global->gen_component_swapping ()),
     static_config_ (be_global->gen_ciao_static_config ())
 {
   /// All existing CIAO examples set the servant export values in the CIDL
@@ -56,17 +62,17 @@ be_visitor_component_scope::visit_extended_port (
 {
   AST_Decl::NodeType nt =
     ScopeAsDecl (node->defined_in ())->node_type ();
-
-  // Store this to prefix to contained provides or uses node name.
+  
+  // Store this to prefix to contained provides or uses node name.  
   if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {
       this->port_prefix_ = node->local_name ()->get_string ();
       this->port_prefix_ += '_';
     }
-
+    
   int status =
     this->visit_porttype_scope (node->port_type ());
-
+    
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -75,7 +81,7 @@ be_visitor_component_scope::visit_extended_port (
                          ACE_TEXT ("visit_porttype_scope failed\n")),
                         -1);
     }
-
+  
   this->port_prefix_ = "";
   return 0;
 }
@@ -86,17 +92,17 @@ be_visitor_component_scope::visit_mirror_port (
 {
   AST_Decl::NodeType nt =
     ScopeAsDecl (node->defined_in ())->node_type ();
-
-  // Store this to prefix to contained provides or uses node name.
+    
+  // Store this to prefix to contained provides or uses node name.  
   if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {
       this->port_prefix_ = node->local_name ()->get_string ();
       this->port_prefix_ += '_';
     }
-
+    
   int status =
     this->visit_porttype_scope_mirror (node->port_type ());
-
+    
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -106,7 +112,7 @@ be_visitor_component_scope::visit_mirror_port (
                          ACE_TEXT ("_mirror failed\n")),
                         -1);
     }
-
+  
   this->port_prefix_ = "";
   return 0;
 }
@@ -119,7 +125,7 @@ be_visitor_component_scope::visit_component_scope (
     {
       return 0;
     }
-
+    
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -129,7 +135,7 @@ be_visitor_component_scope::visit_component_scope (
                          ACE_TEXT ("failed\n")),
                         -1);
     }
-
+    
   return this->visit_component_scope (node->base_component ());
 }
 
@@ -148,18 +154,18 @@ be_visitor_component_scope::visit_porttype_scope_mirror (be_porttype *node)
        si.next ())
     {
       be_decl *d = be_decl::narrow_from_decl (si.item ());
-
+      
       switch (d->node_type ())
         {
           case AST_Decl::NT_provides:
             {
               be_provides *p =
                 be_provides::narrow_from_decl (d);
-
+                
               be_uses mirror_node (p->name (),
                                    p->provides_type (),
                                    false);
-
+                                   
               if (this->visit_uses (&mirror_node) == -1)
                 {
                   ACE_ERROR_RETURN ((LM_ERROR,
@@ -168,7 +174,7 @@ be_visitor_component_scope::visit_porttype_scope_mirror (be_porttype *node)
                                      ACE_TEXT ("visit_uses() failed\n")),
                                     -1);
                 }
-
+                
               mirror_node.destroy ();
               break;
             }
@@ -176,10 +182,10 @@ be_visitor_component_scope::visit_porttype_scope_mirror (be_porttype *node)
             {
               be_uses *u =
                 be_uses::narrow_from_decl (d);
-
+                
               be_provides mirror_node (u->name (),
                                        u->uses_type ());
-
+                                   
               if (this->visit_provides (&mirror_node) == -1)
                 {
                   ACE_ERROR_RETURN ((LM_ERROR,
@@ -188,7 +194,7 @@ be_visitor_component_scope::visit_porttype_scope_mirror (be_porttype *node)
                                      ACE_TEXT ("visit_provides() failed\n")),
                                     -1);
                 }
-
+                
               mirror_node.destroy ();
               break;
             }
@@ -196,7 +202,7 @@ be_visitor_component_scope::visit_porttype_scope_mirror (be_porttype *node)
             return d->accept (this);
         }
     }
-
+    
   return 0;
 }
 
@@ -259,7 +265,7 @@ be_visitor_component_scope::gen_exec_entrypoint_decl (void)
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::Components::EnterpriseComponent_ptr" << be_nl
       << "create_" << node_->flat_name ()
-      << "_Impl (void);";
+      << "_Impl (void);"; 
 }
 
 void

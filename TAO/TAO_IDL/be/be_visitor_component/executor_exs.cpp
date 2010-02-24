@@ -1,17 +1,22 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    executor_exs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code in the exec impl source.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO_IDL_BE
+//
+// = FILENAME
+//    executor_exs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code in the exec impl source.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 be_visitor_executor_exs::be_visitor_executor_exs (
       be_visitor_context *ctx)
@@ -35,7 +40,7 @@ be_visitor_executor_exs::visit_operation (be_operation *node)
 
   // Components have implied IDL operations added to the AST, but
   // we are interested only in supported interface operations.
-  if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
+  if (nt == AST_Decl::NT_component)
     {
       return 0;
     }

@@ -13,17 +13,18 @@
 namespace CIAO_Writer_Sender_Impl
 {
   //============================================================
-  // ReadHandler
+  // pulse_Generator
   //============================================================
-  StartHandler::StartHandler(Sender_exec_i &callback)
-    : callback_ (callback)
+  pulse_Generator::pulse_Generator (Sender_exec_i &callback)
+    : pulse_callback_ (callback)
   {
   }
 
   int
-  StartHandler::handle_exception (ACE_HANDLE)
+  pulse_Generator::handle_timeout (const ACE_Time_Value &, const void *)
   {
-    this->callback_.run ();
+    // Notify the subscribers
+    this->pulse_callback_.tick ();
     return 0;
   }
 
@@ -31,8 +32,10 @@ namespace CIAO_Writer_Sender_Impl
   // Sender_exec_i
   //============================================================
   Sender_exec_i::Sender_exec_i (void)
-    : keys_ (5)
+    : rate_ (1),
+      keys_ (5)
   {
+    this->ticker_ = new pulse_Generator (*this);
   }
 
   Sender_exec_i::~Sender_exec_i (void)
@@ -63,7 +66,7 @@ namespace CIAO_Writer_Sender_Impl
   }
 
   void
-  Sender_exec_i::register_handles ()
+  Sender_exec_i::register_handles()
   {
     Writer_Table::iterator i = this->ktests_.begin ();
     for (i = this->ktests_.begin(); i != this->ktests_.end(); ++i)
@@ -83,27 +86,26 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::test_equality ()
   {
-    Writer_Table::iterator i = this->ktests_.begin ();
-    for (i = this->ktests_.begin(); i != this->ktests_.end(); ++i)
+    if (this->last_key_ != this->ktests_.end ())
       {
         ::DDS::InstanceHandle_t ccm_hnd =
-          this->handles_[i->first.c_str ()];
+          this->handles_[this->last_key_->first.c_str ()];
 
         DDS_InstanceHandle_t dds_hnd =
-          this->dds_writer_->lookup_instance (i->second);
+          this->dds_writer_->lookup_instance (this->last_key_->second);
         if (dds_hnd == ccm_hnd)
           {
             ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::test_equality - "
                           "== operator seems to work for DDS and "
                           "CCM handles for key <%C>\n",
-                          i->first.c_str ()));
+                          this->last_key_->first.c_str ()));
           }
         else
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::test_equality - "
                           "== operator doesn't seem to work for DDS and "
                           "CCM handles for key <%C>\n",
-                          i->first.c_str ()));
+                          this->last_key_->first.c_str ()));
           }
         DDS::InstanceHandle_t ccm_dds_hnd;
         ccm_dds_hnd <<= dds_hnd;
@@ -112,14 +114,14 @@ namespace CIAO_Writer_Sender_Impl
             ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::test_equality - "
                           "== operator seems to work for CCM handles "
                           "for key <%C>\n",
-                          i->first.c_str ()));
+                          this->last_key_->first.c_str ()));
           }
         else
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::test_equality - "
                           "== operator doesn't seem to work for CCM "
                           "handles for key <%C>\n",
-                          i->first.c_str ()));
+                          this->last_key_->first.c_str ()));
           }
       }
   }
@@ -127,13 +129,12 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::test_non_equality ()
   {
-    Writer_Table::iterator i = this->ktests_.begin ();
-    for (i = this->ktests_.begin(); i != this->ktests_.end(); ++i)
+    if (this->last_key_ != this->ktests_.end ())
       {
         ::DDS::InstanceHandle_t ccm_hnd =
-          this->handles_[i->first.c_str ()];
+          this->handles_[this->last_key_->first.c_str ()];
 
-        Writer_Table::iterator unequal = i;
+        Writer_Table::iterator unequal = this->last_key_;
         ++unequal;
         if (unequal == this->ktests_.end ())
           unequal = this->ktests_.begin ();
@@ -146,14 +147,14 @@ namespace CIAO_Writer_Sender_Impl
             ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::test_equality - "
                           "!= operator seems to work for DDS and "
                           "CCM handles for key <%C>\n",
-                          i->first.c_str ()));
+                          this->last_key_->first.c_str ()));
           }
         else
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::test_equality - "
                           "!= operator doesn't seem to work for DDS and "
                           "CCM handles for key <%C>\n",
-                          i->first.c_str ()));
+                          this->last_key_->first.c_str ()));
           }
         DDS::InstanceHandle_t ccm_dds_hnd;
         ccm_dds_hnd <<= dds_hnd;
@@ -162,21 +163,26 @@ namespace CIAO_Writer_Sender_Impl
             ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::test_equality - "
                           "!= operator seems to work for CCM "
                           "handles for key <%C>\n",
-                          i->first.c_str ()));
+                          this->last_key_->first.c_str ()));
           }
         else
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::test_equality - "
                           "!= operator doesn't seem to work for CCM "
                           "handles for key <%C>\n",
-                          i->first.c_str ()));
+                          this->last_key_->first.c_str ()));
           }
+        ++this->last_key_;
       }
-    unregister_handles ();
+    else
+      {
+        unregister_handles ();
+        this->stop ();
+      }
   }
 
   void
-  Sender_exec_i::run ()
+  Sender_exec_i::tick ()
   {
     test_equality ();
     test_non_equality ();
@@ -185,8 +191,36 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::start (void)
   {
-    StartHandler *rh = new StartHandler (*this);
-    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (rh);
+    long usec = 1000000 / this->rate_;
+    if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
+                this->ticker_,
+                0,
+                ACE_Time_Value (0, usec),
+                ACE_Time_Value (0, usec)) == -1)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
+                              ACE_TEXT ("Error scheduling timer")));
+      }
+  }
+
+  void
+  Sender_exec_i::stop (void)
+  {
+    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
+    delete this->ticker_;
+  }
+
+  ::CORBA::UShort
+  Sender_exec_i::rate (void)
+  {
+    return this->rate_;
+  }
+
+  void
+  Sender_exec_i::rate (::CORBA::UShort rate)
+  {
+    this->rate_ = rate;
   }
 
   ::CORBA::UShort
@@ -218,8 +252,8 @@ namespace CIAO_Writer_Sender_Impl
   {
     DDS::DataWriter_var dds_dw =
       this->context_->get_connection_info_write_dds_entity ();
-    CIAO::DDS4CCM::CCM_DDS_DataWriter_i *rti_rd =
-      dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_i *> (dds_dw.in ());
+    CIAO::DDS4CCM::RTI::RTI_DataWriter_i *rti_rd =
+      dynamic_cast <CIAO::DDS4CCM::RTI::RTI_DataWriter_i *> (dds_dw.in ());
     DDSDataWriter * p = rti_rd->get_impl ();
     this->dds_writer_ = dynamic_cast <WriterTestDataWriter *> (p);
     this->ccm_writer_ = this->context_->get_connection_info_write_data ();
@@ -242,12 +276,14 @@ namespace CIAO_Writer_Sender_Impl
 
         this->ktests_[key] = new_key;
       }
+    this->last_key_ = this->ktests_.begin ();
     register_handles ();
   }
 
   void
   Sender_exec_i::ccm_passivate (void)
   {
+    this->stop ();
   }
 
   void

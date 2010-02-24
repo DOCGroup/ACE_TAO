@@ -249,7 +249,7 @@
           <kind>tk_ulong</kind>
         </type>
         <value>
-          <ulong>50</ulong>
+          <ulong>10</ulong>
         </value>
       </value>
     </configProperty>
@@ -271,6 +271,26 @@
       <portName>push_consumer_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
+      <instance xmi:idref="Reader_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>info_out_connector_status_rec</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_out_connector_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>error_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Reader_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>

@@ -3,6 +3,8 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+
+#include "tao/TAO_Singleton_Manager.h"
 #include "tao/StringSeqC.h"
 #include "tao/IORTable/IORTable.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
@@ -174,36 +176,36 @@ DAnCE_ExecutionManager_Module::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 CORBA::Object_ptr
-DAnCE_ExecutionManager_Module::init (CORBA::ORB_ptr orb,
-                                      int argc,
-                                      ACE_TCHAR *argv[])
+DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
+                                              int argc,
+                                              ACE_TCHAR *argv[])
 {
-  DANCE_TRACE ("DAnCE_ExecutionManager_Module::init");
+  DANCE_TRACE ("DAnCE_ExecutionManager_Module::create_object");
 
   try
     {
       if (this->em_impl_ != 0)
         {
           DANCE_ERROR (1, (LM_ERROR,
-                         DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::init - ")
+                         DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
                          ACE_TEXT("Error: ExecutionManager already exists.\n")));
           return CORBA::Object::_nil ();
         }
 
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::init - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
                     ACE_TEXT("before parsing arguments.\n")));
 
       if (!this->parse_args (argc, argv))
         return CORBA::Object::_nil ();
 
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::init - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
                     ACE_TEXT("before creating value factory.\n")));
       CORBA::ValueFactory_var vf = new Components::Cookie_init();
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::init - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
                     ACE_TEXT("before registering value factory.\n")));
       vf = orb->register_value_factory ("IDL:omg.org/Components/Cookie:1.0", vf.in());
 
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::init - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
                     ACE_TEXT("after creating value factory.\n")));
       // Get reference to Root POA.
       CORBA::Object_var poa_obj
@@ -218,7 +220,7 @@ DAnCE_ExecutionManager_Module::init (CORBA::ORB_ptr orb,
       policies.length (2);
       try
         {
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::init - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
                         ACE_TEXT("before creating the \"Managers\" POA.\n")));
 
           policies[0] = poa->create_id_assignment_policy (PortableServer::USER_ID);
@@ -239,7 +241,7 @@ DAnCE_ExecutionManager_Module::init (CORBA::ORB_ptr orb,
         {
           if (this->options_.domain_nc_)
             {
-              DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::init - ")
+              DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
                             ACE_TEXT("before resolving \"DomainNC\".\n")));
               CORBA::Object_var domain_obj = orb->string_to_object (this->options_.domain_nc_);
               if (!CORBA::is_nil (domain_obj.in ()))
@@ -275,7 +277,7 @@ DAnCE_ExecutionManager_Module::init (CORBA::ORB_ptr orb,
         }
 
       // Create and install the DAnCE Daemon servant on child POA
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::init - before creating EM servant.\n")));
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - before creating EM servant.\n")));
       ACE_NEW_RETURN (this->em_impl_,
                       DAnCE::ExecutionManager_Impl (orb,
                                                     poa.in (),
@@ -290,8 +292,8 @@ DAnCE_ExecutionManager_Module::init (CORBA::ORB_ptr orb,
       CORBA::Object_var em_obj = persistent_poa->id_to_reference (oid.in ());
       CORBA::String_var em_ior = orb->object_to_string (em_obj.in ());
 
-      Deployment::ExecutionManager_var em_daemon
-        = Deployment::ExecutionManager::_narrow (em_obj.in ());
+      DAnCE::ExecutionManagerDaemon_var em_daemon
+        = DAnCE::ExecutionManagerDaemon::_narrow (em_obj.in ());
 
       // Binding ior to IOR Table
       adapter->bind ("ExecutionManager", em_ior.in ());
@@ -315,7 +317,7 @@ DAnCE_ExecutionManager_Module::init (CORBA::ORB_ptr orb,
       // End ExecutionManager initialization part
 
       // Initializing NodeManagers
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::init - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
                     ACE_TEXT("before processing --node-mgr options(%u).\n"), this->options_.node_managers_.size()));
       for (size_t i = 0; i < this->options_.node_managers_.size(); ++i)
         {
@@ -325,7 +327,7 @@ DAnCE_ExecutionManager_Module::init (CORBA::ORB_ptr orb,
 
           if (ACE_CString::npos == pos)
             {
-              DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::init - ")
+              DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
                             ACE_TEXT("Execution manager received --node-mgr without IOR\n")));
               continue;
             }
@@ -339,7 +341,7 @@ DAnCE_ExecutionManager_Module::init (CORBA::ORB_ptr orb,
 
       if (this->options_.node_map_ != 0)
         {
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::init - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
                         ACE_TEXT("Parsing node map %C\n"),
                         this->options_.node_map_));
           this->em_impl_->load_node_map (this->options_.node_map_);
@@ -356,4 +358,8 @@ DAnCE_ExecutionManager_Module::init (CORBA::ORB_ptr orb,
       return CORBA::Object::_nil ();
     }
 }
+
+ACE_FACTORY_DEFINE (DAnCE_ExecutionManager_Module, DAnCE_ExecutionManager_Module)
+
+
 

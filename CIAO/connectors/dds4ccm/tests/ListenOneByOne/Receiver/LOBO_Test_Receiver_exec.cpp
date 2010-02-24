@@ -12,11 +12,9 @@ namespace CIAO_LOBO_Test_Receiver_Impl
   //============================================================
   ListenOneByOneTest_Listener_exec_i::ListenOneByOneTest_Listener_exec_i (
                                               Atomic_ULong &received_one_by_one,
-                                              Atomic_ULong &received_many_by_many,
-                                              Atomic_ThreadId &thread_id)
+                                              Atomic_ULong &received_many_by_many)
     : received_one_by_one_ (received_one_by_one),
-      received_many_by_many_ (received_many_by_many),
-      thread_id_ (thread_id)
+      received_many_by_many_ (received_many_by_many)
   {
   }
 
@@ -29,7 +27,6 @@ namespace CIAO_LOBO_Test_Receiver_Impl
                                   const ListenOneByOneTest & an_instance,
                                   const ::CCM_DDS::ReadInfo & info)
   {
-    this->thread_id_ = ACE_Thread::self ();
     ACE_DEBUG ((LM_DEBUG, "ListenOneByOneTest_Listener_exec_i::on_one_data: "
                             "key <%C> - iteration <%d>\n",
                             an_instance.key.in (),
@@ -64,12 +61,65 @@ namespace CIAO_LOBO_Test_Receiver_Impl
   }
 
   //============================================================
+  // ConnectorStatusListener_exec_i
+  //============================================================
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (
+            Receiver_exec_i &callback)
+    : callback_ (callback)
+  {
+  }
+
+  ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
+     ::DDS::Topic_ptr ,
+     const DDS::InconsistentTopicStatus & )
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
+    ::DDS::DataReader_ptr ,
+     const DDS::RequestedIncompatibleQosStatus & )
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_sample_rejected(
+     ::DDS::DataReader_ptr ,
+     const DDS::SampleRejectedStatus & )
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
+     ::DDS::DataWriter_ptr ,
+     const DDS::OfferedDeadlineMissedStatus & )
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
+     ::DDS::DataWriter_ptr ,
+     const DDS::OfferedIncompatibleQosStatus & )
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_unexpected_status(
+    ::DDS::Entity_ptr ,
+    ::DDS::StatusKind  status_kind)
+  {
+    if (status_kind == ::DDS::DATA_ON_READERS_STATUS)
+      {
+        this->callback_.start ();
+      }
+  }
+
+  //============================================================
   // Receiver_exec_i
   //============================================================
   Receiver_exec_i::Receiver_exec_i (void)
     : received_one_by_one_ (0),
       received_many_by_many_ (0),
-      thread_id_listener_ (0),
+      started_ (false),
       iterations_ (10),
       keys_ (5)
   {
@@ -82,9 +132,13 @@ namespace CIAO_LOBO_Test_Receiver_Impl
   void
   Receiver_exec_i::start ()
   {
-    ::CCM_DDS::DataListenerControl_var dlc =
-        this->context_->get_connection_info_listen_data_control ();
-    dlc->mode (::CCM_DDS::ONE_BY_ONE);
+    if (!this->started_.value ())
+      {
+        this->started_ = true;
+        ::CCM_DDS::DataListenerControl_var dlc =
+            this->context_->get_connection_info_listen_data_control ();
+        dlc->mode (::CCM_DDS::ONE_BY_ONE);
+      }
   }
 
   ::CCM_DDS::ListenOneByOneTest::CCM_Listener_ptr
@@ -92,8 +146,7 @@ namespace CIAO_LOBO_Test_Receiver_Impl
   {
     return new ListenOneByOneTest_Listener_exec_i (
                 this->received_one_by_one_,
-                this->received_many_by_many_,
-                this->thread_id_listener_);
+                this->received_many_by_many_);
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -105,7 +158,7 @@ namespace CIAO_LOBO_Test_Receiver_Impl
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Receiver_exec_i::get_info_listen_connector_status (void)
   {
-    return ::CCM_DDS::CCM_ConnectorStatusListener::_nil ();
+    return new ConnectorStatusListener_exec_i (*this);
   }
 
   ::CORBA::UShort
@@ -152,7 +205,6 @@ namespace CIAO_LOBO_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
-    start ();
   }
 
   void
@@ -191,58 +243,21 @@ namespace CIAO_LOBO_Test_Receiver_Impl
                                "expected <0> - received <%u>\n",
                                this->received_many_by_many_.value ()));
       }
+    if (!this->started_.value ())
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: ONE_BY_ONE: "
+                               "Didn't received DATA_ON_READERS_STATUS on "
+                               "ConnectorStatusListener\n"));
+      }
     if (this->received_one_by_one_.value () > 0   &&
-        this->received_many_by_many_.value () == 0)
+        this->received_many_by_many_.value () == 0 &&
+        this->started_.value ())
       {
         ACE_DEBUG ((LM_DEBUG, "ONE_BY_ONE: "
                                "Received only data on "
                                "one_by_one callback. "
                                "Test passed!\n"));
       }
-    if (this->thread_id_listener_.value () == 0)
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: "
-                              "Thread ID for ReaderListener not set!\n"));
-      }
-    #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
-    else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
-                                ACE_Thread::self ()))
-      {
-        ACE_DEBUG ((LM_DEBUG, "ONE_BY_ONE: "
-                              "Thread switch for ReaderListener seems OK. "
-                              "(DDS uses the CCM thread for its callback) "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_.value (),
-                              ACE_Thread::self ()));
-      }
-    else
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: ONE_BY_ONE: "
-                              "Thread switch for ReaderListener "
-                              "doesn't seem to work! "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_.value (),
-                              ACE_Thread::self ()));
-      }
-    #else
-    else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
-                                ACE_Thread::self ()))
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: ONE_BY_ONE: ReaderListener: "
-                              "DDS seems to use a CCM thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_.value (),
-                              ACE_Thread::self ()));
-      }
-    else
-      {
-        ACE_DEBUG ((LM_DEBUG, "ONE_BY_ONE: ReaderListener: "
-                              "DDS seems to use its own thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_.value (),
-                              ACE_Thread::self ()));
-      }
-    #endif
   }
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

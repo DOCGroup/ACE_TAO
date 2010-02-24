@@ -11,6 +11,10 @@
 */
 //=============================================================================
 
+ACE_RCSID (be_visitor_interface,
+           amh_si,
+           "$Id$")
+
 be_visitor_amh_interface_si::be_visitor_amh_interface_si (
     be_visitor_context *ctx
   )

@@ -4,139 +4,111 @@
 #include "Topic.h"
 #include "StringSeq.h"
 
-#include "dds4ccm/impl/logger/Log_Macros.h"
+#include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO
 {
   namespace DDS4CCM
   {
-    CCM_DDS_ContentFilteredTopic_i::CCM_DDS_ContentFilteredTopic_i (
-      DDSContentFilteredTopic * dw) : impl_ (dw)
+    namespace RTI
     {
-    }
+      // Implementation skeleton constructor
+      RTI_ContentFilteredTopic_i::RTI_ContentFilteredTopic_i (void)
+        : impl_ (0)
+      {
+      }
 
-    CCM_DDS_ContentFilteredTopic_i::~CCM_DDS_ContentFilteredTopic_i (void)
-    {
-    }
+      // Implementation skeleton destructor
+      RTI_ContentFilteredTopic_i::~RTI_ContentFilteredTopic_i (void)
+      {
+      }
 
-    char *
-    CCM_DDS_ContentFilteredTopic_i::get_filter_expression (void)
-    {
-      DDS4CCM_TRACE ("CCM_DDS_ContentFilteredTopic_i::get_filter_expression");
-      return CORBA::string_dup (this->impl ()->get_filter_expression ());
-    }
+      char *
+      RTI_ContentFilteredTopic_i::get_filter_expression (void)
+      {
+        CIAO_TRACE ("RTI_ContentFilteredTopic_i::get_filter_expression");
+        return CORBA::string_dup (this->impl ()->get_filter_expression ());
+      }
 
-    ::DDS::ReturnCode_t
-    CCM_DDS_ContentFilteredTopic_i::get_expression_parameters (
-      ::DDS::StringSeq & expression_parameters)
-    {
-      DDS4CCM_TRACE ("CCM_DDS_ContentFilteredTopic_i::get_expression_parameters");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      DDS_StringSeq parameters;
-      ::DDS::ReturnCode_t retval = this->impl ()->get_expression_parameters (
-                                                                  parameters);
-      expression_parameters <<= parameters;
-#else
-      ::DDS::ReturnCode_t retval = this->impl ()->get_expression_parameters (
-                                                                  expression_parameters);
-#endif
-      return retval;
-    }
+      ::DDS::ReturnCode_t
+      RTI_ContentFilteredTopic_i::get_expression_parameters (
+        ::DDS::StringSeq & expression_parameters)
+      {
+        CIAO_TRACE ("RTI_ContentFilteredTopic_i::get_expression_parameters");
+        DDS_StringSeq parameters;
+        ::DDS::ReturnCode_t retval = this->impl ()->get_expression_parameters (
+                                                                    parameters);
+        expression_parameters <<= parameters;
+        return retval;
+      }
 
-    ::DDS::ReturnCode_t
-    CCM_DDS_ContentFilteredTopic_i::set_expression_parameters (
-      const ::DDS::StringSeq & expression_parameters)
-    {
-      DDS4CCM_TRACE ("CCM_DDS_ContentFilteredTopic_i::set_expression_parameters");
+      ::DDS::ReturnCode_t
+      RTI_ContentFilteredTopic_i::set_expression_parameters (
+        const ::DDS::StringSeq & expression_parameters)
+      {
+        CIAO_TRACE ("RTI_ContentFilteredTopic_i::set_expression_parameters");
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      DDS_StringSeq parameters;
-      parameters <<= expression_parameters;
-      return this->impl ()->set_expression_parameters (parameters);
-#else
-      return this->impl ()->set_expression_parameters (expression_parameters);
-#endif
-    }
+        DDS_StringSeq parameters;
+        parameters <<= expression_parameters;
 
-    ::DDS::Topic_ptr
-    CCM_DDS_ContentFilteredTopic_i::get_related_topic (void)
-    {
-      DDS4CCM_TRACE ("CCM_DDS_ContentFilteredTopic_i::get_related_topic");
+        return this->impl ()->set_expression_parameters (parameters);
+      }
 
-      ::DDS::Topic_var retval = ::DDS::Topic::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      DDSTopic *topic = this->impl ()->get_related_topic ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_Topic_i (topic),
-                        CORBA::NO_MEMORY ());
-      return retval._retn ();
-#else
-      ::DDS::Topic_var topic = this->impl ()->get_related_topic ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_Topic_i (topic.in ()),
-                        CORBA::NO_MEMORY ());
-      return retval._retn ();
-#endif
-    }
+      ::DDS::Topic_ptr
+      RTI_ContentFilteredTopic_i::get_related_topic (void)
+      {
+        CIAO_TRACE ("RTI_ContentFilteredTopic_i::get_related_topic");
+        DDSTopic *topic = this->impl ()->get_related_topic ();
+        ::DDS::Topic_var retval = new RTI_Topic_i ();
+        RTI_Topic_i *rti_topic = dynamic_cast < RTI_Topic_i *> (retval.in ());
+        rti_topic->set_impl (topic);
+        return retval._retn ();
+      }
 
-    char *
-    CCM_DDS_ContentFilteredTopic_i::get_type_name (void)
-    {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      return CORBA::string_dup (this->impl ()->get_type_name ());
-#else
-      return this->impl ()->get_type_name ();
-#endif
-    }
+      char *
+      RTI_ContentFilteredTopic_i::get_type_name (void)
+      {
+        return CORBA::string_dup (this->impl ()->get_type_name ());
+      }
 
-    char *
-    CCM_DDS_ContentFilteredTopic_i::get_name (void)
-    {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      return CORBA::string_dup (this->impl ()->get_name ());
-#else
-      return this->impl ()->get_name ();
-#endif
-    }
+      char *
+      RTI_ContentFilteredTopic_i::get_name (void)
+      {
+        return CORBA::string_dup (this->impl ()->get_name ());
+      }
 
-    ::DDS::DomainParticipant_ptr
-    CCM_DDS_ContentFilteredTopic_i::get_participant (void)
-    {
-      ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      DDSDomainParticipant* p = this->impl ()->get_participant ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_DomainParticipant_i (p),
-                        CORBA::NO_MEMORY ());
-#else
-      ::DDS::DomainParticipant_var p = this->impl ()->get_participant ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_DomainParticipant_i (p.in ()),
-                        CORBA::NO_MEMORY ());
-#endif
-      return retval._retn ();
-    }
+      ::DDS::DomainParticipant_ptr
+      RTI_ContentFilteredTopic_i::get_participant (void)
+      {
+        DDSDomainParticipant* p = this->impl ()->get_participant ();
+        ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i ();
+        RTI_DomainParticipant_i *rti_dp = dynamic_cast < RTI_DomainParticipant_i *> (retval.in ());
+        rti_dp->set_impl (p);
+        return retval._retn ();
+      }
 
-    DDSContentFilteredTopic *
-    CCM_DDS_ContentFilteredTopic_i::get_impl (void)
-    {
-      return this->impl_;
-    }
+      DDSContentFilteredTopic *
+      RTI_ContentFilteredTopic_i::get_impl (void)
+      {
+        return this->impl_;
+      }
 
-    void
-    CCM_DDS_ContentFilteredTopic_i::set_impl (DDSContentFilteredTopic * dw)
-    {
-      this->impl_ = dw;
-    }
+      void
+      RTI_ContentFilteredTopic_i::set_impl (DDSContentFilteredTopic * dw)
+      {
+        this->impl_ = dw;
+      }
 
-    DDSContentFilteredTopic *
-    CCM_DDS_ContentFilteredTopic_i::impl (void)
-    {
-      if (!this->impl_)
-        {
-          throw ::CORBA::BAD_INV_ORDER ();
-        }
-      return this->impl_;
+      DDSContentFilteredTopic *
+      RTI_ContentFilteredTopic_i::impl (void)
+      {
+        if (!this->impl_)
+          {
+            throw ::CORBA::BAD_INV_ORDER ();
+          }
+        return this->impl_;
+      }
+
     }
   }
 }

@@ -1,19 +1,28 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuetype_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Valuetypes in the client header
- *  (see C++ mapping OMG 20.17)
- *
- *
- *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
- *  @author based on interface_ch.cpp from Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuetype_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Valuetypes in the client header
+//    (see C++ mapping OMG 20.17)
+//
+// = AUTHOR
+//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>,
+//    based on interface_ch.cpp from Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_ch,
+           "$Id$")
 
 // ******************************************************
 // Valuetype visitor for client header

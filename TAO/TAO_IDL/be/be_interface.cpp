@@ -1,19 +1,24 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_interface.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_Interface that provides additional means for C++
- *  mapping of an interface.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- *  @author Michael Kircher
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_interface.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_Interface that provides additional means for C++
+//    mapping of an interface.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale,
+//    Michael Kircher
+//
+// ============================================================================
 
 #include "be_interface.h"
 #include "be_interface_strategy.h"
@@ -41,6 +46,32 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 
+ACE_RCSID (be,
+           be_interface,
+           "$Id$")
+
+// Default constructor.
+be_interface::be_interface (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    UTL_Scope (),
+    AST_Interface (),
+    be_scope (),
+    be_type (),
+    var_out_seq_decls_gen_ (0),
+    skel_count_ (0),
+    in_mult_inheritance_ (-1),
+    strategy_ (0),
+    original_interface_ (0),
+    has_mixed_parentage_ (-1),
+    session_component_child_ (-1)
+{
+  ACE_NEW (this->strategy_,
+           be_interface_default_strategy (this));
+}
+
+// Constructor used to build the AST.
 be_interface::be_interface (UTL_ScopedName *n,
                             AST_Type **ih,
                             long nih,
@@ -63,8 +94,6 @@ be_interface::be_interface (UTL_ScopedName *n,
                    local,
                    abstract),
     be_scope (AST_Decl::NT_interface),
-    be_decl (AST_Decl::NT_interface,
-             n),
     be_type (AST_Decl::NT_interface,
              n),
     var_out_seq_decls_gen_ (0),
@@ -1371,8 +1400,7 @@ be_interface::analyze_parentage (void)
   AST_Decl::NodeType nt = this->node_type ();
   bool can_be_mixed = nt == AST_Decl::NT_interface
                           || nt == AST_Decl::NT_component
-                          || nt == AST_Decl::NT_home
-                          || nt == AST_Decl::NT_connector;
+                          || nt == AST_Decl::NT_home;
 
   if (this->has_mixed_parentage_ == 1
       && can_be_mixed
@@ -1455,18 +1483,16 @@ be_interface::traverse_inheritance_graph (
                              "dequeue_head failed\n"),
                             -1);
         }
-        
-      AST_Decl::NodeType nt = intf->node_type ();
 
       // If we are doing a home, we check for a parent.
-      if (nt == AST_Decl::NT_home)
+      if (intf->node_type () == AST_Decl::NT_home)
         {
           this->enqueue_base_home_r (
             AST_Home::narrow_from_decl (intf));
         }
 
       // If we are doing a component, we check for a parent.
-      if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
+      if (intf->node_type () == AST_Decl::NT_component)
         {
           if (add_ccm_object)
             {
@@ -2553,9 +2579,7 @@ be_interface::has_mixed_parentage (void)
 
   AST_Decl::NodeType nt = this->node_type ();
 
-  if (AST_Decl::NT_component == nt
-      || AST_Decl::NT_home == nt
-      || AST_Decl::NT_connector == nt)
+  if (AST_Decl::NT_component == nt || AST_Decl::NT_home == nt)
     {
       return 0;
     }
@@ -2788,9 +2812,7 @@ Facet_Op_Attr_Helper::emit (be_interface * /*derived_interface */,
                             TAO_OutStream *,
                             be_interface *base_interface)
 {
-  AST_Decl::NodeType nt = base_interface->node_type ();
-
-  if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
+  if (base_interface->node_type () == AST_Decl::NT_component)
     {
       return 0;
     }

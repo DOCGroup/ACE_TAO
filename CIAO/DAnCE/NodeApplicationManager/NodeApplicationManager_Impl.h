@@ -16,13 +16,9 @@
 #define NODEAPPLICATIONMANAGER_IMPL_H_
 
 #include "NodeApplicationManager_Export.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "Deployment/Deployment_DeploymentPlanC.h"
 #include "Deployment/Deployment_NodeApplicationManagerS.h"
+#include "Deployment/Deployment_NodeApplicationC.h"
 #include "NodeApplication/NodeApplication_Impl.h"
 
 namespace DAnCE

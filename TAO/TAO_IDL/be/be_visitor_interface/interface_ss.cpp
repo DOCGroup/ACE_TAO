@@ -1,21 +1,32 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    interface_ss.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Interfaces in the server skeletons file.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    interface_ss.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Interfaces in the server skeletons file.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "global_extern.h"
 #include "ast_generator.h"
 #include "ast_string.h"
+
+
+ACE_RCSID (be_visitor_interface,
+           interface_ss,
+           "$Id$")
+
 
 // ************************************************************
 // Interface visitor for server skeletons.

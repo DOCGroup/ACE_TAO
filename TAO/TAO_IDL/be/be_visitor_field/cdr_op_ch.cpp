@@ -1,17 +1,22 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating CDR operator declarator for field in the client header
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating CDR operator declarator for field in the client header
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_visitor_array/cdr_op_ch.h"
 #include "be_visitor_enum/cdr_op_ch.h"
@@ -20,6 +25,11 @@
 #include "be_visitor_structure/cdr_op_ch.h"
 #include "be_visitor_union/union.h"
 #include "be_visitor_union/cdr_op_ch.h"
+
+ACE_RCSID (be_visitor_field, 
+           cdr_op_ch, 
+           "$Id$")
+
 
 // **********************************************
 //  Visitor for field in the client header file.

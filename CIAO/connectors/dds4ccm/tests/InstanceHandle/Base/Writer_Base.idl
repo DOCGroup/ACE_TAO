@@ -8,8 +8,6 @@
 #ifndef WRITER_BASE_IDL
 #define WRITER_BASE_IDL
 
-#pragma ndds typesupport "Base/Writer_BaseSupport.h"
-
 struct WriterTest {
   string key; //@key
 };

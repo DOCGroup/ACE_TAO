@@ -1,24 +1,46 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_enum.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_Enum that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_enum.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_Enum that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_enum.h"
 #include "be_visitor.h"
 #include "be_helper.h"
 
 #include "global_extern.h"
+
+ACE_RCSID (be,
+           be_enum,
+           "$Id$")
+
+be_enum::be_enum (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType (),
+    UTL_Scope (),
+    AST_Enum (),
+    be_scope (),
+    be_decl (),
+    be_type ()
+{
+}
 
 be_enum::be_enum (UTL_ScopedName *n,
                   bool local,

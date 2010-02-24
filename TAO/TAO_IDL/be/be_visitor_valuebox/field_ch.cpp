@@ -1,23 +1,33 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    field_ch.cpp
- *
- *  $Id$
- *
- *   Visitor for the structure fields in valuebox class.
- *   This one generates code for access to strucuture members
- *   in the client header.
- *
- *   Based on be_visitor_union_branch/public_ch.  In general we
- *   generate the same method signatures as that visitor but cannot
- *   use it directly because a valuebox is not a scope and because
- *   the structure is visited prior to visiting the valuebox.
- *
- *
- *  @author Gary Maxey
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    field_ch.cpp
+//
+// = DESCRIPTION
+//     Visitor for the structure fields in valuebox class.
+//     This one generates code for access to strucuture members
+//     in the client header.
+//
+//     Based on be_visitor_union_branch/public_ch.  In general we
+//     generate the same method signatures as that visitor but cannot
+//     use it directly because a valuebox is not a scope and because
+//     the structure is visited prior to visiting the valuebox.
+//
+// = AUTHOR
+//    Gary Maxey
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_valuebox,
+           field_ch,
+           "$Id$")
 
 
 be_visitor_valuebox_field_ch::be_visitor_valuebox_field_ch (

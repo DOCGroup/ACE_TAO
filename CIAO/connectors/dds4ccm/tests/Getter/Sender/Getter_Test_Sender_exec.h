@@ -102,8 +102,7 @@ namespace CIAO_Getter_Test_Sender_Impl
 
   private:
     ::Getter_Test::CCM_Sender_Context_var context_;
-    ::Getter_Test::GetterTestConn::Writer_var writer_;
-    ::Getter_Test::GetterFixedConn::Writer_var fixed_;
+    CCM_DDS::GetterTest::Writer_var writer_;
     GetInvoker_var invoker_;
 
     CORBA::UShort iterations_;

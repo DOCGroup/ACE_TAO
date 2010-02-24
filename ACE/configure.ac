@@ -135,9 +135,6 @@ AC_LANG([C++])
 dnl If we are cross compiling disable certain things in the Makefiles.
 AM_CONDITIONAL([ACE_CROSS_COMPILED], [test X$cross_compiling = Xyes])
 
-dnl If we are cross compiling disable certain things in the Makefiles.
-AM_CONDITIONAL([BUILD_CROSS_COMPILE], [test X$cross_compiling = Xyes])
-
 dnl Look for the best awk-style program available.
 AC_PROG_AWK
 
@@ -370,6 +367,9 @@ AC_DISABLE_STATIC
 
 dnl Enable Libtool module support
 AC_LIBTOOL_DLOPEN
+
+dnl Enable support for "clean" DLLs.
+AC_LIBTOOL_WIN32_DLL
 
 dnl
 dnl  ###### Relies on the as of yet unreleased Libtool 1.6 distribuion ###
@@ -3288,8 +3288,6 @@ ACE_CHECK_LACKS_FUNCS(strtoul)
 
 ACE_FUNC_STRTOULL
 
-ACE_CHECK_LACKS_FUNCS(floor ceil floorl ceill)
-
 # swab() comes in a number of forms:
 #   swab (const void*, void*, size_t) is POSIX, XPG4, SUS, SUSv2 standard.
 #   swab (const char*, char*, size_t) is SVID third edition.
@@ -4556,11 +4554,11 @@ if test "$ace_user_enable_reentrant_funcs" = yes; then
 #endif
                  ]],
                  [[
-  const char * name = 0;
+  const char * name;
   struct passwd * pwent;
-  char * buffer = 0;
+  char * buffer;
   int buflen;
-  struct passwd * result = 0;
+  struct passwd * result;
 
   int status = getpwnam_r (name, pwent, buffer, buflen, &result);
                  ]])],
@@ -4569,11 +4567,10 @@ if test "$ace_user_enable_reentrant_funcs" = yes; then
                     AC_DEFINE([ACE_HAS_POSIX_GETPWNAM_R])
                   fi
                  ],
-                [
+                 [
                   dnl Nothing to do!
-                  echo
-                ]),
-                ],,
+                 ])
+                ],
                 [AC_DEFINE([ACE_LACKS_PWD_REENTRANT_FUNCTIONS])])
 
   AC_CHECK_FUNC([ctime_r],,)

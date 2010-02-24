@@ -1,22 +1,45 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_valuetype_fwd.cpp
- *
- *  $Id$
- *
- *  Extension of class be_interface_fwd that provides additional
- *  means for C++ mapping of an valuetype.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems Inc.
- *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_valuetype_fwd.h
+//
+// = DESCRIPTION
+//    Extension of class be_interface_fwd that provides additional
+//    means for C++ mapping of an valuetype.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//    changed for valuetypes by Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+//
+// ============================================================================
+
 
 #include "be_valuetype_fwd.h"
 #include "be_visitor.h"
 #include "ast_interface.h"
+
+ACE_RCSID (be, 
+           be_valuetype_fwd, 
+           "$Id$")
+
+be_valuetype_fwd::be_valuetype_fwd (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_InterfaceFwd (),
+    be_decl (),
+    be_type (),
+    be_interface_fwd (),
+    AST_ValueTypeFwd ()
+{
+}
 
 be_valuetype_fwd::be_valuetype_fwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)

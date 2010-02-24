@@ -67,8 +67,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * idl.ll - Lexical scanner for IDL 3.1
  */
 
-#include "global_extern.h"
-#include "nr_extern.h"
 #include "utl_strlist.h"
 #include "utl_exprlist.h"
 #include "utl_labellist.h"
@@ -85,8 +83,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_obv_header.h"
 #include "fe_component_header.h"
 #include "fe_home_header.h"
+#include "global_extern.h"
 #include "fe_private.h"
 #include "fe_extern.h"
+#include "nr_extern.h"
 #include "y.tab.h"
 
 static char *           idl_wstring_escape_reader (char *);
@@ -498,14 +498,12 @@ idl_parse_line_and_file (char *buf)
 
   UTL_String *fname = idl_global->filename ();
   bool in_main_file = false;
-
-  bool is_real_filename =
-    fname->compare (idl_global->real_filename ())
-    || same_file (fname->get_string(),
-                  idl_global->real_filename ()->get_string());
-
+  bool is_real_filename 
+    = fname->compare (idl_global->real_filename ())
+      || same_file (fname->get_string(), 
+                    idl_global->real_filename ()->get_string()); 
+  
   bool is_main_filename = false;
-
   if (!is_real_filename)
     {
 #if defined (ACE_OPENVMS)
@@ -518,11 +516,11 @@ idl_parse_line_and_file (char *buf)
       is_main_filename = idl_global->path_cmp (idl_global->main_filename ()->get_string (),
                                                full_fname) == 0;
 #else
-      is_main_filename =
-        fname->compare (idl_global->main_filename ())
-        || same_file (fname->get_string(),
-                      idl_global->main_filename ()->get_string());
-#endif
+      is_main_filename
+        = fname->compare (idl_global->main_filename ())
+          || same_file (fname->get_string(),
+                        idl_global->main_filename ()->get_string());
+#endif    
     }
 
   if (is_real_filename || is_main_filename)
@@ -536,10 +534,12 @@ idl_parse_line_and_file (char *buf)
   // by the preprocessor.
   if (!(idl_global->in_main_file ()) && idl_global->import ())
     {
-      ACE_NEW (nm,
-               UTL_String (
-                 idl_global->stripped_preproc_include (
-                   fname->get_string ())));
+      ACE_NEW (
+          nm,
+          UTL_String (
+              idl_global->stripped_preproc_include (fname->get_string ())
+            )
+        );
 
       // This call also manages the #pragma prefix.
       idl_global->store_include_file_name (nm);
@@ -619,8 +619,8 @@ idl_store_pragma (char *buf)
           // associated with this file, otherwise we add the prefix.
           char *ext_id = idl_global->filename ()->get_string ();
           char *int_id = 0;
-          int const status =
-            idl_global->file_prefixes ().find (ext_id, int_id);
+          int status = idl_global->file_prefixes ().find (ext_id,
+                                                          int_id);
 
           if (status == 0)
             {
@@ -778,20 +778,15 @@ idl_store_pragma (char *buf)
     {
       char *tmp = idl_get_pragma_string (buf);
 
-      // Split up data type and key strings
+      // split up data type and key strings
       char *sample_type = tmp;
-
       while (*tmp && !isspace (*tmp))
-        {
-          ++tmp;
-        }
-
+        tmp++;
       while (isspace (*tmp))
         {
           *tmp = '\0';
           tmp++;
         }
-
       char *key = tmp;
 
       if (!idl_global->add_dcps_data_key (sample_type, key))
@@ -808,16 +803,6 @@ idl_store_pragma (char *buf)
     {
       idl_global->dcps_gen_zero_copy_read (true);
     }
-  else if (ACE_OS::strncmp (buf + 8, "ciao lem", 8) == 0)
-    {
-      char *tmp = idl_get_pragma_string (buf);
-      idl_global->add_ciao_lem_file_names (tmp);
-    }
-  else if (ACE_OS::strncmp (buf + 8, "ndds typesupport", 15) == 0)
-    {
-      char *tmp = idl_get_pragma_string (buf);
-      idl_global->add_ciao_rti_ts_file_names (tmp);
-    }
 }
 
 /*
@@ -831,12 +816,12 @@ idl_atoi(char *s, long b)
   // Skip over the dash and possibly spaces after the dash
   while (*s == '-' || *s == ' ' || *s == '\t')
     {
-      ++s;
+      s++;
     }
 
   if (b == 8 && *s == '0')
     {
-      ++s;
+      s++;
     }
   else if (b == 16 && *s == '0' && (*(s + 1) == 'x' || *(s + 1) == 'X'))
     {
@@ -876,7 +861,7 @@ idl_atoui(char *s, long b)
 
   if (b == 8 && *s == '0')
     {
-      ++s;
+      s++;
     }
   else if (b == 16 && *s == '0' && (*(s + 1) == 'x' || *(s + 1) == 'X'))
     {
@@ -919,36 +904,36 @@ idl_atof (char *s)
   if (*s == '-')
     {
       neg = 1;
-
+ 
       // Skip over the dash and possibly spaces after the dash
       while (*s == '-' || *s == ' ' || *s == '\t')
         {
-          ++s;
+          s++;
         }
     }
 
   while (*s >= '0' && *s <= '9')
     {
       d = (d * 10) + *s - '0';
-      ++s;
+      s++;
     }
 
   if (*s == '.')
     {
-      ++s;
+      s++;
       e = 10;
 
       while (*s >= '0' && *s <= '9')
         {
           d += (*s - '0') / (e * 1.0);
           e *= 10;
-          ++s;
+          s++;
         }
     }
 
   if (*s == 'e' || *s == 'E')
     {
-      ++s;
+      s++;
 
       if (*s == '-')
         {
@@ -957,7 +942,7 @@ idl_atof (char *s)
         }
       else if (*s == '+')
         {
-          ++s;
+          s++;
         }
 
       e = 0;
@@ -965,7 +950,7 @@ idl_atof (char *s)
       while (*s >= '0' && *s <= '9')
         {
           e = (e * 10) + *s - '0';
-          ++s;
+          s++;
         }
 
       if (e > 0)
@@ -995,11 +980,13 @@ idl_atof (char *s)
  * Convert (some) escaped characters into their ascii values
  */
 static char
-idl_escape_reader (char *str)
+idl_escape_reader(
+    char *str
+  )
 {
   if (str[0] != '\\')
     {
-      return str[0];
+            return str[0];
     }
 
   switch (str[1])

@@ -1,18 +1,23 @@
 /* -*- c++ -*- */
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    be_visitor_union.h
- *
- *  $Id$
- *
- *  Concrete visitor for the Union class
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_union.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the Union class
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #ifndef TAO_BE_VISITOR_UNION_H
 #define TAO_BE_VISITOR_UNION_H

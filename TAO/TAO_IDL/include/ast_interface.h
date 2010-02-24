@@ -78,6 +78,8 @@ class TAO_IDL_FE_Export AST_Interface : public virtual AST_Type,
                                         public virtual UTL_Scope
 {
 public:
+  AST_Interface (void);
+
   AST_Interface (UTL_ScopedName *n,
                  AST_Type **ih,
                  long nih,
@@ -151,9 +153,6 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
-  static AST_Decl::NodeType const NT;
-  typedef AST_InterfaceFwd FWD_TYPE;
-
 protected:
   // Data.
 
@@ -204,6 +203,8 @@ protected:
 
   virtual AST_Attribute *fe_add_attribute (AST_Attribute *a);
 
+  virtual AST_Field *fe_add_field (AST_Field *o);
+
   virtual AST_Operation *fe_add_operation (AST_Operation *o);
 
   virtual AST_Union *fe_add_union (AST_Union *u);
@@ -224,7 +225,8 @@ protected:
 
   // Lookup based on the local name, override of UTL_Scope definition.
   // This version checks for redefinitions of attributes or operations.
-  AST_Decl *lookup_for_add (AST_Decl *d);
+  AST_Decl *lookup_for_add (AST_Decl *d,
+                            bool treat_as_ref);
 
   void redef_clash_populate_r (AST_Type *t);
   // Populate the insert queue with our parents, and, if we are a

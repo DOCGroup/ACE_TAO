@@ -1,17 +1,22 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    component_exs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Components in the exec impl source.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO_IDL_BE
+//
+// = FILENAME
+//    component_exs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Components in the exec impl source.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 be_visitor_component_exs::be_visitor_component_exs (
       be_visitor_context *ctx)
@@ -86,9 +91,7 @@ Component_Exec_Op_Attr_Generator::emit (be_interface * /*derived_interface */,
                                         TAO_OutStream * /* os */,
                                         be_interface * base_interface)
 {
-  AST_Decl::NodeType nt = base_interface->node_type ();
-
-  if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
+  if (base_interface->node_type () == AST_Decl::NT_component)
     {
       return 0;
     }

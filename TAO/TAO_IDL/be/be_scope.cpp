@@ -4,7 +4,7 @@
 #include "be_scope.h"
 #include "be_valuetype.h"
 #include "be_eventtype.h"
-#include "be_connector.h"
+#include "be_component.h"
 #include "be_home.h"
 #include "be_module.h"
 #include "be_exception.h"
@@ -13,7 +13,6 @@
 #include "be_enum.h"
 #include "be_operation.h"
 #include "be_factory.h"
-#include "be_finder.h"
 #include "be_root.h"
 #include "be_visitor.h"
 
@@ -75,8 +74,6 @@ be_scope::decl (void)
       return be_eventtype::narrow_from_scope (this);
     case AST_Decl::NT_component:
       return be_component::narrow_from_scope (this);
-    case AST_Decl::NT_connector:
-      return be_connector::narrow_from_scope (this);
     case AST_Decl::NT_home:
       return be_home::narrow_from_scope (this);
     case AST_Decl::NT_module:
@@ -95,8 +92,6 @@ be_scope::decl (void)
       return be_operation::narrow_from_scope (this);
     case AST_Decl::NT_factory:
       return be_factory::narrow_from_scope (this);
-    case AST_Decl::NT_finder:
-      return be_finder::narrow_from_scope (this);
     default:
       return (be_decl *)0;
     }

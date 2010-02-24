@@ -1,18 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_string.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_String that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_string.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_String that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_string.h"
 #include "be_visitor.h"
@@ -20,6 +25,22 @@
 
 #include "utl_identifier.h"
 #include "global_extern.h"
+
+ACE_RCSID (be,
+           be_string,
+           "$Id$")
+
+be_string::be_string (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_String (),
+    be_decl (),
+    be_type ()
+{
+  // Always the case.
+  this->size_type (AST_Type::VARIABLE);
+}
 
 be_string::be_string (AST_Decl::NodeType nt,
                       UTL_ScopedName * n,
@@ -31,8 +52,6 @@ be_string::be_string (AST_Decl::NodeType nt,
               true),
     AST_Type (nt,
               n),
-    AST_ConcreteType (nt,
-                      n),
     AST_String (nt,
                 n,
                 v,

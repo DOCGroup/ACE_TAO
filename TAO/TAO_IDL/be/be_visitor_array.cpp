@@ -1,17 +1,22 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    be_visitor_array.cpp
- *
- *  $Id$
- *
- *  Visitors for generation of code for Array
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_array.cpp
+//
+// = DESCRIPTION
+//    Visitors for generation of code for Array
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_enum.h"
 #include "be_type.h"

@@ -1,18 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_type.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_Type that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_type.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_Type that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_type.h"
 #include "be_scope.h"
@@ -22,6 +27,22 @@
 #include "utl_identifier.h"
 #include "idl_defines.h"
 #include "nr_extern.h"
+
+ACE_RCSID (be,
+           be_type,
+           "$Id$")
+
+be_type::be_type (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    be_decl (),
+    tc_name_ (0),
+    common_varout_gen_ (false),
+    seen_in_sequence_ (false),
+    seen_in_operation_ (false)
+{
+}
 
 be_type::be_type (AST_Decl::NodeType nt,
                   UTL_ScopedName *n)

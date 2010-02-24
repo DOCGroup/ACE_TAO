@@ -10,8 +10,6 @@ ifneq ($(mingw32),1)
   endif
 endif
 
-no_hidden_visibility ?= 1
-
 GNUWIN32_CXX_VERSION := $(shell $(CXX) -dumpversion)
 
 winsock2 ?= 1

@@ -8,8 +8,6 @@
 #ifndef STATE_CONNECTION_TEST_BASE_IDL
 #define STATE_CONNECTION_TEST_BASE_IDL
 
-#pragma ndds typesupport "Base/State_Connection_Test_BaseSupport.h"
-
 struct State_ConnectionTest {
   string key; //@key
   long iteration;

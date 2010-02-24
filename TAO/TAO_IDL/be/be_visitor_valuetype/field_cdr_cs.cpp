@@ -1,17 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    field_cdr_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Field in the client stubs file.
- *
- *
- *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> derived from be_visitor_field/cdr_op_cs.cpp
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    field_cdr_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Field in the client stubs file.
+//
+// = AUTHOR
+//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+//    derived from be_visitor_field/cdr_op_cs.cpp
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuetype,
+           field_cdr_op_cs,
+           "$Id$")
 
 // **********************************************
 //  Visitor for field in the client inline file.
@@ -64,10 +74,9 @@ be_visitor_valuetype_field_cdr_cs::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
-  if (f == 0)
+  if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -169,10 +178,9 @@ be_visitor_valuetype_field_cdr_cs::visit_enum (be_enum *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
-  if (f == 0)
+  if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -231,10 +239,9 @@ be_visitor_valuetype_field_cdr_cs::visit_interface (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
-  if (f == 0)
+  if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -281,10 +288,9 @@ be_visitor_valuetype_field_cdr_cs::visit_interface_fwd (be_interface_fwd *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
-  if (f == 0)
+  if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -337,10 +343,9 @@ be_visitor_valuetype_field_cdr_cs::valuetype_common (be_type *)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
-  if (f == 0)
+  if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -389,10 +394,9 @@ be_visitor_valuetype_field_cdr_cs::visit_valuetype_fwd (be_valuetype_fwd *)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
-  if (f == 0)
+  if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -459,10 +463,9 @@ be_visitor_valuetype_field_cdr_cs::visit_predefined_type (be_predefined_type *no
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
-  if (f == 0)
+  if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -564,10 +567,9 @@ be_visitor_valuetype_field_cdr_cs::visit_sequence (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
-  if (f == 0)
+  if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -629,10 +631,9 @@ be_visitor_valuetype_field_cdr_cs::visit_string (be_string *str)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
-  if (f == 0)
+  if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -705,16 +706,14 @@ be_visitor_valuetype_field_cdr_cs::visit_string (be_string *str)
 }
 
 int
-be_visitor_valuetype_field_cdr_cs::visit_structure (
-  be_structure *node)
+be_visitor_valuetype_field_cdr_cs::visit_structure (be_structure *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
-  if (f == 0)
+  if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -794,10 +793,9 @@ be_visitor_valuetype_field_cdr_cs::visit_union (be_union *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
-  if (f == 0)
+  if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -903,10 +901,9 @@ be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
-  if (f == 0)
+  if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_decl::"

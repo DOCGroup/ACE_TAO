@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    ami_exception_holder_operation_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Operation in the stubs file.
- *
- *
- *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    ami_exception_holder_operation_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Operation in the stubs file.
+//
+// = AUTHOR
+//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_operation,
+           ami_exception_holder_operation_cs,
+           "$Id$")
 
 // ************************************************************
 // Operation visitor for client stubs

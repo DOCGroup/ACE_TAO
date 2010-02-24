@@ -1,17 +1,23 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuetype.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Valuetypes. This is a generic visitor.
- *
- *
- *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on interface.cpp from Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuetype.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Valuetypes. This is a generic visitor.
+//
+// = AUTHOR
+//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+//    based on interface.cpp from Aniruddha Gokhale
+//
+// ============================================================================
 
 be_visitor_valuetype::be_visitor_valuetype (be_visitor_context *ctx)
   : be_visitor_scope (ctx)

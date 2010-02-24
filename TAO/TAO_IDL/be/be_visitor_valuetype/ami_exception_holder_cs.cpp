@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    ami_exception_holder_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for excpetion holders.
- *
- *
- *  @author Michael Kircher
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    ami_exception_holder_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for excpetion holders.
+//
+// = AUTHOR
+//    Michael Kircher
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuetype,
+           ami_exception_holder_cs,
+           "$Id$")
 
 // ************************************************************
 // Interface visitor for client stubs

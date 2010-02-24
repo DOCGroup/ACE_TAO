@@ -8,22 +8,12 @@
 #ifndef SHAPES_BASE_IDL
 #define SHAPES_BASE_IDL
 
-#pragma ndds typesupport "Base/Shapes_BaseSupport.h"
-#pragma opendds typesupport "Base/Shapes_BaseTypeSupportC.h"
-
-#pragma DCPS_DATA_TYPE "ShapeType"
-#pragma DCPS_DATA_KEY "ShapeType color"
-
 struct ShapeType {
   string color; //@key
   long x;
   long y;
   long shapesize;
 };
-
-#pragma DCPS_DATA_TYPE "Attributes"
-#pragma DCPS_DATA_KEY "Attributes shape"
-#pragma DCPS_DATA_KEY "Attributes color"
 
 struct Attributes {
   string shape; //@key

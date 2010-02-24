@@ -1,16 +1,22 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    component_svh.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Components in the servant header.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    component_svh.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Components in the servant header.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 // ******************************************************
 // Component visitor for server header
@@ -38,11 +44,6 @@ be_visitor_component_svh::~be_visitor_component_svh (void)
 int
 be_visitor_component_svh::visit_component (be_component *node)
 {
-  if (node->imported ())
-    {
-      return 0;
-    }
-  
   // Generate the facet servant class declaration.
   be_visitor_facet_svh facet_visitor (this->ctx_);
   
@@ -92,12 +93,6 @@ be_visitor_component_svh::visit_component (be_component *node)
       << "}";
 
   return 0;
-}
-
-int
-be_visitor_component_svh::visit_connector (be_connector *node)
-{
-  return this->visit_component (node);
 }
 
 void

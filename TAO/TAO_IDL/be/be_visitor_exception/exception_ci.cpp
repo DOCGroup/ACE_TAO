@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    exception_ci.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Exception in the inline file.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    exception_ci.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Exception in the inline file.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_exception, 
+           exception_ci, 
+           "$Id$")
 
 
 // ******************************************************

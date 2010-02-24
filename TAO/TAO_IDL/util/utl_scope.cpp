@@ -105,10 +105,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_factory.h"
 #include "ast_visitor.h"
 #include "ast_generator.h"
-#include "ast_extern.h"
 
-#include "fe_extern.h"
 #include "nr_extern.h"
+#include "fe_extern.h"
 #include "global_extern.h"
 
 #include "ace/OS_NS_strings.h"
@@ -118,6 +117,141 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #undef  INCREMENT
 #define INCREMENT 64
+
+// Static variables.
+static Identifier *_global_scope_name = 0;
+static Identifier *_global_scope_root_name = 0;
+
+// Static functions.
+
+// Determines if a name is global.
+static long
+is_global_name (Identifier *i)
+{
+  long comp_result = 0;
+
+  if (i == 0)
+    {
+      return comp_result;
+    }
+
+  if (_global_scope_name == 0)
+    {
+      ACE_NEW_RETURN (_global_scope_name,
+                      Identifier ("::"),
+                      0);
+    }
+
+  if (_global_scope_root_name == 0)
+    {
+      ACE_NEW_RETURN (_global_scope_root_name,
+                      Identifier (""),
+                      0);
+    }
+
+  comp_result = i->compare (_global_scope_name);
+
+  if (comp_result == 0)
+    {
+      comp_result = i->compare (_global_scope_root_name);
+    }
+
+  return comp_result;
+}
+
+// Helper function for lookup_by_name. Iterates doing local lookups of
+// subsequent components of a scoped name.
+static AST_Decl *
+iter_lookup_by_name_local (AST_Decl *d,
+                           UTL_ScopedName *e,
+                           long index,
+                           bool full_def_only = false)
+{
+  AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
+  AST_Decl *result = 0;
+
+  // Remove all the layers of typedefs.
+  while (d != 0 && d->node_type () == AST_Decl::NT_typedef)
+    {
+      if (td == 0)
+        {
+          return 0;
+        }
+
+      d = td->base_type ();
+    }
+    
+  if (d == 0)
+    {
+      return 0;
+    }
+
+  // Try to convert the AST_Decl to a UTL_Scope.
+  UTL_Scope *sc = DeclAsScope (d);
+
+  if (sc == 0)
+    {
+      return 0;
+    }
+
+  if (index < static_cast<long> (sc->nmembers ()))
+    {
+      // Look up the first component of the scoped name.
+      result = sc->lookup_by_name_local (e->head (),
+                                         index,
+                                         full_def_only);
+    }
+  else
+    {
+      return 0;
+    }
+
+  UTL_ScopedName *sn = (UTL_ScopedName *) e->tail ();
+
+  if (result == 0)
+    {
+      if (sn == 0)
+        {
+          result = UTL_Scope::match_param (e);
+        }
+
+      return result;
+    }
+  else
+    {
+      if (sn == 0)
+        {
+          // We're done.
+          return result;
+        }
+      else
+        {
+          // Look up the next component of the scoped name.
+          result = iter_lookup_by_name_local (result,
+                                              sn,
+                                              0,
+                                              full_def_only);
+        }
+
+      if (result != 0)
+        {
+          // We're done.
+          return result;
+        }
+      else
+        {
+          // Maybe we're on the wrong branch of reopened
+          // and/or nested modules, so let's see if there's
+          // another branch. If 'index' gets as high as the
+          // number of members in the scope, the call above
+          // to lookup_by_name_local will catch it and return 0.
+          return iter_lookup_by_name_local (d,
+                                            e,
+                                            index + 1,
+                                            full_def_only);
+        }
+    }
+}
 
 //  Constructors.
 
@@ -162,13 +296,71 @@ UTL_Scope::~UTL_Scope (void)
 {
 }
 
+// Private operations.
+
+static AST_Decl *
+add_type (AST_Type *type)
+{
+  AST_Decl *result = 0;
+  UTL_Scope *scope = 0;
+
+  switch (type->node_type())
+    {
+    case AST_Decl::NT_array:
+      result =
+        idl_global->root ()->add_array (AST_Array::narrow_from_decl (type));
+      break;
+    case AST_Decl::NT_enum:
+      result =
+        type->defined_in ()->add_enum (AST_Enum::narrow_from_decl (type));
+      scope = AST_Enum::narrow_from_decl (type);
+      break;
+    case AST_Decl::NT_sequence:
+      result =
+        idl_global->root ()->add_sequence (
+                                 AST_Sequence::narrow_from_decl (type)
+                               );
+      break;
+    case AST_Decl::NT_string:
+    case AST_Decl::NT_wstring:
+      result =
+        idl_global->root ()->add_string (AST_String::narrow_from_decl (type));
+      break;
+    case AST_Decl::NT_struct:
+      result =
+        type->defined_in ()->add_structure (
+                                 AST_Structure::narrow_from_decl (type)
+                               );
+      scope = AST_Structure::narrow_from_decl (type);
+      break;
+    case AST_Decl::NT_union:
+      result =
+        type->defined_in ()->add_union (AST_Union::narrow_from_decl (type));
+      scope = AST_Union::narrow_from_decl (type);
+      break;
+    default:
+      // For non-complex types, like predefined types
+      // no additional add needed, assume everything is ok.
+      result = (AST_Decl *) 1;
+      break;
+    }
+
+  if (scope != 0)
+    {
+      result = scope->call_add ();
+    }
+
+  return result;
+}
+
 // Protected operations.
 
 // Special version of lookup which only looks at the local name instead of
 // the fully scoped name, when doing lookups. This version is intended to
-// be used only by the frontend add_xxx functions.
+// be used only by the CFE add_xxx functions.
 AST_Decl *
-UTL_Scope::lookup_for_add (AST_Decl *d)
+UTL_Scope::lookup_for_add (AST_Decl *d,
+                           bool)
 {
   if (d == 0)
     {
@@ -182,7 +374,8 @@ UTL_Scope::lookup_for_add (AST_Decl *d)
       return 0;
     }
 
-  return this->lookup_by_name_local (id, 0);
+  return this->lookup_by_name_local (id,
+                                     0);
 }
 
 int
@@ -388,207 +581,466 @@ UTL_Scope::check_for_predef_seq (AST_Decl *d)
 
 // Public operations.
 
+// Scope Management Protocol.
+//
+// All members of the protocol defined in UTL_Scope simply return the node
+// and don't do a thing. These members are simply dummies to retain
+// compatibility with pre-two-pass compiler back-ends.
+
+AST_PredefinedType *
+UTL_Scope::add_predefined_type (AST_PredefinedType *p)
+{
+  if (p == 0)
+    {
+      return 0;
+    }
+
+  p->set_added (true);
+  return p;
+}
+
+AST_Module *
+UTL_Scope::add_module (AST_Module *m)
+{
+  if (m == 0)
+    {
+      return 0;
+    }
+
+  m->set_added (true);
+  return m;
+}
+
+AST_Interface *
+UTL_Scope::add_interface (AST_Interface *i)
+{
+  if (i == 0)
+    {
+      return 0;
+    }
+
+  i->set_added (true);
+  return i;
+}
+
+AST_InterfaceFwd *
+UTL_Scope::add_interface_fwd (AST_InterfaceFwd *i)
+{
+  if (i == 0)
+    {
+      return 0;
+    }
+
+  i->set_added (true);
+  return i;
+}
+
+AST_ValueType *
+UTL_Scope::add_valuetype (AST_ValueType *i)
+{
+  if (i == 0)
+    {
+      return 0;
+    }
+
+  i->set_added (true);
+  return i;
+}
+
+AST_ValueTypeFwd *
+UTL_Scope::add_valuetype_fwd (AST_ValueTypeFwd *i)
+{
+  if (i == 0)
+    {
+      return 0;
+    }
+
+  i->set_added (true);
+  return i;
+}
+
+AST_EventType *
+UTL_Scope::add_eventtype (AST_EventType *i)
+{
+  if (i == 0)
+    {
+      return 0;
+    }
+
+  i->set_added (true);
+  return i;
+}
+
+AST_EventTypeFwd *
+UTL_Scope::add_eventtype_fwd (AST_EventTypeFwd *i)
+{
+  if (i == 0)
+    {
+      return 0;
+    }
+
+  i->set_added (true);
+  return i;
+}
+
+AST_Component *
+UTL_Scope::add_component (AST_Component *i)
+{
+  if (i == 0)
+    {
+      return 0;
+    }
+
+  i->set_added (true);
+  return i;
+}
+
+AST_ComponentFwd *
+UTL_Scope::add_component_fwd (AST_ComponentFwd *i)
+{
+  if (i == 0)
+    {
+      return 0;
+    }
+
+  i->set_added (true);
+  return i;
+}
+
+AST_Home *
+UTL_Scope::add_home (AST_Home *i)
+{
+  if (i == 0)
+    {
+      return 0;
+    }
+
+  i->set_added (true);
+  return i;
+}
+
+AST_Exception *
+UTL_Scope::add_exception (AST_Exception *e)
+{
+  if (e == 0)
+    {
+      return 0;
+    }
+
+  e->set_added (true);
+  return e;
+}
+
+AST_Constant *
+UTL_Scope::add_constant (AST_Constant *c)
+{
+  if (c == 0)
+    {
+      return 0;
+    }
+
+  c->set_added (true);
+  return c;
+}
+
+UTL_StrList *
+UTL_Scope::add_context (UTL_StrList *c)
+{
+  return c;
+}
+
+UTL_NameList *
+UTL_Scope::add_exceptions (UTL_NameList *e)
+{
+  return e;
+}
+
+AST_Attribute *
+UTL_Scope::add_attribute (AST_Attribute *a)
+{
+  if (a == 0)
+    {
+      return 0;
+    }
+
+  a->set_added (true);
+
+  if (!a->field_type ()->added ())
+    {
+      return add_type (a->field_type ()) ? a : 0;
+    }
+  else
+    {
+      return a;
+    }
+}
+
+AST_Operation *
+UTL_Scope::add_operation (AST_Operation *o)
+{
+  if (o == 0)
+    {
+      return 0;
+    }
+
+  o->set_added (true);
+
+  if (!o->return_type ()->added ())
+    {
+      return add_type (o->return_type ()) ? o : 0;
+    }
+  else
+    {
+      return o;
+    }
+}
+
+AST_Argument *
+UTL_Scope::add_argument (AST_Argument *a)
+{
+  if (a == 0)
+    {
+      return 0;
+    }
+
+  a->set_added (true);
+
+  if (!a->field_type ()->added ())
+    {
+      return add_type (a->field_type ()) ? a : 0;
+    }
+  else
+    {
+      return a;
+    }
+}
+
+AST_Union *
+UTL_Scope::add_union (AST_Union *u)
+{
+  if (u == 0)
+    {
+      return 0;
+    }
+
+  u->set_added (true);
+  return u;
+}
+
+AST_UnionFwd *
+UTL_Scope::add_union_fwd (AST_UnionFwd *u)
+{
+  if (u == 0)
+    {
+      return 0;
+    }
+
+  u->set_added (true);
+  return u;
+}
+
+AST_UnionBranch *
+UTL_Scope::add_union_branch (AST_UnionBranch *u)
+{
+  if (u == 0)
+    {
+      return 0;
+    }
+
+  u->set_added (true);
+
+  if (!u->field_type ()->added ())
+    {
+      return add_type (u->field_type ()) ? u : 0;
+    }
+  else
+    {
+      return u;
+    }
+}
+
+AST_Structure *
+UTL_Scope::add_structure (AST_Structure *s)
+{
+  if (s == 0)
+    {
+      return 0;
+    }
+
+  s->set_added (true);
+  return s;
+}
+
+AST_StructureFwd *
+UTL_Scope::add_structure_fwd (AST_StructureFwd *s)
+{
+  if (s == 0)
+    {
+      return 0;
+    }
+
+  s->set_added (true);
+  return s;
+}
+
+AST_Field *
+UTL_Scope::add_field (AST_Field *f)
+{
+  if (f == 0)
+    {
+      return 0;
+    }
+
+  f->set_added (true);
+
+  if (!f->field_type ()->added ())
+    {
+      return add_type (f->field_type ()) ? f : 0;
+    }
+  else
+    {
+      return f;
+    }
+}
+
+AST_Enum *
+UTL_Scope::add_enum (AST_Enum *e)
+{
+  if (e == 0)
+    {
+      return 0;
+    }
+
+  e->set_added (true);
+  return e;
+}
+
+AST_EnumVal *
+UTL_Scope::add_enum_val (AST_EnumVal *e)
+{
+  if (e == 0)
+    {
+      return 0;
+    }
+
+  e->set_added (true);
+  return e;
+}
+
+AST_Typedef *
+UTL_Scope::add_typedef (AST_Typedef *t)
+{
+  if (t == 0)
+    {
+      return 0;
+    }
+
+  t->set_added (true);
+  if (!t->base_type ()->added ())
+    {
+      return add_type (t->base_type ()) ? t : 0;
+    }
+  else
+    {
+      return t;
+    }
+}
+
+AST_Sequence *
+UTL_Scope::add_sequence (AST_Sequence *s)
+{
+  if (s == 0)
+    {
+      return 0;
+    }
+
+  s->set_added (true);
+
+  if (!s->base_type ()->added ())
+    {
+      return add_type (s->base_type ()) ? s : 0;
+    }
+  else
+    {
+      return s;
+    }
+}
+
+AST_String *
+UTL_Scope::add_string (AST_String *s)
+{
+  if (s == 0)
+    {
+      return 0;
+    }
+
+  s->set_added (true);
+  return s;
+}
+
+AST_Array *
+UTL_Scope::add_array (AST_Array *a)
+{
+  if (a == 0)
+    {
+      return 0;
+    }
+
+  a->set_added (true);
+
+  if (!a->base_type ()->added ())
+    {
+      return add_type (a->base_type ()) ? a : 0;
+    }
+  else
+    {
+      return a;
+    }
+}
+
+AST_Native *
+UTL_Scope::add_native (AST_Native *n)
+{
+  if (n == 0)
+    {
+      return 0;
+    }
+
+  n->set_added (true);
+  return n;
+}
+
+AST_Factory *
+UTL_Scope::add_factory (AST_Factory *f)
+{
+  // We don't invite any new types so there is nothing actually to add
+  if (f == 0)
+    {
+      return 0;
+    }
+
+  f->set_added (true);
+  return f;
+}
+
+AST_PortType *
+UTL_Scope::add_porttype (AST_PortType *p)
+{
+  if (p == 0)
+    {
+      return 0;
+    }
+
+  p->set_added (true);
+  return p;
+}
+
 // Protected Front End Scope Management Protocol.
 //
 // All members of the protocol defined in UTL_Scope simply return NULL
 // and don't do a thing. This ensures that runtime errors will discover
 // operations which should have been redefined to allow certain kinds of
 // AST nodes to appear in a given context.
-
-AST_Decl *
-UTL_Scope::fe_add_decl (AST_Decl *t)
-{
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      ScopeAsDecl (this),
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      ScopeAsDecl (this),
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t, d);
-          return 0;
-        }
-    }
-  else if (this->inherited_op_attr_clash (t))
-    {
-      return 0;
-    }
-    
-  if (this->arg_specific_error (t))
-    {
-      return 0;
-    }
-  
-  this->smart_local_add (t);
-
-  // Add it to set of locally referenced symbols, unless it is
-  // a home, in which case it will clash when the equivalent
-  // interface is created.
-  if (t->node_type () != AST_Decl::NT_home)
-    {
-      this->add_to_referenced (t,
-                               false,
-                               t->local_name ());
-    }
-
-  return t;
-}
-
-AST_Field *
-UTL_Scope::fe_add_ref_decl (AST_Field *t)
-{
-  AST_Decl *d = this->fe_add_decl (t);
-
-  if (d != 0)
-    {
-      AST_Type *ft = t->field_type ();
-      UTL_ScopedName *mru = ft->last_referenced_as ();
-
-      if (mru != 0)
-        {
-          this->add_to_referenced (ft,
-                                   false,
-                                   mru->first_component ());
-        }
-    }
-    
-  /// Catches struct/union/exception which all maintain a queue
-  /// for fields as distinct from decls and enum values.  
-  AST_Structure *s = AST_Structure::narrow_from_scope (this);
-  
-  if (s != 0)
-    {
-      s->fields ().enqueue_tail (t);
-    }
-
-  return AST_Field::narrow_from_decl (d);
-}
-
-AST_Structure *
-UTL_Scope::fe_add_full_struct_type (AST_Structure *t)
-{
-  AST_Decl *predef = 0;
-
-  if ((predef = this->lookup_for_add (t)) != 0)
-    {
-      if (!can_be_redefined (predef))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      ScopeAsDecl (this),
-                                      predef);
-
-          return 0;
-        }
-      else if (referenced (predef, t->local_name ())
-               && !t->is_defined ())
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      ScopeAsDecl (this),
-                                      predef);
-
-          return 0;
-        }
-    }
-
-  AST_Decl::NodeType nt = ScopeAsDecl (this)->node_type ();
-  
-  /// Decls inside a struct or union are also referenced by
-  /// fields, and so must be handled differently.
-  if (nt == AST_Decl::NT_struct
-      || nt == AST_Decl::NT_union
-      || nt == AST_Decl::NT_except)
-    {
-      this->add_to_local_types (t);
-    }
-  else
-    {
-      this->add_to_scope (t);
-    }
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-
-  return t;
-}
-
-AST_StructureFwd *
-UTL_Scope::fe_add_fwd_struct_type (AST_StructureFwd *t)
-{
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t)) != 0)
-    {
-      AST_Decl::NodeType nt = d->node_type ();
-
-      // There used to be another check here ANDed with the one below:
-      // d->defined_in () == this. But lookup_for_add() calls only
-      // lookup_by_name_local(), which does not bump up the scope,
-      // and look_in_previous() for modules. If look_in_previous()
-      // finds something, the scopes will NOT be the same pointer
-      // value, but the result is what we want.
-      if (nt == AST_Decl::NT_struct)
-        {
-          AST_Structure *s = AST_Structure::narrow_from_decl (d);
-          t->set_full_definition (s);
-        }
-      else
-        {
-          if (!can_be_redefined (d))
-            {
-              idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                          t,
-                                          ScopeAsDecl (this),
-                                          d);
-              return 0;
-            }
-
-          if (this->referenced (d, t->local_name ()))
-            {
-              idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                          t,
-                                          ScopeAsDecl (this),
-                                          d);
-              return 0;
-            }
-        }
-    }
-
-  // Add it to scope
-  this->add_to_scope (t);
-
-  // Add it to set of locally referenced symbols
-  this->add_to_referenced (t,
-                           false,
-                           t->local_name ());
-
-  // Must check later that all struct and union forward declarations
-  // are defined in the same IDL file.
-  AST_record_fwd_decl (t);
-  return t;
-}
 
 AST_PredefinedType *
 UTL_Scope::fe_add_predefined_type (AST_PredefinedType *)
@@ -800,12 +1252,6 @@ UTL_Scope::fe_add_factory (AST_Factory *)
   return 0;
 }
 
-AST_Finder *
-UTL_Scope::fe_add_finder (AST_Finder *)
-{
-  return 0;
-}
-
 AST_PortType *
 UTL_Scope::fe_add_porttype (AST_PortType *)
 {
@@ -858,6 +1304,117 @@ AST_Connector *
 UTL_Scope::fe_add_connector (AST_Connector *)
 {
   return 0;
+}
+
+// This is the second pass of the front end
+// It calls the public add protocol on everything in scope.
+// It calls the add_xx functions of the most derived AST_Node.
+
+AST_Decl *
+UTL_Scope::call_add (void)
+{
+  AST_Decl *result = 0;
+  AST_Decl *decl = 0;
+
+  UTL_ScopeActiveIterator i (this,
+                             UTL_Scope::IK_decls);
+  UTL_Scope *scope = 0;
+
+  while (!i.is_done ())
+    {
+      decl = i.item ();
+      scope = 0;
+
+      switch (decl->node_type ())
+        {
+        case AST_Decl::NT_argument:
+          result = add_argument (AST_Argument::narrow_from_decl (decl));
+          break;
+        case AST_Decl::NT_array:
+          result = add_array (AST_Array::narrow_from_decl (decl));
+          break;
+        case AST_Decl::NT_attr:
+          result = add_attribute (AST_Attribute::narrow_from_decl (decl));
+          break;
+        case AST_Decl::NT_const:
+          result = add_constant (AST_Constant::narrow_from_decl (decl));
+          break;
+        case AST_Decl::NT_enum:
+          scope = AST_Enum::narrow_from_decl (decl);
+          result = add_enum (AST_Enum::narrow_from_decl (decl));
+          break;
+        case AST_Decl::NT_enum_val:
+          result = add_enum_val (AST_EnumVal::narrow_from_decl (decl));
+          break;
+        case AST_Decl::NT_except:
+          scope = AST_Exception::narrow_from_decl (decl);
+          result = add_exception (AST_Exception::narrow_from_decl (decl));
+          break;
+        case AST_Decl::NT_field:
+          result = add_field (AST_Field::narrow_from_decl (decl));
+          break;
+        case AST_Decl::NT_interface:
+          scope = AST_Interface::narrow_from_decl (decl);
+          result = add_interface (AST_Interface::narrow_from_decl (decl));
+          break;
+        case AST_Decl::NT_interface_fwd:
+          result =
+            add_interface_fwd (AST_InterfaceFwd::narrow_from_decl (decl));
+          break;
+        case AST_Decl::NT_module:
+          scope = AST_Module::narrow_from_decl (decl);
+          result = add_module (AST_Module::narrow_from_decl (decl));
+          break;
+        case AST_Decl::NT_native:
+          result = add_native (AST_Native::narrow_from_decl (decl));
+          break;
+        case AST_Decl::NT_op:
+          result = add_operation (AST_Operation::narrow_from_decl (decl));
+          scope = AST_Operation::narrow_from_decl (decl);
+          break;
+        case AST_Decl::NT_pre_defined:
+          result =
+            add_predefined_type (AST_PredefinedType::narrow_from_decl (decl));
+          break;
+        case AST_Decl::NT_sequence:
+          result = add_sequence (AST_Sequence::narrow_from_decl (decl));
+          break;
+        case AST_Decl::NT_string:
+        case AST_Decl::NT_wstring:
+          result = add_string (AST_String::narrow_from_decl (decl));
+          break;
+        case AST_Decl::NT_struct:
+          result = add_structure (AST_Structure::narrow_from_decl (decl));
+          scope = AST_Structure::narrow_from_decl (decl);
+          break;
+        case AST_Decl::NT_typedef:
+          result = add_typedef (AST_Typedef::narrow_from_decl (decl));
+          break;
+        case AST_Decl::NT_union:
+          result = add_union (AST_Union::narrow_from_decl (decl));
+          scope = AST_Union::narrow_from_decl (decl);
+          break;
+        case AST_Decl::NT_union_branch:
+          result =
+            add_union_branch (AST_UnionBranch::narrow_from_decl (decl));
+          break;
+        case AST_Decl::NT_factory:
+          result = add_factory (AST_Factory::narrow_from_decl (decl));
+          scope = AST_Factory::narrow_from_decl (decl);
+          break;
+        default:
+          return 0;
+        }
+
+      if (scope != 0)
+        {
+          scope->call_add ();
+        }
+
+      i.next ();
+    }
+
+  return result;
 }
 
 // Private lookup mechanism.
@@ -1178,11 +1735,9 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
             {
               AST_Decl::NodeType nt = d->node_type ();
 
-              // Special case for forward declared types,
+              // Special case for forward declared interfaces,
               // In this case, we want to return
-              // the full definition member, whether defined yet or not.
-              // NOTE: corresponding full_definition fe_add_* methods
-              // depend on the behavior below!
+              // the full definition member, whether defined yet or not
               if (nt == AST_Decl::NT_interface_fwd
                   || nt == AST_Decl::NT_valuetype_fwd
                   || nt == AST_Decl::NT_component_fwd
@@ -1287,7 +1842,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
     }
 
   // If name starts with "::" or "" start lookup in global scope.
-  if (this->is_global_name (e->head ()))
+  if (is_global_name (e->head ()))
     {
      // Get parent scope.
       d = ScopeAsDecl (this);
@@ -1511,10 +2066,10 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
 
       if (sn != 0)
         {
-          d = this->iter_lookup_by_name_local (d,
-                                               sn,
-                                               0,
-                                               full_def_only);
+          d = iter_lookup_by_name_local (d,
+                                         sn,
+                                         0,
+                                         full_def_only);
         }
 
       // If the start of the scoped name is an interface, and the
@@ -1709,6 +2264,7 @@ UTL_Scope::replace_scope (AST_Decl *old_decl,
           break;
         }
     }
+
 }
 
 
@@ -1952,11 +2508,8 @@ UTL_Scope::referenced (AST_Decl *e,
           // scope, then it's a type name for something else
           // that was, and it can appear any number of times
           // in this scope without a clash.
-          AST_Decl::NodeType nt = e->node_type ();
-          
           if (id->compare (*name_tmp) == true
-              && nt != AST_Decl::NT_module
-              && nt != AST_Decl::NT_param_holder
+              && e->node_type () != AST_Decl::NT_module
               && e->defined_in () == this)
             {
               idl_global->err ()->redef_error (id->get_string (),
@@ -2154,221 +2707,7 @@ UTL_Scope::destroy (void)
   this->pd_referenced_used = 0;
 }
 
-bool
-UTL_Scope::inherited_op_attr_clash (AST_Decl *t)
-{
-  AST_Interface *i = AST_Interface::narrow_from_scope (this);
-  
-  if (i == 0)
-    {
-      return false;
-    }
-    
-  AST_Decl *d = i->look_in_inherited (t->name (), false);
-  
-  if (d != 0)
-    {
-      AST_Decl::NodeType nt = d->node_type ();
-      
-      if (nt == AST_Decl::NT_attr || nt == AST_Decl::NT_op)
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      i,
-                                      d);
-          return true;
-        }
-    }
-    
-  return false;
-}
 
-bool
-UTL_Scope::arg_specific_error (AST_Decl *t)
-{
-  AST_Operation *op = AST_Operation::narrow_from_scope (this);
-  
-  if (op == 0)
-    {
-      return false;
-    }
-    
-  AST_Argument *arg = AST_Argument::narrow_from_decl (t);
-  AST_Argument::Direction d = arg->direction ();
-  AST_Operation::Flags flag = op->flags ();
-  
-  /// Cannot add OUT or INOUT argument to oneway operation.
-  if ((d == AST_Argument::dir_OUT || d == AST_Argument::dir_INOUT)
-      && flag == AST_Operation::OP_oneway)
-    {
-      idl_global->err ()->error2 (UTL_Error::EIDL_ONEWAY_CONFLICT,
-                                  t,
-                                  op);
-      return true;
-    }
-
-  AST_Type *arg_type = arg->field_type ();
-
-  /// This error is not caught in y.tab.cpp so we check for it here.
-  if (arg_type->node_type () == AST_Decl::NT_array
-      && arg_type->anonymous ())
-    {
-      idl_global->err ()->syntax_error (idl_global->parse_state ());
-      return true;
-    }
-    
-  return false;
-}
-
-void
-UTL_Scope::smart_local_add (AST_Decl *t)
-{
-  /// Catches struct, union * exception
-  AST_Structure *s = AST_Structure::narrow_from_scope (this);
-  
-  /// Catches AST_Field and AST_UnionBranch.
-  AST_Field *f = AST_Field::narrow_from_decl (t);
-  
-  /// Decls inside a struct/union/exception are also referenced by
-  /// fields, and so must be handled differently.
-  if (s != 0 && f == 0)
-    {
-      this->add_to_local_types (t);
-    }
-  else
-    {
-      this->add_to_scope (t);
-    }
-    
-  AST_Union *u = AST_Union::narrow_from_scope (this);
-  AST_UnionBranch *ub = AST_UnionBranch::narrow_from_decl (t);
-  
-  // If we have an enum discriminator, add the label names to
-  // the name_referenced list before we add the union branch,
-  // so a branch name clash with a label name will be caught.
-  if (u != 0 && ub != 0)
-    {
-      if (u->udisc_type () == AST_Expression::EV_enum)
-        {
-          ub->add_labels (u);
-        }
-      else
-        {
-          ub->coerce_labels (u);
-        }
-    }
-}
-
-/// Determines if a name is global.
-bool
-UTL_Scope::is_global_name (Identifier *i)
-{
-  if (i == 0)
-    {
-      return false;
-    }
-    
-  ACE_CString cmp (i->get_string (), 0, false);
-  
-  if (cmp == "" || cmp == "::")
-    {
-      return true;
-    }
-
-  return false;
-}
-
-AST_Decl *
-UTL_Scope::iter_lookup_by_name_local (AST_Decl *d,
-                                      UTL_ScopedName *e,
-                                      long index,
-                                      bool full_def_only)
-{
-  AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
-  AST_Decl *result = 0;
-
-  // Remove all the layers of typedefs.
-  while (d != 0 && d->node_type () == AST_Decl::NT_typedef)
-    {
-      if (td == 0)
-        {
-          return 0;
-        }
-
-      d = td->base_type ();
-    }
-    
-  if (d == 0)
-    {
-      return 0;
-    }
-
-  // Try to convert the AST_Decl to a UTL_Scope.
-  UTL_Scope *sc = DeclAsScope (d);
-
-  if (sc == 0)
-    {
-      return 0;
-    }
-
-  if (index < static_cast<long> (sc->nmembers ()))
-    {
-      // Look up the first component of the scoped name.
-      result = sc->lookup_by_name_local (e->head (),
-                                         index,
-                                         full_def_only);
-    }
-  else
-    {
-      return 0;
-    }
-
-  UTL_ScopedName *sn = (UTL_ScopedName *) e->tail ();
-
-  if (result == 0)
-    {
-      if (sn == 0)
-        {
-          result = UTL_Scope::match_param (e);
-        }
-
-      return result;
-    }
-  else
-    {
-      if (sn == 0)
-        {
-          // We're done.
-          return result;
-        }
-      else
-        {
-          // Look up the next component of the scoped name.
-          result = iter_lookup_by_name_local (result,
-                                              sn,
-                                              0,
-                                              full_def_only);
-        }
-
-      if (result != 0)
-        {
-          // We're done.
-          return result;
-        }
-      else
-        {
-          // Maybe we're on the wrong branch of reopened
-          // and/or nested modules, so let's see if there's
-          // another branch. If 'index' gets as high as the
-          // number of members in the scope, the call above
-          // to lookup_by_name_local will catch it and return 0.
-          return this->iter_lookup_by_name_local (d,
-                                                  e,
-                                                  index + 1,
-                                                  full_def_only);
-        }
-    }
-}
 
 IMPL_NARROW_FROM_SCOPE(UTL_Scope)
 

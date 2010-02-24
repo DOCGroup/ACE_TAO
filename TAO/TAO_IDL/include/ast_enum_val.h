@@ -74,12 +74,19 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_EnumVal : public virtual AST_Constant
 {
 public:
+  // Operations.
+
+  // Constructor(s).
+  AST_EnumVal (void);
+
   AST_EnumVal (ACE_CDR::ULong v,
                UTL_ScopedName *n);
 
+  // Destructor.
   virtual ~AST_EnumVal (void);
 
   // Narrowing.
+
   DEF_NARROW_FROM_DECL(AST_EnumVal);
 
   // AST Dumping.
@@ -87,8 +94,6 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-
-  static AST_Decl::NodeType const NT;
 };
 
 #endif           // _AST_ENUM_VAL_AST_ENUM_VAL_HH

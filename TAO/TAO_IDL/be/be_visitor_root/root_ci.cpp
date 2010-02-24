@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    root_ci.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for the Root in the client inline
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    root_ci.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for the Root in the client inline
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_root, 
+           root_ci, 
+           "$Id$")
 
 // *********************************
 // Root visitor for client inline

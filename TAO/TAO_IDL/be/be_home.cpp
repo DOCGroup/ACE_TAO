@@ -1,17 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_home.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_Home that provides additional means for C++
- *  mapping of a component home.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_home.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_Home that provides additional means for C++
+//    mapping of a component home.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #include "be_home.h"
 #include "be_component.h"
@@ -19,6 +23,24 @@
 #include "be_visitor.h"
 #include "global_extern.h"
 #include "utl_err.h"
+
+ACE_RCSID (be,
+           be_home,
+           "$Id$")
+
+be_home::be_home (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    UTL_Scope (),
+    AST_Interface (),
+    AST_Home (),
+    be_scope (),
+    be_type (),
+    be_interface ()
+{
+  this->size_type (AST_Type::VARIABLE);
+}
 
 be_home::be_home (UTL_ScopedName *n,
                   AST_Home *base_home,
@@ -51,8 +73,6 @@ be_home::be_home (UTL_ScopedName *n,
               supports_flat,
               n_supports_flat),
     be_scope (AST_Decl::NT_home),
-    be_decl (AST_Decl::NT_home,
-             n),
     be_type (AST_Decl::NT_home,
              n),
     be_interface (n,

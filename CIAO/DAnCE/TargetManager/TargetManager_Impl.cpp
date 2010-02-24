@@ -12,6 +12,7 @@ TargetManagerDaemon_i::TargetManagerDaemon_i (CORBA::ORB_ptr orb)
 {
 }
 
+// Implementation skeleton destructor
 TargetManagerDaemon_i::~TargetManagerDaemon_i (void)
 {
 }
@@ -23,19 +24,21 @@ void TargetManagerDaemon_i::init (const ACE_TCHAR *file)
                                     file);
 }
 
+void TargetManagerDaemon_i::shutdown (void)
+{
+}
+
 ::Deployment::Domain * TargetManagerDaemon_i::getAllResources (void)
 {
   return DAnCE::DOMAIN_DATA_MANAGER->get_initial_domain ();
 }
 
-::Deployment::Domain *
-TargetManagerDaemon_i::getAvailableResources (void)
+::Deployment::Domain * TargetManagerDaemon_i::getAvailableResources (void)
 {
   return DAnCE::DOMAIN_DATA_MANAGER->get_current_domain ();
 }
 
-::Deployment::ResourceCommitmentManager_ptr
-TargetManagerDaemon_i::createResourceCommitment (
+::Deployment::ResourceCommitmentManager_ptr TargetManagerDaemon_i::createResourceCommitment (
   const ::Deployment::ResourceAllocations & resources)
 {
   return DAnCE::DOMAIN_DATA_MANAGER->commitResources (resources);

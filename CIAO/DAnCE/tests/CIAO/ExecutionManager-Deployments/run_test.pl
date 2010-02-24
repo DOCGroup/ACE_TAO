@@ -16,11 +16,11 @@ $daemons_running = 0;
 $em_running = 0;
 $ns_running = 0;
 
-$nr_daemon = 2;
-@ports = ( 60001, 60002 );
-@iorbases = ( "NodeApp1.ior", "NodeApp2.ior" );
+$nr_daemon = 1;
+@ports = ( 60001 );
+@iorbases = ( "NodeApp1.ior" );
 @iorfiles = 0;
-@nodenames = ( "NodeOne", "NodeTwo" );
+@nodenames = ( "NodeOne" );
 
 # ior files other than daemon
 $ior_nsbase = "ns.ior";
@@ -52,7 +52,7 @@ sub create_targets {
     #   daemon
     for ($i = 0; $i < $nr_daemon; ++$i) {
         $tg_daemons[$i] = PerlACE::TestTarget::create_target ($i+1) || die "Create target for deamon $i failed\n";
-        $tg_daemons[$i]->AddLibPath ('../Components');
+        $tg_daemons[$i]->AddLibPath ('..');
     }
     #   execution manager
     $tg_exe_man = PerlACE::TestTarget::create_target (1) || die "Create target for EM failed\n";
@@ -101,8 +101,6 @@ sub kill_open_processes {
     if ($ns_running == 1) {
         $NS->Kill (); $NS->TimedWait (1);
     }
-    # in case shutdown did not perform as expected
-    $tg_executor->KillAll ('ciao_componentserver');
 }
 
 
@@ -198,10 +196,9 @@ foreach $file (@files) {
     # Invoke executor - start the application -.
     print "Invoking executor - launch the application -\n";
     $E = $tg_executor->CreateProcess ("simple_em_launcher",
-				      "file://$ior_emfile $file");
-    
-    $E->SpawnWaitKill (120);
-    
+                               "file://$ior_emfile $file");
+
+
     print "Executor finished.\n";
 
     delete_ior_files ();

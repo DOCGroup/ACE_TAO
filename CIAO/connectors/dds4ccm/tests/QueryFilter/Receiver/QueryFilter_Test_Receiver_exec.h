@@ -21,23 +21,18 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   class Receiver_exec_i;
 
   //============================================================
-  // read_action_Generator
+  // ReadHandler
   //============================================================
-  class read_action_Generator
-    : public ACE_Event_Handler
+  class ReadHandler :
+    public ACE_Event_Handler
   {
   public:
-    read_action_Generator (Receiver_exec_i &callback,
-                           int run);
-
-    ~read_action_Generator ();
-
-    virtual int handle_timeout (const ACE_Time_Value &tv,
-                                const void *arg);
+    ReadHandler (Receiver_exec_i &callback,
+                 CORBA::UShort run);
+    virtual int handle_exception (ACE_HANDLE fc = ACE_INVALID_HANDLE);
   private:
     Receiver_exec_i &callback_;
-    int run_;
-
+    CORBA::UShort run_;
   };
 
   //============================================================
@@ -84,7 +79,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     get_reader_start ();
 
     bool check_last ();
-    void start_read (CORBA::UShort run);
+    void start (CORBA::UShort run);
     void run (CORBA::UShort run);
 
     ::CORBA::UShort iterations (void);
@@ -117,13 +112,10 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     int current_min_iteration_;
     int current_max_iteration_;
 
-    read_action_Generator *ticker_;
-
     void read_all (void);
     void check_filter (void);
     void test_exception (void);
     void test_set_query_parameters (void);
-    void set_filter (void);
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

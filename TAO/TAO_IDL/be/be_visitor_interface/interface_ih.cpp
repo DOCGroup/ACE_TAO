@@ -1,17 +1,24 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    interface_ih.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Interfaces in the implementation header
- *
- *
- *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    interface_ih.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Interfaces in the implementation header
+//
+// = AUTHOR
+//   Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_interface,
+           interface_ih,
+           "$Id$")
 
 // ************************************************************
 // Interface visitor for implementation header.

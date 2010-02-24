@@ -98,6 +98,11 @@ public:
       , PT_pseudo       // Predefined type for pseudo objects
     };
 
+  // Operations.
+
+  // Constructor(s).
+  AST_PredefinedType (void);
+
   AST_PredefinedType (PredefinedType t,
                       UTL_ScopedName *n);
 
@@ -107,6 +112,7 @@ public:
   PredefinedType pt (void);
 
   // Narrowing
+
   DEF_NARROW_FROM_DECL(AST_PredefinedType);
 
   // AST Dumping
@@ -117,8 +123,6 @@ public:
 
   // Cleanup.
   virtual void destroy (void);
-
-  static AST_Decl::NodeType const NT;
 
 protected:
   virtual int compute_size_type (void);

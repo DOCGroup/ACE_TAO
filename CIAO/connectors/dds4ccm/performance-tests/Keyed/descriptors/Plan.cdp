@@ -166,6 +166,28 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="ReceiverComponentImplementation" />
+    <configProperty>
+      <name>keys</name>
+      <value>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <ushort>5</ushort>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>iterations</name>
+      <value>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <ushort>10</ushort>
+        </value>
+      </value>
+    </configProperty>
   </instance>
   <instance xmi:id="Perf_Keyed_Test_ConnectorComponentInstance">
     <name>Perf_Keyed_Test_ConnectorComponent</name>
@@ -238,7 +260,7 @@
           <kind>tk_ushort</kind>
         </type>
         <value>
-          <ushort>1</ushort>
+          <ushort>5</ushort>
         </value>
       </value>
     </configProperty>
@@ -246,10 +268,10 @@
       <name>iterations</name>
       <value>
         <type>
-          <kind>tk_ulong</kind>
+          <kind>tk_ushort</kind>
         </type>
         <value>
-          <ulong>10000</ulong>
+          <ushort>1000</ushort>
         </value>
       </value>
     </configProperty>
@@ -272,28 +294,6 @@
         </type>
         <value>
           <ushort>10</ushort>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>spin</name>
-      <value>
-        <type>
-          <kind>tk_ushort</kind>
-        </type>
-        <value>
-          <ushort>10</ushort>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>datalen</name>
-      <value>
-        <type>
-          <kind>tk_ushort</kind>
-        </type>
-        <value>
-          <ushort>999</ushort>
         </value>
       </value>
     </configProperty>

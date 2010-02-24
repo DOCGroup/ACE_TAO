@@ -1,40 +1,46 @@
 /* -*- C++ -*- */
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    enum_cs.h
- *
- *  $Id$
- *
- *  Concrete visitor for Enums generating code in the client stubs.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    enum_cs.h
+//
+// = DESCRIPTION
+//    Concrete visitor for Enums generating code in the client stubs.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #ifndef _BE_VISITOR_ENUM_ENUM_CS_H_
 #define _BE_VISITOR_ENUM_ENUM_CS_H_
 
-/**
- * @class be_visitor_enum_cs
- *
- * @brief be_visitor_enum_cs
- *
- * This is the visitor for enum for the impl file
- */
 class be_visitor_enum_cs : public be_visitor_scope
 {
+  //
+  // = TITLE
+  //   be_visitor_enum_cs
+  //
+  // = DESCRIPTION
+  //   This is the visitor for enum for the impl file
+  //
+  //
 public:
-  /// conenumor
   be_visitor_enum_cs (be_visitor_context *ctx);
+  // conenumor
 
-  /// deenumor
   ~be_visitor_enum_cs (void);
+  // deenumor
 
-  /// visit enum and generate the typecode
   virtual int visit_enum (be_enum *node);
+  // visit enum and generate the typecode
 };
 
 #endif /* _BE_VISITOR_ENUM_ENUM_CS_H_ */

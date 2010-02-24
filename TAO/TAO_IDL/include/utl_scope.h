@@ -120,7 +120,6 @@ class AST_Typedef;
 class AST_Array;
 class AST_Native;
 class AST_Factory;
-class AST_Finder;
 class AST_PortType;
 class AST_Provides;
 class AST_Uses;
@@ -154,6 +153,76 @@ public:
 
   // Destructor.
   virtual ~UTL_Scope (void);
+
+  // Scope Management Protocol.
+  virtual AST_PredefinedType *add_predefined_type (AST_PredefinedType *t);
+
+  virtual AST_Module *add_module (AST_Module *m);
+
+  virtual AST_Interface *add_interface (AST_Interface *i);
+
+  virtual AST_InterfaceFwd *add_interface_fwd (AST_InterfaceFwd *i);
+
+  virtual AST_ValueType *add_valuetype (AST_ValueType *i);
+
+  virtual AST_ValueTypeFwd *add_valuetype_fwd (AST_ValueTypeFwd *i);
+
+  virtual AST_EventType *add_eventtype (AST_EventType *i);
+
+  virtual AST_EventTypeFwd *add_eventtype_fwd (AST_EventTypeFwd *i);
+
+  virtual AST_Component *add_component (AST_Component *i);
+
+  virtual AST_ComponentFwd *add_component_fwd (AST_ComponentFwd *i);
+
+  virtual AST_Home *add_home (AST_Home *i);
+
+  virtual AST_Constant *add_constant (AST_Constant *c);
+
+  virtual AST_Exception *add_exception (AST_Exception *e);
+
+  virtual AST_Attribute *add_attribute (AST_Attribute *a);
+
+  virtual AST_Operation *add_operation (AST_Operation *o);
+
+  virtual AST_Argument *add_argument (AST_Argument *a);
+
+  virtual AST_Union *add_union (AST_Union *u);
+
+  virtual AST_UnionFwd *add_union_fwd (AST_UnionFwd *u);
+
+  virtual AST_UnionBranch *add_union_branch (AST_UnionBranch *b);
+
+  virtual AST_Structure *add_structure (AST_Structure *s);
+
+  virtual AST_StructureFwd *add_structure_fwd (AST_StructureFwd *s);
+
+  virtual AST_Field *add_field (AST_Field *f);
+
+  virtual AST_Enum *add_enum (AST_Enum *e);
+
+  virtual AST_EnumVal *add_enum_val (AST_EnumVal *v);
+
+  virtual AST_Typedef *add_typedef (AST_Typedef *t);
+
+  virtual UTL_StrList *add_context (UTL_StrList *c);
+
+  virtual UTL_NameList *add_exceptions (UTL_NameList *e);
+
+  virtual AST_Sequence *add_sequence (AST_Sequence *s);
+
+  virtual AST_String *add_string (AST_String *s);
+
+  virtual AST_Array *add_array (AST_Array *a);
+
+  virtual AST_Native *add_native (AST_Native *n);
+
+  virtual AST_Factory *add_factory (AST_Factory *f);
+
+  virtual AST_PortType *add_porttype (AST_PortType *p);
+
+  // Call back end add_XXX functions for this scope.
+  virtual AST_Decl *call_add (void);
 
   // Data Accessors.
   AST_Decl::NodeType scope_node_type (void)
@@ -260,7 +329,8 @@ protected:
                                        bool treat_as_ref);
 
   // Lookup based on the local name.
-  AST_Decl *lookup_for_add (AST_Decl *d);
+  AST_Decl *lookup_for_add (AST_Decl *d,
+                            bool treat_as_ref);
 
   // Is there a (case-insensitive) clash between a local name
   // and an IDL keyword?
@@ -315,26 +385,7 @@ protected:
   friend class AST_Enum;
   friend class IDL_GlobalData;
 
-  /// Scope Management Protocol.
-  
-  /// Common code for most basic adding action.
-  AST_Decl *fe_add_decl (AST_Decl *d);
-  
-  /// Specialized for types that reference another type.
-  AST_Field *fe_add_ref_decl (AST_Field *d);
-  
-  template<typename DECL>
-  DECL *fe_add_full_intf_decl (DECL *t);
-  
-  template<typename FULL_DECL>
-  typename FULL_DECL::FWD_TYPE *fe_add_fwd_intf_decl (
-    typename FULL_DECL::FWD_TYPE *t);
-    
-  AST_Structure *fe_add_full_struct_type (AST_Structure *t);
-  AST_StructureFwd *fe_add_fwd_struct_type (AST_StructureFwd *t);
-  
-  /// No-op base class version of the specialized adding actions.
-  
+  // Scope Management Protocol.
   virtual
   AST_PredefinedType *fe_add_predefined_type (
     AST_PredefinedType *t);
@@ -442,9 +493,6 @@ protected:
 
   virtual
   AST_Factory *fe_add_factory (AST_Factory *f);
-  
-  virtual
-  AST_Finder *fe_add_finder (AST_Finder *f);
 
   virtual
   AST_ValueBox *fe_add_valuebox (AST_ValueBox *vb);
@@ -472,27 +520,6 @@ protected:
 
   virtual
   AST_Mirror_Port *fe_add_mirror_port (AST_Mirror_Port *mp);
-  
-private:
-  /// Checks called from fe_add_decl() specific to interfaces
-  /// (and its subtypes) and operations respectively.
-  bool inherited_op_attr_clash (AST_Decl *t);
-  bool arg_specific_error (AST_Decl *t);
-  
-  /// Encapsulates the vagaries of adding fields vs decls to
-  /// structs/unions vs other types.
-  void smart_local_add (AST_Decl *t);
-  
-  /// Quick check on the head of a name to see if it's global.
-  bool is_global_name (Identifier *i);
-
-  /// Helper function for lookup_by_name(). Iterates doing local
-  /// lookups of subsequent components of a scoped name.
-  AST_Decl *
-  iter_lookup_by_name_local (AST_Decl *d,
-                             UTL_ScopedName *e,
-                             long index,
-                             bool full_def_only = false);
 };
 
 // Active iterator for a UTL_Scope node
@@ -533,13 +560,5 @@ private:
   // What location in stage?
   long il;
 };
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "utl_tmpl/UTL_Scope_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("utl_tmpl/UTL_Scope_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif           // _UTL_SCOPE_UTL_SCOPE_HH

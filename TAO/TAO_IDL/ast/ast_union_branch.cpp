@@ -77,8 +77,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_visitor.h"
 #include "utl_labellist.h"
 
-AST_Decl::NodeType const
-AST_UnionBranch::NT = AST_Decl::NT_union_branch;
+AST_UnionBranch::AST_UnionBranch (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Field (),
+    pd_ll (0)
+{
+}
 
 AST_UnionBranch::AST_UnionBranch (UTL_LabelList *ll,
                                   AST_Type *ft,
@@ -227,5 +232,7 @@ AST_UnionBranch::coerce_labels (AST_Union *u)
       lv->set_ev (lv->coerce (u->udisc_type ()));
     }
 }
+
+
 
 IMPL_NARROW_FROM_DECL(AST_UnionBranch)

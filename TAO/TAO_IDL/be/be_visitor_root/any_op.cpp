@@ -1,18 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    any_op.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for the Any operators for types defined in Root's
- *  scope.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    any_op.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for the Any operators for types defined in Root's
+//    scope.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_root, 
+           any_op, 
+           "$Id$")
 
 // ***************************************************************************
 // Root visitor for generating Any operator declarations in the client header

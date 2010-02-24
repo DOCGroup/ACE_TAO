@@ -1,18 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    tie_sh.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for operations of the TIE class in the header
- *  file.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    tie_sh.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for operations of the TIE class in the header
+//    file.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_operation, 
+           tie_sh, 
+           "$Id$")
 
 // ************************************************************
 // Operation visitor for server header for TIE class operations.

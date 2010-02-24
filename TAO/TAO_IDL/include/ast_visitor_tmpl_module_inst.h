@@ -1,21 +1,26 @@
+//
+// $Id$
+//
 
 /* -*- c++ -*- */
-//=============================================================================
-/**
- *  @file    ast_visitor_tmpl_module_inst.h
- *
- *  $Id$
- *
- *  This visitor creates nodes resulting
- *  from the instantiation of a template module, or from a
- *  reference to one inside another, and adds these nodes
- *  to the AST.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    ast_visitor_tmpl_module_inst.h
+//
+// = DESCRIPTION
+//    This visitor creates nodes resulting
+//    from the instantiation of a template module, or from a
+//    reference to one inside another, and adds these nodes
+//    to the AST.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #ifndef TAO_AST_VISITOR_TMPL_MODULE_INST_H
 #define TAO_AST_VISITOR_TMPL_MODULE_INST_H
@@ -27,16 +32,16 @@ class UTL_ExceptList;
 class UTL_NameList;
 class ast_visitor_context;
 
-/**
- * @class ast_visitor_tmpl_module_inst
- *
- * @brief ast_visitor_tmpl_module_inst
- *
- * Adds implied IDL code to the AST related to the
- * instantiation or alias of a template module.
- */
 class ast_visitor_tmpl_module_inst : public ast_visitor
 {
+  //
+  // = TITLE
+  //   ast_visitor_tmpl_module_inst
+  //
+  // = DESCRIPTION
+  //   Adds implied IDL code to the AST related to the
+  //   instantiation or alias of a template module.
+  //
 public:
   ast_visitor_tmpl_module_inst (ast_visitor_context *ctx,
                                 bool ref_only = false);
@@ -93,7 +98,6 @@ public:
   virtual int visit_structure (AST_Structure *node);
   virtual int visit_field (AST_Field *node);
   virtual int visit_factory (AST_Factory *node);
-  virtual int visit_finder (AST_Finder *node);
   
 private:
   // If arg is a param holder, return the matching template arg,
@@ -115,10 +119,6 @@ private:
   // Flag to branch in visit_valuetype() where we create an
   // eventtype or a valuetype.
   bool for_eventtype_;
-  
-  // Flag to branch in visit_factory() where we create a
-  // finder or a factory.
-  bool for_finder_;
   
   // Flag to short_circuit reifying if we are the base class of
   // ast_visitor_tmpl_module_ref.

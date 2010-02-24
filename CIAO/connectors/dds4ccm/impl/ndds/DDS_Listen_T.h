@@ -8,8 +8,6 @@
 #ifndef DDS_LISTEN_T_H_
 #define DDS_LISTEN_T_H_
 
-class ACE_Reactor;
-
 template <typename DDS_TYPE, typename CCM_TYPE>
 class DDS_Listen_T
 {
@@ -37,8 +35,7 @@ public:
 
   void activate (
     typename CCM_TYPE::listener_type::_ptr_type listener,
-    ::CCM_DDS::PortStatusListener_ptr status,
-    ACE_Reactor* reactor);
+    ::CCM_DDS::PortStatusListener_ptr status);
 
   void passivate (void);
 
@@ -54,9 +51,8 @@ private:
   ::CCM_DDS::CCM_DataListenerControl_var data_control_;
   ::DDS::DataReaderListener_var data_listener_;
   ::CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> dds_read_;
-  ::CIAO::DDS4CCM::CCM_DDS_DataReader_i rti_reader_;
+  ::CIAO::DDS4CCM::RTI::RTI_DataReader_i rti_reader_;
   //@}
-  typedef ::CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE> DataReaderListener;
 };
 
 #include "dds4ccm/impl/ndds/DDS_Listen_T.cpp"

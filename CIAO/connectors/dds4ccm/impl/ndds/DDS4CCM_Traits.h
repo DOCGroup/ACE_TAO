@@ -7,8 +7,10 @@
  * Traits necessary for various bits and pieces of the DDS4CCM infrastructure.
  */
 
-#ifndef DDS4CCM_TRAITS_H
-#define DDS4CCM_TRAITS_H
+#ifndef NDDS_TRAITS_H
+#define NDDS_TRAITS_H
+
+#include "ndds/ndds_cpp.h"
 
 namespace CIAO
 {
@@ -66,4 +68,4 @@ namespace CIAO
     }
   }
 }
-#endif /* DDS4CCM_TRAITS_H */
+#endif

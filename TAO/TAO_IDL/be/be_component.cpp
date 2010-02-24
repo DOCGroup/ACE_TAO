@@ -1,23 +1,47 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_component.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_Component that provides additional means for C++
- *  mapping of an interface.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_component.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_Component that provides additional means for C++
+//    mapping of an interface.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #include "be_component.h"
 #include "be_visitor.h"
 
 #include "global_extern.h"
 #include "utl_err.h"
+
+ACE_RCSID (be,
+           be_component,
+           "$Id$")
+
+be_component::be_component (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    UTL_Scope (),
+    AST_Interface (),
+    AST_Component (),
+    be_scope (),
+    be_decl (),
+    be_type (),
+    be_interface ()
+{
+  this->size_type (AST_Type::VARIABLE);
+  this->has_constructor (true);
+}
 
 be_component::be_component (UTL_ScopedName *n,
                             AST_Component *base_component,

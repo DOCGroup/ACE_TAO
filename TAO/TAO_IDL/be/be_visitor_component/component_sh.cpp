@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    component_sh.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Components in the server header.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    component_sh.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Components in the server header.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_component,
+           component_sh,
+           "$Id$")
 
 // ******************************************************
 // Component visitor for server header
@@ -291,12 +301,6 @@ be_visitor_component_sh::visit_component (be_component *node)
     }
 
   return 0;
-}
-
-int
-be_visitor_component_sh::visit_connector (be_connector *node)
-{
-  return this->visit_component (node);
 }
 
 int

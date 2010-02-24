@@ -9,6 +9,10 @@
 class TAO_IDL_FE_Export AST_ValueBox :  public virtual AST_ConcreteType
 {
 public:
+
+  // Constructor(s) and destructor.
+  AST_ValueBox (void);
+
   AST_ValueBox (UTL_ScopedName *n,
                 AST_Type       *boxed_type);
   
@@ -18,6 +22,7 @@ public:
   AST_Type            *boxed_type (void) const;
    
   // Narrowing.
+
   DEF_NARROW_FROM_DECL(AST_ValueBox);
 
   // AST Dumping.
@@ -28,8 +33,6 @@ public:
   
   // Cleanup.
   virtual void destroy (void);
-
-  static AST_Decl::NodeType const NT;
 
 protected:
   AST_Type                    *pd_boxed_type;

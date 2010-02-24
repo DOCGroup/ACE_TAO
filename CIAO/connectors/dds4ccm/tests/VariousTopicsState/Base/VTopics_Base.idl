@@ -1,14 +1,13 @@
 // $Id$
 
 /**
- * @file   VTopics_Base.idl
+ * @file   VTopics_Base.idl 
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
  */
 
 #ifndef VTOPICS_BASE_IDL
 #define VTOPICS_BASE_IDL
 
-#pragma ndds typesupport "Base/VTopics_BaseSupport.h"
 
   struct TestTopic {
     string key; //@key
@@ -19,7 +18,7 @@
     string key; //@key
     string x_str;
    };
-
+ 
   //arrays
   struct TopicArray {
     string key; //@key
@@ -37,7 +36,7 @@
   struct TopicUnion {
     string key; //@key
     X_Union x_uni;
-
+ 
    };
 
  */
@@ -53,7 +52,7 @@
     string key; //@key
     test_seq x_seq;
    };
-
+  
 
   typedef sequence<TestTopic> TestTopic_Seq;
   typedef sequence<TopicString> TopicString_Seq;

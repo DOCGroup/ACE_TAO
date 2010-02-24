@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    home_ex_idl.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Homes in the CIAO executor IDL.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO_IDL_BE
+//
+// = FILENAME
+//    home_ex_idl.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Homes in the CIAO executor IDL.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_home,
+           home_ex_idl,
+           "$Id$")
 
 // ******************************************************
 // Home visitor for CIAO executor IDL
@@ -148,32 +157,6 @@ be_visitor_home_ex_idl::visit_argument (be_argument *node)
       << " "
       << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
       << (this->last_node (node) ? "" : ",");
-
-  return 0;
-}
-
-int
-be_visitor_home_ex_idl::visit_factory (be_factory *node)
-{
-  os_ << be_nl
-      << "::Components::EnterpriseComponent "
-      << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
-      << " (" << be_idt << be_idt;
-
-  if (this->visit_scope (node) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("be_visitor_home_ex_idl::")
-                  ACE_TEXT ("visit_factory - ")
-                  ACE_TEXT ("codegen for scope failed\n")));
-    }
-
-  os_ << ")"
-      << be_uidt << be_uidt;
-
-  this->gen_exception_list (node->exceptions (), "", true);
-
-  os_ << ";";
 
   return 0;
 }
@@ -335,6 +318,9 @@ be_visitor_home_ex_idl::gen_explicit (void)
                   ACE_TEXT ("visit_scope() failed\n")));
     }
 
+  this->gen_factories ();
+  this->gen_finders ();
+
   os_ << be_uidt_nl
       << "};";
 }
@@ -417,6 +403,52 @@ be_visitor_home_ex_idl::gen_exception_list (
         }
 
       os_ << ")" << be_uidt;
+    }
+}
+
+void
+be_visitor_home_ex_idl::gen_factories (void)
+{
+  this->gen_init_ops (node_->factories ());
+}
+
+void
+be_visitor_home_ex_idl::gen_finders (void)
+{
+  this->gen_init_ops (node_->finders ());
+}
+
+void
+be_visitor_home_ex_idl::gen_init_ops (AST_Home::INIT_LIST & list)
+{
+  AST_Operation **op = 0;
+
+  for (AST_Home::INIT_LIST::ITERATOR i = list.begin ();
+       !i.done ();
+       i.advance ())
+    {
+      i.next (op);
+      be_operation *bop = be_operation::narrow_from_decl (*op);
+
+      os_ << be_nl
+          << "::Components::EnterpriseComponent "
+          << IdentifierHelper::try_escape (bop->original_local_name ()).c_str ()
+          << " (" << be_idt << be_idt;
+
+      if (this->visit_scope (bop) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("be_visitor_home_ex_idl::")
+                      ACE_TEXT ("gen_init_ops - ")
+                      ACE_TEXT ("visit_scope() failed\n")));
+        }
+
+      os_ << ")"
+          << be_uidt << be_uidt;
+
+      this->gen_exception_list (bop->exceptions (), "", true);
+
+      os_ << ";";
     }
 }
 

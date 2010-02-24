@@ -1,20 +1,29 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    serializer_op_ch.cpp
- *
- *  $Id$
- *
- *  Visitor for code generation of Arrays for the 
- *  TAO::DCPS::Serializer operators in the client header.
- *
- *
- *  @author Scott Harris <harris_s@ociweb.com> based on code by Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    serializer_op_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor for code generation of Arrays for the 
+//    TAO::DCPS::Serializer operators in the client header.
+//
+// = AUTHOR
+//    Scott Harris <harris_s@ociweb.com> based on code by Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_visitor_sequence/serializer_op_ch.h"
+
+ACE_RCSID (be_visitor_array, 
+           serializer_op_ch, 
+           "$Id$")
 
 // ***************************************************************************
 // Array visitor for generating Serializer operator declarations in the client header

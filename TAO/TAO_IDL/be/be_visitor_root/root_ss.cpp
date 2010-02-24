@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    root_ss.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for the Root in the server skeletons file
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    root_ss.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for the Root in the server skeletons file
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_root,
+           root_ss,
+           "$Id$")
 
 // ******************************************************
 // Root visitor for server skeletons

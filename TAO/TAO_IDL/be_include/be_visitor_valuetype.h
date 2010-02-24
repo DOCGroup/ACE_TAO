@@ -1,17 +1,19 @@
 
+// $Id$
+//
 /* -*- c++ -*- */
-//=============================================================================
-/**
- *  @file    be_visitor_valuetype.h
- *
- *  $Id$
- *
- *  Concrete visitor for the Valuetype class
- *
- *
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_valuetype.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the Valuetype class
+//
+// ============================================================================
 
 #ifndef TAO_BE_VISITOR_VALUETYPE_H
 #define TAO_BE_VISITOR_VALUETYPE_H

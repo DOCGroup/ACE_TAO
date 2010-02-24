@@ -19,6 +19,8 @@ class TAO_IDL_FE_Export AST_Component
   : public virtual AST_Interface
 {
 public:
+  AST_Component (void);
+
   AST_Component (UTL_ScopedName *n,
                  AST_Component *base_component,
                  AST_Type **supports,
@@ -67,9 +69,6 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
-  static AST_Decl::NodeType const NT;
-  typedef AST_ComponentFwd FWD_TYPE;
-  
 protected:
   virtual AST_Provides *fe_add_provides (AST_Provides *p);
 

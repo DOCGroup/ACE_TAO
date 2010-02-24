@@ -1,17 +1,22 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    be_visitor_component.cpp
- *
- *  $Id$
- *
- *  Visitors for generation of code for Component.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_component.cpp
+//
+// = DESCRIPTION
+//    Visitors for generation of code for Component.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #include "ace/Log_Msg.h"
 
@@ -23,7 +28,7 @@
 #include "ast_argument.h"
 #include "ast_exception.h"
 
-#include "be_connector.h"
+#include "be_component.h"
 #include "be_provides.h"
 #include "be_uses.h"
 #include "be_publishes.h"
@@ -61,6 +66,8 @@
 #include "be_visitor_component/component_sh.cpp"
 #include "be_visitor_component/component_si.cpp"
 #include "be_visitor_component/component_ss.cpp"
+#include "be_visitor_component/component_ih.cpp"
+#include "be_visitor_component/component_is.cpp"
 #include "be_visitor_component/component_svh.cpp"
 #include "be_visitor_component/facet_svh.cpp"
 #include "be_visitor_component/context_svh.cpp"

@@ -76,12 +76,18 @@ class UTL_NameList;
 class TAO_IDL_FE_Export AST_Attribute : public virtual AST_Field
 {
 public:
+  // Operations.
+
+  // Constructor(s).
+  AST_Attribute (void);
+
   AST_Attribute (bool readonly,
                  AST_Type *ft,
                  UTL_ScopedName *n,
                  bool local,
                  bool abstract);
 
+  // Destructor.
   virtual ~AST_Attribute (void);
 
   // Data Accessors.
@@ -107,8 +113,6 @@ public:
   UTL_ExceptList *be_add_get_exceptions (UTL_ExceptList *t);
   UTL_ExceptList *be_add_set_exceptions (UTL_ExceptList *t);
 
-  static AST_Decl::NodeType const NT;
-  
 private:
   // Data.
 

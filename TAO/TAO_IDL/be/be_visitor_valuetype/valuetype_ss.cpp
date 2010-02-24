@@ -1,19 +1,29 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuetype_ss.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Interfaces in the server skeletons file.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuetype_ss.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Interfaces in the server skeletons file.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "nr_extern.h"
+
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_ss,
+           "$Id$")
+
 
 // ************************************************************
 // Interface visitor for server skeletons.

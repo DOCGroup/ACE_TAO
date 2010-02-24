@@ -1,18 +1,23 @@
 /* -*- c++ -*- */
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    be_visitor_attribute.h
- *
- *  $Id$
- *
- *  Concrete visitor for the Attribute class
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_attribute.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the Attribute class
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #ifndef TAO_BE_VISITOR_ATTRIBUTE_H
 #define TAO_BE_VISITOR_ATTRIBUTE_H

@@ -7,21 +7,9 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDS4CCM_INSTANCEHANDLE_T_H
-#define DDS4CCM_INSTANCEHANDLE_T_H
+#ifndef CIAO_RTI_INSTANCEHANDLE_T_H
+#define CIAO_RTI_INSTANCEHANDLE_T_H
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-#include "ndds/ndds_cpp.h"
-#define DDS_INSTANCE_HANDLE_T_IN const ::DDS::InstanceHandle_t &
-#define DDS_INSTANCE_HANDLE_T_RETN ::DDS::InstanceHandle_t
-#endif
-
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
-#define DDS_INSTANCE_HANDLE_T_IN ::DDS::InstanceHandle_t
-#define DDS_INSTANCE_HANDLE_T_RETN ::DDS::InstanceHandle_t
-#endif
-
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::InstanceHandle_t &ddsinstancehandle, const ::DDS_InstanceHandle_t & instancehandle)
 {
@@ -101,6 +89,5 @@ operator!= (const ::DDS::InstanceHandle_t & ccm_instancehandle, const DDS_Instan
          ccm_instancehandle.isValid != static_cast<CORBA::ULong>(dds_instancehandle.isValid) ||
          ACE_OS::memcmp (ccm_instancehandle.value, dds_instancehandle.keyHash.value, sizeof (ccm_instancehandle.value)) != 0;
 }
-#endif
 
-#endif /* DDS4CCM_INSTANCEHANDLE_T_H */
+#endif /* CIAO_RTI_INSTANCEHANDLE_T_H */

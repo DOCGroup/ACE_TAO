@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    root_sh.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Root in the server header
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    root_sh.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Root in the server header
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_root, 
+           root_sh, 
+           "$Id$")
 
 // ***********************************
 // Root visitor for server header

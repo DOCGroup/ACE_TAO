@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    smart_proxy_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Operation node in the client header.
- *
- *
- *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    operation_smart_proxy_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Operation node in the client header.
+//
+// = AUTHOR
+//    Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_operation, 
+           smart_proxy_ch, 
+           "$Id$")
 
 // ******************************************************
 // Primary visitor for "operation" in client header.

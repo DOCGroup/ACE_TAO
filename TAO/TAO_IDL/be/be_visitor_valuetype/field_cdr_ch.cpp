@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    field_cdr_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Field in the client header file.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    field_cdr_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Field in the client header file.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuetype, 
+           field_cdr_op_ch, 
+           "$Id$")
 
 // **********************************************
 //  Visitor for field in the client header file.

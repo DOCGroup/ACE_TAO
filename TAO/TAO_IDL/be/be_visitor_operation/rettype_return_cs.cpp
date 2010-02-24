@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    rettype_return_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for returning the return type variable.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    rettype_return_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for returning the return type variable.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_operation, 
+           rettype_return_cs, 
+           "$Id$")
 
 // ************************************************************
 //    be_visitor_operation_rettype_return_cs

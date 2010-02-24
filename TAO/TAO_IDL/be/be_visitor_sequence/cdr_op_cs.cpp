@@ -1,5 +1,3 @@
-// $Id$
-
 // ============================================================================
 //
 // = LIBRARY
@@ -16,6 +14,10 @@
 //    Aniruddha Gokhale
 //
 // ============================================================================
+
+ACE_RCSID (be_visitor_sequence,
+           cdr_op_cs,
+           "$Id$")
 
 // ***************************************************************************
 // Sequence visitor for generating CDR operator declarations in the client
@@ -132,7 +134,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       << be_uidt_nl;
 
   *os << "}" << be_nl;
-
+  
   if (be_global->gen_ostream_operators ())
     {
       node->gen_ostream_operator (os, false);

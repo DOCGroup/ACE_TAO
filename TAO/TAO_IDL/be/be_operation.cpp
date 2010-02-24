@@ -1,18 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_operation.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_Operation that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_operation.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_Operation that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_operation.h"
 #include "be_operation_strategy.h"
@@ -26,6 +31,19 @@
 #include "utl_exceptlist.h"
 
 #include "global_extern.h"
+
+be_operation::be_operation (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    UTL_Scope (),
+    AST_Operation (),
+    be_scope (),
+    be_decl (),
+    original_operation_ (0)
+{
+  ACE_NEW (this->strategy_,
+           be_operation_default_strategy (this));
+}
 
 be_operation::be_operation (AST_Type *rt,
                             AST_Operation::Flags fl,

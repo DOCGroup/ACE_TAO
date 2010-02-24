@@ -4,9 +4,6 @@
 #include "ast_interface.h"
 #include "ast_visitor.h"
 
-AST_Decl::NodeType const
-AST_Provides::NT = AST_Decl::NT_provides;
-
 AST_Provides::AST_Provides (UTL_ScopedName *n,
                             AST_Type *provides_type)
   : COMMON_Base (),

@@ -1,18 +1,22 @@
 
+// $Id$
+//
 /* -*- c++ -*- */
-//=============================================================================
-/**
- *  @file    be_visitor_valuetype.cpp
- *
- *  $Id$
- *
- *  Concrete visitor for the Valuetype class
- *
- *
- *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_valuetype.cpp
+//
+// = DESCRIPTION
+//    Concrete visitor for the Valuetype class
+//
+// = AUTHOR
+//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+//
+// ============================================================================
 
 #include "be_argument.h"
 #include "be_array.h"
@@ -95,3 +99,6 @@
 #include "be_visitor_valuetype/valuetype_init_cs.cpp"
 #include "be_visitor_valuetype/valuetype_init_arglist_ch.cpp"
 
+ACE_RCSID (be,
+           be_visitor_valuetype,
+          "$Id$")

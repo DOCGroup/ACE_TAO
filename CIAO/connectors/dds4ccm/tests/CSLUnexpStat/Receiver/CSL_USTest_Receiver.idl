@@ -14,8 +14,7 @@ module CSL_USTest
 {
   component Receiver
   {
-    port TestTopicConn::DDS_Listen info_out;
-    port TestTopicConn::DDS_Read info_read;
+    port CCM_DDS::TestTopic::DDS_Listen info_out;
     provides CCM_DDS::ConnectorStatusListener info_out_connector_status;
    };
 };

@@ -1,17 +1,23 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    servant_svh.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for a servant class in the
- *  servant header.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    servant_svh.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for a servant class in the
+//    servant header.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 be_visitor_servant_svh::be_visitor_servant_svh (be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -25,10 +31,6 @@ be_visitor_servant_svh::~be_visitor_servant_svh (void)
 int
 be_visitor_servant_svh::visit_component (be_component *node)
 {
-  // This visitor is spawned by be_visitor_component_svh,
-  // which already does a check for imported node, so none
-  // is needed here.
-  
   node_ = node;
 
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
@@ -111,12 +113,6 @@ be_visitor_servant_svh::visit_component (be_component *node)
       << "};";
 
   return 0;
-}
-
-int
-be_visitor_servant_svh::visit_connector (be_connector *node)
-{
-  return this->visit_component (node);
 }
 
 int

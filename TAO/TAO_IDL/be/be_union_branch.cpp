@@ -1,18 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_union_branch.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_UnionBranch that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_union_branch.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_UnionBranch that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_union_branch.h"
 #include "be_union.h"
@@ -22,6 +27,20 @@
 #include "be_helper.h"
 #include "ast_union_label.h"
 #include "ace/Log_Msg.h"
+
+ACE_RCSID (be,
+           be_union_branch,
+           "$Id$")
+
+be_union_branch::be_union_branch (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Field (),
+    AST_UnionBranch (),
+    be_decl (),
+    be_field ()
+{
+}
 
 be_union_branch::be_union_branch (UTL_LabelList *ll,
                                   AST_Type *ft,

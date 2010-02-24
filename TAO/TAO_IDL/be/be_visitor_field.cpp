@@ -1,16 +1,21 @@
-//=============================================================================
-/**
- *  @file    be_visitor_field.cpp
- *
- *  $Id$
- *
- *  Concrete visitor for the base "BE_Field" node
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+//
+// $Id$
+//
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_field.cpp
+//
+// = DESCRIPTION
+//    Concrete visitor for the base "BE_Field" node
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_type.h"
 #include "be_field.h"

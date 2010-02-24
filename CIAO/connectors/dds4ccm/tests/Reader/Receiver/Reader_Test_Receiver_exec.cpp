@@ -4,32 +4,64 @@
 
 #include "Reader_Test_Receiver_exec.h"
 #include "ciao/Logger/Log_Macros.h"
-#include "ace/OS_NS_unistd.h"
-#include "tao/ORB_Core.h"
-#include "ace/Reactor.h"
 
 namespace CIAO_Reader_Test_Receiver_Impl
 {
   //============================================================
-  // read_action_Generator
+  // ConnectorStatusListener_exec_i
   //============================================================
-  read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
-    : callback_ (callback)
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Receiver_exec_i &callback)
+    : callback_ (callback),
+      has_run_ (false)
   {
   }
 
-  read_action_Generator::~read_action_Generator ()
+  ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
   {
   }
 
-  int
-  read_action_Generator::handle_timeout (const ACE_Time_Value &, const void *)
+  // Operations from ::CCM_DDS::ConnectorStatusListener
+  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
+     ::DDS::Topic_ptr ,
+     const DDS::InconsistentTopicStatus & )
   {
-    ACE_DEBUG ((LM_DEBUG, "Checking if last sample "
-                          "is available in DDS...\n"));
-    if (this->callback_.check_last ())
-      this->callback_.run ();
-    return 0;
+  }
+
+  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
+    ::DDS::DataReader_ptr ,
+     const DDS::RequestedIncompatibleQosStatus & )
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_sample_rejected(
+     ::DDS::DataReader_ptr ,
+     const DDS::SampleRejectedStatus & )
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
+     ::DDS::DataWriter_ptr ,
+     const DDS::OfferedDeadlineMissedStatus & )
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
+     ::DDS::DataWriter_ptr ,
+     const DDS::OfferedIncompatibleQosStatus & )
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_unexpected_status(
+    ::DDS::Entity_ptr /*the_entity*/,
+    ::DDS::StatusKind  status_kind)
+  {
+    if (status_kind == ::DDS::DATA_ON_READERS_STATUS &&
+        !this->has_run_ &&
+        this->callback_.check_last ())
+      {
+        this->has_run_ = true;
+        this->callback_.run ();
+      }
   }
 
   //============================================================
@@ -53,12 +85,6 @@ namespace CIAO_Reader_Test_Receiver_Impl
   }
 
   void
-  Starter_exec_i::start_read ()
-  {
-    this->callback_.start_read ();
-  }
-
-  void
   Starter_exec_i::read_no_data ()
   {
     this->callback_.read_no_data ();
@@ -72,7 +98,6 @@ namespace CIAO_Reader_Test_Receiver_Impl
       keys_ (5),
       has_run_ (false)
   {
-    this->ticker_ = new read_action_Generator (*this);
   }
 
   Receiver_exec_i::~Receiver_exec_i (void)
@@ -85,28 +110,21 @@ namespace CIAO_Reader_Test_Receiver_Impl
   {
     try
       {
-        if (!CORBA::is_nil (this->reader_))
-          {
-            ReaderTest readertest_info;
-            ::CCM_DDS::ReadInfo readinfo;
-            char key[100];
-            ACE_OS::sprintf (key, "KEY_%d", this->keys_);
-            readertest_info.key = CORBA::string_dup (key);
-            this->reader_->read_one_last (
-                    readertest_info,
-                    readinfo,
-                    ::DDS::HANDLE_NIL);
-            ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::check_last: "
-                                  "key <%C> - iteration <%d>\n",
-                                  readertest_info.key.in (),
-                                  readertest_info.iteration));
-            return readertest_info.iteration == this->iterations_;
-          }
+        ReaderTest readertest_info;
+        ::CCM_DDS::ReadInfo readinfo;
+        char key[100];
+        ACE_OS::sprintf (key, "KEY_%d", this->keys_);
+        readertest_info.key = CORBA::string_dup (key);
+        this->reader_->read_one_last (
+                readertest_info,
+                readinfo,
+                ::DDS::HANDLE_NIL);
+        return readertest_info.iteration == this->iterations_;
       }
     catch (...)
       {
-        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::check_last: "
-                              "Unexpected exception caught\n"));
+        // no need to catch. An error is given
+        // when this example didn't run at all.
       }
     return false;
   }
@@ -502,10 +520,6 @@ namespace CIAO_Reader_Test_Receiver_Impl
   void
   Receiver_exec_i::run ()
   {
-    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
-    delete this->ticker_;
-    this->ticker_ = 0;
-
     this->has_run_ = true;
     read_all ();
     read_last ();
@@ -516,19 +530,6 @@ namespace CIAO_Reader_Test_Receiver_Impl
     read_one_all (true);
     read_one_last (true);
     test_exception_with_handles ();
-  }
-
-  void
-  Receiver_exec_i::start_read ()
-  {
-    if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
-                                          this->ticker_,
-                                          0,
-                                          ACE_Time_Value(1, 0),
-                                          ACE_Time_Value(1, 0)) == -1)
-      {
-        ACE_ERROR ((LM_ERROR, "Unable to schedule Timer\n"));
-      }
   }
 
   ::CORBA::UShort
@@ -566,6 +567,12 @@ namespace CIAO_Reader_Test_Receiver_Impl
   Receiver_exec_i::get_info_out_status (void)
   {
     return 0;
+  }
+
+  ::CCM_DDS::CCM_ConnectorStatusListener_ptr
+  Receiver_exec_i::get_info_out_connector_status (void)
+  {
+    return new ConnectorStatusListener_exec_i (*this);
   }
 
   ::CCM_ReaderStarter_ptr
@@ -606,19 +613,12 @@ namespace CIAO_Reader_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-    if (this->ticker_)
-      {
-        ACE_ERROR ((LM_ERROR, "Still checking DDS upon exit\n"));
-        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
-        delete this->ticker_;
-        this->ticker_ = 0;
-      }
-
     if (!this->has_run_)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: ")
             ACE_TEXT ("Test did not run: Didn't receive ")
-            ACE_TEXT ("the expected number of samples\n")));
+            ACE_TEXT ("the expected number of DATA_ON_READERS")
+            ACE_TEXT ("events.\n")));
       }
   }
 

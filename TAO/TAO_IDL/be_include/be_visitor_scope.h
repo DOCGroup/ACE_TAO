@@ -1,17 +1,22 @@
+//
+// $Id$
+//
 /* -*- c++ -*- */
-//=============================================================================
-/**
- *  @file    be_visitor_scope.h
- *
- *  $Id$
- *
- *  Concrete visitor for the base "BE_Scope" node
- *
- *
- *  @author Aniruddha Gokhale and Carlos O'Ryan
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_scope.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the base "BE_Scope" node
+//
+// = AUTHOR
+//    Aniruddha Gokhale and Carlos O'Ryan
+//
+// ============================================================================
 
 #ifndef TAO_BE_VISITOR_SCOPE_H
 #define TAO_BE_VISITOR_SCOPE_H
@@ -19,44 +24,44 @@
 #include "be_visitor_decl.h"
 
 
-/**
- * @class be_visitor_scope
- *
- * @brief be_visitor_scope
- *
- * This is a concrete visitor for the be_scope node. Its only purpose is to
- * iterate over the elements of the scope
- */
 class be_visitor_scope : public be_visitor_decl
 {
+  //
+  // = TITLE
+  //    be_visitor_scope
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor for the be_scope node. Its only purpose is to
+  //   iterate over the elements of the scope
+  //
 public:
-  /// constructor
   be_visitor_scope (be_visitor_context *ctx);
+  // constructor
 
-  /// destructor
   ~be_visitor_scope (void);
+  // destructor
 
-  /// visit scope
   int visit_scope (be_scope *node);
+  // visit scope
 
-  /// do any processing after every element except the last one of the scope is
-  /// processed
   virtual int post_process (be_decl *);
+  // do any processing after every element except the last one of the scope is
+  // processed
 
-  /// do any processing prior to processing the element in the scope
   virtual int pre_process (be_decl *);
+  // do any processing prior to processing the element in the scope
 
-  /// return the element number that is being processed
   virtual int elem_number (void);
+  // return the element number that is being processed
 
-  /// get the successor to elem
   virtual int next_elem (be_decl *elem, be_decl *&);
+  // get the successor to elem
 
-  /// Is bd the last node in the scope
   virtual bool last_node (be_decl *bd);
+  // Is bd the last node in the scope
 
-  /// Is bd the last inout or out in the scope
   bool last_inout_or_out_node (be_decl *bd);
+  // Is bd the last inout or out in the scope
 
 protected:
   int elem_number_;

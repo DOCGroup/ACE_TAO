@@ -1,20 +1,38 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_structure_fwd.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_StructureFwd that provides additional means for C++
- *  mapping of a struct.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_structure_fwd.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_StructureFwd that provides additional means for C++
+//    mapping of a struct.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #include "be_structure_fwd.h"
 #include "be_visitor.h"
+
+ACE_RCSID (be, 
+           be_structure_fwd, 
+           "$Id$")
+
+be_structure_fwd::be_structure_fwd (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_StructureFwd (),
+    be_decl (),
+    be_type ()
+{
+}
 
 be_structure_fwd::be_structure_fwd (AST_Structure *dummy,
                                     UTL_ScopedName *n)

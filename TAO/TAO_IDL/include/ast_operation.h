@@ -85,12 +85,16 @@ public:
      , OP_idempotent            // Operation is idempotent.
   };
 
+  // Constructor(s).
+  AST_Operation (void);
+
   AST_Operation (AST_Type *return_type,
                  Flags flags,
                  UTL_ScopedName *n,
                  bool local,
                  bool abstract);
 
+  // Destructor.
   virtual ~AST_Operation (void);
 
   // Data Accessors.
@@ -144,8 +148,6 @@ public:
 
   // Method to add exceptions
   UTL_ExceptList *be_add_exceptions (UTL_ExceptList *t);
-
-  static AST_Decl::NodeType const NT;
 
 protected:
   // Data.

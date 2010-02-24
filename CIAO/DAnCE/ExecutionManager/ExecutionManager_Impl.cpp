@@ -6,6 +6,7 @@
 #include "Config_Handlers/DnC_Dump.h"
 #include "DAnCE/Logger/Log_Macros.h"
 
+
 using namespace DAnCE;
 
 ExecutionManager_Impl::ExecutionManager_Impl (CORBA::ORB_ptr orb,
@@ -79,7 +80,7 @@ ExecutionManager_Impl::preparePlan (const ::Deployment::DeploymentPlan & plan,
 }
 
 ::Deployment::DomainApplicationManagers *
-ExecutionManager_Impl::getManagers (void)
+ExecutionManager_Impl::getManagers ()
 {
   DANCE_TRACE ( "ExecutionManager_Impl::getManagers ()");
 
@@ -89,7 +90,7 @@ ExecutionManager_Impl::getManagers (void)
                     CORBA::NO_MEMORY());
 
   managers->length (this->managers_.current_size());
-  CORBA::ULong index = 0;
+  unsigned int index = 0;
   for (TDomainManagers::iterator iter = this->managers_.begin();
        iter != this->managers_.end();
        ++iter)
@@ -121,6 +122,8 @@ ExecutionManager_Impl::destroyManager (::Deployment::DomainApplicationManager_pt
           DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT("ExecutionManager_Impl::destroyManager - deleting DomainApplicationManager\n")));
           delete (*iter).int_id_;
           (*iter).int_id_ = 0;
+          DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT("ExecutionManager_Impl::destroyManager - DomainApplicationManager deleted\n")));
+          //this->managers_.unbind ( (*iter).ext_id_);
           DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT("ExecutionManager_Impl::destroyManager - finished\n")));
           return;
         }
@@ -130,8 +133,19 @@ ExecutionManager_Impl::destroyManager (::Deployment::DomainApplicationManager_pt
   throw ::Deployment::StopError();
 }
 
+// This one derived from ExecutionManagerDaemon interface
+// for shutdowning DAnCE agent
 void
-ExecutionManager_Impl::add_node_manager (const char *name, const char *ior)
+ExecutionManager_Impl::shutdown ()
+{
+  DANCE_TRACE ("ExecutionManager_Impl::shutdown");
+  this->orb_->shutdown();
+}
+
+
+void
+ExecutionManager_Impl::add_node_manager (const char *name,
+                                         const char *ior)
 {
   DANCE_TRACE ("ExecutionManager_Impl::add_node_manager");
   this->locator_.store_ior (name, ior);

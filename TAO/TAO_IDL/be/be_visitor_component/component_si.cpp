@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    component_si.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Components in the server inline.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    component_si.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Components in the server inline.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_component,
+           component_si,
+           "$Id$")
 
 // ******************************************************
 // Component visitor for server inline
@@ -32,10 +42,3 @@ be_visitor_component_si::visit_component (be_component *node)
   be_visitor_interface_si visitor (&ctx);
   return visitor.visit_interface (node);
 }
-
-int
-be_visitor_component_si::visit_connector (be_connector *node)
-{
-  return this->visit_component (node);
-}
-

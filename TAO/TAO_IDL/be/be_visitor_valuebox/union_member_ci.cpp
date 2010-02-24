@@ -1,19 +1,24 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    union_member_ci.cpp
- *
- *  $Id$
- *
- *   Visitor for the Valuebox class.
- *   This one generates code for accessor and modifier functions of
- *   for valuebox union members.
- *
- *
- *  @author Gary Maxey
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    union_member_ci.cpp
+//
+// = DESCRIPTION
+//     Visitor for the Valuebox class.
+//     This one generates code for accessor and modifier functions of
+//     for valuebox union members.
+//
+// = AUTHOR
+//    Gary Maxey
+//
+// ============================================================================
 be_visitor_valuebox_union_member_ci::be_visitor_valuebox_union_member_ci (
     be_visitor_context *ctx
   )

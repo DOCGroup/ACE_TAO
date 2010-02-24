@@ -1,17 +1,23 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    servant_svs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for a servant class in the
- *  servant source file.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    servant_svs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for a servant class in the
+//    servant source file.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 be_visitor_servant_svs::be_visitor_servant_svs (be_visitor_context *ctx)
   : be_visitor_component_scope (ctx),
@@ -31,10 +37,6 @@ be_visitor_servant_svs::~be_visitor_servant_svs (void)
 int
 be_visitor_servant_svs::visit_component (be_component *node)
 {
-  // This visitor is spawned by be_visitor_component_svh,
-  // which already does a check for imported node, so none
-  // is needed here.
-  
   node_ = node;
 
   n_provides_ = 0UL;
@@ -103,6 +105,11 @@ be_visitor_servant_svs::visit_component (be_component *node)
       << lname << "_Servant::set_attributes (" << be_idt_nl
       << "const ::Components::ConfigValues & descr)" << be_uidt_nl
       << "{" << be_idt_nl;
+
+  if (swapping_)
+    {
+      os_ << "this->activate_component ();" << be_nl << be_nl;
+    }
 
   os_ << "for ( ::CORBA::ULong i = 0; i < descr.length (); ++i)"
       << be_idt_nl
@@ -206,12 +213,6 @@ be_visitor_servant_svs::visit_component (be_component *node)
 }
 
 int
-be_visitor_servant_svs::visit_connector (be_connector *node)
-{
-  return this->visit_component (node);
-}
-
-int
 be_visitor_servant_svs::visit_operation (be_operation *node)
 {
   AST_Decl::NodeType nt =
@@ -219,7 +220,7 @@ be_visitor_servant_svs::visit_operation (be_operation *node)
 
   // Components have implied IDL operations added to the AST, but
   // we are interested only in supported interface operations.
-  if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
+  if (nt == AST_Decl::NT_component)
     {
       return 0;
     }
@@ -271,6 +272,11 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
       << node_->local_name () << "_Servant::provide_"
       << port_name << " (void)" << be_nl
       << "{" << be_idt_nl;
+
+  if (swapping_)
+    {
+      os_ << "this->activate_component ();" << be_nl << be_nl;
+    }
 
   os_ << "if ( ::CORBA::is_nil (this->provide_"
       << port_name << "_.in ()))" << be_idt_nl
@@ -484,6 +490,11 @@ be_visitor_servant_svs::visit_publishes (be_publishes *node)
       << "::" << obj_name << "Consumer_ptr c)" << be_uidt_nl
       << "{" << be_idt_nl;
 
+   if (swapping_)
+    {
+      os_ << "this->activate_component ();" << be_nl;
+    }
+
  os_ << "return this->context_->subscribe_" << port_name
       << " (c);" << be_uidt_nl
       << "}";
@@ -495,6 +506,11 @@ be_visitor_servant_svs::visit_publishes (be_publishes *node)
       << "::Components::EventConsumerBase_ptr c)" << be_uidt_nl
       << "{" << be_idt_nl;
 
+  if (swapping_)
+    {
+      os_ << "this->activate_component ();" << be_nl;
+    }
+
   os_ << "return this->context_->subscribe_" << port_name
       << "_generic (c);" << be_uidt_nl
       << "}";
@@ -505,6 +521,11 @@ be_visitor_servant_svs::visit_publishes (be_publishes *node)
       << port_name << " (" << be_idt_nl
       << "::Components::Cookie * ck)" << be_uidt_nl
       << "{" << be_idt_nl;
+
+  if (swapping_)
+    {
+      os_ << "this->activate_component ();" << be_nl;
+    }
 
   os_ << "return this->context_->unsubscribe_" << port_name
       << " (ck);" << be_uidt_nl
@@ -805,6 +826,11 @@ be_visitor_servant_svs::gen_provides_top (void)
       << "const char * name)" << be_uidt_nl
       << "{" << be_idt_nl;
 
+  if (swapping_)
+    {
+      os_ << "this->activate_component ();" << be_nl << be_nl;
+    }
+
   os_ << "if (name == 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
@@ -839,6 +865,11 @@ be_visitor_servant_svs::gen_publishes_top (void)
       << be_uidt_nl
       << "{" << be_idt_nl;
 
+  if (swapping_)
+    {
+      os_ << "this->activate_component ();" << be_nl << be_nl;
+    }
+
   os_ << "ACE_UNUSED_ARG (subscribe);" << be_nl << be_nl
       << "if (publisher_name == 0)" << be_idt_nl
       << "{" << be_idt_nl
@@ -868,6 +899,11 @@ be_visitor_servant_svs::gen_publishes_top (void)
       << "const char * publisher_name," << be_nl
       << "::Components::Cookie * ck)" << be_uidt_nl
       << "{" << be_idt_nl;
+
+  if (swapping_)
+    {
+      os_ << "this->activate_component ();" << be_nl << be_nl;
+    }
 
   os_ << "ACE_UNUSED_ARG (ck);" << be_nl << be_nl
       << "if (publisher_name == 0)" << be_idt_nl
@@ -934,6 +970,11 @@ be_visitor_servant_svs::gen_uses_top (void)
       << "::CORBA::Object_ptr connection)" << be_uidt_nl
       << "{" << be_idt_nl;
 
+  if (swapping_)
+    {
+      os_ << "this->activate_component ();" << be_nl << be_nl;
+    }
+
   os_ << "/// If the component has no receptacles, "
       << "arg will be unused." << be_nl
       << "ACE_UNUSED_ARG (connection);" << be_nl << be_nl
@@ -965,6 +1006,11 @@ be_visitor_servant_svs::gen_uses_top (void)
       << "const char * name," << be_nl
       << "::Components::Cookie * ck)" << be_uidt_nl
       << "{" << be_idt_nl;
+
+  if (swapping_)
+    {
+      os_ << "this->activate_component ();" << be_nl << be_nl;
+    }
 
   os_ << "ACE_UNUSED_ARG (ck);" << be_nl << be_nl
       << "if (name == 0)" << be_idt_nl
@@ -1033,6 +1079,11 @@ be_visitor_servant_svs::gen_emits_top (void)
       << be_uidt_nl
       << "{" << be_idt_nl;
 
+  if (swapping_)
+    {
+      os_ << "this->activate_component ();" << be_nl << be_nl;
+    }
+
   os_ << "if (emitter_name == 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
@@ -1061,6 +1112,11 @@ be_visitor_servant_svs::gen_emits_top (void)
       << "_Servant::disconnect_consumer (" << be_idt_nl
       << "const char * source_name)" << be_uidt_nl
       << "{" << be_idt_nl;
+
+  if (swapping_)
+    {
+      os_ << "this->activate_component ();" << be_nl << be_nl;
+    }
 
   os_ << "if (source_name == 0)" << be_idt_nl
       << "{" << be_idt_nl
@@ -1760,9 +1816,7 @@ Component_Op_Attr_Generator::emit (be_interface * /* derived_interface */,
                                    TAO_OutStream * /* os */,
                                    be_interface * base_interface)
 {
-  AST_Decl::NodeType nt = base_interface->node_type ();
-
-  if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
+  if (base_interface->node_type () == AST_Decl::NT_component)
     {
       return 0;
     }

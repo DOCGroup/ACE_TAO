@@ -8,9 +8,6 @@
 
 namespace CIAO_Shapes_Receiver_Impl
 {
-  //============================================================
-  // read_action_Generator
-  //============================================================
   read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
     : pulse_callback_ (callback)
   {
@@ -37,8 +34,9 @@ namespace CIAO_Shapes_Receiver_Impl
   }
 
   //============================================================
-  // ShapeType_Listener_exec_i
+  // Facet Executor Implementation Class: ShapeType_Listener_exec_i
   //============================================================
+
   ShapeType_Listener_exec_i::ShapeType_Listener_exec_i (void)
   {
   }
@@ -69,8 +67,9 @@ namespace CIAO_Shapes_Receiver_Impl
   }
 
   //============================================================
-  // PortStatusListener_exec_i
+  // Facet Executor Implementation Class: PortStatusListener_exec_i
   //============================================================
+
   PortStatusListener_exec_i::PortStatusListener_exec_i (void)
   {
   }
@@ -95,8 +94,9 @@ namespace CIAO_Shapes_Receiver_Impl
   }
 
   //============================================================
-  // Receiver_exec_i
+  // Component Executor Implementation Class: Receiver_exec_iShapeType_Listener_exec_i ();
   //============================================================
+
   Receiver_exec_i::Receiver_exec_i (void)
     : rate_ (0),
       get_data_ (true),
@@ -269,7 +269,7 @@ namespace CIAO_Shapes_Receiver_Impl
   }
 
   // Port operations.
-  ::Shapes::ShapeTypeConn::CCM_Listener_ptr
+  ::CCM_DDS::ShapeType::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new ShapeType RAW listener\n")));

@@ -5,8 +5,18 @@
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
-AST_Decl::NodeType const
-AST_EventTypeFwd::NT = AST_Decl::NT_eventtype_fwd;
+ACE_RCSID( ast,
+           ast_eventtype_fwd,
+           "$Id$")
+
+AST_EventTypeFwd::AST_EventTypeFwd (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_InterfaceFwd (),
+    AST_ValueTypeFwd ()
+{
+}
 
 AST_EventTypeFwd::AST_EventTypeFwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)

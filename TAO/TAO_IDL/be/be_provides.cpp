@@ -284,9 +284,7 @@ be_facet_op_attr_defn_helper::emit (be_interface * /* derived_interface */,
                                     TAO_OutStream *os,
                                     be_interface *base_interface)
 {
-  AST_Decl::NodeType nt = base_interface->node_type ();
-
-  if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
+  if (base_interface->node_type () == AST_Decl::NT_component)
     {
       return 0;
     }

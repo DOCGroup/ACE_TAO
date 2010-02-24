@@ -71,7 +71,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_structure.h"
 #include "ast_sequence.h"
 #include "ast_valuetype.h"
-#include "ast_component.h"
 #include "ast_uses.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
@@ -236,7 +235,6 @@ IDL_GlobalData::reset_flag_seen (void)
   boolean_seq_seen_ = false;
   char_seq_seen_ = false;
   component_seen_ = false;
-  connector_seen_ = false;
   double_seq_seen_ = false;
   enum_seen_ = false;
   exception_seen_ = false;
@@ -1308,18 +1306,6 @@ ACE_Unbounded_Queue<char *> &
 IDL_GlobalData::ciao_lem_file_names (void)
 {
   return this->ciao_lem_file_names_;
-}
-
-void
-IDL_GlobalData::add_ciao_rti_ts_file_names (const char *s)
-{
-  this->ciao_rti_ts_file_names_.enqueue_tail (ACE::strnew (s));
-}
-
-ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_rti_ts_file_names (void)
-{
-  return this->ciao_rti_ts_file_names_;
 }
 
 ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex> &

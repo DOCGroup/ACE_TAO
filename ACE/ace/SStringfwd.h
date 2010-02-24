@@ -33,7 +33,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template <class ACE_CHAR_T> class ACE_String_Base;  // Forward declaration.
+template <class CHAR> class ACE_String_Base;  // Forward declaration.
 
 typedef ACE_WCHAR_T ACE_WSTRING_TYPE;
 

@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    union_fwd_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for be_union_fwd node in the client header.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    union_fwd_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for be_union_fwd node in the client header.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_union_fwd, 
+           union_fwd_ch, 
+           "$Id$")
 
 be_visitor_union_fwd_ch::be_visitor_union_fwd_ch (
     be_visitor_context *ctx

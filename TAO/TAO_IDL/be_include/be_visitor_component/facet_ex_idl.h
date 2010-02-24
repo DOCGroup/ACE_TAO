@@ -1,17 +1,23 @@
+//
+// $Id$
+//
 /* -*- c++ -*- */
-//=============================================================================
-/**
- *  @file    facet_ex_idl.h
- *
- *  $Id$
- *
- *  Concrete visitor for the Component node.
- *  Provides code generation for facets in the CIAO executor IDL
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    facet_ex_idl.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the Component node.
+//    Provides code generation for facets in the CIAO executor IDL
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #ifndef _BE_COMPONENT_FACET_EX_IDL_H_
 #define _BE_COMPONENT_FACET_EX_IDL_H_

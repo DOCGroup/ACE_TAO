@@ -1,8 +1,12 @@
 // $Id$
 
 #include "NodeManager_Impl.h"
+
+
 #include "ace/streams.h"
+
 #include "DAnCE/Logger/Log_Macros.h"
+
 #include "ace/OS_Memory.h"
 
 #ifdef GEN_OSTREAM_OPS

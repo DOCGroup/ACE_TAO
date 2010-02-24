@@ -7,14 +7,9 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDS4CCM_TIME_T_H
-#define DDS4CCM_TIME_T_H
+#ifndef CIAO_RTI_TIME_T_H
+#define CIAO_RTI_TIME_T_H
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
-typedef ::DDS::Time_t DDS_Time_t;
-#endif
-
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::Time_t &ddstime, const ::DDS_Time_t & time)
 {
@@ -35,7 +30,6 @@ operator>>= (const ::DDS_Time_t &time, ::DDS::Time_t & ddstime)
   ddstime.sec = time.sec;
   ddstime.nanosec = time.nanosec;
 }
-#endif
 
-#endif /* DDS4CCM_TIME_T_H */
+#endif /* CIAO_RTI_TIME_T_H */
 

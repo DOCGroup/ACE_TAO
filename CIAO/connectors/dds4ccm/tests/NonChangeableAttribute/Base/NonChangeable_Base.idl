@@ -8,8 +8,6 @@
 #ifndef NONCHANGEABLE_BASE_IDL
 #define NONCHANGEABLE_BASE_IDL
 
-#pragma ndds typesupport "Base/NonChangeable_BaseSupport.h"
-
 struct NonChangeableTest {
   string key;
   long iteration;

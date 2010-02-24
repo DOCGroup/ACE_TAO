@@ -1,17 +1,23 @@
+//
+// $Id$
+//
 /* -*- c++ -*- */
-//=============================================================================
-/**
- *  @file    context_ex_idl.h
- *
- *  $Id$
- *
- *  Provides code generation for the context class
- *  in the CIAO executor IDL.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    context_ex_idl.h
+//
+// = DESCRIPTION
+//    Provides code generation for the context class
+//    in the CIAO executor IDL.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #ifndef _BE_COMPONENT_CONTEXT_EX_IDL_H_
 #define _BE_COMPONENT_CONTEXT_EX_IDL_H_
@@ -34,7 +40,6 @@ public:
   ~be_visitor_context_ex_idl (void);
 
   virtual int visit_component (be_component *node);
-  virtual int visit_connector (be_connector *node);
   virtual int visit_uses (be_uses *node);
   virtual int visit_publishes (be_publishes *node);
   virtual int visit_emits (be_emits *node);

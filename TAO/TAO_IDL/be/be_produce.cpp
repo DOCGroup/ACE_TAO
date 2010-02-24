@@ -228,7 +228,8 @@ BE_produce (void)
       BE_visit_root (root_svs_visitor, "CIAO executor IDL");
     }
 
-  if (be_global->gen_ciao_exec_impl ())
+  // We can eliminate some overhead in IDL files without components.
+  if (be_global->gen_ciao_exec_impl () && idl_global->component_seen_)
     {
       ctx.state (TAO_CodeGen::TAO_ROOT_EXH);
       be_visitor_root_exh root_exh_visitor (&ctx);
@@ -237,17 +238,6 @@ BE_produce (void)
       ctx.state (TAO_CodeGen::TAO_ROOT_EXS);
       be_visitor_root_exs root_exs_visitor (&ctx);
       BE_visit_root (root_exs_visitor, "CIAO exec impl source");
-    }
-    
-  if (be_global->gen_ciao_conn_impl ())
-    {
-      ctx.state (TAO_CodeGen::TAO_ROOT_CNH);
-      be_visitor_root_cnh root_cnh_visitor (&ctx);
-      BE_visit_root (root_cnh_visitor, "CIAO conn impl header");
-
-      ctx.state (TAO_CodeGen::TAO_ROOT_CNS);
-      be_visitor_root_cns root_cns_visitor (&ctx);
-      BE_visit_root (root_cns_visitor, "CIAO conn impl source");
     }
     
   tao_cg->gen_export_files ();

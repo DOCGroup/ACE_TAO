@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    discriminant_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for discriminant of the union
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    discriminant_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for discriminant of the union
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_union,
+           discriminant_cs,
+           "$Id$")
 
 // *************************************************************************
 // Visitor for discriminant in client stubs.
@@ -32,7 +41,7 @@ int
 be_visitor_union_discriminant_cs::visit_enum (be_enum *node)
 {
   be_union *bu =
-    be_union::narrow_from_decl (this->ctx_->node ());
+    this->ctx_->be_node_as_union ();  // get the enclosing union backend
   be_type *bt = 0;
 
   if (this->ctx_->alias ())

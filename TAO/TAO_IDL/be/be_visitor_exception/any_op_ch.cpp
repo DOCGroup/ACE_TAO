@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    any_op_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for the Any operators for Exceptions
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    any_op_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for the Any operators for Exceptions
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_exception,
+           any_op_ch,
+           "$Id$")
 
 // ***************************************************************************
 // Exception visitor for generating Any operator declarations in the client header

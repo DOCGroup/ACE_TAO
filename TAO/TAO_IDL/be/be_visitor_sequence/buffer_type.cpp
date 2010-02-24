@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    buffer_type.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for the internal buffer type of the Sequence node
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    buffer_type.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for the internal buffer type of the Sequence node
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_sequence,
+           buffer_type,
+           "$Id$")
 
 // ****************************************************************
 // We have to generate the buffer type in the constructor

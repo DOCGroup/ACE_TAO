@@ -18,41 +18,49 @@
 #include "ace/Map_Manager.h"
 #include "ace/SStringfwd.h"
 #include "orbsvcs/orbsvcs/CosNamingC.h"
-#include "Deployment/Deployment_ExecutionManagerS.h"
+#include "ExecutionManager_Export.h"
+#include "Deployment/CIAO_ExecutionManagerDaemonS.h"
 #include "Deployment/Deployment_NodeManagerC.h"
 #include "DomainApplicationManager/DomainApplicationManager_Impl.h"
 #include "DomainApplicationManager/Node_Locator.h"
 
 namespace DAnCE
   {
-  class ExecutionManager_Impl
-        : public virtual POA_Deployment::ExecutionManager
+  class ExecutionManager_Export ExecutionManager_Impl
+        : public virtual POA_DAnCE::ExecutionManagerDaemon
     {
+    private:
+      typedef ACE_Map_Manager<ACE_CString, DomainApplicationManager_Impl*, ACE_Null_Mutex> TDomainManagers;
+
     public:
+
       ExecutionManager_Impl (CORBA::ORB_ptr orb,
                              PortableServer::POA_ptr poa,
                              CosNaming::NamingContext_ptr);
 
-      virtual ~ExecutionManager_Impl(void);
+      virtual ~ExecutionManager_Impl();
 
       virtual ::Deployment::DomainApplicationManager_ptr preparePlan (
         const ::Deployment::DeploymentPlan & plan,
-        ::Deployment::ResourceCommitmentManager_ptr resourceCommitment);
+        ::Deployment::ResourceCommitmentManager_ptr resourceCommitment
+      );
 
-      virtual ::Deployment::DomainApplicationManagers * getManagers (void);
+      virtual ::Deployment::DomainApplicationManagers * getManagers (
+      );
 
       virtual void destroyManager (
-        ::Deployment::DomainApplicationManager_ptr manager);
+        ::Deployment::DomainApplicationManager_ptr manager
+      );
+
+      // This one derived from ExecutionManagerDaemon interface
+      // for shutdowning DAnCE agent
+      virtual void shutdown ();
 
       void add_node_manager (const char *name, const char *ior);
 
       void load_node_map (const ACE_TCHAR *filename);
 
     private:
-      typedef ACE_Map_Manager<
-        ACE_CString,
-        DomainApplicationManager_Impl*,
-        ACE_Null_Mutex> TDomainManagers;
       CORBA::ORB_var orb_;
       PortableServer::POA_var poa_;
       TDomainManagers managers_;

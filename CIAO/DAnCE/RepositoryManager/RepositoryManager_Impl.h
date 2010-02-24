@@ -22,12 +22,14 @@
 #ifndef REPOSITORYMANAGERI_H_
 #define REPOSITORYMANAGERI_H_
 
+
 //-----------------------------NOTE---------------------------------
 //I need to disable all the code which has to do with interface
 //type information because we currently do not support assembly
 //interfaces which causes undesired behavior with respect to the
 //hash tables because the specificType field in assembly interfaces
 //is empty, so two unrelated intefaces appear to be related.
+
 
 #include "RepositoryManagerDaemonS.h"
 
@@ -49,7 +51,7 @@ namespace
 
 namespace DAnCE
 {
-  class RepositoryManagerDaemon_i :
+  class  RepositoryManagerDaemon_i :
     public virtual POA_CIAO::RepositoryManagerDaemon
   {
   public:

@@ -1,21 +1,26 @@
+//
+// $Id$
+//
 
 /* -*- c++ -*- */
-//=============================================================================
-/**
- *  @file    be_visitor_ccm_pre_proc.h
- *
- *  $Id$
- *
- *  This visitor creates for components the appropriate AST
- *  (Abstract Syntax Tree) nodes, corresponding to provides, uses,
- *  emits, publishes and consumes declarations,
- *  and adds the nodes to the AST.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_ccm_pre_proc.h
+//
+// = DESCRIPTION
+//    This visitor creates for components the appropriate AST
+//    (Abstract Syntax Tree) nodes, corresponding to provides, uses,
+//    emits, publishes and consumes declarations,
+//    and adds the nodes to the AST.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #ifndef TAO_BE_VISITOR_CCM_PRE_PROC_H
 #define TAO_BE_VISITOR_CCM_PRE_PROC_H
@@ -28,15 +33,15 @@ class be_valuetype;
 class be_exception;
 class UTL_ExceptList;
 
-/**
- * @class be_visitor_ccm_pre_proc
- *
- * @brief be_visitor_ccm_pre_proc
- *
- * Adds CCM implied IDL code to the AST.
- */
 class be_visitor_ccm_pre_proc : public be_visitor_component_scope
 {
+  //
+  // = TITLE
+  //   be_visitor_ccm_pre_proc
+  //
+  // = DESCRIPTION
+  //   Adds CCM implied IDL code to the AST.
+  //
 public:
   be_visitor_ccm_pre_proc (be_visitor_context *ctx);
 
@@ -45,7 +50,6 @@ public:
   virtual int visit_root (be_root *node);
   virtual int visit_module (be_module *node);
   virtual int visit_component (be_component *node);
-  virtual int visit_connector (be_connector *node);
   virtual int visit_provides (be_provides *node);
   virtual int visit_uses (be_uses *node);
   virtual int visit_publishes (be_publishes *node);
@@ -55,8 +59,12 @@ public:
   virtual int visit_eventtype (be_eventtype *node);
   virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
   
-protected:
+private:
   // Utility methods to handle the corresponding IDL declarations.
+  int gen_factories (be_home *node,
+                     AST_Interface *xplicit);
+  int gen_finders (be_home *node,
+                   AST_Interface *xplicit);
   int gen_implicit_ops (be_home *node,
                         AST_Interface *implicit);
 
@@ -106,7 +114,7 @@ protected:
                                       AST_Decl *parent);
   UTL_NameList *compute_inheritance (be_home *node);
   
-protected:
+private:
   // These are created for operations implied by 'uses multiple' declarations.
   Identifier module_id_;
   be_valuetype *cookie_;

@@ -1,24 +1,52 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_attribute.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_Attribute that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_attribute.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_Attribute that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_attribute.h"
 #include "be_type.h"
 #include "be_visitor.h"
 
 #include "global_extern.h"
+
+ACE_RCSID (be,
+           be_attribute,
+           "$Id$")
+
+be_attribute::be_attribute (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Field (),
+    AST_Attribute (),
+    be_decl (),
+    original_attribute_ (0)
+{
+  be_operation_default_strategy *bods = 0;
+
+  ACE_NEW (bods,
+           be_operation_default_strategy (0));
+  this->get_strategy_ = bods;
+
+  ACE_NEW (bods,
+           be_operation_default_strategy (0));
+  this->set_strategy_ = bods;
+}
 
 be_attribute::be_attribute (bool ro,
                             AST_Type *ft,

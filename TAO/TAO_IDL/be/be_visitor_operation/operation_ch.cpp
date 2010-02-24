@@ -1,17 +1,22 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    operation_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Operation node in the client header.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    operation_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Operation node in the client header.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 // ******************************************************
 // Primary visitor for "operation" in client header.

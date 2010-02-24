@@ -1,19 +1,24 @@
+//
+// $Id$
+//
 
 /* -*- c++ -*- */
-//=============================================================================
-/**
- *  @file    ast_visitor_tmpl_module_ref.h
- *
- *  $Id$
- *
- *  This visitor creates nodes resulting from the reference
- *  to one inside another, and adds these nodes to the AST.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    ast_visitor_tmpl_module_ref.h
+//
+// = DESCRIPTION
+//    This visitor creates nodes resulting from the reference
+//    to one inside another, and adds these nodes to the AST.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #ifndef TAO_AST_VISITOR_TMPL_MODULE_REF_H
 #define TAO_AST_VISITOR_TMPL_MODULE_REF_H

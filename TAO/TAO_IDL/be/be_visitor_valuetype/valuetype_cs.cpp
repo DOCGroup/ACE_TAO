@@ -1,17 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuetype_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Valuetypes in the client stubs file.
- *
- *
- *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on code from Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuetype_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Valuetypes in the client stubs file.
+//
+// = AUTHOR
+//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+//    based on code from Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_cs,
+           "$Id$")
 
 // ************************************************************
 // Valuetype visitor for client stubs.

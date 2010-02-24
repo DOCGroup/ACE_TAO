@@ -1,18 +1,23 @@
+//
+// $Id$
+//
 /* -*- c++ -*- */
-//=============================================================================
-/**
- *  @file    connector_dds_exh.h
- *
- *  $Id$
- *
- *  Concrete visitor for the DDS Connector node.
- *  This provides for code generation in the exec impl header
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO_IDL_BE
+//
+// = FILENAME
+//    connector_dds_exh.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the DDS Connector node.
+//    This provides for code generation in the exec impl header
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #ifndef _BE_CONNECTOR_CONNECTOR_DDS_EXH_H_
 #define _BE_CONNECTOR_CONNECTOR_DDS_EXH_H_
@@ -20,7 +25,7 @@
 class be_visitor_context;
 
 class be_visitor_connector_dds_exh
-  : public be_visitor_connector_dds_ex_base
+  : public be_visitor_component_scope
 {
   //
   // = TITLE
@@ -37,12 +42,6 @@ public:
   ~be_visitor_connector_dds_exh (void);
   
   virtual int visit_connector (be_connector *node);
-  
-private:
-  // Generate application-specific instantiations of
-  // middleware templates containing traits constructs.
-  void gen_dds_traits (void);
-  void gen_connector_traits (void);
 };
 
 #endif /* _BE_CONNECTOR_CONNECTOR_DDS_EXH_H_ */

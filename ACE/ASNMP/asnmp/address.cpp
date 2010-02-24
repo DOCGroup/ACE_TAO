@@ -312,8 +312,7 @@ IpAddress::~IpAddress()
 int IpAddress::is_loopback() const
 {
  if (valid()) {
-   u_long *pl = (u_long *)&address_buffer;
-   return (*pl == INADDR_LOOPBACK);
+   return (*(u_long *)&address_buffer == INADDR_LOOPBACK);
  }
   return 0;
 }
@@ -321,8 +320,7 @@ int IpAddress::is_loopback() const
 int IpAddress::is_multicast() const
 {
  if (valid()) {
-   u_long *pl = (u_long *)&address_buffer;
-   return (IN_MULTICAST(*pl));
+   return (IN_MULTICAST(*(u_long *)&address_buffer));
  }
   return 0;
 }
@@ -360,8 +358,7 @@ void IpAddress::to_octet(OctetStr& octet) const
 int IpAddress::is_broadcast() const
 {
  if (valid()) {
-   u_long *pl = (u_long *)&address_buffer;
-   return ( (*pl) & INADDR_BROADCAST);
+   return ( (*(u_long *)&address_buffer) & INADDR_BROADCAST);
  }
   return 0;
 }

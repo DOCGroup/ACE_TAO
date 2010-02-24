@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    component.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Components. This is a generic visitor.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    component.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Components. This is a generic visitor.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_component,
+           component,
+           "$Id$")
 
 // ******************************************************
 // Generic Component visitor
@@ -115,8 +124,6 @@ be_visitor_component::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_ROOT_SVS:
     case TAO_CodeGen::TAO_ROOT_EXH:
     case TAO_CodeGen::TAO_ROOT_EXS:
-    case TAO_CodeGen::TAO_ROOT_CNH:
-    case TAO_CodeGen::TAO_ROOT_CNS:
     case TAO_CodeGen::TAO_ROOT_EX_IDL:
       return 0; // nothing to be done
     default:
@@ -336,8 +343,6 @@ be_visitor_component::visit_typedef (be_typedef *node)
     case TAO_CodeGen::TAO_ROOT_SVS:
     case TAO_CodeGen::TAO_ROOT_EXH:
     case TAO_CodeGen::TAO_ROOT_EXS:
-    case TAO_CodeGen::TAO_ROOT_CNH:
-    case TAO_CodeGen::TAO_ROOT_CNS:
     case TAO_CodeGen::TAO_ROOT_EX_IDL:
       return 0; // nothing to be done
     default:

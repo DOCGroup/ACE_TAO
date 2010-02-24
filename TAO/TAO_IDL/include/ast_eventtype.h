@@ -9,6 +9,8 @@
 class TAO_IDL_FE_Export AST_EventType : public virtual AST_ValueType
 {
 public:
+  AST_EventType (void);
+
   AST_EventType (UTL_ScopedName *n,
                  AST_Type **inherits,
                  long n_inherits,
@@ -37,9 +39,6 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-
-  static AST_Decl::NodeType const NT;
-  typedef AST_EventTypeFwd FWD_TYPE;
 };
 
 #endif           // _AST_VALUETYPE_AST_EVENTTYPE_HH

@@ -1,18 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_field.h
- *
- *  $Id$
- *
- *  Extension of class AST_Field that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_field.h
+//
+// = DESCRIPTION
+//    Extension of class AST_Field that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #ifndef BE_FIELD_H
 #define BE_FIELD_H
@@ -27,6 +32,8 @@ class be_field : public virtual AST_Field,
                  public virtual be_decl
 {
 public:
+  be_field (void);
+
   be_field (AST_Type *ft,
             UTL_ScopedName *n,
             Visibility vis = vis_NA);

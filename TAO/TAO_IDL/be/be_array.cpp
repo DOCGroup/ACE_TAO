@@ -1,18 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_array.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_Array that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_array.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_Array that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_array.h"
 #include "be_codegen.h"
@@ -24,6 +29,21 @@
 #include "global_extern.h"
 
 #include "ace/Log_Msg.h"
+
+ACE_RCSID (be,
+           be_array,
+           "$Id$")
+
+be_array::be_array (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType (),
+    AST_Array (),
+    be_decl (),
+    be_type ()
+{
+}
 
 be_array::be_array (UTL_ScopedName *n,
                     unsigned long ndims,

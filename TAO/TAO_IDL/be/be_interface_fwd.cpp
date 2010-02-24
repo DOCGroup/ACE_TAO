@@ -1,23 +1,44 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_interface_fwd.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_InterfaceFwd that provides additional means for C++
- *  mapping of an interface.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_interface_fwd.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_InterfaceFwd that provides additional means for C++
+//    mapping of an interface.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_interface_fwd.h"
 #include "be_interface.h"
 #include "be_visitor.h"
 #include "ast_interface.h"
+
+ACE_RCSID (be,
+           be_interface_fwd,
+           "$Id$")
+
+be_interface_fwd::be_interface_fwd (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_InterfaceFwd (),
+    be_decl (),
+    be_type ()
+{
+  // Always the case.
+  this->size_type (AST_Type::VARIABLE);
+}
 
 be_interface_fwd::be_interface_fwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)

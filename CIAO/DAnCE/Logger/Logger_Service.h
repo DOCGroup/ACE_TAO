@@ -25,9 +25,7 @@ namespace DAnCE
 static int TAO_Requires_DAnCE_Logger_Service_Initializer =
   DAnCE::Logger_Service::Initializer ();
 
-typedef DAnCE::Logger_Service DANCE_LOGGER_SERVICE;
-
-ACE_STATIC_SVC_DECLARE (DANCE_LOGGER_SERVICE)
-ACE_FACTORY_DECLARE (DAnCE_Logger, DANCE_LOGGER_SERVICE)
+ACE_STATIC_SVC_DECLARE (Logger_Service)
+ACE_FACTORY_DECLARE (DAnCE_Logger, Logger_Service)
 
 #endif /*LOGGER_SERVICE_H_*/

@@ -1,19 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_expression.h
- *
- *  $Id$
- *
- *  Extension of class AST_Expression that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_expression.h
+//
+// = DESCRIPTION
+//    Extension of class AST_Expression that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #ifndef BE_EXPRESSION_H
 #define BE_EXPRESSION_H
