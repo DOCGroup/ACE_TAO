@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_DURABILITYQOSPOLICY_H
-#define CIAO_RTI_DURABILITYQOSPOLICY_H
+#ifndef DDS4CCM_DURABILITYQOSPOLICY_H
+#define DDS4CCM_DURABILITYQOSPOLICY_H
 
 #if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::DurabilityQosPolicy DDS_DurabilityQosPolicy;
@@ -39,4 +39,4 @@ operator>>= (const ::DDS::DurabilityQosPolicy &qos, ::DDS_DurabilityQosPolicy & 
 }
 #endif
 
-#endif /* CIAO_RTI_DURABILITYQOSPOLICY_H */
+#endif /* DDS4CCM_DURABILITYQOSPOLICY_H */

@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_LIFESPANQOSPOLICY_H
-#define CIAO_RTI_LIFESPANQOSPOLICY_H
+#ifndef DDS4CCM_LIFESPANQOSPOLICY_H
+#define DDS4CCM_LIFESPANQOSPOLICY_H
 
 #include "Duration_t.h"
 
@@ -41,4 +41,4 @@ operator>>= (const ::DDS::LifespanQosPolicy &qos, ::DDS_LifespanQosPolicy & ddsq
 }
 #endif
 
-#endif /* CIAO_RTI_LIFESPANQOSPOLICY_H */
+#endif /* DDS4CCM_LIFESPANQOSPOLICY_H */

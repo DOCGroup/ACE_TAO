@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_PUBLICATIONMATCHEDSTATUS_H
-#define CIAO_RTI_PUBLICATIONMATCHEDSTATUS_H
+#ifndef DDS4CCM_PUBLICATIONMATCHEDSTATUS_H
+#define DDS4CCM_PUBLICATIONMATCHEDSTATUS_H
 
 #include "InstanceHandle_t.h"
 
@@ -58,4 +58,4 @@ operator>>= (const ::DDS::PublicationMatchedStatus &status, ::DDS_PublicationMat
 }
 #endif
 
-#endif /* CIAO_RTI_PUBLICATIONMATCHEDSTATUS_H */
+#endif /* DDS4CCM_PUBLICATIONMATCHEDSTATUS_H */

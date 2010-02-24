@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_LIVELINESSCHANGEDSTATUS_H
-#define CIAO_RTI_LIVELINESSCHANGEDSTATUS_H
+#ifndef DDS4CCM_LIVELINESSCHANGEDSTATUS_H
+#define DDS4CCM_LIVELINESSCHANGEDSTATUS_H
 
 #include "InstanceHandle_t.h"
 
@@ -58,4 +58,4 @@ operator>>= (const ::DDS::LivelinessChangedStatus &status, ::DDS_LivelinessChang
 }
 #endif
 
-#endif /* CIAO_RTI_LIVELINESSCHANGEDSTATUS_H */
+#endif /* DDS4CCM_LIVELINESSCHANGEDSTATUS_H */

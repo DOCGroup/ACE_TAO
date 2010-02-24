@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_LIVELINESSQOSPOLICY_H
-#define CIAO_RTI_LIVELINESSQOSPOLICY_H
+#ifndef DDS4CCM_LIVELINESSQOSPOLICY_H
+#define DDS4CCM_LIVELINESSQOSPOLICY_H
 
 #include "Duration_t.h"
 
@@ -45,4 +45,4 @@ operator>>= (const ::DDS::LivelinessQosPolicy &qos, ::DDS_LivelinessQosPolicy & 
 }
 #endif
 
-#endif /* CIAO_RTI_LIVELINESSQOSPOLICY_H */
+#endif /* DDS4CCM_LIVELINESSQOSPOLICY_H */

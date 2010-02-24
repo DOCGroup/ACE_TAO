@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_RESOURCELIMITSQOSPOLICY_H
-#define CIAO_RTI_RESOURCELIMITSQOSPOLICY_H
+#ifndef DDS4CCM_RESOURCELIMITSQOSPOLICY_H
+#define DDS4CCM_RESOURCELIMITSQOSPOLICY_H
 
 #if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::ResourceLimitsQosPolicy DDS_ResourceLimitsQosPolicy;
@@ -47,4 +47,4 @@ operator>>= (const ::DDS::ResourceLimitsQosPolicy &qos, ::DDS_ResourceLimitsQosP
 }
 #endif
 
-#endif /* CIAO_RTI_RESOURCELIMITSQOSPOLICY_H */
+#endif /* DDS4CCM_RESOURCELIMITSQOSPOLICY_H */

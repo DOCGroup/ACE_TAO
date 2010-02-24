@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_TOPICLISTENER_H
-#define CIAO_RTI_TOPICLISTENER_H
+#ifndef DDS4CCM_TOPICLISTENER_H
+#define DDS4CCM_TOPICLISTENER_H
 
 #include "tao/LocalObject.h"
 
@@ -49,4 +49,4 @@ namespace CIAO
   }
 }
 
-#endif /* CIAO_RTI_TOPICLISTENER_H */
+#endif /* DDS4CCM_TOPICLISTENER_H */

@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_PUBLISHER_H
-#define CIAO_RTI_PUBLISHER_H
+#ifndef DDS4CCM_PUBLISHER_H
+#define DDS4CCM_PUBLISHER_H
 
 #include "tao/LocalObject.h"
 

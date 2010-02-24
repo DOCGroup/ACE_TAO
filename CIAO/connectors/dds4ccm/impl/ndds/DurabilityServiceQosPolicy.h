@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_DURABILITYSERVICEQOSPOLICY_H
-#define CIAO_RTI_DURABILITYSERVICEQOSPOLICY_H
+#ifndef DDS4CCM_DURABILITYSERVICEQOSPOLICY_H
+#define DDS4CCM_DURABILITYSERVICEQOSPOLICY_H
 
 #include "Duration_t.h"
 
@@ -61,4 +61,4 @@ operator>>= (const ::DDS::DurabilityServiceQosPolicy &qos, ::DDS_DurabilityServi
 }
 #endif
 
-#endif /* CIAO_RTI_DURABILITYSERVICEQOSPOLICY_H */
+#endif /* DDS4CCM_DURABILITYSERVICEQOSPOLICY_H */

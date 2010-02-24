@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_PUBLISHERQOS_H
-#define CIAO_RTI_PUBLISHERQOS_H
+#ifndef DDS4CCM_PUBLISHERQOS_H
+#define DDS4CCM_PUBLISHERQOS_H
 
 #include "PresentationQosPolicy.h"
 #include "PartitionQosPolicy.h"
@@ -56,4 +56,4 @@ operator>>= (const ::DDS::PublisherQos &qos, ::DDS_PublisherQos & ddsqos)
 }
 #endif
 
-#endif /* CIAO_RTI_PUBLISHERQOS_H */
+#endif /* DDS4CCM_PUBLISHERQOS_H */
