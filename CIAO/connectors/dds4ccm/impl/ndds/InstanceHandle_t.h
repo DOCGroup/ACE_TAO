@@ -11,6 +11,7 @@
 #define CIAO_RTI_INSTANCEHANDLE_T_H
 
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#include "ndds/ndds_cpp.h"
 #define DDS_INSTANCE_HANDLE_T_IN const ::DDS::InstanceHandle_t &
 #define DDS_INSTANCE_HANDLE_T_RETN ::DDS::InstanceHandle_t
 #endif
