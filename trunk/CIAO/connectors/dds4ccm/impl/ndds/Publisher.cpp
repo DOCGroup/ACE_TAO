@@ -10,6 +10,8 @@
 #include "InstanceHandle_t.h"
 #include "DataWriterListener.h"
 #include "DataWriterQos.h"
+#include "PublisherQos.h"
+#include "TopicQos.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
@@ -205,17 +207,32 @@ namespace CIAO
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i::set_qos (const ::DDS::PublisherQos & /*qos*/)
+    CCM_DDS_Publisher_i::set_qos (const ::DDS::PublisherQos & qos)
     {
       DDS4CCM_TRACE ("CCM_DDS_Publisher_i::set_qos");
-      throw CORBA::NO_IMPLEMENT ();
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ::DDS_PublisherQos rti_qos;
+      rti_qos <<= qos;
+      return this->impl()->set_qos (rti_qos);
+#else
+      return this->impl ()->set_qos (qos);
+#endif
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i::get_qos (::DDS::PublisherQos & /* qos*/)
+    CCM_DDS_Publisher_i::get_qos (::DDS::PublisherQos & qos)
     {
       DDS4CCM_TRACE ("CCM_DDS_Publisher_i::get_qos");
-      throw CORBA::NO_IMPLEMENT ();
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ::DDS_PublisherQos rti_qos;
+      rti_qos <<= qos;
+      ::DDS::ReturnCode_t retcode = this->impl()->
+              get_qos (rti_qos);
+      qos <<= rti_qos;
+      return retcode;
+#else
+      return this->impl ()->get_qos (qos);
+#endif
     }
 
     ::DDS::ReturnCode_t
@@ -314,25 +331,53 @@ namespace CIAO
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i::set_default_datawriter_qos (const ::DDS::DataWriterQos & /*qos*/)
+    CCM_DDS_Publisher_i::set_default_datawriter_qos (const ::DDS::DataWriterQos & qos)
     {
       DDS4CCM_TRACE ("CCM_DDS_Publisher_i::set_default_datawriter_qos");
-      throw CORBA::NO_IMPLEMENT ();
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ::DDS_DataWriterQos rti_qos;
+      rti_qos <<= qos;
+      return this->impl()->set_default_datawriter_qos (rti_qos);
+#else
+      return this->impl()->set_default_datawriter_qos (qos);
+#endif
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i::get_default_datawriter_qos (::DDS::DataWriterQos & /*qos*/)
+    CCM_DDS_Publisher_i::get_default_datawriter_qos (::DDS::DataWriterQos & qos)
     {
       DDS4CCM_TRACE ("CCM_DDS_Publisher_i::get_default_datawriter_qos");
-      throw CORBA::NO_IMPLEMENT ();
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ::DDS_DataWriterQos rti_qos;
+      ::DDS::ReturnCode_t retcode =
+            this->impl()->get_default_datawriter_qos (rti_qos);
+      qos <<= rti_qos;
+      return retcode;
+#else
+      return this->impl()->get_default_datawriter_qos (qos);
+#endif
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i::copy_from_topic_qos (::DDS::DataWriterQos & /*a_dataimpl_qos*/,
-                                          const ::DDS::TopicQos & /*a_impl_qos*/)
+    CCM_DDS_Publisher_i::copy_from_topic_qos (::DDS::DataWriterQos & a_dataimpl_qos,
+                                              const ::DDS::TopicQos & a_impl_qos)
     {
       DDS4CCM_TRACE ("CCM_DDS_Publisher_i::copy_from_topic_qos");
-      throw CORBA::NO_IMPLEMENT ();
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ::DDS_DataWriterQos rti_qos;
+      ::DDS_TopicQos rti_topic_qos;
+
+      rti_qos <<= a_dataimpl_qos;
+      rti_topic_qos <<= a_impl_qos;
+      ::DDS::ReturnCode_t retcode =
+          this->impl()->copy_from_topic_qos (rti_qos,
+                                             rti_topic_qos);
+      a_dataimpl_qos <<= rti_qos;
+      return retcode;
+#else
+      return this->impl()->copy_from_topic_qos (a_dataimpl_qos,
+                                                a_impl_qos);
+#endif
     }
 
     ::DDS::ReturnCode_t
