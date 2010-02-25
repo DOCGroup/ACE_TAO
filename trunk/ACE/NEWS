@@ -1,6 +1,9 @@
 USER VISIBLE CHANGES BETWEEN ACE-5.7.6 and ACE-5.7.7
 ====================================================
 
+. Integrated fix for bug 3104 and regression test for
+  interval timers.
+
 . Added support for GCC builtin Atomic instructions which
   are enabled with GCC >= 4.1 for PPC32/PPC64/IA64
 
