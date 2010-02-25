@@ -10,6 +10,9 @@
 #define DDS4CCM_SUBSCRIBERQOS_H
 
 #include "EntityFactoryQosPolicy.h"
+#include "GroupDataQosPolicy.h"
+#include "PartitionQosPolicy.h"
+#include "PresentationQosPolicy.h"
 
 #if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::SubscriberQos DDS_SubscriberQos;
