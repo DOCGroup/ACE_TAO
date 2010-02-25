@@ -26,8 +26,8 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    CCM_DDS_DataReader_i::CCM_DDS_DataReader_i (void)
-      : impl_ (0)
+    CCM_DDS_DataReader_i::CCM_DDS_DataReader_i (DDSDataReader * dr)
+      : impl_ (dr)
     {
     }
 
@@ -47,14 +47,20 @@ namespace CIAO
       ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_StatusCondition_i (sc),
-                        CORBA::NO_MEMORY ());
+      if (sc)
+        {
+          ACE_NEW_THROW_EX (retval,
+                            CCM_DDS_StatusCondition_i (sc),
+                            CORBA::NO_MEMORY ());
+        }
 #else
       ::DDS::StatusCondition_var sc = this->impl ()->get_statuscondition ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_StatusCondition_i (sc.in ()),
-                        CORBA::NO_MEMORY ());
+      if (!CORBA::is_nil (sc.in ()))
+        {
+          ACE_NEW_THROW_EX (retval,
+                            CCM_DDS_StatusCondition_i (sc.in ()),
+                            CORBA::NO_MEMORY ());
+        }
 #endif
       return retval._retn ();
     }
@@ -84,19 +90,25 @@ namespace CIAO
       ::DDS::ViewStateMask view_states,
       ::DDS::InstanceStateMask instance_states)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS::ReadCondition_var retval = ::DDS::ReadCondition::_nil ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_ReadCondition_i (),
-                        CORBA::NO_MEMORY ());
-
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDSReadCondition* rc = this->impl ()->create_readcondition (sample_states, view_states, instance_states);
-      CCM_DDS_ReadCondition_i *rti_rc = dynamic_cast < CCM_DDS_ReadCondition_i *>(retval.in ());
-      rti_rc->set_impl (rc);
-      return retval._retn ();
+      if (rc)
+        {
+          ACE_NEW_THROW_EX (retval,
+                            CCM_DDS_ReadCondition_i (rc),
+                            CORBA::NO_MEMORY ());
+        }
 #else
-      return this->impl ()->create_readcondition (sample_states, view_states, instance_states);
+      ::DDS::ReadCondition_var rc = this->impl ()->create_readcondition (sample_states, view_states, instance_states);
+      if (!CORBA::is_nil (rc.in ()))
+        {
+          ACE_NEW_THROW_EX (retval,
+                            CCM_DDS_StatusCondition_i (sc.in ()),
+                            CORBA::NO_MEMORY ());
+        }
 #endif
+      return retval._retn ();
     }
 
     ::DDS::QueryCondition_ptr
@@ -107,15 +119,10 @@ namespace CIAO
       const char * query_expression,
       const ::DDS::StringSeq & query_parameters)
     {
+      ::DDS::QueryCondition_var retval = ::DDS::QueryCondition::_nil ();
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDS_StringSeq parameters;
       parameters <<= query_parameters;
-
-      ::DDS::QueryCondition_var retval = ::DDS::QueryCondition::_nil ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_QueryCondition_i (),
-                        CORBA::NO_MEMORY ());
-
       DDSQueryCondition* qc = this->impl ()->create_querycondition (
                                      sample_states,
                                      view_states,
@@ -123,23 +130,28 @@ namespace CIAO
                                      query_expression,
                                      parameters);
 
-      if (!qc)
+      if (qc)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, "CCM_DDS_DataReader_i::create_querycondition: "
-                                       "DDS return NIL as a DDSQueryCondition!\n"));
-          return ::DDS::QueryCondition::_nil ();
+          ACE_NEW_THROW_EX (retval,
+                            CCM_DDS_QueryCondition_i (qc),
+                            CORBA::NO_MEMORY ());
         }
-      CCM_DDS_QueryCondition_i *rti_qc = dynamic_cast < CCM_DDS_QueryCondition_i *> (retval.in ());
-      rti_qc->set_impl (qc);
-      return retval._retn ();
 #else
-      return this->impl ()->create_querycondition (
+      ::DDS::QueryCondition_var qc = this->impl ()->create_querycondition (
                                      sample_states,
                                      view_states,
                                      instance_states,
                                      query_expression,
                                      query_parameters);
+
+      if (!CORBA::is_nil (qc.in ()))
+        {
+          ACE_NEW_THROW_EX (retval,
+                            CCM_DDS_QueryCondition_i (qc.in ()),
+                            CORBA::NO_MEMORY ());
+        }
 #endif
+      return retval._retn ();
     }
 
     ::DDS::ReturnCode_t
@@ -183,7 +195,6 @@ namespace CIAO
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_DataReaderQos ddsqos;
-      ddsqos <<= qos;
       ::DDS_ReturnCode_t const retval = this->impl ()->get_qos (ddsqos);
       qos <<= ddsqos;
       return retval;
@@ -275,7 +286,6 @@ namespace CIAO
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDS_SampleRejectedStatus rtistatus;
-      rtistatus <<= status;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_sample_rejected_status (rtistatus);
       rtistatus >>= status;
       return retval;
@@ -290,7 +300,6 @@ namespace CIAO
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDS_LivelinessChangedStatus rtistatus;
-      rtistatus <<= status;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_liveliness_changed_status (rtistatus);
       rtistatus >>= status;
       return retval;
@@ -305,7 +314,6 @@ namespace CIAO
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDS_RequestedDeadlineMissedStatus rtistatus;
-      rtistatus <<= status;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_requested_deadline_missed_status (rtistatus);
       rtistatus >>= status;
       return retval;
@@ -320,7 +328,6 @@ namespace CIAO
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDS_RequestedIncompatibleQosStatus rtistatus;
-      rtistatus <<= status;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_requested_incompatible_qos_status (rtistatus);
       rtistatus >>= status;
       return retval;
@@ -335,7 +342,6 @@ namespace CIAO
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_SubscriptionMatchedStatus ddsstatus;
-      ddsstatus <<= status;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_subscription_matched_status (ddsstatus);
       ddsstatus >>= status;
       return retval;
@@ -377,7 +383,6 @@ namespace CIAO
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandleSeq rtiseq;
-      rtiseq <<= publication_handles;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_matched_publications (rtiseq);
       rtiseq >>= publication_handles;
       return retval;
@@ -397,7 +402,7 @@ namespace CIAO
 
       rti_pub_data <<= publication_data;
       rti_pub_handle <<= publication_handle;
-      ::DDS::ReturnCode_t retcode = this->impl()->
+      ::DDS::ReturnCode_t const retcode = this->impl()->
                     get_matched_publication_data (rti_pub_data,
                                                   rti_pub_handle);
       rti_pub_data >>= publication_data;

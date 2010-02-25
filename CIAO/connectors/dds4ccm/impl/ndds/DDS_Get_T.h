@@ -31,6 +31,7 @@ public:
 
   ::DDS::CCM_DataReader_ptr get_dds_entity (void);
   //@}
+
   void configuration_complete (
     ::DDS::Topic_ptr topic,
     ::DDS::Subscriber_ptr subscriber,

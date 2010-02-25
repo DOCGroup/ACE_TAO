@@ -45,14 +45,20 @@ namespace CIAO
       ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_StatusCondition_i (sc),
-                        CORBA::NO_MEMORY ());
+      if (sc)
+        {
+          ACE_NEW_THROW_EX (retval,
+                            CCM_DDS_StatusCondition_i (sc),
+                            CORBA::NO_MEMORY ());
+        }
 #else
       ::DDS::StatusCondition_var sc = this->impl ()->get_statuscondition ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_StatusCondition_i (sc.in ()),
-                        CORBA::NO_MEMORY ());
+      if (!CORBA::is_nil (sc.in ()))
+        {
+          ACE_NEW_THROW_EX (retval,
+                            CCM_DDS_StatusCondition_i (sc.in ()),
+                            CORBA::NO_MEMORY ());
+        }
 #endif
       return retval._retn ();
     }
@@ -163,10 +169,6 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_Subscriber_i::create_datareader");
       ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_DataReader_i (),
-                        CORBA::NO_MEMORY ());
-
       DDSDataReaderListener *rti_drl = 0;
       if (!CORBA::is_nil (a_listener))
         {
@@ -209,9 +211,9 @@ namespace CIAO
         }
 
       rti_dr->enable ();
-      CCM_DDS_DataReader_i *dr = dynamic_cast < CCM_DDS_DataReader_i *>(retval.in ());
-      dr->set_impl (rti_dr);
-
+      ACE_NEW_THROW_EX (retval,
+                        CCM_DDS_DataReader_i (rti_dr),
+                        CORBA::NO_MEMORY ());
       return retval._retn ();
     }
 
@@ -225,10 +227,6 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_Subscriber_i::create_datareader_with_profile");
       ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_DataReader_i (),
-                        CORBA::NO_MEMORY ());
-
       DDSDataReaderListener *rti_drl = 0;
       if (!CORBA::is_nil (a_listener))
         {
@@ -281,9 +279,9 @@ namespace CIAO
         }
 
       rti_dr->enable ();
-      CCM_DDS_DataReader_i *dr = dynamic_cast < CCM_DDS_DataReader_i *>(retval.in ());
-      dr->set_impl (rti_dr);
-
+      ACE_NEW_THROW_EX (retval,
+                        CCM_DDS_DataReader_i (rti_dr),
+                        CORBA::NO_MEMORY ());
       return retval._retn ();
     }
 
@@ -310,8 +308,11 @@ namespace CIAO
                        "Error: Returned non-ok error code %C\n",
                        translate_retcode (retval)));
         }
-      else DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_Subscriber_i::delete_datareader - "
+      else
+        {
+          DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_Subscriber_i::delete_datareader - "
                         "Datareader successfully  deleted\n"));
+        }
 
       return retval;
     }
@@ -327,12 +328,13 @@ namespace CIAO
       const char * impl_name)
     {
       ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_DataReader_i (),
-                        CORBA::NO_MEMORY ());
       DDSDataReader* dr = this->impl ()->lookup_datareader (impl_name);
-      CCM_DDS_DataReader_i *rti_dr = dynamic_cast < CCM_DDS_DataReader_i *>(retval.in ());
-      rti_dr->set_impl (dr);
+      if (dr)
+        {
+          ACE_NEW_THROW_EX (retval,
+                            CCM_DDS_DataReader_i (dr),
+                            CORBA::NO_MEMORY ());
+        }
       return retval._retn ();
     }
 
@@ -374,7 +376,6 @@ namespace CIAO
       CIAO_TRACE ("CCM_DDS_Subscriber_i::get_qos");
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_SubscriberQos rti_qos;
-      rti_qos <<= qos;
       ::DDS::ReturnCode_t retcode = this->impl ()->get_qos (rti_qos);
       qos <<= rti_qos;
       return retcode;
@@ -434,14 +435,20 @@ namespace CIAO
       ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDSDomainParticipant* p = this->impl ()->get_participant ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_DomainParticipant_i (p),
-                        CORBA::NO_MEMORY ());
+      if (p)
+        {
+          ACE_NEW_THROW_EX (retval,
+                            CCM_DDS_DomainParticipant_i (p),
+                            CORBA::NO_MEMORY ());
+        }
 #else
       ::DDS::DomainParticipant_var p = this->impl ()->get_participant ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_DomainParticipant_i (p.in ()),
-                        CORBA::NO_MEMORY ());
+      if (!CORBA::is_nil (p.in))
+        {
+          ACE_NEW_THROW_EX (retval,
+                            CCM_DDS_DomainParticipant_i (p.in ()),
+                            CORBA::NO_MEMORY ());
+        }
 #endif
       return retval._retn ();
     }
@@ -467,9 +474,7 @@ namespace CIAO
       CIAO_TRACE ("CCM_DDS_Subscriber_i::get_default_datareader_qos");
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_DataReaderQos rti_qos;
-      rti_qos <<= qos;
-      ::DDS::ReturnCode_t retcode =
-              this->impl ()->get_default_datareader_qos (rti_qos);
+      ::DDS::ReturnCode_t retcode = this->impl ()->get_default_datareader_qos (rti_qos);
       qos <<= rti_qos;
       return retcode;
 #else

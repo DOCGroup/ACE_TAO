@@ -1,13 +1,37 @@
+Thu Feb 25 20:03:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReader.cpp
+        * connectors/dds4ccm/impl/ndds/DataReader.h
+        * connectors/dds4ccm/impl/ndds/DataReaderListener.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Get_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Get_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_Listen_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Read_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_StateListen_T.cpp
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp
+        * connectors/dds4ccm/impl/ndds/PublisherListener.cpp
+        * connectors/dds4ccm/impl/ndds/QueryCondition.cpp
+        * connectors/dds4ccm/impl/ndds/QueryCondition.h
+        * connectors/dds4ccm/impl/ndds/ReadCondition.cpp
+        * connectors/dds4ccm/impl/ndds/ReadCondition.h
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp
+        * connectors/dds4ccm/impl/ndds/SubscriberListener.cpp
+        * connectors/dds4ccm/impl/ndds/Topic.cpp
+        * connectors/dds4ccm/impl/ndds/TopicDescription.cpp
+        * connectors/dds4ccm/impl/ndds/TopicListener.cpp
+          Set of cleanup of the core library. More will come after the release
+          of x.7.7. The code is at a much better level than with x.7.6 but
+          not at the level we aimed for x.7.7 because that was scheduled for
+          the end of March
+
 Thu Feb 25 16:23:49 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * NEWS:
-
           Added news entries.
-        
+
 Thu Feb 25 16:20:27 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tools/Convert_Plan/Convert_Plan_Impl.h:
-
           Compile error fix.
 
 Thu Feb 25 15:47:16 UTC 2010  Marcel Smit  <msmit@remedy.nl>

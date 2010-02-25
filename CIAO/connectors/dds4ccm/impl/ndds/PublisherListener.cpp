@@ -34,15 +34,13 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_PublisherListener_i::on_offered_deadline_missed");
 
       ::DDS::DataWriter_var dds_writer = ::DDS::DataWriter::_nil ();
+      ACE_NEW (dds_writer,
+               CCM_DDS_DataWriter_i (writer));
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS::OfferedDeadlineMissedStatus ddsstatus;
       ddsstatus <<= status;
-      ACE_NEW (dds_writer, 
-               CCM_DDS_DataWriter_i (writer));
       this->impl_->on_offered_deadline_missed (dds_writer.in (), ddsstatus);
 #else
-      ACE_NEW (dds_writer, 
-               CCM_DDS_DataWriter_i (writer));
       this->impl_->on_offered_deadline_missed (dds_writer.in (), status);
 #endif
     }
@@ -55,15 +53,13 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_PublisherListener_i::on_offered_incompatible_qos");
 
       ::DDS::DataWriter_var dds_writer = ::DDS::DataWriter::_nil ();
+      ACE_NEW (dds_writer,
+               CCM_DDS_DataWriter_i (writer));
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS::OfferedIncompatibleQosStatus ddsstatus;
       ddsstatus <<= status;
-      ACE_NEW (dds_writer, 
-               CCM_DDS_DataWriter_i (writer));
       this->impl_->on_offered_incompatible_qos (dds_writer.in (), ddsstatus);
 #else
-      ACE_NEW (dds_writer, 
-               CCM_DDS_DataWriter_i (writer));
       this->impl_->on_offered_incompatible_qos (dds_writer.in (), status);
 #endif
     }
@@ -76,15 +72,13 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_PublisherListener_i::on_liveliness_lost");
 
       ::DDS::DataWriter_var dds_writer = ::DDS::DataWriter::_nil ();
+      ACE_NEW (dds_writer,
+               CCM_DDS_DataWriter_i (writer));
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS::LivelinessLostStatus ddsstatus;
       ddsstatus <<= status;
-      ACE_NEW (dds_writer, 
-               CCM_DDS_DataWriter_i (writer));
       this->impl_->on_liveliness_lost (dds_writer.in (), ddsstatus);
 #else
-      ACE_NEW (dds_writer, 
-               CCM_DDS_DataWriter_i (writer));
       this->impl_->on_liveliness_lost (dds_writer.in (), status);
 #endif
     }
@@ -97,15 +91,13 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_PublisherListener_i::on_publication_matched");
 
       ::DDS::DataWriter_var dds_writer = ::DDS::DataWriter::_nil ();
+      ACE_NEW (dds_writer,
+               CCM_DDS_DataWriter_i (writer));
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS::PublicationMatchedStatus ddsstatus;
       ddsstatus <<= status;
-      ACE_NEW (dds_writer, 
-               CCM_DDS_DataWriter_i (writer));
       this->impl_->on_publication_matched (dds_writer.in (), ddsstatus);
 #else
-      ACE_NEW (dds_writer, 
-               CCM_DDS_DataWriter_i (writer));
       this->impl_->on_publication_matched (dds_writer.in (), status);
 #endif
     }
