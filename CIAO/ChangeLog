@@ -1,3 +1,15 @@
+Thu Feb 25 15:47:16 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReader.cpp:
+          Optimized logging regarding query condition.
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.h:
+          Optimized Doxygen documentation.
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Resolved compile error when QueryConditions are
+          enabled.
+
 Thu Feb 25 13:28:31 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Getter_T.h:

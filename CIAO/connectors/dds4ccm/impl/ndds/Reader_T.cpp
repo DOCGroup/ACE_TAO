@@ -17,7 +17,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::Reader_T (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::Reader_T");
   #if defined DDS4CCM_USES_QUERY_CONDITION
-    this->qc_ ::= DDS::QueryCondition::_nil ();
+    this->qc_ = DDS::QueryCondition::_nil ();
   #else
     this->cft_ = ::DDS::ContentFilteredTopic::_nil ();
   #endif
@@ -440,7 +440,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
   #if defined DDS4CCM_USES_QUERY_CONDITION
     if (CORBA::is_nil (this->qc_))
       {
-        this->qc_ = this->reader_->create_querycondition (
+        this->qc_ = this->impl ()->create_querycondition (
                                 DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE,
                                 DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
                                 DDS_ALIVE_INSTANCE_STATE,
