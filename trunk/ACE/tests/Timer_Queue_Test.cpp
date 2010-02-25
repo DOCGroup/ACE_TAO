@@ -87,6 +87,56 @@ public:
   // Keeps track of the number of times that <handle_close> is called.
 };
 
+
+struct Interval_Handler : public ACE_Event_Handler
+{
+  Interval_Handler (void) : trip_count_ (0) { }
+
+  virtual int handle_timeout (const ACE_Time_Value & , const void *arg)
+  {
+    ++trip_count_;
+    return 0;
+  }
+
+  unsigned trip_count_; // number of times handle_timeout has been tripped.
+};
+
+static void
+test_interval_timer (ACE_Timer_Queue *tq)
+{
+  /*
+    The strategy:
+
+    Set up a timer to fire on a 50ms interval.
+  */
+  Interval_Handler ih;
+  ACE_Time_Value interval (0, 50 * 1000 /* number of usec in millisecond */);
+  const unsigned NUM_INTERVAL_FIRINGS = 50;
+  ACE_Time_Value loop_stop_time =
+    tq->gettimeofday () + (NUM_INTERVAL_FIRINGS * interval);
+  const unsigned EXPECTED_TRIP_COUNT =
+    NUM_INTERVAL_FIRINGS + 1 /* for the first immediate firing */;
+
+  long id = tq->schedule (&ih, 0 /* no act */, ACE_Time_Value::zero, interval);
+  ACE_ASSERT (id != -1);
+
+  do
+    {
+      tq->expire ();
+    }
+  while (tq->gettimeofday () < loop_stop_time);
+
+  ACE_DEBUG((LM_DEBUG,
+             ACE_TEXT("after interval loop, timer fired %d ")
+             ACE_TEXT("times out of %d expected: %s\n"),
+             ih.trip_count_, EXPECTED_TRIP_COUNT,
+             ih.trip_count_ == EXPECTED_TRIP_COUNT 
+             ? ACE_TEXT ("success") : ACE_TEXT ("FAIL")
+             ));
+
+  tq->cancel (id);
+}
+
 static void
 test_functionality (ACE_Timer_Queue *tq)
 {
@@ -646,6 +696,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("**** starting test of %s\n"),
                   tq_ptr->name_));
+      test_interval_timer (tq_ptr->queue_);
       test_functionality (tq_ptr->queue_);
       test_performance (tq_ptr->queue_,
                         tq_ptr->name_);

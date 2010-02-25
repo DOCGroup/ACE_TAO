@@ -834,10 +834,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value& cur_ti
         {
           // Make sure that we skip past values that have already
           // "expired".
-          do
-            n->set_timer_value (n->get_timer_value () +
-                                n->get_interval ());
-          while (n->get_timer_value () <= cur_time);
+          this->recompute_next_abs_interval_time (n, cur_time);
 
           this->reschedule (n);
         }

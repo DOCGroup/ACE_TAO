@@ -823,10 +823,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire (const ACE_Time_Value 
             {
               // Make sure that we skip past values that have already
               // "expired".
-              do
-                expired->set_timer_value (expired->get_timer_value ()
-                                          + expired->get_interval ());
-              while (expired->get_timer_value () <= cur_time);
+              this->recompute_next_abs_interval_time (expired, cur_time);
 
               // Since this is an interval timer, we need to
               // reschedule it.
