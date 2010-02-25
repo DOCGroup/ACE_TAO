@@ -1,3 +1,15 @@
+Thu Feb 25 07:38:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/svcconf.mpb:
+        * ace/svcconfgen.mpc:
+          Moved regeneration support to its own file that is disabled by
+          defeault. Thanks to Joseph Sarbak <Joseph dot Sarbak at rbccm dot com>
+          for reporting this.
+
+        * bin/MakeProjectCreator/config/global.features:
+          Set ace_svcconf_gen to 0, when this is set to 1 we enable svcconf
+          regeneration
+
 Wed Feb 24 22:07:30 UTC 2010  Steven Stallion  <stallions@ociweb.com>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU:
