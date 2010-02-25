@@ -1,5 +1,10 @@
 Thu Feb 25 08:10:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * ace/config-opensd.h:
+          #define ACE_LACKS_CEILL & ACE_LACKS_FLOORL
+
+Thu Feb 25 08:10:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
         * ace/config-netbsd.h:
           #define ACE_LACKS_CEILL & ACE_LACKS_FLOORL
 
