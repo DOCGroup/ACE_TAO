@@ -215,7 +215,7 @@ Mon Feb 15 09:40:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/platform_linux.GNU:
 
-          Added support for modelcpu (-mcpu=) and modeltune (-mtune=) flags.
+          Added support for cpumodelflag (-mcpu=) and tunemodelflag (-mtune=) flags.
 
 Mon Feb 15 09:38:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
