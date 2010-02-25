@@ -1,3 +1,11 @@
+Thu Feb 25 08:29:14 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+        * connectors/dds4ccm/impl/ndds/SubscriberQos.h:
+          Implemented set/get_qos methods.
+
 Thu Feb 25 08:16:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/tools/Split_Plan/Split_Plan.mpc:

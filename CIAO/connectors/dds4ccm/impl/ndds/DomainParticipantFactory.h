@@ -80,7 +80,7 @@ namespace CIAO
         ::DDS::ReturnCode_t get_qos (::DDS::DomainParticipantFactoryQos & qos);
 
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      virtual ::DDS::ReturnCode_t set_default_participant_qos_with_profile(
+      virtual ::DDS::ReturnCode_t set_default_participant_qos_with_profile (
                                                         const char * library_name,
                                                         const char * profile_name);
 #endif

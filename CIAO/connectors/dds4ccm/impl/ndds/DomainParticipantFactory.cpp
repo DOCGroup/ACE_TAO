@@ -3,6 +3,8 @@
 #include "DomainParticipantFactory.h"
 #include "DomainParticipant.h"
 #include "DomainParticipantListener.h"
+#include "DomainParticipantFactoryQos.h"
+#include "DomainParticipantQos.h"
 #include "Utils.h"
 
 #include "dds4ccm/impl/logger/Log_Macros.h"
@@ -251,35 +253,60 @@ namespace CIAO
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipantFactory_i::set_default_participant_qos (const ::DDS::DomainParticipantQos & /*qos*/)
+    CCM_DDS_DomainParticipantFactory_i::set_default_participant_qos (const ::DDS::DomainParticipantQos & qos)
     {
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_i::set_default_participant_qos");
-
-      throw CORBA::NO_IMPLEMENT ();
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ::DDS_DomainParticipantQos rti_qos;
+      rti_qos <<= qos;
+      return DDSDomainParticipantFactory::get_instance ()->set_default_participant_qos (rti_qos);
+#else
+      return DDSDomainParticipantFactory::get_instance ()->set_default_participant_qos (qos);
+#endif
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipantFactory_i::get_default_participant_qos (::DDS::DomainParticipantQos & /*qos*/)
+    CCM_DDS_DomainParticipantFactory_i::get_default_participant_qos (::DDS::DomainParticipantQos & qos)
     {
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_i::get_default_participant_qos");
-
-      throw CORBA::NO_IMPLEMENT ();
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ::DDS_DomainParticipantQos rti_qos;
+      rti_qos <<= qos;
+      ::DDS::ReturnCode_t retcode =
+          DDSDomainParticipantFactory::get_instance ()->get_default_participant_qos (rti_qos);
+      qos <<= rti_qos;
+      return retcode;
+#else
+      return DDSDomainParticipantFactory::get_instance ()->get_default_participant_qos (qos);
+#endif
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipantFactory_i::set_qos (const ::DDS::DomainParticipantFactoryQos & /*qos*/)
+    CCM_DDS_DomainParticipantFactory_i::set_qos (const ::DDS::DomainParticipantFactoryQos & qos)
     {
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_i::set_qos");
-
-      throw CORBA::NO_IMPLEMENT ();
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ::DDS_DomainParticipantFactoryQos rti_qos;
+      rti_qos <<= qos;
+      return DDSDomainParticipantFactory::get_instance ()->set_qos (rti_qos);
+#else
+      return DDSDomainParticipantFactory::get_instance ()->set_qos (qos);
+#endif
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipantFactory_i::get_qos (::DDS::DomainParticipantFactoryQos & /*qos*/)
+    CCM_DDS_DomainParticipantFactory_i::get_qos (::DDS::DomainParticipantFactoryQos & qos)
     {
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_i::get_qos");
-
-      throw CORBA::NO_IMPLEMENT ();
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ::DDS_DomainParticipantFactoryQos rti_qos;
+      rti_qos <<= qos;
+      ::DDS::ReturnCode_t retcode = DDSDomainParticipantFactory::get_instance ()->get_qos (rti_qos);
+      qos <<= rti_qos;
+      return retcode;
+#else
+      return DDSDomainParticipantFactory::get_instance ()->get_qos (qos);
+#endif
     }
 
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)

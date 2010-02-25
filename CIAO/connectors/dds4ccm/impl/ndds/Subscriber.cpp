@@ -10,6 +10,10 @@
 #include "StatusCondition.h"
 #include "InstanceHandle_t.h"
 
+#include "DataReaderQos.h"
+#include "SubscriberQos.h"
+#include "TopicQos.h"
+
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
 #include "dds4ccm/impl/logger/Log_Macros.h"
@@ -343,25 +347,30 @@ namespace CIAO
     CCM_DDS_Subscriber_i::set_qos (
       const ::DDS::SubscriberQos & qos)
     {
-      ::DDS_SubscriberQos rti_impl_qos;
-/*        rti_impl_qos.presentation = qos.presentation;
-      rti_impl_qos.partition = qos.partition;
-      rti_impl_qos.group_data = qos.group_data;
-      rti_impl_qos.entity_factory = qos.entity_factory;*/
-      return this->impl ()->set_qos (rti_impl_qos);
+      CIAO_TRACE ("CCM_DDS_Subscriber_i::set_qos");
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ::DDS_SubscriberQos rti_qos;
+      rti_qos <<= qos;
+      return this->impl ()->get_qos (rti_qos);
+#else
+      return this->impl ()->set_qos (qos);
+#endif
     }
 
     ::DDS::ReturnCode_t
     CCM_DDS_Subscriber_i::get_qos (
-      ::DDS::SubscriberQos & /*qos*/)
+      ::DDS::SubscriberQos & qos)
     {
-      DDS_SubscriberQos rti_impl_qos;
-      ::DDS::ReturnCode_t const rti_retcode = this->impl ()->get_qos (rti_impl_qos);
-      /*qos.presentation = rti_impl_qos.presentation;
-      qos.partition = rti_impl_qos.partition;
-      qos.group_data = rti_impl_qos.group_data;
-      qos.entity_factory = rti_impl_qos.entity_factory;*/
-      return rti_retcode;
+      CIAO_TRACE ("CCM_DDS_Subscriber_i::get_qos");
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ::DDS_SubscriberQos rti_qos;
+      rti_qos <<= qos;
+      ::DDS::ReturnCode_t retcode = this->impl ()->get_qos (rti_qos);
+      qos <<= rti_qos;
+      return retcode;
+#else
+      return this->impl ()->get_qos (qos);
+#endif
     }
 
     ::DDS::ReturnCode_t
@@ -429,27 +438,56 @@ namespace CIAO
 
     ::DDS::ReturnCode_t
     CCM_DDS_Subscriber_i::set_default_datareader_qos (
-      const ::DDS::DataReaderQos & /*qos*/)
+      const ::DDS::DataReaderQos & qos)
     {
-      throw CORBA::NO_IMPLEMENT ();
-      // Add your implementation here
+      CIAO_TRACE ("CCM_DDS_Subscriber_i::set_default_datareader_qos");
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ::DDS_DataReaderQos rti_qos;
+      rti_qos <<= qos;
+      return this->impl ()->set_default_datareader_qos (rti_qos);
+#else
+      return this->impl ()->set_default_datareader_qos (qos);
+#endif
     }
 
     ::DDS::ReturnCode_t
     CCM_DDS_Subscriber_i::get_default_datareader_qos (
-      ::DDS::DataReaderQos & /*qos*/)
+      ::DDS::DataReaderQos & qos)
     {
-      throw CORBA::NO_IMPLEMENT ();
-      // Add your implementation here
+      CIAO_TRACE ("CCM_DDS_Subscriber_i::get_default_datareader_qos");
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ::DDS_DataReaderQos rti_qos;
+      rti_qos <<= qos;
+      ::DDS::ReturnCode_t retcode =
+              this->impl ()->get_default_datareader_qos (rti_qos);
+      qos <<= rti_qos;
+      return retcode;
+#else
+      return this->impl ()->get_default_datareader_qos (qos);
+#endif
     }
 
     ::DDS::ReturnCode_t
     CCM_DDS_Subscriber_i::copy_from_topic_qos (
-      ::DDS::DataReaderQos & /*a_datareader_qos*/,
-      const ::DDS::TopicQos & /*a_impl_qos*/)
+      ::DDS::DataReaderQos & a_datareader_qos,
+      const ::DDS::TopicQos & a_impl_qos)
     {
-      throw CORBA::NO_IMPLEMENT ();
-      // Add your implementation here
+      DDS4CCM_TRACE ("CCM_DDS_Subscriber_i::copy_from_topic_qos");
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ::DDS_DataReaderQos rti_qos;
+      ::DDS_TopicQos rti_topic_qos;
+
+      rti_qos <<= a_datareader_qos;
+      rti_topic_qos <<= a_impl_qos;
+      ::DDS::ReturnCode_t retcode =
+          this->impl()->copy_from_topic_qos (rti_qos,
+                                             rti_topic_qos);
+      a_datareader_qos <<= rti_qos;
+      return retcode;
+#else
+      return this->impl()->copy_from_topic_qos (a_datareader_qos,
+                                                a_impl_qos);
+#endif
     }
 
     DDSSubscriber *
