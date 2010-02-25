@@ -285,6 +285,7 @@ project(*NDDS_Lib): taolib, messaging, gen_ostream, nddslib {
 
   verbatim(gnuace, macros) {
     override no_hidden_visibility = 1
+    override no_strict_aliasing = 1
   }
 
   dynamicflags = NDDS_USER_DLL_EXPORT
