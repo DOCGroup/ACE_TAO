@@ -99,13 +99,11 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_publisher");
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-
-      ACE_UNUSED_ARG (qos);
-
       DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_i::create_publisher - "
                    "Creating Publisher\n"));
 
-      DDS_PublisherQos rti_qos = DDS_PUBLISHER_QOS_DEFAULT;
+      DDS_PublisherQos rti_qos;
+      rti_qos <<= qos;
 
       CCM_DDS_PublisherListener_i *rti_pl = 0;
       if (!CORBA::is_nil (a_listener))
@@ -238,8 +236,6 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_subscriber");
 
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      ACE_UNUSED_ARG (qos);
-
       DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_i::create_subscriber - "
                    "Creating Subscriber\n"));
 
@@ -250,8 +246,11 @@ namespace CIAO
                             CCM_DDS_SubscriberListener_i (a_listener),
                             CORBA::NO_MEMORY ());
         }
+
+      DDS_SubscriberQos rti_qos;
+      rti_qos <<= qos;
       DDSSubscriber * rti_sub =
-        this->impl ()->create_subscriber (DDS_SUBSCRIBER_QOS_DEFAULT,
+        this->impl ()->create_subscriber (rti_qos,
                                           rti_sl,
                                           mask);
 
@@ -344,8 +343,6 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_topic");
 
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      ACE_UNUSED_ARG (qos);
-
       if (impl_name == 0)
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic - "
@@ -374,9 +371,12 @@ namespace CIAO
                             CORBA::NO_MEMORY ());
         }
 
+      DDS_TopicQos rti_qos;
+      rti_qos <<= qos;
+
       DDSTopic *rti_topic = this->impl ()->create_topic (impl_name,
                                                       type_name,
-                                                      DDS_TOPIC_QOS_DEFAULT,
+                                                      rti_qos,
                                                       rti_tl,
                                                       mask);
 
