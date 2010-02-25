@@ -8,7 +8,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.7.6 and ACE-5.7.7
 
 . Added support for -mcpu and -mtune. Add TCPU=.. to your
   environment/platform_macros.GNU to specify you cpu and
-  than add cpumodelflag=1 and/or tunemodelflag=1
+  than add cpumodelflag=1 and/or tunemodelflag=1. Using
+  this with IBM Cell increased the performance significantly
 
 USER VISIBLE CHANGES BETWEEN ACE-5.7.5 and ACE-5.7.6
 ====================================================
