@@ -1,3 +1,10 @@
+Thu Feb 25 19:11:07 UTC 2010  Steven Stallion  <stallions@ociweb.com>
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+          Refined use of CPPFLAGS; -library will now only be applied to CC
+          invocations.
+
 Thu Feb 25 16:52:20 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * ace/Strategies_T.cpp:
