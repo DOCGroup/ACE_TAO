@@ -64,8 +64,6 @@ public:
   {
     TEST_TRACE ("handle_close");
     super::handle_close (fd, mask);
-    // Remove own reference which we own since creation.
-    this->remove_reference ();
     if (g_handler_deleted)
     {
       ACE_ERROR ((LM_ERROR,

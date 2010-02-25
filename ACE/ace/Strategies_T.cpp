@@ -439,7 +439,7 @@ ACE_Process_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handle
     case -1:
       {
         ACE_Errno_Guard error (errno);
-        svc_handler->close ();
+        svc_handler->destroy ();
       }
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
@@ -462,7 +462,7 @@ ACE_Process_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handle
     default: // In parent process.
       // We need to close down the <SVC_HANDLER> here because it's
       // running in the child.
-      svc_handler->close ();
+      svc_handler->destroy ();
       return 0;
     }
 }
