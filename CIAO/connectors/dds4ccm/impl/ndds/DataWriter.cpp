@@ -12,6 +12,7 @@
 #include "OfferedIncompatibleQosStatus.h"
 #include "OfferedDeadlineMissedStatus.h"
 #include "InstanceHandleSeq.h"
+#include "DataWriterQos.h"
 
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
@@ -33,9 +34,9 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_DataWriter_i::set_qos");
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      ACE_UNUSED_ARG (qos);
-      throw CORBA::NO_IMPLEMENT ();
-      // Add your implementation here
+      ::DDS_DataWriterQos rti_qos;
+      rti_qos <<= qos;
+      return this->impl()->set_qos (rti_qos);
 #else
       return this->impl ()->set_qos (qos);
 #endif
@@ -46,9 +47,12 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_DataWriter_i::get_qos");
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      ACE_UNUSED_ARG (qos);
-      throw CORBA::NO_IMPLEMENT ();
-      // Add your implementation here
+      ::DDS_DataWriterQos rti_qos;
+      rti_qos <<= qos;
+      ::DDS::ReturnCode_t retcode =
+            this->impl()->get_qos (rti_qos);
+      qos <<= rti_qos;
+      return retcode;
 #else
       return this->impl ()->get_qos (qos);
 #endif
@@ -143,6 +147,7 @@ namespace CIAO
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_LivelinessLostStatus rtistatus;
+      rtistatus <<= status;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_liveliness_lost_status (rtistatus);
       rtistatus >>= status;
       return retval;
@@ -156,6 +161,7 @@ namespace CIAO
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_OfferedDeadlineMissedStatus rtistatus;
+      rtistatus <<= status;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_offered_deadline_missed_status (rtistatus);
       rtistatus >>= status;
       return retval;
@@ -169,6 +175,7 @@ namespace CIAO
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_OfferedIncompatibleQosStatus rtistatus;
+      rtistatus <<= status;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_offered_incompatible_qos_status (rtistatus);
       rtistatus >>= status;
       return retval;
@@ -182,6 +189,7 @@ namespace CIAO
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_PublicationMatchedStatus rtistatus;
+      rtistatus <<= status;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_publication_matched_status (rtistatus);
       rtistatus >>= status;
       return retval;
@@ -201,6 +209,7 @@ namespace CIAO
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandleSeq rtiseq;
+      rtiseq <<= subscription_handles;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_matched_subscriptions (rtiseq);
       rtiseq >>= subscription_handles;
       return retval;

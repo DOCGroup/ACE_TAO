@@ -341,9 +341,9 @@ namespace CIAO
 
     ::DDS::ReturnCode_t
     CCM_DDS_Subscriber_i::set_qos (
-      const ::DDS::SubscriberQos & /*qos*/)
+      const ::DDS::SubscriberQos & qos)
     {
-      DDS_SubscriberQos rti_impl_qos;
+      ::DDS_SubscriberQos rti_impl_qos;
 /*        rti_impl_qos.presentation = qos.presentation;
       rti_impl_qos.partition = qos.partition;
       rti_impl_qos.group_data = qos.group_data;
