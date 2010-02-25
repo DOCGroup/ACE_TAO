@@ -82,6 +82,13 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.7.6 and CIAO-0.7.7
 
 . Fixed -Glfa support
 
+. Added a new tool, dance_split_plan, which will allow a user
+  to split a deployment plan into locality-constrained CDR-encoded deployment
+  plans. 
+
+. Added a new tool, dance_convert_plan, which will allow a user to validate
+  and optionally convert a XML encoded deployment plan into CDR.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.5 and CIAO-0.7.6
 =======================================================
 
