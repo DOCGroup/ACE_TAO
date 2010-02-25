@@ -242,7 +242,7 @@ namespace ACE_OS {
 #else
   extern ACE_Export
   ACE_TCHAR *mktemp (ACE_TCHAR *s);
-#endif /* !ACE_LACKS_MSTEMP */
+#endif /* !ACE_LACKS_MKTEMP */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int putenv (const char *string);

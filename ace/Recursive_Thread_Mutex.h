@@ -151,6 +151,9 @@ public:
   int get_nesting_level (void);
 
   /// Returns a reference to the recursive mutex;
+  ACE_recursive_thread_mutex_t &lock (void);
+
+  /// @deprecated Returns a reference to the recursive mutex;
   ACE_recursive_thread_mutex_t &mutex (void);
 
   /// Returns a reference to the recursive mutex's internal mutex;

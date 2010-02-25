@@ -122,7 +122,7 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_timeout
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_timeout");
 
   SVC_HANDLER *svc_handler = 0;
-  int retval = this->close (svc_handler) ? 0 : -1;
+  int const retval = this->close (svc_handler) ? 0 : -1;
 
   // Forward to the SVC_HANDLER the <arg> that was passed in as a
   // magic cookie during ACE_Connector::connect().  This gives the

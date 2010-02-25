@@ -9,6 +9,10 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_time.h"
 
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
+#include "ace/Message_Queue_NT.h"
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */

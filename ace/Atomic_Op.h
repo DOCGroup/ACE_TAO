@@ -45,6 +45,9 @@
 #  define ACE_HAS_BUILTIN_ATOMIC_OP
 # elif defined (ACE_HAS_VXATOMICLIB)
 #  define ACE_HAS_BUILTIN_ATOMIC_OP
+# elif defined (ACE_HAS_GCC_ATOMIC_BUILTINS) && (ACE_HAS_GCC_ATOMIC_BUILTINS == 1)
+#  define ACE_HAS_BUILTIN_ATOMIC_OP
+#  define ACE_USES_GCC_ATOMIC_BUILTINS 1
 # endif /* WIN32 */
 #endif /* ACE_HAS_THREADS */
 
@@ -229,9 +232,9 @@ public:
 
 private:
 
-  // This function cannot be supported by this template specialization.
-  // If you need access to an underlying lock, use the ACE_Atomic_Op_Ex
-  // template instead.
+  /// This function cannot be supported by this template specialization.
+  /// If you need access to an underlying lock, use the ACE_Atomic_Op_Ex
+  /// template instead.
   ACE_Thread_Mutex &mutex (void);
 
 private:
