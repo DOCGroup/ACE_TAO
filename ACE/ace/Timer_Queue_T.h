@@ -431,6 +431,10 @@ protected:
   virtual int dispatch_info_i (const ACE_Time_Value &current_time,
                                ACE_Timer_Node_Dispatch_Info_T<TYPE> &info);
 
+  /// Recompute when the next time is that this interval timer should fire.
+  void recompute_next_abs_interval_time (ACE_Timer_Node_T<TYPE>* expired,
+                                         const ACE_Time_Value &cur_time);
+
   /// Synchronization variable for ACE_Timer_Queue.
   /// @note The right name would be lock_, but HP/C++ will choke on that!
   ACE_LOCK mutex_;
