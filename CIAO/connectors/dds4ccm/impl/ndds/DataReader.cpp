@@ -123,6 +123,12 @@ namespace CIAO
                                      query_expression,
                                      parameters);
 
+      if (!qc)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, "CCM_DDS_DataReader_i::create_querycondition: "
+                                       "DDS return NIL as a DDSQueryCondition!\n"));
+          return ::DDS::QueryCondition::_nil ();
+        }
       CCM_DDS_QueryCondition_i *rti_qc = dynamic_cast < CCM_DDS_QueryCondition_i *> (retval.in ());
       rti_qc->set_impl (qc);
       return retval._retn ();
