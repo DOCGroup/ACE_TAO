@@ -1,3 +1,17 @@
+Thu Feb 25 16:52:20 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/Strategies_T.cpp:
+        * ace/Connector.cpp:
+        * ace/Svc_Handler.cpp:
+        * tests/run_test.lst:
+        * tests/Bug_2609_Regression_Test.cpp:
+        * tests/NonBlocking_Conn_Test.h:
+        * tests/Bug_2610_Regression_Test.cpp:
+        * tests/Process_Strategy_Test.cpp:
+        * tests/NonBlocking_Conn_Test.cpp:
+          Reverted all the changes done in attempt to fix non-blocking
+          connect test and tests for 2609/2610.
+
 Thu Feb 25 08:10:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-opensd.h:

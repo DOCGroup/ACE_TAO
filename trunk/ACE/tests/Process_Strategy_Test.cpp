@@ -441,18 +441,8 @@ int
 Counting_Service::handle_close (ACE_HANDLE,
                                 ACE_Reactor_Mask)
 {
-  // Count completed connections here only when the test is not in
-  // "process-per-connection" mode. In general, this should not be
-  // done here. Proper place for this is activate_svc_handler() but
-  // since only "process-per-connection" hooks into that function in
-  // other modes it's done here. The later creates a problem in
-  // "process-per-connection" mode since it calculates the same
-  // connection twice and as a result it cannot finalize gracefully.
-  if (OPTIONS::instance ()->concurrency_type () != Options::PROCESS)
-    {
-      // Done with another connection.
-      connection_completed ();
-    }
+  // Done with another connection.
+  connection_completed ();
 
   // Call down to base class
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::handle_close ();
