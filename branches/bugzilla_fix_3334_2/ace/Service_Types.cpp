@@ -230,7 +230,6 @@ int
 ACE_Module_Type::fini (void) const
 {
   ACE_TRACE ("ACE_Module_Type::fini");
-#if 0
   void *obj = this->object ();
   MT_Module *mod = (MT_Module *) obj;
   MT_Task *reader = mod->reader ();
@@ -245,8 +244,6 @@ ACE_Module_Type::fini (void) const
   // Close the module and delete the memory.
   mod->close (MT_Module::M_DELETE);
   return ACE_Service_Type_Impl::fini ();
-#endif
-  return 0;
 }
 
 int
