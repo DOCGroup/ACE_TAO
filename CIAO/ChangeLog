@@ -1,3 +1,9 @@
+Thu Feb 25 12:48:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+          Optimized get_one. Return false when DDS returns
+          DDS_RETCODE_NO_DATA (instead of throwing an exception).
+
 Thu Feb 25 12:43:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h:
