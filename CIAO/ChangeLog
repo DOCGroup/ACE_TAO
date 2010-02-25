@@ -1,3 +1,11 @@
+Thu Feb 25 12:43:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h:
+          Layout changes.
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+          Resolve runtime errors.
+
 Thu Feb 25 11:24:14 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
