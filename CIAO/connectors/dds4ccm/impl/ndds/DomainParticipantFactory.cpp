@@ -37,6 +37,8 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_i::create_participant");
 
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ACE_UNUSED_ARG (qos);
+
       DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipantFactory_i::create_participant - "
                    "Creating domain participant for domain <%d>\n",
                    domain_id));
@@ -49,8 +51,7 @@ namespace CIAO
                             CORBA::NO_MEMORY ());
         }
 
-      DDS_DomainParticipantQos rti_qos;
-      rti_qos <<= qos;
+      DDS_DomainParticipantQos rti_qos = DDS_PARTICIPANT_QOS_DEFAULT;
 
       DDSDomainParticipant *part = DDSDomainParticipantFactory::get_instance ()->
         create_participant (domain_id,

@@ -41,6 +41,8 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_Publisher_i::create_datawriter");
 
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ACE_UNUSED_ARG (qos);
+
       CCM_DDS_Topic_i * topic = dynamic_cast < CCM_DDS_Topic_i * > (a_topic);
 
       if (!topic)
@@ -57,8 +59,7 @@ namespace CIAO
                             CCM_DDS_DataWriterListener_i (a_listener),
                             CORBA::NO_MEMORY ());
         }
-      DDS_DataWriterQos rti_qos;
-      rti_qos <<= qos;
+      DDS_DataWriterQos rti_qos = DDS_DATAWRITER_QOS_DEFAULT;
       DDSDataWriter *rti_dw = this->impl ()->create_datawriter (
                                                             topic->get_impl (),
                                                             rti_qos,
