@@ -2033,7 +2033,7 @@ TAO_CodeGen::gen_export_files (void)
 void
 TAO_CodeGen::gen_export_file (const char *filename,
                               const char *macro,
-                              const char *msg,
+                              const char *,
                               bool for_skel)
 {
   // Svnt export macro may correctly default to skel
@@ -2076,7 +2076,7 @@ TAO_CodeGen::gen_export_file (const char *filename,
       file_str += output_path;
       file_str += '/';
     }
-    
+
   file_str += filename;
 
   TAO_OutStream os;
@@ -2220,10 +2220,10 @@ TAO_CodeGen::gen_ifndef_string (const char *fname,
           macro_name[i + offset] = '_';
         }
     }
-    
+
   ACE_OS::strcat (macro_name, "_XXXXXX");
   char * const t = ACE_OS::strstr (macro_name, "XXXXXX");
-  
+
   this->make_rand_extension (t);
 
   ACE_OS::strcat (macro_name, suffix);
@@ -3392,7 +3392,7 @@ void
 TAO_CodeGen::make_rand_extension (char * const t)
 {
   size_t const NUM_CHARS = ACE_OS::strlen (t);
-  
+
   /// Use ACE_Time_Value::msec(ACE_UINT64&) as opposed to
   /// ACE_Time_Value::msec(void) to avoid truncation.
   ACE_UINT64 msec;
