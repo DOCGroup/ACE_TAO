@@ -16,7 +16,11 @@
 #include "SubscriberListener.h"
 #include "TopicListener.h"
 #include "DomainParticipantListener.h"
+
 #include "PublisherQos.h"
+#include "SubscriberQos.h"
+#include "TopicQos.h"
+#include "DomainParticipantQos.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
@@ -666,19 +670,31 @@ namespace CIAO
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_i::set_qos (const ::DDS::DomainParticipantQos & /*qos*/)
+    CCM_DDS_DomainParticipant_i::set_qos (const ::DDS::DomainParticipantQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::set_qos");
-      throw CORBA::NO_IMPLEMENT ();
-
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ::DDS_DomainParticipantQos rti_qos;
+      rti_qos <<= qos;
+      return this->impl()->set_qos (rti_qos);
+#else
+      return this->impl()->set_qos (qos);
+#endif
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_i::get_qos (::DDS::DomainParticipantQos & /*qos*/)
+    CCM_DDS_DomainParticipant_i::get_qos (::DDS::DomainParticipantQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_qos");
-      throw CORBA::NO_IMPLEMENT ();
-
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ::DDS_DomainParticipantQos rti_qos;
+      rti_qos <<= qos;
+      ::DDS::ReturnCode_t retcode = this->impl()-> get_qos (rti_qos);
+      qos <<= rti_qos;
+      return retcode;
+#else
+      return this->impl()->get_qos (qos);
+#endif
     }
 
     ::DDS::ReturnCode_t
@@ -780,51 +796,90 @@ namespace CIAO
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_i::set_default_publisher_qos (const ::DDS::PublisherQos & /*qos*/)
+    CCM_DDS_DomainParticipant_i::set_default_publisher_qos (const ::DDS::PublisherQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::set_default_publisher_qos");
-      throw CORBA::NO_IMPLEMENT ();
-
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ::DDS_PublisherQos rti_qos;
+      rti_qos <<= qos;
+      return this->impl()->set_default_publisher_qos (rti_qos);
+#else
+      return this->impl()->set_default_publisher_qos (qos);
+#endif
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_i::get_default_publisher_qos (::DDS::PublisherQos & /*qos*/)
+    CCM_DDS_DomainParticipant_i::get_default_publisher_qos (::DDS::PublisherQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_default_publisher_qos");
-      throw CORBA::NO_IMPLEMENT ();
-
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ::DDS_PublisherQos rti_qos;
+      rti_qos <<= qos;
+      ::DDS::ReturnCode_t retcode =
+            this->impl()-> get_default_publisher_qos (rti_qos);
+      qos <<= rti_qos;
+      return retcode;
+#else
+      return this->impl()->get_default_publisher_qos (qos);
+#endif
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_i::set_default_subscriber_qos (const ::DDS::SubscriberQos & /*qos*/)
+    CCM_DDS_DomainParticipant_i::set_default_subscriber_qos (const ::DDS::SubscriberQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::set_default_subscriber_qos");
-      throw CORBA::NO_IMPLEMENT ();
-
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ::DDS_SubscriberQos rti_qos;
+      rti_qos <<= qos;
+      return this->impl()->set_default_subscriber_qos (rti_qos);
+#else
+      return this->impl()->set_default_subscriber_qos (qos);
+#endif
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_i::get_default_subscriber_qos (::DDS::SubscriberQos & /*qos*/)
+    CCM_DDS_DomainParticipant_i::get_default_subscriber_qos (::DDS::SubscriberQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_default_subscriber_qos");
-      throw CORBA::NO_IMPLEMENT ();
-
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ::DDS_SubscriberQos rti_qos;
+      rti_qos <<= qos;
+      ::DDS::ReturnCode_t retcode =
+            this->impl()-> get_default_subscriber_qos (rti_qos);
+      qos <<= rti_qos;
+      return retcode;
+#else
+      return this->impl()->get_default_subscriber_qos (qos);
+#endif
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_i::set_default_topic_qos (const ::DDS::TopicQos & /*qos*/)
+    CCM_DDS_DomainParticipant_i::set_default_topic_qos (const ::DDS::TopicQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::set_default_topic_qos");
-      throw CORBA::NO_IMPLEMENT ();
-
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ::DDS_TopicQos rti_qos;
+      rti_qos <<= qos;
+      return this->impl()->set_default_topic_qos (rti_qos);
+#else
+      return this->impl()->set_default_topic_qos (qos);
+#endif
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_i::get_default_topic_qos (::DDS::TopicQos & /*qos*/)
+    CCM_DDS_DomainParticipant_i::get_default_topic_qos (::DDS::TopicQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_default_topic_qos");
-      throw CORBA::NO_IMPLEMENT ();
-
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ::DDS_TopicQos rti_qos;
+      rti_qos <<= qos;
+      ::DDS::ReturnCode_t retcode =
+            this->impl()-> get_default_topic_qos (rti_qos);
+      qos <<= rti_qos;
+      return retcode;
+#else
+      return this->impl()->get_default_topic_qos (qos);
+#endif
     }
 
     ::DDS::ReturnCode_t
