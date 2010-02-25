@@ -217,7 +217,8 @@ LIBS            += -lsocket -lrt -laio -ldl -lnsl -lgen -lposix4 -ladm
 # Support alternate CC libraries (i.e. STLport, Tools.h++, Cstd)
 # See: http://docs.sun.com/app/docs/doc/820-7599/bkaty?a=view
 ifeq ($(stlport),1)
-  PLATFORM_STLPORT_CPPFLAGS += -library=stlport4
+  PLATFORM_STLPORT_CCFLAGS += -library=stlport4
+  PLATFORM_STLPORT_LDFLAGS += -library=stlport4
 else
   ifeq ($(rwtools),1)
     ifeq ($(stdcpplib),1)
@@ -234,7 +235,8 @@ else
       CPPFLAGS += -DACE_USES_OLD_IOSTREAMS
     endif
   endif
-  CPPFLAGS += -library=$(CC_LIBRARY)
+  CCFLAGS += -library=$(CC_LIBRARY)
+  LDFLAGS += -library=$(CC_LIBRARY)
 endif
 
 ### CC 5.10 enables annotation support by default; allow user to override
