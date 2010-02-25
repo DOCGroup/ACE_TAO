@@ -84,8 +84,8 @@ namespace CIAO
                    const ::DDS::DataReaderQos & qos)
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      DDS_DataReaderQos rti_qos;
-      rti_qos <<= qos;
+      ACE_UNUSED_ARG (qos);
+      DDS_DataReaderQos rti_qos = DDS_DATAREADER_QOS_DEFAULT;
       return this->impl ()->create_datareader (topic,
                                                rti_qos,
                                                rti_drl,
@@ -106,8 +106,8 @@ namespace CIAO
                    const ::DDS::DataReaderQos & qos)
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      DDS_DataReaderQos rti_qos;
-      rti_qos <<= qos;
+      ACE_UNUSED_ARG (qos);
+      DDS_DataReaderQos rti_qos = DDS_DATAREADER_QOS_DEFAULT;
       return this->impl ()->create_datareader (topic,
                                                rti_qos,
                                                rti_drl,
