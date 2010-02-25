@@ -1,3 +1,8 @@
+Thu Feb 25 13:28:31 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.h:
+          Added doxygen documentation.
+
 Thu Feb 25 12:48:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
