@@ -1,3 +1,8 @@
+Thu Feb 25 08:32:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/TimeConversion/Time_Conversion.mpc:
+          Cleanup
+
 Thu Feb 25 08:29:14 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h:
