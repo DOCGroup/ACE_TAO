@@ -84,9 +84,6 @@ namespace CIAO
                    "Successfully created a DDSPublisher\n"));
 
       rti_pub->enable ();
-      CCM_DDS_Publisher_i *rti_p = dynamic_cast < CCM_DDS_Publisher_i *> (retval.in ());
-      rti_p->set_impl (rti_pub);
-
       return retval._retn ();
     }
 #endif
@@ -130,14 +127,10 @@ namespace CIAO
                         CCM_DDS_Publisher_i (rti_pub),
                         CORBA::NO_MEMORY ());
 
-
       DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_i::create_publisher - "
                    "Successfully created a DDSPublisher\n"));
 
       rti_pub->enable ();
-      CCM_DDS_Publisher_i *rti_p = dynamic_cast < CCM_DDS_Publisher_i *> (retval.in ());
-      rti_p->set_impl (rti_pub);
-
       return retval._retn ();
 #else
       return this->impl ()->create_publisher (qos, a_listener, mask);
@@ -221,9 +214,6 @@ namespace CIAO
                    "Successfully created a DDSSubscriber\n"));
 
       rti_sub->enable ();
-      CCM_DDS_Subscriber_i *rti_s = dynamic_cast < CCM_DDS_Subscriber_i *> (retval.in ());
-      rti_s->set_impl (rti_sub);
-
       return retval._retn ();
     }
 #endif
@@ -272,14 +262,9 @@ namespace CIAO
                    "Successfully created a DDSSubscriber\n"));
 
       rti_sub->enable ();
-      CCM_DDS_Subscriber_i *rti_s = dynamic_cast < CCM_DDS_Subscriber_i *> (retval.in ());
-      rti_s->set_impl (rti_sub);
-
       return retval._retn ();
 #else
-      return this->impl ()->create_subscriber (qos,
-                                          a_listener,
-                                          mask);
+      return this->impl ()->create_subscriber (qos, a_listener, mask);
 #endif
     }
 
@@ -307,8 +292,11 @@ namespace CIAO
                        "Error: RTI delete_subscriber returned non-ok error code %C\n",
                        translate_retcode (retval)));
         }
-      else DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_i::delete_subscriber - "
+      else
+        {
+          DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_i::delete_subscriber - "
                         "Provided subscriber successfully deleted\n"));
+        }
 
       return retval;
 #else
@@ -322,14 +310,20 @@ namespace CIAO
       ::DDS::Subscriber_var retval = ::DDS::Subscriber::_nil ();
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDSSubscriber* sub = this->impl ()->get_builtin_subscriber ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_Subscriber_i (sub),
-                        CORBA::NO_MEMORY ());
+      if (sub)
+        {
+          ACE_NEW_THROW_EX (retval,
+                            CCM_DDS_Subscriber_i (sub),
+                            CORBA::NO_MEMORY ());
+        }
 #else
       ::DDS::Subscriber_var sub = this->impl ()->get_builtin_subscriber ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_Subscriber_i (sub.in ()),
-                        CORBA::NO_MEMORY ());
+      if (!CORBA::is_nil (sub.in ()))
+        {
+          ACE_NEW_THROW_EX (retval,
+                            CCM_DDS_Subscriber_i (sub.in ()),
+                            CORBA::NO_MEMORY ());
+        }
 #endif
       return retval._retn ();
     }
@@ -398,9 +392,6 @@ namespace CIAO
       DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "DDS_DomainParticipant_i::create_topic - "
                   "Successfully created topic with name %C and type %C\n",
                   impl_name, type_name));
-
-      CCM_DDS_Topic_i *tp = dynamic_cast < CCM_DDS_Topic_i *> (retval.in ());
-      tp->set_impl (rti_topic);
 
       return retval._retn ();
 #else
@@ -477,9 +468,6 @@ namespace CIAO
                       "Successfully created topic with name %C and type %C\n",
                       impl_name, type_name));
 
-          CCM_DDS_Topic_i *tp = dynamic_cast < CCM_DDS_Topic_i *> (retval.in ());
-          tp->set_impl (rti_topic);
-
           return retval._retn ();
         }
       else
@@ -518,8 +506,11 @@ namespace CIAO
                        "Error: RTI delete_topic returned non-ok error code %C\n",
                        translate_retcode (retval)));
         }
-      else DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic - "
+      else
+        {
+           DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic - "
                         "Provided topic successfully deleted\n"));
+        }
 
       return retval;
 #else
@@ -560,14 +551,20 @@ namespace CIAO
       ::DDS::TopicDescription_var retval = ::DDS::TopicDescription::_nil ();
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDSTopicDescription* topic = this->impl ()->lookup_topicdescription (name);
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_TopicDescription_i (topic),
-                        CORBA::NO_MEMORY ());
+      if (topic)
+        {
+          ACE_NEW_THROW_EX (retval,
+                            CCM_DDS_TopicDescription_i (topic),
+                            CORBA::NO_MEMORY ());
+        }
 #else
       ::DDSTopicDescription_var topic = this->impl ()->lookup_topicdescription (name);
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_TopicDescription_i (topic.in ()),
-                        CORBA::NO_MEMORY ());
+      if (!CORBA::is_ni (topic.in ()))
+        {
+          ACE_NEW_THROW_EX (retval,
+                            CCM_DDS_TopicDescription_i (topic.in ()),
+                            CORBA::NO_MEMORY ());
+        }
 #endif
       return retval._retn ();
     }
@@ -622,9 +619,6 @@ namespace CIAO
       DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "DDS_DomainParticipant_i::create_contentfilteredtopic - "
                    "Successfully created topic with name <%C> and filter expression <%C>\n",
                    name, filter_expression));
-
-      CCM_DDS_ContentFilteredTopic_i *tp = dynamic_cast < CCM_DDS_ContentFilteredTopic_i *> (retval.in ());
-      tp->set_impl (rti_cft);
 
       return retval._retn ();
 #else
@@ -690,7 +684,6 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_qos");
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_DomainParticipantQos rti_qos;
-      rti_qos <<= qos;
       ::DDS::ReturnCode_t retcode = this->impl()-> get_qos (rti_qos);
       qos <<= rti_qos;
       return retcode;
@@ -816,9 +809,7 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_default_publisher_qos");
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_PublisherQos rti_qos;
-      rti_qos <<= qos;
-      ::DDS::ReturnCode_t retcode =
-            this->impl()-> get_default_publisher_qos (rti_qos);
+      ::DDS::ReturnCode_t retcode = this->impl()-> get_default_publisher_qos (rti_qos);
       qos <<= rti_qos;
       return retcode;
 #else
@@ -845,7 +836,6 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_default_subscriber_qos");
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_SubscriberQos rti_qos;
-      rti_qos <<= qos;
       ::DDS::ReturnCode_t retcode =
             this->impl()-> get_default_subscriber_qos (rti_qos);
       qos <<= rti_qos;
@@ -874,7 +864,6 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_default_topic_qos");
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_TopicQos rti_qos;
-      rti_qos <<= qos;
       ::DDS::ReturnCode_t retcode =
             this->impl()-> get_default_topic_qos (rti_qos);
       qos <<= rti_qos;
@@ -903,7 +892,6 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_discovered_participant_data");
       throw CORBA::NO_IMPLEMENT ();
-
     }
 
     ::DDS::ReturnCode_t
@@ -925,7 +913,6 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_discovered_topic_data");
       throw CORBA::NO_IMPLEMENT ();
-
     }
 
     ::CORBA::Boolean
@@ -965,14 +952,20 @@ namespace CIAO
       ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_StatusCondition_i (sc),
-                        CORBA::NO_MEMORY ());
+      if (sc)
+        {
+          ACE_NEW_THROW_EX (retval,
+                            CCM_DDS_StatusCondition_i (sc),
+                            CORBA::NO_MEMORY ());
+        }
 #else
       ::DDS::StatusCondition_var sc = this->impl ()->get_statuscondition ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_StatusCondition_i (sc.in ()),
-                        CORBA::NO_MEMORY ());
+      if (!CORBA::is_nil (sc.in ()))
+        {
+          ACE_NEW_THROW_EX (retval,
+                            CCM_DDS_StatusCondition_i (sc.in ()),
+                            CORBA::NO_MEMORY ());
+        }
 #endif
       return retval._retn ();
     }

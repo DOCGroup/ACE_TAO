@@ -13,8 +13,8 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    CCM_DDS_QueryCondition_i::CCM_DDS_QueryCondition_i ()
-      : impl_ (0)
+    CCM_DDS_QueryCondition_i::CCM_DDS_QueryCondition_i (DDSQueryCondition * qc)
+      : impl_ (qc)
     {
     }
 
@@ -49,19 +49,25 @@ namespace CIAO
     ::DDS::DataReader_ptr
     CCM_DDS_QueryCondition_i::get_datareader (void)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
-      ACE_NEW_THROW_EX (dds_reader,
-                        CCM_DDS_DataReader_i (),
-                        CORBA::NO_MEMORY ());
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDSDataReader* reader = this->impl ()->get_datareader ();
-      CCM_DDS_DataReader_i *rti_dr = dynamic_cast < CCM_DDS_DataReader_i *>(dds_reader.in ());
-      rti_dr->set_impl (reader);
-
-      return dds_reader._retn ();
+      if (reader)
+        {
+          ACE_NEW_THROW_EX (dds_reader,
+                            CCM_DDS_DataReader_i (reader),
+                            CORBA::NO_MEMORY ());
+        }
 #else
-      return this->impl ()->get_datareader ();
+      ::DDS::DataReader_var reader = this->impl ()->get_datareader ();
+      if (!CORBA::is_nil (reader.in ()))
+        {
+          ACE_NEW_THROW_EX (dds_reader,
+                            CCM_DDS_DataReader_i (reader.in ()),
+                            CORBA::NO_MEMORY ());
+        }
 #endif
+      return dds_reader._retn ();
     }
 
     char *
@@ -80,8 +86,7 @@ namespace CIAO
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDS_StringSeq parameters;
-      ::DDS::ReturnCode_t retval = this->impl ()->get_query_parameters (
-                                                         parameters);
+      ::DDS::ReturnCode_t const retval = this->impl ()->get_query_parameters (parameters);
       query_parameters <<= parameters;
       return retval;
 #else

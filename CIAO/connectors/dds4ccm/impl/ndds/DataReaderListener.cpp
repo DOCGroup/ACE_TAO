@@ -32,16 +32,15 @@ namespace CIAO
       const ::DDS_RequestedDeadlineMissedStatus & status)
     {
       DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_i::on_requested_deadline_missed");
+      ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
+      ACE_NEW (dds_reader, 
+               CCM_DDS_DataReader_i (the_reader));
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS::RequestedDeadlineMissedStatus ddsstatus;
       ddsstatus <<= status;
-      ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
-      ACE_NEW (dds_reader, CCM_DDS_DataReader_i ());
-      CCM_DDS_DataReader_i *rti_dr = dynamic_cast < CCM_DDS_DataReader_i *>(dds_reader.in ());
-      rti_dr->set_impl (the_reader);
       this->impl_->on_requested_deadline_missed (dds_reader.in (), ddsstatus);
 #else
-      this->impl_->on_requested_deadline_missed (the_reader, status);
+      this->impl_->on_requested_deadline_missed (dds_reader.in (), status);
 #endif
     }
 
@@ -51,16 +50,15 @@ namespace CIAO
       const ::DDS_RequestedIncompatibleQosStatus & status)
     {
       DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_i::on_requested_incompatible_qos");
+      ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
+      ACE_NEW (dds_reader, 
+               CCM_DDS_DataReader_i (the_reader));
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS::RequestedIncompatibleQosStatus ddsstatus;
       ddsstatus <<= status;
-      ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
-      ACE_NEW (dds_reader, CCM_DDS_DataReader_i ());
-      CCM_DDS_DataReader_i *rti_dr = dynamic_cast < CCM_DDS_DataReader_i *>(dds_reader.in ());
-      rti_dr->set_impl (the_reader);
       this->impl_->on_requested_incompatible_qos (dds_reader.in (), ddsstatus);
 #else
-      this->impl_->on_requested_incompatible_qos (the_reader, status);
+      this->impl_->on_requested_incompatible_qos (dds_reader.in (), status);
 #endif
     }
 
@@ -70,16 +68,15 @@ namespace CIAO
       const ::DDS_SampleRejectedStatus & status)
     {
       DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_i::on_sample_rejected");
+      ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
+      ACE_NEW (dds_reader, 
+               CCM_DDS_DataReader_i (the_reader));
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS::SampleRejectedStatus ddsstatus;
       ddsstatus <<= status;
-      ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
-      ACE_NEW (dds_reader, CCM_DDS_DataReader_i ());
-      CCM_DDS_DataReader_i *rti_dr = dynamic_cast < CCM_DDS_DataReader_i *>(dds_reader.in ());
-      rti_dr->set_impl (the_reader);
       this->impl_->on_sample_rejected (dds_reader.in (), ddsstatus);
 #else
-      this->impl_->on_sample_rejected (the_reader, status);
+      this->impl_->on_sample_rejected (dds_reader.in (), status);
 #endif
     }
 
@@ -89,16 +86,15 @@ namespace CIAO
       const ::DDS_LivelinessChangedStatus & status)
     {
       DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_i::on_liveliness_changed");
+      ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
+      ACE_NEW (dds_reader, 
+               CCM_DDS_DataReader_i (the_reader));
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS::LivelinessChangedStatus ddsstatus;
       ddsstatus <<= status;
-      ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
-      ACE_NEW (dds_reader, CCM_DDS_DataReader_i ());
-      CCM_DDS_DataReader_i *rti_dr = dynamic_cast < CCM_DDS_DataReader_i *>(dds_reader.in ());
-      rti_dr->set_impl (the_reader);
       this->impl_->on_liveliness_changed (dds_reader.in (), ddsstatus);
 #else
-      this->impl_->on_liveliness_changed (the_reader, status);
+      this->impl_->on_liveliness_changed (dds_reader.in (), status);
 #endif
     }
 
@@ -106,14 +102,13 @@ namespace CIAO
     CCM_DDS_DataReaderListener_i::on_data_available(::DDSDataReader *the_reader)
     {
       DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_i::on_data_available");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
-      ACE_NEW (dds_reader, CCM_DDS_DataReader_i ());
-      CCM_DDS_DataReader_i *rti_dr = dynamic_cast < CCM_DDS_DataReader_i *>(dds_reader.in ());
-      rti_dr->set_impl (the_reader);
+      ACE_NEW (dds_reader, 
+               CCM_DDS_DataReader_i (the_reader));
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       this->impl_->on_data_available (dds_reader.in ());
 #else
-      this->impl_->on_data_available (the_reader);
+      this->impl_->on_data_available (dds_reader.in ());
 #endif
     }
 
@@ -123,16 +118,15 @@ namespace CIAO
       const ::DDS_SubscriptionMatchedStatus & status)
     {
       DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_i::on_subscription_matched");
+      ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
+      ACE_NEW (dds_reader, 
+               CCM_DDS_DataReader_i (the_reader));
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS::SubscriptionMatchedStatus ddsstatus;
       ddsstatus <<= status;
-      ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
-      ACE_NEW (dds_reader, CCM_DDS_DataReader_i ());
-      CCM_DDS_DataReader_i *rti_dr = dynamic_cast < CCM_DDS_DataReader_i *>(dds_reader.in ());
-      rti_dr->set_impl (the_reader);
       this->impl_->on_subscription_matched (dds_reader.in (), ddsstatus);
 #else
-      this->impl_->on_subscription_matched (the_reader, status);
+      this->impl_->on_subscription_matched (dds_reader.in (), status);
 #endif
     }
 
@@ -142,16 +136,15 @@ namespace CIAO
       const ::DDS_SampleLostStatus & status)
     {
       DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_i::on_sample_lost");
+      ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
+      ACE_NEW (dds_reader, 
+               CCM_DDS_DataReader_i (the_reader));
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS::SampleLostStatus ddsstatus;
       ddsstatus <<= status;
-      ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
-      ACE_NEW (dds_reader, CCM_DDS_DataReader_i ());
-      CCM_DDS_DataReader_i *rti_dr = dynamic_cast < CCM_DDS_DataReader_i *>(dds_reader.in ());
-      rti_dr->set_impl (the_reader);
       this->impl_->on_sample_lost (dds_reader.in (), ddsstatus);
 #else
-      this->impl_->on_sample_lost (the_reader, status);
+      this->impl_->on_sample_lost (dds_reader.in (), status);
 #endif
     }
 

@@ -7,8 +7,8 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    CCM_DDS_ReadCondition_i::CCM_DDS_ReadCondition_i (void)
-      : impl_ (0)
+    CCM_DDS_ReadCondition_i::CCM_DDS_ReadCondition_i (DDSReadCondition * rc)
+      : impl_ (rc)
     {
     }
 
@@ -44,13 +44,13 @@ namespace CIAO
     CCM_DDS_ReadCondition_i::get_datareader (void)
     {
       ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_DataReader_i (),
-                        CORBA::NO_MEMORY ());
-      DDSDataReader* rd = this->impl ()->get_datareader ();
-      CCM_DDS_DataReader_i *rti_dr = dynamic_cast < CCM_DDS_DataReader_i *>(retval.in ());
-      rti_dr->set_impl (rd);
-
+      ::DDSDataReader* rd = this->impl ()->get_datareader ();
+      if (rd)
+        {
+          ACE_NEW_THROW_EX (retval,
+                            CCM_DDS_DataReader_i (rd),
+                            CORBA::NO_MEMORY ());
+        }
       return retval._retn ();
     }
 
