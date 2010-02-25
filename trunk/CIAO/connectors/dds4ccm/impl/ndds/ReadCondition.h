@@ -37,7 +37,7 @@ namespace CIAO
     {
     public:
       /// Constructor
-      CCM_DDS_ReadCondition_i (void);
+      CCM_DDS_ReadCondition_i (DDSReadCondition * rc);
 
       /// Destructor
       virtual ~CCM_DDS_ReadCondition_i (void);

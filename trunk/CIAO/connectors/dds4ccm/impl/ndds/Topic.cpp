@@ -39,7 +39,6 @@ namespace CIAO
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_TopicQos ddsqos;
-      ddsqos <<= qos;
       ::DDS_ReturnCode_t const retval = this->impl ()->get_qos (ddsqos);
       qos <<= ddsqos;
       return retval;
@@ -95,8 +94,9 @@ namespace CIAO
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDS_InconsistentTopicStatus ddsstatus;
-      ddsstatus <<= a_status;
-      return this->impl ()->get_inconsistent_topic_status (ddsstatus);
+      ::DDS::ReturnCode_t const retval = this->impl ()->get_inconsistent_topic_status (ddsstatus);
+      a_status <<= ddsstatus;;
+      return retval;
 #else
       return this->impl ()->get_inconsistent_topic_status (a_status);
 #endif
@@ -171,14 +171,20 @@ namespace CIAO
       ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDSDomainParticipant* p = this->impl ()->get_participant ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_DomainParticipant_i (p),
-                        CORBA::NO_MEMORY ());
+      if (p)
+        {
+          ACE_NEW_THROW_EX (retval,
+                            CCM_DDS_DomainParticipant_i (p),
+                            CORBA::NO_MEMORY ());
+        }
 #else
       ::DDS::DomainParticipant_var p = this->impl ()->get_participant ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_DomainParticipant_i (p.in ()),
-                        CORBA::NO_MEMORY ());
+      if (!CORBA::is_nil (p.in ()))
+        {
+          ACE_NEW_THROW_EX (retval,
+                            CCM_DDS_DomainParticipant_i (p.in ()),
+                            CORBA::NO_MEMORY ());
+        }
 #endif
       return retval._retn ();
     }

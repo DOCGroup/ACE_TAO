@@ -11,7 +11,8 @@
 template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_StateListen_T<DDS_TYPE, CCM_TYPE>::DDS_StateListen_T (void) :
   data_control_ (new CCM_DDS_StateListenerControl_T
-    < ::CCM_DDS::CCM_StateListenerControl> ())
+    < ::CCM_DDS::CCM_StateListenerControl> ()),
+  rti_reader_ (0)
 {
 }
 

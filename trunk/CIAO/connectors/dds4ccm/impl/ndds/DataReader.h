@@ -36,7 +36,7 @@ namespace CIAO
     {
     public:
       /// Constructor
-      CCM_DDS_DataReader_i (void);
+      CCM_DDS_DataReader_i (DDSDataReader *dr);
 
       /// Destructor
       virtual ~CCM_DDS_DataReader_i (void);

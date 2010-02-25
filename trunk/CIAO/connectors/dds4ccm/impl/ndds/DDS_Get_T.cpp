@@ -9,7 +9,8 @@
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::DDS_Get_T (void)
+DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::DDS_Get_T (void) :
+  rti_reader_ (0)
 {
 }
 
