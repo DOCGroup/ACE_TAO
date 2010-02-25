@@ -1,3 +1,11 @@
+USER VISIBLE CHANGES BETWEEN ACE-5.7.6 and ACE-5.7.7
+====================================================
+
+. Added support for GCC builtin Atomic instructions which
+  are enabled with GCC >= 4.1 for PPC32/PPC64/IA64
+
+. Improved autoconf support for debian
+
 USER VISIBLE CHANGES BETWEEN ACE-5.7.5 and ACE-5.7.6
 ====================================================
 
