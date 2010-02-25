@@ -7,6 +7,13 @@
 #define ACE_CONFIG_H
 #include /**/ "ace/pre.h"
 
+// System include files are not in sys/, this gets rid of warning.
+#define __NO_INCLUDE_WARN__
+
+#define __FREEBSDCODE__
+#include <param.h>
+#undef __FREEBSDCODE__
+
 #if ! defined (__ACE_INLINE__)
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
@@ -69,7 +76,6 @@
 #define ACE_HAS_POSIX_NONBLOCK
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
-//#define ACE_HAS_REENTRANT_FUNCTIONS
 #define ACE_HAS_SCANDIR
 #define ACE_HAS_SIGACTION_CONSTP2
 #define ACE_HAS_SIGINFO_T
@@ -81,6 +87,7 @@
 #define ACE_HAS_SOCKADDR_IN6_SIN6_LEN
 #define ACE_HAS_SOCKADDR_IN_SIN_LEN
 #define ACE_HAS_SOCKADDR_MSG_NAME
+#define ACE_HAS_SOCKLEN_T
 #define ACE_HAS_SSIZE_T
 #define ACE_HAS_STREAMS
 #define ACE_HAS_STRINGS
@@ -92,7 +99,9 @@
 #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
 
 #define ACE_LACKS_ALPHASORT_PROTOTYPE
+#define ACE_LACKS_CEILL
 #define ACE_LACKS_CONST_TIMESPEC_PTR
+#define ACE_LACKS_FLOORL
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_ISCTYPE
 #define ACE_LACKS_MADVISE
@@ -143,15 +152,6 @@
 #if !defined (ACE_USE_RCSID)
 # define ACE_USE_RCSID 0
 #endif /* ! ACE_USE_RCSID */
-
-// System include files are not in sys/, this gets rid of warning.
-#define __NO_INCLUDE_WARN__
-
-// "changes signedness" error (OS.i and many other files)
-#define ACE_HAS_SOCKLEN_T
-// LSOCK.cpp uses a macro from param.h, not included
-#define ALIGNBYTES (sizeof(int) - 1)
-#define ALIGN(p) (((unsigned)p + ALIGNBYTES) & ~ALIGNBYTES)
 
 #if ACE_LYNXOS_MAJOR == 4 && ACE_LYNXOS_MINOR == 0
 # define ACE_LACKS_GETOPT_PROTOTYPE

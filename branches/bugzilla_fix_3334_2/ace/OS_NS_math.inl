@@ -22,6 +22,22 @@ namespace ACE_OS {
 #endif
   }
 
+  ACE_INLINE long double
+  floor (long double x)
+  {
+#if defined (ACE_LACKS_FLOORL)
+    // This method computes the largest integral value not greater than x.
+    if(x > 0)
+      return static_cast<long> (x);
+    else if ((static_cast<long> (x) < x) || (static_cast<long> (x) > x) )
+      return static_cast<long>(x) - 1;
+    else
+      return x;
+#else
+    return ::floorl (x);
+#endif
+  }
+
   ACE_INLINE double
   ceil (double x)
   {
@@ -35,6 +51,22 @@ namespace ACE_OS {
       return x;
 #else
     return ::ceil (x);
+#endif
+  }
+
+  ACE_INLINE long double
+  ceil (long double x)
+  {
+#if defined (ACE_LACKS_CEILL)
+    // This method computes the smallest integral value not less than x.
+    if (x < 0)
+      return static_cast<long> (x);
+    else if ((static_cast<long> (x) < x) || (static_cast<long> (x) > x))
+      return static_cast<long> (x) + 1;
+    else
+      return x;
+#else
+    return ::ceill (x);
 #endif
   }
 
