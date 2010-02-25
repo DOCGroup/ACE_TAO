@@ -33,6 +33,7 @@ Buffer_Stream_Test
 Bug_1576_Regression_Test
 Bug_1890_Regression_Test
 Bug_2368_Regression_Test: ALL !DISABLED
+Bug_2434_Regression_Test
 Bug_2497_Regression_Test
 Bug_2540_Regression_Test
 #Bug_2609_Regression_Test: !ST !ACE_FOR_TAO
@@ -160,6 +161,7 @@ Bug_3332_Regression_Test
 Reactor_Dispatch_Order_Test
 Reactor_Dispatch_Order_Test_Dev_Poll:
 Reactor_Exceptions_Test
+Reactor_Fairness_Test: !FIXED_BUGS_ONLY
 Reactor_Notify_Test: !ST !ACE_FOR_TAO
 Reactor_Notification_Queue_Test
 Reactor_Performance_Test: !ACE_FOR_TAO

@@ -52,7 +52,6 @@ export ACE_ROOT := $(shell pwd)/$(ACE_SUBDIR)
 export TAO_ROOT := $(ACE_ROOT)/TAO
 export CIAO_ROOT := $(TAO_ROOT)/CIAO
 export DANCE_ROOT := $(CIAO_ROOT)/DAnCE
-export DDS_ROOT := $(CIAO_ROOT)/connectors/dds4ccm
 export LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):$(ACE_ROOT)/lib
 export QTDIR := /usr/share/qt4
 
@@ -194,13 +193,6 @@ install: build
 
 	$(MAKE) -C objdir install DESTDIR=$(CURDIR)/$(DT)
 	$(MAKE) -C objdir/TAO install DESTDIR=$(CURDIR)/$(DT)
-
-#	Rename the catior utility, it already exists in another package
-	mv $(DT)/usr/bin/catior $(DT)/usr/bin/tao-catior
-
-#       Multiple README
-	cp $(TAO_ROOT)/utils/catior/README $(TAO_ROOT)/utils/catior/README.catior
-	cp $(TAO_ROOT)/utils/nslist/README $(TAO_ROOT)/utils/nslist/README.nslist
 
 #	We provide scripts replacement for tao_idl and tao_ifr ; they
 #	automatically define ACE_ROOT and TAO_ROOT

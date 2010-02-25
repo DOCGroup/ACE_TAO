@@ -1,7 +1,7 @@
 # Set the version number here.
-%define ACEVER  5.7.5
-%define TAOVER  1.7.5
-%define CIAOVER 0.7.5
+%define ACEVER  5.7.6
+%define TAOVER  1.7.6
+%define CIAOVER 0.7.6
 
 # Conditional build
 # Default values are
@@ -2356,6 +2356,8 @@ fi
 %doc TAO/PROBLEM-REPORT-FORM
 %doc TAO/VERSION
 %doc TAO/README
+%doc TAO/utils/catior/README.catior
+%doc TAO/utils/catior/README.nslist
 
 # ---------------- tao-cosnaming ----------------
 

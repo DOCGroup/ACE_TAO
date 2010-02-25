@@ -83,6 +83,8 @@ enable-auto-props = yes
 *.aspx=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.cpp=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.cxx=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.patch=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.dpatch=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.cc=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.C=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.c=svn:eol-style=native;svn:keywords=Author Date Id Revision

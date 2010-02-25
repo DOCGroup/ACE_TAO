@@ -85,7 +85,7 @@ static void
 connection_completed (void)
 {
   // Increment connection counter.
-  connections++;
+  ++connections;
 
   // If all connections have been serviced.
   if (connections == ACE_MAX_ITERATIONS + 1)

@@ -2,12 +2,12 @@
 ## 02-qt4.dpatch by Thomas Girard <thomas.g.girard@free.fr>
 ##
 ## All lines beginning with `## DP:' are a description of the patch.
-## DP: detect Qt4 instead of Qt3
+## DP: use Qt4 instead of Qt3
 
 @DPATCH@
 --- ACE_wrappers.orig/m4/ace.m4
 +++ ACE_wrappers/m4/ace.m4
-@@ -1265,18 +1265,18 @@
+@@ -1195,18 +1195,18 @@
  AC_DEFUN([ACE_PATH_QT],
  [
   ac_qt_found=no
