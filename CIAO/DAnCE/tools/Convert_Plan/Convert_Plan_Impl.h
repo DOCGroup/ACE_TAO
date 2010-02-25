@@ -21,6 +21,6 @@ namespace DAnCE
     static Deployment::DeploymentPlan * read_cdr_plan (const char *filename);
     static bool write_cdr_plan (const char *filename, Deployment::DeploymentPlan &plan);
   };
-};
+}
 
 #endif
