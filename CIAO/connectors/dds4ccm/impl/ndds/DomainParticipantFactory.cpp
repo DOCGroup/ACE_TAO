@@ -5,6 +5,7 @@
 #include "DomainParticipantListener.h"
 #include "DomainParticipantFactoryQos.h"
 #include "DomainParticipantQos.h"
+
 #include "Utils.h"
 
 #include "dds4ccm/impl/logger/Log_Macros.h"
@@ -51,11 +52,9 @@ namespace CIAO
                             CORBA::NO_MEMORY ());
         }
 
-      DDS_DomainParticipantQos rti_qos = DDS_PARTICIPANT_QOS_DEFAULT;
-
       DDSDomainParticipant *part = DDSDomainParticipantFactory::get_instance ()->
         create_participant (domain_id,
-                            rti_qos,
+                            DDS_PARTICIPANT_QOS_DEFAULT,
                             rti_dpl,
                             mask);
 
@@ -259,7 +258,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_i::set_default_participant_qos");
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      ::DDS_DomainParticipantQos rti_qos;
+      DDS_DomainParticipantQos rti_qos;
       rti_qos <<= qos;
       return DDSDomainParticipantFactory::get_instance ()->set_default_participant_qos (rti_qos);
 #else
@@ -272,10 +271,9 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_i::get_default_participant_qos");
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      ::DDS_DomainParticipantQos rti_qos;
-      rti_qos <<= qos;
+      DDS_DomainParticipantQos rti_qos;
       ::DDS::ReturnCode_t retcode =
-          DDSDomainParticipantFactory::get_instance ()->get_default_participant_qos (rti_qos);
+        DDSDomainParticipantFactory::get_instance ()->get_default_participant_qos (rti_qos);
       qos <<= rti_qos;
       return retcode;
 #else
@@ -288,7 +286,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_i::set_qos");
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      ::DDS_DomainParticipantFactoryQos rti_qos;
+      DDS_DomainParticipantFactoryQos rti_qos;
       rti_qos <<= qos;
       return DDSDomainParticipantFactory::get_instance ()->set_qos (rti_qos);
 #else
@@ -301,10 +299,10 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_i::get_qos");
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      ::DDS_DomainParticipantFactoryQos rti_qos;
+      DDS_DomainParticipantFactoryQos rti_qos;
+      ::DDS::ReturnCode_t retcode =
+        DDSDomainParticipantFactory::get_instance ()->get_qos (rti_qos);
       rti_qos <<= qos;
-      ::DDS::ReturnCode_t retcode = DDSDomainParticipantFactory::get_instance ()->get_qos (rti_qos);
-      qos <<= rti_qos;
       return retcode;
 #else
       return DDSDomainParticipantFactory::get_instance ()->get_qos (qos);
