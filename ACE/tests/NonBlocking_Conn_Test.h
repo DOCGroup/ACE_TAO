@@ -33,18 +33,11 @@ public:
 
   enum Connection_Status
     {
-      Conn_SUCCEEDED,
-      Conn_FAILED
+      SUCCEEDED,
+      FAILED
     };
 
-  enum Completion_Status
-    {
-      Comp_YES,
-      Comp_NO,
-      Comp_IGNORE
-    };
-
-  Svc_Handler (bool is_ref_counted = false);
+  Svc_Handler (void);
 
   void connection_status (Connection_Status &status,
                           int &completion_counter);
@@ -56,7 +49,6 @@ public:
 
   Connection_Status *status_;
   int *completion_counter_;
-  bool is_ref_counted_;
 };
 
 #endif /* NONBLOCKING_CONN_TEST_H */
