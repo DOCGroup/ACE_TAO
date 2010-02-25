@@ -1,3 +1,8 @@
+Thu Feb 25 08:16:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/tools/Split_Plan/Split_Plan.mpc:
+          Added missing base projects
+
 Thu Feb 25 07:46:04 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReader.cpp:
