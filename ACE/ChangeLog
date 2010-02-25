@@ -1,3 +1,11 @@
+Thu Feb 25 21:42:13 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * configure.ac: Use AC_CHECK_DECL rather than ACE_CHECK_LACKS_FUNCS
+          for ceill() and floorl(). On Solaris 9 the symbols show up in
+          some library (possibly as a stub) but aren't available; this
+          fools ACE_CHECK_LACKS_FUNC. There's probably a better way to
+          integrate this into ACE_CHECKS_LACKS_FUNCS but I don't know how.
+
 Thu Feb 25 22:07:25 UTC 2010  Chris Cleeland  <cleeland@ociweb.com>
 
         * tests/Timer_Queue_Test.cpp (test_interval_timer):
