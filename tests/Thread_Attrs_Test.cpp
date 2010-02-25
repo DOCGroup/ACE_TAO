@@ -83,7 +83,11 @@ Stack_Size_Check::svc (void)
   my_size = this->stack_size_;
 #endif /* __USE_GNU */
 
-  if (my_size != this->stack_size_)
+  // The Posix docs say that the size set for the threads stack will be the
+  // *minimum* size allocated (the actual size may be bigger because of
+  // a) pagesize rounding, b) guardsize addition) so we can really only
+  // check if we have gotten *at least* what we asked for.
+  if (my_size < this->stack_size_)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%t: My stack size attr %B; expected %B\n"),
@@ -127,7 +131,7 @@ run_main (int, ACE_TCHAR *[])
 
   int status = 0;
 #if defined (ACE_HAS_THREADS)
-  Stack_Size_Check size_checker (42*1024);
+  Stack_Size_Check size_checker (40*1024);
   status = size_checker.open(0);
   if (status == 0)
     {

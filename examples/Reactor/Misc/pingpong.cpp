@@ -80,8 +80,10 @@ Ping_Pong::Ping_Pong (char b[], ACE_HANDLE f)
     pid_ (ACE_OS::getpid ()),
     handle_ (f)
 {
-  *((int *) this->buf_) = (int) this->pid_;
-  *((int *) (this->buf_ + sizeof (int))) = 0;
+  int *pi_buf = (int *) this->buf_;
+  *(pi_buf) = (int) this->pid_;
+  pi_buf = (int *) (this->buf_ + sizeof (int));
+  *(pi_buf) = 0;
   ACE_OS::strcpy (this->buf_ + (2 * sizeof (int)), b);
   this->buf_[this->buflen_ - 1] = '\n';
   this->buf_[this->buflen_] = '\0';

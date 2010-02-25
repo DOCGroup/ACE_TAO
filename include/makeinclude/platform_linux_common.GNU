@@ -33,9 +33,9 @@ PLATFORM_GTK_CPPFLAGS=$(shell gtk-config --cflags)
 PLATFORM_GTK_LIBS    =$(shell gtk-config --libs)
 PLATFORM_GTK_LDFLAGS =
 
-PLATFORM_FOX_CPPFLAGS=
-PLATFORM_FOX_LIBS=-lFOX
-PLATFORM_FOX_LDFLAGS=
+PLATFORM_FOX_CPPFLAGS ?= -I/usr/include/fox
+PLATFORM_FOX_LIBS     ?= -lFOX
+PLATFORM_FOX_LDFLAGS  ?=
 
 # NOTE: we only support wxWindows over GTK
 PLATFORM_WX_CPPFLAGS= $(shell wx-config --cxxflags) $(PLATFORM_GTK_CPPFLAGS)
@@ -130,8 +130,8 @@ else
     ifneq (,$(HOST_ROOT))
       TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/ace_gperf
       TAO_IDL = $(HOST_ROOT)/bin/tao_idl
-      TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2
       TAO_IDL_DEP = $(TAO_IDL)
+      TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/TAO/CIAO/bin/tao_idl3_to_idl2
       TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
       # make sure to use the target compiler, not the cross-compiler
       # as preprocessor for the cross-compiled idl tools

@@ -1,5 +1,7 @@
 # $Id$
 
+static_libs_only=1
+
 include $(ACE_ROOT)/include/makeinclude/platform_macosx_common.GNU
 
 XCODE:=/Developer
@@ -8,14 +10,22 @@ ifeq ($(IPHONE_TARGET), SIMULATOR)
   IPHONE_PLATFORM:=$(XCODE)/Platforms/iPhoneSimulator.platform/Developer
   IPHONE_SDK:=$(IPHONE_PLATFORM)/SDKs/iPhoneSimulator${IPHONE_VERSION}.sdk
   IPHONE_HARDWARE_ARCHITECTURE=i386
+
+  # crt1.10.6.o is missing under MacOSX 10.6, fallback to 10.5
+  # until apple provides the missing crt1.10.6.o
+  CFLAGS   += -mmacosx-version-min=10.5
+  CXXFLAGS += -mmacosx-version-min=10.5
+  LDFLAGS  += -mmacosx-version-min=10.5
 endif
 
 ifeq ($(IPHONE_TARGET), HARDWARE)
+  CROSS-COMPILE=1
   IPHONE_PLATFORM:=$(XCODE)/Platforms/iPhoneOS.platform/Developer
   IPHONE_SDK:=$(IPHONE_PLATFORM)/SDKs/iPhoneOS${IPHONE_VERSION}.sdk
   IPHONE_HARDWARE_ARCHITECTURE=armv6
   CODESIGN_ALLOCATE:=$(IPHONE_PLATFORM)/usr/bin/codesign_allocate
   POSTLINK=; codesign -f -s "iPhone Developer" $(BIN)
+  rwho = 0
 endif
 
 CC:=$(IPHONE_PLATFORM)/usr/bin/gcc

@@ -11,8 +11,7 @@
 // = DESCRIPTION
 //      This test program validates the functionality of the
 //      ACE_Condition<ACE_Recursive_Thread_Mutex> template
-//      specialization when combined with the
-//      ACE_Thread_Timer_Queue_Adapter on Win32 and Posix pthreads.
+//      specialization.
 //
 // = AUTHOR
 //    Stephen Howard <stephen.e.howard@lmco.com> and
@@ -68,8 +67,9 @@ private:
 
 // These are for the basic functionality tests.
 ACE_SYNCH_RECURSIVE_MUTEX mutex_;
-ACE_SYNCH_RECURSIVE_CONDITION condition_(mutex_);
-// Test driver sets this to non-zero before spawning and to zero for waiter.
+ACE_Condition<ACE_SYNCH_RECURSIVE_MUTEX> condition_ (mutex_);
+// Test driver sets this to non-zero before spawning and to zero for
+// waiter.
 int protected_int = 0;
 
 static ACE_THR_FUNC_RETURN
@@ -247,7 +247,6 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Recursive_Condition_Test"));
 
 #if defined (ACE_HAS_THREADS)
-
   int status = 0;
 
   /* Test 1 - Simple test */

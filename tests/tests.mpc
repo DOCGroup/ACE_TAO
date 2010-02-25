@@ -229,6 +229,13 @@ project(Bug_2368_Regression_Test) : acetest {
   }
 }
 
+project(Bug_2434_Regression_Test) : acetest {
+  exename = Bug_2434_Regression_Test
+  Source_Files {
+    Bug_2434_Regression_Test.cpp
+  }
+}
+
 project(Bug_2497_Regression_Test) : acetest {
   exename = Bug_2497_Regression_Test
   Source_Files {
@@ -369,9 +376,6 @@ project(Bug_3673_Regression_Test) : acetest {
 
 project(Bug_3709_Regression_Test) : acetest {
   exename = Bug_3709_Regression_Test
-  specific (vc71) {
-    requires += dummy_label
-  }
   Source_Files {
     Bug_3709_Regression_Test.cpp
   }
@@ -1139,6 +1143,13 @@ project(Reactor_Dispatch_Order_Test_Dev_Poll) : acetest {
   exename = Reactor_Dispatch_Order_Test_Dev_Poll
   Source_Files {
     Reactor_Dispatch_Order_Test_Dev_Poll.cpp
+  }
+}
+
+project(Reactor Fairness Test) : acetest {
+  exename = Reactor_Fairness_Test
+  Source_Files {
+    Reactor_Fairness_Test.cpp
   }
 }
 

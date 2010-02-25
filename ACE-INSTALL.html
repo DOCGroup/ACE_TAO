@@ -154,7 +154,7 @@ document</a>.</p><p>
     <th>Remedy IT</th>
     <td>Maintains ACE on many platforms required for their ACE and
         TAO service offerings. We support AIX,  
-        CodeGear C++ Builder 2007/2009, CodeGear RAD Studio 2007, 
+        CodeGear C++ Builder 2007/2009, CodeGear RAD Studio 2007, Embarcadero C++ Builder 2010,
         CBuilderX 1.0, Windows CE, MinGW, Microsoft Visual C++ 7.1/8/9, GCC,
         Cygwin, VxWorks 5.5.x - 6.x (kernel and rtp), OpenVMS 8.2-1 &            8.3 on Alpha and IA64,
         BlueCAT Linux, RedHat Linux, Fedora, MacOSX, Solaris, 
@@ -798,6 +798,8 @@ to check <a href="#win32nonic">here</a> first. <p>
       <br>
       <code>set PATH=C:\ACE_wrappers\lib;C:\ACE_wrappers\bin;%PATH%</code><br>
       <br>
+  </li><li>Generate the bmake makefiles using <a href="#MPC">MPC</a>. Use the <code>bmake</code> project type for C++ Builder.
+      <br><br>
   </li><li>Change to the ACE_ROOT\ace directory.<br>
       <br>
   </li><li>Build release DLLs for ACE by going:<br>
@@ -834,7 +836,7 @@ to check <a href="#win32nonic">here</a> first. <p>
 
 Note that when you run <code>make</code> in a sub directory you give <code>make -f Makefile.bmak all</code>. The <code>all</code> is needed to make sure the complete project is build.<p>
 
-The Borland/CodeGear C++ Builder 4.0/5.0/6.0/2006/2007/2009 port has been done by Jody Hagins, <a href="mailto:chris@kohlhoff.com">Christopher Kohlhoff</a> and <a href="mailto:jwillemsen@remedy.nl">Johnny Willemsen</a>. </p><p>
+The Borland/CodeGear C++ Builder 4.0/5.0/6.0/2006/2007/2009/2010 port has been done by Jody Hagins, <a href="mailto:chris@kohlhoff.com">Christopher Kohlhoff</a> and <a href="mailto:jwillemsen@remedy.nl">Johnny Willemsen</a>. </p><p>
 
 <b>ACE TESTS</b></p><p>
 
@@ -2462,6 +2464,29 @@ perl bin/mwc.pl  -type vc71 -relative ACE_ROOT=C:/ace/ACE_wrappers -relative TAO
         John Zorko
         &lt;<a href="mailto:j.zorko@att.net">j.zorko@att.net</a>&gt; is
         only one of them.</p>
+
+</p></li><li><strong>iPhone/iPod Touch/iPad</strong><p>
+
+        </p><p>ACE builds and runs on the iPhone/iPod Touch/iPad Hardware 
+        and Simulator. Keep in mind that ACE/TAO needs to be built
+        statically since Apple does not allow third party dynamic libraries
+        to be deployed on the hardware. The following are needed to build ACE:</p>
+
+        <p>1. The iPhone SDK.</p>
+        <p>2. When creating $ACE_ROOT/ace/config.h, include
+        config-macosx-iphone-hardware.h if you want to deploy on the 
+        hardware, include config-macosx-iphone-simulator.h if you want
+        to deploy on the simulator. Even though those includes are named
+        after the iPhone, the includes work for iPhone/iPod Touch, and iPad.</p>
+        <p>3. You need to define two environment variables. The first is
+        IPHONE_TARGET. Set IPHONE_TARGET to SIMULATOR if you want to deploy
+        on SIMULATOR. Set IPHONE_TARGET to HARDWARE if you want to deploy on
+        the hardware device.</p> 
+        <p>4. When creating $ACE_ROOT/include/makeinclude/platform_macros.GNU,
+        include 'include $(ACE_ROOT)/include/makeinclude/platform_macosx_iphone.GNU'
+        in the file.</p>
+        
+       
 
 </li></ul>
 
