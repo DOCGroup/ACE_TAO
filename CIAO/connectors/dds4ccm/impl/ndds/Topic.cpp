@@ -39,6 +39,7 @@ namespace CIAO
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_TopicQos ddsqos;
+      ddsqos <<= qos;
       ::DDS_ReturnCode_t const retval = this->impl ()->get_qos (ddsqos);
       qos <<= ddsqos;
       return retval;

@@ -10,6 +10,7 @@
 #include "RequestedDeadlineMissedStatus.h"
 #include "SampleRejectedStatus.h"
 #include "LivelinessChangedStatus.h"
+#include "PublicationBuiltinTopicData.h"
 #include "RequestedIncompatibleQosStatus.h"
 #include "Duration_t.h"
 #include "InstanceHandle_t.h"
@@ -176,6 +177,7 @@ namespace CIAO
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_DataReaderQos ddsqos;
+      ddsqos <<= qos;
       ::DDS_ReturnCode_t const retval = this->impl ()->get_qos (ddsqos);
       qos <<= ddsqos;
       return retval;
@@ -267,6 +269,7 @@ namespace CIAO
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDS_SampleRejectedStatus rtistatus;
+      rtistatus <<= status;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_sample_rejected_status (rtistatus);
       rtistatus >>= status;
       return retval;
@@ -281,6 +284,7 @@ namespace CIAO
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDS_LivelinessChangedStatus rtistatus;
+      rtistatus <<= status;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_liveliness_changed_status (rtistatus);
       rtistatus >>= status;
       return retval;
@@ -295,6 +299,7 @@ namespace CIAO
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDS_RequestedDeadlineMissedStatus rtistatus;
+      rtistatus <<= status;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_requested_deadline_missed_status (rtistatus);
       rtistatus >>= status;
       return retval;
@@ -309,6 +314,7 @@ namespace CIAO
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDS_RequestedIncompatibleQosStatus rtistatus;
+      rtistatus <<= status;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_requested_incompatible_qos_status (rtistatus);
       rtistatus >>= status;
       return retval;
@@ -323,6 +329,7 @@ namespace CIAO
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_SubscriptionMatchedStatus ddsstatus;
+      ddsstatus <<= status;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_subscription_matched_status (ddsstatus);
       ddsstatus >>= status;
       return retval;
@@ -364,6 +371,7 @@ namespace CIAO
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandleSeq rtiseq;
+      rtiseq <<= publication_handles;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_matched_publications (rtiseq);
       rtiseq >>= publication_handles;
       return retval;
@@ -378,10 +386,16 @@ namespace CIAO
       DDS_INSTANCE_HANDLE_T_IN publication_handle)
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      ACE_UNUSED_ARG (publication_data);
-      ACE_UNUSED_ARG (publication_handle);
-      throw CORBA::NO_IMPLEMENT ();
-      // Add your implementation here
+      ::DDS_PublicationBuiltinTopicData rti_pub_data;
+      ::DDS_InstanceHandle_t rti_pub_handle;
+
+      rti_pub_data <<= publication_data;
+      rti_pub_handle <<= publication_handle;
+      ::DDS::ReturnCode_t retcode = this->impl()->
+                    get_matched_publication_data (rti_pub_data,
+                                                  rti_pub_handle);
+      rti_pub_data >>= publication_data;
+      return retcode;
 #else
       return this->impl ()->get_matched_publication_data (publication_data, publication_handle);
 #endif

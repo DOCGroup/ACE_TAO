@@ -1,3 +1,13 @@
+Thu Feb 25 07:46:04 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReader.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriter.cpp:
+        * connectors/dds4ccm/impl/ndds/PublicationBuiltinTopicData.h:
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+        * connectors/dds4ccm/impl/ndds/Topic.cpp:
+          Implemented methods wich were not implemented yet.
+
 Wed Feb 24 22:08:45 UTC 2010  William R. Otte <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
