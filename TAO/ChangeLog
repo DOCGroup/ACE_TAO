@@ -1,3 +1,23 @@
+Thu Feb 25 16:50:09 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/proxy_impls_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/base_proxy_impl_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_broker_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_broker_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/base_proxy_broker_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/proxy_brokers_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_impl_ch.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/base_proxy_broker_ch.h:
+        * TAO_IDL/be_include/be_visitor_interface/proxy_brokers_ch.h:
+        * TAO_IDL/be_include/be_visitor_interface/remote_proxy_impl_ch.h:
+        * TAO_IDL/be_include/be_visitor_interface/proxy_impls_ch.h:
+        * TAO_IDL/be_include/be_visitor_interface/base_proxy_impl_ch.h:
+        * TAO_IDL/be_include/be_visitor_interface/remote_proxy_broker_ch.h:
+        * TAO_IDL/be_include/be_visitor_interface/remote_proxy_broker_cs.h:
+
+          Removed these files, the visitors are never used. This fix closes
+          [BUGID:2200].
+
 Thu Feb 25 13:19:16 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * bin/tao_orb_tests.lst:
