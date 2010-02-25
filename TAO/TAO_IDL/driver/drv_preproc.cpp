@@ -947,11 +947,11 @@ DRV_copy_input (FILE *fin,
       if (*s == '\\')
         {
           *d = '\\';
-          d++;
+          ++d;
         }
 
       *d = *s;
-      d++;
+      ++d;
     }
 
   *d = 0;
