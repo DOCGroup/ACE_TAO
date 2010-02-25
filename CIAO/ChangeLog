@@ -1,3 +1,16 @@
+Thu Feb 25 10:14:21 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/dds4ccm_base.mpb:
+          When no features is set, all dds4cmm should require
+          dummy_label.
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+        * connectors/dds4ccm/impl/ndds/Subscriber.h:
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+          Implemented some more Qos related methods.
+
 Thu Feb 25 09:08:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:

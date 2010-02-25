@@ -140,13 +140,15 @@ namespace CIAO
       create_datareader (
         DDSTopic * topic,
         DDSDataReaderListener * rti_drl,
-        ::DDS::StatusMask mask);
+        ::DDS::StatusMask mask,
+         const ::DDS::DataReaderQos & qos);
 
       DDSDataReader *
       create_datareader (
         DDSContentFilteredTopic * topic,
         DDSDataReaderListener * rti_drl,
-        ::DDS::StatusMask mask);
+        ::DDS::StatusMask mask,
+         const ::DDS::DataReaderQos & qos);
 
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDSDataReader *

@@ -80,34 +80,44 @@ namespace CIAO
     CCM_DDS_Subscriber_i::create_datareader (
                   DDSContentFilteredTopic * topic,
                   DDSDataReaderListener * rti_drl,
-                  ::DDS::StatusMask mask)
+                  ::DDS::StatusMask mask,
+                   const ::DDS::DataReaderQos & qos)
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      DDS_DataReaderQos rti_qos = DDS_DATAREADER_QOS_DEFAULT;
-#else
-      ::DDS::DataReaderQos rti_qos;
-#endif
+      DDS_DataReaderQos rti_qos;
+      rti_qos <<= qos;
       return this->impl ()->create_datareader (topic,
                                                rti_qos,
                                                rti_drl,
                                                mask);
+#else
+      return this->impl ()->create_datareader (topic,
+                                               qos,
+                                               rti_drl,
+                                               mask);
+#endif
     }
 
     DDSDataReader *
     CCM_DDS_Subscriber_i::create_datareader (
                   DDSTopic * topic,
                   DDSDataReaderListener * rti_drl,
-                  ::DDS::StatusMask mask)
+                  ::DDS::StatusMask mask,
+                   const ::DDS::DataReaderQos & qos)
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      DDS_DataReaderQos rti_qos = DDS_DATAREADER_QOS_DEFAULT;
-#else
-      DDS::DataReaderQos rti_qos;
-#endif
+      DDS_DataReaderQos rti_qos;
+      rti_qos <<= qos;
       return this->impl ()->create_datareader (topic,
                                                rti_qos,
                                                rti_drl,
                                                mask);
+#else
+      return this->impl ()->create_datareader (topic,
+                                               qos,
+                                               rti_drl,
+                                               mask);
+#endif
     }
 
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
@@ -147,7 +157,7 @@ namespace CIAO
     ::DDS::DataReader_ptr
     CCM_DDS_Subscriber_i::create_datareader (
       ::DDS::TopicDescription_ptr a_topic,
-      const ::DDS::DataReaderQos & /*qos*/,
+      const ::DDS::DataReaderQos & qos,
       ::DDS::DataReaderListener_ptr a_listener,
       ::DDS::StatusMask mask)
     {
@@ -180,10 +190,10 @@ namespace CIAO
               throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
             }
           else
-            rti_dr = this->create_datareader (cf_topic->get_impl (), rti_drl, mask);
+            rti_dr = this->create_datareader (cf_topic->get_impl (), rti_drl, mask, qos);
         }
       else
-        rti_dr = this->create_datareader (topic->get_impl (), rti_drl, mask);
+        rti_dr = this->create_datareader (topic->get_impl (), rti_drl, mask, qos);
 
       if (!rti_dr)
         {
