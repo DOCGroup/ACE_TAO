@@ -5,9 +5,9 @@
 #include "ace/os_include/sys/os_time.h"
 #include "ace/os_include/os_errno.h"
 
-#if defined (ACE_VXWORKS)
+#if defined (ACE_VXWORKS) || defined (ACE_HAS_CLOCK_REALTIME)
 #  include "ace/OS_NS_time.h"
-#endif /* ACE_VXWORKS */
+#endif /* ACE_VXWORKS || ACE_HAS_CLOCK_REALTIME */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -21,7 +21,7 @@ ACE_OS::gettimeofday (void)
   int result = 0;
 #endif // !defined (ACE_WIN32)
 
-#if (0)
+#if defined (ACE_HAS_CLOCK_REALTIME)
   struct timespec ts;
 
   ACE_OSCALL (ACE_OS::clock_gettime (CLOCK_REALTIME, &ts), int, -1, result);
