@@ -1,5 +1,7 @@
 // $Id$
-project (DAnCE_Convert_Plan) : dance_lib, dance_output, dance_deployment_stub, dance_config_handlers {
+project (DAnCE_Convert_Plan) : dance_lib, dance_output, \
+        dance_deployment_stub, dance_config_handlers, \
+        avoids_ace_for_tao {
 
   dynamicflags = DANCE_CONVERT_PLAN_BUILD_DLL
   includes += $(DANCE_ROOT)/tools
@@ -10,7 +12,8 @@ project (DAnCE_Convert_Plan) : dance_lib, dance_output, dance_deployment_stub, d
 }
 
 
-project (DAnCE_Convert_Plan_Exec) : dance_exe, dance_output, dance_convert_plan {
+project (DAnCE_Convert_Plan_Exec) : dance_exe, dance_output, \
+        avoids_ace_for_tao, dance_convert_plan {
   exename = dance_convert_plan
 
   Source_Files {
