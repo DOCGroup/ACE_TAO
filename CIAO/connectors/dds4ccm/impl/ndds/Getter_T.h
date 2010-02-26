@@ -34,7 +34,7 @@ namespace CIAO
       *                · SampleStateMask: NO_READ,
       *                · ViewStateMask: NEW or NOT_NEW,
       *                · InstanceStateMask: ALIVE or NOT_ALIVE,
-      *                · Through the query (if any) of the Reader associated to the port,
+      *               · Through the query (if any) of the Reader associated to the port,
       *                · Within the time limit specified in time_out.
       *
       *               All methods return a boolean as result indicating whether actual data
@@ -53,48 +53,28 @@ namespace CIAO
         /// Destructor
         virtual ~Getter_Base_T (void);
 
-        /// get_many
         /**
-        *        Spec : get_many returns all the available samples
-        *               in the limits set by the attribute max_delivered_data.
-        *               In case there are more available samples, the first
-        *               max_delivered_data are returned. The default value for
-        *               that attribute is UNLIMITED (0)
-        */
+         *  Spec : get_many returns all the available samples
+         *         in the limits set by the attribute max_delivered_data.
+         *         In case there are more available samples, the first
+         *         max_delivered_data are returned. The default value for
+         *         that attribute is UNLIMITED (0)
+         */
         virtual bool get_many (
           typename CCM_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos);
-        /// time_out
-        /**
-         * Getter
-         */
         virtual ::DDS::Duration_t time_out (void);
-
-        /// time_out
-        /**
-         * Setter
-         */
         virtual void time_out (const ::DDS::Duration_t & time_out);
 
-        /// max_delivered_data
-        /**
-         * Getter
-         */
         virtual ::CCM_DDS::DataNumber_t max_delivered_data (void);
-        /// max_delivered_data
-        /**
-         * Setter
-         */
         virtual void max_delivered_data (
           ::CCM_DDS::DataNumber_t max_delivered_data);
 
-        /// set_impl
         /**
          * Set the actual pointer to DDS Datareader
          */
         void set_impl (::DDS::DataReader_ptr reader);
 
-        /// passivate
         void passivate (void);
 
       protected:
@@ -115,8 +95,6 @@ namespace CIAO
       class Getter_T;
 
       /**
-      * @class Getter_T<DDS_TYPE,CCM_TYPE,false>
-      *
       * @brief Implementation of the Getter port for variable sized data types.
       *
       */
@@ -126,7 +104,6 @@ namespace CIAO
       {
       public:
         /**
-        * @name get_one
         *
         * @brief  get_one implementation for variable sized datatypes.
         *
@@ -138,8 +115,6 @@ namespace CIAO
       };
 
       /**
-      * @class Getter_T<DDS_TYPE,CCM_TYPE,true>
-      *
       * @brief Implementation of the Getter port for fixed sized data types.
       *
       */
@@ -149,8 +124,6 @@ namespace CIAO
       {
       public:
         /**
-        * @name get_one
-        *
         * @brief  get_one implementation for fixed sized datatypes.
         *
         *         Spec : get_one returns the next sample to be gotten.
