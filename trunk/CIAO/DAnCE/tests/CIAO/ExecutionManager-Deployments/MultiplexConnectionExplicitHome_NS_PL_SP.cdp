@@ -68,11 +68,11 @@
     <artifact xmi:idref="SimpleProvider_SvntArtifact" />
   </implementation>
 
-  <implementation xmi:id="SimpleUserHomeImplementation">
-    <name>SimpleUserHomeImplementation</name>
+  <implementation xmi:id="SimpleMultipleUserHomeImplementation">
+    <name>SimpleMultipleUserHomeImplementation</name>
     <source/>
-    <artifact xmi:idref="SimpleUser_ExecArtifact" />
-    <artifact xmi:idref="SimpleUser_SvntArtifact" />
+    <artifact xmi:idref="SimpleMultipleUser_ExecArtifact" />
+    <artifact xmi:idref="SimpleMultipleUser_SvntArtifact" />
     <execParameter>
       <!-- entrypoint as exec parameter (see §10.6.1) -->
       <name>home factory</name>
@@ -81,7 +81,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Simple_SimpleUserHome_Impl</string>
+          <string>create_Simple_SimpleMultipleUserHome_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -92,7 +92,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Simple_SimpleUserHome_Servant</string>
+          <string>create_Simple_SimpleMultipleUserHome_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -103,7 +103,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>SimpleUser_svnt</string>
+          <string>SimpleMultipleUser_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -114,17 +114,17 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>SimpleUser_exec</string>
+          <string>SimpleMultipleUser_exec</string>
         </value>
       </value>
     </execParameter>
   </implementation>
 
-  <implementation xmi:id="SimpleUserComponentImplementation">
-    <name>SimpleUserComponentImplementation</name>
+  <implementation xmi:id="SimpleMultipleUserComponentImplementation">
+    <name>SimpleMultipleUserComponentImplementation</name>
     <source/>
-    <artifact xmi:idref="SimpleUser_ExecArtifact" />
-    <artifact xmi:idref="SimpleUser_SvntArtifact" />
+    <artifact xmi:idref="SimpleMultipleUser_ExecArtifact" />
+    <artifact xmi:idref="SimpleMultipleUser_SvntArtifact" />
   </implementation>
 
   <instance xmi:id="SimpleProviderHomeInstance">
@@ -165,20 +165,20 @@
     </configProperty>
   </instance>
 
-  <instance xmi:id="SimpleUserHomeInstance">
-    <name>SimpleUserHome</name>
+  <instance xmi:id="SimpleMultipleUserHomeInstance">
+    <name>SimpleMultipleUserHome</name>
     <node>NodeTwo</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="SimpleUserHomeImplementation" />
+    <implementation xmi:idref="SimpleMultipleUserHomeImplementation" />
   </instance>
 
-  <instance xmi:id="SimpleUserComponentInstance">
-    <name>SimpleUserComponent</name>
+  <instance xmi:id="SimpleMultipleUserComponentInstance">
+    <name>SimpleMultipleUserComponent</name>
     <node>NodeTwo</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="SimpleUserComponentImplementation" />
+    <implementation xmi:idref="SimpleMultipleUserComponentImplementation" />
     <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
       <value>
@@ -186,7 +186,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>SimpleUserHome</string>
+          <string>SimpleMultipleUserHome</string>
         </value>
       </value>
     </configProperty>
@@ -197,18 +197,18 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>SimpleUserComponent</string>
+          <string>SimpleMultipleUserComponent</string>
         </value>
       </value>
     </configProperty>
   </instance>
   
-  <instance xmi:id="SimpleUserComponentInstanceReverse">
-    <name>SimpleUserComponentReverse</name>
+  <instance xmi:id="SimpleMultipleUserComponentInstanceReverse">
+    <name>SimpleMultipleUserComponentReverse</name>
     <node>NodeTwo</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="SimpleUserComponentImplementation" />
+    <implementation xmi:idref="SimpleMultipleUserComponentImplementation" />
     <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
       <value>
@@ -216,7 +216,18 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>SimpleUserHome</string>
+          <string>SimpleMultipleUserHome</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SimpleMultipleUserComponentReverse</string>
         </value>
       </value>
     </configProperty>
@@ -224,15 +235,43 @@
   
   <connection>
     <name>TestConnection</name>
-   <internalEndpoint>
+<!--    <internalEndpoint>
       <portName>trig</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="SimpleProviderComponentInstance" />
+    </internalEndpoint> -->
+    <internalEndpoint>
+      <portName>trig</portName>
+      <provider>false</provider>
+      <kind>MultiplexReceptacle</kind>
+      <instance xmi:idref="SimpleMultipleUserComponentInstance" />
+    </internalEndpoint>  
+    <externalReference>
+      <location>corbaname:rir:/NameService#SimpleProviderComponent</location>
+      <provider>true</provider>
+      <portName>trig</portName>
+      <supportedType>Meaningless</supportedType>
+    </externalReference>
+  </connection>
+
+  <connection>
+    <name>TestConnection_2</name>
+<!--    <internalEndpoint>
+      <portName>trig</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SimpleProviderComponentInstance" />
+    </internalEndpoint> -->
+    <internalEndpoint>
+      <portName>trig</portName>
+      <provider>false</provider>
+      <kind>MultiplexReceptacle</kind>
+      <instance xmi:idref="SimpleMultipleUserComponentInstance" />
     </internalEndpoint> 
     <externalReference>
-      <location>corbaname:rir:/NameService#SimpleUserComponent</location>
-      <provider>false</provider>
+      <location>corbaname:rir:/NameService#SimpleProviderComponent</location>
+      <provider>true</provider>
       <portName>trig</portName>
       <supportedType>Meaningless</supportedType>
     </externalReference>
@@ -242,13 +281,29 @@
     <name>TestConnectionReverse</name>
     <internalEndpoint>
       <portName>trig</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="SimpleUserComponentInstanceReverse" />
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SimpleProviderComponentInstance" />
     </internalEndpoint>
     <externalReference>
-      <location>corbaname:rir:/NameService#SimpleProviderComponent</location>
+      <location>corbaname:rir:/NameService#SimpleMultipleUserComponentReverse</location>
+      <provider>false</provider>
+      <portName>trig</portName>
+      <supportedType>Meaningless</supportedType>
+    </externalReference>
+  </connection>
+
+  <connection>
+    <name>TestConnectionReverse_2</name>
+    <internalEndpoint>
+      <portName>trig</portName>
       <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SimpleProviderComponentInstance" />
+    </internalEndpoint>
+    <externalReference>
+      <location>corbaname:rir:/NameService#SimpleMultipleUserComponentReverse</location>
+      <provider>false</provider>
       <portName>trig</portName>
       <supportedType>Meaningless</supportedType>
     </externalReference>
@@ -268,17 +323,26 @@
     <location>SimpleProvider_svnt</location>
   </artifact>
 
-  <artifact xmi:id="SimpleUser_ExecArtifact">
-    <name>SimpleUser_exec</name>
+  <artifact xmi:id="SimpleMultipleUser_ExecArtifact">
+    <name>SimpleMultipleUser_exec</name>
     <source/>
     <node/>
-    <location>SimpleUser_exec</location>
+    <location>SimpleMultipleUser_exec</location>
   </artifact>
-  <artifact xmi:id="SimpleUser_SvntArtifact">
-    <name>SimpleUser_svnt</name>
+  <artifact xmi:id="SimpleMultipleUser_SvntArtifact">
+    <name>SimpleMultipleUser_svnt</name>
     <source/>
     <node/>
-    <location>SimpleUser_svnt</location>
+    <location>SimpleMultipleUser_svnt</location>
   </artifact>
+
+  <localityConstraint>
+    <constraint>SameProcess</constraint>
+    <constrainedInstance xmi:idref="SimpleProviderHomeInstance" />
+    <constrainedInstance xmi:idref="SimpleProviderComponentInstance" />
+    <constrainedInstance xmi:idref="SimpleMultipleUserHomeInstance" />
+    <constrainedInstance xmi:idref="SimpleMultipleUserComponentInstance" />
+    <constrainedInstance xmi:idref="SimpleMultipleUserComponentInstanceReverse" />
+  </localityConstraint>
 
   </Deployment:DeploymentPlan>

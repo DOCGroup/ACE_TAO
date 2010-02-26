@@ -152,6 +152,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SimpleProviderComponent</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <instance xmi:id="SimpleMultipleUserHomeInstance">
@@ -209,28 +220,61 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SimpleMultipleUserComponentReverse</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
   
   <connection>
     <name>TestConnection</name>
-    <internalEndpoint>
+<!--    <internalEndpoint>
       <portName>trig</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="SimpleProviderComponentInstance" />
-    </internalEndpoint>
-    <externalReference>
-      <location>corbaname:rir:/NameService#SimpleMultipleUserComponent</location>
-      <provider>false</provider>
-      <portName>trig</portName>
-      <supportedType>Meaningless</supportedType>
-    </externalReference>
-<!--    <internalEndpoint>
+    </internalEndpoint> -->
+    <internalEndpoint>
       <portName>trig</portName>
       <provider>false</provider>
       <kind>MultiplexReceptacle</kind>
       <instance xmi:idref="SimpleMultipleUserComponentInstance" />
-    </internalEndpoint>  -->
+    </internalEndpoint>  
+    <externalReference>
+      <location>corbaname:rir:/NameService#SimpleProviderComponent</location>
+      <provider>true</provider>
+      <portName>trig</portName>
+      <supportedType>Meaningless</supportedType>
+    </externalReference>
+  </connection>
+
+  <connection>
+    <name>TestConnection_2</name>
+<!--    <internalEndpoint>
+      <portName>trig</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SimpleProviderComponentInstance" />
+    </internalEndpoint> -->
+    <internalEndpoint>
+      <portName>trig</portName>
+      <provider>false</provider>
+      <kind>MultiplexReceptacle</kind>
+      <instance xmi:idref="SimpleMultipleUserComponentInstance" />
+    </internalEndpoint> 
+    <externalReference>
+      <location>corbaname:rir:/NameService#SimpleProviderComponent</location>
+      <provider>true</provider>
+      <portName>trig</portName>
+      <supportedType>Meaningless</supportedType>
+    </externalReference>
   </connection>
 
   <connection>
@@ -242,18 +286,27 @@
       <instance xmi:idref="SimpleProviderComponentInstance" />
     </internalEndpoint>
     <externalReference>
-      <location>corbaname:rir:/NameService#SimpleMultipleUserComponent</location>
+      <location>corbaname:rir:/NameService#SimpleMultipleUserComponentReverse</location>
       <provider>false</provider>
       <portName>trig</portName>
       <supportedType>Meaningless</supportedType>
     </externalReference>
-<!--
+  </connection>
+
+  <connection>
+    <name>TestConnectionReverse_2</name>
     <internalEndpoint>
       <portName>trig</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SimpleProviderComponentInstance" />
+    </internalEndpoint>
+    <externalReference>
+      <location>corbaname:rir:/NameService#SimpleMultipleUserComponentReverse</location>
       <provider>false</provider>
-      <kind>MultiplexReceptacle</kind>
-      <instance xmi:idref="SimpleMultipleUserComponentInstanceReverse" />
-    </internalEndpoint> -->
+      <portName>trig</portName>
+      <supportedType>Meaningless</supportedType>
+    </externalReference>
   </connection>
 
   <!-- Artifacts declarations -->
