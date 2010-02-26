@@ -1,3 +1,9 @@
+Fri Feb 26 08:27:17 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/dds4ccm_impl.mpb:
+          When ndds nor dds4ccm_ndds is set, no need to compile
+          the derived projects.
+
 Fri Feb 26 07:40:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Getter_T.h:

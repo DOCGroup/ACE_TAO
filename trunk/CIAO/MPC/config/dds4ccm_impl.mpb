@@ -16,3 +16,6 @@ feature(dds4ccm_ndds) : dds4ccm_skel, ciao_logger, nddslib {
   libs += CIAO_DDS4CCM_NDDS_Impl
 }
 
+feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_splice) {
+  requires += dummy_label
+}
