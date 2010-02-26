@@ -1,3 +1,8 @@
+Fri Feb 26 18:30:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_time.inl:
+          Changed ACE_HAS_CLOCK_REALTIME to ACE_HAS_CLOCK_GETTIME_REALTIME
+
 Fri Feb 26 16:00:04 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * Fixed double-declaration of ACE_LACKS_CEILL and ACE_LACKS_FLOORL in:
