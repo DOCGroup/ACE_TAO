@@ -8,7 +8,8 @@ project (DAnCE_Split_Plan_Impl) : dance_lib, dance_deployment_stub, dance_output
   }
 }
 
-project (DAnCE_Split_Plan_Exec) : dance_exe, dance_output, dance_split_plan, dance_convert_plan, dance_logger {
+project (DAnCE_Split_Plan_Exec) : dance_exe, dance_output, dance_split_plan, \
+        avoids_ace_for_tao, dance_convert_plan, dance_logger {
   exename = dance_split_plan
 
   Source_Files {
