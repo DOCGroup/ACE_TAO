@@ -92,7 +92,7 @@ struct Interval_Handler : public ACE_Event_Handler
 {
   Interval_Handler (void) : trip_count_ (0) { }
 
-  virtual int handle_timeout (const ACE_Time_Value & , const void *arg)
+  virtual int handle_timeout (const ACE_Time_Value & , const void *)
   {
     ++trip_count_;
     return 0;
