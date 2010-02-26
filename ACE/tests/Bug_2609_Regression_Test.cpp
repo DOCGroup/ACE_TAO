@@ -63,7 +63,7 @@ public:
   }
   //FUZZ: enable check_for_lack_ACE_OS
 
-  int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask mask)
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask)
   {
     TEST_TRACE ("handle_close");
     if (g_handler_deleted)
@@ -126,8 +126,12 @@ run_main (int, ACE_TCHAR *[])
                       1);
   ACE_INET_Addr listen_addr;
   acceptor.acceptor ().get_local_addr (listen_addr);
+#if defined (ACE_HAS_IPV6)
   ACE_TCHAR *me =
     listen_addr.get_type () == PF_INET ? ACE_LOCALHOST : ACE_IPV6_LOCALHOST;
+#else
+  ACE_TCHAR *me = ACE_LOCALHOST;
+#endif /* ACE_HAS_IPV6 */
   ACE_INET_Addr connect_addr (listen_addr.get_port_number (),
                               me,
                               listen_addr.get_type ());
