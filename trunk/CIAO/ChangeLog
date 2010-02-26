@@ -1,3 +1,8 @@
+Fri Feb 26 07:40:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.h:
+          Optimized doxygen.
+
 Thu Feb 25 20:03:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReader.cpp
