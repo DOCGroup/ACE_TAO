@@ -1,3 +1,15 @@
+Fri Feb 26 19:32:06 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/config-sunos5.5.h:
+
+           Moved #define ACE_LACKS_CEILL & ACE_LACKS_FLOORL to a
+           non-compiler-specific section.
+
+        * ace/config-sunos5.10.h:
+
+          Added #undef ACE_LACKS_CEILL & ACE_LACKS_FLOORL because they are
+          available on Solaris 10.
+
 Fri Feb 26 18:30:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_time.inl:
