@@ -1,3 +1,8 @@
+Fri Feb 26 16:00:04 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * Fixed double-declaration of ACE_LACKS_CEILL and ACE_LACKS_FLOORL in:
+          Thu Feb 25 21:42:13 UTC 2010  Steve Huston  <shuston@riverace.com>
+
 Fri Feb 26 15:36:12 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * tests/Bug_2609_Regression_Test.cpp: Fix unused arg warning and

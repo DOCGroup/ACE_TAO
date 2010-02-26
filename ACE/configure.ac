@@ -36,7 +36,7 @@ additional details.])
 
 dnl Require GNU Autoconf 2.58 or better.  Previous versions did not
 dnl correctly support HP-UX.
-AC_PREREQ(2.60)
+AC_PREREQ(2.61)
 
 dnl Autoconf explicitly forbids patterns containing "_AC_".  This causes
 dnl a problem when using MPC to generate the Automake ".am" files since
@@ -3289,10 +3289,10 @@ ACE_CHECK_LACKS_FUNCS(floor ceil)
 # floorl and ceill are somtimes present (maybe as a stub) in the math
 # library but not declared in any header. To avoid introducing an
 # undocumented dependency, try these as decls first.
-AC_DEFINE([ACE_LACKS_CEILL], [], [Platform lacks the ceill() function])
-AC_DEFINE([ACE_LACKS_FLOORL], [], [Platform lacks the floorl() function])
-AC_CHECK_DECL(ceill,[],[AC_DEFINE_UNQUOTED(AS_TR_CPP(ACE_LACKS_ceill))])
-AC_CHECK_DECL(floorl,[],[AC_DEFINE_UNQUOTED(AS_TR_CPP(ACE_LACKS_floorl))])
+AH_TEMPLATE([ACE_LACKS_CEILL], [Platform lacks the ceill() function])
+AH_TEMPLATE([ACE_LACKS_FLOORL], [Platform lacks the floorl() function])
+AC_CHECK_DECL(ceill,[],[AC_DEFINE([ACE_LACKS_CEILL])])
+AC_CHECK_DECL(floorl,[],[AC_DEFINE([ACE_LACKS_FLOORL])])
 
 # swab() comes in a number of forms:
 #   swab (const void*, void*, size_t) is POSIX, XPG4, SUS, SUSv2 standard.
