@@ -1,3 +1,9 @@
+Fri Feb 26 12:37:53 UTC 2010  William R. Otte <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+
+        Unicode compile error.
+
 Fri Feb 26 08:27:17 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/dds4ccm_impl.mpb:

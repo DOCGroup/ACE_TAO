@@ -2086,7 +2086,7 @@ NodeApplication_Impl::connect_receptacle (const ::Deployment::PlanConnectionDesc
           if (CORBA::is_nil (facet))
             {
               DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("NodeApplication_Impl::connect_receptacle - ")
-                               "Object reference for facet to connect to [%C] was nil\n",
+                               ACE_TEXT ("Object reference for facet to connect to [%C] was nil\n"),
                                recep_name.c_str ()));
               throw ::Deployment::InvalidConnection ("",
                                                      "Provided facet reference was nil\n");
