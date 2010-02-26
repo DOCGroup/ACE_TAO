@@ -24,6 +24,9 @@
 // SunOS 5.5 does not provide getloadavg()
 #define ACE_LACKS_GETLOADAVG
 
+#define ACE_LACKS_CEILL
+#define ACE_LACKS_FLOORL 
+
 // Some SunOS releases define _POSIX_PTHREAD_SEMANTICS automatically.
 // We need to be check if the user has manually defined the macro before
 // including <sys/feature_tests.h>.
@@ -130,8 +133,6 @@
   // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
   // this must appear before its #include.
 # define ACE_HAS_STRING_CLASS
-# define ACE_LACKS_CEILL
-# define ACE_LACKS_FLOORL 
 
 # include "ace/config-g++-common.h"
 
