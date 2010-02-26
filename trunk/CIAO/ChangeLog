@@ -1,3 +1,10 @@
+Fri Feb 26 13:08:03 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tools/Convert_Plan/Convert_Plan.mpc:
+        * DAnCE/tools/Split_Plan/Split_Plan.mpc:
+
+          Avoids ace_for_tao, as Convert_Plan requires file connector.
+
 Fri Feb 26 12:37:53 UTC 2010  William R. Otte <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
