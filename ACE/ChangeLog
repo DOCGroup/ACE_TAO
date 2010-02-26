@@ -1,3 +1,8 @@
+Fri Feb 26 14:48:01 UTC 2010  Chris Cleeland  <cleeland@ociweb.com>
+
+        * tests/Timer_Queue_Test.cpp (handle_timeout): Fix unused argument
+          warning.
+
 Fri Feb 26 14:45:30 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/OS_NS_sys_time.inl (ACE_OS::gettimeofday): Added in support
