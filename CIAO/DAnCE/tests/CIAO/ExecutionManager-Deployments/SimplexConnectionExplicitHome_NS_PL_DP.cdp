@@ -281,4 +281,17 @@
     <location>SimpleUser_svnt</location>
   </artifact>
 
+  <localityConstraint>
+    <constraint>SameProcess</constraint>
+    <constrainedInstance xmi:idref="SimpleProviderHomeInstance" />
+    <constrainedInstance xmi:idref="SimpleProviderComponentInstance" />
+  </localityConstraint>
+
+  <localityConstraint>
+    <constraint>SameProcess</constraint>
+    <constrainedInstance xmi:idref="SimpleUserHomeInstance" />
+    <constrainedInstance xmi:idref="SimpleUserComponentInstance" />
+    <constrainedInstance xmi:idref="SimpleUserComponentInstanceReverse" />
+  </localityConstraint>
+
   </Deployment:DeploymentPlan>

@@ -1,3 +1,20 @@
+Fri Feb 26 15:54:33 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/MultiplexConnectionExplicitHome_NS.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/MultiplexConnectionExplicitHome_NS_PL_DP.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/MultiplexConnectionExplicitHome_NS_PL_SP.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/SimplexConnectionExplicitHome_NS.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/SimplexConnectionExplicitHome_NS_PL_DP.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/SimplexConnectionExplicitHome_NS_PL_SP.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test.pl:
+
+          Expanded NS/PlanLocality testing merged in, converted this test
+          to use dance_plan_launcher.
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/em_launcher.mpc:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/simple_em_launcher.cpp:
+
+          Removed these files as they are no longer needed for above test.
+
 Fri Feb 26 13:08:03 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tools/Convert_Plan/Convert_Plan.mpc:
