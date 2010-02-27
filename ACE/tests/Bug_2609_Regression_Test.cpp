@@ -127,15 +127,15 @@ run_main (int, ACE_TCHAR *[])
   ACE_INET_Addr listen_addr;
   acceptor.acceptor ().get_local_addr (listen_addr);
 #if defined (ACE_HAS_IPV6)
-  ACE_TCHAR *me =
+  const ACE_TCHAR *me =
     listen_addr.get_type () == PF_INET ? ACE_LOCALHOST : ACE_IPV6_LOCALHOST;
 #else
-  ACE_TCHAR *me = ACE_LOCALHOST;
+  const ACE_TCHAR *me = ACE_LOCALHOST;
 #endif /* ACE_HAS_IPV6 */
   ACE_INET_Addr connect_addr (listen_addr.get_port_number (),
                               me,
                               listen_addr.get_type ());
-                           
+
   Timer_Handler timer_handler;
   ACE_Reactor::instance()->schedule_timer (&timer_handler,
                                            0,
