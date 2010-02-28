@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : dance, dance_domainapplication, naming, dance_domainapplicationmanager_skel {
+project : dance, dance_domainapplication, naming, dance_domainapplicationmanager_skel, dance_split_plan {
   after += DomainApplicationManager
   libs  += DAnCE_DomainApplicationManager
 }
