@@ -8,7 +8,9 @@
 #ifndef DDS_LISTEN_T_H_
 #define DDS_LISTEN_T_H_
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Reactor;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 class DDS_Listen_T

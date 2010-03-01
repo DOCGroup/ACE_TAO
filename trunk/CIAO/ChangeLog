@@ -1,3 +1,12 @@
+Mon Mar  1 10:00:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_Listen_T.h:
+        * connectors/dds4ccm/impl/ndds/PortStatusListener_T.h:
+        * connectors/dds4ccm/impl/ndds/PublisherListener_T.h:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.h:
+          Fixed versioned namespace builds
+
 Sun Feb 28 23:13:23 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/MPC/config/dance_domainapplicationmanager.mpb:
