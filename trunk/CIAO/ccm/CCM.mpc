@@ -38,11 +38,11 @@ project(CCM_stub_idl) : ciaolib_with_idl, valuetype {
     CCM_HomeFinder.idl
     CCM_Configurator.idl
     CCM_KeylessCCMHome.idl
-    CCM_Navigation.idl
-    CCM_Receptacle.idl
   }
 
   IDL_Files {
+    CCM_Navigation.idl
+    CCM_Receptacle.idl
     CCM_Events.idl
     CCM_EventBase.idl
     CCM_EventConsumerBase.idl
