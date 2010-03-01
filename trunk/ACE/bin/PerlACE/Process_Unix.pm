@@ -542,6 +542,8 @@ sub kill_all ($)
   my $first = 1;
   my $ps_cmd = 'ps xw';
   my $ps_file = `which ps`;
+  $ps_file =~ s/^\s+//;
+  $ps_file =~ s/\s+$//;
   if ((-l $ps_file) and (readlink ($ps_file)) =~ /busybox/) {
     ## some embedded targets use BusyBox for base tools
     ## with different arguments
