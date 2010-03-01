@@ -1,3 +1,13 @@
+Mon Mar  1 19:38:29 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ccm/CCM.mpc:
+        
+          Removed the application of the -Ssi IDL compiler option to
+          Navigation.idl and Receptacles.idl, so that their direct
+          collocation related code can be compiled for a specialized
+          build that tests the direct collocation code generation
+          option.
+
 Mon Mar  1 10:00:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h:
