@@ -1,3 +1,9 @@
+Mon Mar  1 12:27:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/Process_Unix.pm:
+
+          Fixed 'ps' determination problems.
+
 Fri Feb 26 19:32:06 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * ace/config-sunos5.5.h:
