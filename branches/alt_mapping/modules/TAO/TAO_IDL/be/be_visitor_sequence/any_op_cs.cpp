@@ -55,6 +55,35 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
 
   *os << be_global->core_versioning_begin () << be_nl;
   
+  // These are no-ops for now, so we just generate them and return
+  if (be_global->alt_mapping ())
+    {
+      be_type *bt =
+        be_type::narrow_from_decl (node->base_type ());
+        
+      *os << be_nl
+          << "void operator<<= (" << be_idt_nl
+          << "::CORBA::Any &," << be_nl
+          << "const std::vector<" << bt->full_name ()
+          << ">" << be_uidt_nl
+          << "{" << be_nl
+          << "}";
+          
+      *os << be_nl << be_nl
+          << "::CORBA::Boolean operator>>= (" << be_idt_nl
+          << "const ::CORBA::Any &," << be_nl
+          << "std::vector<" << bt->full_name ()
+          << ">" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "return true;" << be_uidt_nl
+          << "}";
+
+      *os << be_global->core_versioning_end () << be_nl;
+      
+      node->cli_stub_any_op_gen (true);
+      return 0;
+    }
+  
   // Since we don't generate CDR stream operators for types that
   // explicitly contain a local interface (at some level), we
   // must override these Any template class methods to avoid
@@ -89,7 +118,8 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
   be_typedef *td = this->ctx_->tdef ();
 
   // Copying insertion.
-  *os << be_nl << "// Copying insertion." << be_nl
+  *os << be_nl
+      << "// Copying insertion." << be_nl
       << "void operator<<= (" << be_idt << be_idt_nl
       << "::CORBA::Any &_tao_any," << be_nl
       << "const " << node->name () << " &_tao_elem" << be_uidt_nl
@@ -159,6 +189,6 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
 
   *os << be_global->core_versioning_end () << be_nl;
   
-  node->cli_stub_any_op_gen (1);
+  node->cli_stub_any_op_gen (true);
   return 0;
 }

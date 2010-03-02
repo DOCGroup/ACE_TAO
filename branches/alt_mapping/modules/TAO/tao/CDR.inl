@@ -455,6 +455,12 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
   return os << x.val_;
 }
 
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
+                                      const std::string &x)
+{
+  return os << x.c_str ();
+}
+
 // ****************************************************************
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
@@ -549,5 +555,14 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
   return marshal_flag;
 }
 
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
+                                      std::string &x)
+{
+  char *buf = 0;
+  CORBA::Boolean const marshal_flag = is >> buf;
+  x.assign (buf);
+  ACE::strdelete (buf);
+  return marshal_flag;
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -134,7 +134,8 @@ BE_GlobalData::BE_GlobalData (void)
     gen_skel_export_hdr_file_ (false),
     gen_svnt_export_hdr_file_ (false),
     gen_exec_export_hdr_file_ (false),
-    gen_lem_force_all_ (false)
+    gen_lem_force_all_ (false),
+    alt_mapping_ (false)
 {
 }
 
@@ -2102,6 +2103,18 @@ void
 BE_GlobalData::gen_lem_force_all (bool val)
 {
   this->gen_lem_force_all_ = val;
+}
+
+bool
+BE_GlobalData::alt_mapping (void) const
+{
+  return this->alt_mapping_;
+}
+
+void
+BE_GlobalData::alt_mapping (bool val)
+{
+  this->alt_mapping_ = val;
 }
 
 ACE_CString

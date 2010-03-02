@@ -95,7 +95,7 @@ public:
 
   // = Start of sequences tests...
   virtual Param_Test::UB_Long_Seq test_long_sequence (
-      Param_Test::UB_Long_Seq & s1,
+      const Param_Test::UB_Long_Seq & s1,
       Param_Test::UB_Long_Seq & s2,
       Param_Test::UB_Long_Seq & s3);
       

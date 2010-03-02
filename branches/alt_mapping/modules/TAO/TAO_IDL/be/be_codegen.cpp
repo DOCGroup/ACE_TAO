@@ -272,7 +272,7 @@ TAO_CodeGen::start_client_header (const char *fname)
     }
   else
     {
-      *this->client_header_ << "#include <string>";
+      *this->client_header_ << "\n#include <string>";
       *this->client_header_ << "\n#include <vector>\n";
 
       this->gen_stub_hdr_includes ();

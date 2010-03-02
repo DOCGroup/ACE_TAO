@@ -727,6 +727,9 @@ public:
   
   bool gen_lem_force_all (void) const;
   void gen_lem_force_all (bool val);
+  
+  bool alt_mapping (void) const;
+  void alt_mapping (bool val);
 
   ACE_CString spawn_options (void);
   // Command line passed to ACE_Process::spawn. Different
@@ -1033,6 +1036,9 @@ private:
   bool gen_lem_force_all_;
   // Toggles generation of exec IDL for facets with imported
   // interface types (not in main IDL file).
+  
+  bool alt_mapping_;
+  // Are we generating STL types?
 };
 
 #endif /* _BE_GLOBAL_H */

@@ -1,3 +1,38 @@
+Tue Mar  2 23:18:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/Param_Test.mpc:
+        * tests/Param_Test/param_testC.cpp:
+        * tests/Param_Test/param_testS.cpp:
+        * tests/Param_Test/param_testC.h:
+        * tests/Param_Test/param_testS.h:
+        * tests/Param_Test/param_test_i.h:
+        * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_root/cdr_op.cpp:
+        * TAO_IDL/be/be_visitor_root/any_op.cpp:
+        * TAO_IDL/be/be_visitor_argument.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        * tao/AnyTypeCode/Any.h:
+        * tao/AnyTypeCode/Any.cpp:
+        * tao/CDR.inl
+        * tao/Array_VarOut_T.h:
+        * tao/CDR.h:
+
+          Progress toward generation of code for alternate mapping
+          in the general case.
+
+        * tao/Vector_CDR_T.h:
+
+          New file containing template methods for (de)marshaling
+          std::vector<T>. Includes a general case and special
+          cases for interfaces and arrays.
+
 Tue Feb 23 17:06:19 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_arg_traits.cpp:

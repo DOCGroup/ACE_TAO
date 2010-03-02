@@ -297,17 +297,33 @@ int be_visitor_args_arglist::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  switch (this->direction ())
+  if (be_global->alt_mapping ())
     {
-    case AST_Argument::dir_IN:
-      *os << "const " << this->type_name (node) << " &";
-      break;
-    case AST_Argument::dir_INOUT:
-      *os << this->type_name (node) << " &";
-      break;
-    case AST_Argument::dir_OUT:
-      *os << this->type_name (node, "_out");
-      break;
+      switch (this->direction ())
+        {
+        case AST_Argument::dir_IN:
+          *os << "const std::vector<" << this->type_name (node) << "> &";
+          break;
+        case AST_Argument::dir_INOUT:
+        case AST_Argument::dir_OUT:
+          *os << "std::vector<" << this->type_name (node) << "> &";
+          break;
+        }
+    }
+  else
+    {
+      switch (this->direction ())
+        {
+        case AST_Argument::dir_IN:
+          *os << "const " << this->type_name (node) << " &";
+          break;
+        case AST_Argument::dir_INOUT:
+          *os << this->type_name (node) << " &";
+          break;
+        case AST_Argument::dir_OUT:
+          *os << this->type_name (node, "_out");
+          break;
+        }
     }
 
   return 0;
@@ -409,13 +425,6 @@ int be_visitor_args_arglist::visit_union (be_union *node)
 
 int be_visitor_args_arglist::visit_typedef (be_typedef *node)
 {
-  if (ACE_OS::strcmp (node->full_name (), "CORBA::LongSeq") == 0)
-    {
-      *this->ctx_->stream () << "Param_Test::UB_Long_Seq &";
-      
-      return 0;
-    }
-    
   this->ctx_->alias (node);
 
   if (node->primitive_base_type ()->accept (this) == -1)

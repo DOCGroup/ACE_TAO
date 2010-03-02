@@ -47,6 +47,7 @@ class TAO_Array_Forany_T
 public:
   typedef T _array_type;
   typedef T_slice _slice_type;
+  typedef TAG _tag_type;
 
   TAO_Array_Forany_T (void);
   TAO_Array_Forany_T (_slice_type *, CORBA::Boolean nocopy = false);
