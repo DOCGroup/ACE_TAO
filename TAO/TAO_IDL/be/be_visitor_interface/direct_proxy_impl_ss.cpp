@@ -160,10 +160,14 @@ be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper (
 }
 
 int be_visitor_interface_direct_proxy_impl_ss::visit_component (
-    be_component *node
-  )
+    be_component *node)
 {
   return this->visit_interface (node);
 }
 
+int be_visitor_interface_direct_proxy_impl_ss::visit_connector (
+    be_connector *node)
+{
+  return this->visit_component (node);
+}
 

@@ -18,6 +18,7 @@
 #include "be_interface.h"
 #include "be_interface_strategy.h"
 #include "be_component.h"
+#include "be_connector.h"
 #include "be_attribute.h"
 #include "be_operation.h"
 #include "be_exception.h"
@@ -1455,7 +1456,7 @@ be_interface::traverse_inheritance_graph (
                              "dequeue_head failed\n"),
                             -1);
         }
-        
+
       AST_Decl::NodeType nt = intf->node_type ();
 
       // If we are doing a home, we check for a parent.
@@ -2708,6 +2709,21 @@ be_interface::gen_facet_idl (TAO_OutStream &os)
 
       os << be_uidt_nl
          << "};";
+
+/*
+         os << be_nl << be_nl
+  << "local interface CCM_AMI_CONN_MyFoo" << be_nl
+  << "  : ::Components::EnterpriseComponent" << be_nl
+  << "{" << be_nl
+  << "  ::Hello::CCM_AMI_MyFoo get_provides_MyFoo ();" << be_nl
+  << "};" << be_nl
+  << be_nl
+  << "local interface CCM_AMI_CONN_MyFoo_Context" << be_nl
+  << "  : ::Components::SessionContext" << be_nl
+  << "{" << be_nl
+  << "  ::Hello::MyFoo get_connection_uses_MyFoo ();" << be_nl
+  << "  ::Hello::AMI_MyFoo get_connection_provides_MyFoo ();" << be_nl
+  << "};";*/
     }
 
   this->gen_nesting_close (os);
