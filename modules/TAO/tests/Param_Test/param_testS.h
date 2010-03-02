@@ -27,7 +27,7 @@
  **/
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:471
+// .\be\be_codegen.cpp:474
 
 #ifndef _TAO_IDL_PARAM_TESTS_H_
 #define _TAO_IDL_PARAM_TESTS_H_
@@ -356,7 +356,7 @@ public:
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual Param_Test::UB_Long_Seq test_long_sequence (
-    Param_Test::UB_Long_Seq & s1,
+    const Param_Test::UB_Long_Seq & s1,
     Param_Test::UB_Long_Seq & s2,
     Param_Test::UB_Long_Seq & s3) = 0;
   
@@ -768,7 +768,7 @@ public:
 };
 
 // TAO_IDL - Generated from 
-// .\be\be_codegen.cpp:1514
+// .\be\be_codegen.cpp:1517
 
 
 #if defined (__ACE_INLINE__)

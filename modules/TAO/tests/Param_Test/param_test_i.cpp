@@ -188,7 +188,7 @@ Param_Test_i::test_fixed_struct (const Param_Test::Fixed_Struct &s1,
 // = Sequences
 
 Param_Test::UB_Long_Seq
-Param_Test_i::test_long_sequence (Param_Test::UB_Long_Seq & s1,
+Param_Test_i::test_long_sequence (const Param_Test::UB_Long_Seq & s1,
                                   Param_Test::UB_Long_Seq & s2,
                                   Param_Test::UB_Long_Seq & s3)
 {

@@ -1,6 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
+project(*idl): taoidldefaults {
+  IDL_Files {
+    idlflags -= -Sa -St
+    param_test.idl
+  }
+  custom_only = 1
+}
+
 project(*Server): taoserver, codeset, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after  += *idl
   Source_Files {

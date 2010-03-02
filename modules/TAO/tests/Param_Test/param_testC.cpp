@@ -27,7 +27,7 @@
  **/
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:375
+// .\be\be_codegen.cpp:378
 
 
 #include "param_testC.h"
@@ -80,34 +80,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   
-  // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
-
-#if !defined (_CORBA_LONGSEQ__ARG_TRAITS_)
-#define _CORBA_LONGSEQ__ARG_TRAITS_
-  
-  template<>
-  class Arg_Traits<CORBA::LongSeq>
-    : public
-        Var_Size_Arg_Traits_T<
-            CORBA::LongSeq,
-            TAO::Any_Insert_Policy_Stream <CORBA::LongSeq>
-          >
-  {
-  };
-  
   template<>
   class Arg_Traits<Param_Test::UB_Long_Seq>
-    : public 
-        Basic_Arg_Traits_T <
+    : public
+        Basic_Arg_Traits_T<
             Param_Test::UB_Long_Seq,
             TAO::Any_Insert_Policy_Stream <Param_Test::UB_Long_Seq>
           >
   {
   };
-
-#endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // .\be\be_visitor_arg_traits.cpp:620
 
@@ -202,7 +184,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:870
+  // .\be\be_visitor_arg_traits.cpp:871
 
 #if !defined (_COFFEE_DESC__ARG_TRAITS_)
 #define _COFFEE_DESC__ARG_TRAITS_
@@ -260,7 +242,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:870
+  // .\be\be_visitor_arg_traits.cpp:871
 
 #if !defined (_PARAM_TEST_FIXED_STRUCT__ARG_TRAITS_)
 #define _PARAM_TEST_FIXED_STRUCT__ARG_TRAITS_
@@ -440,7 +422,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:870
+  // .\be\be_visitor_arg_traits.cpp:871
 
 #if !defined (_PARAM_TEST_VAR_STRUCT__ARG_TRAITS_)
 #define _PARAM_TEST_VAR_STRUCT__ARG_TRAITS_
@@ -458,7 +440,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:870
+  // .\be\be_visitor_arg_traits.cpp:871
 
 #if !defined (_PARAM_TEST_NESTED_STRUCT__ARG_TRAITS_)
 #define _PARAM_TEST_NESTED_STRUCT__ARG_TRAITS_
@@ -476,7 +458,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:870
+  // .\be\be_visitor_arg_traits.cpp:871
 
 #if !defined (_PARAM_TEST_OBJREF_STRUCT__ARG_TRAITS_)
 #define _PARAM_TEST_OBJREF_STRUCT__ARG_TRAITS_
@@ -562,7 +544,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:978
+  // .\be\be_visitor_arg_traits.cpp:979
 
 #if !defined (_PARAM_TEST_BIG_UNION__ARG_TRAITS_)
 #define _PARAM_TEST_BIG_UNION__ARG_TRAITS_
@@ -580,7 +562,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:978
+  // .\be\be_visitor_arg_traits.cpp:979
 
 #if !defined (_PARAM_TEST_SMALL_UNION__ARG_TRAITS_)
 #define _PARAM_TEST_SMALL_UNION__ARG_TRAITS_
@@ -598,7 +580,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:870
+  // .\be\be_visitor_arg_traits.cpp:871
 
 #if !defined (_PARAM_TEST_RECURSIVE_STRUCT__ARG_TRAITS_)
 #define _PARAM_TEST_RECURSIVE_STRUCT__ARG_TRAITS_
@@ -616,7 +598,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:978
+  // .\be\be_visitor_arg_traits.cpp:979
 
 #if !defined (_PARAM_TEST_RECURSIVE_UNION__ARG_TRAITS_)
 #define _PARAM_TEST_RECURSIVE_UNION__ARG_TRAITS_
@@ -1059,54 +1041,11 @@ Param_Test::test_ulonglong (
 // TAO_IDL - Generated from
 // w:\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
 
-char *
-Param_Test::test_unbounded_string (
-  const char * s1,
-  char *& s2,
-  ::CORBA::String_out s3)
-{
-  if (!this->is_evaluated ())
-    {
-      ::CORBA::Object::tao_object_initialize (this);
-    }
-  
-  if (this->the_TAO_Param_Test_Proxy_Broker_ == 0)
-    {
-      Param_Test_setup_collocation ();
-    }
-  
-  TAO::Arg_Traits< char *>::ret_val _tao_retval;
-  TAO::Arg_Traits< char *>::in_arg_val _tao_s1 (s1);
-  TAO::Arg_Traits< char *>::inout_arg_val _tao_s2 (s2);
-  TAO::Arg_Traits< char *>::out_arg_val _tao_s3 (s3);
-  
-  TAO::Argument *_the_tao_operation_signature [] =
-    {
-      &_tao_retval,
-      &_tao_s1,
-      &_tao_s2,
-      &_tao_s3
-    };
-  
-  TAO::Invocation_Adapter _tao_call (
-      this,
-      _the_tao_operation_signature,
-      4,
-      "test_unbounded_string",
-      21,
-      this->the_TAO_Param_Test_Proxy_Broker_
-    );
-  
-  _tao_call.invoke (0, 0);
-  
-  return _tao_retval.retn ();
-}
-
 std::string
-Param_Test::test_unbounded_string(
+Param_Test::test_unbounded_string (
   const std::string s1,
-  std::string &s2,
-  std::string &s3)
+  std::string & s2,
+  std::string & s3)
 {
   if (!this->is_evaluated ())
     {
@@ -1118,10 +1057,10 @@ Param_Test::test_unbounded_string(
       Param_Test_setup_collocation ();
     }
   
-  TAO::Arg_Traits<std::string>::ret_val _tao_retval;
-  TAO::Arg_Traits<std::string>::in_arg_val _tao_s1 (s1);
-  TAO::Arg_Traits<std::string>::inout_arg_val _tao_s2 (s2);
-  TAO::Arg_Traits<std::string>::out_arg_val _tao_s3 (s3);
+  TAO::Arg_Traits< std::string>::ret_val _tao_retval;
+  TAO::Arg_Traits< std::string>::in_arg_val _tao_s1 (s1);
+  TAO::Arg_Traits< std::string>::inout_arg_val _tao_s2 (s2);
+  TAO::Arg_Traits< std::string>::out_arg_val _tao_s3 (s3);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1891,54 +1830,11 @@ Param_Test::test_bounded_short_sequence (
 // TAO_IDL - Generated from
 // w:\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
 
-::CORBA::LongSeq *
-Param_Test::test_long_sequence (
-  const ::CORBA::LongSeq & s1,
-  ::CORBA::LongSeq & s2,
-  ::CORBA::LongSeq_out s3)
-{
-  if (!this->is_evaluated ())
-    {
-      ::CORBA::Object::tao_object_initialize (this);
-    }
-  
-  if (this->the_TAO_Param_Test_Proxy_Broker_ == 0)
-    {
-      Param_Test_setup_collocation ();
-    }
-  
-  TAO::Arg_Traits< ::CORBA::LongSeq>::ret_val _tao_retval;
-  TAO::Arg_Traits< ::CORBA::LongSeq>::in_arg_val _tao_s1 (s1);
-  TAO::Arg_Traits< ::CORBA::LongSeq>::inout_arg_val _tao_s2 (s2);
-  TAO::Arg_Traits< ::CORBA::LongSeq>::out_arg_val _tao_s3 (s3);
-  
-  TAO::Argument *_the_tao_operation_signature [] =
-    {
-      &_tao_retval,
-      &_tao_s1,
-      &_tao_s2,
-      &_tao_s3
-    };
-  
-  TAO::Invocation_Adapter _tao_call (
-      this,
-      _the_tao_operation_signature,
-      4,
-      "test_long_sequence",
-      18,
-      this->the_TAO_Param_Test_Proxy_Broker_
-    );
-  
-  _tao_call.invoke (0, 0);
-  
-  return _tao_retval.retn ();
-}
-
 Param_Test::UB_Long_Seq
 Param_Test::test_long_sequence (
-  UB_Long_Seq &s1,
-  UB_Long_Seq &s2,
-  UB_Long_Seq &s3)
+  const Param_Test::UB_Long_Seq & s1,
+  Param_Test::UB_Long_Seq & s2,
+  Param_Test::UB_Long_Seq & s3)
 {
   if (!this->is_evaluated ())
     {
@@ -1950,10 +1846,10 @@ Param_Test::test_long_sequence (
       Param_Test_setup_collocation ();
     }
   
-  TAO::Arg_Traits<UB_Long_Seq>::ret_val _tao_retval;
-  TAO::Arg_Traits<UB_Long_Seq>::in_arg_val _tao_s1 (s1);
-  TAO::Arg_Traits<UB_Long_Seq>::inout_arg_val _tao_s2 (s2);
-  TAO::Arg_Traits<UB_Long_Seq>::out_arg_val _tao_s3 (s3);
+  TAO::Arg_Traits< Param_Test::UB_Long_Seq>::ret_val _tao_retval;
+  TAO::Arg_Traits< Param_Test::UB_Long_Seq>::in_arg_val _tao_s1 (s1);
+  TAO::Arg_Traits< Param_Test::UB_Long_Seq>::inout_arg_val _tao_s2 (s2);
+  TAO::Arg_Traits< Param_Test::UB_Long_Seq>::out_arg_val _tao_s3 (s3);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -8458,6 +8354,40 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+void operator<<= (
+  ::CORBA::Any &,
+  const std::string)
+{
+}
+
+::CORBA::Boolean operator>>= (
+  const ::CORBA::Any &,
+  std::string &)
+{
+  return true;
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+void operator<<= (
+  ::CORBA::Any &,
+  const Param_Test::UB_Long_Seq)
+{
+}
+
+::CORBA::Boolean operator>>= (
+  const ::CORBA::Any &,
+  Param_Test::UB_Long_Seq &)
+{
+  return true;
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from
 // w:\tao\tao_idl\be\be_visitor_structure/cdr_op_cs.cpp:61
 
@@ -10040,6 +9970,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ::CORBA::Boolean operator<< (
@@ -10060,26 +9992,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
   return true;
 }
 
-void operator<<= (
-  ::CORBA::Any &,
-  const std::string)
-{
-}
-
-::CORBA::Boolean operator>>= (
-  const ::CORBA::Any &,
-  std::string &)
-{
-  return true;
-}
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::UB_Long_Seq &_tao_vector)
+  TAO_OutputCDR &strm,
+  const Param_Test::UB_Long_Seq &_tao_vector)
 {
   ::CORBA::ULong length = _tao_vector.size ();
   strm << length;
@@ -10088,19 +10007,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       strm << _tao_vector[i];
     }
-    
+  
   return true;
 }
 
 ::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::UB_Long_Seq &_tao_vector)
+  TAO_InputCDR &strm,
+  Param_Test::UB_Long_Seq &_tao_vector)
 {
   ::CORBA::ULong length = 0UL;
   ::CORBA::ULong tmp = 0UL;
-  
-  strm >> length;
-  _tao_vector.resize (length);
   
   for ( ::CORBA::ULong i = 0UL; i < length; ++i)
     {
@@ -10111,23 +10027,5 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
   return true;
 }
 
-void operator<<= (
-  ::CORBA::Any &,
-  const Param_Test::UB_Long_Seq)
-{
-}
-
-::CORBA::Boolean operator>>= (
-  const ::CORBA::Any &,
-  Param_Test::UB_Long_Seq &)
-{
-  return true;
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-
-
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

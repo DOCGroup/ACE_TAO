@@ -62,6 +62,8 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
 
+#include <string>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
@@ -489,6 +491,8 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       ACE_OutputCDR::from_string x);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       ACE_OutputCDR::from_wstring x);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
+                                      const std::string &x);
 
 // CDR input operators for CORBA types
 
@@ -518,6 +522,8 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &os,
                                       ACE_InputCDR::to_string x);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &os,
                                       ACE_InputCDR::to_wstring x);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &os,
+                                      std::string &x);
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

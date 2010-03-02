@@ -41,6 +41,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include <string>
+#include <vector>
 
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/ORB.h"
@@ -109,9 +111,6 @@
 #include "tao/Typecode_typesC.h"
 #include "tao/WrongTransactionC.h"
 #include "tao/AnyTypeCode/AnySeqC.h"
-
-#include <string>
-#include <vector>
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -342,23 +341,11 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
   
-  virtual char *
-  test_unbounded_string (
-    const char * s1,
-    char *& s2,
-    ::CORBA::String_out s3);
-    
-  //================================================
-  // Another version of test_unbounded_string, this
-  // one using std::string.
-    
   virtual std::string
   test_unbounded_string (
     const std::string s1,
-    std::string &s2,
-    std::string &s3);
-    
-  //================================================
+    std::string & s2,
+    std::string & s3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_typedef/typedef_ch.cpp:413
@@ -657,26 +644,14 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
   
-  virtual ::CORBA::LongSeq *
-  test_long_sequence (
-    const ::CORBA::LongSeq & s1,
-    ::CORBA::LongSeq & s2,
-    ::CORBA::LongSeq_out s3);
-    
-  //===========================================================
-  // Another version of test_long_sequence, this one using
-  // std::vector.
-    
   typedef std::vector< ::CORBA::Long> UB_Long_Seq;
-    
-  virtual UB_Long_Seq
+  
+  virtual Param_Test::UB_Long_Seq
   test_long_sequence (
-    UB_Long_Seq &s1,
-    UB_Long_Seq &s2,
-    UB_Long_Seq &s3);
-    
-  //===========================================================
-    
+    const Param_Test::UB_Long_Seq & s1,
+    Param_Test::UB_Long_Seq & s2,
+    Param_Test::UB_Long_Seq & s3);
+  
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_sequence/sequence_ch.cpp:107
 
@@ -3059,6 +3034,20 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+void operator<<= ( ::CORBA::Any &, const std::string);
+::CORBA::Boolean operator>>= (const ::CORBA::Any &, std::string &);
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+void operator<<= ( ::CORBA::Any &, const Param_Test::UB_Long_Seq);
+::CORBA::Boolean operator>>= (const ::CORBA::Any &, Param_Test::UB_Long_Seq &);
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from
 // w:\tao\tao_idl\be\be_visitor_interface/cdr_op_ch.cpp:55
 
@@ -3676,24 +3665,20 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
- ::CORBA::Boolean operator<< (TAO_OutputCDR &strm, const std::string &_tao_string);
- ::CORBA::Boolean operator>> (TAO_InputCDR &, std::string &_tao_string);
- void operator<<= ( ::CORBA::Any &, const std::string);
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, std::string &);
+::CORBA::Boolean operator<< (TAO_OutputCDR &strm, const std::string &_tao_string);
+::CORBA::Boolean operator>> (TAO_InputCDR &strm, std::string &_tao_string);
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
- ::CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Param_Test::UB_Long_Seq &_tao_vector);
- ::CORBA::Boolean operator>> (TAO_InputCDR &, Param_Test::UB_Long_Seq &_tao_array);
- void operator<<= ( ::CORBA::Any &, const Param_Test::UB_Long_Seq);
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, Param_Test::UB_Long_Seq &);
+::CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Param_Test::UB_Long_Seq &_tao_vector);
+::CORBA::Boolean operator>> (TAO_InputCDR &strm, Param_Test::UB_Long_Seq &_tao_vector);
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:1452
+// .\be\be_codegen.cpp:1455
 #if defined (__ACE_INLINE__)
 #include "param_testC.inl"
 #endif /* defined INLINE */
