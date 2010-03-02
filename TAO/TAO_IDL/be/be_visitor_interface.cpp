@@ -28,6 +28,7 @@
 #include "be_typedef.h"
 #include "be_predefined_type.h"
 #include "be_component.h"
+#include "be_connector.h"
 #include "be_helper.h"
 #include "be_extern.h"
 #include "be_util.h"

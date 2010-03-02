@@ -46,10 +46,10 @@ public:
   /// Catch BE-specific members before delegating to the base class.
   virtual void redefine (AST_Interface *from);
 
-  // Cleanup function.
+  /// Cleanup function.
   virtual void destroy (void);
 
-  // Visiting.
+  /// Visiting.
   virtual int accept (be_visitor *visitor);
 
   // Need for public access to fe_add_structure and fe_add_typedef,
