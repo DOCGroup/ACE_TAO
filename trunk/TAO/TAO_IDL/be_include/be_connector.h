@@ -16,8 +16,8 @@ public:
                 AST_Connector *base_connector);
 
   virtual ~be_connector (void);
-  
-  // Cleanup function.
+
+  /// Cleanup function.
   virtual void destroy (void);
 
   // Narrowing.
@@ -25,7 +25,7 @@ public:
   DEF_NARROW_FROM_DECL (be_connector);
   DEF_NARROW_FROM_SCOPE (be_connector);
 
-  // Visiting.
+  /// Visiting.
   virtual int accept (be_visitor *visitor);
 };
 

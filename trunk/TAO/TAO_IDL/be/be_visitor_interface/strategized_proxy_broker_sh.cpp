@@ -77,8 +77,13 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (
 }
 
 int be_visitor_interface_strategized_proxy_broker_sh::visit_component (
-    be_component *node
-  )
+    be_component *node)
 {
   return this->visit_interface (node);
+}
+
+int be_visitor_interface_strategized_proxy_broker_sh::visit_connector (
+    be_connector *node)
+{
+  return this->visit_component (node);
 }

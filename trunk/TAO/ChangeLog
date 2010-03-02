@@ -1,7 +1,23 @@
+Tue Mar  2 09:58:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+        * TAO_IDL/be_include/be_component.h:
+        * TAO_IDL/be_include/be_connector.h:
+        * TAO_IDL/be_include/be_visitor_interface/direct_proxy_impl_sh.h:
+        * TAO_IDL/be_include/be_visitor_interface/direct_proxy_impl_ss.h:
+        * TAO_IDL/be_include/be_visitor_interface/strategized_proxy_broker_sh.h:
+        * TAO_IDL/be_include/be_visitor_interface/strategized_proxy_broker_ss.h:
+          Generate direct and through poa proxy brokers for connectors
+
 Thu Feb 25 17:04:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * NEWS:
-        
+
           Updated TAO_IDL cleanup item.
 
 Thu Feb 25 16:50:09 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>

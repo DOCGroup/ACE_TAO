@@ -1,6 +1,5 @@
 //
 // $Id$
-//
 
 be_visitor_interface_strategized_proxy_broker_ss::
 be_visitor_interface_strategized_proxy_broker_ss (be_visitor_context *ctx)
@@ -102,16 +101,21 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
 
 int
 be_visitor_interface_strategized_proxy_broker_ss::visit_component (
-    be_component *node
-  )
+    be_component *node)
 {
   return this->visit_interface (node);
+}
+
+int
+be_visitor_interface_strategized_proxy_broker_ss::visit_connector (
+    be_connector *node)
+{
+  return this->visit_component (node);
 }
 
 void
 be_visitor_interface_strategized_proxy_broker_ss::gen_direct_operations (
     be_interface *,
-    TAO_OutStream *
-  )
+    TAO_OutStream *)
 {
 }

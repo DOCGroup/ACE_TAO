@@ -38,6 +38,10 @@ public:
   /// another set of visitors for this stuff.
   virtual int visit_component (be_component *node);
 
+  /// This will just call the above method - no need to create
+  /// another set of visitors for this stuff.
+  virtual int visit_connector (be_connector *node);
+
   /// Helper to generate the declarations for the operations
   /// of any abstract parents we may have.
   static int gen_abstract_ops_helper (be_interface *node,

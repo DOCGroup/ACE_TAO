@@ -38,6 +38,10 @@ public:
   /// This will just call the above method - no need to create
   /// another set of visitors for this stuff.
   virtual int visit_component (be_component *node);
+
+  /// This will just call the above method - no need to create
+  /// another set of visitors for this stuff.
+  virtual int visit_connector (be_connector *node);
 };
 
 #endif /* BE_STRATEGIZED_PROXY_BROKER_SH_H_ */
