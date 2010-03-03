@@ -84,10 +84,17 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.7.6 and CIAO-0.7.7
 
 . Added a new tool, dance_split_plan, which will allow a user
   to split a deployment plan into locality-constrained CDR-encoded deployment
-  plans. 
+  plans.
 
 . Added a new tool, dance_convert_plan, which will allow a user to validate
   and optionally convert a XML encoded deployment plan into CDR.
+
+. CIAO and DAnCE logging are silent by default, no messages are printed anymore.
+  If you want to enable logging use the environment variables CIAO_LOG_LEVEL,
+  DANCE_LOG_LEVEL, CIAO_TRACE_ENABLE, DANCE_TRACE_ENABLE, DANCE_LOG_FILE,
+  and CIAO_LOG_FILE. For the executables we have the commandline arguments
+  -DAnCELogLevel, -DAnCETraceEnable, -DAnCELogFile, -CIAOLogLevel,
+  -CIAOTraceEnable, and -CIAOLogFile
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.5 and CIAO-0.7.6
 =======================================================
