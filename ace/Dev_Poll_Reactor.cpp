@@ -2318,8 +2318,6 @@ ACE_Dev_Poll_Reactor::mask_ops_i (ACE_HANDLE handle,
   // Block out all signals until method returns.
   ACE_Sig_Guard sb;
 
-  Event_Tuple *info = this->handler_rep_.find (handle);
-
   ACE_Reactor_Mask const old_mask = info->mask;
   ACE_Reactor_Mask new_mask = old_mask;
 
