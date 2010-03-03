@@ -1,0 +1,7 @@
+// $Id$
+// -*- MPC -*-
+
+project : acelib {
+  after += DDS4CCM_Logger
+  libs  += DDS4CCM_Logger
+}

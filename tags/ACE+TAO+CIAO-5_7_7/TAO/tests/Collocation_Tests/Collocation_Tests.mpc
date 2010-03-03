@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
+project(Collocation_Tests): taoserver {
+  exename = Collocated_Test
+}

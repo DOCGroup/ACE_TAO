@@ -1,0 +1,33 @@
+// -*- MPC -*-
+// $Id$
+
+project(*IDL): taoidldefaults {
+  IDL_Files {
+    test.idl
+  }
+  custom_only = 1
+}
+
+project(muf_server): kokyu_dsrt_scheduler_server {
+  exename = muf_server
+  after += *IDL
+  Source_Files {
+    test_i.cpp
+    server.cpp
+    testS.cpp
+    testC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(muf_client): orbsvcsexe, svc_utils, kokyu_dsrt_scheduler_client {
+  exename = muf_client
+  after += *IDL
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+  IDL_Files {
+  }
+}

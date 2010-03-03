@@ -1,0 +1,25 @@
+// $Id$
+
+/**
+ * @file QueryFilter_Starter.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef QUERYFILTER_STARTER_IDL
+#define QUERYFILTER_STARTER_IDL
+
+#pragma ciao lem "Base/QueryFilter_StarterE.idl"
+
+interface QueryFilterStarter
+{
+  void set_reader_properties (in unsigned short nr_keys,
+                              in unsigned short nr_iterations);
+  void start_read (in unsigned short run);
+};
+
+interface QueryFilterRestarter
+{
+  void restart_write ();
+};
+
+#endif /* QUERYFILTER_STARTER_IDL */

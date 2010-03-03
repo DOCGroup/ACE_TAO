@@ -1,0 +1,11 @@
+// $Id$
+
+module orange {
+    module apple {
+        valuetype Foo;
+        valuetype Foo;
+
+        component Bar;
+        component Bar;
+    };
+};
