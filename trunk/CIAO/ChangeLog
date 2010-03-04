@@ -1,3 +1,22 @@
+Thu Mar  4 13:04:14 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Deployment_Failure.h:
+        * DAnCE/Plan_Launcher/EM_Launcher.h:
+        * DAnCE/Plan_Launcher/EM_Launcher.cpp:
+        * DAnCE/Plan_Launcher/NM_Launcher.h:
+        * DAnCE/Plan_Launcher/NM_Launcher.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base.h:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.h:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
+
+          Plan launcher re-factoring.  Improves ability to handle CDR
+          encoded deployment plans, adds ability to perform
+          direct-to-NodeManager deployments, some command line options
+          cleaned up.  Main user visible change in behavior is the change
+          of the teardown option from -q to -s.
+
 Thu Mar  4 13:02:04 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/Components/SimpleConsumer_exec.h:
@@ -6,8 +25,8 @@ Thu Mar  4 13:02:04 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/tests/CIAO/Components/SimpleProvider_exec.cpp:
         * DAnCE/tests/CIAO/Components/SimplePublisher_exec.cpp:
 
-          Improved reporting of error conditions. 
-        
+          Improved reporting of error conditions.
+
 Thu Mar  4 12:57:52 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tools/Convert_Plan/Convert_Plan.cpp:

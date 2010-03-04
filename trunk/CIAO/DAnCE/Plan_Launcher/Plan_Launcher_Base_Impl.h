@@ -1,106 +1,92 @@
 /**
  * $Id$
  * @file Plan_Launcher_Base_Impl.h
- * @author Will Otte <wotte@dre.vanderbilt.edu>
+ * @author William R. Otte <wotte@dre.vanderbilt.edu>
  *
- * Contains the Plan_Launcher_i class, which can be used by
- * applications to launch component assemblies.
+ * Contains the generic implementation of plan launcher logic for both EM and NM deployments.
+ * 
  */
+
 #ifndef PLAN_LAUNCHER_BASE_IMPL_H
 #define PLAN_LAUNCHER_BASE_IMPL_H
 
-#include "DAnCE/Deployment/Deployment_DomainApplicationManagerC.h"
-#include "DAnCE/Deployment/Deployment_ExecutionManagerC.h"
 #include "DAnCE/Deployment/Deployment_ConnectionC.h"
-#include "ace/Map_Manager.h"
 #include "DAnCE/Deployment/Deployment_DeploymentPlanC.h"
-#include "ace/Vector_T.h"
 
-/**
- * @class Plan_Launcher_Impl
- * @brief This class launches and manages deployment plans.
- */
-class Plan_Launcher_Base_Impl
+#include "Plan_Launcher_Base.h"
+
+namespace DAnCE
 {
-public:
-  struct Deployment_Failure
-  {
-    Deployment_Failure(const ACE_CString &error) :
-      error_(error)
-    {}
-    ACE_CString error_;
-  };
-
-  struct Help_Issued
-  {
-    Help_Issued() {}
-  };
-
-  Plan_Launcher_Base_Impl(CORBA::ORB_ptr orb, int argc, ACE_TCHAR *argv[]);
-
-  virtual ~Plan_Launcher_Base_Impl();
-
-  void execute();
-
-  static Deployment::DeploymentPlan* read_cdr_plan_file(
-      const char *deployment_plan_uri);
-  static void write_cdr_plan_file(const char * filename,
-      const Deployment::DeploymentPlan & plan);
-
-protected:
   /**
-   * @brief Launch a plan, given an IDL deployment plan
-   * @param plan A valid IDL deployment plan
-   * @returns a string containing the UUID of the plan. Null indicates failure.
+   * @class Plan_Launcher_Base_Impl
+   * @brief This class launches and manages deployment plans.
    */
-  virtual const char * launch_plan(const ::Deployment::DeploymentPlan &plan);
-
-  /// Returns the DAM associated with a given plan URI
-  ::Deployment::DomainApplicationManager_ptr get_dam(const char *uuid);
-
-  /// Tears down a plan given the UUID
-  bool teardown_plan(const char *uuid);
-
-  void teardown_plan(::Deployment::DomainApplicationManager_ptr dam);
-
-  void destroy_dam(::Deployment::DomainApplicationManager_ptr dam);
-
-  virtual void stop_plan();
-  void usage(const ACE_TCHAR* program = 0);
-  void parse_args(int argc, ACE_TCHAR *argv[]);
-
-  static bool is_empty(const ACE_CString & s)
+  template<typename Manager, typename AppManager, typename Application>
+  class Plan_Launcher_Base_Impl : public virtual Plan_Launcher_Base
   {
-    return 0 == s.length();
-  }
+  protected:
+    
+    typedef typename Manager::_ptr_type Manager_ptr;
+    typedef typename Manager::_var_type Manager_var;
 
-  void write_dam_ior(::Deployment::DomainApplicationManager_ptr dam);
+    typedef typename AppManager::_ptr_type AppManager_ptr;
+    typedef typename AppManager::_var_type AppManager_var;
 
-  void create_external_connections(const ::Deployment::DeploymentPlan &plan,
-      Deployment::Connections& conn);
+    typedef typename Application::_ptr_type Application_ptr;
+    typedef typename Application::_var_type Application_var;
+  
+  public:
+    Plan_Launcher_Base_Impl (CORBA::ORB_ptr orb,
+                             Manager_ptr manager);
 
-  virtual void check_mode_consistentness();
-  static ACE_CString expand_env_vars(const ACE_TCHAR * src);
+    virtual ~Plan_Launcher_Base_Impl ();
 
-  /// Cached ORB pointer
-  CORBA::ORB_var orb_;
+    /**
+     * @brief Launch a plan, given an IDL deployment plan
+     * @param plan A valid IDL deployment plan
+     * @returns a string containing the UUID of the plan. Null indicates failure.
+     */
+    virtual const char * launch_plan (const ::Deployment::DeploymentPlan &plan,
+                                      CORBA::Object_out am,
+                                      CORBA::Object_out app);
+  
+    virtual CORBA::Object_ptr prepare_plan (const ::Deployment::DeploymentPlan &plan);
+  
+    virtual CORBA::Object_ptr start_launch (CORBA::Object_ptr app_mgr,
+                                            const ::Deployment::Properties &properties,
+                                            ::Deployment::Connections_out connections);
+  
+    virtual void finish_launch (CORBA::Object_ptr app,
+                                const ::Deployment::Connections &provided_connections,
+                                bool start);
+  
+    virtual void start (CORBA::Object_ptr application);
+  
+    /// Tears down a plan given the UUID
+    virtual void teardown_application (CORBA::Object_ptr app_mgr,
+                                       CORBA::Object_ptr app);
 
-  /// Object reference of the ExecutionManager
-  ::Deployment::ExecutionManager_var em_;
+    virtual void destroy_app_manager (CORBA::Object_ptr);
 
-  ACE_Vector<ACE_CString> cdr_plan_urls_;
-  ACE_CString plan_uuid_;
-  ACE_CString em_ior_;
-  ACE_CString dam_ior_;
-  ACE_Vector<ACE_CString> xml_plan_urls_;
-  ACE_CString cdr_dest_url_;
+    virtual void create_external_connections(const ::Deployment::DeploymentPlan &plan,
+                                             Deployment::Connections &conn);
 
-  unsigned long mode_;
-  static const unsigned long MODE_START_PLAN = 0x0001;
-  static const unsigned long MODE_STOP_PLAN = 0x0002;
-  static const unsigned long MODE_USE_NAMING = 0x0004;
-  static const unsigned long MODE_WRITE_CDR = 0x0008;
+    //  static ACE_CString expand_env_vars(const ACE_TCHAR * src);
+  protected:
+    /// Cached ORB pointer
+    CORBA::ORB_var orb_;
+  
+    /// Object reference of the Manager
+    Manager_var manager_;
+  }; // class Plan_Launcher_Impl
 
-}; // class Plan_Launcher_Impl
+}
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#include "Plan_Launcher/Plan_Launcher_Base_Impl.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+#pragma implementation ("Plan_Launcher_Base_Impl.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* PLAN_LAUNCHER_BASE_IMPL_H */
