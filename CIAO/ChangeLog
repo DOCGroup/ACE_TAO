@@ -1,3 +1,9 @@
+Thu Mar  4 14:27:16 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+
+          Additional logging fixes. 
+        
 Thu Mar  4 14:13:36 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
