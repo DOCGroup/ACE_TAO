@@ -55,7 +55,7 @@
     </P>
     <P>
       The Build Czar is empowered to set up more builds on his own for his 
-      convenience. This <a href="https://svn.dre.vanderbilt.edu/viewvc/ACE_autobuild/trunk/README?revision=HEAD">
+      convenience. This <a href="https://svn.dre.vanderbilt.edu/viewvc/autobuild/trunk/README?revision=HEAD">
         page </a>has a step by step instructions on how to do that.
     </P>
     <P>
@@ -93,14 +93,19 @@
           </ul>
         <li>
           Prior to starting this, gather aggregate release notes from all developers. 
-          This is usually in the form of an email plea asking for a writeup of 
-          significant changes since the last beta. Add these notes to the NEWS files 
-          before cutting the release so that all notes are part of the release.</li>
+          This is usually in the form of an email plea asking to update all NEWS files in
+          the archive. These NEWS files are used as part of the release notes for the release.</li>
         <li>
-          Checkout a new workspace on <tt>anduril.dre.vanderbilt.edu</tt></li>
+          Checkout a new workspace on a Fedora system with the last public release and with
+          all patches installed. This can be achieved using
+          <ul>
+            <li>yum install perl svn screen pysvn automake doxygen bzip2 tar gzip openssh</li>
+             <li>yum update</li>
+          </ul>
+        </li>
         <ul>
           <li>
-            The best place to create the workspace is under /export/anduriltmp/bczar. Don't 
+            The best place to create the workspace is under /export/anduriltmp/bczar (if you are on anduril). Don't 
             use the home directory itself, it is an NFS share and not really fast.
           </li>
           <li>
@@ -193,7 +198,7 @@
             documentation, this can be started in parrellel with this activity.
           </li>
           <li>
-            The kits end up in <tt>/export/anduriltmp/bczar/packages</tt></li>
+            The kits end up in <tt>$DOC_ROOT/packages</tt></li>
         </ul>
     <p>
     To summarize, the following is a transcript of the steps up to this point 
@@ -201,7 +206,7 @@
     <p><code>$ ssh bczar@anduril.dre.vanderbilt.edu<br>
         No default printer<br>
         -bash-3.00$ screen<br>
-        -bash-3.00$ cd /export/anduriltmp/bczar<br>
+        -bash-3.00$ cd /tmp<br>
         -bash-3.00$ rm -rf DOC_ROOT<br>
         -bash-3.00$ mkdir DOC_ROOT<br>
         -bash-3.00$ export DOC_ROOT=$PWD/DOC_ROOT<br>
@@ -220,11 +225,11 @@
         The packages end up by default under $DOC_ROOT/package-&lt;PID&gt;, you can 
         copy them to the webserver using the following commands. (Note that &lt;PID&gt; 
         needs to be the numerical pid of the process that created the kit, use<br>
-        <code>ls -ald</code><br>
+        <code>ls -ald</code>
         to determine the correct filename.) At the moment you execute these commands 
-        all users can download these packages.</li><br>
-      <code>cp $DOC_ROOT/package-&lt;PID&gt;/ACE* 
-        /export/www/download.dre/ACE+TAO-distribution<br>
+        all users can download these packages.</li>
+      <code>scp $DOC_ROOT/package-&lt;PID&gt;/ACE* 
+        bczar@anduril.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution<br>
       </code>
       <li>
         After the repository is tagged you can also start generating the doxygen 
@@ -277,7 +282,7 @@
       </li>
       <li>
         <code>cd $ACE_ROOT</code><br>
-        <code>make -f Release manpages</code>
+        <code>nohup make -f Release manpages &</code>
       </li></ul><br>
       <li>
         While doxygen churns, format a release announcement, including the release 
@@ -403,41 +408,41 @@
     <hr>
     <h2>
       Tips to being a Build Czar</h2>
-    <p>
-      1. Trust no one.<br>
-      2. Be careful with <a href="http://www.cs.wustl.edu/~schmidt">this guy</a>, he 
+    <p><ol>
+      <li>Trust no one.</li>
+      <li>Be careful with <a href="http://www.cs.wustl.edu/~schmidt">this guy</a>, he 
       is notorious in breaking builds (and fixing them as well...Rumour has it that 
       it's actually a super-scalar, super-pipelined processor capable of out-of-order 
-      execution, in human incarnation).<br>
-      3. Don't forgive people who break ACE :-)<br>
-      4. If a build hasn't run in a long time (symptoms are a "red" in the Last Run 
+      execution, in human incarnation).</li>
+      <li>Don't forgive people who break ACE :-)</li>
+      <li>If a build hasn't run in a long time (symptoms are a "red" in the Last Run 
       column of the build scoreboard), delete the .disable file in 
-      /path/to/build/directory/BUILD_NAME/ by hand.<br>
-      5. Think of the group who wrote the scoreboard update script, every time you 
+      /path/to/build/directory/BUILD_NAME/ by hand.</li>
+      <li>Think of the group who wrote the scoreboard update script, every time you 
       catch an otherwise not so obvious error with the help of the scoreboard. Tell <a href="mailto:devo-group@list.isis.vanderbilt.edu">
-        DEVO group</a> about it.<br>
-      6. Send a note to  <a href="mailto:sysadmin@isis.vanderbilt.edu">sysadmin@isis.vanderbilt.edu</a> asking for the repo to be frozen. Provide them a list of names, including yourself and bczar to be granted write permission.
-      <br>
-      7. Compile once on Win32, Linux and Solaris before cutting a beta.<br>
-      8. Trust the release script when making a release. Don't make tar balls by 
+        DEVO group</a> about it.</li>
+      <li>Send a note to  <a href="mailto:sysadmin@isis.vanderbilt.edu">sysadmin@isis.vanderbilt.edu</a> asking for the repo to be frozen. Provide them a list of names, including yourself and bczar to be granted write permission.
+      </li>
+      <li>Compile once on Win32, Linux and Solaris before cutting a beta.</li>
+      <li>Trust the release script when making a release. Don't make tar balls by 
       hand. Make sure that the public ftp directories 
       (/project/beguine/ftp/pub/ACE+TAO-distribution and 
       /project/beguine/ftp/pub/ACE+TAO-distribution/diffs) have the right 
-      permissions, so that the release script can copy the tar balls.<br>
-      9. When all hell breaks loose, don't wait for the nightly builds to monitor 
-      improvement. Instead manually start the builds.<br>
-      10. Maintain private up-to-date workspaces for problem platforms (read as 
-      Solaris).<br>
-      11. Don't hesitate to ask for help.<br>
-      12. When you get an account to access the svn repo, make sure you are added to 
+      permissions, so that the release script can copy the tar balls.</li>
+      <li>When all hell breaks loose, don't wait for the nightly builds to monitor 
+      improvement. Instead manually start the builds.</li>
+      <li>Maintain private up-to-date workspaces for problem platforms (read as 
+      Solaris).</li>
+      <li>Don't hesitate to ask for help.</li>
+      <li>When you get an account to access the svn repo, make sure you are added to 
       the correct groups, for example, 
       gid=100(users),5000(doc),5002(acetaodev),5003(cvs). Otherwise you will have 
-      problem to checkout various modules.<br>
-      13. Install your public key to the different machines you have frequent access 
-      to avoid typing password.<br>
-      14. Update this page if you have any more tips for future build czars :-). This 
-      page is in svn under <code>ACE_wrappres/docs/bczar/bczar.html</code><br>
-    </p>
+      problem to checkout various modules.</li>
+      <li>Install your public key to the different machines you have frequent access 
+      to avoid typing password.</li>
+      <li>Update this page if you have any more tips for future build czars :-). This 
+      page is in svn under <code>ACE_wrappres/docs/bczar/bczar.html</code></li>
+    </p></ol>
     <hr>
     <Center>
       <h1>The Realm of the Build Czar</h1>
