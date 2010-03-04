@@ -10,7 +10,7 @@
 #ifndef DANCE_PLAN_LAUNCHER_NM
 #define DANCE_PLAN_LAUNCHER_NM
 
-#include "Plan_Launcher_Base_Impl.h"
+#include "Plan_Launcher_Base_Impl_T.h"
 
 #include "DAnCE/Deployment/Deployment_NodeApplicationC.h"
 #include "DAnCE/Deployment/Deployment_NodeApplicationManagerC.h"

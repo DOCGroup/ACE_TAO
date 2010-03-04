@@ -3,7 +3,7 @@
 #ifndef PLAN_LAUNCHER_BASE_IMPL_CPP
 #define PLAN_LAUNCHER_BASE_IMPL_CPP
 
-#include "Plan_Launcher_Base_Impl.h"
+#include "Plan_Launcher_Base_Impl_T.h"
 
 #include "ace/Env_Value_T.h"
 #include "ace/OS_NS_stdio.h"
@@ -29,14 +29,14 @@ namespace DAnCE
       manager_ (Manager::_duplicate (manager))
   {
     DANCE_TRACE ("Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl");
-    if (CORBA::is_nil (this->orb_))
+    if (CORBA::is_nil (this->orb_.in ()))
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO "Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - "
                          "Plan Launcher requires a valid ORB\n"));
         throw Deployment_Failure ("Plan launcher requires a valid ORB\n");
       }
 
-    if (CORBA::is_nil (this->manager_))
+    if (CORBA::is_nil (this->manager_.in ()))
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO "Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - "
                          "Plan Launcher requires a valid Manager reference.\n"));
@@ -109,7 +109,7 @@ namespace DAnCE
   
     AppManager_var app_manager (AppManager::_narrow (app_mgr));
 
-    if (CORBA::is_nil (app_manager))
+    if (CORBA::is_nil (app_manager.in ()))
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher_Base_Impl::start_launch - ")
                          ACE_TEXT ("Nil ApplicationManager reference\n")));
@@ -159,7 +159,7 @@ namespace DAnCE
   
     Application_var application (Application::_narrow (app));
 
-    if (CORBA::is_nil (application))
+    if (CORBA::is_nil (application.in ()))
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
                          ACE_TEXT("Nil Application reference.\n")));
@@ -193,7 +193,7 @@ namespace DAnCE
   
     Application_var application (Application::_narrow (app));
 
-    if (CORBA::is_nil (application))
+    if (CORBA::is_nil (application.in ()))
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::start - ")
                          ACE_TEXT("Nil Application reference.\n")));
@@ -325,7 +325,7 @@ namespace DAnCE
   
     AppManager_var am (AppManager::_narrow (am_obj));
   
-    if (CORBA::is_nil (am))
+    if (CORBA::is_nil (am.in ()))
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::teardown_application - ")
                          ACE_TEXT("Nil ApplicationManager reference.\n")));
@@ -334,7 +334,7 @@ namespace DAnCE
   
     Application_var app (Application::_narrow (app_obj));
 
-    if (CORBA::is_nil (app))
+    if (CORBA::is_nil (app.in ()))
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::teardown_appliocation - ")
                          ACE_TEXT("Nil Application reference.\n")));
@@ -375,7 +375,7 @@ namespace DAnCE
   
     AppManager_var am (AppManager::_narrow (am_obj));
 
-    if (CORBA::is_nil (am))
+    if (CORBA::is_nil (am.in ()))
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::destroy_app_manager - ")
                          ACE_TEXT("Nil ApplicationManager reference.\n")));

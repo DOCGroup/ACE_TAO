@@ -82,11 +82,11 @@ namespace DAnCE
 
 }
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Plan_Launcher/Plan_Launcher_Base_Impl.cpp"
+#include "Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Plan_Launcher_Base_Impl.cpp")
+#pragma implementation ("Plan_Launcher_Base_Impl_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* PLAN_LAUNCHER_BASE_IMPL_H */
