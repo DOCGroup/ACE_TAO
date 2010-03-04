@@ -1,0 +1,59 @@
+// $Id$
+
+project (DDS4CCM_idl_gen) : dds4ccm, componentidldefaults {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=DDS4CCM_STUB_Export \
+              -Wb,stub_export_include=dds4ccm_stub_export.h \
+              -Wb,skel_export_macro=DDS4CCM_SKEL_Export \
+              -Wb,skel_export_include=dds4ccm_skel_export.h \
+              -I$(CIAO_ROOT)/connectors -Glem
+
+  IDL_Files {
+    idlflags += -Gxhst -Gxhsk -SS
+    dds4ccm_Base.idl
+  }
+
+  IDL_Files {
+    idlflags -= -Gxhst -Gxhsk
+    dds_rtf2_dcps.idl
+    dds_rtf2_dcps_i_handle.idl
+    dds4ccm_PortStatusListener.idl
+    dds4ccm_DataListenerControl.idl
+    dds4ccm_ConnectorStatusListener.idl
+    dds4ccm_StateListenerControl.idl
+    dds4ccm_Connector.idl
+  }
+}
+
+project (DDS4CCM_stub) : dds4ccm, ccm_stub, ciaolib_with_idl, ciao_output, taolib {
+
+  after += DDS4CCM_idl_gen
+  includes += $(CIAO_ROOT)/connectors
+
+  dynamicflags += DDS4CCM_STUB_BUILD_DLL
+  IDL_Files {
+  }
+
+  Header_Files {
+    dds4ccm_BaseC.h
+    dds4ccm_PortStatusListenerC.h
+    dds4ccm_DataListenerControlC.h
+    dds4ccm_ConnectorStatusListenerC.h
+    dds4ccm_StateListenerControlC.h
+    dds_rtf2_dcpsC.h
+  }
+
+  Source_Files {
+    dds4ccm_BaseC.cpp
+    dds4ccm_PortStatusListenerC.cpp
+    dds4ccm_DataListenerControlC.cpp
+    dds4ccm_ConnectorStatusListenerC.cpp
+    dds4ccm_StateListenerControlC.cpp
+    dds4ccm_ConnectorC.cpp
+    dds_rtf2_dcpsC.cpp
+    dds_rtf2_dcps_i_handleC.cpp
+    dds_rtf2_dcps_instance_handleC.cpp
+  }
+}
+
+

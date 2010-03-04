@@ -1,5 +1,5 @@
 // -*- MPC -*-
 // $Id$
 
-project : ccm_stub {
+project : ccm_lem_stub {
 }
