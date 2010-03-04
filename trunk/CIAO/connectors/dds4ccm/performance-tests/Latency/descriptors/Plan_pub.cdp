@@ -133,7 +133,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>HelloTest_Library#LatencyQoS</string>
+          <string>HelloTest_Library#LatencyPubQoS</string>
         </value>
       </value>
     </configProperty>
@@ -144,17 +144,6 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="SenderComponentImplementation" />
-    <configProperty>
-      <name>keys</name>
-      <value>
-        <type>
-          <kind>tk_ushort</kind>
-        </type>
-        <value>
-          <ushort>1</ushort>
-        </value>
-      </value>
-    </configProperty>
     <configProperty>
       <name>iterations</name>
       <value>

@@ -11,10 +11,10 @@
 #pragma ndds typesupport "Base/Latency_Test_BaseSupport.h"
 
 const short MAX_DATA_SEQUENCE_LENGTH = 8192;
-typedef sequence<octet> OctetSeq;
+typedef sequence<octet, MAX_DATA_SEQUENCE_LENGTH> OctetSeq;
 
 struct LatencyTest {
-  string key;
+//  string key;
   long seq_num;
   long ping;
   OctetSeq data;
