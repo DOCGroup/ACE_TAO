@@ -26,17 +26,6 @@ operator<<= (::DDS_OwnershipStrengthQosPolicy &ddsqos, const ::DDS::OwnershipStr
   ddsqos.value = qos.value;
 }
 
-inline void
-operator>>= (const ::DDS_OwnershipStrengthQosPolicy &qos, ::DDS::OwnershipStrengthQosPolicy & ddsqos)
-{
-  ddsqos.value = qos.value;
-}
-
-inline void
-operator>>= (const ::DDS::OwnershipStrengthQosPolicy &qos, ::DDS_OwnershipStrengthQosPolicy & ddsqos)
-{
-  ddsqos.value = qos.value;
-}
 #endif
 
 #endif /* DDS4CCM_OWNERSHIPSTRENGTHQOSPOLICY_H */

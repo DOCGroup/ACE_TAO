@@ -28,17 +28,6 @@ operator<<= (::DDS_LatencyBudgetQosPolicy &ddsqos, const ::DDS::LatencyBudgetQos
   ddsqos.duration <<= qos.duration;
 }
 
-inline void
-operator>>= (const ::DDS_LatencyBudgetQosPolicy &qos, ::DDS::LatencyBudgetQosPolicy & ddsqos)
-{
-  ddsqos.duration <<= qos.duration;
-}
-
-inline void
-operator>>= (const ::DDS::LatencyBudgetQosPolicy &qos, ::DDS_LatencyBudgetQosPolicy & ddsqos)
-{
-  ddsqos.duration <<= qos.duration;
-}
 #endif
 
 #endif /* DDS4CCM_LATENCYBUDGETQOSPOLICY_H */

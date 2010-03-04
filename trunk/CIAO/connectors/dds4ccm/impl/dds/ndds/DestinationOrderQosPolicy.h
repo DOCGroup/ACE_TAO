@@ -28,17 +28,6 @@ operator<<= (::DDS_DestinationOrderQosPolicy &ddsqos, const ::DDS::DestinationOr
   ddsqos.kind = static_cast < ::DDS_DestinationOrderQosPolicyKind> (qos.kind);
 }
 
-inline void
-operator>>= (const ::DDS_DestinationOrderQosPolicy &qos, ::DDS::DestinationOrderQosPolicy & ddsqos)
-{
-  ddsqos.kind = static_cast < ::DDS::DestinationOrderQosPolicyKind> (qos.kind);
-}
-
-inline void
-operator>>= (const ::DDS::DestinationOrderQosPolicy &qos, ::DDS_DestinationOrderQosPolicy & ddsqos)
-{
-  ddsqos.kind = static_cast < ::DDS_DestinationOrderQosPolicyKind> (qos.kind);
-}
 #endif
 
 #endif /* DDS4CCM_DESTINATIONORDERQOSPOLICY_H */

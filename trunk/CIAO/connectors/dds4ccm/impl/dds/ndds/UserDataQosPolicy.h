@@ -28,17 +28,6 @@ operator<<= (::DDS_UserDataQosPolicy &ddsqos, const ::DDS::UserDataQosPolicy & q
   ddsqos.value <<= qos.value;
 }
 
-inline void
-operator>>= (const ::DDS_UserDataQosPolicy &qos, ::DDS::UserDataQosPolicy & ddsqos)
-{
-  ddsqos.value <<= qos.value;
-}
-
-inline void
-operator>>= (const ::DDS::UserDataQosPolicy &qos, ::DDS_UserDataQosPolicy & ddsqos)
-{
-  ddsqos.value <<= qos.value;
-}
 #endif
 
 #endif /* DDS4CCM_USERDATAQOSPOLICY_H */

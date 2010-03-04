@@ -29,12 +29,6 @@ operator<<= (::DDS_Time_t &ddstime, const ::DDS::Time_t & time)
   ddstime.nanosec = time.nanosec;
 }
 
-inline void
-operator>>= (const ::DDS_Time_t &time, ::DDS::Time_t & ddstime)
-{
-  ddstime.sec = time.sec;
-  ddstime.nanosec = time.nanosec;
-}
 #endif
 
 #endif /* DDS4CCM_TIME_T_H */

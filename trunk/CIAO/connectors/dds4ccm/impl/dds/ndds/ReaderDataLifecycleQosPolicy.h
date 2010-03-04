@@ -31,19 +31,6 @@ operator<<= (::DDS_ReaderDataLifecycleQosPolicy &ddsqos, const ::DDS::ReaderData
   ddsqos.autopurge_disposed_samples_delay <<= qos.autopurge_disposed_samples_delay;
 }
 
-inline void
-operator>>= (const ::DDS_ReaderDataLifecycleQosPolicy &qos, ::DDS::ReaderDataLifecycleQosPolicy & ddsqos)
-{
-  ddsqos.autopurge_nowriter_samples_delay <<= qos.autopurge_nowriter_samples_delay;
-  ddsqos.autopurge_disposed_samples_delay <<= qos.autopurge_disposed_samples_delay;
-}
-
-inline void
-operator>>= (const ::DDS::ReaderDataLifecycleQosPolicy &qos, ::DDS_ReaderDataLifecycleQosPolicy & ddsqos)
-{
-  ddsqos.autopurge_nowriter_samples_delay <<= qos.autopurge_nowriter_samples_delay;
-  ddsqos.autopurge_disposed_samples_delay <<= qos.autopurge_disposed_samples_delay;
-}
 #endif
 
 #endif /* DDS4CCM_READERDATALIFECYCLEQOSPOLICY_H */

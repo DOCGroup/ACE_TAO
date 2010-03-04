@@ -286,9 +286,9 @@ namespace CIAO
       ::DDS::SampleRejectedStatus & status)
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      DDS_SampleRejectedStatus rtistatus;
-      ::DDS::ReturnCode_t const retval = this->impl ()->get_sample_rejected_status (rtistatus);
-      rtistatus >>= status;
+      DDS_SampleRejectedStatus ddsstatus;
+      ::DDS::ReturnCode_t const retval = this->impl ()->get_sample_rejected_status (ddsstatus);
+      status <<= ddsstatus;
       return retval;
 #else
       return this->impl ()->get_sample_rejected_status (status);
@@ -300,9 +300,9 @@ namespace CIAO
       ::DDS::LivelinessChangedStatus & status)
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      DDS_LivelinessChangedStatus rtistatus;
-      ::DDS::ReturnCode_t const retval = this->impl ()->get_liveliness_changed_status (rtistatus);
-      rtistatus >>= status;
+      DDS_LivelinessChangedStatus ddsstatus;
+      ::DDS::ReturnCode_t const retval = this->impl ()->get_liveliness_changed_status (ddsstatus);
+      status <<= ddsstatus;
       return retval;
 #else
       return this->impl ()->get_liveliness_changed_status (status);
@@ -314,9 +314,9 @@ namespace CIAO
       ::DDS::RequestedDeadlineMissedStatus & status)
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      DDS_RequestedDeadlineMissedStatus rtistatus;
-      ::DDS::ReturnCode_t const retval = this->impl ()->get_requested_deadline_missed_status (rtistatus);
-      rtistatus >>= status;
+      DDS_RequestedDeadlineMissedStatus ddsstatus;
+      ::DDS::ReturnCode_t const retval = this->impl ()->get_requested_deadline_missed_status (ddsstatus);
+      status <<= ddsstatus;
       return retval;
 #else
       return this->impl ()->get_requested_deadline_missed_status (status);
@@ -328,9 +328,9 @@ namespace CIAO
       ::DDS::RequestedIncompatibleQosStatus & status)
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      DDS_RequestedIncompatibleQosStatus rtistatus;
-      ::DDS::ReturnCode_t const retval = this->impl ()->get_requested_incompatible_qos_status (rtistatus);
-      rtistatus >>= status;
+      DDS_RequestedIncompatibleQosStatus ddsstatus;
+      ::DDS::ReturnCode_t const retval = this->impl ()->get_requested_incompatible_qos_status (ddsstatus);
+      status <<= ddsstatus;
       return retval;
 #else
       return this->impl ()->get_requested_incompatible_qos_status (status);
@@ -344,7 +344,7 @@ namespace CIAO
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_SubscriptionMatchedStatus ddsstatus;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_subscription_matched_status (ddsstatus);
-      ddsstatus >>= status;
+      status <<= ddsstatus;
       return retval;
 #else
       return this->impl ()->get_subscription_matched_status (status);
@@ -356,9 +356,9 @@ namespace CIAO
       ::DDS::SampleLostStatus & status)
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      DDS_SampleLostStatus rtistatus;
-      ::DDS::ReturnCode_t const retval = this->impl ()->get_sample_lost_status (rtistatus);
-      rtistatus >>= status;
+      DDS_SampleLostStatus ddsstatus;
+      ::DDS::ReturnCode_t const retval = this->impl ()->get_sample_lost_status (ddsstatus);
+      status <<= ddsstatus;
       return retval;
 #else
       return this->impl ()->get_sample_lost_status (status);
@@ -386,7 +386,7 @@ namespace CIAO
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandleSeq rtiseq;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_matched_publications (rtiseq);
-      rtiseq >>= publication_handles;
+      publication_handles <<= rtiseq;
       return retval;
 #else
       return this->impl ()->get_matched_publications (publication_handles);
@@ -407,7 +407,7 @@ namespace CIAO
       ::DDS::ReturnCode_t const retcode = this->impl()->
                     get_matched_publication_data (ccm_dds_pub_data,
                                                   ccm_dds_pub_handle);
-      ccm_dds_pub_data >>= publication_data;
+      publication_data <<= ccm_dds_pub_data;
       return retcode;
 #else
       return this->impl ()->get_matched_publication_data (publication_data, publication_handle);

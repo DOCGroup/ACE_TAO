@@ -37,27 +37,6 @@ operator<<= (::DDS_QosPolicyCountSeq & ddspolicycount, const ::DDS::QosPolicyCou
     }
 }
 
-inline void
-operator>>= (const ::DDS_QosPolicyCountSeq & policycount, ::DDS::QosPolicyCountSeq & ddspolicycount)
-{
-  ddspolicycount.length (policycount.length ());
-  for (::DDS_Long i = 0 ; i < policycount.length (); ++i)
-    {
-      ddspolicycount[i].policy_id = policycount[i].policy_id;
-      ddspolicycount[i].count = policycount[i].count;
-    }
-}
-
-inline void
-operator>>= (const ::DDS::QosPolicyCountSeq & policycount, ::DDS_QosPolicyCountSeq & ddspolicycount)
-{
-  ddspolicycount.length (policycount.length ());
-  for (::CORBA::ULong i = 0 ; i < policycount.length (); ++i)
-    {
-      ddspolicycount[i].policy_id = static_cast <DDS_QosPolicyId_t> (policycount[i].policy_id);
-      ddspolicycount[i].count = policycount[i].count;
-    }
-}
 #endif
 
 #endif /* DDS4CCM_QOSPOLICYCOUNTSEQ_H */

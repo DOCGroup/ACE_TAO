@@ -11,5 +11,5 @@ WriterDataLifecyclePolicyTest::check (const ::DDS_WriterDataLifecycleQosPolicy &
                                       const ::DDS::WriterDataLifecycleQosPolicy & qos)
 {
   return dds_qos.autodispose_unregistered_instances ==
-         qos.autodispose_unregistered_instances;
+         static_cast <DDS_Boolean> (qos.autodispose_unregistered_instances);
 }

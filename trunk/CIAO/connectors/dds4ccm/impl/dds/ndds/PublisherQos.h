@@ -37,23 +37,6 @@ operator<<= (::DDS_PublisherQos &ddsqos, const ::DDS::PublisherQos & qos)
   ddsqos.entity_factory <<= qos.entity_factory;
 }
 
-inline void
-operator>>= (const ::DDS_PublisherQos &qos, ::DDS::PublisherQos & ddsqos)
-{
-  ddsqos.presentation <<= qos.presentation;
-  ddsqos.partition <<= qos.partition;
-  ddsqos.group_data <<= qos.group_data;
-  ddsqos.entity_factory <<= qos.entity_factory;
-}
-
-inline void
-operator>>= (const ::DDS::PublisherQos &qos, ::DDS_PublisherQos & ddsqos)
-{
-  ddsqos.presentation <<= qos.presentation;
-  ddsqos.partition <<= qos.partition;
-  ddsqos.group_data <<= qos.group_data;
-  ddsqos.entity_factory <<= qos.entity_factory;
-}
 #endif
 
 #endif /* DDS4CCM_PUBLISHERQOS_H */
