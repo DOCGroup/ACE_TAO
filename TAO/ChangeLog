@@ -1,3 +1,11 @@
+Thu Mar  4 12:01:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+          Unicode fixes
+
+        * orbsvcs/tests/Bug_3215_Regression/Hello.h:
+          Removed msvc checks
+
 Thu Mar  4 11:58:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.cpp:

@@ -69,8 +69,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Check this isn't generating transients for any other reason
       hello->ping ();
 
-
-
       try
         {
           hello->throw_location_forward ();
