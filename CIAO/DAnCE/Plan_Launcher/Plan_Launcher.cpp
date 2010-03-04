@@ -424,13 +424,26 @@ int teardown_plan (const Options &opts,
   return 0;
 }
 
+struct ORB_Destroyer
+{
+  ORB_Destroyer (CORBA::ORB_var &orb) : 
+    orb_ (orb)
+  {
+  }
+  
+  ~ORB_Destroyer (void)
+  {
+    orb_->destroy ();
+  }
+  CORBA::ORB_var &orb_;
+};
+
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   DANCE_DISABLE_TRACE ();
 
   int retval = 0;
-  CORBA::ORB_var orb;
 
   try
     {
@@ -445,7 +458,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       DANCE_DEBUG (6, (LM_TRACE, DLINFO
                        ACE_TEXT("PlanLauncher - initializing ORB\n")));
 
-      orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      
+      ORB_Destroyer safe_orb (orb);
       
       Options options;
       if (!parse_args (argc, argv, options))
@@ -547,26 +562,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           break;
           
         };
-
-      orb->destroy ();
     }
   catch (const DAnCE::Deployment_Failure& e)
     {
       ACE_ERROR ((LM_ERROR, DLINFO "PlanLauncher - Error: %C.\n", e.ex_.c_str()));
       retval = -1;
-      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
       ACE_ERROR ((LM_ERROR, DLINFO "PlanLauncher - Error: %C\n", ex._info ().c_str ()));
       retval = -1;
-      orb->destroy ();
     }
   catch (...)
     {
       ACE_ERROR ((LM_ERROR, "PlanLauncher - Error: Unknown exception.\n"));
       retval = -1;
-      orb->destroy ();
     }
 
   return retval;
