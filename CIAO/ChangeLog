@@ -1,3 +1,34 @@
+Thu Mar  4 16:56:09 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ccm/CCM.mpc:
+        * connectors/dds4ccm/idl/dds4ccm.mpc:
+
+          Removed these files, replace by the added ones below.
+
+        * ccm/CCM_svnt.mpc:
+        * ccm/CCM_lem_stub.mpc:
+        * ccm/CCM_stub.mpc:
+        * connectors/dds4ccm/idl/dds4ccm_lem_stub.mpc:
+        * connectors/dds4ccm/idl/dds4ccm_stub.mpc:
+        * connectors/dds4ccm/idl/dds4ccm_skel.mpc:
+        * connectors/dds4ccm/RTIDDS_DDS4CCM_CIAO.mwc:
+
+          New files, split up MPC files in CIAO/ccm and
+          connectors/dds4ccm/idl with separate ones for
+          stub, lem_stub and skel builds. This change
+          makes it easier for the added .mwc file to
+          select only the builds it needs.
+
+        * MPC/config/ccm_svnt.mpb:
+        * MPC/config/ccm_executor.mpb:
+        * MPC/config/dds4ccm.mpb:
+
+          Changes corresponding to the MPC file changes above.
+
+        * connectors/dds4ccm/impl/ndds/ndds_impl.mpc:
+
+          Removed dependency on skel builds.
+
 Thu Mar  4 16:32:49 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Latency/Base/Latency_Test_Base.idl:
