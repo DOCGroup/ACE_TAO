@@ -3310,7 +3310,7 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
   // to tell which DDS vendor.
   this->gen_standard_include (
     this->ciao_conn_header_,
-    "connectors/dds4ccm/impl/ndds/DDS4CCM_Traits.h");
+    "connectors/dds4ccm/impl/dds/DDS4CCM_Traits.h");
 
   // Placeholder for forthcoming real-world logic.
   bool dds_event_connector = true;
@@ -3319,7 +3319,7 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
     {
       this->gen_standard_include (
         this->ciao_conn_header_,
-        "connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.h");
+        "connectors/dds4ccm/impl/dds/DDS_Event_Connector_T.h");
     }
 
   // Placeholder for forthcoming real-world logic.
@@ -3329,7 +3329,7 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
     {
       this->gen_standard_include (
         this->ciao_conn_header_,
-        "connectors/dds4ccm/impl/ndds/DDS_State_Connector_T.h");
+        "connectors/dds4ccm/impl/dds/DDS_State_Connector_T.h");
     }
 
   for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
