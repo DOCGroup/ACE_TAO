@@ -1,5 +1,5 @@
 /**
- * @file Plan_Launcher_EM.h
+ * @file EM_Launcher.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  *
  * $Id$
