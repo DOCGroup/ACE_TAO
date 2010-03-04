@@ -50,6 +50,7 @@ namespace CIAO_Simple_SimpleConsumer_Impl
 
     private:
     ::Simple::CCM_SimpleConsumer_Context_var context_;
+    bool pushed_;
   };
 
   class SIMPLECONSUMER_EXEC_Export SimpleConsumerHome_exec_i
