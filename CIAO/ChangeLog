@@ -1,3 +1,45 @@
+Thu Mar  4 10:39:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Base/Hello_Base.mpc
+        * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.mpc
+        * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.mpc
+        * connectors/dds4ccm/performance-tests/Keyed/Base/Perf_Keyed_Test_Base.mpc
+        * connectors/dds4ccm/performance-tests/Latency/Base/Latency_Test_Base.mpc
+        * connectors/dds4ccm/tests/CoherentWriter/Base/CoherentWrite_Test_Base.mpc
+        * connectors/dds4ccm/tests/CSLDeadline/Base/CSL_DeadlineTest_Base.mpc
+        * connectors/dds4ccm/tests/CSLQoS/Base/CSL_QoSTest_Base.mpc
+        * connectors/dds4ccm/tests/CSLSampleRejected/Base/CSL_SRTest_Base.mpc
+        * connectors/dds4ccm/tests/CSLUnexpStat/Base/CSL_USTest_Base.mpc
+        * connectors/dds4ccm/tests/DDSWriterEntity/Base/Writer_Base.mpc
+        * connectors/dds4ccm/tests/Event_Connection_Test/Base/Event_Connection_Test_Base.mpc
+        * connectors/dds4ccm/tests/FixedSizeStruct/EventConnector/Base/FSS_Event_Base.mpc
+        * connectors/dds4ccm/tests/FixedSizeStruct/StateConnector/Base/FSS_State_Base.mpc
+        * connectors/dds4ccm/tests/Getter/Base/Getter_Test_Base.mpc
+        * connectors/dds4ccm/tests/InstanceHandle/Base/Writer_Base.mpc
+        * connectors/dds4ccm/tests/KeyedSamples/Base/Keyed_Test_Base.mpc
+        * connectors/dds4ccm/tests/KeyedWriter/Base/Writer_Base.mpc
+        * connectors/dds4ccm/tests/ListenManyByMany/Base/LMBM_Test_Base.mpc
+        * connectors/dds4ccm/tests/ListenNotEnabled/Base/LNE_Test_Base.mpc
+        * connectors/dds4ccm/tests/ListenOneByOne/Base/LOBO_Test_Base.mpc
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Base/NonChangeable_Base.mpc
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Base/ConnectorStatusListener_Test_Base.mpc
+        * connectors/dds4ccm/tests/PSLDeadline/Base/PSL_DeadlineTest_Base.mpc
+        * connectors/dds4ccm/tests/PSLSampleLost/Base/PSL_SampleLost_Base.mpc
+        * connectors/dds4ccm/tests/QueryFilter/Base/QueryFilter_Test_Base.mpc
+        * connectors/dds4ccm/tests/Reader/Base/Reader_Test_Base.mpc
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Base/SetConnectorAttribute_Base.mpc
+        * connectors/dds4ccm/tests/SLDisabled/Base/SL_Disabled_Base.mpc
+        * connectors/dds4ccm/tests/SLManyByMany/Base/SL_ManyByMany_Base.mpc
+        * connectors/dds4ccm/tests/SLOneByOne/Base/SL_OneByOne_Base.mpc
+        * connectors/dds4ccm/tests/State_Connection_Test/Base/State_Connection_Test_Base.mpc
+        * connectors/dds4ccm/tests/TwoTopics/Base/TwoTopics_Base.mpc
+        * connectors/dds4ccm/tests/UnkeyedSamples/Base/Unkeyed_Test_Base.mpc
+        * connectors/dds4ccm/tests/UnkeyedWriter/Base/Writer_Base.mpc
+        * connectors/dds4ccm/tests/Updater/Base/Updater_Base.mpc
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Base/VTopic_Base.mpc
+        * connectors/dds4ccm/tests/VariousTopicsState/Base/VTopics_Base.mpc
+          Make sure we only generate the export file once
+
 Thu Mar  4 10:30:04 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/TimeUtilities.h:

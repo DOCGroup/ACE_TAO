@@ -5,11 +5,12 @@ project (DDS_Getter_Test_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_de
   dynamicflags += GETTER_TEST_BASE_STUB_BUILD_DLL
   libout = ../lib
 
-  idlflags += -SS -Gxhst -Sci \
+  idlflags += -SS -Sci \
               -Wb,stub_export_macro=GETTER_TEST_BASE_STUB_Export \
               -Wb,stub_export_include=Getter_Test_Base_stub_export.h
 
   IDL_Files {
+    idlflags += -Gxhst
     Getter_Test_Base.idl
   }
 
@@ -17,9 +18,6 @@ project (DDS_Getter_Test_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_de
 
   DDSGenerator_Files {
     Getter_Test_Base.idl
-  }
-
-  Source_Files {
   }
 
   Source_Files {

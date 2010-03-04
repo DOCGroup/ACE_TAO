@@ -6,11 +6,12 @@ project (DDS_VTopics_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_defaul
   libout = ../lib
   avoids+=dds4ccm_ndds;
 
-  idlflags += -SS -Gxhst -Sci \
+  idlflags += -SS -Sci \
               -Wb,stub_export_macro=VTOPICS_BASE_STUB_Export \
               -Wb,stub_export_include=VTopics_Base_stub_export.h
 
   IDL_Files {
+    idlflags += -Gxhst
     VTopics_Base.idl
   }
 
