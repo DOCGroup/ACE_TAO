@@ -10,56 +10,66 @@
 
 #pragma ndds typesupport "Base/VTopics_BaseSupport.h"
 
-  struct TestTopic {
-    string key; //@key
-    long x;
-   };
-  //string
-  struct TopicString {
-    string key; //@key
-    string x_str;
-   };
+// Plain Topic
+struct TestTopic {
+  string key; //@key
+  long x;
+};
 
-  //arrays
-  struct TopicArray {
-    string key; //@key
-    octet x_array[5];
-   };
+// String
+struct TopicString {
+  string key; //@key
+  string x_str;
+};
 
-  //unions
-/*  union X_Union switch (short) {
-    case 0:
-      string x_test;
-    case 1:
-      long   x_long;
-   };
+// Arrays
+struct TopicArray {
+  string key; //@key
+  octet x_array[5];
+};
 
-  struct TopicUnion {
-    string key; //@key
-    X_Union x_uni;
+// Unions
+union X_Union switch (short) {
+  case 0:
+    string x_test;
+  case 1:
+    long   x_long;
+};
 
-   };
+struct TopicUnion {
+  string key; //@key
+  X_Union x_uni;
+};
 
- */
+// Sequence
+struct test {
+  short x_test;
+  string x_teststr;
+};
+typedef sequence<test> test_seq;
 
-  struct test {
-    short x_test;
-    string x_teststr;
+struct TopicSeq {
+  string key; //@key
+  test_seq x_seq;
   };
-  typedef sequence<test> test_seq;
 
-  //sequence
-  struct TopicSeq {
-    string key; //@key
-    test_seq x_seq;
-   };
+ // ValueType
+valuetype X_Valuetype {
+  public string type;
+  public long x_long;
+};
 
+struct TopicValuetype {
+  string key; //@key
+  X_Valuetype x_vt;
+};
 
-  typedef sequence<TestTopic> TestTopic_Seq;
-  typedef sequence<TopicString> TopicString_Seq;
-  typedef sequence<TopicArray> TopicArray_Seq;
- // typedef sequence<TopicUnion> TopicUnion_Seq;
-  typedef sequence<TopicSeq> TopicSeq_Seq;
-
+// Sequences
+typedef sequence<TestTopic> TestTopic_Seq;
+typedef sequence<TopicString> TopicString_Seq;
+typedef sequence<TopicArray> TopicArray_Seq;
+typedef sequence<TopicUnion> TopicUnion_Seq;
+typedef sequence<TopicSeq> TopicSeq_Seq;
+typedef sequence<TopicValuetype> TopicValuetype_Seq;
 
 #endif

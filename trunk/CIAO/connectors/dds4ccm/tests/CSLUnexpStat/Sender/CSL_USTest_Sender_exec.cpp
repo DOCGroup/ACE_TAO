@@ -8,7 +8,7 @@
 #include "ciao/Logger/Log_Macros.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
-#include "dds4ccm/impl/ndds/Utils.h"
+#include "dds4ccm/impl/dds/Utils.h"
 
 namespace CIAO_CSL_USTest_Sender_Impl
 {
