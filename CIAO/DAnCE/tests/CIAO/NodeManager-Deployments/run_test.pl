@@ -27,6 +27,10 @@ $ior_nsbase = "ns.ior";
 $ior_nsfile = 0;
 $ior_embase = "EM.ior";
 $ior_emfile = 0;
+$ior_applicationbase = "Node_APP.ior";
+$ior_application = 0;
+$ior_ambase = "Node_AM.ior";
+$ior_am = 0;
 
 #  Processes
 $E = 0;
@@ -52,14 +56,14 @@ sub create_targets {
     #   daemon
     for ($i = 0; $i < $nr_daemon; ++$i) {
         $tg_daemons[$i] = PerlACE::TestTarget::create_target ($i+1) || die "Create target for deamon $i failed\n";
-        $tg_daemons[$i]->AddLibPath ('..');
+        $tg_daemons[$i]->AddLibPath ('../Components');
     }
     #   execution manager
     $tg_exe_man = PerlACE::TestTarget::create_target (1) || die "Create target for EM failed\n";
-    $tg_exe_man->AddLibPath ('..');
+    # $tg_exe_man->AddLibPath ('..');
     #   executor (plan_launcher)
     $tg_executor = PerlACE::TestTarget::create_target (1) || die "Create target for executor failed\n";
-    $tg_executor->AddLibPath ('..');
+    #$tg_executor->AddLibPath ('..');
 }
 
 sub init_ior_files {
@@ -68,6 +72,8 @@ sub init_ior_files {
     for ($i = 0; $i < $nr_daemon; ++$i) {
         $iorfiles[$i] = $tg_daemons[$i]->LocalFile ($iorbases[$i]);
     }
+    $ior_application = $tg_executor->LocalFile ($ior_applicationbase);
+    $ior_am = $tg_executor->LocalFile ($ior_ambase);
     delete_ior_files ();
 }
 
@@ -81,6 +87,9 @@ sub delete_ior_files {
     for ($i = 0; $i < $nr_daemon; ++$i) {
         $iorfiles[$i] = $tg_daemons[$i]->LocalFile ($iorbases[$i]);
     }
+    
+    $tg_executor->DeleteFile ($ior_applicationbase);
+    $tg_executor->DeleteFile ($ior_ambase);
 }
 
 sub kill_node_daemon {
@@ -179,28 +188,16 @@ foreach $file (@files) {
 
     $daemons_running = 1;
 
-    # Invoke execution manager.
-    print "Invoking execution manager\n";
-    $EM = $tg_exe_man->CreateProcess ("$DANCE_ROOT/bin/dance_execution_manager",
-                                    "-e$ior_emfile --domain-nc corbaloc:rir:/NameService");
-    $EM->Spawn ();
-
-    if ($tg_exe_man->WaitForFileTimed ($ior_embase,
-                                    $tg_exe_man->ProcessStartWaitInterval ()) == -1) {
-        print STDERR
-          "ERROR: The ior file of execution manager could not be found\n";
-        kill_open_processes ();
-        exit 1;
-    }
-
-    $em_running = 1;
-
     # Invoke executor - start the application -.
     print "Invoking executor - launch the application -\n";
-    $E = $tg_executor->CreateProcess ("simple_em_launcher",
-                               "file://$ior_emfile $file");
+    $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
+                                      "-x $file -n file://NodeApp1.ior -l -oNode");
+    $E->SpawnWaitKill (120);
 
-
+    print "Teardown the application\n";
+    $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
+                                      "-n file://NodeApp1.ior -a file://$ior_application -m file://$ior_am -s");
+    $E->SpawnWaitKill (120);
     print "Executor finished.\n";
 
     delete_ior_files ();

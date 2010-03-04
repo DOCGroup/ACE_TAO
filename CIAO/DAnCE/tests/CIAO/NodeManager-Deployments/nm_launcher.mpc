@@ -1,6 +1,0 @@
-// $Id$
-project(simple_nm_launcher) : dance_config_handlers, dance_nodemanager_stub, dance_nodeapplication_stub, dance_logger {
-  Source_Files {
-    simple_nm_launcher.cpp
-  }
-}
