@@ -9,7 +9,8 @@ namespace CIAO_Simple_SimpleConsumer_Impl
   // Component Executor Implementation Class:   SimpleConsumer_exec_i
   //==================================================================
 
-  SimpleConsumer_exec_i::SimpleConsumer_exec_i (void)
+  SimpleConsumer_exec_i::SimpleConsumer_exec_i (void) :
+    pushed_ (false)
   {
     DANCE_TRACE ("SimpleConsumer_exec_i::SimpleConsumer_exec_i (void)");
   }
@@ -31,7 +32,8 @@ namespace CIAO_Simple_SimpleConsumer_Impl
   {
     DANCE_TRACE ("SimpleConsumer_exec_i::push_hello_ ()");
     // Your code here.
-
+    
+    this->pushed_ = true;
     ACE_DEBUG ((LM_EMERGENCY, "SimpleConsumer_exec_i::push_hello_ - "
                  "Received hello event, value is %s\n", ev->hello_ ()));
   }
@@ -78,6 +80,10 @@ namespace CIAO_Simple_SimpleConsumer_Impl
   SimpleConsumer_exec_i::ccm_remove ()
   {
     DANCE_TRACE ("SimpleConsumer_exec_i::ccm_remove ()");
+    if (!pushed_)
+      {
+        ACE_ERROR ((LM_EMERGENCY, "Error: SimpleConsumer didn't get pushed!\n"));
+      }
     // Your code here.
   }
 
