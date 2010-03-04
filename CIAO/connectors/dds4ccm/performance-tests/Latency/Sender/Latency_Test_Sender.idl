@@ -18,7 +18,6 @@ module Latency_Test
   component Sender
   {
     port CCM_DDS::LatencyTest::DDS_Write info_write;
-    attribute unsigned short keys;  
     attribute unsigned long iterations;
     attribute unsigned short sleep; 
     attribute unsigned short datalen; //minimal 32

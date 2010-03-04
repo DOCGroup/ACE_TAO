@@ -140,7 +140,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>HelloTest_Library#LatencyQoS</string>
+          <string>HelloTest_Library#LatencySubQoS</string>
         </value>
       </value>
     </configProperty>

@@ -39,7 +39,9 @@ RTI Data Distribution Service user manual.
           <kind>KEEP_ALL_HISTORY_QOS</kind>
         </history>
         <durability>
-          <kind>TRANSIENT_DURABILITY_QOS</kind>
+          <!--kind>TRANSIENT_DURABILITY_QOS</kind-->
+          <kind>VOLATILE_DURABILITY_QOS</kind>
+          <direct_communication>true</direct_communication>
         </durability>
         <resource_limits>
           <max_instances>1</max_instances>
@@ -70,22 +72,30 @@ RTI Data Distribution Service user manual.
           <max_samples_per_instance>LENGTH_UNLIMITED</max_samples_per_instance>
         </resource_limits>
         <durability>
-          <kind>TRANSIENT_DURABILITY_QOS</kind>
+          <!--kind>TRANSIENT_DURABILITY_QOS</kind-->
+          <kind>VOLATILE_DURABILITY_QOS</kind>
+          <direct_communication>true</direct_communication>
         </durability>
       </datareader_qos>
-      
     </qos_profile>
-    <qos_profile name="BestEffortQoS" is_default_qos="false">
+
+    <qos_profile name="LatencyPubQoS" is_default_qos="true">
       <!-- QoS used to configure the data writer created in the example code -->
       <datawriter_qos>
         <reliability>
-          <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
-         </reliability>
+          <kind>RELIABLE_RELIABILITY_QOS</kind>
+          <max_blocking_time>
+            <sec>DURATION_INFINITE_SEC</sec>
+            <nanosec>DURATION_INFINITE_NSEC</nanosec>
+          </max_blocking_time>
+        </reliability>
         <history>
           <kind>KEEP_ALL_HISTORY_QOS</kind>
         </history>
         <durability>
-          <kind>TRANSIENT_DURABILITY_QOS</kind>
+          <!--kind>TRANSIENT_DURABILITY_QOS</kind-->
+          <kind>VOLATILE_DURABILITY_QOS</kind>
+          <direct_communication>true</direct_communication>
         </durability>
         <resource_limits>
           <max_instances>1</max_instances>
@@ -103,7 +113,7 @@ RTI Data Distribution Service user manual.
       <!-- QoS used to configure the data reader created in the example code -->
       <datareader_qos>
         <reliability>
-          <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+          <kind>RELIABLE_RELIABILITY_QOS</kind>
         </reliability>
         <history>
           <kind>KEEP_ALL_HISTORY_QOS</kind>
@@ -116,9 +126,74 @@ RTI Data Distribution Service user manual.
           <max_samples_per_instance>LENGTH_UNLIMITED</max_samples_per_instance>
         </resource_limits>
         <durability>
-          <kind>TRANSIENT_DURABILITY_QOS</kind>
+          <!--kind>TRANSIENT_DURABILITY_QOS</kind-->
+          <kind>VOLATILE_DURABILITY_QOS</kind>
+          <direct_communication>true</direct_communication>
+        </durability>
+        <ownership>
+          <kind>EXCLUSIVE_OWNERSHIP_QOS</kind>
+        </ownership>
+      </datareader_qos>
+    </qos_profile>
+
+    <qos_profile name="LatencySubQoS" is_default_qos="true">
+      <!-- QoS used to configure the data writer created in the example code -->
+      <datawriter_qos>
+        <reliability>
+          <kind>RELIABLE_RELIABILITY_QOS</kind>
+          <max_blocking_time>
+            <sec>DURATION_INFINITE_SEC</sec>
+            <nanosec>DURATION_INFINITE_NSEC</nanosec>
+          </max_blocking_time>
+        </reliability>
+        <history>
+          <kind>KEEP_ALL_HISTORY_QOS</kind>
+        </history>
+        <durability>
+          <kind>VOLATILE_DURABILITY_QOS</kind>
+          <direct_communication>true</direct_communication>
+        </durability>
+        <resource_limits>
+          <max_instances>1</max_instances>
+          <initial_instances>1</initial_instances>
+          <max_samples>LENGTH_UNLIMITED</max_samples>
+          <initial_samples>100</initial_samples>
+          <max_samples_per_instance>LENGTH_UNLIMITED</max_samples_per_instance>
+        </resource_limits>
+        <ownership>
+          <kind>EXCLUSIVE_OWNERSHIP_QOS</kind>
+         </ownership>
+        <ownership_strength>
+          <value>2</value>
+        </ownership_strength>
+        <protocol>
+          <rtps_reliable_writer>
+            <max_heartbeat_retries>10</max_heartbeat_retries>
+          </rtps_reliable_writer>
+        </protocol>
+      </datawriter_qos>
+      <!-- QoS used to configure the data reader created in the example code -->
+      <datareader_qos>
+        <reliability>
+          <kind>RELIABLE_RELIABILITY_QOS</kind>
+        </reliability>
+        <history>
+          <kind>KEEP_ALL_HISTORY_QOS</kind>
+        </history>
+        <resource_limits>
+          <initial_samples>100</initial_samples>
+          <initial_instances>1</initial_instances>
+          <max_samples>LENGTH_UNLIMITED</max_samples>
+          <max_instances>1</max_instances>
+          <max_samples_per_instance>LENGTH_UNLIMITED</max_samples_per_instance>
+        </resource_limits>
+        <durability>
+          <!--kind>TRANSIENT_DURABILITY_QOS</kind-->
+          <kind>VOLATILE_DURABILITY_QOS</kind>
+          <direct_communication>true</direct_communication>
         </durability>
       </datareader_qos>
+
     </qos_profile>
   </qos_library>
 
