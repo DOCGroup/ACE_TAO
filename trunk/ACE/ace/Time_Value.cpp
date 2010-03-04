@@ -265,9 +265,13 @@ ACE_Time_Value::operator *= (double d)
     ACE_Numeric_Limits<time_t>::min() - 0.999999;
 
   if (sec_total > max_int)
-    this->set(ACE_Numeric_Limits<time_t>::max(), ACE_ONE_SECOND_IN_USECS-1);
+    {
+      this->set(ACE_Numeric_Limits<time_t>::max(), ACE_ONE_SECOND_IN_USECS-1);
+    }
   else if (sec_total < min_int)
-    this->set(ACE_Numeric_Limits<time_t>::min(), -ACE_ONE_SECOND_IN_USECS+1);
+    {
+      this->set(ACE_Numeric_Limits<time_t>::min(), -ACE_ONE_SECOND_IN_USECS+1);
+    }
   else
     {
       time_t time_sec = static_cast<time_t> (sec_total);
@@ -282,9 +286,13 @@ ACE_Time_Value::operator *= (double d)
       sec_total = usec_total / ACE_ONE_SECOND_IN_USECS;
       // keep remaining usec
       if (sec_total > 0)
-        usec_total = (sec_total - ACE_OS::floor(sec_total));
+        {
+          usec_total = (sec_total - ACE_OS::floor(sec_total));
+        }
       else
-        usec_total = (sec_total - ACE_OS::ceil(sec_total));
+        {
+          usec_total = (sec_total - ACE_OS::ceil(sec_total));
+        }
 
       sec_total -= usec_total;
       usec_total *= ACE_ONE_SECOND_IN_USECS;
@@ -294,9 +302,13 @@ ACE_Time_Value::operator *= (double d)
 
       // recheck for saturation
       if (sec_total > max_int)
-        this->set (ACE_Numeric_Limits<time_t>::max(), ACE_ONE_SECOND_IN_USECS - 1);
+        {
+          this->set (ACE_Numeric_Limits<time_t>::max(), ACE_ONE_SECOND_IN_USECS - 1);
+        }
       else if (sec_total < min_int)
-        this->set (ACE_Numeric_Limits<time_t>::min(), -ACE_ONE_SECOND_IN_USECS + 1);
+        {
+          this->set (ACE_Numeric_Limits<time_t>::min(), -ACE_ONE_SECOND_IN_USECS + 1);
+        }
       else
         {
           time_sec = static_cast<time_t> (sec_total);
@@ -304,9 +316,13 @@ ACE_Time_Value::operator *= (double d)
 
           // round up the result to save the last usec
           if (time_usec > 0 && (usec_total - time_usec) >= 0.5)
-            ++time_usec;
+            {
+              ++time_usec;
+            }
           else if (time_usec < 0 && (usec_total - time_usec) <= -0.5)
-            --time_usec;
+            {
+              --time_usec;
+            }
 
           this->set (time_sec, time_usec);
         }
@@ -324,15 +340,21 @@ ostream &operator<<(ostream &o, const ACE_Time_Value &v)
     {
       o << tv->tv_sec;
       if (tv->tv_usec)
-        o << '.' << std::setw (6) << abs (tv->tv_usec);
+        {
+          o << '.' << std::setw (6) << ACE_STD_NAMESPACE::abs (tv->tv_usec);
+        }
     }
   else if (tv->tv_usec < 0)
-    o << "-0." << std::setw (6) << -tv->tv_usec;
+    {
+      o << "-0." << std::setw (6) << -tv->tv_usec;
+    }
   else
     {
       o << '0';
       if (tv->tv_usec > 0)
-        o << '.'<< std::setw (6) << tv->tv_usec;
+        {
+          o << '.'<< std::setw (6) << tv->tv_usec;
+        }
     }
 
   o.fill (oldFiller);
