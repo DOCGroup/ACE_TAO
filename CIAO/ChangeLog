@@ -1,3 +1,10 @@
+Thu Mar  4 08:30:43 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/Policies/*:
+          Added a policy test. This tests all the ndds
+          streaming operators.
+
 Thu Mar  4 07:51:20 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/idl/ccm_dds.idl:
