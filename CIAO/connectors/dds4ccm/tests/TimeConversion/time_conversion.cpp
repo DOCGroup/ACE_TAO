@@ -1,6 +1,6 @@
 // $Id$
 
-#include "dds4ccm/impl/dds/ndds/TimeUtilities.h"
+#include "dds4ccm/impl/dds/TimeUtilities.h"
 #include "ace/OS_NS_sys_time.h"
 
 int
