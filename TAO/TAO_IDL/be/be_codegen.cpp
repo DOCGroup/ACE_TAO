@@ -3305,12 +3305,22 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
     }
 
   *this->ciao_conn_header_ << be_nl;
+  
+  BE_GlobalData::DDS_IMPL the_dds_impl =
+    be_global->dds_impl ();
 
-  // We'll probably need some kind of flag to check
-  // to tell which DDS vendor.
-  this->gen_standard_include (
-    this->ciao_conn_header_,
-    "connectors/dds4ccm/impl/dds/DDS4CCM_Traits.h");
+  switch (the_dds_impl)
+    {
+      case BE_GlobalData::RTIDDS:
+        this->gen_standard_include (
+          this->ciao_conn_header_,
+          "connectors/dds4ccm/impl/ndds/DDS4CCM_Traits.h");
+          
+        break;
+      case BE_GlobalData::OPENSPLICE:
+      case BE_GlobalData::OPENDDS:
+        break;
+    }
 
   // Placeholder for forthcoming real-world logic.
   bool dds_event_connector = true;
@@ -3355,11 +3365,25 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
 
       str.destroy ();
     }
-
-  // This will be replaced with something to implement DDS
-  // vendor portability.
+    
+  /// The default, and we have to set the reference to
+  /// something.  
   ACE_Unbounded_Queue<char *> &ts_files =
     idl_global->ciao_rti_ts_file_names ();
+
+  switch (the_dds_impl)
+    {
+      case BE_GlobalData::RTIDDS:
+        break;
+      case BE_GlobalData::OPENSPLICE:
+        ts_files =
+          idl_global->ciao_spl_ts_file_names ();
+        break;
+      case BE_GlobalData::OPENDDS:
+        ts_files =
+          idl_global->ciao_oci_ts_file_names ();
+        break;
+    }
 
   if (ts_files.size () > 0)
     {
