@@ -1,3 +1,8 @@
+Thu Mar  4 09:15:54 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/make_release.py:
+          Fix for problems with creating MPC release tag.
+
 Thu Mar  4 07:50:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Atomic_Op_Test.cpp:
