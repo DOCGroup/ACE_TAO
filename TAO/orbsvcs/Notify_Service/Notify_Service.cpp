@@ -412,7 +412,7 @@ TAO_Notify_Service_Driver::fini (void)
         naming->to_name (this->notify_factory_name_.c_str ());
 
       naming->unbind (name.in ());
-      
+
       naming = CosNaming::NamingContextExt::_nil ();
     }
 
@@ -421,12 +421,12 @@ TAO_Notify_Service_Driver::fini (void)
       poa->destroy (true, true);
       poa = PortableServer::POA::_nil ();
     }
-    
+
   if (this->shutdown_dispatching_orb_ && !CORBA::is_nil (dispatching_orb_.in ()))
     {
       dispatching_orb->shutdown ();
     }
-   
+
   // shutdown the ORB.
   if (this->shutdown_orb_ && !CORBA::is_nil (orb.in ()))
     {
@@ -449,11 +449,11 @@ TAO_Notify_Service_Driver::fini (void)
       orb->destroy ();
     }
 
-  dispatching_orb_ = CORBA::ORB::_nil ();  
+  dispatching_orb_ = CORBA::ORB::_nil ();
 
   worker_.orb (CORBA::ORB::_nil ());
-    
-  orb = CORBA::ORB::_nil ();  
+
+  orb = CORBA::ORB::_nil ();
 
   return 0;
 }

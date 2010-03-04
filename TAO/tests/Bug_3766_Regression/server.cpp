@@ -82,7 +82,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_OS::fprintf(file, "%s", ior.in ());
       ACE_OS::fclose(file);
 
-
       poa_manager->activate ();
 
       orb->run ();
