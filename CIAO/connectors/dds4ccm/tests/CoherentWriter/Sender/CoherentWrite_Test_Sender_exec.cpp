@@ -136,6 +136,7 @@ namespace CIAO_CoherentWrite_Test_Sender_Impl
     try
       {
         this->writer_ = this->context_->get_connection_info_write_data ();
+        this->writer_->is_coherent_write (true);
         this->starter_ = this->context_->get_connection_start_reader ();
         WriteHandler *wh = new WriteHandler (*this);
         this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (wh);

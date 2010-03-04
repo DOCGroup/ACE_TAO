@@ -1,3 +1,11 @@
+Thu Mar  4 09:31:48 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/CoherentWriter/Sender/CoherentWrite_Test_Sender_exec.cpp:
+          Set is_coherent_write to true.
+
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.cpp:
+          Resolve compile issue.
+
 Thu Mar  4 09:21:49 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Latency/Base/Latency_Test_Base.idl:
