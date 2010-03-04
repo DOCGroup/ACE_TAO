@@ -222,8 +222,8 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
   if ((!options.em_ior_ && !options.nm_ior_) || 
       (options.em_ior_ && options.nm_ior_))
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Plan_launcher::parse_args - ")
-                       ACE_TEXT ("Error: Must specify either EM IOR or NM IOR\n")));
+      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_launcher::parse_args - ")
+                  ACE_TEXT ("Error: Must specify either EM IOR or NM IOR\n")));
       return false;
     }
   
@@ -232,9 +232,9 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
       ((!options.xml_plan_ && !options.cdr_plan_) ||
        (options.xml_plan_ && options.cdr_plan_)))
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::parse_args - ")
-                       ACE_TEXT ("Error: Launching plans requires exactly one type of plan (CDR/XML) be ")
-                       ACE_TEXT ("specified.\n")));
+      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::parse_args - ")
+                  ACE_TEXT ("Error: Launching plans requires exactly one type of plan (CDR/XML) be ")
+                  ACE_TEXT ("specified.\n")));
       return false;
     }
   
@@ -256,8 +256,8 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
            )
       )
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::parse_args - ")
-                       ACE_TEXT ("Invalid set of plan identification as required for teardown\n")));
+      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::parse_args - ")
+                  ACE_TEXT ("Invalid set of plan identification as required for teardown\n")));
       return false;
     }
       
@@ -324,22 +324,22 @@ int launch_plan (const Options &opts,
     }
   catch (const DAnCE::Deployment_Failure &ex)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::launch_plan - ")
-                       ACE_TEXT ("Deployment failed, exception: %C\n"),
-                       ex.ex_.c_str ()));
+      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::launch_plan - ")
+                  ACE_TEXT ("Deployment failed, exception: %C\n"),
+                  ex.ex_.c_str ()));
       return -1;
     }
   catch (const CORBA::Exception &ex)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::launch_plan - ")
-                       ACE_TEXT ("Deployment failed, caught CORBA exception %C\n"),
-                       ex._info ().c_str ()));
+      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::launch_plan - ")
+                  ACE_TEXT ("Deployment failed, caught CORBA exception %C\n"),
+                  ex._info ().c_str ()));
       return -1;
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::launch_plan - ")
-                       ACE_TEXT ("Deployment failed, caught unknown C++ exception\n")));
+      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::launch_plan - ")
+                  ACE_TEXT ("Deployment failed, caught unknown C++ exception\n")));
       return -1;
     }
   
@@ -402,22 +402,22 @@ int teardown_plan (const Options &opts,
     }
   catch (const DAnCE::Deployment_Failure &ex)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                       ACE_TEXT ("Teardown failed, exception: %C\n"),
-                       ex.ex_.c_str ()));
+      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::teardown_plan - ")
+                 ACE_TEXT ("Teardown failed, exception: %C\n"),
+                 ex.ex_.c_str ()));
       return -1;
     }
   catch (const CORBA::Exception &ex)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                       ACE_TEXT ("Teardown failed, caught CORBA exception %C\n"),
-                       ex._info ().c_str ()));
+      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::teardown_plan - ")
+                  ACE_TEXT ("Teardown failed, caught CORBA exception %C\n"),
+                  ex._info ().c_str ()));
       return -1;
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                       ACE_TEXT ("Teardown failed, caught unknown C++ exception\n")));
+      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::teardown_plan - ")
+                  ACE_TEXT ("Teardown failed, caught unknown C++ exception\n")));
       return -1;
     }
   
@@ -465,8 +465,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Options options;
       if (!parse_args (argc, argv, options))
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher - ")
-                           ACE_TEXT ("Failed to parse command line arguments, exiting.\n")));
+          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher - ")
+                      ACE_TEXT ("Failed to parse command line arguments, exiting.\n")));
           return -1;
         }
       
@@ -483,9 +483,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           
           if (CORBA::is_nil (tmp_em.in ()))
             {
-              DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher - ")
-                               ACE_TEXT ("Unable to resolve ExecutionManager reference <%s>\n"),
-                               options.em_ior_));
+              ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher - ")
+                          ACE_TEXT ("Unable to resolve ExecutionManager reference <%s>\n"),
+                          options.em_ior_));
               return -1;
             }
           
@@ -506,9 +506,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           
           if (CORBA::is_nil (tmp_em.in ()))
             {
-              DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher - ")
-                               ACE_TEXT ("Unable to resolve NodeManager reference <%s>\n"),
-                               options.em_ior_));
+              ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher - ")
+                          ACE_TEXT ("Unable to resolve NodeManager reference <%s>\n"),
+                          options.em_ior_));
               return -1;
             }
           
@@ -548,12 +548,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       switch (options.mode_)
         {
         case Options::LAUNCH:
-          launch_plan (options, pl_base.get (), dp, orb.in ());
+          retval = launch_plan (options, pl_base.get (), dp, orb.in ());
           
           break;
           
         case Options::TEARDOWN:
-          teardown_plan (options, pl_base.get (), dp, orb.in ());
+          retval = teardown_plan (options, pl_base.get (), dp, orb.in ());
           break;
 
         default:
