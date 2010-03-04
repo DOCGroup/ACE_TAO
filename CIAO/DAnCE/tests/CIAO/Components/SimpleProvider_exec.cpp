@@ -9,7 +9,8 @@ namespace CIAO_Simple_SimpleProvider_Impl
   // Facet Executor Implementation Class:   Trigger_exec_i
   //==================================================================
 
-  Trigger_exec_i::Trigger_exec_i (void)
+  Trigger_exec_i::Trigger_exec_i (bool &triggered)
+    : triggered_ (triggered)
   {
     DANCE_TRACE ("Trigger_exec_i::Trigger_exec_i (void)");
   }
@@ -26,6 +27,7 @@ namespace CIAO_Simple_SimpleProvider_Impl
     const char * hello )
   {
     DANCE_TRACE ("Trigger_exec_i::hello ()");
+    this->triggered_ = true;
     // Your code here.
     ACE_DEBUG ((LM_EMERGENCY, "Trigger_exec_i::hello - "
                  "Got the following information from trig port: %C\n",
@@ -37,6 +39,7 @@ namespace CIAO_Simple_SimpleProvider_Impl
   //==================================================================
 
   SimpleProvider_exec_i::SimpleProvider_exec_i (void)
+    : triggered_ (false)
   {
     DANCE_TRACE ("SimpleProvider_exec_i::SimpleProvider_exec_i (void)");
   }
@@ -56,7 +59,7 @@ namespace CIAO_Simple_SimpleProvider_Impl
   SimpleProvider_exec_i::get_trig ()
   {
     DANCE_TRACE ("SimpleProvider_exec_i::get_trig ()");
-    return new Trigger_exec_i ();
+    return new Trigger_exec_i (this->triggered_);
   }
 
   // Operations from Components::SessionComponent
@@ -100,6 +103,9 @@ namespace CIAO_Simple_SimpleProvider_Impl
   SimpleProvider_exec_i::ccm_remove ()
   {
     DANCE_TRACE ("SimpleProvider_exec_i::ccm_remove ()");
+    if (!triggered_)
+      ACE_ERROR ((LM_EMERGENCY, "Error:  My facet wasn't triggered!!\n"));
+    
     // Your code here.
   }
 

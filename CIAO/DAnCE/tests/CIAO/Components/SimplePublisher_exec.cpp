@@ -53,7 +53,6 @@ namespace CIAO_Simple_SimplePublisher_Impl
   {
     DANCE_TRACE ("SimplePublisher_exec_i::ccm_activate ()");
     ::Simple::Hello_var hello = new OBV_Simple::Hello ("Test successful, hello from SimplePublisher_exec_i");
-
     this->context_->push_hello (hello._retn ());
     // Your code here.
   }
