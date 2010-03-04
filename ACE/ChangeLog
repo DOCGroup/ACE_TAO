@@ -1,3 +1,8 @@
+Tue Mar  2 21:02:51 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dev_Poll_Reactor.cpp (mask_ops_i): If the specified handle is
+          not registered, return -1 instead of crashing.
+
 Thu Mar  4 09:15:54 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * bin/make_release.py:
