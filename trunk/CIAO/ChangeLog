@@ -1,3 +1,9 @@
+Thu Mar  4 17:55:24 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/MPC/config/dance_plan_launcher.mpb:
+
+          Missing file from previous commit. 
+        
 Thu Mar  4 16:56:09 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ccm/CCM.mpc:
@@ -44,8 +50,8 @@ Thu Mar  4 14:27:16 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
 
-          Additional logging fixes. 
-        
+          Additional logging fixes.
+
 Thu Mar  4 14:13:36 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
