@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    be_global.h
@@ -13,7 +12,6 @@
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef _BE_GLOBAL_H
 #define _BE_GLOBAL_H
@@ -50,6 +48,15 @@ public:
     TAO_DYNAMIC_HASH,
     TAO_PERFECT_HASH,
     TAO_BINARY_SEARCH
+  };
+  
+  // To help with DDD portability in DDS4CCM
+  // connectors.
+  enum DDS_IMPL
+  {
+    RTIDDS,
+    OPENSPLICE,
+    OPENDDS
   };
 
   // Constructor
@@ -668,7 +675,14 @@ public:
 
   /// Return the enumerated value for the lookup strategy. Default is
   /// perfect hashing.
-  BE_GlobalData::LOOKUP_STRATEGY lookup_strategy (void) const;
+  LOOKUP_STRATEGY lookup_strategy (void) const;
+  
+  /// Set the DDS implementation.
+  void dds_impl (char const * const val);
+
+  /// Return the enumerated value for the DDS implementation.
+  /// Default is RTIDDS.
+  DDS_IMPL dds_impl (void) const;
 
   /// Cleanup function.
   void destroy (void);
@@ -1018,6 +1032,9 @@ private:
 
   /// The enumerated value indicating the lookup strategy.
   LOOKUP_STRATEGY lookup_strategy_;
+
+  /// The enumerated value indicating the DDS implementation.
+  DDS_IMPL dds_impl_;
 
   /// Used for void operation return types.
   AST_PredefinedType *void_type_;

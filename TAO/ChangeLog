@@ -1,3 +1,19 @@
+Thu Mar  4 16:31:41 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/anonymous.idl:
+        
+          Added array test cases.
+          
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        
+          Added command line option -Wb,dds_impl=xxx to select
+          included files to generate, both the list of typesupport
+          files gathered with the associated #pragma, or other
+          miscellaneous files such as the state and connector
+          template header files.
+
 Thu Mar  4 12:01:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
