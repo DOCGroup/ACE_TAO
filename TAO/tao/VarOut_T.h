@@ -153,7 +153,7 @@ public:
 private:
   T *& ptr_;
 
-  // Assignment from T_var not allowed.
+  /// Assignment from T_var not allowed.
   void operator= (const T_var &);
 };
 
