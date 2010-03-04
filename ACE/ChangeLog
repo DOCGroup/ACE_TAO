@@ -1,5 +1,19 @@
 Thu Mar  4 07:50:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * tests/Atomic_Op_Test.cpp:
+          Rewritten this test to use a template method so that we can
+          test atomic op easily for various data types
+
+        * ace/Time_Value.cpp:
+          Layout changes and fixed compile problem with CB2010. This fixes
+          bugzilla 3835, thanks to Jan Kalin <jan dot kalin at zag dot si>
+          for reporting this.
+
+        * ace/config-win32-borland.h:
+          CB also has long timevalue mismatch
+
+Thu Mar  4 07:50:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
         * NEWS:
           Updated for next micro
 
