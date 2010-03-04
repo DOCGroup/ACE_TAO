@@ -1,0 +1,29 @@
+// $Id$
+
+/**
+ * @file CoherentWrite_Test_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef COHERENT_WRITE_TEST_CONNECTOR_IDL_
+#define COHERENT_WRITE_TEST_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/CoherentWrite_Test_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Connector/CoherentWrite_Test_ConnectorE.idl"
+
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::CoherentWriteTest, ::CoherentWriteTest_Seq> CoherentWriteTest;
+};
+
+module CoherentWrite_Test
+{
+  connector CoherentWrite_Test_Connector : ::CCM_DDS::CoherentWriteTest::DDS_Event
+  {
+  };
+};
+
+#endif /* CoherentWrite_Test_CONNECTOR_IDL_ */
