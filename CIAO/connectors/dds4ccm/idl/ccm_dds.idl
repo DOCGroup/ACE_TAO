@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef DDS_CCM_BASE_IDL
-#define DDS_CCM_BASE_IDL
+#ifndef CCM_DDS_BASE_IDL
+#define CCM_DDS_BASE_IDL
 
 #include  <Components.idl>
 #include "connectors/dds4ccm/idl/dds4ccm_DataListenerControl.idl"

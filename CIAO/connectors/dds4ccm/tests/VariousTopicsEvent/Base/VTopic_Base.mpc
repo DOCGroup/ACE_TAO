@@ -4,6 +4,7 @@ project (DDS_VTopic_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default
   sharedname = DDS_VTopic_Base_stub
   dynamicflags += VTOPIC_BASE_STUB_BUILD_DLL
   libout = ../lib
+  avoids+=dds4ccm_ndds;
 
   idlflags += -SS -Gxhst -Sci \
               -Wb,stub_export_macro=VTOPIC_BASE_STUB_Export \

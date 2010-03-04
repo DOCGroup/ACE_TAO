@@ -2,13 +2,14 @@
 // $Id$
 
 #include "Writer_Sender_exec.h"
-#include "ciao/Logger/Log_Macros.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
 #include "Base/Writer_BaseSupport.h"
-#include "dds4ccm/impl/ndds/Utils.h"
-#include "dds4ccm/impl/ndds/InstanceHandle_t.h"
+#include "dds4ccm/impl/dds/Utils.h"
+#include "dds4ccm/impl/dds/ndds/InstanceHandle_t.h"
+
+#include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO_Writer_Sender_Impl
 {
@@ -218,9 +219,9 @@ namespace CIAO_Writer_Sender_Impl
   {
     DDS::DataWriter_var dds_dw =
       this->context_->get_connection_info_write_dds_entity ();
-    CIAO::DDS4CCM::CCM_DDS_DataWriter_i *rti_rd =
+    CIAO::DDS4CCM::CCM_DDS_DataWriter_i *ccm_dds_rd =
       dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_i *> (dds_dw.in ());
-    DDSDataWriter * p = rti_rd->get_impl ();
+    DDSDataWriter * p = ccm_dds_rd->get_impl ();
     this->dds_writer_ = dynamic_cast <WriterTestDataWriter *> (p);
     this->ccm_writer_ = this->context_->get_connection_info_write_data ();
   }

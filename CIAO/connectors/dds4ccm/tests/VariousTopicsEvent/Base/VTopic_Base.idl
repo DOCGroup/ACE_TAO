@@ -10,6 +10,7 @@
 
 #pragma ndds typesupport "Base/VTopic_BaseSupport.h"
 
+// Plain topic
 struct TestTopic {
   string key; //@key
   long x;
@@ -27,38 +28,49 @@ struct TopicArray {
   octet x_array[5];
  };
 
-//unions
-/*  union X_Union switch (short) {
+// Unions
+union X_Union switch (short) {
     case 0:
       string x_test;
     case 1:
       long   x_long;
-   };
+};
 
-  struct TopicUnion {
-    string key; //@key
-    X_Union x_uni;
+struct TopicUnion {
+  string key; //@key
+  X_Union x_uni;
 
-   };
+};
 
- */
-
+// Sequence
 struct test {
   short x_test;
   string x_teststr;
 };
 typedef sequence<test> test_seq;
 
-// Sequence
 struct TopicSeq {
   string key; //@key
   test_seq x_seq;
 };
 
-  typedef sequence<TestTopic> TestTopic_Seq;
-  typedef sequence<TopicString> TopicString_Seq;
-  typedef sequence<TopicArray> TopicArray_Seq;
- // typedef sequence<TopicUnion> TopicUnion_Seq;
-  typedef sequence<TopicSeq> TopicSeq_Seq;
+// ValueType
+valuetype X_Valuetype {
+  public string type;
+  public long x_long;
+};
+
+struct TopicValuetype {
+  string key; //@key
+  X_Valuetype x_vt;
+};
+
+// Sequences
+typedef sequence<TestTopic> TestTopic_Seq;
+typedef sequence<TopicString> TopicString_Seq;
+typedef sequence<TopicArray> TopicArray_Seq;
+typedef sequence<TopicUnion> TopicUnion_Seq;
+typedef sequence<TopicSeq> TopicSeq_Seq;
+typedef sequence<TopicValuetype> TopicValuetype_Seq;
 
 #endif
