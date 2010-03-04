@@ -198,12 +198,12 @@ foreach $file (@files) {
     # Invoke executor - start the application -.
     print "Invoking executor - launch the application -\n";
     $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
-                                      "-x $file -k file://$ior_emfile");
+                                      "-x $file -k file://$ior_emfile -l");
     $E->SpawnWaitKill (120);
 
     print "Teardown the application\n";
     $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
-                                      "-k file://$ior_emfile -x $file -q");
+                                      "-k file://$ior_emfile -x $file -s");
     $E->SpawnWaitKill (120);
     print "Executor finished.\n";
 

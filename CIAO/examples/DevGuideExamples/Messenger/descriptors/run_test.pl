@@ -77,11 +77,11 @@ if ($tg->WaitForFileTimed ($embase,
 sleep(5);
 #Start the plan  launcher
 $EX = $tg->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
-                            "-x Application-flattened_Unhomed.cdp -k file://$emior ");
+                          "-x Application-flattened_Unhomed.cdp -k file://$emior ");
 
 #Stop the plan launcher
 $EX2 = $tg->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
-                             "-k file://$emior -x Application-flattened_Unhomed.cdp");
+                           "-k file://$emior -x Application-flattened_Unhomed.cdp -s");
 
 $Ret6 = $EX->Spawn ();
 if($Ret6 == -1) {
