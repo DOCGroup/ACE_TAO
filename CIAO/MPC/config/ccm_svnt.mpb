@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : ccm_stub, portableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project : ccm_lem_stub, portableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after += CCM_svnt
   libs += CCM_svnt
 }

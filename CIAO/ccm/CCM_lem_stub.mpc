@@ -1,0 +1,53 @@
+// $Id$
+
+project(CCM_lem_stub_idl) : ciaolib_with_idl, valuetype {
+  idlflags   += -Wb,stub_export_include=CCM_LEM_Stub_Export.h
+  idlflags   += -Wb,stub_export_macro=CCM_LEM_STUB_Export
+  idlflags   += -Gxhst
+  custom_only = 1
+
+  IDL_Files {
+    idlflags += -SS -Sci \
+                -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL \
+                -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL
+    Security.idl
+  }
+
+  IDL_Files {
+    idlflags += -SS -Sci
+    CCM_CCMException.idl
+    CCM_Context.idl
+  }
+
+  IDL_Files {
+    idlflags += -SS
+    CCM_Container.idl
+    CCM_EnterpriseComponent.idl
+    CCM_HomeExecutorBase.idl
+    CCM_SessionContext.idl
+    CCM_SessionComponent.idl
+  }
+
+}
+
+project(CCM_lem_stub) : ciaolib_with_idl, ciao_output, valuetype, ifr_client {
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)
+  dynamicflags = CCM_LEM_STUB_BUILD_DLL
+  after += CCM_stub CCM_lem_stub_idl
+  libs  += CCM_stub
+  IDL_Files {
+  }
+
+  Source_Files {
+    CCM_CCMExceptionC.cpp
+    CCM_ContainerC.cpp
+    CCM_ContextC.cpp
+    CCM_EnterpriseComponentC.cpp
+    CCM_HomeExecutorBaseC.cpp
+    CCM_SessionContextC.cpp
+    CCM_SessionComponentC.cpp
+    SecurityC.cpp
+  }
+}
+

@@ -2,17 +2,20 @@
 
 feature(dds4ccm_opendds) : taoidldefaults, dcps {
   macros += CIAO_DDS4CCM_OPENDDS=1
-  idlflags += -DCIAO_DDS4CCM_OPENDDS=1
+  idlflags += -DCIAO_DDS4CCM_OPENDDS=1 \
+              -Wb,dds_impl=opendds
 }
 
 feature(dds4ccm_splice) : taoidldefaults {
   macros += CIAO_DDS4CCM_SPLICE=1
-  idlflags += -DCIAO_DDS4CCM_SPLICE=1
+  idlflags += -DCIAO_DDS4CCM_SPLICE=1 \
+              -Wb,dds_impl=opensplice
 }
 
 feature(dds4ccm_ndds) : taoidldefaults {
   macros += CIAO_DDS4CCM_NDDS=1
-  idlflags += -DCIAO_DDS4CCM_NDDS=1
+  idlflags += -DCIAO_DDS4CCM_NDDS=1 \
+              -Wb,dds_impl=rtidds
 }
 
 feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_splice) {
