@@ -9,7 +9,7 @@
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_time.h"
 #include "dds4ccm/impl/dds/Utils.h"
-#include "dds4ccm/impl/dds/ndds/TimeUtilities.h"
+#include "dds4ccm/impl/dds/TimeUtilities.h"
 
 namespace CIAO_PSL_SampleLost_Receiver_Impl
 {
