@@ -31,8 +31,9 @@ namespace DAnCE
   {
     if (!filename)
       {
-        DANCE_ERROR (1, (LM_WARNING, DLINFO ACE_TEXT ("Convert_Plan::read_cdr_plan - ")
+        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Convert_Plan::read_cdr_plan - ")
                          ACE_TEXT ("Passed a null pointer, returning.\n")));
+        return 0;
       }
     
     FILE *file = ACE_OS::fopen (filename, "r");
