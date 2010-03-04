@@ -9,7 +9,6 @@
 #include "ace/Reactor.h"
 #include "ace/High_Res_Timer.h"
 
-
 namespace CIAO_Latency_Test_Sender_Impl
 {
   //============================================================
@@ -33,7 +32,8 @@ namespace CIAO_Latency_Test_Sender_Impl
   {
     ACE_UINT64  receive_time = 0;
 
-    //only interested in messages received with a latency_ping = 0 (messages sent back by receiver)
+    //only interested in messages received with a latency_ping = 0 
+    //(messages sent back by receiver)
     if( an_instance.ping == 0)
       {
         ACE_High_Res_Timer::gettimeofday_hr ().to_usec ( receive_time);
@@ -50,7 +50,10 @@ namespace CIAO_Latency_Test_Sender_Impl
   //============================================================
   // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
   //============================================================
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &matched, int number_of_subscribers, Sender_exec_i &callback)
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (
+                                        Atomic_Boolean &matched, 
+                                        int number_of_subscribers, 
+                                        Sender_exec_i &callback)
    : callback_ (callback),
     matched_ (matched),
     number_of_subscribers_ (number_of_subscribers)
@@ -70,39 +73,47 @@ namespace CIAO_Latency_Test_Sender_Impl
 
   void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
+     const DDS::RequestedIncompatibleQosStatus & /*status*/)
+    {
     }
 
   void ConnectorStatusListener_exec_i::on_sample_rejected(
      ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::SampleRejectedStatus & /*status*/)  {
+     const DDS::SampleRejectedStatus & /*status*/)
+    {
     }
 
   void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
      ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedDeadlineMissedStatus & /*status*/)  {
+     const DDS::OfferedDeadlineMissedStatus & /*status*/) 
+    {
     }
 
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
      ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
+     const DDS::OfferedIncompatibleQosStatus & /*status*/)
+    {
     }
 
   void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr the_entity,
-    ::DDS::StatusKind  status_kind)  {
+    ::DDS::StatusKind  status_kind)
+    {
       CORBA::ULong kind = status_kind;
-      if((!CORBA::is_nil(the_entity)) && (kind==DDS::PUBLICATION_MATCHED_STATUS))
+      if((!CORBA::is_nil(the_entity)) && 
+         (kind==DDS::PUBLICATION_MATCHED_STATUS))
         {
           ::DDS::PublicationMatchedStatus_var stat;
           ::DDS::DataWriter::_narrow(the_entity)->get_publication_matched_status(stat.out());
-          if((stat.in().current_count >= (this->number_of_subscribers_ + 1))  && !this->matched_.value())
+          if((stat.in().current_count >= 
+             (this->number_of_subscribers_ + 1)) && 
+             !this->matched_.value())
             {
               this->matched_ = true;
               this->callback_.start();
             }
-         }
-      }
+        }
+    }
   //============================================================
   // WriteTickerHandler
   //============================================================
@@ -153,12 +164,14 @@ namespace CIAO_Latency_Test_Sender_Impl
   void
   Sender_exec_i::write_one (void)
   {
-    //first message sent always, next messages only as previous sent message is received back
+    //first message sent always, next messages only as previous sent message
+    //is received back
     // TO DO: what if a message is lost?
     if( (this->number_of_msg_ == 0) || ( this->received_.value()))
     {
       // all messages send, stop timer
-      if((this->iterations_ != 0) && (this->number_of_msg_ >= this->iterations_ ))
+      if((this->iterations_ != 0) && 
+         (this->number_of_msg_ >= this->iterations_ ))
         {
           this->stop();
           this->timer_ = false;
@@ -167,11 +180,12 @@ namespace CIAO_Latency_Test_Sender_Impl
         {
         try
           {
-            //send messages with indicator (ping = 1L) so that subscriber knows that this message has to sent back.
+            //send messages with indicator (ping = 1L) so that subscriber knows
+            //that this message has to sent back.
             this->test_topic_.ping = 1L;
-            this->test_topic_.seq_num =  this->number_of_msg_;;
+            this->test_topic_.seq_num =  this->number_of_msg_;
 
-            //keep last sent seq_num, in order to control if message is sent back.
+            //keep last sent seq_num, to control if message is sent back.
             this->seq_num_ = this->number_of_msg_;
             this->received_ = false;
             ACE_High_Res_Timer::gettimeofday_hr ().to_usec (this->start_time_);
@@ -323,7 +337,8 @@ Sender_exec_i::record_time (ACE_UINT64  receive_time)
     if((datalen <= overhead_size) || (datalen > MAX_DATA_SEQUENCE_LENGTH))
     {
        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("ERROR: datalen has to be bigger as %u and smaller as %u\n"), overhead_size, MAX_DATA_SEQUENCE_LENGTH));
+                   ACE_TEXT ("ERROR: datalen has to be > as %u and < as %u\n"), 
+                    overhead_size, MAX_DATA_SEQUENCE_LENGTH));
        throw ::CORBA::BAD_PARAM ();
     }
     this->datalen_ = datalen - overhead_size;
@@ -394,14 +409,16 @@ Sender_exec_i::record_time (ACE_UINT64  receive_time)
   void
   Sender_exec_i::ccm_remove (void)
   {
-
     ACE_DEBUG ((LM_DEBUG, "SUMMARY SENDER number of messages sent: %u\n",
                           (this->number_of_msg_)));
    
     //sort all duration times
-    qsort(this->duration_times, this->count_,sizeof(CORBA::Long), compare_two_longs);
-    /* Show latency_50_percentile, latency_90_percentile, latency_99_percentile and 
-     * latency_99.99_percentile.
+    qsort(this->duration_times, 
+          this->count_,
+          sizeof(CORBA::Long), 
+          compare_two_longs);
+    /* Show latency_50_percentile, latency_90_percentile, 
+     * latency_99_percentile and latency_99.99_percentile.
      * For example duration_times[per50] is the median i.e. 50% of the 
      * samples have a latency time  <=  duration_times[per50]
      */
@@ -418,13 +435,15 @@ Sender_exec_i::record_time (ACE_UINT64  receive_time)
 
     int overhead_size = sizeof(CORBA::ULong) + sizeof(CORBA::ULong);
     CORBA::UShort datalen = overhead_size  + this->datalen_;
-//   if( this->count_.value () > 0)
     if( this->count_ > 0)
       {
-        ACE_DEBUG ((LM_DEBUG,"Collecting statistics on %d samples with message size %u.\n"
+        ACE_DEBUG ((LM_DEBUG,
+           "Collecting statistics on %d samples with message size %u.\n"
            "This is the roundtrip time, *not* the one-way-latency\n"
-           "bytes ,stdev us,ave us, min us, 50%% us, 90%% us, 99%% us, 99.9%%, max us\n"
-           "------,-------,-------,-------,-------,-------,-------,-------,-------\n"
+           "bytes ,stdev us,ave us, min us, 50%% us, 90%% us, 99%% us, 99.9%%,"
+           " max us\n"
+           "------,-------,-------,-------,-------,-------,-------,-------,"
+            "-------\n"
            "%6d,%7.1f,%7.1f,%7u,%7u,%7u,%7u,%7u,%7u\n",
             this->count_,
             datalen,

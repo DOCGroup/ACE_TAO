@@ -14,13 +14,10 @@ const short MAX_DATA_SEQUENCE_LENGTH = 8192;
 typedef sequence<octet, MAX_DATA_SEQUENCE_LENGTH> OctetSeq;
 
 struct LatencyTest {
-//  string key;
   long seq_num;
   long ping;
   OctetSeq data;
  };
- //key is temporarily to prevent compile errors, has to be removed
- //ping  is temporarily, has to be solved in QoS file
 
 typedef sequence<LatencyTest> LatencyTest_Seq;
 

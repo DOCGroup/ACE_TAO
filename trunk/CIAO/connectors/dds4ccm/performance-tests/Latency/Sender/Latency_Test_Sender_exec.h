@@ -4,7 +4,6 @@
 #ifndef CIAO_SENDER_EXEC_H_
 #define CIAO_SENDER_EXEC_H_
 
-
 #include "Latency_Test_SenderEC.h"
 
 #include /**/ "Sender_exec_export.h"
@@ -15,13 +14,12 @@
 
 #include "tao/LocalObject.h"
 
-#include <map>
-
 namespace CIAO_Latency_Test_Sender_Impl
 {
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Long > Atomic_Long;
-  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong > Atomic_ULong;
-  typedef ACE_Atomic_Op <ACE_Recursive_Thread_Mutex, CORBA::Boolean > Atomic_Boolean;
+  //typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong > Atomic_ULong;
+  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean> Atomic_Boolean;
+  //typedef ACE_Atomic_Op <ACE_Recursive_Thread_Mutex, CORBA::Boolean > Atomic_Boolean;
 
   class Sender_exec_i;
   //============================================================
@@ -144,7 +142,6 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     WriteTicker *ticker_;
 
     CORBA::UShort iterations_;
-
     CORBA::UShort datalen_;
     CORBA::UShort sleep_;
     Atomic_Boolean matched_;
@@ -156,7 +153,7 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     CORBA::UShort number_of_msg_;
     Atomic_Boolean timer_;
     Atomic_Boolean received_;
-    Atomic_ULong seq_num_; 
+    Atomic_Long seq_num_; 
     CORBA::Double sigma_duration_squared_;
     ACE_UINT64 start_time_;
 
