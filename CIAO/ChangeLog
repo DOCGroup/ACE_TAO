@@ -1,3 +1,9 @@
+Thu Mar  4 09:06:49 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/CoherentWriter:
+          Added coherent writer test.
+
 Thu Mar  4 08:55:49 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/ndds/TimeUtilities.h:
