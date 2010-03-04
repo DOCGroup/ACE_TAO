@@ -1,10 +1,19 @@
+Thu Mar  4 13:11:25 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test_cdr.pl:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/run_test_cdr.pl:
+        * bin/ciao_tests.lst:
+
+          Added a test which 1) converts XML plans to CDR with
+          dance_convert_plan, and 2) deploys that plan.
+
 Thu Mar  4 13:08:02 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test.pl:
         * DAnCE/tests/CIAO/NodeManager-Deployments/run_test.pl:
 
           Ported to use dance_plan_launcher directly.
-        
+
         * DAnCE/tests/CIAO/CommandlinePassage/run_test.pl:
         * connectors/ami4ccm/examples/Hello/descriptors/run_test.pl:
         * connectors/dds4ccm/examples/Hello/descriptors/run_1_to_5.pl:
