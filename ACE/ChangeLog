@@ -1,3 +1,33 @@
+Thu Mar  4 07:50:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for next micro
+
+        * rpmbuild/ace-tao.spec:
+          Fixed problem with installation of nslist readme
+
+        * etc/index.html:
+          Added 5.7.7
+
+        * docs/Download.html:
+          Updated for 5.7.7
+
+        * docs/bczar/bczar.html:
+          Several updates because we now package on a FC12 system
+
+        * debianbuild/rules:
+          Removed commented out part
+
+        * bin/make_release.py:
+          Next micro release will not ship msvc71 solutions, it is still
+          supported but the end user should generate the solutions him self.
+          Also WinCE solutions are not generated anymore for CIAO and the
+          autoconf bootstrapping is done much earlier in the release process
+          so when it fails we know early. The hostname check has been removed
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+          Updated because of micro release
+
 Local Variables:
 mode: change-log
 add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))

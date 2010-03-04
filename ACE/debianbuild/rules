@@ -127,32 +127,6 @@ autotools-stamp: prepatch-stamp
 	patch -p1 -d $(ACE_ROOT) < debian/patches/96-build-athena3d.dpatch
 	cd $(ACE_ROOT) && bin/bootstrap
 
-#	cd $(ACE_ROOT) && autoconf && autoheader && aclocal && automake && libtoolize
-#	cd $(TAO_ROOT) && autoconf && autoheader && aclocal && automake && libtoolize
-
-#	echo "ACE_ROOT - autoconf"
-#	autoconf
-#	echo "ACE_ROOT - autoheader"
-#	autoheader
-#	echo "ACE_ROOT - aclocal"
-#	aclocal
-#	echo "ACE_ROOT - automake"
-#	automake
-#	echo "ACE_ROOT - libtoolize"
-#	libtoolize
-
-#	cd $(TAO_ROOT)
-#	echo "TAO_ROOT - autoconf"
-#	autoconf
-#	echo "TAO_ROOT - autoheader"
-#	autoheader
-#	echo "TAO_ROOT - aclocal"
-#	aclocal
-#	echo "TAO_ROOT - automake"
-#	automake
-#	echo "TAO_ROOT - libtoolize"
-#	libtoolize
-
 	touch $@
 
 .PHONY: autotools
