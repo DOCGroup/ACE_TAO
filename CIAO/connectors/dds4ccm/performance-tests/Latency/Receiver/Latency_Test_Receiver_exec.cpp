@@ -31,7 +31,7 @@ namespace CIAO_Latency_Test_Receiver_Impl
       {
          this->callback_.write_one(an_instance);
       }
-  }
+   }
 
   void
   LatencyTest_Listener_exec_i::on_many_data (

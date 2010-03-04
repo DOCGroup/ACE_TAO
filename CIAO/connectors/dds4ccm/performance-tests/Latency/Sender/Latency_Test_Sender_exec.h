@@ -20,8 +20,8 @@
 namespace CIAO_Latency_Test_Sender_Impl
 {
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Long > Atomic_Long;
-  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Long > Atomic_ULong;
-  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
+  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong > Atomic_ULong;
+  typedef ACE_Atomic_Op <ACE_Recursive_Thread_Mutex, CORBA::Boolean > Atomic_Boolean;
 
   class Sender_exec_i;
   //============================================================
@@ -116,9 +116,6 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     virtual ::CORBA::ULong iterations (void);
     virtual void iterations (::CORBA::ULong iterations);
 
-    virtual ::CORBA::UShort keys (void);
-    virtual void keys (::CORBA::UShort keys);
-
     virtual ::CORBA::UShort sleep (void);
     virtual void sleep (::CORBA::UShort sleep);
 
@@ -136,7 +133,8 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
 
-    void start (void);
+    void start(void);
+    void stop (void);
     void write_one (void);
     void read(LatencyTest instance,ACE_UINT64 receive_time);
 
@@ -146,7 +144,6 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     WriteTicker *ticker_;
 
     CORBA::UShort iterations_;
-    CORBA::UShort keys_;
 
     CORBA::UShort datalen_;
     CORBA::UShort sleep_;
@@ -155,19 +152,19 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     Atomic_Long  tv_total_;
     Atomic_Long  tv_max_;
     Atomic_Long  tv_min_;
-    Atomic_Long  count_;
+    CORBA::UShort count_;
     CORBA::UShort number_of_msg_;
     Atomic_Boolean timer_;
     Atomic_Boolean received_;
     Atomic_ULong seq_num_; 
+    CORBA::Double sigma_duration_squared_;
     ACE_UINT64 start_time_;
 
     TAO_SYNCH_MUTEX mutex_;
-    typedef std::map<ACE_CString, LatencyTest_var> Writer_Table;
-    Writer_Table samples_;
-
-    Writer_Table::iterator last_key_;
- };
+    LatencyTest test_topic_;
+    CORBA::Octet* buffer_;
+    CORBA::Long* duration_times;
+};
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Latency_Test_Sender_Impl (void);

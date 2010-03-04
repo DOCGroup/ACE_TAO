@@ -232,24 +232,13 @@
     <source/>
     <implementation xmi:idref="SenderComponentImplementation" />
     <configProperty>
-      <name>keys</name>
-      <value>
-        <type>
-          <kind>tk_ushort</kind>
-        </type>
-        <value>
-          <ushort>1</ushort>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
       <name>iterations</name>
       <value>
         <type>
           <kind>tk_ulong</kind>
         </type>
         <value>
-          <ulong>10000</ulong>
+          <ulong>1000</ulong>
         </value>
       </value>
     </configProperty>
@@ -260,7 +249,7 @@
           <kind>tk_ushort</kind>
         </type>
         <value>
-          <ushort>2</ushort>
+          <ushort>100</ushort>
         </value>
       </value>
     </configProperty>

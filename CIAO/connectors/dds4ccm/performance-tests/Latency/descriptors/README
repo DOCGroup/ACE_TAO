@@ -1,0 +1,17 @@
+
+This performace test shows the latency. The test can run with different options.
+
+-	separate publisher and  subscriber:
+	run_pub.pl and run_sub.pl with resp. Plan_pub.cdp and Plan_sub.cdp .
+
+-	to check if test still compiles and runs , use this test
+    one publisher and one subscriber in 1 process :
+	run_test.pl with resp. Plan.cdp
+
+
+
+
+To test changes in the next attributes, changes this values in the publisher cdp-files:
+iterations : the number of messages from one instance to send. Has to be greater as 0.
+datalen: the datalen of a message (minimal 32). 
+sleep:  time in ms to sleep before writing the next message 
