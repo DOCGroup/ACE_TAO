@@ -173,10 +173,8 @@ int
 TAO_AnyTypeCode_Adapter_Impl::Initializer (void)
 {
   return ACE_Service_Config::process_directive (
-        ace_svc_desc_TAO_AnyTypeCode_Adapter_Impl
-      );
+        ace_svc_desc_TAO_AnyTypeCode_Adapter_Impl);
 }
-
 
 ACE_STATIC_SVC_DEFINE (
   TAO_AnyTypeCode_Adapter_Impl,
