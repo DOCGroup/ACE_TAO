@@ -12,7 +12,6 @@
 
 #include "Connector/Latency_Test_Connector.idl"
 
-
 module Latency_Test
 {
   component Sender

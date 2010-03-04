@@ -116,8 +116,6 @@ namespace CIAO_Latency_Test_Receiver_Impl
     dlc->mode (::CCM_DDS::ONE_BY_ONE);
   }
 
-  
-
   ::CCM_DDS::LatencyTest::CCM_Listener_ptr
   Receiver_exec_i::get_info_listen_data_listener (void)
   {
