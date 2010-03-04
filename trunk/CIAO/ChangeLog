@@ -1,3 +1,9 @@
+Thu Mar  4 13:27:35 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/EM_Launcher.h:
+
+          Fuzz fix.
+
 Thu Mar  4 13:11:25 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test_cdr.pl:
