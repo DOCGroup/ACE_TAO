@@ -18,7 +18,7 @@
 
 namespace DAnCE
 {
-  class EM_Launcher : 
+  class EM_Launcher :
     public virtual Plan_Launcher_Base_Impl< ::Deployment::ExecutionManager,
                                             ::Deployment::DomainApplicationManager,
                                             ::Deployment::DomainApplication >
@@ -26,18 +26,17 @@ namespace DAnCE
     typedef Plan_Launcher_Base_Impl< ::Deployment::ExecutionManager,
                                      ::Deployment::DomainApplicationManager,
                                      ::Deployment::DomainApplication > __Base;
-    
+
   public:
     EM_Launcher (CORBA::ORB_ptr orb,
                       __Base::Manager_ptr managerw);
-    
+
     ~EM_Launcher (void);
-    
-    
+
+
     bool lookup_by_uuid (const char *uuid,
                          CORBA::Object_out am,
                          CORBA::Object_out app);
-    
   };
 }
 
