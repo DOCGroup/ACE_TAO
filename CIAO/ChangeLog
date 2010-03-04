@@ -1,11 +1,27 @@
+Thu Mar  4 13:57:48 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/EM_Launcher.h:
+        * DAnCE/Plan_Launcher/NM_Launcher.h:
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+
+          Fixed comments from Johnny.
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl_T.h:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.h:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
+
+          Renamed these files to have _T suffix.
+
 Thu Mar  4 13:30:45 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tools/Convert_Plan/Convert_Plan_Impl.cpp:
 
           Fixed an error-checking problem whereby an invalid filename
           didn't result in function exit properly.  Thanks to Johnny
-          Willemsen for pointing this out. 
-        
+          Willemsen for pointing this out.
+
 Thu Mar  4 13:27:35 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/EM_Launcher.h:

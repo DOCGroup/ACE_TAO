@@ -14,63 +14,6 @@
 
 //#include "Plan_Launcher_Impl.h"
 
-ACE_CString
-expand_env_vars (const ACE_TCHAR * s)
-{
-  ACE_TString src(s);
-  ACE_TString res;
-  size_t pos_done = 0;
-  while (pos_done < (size_t) src.length())
-    {
-      size_t pos_start = src.find ('$', pos_done);
-      if (ACE_TString::npos == pos_start)
-        {
-          res += src.substring (pos_done);
-          pos_done = src.length();
-        }
-      else // take the substring before '$' and append value
-        {
-          if (pos_start > pos_done)
-            {
-              res += src.substring (pos_done, pos_start - pos_done);
-              pos_done = pos_start;
-            }
-
-          size_t pos_end = src.length();
-
-          size_t p;
-
-          p = src.find (ACE_TEXT(' '), pos_start + 1);
-          if (ACE_TString::npos != p && pos_end > p) pos_end = p;
-
-          p = src.find (ACE_TEXT('/'), pos_start + 1);
-          if (ACE_TString::npos != p && pos_end > p) pos_end = p;
-
-          p = src.find (ACE_TEXT('\\'), pos_start + 1);
-          if (ACE_TString::npos != p && pos_end > p) pos_end = p;
-
-          p = src.find (ACE_TEXT('$'), pos_start + 1);
-          if (ACE_TString::npos != p && pos_end > p) pos_end = p;
-
-          if (pos_end - pos_start > 1)
-            {
-              ACE_Env_Value<const ACE_TCHAR*> val (src.substring (pos_start + 1, pos_end - pos_start - 1).c_str(), 0);
-              res += val;
-              pos_done = pos_end;
-            }
-          else
-            {
-              DANCE_DEBUG (6, (LM_WARNING, DLINFO
-                               ACE_TEXT("Plan_Launcher::expand_env_vars - ")
-                               ACE_TEXT("Envvar can not be parsed out at %i in \"<%s>\""),
-                               pos_start,
-                               src.c_str()));
-            }
-        }
-    }
-  return res;
-}
-
 namespace
 {
   struct Options
@@ -137,7 +80,7 @@ usage(const ACE_TCHAR*)
               ACE_TEXT ("The default action is to fully launch a plan. The following options may be used\n")
               ACE_TEXT ("to arrive at a different state\n")
               ACE_TEXT ("\t-l|--launch-plan\t\tLaunch the plan (Requires CDR/XML plan)\n")
-              ACE_TEXT ("\t-s|--stop-plan\t\t\tStop the plan\n (Requires Plan, UUID, or APP/AM references")
+              ACE_TEXT ("\t-s|--stop-plan\t\t\tStop the plan (Requires Plan, UUID, or APP/AM references")
               
               ACE_TEXT ("\nOther Options\n")
               ACE_TEXT ("\t-o|--output[prefix]\t\tOutput IOR files that result from plan control action,")
@@ -423,6 +366,7 @@ int teardown_plan (const Options &opts,
         }
       else
         {
+          // Need to perform lookup by uuid, either explicitly provided or in plan. 
           ACE_CString uuid;
           if (plan)
             uuid = plan->UUID.in ();
@@ -431,7 +375,7 @@ int teardown_plan (const Options &opts,
           
           DAnCE::EM_Launcher *em_launcher = dynamic_cast <DAnCE::EM_Launcher *> (pl_base);
           
-          if (!pl_base)
+          if (!em_launcher)
             {
               DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::teardown_plan - ")
                                ACE_TEXT ("Error: Attempting UUID lookup on non-EM managed plan not supported\n")));
@@ -486,6 +430,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   DANCE_DISABLE_TRACE ();
 
   int retval = 0;
+  CORBA::ORB_var orb;
 
   try
     {
@@ -500,7 +445,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       DANCE_DEBUG (6, (LM_TRACE, DLINFO
                        ACE_TEXT("PlanLauncher - initializing ORB\n")));
 
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      orb = CORBA::ORB_init (argc, argv);
       
       Options options;
       if (!parse_args (argc, argv, options))
@@ -515,12 +460,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       
       if (options.em_ior_)
         {
+          // Resolve ExecutionManager IOR for EM base deployment. 
           DAnCE::EM_Launcher *em_pl (0);
           
           CORBA::Object_var obj = orb->string_to_object (options.em_ior_);
           Deployment::ExecutionManager_var tmp_em = Deployment::ExecutionManager::_narrow (obj);
           
-          if (CORBA::is_nil (tmp_em))
+          if (CORBA::is_nil (tmp_em.in ()))
             {
               DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher - ")
                                ACE_TEXT ("Unable to resolve ExecutionManager reference <%s>\n"),
@@ -534,16 +480,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             CORBA::NO_MEMORY ());
           
           pl_base.reset (em_pl);
-          
         }
       else
         {
+          // Resolve NM IOR for NM based deployment.
           DAnCE::NM_Launcher *nm_pl (0);
 
           CORBA::Object_var obj = orb->string_to_object (options.nm_ior_);
           Deployment::NodeManager_var tmp_em = Deployment::NodeManager::_narrow (obj);
           
-          if (CORBA::is_nil (tmp_em))
+          if (CORBA::is_nil (tmp_em.in ()))
             {
               DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher - ")
                                ACE_TEXT ("Unable to resolve NodeManager reference <%s>\n"),
@@ -579,7 +525,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           
           if (!dp.ptr ())
             {
-              ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("PlanLauncher - Error: Unable to read in XML plan\n")));
+              ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("PlanLauncher - Error: Unable to read in CDR plan\n")));
               return -1;
             }
         }
@@ -596,8 +542,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           break;
 
         default:
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher -")
-                           ACE_TEXT ("Mode not yet supported\n")));
+          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher -")
+                      ACE_TEXT ("Mode not yet supported\n")));
           break;
           
         };
@@ -608,16 +554,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       ACE_ERROR ((LM_ERROR, DLINFO "PlanLauncher - Error: %C.\n", e.ex_.c_str()));
       retval = -1;
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
       ACE_ERROR ((LM_ERROR, DLINFO "PlanLauncher - Error: %C\n", ex._info ().c_str ()));
       retval = -1;
+      orb->destroy ();
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_ERROR, "PlanLauncher - Error: Unknown exception.\n"));
+      ACE_ERROR ((LM_ERROR, "PlanLauncher - Error: Unknown exception.\n"));
       retval = -1;
+      orb->destroy ();
     }
 
   return retval;
