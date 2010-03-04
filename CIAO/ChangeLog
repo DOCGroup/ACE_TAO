@@ -1,3 +1,11 @@
+Thu Mar  4 12:57:52 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tools/Convert_Plan/Convert_Plan.cpp:
+        * DAnCE/tools/Convert_Plan/Convert_Plan.mpc:
+        * DAnCE/tools/Convert_Plan/Convert_Plan_Impl.cpp:
+
+          Re-implemented CDR logic to not use FILE_Connector.
+
 Thu Mar  4 12:54:14 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/VariousTopicsEvent/Base/VTopic_Base.mpc:

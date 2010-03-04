@@ -61,6 +61,11 @@ parse_args (int argc, ACE_TCHAR *argv [])
   return true;
 }
 
+#ifdef GEN_OSTREAM_OPS
+#include <iostream>
+#include <sstream>
+#endif /* GEN_OSTREAM_OPS */
+
 int 
 ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
@@ -104,7 +109,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
                            "Unable to load an XML based plan\n"));
           return -1;
         }
-      
+
+#ifdef GEN_OSTREAM_OPS
+  {
+    std::ostringstream plan_stream;
+    plan_stream << *plan << std::endl;
+    DANCE_DEBUG (9, (LM_TRACE, DLINFO "Convert_Plan - Input plan: %C\n",
+                  plan_stream.str ().c_str ()));
+  }
+#endif /* GEN_OSTREAM_OPS */
+  
       if (!output_filename)
         {
           DANCE_DEBUG (2, (LM_DEBUG, DLINFO "Convert_Plan - "
