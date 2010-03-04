@@ -33,21 +33,6 @@ operator<<= (::DDS_RequestedDeadlineMissedStatus &ddsstatus, const ::DDS::Reques
   ddsstatus.last_instance_handle <<= status.last_instance_handle;
 }
 
-inline void
-operator>>= (const ::DDS_RequestedDeadlineMissedStatus &status, ::DDS::RequestedDeadlineMissedStatus & ddsstatus)
-{
-  ddsstatus.total_count = status.total_count;
-  ddsstatus.total_count_change = status.total_count_change;
-  ddsstatus.last_instance_handle <<= status.last_instance_handle;
-}
-
-inline void
-operator>>= (const ::DDS::RequestedDeadlineMissedStatus &status, ::DDS_RequestedDeadlineMissedStatus & ddsstatus)
-{
-  ddsstatus.total_count = status.total_count;
-  ddsstatus.total_count_change = status.total_count_change;
-  ddsstatus.last_instance_handle <<= status.last_instance_handle;
-}
 #endif
 
 #endif /* DDS4CCM_REQUESTEDDEADLINEMISSEDSTATUS_H */

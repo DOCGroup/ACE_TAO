@@ -73,54 +73,6 @@ operator<<= (::DDS_SubscriptionBuiltinTopicData & ddstopicdata, const ::DDS::Sub
   ddstopicdata.group_data <<= topicdata.group_data;
 }
 
-inline void
-operator>>= (const ::DDS_SubscriptionBuiltinTopicData & topicdata, ::DDS::SubscriptionBuiltinTopicData & ddstopicdata)
-{
-  ddstopicdata.key <<= topicdata.key;
-  ddstopicdata.participant_key <<= topicdata.participant_key;
-  ddstopicdata.topic_name = topicdata.topic_name;
-  ddstopicdata.type_name = topicdata.type_name;
-
-  ddstopicdata.durability <<= topicdata.durability;
-  ddstopicdata.deadline <<= topicdata.deadline;
-  ddstopicdata.latency_budget <<= topicdata.latency_budget;
-  ddstopicdata.liveliness <<= topicdata.liveliness;
-  ddstopicdata.reliability <<= topicdata.reliability;
-  ddstopicdata.ownership <<= topicdata.ownership;
-  ddstopicdata.destination_order <<= topicdata.destination_order;
-  ddstopicdata.user_data <<= topicdata.user_data;
-  ddstopicdata.time_based_filter <<= topicdata.time_based_filter;
-
-  ddstopicdata.presentation <<= topicdata.presentation;
-  ddstopicdata.partition <<= topicdata.partition;
-  ddstopicdata.topic_data <<= topicdata.topic_data;
-  ddstopicdata.group_data <<= topicdata.group_data;
-}
-
-inline void
-operator>>= (const ::DDS::SubscriptionBuiltinTopicData & topicdata, ::DDS_SubscriptionBuiltinTopicData & ddstopicdata)
-{
-  ddstopicdata.key <<= topicdata.key;
-  ddstopicdata.participant_key <<= topicdata.participant_key;
-  ddstopicdata.topic_name = CORBA::string_dup (topicdata.topic_name);
-  ddstopicdata.type_name = CORBA::string_dup (topicdata.type_name);
-
-  ddstopicdata.durability <<= topicdata.durability;
-  ddstopicdata.deadline <<= topicdata.deadline;
-  ddstopicdata.latency_budget <<= topicdata.latency_budget;
-  ddstopicdata.liveliness <<= topicdata.liveliness;
-  ddstopicdata.reliability <<= topicdata.reliability;
-  ddstopicdata.ownership <<= topicdata.ownership;
-  ddstopicdata.destination_order <<= topicdata.destination_order;
-  ddstopicdata.user_data <<= topicdata.user_data;
-  ddstopicdata.time_based_filter <<= topicdata.time_based_filter;
-
-  ddstopicdata.presentation <<= topicdata.presentation;
-  ddstopicdata.partition <<= topicdata.partition;
-  ddstopicdata.topic_data <<= topicdata.topic_data;
-  ddstopicdata.group_data <<= topicdata.group_data;
-}
-
 #endif
 
 #endif /* SUBSCRIPTIONBUILTINTOPICDATA_H_ */

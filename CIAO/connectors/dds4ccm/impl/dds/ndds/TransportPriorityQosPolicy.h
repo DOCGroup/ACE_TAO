@@ -26,17 +26,6 @@ operator<<= (::DDS_TransportPriorityQosPolicy &ddsqos, const ::DDS::TransportPri
   ddsqos.value = qos.value;
 }
 
-inline void
-operator>>= (const ::DDS_TransportPriorityQosPolicy &qos, ::DDS::TransportPriorityQosPolicy & ddsqos)
-{
-  ddsqos.value = qos.value;
-}
-
-inline void
-operator>>= (const ::DDS::TransportPriorityQosPolicy &qos, ::DDS_TransportPriorityQosPolicy & ddsqos)
-{
-  ddsqos.value = qos.value;
-}
 #endif
 
 #endif /* DDS4CCM_TRANSPORTPRIOTITYQOSPOLICY_H */

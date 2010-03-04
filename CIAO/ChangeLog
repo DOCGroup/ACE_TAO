@@ -1,3 +1,64 @@
+Thu Mar  4 10:18:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DataReader.cpp:
+        * connectors/dds4ccm/impl/dds/DataWriter.cpp:
+        * connectors/dds4ccm/impl/dds/DomainParticipant.cpp:
+        * connectors/dds4ccm/impl/dds/ndds/BuiltinTopicKey_t.h:
+        * connectors/dds4ccm/impl/dds/ndds/DataReaderQos.h:
+        * connectors/dds4ccm/impl/dds/ndds/DataWriterQos.h:
+        * connectors/dds4ccm/impl/dds/ndds/DeadlineQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/DestinationOrderQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/DomainParticipantFactoryQos.h:
+        * connectors/dds4ccm/impl/dds/ndds/DomainParticipantQos.h:
+        * connectors/dds4ccm/impl/dds/ndds/DurabilityQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/DurabilityServiceQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/Duration_t.h:
+        * connectors/dds4ccm/impl/dds/ndds/EntityFactoryQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/GroupDataQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/HistoryQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/InconsistentTopicStatus.h:
+        * connectors/dds4ccm/impl/dds/ndds/InstanceHandleSeq.h:
+        * connectors/dds4ccm/impl/dds/ndds/InstanceHandle_t.h:
+        * connectors/dds4ccm/impl/dds/ndds/LatencyBudgetQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/LifespanQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/LivelinessChangedStatus.h:
+        * connectors/dds4ccm/impl/dds/ndds/LivelinessLostStatus.h:
+        * connectors/dds4ccm/impl/dds/ndds/LivelinessQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/OctetSeq.h:
+        * connectors/dds4ccm/impl/dds/ndds/OfferedDeadlineMissedStatus.h:
+        * connectors/dds4ccm/impl/dds/ndds/OfferedIncompatibleQosStatus.h:
+        * connectors/dds4ccm/impl/dds/ndds/OwnershipQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/OwnershipStrengthQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/PartitionQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/PresentationQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/PublicationBuiltinTopicData.h:
+        * connectors/dds4ccm/impl/dds/ndds/PublicationMatchedStatus.h:
+        * connectors/dds4ccm/impl/dds/ndds/PublisherQos.h:
+        * connectors/dds4ccm/impl/dds/ndds/QosPolicyCountSeq.h:
+        * connectors/dds4ccm/impl/dds/ndds/ReaderDataLifecycleQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/ReliabilityQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/RequestedDeadlineMissedStatus.h:
+        * connectors/dds4ccm/impl/dds/ndds/RequestedIncompatibleQosStatus.h:
+        * connectors/dds4ccm/impl/dds/ndds/ResourceLimitsQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/SampleRejectedStatus.h:
+        * connectors/dds4ccm/impl/dds/ndds/SubscriberQos.h:
+        * connectors/dds4ccm/impl/dds/ndds/SubscriptionBuiltinTopicData.h:
+        * connectors/dds4ccm/impl/dds/ndds/SubscriptionMatchedStatus.h:
+        * connectors/dds4ccm/impl/dds/ndds/TimeBasedFilterQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/TimeUtilities.h:
+        * connectors/dds4ccm/impl/dds/ndds/Time_t.h:
+        * connectors/dds4ccm/impl/dds/ndds/TopicDataQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/TopicQos.h:
+        * connectors/dds4ccm/impl/dds/ndds/TransportPriorityQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/UserDataQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/WriterDataLifecycleQosPolicy.h:
+          Removed all >>= operators.
+
+        * connectors/dds4ccm/tests/Policies/entity_factory_qos_test.cpp:
+        * connectors/dds4ccm/tests/Policies/presentation_qos_test.cpp:
+        * connectors/dds4ccm/tests/Policies/wr_lifecycle_qos_test.cpp:
+          Resolved compile warnings on Windows.
+
 Thu Mar  4 09:37:01 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver_exec.cpp:

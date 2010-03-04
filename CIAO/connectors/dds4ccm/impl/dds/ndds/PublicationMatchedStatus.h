@@ -37,25 +37,6 @@ operator<<= (::DDS_PublicationMatchedStatus &ddsstatus, const ::DDS::Publication
   ddsstatus.last_subscription_handle <<= status.last_subscription_handle;
 }
 
-inline void
-operator>>= (const ::DDS_PublicationMatchedStatus &status, ::DDS::PublicationMatchedStatus & ddsstatus)
-{
-  ddsstatus.total_count = status.total_count;
-  ddsstatus.total_count_change = status.total_count_change;
-  ddsstatus.current_count = status.current_count;
-  ddsstatus.current_count_change = status.current_count_change;
-  ddsstatus.last_subscription_handle <<= status.last_subscription_handle;
-}
-
-inline void
-operator>>= (const ::DDS::PublicationMatchedStatus &status, ::DDS_PublicationMatchedStatus & ddsstatus)
-{
-  ddsstatus.total_count = status.total_count;
-  ddsstatus.total_count_change = status.total_count_change;
-  ddsstatus.current_count = status.current_count;
-  ddsstatus.current_count_change = status.current_count_change;
-  ddsstatus.last_subscription_handle <<= status.last_subscription_handle;
-}
 #endif
 
 #endif /* DDS4CCM_PUBLICATIONMATCHEDSTATUS_H */

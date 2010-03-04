@@ -31,18 +31,4 @@ operator<<= (::ACE_Time_Value & ace_time, const ::DDS::Time_t &dds_time)
   ace_time.usec (dds_time.nanosec/1000);
 }
 
-inline void
-operator>>= (const ::DDS::Time_t & dds_time, ::ACE_Time_Value & ace_time)
-{
-  ace_time.sec (dds_time.sec);
-  ace_time.usec (dds_time.nanosec/1000);
-}
-
-inline void
-operator>>= (const ::ACE_Time_Value & ace_time, ::DDS::Time_t &dds_time)
-{
-  dds_time.sec = static_cast < ::CORBA::Long> (ace_time.sec ());
-  dds_time.nanosec = ace_time.usec () * 1000;
-}
-
 #endif /* DDS4CCM_TIME_UTILITIES_H */

@@ -30,21 +30,6 @@ operator<<= (::DDS_PresentationQosPolicy &ddsqos, const ::DDS::PresentationQosPo
   ddsqos.ordered_access = qos.ordered_access;
 }
 
-inline void
-operator>>= (const ::DDS_PresentationQosPolicy &qos, ::DDS::PresentationQosPolicy & ddsqos)
-{
-  ddsqos.access_scope = static_cast < ::DDS::PresentationQosPolicyAccessScopeKind> (qos.access_scope);
-  ddsqos.coherent_access = qos.coherent_access;
-  ddsqos.ordered_access = qos.ordered_access;
-}
-
-inline void
-operator>>= (const ::DDS::PresentationQosPolicy &qos, ::DDS_PresentationQosPolicy & ddsqos)
-{
-  ddsqos.access_scope = static_cast < DDS_PresentationQosPolicyAccessScopeKind> (qos.access_scope);
-  ddsqos.coherent_access = qos.coherent_access;
-  ddsqos.ordered_access = qos.ordered_access;
-}
 #endif
 
 #endif /* DDS4CCM_PRESENTATIONQOSPOLICY_H */

@@ -28,17 +28,6 @@ operator<<= (::DDS_PartitionQosPolicy &ddsqos, const ::DDS::PartitionQosPolicy &
   ddsqos.name <<= qos.name;
 }
 
-inline void
-operator>>= (const ::DDS_PartitionQosPolicy &qos, ::DDS::PartitionQosPolicy & ddsqos)
-{
-  ddsqos.name <<= qos.name;
-}
-
-inline void
-operator>>= (const ::DDS::PartitionQosPolicy &qos, ::DDS_PartitionQosPolicy & ddsqos)
-{
-  ddsqos.name <<= qos.name;
-}
 #endif
 
 #endif /* DDS4CCM_PARTITIONQOSPOLICY_H */

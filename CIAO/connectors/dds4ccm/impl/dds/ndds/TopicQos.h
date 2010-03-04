@@ -64,41 +64,6 @@ operator<<= (::DDS_TopicQos &ddsqos, const ::DDS::TopicQos & qos)
   ddsqos.ownership <<= qos.ownership;
 }
 
-inline void
-operator>>= (const ::DDS_TopicQos &qos, ::DDS::TopicQos & ddsqos)
-{
-  ddsqos.topic_data <<= qos.topic_data;
-  ddsqos.durability <<= qos.durability;
-  ddsqos.durability_service <<= qos.durability_service;
-  ddsqos.deadline <<= qos.deadline;
-  ddsqos.latency_budget <<= qos.latency_budget;
-  ddsqos.liveliness <<= qos.liveliness;
-  ddsqos.reliability <<= qos.reliability;
-  ddsqos.destination_order <<= qos.destination_order;
-  ddsqos.history <<= qos.history;
-  ddsqos.resource_limits <<= qos.resource_limits;
-  ddsqos.transport_priority <<= qos.transport_priority;
-  ddsqos.lifespan <<= qos.lifespan;
-  ddsqos.ownership <<= qos.ownership;
-}
-
-inline void
-operator>>= (const ::DDS::TopicQos &qos, ::DDS_TopicQos & ddsqos)
-{
-  ddsqos.topic_data <<= qos.topic_data;
-  ddsqos.durability <<= qos.durability;
-  ddsqos.durability_service <<= qos.durability_service;
-  ddsqos.deadline <<= qos.deadline;
-  ddsqos.latency_budget <<= qos.latency_budget;
-  ddsqos.liveliness <<= qos.liveliness;
-  ddsqos.reliability <<= qos.reliability;
-  ddsqos.destination_order <<= qos.destination_order;
-  ddsqos.history <<= qos.history;
-  ddsqos.resource_limits <<= qos.resource_limits;
-  ddsqos.transport_priority <<= qos.transport_priority;
-  ddsqos.lifespan <<= qos.lifespan;
-  ddsqos.ownership <<= qos.ownership;
-}
 #endif
 
 #endif /* DDS4CCM_TOPICQOS_H */

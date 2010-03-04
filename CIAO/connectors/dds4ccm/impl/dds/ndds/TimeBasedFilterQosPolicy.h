@@ -28,17 +28,6 @@ operator<<= (::DDS_TimeBasedFilterQosPolicy &ddsqos, const ::DDS::TimeBasedFilte
   ddsqos.minimum_separation <<= qos.minimum_separation;
 }
 
-inline void
-operator>>= (const ::DDS_TimeBasedFilterQosPolicy &qos, ::DDS::TimeBasedFilterQosPolicy & ddsqos)
-{
-  ddsqos.minimum_separation <<= qos.minimum_separation;
-}
-
-inline void
-operator>>= (const ::DDS::TimeBasedFilterQosPolicy &qos, ::DDS_TimeBasedFilterQosPolicy & ddsqos)
-{
-  ddsqos.minimum_separation <<= qos.minimum_separation;
-}
 #endif
 
 #endif /* DDS4CCM_TIMEBASEDFILTERQOSPOLICY_H */

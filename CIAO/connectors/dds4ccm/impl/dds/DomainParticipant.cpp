@@ -879,7 +879,7 @@ namespace CIAO
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandleSeq rtiseq;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_discovered_participants (rtiseq);
-      rtiseq >>= impl_handles;
+      impl_handles <<= rtiseq;
       return retval;
 #else
       return this->impl ()->get_discovered_participants (impl_handles);
@@ -900,7 +900,7 @@ namespace CIAO
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandleSeq rtiseq;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_discovered_topics (rtiseq);
-      rtiseq >>= impl_handles;
+      impl_handles <<= rtiseq;
       return retval;
 #else
       return this->impl ()->get_discovered_topics (impl_handles);
@@ -933,7 +933,7 @@ namespace CIAO
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDS_Time_t ccm_dds_time;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_current_time (ccm_dds_time);
-      ccm_dds_time >>= current_time;
+      current_time <<= ccm_dds_time;
       return retval;
 #else
       return this->impl ()->get_current_time (current_time);

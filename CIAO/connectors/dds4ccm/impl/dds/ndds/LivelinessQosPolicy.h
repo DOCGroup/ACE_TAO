@@ -30,19 +30,6 @@ operator<<= (::DDS_LivelinessQosPolicy &ddsqos, const ::DDS::LivelinessQosPolicy
   ddsqos.lease_duration <<= qos.lease_duration;
 }
 
-inline void
-operator>>= (const ::DDS_LivelinessQosPolicy &qos, ::DDS::LivelinessQosPolicy & ddsqos)
-{
-  ddsqos.kind = static_cast < ::DDS::LivelinessQosPolicyKind> (qos.kind);
-  ddsqos.lease_duration <<= qos.lease_duration;
-}
-
-inline void
-operator>>= (const ::DDS::LivelinessQosPolicy &qos, ::DDS_LivelinessQosPolicy & ddsqos)
-{
-  ddsqos.kind = static_cast < ::DDS_LivelinessQosPolicyKind> (qos.kind);
-  ddsqos.lease_duration <<= qos.lease_duration;
-}
 #endif
 
 #endif /* DDS4CCM_LIVELINESSQOSPOLICY_H */
