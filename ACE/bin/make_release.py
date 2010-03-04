@@ -106,6 +106,11 @@ def parse_args ():
                        # By default get repo root from working copy
                        # default="https://svn.dre.vanderbilt.edu/DOC/")
 
+    parser.add_option ("--mpc_root", dest="mpc_root", action="store",
+                       help="Specify an alternate MPC repository root",
+                       default=None)
+                       # By default get repo root from MPC root in working copy
+
     parser.add_option ("-n", dest="take_action", action="store_false",
                        help="Take no action", default=True)
     parser.add_option ("--verbose", dest="verbose", action="store_true",
@@ -208,7 +213,13 @@ def check_workspace ():
         info = svn_client.info2 (doc_root + "/ACE")[0]
         opts.repo_root = info[1]["repos_root_URL"]
 
+    # By default retrieve MPC root from working copy
+    if opts.mpc_root is None:
+        info = svn_client.info2 (doc_root + "/ACE/MPC")[0]
+        opts.mpc_root = info[1]["repos_root_URL"]
+
     vprint ("Repos root URL = " + opts.repo_root + "\n")
+    vprint ("Repos MPC root URL = " + opts.mpc_root + "\n")
 
 
 def update_version_files (component):
@@ -575,8 +586,8 @@ def tag ():
                         opts.repo_root + "/tags/" + branch)
 
         # Tag MPC
-        svn_client.copy (opts.repo_root + "/MPC/trunk",
-                        opts.repo_root + "/MPC/tags/" + branch)
+        svn_client.copy (opts.mpc_root + "/trunk",
+                        opts.mpc_root + "/tags/" + branch)
 
         # Update latest tag
         # mcorino@remedy.nl - subversion does not seem to support propset directly
@@ -592,8 +603,8 @@ def tag ():
                     #update_latest_tag ("BFO", branch)
     else:
         print "Creating tags:\n"
-        print opts.repo_root + "/Middleware/tags/" + branch + "\n"
-        print opts.repo_root + "/MPC/tags/" + branch + "\n"
+        print opts.repo_root + "/trunk -> " + opts.repo_root + "/tags/" + branch + "\n"
+        print opts.mpc_root + "/trunk -> " + opts.mpc_root + "/tags/" + branch + "\n"
 
 ##################################################
 #### Packaging methods
