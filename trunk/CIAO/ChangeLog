@@ -1,3 +1,83 @@
+Thu Mar  4 13:08:02 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test.pl:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/run_test.pl:
+
+          Ported to use dance_plan_launcher directly.
+        
+        * DAnCE/tests/CIAO/CommandlinePassage/run_test.pl:
+        * connectors/ami4ccm/examples/Hello/descriptors/run_test.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_1_to_5.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_5_to_1.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_5_to_5.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_receiver.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_sender.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_test.pl:
+        * connectors/dds4ccm/examples/Quoter/descriptors/run_test.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/run_test.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_pub.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_pub3.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_pub_BE.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_sub.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_sub2.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_sub3.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_sub_BE.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_test.pl:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/run_pub.pl:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/run_sub.pl:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLDeadline/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLQoS/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLSampleRejected/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLUnexpStat/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/DDSWriterEntity/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/Event_Connection_Test/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/Getter/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/InstanceHandle/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/KeyedWriter/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/ListenManyByMany/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/ListenNotEnabled/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/ListenOneByOne/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/PSLDeadline/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/PSLSampleLost/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/QueryFilter/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/Reader/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SLDisabled/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SLManyByMany/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SLOneByOne/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/State_Connection_Test/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/UnkeyedSamples/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/UnkeyedWriter/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/Updater/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/VariousTopicsState/descriptors/run_test.pl:
+        * examples/BasicSP/descriptors/run_test.pl:
+        * examples/DevGuideExamples/Messenger/StaticDAnCE/run_test.pl:
+        * examples/DevGuideExamples/Messenger/descriptors/run_test.pl:
+        * examples/Hello/descriptors/run_test.pl:
+        * examples/Hello/descriptors/run_test_PlanLocality_DifferentProcesses.pl:
+        * examples/Hello/descriptors/run_test_PlanLocality_SameProcess.pl:
+        * examples/Hello/descriptors/run_test_alias.pl:
+        * examples/Hello/descriptors/run_test_without_ns.pl:
+        * examples/Null_Component/descriptors/run_test.pl:
+        * examples/Null_Component/descriptors/run_test_without_ns.pl:
+        * examples/Null_Component_Glfa/descriptors/run_test.pl:
+        * tests/Bug_3769_Regression/descriptors/run_test.pl:
+
+          Ported tests to use new teardown option.
+
+        * DAnCE/tests/CIAO/NodeManager-Deployments/nm_launcher.mpc:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/simple_nm_launcher.cpp:
+
+          Removed these files, as they are made obsolete by
+          direct-to-nodemanager deployment.
+
 Thu Mar  4 13:04:14 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Deployment_Failure.h:
