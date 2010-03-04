@@ -58,6 +58,9 @@ module All_Anon
   exception Nested_Anon 
   {
     sequence<float> float_seq_array[6];
+    sequence<float> another_fsa[6];
+    long long_array_1[6];
+    long long_array_2[6];
   };
 };
 

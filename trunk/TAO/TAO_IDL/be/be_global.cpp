@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "be_global.h"
 #include "be_codegen.h"
 #include "be_generator.h"
@@ -104,6 +103,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_orb_h_include_ (true),
     gen_empty_anyop_header_ (false),
     lookup_strategy_ (TAO_PERFECT_HASH),
+    dds_impl_ (RTIDDS),
     void_type_ (0),
     ccmobject_ (0),
     messaging_ (0),
@@ -1611,6 +1611,39 @@ BE_GlobalData::LOOKUP_STRATEGY
 BE_GlobalData::lookup_strategy (void) const
 {
   return this->lookup_strategy_;
+}
+
+void
+BE_GlobalData::dds_impl (char const * const val)
+{
+  ACE_CString tmp (val, 0, false);
+  
+  if (tmp == "rtidds")
+    {
+      this->dds_impl_ = RTIDDS;
+    }
+  else if (tmp == "opensplice")
+    {
+      this->dds_impl_ = OPENSPLICE;
+    }
+  else if (tmp == "opendds")
+    {
+      this->dds_impl_ = OPENDDS;
+    }
+  else
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%C: invalid or unknown ")
+                  ACE_TEXT ("argument <%C> to -Wb,dds_impl\n"),
+                  idl_global->prog_name (),
+                  val));
+    }
+}
+
+BE_GlobalData::DDS_IMPL
+BE_GlobalData::dds_impl (void) const
+{
+  return this->dds_impl_;
 }
 
 void
@@ -3295,6 +3328,7 @@ BE_GlobalData::prep_be_arg (char *s)
   static const char include_guard[]        = "include_guard=";
   static const char safe_include[]         = "safe_include=";
   static const char unique_include[]       = "unique_include=";
+  static const char dds_impl[]             = "dds_impl=";
 
   char* last = 0;
 
@@ -3410,19 +3444,29 @@ BE_GlobalData::prep_be_arg (char *s)
         }
       else if (ACE_OS::strstr (arg, arg_versioning_begin) == arg)
         {
-          char const * const val = arg + sizeof (arg_versioning_begin) - 1;
+          char const * const val =
+            arg + sizeof (arg_versioning_begin) - 1;
           be_global->versioning_begin (val);
         }
       else if (ACE_OS::strstr (arg, arg_versioning_end) == arg)
         {
-          char const * const val = arg + sizeof (arg_versioning_end) - 1;
+          char const * const val =
+            arg + sizeof (arg_versioning_end) - 1;
           be_global->versioning_end (val);
+        }
+      else if (ACE_OS::strstr (arg, dds_impl) == arg)
+        {
+          char const * const val =
+            arg + sizeof (dds_impl) - 1;
+          be_global->dds_impl (val);
         }
       else
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%C: invalid or unknown argument <%C> to back end\n"),
-                      idl_global->prog_name (), arg));
+                      ACE_TEXT ("%C: invalid or unknown ")
+                      ACE_TEXT ("argument <%C> to back end\n"),
+                      idl_global->prog_name (),
+                      arg));
         }
     }
 }
