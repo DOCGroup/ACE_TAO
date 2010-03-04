@@ -1,3 +1,9 @@
+Thu Mar  4 12:54:14 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Base/VTopic_Base.mpc:
+        * connectors/dds4ccm/tests/VariousTopicsState/Base/VTopics_Base.mpc:
+          Resolved compile issues.
+
 Thu Mar  4 10:39:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Base/Hello_Base.mpc
