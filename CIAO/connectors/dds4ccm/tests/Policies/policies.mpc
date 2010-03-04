@@ -1,0 +1,44 @@
+// $Id$
+
+project(DDS_Policies_Test) : taoexe, dds4ccm_base {
+  includes += $(CIAO_ROOT)
+  exename = policies_test
+  Source_Files {
+    deadline_qos_test.cpp
+    dest_order_qos_test.cpp
+    dp_factory_qos_test.cpp
+    dp_qos_test.cpp
+    dr_qos_test.cpp
+    dur_qos_test.cpp
+    dur_service_qos_test.cpp
+    dw_qos_test.cpp
+    entity_factory_qos_test.cpp
+    group_data_qos_test.cpp
+    hist_qos_test.cpp
+    lat_budget_qos_test.cpp
+    lifespan_qos_test.cpp
+    liveliness_qos_test.cpp
+    main.cpp
+    ownership_qos_test.cpp
+    partition_qos_test.cpp
+    presentation_qos_test.cpp
+    pub_qos_test.cpp
+    reliability_qos_test.cpp
+    resource_limits_qos_test.cpp
+    sub_qos_test.cpp
+    tp_data_qos_test.cpp
+    tp_qos_test.cpp
+    transport_prio_qos_test.cpp
+    user_data_qos_test.cpp
+    rd_lifecycle_qos_test.cpp
+    tbf_qos_test.cpp
+    ownership_strength_qos_test.cpp
+    wr_lifecycle_qos_test.cpp
+    duration.cpp
+    octet_seq.cpp
+  }
+
+  Header_Files {
+    *.h
+  }
+}
