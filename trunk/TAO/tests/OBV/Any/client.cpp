@@ -136,7 +136,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (CORBA::is_nil (test.in ()))
       {
-      ACE_ERROR_RETURN ((LM_DEBUG,
+        ACE_ERROR_RETURN ((LM_DEBUG,
                          "Nil OBV_AnyTest::Test reference <%s>\n",
                          ior),
                         1);
