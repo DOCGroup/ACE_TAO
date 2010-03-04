@@ -1,3 +1,18 @@
+Thu Mar  4 10:30:04 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/TimeUtilities.h:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/TimeConversion/time_conversion.cpp:
+        * connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver_exec.cpp:
+        * connectors/dds4ccm/impl/dds/ndds/TimeUtilities.h:
+          Moved TimeUtilities.h from impl/dds/ndds to impl/dds/.
+
 Thu Mar  4 10:22:44 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Policies/pub_qos_test.cpp:
