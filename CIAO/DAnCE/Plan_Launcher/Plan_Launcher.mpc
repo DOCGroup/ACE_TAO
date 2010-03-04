@@ -1,11 +1,22 @@
 // -*- MPC -*-
 // $Id$
 
-project(Plan_Launcher_Exec) : dance_exe, dance_logger, xerces, dance_executionmanager_stub, dance_config_handlers {
+project(DAnCE_Plan_Launcher_Impl) : dance_lib, dance_logger, dance_convert_plan, \
+                            dance_executionmanager_stub, \
+                            dance_nodemanager_stub {
+  Source_Files {
+    EM_Launcher.cpp
+    NM_Launcher.cpp
+  }
+  
+  Template_Files {
+    Plan_Launcher_Base_Impl.cpp
+  }
+}
+        
+project(Plan_Launcher_Exec) : dance_exe, dance_plan_launcher {
   exename = dance_plan_launcher
   Source_Files {
     Plan_Launcher.cpp
-    Plan_Launcher_Base_Impl.cpp
-    Plan_Launcher_Impl.cpp
   }
 }
