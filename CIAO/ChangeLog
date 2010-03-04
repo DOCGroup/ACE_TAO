@@ -1,3 +1,14 @@
+Thu Mar  4 07:50:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for next micro
+
+        * DAnCE/MPC/config/dance_split_plan.mpb:
+          Layout changes
+
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
+          Extended this test
+
 Local Variables:
 mode: change-log
 add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
