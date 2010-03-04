@@ -42,25 +42,6 @@ operator<<= (::DDS_InstanceHandleSeq &ddsinstancehandleseqseq, const ::DDS::Inst
     }
 }
 
-inline void
-operator>>= (const ::DDS_InstanceHandleSeq &instancehandle, ::DDS::InstanceHandleSeq & ddsinstancehandleseqseq)
-{
-  ddsinstancehandleseqseq.length (instancehandle.length ());
-  for (::DDS_Long index = 0; index < instancehandle.length (); index++)
-    {
-      ddsinstancehandleseqseq[index] <<= instancehandle[index];
-    }
-}
-
-inline void
-operator>>= (const ::DDS::InstanceHandleSeq &instancehandle, ::DDS_InstanceHandleSeq & ddsinstancehandleseqseq)
-{
-  ddsinstancehandleseqseq.length (instancehandle.length ());
-  for (::DDS::InstanceHandleSeq::size_type index = 0; index < instancehandle.length (); index++)
-    {
-      ddsinstancehandleseqseq[index] <<= instancehandle[index];
-    }
-}
 #endif
 
 #endif /* DDS4CCM_INSTANCEHANDLESEQ_H */

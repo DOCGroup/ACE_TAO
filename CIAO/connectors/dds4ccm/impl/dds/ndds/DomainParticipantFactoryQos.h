@@ -28,17 +28,6 @@ operator<<= (::DDS_DomainParticipantFactoryQos &ddsqos, const ::DDS::DomainParti
   ddsqos.entity_factory <<= qos.entity_factory;
 }
 
-inline void
-operator>>= (const ::DDS_DomainParticipantFactoryQos &qos, ::DDS::DomainParticipantFactoryQos & ddsqos)
-{
-  ddsqos.entity_factory <<= qos.entity_factory;
-}
-
-inline void
-operator>>= (const ::DDS::DomainParticipantFactoryQos &qos, ::DDS_DomainParticipantFactoryQos & ddsqos)
-{
-  ddsqos.entity_factory <<= qos.entity_factory;
-}
 #endif
 
 #endif /* DDS4CCM_DOMAINPARTICIPANTFACTORYQOSPOLICY_H */

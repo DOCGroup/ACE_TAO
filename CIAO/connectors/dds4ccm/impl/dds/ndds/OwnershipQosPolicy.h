@@ -26,17 +26,6 @@ operator<<= (::DDS_OwnershipQosPolicy &ddsqos, const ::DDS::OwnershipQosPolicy &
   ddsqos.kind = static_cast < ::DDS_OwnershipQosPolicyKind> (qos.kind);
 }
 
-inline void
-operator>>= (const ::DDS_OwnershipQosPolicy &qos, ::DDS::OwnershipQosPolicy & ddsqos)
-{
-  ddsqos.kind = static_cast < ::DDS::OwnershipQosPolicyKind> (qos.kind);
-}
-
-inline void
-operator>>= (const ::DDS::OwnershipQosPolicy &qos, ::DDS_OwnershipQosPolicy & ddsqos)
-{
-  ddsqos.kind = static_cast < ::DDS_OwnershipQosPolicyKind> (qos.kind);
-}
 #endif
 
 #endif /* DDS4CCM_OWNERSHIPQOSPOLICY_H */

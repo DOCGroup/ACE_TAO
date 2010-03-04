@@ -26,17 +26,6 @@ operator<<= (::DDS_EntityFactoryQosPolicy &ddsqos, const ::DDS::EntityFactoryQos
   ddsqos.autoenable_created_entities = qos.autoenable_created_entities;
 }
 
-inline void
-operator>>= (const ::DDS_EntityFactoryQosPolicy &qos, ::DDS::EntityFactoryQosPolicy & ddsqos)
-{
-  ddsqos.autoenable_created_entities = qos.autoenable_created_entities;
-}
-
-inline void
-operator>>= (const ::DDS::EntityFactoryQosPolicy &qos, ::DDS_EntityFactoryQosPolicy & ddsqos)
-{
-  ddsqos.autoenable_created_entities = qos.autoenable_created_entities;
-}
 #endif
 
 #endif /* DDS4CCM_ENTITYFACTORYQOSPOLICY_H */

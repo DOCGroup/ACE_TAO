@@ -21,18 +21,6 @@ operator<<= (::DDS_BuiltinTopicKey_t &ddsbuiltintopickey, const ::DDS::BuiltinTo
   ACE_OS::memcpy (ddsbuiltintopickey.value, builtintopickey.value, sizeof (builtintopickey.value));
 }
 
-inline void
-operator>>= (const ::DDS_BuiltinTopicKey_t &builtintopickey, ::DDS::BuiltinTopicKey_t & ddsbuiltintopickey)
-{
-  ACE_OS::memcpy (ddsbuiltintopickey.value, builtintopickey.value, sizeof (builtintopickey.value));
-}
-
-inline void
-operator>>= (const ::DDS::BuiltinTopicKey_t &builtintopickey, ::DDS_BuiltinTopicKey_t & ddsbuiltintopickey)
-{
-  ACE_OS::memcpy (ddsbuiltintopickey.value, builtintopickey.value, sizeof (builtintopickey.value));
-}
-
 #endif
 
 #endif /* BUILTINTOPICKEY_T_H */

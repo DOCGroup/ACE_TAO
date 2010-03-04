@@ -28,17 +28,6 @@ operator<<= (::DDS_LifespanQosPolicy &ddsqos, const ::DDS::LifespanQosPolicy & q
   ddsqos.duration <<= qos.duration;
 }
 
-inline void
-operator>>= (const ::DDS_LifespanQosPolicy &qos, ::DDS::LifespanQosPolicy & ddsqos)
-{
-  ddsqos.duration <<= qos.duration;
-}
-
-inline void
-operator>>= (const ::DDS::LifespanQosPolicy &qos, ::DDS_LifespanQosPolicy & ddsqos)
-{
-  ddsqos.duration <<= qos.duration;
-}
 #endif
 
 #endif /* DDS4CCM_LIFESPANQOSPOLICY_H */

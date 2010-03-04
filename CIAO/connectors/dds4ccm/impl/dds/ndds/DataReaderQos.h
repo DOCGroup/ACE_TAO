@@ -61,39 +61,6 @@ operator<<= (::DDS_DataReaderQos &ddsqos, const ::DDS::DataReaderQos & qos)
   ddsqos.reader_data_lifecycle <<= qos.reader_data_lifecycle;
 }
 
-inline void
-operator>>= (const ::DDS_DataReaderQos &qos, ::DDS::DataReaderQos & ddsqos)
-{
-  ddsqos.durability <<= qos.durability;
-  ddsqos.deadline <<= qos.deadline;
-  ddsqos.latency_budget <<= qos.latency_budget;
-  ddsqos.liveliness <<= qos.liveliness;
-  ddsqos.reliability <<= qos.reliability;
-  ddsqos.destination_order <<= qos.destination_order;
-  ddsqos.history <<= qos.history;
-  ddsqos.resource_limits <<= qos.resource_limits;
-  ddsqos.user_data <<= qos.user_data;
-  ddsqos.ownership <<= qos.ownership;
-  ddsqos.time_based_filter <<= qos.time_based_filter;
-  ddsqos.reader_data_lifecycle <<= qos.reader_data_lifecycle;
-}
-
-inline void
-operator>>= (const ::DDS::DataReaderQos &qos, ::DDS_DataReaderQos & ddsqos)
-{
-  ddsqos.durability <<= qos.durability;
-  ddsqos.deadline <<= qos.deadline;
-  ddsqos.latency_budget <<= qos.latency_budget;
-  ddsqos.liveliness <<= qos.liveliness;
-  ddsqos.reliability <<= qos.reliability;
-  ddsqos.destination_order <<= qos.destination_order;
-  ddsqos.history <<= qos.history;
-  ddsqos.resource_limits <<= qos.resource_limits;
-  ddsqos.user_data <<= qos.user_data;
-  ddsqos.ownership <<= qos.ownership;
-  ddsqos.time_based_filter <<= qos.time_based_filter;
-  ddsqos.reader_data_lifecycle <<= qos.reader_data_lifecycle;
-}
 #endif
 
 #endif /* DDS4CCM_DATAREADERQOS_H */

@@ -26,17 +26,6 @@ operator<<= (::DDS_WriterDataLifecycleQosPolicy &ddsqos, const ::DDS::WriterData
   ddsqos.autodispose_unregistered_instances = qos.autodispose_unregistered_instances;
 }
 
-inline void
-operator>>= (const ::DDS_WriterDataLifecycleQosPolicy &qos, ::DDS::WriterDataLifecycleQosPolicy & ddsqos)
-{
-  ddsqos.autodispose_unregistered_instances = qos.autodispose_unregistered_instances;
-}
-
-inline void
-operator>>= (const ::DDS::WriterDataLifecycleQosPolicy &qos, ::DDS_WriterDataLifecycleQosPolicy & ddsqos)
-{
-  ddsqos.autodispose_unregistered_instances = qos.autodispose_unregistered_instances;
-}
 #endif
 
 #endif /* DDS4CCM_WRITERDATALIFECYCLEQOSPOLICY_H */

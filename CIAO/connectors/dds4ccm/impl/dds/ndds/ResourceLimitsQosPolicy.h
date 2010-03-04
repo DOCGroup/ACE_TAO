@@ -30,21 +30,6 @@ operator<<= (::DDS_ResourceLimitsQosPolicy &ddsqos, const ::DDS::ResourceLimitsQ
   ddsqos.max_samples_per_instance = qos.max_samples_per_instance;
 }
 
-inline void
-operator>>= (const ::DDS_ResourceLimitsQosPolicy &qos, ::DDS::ResourceLimitsQosPolicy & ddsqos)
-{
-  ddsqos.max_samples = qos.max_samples;
-  ddsqos.max_instances = qos.max_instances;
-  ddsqos.max_samples_per_instance = qos.max_samples_per_instance;
-}
-
-inline void
-operator>>= (const ::DDS::ResourceLimitsQosPolicy &qos, ::DDS_ResourceLimitsQosPolicy & ddsqos)
-{
-  ddsqos.max_samples = qos.max_samples;
-  ddsqos.max_instances = qos.max_instances;
-  ddsqos.max_samples_per_instance = qos.max_samples_per_instance;
-}
 #endif
 
 #endif /* DDS4CCM_RESOURCELIMITSQOSPOLICY_H */

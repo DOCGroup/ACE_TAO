@@ -28,17 +28,6 @@ operator<<= (::DDS_DeadlineQosPolicy &ddsqos, const ::DDS::DeadlineQosPolicy & q
   ddsqos.period <<= qos.period;
 }
 
-inline void
-operator>>= (const ::DDS_DeadlineQosPolicy &qos, ::DDS::DeadlineQosPolicy & ddsqos)
-{
-  ddsqos.period <<= qos.period;
-}
-
-inline void
-operator>>= (const ::DDS::DeadlineQosPolicy &qos, ::DDS_DeadlineQosPolicy & ddsqos)
-{
-  ddsqos.period <<= qos.period;
-}
 #endif
 
 #endif /* DDS4CCM_DEADLINEQOSPOLICY_H */

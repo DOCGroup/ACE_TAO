@@ -37,25 +37,6 @@ operator<<= (::DDS_LivelinessChangedStatus &ddsstatus, const ::DDS::LivelinessCh
   ddsstatus.last_publication_handle <<= status.last_publication_handle;
 }
 
-inline void
-operator>>= (const ::DDS_LivelinessChangedStatus &status, ::DDS::LivelinessChangedStatus & ddsstatus)
-{
-  ddsstatus.alive_count = status.alive_count;
-  ddsstatus.not_alive_count = status.not_alive_count;
-  ddsstatus.alive_count_change = status.alive_count_change;
-  ddsstatus.not_alive_count_change = status.not_alive_count_change;
-  ddsstatus.last_publication_handle <<= status.last_publication_handle;
-}
-
-inline void
-operator>>= (const ::DDS::LivelinessChangedStatus &status, ::DDS_LivelinessChangedStatus & ddsstatus)
-{
-  ddsstatus.alive_count = status.alive_count;
-  ddsstatus.not_alive_count = status.not_alive_count;
-  ddsstatus.alive_count_change = status.alive_count_change;
-  ddsstatus.not_alive_count_change = status.not_alive_count_change;
-  ddsstatus.last_publication_handle <<= status.last_publication_handle;
-}
 #endif
 
 #endif /* DDS4CCM_LIVELINESSCHANGEDSTATUS_H */

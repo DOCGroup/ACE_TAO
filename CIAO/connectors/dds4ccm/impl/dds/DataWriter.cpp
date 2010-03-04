@@ -148,10 +148,10 @@ namespace CIAO
     CCM_DDS_DataWriter_i::get_liveliness_lost_status (::DDS::LivelinessLostStatus & status)
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      ::DDS_LivelinessLostStatus rtistatus;
-      rtistatus <<= status;
-      ::DDS::ReturnCode_t const retval = this->impl ()->get_liveliness_lost_status (rtistatus);
-      rtistatus >>= status;
+      ::DDS_LivelinessLostStatus ddsstatus;
+      ddsstatus <<= status;
+      ::DDS::ReturnCode_t const retval = this->impl ()->get_liveliness_lost_status (ddsstatus);
+      status <<= ddsstatus;
       return retval;
 #else
       return this->impl ()->get_liveliness_lost_status (status);
@@ -162,10 +162,10 @@ namespace CIAO
     CCM_DDS_DataWriter_i::get_offered_deadline_missed_status (::DDS::OfferedDeadlineMissedStatus & status)
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      ::DDS_OfferedDeadlineMissedStatus rtistatus;
-      rtistatus <<= status;
-      ::DDS::ReturnCode_t const retval = this->impl ()->get_offered_deadline_missed_status (rtistatus);
-      rtistatus >>= status;
+      ::DDS_OfferedDeadlineMissedStatus ddsstatus;
+      ddsstatus <<= status;
+      ::DDS::ReturnCode_t const retval = this->impl ()->get_offered_deadline_missed_status (ddsstatus);
+      status <<= ddsstatus;
       return retval;
 #else
       return this->impl ()->get_offered_deadline_missed_status (status);
@@ -176,10 +176,10 @@ namespace CIAO
     CCM_DDS_DataWriter_i::get_offered_incompatible_qos_status (::DDS::OfferedIncompatibleQosStatus & status)
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      ::DDS_OfferedIncompatibleQosStatus rtistatus;
-      rtistatus <<= status;
-      ::DDS::ReturnCode_t const retval = this->impl ()->get_offered_incompatible_qos_status (rtistatus);
-      rtistatus >>= status;
+      ::DDS_OfferedIncompatibleQosStatus ddsstatus;
+      ddsstatus <<= status;
+      ::DDS::ReturnCode_t const retval = this->impl ()->get_offered_incompatible_qos_status (ddsstatus);
+      status <<= ddsstatus;
       return retval;
 #else
       return this->impl ()->get_offered_incompatible_qos_status (status);
@@ -190,10 +190,10 @@ namespace CIAO
     CCM_DDS_DataWriter_i::get_publication_matched_status (::DDS::PublicationMatchedStatus & status)
     {
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      ::DDS_PublicationMatchedStatus rtistatus;
-      rtistatus <<= status;
-      ::DDS::ReturnCode_t const retval = this->impl ()->get_publication_matched_status (rtistatus);
-      rtistatus >>= status;
+      ::DDS_PublicationMatchedStatus ddsstatus;
+      ddsstatus <<= status;
+      ::DDS::ReturnCode_t const retval = this->impl ()->get_publication_matched_status (ddsstatus);
+      status <<= ddsstatus;
       return retval;
 #else
       return this->impl ()->get_publication_matched_status (status);
@@ -213,7 +213,7 @@ namespace CIAO
       ::DDS_InstanceHandleSeq rtiseq;
       rtiseq <<= subscription_handles;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_matched_subscriptions (rtiseq);
-      rtiseq >>= subscription_handles;
+      subscription_handles <<= rtiseq;
       return retval;
 #else
       return this->impl ()->get_matched_subscriptions (subscription_handles);

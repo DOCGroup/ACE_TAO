@@ -10,5 +10,6 @@ bool
 EntityFactoryPolicyTest::check (const ::DDS_EntityFactoryQosPolicy & dds_qos,
                                 const ::DDS::EntityFactoryQosPolicy & qos)
 {
-  return dds_qos.autoenable_created_entities == qos.autoenable_created_entities;
+  return dds_qos.autoenable_created_entities ==
+         static_cast <DDS_Boolean> (qos.autoenable_created_entities);
 }
