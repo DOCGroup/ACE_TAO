@@ -1,3 +1,9 @@
+Thu Mar  4 10:22:44 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Policies/pub_qos_test.cpp:
+        * connectors/dds4ccm/tests/Policies/sub_qos_test.cpp:
+          Resolved fuzz errors.
+
 Thu Mar  4 10:18:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DataReader.cpp:
