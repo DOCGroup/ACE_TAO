@@ -6,7 +6,7 @@
 
 #include "Base/BaseSupport.h"
 
-#include "dds4ccm/impl/ndds/DataWriter.h"
+#include "dds4ccm/impl/dds/DataWriter.h"
 
 namespace CIAO_SharedDP_SharedDPComponent_Impl
 {
@@ -46,9 +46,9 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
       {
         DDS::DataWriter_var dw1 =
           this->context_->get_connection_write1_dds_entity ();
-        CIAO::DDS4CCM::CCM_DDS_DataWriter_i *rti_rd1 =
+        CIAO::DDS4CCM::CCM_DDS_DataWriter_i *ccm_dds_rd1 =
            dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_i *> (dw1.in ());
-        DDSDataWriter * dds_dw1 = rti_rd1->get_impl ();
+        DDSDataWriter * dds_dw1 = ccm_dds_rd1->get_impl ();
         DDSPublisher * dds_p1 = dds_dw1->get_publisher ();
         this->dds_dp1_ = dds_p1->get_participant ();
       }
@@ -61,9 +61,9 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
       {
         DDS::DataWriter_var dw2 =
           this->context_->get_connection_write2_dds_entity ();
-        CIAO::DDS4CCM::CCM_DDS_DataWriter_i *rti_rd2 =
+        CIAO::DDS4CCM::CCM_DDS_DataWriter_i *ccm_dds_rd2 =
            dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_i *> (dw2.in ());
-        DDSDataWriter * dds_dw2 = rti_rd2->get_impl ();
+        DDSDataWriter * dds_dw2 = ccm_dds_rd2->get_impl ();
         DDSPublisher * dds_p2 = dds_dw2->get_publisher ();
         this->dds_dp2_ = dds_p2->get_participant ();
       }
@@ -76,9 +76,9 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
       {
         DDS::DataWriter_var dw3 =
           this->context_->get_connection_write3_dds_entity ();
-        CIAO::DDS4CCM::CCM_DDS_DataWriter_i *rti_rd3 =
+        CIAO::DDS4CCM::CCM_DDS_DataWriter_i *ccm_dds_rd3 =
            dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_i *> (dw3.in ());
-        DDSDataWriter * dds_dw3 = rti_rd3->get_impl ();
+        DDSDataWriter * dds_dw3 = ccm_dds_rd3->get_impl ();
         DDSPublisher * dds_p3 = dds_dw3->get_publisher ();
         this->dds_dp3_ = dds_p3->get_participant ();
       }

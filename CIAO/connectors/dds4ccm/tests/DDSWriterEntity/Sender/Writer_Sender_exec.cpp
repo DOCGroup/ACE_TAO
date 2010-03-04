@@ -7,7 +7,7 @@
 #include "ace/Reactor.h"
 
 #include "Base/Writer_BaseSupport.h"
-#include "dds4ccm/impl/ndds/Utils.h"
+#include "dds4ccm/impl/dds/Utils.h"
 
 namespace CIAO_Writer_Sender_Impl
 {
@@ -214,9 +214,9 @@ namespace CIAO_Writer_Sender_Impl
   {
     DDS::DataWriter_var dds_dw =
       this->context_->get_connection_info_write_dds_entity ();
-    CIAO::DDS4CCM::CCM_DDS_DataWriter_i *rti_rd =
+    CIAO::DDS4CCM::CCM_DDS_DataWriter_i *ccm_dds_rd =
       dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_i *> (dds_dw.in ());
-    DDSDataWriter * p = rti_rd->get_impl ();
+    DDSDataWriter * p = ccm_dds_rd->get_impl ();
     this->writer_ = dynamic_cast <WriterTestDataWriter *> (p);
   }
 
