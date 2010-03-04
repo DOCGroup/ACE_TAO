@@ -1,0 +1,19 @@
+// $Id$
+
+/**
+ * @file Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef BASE_IDL
+#define BASE_IDL
+
+#pragma ndds typesupport "Base/BaseSupport.h"
+
+struct SharedDPTest {
+  string key;
+  long iteration;
+};
+typedef sequence<SharedDPTest> SharedDPTest_Seq;
+
+#endif

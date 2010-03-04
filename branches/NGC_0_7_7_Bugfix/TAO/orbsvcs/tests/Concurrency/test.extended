@@ -1,0 +1,4 @@
+create ls1;
+lock ls1 write;
+wait "Run test.e1 - then press return";
+lock ls1 write;

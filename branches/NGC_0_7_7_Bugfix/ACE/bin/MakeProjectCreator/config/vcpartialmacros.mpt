@@ -1,0 +1,12 @@
+// -*- MPC -*-
+// $Id$
+
+// ACE specific macros for nmake, vc6, and vc7
+
+MFC Release {
+  defines += ACE_HAS_MFC=1 ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER
+}
+
+MFC Debug {
+  defines += ACE_HAS_MFC=1 ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER
+}

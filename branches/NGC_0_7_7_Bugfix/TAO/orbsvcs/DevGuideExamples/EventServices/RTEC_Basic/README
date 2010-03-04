@@ -1,0 +1,59 @@
+// $Id$
+
+Real-Time Event Service
+
+
+File: DevGuideExamples/EventServices/RTEC_Basic/README
+
+
+This directory contains a simple example of using the RT Event service.
+This example uses the push/push model:
+
+  EchoEventSupplier ------> Event_Service ------> EchoEventConsumer
+
+-------------------------------------------------------------------------
+
+Note: To test this, you must first run the Naming Service and the
+Event Service, e.g.:
+
+$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -o ns.ior&
+$TAO_ROOT/orbsvcs/Event_Service/Event_Service -ORBInitRef NameService=file://ns.ior&
+
+-------------------------------------------------------------------------
+
+EchoEventSupplerMain.cpp
+
+  Main program for a PushSupplier.
+
+    EchoEventSupplier -ORBInitRef NameService=file://ns.ior
+  
+  It will publish an event to the event channel every 1 second.
+  Use Control-C to kill the process.
+
+-------------------------------------------------------------------------
+
+EchoEventConsumerMain.cpp
+
+  Main program for a PushConsumer.
+
+  To run it:
+
+    EchoEventConsumer -ORBInitRef NameService=file://ns.ior
+
+  Use Control-C to kill the process.
+
+-------------------------------------------------------------------------
+
+EchoEventConsumer_i.{h,cpp}
+
+  Call which implements the RtecEventComm::PushConsumer interface.
+
+
+
+Exeuction via Perl Script
+-------------------------
+
+A Perl script has been created to automate the steps shown
+above.  This script can be run via the following command:
+
+./run_test.pl
