@@ -10,7 +10,7 @@
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_time.h"
 #include "dds4ccm/impl/dds/Utils.h"
-#include "dds4ccm/impl/dds/TimeUtilities.h"
+#include "dds4ccm/impl/dds/ndds/TimeUtilities.h"
 
 namespace CIAO_CSL_SRTest_Receiver_Impl
 {
