@@ -155,6 +155,11 @@ module V
   };
 };
 
+connector Comp3_T
+{
+  provides iface Conn_T_Port;
+};
+
 module B::second_B<iface, ifaceSeq> second_B_Inst;
 
 module Ast<typename T,
@@ -196,8 +201,8 @@ module Ast<typename T,
 
   component Comp_T
   {
-    uses multiple T Comp_T_Recep; 
-    mirrorport PT_T Comp_T_Mirror_Port; 
+    uses multiple T Comp_T_Recep;
+    mirrorport PT_T Comp_T_Mirror_Port;
     provides T Comp_T_Facet;
     emits E Comp_T_Emit;
 
@@ -217,6 +222,12 @@ module Ast<typename T,
   // where there is no conflict with the port interfaces.
   home Comp_T_Home_2 supports T manages Comp_T primarykey V
   {
+  };
+
+  connector Comp2_T
+  {
+    port PT_T Conn_T_Port;
+    provides T Conn_T_Facet;
   };
 
   connector Conn_T
@@ -247,7 +258,7 @@ module Ast<iface,
            101>
   Ast_Inst;
 
-module M 
+module M
 {
   module N <typename T>
   {
