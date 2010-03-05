@@ -1,0 +1,25 @@
+// $Id$
+
+/**
+ * @file CoherentUpdate_Test_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef COHERENT_UPDATE_TEST_CONNECTOR_IDL_
+#define COHERENT_UPDATE_TEST_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/CoherentUpdate_Test_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Connector/CoherentUpdate_Test_ConnectorE.idl"
+
+module CoherentUpdate_Test
+{
+  module ::CCM_DDS::Typed < ::CoherentUpdateTest, ::CoherentUpdateTest_Seq> CoherentUpdateTestConn;
+  connector CoherentUpdate_Test_Connector : CoherentUpdateTestConn::DDS_State
+  {
+  };
+};
+
+#endif /* CoherentUpdate_TestCONNECTOR_IDL_ */
