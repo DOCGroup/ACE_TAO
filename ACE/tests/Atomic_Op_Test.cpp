@@ -31,8 +31,9 @@ ACE_RCSID(tests, Atomic_Op_Test, "$Id$")
 enum { TEST_ITERATIONS = 1000000 };
 
 template <typename TYPE>
-void test (const ACE_TCHAR* type)
+int test (const ACE_TCHAR* type)
 {
+  int retval = 0;
   ACE_Atomic_Op <ACE_SYNCH_MUTEX, TYPE> foo (5);
 
   ACE_ASSERT (foo == 5);
@@ -85,6 +86,8 @@ void test (const ACE_TCHAR* type)
   diff.to_usec (usec);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <%s> assignment %D, took %Q\n"), type, usec));
 
+  foo = 0;
+
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <%s> increment %D\n"), type));
   diff = ACE_OS::gettimeofday ();
   for (i = 0; i < TEST_ITERATIONS; ++i)
@@ -97,6 +100,12 @@ void test (const ACE_TCHAR* type)
   diff = ACE_OS::gettimeofday () - diff;
   diff.to_usec (usec);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <%s> increment %D, took %Q\n"), type, usec));
+
+  if (foo != TEST_ITERATIONS * 4)
+    {
+      ++retval;
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Increment failed\n")));
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <%s> decrement %D\n"), type));
   diff = ACE_OS::gettimeofday ();
@@ -111,6 +120,12 @@ void test (const ACE_TCHAR* type)
   diff.to_usec (usec);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <%s> decrement %D, took %Q\n"), type, usec));
 
+  if (foo != 0)
+    {
+      ++retval;
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Decrement failed\n")));
+    }
+
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <%s> addition %D\n"), type));
   diff = ACE_OS::gettimeofday ();
   for (i = 0; i < TEST_ITERATIONS; ++i)
@@ -124,6 +139,12 @@ void test (const ACE_TCHAR* type)
   diff.to_usec (usec);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <%s> addition %D, took %Q\n"), type, usec));
 
+  if (foo != TEST_ITERATIONS * 4 * 5)
+    {
+      ++retval;
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Addition failed\n")));
+     }
+
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <%s> subtraction %D\n"), type));
   diff = ACE_OS::gettimeofday ();
   for (i = 0; i < TEST_ITERATIONS; ++i)
@@ -136,6 +157,14 @@ void test (const ACE_TCHAR* type)
   diff = ACE_OS::gettimeofday () - diff;
   diff.to_usec (usec);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <%s> subtraction %D, took %Q\n"), type, usec));
+
+  if (foo != 0)
+    {
+      ++retval;
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Substraction failed\n")));
+    }
+
+  return retval;
 }
 
 int
@@ -143,14 +172,17 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Atomic_Op_Test"));
 
-  test <int> (ACE_TEXT("int"));
-  test <long> (ACE_TEXT("long"));
-  test <unsigned int> (ACE_TEXT("unsigned int"));
-  test <unsigned long> (ACE_TEXT("unsigned long"));
+  int retval = 0;
+
+  retval += test <int> (ACE_TEXT("int"));
+  retval += test <long> (ACE_TEXT("long"));
+  retval += test <unsigned int> (ACE_TEXT("unsigned int"));
+  retval += test <unsigned long> (ACE_TEXT("unsigned long"));
 #if !defined (ACE_LACKS_LONGLONG_T)
-  test <long long> (ACE_TEXT("long long"));
+  retval += test <long long> (ACE_TEXT("long long"));
 #endif
+
   ACE_END_TEST;
-  return 0;
+  return retval;
 }
 
