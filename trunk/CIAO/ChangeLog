@@ -1,3 +1,19 @@
+Fri Mar  5 22:06:59 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MPC/config/dds4ccm_lem_stub.mpb:
+        * MPC/config/dds4ccm_stub.mpb:
+        
+          New files, reflecting the recent refactoring of CIAO/ccm
+          and CIAO/connectors/dds4ccm projects.
+          
+        * MPC/config/dds4ccm_skel.mpb:
+        
+          Modified to make use of dds4ccm_stub.mpb, described above.
+
+        * connectors/dds4ccm/tests/NoModule/NoModule_Connector.mpc:
+         
+          Changes corresponding to the above new base projects.
+
 Fri Mar  5 21:21:03 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/tests/NoModule/NoModule_Connector.mpc:
