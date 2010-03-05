@@ -1,13 +1,18 @@
+Fri Mar  5 10:42:57 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Changed path to DDS4CCM_Traits.h
+
 Thu Mar  4 16:31:41 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/anonymous.idl:
-        
+
           Added array test cases.
-          
+
         * TAO_IDL/be/be_codegen.cpp:
         * TAO_IDL/be/be_global.cpp:
         * TAO_IDL/be_include/be_global.h:
-        
+
           Added command line option -Wb,dds_impl=xxx to select
           included files to generate, both the list of typesupport
           files gathered with the associated #pragma, or other

@@ -3314,7 +3314,7 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
       case BE_GlobalData::RTIDDS:
         this->gen_standard_include (
           this->ciao_conn_header_,
-          "connectors/dds4ccm/impl/ndds/DDS4CCM_Traits.h");
+          "connectors/dds4ccm/impl/dds/ndds/DDS4CCM_Traits.h");
           
         break;
       case BE_GlobalData::OPENSPLICE:
