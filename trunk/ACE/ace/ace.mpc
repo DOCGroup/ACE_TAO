@@ -291,6 +291,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Asynch_Acceptor.cpp
     Asynch_Connector.cpp
     Atomic_Op_T.cpp
+    Atomic_Op_GCC_T.cpp
     Auto_Functor.cpp
     Auto_IncDec_T.cpp
     Auto_Ptr.cpp
