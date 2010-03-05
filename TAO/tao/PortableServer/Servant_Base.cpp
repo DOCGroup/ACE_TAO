@@ -317,16 +317,18 @@ TAO_ServantBase::_add_ref (void)
 void
 TAO_ServantBase::_remove_ref (void)
 {
-  long const new_count = --this->ref_count_;
+  unsigned long const new_count = --this->ref_count_;
 
   if (new_count == 0)
-    delete this;
+    {
+      delete this;
+    }
 }
 
 CORBA::ULong
 TAO_ServantBase::_refcount_value (void) const
 {
-  return static_cast<CORBA::ULong> (this->ref_count_.value ());
+  return this->ref_count_.value ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
