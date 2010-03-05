@@ -190,6 +190,12 @@ be_visitor_connector_dds_exh::gen_connector_traits (void)
 
       return;
     }
+    
+  AST_Decl *comp_scope =
+    ScopeAsDecl (this->node_->defined_in ());
+    
+  bool global_comp =
+    (comp_scope->node_type () == AST_Decl::NT_root);
 
   os_ << be_nl << be_nl
       << "typedef ::CIAO::DDS4CCM::Connector_Traits <"
@@ -205,7 +211,8 @@ be_visitor_connector_dds_exh::gen_connector_traits (void)
       << "::CCM_Getter," << be_nl
       << "::" << this->t_inst_->name ()
       << "::CCM_Reader," << be_nl
-      << "::" << ScopeAsDecl (this->node_->defined_in ())->name ()
+      << (global_comp ? "" : "::")
+      << comp_scope->name ()
       << "::CCM_" << this->node_->local_name ()
       << "_Context," << be_nl
       << "::" << this->t_inst_->name ()
