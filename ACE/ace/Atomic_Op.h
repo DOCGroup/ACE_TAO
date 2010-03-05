@@ -45,15 +45,15 @@
 #  define ACE_HAS_BUILTIN_ATOMIC_OP
 # elif defined (ACE_HAS_VXATOMICLIB)
 #  define ACE_HAS_BUILTIN_ATOMIC_OP
-# elif defined (ACE_HAS_GCC_ATOMIC_BUILTINS) && (ACE_HAS_GCC_ATOMIC_BUILTINS == 1)
-#  define ACE_HAS_BUILTIN_ATOMIC_OP
-#  define ACE_USES_GCC_ATOMIC_BUILTINS 1
 # endif /* WIN32 */
 #endif /* ACE_HAS_THREADS */
 
-#if defined (ACE_HAS_BUILTIN_ATOMIC_OP)
+// Include the templates here.
+#include "ace/Atomic_Op_GCC_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+#if defined (ACE_HAS_BUILTIN_ATOMIC_OP)
 
 /**
  * @brief Specialization of ACE_Atomic_Op for platforms that
@@ -249,9 +249,62 @@ private:
   static long (*exchange_add_fn_) (volatile long *, long);
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
+#endif /* !ACE_HAS_BUILTIN_ATOMIC_OP */
+
+#if defined (ACE_HAS_GCC_ATOMIC_BUILTINS) && (ACE_HAS_GCC_ATOMIC_BUILTINS == 1)
+
+template<>
+class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, int>
+: public ACE_Atomic_Op_GCC<int>
+{
+public:
+  ACE_Atomic_Op (void);
+  ACE_Atomic_Op (int c);
+  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, int> &c);
+  ACE_Atomic_Op<ACE_Thread_Mutex, int> &operator= (int rhs);
+};
+
+template<>
+class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int>
+: public ACE_Atomic_Op_GCC<unsigned int>
+{
+public:
+  ACE_Atomic_Op (void);
+  ACE_Atomic_Op (unsigned int c);
+  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned> &c);
+  ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int> &operator= (unsigned int rhs);
+};
+
+#if !defined (ACE_HAS_BUILTIN_ATOMIC_OP)
+// If we have built in atomic op, use that, the assignment operator
+// is faster for a long/unsinged long
+template<>
+class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, long>
+: public ACE_Atomic_Op_GCC<long>
+{
+public:
+  ACE_Atomic_Op (void);
+  ACE_Atomic_Op (long c);
+  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &c);
+  ACE_Atomic_Op<ACE_Thread_Mutex, long> &operator= (long rhs);
+};
+
+template<>
+class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>
+: public ACE_Atomic_Op_GCC<unsigned long>
+{
+public:
+  ACE_Atomic_Op (void);
+  ACE_Atomic_Op (unsigned long c);
+  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &c);
+  ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &operator= (unsigned long rhs);
+};
+
+#endif
 
 #endif /* ACE_HAS_BUILTIN_ATOMIC_OP */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Atomic_Op.inl"

@@ -402,6 +402,9 @@ nobase_include_HEADERS += \
   Atomic_Op.inl \
   Atomic_Op_Sparc.h \
   Atomic_Op_T.cpp \
+  Atomic_Op_GCC_T.h \
+  Atomic_Op_GCC_T.cpp \
+  Atomic_Op_GCC_T.inl \
   Atomic_Op_T.h \
   Atomic_Op_T.inl \
   Auto_Event.h \
