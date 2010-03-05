@@ -1,0 +1,20 @@
+// $Id$
+
+/**
+ * @file CoherentUpdate_TestBase.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef COHERENT_UPDATE_TEST_BASE_IDL
+#define COHERENT_UPDATE_TEST_BASE_IDL
+
+#pragma ndds typesupport "Base/CoherentUpdate_Test_BaseSupport.h"
+
+struct CoherentUpdateTest {
+  string symbol; //@key
+  long iteration;
+};
+
+typedef sequence<CoherentUpdateTest> CoherentUpdateTest_Seq;
+
+#endif
