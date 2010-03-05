@@ -9,6 +9,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
 
+#include "Deployment/Deployment_PlanErrorC.h"
+#include "Deployment/Deployment_ApplicationC.h"
 #include "Deployment/Deployment_ApplicationManagerC.h"
 #include "DAnCE/Logger/Log_Macros.h"
 
@@ -71,11 +73,46 @@ namespace DAnCE
       {
         app_manager = this->manager_->preparePlan (plan, 0);
       }
+    catch (::Deployment::PlanError &ex)
+      {
+        ACE_CString error ("Caught PlanError exception while invoking preparePlan: ");
+        error += ex.name.in ();
+        error += ", ";
+        error += ex.reason.in ();
+        
+        DANCE_ERROR (1, (LM_ERROR, DLINFO 
+                         ACE_TEXT("Plan_Launcher_Base_Impl::prepare_plan - %C\n"),
+                         error.c_str ()));
+        throw Deployment_Failure (error);
+      }
+    catch (::Deployment::StartError &ex)
+      {
+        ACE_CString error ("Caught StartError exception while invoking preparePlan: ");
+        error += ex.name.in ();
+        error += ", " ;
+        error += ex.reason.in ();
+        
+        DANCE_ERROR (1, (LM_ERROR, DLINFO 
+                         ACE_TEXT("Plan_Launcher_Base_Impl::prepare_plan - %C\n"),
+                         error.c_str ()));
+        throw Deployment_Failure (error);
+      }
+    catch (::CORBA::Exception &ex)
+      {
+        ACE_CString error;
+        error += "Caught CORBA exception while invoking preparePlan: ";
+        error += ex._info ();
+        
+        DANCE_ERROR (1, (LM_ERROR, DLINFO 
+                         ACE_TEXT("Plan_Launcher_Base_Impl::prepare_plan - %C\n"),
+                         error.c_str ()));
+        throw Deployment_Failure (error);
+      }
     catch(...)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
+        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::prepare_plan - ")
                          ACE_TEXT("An exception was thrown during EM->preparePlan.\n")));
-        throw;
+        throw Deployment_Failure ("An unexpected C++ exception was caught while invoking preparePlan");
       }
   
     DANCE_DEBUG (6, (LM_DEBUG, DLINFO
@@ -84,14 +121,14 @@ namespace DAnCE
   
     if (CORBA::is_nil (app_manager.in ()))
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
+        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::prepare_plan - ")
                          ACE_TEXT("preparePlan call failed: ")
                          ACE_TEXT("nil ApplicationManager reference\n")));
         return 0;
       }
     else
       {
-        DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
+        DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::prepare_plan - ")
                          ACE_TEXT("ApplicationMAnager was received from preparePlan.\n")));
       }
   
@@ -125,23 +162,106 @@ namespace DAnCE
         DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::start_launch - ")
                          ACE_TEXT("startLaunch completed...\n")));
       }
+    catch (::Deployment::StartError &ex)
+      {
+        ACE_CString error;
+        error += "Caught StartError exception while invoking startLaunch: " ;
+        error += ex.name.in ();
+        error +=  ", ";
+        error += ex.reason.in ();
+        
+        DANCE_ERROR (1, (LM_ERROR, DLINFO 
+                         ACE_TEXT("Plan_Launcher_Base_Impl::start_launch - %C\n"),
+                         error.c_str ()));
+        throw Deployment_Failure (error);
+      }
+    catch (::Deployment::InvalidProperty &ex)
+      {
+        ACE_CString error;
+        error += "Caught InvalidProperty exception while invoking startLaunch: ";
+        error += ex.name.in ();
+        error += ", ";
+        error += ex.reason.in ();
+        
+        DANCE_ERROR (1, (LM_ERROR, DLINFO 
+                         ACE_TEXT("Plan_Launcher_Base_Impl::start_launch - %C\n"),
+                         error.c_str ()));
+        throw Deployment_Failure (error);
+      }
+    catch (::Deployment::InvalidNodeExecParameter &ex)
+      {
+        ACE_CString error;
+        error += "Caught InvalidNodeExecParameter exception while invoking startLaunch: ";
+        error += ex.name.in ();
+        error += ", ";
+        error += ex.reason.in ();
+          
+        DANCE_ERROR (1, (LM_ERROR, DLINFO 
+                         ACE_TEXT("Plan_Launcher_Base_Impl::start_launch - %C\n"),
+                         error.c_str ()));
+        throw Deployment_Failure (error);
+      }
+    catch (::Deployment::InvalidComponentExecParameter &ex)
+      {
+        ACE_CString error;
+        error += "Caught InvalidComponentExecParameter exception while invoking startLaunch: ";
+        error += ex.name.in ();
+        error += ", ";
+        error += ex.reason.in ();
+        
+        DANCE_ERROR (1, (LM_ERROR, DLINFO 
+                         ACE_TEXT("Plan_Launcher_Base_Impl::start_launch - %C\n"),
+                         error.c_str ()));
+        throw Deployment_Failure (error);
+      }
+    catch (::Deployment::ResourceNotAvailable &ex)
+      {
+        ACE_CString error;
+        error += "Caught ResourceNotAvailable while invoking startLaunch: ";
+        error += ex.name.in ();
+        error += ", Type: <";
+        error += ex.resourceType.in ();
+        error += "> Property Name: <";
+        error += ex.propertyName.in ();
+        error += "> Element: <";
+        error += ex.elementName.in ();
+        error += "> Resource Name: <";
+        error += ex.resourceName.in ();
+        error += ">";
+            
+        DANCE_ERROR (1, (LM_ERROR, DLINFO 
+                         ACE_TEXT("Plan_Launcher_Base_Impl::start_launch - %C\n"),
+                         error.c_str ()));
+        throw Deployment_Failure (error);
+      }
+    catch (::CORBA::Exception &ex)
+      {
+        ACE_CString error;
+        error += "Caught CORBA exception while invoking startLaunch: ";
+        error += ex._info ().c_str ();
+        
+        DANCE_ERROR (1, (LM_ERROR, DLINFO 
+                         ACE_TEXT("Plan_Launcher_Base_Impl::start_launch - %C\n"),
+                         error.c_str ()));
+        throw Deployment_Failure (error);
+      }
     catch(...)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
+        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::start_launch - ")
                          ACE_TEXT("An exception was thrown during DAM->startLaunch.\n")));
-        throw;
+        throw Deployment_Failure ("Unexpected C++ exception in startLaunch\n");
       }
-  
+
     if (CORBA::is_nil (da.in()))
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
+        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::start_launch - ")
                          ACE_TEXT("CIAO_PlanLauncher:startLaunch call failed: ")
                          ACE_TEXT("nil DomainApplication reference\n")));
         return 0;
       }
     else
       {
-        DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
+        DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::start_launch - ")
                          ACE_TEXT("DomainApplication was received from startLaunch\n")));
       }
   
@@ -176,11 +296,48 @@ namespace DAnCE
         DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
                          ACE_TEXT("finishLaunch completed.\n")));
       }
+    catch (::Deployment::InvalidConnection &ex)
+      {
+        ACE_CString error;
+        error += "Caught InvalidConnection exception while invoking finishLaunch: ";
+        error += ex.name.in ();
+        error += ", ";
+        error += ex.reason.in ();
+        
+        DANCE_ERROR (1, (LM_ERROR, DLINFO 
+                         ACE_TEXT("Plan_Launcher_Base_Impl::finish_launch - %C\n"),
+                         error.c_str ()));
+        throw Deployment_Failure (error);
+      }
+    catch (::Deployment::StartError &ex)
+      {
+        ACE_CString error;
+        error += "Caught StartError exception while invoking finishLaunch: ";
+        error += ex.name.in ();
+        error += ", ";
+        error += ex.reason.in ();
+        
+        DANCE_ERROR (1, (LM_ERROR, DLINFO 
+                         ACE_TEXT("Plan_Launcher_Base_Impl::finish_launch - %C\n"),
+                         error.c_str ()));
+        throw Deployment_Failure (error);
+      }
+    catch (::CORBA::Exception &ex)
+      {
+        ACE_CString error;
+        error += "Caught CORB exception while invoking finishLaunch: ";
+        error += ex._info ();
+        
+        DANCE_ERROR (1, (LM_ERROR, DLINFO 
+                         ACE_TEXT("Plan_Launcher_Base_Impl::finish_launch - %C\n"),
+                         error.c_str ()));
+        throw Deployment_Failure (error);
+      }
     catch(...)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
+        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::finish_launch - ")
                          ACE_TEXT("An exception was thrown during DA->finishLaunch.\n")));
-        throw;
+        throw Deployment_Failure ("Unexpected C++ exception in finishLaunch");
       }
   }
 
@@ -208,11 +365,35 @@ namespace DAnCE
         DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::start - ")
                          ACE_TEXT("after invoking start on application...\n")));
       }
+    catch (::Deployment::StartError &ex)
+      {
+        ACE_CString error;
+        error += "Caught StartError exception while invoking start: ";
+        error += ex.name.in ();
+        error += ", ";
+        error += ex.reason.in ();
+        
+        DANCE_ERROR (1, (LM_ERROR, DLINFO 
+                         ACE_TEXT("Plan_Launcher_Base_Impl::start - %C\n"),
+                         error.c_str ()));
+        throw Deployment_Failure (error);
+      }
+    catch (::CORBA::Exception &ex)
+      {
+        ACE_CString error;
+        error += "Caught CORBA exception while invoking start: ";
+        error += ex._info ().c_str ();
+        
+        DANCE_ERROR (1, (LM_ERROR, DLINFO 
+                         ACE_TEXT("Plan_Launcher_Base_Impl::start - %C\n"),
+                         error.c_str ()));
+        throw Deployment_Failure (error);
+      }
     catch(...)
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::start - ")
                          ACE_TEXT("An exception was thrown during DA->start.\n")));
-        throw;
+        throw Deployment_Failure ("Unexpected C++ exception in start\n");
       }
   }
 
@@ -253,49 +434,6 @@ namespace DAnCE
         am_out = app_mgr._retn ();
         app_out = app._retn ();
       }
-    catch (const Deployment::ResourceNotAvailable& ex)
-      {
-        char buf[1024];
-        ACE_OS::sprintf (buf, "Plan_Launcher_Base_Impl::launch_plan - EXCEPTION: ResourceNotAvaiable exception caught: <%s>,\n"
-                         "Type: <%s>\n"
-                         "Property: <%s>\n"
-                         "Element: <%s>\n"
-                         "Resource: <%s>\n",
-                         ex.name.in (),
-                         ex.resourceType.in (),
-                         ex.propertyName.in (),
-                         ex.elementName.in (),
-                         ex.resourceName.in ());
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("%C"), buf));
-        throw Deployment_Failure (buf);
-      }
-    catch (const Deployment::StartError& ex)
-      {
-        char buf[1024];
-        ACE_OS::sprintf (buf, "Plan_Launcher_Base_Impl::launch_plan - EXCEPTION: StartError exception caught: <%s>, <%s>\n",
-                         ex.name.in (),
-                         ex.reason.in ());
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("%C"), buf));
-        throw Deployment_Failure (buf);
-      }
-    catch (const Deployment::InvalidProperty& ex)
-      {
-        char buf[1024];
-        ACE_OS::sprintf (buf, "Plan_Launcher_Base_Impl::launch_plan - EXCEPTION: InvalidProperty exception caught: <%s>, <%s>\n",
-                         ex.name.in (),
-                         ex.reason.in ());
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("%C"), buf));
-        throw Deployment_Failure (buf);
-      }
-    catch (const Deployment::InvalidConnection& ex)
-      {
-        char buf[1024];
-        ACE_OS::sprintf (buf, "Plan_Launcher_Base_Impl::launch_plan - EXCEPTION: InvalidConnection exception caught: <%s>, <%s>\n",
-                         ex.name.in (),
-                         ex.reason.in ());
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("%C"), buf));
-        throw Deployment_Failure (buf);
-      }
     catch (const CORBA::Exception& ex)
       {
         char buf[1024];
@@ -303,6 +441,10 @@ namespace DAnCE
                          ex._info().fast_rep());
         DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("%C"), buf));
         throw Deployment_Failure (buf);
+      }
+    catch (const Deployment_Failure &ex)
+      {
+        throw;
       }
     catch (...)
       {
@@ -329,7 +471,7 @@ namespace DAnCE
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::teardown_application - ")
                          ACE_TEXT("Nil ApplicationManager reference.\n")));
-        throw Deployment_Failure ("Nil ApplicationManager reference");
+        throw Deployment_Failure ("Nil ApplicationManager reference in teardown_application");
       }
   
     Application_var app (Application::_narrow (app_obj));
@@ -338,7 +480,7 @@ namespace DAnCE
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::teardown_appliocation - ")
                          ACE_TEXT("Nil Application reference.\n")));
-        throw Deployment_Failure ("Nil Application reference");
+        throw Deployment_Failure ("Nil Application reference in teardown_application");
       }
 
     try
@@ -347,16 +489,27 @@ namespace DAnCE
       }
     catch (const ::Deployment::StopError &ex)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::teardown_appliocation - ")
-                         ACE_TEXT ("Caught StopError exception\n")));
-        throw Deployment_Failure ("StopError Exception\n");
+        ACE_CString error;
+        error += "Caught StopError exception while invoking destroyApplication: ";
+        error += ex.name.in ();
+        error += ", ";
+        error += ex.reason.in ();
+        
+        DANCE_ERROR (1, (LM_ERROR, DLINFO 
+                         ACE_TEXT("Plan_Launcher_Base_Impl::teardown_application - %C\n"),
+                         error.c_str ()));
+        throw Deployment_Failure (error);
       }
     catch (const CORBA::Exception &ex)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::teardown_appliocation - ")
-                         ACE_TEXT ("Caught CORBA exception: %s\n"),
-                         ex._info ().c_str ()));
-        throw Deployment_Failure (ex._info ().c_str ());
+        ACE_CString error;
+        error += "Caught CORBA exception while invoking destroyApplication: ";
+        error += ex._info ().c_str ();
+        
+        DANCE_ERROR (1, (LM_ERROR, DLINFO 
+                         ACE_TEXT("Plan_Launcher_Base_Impl::teardown_application - %C\n"),
+                         error.c_str ()));
+        throw Deployment_Failure (error);
       }
     catch (...)
       {
@@ -379,7 +532,7 @@ namespace DAnCE
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::destroy_app_manager - ")
                          ACE_TEXT("Nil ApplicationManager reference.\n")));
-        throw Deployment_Failure ("Nil ApplicationManager reference");
+        throw Deployment_Failure ("Nil ApplicationManager reference in destroy_app_manager");
       }
 
     try
@@ -392,16 +545,27 @@ namespace DAnCE
       }
     catch (const ::Deployment::StopError &ex)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::destroy_app_manager - ")
-                         ACE_TEXT ("Caught StopError exception\n")));
-        throw Deployment_Failure ("StopError Exception\n");
+        ACE_CString error;
+        error += "Caught StopError exception while invoking destroyManager: ";
+        error += ex.name.in ();
+        error += ", ";
+        error += ex.reason.in ();
+        
+        DANCE_ERROR (1, (LM_ERROR, DLINFO 
+                         ACE_TEXT("Plan_Launcher_Base_Impl::destory_app_manager - %C\n"),
+                         error.c_str ()));
+        throw Deployment_Failure (error);
       }
     catch (const CORBA::Exception &ex)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::destroy_app_manager - ")
-                         ACE_TEXT ("Caught CORBA exception: %s\n"),
-                         ex._info ().c_str ()));
-        throw Deployment_Failure (ex._info ().c_str ());
+        ACE_CString error;
+        error += "Caught CORBA exception while invoking destroyManager: ";
+        error += ex._info ().c_str ();
+        
+        DANCE_ERROR (1, (LM_ERROR, DLINFO 
+                         ACE_TEXT("Plan_Launcher_Base_Impl::destroy_app_manager - %C\n"),
+                         error.c_str ()));
+        throw Deployment_Failure (error);
       }
     catch (...)
       {
