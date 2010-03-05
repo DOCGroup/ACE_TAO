@@ -10,6 +10,9 @@ Fri Mar  5 12:20:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
           On EM64T we do use this for int/unsigned int, the ACE assembly version for
           long/unsigned long is faster than the GCC.
 
+          On FC10 64bit the int/unsigned int Atomic_Op is now around 6 to 7 times
+          faster than before this change
+
         * ace/config-g++-common.h:
           Enable the new builtin atomic also for EM64T
 
