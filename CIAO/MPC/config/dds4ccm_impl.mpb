@@ -2,18 +2,18 @@
 // $Id$
 
 feature(dds4ccm_opendds) : dds4ccm_skel, ciao_logger, dcps {
-  after += CIAO_DDS4CCM_NDDS_Impl
-  libs += CIAO_DDS4CCM_NDDS_Impl
+  after += CIAO_DDS4CCM_DDS_Impl
+  libs += CIAO_DDS4CCM_DDS_Impl
 }
 
 feature(dds4ccm_splice) : dds4ccm_skel, ciao_logger {
-  after += CIAO_DDS4CCM_NDDS_Impl
-  libs += CIAO_DDS4CCM_NDDS_Impl
+  after += CIAO_DDS4CCM_DDS_Impl
+  libs += CIAO_DDS4CCM_DDS_Impl
 }
 
 feature(dds4ccm_ndds) : dds4ccm_skel, ciao_logger, nddslib {
-  after += CIAO_DDS4CCM_NDDS_Impl
-  libs += CIAO_DDS4CCM_NDDS_Impl
+  after += CIAO_DDS4CCM_DDS_Impl
+  libs += CIAO_DDS4CCM_DDS_Impl
 }
 
 feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_splice) {

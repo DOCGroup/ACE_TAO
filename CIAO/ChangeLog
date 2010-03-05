@@ -1,3 +1,35 @@
+Fri Mar  5 12:16:58 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/dds4ccm_impl.mpb:
+        * connectors/dds4ccm/impl/dds/Coherent_Changes_Guard.h:
+        * connectors/dds4ccm/impl/dds/ContentFilteredTopic.h:
+        * connectors/dds4ccm/impl/dds/DDSCallbackStatusHandler.h:
+        * connectors/dds4ccm/impl/dds/DataReader.h:
+        * connectors/dds4ccm/impl/dds/DataReaderListener.h:
+        * connectors/dds4ccm/impl/dds/DataWriter.h:
+        * connectors/dds4ccm/impl/dds/DataWriterListener.h:
+        * connectors/dds4ccm/impl/dds/DomainParticipant.h:
+        * connectors/dds4ccm/impl/dds/DomainParticipantFactory.h:
+        * connectors/dds4ccm/impl/dds/DomainParticipantListener.h:
+        * connectors/dds4ccm/impl/dds/Publisher.h:
+        * connectors/dds4ccm/impl/dds/PublisherListener.h:
+        * connectors/dds4ccm/impl/dds/QueryCondition.h:
+        * connectors/dds4ccm/impl/dds/ReadCondition.h:
+        * connectors/dds4ccm/impl/dds/StatusCondition.h:
+        * connectors/dds4ccm/impl/dds/Subscriber.h:
+        * connectors/dds4ccm/impl/dds/SubscriberListener.h:
+        * connectors/dds4ccm/impl/dds/Topic.h:
+        * connectors/dds4ccm/impl/dds/TopicDescription.h:
+        * connectors/dds4ccm/impl/dds/TopicListener.h:
+        * connectors/dds4ccm/impl/dds/Utils.h:
+        * connectors/dds4ccm/impl/dds/dds4ccm_dds_impl_export.h:
+        * connectors/dds4ccm/impl/dds/dds_impl.mpc:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component.mpc:
+        * connectors/dds4ccm/impl/dds/dds4ccm_ndds_impl_export.h:
+        * connectors/dds4ccm/impl/dds/ndds_impl.mpc:
+          Renamed project CIAO_DDS4CCM_NDDS_Impl to CIAO_DDS4CCM_DDS_Impl.
+          Also renamed internal macros to DDS (instead of NDDS).
+
 Fri Mar  5 11:46:00 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/Plan_Launcher/EM_Launcher.cpp:
