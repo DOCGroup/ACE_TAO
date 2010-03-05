@@ -1,3 +1,8 @@
+Fri Mar  5 14:41:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Fixed invalid path
+
 Fri Mar  5 13:18:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * cmm/CCM_lem_stub.mpc:
