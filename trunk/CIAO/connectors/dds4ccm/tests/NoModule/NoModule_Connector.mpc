@@ -7,8 +7,6 @@ project(NoModule_Connector_idl_gen) : connectoridldefaults , dds4ccm  {
               -Wb,stub_export_include=NoModule_Connector_stub_export.h \
               -Wb,skel_export_macro=NOMODULE_CONNECTOR_SVNT_Export \
               -Wb,skel_export_include=NoModule_Connector_svnt_export.h \
-              -Wb,exec_export_macro=NOMODULE_CONNECTOR_EXEC_Export \
-              -Wb,exec_export_include=NoModule_Connector_exec_export.h \
               -Wb,conn_export_macro=NOMODULE_CONNECTOR_CONN_Export \
               -Wb,conn_export_include=NoModule_Connector_conn_export.h \
               -Gxhex -Gxhsk -Gxhst
@@ -85,7 +83,7 @@ project(NoModule_Connector_exec) : ciao_executor , dds4ccm_impl  {
   libs += NoModule_Connector_stub NoModule_Connector_lem_stub NoModule_stub
   requires += dummy_label
   
-  dynamicflags   = NOMODULE_CONNECTOR_EXEC_BUILD_DLL
+  dynamicflags   = NOMODULE_CONNECTOR_CONN_BUILD_DLL
 
   IDL_Files {
   }
