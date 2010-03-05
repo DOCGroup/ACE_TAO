@@ -1,3 +1,11 @@
+Fri Mar  5 20:50:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_connectorconnector_dds_exh.cpp:
+        
+          Fixed bug in connector traits typedef generation, a component
+          declared at global scope caused an extra '::' to be generated
+          in the associated context class name.
+
 Fri Mar  5 14:14:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Servant_Base.cpp:
