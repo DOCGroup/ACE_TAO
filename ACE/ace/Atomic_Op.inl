@@ -3,9 +3,8 @@
 // $Id$
 
 #if defined (ACE_HAS_INTRINSIC_INTERLOCKED)
-#  include "ace/os_include/os_intrin.h"
-
-#pragma intrinsic (_InterlockedExchange, _InterlockedExchangeAdd, _InterlockedIncrement, _InterlockedDecrement)
+# include "ace/os_include/os_intrin.h"
+# pragma intrinsic (_InterlockedExchange, _InterlockedExchangeAdd, _InterlockedIncrement, _InterlockedDecrement)
 #endif /* ACE_HAS_INTRINSIC_INTERLOCKED */
 
 #if defined (ACE_HAS_VXATOMICLIB)
@@ -374,7 +373,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int>::ACE_Atomic_Op (void) :
 {
 }
 
-#if !defined (ACE_HAS_BUILTIN_ATOMIC_OP)
 ACE_INLINE
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op (void) :
   ACE_Atomic_Op_GCC<long>()
@@ -386,7 +384,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op (void) :
   ACE_Atomic_Op_GCC<unsigned long> ()
 {
 }
-#endif
 
 ACE_INLINE
 ACE_Atomic_Op<ACE_Thread_Mutex, int>::ACE_Atomic_Op (int c) :
@@ -400,7 +397,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int>::ACE_Atomic_Op (unsigned int c) :
 {
 }
 
-#if !defined (ACE_HAS_BUILTIN_ATOMIC_OP)
 ACE_INLINE
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op (long c) :
   ACE_Atomic_Op_GCC<long>(c)
@@ -412,7 +408,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op (unsigned long c) 
   ACE_Atomic_Op_GCC<unsigned long>(c)
 {
 }
-#endif
 
 ACE_INLINE
 ACE_Atomic_Op<ACE_Thread_Mutex, int>::ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, int> &c) :
@@ -426,7 +421,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int>::ACE_Atomic_Op (const ACE_Atomic_O
 {
 }
 
-#if !defined (ACE_HAS_BUILTIN_ATOMIC_OP)
 ACE_INLINE
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &c) :
   ACE_Atomic_Op_GCC<long>(c)
@@ -438,7 +432,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op (const ACE_Atomic_
   ACE_Atomic_Op_GCC<unsigned long>(c)
 {
 }
-#endif
 
 ACE_INLINE
 ACE_Atomic_Op<ACE_Thread_Mutex, int>&
@@ -456,7 +449,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int>::operator= (unsigned int rhs)
   return *this;
 }
 
-#if !defined (ACE_HAS_BUILTIN_ATOMIC_OP)
 ACE_INLINE
 ACE_Atomic_Op<ACE_Thread_Mutex, long>&
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (long rhs)
@@ -472,10 +464,8 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator= (unsigned long rhs)
   ACE_Atomic_Op_GCC<unsigned long>::operator= (rhs);
   return *this;
 }
-#endif
 
-
-#endif
+#endif /* ACE_HAS_GCC_ATOMIC_BUILTINS==1 */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
