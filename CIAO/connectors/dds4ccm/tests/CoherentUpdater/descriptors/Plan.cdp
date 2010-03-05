@@ -61,8 +61,8 @@
   <implementation xmi:id="CoherentUpdate_Test_ConnectorComponentImplementation">
     <name>CoherentUpdate_Test_ConnectorComponentImplementation</name>
     <source/>
-    <artifact xmi:idref="CoherentUpdate_Test_Connector_ExecArtifact" />
-    <artifact xmi:idref="CoherentUpdate_Test_Connector_SvntArtifact" />
+    <artifact xmi:idref="CoherentUpdate_Connector_ExecArtifact" />
+    <artifact xmi:idref="CoherentUpdate_Connector_SvntArtifact" />
     <execParameter>
       <!-- entrypoint as exec parameter (see 10.6.1) -->
       <name>component factory</name>
@@ -93,7 +93,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>CoherentUpdate_Test_Connector_svnt</string>
+          <string>CoherentUpdate_Connector_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -104,7 +104,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>CoherentUpdate_Test_Connector_exec</string>
+          <string>CoherentUpdate_Connector_exec</string>
         </value>
       </value>
     </execParameter>
@@ -365,23 +365,23 @@
     <node/>
     <location>Sender_stub</location>
   </artifact>
-  <artifact xmi:id="CoherentUpdate_Test_Connector_ExecArtifact">
-    <name>CoherentUpdate_Test_Connector_exec</name>
+  <artifact xmi:id="CoherentUpdate_Connector_ExecArtifact">
+    <name>CoherentUpdate_Connector_exec</name>
     <source/>
     <node/>
-    <location>CoherentUpdate_Test_Connector_exec</location>
+    <location>CoherentUpdate_Connector_exec</location>
   </artifact>
-  <artifact xmi:id="CoherentUpdate_Test_Connector_SvntArtifact">
-    <name>CoherentUpdate_Test_Connector_svnt</name>
+  <artifact xmi:id="CoherentUpdate_Connector_SvntArtifact">
+    <name>CoherentUpdate_Connector_svnt</name>
     <source/>
     <node/>
-    <location>CoherentUpdate_Test_Connector_svnt</location>
+    <location>CoherentUpdate_Connector_svnt</location>
   </artifact>
-  <artifact xmi:id="CoherentUpdate_Test_Connector_StubArtifact">
-    <name>CoherentUpdate_Test_Connector_stub</name>
+  <artifact xmi:id="CoherentUpdate_Connector_StubArtifact">
+    <name>CoherentUpdate_Connector_stub</name>
     <source/>
     <node/>
-    <location>CoherentUpdate_Test_Connector_stub</location>
+    <location>CoherentUpdate_Connector_stub</location>
   </artifact>
   <artifact xmi:id="Receiver_ExecArtifact">
     <name>Receiver_exec</name>
