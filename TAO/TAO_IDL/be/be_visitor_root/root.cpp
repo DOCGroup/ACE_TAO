@@ -107,6 +107,48 @@ int be_visitor_root::visit_root (be_root *node)
         }
 
         break;
+      case TAO_CodeGen::TAO_ROOT_EX_IDL:
+        {
+          if (be_global->ami4ccm_call_back ())
+            {
+              for (ACE_Unbounded_Queue<char *>::CONST_ITERATOR i (
+                     idl_global->ciao_ami_iface_names ());
+                   ! i.done ();
+                   i.advance ())
+                {
+                  char **item = 0;
+                  i.next (item);
+                  
+                  UTL_ScopedName *sn =
+                    idl_global->string_to_scoped_name (*item);
+                    
+                  UTL_Scope *s =
+                    idl_global->scopes ().top_non_null ();
+                    
+                  AST_Decl *d = s->lookup_by_name (sn, true);
+                  
+                  if (d == 0)
+                    {
+                      idl_global->err ()->lookup_error (sn);
+                      continue;
+                    }
+                    
+                  be_interface *iface =
+                    be_interface::narrow_from_decl (d);
+                    
+                  if (iface == 0)
+                    {
+                      idl_global->err ()->interface_expected (d);
+                      continue;
+                    }
+                    
+                  iface->gen_reply_handler_idl (
+                    *this->ctx_->stream ());
+                }
+            }
+        }
+        
+        break;
       default:
         break;
     }
