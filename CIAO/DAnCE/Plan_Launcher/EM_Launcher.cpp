@@ -40,7 +40,7 @@ namespace DAnCE
                 
                 if (apps->length () != 0)
                   {
-                    app = CORBA::Object::_duplicate (apps[0]);
+                    app = CORBA::Object::_duplicate ((*apps)[0]);
                     return true;
                   }
                 else return false;

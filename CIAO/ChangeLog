@@ -1,3 +1,12 @@
+Fri Mar  5 11:46:00 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/Plan_Launcher/EM_Launcher.cpp:
+          Resolved compile issue.
+
+        * connectors/dds4ccm/tests/CoherentUpdater/*:
+          Added test to test is_coherent_write on the
+          updater port.
+
 Fri Mar  5 07:55:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/ndds/DDS4CCM_Traits.h:

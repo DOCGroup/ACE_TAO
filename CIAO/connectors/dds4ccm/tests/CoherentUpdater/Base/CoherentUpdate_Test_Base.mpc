@@ -1,0 +1,25 @@
+// $Id$
+
+project (CoherentUpdate_Test_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
+  sharedname = CoherentUpdate_Test_Base_stub
+  dynamicflags += COHERENT_UPDATE_TEST_BASE_STUB_BUILD_DLL
+  libout = ../lib
+
+  idlflags += -SS -Gxhst -Sci \
+              -Wb,stub_export_macro=COHERENT_UPDATE_TEST_BASE_STUB_Export \
+              -Wb,stub_export_include=CoherentUpdate_Test_Base_stub_export.h
+
+  IDL_Files {
+    CoherentUpdate_Test_Base.idl
+  }
+
+  opendds_ts_flags += --export=COHERENT_UPDATE_TEST_BASE_STUB_Export
+
+  DDSGenerator_Files {
+    CoherentUpdate_Test_Base.idl
+  }
+
+  Source_Files {
+  }
+}
+
