@@ -1,0 +1,17 @@
+// $Id$
+
+#ifndef NOMODULE_CONNECTOR_IDL
+#define NOMODULE_CONNECTOR_IDL
+
+#include <Components.idl>
+#include "NoModule.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "NoModule_ConnectorE.idl"
+
+module ::CCM_DDS::Typed < ::NoModuleType, ::NoModuleType_Seq> NoModuleTypeConn;
+connector NoModule_Connector : NoModuleTypeConn::DDS_Event
+{
+};
+
+#endif
