@@ -88,7 +88,7 @@ int test (const ACE_TCHAR* type)
 
   foo = 0;
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <%s> increment %D\n"), type));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <%s> prefix increment %D\n"), type));
   diff = ACE_OS::gettimeofday ();
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
@@ -99,15 +99,53 @@ int test (const ACE_TCHAR* type)
     }
   diff = ACE_OS::gettimeofday () - diff;
   diff.to_usec (usec);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <%s> increment %D, took %Q\n"), type, usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <%s> prefix increment %D, took %Q\n"), type, usec));
 
   if (foo != TEST_ITERATIONS * 4)
     {
       ++retval;
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Increment failed\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Prefix increment failed\n")));
     }
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <%s> decrement %D\n"), type));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <%s> prefix decrement %D\n"), type));
+  diff = ACE_OS::gettimeofday ();
+  for (i = 0; i < TEST_ITERATIONS; ++i)
+    {
+      foo--;
+      foo--;
+      foo--;
+      foo--;
+    }
+  diff = ACE_OS::gettimeofday () - diff;
+  diff.to_usec (usec);
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <%s> prefix decrement %D, took %Q\n"), type, usec));
+
+  if (foo != 0)
+    {
+      ++retval;
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Prefix decrement failed\n")));
+    }
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <%s> postfix increment %D\n"), type));
+  diff = ACE_OS::gettimeofday ();
+  for (i = 0; i < TEST_ITERATIONS; ++i)
+    {
+      foo++;
+      foo++;
+      foo++;
+      foo++;
+    }
+  diff = ACE_OS::gettimeofday () - diff;
+  diff.to_usec (usec);
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <%s> postfix increment %D, took %Q\n"), type, usec));
+
+  if (foo != TEST_ITERATIONS * 4)
+    {
+      ++retval;
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Postfix increment failed\n")));
+    }
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <%s> postfix decrement %D\n"), type));
   diff = ACE_OS::gettimeofday ();
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
@@ -118,12 +156,12 @@ int test (const ACE_TCHAR* type)
     }
   diff = ACE_OS::gettimeofday () - diff;
   diff.to_usec (usec);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <%s> decrement %D, took %Q\n"), type, usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <%s> postfix decrement %D, took %Q\n"), type, usec));
 
   if (foo != 0)
     {
       ++retval;
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Decrement failed\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Postfix decrement failed\n")));
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <%s> addition %D\n"), type));
