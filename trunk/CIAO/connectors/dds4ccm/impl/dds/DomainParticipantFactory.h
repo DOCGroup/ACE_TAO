@@ -14,7 +14,7 @@
 
 #include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
 
-#include "dds4ccm/impl/dds/dds4ccm_ndds_impl_export.h"
+#include "dds4ccm/impl/dds/dds4ccm_dds_impl_export.h"
 
 #include "tao/LocalObject.h"
 
@@ -28,7 +28,7 @@ namespace CIAO
   {
     class CCM_DDS_DomainParticipant_i;
 
-    class DDS4CCM_NDDS_IMPL_Export CCM_DDS_DomainParticipantFactory_i :
+    class DDS4CCM_DDS_IMPL_Export CCM_DDS_DomainParticipantFactory_i :
       public virtual ::DDS::CCM_DomainParticipantFactory,
       public virtual ::CORBA::LocalObject
     {
@@ -104,7 +104,7 @@ namespace CIAO
 #define DPFACTORY ::CIAO::DDS4CCM::Domain_Participant_Factory::instance ()
 
 /// Declare a process wide singleton
-DDS4CCM_NDDS_IMPL_SINGLETON_DECLARE (ACE_Singleton,
+DDS4CCM_DDS_IMPL_SINGLETON_DECLARE (ACE_Singleton,
                                       ::CIAO::DDS4CCM::CCM_DDS_DomainParticipantFactory_i,
                                       TAO_SYNCH_MUTEX)
 

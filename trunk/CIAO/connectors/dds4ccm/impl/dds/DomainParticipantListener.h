@@ -13,7 +13,7 @@
 #include "tao/LocalObject.h"
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-#include "dds4ccm_ndds_impl_export.h"
+#include "dds4ccm_dds_impl_export.h"
 
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
 # include "ndds/ndds_cpp.h"
@@ -27,7 +27,7 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    class DDS4CCM_NDDS_IMPL_Export CCM_DDS_DomainPublisherListener_i :
+    class DDS4CCM_DDS_IMPL_Export CCM_DDS_DomainPublisherListener_i :
       public virtual ::DDSDomainParticipantListener
     {
     public:

@@ -15,13 +15,13 @@
 #include "dds4ccm/idl/dds4ccm_ConnectorStatusListenerC.h"
 #include "dds4ccm/idl/dds4ccm_PortStatusListenerC.h"
 #include "ace/Event_Handler.h"
-#include "dds4ccm_ndds_impl_export.h"
+#include "dds4ccm_dds_impl_export.h"
 
 namespace CIAO
 {
   namespace DDS4CCM
   {
-    class DDS4CCM_NDDS_IMPL_Export OnUnexpectedStatusHandler :
+    class DDS4CCM_DDS_IMPL_Export OnUnexpectedStatusHandler :
       public ACE_Event_Handler
     {
       public:
@@ -38,7 +38,7 @@ namespace CIAO
         ::DDS::StatusKind status_kind_;
     };
 
-    class DDS4CCM_NDDS_IMPL_Export OnRequestedOncompatibleQosHandler :
+    class DDS4CCM_DDS_IMPL_Export OnRequestedOncompatibleQosHandler :
       public ACE_Event_Handler
     {
       public:
@@ -54,7 +54,7 @@ namespace CIAO
         ::DDS::RequestedIncompatibleQosStatus const status_;
     };
 
-    class DDS4CCM_NDDS_IMPL_Export OnSampleRejectedHandler :
+    class DDS4CCM_DDS_IMPL_Export OnSampleRejectedHandler :
       public ACE_Event_Handler
     {
       public:
@@ -70,7 +70,7 @@ namespace CIAO
         ::DDS::SampleRejectedStatus const status_;
     };
 
-    class DDS4CCM_NDDS_IMPL_Export OnInconsistentTopicHandler :
+    class DDS4CCM_DDS_IMPL_Export OnInconsistentTopicHandler :
       public ACE_Event_Handler
     {
       public:
@@ -86,7 +86,7 @@ namespace CIAO
         ::DDS::InconsistentTopicStatus const status_;
     };
 
-    class DDS4CCM_NDDS_IMPL_Export OnOfferedDeadlineMissedHandler :
+    class DDS4CCM_DDS_IMPL_Export OnOfferedDeadlineMissedHandler :
       public ACE_Event_Handler
     {
       public:
@@ -102,7 +102,7 @@ namespace CIAO
         ::DDS::OfferedDeadlineMissedStatus const status_;
     };
 
-    class DDS4CCM_NDDS_IMPL_Export OnOfferedIncompatibleQoSHandler :
+    class DDS4CCM_DDS_IMPL_Export OnOfferedIncompatibleQoSHandler :
       public ACE_Event_Handler
     {
       public:
@@ -118,7 +118,7 @@ namespace CIAO
         ::DDS::OfferedIncompatibleQosStatus const status_;
     };
 
-    class DDS4CCM_NDDS_IMPL_Export OnRequestedDeadlineMissedHandler :
+    class DDS4CCM_DDS_IMPL_Export OnRequestedDeadlineMissedHandler :
       public ACE_Event_Handler
     {
       public:
@@ -134,7 +134,7 @@ namespace CIAO
         ::DDS::RequestedDeadlineMissedStatus const status_;
     };
 
-    class DDS4CCM_NDDS_IMPL_Export OnSampleLostHandler :
+    class DDS4CCM_DDS_IMPL_Export OnSampleLostHandler :
       public ACE_Event_Handler
     {
       public:
