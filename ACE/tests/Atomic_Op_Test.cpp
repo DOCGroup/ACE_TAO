@@ -212,6 +212,8 @@ run_main (int, ACE_TCHAR *[])
 
   int retval = 0;
 
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Measuring %d iterations\n"), TEST_ITERATIONS));
+
   retval += test <int> (ACE_TEXT("int"));
   retval += test <long> (ACE_TEXT("long"));
   retval += test <unsigned int> (ACE_TEXT("unsigned int"));
