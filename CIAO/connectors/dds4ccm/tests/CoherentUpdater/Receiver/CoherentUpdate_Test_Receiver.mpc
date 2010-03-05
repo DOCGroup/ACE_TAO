@@ -2,7 +2,7 @@
 
 project(CoherentUpdate_Test_Receiver_idl_gen) : componentidldefaults, dds4ccm {
   custom_only = 1
-  after += CoherentUpdate_Test_Connector_idl_gen
+  after += CoherentUpdate_Connector_idl_gen
   idlflags += -Wb,stub_export_macro=RECEIVER_STUB_Export \
               -Wb,stub_export_include=Receiver_stub_export.h \
               -Wb,skel_export_macro=RECEIVER_SVNT_Export \
@@ -31,9 +31,9 @@ project(CoherentUpdate_Test_Receiver_lem_gen) : ciaoidldefaults, dds4ccm {
 
 project(CoherentUpdate_Test_Receiver_lem_stub) : ccm_svnt, dds4ccm_base  {
   after += CoherentUpdate_Test_Receiver_lem_gen CoherentUpdate_Test_Receiver_stub  \
-           CoherentUpdate_Test_Connector_stub CoherentUpdate_Test_Base_stub \
+           CoherentUpdate_Connector_stub CoherentUpdate_Test_Base_stub \
            DDS_Coh_Update_ReaderStarter_stub
-  libs  +=  Receiver_stub CoherentUpdate_Test_Connector_stub \
+  libs  +=  Receiver_stub CoherentUpdate_Connector_stub \
             CoherentUpdate_Test_Base_stub Reader_Starter_stub
   libpaths += ../lib
   libout = ../lib
@@ -59,10 +59,10 @@ project(CoherentUpdate_Test_Receiver_lem_stub) : ccm_svnt, dds4ccm_base  {
 }
 
 project(CoherentUpdate_Test_Receiver_stub) : ccm_stub, dds4ccm_base {
-  after += CoherentUpdate_Test_Receiver_idl_gen  CoherentUpdate_Test_Connector_stub \
-           CoherentUpdate_Test_Base_stub CoherentUpdate_Test_Connector_lem_gen \
+  after += CoherentUpdate_Test_Receiver_idl_gen  CoherentUpdate_Connector_stub \
+           CoherentUpdate_Test_Base_stub CoherentUpdate_Connector_lem_gen \
            DDS_Coh_Update_ReaderStarter_stub DDS_Coh_Update_ReaderStarter_lem_stub
-  libs  += CoherentUpdate_Test_Connector_stub CoherentUpdate_Test_Base_stub \
+  libs  += CoherentUpdate_Connector_stub CoherentUpdate_Test_Base_stub \
            Reader_Starter_stub
   libpaths += ../lib
   libout = ../lib
@@ -89,12 +89,12 @@ project(CoherentUpdate_Test_Receiver_stub) : ccm_stub, dds4ccm_base {
 
 project(CoherentUpdate_Test_Receiver_exec) : ciao_executor, dds4ccm_base {
   after   += CoherentUpdate_Test_Receiver_lem_stub CoherentUpdate_Test_Receiver_stub \
-             CoherentUpdate_Test_Base_stub CoherentUpdate_Test_Connector_stub \
-             CoherentUpdate_Test_Connector_lem_stub DDS4CCM_lem_stub \
+             CoherentUpdate_Test_Base_stub CoherentUpdate_Connector_stub \
+             CoherentUpdate_Connector_lem_stub DDS4CCM_lem_stub \
              DDS_Coh_Update_ReaderStarter_lem_stub DDS_Coh_Update_ReaderStarter_stub
   sharedname = Receiver_exec
   libs += Receiver_stub Receiver_lem_stub CoherentUpdate_Test_Base_stub \
-          CoherentUpdate_Test_Connector_stub CoherentUpdate_Test_Connector_lem_stub \
+          CoherentUpdate_Connector_stub CoherentUpdate_Connector_lem_stub \
           DDS4CCM_lem_stub Reader_Starter_lem_stub Reader_Starter_stub
   libpaths += ../lib
   libout = ../lib
@@ -120,14 +120,14 @@ project(CoherentUpdate_Test_Receiver_exec) : ciao_executor, dds4ccm_base {
 
 project(CoherentUpdate_Test_Receiver_svnt) : ciao_servant, dds4ccm_base {
   after      +=   CoherentUpdate_Test_Receiver_lem_stub CoherentUpdate_Test_Base_stub \
-                  CoherentUpdate_Test_Connector_stub CoherentUpdate_Test_Connector_svnt \
-                  CoherentUpdate_Test_Receiver_exec CoherentUpdate_Test_Connector_lem_stub \
+                  CoherentUpdate_Connector_stub CoherentUpdate_Connector_svnt \
+                  CoherentUpdate_Test_Receiver_exec CoherentUpdate_Connector_lem_stub \
                   DDS4CCM_lem_stub DDS4CCM_skel DDS_Coh_Update_ReaderStarter_stub \
                   DDS_Coh_Update_ReaderStarter_svnt DDS_Coh_Update_ReaderStarter_lem_stub
   sharedname  = Receiver_svnt
   libs       += Receiver_stub Receiver_lem_stub CoherentUpdate_Test_Base_stub \
-                CoherentUpdate_Test_Connector_stub CoherentUpdate_Test_Connector_svnt \
-                Receiver_exec CoherentUpdate_Test_Connector_lem_stub DDS4CCM_lem_stub \
+                CoherentUpdate_Connector_stub CoherentUpdate_Connector_svnt \
+                Receiver_exec CoherentUpdate_Connector_lem_stub DDS4CCM_lem_stub \
                 DDS4CCM_skel Reader_Starter_stub Reader_Starter_svnt \
                 Reader_Starter_lem_stub
   libpaths += ../lib
