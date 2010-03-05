@@ -1,9 +1,24 @@
+Fri Mar  5 07:55:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/ndds/DDS4CCM_Traits.h:
+        * connectors/dds4ccm/impl/dds/DDS4CCM_Traits.h:
+          Moved.
+
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Valuetype:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Valuetype/VT_Valuetype_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Valuetype/VT_Valuetype_Connector.mpc:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Receiver/VTopic_Receiver.mpc:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Sender/VTopic_Sender.mpc:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/descriptors/run_test.pl:
+          Added test for Value types.
+
 Thu Mar  4 19:24:17 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl_T.h:
 
           Fuzz.
-        
+
 Thu Mar  4 19:03:08 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MPC/config/ccm_lem_stub.mpb:
