@@ -39,7 +39,6 @@
 #include "be_visitor_interface/cdr_op_cs.h"
 #include "be_visitor_interface/tie_sh.h"
 #include "be_visitor_interface/tie_ss.h"
-#include "be_visitor_interface/ami_interface_ch.h"
 #include "be_visitor_interface/smart_proxy_ch.h"
 #include "be_visitor_interface/smart_proxy_cs.h"
 
@@ -50,6 +49,12 @@
 // Proxy Impls
 #include "be_visitor_interface/direct_proxy_impl_sh.h"
 #include "be_visitor_interface/direct_proxy_impl_ss.h"
+
+// AMI
+#include "be_visitor_interface/ami_interface_ch.h"
+
+// AMI4CCM
+#include "be_visitor_interface/ami4ccm_rh_ex_idl.h"
 
 // AMH
 #include "be_visitor_interface/amh_ch.h"

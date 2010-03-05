@@ -473,6 +473,9 @@ protected:
   virtual
   AST_Mirror_Port *fe_add_mirror_port (AST_Mirror_Port *mp);
   
+  /// Quick check on the head of a name to see if it's global.
+  bool is_global_name (Identifier *i);
+
 private:
   /// Checks called from fe_add_decl() specific to interfaces
   /// (and its subtypes) and operations respectively.
@@ -483,9 +486,6 @@ private:
   /// structs/unions vs other types.
   void smart_local_add (AST_Decl *t);
   
-  /// Quick check on the head of a name to see if it's global.
-  bool is_global_name (Identifier *i);
-
   /// Helper function for lookup_by_name(). Iterates doing local
   /// lookups of subsequent components of a scoped name.
   AST_Decl *

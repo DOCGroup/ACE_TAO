@@ -45,14 +45,16 @@
 #include "be_visitor_operation/argument_marshal.h"
 #include "be_visitor_operation/ami_ch.h"
 #include "be_visitor_operation/ami_cs.h"
-#include "be_visitor_operation/ami_handler_reply_stub_operation_ch.h"
-#include "be_visitor_operation/ami_handler_reply_stub_operation_cs.h"
-#include "be_visitor_operation/ami_exception_holder_operation_cs.h"
 #include "be_visitor_operation/smart_proxy_ch.h"
 #include "be_visitor_operation/smart_proxy_cs.h"
 #include "be_visitor_operation/upcall_command_ss.h"
 #include "be_visitor_operation/proxy_impl_xh.h"
 #include "be_visitor_operation/direct_proxy_impl_ss.h"
+
+// AMI
+#include "be_visitor_operation/ami_handler_reply_stub_operation_ch.h"
+#include "be_visitor_operation/ami_handler_reply_stub_operation_cs.h"
+#include "be_visitor_operation/ami_exception_holder_operation_cs.h"
 
 // AMH
 #include "be_visitor_operation/amh_sh.h"
