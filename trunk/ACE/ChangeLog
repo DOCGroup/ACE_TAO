@@ -1,3 +1,8 @@
+Fri Mar  5 14:02:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Added test for GCC builtin support
+
 Fri Mar  5 12:40:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Atomic_Op.h:

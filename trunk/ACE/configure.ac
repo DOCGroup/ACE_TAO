@@ -2933,6 +2933,27 @@ if test "$ac_cv_func__InterlockedIncrement" = yes &&
   AC_DEFINE([ACE_HAS_INTRINSIC_INTERLOCKED])
 fi
 
+dnl Check for GCC atomic builtin
+AC_MSG_CHECKING([for GCC atomic builtin])
+AC_LINK_IFELSE([AC_LANG_PROGRAM(
+          [[
+          ]],
+          [[
+            volatile unsigned long val = 1;
+            __sync_sub_and_fetch(&val, 1);
+            __sync_add_and_fetch(&val, 1);
+            __sync_fetch_and_sub(&val, 1);
+            __sync_fetch_and_add(&val, 1);
+          ]])],
+          [
+           AC_MSG_RESULT([yes])
+           AC_DEFINE([ACE_HAS_GCC_ATOMIC_BUILTINS], 1,
+                     [Define to 1 if compiler has builtin atomic support])
+          ],
+          [
+            AC_MSG_RESULT([no])
+          ])
+
 ACE_CHECK_LACKS_FUNCS(access)
 
 ACE_CHECK_LACKS_FUNCS(alphasort)
