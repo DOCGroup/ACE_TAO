@@ -1,3 +1,8 @@
+Fri Mar  5 11:21:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Atomic_Op_Test.cpp:
+          Added more checks to make sure Atomic_Op does work
+
 Tue Mar  2 21:02:51 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/Dev_Poll_Reactor.cpp (mask_ops_i): If the specified handle is
