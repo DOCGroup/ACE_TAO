@@ -1,3 +1,9 @@
+Fri Mar  5 13:04:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/RTIDDS_DDS4CCM_CIAO.mwc:
+        * connectors/dds4ccm/NDDS_DDS4CCM_CIAO.mwc:
+          Renamed
+
 Fri Mar  5 12:27:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/dds4ccm_impl.mpc:
