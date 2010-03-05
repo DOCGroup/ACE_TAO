@@ -1,3 +1,12 @@
+Fri Mar  5 15:18:50 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/CoherentUpdater/Base/CoherentUpdate_Test_Base.idl:
+        * connectors/dds4ccm/tests/CoherentUpdater/Connector/CoherentUpdate_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/CoherentUpdater/Receiver/CoherentUpdate_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/CoherentUpdater/Sender/CoherentUpdate_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/CoherentUpdater/descriptors/Plan.cdp:
+          Resolved fuzz errors.
+
 Fri Mar  5 14:41:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao_tests.lst:
