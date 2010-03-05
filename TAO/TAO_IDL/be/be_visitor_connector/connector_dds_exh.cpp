@@ -164,7 +164,7 @@ be_visitor_connector_dds_exh::gen_dds_traits (void)
   if (rti_dds_connector)
     {
       os_ << be_nl
-          << "typedef CIAO::DDS4CCM::RTI::Type_Traits <"
+          << "typedef CIAO::DDS4CCM::NDDS::Type_Traits <"
           << be_idt_nl
           << "::" << dt_name << "," << be_nl
           << "::" << dt_name << "Seq," << be_nl

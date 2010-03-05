@@ -1,3 +1,9 @@
+Fri Mar  5 12:28:06 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+          Namespace RTI renamed to NDDS namespace regarding
+          traits.
+
 Fri Mar  5 10:42:57 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
