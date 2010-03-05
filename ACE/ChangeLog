@@ -1,3 +1,22 @@
+Fri Mar  5 12:20:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Atomic_Op.h:
+        * ace/Atomic_Op.inl:
+        * ace/Atomic_Op_GCC_T.cpp:
+        * ace/Atomic_Op_GCC_T.h:
+        * ace/Atomic_Op_GCC_T.inl:
+          Added new Atomic template for the GCC builtin atomic op support.
+          This is used on PPC64/PPC32/IA64 for int/unsigned int/long/unsigned long.
+          On EM64T we do use this for int/unsigned int, the ACE assembly version for
+          long/unsigned long is faster than the GCC.
+
+        * ace/config-g++-common.h:
+          Enable the new builtin atomic also for EM64T
+
+        * ace/ace.mpc:
+        * ace/Makefile.am:
+          Added new files
+
 Fri Mar  5 11:30:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Atomic_Op_Test.cpp:
