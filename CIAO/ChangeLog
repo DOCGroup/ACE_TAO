@@ -1,9 +1,20 @@
+Fri Mar  5 20:14:38 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/tests/NoModule:
+        * connectors/dds4ccm/tests/NoModule/NoModule.idl:
+        * connectors/dds4ccm/tests/NoModule/NoModule.mpc:
+        * connectors/dds4ccm/tests/NoModule/NoModule_Connector.idl:
+        * connectors/dds4ccm/tests/NoModule/NoModule_Connector.mpc:
+
+          Demonstrates broken compilation when types aren't contained in a
+          module.
+
 Fri Mar  5 16:35:58 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
 
           improved error reporting, fixes for compile errors/warnings.
-        
+
 Fri Mar  5 15:18:50 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/CoherentUpdater/Base/CoherentUpdate_Test_Base.idl:

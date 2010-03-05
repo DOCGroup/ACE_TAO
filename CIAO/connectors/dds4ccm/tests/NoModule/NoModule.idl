@@ -1,0 +1,12 @@
+#ifndef NOMODULE_IDL
+#define NOMODULE_IDL
+
+#pragma ndds typesupport "NoModuleSupport.h"
+
+struct NoModuleType {
+  string value; //@key
+};
+
+typedef sequence<NoModuleType> NoModuleType_Seq;
+
+#endif
