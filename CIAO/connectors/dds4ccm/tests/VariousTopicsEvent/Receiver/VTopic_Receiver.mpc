@@ -57,8 +57,15 @@ project(DDS_VTopic_Receiver_lem_stub) : ccm_svnt, dds4ccm_base {
 }
 
 project(DDS_VTopic_Receiver_stub) : ccm_stub, dds4ccm_base {
-  after += DDS_VTopic_Receiver_idl_gen DDS_VTopic_Base_stub DDS_VTopic_Connector_lem_stub  DDS_VT_String_Connector_lem_stub DDS_VT_Array_Connector_lem_stub DDS_VT_Seq_Connector_lem_stub DDS_VTopic_Connector_stub DDS_VT_Array_Connector_stub  DDS_VT_String_Connector_stub DDS_VT_Seq_Connector_stub
-  libs  += DDS_VTopic_Base_stub DDS_VTopic_Connector_stub  DDS_VT_Array_Connector_stub DDS_VT_String_Connector_stub  DDS_VT_Seq_Connector_stub
+  after += DDS_VTopic_Receiver_idl_gen DDS_VTopic_Base_stub \
+           DDS_VTopic_Connector_lem_stub DDS_VTopic_Connector_stub \
+           DDS_VT_String_Connector_lem_stub DDS_VT_String_Connector_stub \
+           DDS_VT_Array_Connector_lem_stub DDS_VT_Array_Connector_stub \
+           DDS_VT_Valuetype_Connector_lem_stub DDS_VT_Valuetype_Connector_stub \
+           DDS_VT_Seq_Connector_lem_stub DDS_VT_Seq_Connector_stub
+  libs  += DDS_VTopic_Base_stub DDS_VTopic_Connector_stub  DDS_VT_Array_Connector_stub \
+           DDS_VT_Valuetype_Connector_stub DDS_VT_String_Connector_stub \
+           DDS_VT_Seq_Connector_stub
   includes += ..
   libpaths += ../lib
   libout = ../lib
@@ -83,11 +90,19 @@ project(DDS_VTopic_Receiver_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(DDS_VTopic_Receiver_exec) : ciao_executor, dds4ccm_base {
-  after   += DDS_VTopic_Receiver_lem_stub DDS_VTopic_Receiver_stub DDS_VTopic_Connector_lem_stub  DDS_VT_Array_Connector_lem_stub DDS_VT_String_Connector_lem_stub DDS_VT_Seq_Connector_lem_stub DDS_VTopic_Connector_stub   DDS_VT_Array_Connector_stub DDS_VT_String_Connector_stub DDS_VT_Seq_Connector_stub DDS4CCM_lem_stub
+  after     += DDS_VTopic_Receiver_lem_stub DDS_VTopic_Receiver_stub \
+               DDS_VTopic_Connector_lem_stub  DDS_VTopic_Connector_stub\
+               DDS_VT_Array_Connector_lem_stub DDS_VT_Array_Connector_stub \
+               DDS_VT_String_Connector_lem_stub DDS_VT_String_Connector_stub \
+               DDS_VT_Valuetype_Connector_lem_stub DDS_VT_Valuetype_Connector_stub \
+               DDS_VT_Seq_Connector_lem_stub DDS_VT_Seq_Connector_stub \
+               DDS4CCM_lem_stub
   sharedname = Receiver_exec
-  libs += Receiver_stub Receiver_lem_stub DDS_VTopic_Base_stub DDS_VTopic_Connector_lem_stub DDS_VTopic_Connector_stub DDS_VT_Array_Connector_stub DDS_VT_String_Connector_stub DDS_VT_Seq_Connector_stub DDS4CCM_lem_stub
-  libpaths += ../lib
-  includes += ..
+  libs      += Receiver_stub Receiver_lem_stub DDS_VTopic_Base_stub DDS_VTopic_Connector_lem_stub \
+               DDS_VTopic_Connector_stub DDS_VT_Array_Connector_stub DDS_VT_String_Connector_stub \
+               DDS_VT_Valuetype_Connector_stub DDS_VT_Seq_Connector_stub DDS4CCM_lem_stub
+  libpaths  += ../lib
+  includes  += ..
   libout = ../lib
   dynamicflags   = RECEIVER_EXEC_BUILD_DLL
 
@@ -109,23 +124,23 @@ project(DDS_VTopic_Receiver_exec) : ciao_executor, dds4ccm_base {
 
 
 project(DDS_VTopic_Receiver_svnt) : ciao_servant, dds4ccm_base {
-  after      += DDS_VTopic_Base_stub  DDS_VTopic_Receiver_lem_stub DDS4CCM_lem_stub \
-                DDS4CCM_skel DDS_VTopic_Connector_stub DDS_VT_Array_Connector_stub  DDS_VT_String_Connector_stub DDS_VT_Seq_Connector_stub \
-                DDS_VTopic_Connector_svnt DDS_VT_Array_Connector_svnt DDS_VT_String_Connector_svnt DDS_VT_Seq_Connector_svnt \
-                DDS_VTopic_Connector_lem_stub  DDS_VT_Array_Connector_lem_stub DDS_VT_String_Connector_lem_stub DDS_VT_Seq_Connector_lem_stub
+  after      += DDS_VTopic_Base_stub  DDS_VTopic_Receiver_lem_stub \
+                DDS4CCM_lem_stub DDS4CCM_skel \
+                DDS_VT_String_Connector_stub DDS_VT_String_Connector_svnt DDS_VT_String_Connector_lem_stub \
+                DDS_VT_Seq_Connector_stub DDS_VT_Seq_Connector_svnt DDS_VT_Seq_Connector_lem_stub\
+                DDS_VT_Array_Connector_stub DDS_VT_Array_Connector_svnt DDS_VT_Array_Connector_lem_stub \
+                DDS_VT_Valuetype_Connector_stub DDS_VT_Valuetype_Connector_svnt DDS_VT_Valuetype_Connector_lem_stub \
+                DDS_VTopic_Connector_stub DDS_VTopic_Connector_svnt DDS_VTopic_Connector_lem_stub
   sharedname  = Receiver_svnt
-  libs       += Receiver_stub Receiver_lem_stub  \
+  libs       += Receiver_stub Receiver_lem_stub \
                 DDS_VTopic_Base_stub \
                 DDS4CCM_lem_stub \
                 DDS4CCM_skel \
-                DDS_VTopic_Connector_stub \
-                DDS_VT_Array_Connector_stub \
-                DDS_VT_String_Connector_stub \
-                DDS_VT_Seq_Connector_stub \
-                DDS_VTopic_Connector_svnt \
-                DDS_VT_Array_Connector_svnt \
-                DDS_VT_String_Connector_svnt \
-                DDS_VT_Seq_Connector_svnt
+                DDS_VTopic_Connector_stub DDS_VTopic_Connector_svnt \
+                DDS_VT_Array_Connector_stub DDS_VT_Array_Connector_svnt \
+                DDS_VT_String_Connector_stub DDS_VT_String_Connector_svnt \
+                DDS_VT_Seq_Connector_stub DDS_VT_Seq_Connector_svnt \
+                DDS_VT_Valuetype_Connector_stub DDS_VT_Valuetype_Connector_svnt
   libpaths += ../lib
   libout = ../lib
   includes += ..

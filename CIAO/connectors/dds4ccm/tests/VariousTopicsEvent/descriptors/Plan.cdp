@@ -214,6 +214,58 @@
     </execParameter>
   </implementation>
 
+  <implementation xmi:id="VT_Valuetype_ConnectorComponentImplementation">
+    <name>VT_Valuetype_ConnectorComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="VT_Valuetype_Connector_ExecArtifact" />
+    <artifact xmi:idref="VT_Valuetype_Connector_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_VTopic_VT_Valuetype_Connector_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_VTopic_VT_Valuetype_Connector_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>VT_Valuetype_Connector_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>VT_Valuetype_Connector_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
   <implementation xmi:id="VT_Seq_ConnectorComponentImplementation">
     <name>VT_Seq_ConnectorComponentImplementation</name>
     <source/>
@@ -436,6 +488,43 @@
     </configProperty>
   </instance>
 
+  <instance xmi:id="VT_Valuetype_ConnectorComponentInstance">
+    <name>VT_Valuetype_ConnectorComponent</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="VT_Valuetype_ConnectorComponentImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>TestValuetype</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="VT_Valuetype_ConnectorComponentInstance2">
+    <name>VT_Valuetype_ConnectorComponent2</name>
+    <node>ReceiverNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="VT_Valuetype_ConnectorComponentImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>TestValuetype</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
   <instance xmi:id="VT_Seq_ConnectorComponentInstance">
     <name>VT_Seq_ConnectorComponent</name>
     <node>SenderNode</node>
@@ -599,6 +688,45 @@
   </connection>
 
   <connection>
+    <name>info_out_connector_status_receiver_valuetype</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_out_connector_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>error_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="VT_Valuetype_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>test_topic_connector_status_sender_valuetype</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>test_topic_connector_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>error_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="VT_Valuetype_ConnectorComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
     <name>info_out_connector_status_receiver_seq</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
@@ -711,7 +839,26 @@
     <node/>
     <location>DDS_VT_Array_Connector_stub</location>
   </artifact>
-  
+
+  <artifact xmi:id="VT_Valuetype_Connector_ExecArtifact">
+    <name>VT_Valuetype_Connector_exec</name>
+    <source/>
+    <node/>
+    <location>DDS_VT_Valuetype_Connector_exec</location>
+  </artifact>
+  <artifact xmi:id="VT_Valuetype_Connector_SvntArtifact">
+    <name>VT_Valuetype_Connector_svnt</name>
+    <source/>
+    <node/>
+    <location>DDS_VT_Valuetype_Connector_svnt</location>
+  </artifact>
+  <artifact xmi:id="VT_Valuetype_Connector_StubArtifact">
+    <name>VT_Valuetype_Connector_stub</name>
+    <source/>
+    <node/>
+    <location>DDS_VT_Valuetype_Connector_stub</location>
+  </artifact>
+
   <artifact xmi:id="VT_Seq_Connector_ExecArtifact">
     <name>VT_Seq_Connector_exec</name>
     <source/>
