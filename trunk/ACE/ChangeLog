@@ -1,3 +1,13 @@
+Fri Mar  5 12:40:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Atomic_Op.h:
+        * ace/Atomic_Op.inl:
+          We did a benchmark on a FC10 64bit system with the GCC builtin support
+          for long/unsigned long. In a release/inline build the performance
+          results using the GCC builtin support is around 2 times faster than
+          when using the ACE assembly version. When we have the GCC builtin support,
+          we now also going to use that for long/unsigned long.
+
 Fri Mar  5 12:20:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Atomic_Op.h:

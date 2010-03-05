@@ -48,6 +48,11 @@
 # endif /* WIN32 */
 #endif /* ACE_HAS_THREADS */
 
+// If we have the GCC Atomic builtin support, use it
+#if defined (ACE_HAS_GCC_ATOMIC_BUILTINS) && (ACE_HAS_GCC_ATOMIC_BUILTINS == 1)
+# undef ACE_HAS_BUILTIN_ATOMIC_OP
+#endif
+
 // Include the templates here.
 #include "ace/Atomic_Op_GCC_T.h"
 
@@ -275,7 +280,6 @@ public:
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int> &operator= (unsigned int rhs);
 };
 
-#if !defined (ACE_HAS_BUILTIN_ATOMIC_OP)
 // If we have built in atomic op, use that, the assignment operator
 // is faster for a long/unsinged long
 template<>
@@ -299,8 +303,6 @@ public:
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &operator= (unsigned long rhs);
 };
-
-#endif
 
 #endif /* ACE_HAS_BUILTIN_ATOMIC_OP */
 
