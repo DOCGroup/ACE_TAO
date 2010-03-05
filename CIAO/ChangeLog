@@ -1,3 +1,12 @@
+Fri Mar  5 12:27:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/dds4ccm_impl.mpc:
+        * connectors/dds4ccm/impl/dds/dds_impl.mpc:
+          Renamed.
+
+        * connectors/dds4ccm/impl/dds/ndds/DDS4CCM_Traits.h:
+          Renamed RTI namespace to NDDS namespace.
+
 Fri Mar  5 12:16:58 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/dds4ccm_impl.mpb:

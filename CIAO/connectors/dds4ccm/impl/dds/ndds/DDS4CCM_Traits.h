@@ -40,7 +40,7 @@ namespace CIAO
       typedef CONNECTORSTATUSLISTENER_TYPE connectorstatuslistener_type;
     };
 
-    namespace RTI
+    namespace NDDS
     {
       /**
        * @struct Type_Traits
