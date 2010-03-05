@@ -15,7 +15,7 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-#include "dds4ccm/impl/dds/dds4ccm_ndds_impl_export.h"
+#include "dds4ccm/impl/dds/dds4ccm_dds_impl_export.h"
 
 #include "tao/LocalObject.h"
 
@@ -35,7 +35,7 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    class DDS4CCM_NDDS_IMPL_Export CCM_DDS_Subscriber_i :
+    class DDS4CCM_DDS_IMPL_Export CCM_DDS_Subscriber_i :
       public virtual ::DDS::CCM_Subscriber,
       public virtual ::CORBA::LocalObject
     {

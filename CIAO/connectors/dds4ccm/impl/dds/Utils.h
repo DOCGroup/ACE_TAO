@@ -10,7 +10,7 @@
 #ifndef NDDS_UTILS_H
 #define NDDS_UTILS_H
 
-#include "dds4ccm_ndds_impl_export.h"
+#include "dds4ccm_dds_impl_export.h"
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 
 namespace CIAO
