@@ -73,7 +73,6 @@
 #include "be_visitor_interface/cdr_op_cs.cpp"
 #include "be_visitor_interface/smart_proxy_ch.cpp"
 #include "be_visitor_interface/smart_proxy_cs.cpp"
-#include "be_visitor_interface/ami_interface_ch.cpp"
 
 // Proxy Brokers
 #include "be_visitor_interface/strategized_proxy_broker_sh.cpp"
@@ -82,6 +81,12 @@
 // Proxy Impls
 #include "be_visitor_interface/direct_proxy_impl_sh.cpp"
 #include "be_visitor_interface/direct_proxy_impl_ss.cpp"
+
+// AMI
+#include "be_visitor_interface/ami_interface_ch.cpp"
+
+// AMI4CCM
+#include "be_visitor_interface/ami4ccm_rh_ex_idl.cpp"
 
 // AMH
 #include "be_visitor_interface/amh_ch.cpp"

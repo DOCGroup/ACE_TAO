@@ -142,6 +142,7 @@ be_visitor_context_svh::visit_uses (be_uses *node)
   if (be_global->ami4ccm_call_back ())
     {
       os_ << be_nl << "virtual ";
+      
       if (is_multiple)
         {
           os_ << "::" << node_->full_name () << "::"

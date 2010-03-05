@@ -1,3 +1,46 @@
+Fri Mar  5 22:26:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_visitor_interface/ami4ccm_rh_ex_idl.h:
+        * TAO_IDL/be/be_visitor_interface/ami4ccm_rh_ex_idl.cpp:
+
+          New files, containing a new visitor to generate the reply
+          handler interfaces in executor IDL.
+
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/be_include/be_visitor_interface/ami_interface_ch.h:
+        * TAO_IDL/be_include/be_visitor_operation.h:
+
+          Cosmetic changes.
+
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_visitor_interface.h:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/include/idl_global.h:
+
+          - Added new pragma string to be handled, one that
+            designates an IDL interface for AMI4CCM code
+            generation.
+
+          - Added storage for the above pragma interface
+            names in IDL_GlobalData.
+
+          - Added cleanup of string names contained in
+            several new ACE_Unbounded_Queue members of
+            IDL_GlobalData.
+
+          - Added iteration of pragma ami4ccm interface
+            list and trigger of associated code generation
+            in root visitor.
+
+          - Added as yet unimplemented visitor to generate
+            the reply handler operations.
+
 Fri Mar  5 20:50:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_connectorconnector_dds_exh.cpp:

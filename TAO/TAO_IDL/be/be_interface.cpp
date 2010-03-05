@@ -26,13 +26,18 @@
 #include "be_helper.h"
 #include "be_identifier_helper.h"
 #include "be_extern.h"
+
+#include "be_visitor_interface.h"
 #include "be_visitor_operation.h"
 #include "be_visitor_attribute.h"
 #include "be_visitor_context.h"
+
 #include "utl_identifier.h"
 #include "utl_exceptlist.h"
+
 #include "ast_generator.h"
 #include "ast_home.h"
+
 #include "global_extern.h"
 #include "idl_defines.h"
 #include "nr_extern.h"
@@ -2646,7 +2651,7 @@ be_interface::gen_facet_idl (TAO_OutStream &os)
 
   os << be_uidt_nl
      << "};";
-
+/*
   if (be_global->ami4ccm_call_back ())
     {
       ACE_CString reply_handler_local_name;
@@ -2709,23 +2714,9 @@ be_interface::gen_facet_idl (TAO_OutStream &os)
 
       os << be_uidt_nl
          << "};";
-
-/*
-         os << be_nl << be_nl
-  << "local interface CCM_AMI_CONN_MyFoo" << be_nl
-  << "  : ::Components::EnterpriseComponent" << be_nl
-  << "{" << be_nl
-  << "  ::Hello::CCM_AMI_MyFoo get_provides_MyFoo ();" << be_nl
-  << "};" << be_nl
-  << be_nl
-  << "local interface CCM_AMI_CONN_MyFoo_Context" << be_nl
-  << "  : ::Components::SessionContext" << be_nl
-  << "{" << be_nl
-  << "  ::Hello::MyFoo get_connection_uses_MyFoo ();" << be_nl
-  << "  ::Hello::AMI_MyFoo get_connection_provides_MyFoo ();" << be_nl
-  << "};";*/
+        
     }
-
+*/
   this->gen_nesting_close (os);
 
   this->ex_idl_facet_gen (true);
@@ -3003,6 +2994,55 @@ be_interface::gen_facet_svnt_src (be_visitor *visitor,
      << "}";
 
   return 0;
+}
+
+void
+be_interface::gen_reply_handler_idl (TAO_OutStream &os)
+{
+  this->gen_nesting_open (os);
+  
+  ACE_CString reply_handler_local_name ("AMI_");
+  reply_handler_local_name += this->name ()->last_component ()->get_string();
+  UTL_ScopedName *reply_handler_name =
+    static_cast<UTL_ScopedName *> (this->name ()->copy ());
+  reply_handler_name->last_component ()->replace_string (
+                                         reply_handler_local_name.c_str ()
+                                       );
+  os << be_nl
+     << "local interface AMI_"
+     << this->original_local_name ()->get_string ()
+     << "Callback : ::CCM_AMI::ReplyHandler" << be_nl
+     << "{" << be_idt;
+     
+     /*
+     << "void foo (in long ami_return_val, in string answer);" << be_nl
+     << "void foo_excep (in CCM_AMI::ExceptionHolder excep_holder);" << be_nl
+     << "void hello (in long ami_return_val);" << be_nl
+     << "void hello_excep (in CCM_AMI::ExceptionHolder excep_holder);" << be_nl
+     << "void get_rw_attrib (in short ami_return_val);" << be_nl
+     << "void get_rw_attrib_excep (in CCM_AMI::ExceptionHolder excep_holder);" << be_nl
+     << "void set_rw_attrib ();" << be_nl
+     << "void set_rw_attrib_excep (in CCM_AMI::ExceptionHolder excep_holder);" << be_nl
+     << "void get_ro_attrib (in short ami_return_val);" << be_nl
+     << "void get_ro_attrib_excep (in CCM_AMI::ExceptionHolder excep_holder);" << be_uidt_nl
+     << "};"
+     << be_nl;
+
+  os << be_nl
+     << "local interface CCM_AMI_"
+     << this->original_local_name ()->get_string ()
+     << "Callback : AMI_"
+     << this->original_local_name ()->get_string ()
+     << "Callback"
+     << be_nl
+     << "{"
+     << "};"
+     << be_nl;
+*/
+  os << be_uidt_nl
+     << "};";
+     
+  this->gen_nesting_close (os);
 }
 
 void

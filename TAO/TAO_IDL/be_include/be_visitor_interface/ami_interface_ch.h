@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_INTERFACE_AMI_INTERFACE_CH_H_
 #define _BE_INTERFACE_AMI_INTERFACE_CH_H_
 
@@ -30,13 +29,10 @@
 class be_visitor_ami_interface_ch : public be_visitor_interface
 {
 public:
-  /// constructor
   be_visitor_ami_interface_ch (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_ami_interface_ch (void);
 
-  /// set the right context and make a visitor
   virtual int visit_interface (be_interface *node);
 };
 

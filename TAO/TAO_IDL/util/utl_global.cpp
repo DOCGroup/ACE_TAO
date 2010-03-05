@@ -1346,6 +1346,18 @@ IDL_GlobalData::ciao_oci_ts_file_names (void)
   return this->ciao_oci_ts_file_names_;
 }
 
+void
+IDL_GlobalData::add_ciao_ami_iface_names (const char *s)
+{
+  this->ciao_ami_iface_names_.enqueue_tail (ACE::strnew (s));
+}
+
+ACE_Unbounded_Queue<char *> &
+IDL_GlobalData::ciao_ami_iface_names (void)
+{
+  return this->ciao_ami_iface_names_;
+}
+
 ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex> &
 IDL_GlobalData::file_prefixes (void)
 {
@@ -1569,13 +1581,48 @@ IDL_GlobalData::fini (void)
       ACE::strdelete (*path_tmp);
     }
 
-  for (ACE_Unbounded_Queue_Iterator<char *>riter (
-            this->ciao_lem_file_names_
-          );
-       riter.done () == 0;
-       riter.advance ())
+  for (ACE_Unbounded_Queue_Iterator<char *>iter1 (
+         this->ciao_lem_file_names_);
+       iter1.done () == 0;
+       iter1.advance ())
     {
-      riter.next (path_tmp);
+      iter1.next (path_tmp);
+      ACE::strdelete (*path_tmp);
+    }
+
+  for (ACE_Unbounded_Queue_Iterator<char *>iter2 (
+         this->ciao_rti_ts_file_names_);
+       iter2.done () == 0;
+       iter2.advance ())
+    {
+      iter2.next (path_tmp);
+      ACE::strdelete (*path_tmp);
+    }
+
+  for (ACE_Unbounded_Queue_Iterator<char *>iter3 (
+         this->ciao_spl_ts_file_names_);
+       iter3.done () == 0;
+       iter3.advance ())
+    {
+      iter3.next (path_tmp);
+      ACE::strdelete (*path_tmp);
+    }
+
+  for (ACE_Unbounded_Queue_Iterator<char *>iter4 (
+         this->ciao_oci_ts_file_names_);
+       iter4.done () == 0;
+       iter4.advance ())
+    {
+      iter4.next (path_tmp);
+      ACE::strdelete (*path_tmp);
+    }
+
+  for (ACE_Unbounded_Queue_Iterator<char *>iter5 (
+         this->ciao_ami_iface_names_);
+       iter5.done () == 0;
+       iter5.advance ())
+    {
+      iter5.next (path_tmp);
       ACE::strdelete (*path_tmp);
     }
 

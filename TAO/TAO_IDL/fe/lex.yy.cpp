@@ -3299,20 +3299,28 @@ idl_store_pragma (char *buf)
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_lem_file_names (tmp);
     }
-  else if (ACE_OS::strncmp (buf + 8, "ndds typesupport", 15) == 0)
+  else if (ACE_OS::strncmp (buf + 8, "ndds typesupport", 16) == 0)
     {
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_rti_ts_file_names (tmp);
     }
-  else if (ACE_OS::strncmp (buf + 8, "opendds typesupport", 18) == 0)
+  else if (ACE_OS::strncmp (buf + 8, "opendds typesupport", 19) == 0)
     {
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_oci_ts_file_names (tmp);
     }
-  else if (ACE_OS::strncmp (buf + 8, "splice typesupport", 17) == 0)
+  else if (ACE_OS::strncmp (buf + 8, "splice typesupport", 18) == 0)
     {
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_spl_ts_file_names (tmp);
+    }
+  else if (ACE_OS::strncmp (buf + 8, "ciao ami4ccm interface", 22) == 0)
+    {
+      if (idl_global->in_main_file ())
+        {
+          char *tmp = idl_get_pragma_string (buf);
+          idl_global->add_ciao_ami_iface_names (tmp);
+        }
     }
 }
 
