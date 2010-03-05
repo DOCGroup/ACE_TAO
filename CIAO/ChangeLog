@@ -1,3 +1,8 @@
+Fri Mar  5 13:18:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * cmm/CCM_lem_stub.mpc:
+          Only generate the stub export with one idl file
+
 Fri Mar  5 13:04:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/RTIDDS_DDS4CCM_CIAO.mwc:

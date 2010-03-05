@@ -3,13 +3,13 @@
 project(CCM_lem_stub_idl) : ciaolib_with_idl, valuetype {
   idlflags   += -Wb,stub_export_include=CCM_LEM_Stub_Export.h
   idlflags   += -Wb,stub_export_macro=CCM_LEM_STUB_Export
-  idlflags   += -Gxhst
   custom_only = 1
 
   IDL_Files {
     idlflags += -SS -Sci \
                 -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL \
                 -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL
+    idlflags   += -Gxhst
     Security.idl
   }
 
