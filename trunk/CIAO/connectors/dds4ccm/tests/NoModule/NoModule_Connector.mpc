@@ -79,7 +79,7 @@ project(NoModule_Connector_stub) : ccm_stub , dds4ccm_base  {
   }
 }
 
-project(NoModule_Connector_exec) : ciao_executor , dds4ccm_base  {
+project(NoModule_Connector_exec) : ciao_executor , dds4ccm_impl  {
   after   += NoModule_Connector_lem_stub NoModule_Connector_stub
   sharedname = NoModule_Connector_exec
   libs += NoModule_Connector_stub NoModule_Connector_lem_stub NoModule_stub
@@ -104,7 +104,7 @@ project(NoModule_Connector_exec) : ciao_executor , dds4ccm_base  {
 }
 
 
-project(NoModule_Connector_svnt) : ciao_servant , dds4ccm_base  {
+project(NoModule_Connector_svnt) : ciao_servant , dds4ccm_impl  {
   after      +=   NoModule_Connector_lem_stub
   sharedname  = NoModule_Connector_svnt
   libs       += NoModule_Connector_stub NoModule_Connector_lem_stub  NoModule_stub
