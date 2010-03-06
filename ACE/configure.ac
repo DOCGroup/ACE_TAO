@@ -2939,11 +2939,11 @@ AC_LINK_IFELSE([AC_LANG_PROGRAM(
           [[
           ]],
           [[
-            volatile unsigned long val = 1;
-            __sync_sub_and_fetch(&val, 1);
-            __sync_add_and_fetch(&val, 1);
-            __sync_fetch_and_sub(&val, 1);
-            __sync_fetch_and_add(&val, 1);
+            volatile unsigned long val = 10;
+            unsigned long retval = __sync_sub_and_fetch(&val, 1);
+            retval = __sync_add_and_fetch(&val, 1);
+            retval = __sync_fetch_and_sub(&val, 1);
+            retval = __sync_fetch_and_add(&val, 1);
           ]])],
           [
            AC_MSG_RESULT([yes])
