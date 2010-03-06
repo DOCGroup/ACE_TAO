@@ -65,6 +65,18 @@ replacement in the near term:
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.7 and CIAO-0.7.8
 =======================================================
 
+. dance_plan_launcher has been extensively re-factored, resulting in several
+  new features:
+  1) dance_plan_launcher may now deploy locality-constrained plans directly to
+     a NodeManager.
+  2) dance_plan_launcher now has the ability to deploy CDR encoded deployment
+     plans in a portable manner. 
+  3) dance_plan_launcher's command line options have been cleaned up to be
+     more intuitive. The major user-visible change is -q (for application
+     teardown) has been renamed -s.  
+  4) Most plan_launcher business logic is encapsulated in an implementation
+     library that may be leveraved by users to write custom executor agents.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.6 and CIAO-0.7.7
 =======================================================
 
