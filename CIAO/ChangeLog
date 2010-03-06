@@ -1,3 +1,13 @@
+Sat Mar  6 19:07:43 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * connectors/dds4ccm/tests/NoModule/NoModule.idl:
+        * connectors/dds4ccm/tests/NoModule/NoModule.mpc:
+        * tests/Bug_3834_Regression/CompA.idl:
+        * tests/Bug_3834_Regression/CompB.idl:
+        * tests/Bug_3834_Regression/Moo.idl:
+
+          Added Id token to fix fuzz error.
+
 Sat Mar  6 18:21:21 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * bin/ciao_tests.lst:
