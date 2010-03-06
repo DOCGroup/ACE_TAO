@@ -5,11 +5,12 @@ project (DDS_SharedDP_DDBase_stub) : taoidldefaults, anytypecode, dds4ccm_ts_def
   dynamicflags += BASE_STUB_BUILD_DLL
   libout = ../lib
 
-  idlflags += -SS -Gxhst -Sci \
+  idlflags += -SS -Sci \
               -Wb,stub_export_macro=BASE_STUB_Export \
               -Wb,stub_export_include=Base_stub_export.h
 
   IDL_Files {
+    idlflags += -Gxhst
     Base.idl
   }
 
