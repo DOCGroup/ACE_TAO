@@ -1,3 +1,12 @@
+Sat Mar  6 15:49:25 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/run_5_to_5.pl:
+        * connectors/dds4ccm/tests/CoherentWriter/descriptors/run_test.pl:
+        * tests/IDL_Test/Double_Inherited_Component/run_test.pl:
+
+          Further updates for the plan launcher command line option
+          changes.
+
 Sat Mar  6 15:45:32 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher_Base.h:
