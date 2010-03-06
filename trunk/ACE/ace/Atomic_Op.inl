@@ -368,68 +368,14 @@ ACE_Atomic_Op<ACE_Thread_Mutex, int>::ACE_Atomic_Op (void) :
 }
 
 ACE_INLINE
-ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int>::ACE_Atomic_Op (void) :
-  ACE_Atomic_Op_GCC<unsigned int>()
-{
-}
-
-ACE_INLINE
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op (void) :
-  ACE_Atomic_Op_GCC<long>()
-{
-}
-
-ACE_INLINE
-ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op (void) :
-  ACE_Atomic_Op_GCC<unsigned long> ()
-{
-}
-
-ACE_INLINE
 ACE_Atomic_Op<ACE_Thread_Mutex, int>::ACE_Atomic_Op (int c) :
   ACE_Atomic_Op_GCC<int>(c)
 {
 }
 
 ACE_INLINE
-ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int>::ACE_Atomic_Op (unsigned int c) :
-  ACE_Atomic_Op_GCC<unsigned int>(c)
-{
-}
-
-ACE_INLINE
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op (long c) :
-  ACE_Atomic_Op_GCC<long>(c)
-{
-}
-
-ACE_INLINE
-ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op (unsigned long c) :
-  ACE_Atomic_Op_GCC<unsigned long>(c)
-{
-}
-
-ACE_INLINE
 ACE_Atomic_Op<ACE_Thread_Mutex, int>::ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, int> &c) :
   ACE_Atomic_Op_GCC<int>(c)
-{
-}
-
-ACE_INLINE
-ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int>::ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int> &c) :
-  ACE_Atomic_Op_GCC<unsigned int>(c)
-{
-}
-
-ACE_INLINE
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &c) :
-  ACE_Atomic_Op_GCC<long>(c)
-{
-}
-
-ACE_INLINE
-ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &c) :
-  ACE_Atomic_Op_GCC<unsigned long>(c)
 {
 }
 
@@ -441,6 +387,25 @@ ACE_Atomic_Op<ACE_Thread_Mutex, int>::operator= (int rhs)
   return *this;
 }
 
+
+ACE_INLINE
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int>::ACE_Atomic_Op (void) :
+  ACE_Atomic_Op_GCC<unsigned int>()
+{
+}
+
+ACE_INLINE
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int>::ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int> &c) :
+  ACE_Atomic_Op_GCC<unsigned int>(c)
+{
+}
+
+ACE_INLINE
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int>::ACE_Atomic_Op (unsigned int c) :
+  ACE_Atomic_Op_GCC<unsigned int>(c)
+{
+}
+
 ACE_INLINE
 ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int>&
 ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int>::operator= (unsigned int rhs)
@@ -450,11 +415,47 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int>::operator= (unsigned int rhs)
 }
 
 ACE_INLINE
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op (void) :
+  ACE_Atomic_Op_GCC<long>()
+{
+}
+
+ACE_INLINE
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op (long c) :
+  ACE_Atomic_Op_GCC<long>(c)
+{
+}
+
+ACE_INLINE
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &c) :
+  ACE_Atomic_Op_GCC<long>(c)
+{
+}
+
+ACE_INLINE
 ACE_Atomic_Op<ACE_Thread_Mutex, long>&
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (long rhs)
 {
   ACE_Atomic_Op_GCC<long>::operator= (rhs);
   return *this;
+}
+
+ACE_INLINE
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op (void) :
+  ACE_Atomic_Op_GCC<unsigned long> ()
+{
+}
+
+ACE_INLINE
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op (unsigned long c) :
+  ACE_Atomic_Op_GCC<unsigned long>(c)
+{
+}
+
+ACE_INLINE
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &c) :
+  ACE_Atomic_Op_GCC<unsigned long>(c)
+{
 }
 
 ACE_INLINE
