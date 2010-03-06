@@ -1,0 +1,13 @@
+#ifndef COMPA_IDL_
+#define COMPA_IDL_
+
+#include <Components.idl>
+#include "Moo.idl"
+
+component CompA
+{
+  provides Moo my_moo;
+};
+
+#endif /* COMPA_IDL_ */
+

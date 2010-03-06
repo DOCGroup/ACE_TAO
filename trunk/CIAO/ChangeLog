@@ -1,3 +1,27 @@
+Sat Mar  6 18:11:47 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * tests/Bug_3834_Regression:
+        * tests/Bug_3834_Regression/CompA.idl:
+        * tests/Bug_3834_Regression/CompA.mpc:
+        * tests/Bug_3834_Regression/CompA_exec.h:
+        * tests/Bug_3834_Regression/CompA_exec.cpp:
+        * tests/Bug_3834_Regression/CompB.idl:
+        * tests/Bug_3834_Regression/CompB.mpc:
+        * tests/Bug_3834_Regression/CompB_exec.h:
+        * tests/Bug_3834_Regression/CompB_exec.cpp:
+        * tests/Bug_3834_Regression/Moo.idl:
+        * tests/Bug_3834_Regression/Moo.mpc:
+        * tests/Bug_3834_Regression/descriptors:
+        * tests/Bug_3834_Regression/descriptors/NodeMap.dat:
+        * tests/Bug_3834_Regression/descriptors/PlanLocality_DifferentProcesses.cdp:
+        * tests/Bug_3834_Regression/descriptors/PlanLocality_SameProcess.cdp:
+        * tests/Bug_3834_Regression/descriptors/run_test.pl:
+        * tests/Bug_3834_Regression/descriptors/run_test_without_ns.pl:
+        * tests/Bug_3834_Regression/model:
+        * tests/Bug_3834_Regression/model/Bug_3834_Regression.xme:
+
+          Added regression test.
+
 Sat Mar  6 16:16:36 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
