@@ -1,0 +1,13 @@
+#ifndef COMPB_IDL_
+#define COMPB_IDL_
+
+#include <Components.idl>
+#include "Moo.idl"
+
+component CompB
+{
+  uses multiple Moo my_moo;
+};
+
+#endif /* COMPB_IDL_ */
+
