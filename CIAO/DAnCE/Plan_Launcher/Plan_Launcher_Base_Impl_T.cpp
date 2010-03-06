@@ -442,7 +442,7 @@ namespace DAnCE
         DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("%C"), buf));
         throw Deployment_Failure (buf);
       }
-    catch (const Deployment_Failure &ex)
+    catch (const Deployment_Failure &)
       {
         throw;
       }
@@ -617,8 +617,9 @@ namespace DAnCE
               {
                 DANCE_ERROR (1, (LM_ERROR, DLINFO 
                                  ACE_TEXT("Plan_Launcher_i::create_external_connections - ")
-                                 ACE_TEXT("Caught CORBA Exception while resolving endpoint for connection %C\n"),
-                                 plan.connection[i].name.in ()));
+                                 ACE_TEXT("Caught CORBA Exception while resolving endpoint for connection %C: %C\n"),
+                                 plan.connection[i].name.in (),
+                                 ex._info ().c_str ()));
               }
             catch (...)
               {
