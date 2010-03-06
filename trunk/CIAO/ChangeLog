@@ -1,3 +1,11 @@
+Sat Mar  6 07:04:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/Base/Hello.mpc
+        * connectors/ami4ccm/examples/Hello/Connector/AMI.mpc
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver.mpc
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender.mpc
+          Disable for the moment now Jeff is working on TAO_IDL
+
 Sat Mar  6 06:47:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Base/Base.mpc
