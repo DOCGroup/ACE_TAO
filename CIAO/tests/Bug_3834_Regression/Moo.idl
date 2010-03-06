@@ -1,0 +1,10 @@
+#ifndef MOO_IDL_
+#define MOO_IDL_
+
+interface Moo
+{
+  void do_something();
+};
+
+#endif /* MOO_IDL_ */
+
