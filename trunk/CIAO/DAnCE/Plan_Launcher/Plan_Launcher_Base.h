@@ -18,6 +18,8 @@ namespace DAnCE
   class Plan_Launcher_Base
   {
   public:
+    virtual ~Plan_Launcher_Base (void) {};
+
     virtual const char * launch_plan (const ::Deployment::DeploymentPlan &plan,
                                       CORBA::Object_out am,
                                       CORBA::Object_out app) = 0;
