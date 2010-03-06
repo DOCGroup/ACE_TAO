@@ -178,10 +178,12 @@ foreach $file (@files) {
                             "-x $file -k file://$ior_emfile");
     $E->SpawnWaitKill (2*$tg_executor->ProcessStartWaitInterval ());
 
+    sleep(999);
+
     # Invoke executor - stop the application -.
     print "Invoking executor - stop the application -\n";
     $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
-                            "-k file://$ior_emfile -x $file -q");
+                                      "-k file://$ior_emfile -x $file -s");
     $E->SpawnWaitKill ($tg_executor->ProcessStopWaitInterval ());
 
     print "Executor returned.\n";
