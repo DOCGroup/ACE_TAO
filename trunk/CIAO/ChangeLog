@@ -1,3 +1,10 @@
+Sat Mar  6 15:43:35 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
+
+          Error/warning fixes for Windows.
+
 Sat Mar  6 15:40:38 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/tests/NoModule/NoModule_Connector.mpc:
