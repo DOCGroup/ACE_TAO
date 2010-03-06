@@ -1,3 +1,9 @@
+Sat Mar  6 15:45:32 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base.h:
+
+          Warning fix for PS3Cell.
+
 Sat Mar  6 15:43:35 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
