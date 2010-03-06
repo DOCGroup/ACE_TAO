@@ -81,7 +81,6 @@ project(NoModule_Connector_exec) : ciao_executor , dds4ccm_impl  {
   after   += NoModule_Connector_lem_stub NoModule_Connector_stub
   sharedname = NoModule_Connector_exec
   libs += NoModule_Connector_stub NoModule_Connector_lem_stub NoModule_stub
-  requires += dummy_label
   
   dynamicflags   = NOMODULE_CONNECTOR_CONN_BUILD_DLL
 
