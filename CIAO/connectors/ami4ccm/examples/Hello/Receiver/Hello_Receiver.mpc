@@ -2,7 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -p Hello_Base Hello_Receiver"
 
 project(AMI_Hello_Base_Hello_Receiver_idl_gen) : componentidldefaults {
-  avoids += dummy_label
+  requires += dummy_label
   custom_only = 1
   after += AMI_Hello_idl_gen
   idlflags += -Wb,stub_export_macro=HELLO_RECEIVER_STUB_Export \
@@ -19,7 +19,7 @@ project(AMI_Hello_Base_Hello_Receiver_idl_gen) : componentidldefaults {
 }
 
 project(AMI_Hello_Base_Hello_Receiver_lem_gen) : ciaoidldefaults {
-  avoids += dummy_label
+  requires += dummy_label
   after += AMI_Hello_Base_Hello_Receiver_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_RECEIVER_LEM_STUB_Export \
@@ -32,7 +32,7 @@ project(AMI_Hello_Base_Hello_Receiver_lem_gen) : ciaoidldefaults {
 }
 
 project(AMI_Hello_Base_Hello_Receiver_l_stub) : ccm_svnt, messaging {
-  avoids += dummy_label
+  requires += dummy_label
   after += AMI_Hello_Base_Hello_Receiver_lem_gen AMI_Hello_Base_Hello_Receiver_stub AMI_Hello_stub
   libs  += Hello_stub Hello_Receiver_stub
   libpaths += ../lib
@@ -58,7 +58,7 @@ project(AMI_Hello_Base_Hello_Receiver_l_stub) : ccm_svnt, messaging {
 }
 
 project(AMI_Hello_Base_Hello_Receiver_stub) : ccm_stub, messaging {
-  avoids += dummy_label
+  requires += dummy_label
   after += AMI_Hello_Base_Hello_Receiver_idl_gen AMI_Hello_stub
   libs  += Hello_stub
   libpaths += ../lib
@@ -84,7 +84,7 @@ project(AMI_Hello_Base_Hello_Receiver_stub) : ccm_stub, messaging {
 }
 
 project(AMI_Hello_Base_Hello_Receiver_exec) : ciao_executor, messaging {
-  avoids += dummy_label
+  requires += dummy_label
   after   += AMI_Hello_Base_Hello_Receiver_l_stub AMI_Hello_Base_Hello_Receiver_stub AMI_Hello_stub AMI_Hello_exec
   sharedname = Hello_Receiver_exec
   libs += Hello_Receiver_stub Hello_Receiver_lem_stub Hello_stub Hello_exec
@@ -109,7 +109,7 @@ project(AMI_Hello_Base_Hello_Receiver_exec) : ciao_executor, messaging {
 }
 
 project(AMI_Hello_Base_Hello_Receiver_svnt) : ciao_servant, messaging {
-  avoids += dummy_label
+  requires += dummy_label
   after      += AMI_Hello_Base_skel AMI_Hello_Base_Hello_Receiver_l_stub AMI_Hello_stub AMI_Hello_exec AMI_Hello_skel
   sharedname  = Hello_Receiver_svnt
   libs       += Hello_Receiver_stub Hello_Receiver_lem_stub  \
