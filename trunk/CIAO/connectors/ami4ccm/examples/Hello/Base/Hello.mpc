@@ -2,7 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -n Hello"
 
 project(AMI_Hello_idl_gen) : componentidldefaults, ami, ami4ccm_stub {
-  avoids += dummy_label
+  requires += dummy_label
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_STUB_Export \
               -Wb,stub_export_include=Hello_stub_export.h \
@@ -17,7 +17,7 @@ project(AMI_Hello_idl_gen) : componentidldefaults, ami, ami4ccm_stub {
 }
 
 project(AMI_Hello_lem_gen) : ciaoidldefaults {
-  avoids += dummy_label
+  requires += dummy_label
   after += AMI_Hello_idl_gen
   custom_only = 1
   idlflags += -Wb,export_macro=HELLO_EXEC_Export \
@@ -29,7 +29,7 @@ project(AMI_Hello_lem_gen) : ciaoidldefaults {
 }
 
 project(AMI_Hello_stub) : ccm_stub, ami, ami4ccm_stub {
-  avoids += dummy_label
+  requires += dummy_label
   after += AMI_Hello_lem_gen
   libs  +=
   libout = ../lib
@@ -57,7 +57,7 @@ project(AMI_Hello_stub) : ccm_stub, ami, ami4ccm_stub {
 }
 
 project(AMI_Hello_exec) : ccm_executor, ami, ami4ccm_stub {
-  avoids += dummy_label
+  requires += dummy_label
   after += AMI_Hello_lem_gen AMI_Hello_stub
   libs += Hello_stub
   libout = ../lib
@@ -85,7 +85,7 @@ project(AMI_Hello_exec) : ccm_executor, ami, ami4ccm_stub {
 }
 
 project(AMI_Hello_skel) : ciao_executor, ami   {
-  avoids += dummy_label
+  requires += dummy_label
   after      += AMI_Hello_stub AMI_Hello_exec
   sharedname  = Hello_skel
   libs       += Hello_stub Hello_exec
