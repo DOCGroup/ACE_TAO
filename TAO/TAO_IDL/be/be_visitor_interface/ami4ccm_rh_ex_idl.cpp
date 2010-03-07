@@ -24,25 +24,25 @@ be_visitor_ami4ccm_rh_ex_idl::~be_visitor_ami4ccm_rh_ex_idl (void)
 }
 
 int
-be_visitor_ami4ccm_rh_ex_idl::visit_interface (be_interface *node)
+be_visitor_ami4ccm_rh_ex_idl::visit_interface (be_interface *)
 {
   return 0;
 }
 
 int
-be_visitor_ami4ccm_rh_ex_idl::visit_operation (be_operation *node)
+be_visitor_ami4ccm_rh_ex_idl::visit_operation (be_operation *)
 {
   return 0;
 }
 
 int
-be_visitor_ami4ccm_rh_ex_idl::visit_attribute (be_attribute *node)
+be_visitor_ami4ccm_rh_ex_idl::visit_attribute (be_attribute *)
 {
   return 0;
 }
 
 int
-be_visitor_ami4ccm_rh_ex_idl::visit_argument (be_argument *node)
+be_visitor_ami4ccm_rh_ex_idl::visit_argument (be_argument *)
 {
   return 0;
 }
