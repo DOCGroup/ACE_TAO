@@ -1,3 +1,8 @@
+Sun Mar  7 19:06:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be_include/be_visitor_interface/ami4ccm_rh_ex_idl.h:
+          Fixed argument not used warnings
+
 Fri Mar  5 22:26:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be_include/be_visitor_interface/ami4ccm_rh_ex_idl.h:
@@ -44,7 +49,7 @@ Fri Mar  5 22:26:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Fri Mar  5 20:50:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_connectorconnector_dds_exh.cpp:
-        
+
           Fixed bug in connector traits typedef generation, a component
           declared at global scope caused an extra '::' to be generated
           in the associated context class name.
