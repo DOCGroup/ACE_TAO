@@ -1,0 +1,26 @@
+// $Id$
+
+/**
+ * @file DNM_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef DOUBLE_NESTED_MODULE_CONNECTOR_IDL_
+#define DOUBLE_NESTED_MODULE_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/DNM_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Connector/DNM_ConnectorE.idl"
+#pragma ndds typesupport "Base/DNM_BaseSupport.h"
+
+module DNM_Test
+{
+  module ::CCM_DDS::Typed < X::Y::Z::DNM_Test_Struct, X::Y::Z::DNM_Test_Struct_Seq> DNM_TestConn;
+  connector Double_Nested_Module_Connector : DNM_TestConn::DDS_Event
+  {
+  };
+};
+
+#endif /* DOUBLE_NESTED_MODULE_CONNECTOR_IDL_ */
