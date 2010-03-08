@@ -100,7 +100,7 @@ namespace CIAO_CompB_Impl
     ACE_DEBUG ((LM_DEBUG, "CompB_exec_i::ccm_remove\n"));
   }
   
-  extern "C" COMPA_EXEC_Export ::Components::EnterpriseComponent_ptr
+  extern "C" COMPB_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_CompB_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =

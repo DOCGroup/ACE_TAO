@@ -38,13 +38,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "CompA_exec_export.h"
+#include /**/ "CompB_exec_export.h"
 #include "tao/LocalObject.h"
 
 
 namespace CIAO_CompB_Impl
 {
-  class COMPA_EXEC_Export CompB_exec_i
+  class COMPB_EXEC_Export CompB_exec_i
     : public virtual CompB_Exec,
       public virtual ::CORBA::LocalObject
   {
@@ -81,7 +81,7 @@ namespace CIAO_CompB_Impl
     ::CCM_CompB_Context_var context_;
   };
   
-  extern "C" COMPA_EXEC_Export ::Components::EnterpriseComponent_ptr
+  extern "C" COMPB_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_CompB_Impl (void);
 }
 
