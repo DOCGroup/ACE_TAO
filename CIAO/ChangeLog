@@ -1,3 +1,10 @@
+Mon Mar  8 11:09:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/Base/Hello.idl:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender.idl:
+          Added new pragma's which the end user can use to indicate for which
+          interface and receptacles he wants to enable ami4ccm
+
 Mon Mar  8 10:52:26 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Latency/Base/Latency_Test_Base.idl:
