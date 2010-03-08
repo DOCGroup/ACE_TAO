@@ -17,9 +17,7 @@
 namespace CIAO_Latency_Test_Sender_Impl
 {
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Long > Atomic_Long;
-  //typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong > Atomic_ULong;
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean> Atomic_Boolean;
-  //typedef ACE_Atomic_Op <ACE_Recursive_Thread_Mutex, CORBA::Boolean > Atomic_Boolean;
 
   class Sender_exec_i;
   //============================================================
