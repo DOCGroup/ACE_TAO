@@ -116,7 +116,7 @@ template <typename T>
 ACE_INLINE ACE_Atomic_Op_GCC<T> &
 ACE_Atomic_Op_GCC<T>::operator= (T rhs)
 {
-  __sync_lock_test_and_set (&this->value_, rhs);
+  (void) __sync_lock_test_and_set (&this->value_, rhs);
   return *this;
 }
 
@@ -125,7 +125,7 @@ ACE_INLINE ACE_Atomic_Op_GCC<T> &
 ACE_Atomic_Op_GCC<T>::operator= (
    const ACE_Atomic_Op_GCC<T> &rhs)
 {
-  __sync_lock_test_and_set (&this->value_, rhs.value_);
+  (void) __sync_lock_test_and_set (&this->value_, rhs.value_);
   return *this;
 }
 
