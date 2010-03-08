@@ -1,3 +1,12 @@
+Mon Mar  8 11:20:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DDS4CCM_Traits.h:
+        * connectors/dds4ccm/impl/dds/ndds/DDS4CCM_Traits.h:
+          Renamed.
+
+        * connectors/dds4ccm/tests/Policies/policies.mpc:
+          Added requires += dds4ccm_ndds.
+
 Mon Mar  8 11:09:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/Base/Hello.idl:
