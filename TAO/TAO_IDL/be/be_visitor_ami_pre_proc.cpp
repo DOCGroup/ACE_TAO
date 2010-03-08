@@ -401,10 +401,6 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
                                  "(%N:%l) be_visitor_ami_pre_proc::visit_interface - "
                                  "bad node in this scope\n"),
                                 0);
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_ami_pre_proc::visit_interface - "
-                                 "bad node in this scope\n"),
-                                0);
             }
 
           if (d->node_type () == AST_Decl::NT_attr)

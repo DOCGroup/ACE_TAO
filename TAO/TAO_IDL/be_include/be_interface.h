@@ -358,7 +358,7 @@ public:
                           TAO_OutStream &os);
                 
   /// Used with ami4ccm.
-  void gen_reply_handler_idl (TAO_OutStream &os);
+  int gen_ami4ccm_idl (TAO_OutStream *os);
 
   /// Helper function called from visitors and used internally.
   void gen_nesting_open (TAO_OutStream &os);

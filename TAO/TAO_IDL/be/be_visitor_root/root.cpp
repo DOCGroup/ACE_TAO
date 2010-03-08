@@ -142,8 +142,7 @@ int be_visitor_root::visit_root (be_root *node)
                       continue;
                     }
                     
-                  iface->gen_reply_handler_idl (
-                    *this->ctx_->stream ());
+                  iface->gen_ami4ccm_idl (this->ctx_->stream ());
                 }
             }
         }
