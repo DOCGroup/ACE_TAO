@@ -1,3 +1,15 @@
+Mon Mar  8 19:03:51 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/MPC/config/dance_plan_launcher.mpb:
+        * DAnCE/Plan_Launcher/EM_Launcher.h:
+        * DAnCE/Plan_Launcher/NM_Launcher.h:
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base.h:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Export.h:
+
+         Reverted the substance of Mon Mar  8 10:04:43 UTC 2010,
+         fixing the problem in a better way.
+
 Mon Mar  8 16:26:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DDS4CCM_Traits.h:
