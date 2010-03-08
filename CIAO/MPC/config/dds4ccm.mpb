@@ -15,7 +15,7 @@ feature(dds4ccm_splice) : taoidldefaults {
 feature(dds4ccm_ndds) : taoidldefaults {
   macros += CIAO_DDS4CCM_NDDS=1
   idlflags += -DCIAO_DDS4CCM_NDDS=1 \
-              -Wb,dds_impl=rtidds
+              -Wb,dds_impl=ndds
 }
 
 feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_splice) {
