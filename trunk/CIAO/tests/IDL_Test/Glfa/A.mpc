@@ -1,0 +1,69 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -n -u Glfa A"
+
+project(Glfa_A_idl_gen) : taoidldefaults   {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=A_STUB_Export \
+              -Wb,stub_export_include=A_stub_export.h \
+              -Wb,skel_export_macro=A_SKEL_Export \
+              -Wb,skel_export_include=A_skel_export.h \
+              -Gxhsk -Gxhst
+
+  IDL_Files {
+    A.idl
+  }
+}
+
+project(Glfa_A_stub) : ccm_stub   {
+  after += Glfa_A_idl_gen 
+  libs  += 
+  
+  
+  sharedname = A_stub
+  dynamicflags   = A_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    AC.cpp
+  }
+
+  Header_Files {
+    AC.h
+    A_stub_export.h
+  }
+
+  Inline_Files {
+    AC.inl
+  }
+}
+
+
+project(Glfa_A_skel) : ciao_executor   {
+  after      +=  Glfa_A_stub Glfa_A_lem_stub
+  sharedname  = A_skel
+  libs       += A_stub
+ 
+  
+  
+  dynamicflags = A_SKEL_BUILD_DLL
+  
+  IDL_Files {
+  }
+
+  Source_Files {
+    AS.cpp
+  }
+
+  Header_Files {
+    AS.h
+    A_skel_export.h
+  }
+
+  Inline_Files {
+    AS.inl
+  }
+}
+
+
