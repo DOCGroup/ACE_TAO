@@ -29,8 +29,8 @@ project(Large_DDS_Pub_lem_gen) : ciaoidldefaults , dds4ccm  {
 }
 
 project(Large_DDS_Pub_lem_stub) : ccm_svnt , dds4ccm_base  {
-  after += Large_DDS_Pub_lem_gen Large_DDS_Pub_stub  Large_Deployment_lem
-  libs  +=  DDS_Pub_stub Large_Deployment_stub Large_Deployment_lem
+  after += Large_DDS_Pub_lem_gen Large_DDS_Pub_stub  
+  libs  +=  DDS_Pub_stub Large_Deployment_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -81,9 +81,9 @@ project(Large_DDS_Pub_stub) : ccm_stub , dds4ccm_base  {
 }
 
 project(Large_DDS_Pub_exec) : ciao_executor , dds4ccm_base  {
-  after   += Large_DDS_Pub_lem_stub Large_DDS_Pub_stub
+  after   += Large_DDS_Pub_lem_stub Large_DDS_Pub_stub Large_Connector_stub
   sharedname = DDS_Pub_exec
-  libs += DDS_Pub_stub DDS_Pub_lem_stub Large_Deployment_stub Large_Deployment_lem
+  libs += DDS_Pub_stub DDS_Pub_lem_stub Large_Deployment_stub Large_Connector_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -107,9 +107,10 @@ project(Large_DDS_Pub_exec) : ciao_executor , dds4ccm_base  {
 
 
 project(Large_DDS_Pub_svnt) : ciao_servant , dds4ccm_base  {
-  after      +=   Large_DDS_Pub_lem_stub
+  after      +=   Large_DDS_Pub_lem_stub Large_Connector_stub
   sharedname  = DDS_Pub_svnt
   libs       += DDS_Pub_stub DDS_Pub_lem_stub  Large_Deployment_stub
+  libs += Large_Connector_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
