@@ -1,3 +1,12 @@
+Mon Mar  8 22:11:40 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * examples/Null_Component/Null_Component_exec.h:
+        * examples/Null_Component/Null_Component_exec.cpp:
+        * examples/Null_Component_Glfa/Null_Component_exec.h:
+        * examples/Null_Component_Glfa/Null_Component_exec.cpp:
+
+          Updated generated code.
+
 Mon Mar  8 21:02:39 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tools/Convert_Plan/Convert_Plan_Impl.cpp:
