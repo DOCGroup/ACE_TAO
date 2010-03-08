@@ -4,6 +4,7 @@
 #define HELLO_IDL
 
 #pragma ciao lem "Base/HelloE.idl"
+#pragma ciao ami4ccm interface "Hello::MyFoo"
 
 module Hello
 {
