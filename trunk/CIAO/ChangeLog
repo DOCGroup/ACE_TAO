@@ -1,3 +1,8 @@
+Mon Mar  8 15:20:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/OMG-CCM-Tutorial.ppt:
+          List AMI4CCM pragma's
+
 Mon Mar  8 15:15:41 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/DoubleNestedModule/Connector/DNM_Connector.idl:
