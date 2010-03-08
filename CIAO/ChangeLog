@@ -1,3 +1,8 @@
+Mon Mar  8 12:33:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Base/VTopic_Base.mpc:
+          Added valuetype as base project.
+
 Mon Mar  8 11:49:27 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Latency/Base/Latency_Test_Base.mpc:
