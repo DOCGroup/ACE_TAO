@@ -3,6 +3,8 @@
 project(DDS_Policies_Test) : taoexe, dds4ccm_base {
   includes += $(CIAO_ROOT)
   exename = policies_test
+  requires += dds4ccm_ndds
+
   Source_Files {
     deadline_qos_test.cpp
     dest_order_qos_test.cpp
