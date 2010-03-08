@@ -213,7 +213,7 @@ be_visitor_scope::last_inout_or_out_node (be_decl *)
           || arg->direction () == AST_Argument::dir_OUT)
         {
           // Not the last.
-          return 0;
+          return false;
         }
 
       be_decl *next_next = 0;
@@ -224,5 +224,5 @@ be_visitor_scope::last_inout_or_out_node (be_decl *)
     }
 
   // I am the last one.
-  return 1;
+  return true;
 }

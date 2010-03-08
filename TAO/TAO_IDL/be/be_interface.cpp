@@ -2651,72 +2651,7 @@ be_interface::gen_facet_idl (TAO_OutStream &os)
 
   os << be_uidt_nl
      << "};";
-/*
-  if (be_global->ami4ccm_call_back ())
-    {
-      ACE_CString reply_handler_local_name;
-      reply_handler_local_name += "AMI_";
-      reply_handler_local_name += this->name ()->last_component ()->get_string();
-      UTL_ScopedName *reply_handler_name =
-        static_cast<UTL_ScopedName *> (this->name ()->copy ());
-      reply_handler_name->last_component ()->replace_string (
-                                             reply_handler_local_name.c_str ()
-                                           );
-      os << be_nl << be_nl
-         << "local interface AMI_"
-         << this->original_local_name ()->get_string ()
-         << "Callback : ::CCM_AMI::ReplyHandler"
-         << be_nl
-         << "{" << be_idt_nl
-         << "void foo (in long ami_return_val, in string answer);" << be_nl
-         << "void foo_excep (in CCM_AMI::ExceptionHolder excep_holder);" << be_nl
-         << "void hello (in long ami_return_val);" << be_nl
-         << "void hello_excep (in CCM_AMI::ExceptionHolder excep_holder);" << be_nl
-         << "void get_rw_attrib (in short ami_return_val);" << be_nl
-         << "void get_rw_attrib_excep (in CCM_AMI::ExceptionHolder excep_holder);" << be_nl
-         << "void set_rw_attrib ();" << be_nl
-         << "void set_rw_attrib_excep (in CCM_AMI::ExceptionHolder excep_holder);" << be_nl
-         << "void get_ro_attrib (in short ami_return_val);" << be_nl
-         << "void get_ro_attrib_excep (in CCM_AMI::ExceptionHolder excep_holder);" << be_uidt_nl
-         << "};"
-         << be_nl;
 
-      os << be_nl
-         << "local interface CCM_AMI_"
-         << this->original_local_name ()->get_string ()
-         << "Callback : AMI_"
-         << this->original_local_name ()->get_string ()
-         << "Callback"
-         << be_nl
-         << "{"
-         << "};"
-         << be_nl;
-
-      os << be_nl << "local interface AMI_"
-         << this->original_local_name ()->get_string ()
-         << be_nl
-         << "{" << be_idt_nl
-         << "void sendc_foo (in AMI_MyFooCallback ami_handler, in string in_str);" << be_nl
-         << "void sendc_hello (in AMI_MyFooCallback ami_handler);" << be_nl
-         << "void sendc_get_rw_attrib (in AMI_MyFooCallback ami_handler);" << be_nl
-         << "void sendc_set_rw_attrib (in AMI_MyFooCallback ami_handler, in short rw_attrib);" << be_nl
-         << "void sendc_get_ro_attrib (in AMI_MyFooCallback ami_handler);" << be_uidt_nl
-         << "};"
-         << be_nl;
-
-      os << be_nl
-         << "local interface CCM_AMI_"
-         << this->original_local_name ()->get_string ()
-         << " : ::"
-         << IdentifierHelper::orig_sn (reply_handler_name).c_str ()
-         << be_nl
-         << "{" << be_idt;
-
-      os << be_uidt_nl
-         << "};";
-        
-    }
-*/
   this->gen_nesting_close (os);
 
   this->ex_idl_facet_gen (true);
@@ -2996,53 +2931,44 @@ be_interface::gen_facet_svnt_src (be_visitor *visitor,
   return 0;
 }
 
-void
-be_interface::gen_reply_handler_idl (TAO_OutStream &os)
+int
+be_interface::gen_ami4ccm_idl (TAO_OutStream *os)
 {
-  this->gen_nesting_open (os);
-  
-  ACE_CString reply_handler_local_name ("AMI_");
-  reply_handler_local_name += this->name ()->last_component ()->get_string();
-  UTL_ScopedName *reply_handler_name =
-    static_cast<UTL_ScopedName *> (this->name ()->copy ());
-  reply_handler_name->last_component ()->replace_string (
-                                         reply_handler_local_name.c_str ()
-                                       );
-  os << be_nl
-     << "local interface AMI_"
-     << this->original_local_name ()->get_string ()
-     << "Callback : ::CCM_AMI::ReplyHandler" << be_nl
-     << "{" << be_idt;
-     
-     /*
-     << "void foo (in long ami_return_val, in string answer);" << be_nl
-     << "void foo_excep (in CCM_AMI::ExceptionHolder excep_holder);" << be_nl
-     << "void hello (in long ami_return_val);" << be_nl
-     << "void hello_excep (in CCM_AMI::ExceptionHolder excep_holder);" << be_nl
-     << "void get_rw_attrib (in short ami_return_val);" << be_nl
-     << "void get_rw_attrib_excep (in CCM_AMI::ExceptionHolder excep_holder);" << be_nl
-     << "void set_rw_attrib ();" << be_nl
-     << "void set_rw_attrib_excep (in CCM_AMI::ExceptionHolder excep_holder);" << be_nl
-     << "void get_ro_attrib (in short ami_return_val);" << be_nl
-     << "void get_ro_attrib_excep (in CCM_AMI::ExceptionHolder excep_holder);" << be_uidt_nl
-     << "};"
-     << be_nl;
+  if (this->ami4ccm_ex_idl_gen ())
+    {
+      return 0;
+    }
 
-  os << be_nl
-     << "local interface CCM_AMI_"
-     << this->original_local_name ()->get_string ()
-     << "Callback : AMI_"
-     << this->original_local_name ()->get_string ()
-     << "Callback"
-     << be_nl
-     << "{"
-     << "};"
-     << be_nl;
-*/
-  os << be_uidt_nl
-     << "};";
+  this->gen_nesting_open (*os);
+  
+  be_visitor_context ctx;
+  ctx.stream (os);
+
+  be_visitor_ami4ccm_rh_ex_idl rh_visitor (&ctx);
+  
+  if (rh_visitor.visit_interface (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_interface::gen_ami4ccm_idl - ")
+                         ACE_TEXT ("reply handler visitor failed\n")),
+                        -1);         
+    }
+    
+  be_visitor_ami4ccm_sendc_ex_idl sendc_visitor (&ctx);
+  
+  if (sendc_visitor.visit_interface (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_interface::gen_ami4ccm_idl - ")
+                         ACE_TEXT ("sendc op visitor failed\n")),
+                        -1);         
+    }
      
-  this->gen_nesting_close (os);
+  this->gen_nesting_close (*os);
+  
+  this->ami4ccm_ex_idl_gen (true);
+  
+  return 0;
 }
 
 void

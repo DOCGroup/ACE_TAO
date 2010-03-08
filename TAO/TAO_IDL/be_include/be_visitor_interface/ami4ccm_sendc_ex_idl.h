@@ -1,7 +1,7 @@
 /* -*- c++ -*- */
 //=============================================================================
 /**
- *  @file    ami4ccm_rh_ex_idl.h
+ *  @file    ami4ccm_sendc_ex_idl.h
  *
  *  $Id$
  *
@@ -13,23 +13,23 @@
  */
 //=============================================================================
 
-#ifndef _AMI4CCM_RH_EX_IDL_H_
-#define _AMI4CCM_RH_EX_IDL_H_
+#ifndef _AMI4CCM_SENDC_EX_IDL_H_
+#define _AMI4CCM_SENDC_EX_IDL_H_
 
 /**
- * @class be_visitor_ami4ccm_rh_ex_idl
+ * @class be_visitor_ami4ccm_sendc_ex_idl
  *
- * @brief be_visitor_ami4ccm_rh_ex_idl
+ * @brief be_visitor_ami4ccm_sendc_ex_idl
  *
- * This is a concrete visitor to generate the reply handler
+ * This is a concrete visitor to generate the sendc_* operation
  * interface IDL in the local executor mapping IDL file.
  */
-class be_visitor_ami4ccm_rh_ex_idl : public be_visitor_scope
+class be_visitor_ami4ccm_sendc_ex_idl : public be_visitor_scope
 {
 public:
-  be_visitor_ami4ccm_rh_ex_idl (be_visitor_context *ctx);
+  be_visitor_ami4ccm_sendc_ex_idl (be_visitor_context *ctx);
 
-  ~be_visitor_ami4ccm_rh_ex_idl (void);
+  ~be_visitor_ami4ccm_sendc_ex_idl (void);
 
   virtual int visit_interface (be_interface *node);
   virtual int visit_operation (be_operation *node);
@@ -41,11 +41,12 @@ public:
   virtual int pre_process (be_decl *node);
   
 private:
-  void gen_attr_rh_ops (bool is_set_op,
-                        be_attribute *node);
+  void gen_attr_sendc_ops (bool is_set_op,
+                           be_attribute *node);
   
 private:
   TAO_OutStream &os_;
+  be_interface *iface_;
 };
 
-#endif /* _AMI4CCM_RH_EX_IDL_H_ */
+#endif /* _AMI4CCM_SENDC_EX_IDL_H_ */

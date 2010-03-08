@@ -21,6 +21,8 @@
 #include "be_exception.h"
 #include "be_module.h"
 #include "be_operation.h"
+#include "be_sequence.h"
+#include "be_string.h"
 #include "be_structure.h"
 #include "be_structure_fwd.h"
 #include "be_union.h"
@@ -29,6 +31,7 @@
 #include "be_predefined_type.h"
 #include "be_component.h"
 #include "be_connector.h"
+#include "be_identifier_helper.h"
 #include "be_helper.h"
 #include "be_extern.h"
 #include "be_util.h"
@@ -87,6 +90,7 @@
 
 // AMI4CCM
 #include "be_visitor_interface/ami4ccm_rh_ex_idl.cpp"
+#include "be_visitor_interface/ami4ccm_sendc_ex_idl.cpp"
 
 // AMH
 #include "be_visitor_interface/amh_ch.cpp"
