@@ -1,3 +1,9 @@
+Mon Mar  8 21:02:39 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tools/Convert_Plan/Convert_Plan_Impl.cpp:
+
+          Stab at a warning fix.
+
 Mon Mar  8 20:56:43 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Large_Deployment:
