@@ -1,3 +1,33 @@
+Mon Mar  8 19:17:55 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/ami4ccm_sendc_ex_idl.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/ami4ccm_sendc_ex_idl.h:
+
+          New files, containing a new visitor that generates an interface
+          containing sendc_* operations for AMI4CCM in the executor IDL
+          file, and a corresponding CCM_* interface inheriting from it.
+
+        * TAO_IDL/be/be_visitor_scope.cpp:
+        * TAO_IDL/be/be_visitor_interface/ami4ccm_rh_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_visitor_interface/ami4ccm_rh_ex_idl.h:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_visitor_interface.h:
+
+          - Mods to existing files required by the new visitor described
+            above
+
+          - Guards to ensure that AMI4CCM IDL gets generated only once
+            per interface (specified by the ciao ami4ccm interface
+            pragma
+
+          - Code cleanup and cosmetic changes
+
 Mon Mar  8 16:27:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:

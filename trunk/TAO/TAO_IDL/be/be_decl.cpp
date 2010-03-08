@@ -96,7 +96,8 @@ be_decl::be_decl (AST_Decl::NodeType type,
     svnt_hdr_facet_gen_ (false),
     svnt_src_facet_gen_ (false),
     exec_hdr_facet_gen_ (false),
-    exec_src_facet_gen_ (false)
+    exec_src_facet_gen_ (false),
+    ami4ccm_ex_idl_gen_ (false)
 {
 }
 
@@ -589,6 +590,12 @@ be_decl::exec_src_facet_gen (void)
   return this->exec_src_facet_gen_;
 }
 
+bool
+be_decl::ami4ccm_ex_idl_gen (void)
+{
+  return this->ami4ccm_ex_idl_gen_;
+}
+
 // Set the flag indicating that code generation is done.
 void
 be_decl::cli_hdr_gen (bool val)
@@ -871,6 +878,12 @@ void
 be_decl::exec_src_facet_gen (bool val)
 {
   this->exec_src_facet_gen_ = val;
+}
+
+void
+be_decl::ami4ccm_ex_idl_gen (bool val)
+{
+  this->ami4ccm_ex_idl_gen_ = val;
 }
 
 //==========================================
