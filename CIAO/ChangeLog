@@ -1,3 +1,12 @@
+Mon Mar  8 15:15:41 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/DoubleNestedModule/Connector/DNM_Connector.idl:
+        * connectors/dds4ccm/tests/DoubleNestedModule/Sender/DNM_Sender.idl:
+        * connectors/dds4ccm/tests/DoubleNestedModule/Sender/DNM_Sender_exec.h:
+        * connectors/dds4ccm/tests/DoubleNestedModule/Sender/DNM_Sender_exec.cpp:
+          Created nested modules for Connector and Sender as well. Placed them in
+          totally different namespaces.
+
 Mon Mar  8 14:40:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * dds4ccm/tests/DoubleNestedModule/Sender/DNM_Sender.mpc:

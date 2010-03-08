@@ -12,11 +12,14 @@
 
 #include "Connector/DNM_Connector.idl"
 
-module DNM_Test
+module DNM_Test_Sender
 {
-  component Sender
+  module Nested_Sender
   {
-    port DNM_TestConn::DDS_Write info_write;
+    component Sender
+    {
+      port DNM_Test_Connector::Nested_Connector::DNM_TestConn::DDS_Write info_write;
+    };
   };
 };
 
