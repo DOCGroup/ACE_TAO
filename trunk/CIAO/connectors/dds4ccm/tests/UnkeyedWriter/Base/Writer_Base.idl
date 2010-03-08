@@ -12,6 +12,9 @@
 
 typedef sequence<octet> Octet_Seq;
 
+#pragma DCPS_DATA_TYPE "WriterTest"
+#pragma DCPS_DATA_KEY "WriterTest key"
+
 struct WriterTest {
   string key;
   long iteration;

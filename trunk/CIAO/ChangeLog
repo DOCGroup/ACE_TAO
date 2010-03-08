@@ -1,3 +1,30 @@
+Mon Mar  8 10:52:26 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Latency/Base/Latency_Test_Base.idl:
+        * connectors/dds4ccm/tests/CSLDeadline/Base/CSL_DeadlineTest_Base.idl:
+        * connectors/dds4ccm/tests/CSLQoS/Base/CSL_QoSTest_Base.idl:
+        * connectors/dds4ccm/tests/CoherentUpdater/Base/CoherentUpdate_Test_Base.idl:
+        * connectors/dds4ccm/tests/CoherentWriter/Base/CoherentWrite_Test_Base.idl:
+        * connectors/dds4ccm/tests/InstanceHandle/Base/Writer_Base.idl:
+        * connectors/dds4ccm/tests/KeyedSamples/Base/Keyed_Test_Base.idl:
+        * connectors/dds4ccm/tests/KeyedWriter/Base/Writer_Base.idl:
+        * connectors/dds4ccm/tests/ListenManyByMany/Base/LMBM_Test_Base.idl:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Base/LNE_Test_Base.idl:
+        * connectors/dds4ccm/tests/PSLSampleLost/Base/PSL_SampleLost_Base.idl:
+        * connectors/dds4ccm/tests/QueryFilter/Base/QueryFilter_Test_Base.idl:
+        * connectors/dds4ccm/tests/Reader/Base/Reader_Test_Base.idl:
+        * connectors/dds4ccm/tests/SLDisabled/Base/SL_Disabled_Base.idl:
+        * connectors/dds4ccm/tests/SLManyByMany/Base/SL_ManyByMany_Base.idl:
+        * connectors/dds4ccm/tests/SLOneByOne/Base/SL_OneByOne_Base.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Base/Base.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Base/Base.idl:
+        * connectors/dds4ccm/tests/State_Connection_Test/Base/State_Connection_Test_Base.idl:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Base/Unkeyed_Test_Base.idl:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Base/Writer_Base.idl:
+        * connectors/dds4ccm/tests/Updater/Base/Updater_Base.idl:
+          Added key declarations for openDDS.
+          Thanks to Jesus Martinez.
+
 Mon Mar  8 10:04:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Plan_Launcher/Plan_Launcher.mpc:

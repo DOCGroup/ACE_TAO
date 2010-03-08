@@ -10,6 +10,15 @@
 
 #pragma ndds typesupport "Base/BaseSupport.h"
 
+#pragma DCPS_DATA_TYPE "SharedDPTest1"
+#pragma DCPS_DATA_KEY "SharedDPTest1 key1"
+
+#pragma DCPS_DATA_TYPE "SharedDPTest2"
+#pragma DCPS_DATA_KEY "SharedDPTest2 key2"
+
+#pragma DCPS_DATA_TYPE "SharedDPTest3"
+#pragma DCPS_DATA_KEY "SharedDPTest3 key3"
+
 struct SharedDPTest1 {
   string key1;
   long iteration1;

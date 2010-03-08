@@ -10,6 +10,9 @@
 
 #pragma ndds typesupport "Base/Reader_Test_BaseSupport.h"
 
+#pragma DCPS_DATA_TYPE "ReaderTest"
+#pragma DCPS_DATA_KEY "ReaderTest key"
+
 struct ReaderTest {
   string key; //@key
   long iteration;
