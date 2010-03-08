@@ -4,7 +4,7 @@
 #include "DNM_Sender_exec.h"
 #include "Base/DNM_BaseC.h"
 
-namespace CIAO_DNM_Test_Sender_Impl
+namespace CIAO_DNM_Test_Sender_Nested_Sender_Sender_Impl
 {
   //============================================================
   // Component Executor Implementation Class: Sender_exec_i
@@ -21,7 +21,7 @@ namespace CIAO_DNM_Test_Sender_Impl
   Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
   {
     this->context_ =
-      ::DNM_Test::CCM_Sender_Context::_narrow (ctx);
+      ::DNM_Test_Sender::Nested_Sender::CCM_Sender_Context::_narrow (ctx);
 
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
