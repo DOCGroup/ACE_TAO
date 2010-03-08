@@ -1,3 +1,9 @@
+Mon Mar  8 11:31:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_global.cpp:
+          Using 'ndds' instead of 'rtidds' for IDL compiler flag
+          'dds_impl'.
+
 Mon Mar  8 11:22:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
