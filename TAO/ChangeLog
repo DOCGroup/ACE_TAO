@@ -1,3 +1,8 @@
+Mon Mar  8 11:22:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Renamed directory of dds4ccm_traits.h
+
 Sun Mar  7 19:06:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be_include/be_visitor_interface/ami4ccm_rh_ex_idl.h:
