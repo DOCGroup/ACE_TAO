@@ -1,6 +1,10 @@
 USER VISIBLE CHANGES BETWEEN ACE-5.7.7 and ACE-5.7.8
 ====================================================
 
+. ACE now uses GCC builtin Atomic instructions for short,
+  unsigned short, long, unsigned long, int, unsigned int,
+  and bool. This makes our Atomic_Op around 7 times faster
+
 USER VISIBLE CHANGES BETWEEN ACE-5.7.6 and ACE-5.7.7
 ====================================================
 
