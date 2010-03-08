@@ -30,7 +30,40 @@ be_visitor_ami4ccm_rh_ex_idl::visit_interface (be_interface *node)
       << "local interface AMI_"
       << node->original_local_name ()
       << "Callback" << be_idt_nl
-      << ": ::CCM_AMI::ReplyHandler" << be_uidt_nl
+      << ": ";
+    
+  long n_parents = node->n_inherits ();
+  
+  if (n_parents == 0)
+    {    
+      os_ << "::CCM_AMI::ReplyHandler";
+    }
+  else
+    {
+      os_ << be_idt;
+    
+      for (long i = 0; i < n_parents; ++i)
+        {
+          if (i != 0)
+            {
+              os_ << "," << be_nl;
+            }
+            
+          AST_Type *parent = node->inherits ()[i];
+            
+          AST_Decl *d = ScopeAsDecl (parent->defined_in ());
+            
+          bool global = (d->node_type () == AST_Decl::NT_root);
+          
+          os_ << (global ? "" : "::") << d->full_name ()
+              << "::AMI_" << parent->original_local_name ()
+              << "Callback";
+        }
+        
+      os_ << be_uidt;
+    }
+      
+  os_ << be_uidt_nl
       << "{" << be_idt;
       
   if (this->visit_scope (node) == -1)
