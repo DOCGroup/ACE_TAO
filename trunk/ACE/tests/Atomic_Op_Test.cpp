@@ -28,11 +28,11 @@ ACE_RCSID(tests, Atomic_Op_Test, "$Id$")
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_sys_time.h"
 
-enum { TEST_ITERATIONS = 1000000 };
-
-template <typename TYPE>
-int test (const ACE_TCHAR* type)
+template <typename TYPE, typename dummy>
+int test (const ACE_TCHAR* type, int iterations)
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Measuring %d iterations for %s\n"), iterations, type));
+
   int retval = 0;
   ACE_Atomic_Op <ACE_SYNCH_MUTEX, TYPE> foo (5);
 
@@ -75,7 +75,7 @@ int test (const ACE_TCHAR* type)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <%s> assignment %D\n"), type));
   ACE_Time_Value diff = ACE_OS::gettimeofday ();
   int i;
-  for (i = 0; i < TEST_ITERATIONS; ++i)
+  for (i = 0; i < iterations; ++i)
     {
       foo = 1;
       foo = 2;
@@ -90,7 +90,7 @@ int test (const ACE_TCHAR* type)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <%s> prefix increment %D\n"), type));
   diff = ACE_OS::gettimeofday ();
-  for (i = 0; i < TEST_ITERATIONS; ++i)
+  for (i = 0; i < iterations; ++i)
     {
       ++foo;
       ++foo;
@@ -101,7 +101,7 @@ int test (const ACE_TCHAR* type)
   diff.to_usec (usec);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <%s> prefix increment %D, took %Q\n"), type, usec));
 
-  if (foo != TEST_ITERATIONS * 4)
+  if (foo != iterations * 4)
     {
       ++retval;
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Prefix increment failed\n")));
@@ -109,7 +109,7 @@ int test (const ACE_TCHAR* type)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <%s> prefix decrement %D\n"), type));
   diff = ACE_OS::gettimeofday ();
-  for (i = 0; i < TEST_ITERATIONS; ++i)
+  for (i = 0; i < iterations; ++i)
     {
       foo--;
       foo--;
@@ -128,7 +128,7 @@ int test (const ACE_TCHAR* type)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <%s> postfix increment %D\n"), type));
   diff = ACE_OS::gettimeofday ();
-  for (i = 0; i < TEST_ITERATIONS; ++i)
+  for (i = 0; i < iterations; ++i)
     {
       foo++;
       foo++;
@@ -139,7 +139,7 @@ int test (const ACE_TCHAR* type)
   diff.to_usec (usec);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <%s> postfix increment %D, took %Q\n"), type, usec));
 
-  if (foo != TEST_ITERATIONS * 4)
+  if (foo != iterations * 4)
     {
       ++retval;
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Postfix increment failed\n")));
@@ -147,7 +147,7 @@ int test (const ACE_TCHAR* type)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <%s> postfix decrement %D\n"), type));
   diff = ACE_OS::gettimeofday ();
-  for (i = 0; i < TEST_ITERATIONS; ++i)
+  for (i = 0; i < iterations; ++i)
     {
       --foo;
       --foo;
@@ -166,7 +166,7 @@ int test (const ACE_TCHAR* type)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <%s> addition %D\n"), type));
   diff = ACE_OS::gettimeofday ();
-  for (i = 0; i < TEST_ITERATIONS; ++i)
+  for (i = 0; i < iterations; ++i)
     {
       foo += 5;
       foo += 5;
@@ -177,7 +177,7 @@ int test (const ACE_TCHAR* type)
   diff.to_usec (usec);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <%s> addition %D, took %Q\n"), type, usec));
 
-  if (foo != TEST_ITERATIONS * 4 * 5)
+  if (foo != iterations * 4 * 5)
     {
       ++retval;
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Addition failed\n")));
@@ -185,7 +185,7 @@ int test (const ACE_TCHAR* type)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <%s> subtraction %D\n"), type));
   diff = ACE_OS::gettimeofday ();
-  for (i = 0; i < TEST_ITERATIONS; ++i)
+  for (i = 0; i < iterations; ++i)
     {
       foo -= 5;
       foo -= 5;
@@ -205,6 +205,45 @@ int test (const ACE_TCHAR* type)
   return retval;
 }
 
+template <typename TYPE>
+int test (const ACE_TCHAR* type, int iterations)
+{
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Measuring %d iterations for %s\n"), iterations, type));
+
+  ACE_UINT64 usec;
+  int retval = 0;
+  ACE_Atomic_Op <ACE_SYNCH_MUTEX, TYPE> foo (true);
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <%s> assignment %D\n"), type));
+  ACE_Time_Value diff = ACE_OS::gettimeofday ();
+  int i;
+  for (i = 0; i < iterations; ++i)
+    {
+      foo = true;
+      foo = true;
+      foo = true;
+      foo = true;
+    }
+  diff = ACE_OS::gettimeofday () - diff;
+  diff.to_usec (usec);
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <%s> assignment %D, took %Q\n"), type, usec));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <%s> comparison %D\n"), type));
+  diff = ACE_OS::gettimeofday ();
+  for (i = 0; i < iterations; ++i)
+    {
+      if (foo != true) ++retval;
+      if (foo == false) ++retval;
+      if (foo != true) ++retval;
+      if (foo == false) ++retval;
+    }
+  diff = ACE_OS::gettimeofday () - diff;
+  diff.to_usec (usec);
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <%s> comparison %D, took %Q\n"), type, usec));
+  
+  return retval;
+}
+
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -212,14 +251,15 @@ run_main (int, ACE_TCHAR *[])
 
   int retval = 0;
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Measuring %d iterations\n"), TEST_ITERATIONS));
-
-  retval += test <int> (ACE_TEXT("int"));
-  retval += test <long> (ACE_TEXT("long"));
-  retval += test <unsigned int> (ACE_TEXT("unsigned int"));
-  retval += test <unsigned long> (ACE_TEXT("unsigned long"));
+  retval += test <int, int> (ACE_TEXT("int"), 1000000);
+  retval += test <long, int> (ACE_TEXT("long"), 1000000);
+  retval += test <unsigned int, int> (ACE_TEXT("unsigned int"), 1000000);
+  retval += test <unsigned long, int> (ACE_TEXT("unsigned long"), 1000000);
+  retval += test <short, int> (ACE_TEXT("short"), 10000);
+  retval += test <unsigned short, int> (ACE_TEXT("unsigned short"), 10000);
+  retval += test <bool> (ACE_TEXT("bool"), 1000000);
 #if !defined (ACE_LACKS_LONGLONG_T)
-  retval += test <long long> (ACE_TEXT("long long"));
+  retval += test <long long, int> (ACE_TEXT("long long"), 1000000);
 #endif
 
   ACE_END_TEST;
