@@ -15,7 +15,7 @@
 
 #include "tao/LocalObject.h"
 
-namespace CIAO_DNM_Test_Sender_Impl
+namespace CIAO_DNM_Test_Sender_Nested_Sender_Sender_Impl
 {
   //============================================================
   // Sender_exec_i
@@ -37,8 +37,8 @@ namespace CIAO_DNM_Test_Sender_Impl
     virtual void ccm_remove (void);
 
   private:
-    ::DNM_Test::CCM_Sender_Context_var context_;
-    ::DNM_Test::DNM_TestConn::Writer_var writer_;
+    ::DNM_Test_Sender::Nested_Sender::CCM_Sender_Context_var context_;
+    ::DNM_Test_Connector::Nested_Connector::DNM_TestConn::Writer_var writer_;
   };
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

@@ -15,11 +15,14 @@
 #pragma ciao lem "Connector/DNM_ConnectorE.idl"
 #pragma ndds typesupport "Base/DNM_BaseSupport.h"
 
-module DNM_Test
+module DNM_Test_Connector
 {
-  module ::CCM_DDS::Typed < X::Y::Z::DNM_Test_Struct, X::Y::Z::DNM_Test_Struct_Seq> DNM_TestConn;
-  connector Double_Nested_Module_Connector : DNM_TestConn::DDS_Event
+  module Nested_Connector
   {
+    module ::CCM_DDS::Typed < X::Y::Z::DNM_Test_Struct, X::Y::Z::DNM_Test_Struct_Seq> DNM_TestConn;
+    connector Double_Nested_Module_Connector : DNM_TestConn::DDS_Event
+    {
+    };
   };
 };
 
