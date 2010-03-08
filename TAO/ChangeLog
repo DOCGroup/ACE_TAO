@@ -1,3 +1,10 @@
+Mon Mar  8 12:06:44 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be_include/be_global.h:
+          Renamed 'RTIDDS' of DDS_IMPL enum to 'NDDS'.
+
 Mon Mar  8 11:31:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_global.cpp:
