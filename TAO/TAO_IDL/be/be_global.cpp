@@ -1618,7 +1618,7 @@ BE_GlobalData::dds_impl (char const * const val)
 {
   ACE_CString tmp (val, 0, false);
   
-  if (tmp == "rtidds")
+  if (tmp == "ndds")
     {
       this->dds_impl_ = RTIDDS;
     }
