@@ -39,7 +39,6 @@ union X_Union switch (short) {
 struct TopicUnion {
   string key; //@key
   X_Union x_uni;
-
 };
 
 // Sequence
