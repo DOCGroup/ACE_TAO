@@ -103,7 +103,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_orb_h_include_ (true),
     gen_empty_anyop_header_ (false),
     lookup_strategy_ (TAO_PERFECT_HASH),
-    dds_impl_ (RTIDDS),
+    dds_impl_ (NDDS),
     void_type_ (0),
     ccmobject_ (0),
     messaging_ (0),
@@ -1620,7 +1620,7 @@ BE_GlobalData::dds_impl (char const * const val)
   
   if (tmp == "ndds")
     {
-      this->dds_impl_ = RTIDDS;
+      this->dds_impl_ = NDDS;
     }
   else if (tmp == "opensplice")
     {
