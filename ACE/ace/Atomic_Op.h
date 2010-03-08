@@ -304,6 +304,39 @@ public:
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &operator= (unsigned long rhs);
 };
 
+template<>
+class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, short>
+: public ACE_Atomic_Op_GCC<short>
+{
+public:
+  ACE_Atomic_Op (void);
+  ACE_Atomic_Op (short c);
+  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, short> &c);
+  ACE_Atomic_Op<ACE_Thread_Mutex, short> &operator= (short rhs);
+};
+
+template<>
+class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, unsigned short>
+: public ACE_Atomic_Op_GCC<unsigned short>
+{
+public:
+  ACE_Atomic_Op (void);
+  ACE_Atomic_Op (unsigned short c);
+  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned short> &c);
+  ACE_Atomic_Op<ACE_Thread_Mutex, unsigned short> &operator= (unsigned short rhs);
+};
+
+template<>
+class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, bool>
+: public ACE_Atomic_Op_GCC<bool>
+{
+public:
+  ACE_Atomic_Op (void);
+  ACE_Atomic_Op (bool c);
+  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, bool> &c);
+  ACE_Atomic_Op<ACE_Thread_Mutex, bool> &operator= (bool rhs);
+};
+
 #endif /* ACE_HAS_BUILTIN_ATOMIC_OP */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

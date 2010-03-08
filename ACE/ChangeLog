@@ -1,3 +1,10 @@
+Mon Mar  8 08:35:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Atomic_Op.h:
+        * ace/Atomic_Op.inl:
+          Added specializations for bool/unsigned short/short, is around 7 times
+          faster than the default atomic op
+
 Mon Mar  8 08:24:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Atomic_Op_Test.cpp:
