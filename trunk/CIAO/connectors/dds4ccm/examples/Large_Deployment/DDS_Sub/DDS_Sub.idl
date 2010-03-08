@@ -1,0 +1,15 @@
+//$Id$
+
+#ifndef DDS_SUB_IDL
+#define DDS_SUB_IDL
+
+#include "Common/Common.idl"
+#include "Connector/Large_Connector.idl"
+
+component DDS_Sub
+{
+  port Large_Connector::DDS_Listen info_in;
+  port Large_Connector::DDS_Get ingo_get;
+  uses Simple_Service ping_port;
+};
+#endif

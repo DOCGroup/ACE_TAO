@@ -1,0 +1,138 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -o ../lib -l ../lib Single_Service"
+
+project(Single_Service_idl_gen) : componentidldefaults   {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=SINGLE_SERVICE_STUB_Export \
+              -Wb,stub_export_include=Single_Service_stub_export.h \
+              -Wb,skel_export_macro=SINGLE_SERVICE_SVNT_Export \
+              -Wb,skel_export_include=Single_Service_svnt_export.h \
+              -Wb,exec_export_macro=SINGLE_SERVICE_EXEC_Export \
+              -Wb,exec_export_include=Single_Service_exec_export.h \
+              -Gxhex -Gxhsk -Gxhst -I.. -Glfa
+
+  IDL_Files {
+    Single_Service.idl
+  }
+}
+
+project(Single_Service_lem_gen) : ciaoidldefaults   {
+  after += Single_Service_idl_gen 
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=SINGLE_SERVICE_LEM_STUB_Export \
+              -Wb,stub_export_include=Single_Service_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    Single_ServiceE.idl
+  }
+}
+
+project(Single_Service_lem_stub) : ccm_svnt   {
+  after += Single_Service_lem_gen Single_Service_stub 
+  libs  +=  Single_Service_stub Large_Deployment_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = Single_Service_lem_stub
+  dynamicflags   = SINGLE_SERVICE_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Single_ServiceEC.cpp
+  }
+
+  Header_Files {
+    Single_ServiceEC.h
+    Single_Service_lem_stub_export.h
+  }
+
+  Inline_Files {
+    Single_ServiceEC.inl
+  }
+}
+
+project(Single_Service_stub) : ccm_stub   {
+  after += Single_Service_idl_gen 
+  libs  += Large_Deployment_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = Single_Service_stub
+  dynamicflags   = SINGLE_SERVICE_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Single_ServiceC.cpp
+  }
+
+  Header_Files {
+    Single_ServiceC.h
+    Single_Service_stub_export.h
+  }
+
+  Inline_Files {
+    Single_ServiceC.inl
+  }
+}
+
+project(Single_Service_exec) : ciao_executor   {
+  after   += Single_Service_lem_stub Single_Service_stub
+  sharedname = Single_Service_exec
+  libs += Single_Service_stub Single_Service_lem_stub Large_Deployment_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags   = SINGLE_SERVICE_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Single_Service_exec.cpp
+  }
+
+  Header_Files {
+    Single_Service_exec.h
+    Single_Service_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(Single_Service_svnt) : ciao_servant   {
+  after      +=   Single_Service_lem_stub
+  sharedname  = Single_Service_svnt
+  libs       += Single_Service_stub Single_Service_lem_stub \
+     Large_Deployment_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags = SINGLE_SERVICE_SVNT_BUILD_DLL
+  
+  IDL_Files {
+  }
+
+  Source_Files {
+    Single_ServiceS.cpp
+    Single_Service_svnt.cpp
+  }
+
+  Header_Files {
+    Single_ServiceS.h
+    Single_Service_svnt.h
+    Single_Service_svnt_export.h
+  }
+
+  Inline_Files {
+    Single_ServiceS.inl
+  }
+}
+
+
