@@ -164,7 +164,7 @@ be_visitor_connector_dds_exh::gen_dds_traits (void)
   if (rti_dds_connector)
     {
       os_ << be_nl
-          << "typedef CIAO::DDS4CCM::NDDS::Type_Traits <"
+          << "typedef ::CIAO::DDS4CCM::Type_Traits <"
           << be_idt_nl
           << "::" << dt_name << "," << be_nl
           << "::" << dt_name << "Seq," << be_nl
@@ -190,10 +190,10 @@ be_visitor_connector_dds_exh::gen_connector_traits (void)
 
       return;
     }
-    
+
   AST_Decl *comp_scope =
     ScopeAsDecl (this->node_->defined_in ());
-    
+
   bool global_comp =
     (comp_scope->node_type () == AST_Decl::NT_root);
 
