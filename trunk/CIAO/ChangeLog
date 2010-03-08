@@ -1,3 +1,13 @@
+Mon Mar  8 11:49:27 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Latency/Base/Latency_Test_Base.mpc:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/Plan.cdp:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/Plan_sub.cdp:
+        * connectors/dds4ccm/performance-tests/Latency/Receiver/Latency_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Latency/Receiver/Latency_Test_Receiver_exec.h:
+        * connectors/dds4ccm/performance-tests/Latency/Sender/Latency_Test_Sender_exec.h:
+        Removed unused ConnectorStatusListener from Receiver.
+
 Mon Mar  8 11:30:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/dds4ccm.mpb:

@@ -145,26 +145,6 @@
       </value>
     </configProperty>
   </instance>
- 
-  <connection>
-    <name>info_listen_connector_status_receiver</name>
-    <deployRequirement>
-      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
-      <resourceType>Local_Interface</resourceType>
-    </deployRequirement>
-    <internalEndpoint>
-      <portName>info_listen_connector_status</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>error_listener</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Latency_Test_ConnectorComponentInstance2" />
-    </internalEndpoint>
-  </connection>
 
   <connection>
     <name>info_listen_data</name>

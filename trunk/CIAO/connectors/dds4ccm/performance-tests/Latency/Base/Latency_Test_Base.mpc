@@ -7,7 +7,7 @@ project (DDS_Latency_Test_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_d
 
   idlflags += -SS -Sci \
               -Wb,stub_export_macro=LATENCY_TEST_BASE_STUB_Export \
-              -Wb,stub_export_include=Latency_Keyed_Test_Base_stub_export.h
+              -Wb,stub_export_include=Latency_Test_Base_stub_export.h
 
   IDL_Files {
     idlflags += -Gxhst
