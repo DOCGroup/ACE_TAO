@@ -52,7 +52,7 @@ public:
   
   // To help with DDD portability in DDS4CCM
   // connectors.
-  enum
+  enum DDS_IMPL
   {
     NDDS,
     OPENSPLICE,

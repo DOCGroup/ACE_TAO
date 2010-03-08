@@ -1,3 +1,10 @@
+Mon Mar  8 14:21:11 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_global.h:
+        
+          Restored name of enum that was made anonymous in the
+          declaration without changing any refereces to the enum.
+
 Mon Mar  8 12:06:44 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
