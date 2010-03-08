@@ -1,3 +1,13 @@
+Mon Mar  8 23:50:38 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Large_Deployment/DDS_Pub/DDS_Pub.mpc:
+        * connectors/dds4ccm/examples/Large_Deployment/DDS_Sub/DDS_Sub.mpc:
+        * connectors/dds4ccm/examples/Large_Deployment/descriptors/LargePlan.cdp:
+        * connectors/dds4ccm/examples/Large_Deployment/descriptors/NodeManagerMap.dat:
+        * connectors/dds4ccm/examples/Large_Deployment/descriptors/run_test.pl:
+
+          Various fixes.
+
 Mon Mar  8 22:11:40 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * examples/Null_Component/Null_Component_exec.h:
