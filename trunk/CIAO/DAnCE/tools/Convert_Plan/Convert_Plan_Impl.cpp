@@ -47,7 +47,7 @@ namespace DAnCE
       }
 
     char byte_order;
-    ssize_t n = ACE_OS::fread (&byte_order, sizeof (byte_order), 1, file);
+    size_t n = ACE_OS::fread (&byte_order, sizeof (byte_order), 1, file);
     
     if (n == 0)
       {
