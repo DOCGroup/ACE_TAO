@@ -43,7 +43,7 @@ namespace CIAO_DNM_Test_Sender_Impl
         new ::X::Y::Z::DNM_Test_Struct;
     dnm->key = CORBA::string_dup ("KEY_1");
     dnm->iter = 10;
-    this-writer_->write_one (*dnm, ::DDS::HANDLE_NIL);
+    this->writer_->write_one (*dnm, ::DDS::HANDLE_NIL);
   }
 
   void
