@@ -1,0 +1,139 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -l ../lib -o ../lib -b dds4ccm_base -u Large Large_Connector"
+
+project(Large_Connector_idl_gen) : connectoridldefaults , dds4ccm  {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=LARGE_CONNECTOR_STUB_Export \
+              -Wb,stub_export_include=Large_Connector_stub_export.h \
+              -Wb,skel_export_macro=LARGE_CONNECTOR_SVNT_Export \
+              -Wb,skel_export_include=Large_Connector_svnt_export.h \
+              -Wb,exec_export_macro=LARGE_CONNECTOR_EXEC_Export \
+              -Wb,exec_export_include=Large_Connector_exec_export.h \
+              -Wb,conn_export_macro=LARGE_CONNECTOR_CONN_Export \
+              -Wb,conn_export_include=LARGE_Connector_conn_export.h \
+              -Gxhex -Gxhsk -Gxhst -I..
+
+  IDL_Files {
+    Large_Connector.idl
+  }
+}
+
+project(Large_Connector_lem_gen) : ciaoidldefaults , dds4ccm_base  {
+  after += Large_Connector_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=LARGE_CONNECTOR_LEM_STUB_Export \
+              -Wb,stub_export_include=Large_Connector_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    Large_ConnectorE.idl
+  }
+}
+
+project(Large_Connector_lem_stub) : ccm_svnt , dds4ccm_base  {
+  after += Large_Connector_lem_gen Large_Connector_stub _stub
+  libs  +=  Large_Connector_stub Large_Deployment_stub DDS4CCM_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = Large_Connector_lem_stub
+  dynamicflags   = LARGE_CONNECTOR_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Large_ConnectorEC.cpp
+  }
+
+  Header_Files {
+    Large_ConnectorEC.h
+    Large_Connector_lem_stub_export.h
+  }
+
+  Inline_Files {
+    Large_ConnectorEC.inl
+  }
+}
+
+project(Large_Connector_stub) : ccm_stub , dds4ccm_base  {
+  after += Large_Connector_idl_gen Large_Deployment_stub
+  libs  += Large_Deployment_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = Large_Connector_stub
+  dynamicflags   = LARGE_CONNECTOR_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Large_ConnectorC.cpp
+  }
+
+  Header_Files {
+    Large_ConnectorC.h
+    Large_Connector_stub_export.h
+  }
+
+  Inline_Files {
+    Large_ConnectorC.inl
+  }
+}
+
+project(Large_Connector_exec) : ciao_executor , dds4ccm_impl  {
+  after   += Large_Connector_lem_stub Large_Connector_stub
+  sharedname = Large_Connector_exec
+  libs += Large_Connector_stub Large_Connector_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags   = LARGE_CONNECTOR_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Large_Connector_conn.cpp
+  }
+
+  Header_Files {
+    Large_Connector_conn.h
+    Large_Connector_conn_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(Large_Connector_svnt) : ciao_servant , dds4ccm_skel  {
+  after      +=   Large_Connector_lem_stub
+  sharedname  = Large_Connector_svnt
+  libs       += Large_Connector_stub Large_Connector_lem_stub 
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags = LARGE_CONNECTOR_SVNT_BUILD_DLL
+  
+  IDL_Files {
+  }
+
+  Source_Files {
+    Large_ConnectorS.cpp
+    Large_Connector_svnt.cpp
+  }
+
+  Header_Files {
+    Large_ConnectorS.h
+    Large_Connector_svnt.h
+    Large_Connector_svnt_export.h
+  }
+
+  Inline_Files {
+    Large_ConnectorS.inl
+  }
+}
+
+

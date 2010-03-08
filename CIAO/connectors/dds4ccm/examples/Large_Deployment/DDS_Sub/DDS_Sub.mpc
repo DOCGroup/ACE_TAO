@@ -1,0 +1,137 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -l ../lib -o ../lib -b dds4ccm_base -u Large DDS_Sub"
+
+project(Large_DDS_Sub_idl_gen) : componentidldefaults , dds4ccm  {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=DDS_SUB_STUB_Export \
+              -Wb,stub_export_include=DDS_Sub_stub_export.h \
+              -Wb,skel_export_macro=DDS_SUB_SVNT_Export \
+              -Wb,skel_export_include=DDS_Sub_svnt_export.h \
+              -Wb,exec_export_macro=DDS_SUB_EXEC_Export \
+              -Wb,exec_export_include=DDS_Sub_exec_export.h \
+              -Gxhex -Gxhsk -Gxhst -I..
+
+  IDL_Files {
+    DDS_Sub.idl
+  }
+}
+
+project(Large_DDS_Sub_lem_gen) : ciaoidldefaults , dds4ccm  {
+  after += Large_DDS_Sub_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=DDS_SUB_LEM_STUB_Export \
+              -Wb,stub_export_include=DDS_Sub_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    DDS_SubE.idl
+  }
+}
+
+project(Large_DDS_Sub_lem_stub) : ccm_svnt , dds4ccm_base  {
+  after += Large_DDS_Sub_lem_gen Large_DDS_Sub_stub  Large_Deployment_lem
+  libs  +=  DDS_Sub_stub Large_Deployment_stub Large_Deployment_lem
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = DDS_Sub_lem_stub
+  dynamicflags   = DDS_SUB_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    DDS_SubEC.cpp
+  }
+
+  Header_Files {
+    DDS_SubEC.h
+    DDS_Sub_lem_stub_export.h
+  }
+
+  Inline_Files {
+    DDS_SubEC.inl
+  }
+}
+
+project(Large_DDS_Sub_stub) : ccm_stub , dds4ccm_base  {
+  after += Large_DDS_Sub_idl_gen Large_Deployment_stub
+  libs  += Large_Deployment_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = DDS_Sub_stub
+  dynamicflags   = DDS_SUB_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    DDS_SubC.cpp
+  }
+
+  Header_Files {
+    DDS_SubC.h
+    DDS_Sub_stub_export.h
+  }
+
+  Inline_Files {
+    DDS_SubC.inl
+  }
+}
+
+project(Large_DDS_Sub_exec) : ciao_executor , dds4ccm_base  {
+  after   += Large_DDS_Sub_lem_stub Large_DDS_Sub_stub
+  sharedname = DDS_Sub_exec
+  libs += DDS_Sub_stub DDS_Sub_lem_stub Large_Deployment_stub Large_Deployment_lem
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags   = DDS_SUB_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    DDS_Sub_exec.cpp
+  }
+
+  Header_Files {
+    DDS_Sub_exec.h
+    DDS_Sub_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(Large_DDS_Sub_svnt) : ciao_servant , dds4ccm_base  {
+  after      +=   Large_DDS_Sub_lem_stub
+  sharedname  = DDS_Sub_svnt
+  libs       += DDS_Sub_stub DDS_Sub_lem_stub  Large_Deployment_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags = DDS_SUB_SVNT_BUILD_DLL
+  
+  IDL_Files {
+  }
+
+  Source_Files {
+    DDS_SubS.cpp
+    DDS_Sub_svnt.cpp
+  }
+
+  Header_Files {
+    DDS_SubS.h
+    DDS_Sub_svnt.h
+    DDS_Sub_svnt_export.h
+  }
+
+  Inline_Files {
+    DDS_SubS.inl
+  }
+}
+
+

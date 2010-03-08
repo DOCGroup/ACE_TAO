@@ -1,0 +1,17 @@
+#ifndef LARGE_COMMON_IDL
+#define LARGE_COMMON_IDL
+
+#pragma ndds typesupport "Common/CommonSupport.h"
+
+struct LargeType {
+  string value; //@key
+};
+
+typedef sequence<LargeType> LargeType_Seq;
+
+interface Simple_Service
+{
+  oneway void ping ();
+};
+
+#endif
