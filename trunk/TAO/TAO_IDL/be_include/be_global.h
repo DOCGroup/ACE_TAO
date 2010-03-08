@@ -32,26 +32,23 @@ class AST_Generator;
 
 // Defines a class containing all back end global data.
 
+/*
+ * Storage of global data specific to the compiler back end
+ */
 class TAO_IDL_BE_Export BE_GlobalData
 {
 public:
-  // = TITLE
-  //    BE_GlobalData
-  //
-  // = DESCRIPTION
-  //    Storage of global data specific to the compiler back end
-  //
+  /// various lookup strategies
   enum LOOKUP_STRATEGY
   {
-    // various lookup strategies
     TAO_LINEAR_SEARCH,
     TAO_DYNAMIC_HASH,
     TAO_PERFECT_HASH,
     TAO_BINARY_SEARCH
   };
   
-  // To help with DDD portability in DDS4CCM
-  // connectors.
+  /// To help with DDD portability in DDS4CCM
+  /// connectors.
   enum DDS_IMPL
   {
     NDDS,
@@ -59,9 +56,10 @@ public:
     OPENDDS
   };
 
-  // Constructor
-  /// Destructor
+  /// Constructor
   BE_GlobalData (void);
+
+  /// Destructor
   virtual ~BE_GlobalData (void);
 
   // To switch between changing or non-changing standard include
