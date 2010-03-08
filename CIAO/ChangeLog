@@ -1,3 +1,13 @@
+Mon Mar  8 10:04:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl_T.h:
+        * DAnCE/MPC/config/dance_plan_launcher.mpb:
+          Removed seperate plan launcher dll, it isn't used except
+          by the plan launcher executable and also didn't work
+          at all on windows
+
 Sat Mar  6 19:07:43 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * connectors/dds4ccm/tests/NoModule/NoModule.idl:

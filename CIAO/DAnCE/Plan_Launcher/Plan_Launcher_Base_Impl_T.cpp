@@ -25,7 +25,7 @@ namespace DAnCE
 {
   template <typename Manager, typename AppManager, typename Application>
   Plan_Launcher_Base_Impl <Manager, AppManager, Application> ::
-  Plan_Launcher_Base_Impl(CORBA::ORB_ptr orb, 
+  Plan_Launcher_Base_Impl(CORBA::ORB_ptr orb,
                           Manager_ptr manager)
     : orb_ (CORBA::ORB::_duplicate (orb)),
       manager_ (Manager::_duplicate (manager))
@@ -57,8 +57,8 @@ namespace DAnCE
   ::prepare_plan (const ::Deployment::DeploymentPlan &plan)
   {
     DANCE_TRACE ("Plan_Launcher_Base_Impl::prepare_plan");
-    
-    
+
+
 #ifdef GEN_OSTREAM_OPS
     {
       std::ostringstream plan_stream;
@@ -114,11 +114,11 @@ namespace DAnCE
                          ACE_TEXT("An exception was thrown during EM->preparePlan.\n")));
         throw Deployment_Failure ("An unexpected C++ exception was caught while invoking preparePlan");
       }
-  
+
     DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                      ACE_TEXT ("Plan_Launcher_Base_Impl::launch_plan - ")
                      ACE_TEXT ("after to call preparePlan\n")));
-  
+
     if (CORBA::is_nil (app_manager.in ()))
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::prepare_plan - ")
@@ -131,7 +131,7 @@ namespace DAnCE
         DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::prepare_plan - ")
                          ACE_TEXT("ApplicationMAnager was received from preparePlan.\n")));
       }
-  
+
     return app_manager._retn ();
   }
 
@@ -143,7 +143,7 @@ namespace DAnCE
                   ::Deployment::Connections_out connections)
   {
     DANCE_TRACE ("Plan_Launcher_Base_Impl::start_launch");
-  
+
     AppManager_var app_manager (AppManager::_narrow (app_mgr));
 
     if (CORBA::is_nil (app_manager.in ()))
@@ -264,7 +264,7 @@ namespace DAnCE
         DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::start_launch - ")
                          ACE_TEXT("DomainApplication was received from startLaunch\n")));
       }
-  
+
     return da._retn ();
   }
 
@@ -276,7 +276,7 @@ namespace DAnCE
                    bool start)
   {
     DANCE_TRACE ("Plan_Launcher_Base_Impl::finish_launch");
-  
+
     Application_var application (Application::_narrow (app));
 
     if (CORBA::is_nil (application.in ()))
@@ -347,7 +347,7 @@ namespace DAnCE
   ::start (CORBA::Object_ptr app)
   {
     DANCE_TRACE ("Plan_Launcher_Base_Impl::start");
-  
+
     Application_var application (Application::_narrow (app));
 
     if (CORBA::is_nil (application.in ()))
@@ -405,32 +405,32 @@ namespace DAnCE
                  CORBA::Object_out app_out)
   {
     DANCE_TRACE ("Plan_Launcher_Base_Impl::launch_plan");
-    
+
     //this->create_external_connections (plan, conns.inout());
-  
+
     try
       {
         CORBA::Object_var app_mgr = this->prepare_plan (plan);
-      
+
         ::Deployment::Connections_var conns;
 
         CORBA::Object_var app = this->start_launch (app_mgr.in (),
                                                     0,
                                                     conns.out ());
-        
+
         this->create_external_connections (plan,
                                            conns.inout ());
-        
+
         this->finish_launch (app.in (),
                              conns,
                              false);
-      
+
         this->start (app.in ());
 
         DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                          ACE_TEXT ("Plan_Launcher_Base_Impl::launch_plan - ")
                          ACE_TEXT ("Application Deployed successfully\n")));
-        
+
         am_out = app_mgr._retn ();
         app_out = app._retn ();
       }
@@ -453,7 +453,7 @@ namespace DAnCE
         DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("%C"), buf));
         throw Deployment_Failure (buf);
       }
-    
+
     return CORBA::string_dup (plan.UUID.in());
   }
 
@@ -464,16 +464,16 @@ namespace DAnCE
                           CORBA::Object_ptr app_obj)
   {
     DANCE_TRACE ("Plan_Launcher_Base_Impl::teardown_application");
-  
+
     AppManager_var am (AppManager::_narrow (am_obj));
-  
+
     if (CORBA::is_nil (am.in ()))
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::teardown_application - ")
                          ACE_TEXT("Nil ApplicationManager reference.\n")));
         throw Deployment_Failure ("Nil ApplicationManager reference in teardown_application");
       }
-  
+
     Application_var app (Application::_narrow (app_obj));
 
     if (CORBA::is_nil (app.in ()))
@@ -525,7 +525,7 @@ namespace DAnCE
   ::destroy_app_manager(CORBA::Object_ptr am_obj)
   {
     DANCE_TRACE ("Plan_Launcher_Base_Impl::destroy_app_manager");
-  
+
     AppManager_var am (AppManager::_narrow (am_obj));
 
     if (CORBA::is_nil (am.in ()))
@@ -575,7 +575,7 @@ namespace DAnCE
       }
   }
 
-  
+
   template <typename Manager, typename AppManager, typename Application>
   void
   Plan_Launcher_Base_Impl< Manager, AppManager, Application>
@@ -583,7 +583,7 @@ namespace DAnCE
                                 Deployment::Connections &conn)
   {
     DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("create_external_connections - start\n")));
-    
+
     for (CORBA::ULong i = 0; i < plan.connection.length(); i++)
       {
         if (plan.connection[i].externalReference.length() > 0
@@ -593,7 +593,7 @@ namespace DAnCE
                              "Plan_Launcher_i::create_external_connections - create connection %C from IOR %C\n",
                              plan.connection[i].name.in(),
                              plan.connection[i].externalReference[0].location.in()));
-            
+
             try
               {
                 CORBA::Object_ptr
@@ -615,7 +615,7 @@ namespace DAnCE
               }
             catch (CORBA::Exception &ex)
               {
-                DANCE_ERROR (1, (LM_ERROR, DLINFO 
+                DANCE_ERROR (1, (LM_ERROR, DLINFO
                                  ACE_TEXT("Plan_Launcher_i::create_external_connections - ")
                                  ACE_TEXT("Caught CORBA Exception while resolving endpoint for connection %C: %C\n"),
                                  plan.connection[i].name.in (),
@@ -623,72 +623,12 @@ namespace DAnCE
               }
             catch (...)
               {
-                 DANCE_ERROR (1, (LM_ERROR, DLINFO 
+                 DANCE_ERROR (1, (LM_ERROR, DLINFO
                                   ACE_TEXT("Plan_Launcher_i::create_external_connections - ")
                                   ACE_TEXT("Caught C++ Exception while resolving endpoint for connection\n")));
               }
           }
       }
   }
-    /*
-
-    ACE_CString
-    Plan_Launcher_Base_Impl::expand_env_vars (const ACE_TCHAR * s)
-    {
-    ACE_TString src(s);
-    ACE_TString res;
-    size_t pos_done = 0;
-    while (pos_done < (size_t) src.length())
-    {
-    size_t pos_start = src.find ('$', pos_done);
-    if (ACE_TString::npos == pos_start)
-    {
-    res += src.substring (pos_done);
-    pos_done = src.length();
-    }
-    else // take the substring before '$' and append value
-    {
-    if (pos_start > pos_done)
-    {
-    res += src.substring (pos_done, pos_start - pos_done);
-    pos_done = pos_start;
-    }
-
-    size_t pos_end = src.length();
-
-    size_t p;
-
-    p = src.find (ACE_TEXT(' '), pos_start + 1);
-    if (ACE_TString::npos != p && pos_end > p) pos_end = p;
-
-    p = src.find (ACE_TEXT('/'), pos_start + 1);
-    if (ACE_TString::npos != p && pos_end > p) pos_end = p;
-
-    p = src.find (ACE_TEXT('\\'), pos_start + 1);
-    if (ACE_TString::npos != p && pos_end > p) pos_end = p;
-
-    p = src.find (ACE_TEXT('$'), pos_start + 1);
-    if (ACE_TString::npos != p && pos_end > p) pos_end = p;
-
-    if (pos_end - pos_start > 1)
-    {
-    ACE_Env_Value<const ACE_TCHAR*> val (src.substring (pos_start + 1, pos_end - pos_start - 1).c_str(), 0);
-    res += val;
-    pos_done = pos_end;
-    }
-    else
-    {
-    DANCE_DEBUG (6, (LM_WARNING, DLINFO
-    ACE_TEXT("Plan_Launcher_Base_Impl::expand_env_vars - ")
-    ACE_TEXT("Envvar can not be parsed out at %i in \"<%s>\""),
-    pos_start,
-    src.c_str()));
-    }
-    }
-    }
-    return res;
-    }
-
-  */
 }
 #endif
