@@ -4,7 +4,7 @@
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  *
  * Contains the generic implementation of plan launcher logic for both EM and NM deployments.
- * 
+ *
  */
 
 #ifndef PLAN_LAUNCHER_BASE_IMPL_H
@@ -25,7 +25,7 @@ namespace DAnCE
   class Plan_Launcher_Base_Impl : public virtual Plan_Launcher_Base
   {
   protected:
-    
+
     typedef typename Manager::_ptr_type Manager_ptr;
     typedef typename Manager::_var_type Manager_var;
 
@@ -34,7 +34,7 @@ namespace DAnCE
 
     typedef typename Application::_ptr_type Application_ptr;
     typedef typename Application::_var_type Application_var;
-  
+
   public:
     Plan_Launcher_Base_Impl (CORBA::ORB_ptr orb,
                              Manager_ptr manager);
@@ -49,19 +49,19 @@ namespace DAnCE
     virtual const char * launch_plan (const ::Deployment::DeploymentPlan &plan,
                                       CORBA::Object_out am,
                                       CORBA::Object_out app);
-  
+
     virtual CORBA::Object_ptr prepare_plan (const ::Deployment::DeploymentPlan &plan);
-  
+
     virtual CORBA::Object_ptr start_launch (CORBA::Object_ptr app_mgr,
                                             const ::Deployment::Properties &properties,
                                             ::Deployment::Connections_out connections);
-  
+
     virtual void finish_launch (CORBA::Object_ptr app,
                                 const ::Deployment::Connections &provided_connections,
                                 bool start);
-  
+
     virtual void start (CORBA::Object_ptr application);
-  
+
     /// Tears down a plan given the UUID
     virtual void teardown_application (CORBA::Object_ptr app_mgr,
                                        CORBA::Object_ptr app);
@@ -71,11 +71,10 @@ namespace DAnCE
     virtual void create_external_connections(const ::Deployment::DeploymentPlan &plan,
                                              Deployment::Connections &conn);
 
-    //  static ACE_CString expand_env_vars(const ACE_TCHAR * src);
   protected:
     /// Cached ORB pointer
     CORBA::ORB_var orb_;
-  
+
     /// Object reference of the Manager
     Manager_var manager_;
   }; // class Plan_Launcher_Impl
