@@ -2100,29 +2100,40 @@ NodeApplication_Impl::connect_receptacle (const ::Deployment::PlanConnectionDesc
     {
       DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - ")
                    ACE_TEXT("Components::CCMObject_var::connect() returned ::Components::InvalidName exception\n")));
-      throw ::Deployment::StartError("",
+      throw ::Deployment::StartError(conn.name.in (),
                                      "Received InvalidName exception while connecting receptacle.");
     }
   catch (const ::Components::InvalidConnection& )
     {
       DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_receptacle - ")
                    ACE_TEXT("Components::CCMObject_var::connect() returned ::Components::InvalidConnection exception\n")));
-      throw ::Deployment::InvalidConnection("",
+      throw ::Deployment::InvalidConnection(conn.name.in (),
                                             "InvalidConnection caught while connecting receptacle.");
     }
   catch (const ::Components::AlreadyConnected& )
     {
       DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_receptacle - ")
-                   ACE_TEXT("Components::CCMObject_var::connect() returned ::Components::AlreadyConnected exception\n")));
-      throw ::Deployment::InvalidConnection("",
+                       ACE_TEXT("Components::CCMObject_var::connect() returned ::Components::AlreadyConnected exception ")
+                       ACE_TEXT("for connection <%C>\n"),
+                       conn.name.in ()));
+      throw ::Deployment::InvalidConnection(conn.name.in (),
                                             "Caught AlreadyConnected exception while connecting receptacle");
     }
   catch (const ::Components::ExceededConnectionLimit& )
     {
       DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::connect_receptacle - ")
                    ACE_TEXT("Components::CCMObject_var::connect() returned ::Components::ExceededConnectionLimit exception\n")));
-      throw ::Deployment::InvalidConnection("",
+      throw ::Deployment::InvalidConnection(conn.name.in (),
                                             "Caught ExceededConnectionLimit exception while connecting receptacle.");
+    }
+  catch (const ::CORBA::Exception &ex )
+    {
+      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::connect_receptacle - ")
+                       ACE_TEXT("Caught a CORBA exception while connecting <%C>: <%C>\n"),
+                       conn.name.in (),
+                       ex._info ().c_str ()));
+      throw ::Deployment::StartError(conn.name.in (),
+                                     ex._info ().c_str ());
     }
   return res;
 }

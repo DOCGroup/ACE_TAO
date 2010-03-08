@@ -1,3 +1,18 @@
+Mon Mar  8 23:52:06 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * ciao/Containers/Session/Session_Container.cpp:
+
+          Improved error reporting.
+
+        * DAnCE/bin/PythonDAnCE/generator/comp_inst.py:
+
+          bugfix, requested node names weren't inserted properly.
+
+        * DAnCE/tools/Split_Plan/Split_Plan_impl.cpp:
+
+          Increased log level needed for trace-level split plan messages.
+
 Mon Mar  8 23:50:38 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Large_Deployment/DDS_Pub/DDS_Pub.mpc:

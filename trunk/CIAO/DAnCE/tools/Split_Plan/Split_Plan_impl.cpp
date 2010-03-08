@@ -79,7 +79,7 @@ namespace DAnCE
     //     plans one by one.
     for (CORBA::ULong i = 0; i < plan.instance.length (); ++i)
       {
-        DANCE_DEBUG (9, (LM_TRACE, DLINFO
+        DANCE_DEBUG (10, (LM_TRACE, DLINFO
                          ACE_TEXT("Split_Plan::split_plan - ")
                          ACE_TEXT("Processing instance: %C\n"), plan.instance[i].name.in()));
         // @@TODO Fill in the child deployment plan in the map.
@@ -154,18 +154,18 @@ namespace DAnCE
         // duplicate <implementation> for the optimization.
         child_plan.instance[index_ins-1].implementationRef = index_imp - 1;
 
-        DANCE_DEBUG (9, (LM_TRACE, DLINFO
+        DANCE_DEBUG (10, (LM_TRACE, DLINFO
                          ACE_TEXT("Split_Plan::split_plan - ")
                          ACE_TEXT("Processing connections.\n")));
         // Copy connections
         for (CORBA::ULong j = 0; j < plan.connection.length(); ++j)
           {
-            DANCE_DEBUG (9, (LM_TRACE, DLINFO
+            DANCE_DEBUG (10, (LM_TRACE, DLINFO
                              ACE_TEXT("Split_Plan::split_plan - ")
                              ACE_TEXT("For connection: %C\n"), plan.connection[j].name.in()));
             for (CORBA::ULong k = 0; k < plan.connection[j].internalEndpoint.length(); ++k)
               {
-                DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                DANCE_DEBUG (10, (LM_TRACE, DLINFO
                                  ACE_TEXT("Split_Plan::split_plan - ")
                                  ACE_TEXT("For endpoint: %C(%C)\n"),
                                  plan.connection[j].internalEndpoint[k].portName.in(),
@@ -195,7 +195,7 @@ namespace DAnCE
                     // Copy the endpoint
                     CORBA::ULong const index_ep = connection_copied->internalEndpoint.length();
 
-                    DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                    DANCE_DEBUG (10, (LM_TRACE, DLINFO
                                      ACE_TEXT("Split_Plan::split_plan - ")
                                      ACE_TEXT ("Copying endpoint %u from connection into endpoint %u\n"),
                                      k, index_ep));
@@ -217,7 +217,7 @@ namespace DAnCE
                     // add our new instance ref to the child plan's corresponding contraint.
                     CORBA::ULong child_loc_len (child_plan.localityConstraint[j].constrainedInstanceRef.length ());
 
-                    DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                    DANCE_DEBUG (10, (LM_TRACE, DLINFO
                                      ACE_TEXT("Split_Plan::split_plan - ")
                                      ACE_TEXT ("Found matching locality constraint %u:%u, adding to %u:%u as %u\n"),
                                      j, k, j, child_loc_len, index_ins - 1));
