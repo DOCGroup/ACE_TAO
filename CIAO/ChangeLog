@@ -1,3 +1,15 @@
+Mon Mar  8 20:01:50 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/IDL_Test/Glfa:
+        * tests/IDL_Test/Glfa/A.idl:
+        * tests/IDL_Test/Glfa/A.mpc:
+        * tests/IDL_Test/Glfa/B.idl:
+        * tests/IDL_Test/Glfa/B.mpc:
+        * tests/IDL_Test/Glfa/B_exec.h:
+        * tests/IDL_Test/Glfa/B_exec.cpp:
+
+          Test to verify Glfa compiles.
+
 Mon Mar  8 19:22:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/OMG-CCM-Tutorial.ppt:
