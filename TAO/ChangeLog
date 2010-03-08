@@ -1,3 +1,10 @@
+Mon Mar  8 20:22:18 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/ami4ccm_rh_ex_idl.cpp:
+        
+          Changed inheritance list of reply handler interface to include
+          corresponding reply handler(s) of parent(s), if any.
+
 Mon Mar  8 19:17:55 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/ami4ccm_sendc_ex_idl.cpp:
