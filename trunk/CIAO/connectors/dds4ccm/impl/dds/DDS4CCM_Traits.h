@@ -40,30 +40,27 @@ namespace CIAO
       typedef CONNECTORSTATUSLISTENER_TYPE connectorstatuslistener_type;
     };
 
-    namespace NDDS
+    /**
+     * @struct Type_Traits
+     * @brief Convenience traits struct.
+     *
+     * This is a convenience struct that is used by most of the
+     * DDS4CCM infrastructure; it is not necessary to use this exact
+     * struct, so long as all of the needed fields are filled in.
+     */
+    template <typename VALUE_TYPE,
+              typename DDS_SEQ_TYPE,
+              typename TYPE_SUPPORT,
+              typename DATA_WRITER,
+              typename DATA_READER>
+    struct Type_Traits
     {
-      /**
-       * @struct Type_Traits
-       * @brief Convenience traits struct.
-       *
-       * This is a convenience struct that is used by most of the
-       * DDS4CCM infrastructure; it is not necessary to use this exact
-       * struct, so long as all of the needed fields are filled in.
-       */
-      template <typename VALUE_TYPE,
-                typename DDS_SEQ_TYPE,
-                typename TYPE_SUPPORT,
-                typename DATA_WRITER,
-                typename DATA_READER>
-      struct Type_Traits
-      {
-        typedef VALUE_TYPE value_type;
-        typedef DDS_SEQ_TYPE dds_seq_type;
-        typedef TYPE_SUPPORT type_support;
-        typedef DATA_WRITER data_writer;
-        typedef DATA_READER data_reader;
-      };
-    }
+      typedef VALUE_TYPE value_type;
+      typedef DDS_SEQ_TYPE dds_seq_type;
+      typedef TYPE_SUPPORT type_support;
+      typedef DATA_WRITER data_writer;
+      typedef DATA_READER data_reader;
+    };
   }
 }
 #endif /* DDS4CCM_TRAITS_H */
