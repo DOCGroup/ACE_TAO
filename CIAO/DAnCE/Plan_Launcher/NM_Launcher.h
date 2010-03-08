@@ -15,10 +15,11 @@
 #include "DAnCE/Deployment/Deployment_NodeApplicationC.h"
 #include "DAnCE/Deployment/Deployment_NodeApplicationManagerC.h"
 #include "DAnCE/Deployment/Deployment_NodeManagerC.h"
+#include "DAnCE/Plan_Launcher/Plan_Launcher_Export.h"
 
 namespace DAnCE
 {
-  class NM_Launcher : 
+  class DAnCE_Plan_Launcher_Export NM_Launcher : 
     public virtual Plan_Launcher_Base_Impl< ::Deployment::NodeManager,
                                             ::Deployment::NodeApplicationManager,
                                             ::Deployment::NodeApplication >
