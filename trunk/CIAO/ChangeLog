@@ -1,3 +1,11 @@
+Mon Mar  8 14:40:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dds4ccm/tests/DoubleNestedModule/Sender/DNM_Sender.mpc:
+          enabled exec
+
+        * dds4ccm/tests/DoubleNestedModule/Sender/DNM_Sender_exec.cpp:
+          Fixed compile problem
+
 Mon Mar  8 13:58:26 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/DoubleNestedModule:

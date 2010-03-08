@@ -95,7 +95,6 @@ project(DNM_Sender_exec) : ciao_executor, dds4ccm_base {
   includes += ..
   libout = ../lib
   dynamicflags   = SENDER_EXEC_BUILD_DLL
-  requires += dummy_label
 
   IDL_Files {
   }
