@@ -15,10 +15,11 @@
 #include "DAnCE/Deployment/Deployment_DomainApplicationC.h"
 #include "DAnCE/Deployment/Deployment_DomainApplicationManagerC.h"
 #include "DAnCE/Deployment/Deployment_ExecutionManagerC.h"
+#include "DAnCE/Plan_Launcher/Plan_Launcher_Export.h"
 
 namespace DAnCE
 {
-  class EM_Launcher :
+  class DAnCE_Plan_Launcher_Export EM_Launcher :
     public virtual Plan_Launcher_Base_Impl< ::Deployment::ExecutionManager,
                                             ::Deployment::DomainApplicationManager,
                                             ::Deployment::DomainApplication >
