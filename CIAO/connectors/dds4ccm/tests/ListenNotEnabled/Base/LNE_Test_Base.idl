@@ -10,6 +10,9 @@
 
 #pragma ndds typesupport "Base/LNE_Test_BaseSupport.h"
 
+#pragma DCPS_DATA_TYPE "ListenNotEnabledTest"
+#pragma DCPS_DATA_KEY "ListenNotEnabledTest key"
+
 struct ListenNotEnabledTest {
   string key; //@key
   long iteration;
