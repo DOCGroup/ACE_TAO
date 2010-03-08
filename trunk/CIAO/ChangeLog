@@ -1,3 +1,20 @@
+Mon Mar  8 13:58:26 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/DoubleNestedModule:
+        * connectors/dds4ccm/tests/DoubleNestedModule/Base:
+        * connectors/dds4ccm/tests/DoubleNestedModule/Base/DNM_Base.idl:
+        * connectors/dds4ccm/tests/DoubleNestedModule/Base/DNM_Base.mpc:
+        * connectors/dds4ccm/tests/DoubleNestedModule/Connector:
+        * connectors/dds4ccm/tests/DoubleNestedModule/Connector/DNM_Connector.idl:
+        * connectors/dds4ccm/tests/DoubleNestedModule/Connector/DNM_Connector.mpc:
+        * connectors/dds4ccm/tests/DoubleNestedModule/Sender:
+        * connectors/dds4ccm/tests/DoubleNestedModule/Sender/DNM_Sender.idl:
+        * connectors/dds4ccm/tests/DoubleNestedModule/Sender/DNM_Sender.mpc:
+        * connectors/dds4ccm/tests/DoubleNestedModule/Sender/DNM_Sender_exec.h:
+        * connectors/dds4ccm/tests/DoubleNestedModule/Sender/DNM_Sender_exec.cpp:
+          Compilation test for double nested modules. The sender_exec project has a
+          dummy_label since it doesn't seem to compile.
+
 Mon Mar  8 12:33:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/VariousTopicsEvent/Base/VTopic_Base.mpc:
