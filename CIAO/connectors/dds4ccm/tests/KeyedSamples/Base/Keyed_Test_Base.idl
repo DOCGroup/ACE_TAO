@@ -10,6 +10,9 @@
 
 #pragma ndds typesupport "Base/Keyed_Test_BaseSupport.h"
 
+#pragma DCPS_DATA_TYPE "KeyedTest"
+#pragma DCPS_DATA_KEY "KeyedTest key"
+
 struct KeyedTest {
   string key; //@key
   long iteration;

@@ -10,6 +10,9 @@
 
 #pragma ndds typesupport "Base/Writer_BaseSupport.h"
 
+#pragma DCPS_DATA_TYPE "WriterTest"
+#pragma DCPS_DATA_KEY "WriterTest key"
+
 struct WriterTest {
   string key; //@key
 };
