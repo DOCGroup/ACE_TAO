@@ -52,9 +52,9 @@ public:
   
   // To help with DDD portability in DDS4CCM
   // connectors.
-  enum DDS_IMPL
+  enum
   {
-    RTIDDS,
+    NDDS,
     OPENSPLICE,
     OPENDDS
   };
@@ -681,7 +681,7 @@ public:
   void dds_impl (char const * const val);
 
   /// Return the enumerated value for the DDS implementation.
-  /// Default is RTIDDS.
+  /// Default is NDDS.
   DDS_IMPL dds_impl (void) const;
 
   /// Cleanup function.
