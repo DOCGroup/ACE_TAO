@@ -91,6 +91,7 @@
 // AMI4CCM
 #include "be_visitor_interface/ami4ccm_rh_ex_idl.cpp"
 #include "be_visitor_interface/ami4ccm_sendc_ex_idl.cpp"
+#include "be_visitor_interface/ami4ccm_conn_ex_idl.cpp"
 
 // AMH
 #include "be_visitor_interface/amh_ch.cpp"
