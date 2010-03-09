@@ -253,17 +253,6 @@
         </value>
       </value>
     </configProperty>
-    <configProperty>
-      <name>datalen</name>
-      <value>
-        <type>
-          <kind>tk_ushort</kind>
-        </type>
-        <value>
-          <ushort>999</ushort>
-        </value>
-      </value>
-    </configProperty>
   </instance>
 
   <connection>

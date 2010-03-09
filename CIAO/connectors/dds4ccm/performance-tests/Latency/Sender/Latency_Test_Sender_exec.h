@@ -118,9 +118,6 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     virtual ::CORBA::UShort number_of_sub (void);
     virtual void number_of_sub (::CORBA::UShort number_of_sub);
 
-    virtual ::CORBA::UShort datalen (void);
-    virtual void datalen (::CORBA::UShort datalen);
-
     virtual void set_session_context (::Components::SessionContext_ptr ctx);
 
     virtual void configuration_complete (void);
@@ -129,10 +126,14 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
 
-    void start(void);
+    void start (void);
     void stop (void);
     void write_one (void);
-    void read(LatencyTest instance,ACE_UINT64 receive_time);
+    void read (LatencyTest & instance,ACE_UINT64 receive_time);
+    void calc_results (void);
+    void reset_results (void);
+    void init_values (void);
+
 
   private:
     ::Latency_Test::CCM_Sender_Context_var context_;
@@ -141,6 +142,8 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
 
     CORBA::UShort iterations_;
     CORBA::UShort datalen_;
+    CORBA::UShort nr_of_runs_;
+    CORBA::UShort datalen_idx_;
     CORBA::UShort sleep_;
     Atomic_Boolean matched_;
     CORBA::UShort number_of_subscribers_;
@@ -159,6 +162,7 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     LatencyTest test_topic_;
     CORBA::Octet* buffer_;
     CORBA::Long* duration_times;
+    CORBA::Short* datalen_range_;
 };
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
