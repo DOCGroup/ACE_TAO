@@ -1,3 +1,12 @@
+Tue Mar  9 00:46:09 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker_exec.h:
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker_exec.cpp:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor_exec.h:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor_exec.cpp:
+
+          Cleaned up the example.
+
 Mon Mar  8 23:54:02 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Large_Deployment/descriptors/generate_large_plan.py:
