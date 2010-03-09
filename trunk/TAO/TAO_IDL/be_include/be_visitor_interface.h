@@ -56,6 +56,7 @@
 // AMI4CCM
 #include "be_visitor_interface/ami4ccm_rh_ex_idl.h"
 #include "be_visitor_interface/ami4ccm_sendc_ex_idl.h"
+#include "be_visitor_interface/ami4ccm_conn_ex_idl.h"
 
 // AMH
 #include "be_visitor_interface/amh_ch.h"

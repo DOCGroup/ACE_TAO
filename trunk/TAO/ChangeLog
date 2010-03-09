@@ -1,3 +1,20 @@
+Tue Mar  9 18:29:06 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/ami4ccm_conn_ex_idl.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/ami4ccm_conn_ex_idl.h:
+
+          New visitor, to generate the implied connector IDL for a
+          designated AMI4CCM IDL interface.
+
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be_include/be_visitor_interface.h:
+
+          Added the new visitor files to the IDL compiler build.
+
+        * TAO_IDL/be/be_interface.cpp:
+
+          Added code to create and launch the new visitor.
+
 Tue Mar  9 14:28:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/TAO_IDL_ACE.mwc:

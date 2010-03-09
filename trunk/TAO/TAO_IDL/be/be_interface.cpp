@@ -2963,6 +2963,16 @@ be_interface::gen_ami4ccm_idl (TAO_OutStream *os)
                          ACE_TEXT ("sendc op visitor failed\n")),
                         -1);         
     }
+    
+  be_visitor_ami4ccm_conn_ex_idl conn_visitor (&ctx);
+  
+  if (conn_visitor.visit_interface (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_interface::gen_ami4ccm_idl - ")
+                         ACE_TEXT ("connector visitor failed\n")),
+                        -1);         
+    }
      
   this->gen_nesting_close (*os);
   
