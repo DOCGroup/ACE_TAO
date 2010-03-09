@@ -1,3 +1,13 @@
+Tue Mar  9 14:40:45 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/Plan.cdp:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/Plan_pub.cdp:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/README:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/run_test.pl:
+        Add test to ciao_tests.lst and start from run_test.pl two different cdp's.
+        
+
 Tue Mar  9 14:14:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/OMG-CCM-Tutorial.ppt:
