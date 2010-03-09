@@ -11,6 +11,7 @@ else
 endif
 
 CXX_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion)
+CXX_MACHINE := $(shell $(CXX_FOR_VERSION_TEST) -dumpmachine)
 ifeq (cmd,$(findstring cmd,$(SHELL)))
 CXX_MAJOR_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion | sed -e "s/[^0-9\.]//g" | sed -e "s/\..*$$//")
 else
