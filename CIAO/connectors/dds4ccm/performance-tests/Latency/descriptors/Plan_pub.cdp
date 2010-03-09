@@ -3,8 +3,8 @@
    xmlns:xmi="http://www.omg.org/XMI"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
-  <label>Latency_Test_Depl_1</label>
-  <UUID>Latency_Test_Depl_1</UUID>
+  <label>Latency_Test_Depl_2</label>
+  <UUID>Latency_Test_Depl_2</UUID>
 
   
   <implementation xmi:id="Latency_Test_ConnectorComponentImplementation">
