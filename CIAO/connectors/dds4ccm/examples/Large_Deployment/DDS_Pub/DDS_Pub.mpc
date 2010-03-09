@@ -29,7 +29,7 @@ project(Large_DDS_Pub_lem_gen) : ciaoidldefaults , dds4ccm  {
 }
 
 project(Large_DDS_Pub_lem_stub) : ccm_svnt , dds4ccm_base  {
-  after += Large_DDS_Pub_lem_gen Large_DDS_Pub_stub  
+  after += Large_DDS_Pub_lem_gen Large_DDS_Pub_stub  Large_Deployment_stub
   libs  +=  DDS_Pub_stub Large_Deployment_stub 
   libpaths += ../lib
   libout = ../lib

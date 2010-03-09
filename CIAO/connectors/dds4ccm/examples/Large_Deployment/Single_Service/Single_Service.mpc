@@ -29,7 +29,7 @@ project(Single_Service_lem_gen) : ciaoidldefaults   {
 }
 
 project(Single_Service_lem_stub) : ccm_svnt   {
-  after += Single_Service_lem_gen Single_Service_stub 
+  after += Single_Service_lem_gen Single_Service_stub Large_Deployment_stub 
   libs  +=  Single_Service_stub Large_Deployment_stub
   libpaths += ../lib
   libout = ../lib
@@ -55,7 +55,7 @@ project(Single_Service_lem_stub) : ccm_svnt   {
 }
 
 project(Single_Service_stub) : ccm_stub   {
-  after += Single_Service_idl_gen 
+  after += Single_Service_idl_gen Large_Deployment_stub
   libs  += Large_Deployment_stub
   libpaths += ../lib
   libout = ../lib
