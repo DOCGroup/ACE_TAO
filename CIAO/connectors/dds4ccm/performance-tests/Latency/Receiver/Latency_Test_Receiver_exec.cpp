@@ -26,10 +26,10 @@ namespace CIAO_Latency_Test_Receiver_Impl
                                   const LatencyTest & an_instance,
                                   const ::CCM_DDS::ReadInfo & /*info*/)
   {
-    // Send back a packet if this is a ping
+    // Send back a packet if this is a ping.
     if (an_instance.ping == 1L)
       {
-         this->callback_.write_one(an_instance);
+        this->callback_.write_one(const_cast<LatencyTest&> (an_instance));
       }
    }
 
@@ -53,12 +53,12 @@ namespace CIAO_Latency_Test_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::write_one ( LatencyTest an_instance)
+  Receiver_exec_i::write_one (LatencyTest & an_instance)
   {
     ++this->count_;
-    //change ping , so this receiever doesn't sent this message back again
+    // Change ping , so this receiever doesn't sent this message back again
     an_instance.ping = 0L;
-    this->writer_->write_one (an_instance, ::DDS::HANDLE_NIL);
+    this->writer_->write_one(an_instance, ::DDS::HANDLE_NIL);
   }
 
   void
@@ -102,7 +102,7 @@ namespace CIAO_Latency_Test_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
-    //enable the datalistener
+    // Enable the datalistener.
     this->start();
   }
 
@@ -116,7 +116,7 @@ namespace CIAO_Latency_Test_Receiver_Impl
   Receiver_exec_i::ccm_passivate (void)
   {
      ACE_DEBUG((LM_DEBUG, "SUMMARY RECEIVER:\n "
-                           "Messages sent back: %u \n",
+                           "Total number of messages sent back: %u \n",
                            this->count_.value()));
   }
 

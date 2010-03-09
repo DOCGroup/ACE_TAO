@@ -14,7 +14,6 @@ const short MAX_DATA_SEQUENCE_LENGTH = 8192;
 typedef sequence<octet, MAX_DATA_SEQUENCE_LENGTH> OctetSeq;
 
 #pragma DCPS_DATA_TYPE "LatencyTest"
-#pragma DCPS_DATA_KEY "LatencyTest seq_num"
 
 struct LatencyTest {
   long seq_num;

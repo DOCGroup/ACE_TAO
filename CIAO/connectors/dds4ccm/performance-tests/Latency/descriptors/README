@@ -12,6 +12,5 @@ This performace test shows the latency. The test can run with different options.
 
 
 To test changes in the next attributes, changes this values in the publisher cdp-files:
-iterations : the number of messages from one instance to send. Has to be greater as 0.
-datalen: the datalen of a message (minimal 32). 
+iterations : the number of messages per run to send. Has to be greater as 0.
 sleep:  time in ms to sleep before writing the next message 

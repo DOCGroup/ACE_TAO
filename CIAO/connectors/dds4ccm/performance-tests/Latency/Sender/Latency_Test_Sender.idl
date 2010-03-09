@@ -19,7 +19,6 @@ module Latency_Test
     port CCM_DDS::LatencyTest::DDS_Write info_write;
     attribute unsigned long iterations;
     attribute unsigned short sleep; 
-    attribute unsigned short datalen; //minimal 32
     attribute unsigned short number_of_sub; //number of subscribers
     provides CCM_DDS::ConnectorStatusListener connector_status;
     port CCM_DDS::LatencyTest::DDS_Listen ping_listen;
