@@ -1,3 +1,12 @@
+Tue Mar  9 16:17:25 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/DefaultQoS.cdp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/run_test_default_qos.pl:
+        * bin/ciao_tests.lst:
+
+          Extended test to excercise sharing when no qos is specified.
+          This test currently fails.
+
 Tue Mar  9 14:40:45 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * bin/ciao_tests.lst:
@@ -6,7 +15,6 @@ Tue Mar  9 14:40:45 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * connectors/dds4ccm/performance-tests/Latency/descriptors/README:
         * connectors/dds4ccm/performance-tests/Latency/descriptors/run_test.pl:
         Add test to ciao_tests.lst and start from run_test.pl two different cdp's.
-        
 
 Tue Mar  9 14:14:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
