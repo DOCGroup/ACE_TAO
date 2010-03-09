@@ -4,7 +4,7 @@
 workspace {
   $(ACE_ROOT)/ace/ace.mpc
   $(ACE_ROOT)/apps/gperf/src
-  tao_idl.mpc
-  tao_idl_fe.mpc
-  tao_idl_be.mpc
+  $(TAO_ROOT)/TAO_IDL/tao_idl.mpc
+  $(TAO_ROOT)/TAO_IDL/tao_idl_fe.mpc
+  $(TAO_ROOT)/TAO_IDL/tao_idl_be.mpc
 }
