@@ -1765,6 +1765,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head (ACE_Message_Block *new_item,
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head");
   int queue_count = 0;
+  ACE_Notification_Strategy *notifier = 0;
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
@@ -1778,11 +1779,17 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head (ACE_Message_Block *new_item,
       return -1;
 
     queue_count = this->enqueue_head_i (new_item);
-
     if (queue_count == -1)
       return -1;
+
+#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
+    this->monitor_->receive (this->cur_length_);
+#endif
+    notifier = this->notification_strategy_;
   }
-  this->notify ();
+
+  if (0 != notifier)
+    notifier->notify();
   return queue_count;
 }
 
@@ -1796,6 +1803,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio (ACE_Message_Block *new_item,
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio");
   int queue_count = 0;
+  ACE_Notification_Strategy *notifier = 0;
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
@@ -1812,8 +1820,14 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio (ACE_Message_Block *new_item,
 
     if (queue_count == -1)
       return -1;
+
+#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
+    this->monitor_->receive (this->cur_length_);
+#endif
+    notifier = this->notification_strategy_;
   }
-  this->notify ();
+  if (0 != notifier)
+    notifier->notify ();
   return queue_count;
 }
 
@@ -1827,6 +1841,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_deadline (ACE_Message_Block *new_item,
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_deadline");
   int queue_count = 0;
+  ACE_Notification_Strategy *notifier = 0;
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
@@ -1843,8 +1858,14 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_deadline (ACE_Message_Block *new_item,
 
     if (queue_count == -1)
       return -1;
+
+#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
+    this->monitor_->receive (this->cur_length_);
+#endif
+    notifier = this->notification_strategy_;
   }
-  this->notify ();
+  if (0 != notifier)
+    notifier->notify ();
   return queue_count;
 }
 
@@ -1865,6 +1886,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (ACE_Message_Block *new_item,
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail");
   int queue_count = 0;
+  ACE_Notification_Strategy *notifier = 0;
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
@@ -1881,8 +1903,14 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (ACE_Message_Block *new_item,
 
     if (queue_count == -1)
       return -1;
+
+#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
+    this->monitor_->receive (this->cur_length_);
+#endif
+    notifier = this->notification_strategy_;
   }
-  this->notify ();
+  if (0 != notifier)
+    notifier->notify ();
   return queue_count;
 }
 
@@ -1982,10 +2010,6 @@ template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::notify (void)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::notify");
-
-#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
-  this->monitor_->receive (this->cur_length_);
-#endif
 
   // By default, don't do anything.
   if (this->notification_strategy_ == 0)
