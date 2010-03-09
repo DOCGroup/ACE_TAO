@@ -115,6 +115,8 @@ be_visitor_context_ex_idl::visit_uses (be_uses *node)
 
   if (be_global->ami4ccm_call_back ())
     {
+      os_ << be_nl;
+    
       if (node->is_multiple ())
         {
           os_ << IdentifierHelper::orig_sn (node_->name ()).c_str ()
@@ -125,12 +127,18 @@ be_visitor_context_ex_idl::visit_uses (be_uses *node)
         {
           ACE_CString original_op_name (
             impl->name ()->last_component ()->get_string ());
-          ACE_CString new_op_name = ACE_CString ("AMI_") + original_op_name;
+          ACE_CString new_op_name =
+            ACE_CString ("AMI_") + original_op_name;
           UTL_ScopedName *op_name =
             static_cast<UTL_ScopedName *> (impl->name ()->copy ());
           op_name->last_component ()->replace_string (new_op_name.c_str ());
-          os_ << be_nl << "::" << IdentifierHelper::orig_sn (op_name).c_str ()
+          
+          os_ << "::" << IdentifierHelper::orig_sn (op_name).c_str ()
               << " get_connection_sendc_" << lname << " ();";
+              
+          op_name->destroy ();
+          delete op_name;
+          op_name = 0;
         }
     }
 
