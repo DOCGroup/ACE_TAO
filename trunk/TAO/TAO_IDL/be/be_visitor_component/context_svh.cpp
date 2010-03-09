@@ -141,7 +141,8 @@ be_visitor_context_svh::visit_uses (be_uses *node)
 
   if (be_global->ami4ccm_call_back ())
     {
-      os_ << be_nl << "virtual ";
+      os_ << be_nl << be_nl
+          << "virtual ";
       
       if (is_multiple)
         {
@@ -182,6 +183,10 @@ be_visitor_context_svh::visit_uses (be_uses *node)
             {
               os_ << "void);";
             }
+            
+          op_name->destroy ();
+          delete op_name;
+          op_name = 0;
         }
     }
 
@@ -232,13 +237,21 @@ be_visitor_context_svh::visit_uses (be_uses *node)
         {
           ACE_CString original_op_name (
             node->uses_type ()->name ()->last_component ()->get_string ());
-          ACE_CString new_op_name = ACE_CString ("AMI_") + original_op_name;
+          ACE_CString new_op_name =
+            ACE_CString ("AMI_") + original_op_name;
           UTL_ScopedName *op_name =
-            static_cast<UTL_ScopedName *> (node->uses_type ()->name ()->copy ());
+            static_cast<UTL_ScopedName *> (
+              node->uses_type ()->name ()->copy ());
           op_name->last_component ()->replace_string (new_op_name.c_str ());
-          os_ << be_nl << "// Simplex sendc_" << port_name << " connection." << be_nl
+          
+          os_ << be_nl << be_nl
+              << "// Simplex sendc_" << port_name << " connection." << be_nl
               << "::" << op_name << "_var" << be_nl
               << "ciao_uses_sendc_" << port_name << "_;";
+              
+          op_name->destroy ();
+          delete op_name;
+          op_name = 0;
         }
     }
 
