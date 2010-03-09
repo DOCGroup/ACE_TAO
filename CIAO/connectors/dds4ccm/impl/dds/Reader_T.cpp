@@ -7,6 +7,7 @@
 #include "dds4ccm/impl/dds/QueryCondition.h"
 
 #include "dds4ccm/impl/dds/ndds/SampleInfo.h"
+#include "dds4ccm/impl/dds/ndds/StringSeq.h"
 
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
@@ -19,7 +20,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::Reader_T (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::Reader_T");
   #if defined DDS4CCM_USES_QUERY_CONDITION
-    this->qc_ = DDS::QueryCondition::_nil ();
+    this->qc_ = 0;
   #else
     this->cft_ = ::DDS::ContentFilteredTopic::_nil ();
   #endif
@@ -79,12 +80,12 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::read_without_instance (
 {
   DDS_ReturnCode_t retval = DDS_RETCODE_ERROR;
 #if defined DDS4CCM_USES_QUERY_CONDITION
-  if (!CORBA::is_nil (this->qc_))
+  if (this->qc_)
     {
-      this->impl ()->read_w_condition (data,
+      retval = this->impl ()->read_w_condition (data,
                                        sample_info,
                                        DDS_LENGTH_UNLIMITED,
-                                       this->qc_->get_impl ());
+                                       this->qc_);
     }
   else
     throw ::CCM_DDS::InternalError (retval, 0);
@@ -429,7 +430,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
  CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::filter (void)
 {
   #if defined DDS4CCM_USES_QUERY_CONDITION
-    if (CORBA::is_nil (this->qc_))
+    if (!this->qc_)
       {
         DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::filter - "
                       "Error: No QueryCondition set yet. First set a filter.\n"));
@@ -440,7 +441,9 @@ template <typename DDS_TYPE, typename CCM_TYPE>
                       ::CCM_DDS::QueryFilter(),
                       CORBA::NO_MEMORY ());
     filter->query = this->qc_->get_query_expression ();
-    this->qc_->get_query_parameters (filter->query_parameters);
+    ::DDS_StringSeq dds_qp;
+    this->qc_->get_query_parameters (dds_qp);
+    filter->query_parameters <<= dds_qp;
     return filter._retn ();
   #else
     if (CORBA::is_nil (this->cft_))
@@ -475,15 +478,17 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::filter");
   #if defined DDS4CCM_USES_QUERY_CONDITION
-    if (CORBA::is_nil (this->qc_))
+    if (!this->qc_)
       {
+        ::DDS_StringSeq dds_qp;
+        dds_qp <<= filter.query_parameters;
         this->qc_ = this->impl ()->create_querycondition (
                                 DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE,
                                 DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
                                 DDS_ALIVE_INSTANCE_STATE,
                                 filter.query,
-                                filter.query_parameters);
-        if (CORBA::is_nil (this->qc_))
+                                dds_qp);
+        if (!this->qc_)
           {
             DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::filter - "
                                       "Error creating query condition."));
@@ -492,16 +497,18 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
       }
     else
       {
-      ::DDS::ReturnCode_t retval = this->qc_->set_query_parameters (
-                                filter.query_parameters);
-      if (retval != ::DDS::RETCODE_OK)
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::filter - "
-                                    "Error setting expression_parameters. "
-                                    "Retval is %C\n",
-                                    translate_retcode(retval)));
-          throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, retval);
-        }
+        ::DDS_StringSeq dds_qp;
+        dds_qp <<= filter.query_parameters;
+        ::DDS::ReturnCode_t retval = this->qc_->set_query_parameters (
+                                                  dds_qp);
+        if (retval != ::DDS::RETCODE_OK)
+          {
+            DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::filter - "
+                                      "Error setting expression_parameters. "
+                                      "Retval is %C\n",
+                                      translate_retcode(retval)));
+            throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, retval);
+          }
       }
   #else
     if (CORBA::is_nil (this->cft_))
