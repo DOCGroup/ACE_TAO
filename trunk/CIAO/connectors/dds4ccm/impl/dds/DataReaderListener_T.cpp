@@ -30,11 +30,7 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(::DDS
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderListener_T::on_data_available");
 
-  if (CORBA::is_nil (this->control_.in ()) || this->control_->mode () == ::CCM_DDS::NOT_ENABLED)
-    {
-      return;
-    }
-  else
+  if (!CORBA::is_nil (this->control_.in ()) && this->control_->mode () != ::CCM_DDS::NOT_ENABLED)
     {
       if (this->reactor_)
         {
@@ -153,6 +149,7 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (::
           listener_->on_many_data (*inst_seq, *infoseq);
         }
     }
+
   // Return the loan
   reader->return_loan(data, sample_info);
 }

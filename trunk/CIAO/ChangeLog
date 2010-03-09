@@ -1,3 +1,13 @@
+Tue Mar  9 17:22:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connector/dds4ccm/impl/dds/DataReaderListener_T.cpp
+        * connector/dds4ccm/impl/dds/DataReaderStateListener_T.cpp
+        * connector/dds4ccm/impl/dds/DomainParticipantFactory.cpp
+        * connector/dds4ccm/impl/dds/Getter_T.cpp
+        * connector/dds4ccm/impl/dds/ReadCondition.h
+        * connector/dds4ccm/impl/dds/Reader_T.cpp
+          Layout and doxygen changes
+
 Tue Mar  9 16:17:25 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/DefaultQoS.cdp:

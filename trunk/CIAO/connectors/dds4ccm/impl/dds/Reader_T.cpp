@@ -354,14 +354,14 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::create_filter (
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::create_filter");
   ::DDS::Subscriber_var sub = this->reader_->get_subscriber ();
-  if (CORBA::is_nil (sub))
+  if (CORBA::is_nil (sub.in ()))
     {
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::create_filter - "
                     "Error: Unable to get Subscriber.\n"));
       throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
     }
   ::DDS::DomainParticipant_var dp = sub->get_participant ();
-  if (CORBA::is_nil (dp))
+  if (CORBA::is_nil (dp.in ()))
     {
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::create_filter - "
                     "Error: Unable to get Participant.\n"));
