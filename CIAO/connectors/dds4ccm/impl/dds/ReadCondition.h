@@ -42,20 +42,15 @@ namespace CIAO
       /// Destructor
       virtual ~CCM_DDS_ReadCondition_i (void);
 
-      virtual ::CORBA::Boolean
-      get_trigger_value (void);
+      virtual ::CORBA::Boolean get_trigger_value (void);
 
-      virtual ::DDS::SampleStateMask
-      get_sample_state_mask (void);
+      virtual ::DDS::SampleStateMask get_sample_state_mask (void);
 
-      virtual ::DDS::ViewStateMask
-      get_view_state_mask (void);
+      virtual ::DDS::ViewStateMask get_view_state_mask (void);
 
-      virtual ::DDS::InstanceStateMask
-      get_instance_state_mask (void);
+      virtual ::DDS::InstanceStateMask get_instance_state_mask (void);
 
-      virtual ::DDS::DataReader_ptr
-      get_datareader (void);
+      virtual ::DDS::DataReader_ptr get_datareader (void);
 
       DDSReadCondition * get_impl (void);
 

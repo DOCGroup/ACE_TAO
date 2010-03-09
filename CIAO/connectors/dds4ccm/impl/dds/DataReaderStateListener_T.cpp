@@ -111,7 +111,7 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_
         {
           for (::DDS_Long i = 0; i < data.length (); ++i)
             {
-              // sample data may not be valid anymore when
+              // Sample data may not be valid anymore when
               // deleted so don't check the valid_data flag
               // here.
               if (sample_info[i].instance_state ==
@@ -123,8 +123,7 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_
                 }
               if (sample_info[i].valid_data)
                 {
-                  if (sample_info[i].view_state ==
-                          ::DDS_NEW_VIEW_STATE)
+                  if (sample_info[i].view_state == ::DDS_NEW_VIEW_STATE)
                     {
                       ::CCM_DDS::ReadInfo readinfo;
                       readinfo <<= sample_info[i];
@@ -152,8 +151,8 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_
                    sample_info[i].view_state == ::DDS_NEW_VIEW_STATE) ||
                   sample_info[i].instance_state == ::DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
                 {
-                  // sample_new or sample_delete found -> first send out the updated
-                  // samples in one go
+                  // Sample_new or sample_delete found -> first send out the
+                  // updated samples in one go
                   typename CCM_TYPE::seq_type * inst_seq = 0;
                   ACE_NEW (inst_seq, typename CCM_TYPE::seq_type);
                   ::CCM_DDS::ReadInfoSeq * infoseq = 0;
@@ -171,7 +170,7 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_
                       ++ix;
                     }
                   this->listener_->on_many_updates (*inst_seq, *infoseq);
-                  // now invoke on_creation or on_deletion
+                  // Now invoke on_creation or on_deletion
                   if (sample_info[i].valid_data &&
                       sample_info[i].view_state == ::DDS_NEW_VIEW_STATE)
                     {
@@ -179,13 +178,14 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_
                       readinfo <<= sample_info[i];
                       this->listener_->on_creation (data[i], readinfo);
                     }
-                  else if (sample_info[i].instance_state == ::DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
+                  else if (sample_info[i].instance_state ==
+                           ::DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
                     {
                       ::CCM_DDS::ReadInfo readinfo;
                       readinfo <<= sample_info[i];
                       this->listener_->on_deletion (data[i], readinfo);
                     }
-                  //clean up
+                  // Clean up
                   updates.clear ();
                   nr_of_updates = 0;
                 }
@@ -195,7 +195,7 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_
                   updates.push_back (i);
                 }
             }
-          //send the latest updates.
+          // Send the latest updates.
           if (updates.size () > 0)
             {
               typename CCM_TYPE::seq_type * inst_seq = 0;

@@ -415,7 +415,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false>::get_one (
                         "CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one - "
                         "No valid available in DDS.\n"));
                 }
-              //return the loan of each read.
+              // Return the loan of each read.
               if (this->impl ()->return_loan (data, sample_info) !=
                   DDS_RETCODE_OK)
                 {

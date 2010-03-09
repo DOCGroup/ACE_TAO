@@ -111,12 +111,10 @@ namespace CIAO
       qos_profile += ACE_TEXT ("#");
       qos_profile += profile_name;
 
-      CCM_DDS_DomainParticipant_i *ccm_dds_dp = 0;
-
       ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
                       this->dps_mutex_, CORBA::INTERNAL ());
       {
-        ccm_dds_dp = this->dps_[qos_profile];
+        CCM_DDS_DomainParticipant_i *ccm_dds_dp = this->dps_[qos_profile];
 
         if (!ccm_dds_dp)
           {
