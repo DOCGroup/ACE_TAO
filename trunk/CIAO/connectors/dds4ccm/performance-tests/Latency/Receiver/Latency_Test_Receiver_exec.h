@@ -76,7 +76,7 @@ namespace CIAO_Latency_Test_Receiver_Impl
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
 
-    void write_one (LatencyTest an_instance);
+    void write_one (LatencyTest & an_instance);
 
   private:
     ::Latency_Test::CCM_Receiver_Context_var context_;
