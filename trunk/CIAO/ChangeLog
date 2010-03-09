@@ -1,3 +1,9 @@
+Tue Mar  9 13:16:38 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
+
+          Added dynamicflags omitted from previous commit on file.
+
 Tue Mar  9 13:10:45 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Latency/Base/Latency_Test_Base.idl:
@@ -13,7 +19,7 @@ Tue Mar  9 13:10:45 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * connectors/dds4ccm/performance-tests/Latency/Sender/Latency_Test_Sender_exec.cpp:
         * connectors/dds4ccm/performance-tests/Latency/Sender/Latency_Test_Sender_exec.h:
         Change attribute datalen of sample in 10 runs of increasing datalen's. Change layout output.
-        
+
 Tue Mar  9 13:08:09 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Large_Deployment/Connector/Large_Connector.mpc:
