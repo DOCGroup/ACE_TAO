@@ -8,6 +8,9 @@ project(DAnCE_Plan_Launcher_Impl) : dance_lib, dance_logger, dance_convert_plan,
                             dance_nodeapplication_stub, \
                             dance_nodeapplicationmanager_stub, \
                             dance_nodemanager_stub {
+
+  dynamicflags = DANCE_PLAN_LAUNCHER_BUILD_DLL
+
   Source_Files {
     EM_Launcher.cpp
     NM_Launcher.cpp
