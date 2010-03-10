@@ -1,3 +1,10 @@
+Wed Mar 10 22:36:40 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/Components/Progressive_exec.h:
+        * DAnCE/tests/CIAO/Components/Progressive_exec.cpp:
+
+          Missing from my previous commit.
+
 Wed Mar 10 20:34:07 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
         * tests/Minimum/Receiver/Receiver_exec.h:
