@@ -1,3 +1,8 @@
+Wed Mar 10 08:47:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/Connector/*:
+          Moved to the base directory
+
 Wed Mar  10 08:36:45 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Latency/Sender/Latency_Test_Sender_exec.h:
