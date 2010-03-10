@@ -1,3 +1,17 @@
+Wed Mar 10 14:33:00 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_Properties.idl:
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+        * DAnCE/tests/CIAO/CommandlinePassage/Component.cdp:
+
+          Adding logic allowing explicitly deployed components.  As a
+          consequence, properties attached to components will no longer be
+          passed into their associated component servers.  These
+          properties must now be associated with a component server that
+          is in a same process locality constraint the component.
+
 Wed Mar 10 13:24:23 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/Components/Progressive.idl:

@@ -581,7 +581,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             {
               ACE_ERROR ((LM_ERROR, DLINFO
                           ACE_TEXT ("PlanLauncher - ")
-                          ACE_TEXT ("Error: Unable to read in XML plan\n")));
+                          ACE_TEXT ("Error: Unable to read in CDR plan\n")));
               return -1;
             }
         }
@@ -593,7 +593,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             {
               ACE_ERROR ((LM_ERROR, DLINFO
                           ACE_TEXT ("PlanLauncher - Error: ")
-                          ACE_TEXT ("Unable to read in CDR plan\n")));
+                          ACE_TEXT ("Unable to read in XML plan\n")));
               return -1;
             }
         }
