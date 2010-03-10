@@ -72,7 +72,7 @@ namespace CIAO
         ACE_CString library_name_;
         ACE_CString profile_name_;
 
-        #if defined DDS4CCM_USES_QUERY_CONDITION
+        #if defined (DDS4CCM_USES_QUERY_CONDITION) && (DDS4CCM_USES_QUERY_CONDITION==1)
           ::DDSQueryCondition * qc_;
         #else
           DDS::ContentFilteredTopic_var cft_;

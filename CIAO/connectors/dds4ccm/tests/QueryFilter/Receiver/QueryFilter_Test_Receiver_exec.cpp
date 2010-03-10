@@ -165,6 +165,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   void
   Receiver_exec_i::get_all (void)
   {
+#if defined (DDS4CCM_USES_QUERY_CONDITION) && (DDS4CCM_USES_QUERY_CONDITION==1)
     if (CORBA::is_nil (this->getter_))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: No Getter\n"));
@@ -178,6 +179,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
         result = this->getter_->get_one (qf_info, readinfo);
         this->check_iter (*qf_info, "GET");
       }
+#endif
   }
 
   void

@@ -19,7 +19,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::Reader_T (void)
     impl_ (0)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::Reader_T");
-  #if defined DDS4CCM_USES_QUERY_CONDITION
+  #if defined (DDS4CCM_USES_QUERY_CONDITION) && (DDS4CCM_USES_QUERY_CONDITION==1)
     this->qc_ = 0;
   #else
     this->cft_ = ::DDS::ContentFilteredTopic::_nil ();
@@ -79,7 +79,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::read_without_instance (
   DDS_SampleInfoSeq & sample_info)
 {
   DDS_ReturnCode_t retval = DDS_RETCODE_ERROR;
-#if defined DDS4CCM_USES_QUERY_CONDITION
+#if defined (DDS4CCM_USES_QUERY_CONDITION) && (DDS4CCM_USES_QUERY_CONDITION==1)
   if (this->qc_)
     {
       retval = this->impl ()->read_w_condition (data,
@@ -429,7 +429,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
  ::CCM_DDS::QueryFilter *
  CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::filter (void)
 {
-  #if defined DDS4CCM_USES_QUERY_CONDITION
+  #if defined (DDS4CCM_USES_QUERY_CONDITION) && (DDS4CCM_USES_QUERY_CONDITION==1)
     if (!this->qc_)
       {
         DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::filter - "
@@ -477,7 +477,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
   const ::CCM_DDS::QueryFilter & filter)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::filter");
-  #if defined DDS4CCM_USES_QUERY_CONDITION
+  #if defined (DDS4CCM_USES_QUERY_CONDITION) && (DDS4CCM_USES_QUERY_CONDITION==1)
     if (!this->qc_)
       {
         ::DDS_StringSeq dds_qp;
