@@ -1,3 +1,9 @@
+Wed Mar 10 22:59:02 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/IDL_Test/Glfa/B.mpc:
+
+          Fixes for linking issues.
+
 Wed Mar 10 22:57:02 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Large_Deployment/Common/Common.mpc:

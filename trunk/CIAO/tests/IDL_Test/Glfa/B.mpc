@@ -30,7 +30,7 @@ project(Glfa_B_lem_gen) : ciaoidldefaults   {
 
 project(Glfa_B_lem_stub) : ccm_svnt   {
   after += Glfa_B_lem_gen Glfa_B_stub 
-  libs  +=  B_stub
+  libs  +=  B_stub A_stub
   
   
   sharedname = B_lem_stub
@@ -55,7 +55,7 @@ project(Glfa_B_lem_stub) : ccm_svnt   {
 
 project(Glfa_B_stub) : ccm_stub   {
   after += Glfa_B_idl_gen 
-  libs  += 
+  libs  += A_stub
   
   
   sharedname = B_stub
@@ -81,7 +81,7 @@ project(Glfa_B_stub) : ccm_stub   {
 project(Glfa_B_exec) : ciao_executor   {
   after   += Glfa_B_lem_stub Glfa_B_stub
   sharedname = B_exec
-  libs += B_stub B_lem_stub 
+  libs += B_stub B_lem_stub A_stub
   
   
   dynamicflags   = B_EXEC_BUILD_DLL
@@ -106,7 +106,7 @@ project(Glfa_B_exec) : ciao_executor   {
 project(Glfa_B_svnt) : ciao_servant   {
   after      +=   Glfa_B_lem_stub
   sharedname  = B_svnt
-  libs       += B_stub B_lem_stub  
+  libs       += B_stub B_lem_stub A_stub A_skel 
   
   
   dynamicflags = B_SVNT_BUILD_DLL
