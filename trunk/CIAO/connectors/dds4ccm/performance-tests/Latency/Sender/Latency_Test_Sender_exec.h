@@ -142,8 +142,8 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
 
     CORBA::UShort iterations_;
     CORBA::UShort datalen_;
-    CORBA::UShort nr_of_runs_;
     CORBA::UShort datalen_idx_;
+    CORBA::UShort nr_of_runs_;
     CORBA::UShort sleep_;
     Atomic_Boolean matched_;
     CORBA::UShort number_of_subscribers_;
