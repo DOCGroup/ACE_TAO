@@ -14,14 +14,10 @@
 
 #pragma ciao lem "Conn_Seq/VT_Seq_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::TopicSeq, ::TopicSeq_Seq> TopicSeq;
-};
-
 module VTopic
 {
-  connector VT_Seq_Connector : ::CCM_DDS::TopicSeq::DDS_Event
+  module ::CCM_DDS::Typed < ::TopicSeq, ::TopicSeq_Seq> TopicSeqConn;
+  connector VT_Seq_Connector : TopicSeqConn::DDS_Event
   {
   };
 };

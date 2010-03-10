@@ -14,14 +14,10 @@
 
 #pragma ciao lem "Conn_Valuetype/VT_Valuetype_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::TopicValuetype, ::TopicValuetype_Seq> TopicValuetype;
-};
-
 module VTopic
 {
-  connector VT_Valuetype_Connector : ::CCM_DDS::TopicValuetype::DDS_Event
+  module ::CCM_DDS::Typed < ::TopicValuetype, ::TopicValuetype_Seq> TopicValuetypeConn;
+  connector VT_Valuetype_Connector : TopicValuetypeConn::DDS_Event
   {
   };
 };
