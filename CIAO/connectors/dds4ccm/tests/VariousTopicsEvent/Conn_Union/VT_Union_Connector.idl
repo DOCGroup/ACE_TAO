@@ -14,14 +14,10 @@
 
 #pragma ciao lem "Conn_Union/VT_Union_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::TopicUnion, ::TopicUnion_Seq> TopicUnion;
-};
-
 module VTopic
 {
-  connector VT_Union_Connector : ::CCM_DDS::TopicUnion::DDS_Event
+  module ::CCM_DDS::Typed < ::TopicUnion, ::TopicUnion_Seq> TopicUnionConn;
+  connector VT_Union_Connector : TopicUnionConn::DDS_Event
   {
   };
 };

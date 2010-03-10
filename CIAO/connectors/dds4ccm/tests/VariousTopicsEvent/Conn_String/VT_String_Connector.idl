@@ -14,14 +14,10 @@
 
 #pragma ciao lem "Conn_String/VT_String_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::TopicString, ::TopicString_Seq> TopicString;
-};
-
 module VTopic
 {
-  connector VT_String_Connector : ::CCM_DDS::TopicString::DDS_Event
+  module ::CCM_DDS::Typed < ::TopicString, ::TopicString_Seq> TopicStringConn;
+  connector VT_String_Connector : TopicStringConn::DDS_Event
   {
   };
 };
