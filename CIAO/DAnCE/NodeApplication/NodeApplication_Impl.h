@@ -80,6 +80,8 @@ namespace DAnCE
       eHome,
       eComponent,
       eHomedComponent,
+      eContainer,
+      eComponentServer,
       eInvalid
     };
 
@@ -135,8 +137,9 @@ namespace DAnCE
 
     struct ComponentServer
     {
+      Instance instance;
       CONTAINERS containers;
-      ::Deployment::Properties properties;
+      const ::Deployment::Properties *properties;
       Components::Deployment::ComponentServer_var ref;
     };
 

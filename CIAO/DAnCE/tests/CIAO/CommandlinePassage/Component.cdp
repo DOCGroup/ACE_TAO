@@ -9,6 +9,24 @@
   <!-- Implementations declarations -->
 
   <!-- Home implementation -->
+  
+  <implementation xmi:id="CompSvrImpl">
+    <name>CompSvr</name>
+    <source />
+    <artifact xmi:idref="CompSvrArt" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.DAnCE.ServerExecutable</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+      
   <implementation xmi:id="CommandlinePassageComponentImplementation">
     <name>CommandlinePassageComponentImplementation</name>
     <source/>
@@ -60,16 +78,13 @@
       </value>
     </execParameter>
   </implementation>
-
-  <instance xmi:id="CommandlinePassageComponentInstance">
-    <name>CommandlinePassageComponent</name>
+  
+  <instance xmi:id="CompSvrInst">
+    <name>ComponentServerInstance</name>
     <node>CommandlinePassageNode</node>
-    <!-- hostname -->
-    <source/>
-    <implementation xmi:idref="CommandlinePassageComponentImplementation" />
-    <!-- set both edu.vanderbilt.dre.CIAO.ComponentServer.Args and
-         tc_max to the same number -->
-    <configProperty>
+    <source />
+    <implementation xmi:idref="CompSvrImpl" />
+        <configProperty>
       <name>edu.vanderbilt.dre.CIAO.ComponentServer.Args</name>
       <value>
         <type>
@@ -80,6 +95,16 @@
         </value>
       </value>
     </configProperty>
+  </instance>
+
+  <instance xmi:id="CommandlinePassageComponentInstance">
+    <name>CommandlinePassageComponent</name>
+    <node>CommandlinePassageNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="CommandlinePassageComponentImplementation" />
+    <!-- set both edu.vanderbilt.dre.CIAO.ComponentServer.Args and
+         tc_max to the same number -->
     <configProperty>
       <name>tc_max</name>
       <value>
@@ -94,6 +119,12 @@
   </instance>
 
   <!-- Artifacts declarations -->
+  <artifact xmi:id="CompSvrArt">
+    <name>CompoSvrArtifactName</name>
+    <source />
+    <node />
+    <location>ciao_componentserver</location>
+  </artifact>
   <artifact xmi:id="CommandlinePassage_ExecArtifact">
     <name>CommandlinePassage_exec</name>
     <source/>
@@ -112,5 +143,11 @@
     <node/>
     <location>CommandlinePassage_stub</location>
   </artifact>
+  
+  <localityConstraint>
+    <constraint>SameProcess</constraint>
+    <constrainedInstance xmi:idref="CompSvrInst" />
+    <constrainedInstance xmi:idref="CommandlinePassageComponentInstance" />
+  </localityConstraint>
 
 </Deployment:DeploymentPlan>
