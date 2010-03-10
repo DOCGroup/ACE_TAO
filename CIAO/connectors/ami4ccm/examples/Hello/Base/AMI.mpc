@@ -2,7 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -p Hello_Base AMI"
 
 project(Hello_Base_AMI_idl_gen) : componentidldefaults {
-  requires += dummy_label
+  avoids += dummy_label
   after += Conn_Hello_Base_idl_gen Conn_Hello_idl_gen AMI_Hello_idl_gen
   custom_only = 1
   idlflags +=  \
@@ -20,7 +20,7 @@ project(Hello_Base_AMI_idl_gen) : componentidldefaults {
 }
 
 project(Hello_Base_AMI_lem_gen) : ciaoidldefaults {
-  requires += dummy_label
+  avoids += dummy_label
   after += Hello_Base_AMI_idl_gen Conn_Hello_Base_lem_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=AMI_LEM_STUB_Export \
@@ -33,7 +33,7 @@ project(Hello_Base_AMI_lem_gen) : ciaoidldefaults {
 }
 
 project(Hello_Base_AMI_lem_stub) : ccm_svnt, ami   {
-  requires += dummy_label
+  avoids += dummy_label
   after += Hello_Base_AMI_lem_gen Hello_Base_AMI_stub AMI_Hello_Base_stub
   libs  += Hello_stub AMI_stub
   libpaths += ../lib
@@ -59,7 +59,7 @@ project(Hello_Base_AMI_lem_stub) : ccm_svnt, ami   {
 }
 
 project(Hello_Base_AMI_stub) : ccm_stub, ami   {
-  requires += dummy_label
+  avoids += dummy_label
   after += Hello_Base_AMI_idl_gen AMI_Hello_Base_stub AMI_Hello_stub
   libs  += Hello_stub
   libpaths += ../lib
@@ -85,7 +85,7 @@ project(Hello_Base_AMI_stub) : ccm_stub, ami   {
 }
 
 project(Hello_Base_AMI_exec) : ciao_executor, ami, ami4ccm_stub {
-  requires += dummy_label
+  avoids += dummy_label
   after   += Hello_Base_AMI_lem_stub AMI_Hello_Base_AMI_stub AMI_Hello_Base_skel AMI_Hello_Base_exec Hello_Base_AMI_stub AMI_Hello_exec AMI_Hello_skel
   sharedname = AMI_exec
   libs += AMI_stub AMI_lem_stub Hello_stub Hello_skel Hello_exec
@@ -113,7 +113,7 @@ project(Hello_Base_AMI_exec) : ciao_executor, ami, ami4ccm_stub {
 
 
 project(Hello_Base_AMI_svnt) : ciao_servant, ami   {
-  requires += dummy_label
+  avoids += dummy_label
   after      += AMI_Hello_Base_skel  Hello_Base_AMI_lem_stub Hello_Base_AMI_exec
   sharedname  = AMI_svnt
   libs       += AMI_stub AMI_lem_stub  \
