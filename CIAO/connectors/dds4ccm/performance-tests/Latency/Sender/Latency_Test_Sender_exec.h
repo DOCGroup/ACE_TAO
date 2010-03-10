@@ -157,6 +157,8 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     Atomic_Long seq_num_; 
     CORBA::Double sigma_duration_squared_;
     ACE_UINT64 start_time_;
+    ACE_UINT64 start_time_test_;
+    ACE_UINT64 end_time_test_;
 
     TAO_SYNCH_MUTEX mutex_;
     LatencyTest test_topic_;
