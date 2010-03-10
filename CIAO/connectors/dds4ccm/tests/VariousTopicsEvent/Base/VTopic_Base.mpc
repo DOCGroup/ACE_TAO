@@ -6,7 +6,7 @@ project (DDS_VTopic_Base_stub) : taoidldefaults, anytypecode, \
   dynamicflags += VTOPIC_BASE_STUB_BUILD_DLL
   libout = ../lib
 
-  idlflags += -SS -Sci \
+  idlflags += -SS \
               -Wb,stub_export_macro=VTOPIC_BASE_STUB_Export \
               -Wb,stub_export_include=VTopic_Base_stub_export.h
 
