@@ -4,8 +4,9 @@
 #ifndef CIAO_AMI_EXEC_H_
 #define CIAO_AMI_EXEC_H_
 
-#include "AMIEC.h"
-#include "AMI_exec_export.h"
+#include "HelloS.h"
+#include "HelloEC.h"
+#include "Hello_exec_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -15,7 +16,41 @@
 
 namespace CIAO_Hello_AMI_Sender_Impl
 {
-  class  AMI_MyFoo_exec_i
+  class AMI_MyFoo_reply_handler : public POA_Hello::AMI_MyFooHandler
+  {
+    public:
+      AMI_MyFoo_reply_handler (
+      ::Hello::AMI_MyFooCallback_ptr foo_callback);
+
+      virtual ~AMI_MyFoo_reply_handler (void);
+
+      virtual void foo (CORBA::Long result, const char * out_str);
+
+      virtual void foo_excep (::Messaging::ExceptionHolder * excep_holder);
+
+      virtual void hello (CORBA::Long answer);
+
+      virtual void hello_excep (::Messaging::ExceptionHolder * excep_holder);
+
+      virtual void get_rw_attrib (::CORBA::Short ami_return_val);
+
+      virtual void get_rw_attrib_excep (
+        ::Messaging::ExceptionHolder * excep_holder);
+
+      virtual void set_rw_attrib ();
+
+      virtual void set_rw_attrib_excep (
+        ::Messaging::ExceptionHolder * excep_holder);
+
+      virtual void get_ro_attrib (::CORBA::Short ami_return_val);
+
+      virtual void get_ro_attrib_excep (
+        ::Messaging::ExceptionHolder * excep_holder);
+    private:
+      ::Hello::AMI_MyFooCallback_var foo_callback_;
+  };
+
+  class AMI_MyFoo_exec_i
     : public virtual ::Hello::CCM_AMI_MyFoo,
       public virtual ::CORBA::LocalObject
   {
@@ -23,8 +58,6 @@ namespace CIAO_Hello_AMI_Sender_Impl
     AMI_MyFoo_exec_i ();
 
     virtual ~AMI_MyFoo_exec_i (void);
-
-    void provide_receiver (::Hello::MyFoo_ptr receiver_foo);
 
     virtual void
     sendc_foo (
@@ -48,12 +81,16 @@ namespace CIAO_Hello_AMI_Sender_Impl
         sendc_get_ro_attrib (
       ::Hello::AMI_MyFooCallback_ptr ami_handler);
 
+    void
+    set_session_context (::Components::SessionContext_ptr ctx);
+
   private:
-    Hello::MyFoo_var ami_foo_server_;
+    ::Hello::MyFoo_var ami_foo_server_;
+    ::Hello::CCM_AMI_CONN_MyFoo_Context_var context_;
   };
 
   class  AMI_exec_i
-    : public virtual AMI_Sender_Exec,
+    : public virtual ::Hello::CCM_AMI_CONN_MyFoo,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -61,11 +98,10 @@ namespace CIAO_Hello_AMI_Sender_Impl
     virtual ~AMI_exec_i (void);
 
     virtual ::Hello::CCM_AMI_MyFoo_ptr
-    get_sendc_run_my_foo (void);
+    get_provides_MyFoo (void);
 
     virtual void
-    set_session_context (
-      ::Components::SessionContext_ptr ctx);
+    set_session_context (::Components::SessionContext_ptr ctx);
 
     virtual void configuration_complete (void);
 
@@ -74,14 +110,13 @@ namespace CIAO_Hello_AMI_Sender_Impl
     virtual void ccm_remove (void);
 
   private:
-    ::Hello::CCM_AMI_Sender_Context_var context_;
+    ::Hello::CCM_AMI_CONN_MyFoo_Context_var context_;
     ::Hello::AMI_MyFooCallback_var callback_foo_;
     ::Hello::MyFoo_var receiver_foo_;
-
     AMI_MyFoo_exec_i *myfoo_;
   };
 
-  extern "C" AMI_EXEC_Export ::Components::EnterpriseComponent_ptr
+  extern "C" HELLO_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Hello_AMI_AMI_Impl (void);
 }
 
