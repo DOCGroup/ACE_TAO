@@ -5,7 +5,7 @@ project (DDS_VTopics_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_defaul
   dynamicflags += VTOPICS_BASE_STUB_BUILD_DLL
   libout = ../lib
 
-  idlflags += -SS -Sci \
+  idlflags += -SS \
               -Wb,stub_export_macro=VTOPICS_BASE_STUB_Export \
               -Wb,stub_export_include=VTopics_Base_stub_export.h
 

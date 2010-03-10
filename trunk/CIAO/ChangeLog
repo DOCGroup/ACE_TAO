@@ -1,3 +1,8 @@
+Wed Mar 10 13:51:42 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/VariousTopicsState/Base/VTopics_Base.mpc:
+          Resolved linker issues on Windows.
+
 Wed Mar  10 13:39:45 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan.cdp:
