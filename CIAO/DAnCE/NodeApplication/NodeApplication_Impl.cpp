@@ -994,7 +994,7 @@ NodeApplication_Impl::create_component_server (size_t index)
                    ACE_TEXT("creating component server %u\n"), index));
       ::Components::ConfigValues config_values;
 
-      if (this->servers_[index].properties)
+      if (this->servers_[index].properties != 0)
         {
           DANCE_DEBUG (9, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::create_component_Server - ")
                            ACE_TEXT ("Passing %u properties to component server\n"),
