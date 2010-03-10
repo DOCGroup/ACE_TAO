@@ -14,14 +14,10 @@
 
 #pragma ciao lem "Conn_Array/VT_Array_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::TopicArray, ::TopicArray_Seq> TopicArray;
-};
-
 module VTopic
 {
-  connector VT_Array_Connector : ::CCM_DDS::TopicArray::DDS_Event
+  module ::CCM_DDS::Typed < ::TopicArray, ::TopicArray_Seq> TopicArrayConn;
+  connector VT_Array_Connector : TopicArrayConn::DDS_Event
   {
   };
 };

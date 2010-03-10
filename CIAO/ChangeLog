@@ -1,3 +1,13 @@
+Wed Mar 10 14:26:29 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Array/VT_Array_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Seq/VT_Seq_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_String/VT_String_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Union/VT_Union_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Valuetype/VT_Valuetype_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Connector/VTopic_Connector.idl:
+          Moved all templated connectors to the VTopics module.
+
 Wed Mar 10 14:12:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Union:
