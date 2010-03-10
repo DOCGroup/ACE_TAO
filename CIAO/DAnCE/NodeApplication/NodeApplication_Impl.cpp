@@ -426,14 +426,19 @@ void
 NodeApplication_Impl::configuration_complete_components ()
 {
   DANCE_TRACE( "NodeApplication_Impl::configuration_complete_components");
-
+  
   bool error = false;
   ::Deployment::StartError exception;
 
   for (INSTANCES::size_type k = 0; k < this->instances_.size (); ++k)
     {
-      if (this->instances_[k]->type == eHome)
+      if (!this->instances_[k] ||
+          this->instances_[k]->type == eHome ||
+          this->instances_[k]->type == eComponentServer)
         {
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO 
+                           ACE_TEXT("NodeApplication_Impl::configuration_complete_components - ")
+                           ACE_TEXT("Skipping non-component instance\n")));
           continue;
         }
 
@@ -515,7 +520,8 @@ NodeApplication_Impl::start ()
 
   for (INSTANCES::size_type k = 0; k < this->instances_.size (); ++k)
     {
-      if (this->instances_[k]->type == eHome)
+      if (this->instances_[k]->type == eHome ||
+          this->instances_[k]->type == eComponentServer)
         {
           continue;
         }
@@ -988,14 +994,26 @@ NodeApplication_Impl::create_component_server (size_t index)
                    ACE_TEXT("creating component server %u\n"), index));
       ::Components::ConfigValues config_values;
 
-      config_values.length (this->servers_[index].properties.length ());
-      for (CORBA::ULong i = 0; i < this->servers_[index].properties.length ();
-         ++i)
-      {
-        config_values[i] = new CIAO::ConfigValue_impl (this->servers_[index].properties[i].name.in (),
-                   this->servers_[index].properties[i].value);
-
-      }
+      if (this->servers_[index].properties)
+        {
+          DANCE_DEBUG (9, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::create_component_Server - ")
+                           ACE_TEXT ("Passing %u properties to component server\n"),
+                           this->servers_[index].properties->length ()));
+          
+          config_values.length (this->servers_[index].properties->length ());
+          for (CORBA::ULong i = 0; i < this->servers_[index].properties->length ();
+               ++i)
+            {
+              DANCE_DEBUG (9, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::create_component_Server - ")
+                               ACE_TEXT ("Copying value <%C>\n"),
+                               (*this->servers_[index].properties)[i].name.in ()));
+                           
+              config_values[i] = new CIAO::ConfigValue_impl ((*this->servers_[index].properties)[i].name.in (),
+                                                             (*this->servers_[index].properties)[i].value);
+              
+            }
+        }
+      
 
       server.ref = this->activator_->create_component_server (config_values);
       DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::create_component_server - ")
@@ -1118,6 +1136,8 @@ NodeApplication_Impl::create_colocation_groups (void)
   DANCE_TRACE ("NodeApplication_Impl::create_colocation_groups");
 
   ColocationMap  retval;
+  this->servers_.max_size (this->plan_.localityConstraint.length () + 1);
+  
   size_t num_servers = 0;
 
   for (CORBA::ULong i = 0; i < this->plan_.instance.length (); ++i)
@@ -1145,17 +1165,31 @@ NodeApplication_Impl::create_colocation_groups (void)
       
       ::CORBA::ULongSeq const &instances =
         this->plan_.localityConstraint[i].constrainedInstanceRef;
-
+      
+      this->servers_.size (num_servers + 1);
+      
       for (CORBA::ULong j = 0; j < instances.length (); ++j)
         {
           std::string id = this->plan_.instance[instances[j]].name.in ();
-
+          
           DANCE_DEBUG (8, (LM_INFO, DLINFO
                         ACE_TEXT ("NodeApplication_Impl::create_colocation_groups - ")
                         ACE_TEXT ("Instance <%C> allocated to component server %u\n"),
                         id.c_str (), num_servers));
 
           retval[id] = num_servers;
+          
+          CORBA::ULong impl = this->plan_.instance[instances[j]].implementationRef;
+
+          if (this->get_instance_type (this->plan_.implementation[impl].execParameter) == 
+              eComponentServer)
+            {
+              DANCE_DEBUG (8, (LM_INFO, DLINFO
+                               ACE_TEXT ("NodeApplication_Impl::create_colocation_groups - ")
+                               ACE_TEXT ("Found component server instance\n")));
+              
+              this->servers_[num_servers].properties = &this->plan_.instance[instances[j]].configProperty;
+            }
         }
 
       ++num_servers;
@@ -1181,6 +1215,10 @@ NodeApplication_Impl::create_colocation_groups (void)
                         ACE_TEXT ("Assigning instance <%C> to default colocation group.\n"),
                         i->first.c_str ()));
           i->second = num_servers;
+        }
+      else
+        {
+          
         }
     }
 
@@ -1227,6 +1265,8 @@ NodeApplication_Impl::init_components()
             this->get_instance_type (this->plan_.implementation[impl].execParameter);
           if (type == eInvalid)
             type = this->get_instance_type (this->plan_.instance[i].configProperty);
+          if (type == eInvalid)
+            continue;
 
           switch (type)
             {
@@ -1239,7 +1279,7 @@ NodeApplication_Impl::init_components()
                 size_t const svr = colocation_map[this->plan_.instance[i].name.in ()];
                 size_t const pos = this->servers_[svr].containers[0].homes.size ();
 
-                append_properties (this->servers_[svr].properties, this->plan_.instance[i].configProperty);
+                //append_properties (this->servers_[svr].properties, this->plan_.instance[i].configProperty);
 
                 this->servers_[svr].containers[0].homes.size (pos + 1);
                 this->servers_[svr].containers[0].homes[pos] = Instance (eHome,
@@ -1255,7 +1295,7 @@ NodeApplication_Impl::init_components()
                               this->plan_.instance[i].name.in ()));
                 size_t const svr = colocation_map[this->plan_.instance[i].name.in ()];
                 size_t const pos = this->servers_[svr].containers[0].components.size ();
-                append_properties (this->servers_[svr].properties, this->plan_.instance[i].configProperty);
+                //append_properties (this->servers_[svr].properties, this->plan_.instance[i].configProperty);
                 this->servers_[svr].containers[0].components.size (pos + 1);
                 this->servers_[svr].containers[0].components[pos] = Instance (eComponent,
                                                                               &this->servers_[svr].containers[0],
@@ -1270,7 +1310,7 @@ NodeApplication_Impl::init_components()
                               this->plan_.instance[i].name.in ()));
                 size_t const svr = colocation_map[this->plan_.instance[i].name.in ()];
                 size_t const pos = this->servers_[svr].containers[0].components.size ();
-                append_properties (this->servers_[svr].properties, this->plan_.instance[i].configProperty);
+                //append_properties (this->servers_[svr].properties, this->plan_.instance[i].configProperty);
                 this->servers_[svr].containers[0].components.size (pos + 1);
                 this->servers_[svr].containers[0].components[pos] = Instance (eHomedComponent,
                                                                               &this->servers_[svr].containers[0],
@@ -1278,6 +1318,17 @@ NodeApplication_Impl::init_components()
                                                                               this->plan_.instance[i].implementationRef);
                 break;
               }
+            case eComponentServer:
+              {
+                size_t const svr = colocation_map[this->plan_.instance[i].name.in ()];
+                this->servers_[svr].instance = Instance (eComponentServer,
+                                                         0,
+                                                         i,
+                                                         this->plan_.instance[i].implementationRef);
+                this->instances_[i] = &this->servers_[svr].instance;
+                break;
+              }
+
             default:
               {
                 DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::init_components - ")
@@ -1322,6 +1373,7 @@ NodeApplication_Impl::passivate_components()
   for (INSTANCES::size_type k = 0; k < this->instances_.size (); ++k)
     {
       if (this->instances_[k]->type == eHome ||
+          this->instances_[k]->type == eComponentServer ||
           this->instances_[k]->type == eInvalid)
         continue;
 
@@ -1408,6 +1460,7 @@ NodeApplication_Impl::remove_components()
       try
         {
           if (this->instances_[k]->type == eInvalid ||
+              this->instances_[k]->type == eComponentServer ||
               this->instances_[k]->type == eHome)
             continue;
 
@@ -1592,10 +1645,26 @@ NodeApplication_Impl::get_instance_type (const ::Deployment::Properties& prop) c
                         ACE_TEXT("Found explicit home component type.\n")));
           return eHomedComponent;
         }
+
+      if (ACE_OS::strcmp (prop[i].name.in (),
+                          DAnCE::IMPL_TYPE) == 0)
+        {
+          const char *val;
+          if (get_property_value (DAnCE::IMPL_TYPE,
+                                  prop,
+                                  val) &&
+              ACE_OS::strcmp (val,
+                              DAnCE::SERVER_EXECUTABLE) == 0)
+            {
+              DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::get_instance_type - ")
+                               ACE_TEXT("Found component server type.\n")));
+              return eComponentServer;
+            }
+        }
     }
 
   DANCE_ERROR (1, (LM_INFO, DLINFO ACE_TEXT("NodeApplication_Impl::get_instance_type - ")
-                ACE_TEXT("Unable to determine instance type\n")));
+                ACE_TEXT("Unable to determine instance type, instance will be ignored.\n")));
   return eInvalid;
 }
 

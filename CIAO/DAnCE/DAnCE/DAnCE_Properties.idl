@@ -20,6 +20,10 @@ module DAnCE
   /// Property value is string.
   const string EXPLICIT_HOME = "edu.vanderbilt.dre.DAnCE.ExplicitHome";
   
+  const string SERVER_EXECUTABLE = "edu.vanderbilt.dre.DAnCE.ServerExecutable";
+  
+  const string IMPL_TYPE = "edu.vanderbilt.dre.DAnCE.ImplementationType";
+
   // Instance (i.e., Home or Component) Properties
   /// Indicates that the instance object reference should be registered in the 
   /// Instance naming context using a specified name.  Property value is string.
