@@ -1,3 +1,9 @@
+Wed Mar 10 22:57:02 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Large_Deployment/Common/Common.mpc:
+
+          Tweaked export directives to solve linking issue on Windows.
+
 Wed Mar 10 22:55:39 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/IDL_Test/Glfa/B_exec.h:
