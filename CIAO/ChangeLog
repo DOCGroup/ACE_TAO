@@ -1,3 +1,10 @@
+Wed Mar 10 22:55:39 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/IDL_Test/Glfa/B_exec.h:
+        * tests/IDL_Test/Glfa/B_exec.cpp:
+
+          Removed these files.
+
 Wed Mar 10 22:41:45 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.h:
