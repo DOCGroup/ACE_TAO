@@ -64,9 +64,6 @@ namespace CIAO_Latency_Test_Receiver_Impl
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_listen_status (void);
 
-    virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
-    get_info_listen_connector_status (void);
-
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);

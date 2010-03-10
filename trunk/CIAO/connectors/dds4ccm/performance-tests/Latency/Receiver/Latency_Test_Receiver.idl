@@ -15,7 +15,6 @@ module Latency_Test
   component Receiver
   {
     port CCM_DDS::LatencyTest::DDS_Listen info_listen;
-    provides CCM_DDS::ConnectorStatusListener info_listen_connector_status;
     port CCM_DDS::LatencyTest::DDS_Write write_ping;
   };
 };

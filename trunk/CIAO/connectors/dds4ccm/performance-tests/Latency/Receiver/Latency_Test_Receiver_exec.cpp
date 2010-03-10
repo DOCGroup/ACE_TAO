@@ -81,12 +81,6 @@ namespace CIAO_Latency_Test_Receiver_Impl
     return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
-  ::CCM_DDS::CCM_ConnectorStatusListener_ptr
-  Receiver_exec_i::get_info_listen_connector_status (void)
-  {
-    return  ::CCM_DDS::CCM_ConnectorStatusListener::_nil ();
-  }
-
   void
   Receiver_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)

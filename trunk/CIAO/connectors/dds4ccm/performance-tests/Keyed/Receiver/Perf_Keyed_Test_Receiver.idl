@@ -15,7 +15,6 @@ module Perf_Keyed_Test
   component Receiver
   {
     port CCM_DDS::PerfKeyedTest::DDS_Listen info_listen;
-    provides CCM_DDS::ConnectorStatusListener info_listen_connector_status;
     port CCM_DDS::PerfKeyedTest::DDS_Write write_ping;
   };
 };

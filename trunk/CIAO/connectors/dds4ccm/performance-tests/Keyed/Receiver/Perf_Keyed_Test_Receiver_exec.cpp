@@ -36,7 +36,7 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
     // Send back a packet if this is a ping
     if (an_instance.latency_ping == 1L)
       {
-        this->callback_.write_one(an_instance);
+        this->callback_.write_one(const_cast<PerfKeyedTest&> (an_instance));
       }
   }
 
@@ -44,53 +44,6 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
   PerfKeyedTest_Listener_exec_i::on_many_data (
                                   const PerfKeyedTest_Seq & /*an_instance*/,
                                   const ::CCM_DDS::ReadInfoSeq & /*info*/)
-  {
-  }
-
-  //============================================================
-  // ConnectorStatusListener_exec_i
-  //============================================================
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (void)
-  {
-  }
-
-  ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
-     ::DDS::Topic_ptr ,
-     const DDS::InconsistentTopicStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
-    ::DDS::DataReader_ptr ,
-     const DDS::RequestedIncompatibleQosStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr ,
-     const DDS::SampleRejectedStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
-     ::DDS::DataWriter_ptr ,
-     const DDS::OfferedDeadlineMissedStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr ,
-     const DDS::OfferedIncompatibleQosStatus & )
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_unexpected_status(
-    ::DDS::Entity_ptr ,
-    ::DDS::StatusKind /*status_kind*/)
   {
   }
 
@@ -115,7 +68,7 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::write_one ( PerfKeyedTest an_instance)
+  Receiver_exec_i::write_one ( PerfKeyedTest & an_instance)
   {
     an_instance.latency_ping = -1L;
     this->writer_->write_one (an_instance, ::DDS::HANDLE_NIL);
@@ -168,12 +121,6 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
     return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
-  ::CCM_DDS::CCM_ConnectorStatusListener_ptr
-  Receiver_exec_i::get_info_listen_connector_status (void)
-  {
-    return new ConnectorStatusListener_exec_i ();
-  }
-
   void
   Receiver_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
@@ -190,7 +137,7 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
   Receiver_exec_i::configuration_complete (void)
   {
     (void) ACE_High_Res_Timer::global_scale_factor ();
-    //enable the datalistener
+    // enable the datalistener
     this->start();
   }
 
@@ -203,7 +150,7 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_passivate (void)
   {
-    if(!this->finished_.value())  //proces ended before received last message
+    if(!this->finished_.value())  // proces ended before received last message
       {
         ACE_UINT64 last_time; 
         ACE_High_Res_Timer::gettimeofday_hr ().to_usec (last_time);
@@ -214,9 +161,11 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
     if ((this->count_.value () > 0) && (this->interval_time_ > 0))
       {  
          double per_sec = (double)1000000/ this->interval_time_;
-         double mbps =  (this->interval_bytes_received_.value()* per_sec)* (8.0/1000.0/1000.0);
+         double mbps = 
+           (this->interval_bytes_received_.value()* per_sec)* (8.0/1000.0/1000.0);
          ACE_DEBUG((LM_DEBUG, "SUMMARY RECEIVER:\n "
-                               "Data Length: %u  Messages: %u  Messages/s(ave): %6.01f,   Mbps(ave): %7.01f \n",
+                               "Data Length: %u  Messages: %u  Messages/s(ave): "
+                               "%6.01f,   Mbps(ave): %7.01f \n",
                        this->interval_data_length_.value(), 
                        this->interval_messages_received_.value(),
                        this->interval_messages_received_.value()* per_sec,
