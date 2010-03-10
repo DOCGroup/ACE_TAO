@@ -74,14 +74,17 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     // Component attributes.
 
     // Port operations.
-    virtual ::CCM_DDS::QueryFilterTest::CCM_Listener_ptr
-    get_info_out_data_listener (void);
+    virtual ::QueryFilter_Test::QueryFilterTestConn::CCM_Listener_ptr
+    get_read_port_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
-    get_info_out_status (void);
+    get_read_port_status (void);
 
     virtual ::CCM_QueryFilterStarter_ptr
     get_reader_start ();
+
+    virtual ::CCM_DDS::CCM_PortStatusListener_ptr
+    get_get_port_status (void);
 
     bool check_last ();
     void start_read (CORBA::UShort run);
@@ -108,7 +111,8 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
 
   private:
     ::QueryFilter_Test::CCM_Receiver_Context_var context_;
-    ::CCM_DDS::QueryFilterTest::Reader_var       reader_;
+    ::QueryFilter_Test::QueryFilterTestConn::Reader_var reader_;
+    ::QueryFilter_Test::QueryFilterTestConn::Getter_var getter_;
     QueryFilterRestarter_var restarter_;
     CORBA::UShort   iterations_;
     CORBA::UShort   keys_;
@@ -119,7 +123,11 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
 
     read_action_Generator *ticker_;
 
+    void test_all (void);
     void read_all (void);
+    void get_all (void);
+    void check_iter (const QueryFilterTest & sample,
+                     const char * test);
     void check_filter (void);
     void test_exception (void);
     void test_set_query_parameters (void);

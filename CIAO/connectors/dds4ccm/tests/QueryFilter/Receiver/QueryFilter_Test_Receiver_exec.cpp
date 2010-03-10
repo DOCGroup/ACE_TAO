@@ -117,63 +117,101 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
 
   // Supported operations and attributes.
   void
+  Receiver_exec_i::check_iter (const QueryFilterTest & sample,
+                               const char * test)
+  {
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C ALL : ")
+        ACE_TEXT ("sample received for <%C>: iteration <%u>\n"),
+        test,
+        sample.symbol.in (),
+        sample.iteration));
+    if (sample.iteration <= this->current_min_iteration_)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: %C ALL: "
+                              "Didn't expect samples with iterations "
+                              "<= %d\n",
+                              test,
+                              this->current_min_iteration_));
+      }
+    if (sample.iteration > this->current_max_iteration_)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: %C ALL: "
+                              "Didn't expect samples with iterations "
+                              "> %d\n",
+                              test,
+                              this->current_max_iteration_));
+      }
+  }
+
+
+  void
   Receiver_exec_i::read_all (void)
   {
+    QueryFilterTest_Seq     *queryfiltertest_info_seq;
+    ::CCM_DDS::ReadInfoSeq  *readinfo_seq;
+    this->reader_->read_all (
+            queryfiltertest_info_seq,
+            readinfo_seq);
+
+    for (CORBA::ULong it = 0; it < queryfiltertest_info_seq->length (); ++it)
+      {
+        if ((*readinfo_seq)[it].access_status == ::CCM_DDS::FRESH_INFO)
+          {
+            this->check_iter ((*queryfiltertest_info_seq)[it], "READ");
+          }
+      }
+  }
+
+  void
+  Receiver_exec_i::get_all (void)
+  {
+    if (CORBA::is_nil (this->getter_))
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: No Getter\n"));
+      }
+    QueryFilterTest * qf_info = new QueryFilterTest;
+    ::CCM_DDS::ReadInfo readinfo;
+    bool result = this->getter_->get_one (qf_info, readinfo);
+    this->check_iter (*qf_info, "GET");
+    while (result)
+      {
+        result = this->getter_->get_one (qf_info, readinfo);
+        this->check_iter (*qf_info, "GET");
+      }
+  }
+
+  void
+  Receiver_exec_i::test_all ()
+  {
+    const char * test = "GET ALL";
     try
       {
-        QueryFilterTest_Seq     *queryfiltertest_info_seq;
-        ::CCM_DDS::ReadInfoSeq  *readinfo_seq;
-        this->reader_->read_all (
-                queryfiltertest_info_seq,
-                readinfo_seq);
-
-        for (CORBA::ULong it = 0; it < queryfiltertest_info_seq->length (); ++it)
-          {
-            if ((*readinfo_seq)[it].access_status == ::CCM_DDS::FRESH_INFO)
-              {
-                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ALL : ")
-                    ACE_TEXT ("sample received for <%C>: iteration <%u>\n"),
-                    (*queryfiltertest_info_seq)[it].symbol.in (),
-                    (*queryfiltertest_info_seq)[it].iteration));
-                if ((*queryfiltertest_info_seq)[it].iteration <=
-                      this->current_min_iteration_)
-                  {
-                    ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
-                                          "Didn't expect samples with iterations "
-                                          "<= %d\n",
-                                          this->current_min_iteration_));
-                  }
-                if ((*queryfiltertest_info_seq)[it].iteration >
-                    this->current_max_iteration_)
-                  {
-                    ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
-                                          "Didn't expect samples with iterations "
-                                          "> %d\n",
-                                          this->current_max_iteration_));
-                  }
-              }
-          }
+        get_all ();
+        test = "READ ALL";
+        read_all ();
       }
     catch (const CCM_DDS::NonExistent& ex)
       {
         for (CORBA::ULong i = 0; i < ex.indexes.length (); ++i)
           {
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ALL: ")
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ERROR %C: ")
                   ACE_TEXT ("caught expected exception: index <%u>\n"),
+                  test,
                   ex.indexes[i]));
           }
       }
     catch (const CCM_DDS::InternalError& ex)
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ALL: ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: %C: ")
               ACE_TEXT ("caught InternalError exception: retval <%u>\n"),
+              test,
               ex.error_code));
       }
     catch (const CORBA::Exception& ex)
       {
-        ex._tao_print_exception ("ERROR: READ ALL: ");
+        ex._tao_print_exception (test);
         ACE_ERROR ((LM_ERROR,
-          ACE_TEXT ("ERROR: Receiver_exec_i::read_all : Exception caught\n")));
+          ACE_TEXT ("ERROR: Receiver_exec_i::test_all : Exception caught\n")));
       }
   }
 
@@ -310,6 +348,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   void
   Receiver_exec_i::set_filter ()
   {
+    ACE_DEBUG ((LM_DEBUG, "Set filter\n"));
     CCM_DDS::QueryFilter filter;
     filter.query = CORBA::string_dup (QUERY);
     filter.query_parameters.length (2);
@@ -351,14 +390,14 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
         {
           test_exception ();
           set_filter ();
-          read_all ();
+          test_all ();
           check_filter ();
           test_set_query_parameters ();
         }
         break;
       case 2:
         {
-          read_all ();
+          test_all ();
           check_filter ();
         }
         break;
@@ -390,16 +429,22 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   }
 
   // Port operations.
-  ::CCM_DDS::QueryFilterTest::CCM_Listener_ptr
-  Receiver_exec_i::get_info_out_data_listener (void)
+  ::QueryFilter_Test::QueryFilterTestConn::CCM_Listener_ptr
+  Receiver_exec_i::get_read_port_data_listener (void)
   {
-    return 0;
+    return ::QueryFilter_Test::QueryFilterTestConn::CCM_Listener::_nil ();
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
-  Receiver_exec_i::get_info_out_status (void)
+  Receiver_exec_i::get_read_port_status (void)
   {
-    return 0;
+    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
+  }
+
+  ::CCM_DDS::CCM_PortStatusListener_ptr
+  Receiver_exec_i::get_get_port_status (void)
+  {
+    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
   ::CCM_QueryFilterStarter_ptr
@@ -429,7 +474,19 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
-    this->reader_ = this->context_->get_connection_info_out_data();
+    this->reader_ = this->context_->get_connection_get_port_data ();
+    this->getter_ = this->context_->get_connection_get_port_fresh_data ();
+    DDS::Duration_t to;
+    to.sec = 5;
+    to.nanosec = 0;
+    if (!CORBA::is_nil (this->getter_))
+      {
+        this->getter_->time_out (to);
+      }
+    else
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: Unable to set time out.\n"));
+      }
     this->restarter_ = this->context_->get_connection_writer_restart ();
 }
 

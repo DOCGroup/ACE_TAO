@@ -1,3 +1,31 @@
+Wed Mar 10 10:28:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Set QueryFilter to !FIXED.
+
+        * connectors/dds4ccm/impl/dds/DomainParticipant.cpp:
+          Using lookup_description instead of find_topic. When using
+          find_topic one should use delete_topic. No need for that when
+          using lookup_description.
+          Refactored lookup_description method. Check whether TopicDescription
+          is a Topic or a ContentFilteredTopic.
+
+        * connectors/dds4ccm/impl/dds/DomainParticipantFactory.cpp:
+          Also share domainparticipant between default QOS.
+
+        * connectors/dds4ccm/impl/dds/Reader_T.cpp:
+          Calling delete_readcondition when QueryCondition is set.
+
+        * connectors/dds4ccm/tests/QueryFilter/Connector/QueryFilter_Test_Connector.idl:
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryFilter/Sender/QueryFilter_Test_Sender.idl:
+        * connectors/dds4ccm/tests/QueryFilter/Sender/QueryFilter_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryFilter/descriptors/Plan.cdp:
+          Refactored. This test now uses the Getter port. Added a getter in order to test
+          the QueryCondition on the Getter.
+
 Wed Mar 10 08:47:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/Connector/*:
