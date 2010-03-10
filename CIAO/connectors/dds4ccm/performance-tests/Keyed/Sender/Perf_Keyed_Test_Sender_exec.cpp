@@ -2,7 +2,6 @@
 // $Id$
 
 #include "Perf_Keyed_Test_Sender_exec.h"
-#include "ace/Guard_T.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "tao/ORB_Core.h"
 #include "ace/Timer_Queue.h"
@@ -62,44 +61,62 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
   void ConnectorStatusListener_exec_i::on_inconsistent_topic(
      ::DDS::Topic_ptr /*the_topic*/,
      const DDS::InconsistentTopicStatus & /*status*/)
-    {
-    }
+  {
+  }
 
   void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
-    }
+     const DDS::RequestedIncompatibleQosStatus & /*status*/)
+  {
+  }
 
   void ConnectorStatusListener_exec_i::on_sample_rejected(
      ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::SampleRejectedStatus & /*status*/)  {
-    }
+     const DDS::SampleRejectedStatus & /*status*/)
+  {
+  }
 
   void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
      ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedDeadlineMissedStatus & /*status*/)  {
-    }
+     const DDS::OfferedDeadlineMissedStatus & /*status*/)
+  {
+  }
 
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
      ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
-    }
-//- In ::on_unexpected_status a dynamic_cast is done, this is a corba reference, a corba narrow should be used, also this can return nil
+     const DDS::OfferedIncompatibleQosStatus & /*status*/)
+  {
+  }
+
   void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr the_entity,
-    ::DDS::StatusKind  status_kind)  {
-      CORBA::ULong kind = status_kind;
-      if((!CORBA::is_nil(the_entity)) && (kind==DDS::PUBLICATION_MATCHED_STATUS))
-        {
-          ::DDS::PublicationMatchedStatus_var stat;
-          ::DDS::DataWriter::_narrow(the_entity)->get_publication_matched_status(stat.out()); 
-          if((stat.in().current_count >= this->number_of_subscribers_)  && !this->matched_.value())      
-            {  
+    ::DDS::StatusKind  status_kind)
+  {
+    CORBA::ULong kind = status_kind;
+    if((!CORBA::is_nil(the_entity)) && 
+       (kind==DDS::PUBLICATION_MATCHED_STATUS))
+      {
+        ::DDS::PublicationMatchedStatus_var stat;
+        DDS::DataWriter_var wr = ::DDS::DataWriter::_narrow(the_entity);
+        if(CORBA::is_nil(wr))
+         {
+            throw ::CORBA::INTERNAL ();
+         }
+        ::DDS::ReturnCode_t retval = wr->get_publication_matched_status(stat.out ());
+        if (retval == DDS::RETCODE_OK)
+          {
+          
+            if((stat.in().current_count >= 
+             (this->number_of_subscribers_ + 1)) && 
+             !this->matched_.value())
+            {
               this->matched_ = true;
               this->callback_.start();
             }
-         }
+          }
       }
+  }
+
   //============================================================
   // WriteTickerHandler
   //============================================================
@@ -131,8 +148,8 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
       tv_total_ (0L),
       tv_max_ (0L),
       tv_min_ (0L),
-      count_ (0),  //number of returned pings
-      number_of_msg_(0), //number of sent messages
+      count_ (0),  // Number of returned pings
+      number_of_msg_(0), // Number of sent messages
       timer_(false)
   {
     this->ticker_ = new WriteTicker (*this);
@@ -152,7 +169,8 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
       this->last_key_->second->bin_data = CORBA::string_alloc(0);
 
     }
-    else if((this->iterations_ != 0) && (this->number_of_msg_ == ((this->iterations_ * this->keys_) -1)))
+    else if((this->iterations_ != 0) &&
+            (this->number_of_msg_ == ((this->iterations_ * this->keys_) -1)))
     {
       //last message
       this->last_key_->second->data_len = FINISHED_SIZE;
@@ -165,7 +183,8 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
       this->last_key_->second->bin_data = CORBA::string_alloc(this->datalen_);
     }
     
-    if((this->iterations_ != 0) && (this->number_of_msg_ >= (this->iterations_ * this->keys_)))
+    if((this->iterations_ != 0) && (this->number_of_msg_ >= 
+                                   (this->iterations_ * this->keys_)))
     {  
       this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
       this->timer_ = false;
@@ -175,32 +194,34 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
         try
           {
             this->last_key_->second->seq_num =  this->number_of_msg_;
-            //send some messages (latency_ping = 1L) with indicator that message has to be returned by the subscriber
+            // Send some messages (latency_ping = 1L) with indicator that 
+            // message has to be returned by the subscriber
             // TO DO : use other selection if more then one key is used.  
             if (( this->number_of_msg_ % this->latency_count_) == 0)
               {
                  this->last_key_->second->latency_ping = 1L;
-                 ACE_High_Res_Timer::gettimeofday_hr ().to_usec (this->last_key_->second->nanotime);
+                 ACE_High_Res_Timer::gettimeofday_hr ().to_usec (
+                               this->last_key_->second->nanotime);
               }
             else
               {
                 this->last_key_->second->latency_ping = 0L;
               }
 
-            this->writer_->write_one (this->last_key_->second, ::DDS::HANDLE_NIL);
+            this->writer_->write_one (this->last_key_->second, 
+                                      ::DDS::HANDLE_NIL);
           }
         catch (const CCM_DDS::InternalError& )
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
-                        ACE_TEXT ("while updating writer info for <%C>.\n"),
-                          this->last_key_->first.c_str ()));
+                        ACE_TEXT ("while writing a sample.\n")));
           }
         ++this->last_key_;
         ++this->number_of_msg_;
 
         if (this->last_key_ == this->samples_.end ())
           {
-            //start over again.
+            // start over again.
             this->last_key_ = this->samples_.begin ();
           }
       }
@@ -216,11 +237,12 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
     b = &bd;
     c = &cd;
 
-    for (long loop=0; (this->iterations_ == 0)||(loop <this->iterations_); ++loop ) 
+    for (long loop=0; (this->iterations_ == 0)||(loop <this->iterations_);
+         ++loop ) 
       { 
         if ( this->spin_ > 0 )
           {
-             // spin, spin, spin
+            // spin, spin, spin
             for (int m=0; m<this->spin_; ++m) {
               *a = 1.1;
               *b = 3.1415;
@@ -229,14 +251,16 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
           }
           if( this->number_of_msg_ == 0)
             {
-              //first message
+              // first message
               this->last_key_->second->data_len = INITIALIZE_SIZE;
               this->last_key_->second->bin_data = CORBA::string_alloc(0);
 
             }
-            else if( (this->iterations_ != 0) && (this->number_of_msg_ == ((this->iterations_ * this->keys_) -1)))
+            else if( (this->iterations_ != 0) && 
+                     (this->number_of_msg_ ==
+                     ((this->iterations_ * this->keys_) -1)))
             {
-              //last message
+              // last message
               this->last_key_->second->data_len = FINISHED_SIZE;
               this->last_key_->second->bin_data = CORBA::string_alloc(0);
 
@@ -244,21 +268,25 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
             else
             {
               this->last_key_->second->data_len = this->datalen_;
-              this->last_key_->second->bin_data = CORBA::string_alloc(this->datalen_);
+              this->last_key_->second->bin_data = 
+                              CORBA::string_alloc(this->datalen_);
             }
             try
           {
             this->last_key_->second->seq_num = loop;
             this->last_key_->second->latency_ping = 0L;
 
-            //if ping required
+            // if ping required
             if (( this->number_of_msg_ % this->latency_count_) == 0)
             {
-              //send some messages (latency_ping = 1L) with indicator that message has to be returned by the subscriber
+              // send some messages (latency_ping = 1L) with indicator that 
+              // message has to be returned by the subscriber
               this->last_key_->second->latency_ping = 1L;
-              ACE_High_Res_Timer::gettimeofday_hr ().to_usec (this->last_key_->second->nanotime);
+              ACE_High_Res_Timer::gettimeofday_hr ().to_usec (
+                            this->last_key_->second->nanotime);
             }
-            this->writer_->write_one (this->last_key_->second, ::DDS::HANDLE_NIL);
+            this->writer_->write_one (this->last_key_->second,
+                                       ::DDS::HANDLE_NIL);
           }
           catch (const CCM_DDS::InternalError& )
           {
@@ -268,7 +296,7 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
           }
           ++this->last_key_;
           if (this->last_key_ == this->samples_.end ())
-          {       //onto the next iteration
+          {       // onto the next iteration
             this->last_key_ = this->samples_.begin ();
           }
           ++this->number_of_msg_;
@@ -278,7 +306,9 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Sender_exec_i::get_connector_status (void)
   {
-    return new ConnectorStatusListener_exec_i (this->matched_, this->number_of_subscribers_, *this);
+    return new ConnectorStatusListener_exec_i (this->matched_, 
+                                               this->number_of_subscribers_,
+                                               *this);
   }
 
   ::CCM_DDS::PerfKeyedTest::CCM_Listener_ptr
@@ -296,8 +326,6 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
   void
   Sender_exec_i::start (void)
   {
-    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
-                        this->mutex_, CORBA::INTERNAL ());
     for (CORBA::UShort i = 1; i < this->keys_ + 1; ++i)
       {
         char key[7];
@@ -311,12 +339,12 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
         this->samples_[key] = new_key;
       }
     this->last_key_ = this->samples_.begin ();
-    //this->sleep_ is in ms
+    // this->sleep_ is in ms
     unsigned int sec = this->sleep_/1000;
     unsigned int usec = (this->sleep_ % 1000) * 1000;
  
-    //if sleep and spin both > 0, use sleep value and ignore spin value
-    if(this->sleep_ > 0) //use reactor timer to sleep  
+    // if sleep and spin both > 0, use sleep value and ignore spin value
+    if(this->sleep_ > 0) // use reactor timer to sleep  
       {
         (void) ACE_High_Res_Timer::global_scale_factor ();
         this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->timer_queue()->gettimeofday (&ACE_High_Res_Timer::gettimeofday_hr);
@@ -352,17 +380,6 @@ Sender_exec_i::record_time (unsigned long long nanotime)
       this->tv_max_ = duration;
     if (duration < this->tv_min_.value () || (this->tv_min_.value () == 0L))
       this->tv_min_ = duration;
-
-  /*  double avg = this->tv_total_.value () / this->count_.value ();
-       ACE_DEBUG ((LM_ERROR, "Sender Listener_exec_i::on_one_data:\n"
-                          " duration = %u\n total.value <%u>,\nthis->count <%u>\n,Avg <%6.01f>\nMin <%u>\nMax <%u> \n",
-                            duration,
-                            this->tv_total_.value ()/2,
-                            this->count_.value (),
-                            avg/2,
-                            this->tv_min_.value ()/2,
-                            this->tv_max_.value ()/2));
-*/
   }
 
   ::CORBA::ULong
@@ -456,7 +473,8 @@ Sender_exec_i::record_time (unsigned long long nanotime)
     if(datalen <= OVERHEAD_BYTES)
     {
        ACE_ERROR ((LM_ERROR, 
-          ACE_TEXT ("ERROR: datalen has to be bigger as %u\n"), OVERHEAD_BYTES));
+          ACE_TEXT ("ERROR: datalen has to be bigger as %u\n"),
+                    OVERHEAD_BYTES));
        throw ::CORBA::BAD_PARAM ();
     }
     this->datalen_ = datalen - OVERHEAD_BYTES;
@@ -499,7 +517,8 @@ Sender_exec_i::record_time (unsigned long long nanotime)
     catch (...)
       {
         ACE_ERROR ((LM_ERROR, 
-          ACE_TEXT ("ERROR: Sender_exec_i::ccm_activate: Unknown exception caught\n")));
+          ACE_TEXT ("ERROR: Sender_exec_i::ccm_activate:"
+                    " Unknown exception caught\n")));
       }
   }
 
@@ -522,7 +541,8 @@ Sender_exec_i::record_time (unsigned long long nanotime)
      {
        double avg = this->tv_total_.value () / this->count_.value ();
        ACE_DEBUG ((LM_DEBUG, "SUMMARY SENDER latency time-one way,in usec :\n"
-                            "Total time<%u>,\nNumber of latency messages <%u>,\nAvg <%6.01f>,\nMin <%u>,\nMax <%u>.\n",
+                            "Total time<%u>,\nNumber of latency messages <%u>,"
+                            "\nAvg <%6.01f>,\nMin <%u>,\nMax <%u>.\n",
                             this->tv_total_.value ()/2, 
                             this->count_.value (),
                             avg/2,
