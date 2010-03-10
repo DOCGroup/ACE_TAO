@@ -433,9 +433,8 @@ namespace CIAO
                    "Attempting to create topic with name %C and type %C\n",
                    impl_name, type_name));
 
-      ::DDS::Duration_t dur = { 0, 1000000 };
-      ::DDS::Topic_var tp = this->find_topic (impl_name, dur);
-      if (CORBA::is_nil (tp))
+      ::DDS::TopicDescription_var td = this->lookup_topicdescription (impl_name);
+      if (CORBA::is_nil (td))
         {
           CCM_DDS_TopicListener_i *ccm_dds_tl = 0;
           if (!CORBA::is_nil (a_listener))
@@ -475,7 +474,8 @@ namespace CIAO
           DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "DDS_DomainParticipant_i::create_topic_with_profile - "
                       "Re-using topic  with name %C and type %C.\n",
                       impl_name, type_name));
-          return ::DDS::Topic::_duplicate (tp.in ());
+          ::DDS::Topic_var tp = ::DDS::Topic::_narrow (td.in ());
+          return ::DDS::Topic::_duplicate (tp);
         }
     }
 #endif
@@ -548,14 +548,34 @@ namespace CIAO
     ::DDS::TopicDescription_ptr
     CCM_DDS_DomainParticipant_i::lookup_topicdescription (const char * name)
     {
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_i::lookup_topicdescription");
+
       ::DDS::TopicDescription_var retval = ::DDS::TopicDescription::_nil ();
+      DDS4CCM_DEBUG (7, (LM_DEBUG, "Looking up topic: name <%C>\n",
+                                   name));
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDSTopicDescription* topic = this->impl ()->lookup_topicdescription (name);
       if (topic)
         {
-          ACE_NEW_THROW_EX (retval,
-                            CCM_DDS_TopicDescription_i (topic),
-                            CORBA::NO_MEMORY ());
+          //Check the entity: is it a Topic or a ContentFilteredTopic
+          ::DDSTopic * tp = dynamic_cast < ::DDSTopic *> (topic);
+          if (tp)
+            {
+              ACE_NEW_THROW_EX (retval,
+                                CCM_DDS_Topic_i (tp),
+                                CORBA::NO_MEMORY ());
+            }
+          else
+            {
+              ::DDSContentFilteredTopic * cftp =
+                dynamic_cast < ::DDSContentFilteredTopic *>(topic);
+              if (cftp)
+                {
+                  ACE_NEW_THROW_EX (retval,
+                                    CCM_DDS_ContentFilteredTopic_i (cftp),
+                                    CORBA::NO_MEMORY ());
+                }
+            }
         }
 #else
       ::DDSTopicDescription_var topic = this->impl ()->lookup_topicdescription (name);

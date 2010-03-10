@@ -14,16 +14,12 @@
 
 #pragma ciao lem "Connector/QueryFilter_Test_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::QueryFilterTest, ::QueryFilterTest_Seq> QueryFilterTest;
-};
-
 module QueryFilter_Test
 {
-  connector QueryFilter_Test_Connector : ::CCM_DDS::QueryFilterTest::DDS_Event
+  module ::CCM_DDS::Typed < ::QueryFilterTest, ::QueryFilterTest_Seq> QueryFilterTestConn;
+  connector QueryFilter_Test_Connector : QueryFilterTestConn::DDS_Event
   {
   };
 };
 
-#endif /* QueryFilter_Test_CONNECTOR_IDL_ */
+#endif /* QUERY_FILTER_TEST_CONNECTOR_IDL_ */

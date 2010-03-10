@@ -15,7 +15,7 @@ module QueryFilter_Test
 {
   component Receiver
   {
-    port CCM_DDS::QueryFilterTest::DDS_Read info_out;
+    port QueryFilterTestConn::DDS_Get get_port;
 
     provides QueryFilterStarter reader_start;
     uses QueryFilterRestarter writer_restart;
