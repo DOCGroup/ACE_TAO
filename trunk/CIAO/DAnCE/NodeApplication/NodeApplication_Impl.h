@@ -137,6 +137,10 @@ namespace DAnCE
 
     struct ComponentServer
     {
+      ComponentServer (void) : properties (0)
+      {
+      }
+
       Instance instance;
       CONTAINERS containers;
       const ::Deployment::Properties *properties;
