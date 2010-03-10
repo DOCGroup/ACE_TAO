@@ -1,3 +1,16 @@
+Wed Mar 10 13:24:23 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/Components/Progressive.idl:
+        * DAnCE/tests/CIAO/Components/Progressive.mpc:
+        * DAnCE/tests/CIAO/Progressive_Deployments:
+        * DAnCE/tests/CIAO/Progressive_Deployments/NodeManagerMap.dat:
+        * DAnCE/tests/CIAO/Progressive_Deployments/Plan_A.cdp:
+        * DAnCE/tests/CIAO/Progressive_Deployments/Plan_B.cdp:
+        * DAnCE/tests/CIAO/Progressive_Deployments/Plan_C.cdp:
+        * DAnCE/tests/CIAO/Progressive_Deployments/run_test.pl:
+
+          Progressive deployment example.
+
 Wed Mar 10 14:26:29 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Array/VT_Array_Connector.idl:
