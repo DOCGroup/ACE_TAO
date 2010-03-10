@@ -1,0 +1,29 @@
+// $Id$
+
+/**
+ * @file VT_Union_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef VT_UNION_CONNECTOR_IDL_
+#define VT_UNION_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/VTopic_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Conn_Union/VT_Union_ConnectorE.idl"
+
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::TopicUnion, ::TopicUnion_Seq> TopicUnion;
+};
+
+module VTopic
+{
+  connector VT_Union_Connector : ::CCM_DDS::TopicUnion::DDS_Event
+  {
+  };
+};
+
+#endif /* VT_UNION_CONNECTOR_IDL_ */
