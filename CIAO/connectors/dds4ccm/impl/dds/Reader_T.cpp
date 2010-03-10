@@ -553,10 +553,12 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::set_impl (
   if (::CORBA::is_nil (reader))
     {
       this->impl_ = 0;
-      if (this->qc_)
-        {
-          this->impl ()->delete_readcondition (this->qc_);
-        }
+      #if defined (DDS4CCM_USES_QUERY_CONDITION) && (DDS4CCM_USES_QUERY_CONDITION==1)
+        if (this->qc_)
+          {
+            this->impl ()->delete_readcondition (this->qc_);
+          }
+      #endif
     }
   else
     {
