@@ -173,6 +173,10 @@ namespace CIAO_Latency_Test_Sender_Impl
   void
   Sender_exec_i::write_one (void)
   {
+    if((this->number_of_msg_ == 0) && (this->datalen_idx_ == 0))
+      {
+        ACE_High_Res_Timer::gettimeofday_hr ().to_usec (this->start_time_test_);
+      }
     // First message sent always, next messages only as previous sent message
     // is received back.
     if( (this->number_of_msg_ == 0) || ( this->received_.value()))
@@ -186,7 +190,9 @@ namespace CIAO_Latency_Test_Sender_Impl
               this->stop();
               this->timer_ = false;
               this->calc_results();
-            }
+              ACE_High_Res_Timer::gettimeofday_hr ().to_usec (this->end_time_test_);
+
+             }
           else
             {
               this->calc_results();
@@ -508,13 +514,23 @@ Sender_exec_i::record_time (ACE_UINT64  receive_time)
   {
     if((this->nr_of_runs_ -1) != this->datalen_idx_)
       {
-        ACE_DEBUG ((LM_DEBUG, "SUMMARY SENDER number of messages sent of last run (%u): %u\n",
-                          this->datalen_idx_, this->number_of_msg_));
+        ACE_DEBUG ((LM_DEBUG, "SUMMARY SENDER : %u of %u runs completed.\n"
+                             " Number of messages sent of last run (%u): %u\n",
+                          (this->datalen_idx_ + 1),
+                           this->nr_of_runs_, 
+                          (this->datalen_idx_ + 1),
+                           this->number_of_msg_));
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, "TEST successful, number of runs (%u) of %u messages.\n",
-                          this->nr_of_runs_, this->number_of_msg_));
+        ACE_UINT64 test_time_usec = this->end_time_test_ - 
+                                    this->start_time_test_;
+
+        double sec =  (double)test_time_usec / (1000 * 1000);
+        ACE_DEBUG ((LM_DEBUG, "TEST successful, number of runs (%u) of "
+                              "%u messages in %3.3f seconds.\n",
+                               this->nr_of_runs_, 
+                               this->number_of_msg_, sec));
       }
   }
 
