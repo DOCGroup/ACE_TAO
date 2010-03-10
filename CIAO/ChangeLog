@@ -1,3 +1,8 @@
+Wed Mar  10 08:36:45 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Latency/Sender/Latency_Test_Sender_exec.h:
+        Change order of variables.
+
 Tue Mar  9 17:22:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connector/dds4ccm/impl/dds/DataReaderListener_T.cpp
