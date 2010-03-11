@@ -10,6 +10,7 @@
 
 namespace CIAO_Latency_Test_Sender_Impl
 {
+
   //============================================================
   // LatencyTest_Listener_exec_i
   //============================================================
@@ -368,7 +369,7 @@ Sender_exec_i::record_time (ACE_UINT64  receive_time)
   {
     ACE_UINT64 interval =  ( receive_time  - this->start_time_);
     ++this->count_;
-    long duration = static_cast <CORBA::Long>(interval);
+    long duration = static_cast <CORBA::Long>(interval) - this->_clock_overhead_;
     int i = this->count_;
     this->duration_times[i-1] = duration;
     this->sigma_duration_squared_ += (double)duration * (double)duration;
@@ -431,7 +432,21 @@ Sender_exec_i::record_time (ACE_UINT64  receive_time)
       }
   }
 
- 
+  void
+  Sender_exec_i::calculate_clock_overhead() 
+  {
+    int num_of_loops_clock = 320;
+    ACE_UINT64 begin_time;
+    ACE_UINT64 clock_roundtrip_time;
+    ACE_High_Res_Timer::gettimeofday_hr ().to_usec (begin_time);
+    for (int i = 0; i < num_of_loops_clock; ++i)
+      {
+        ACE_High_Res_Timer::gettimeofday_hr ().to_usec (clock_roundtrip_time);
+      }
+    ACE_UINT64 total_time =  clock_roundtrip_time - begin_time;
+    this->_clock_overhead_ = (long)(total_time /num_of_loops_clock);
+  }
+
   void
   Sender_exec_i::init_values (void)
   {
@@ -450,6 +465,7 @@ Sender_exec_i::record_time (ACE_UINT64  receive_time)
     this->test_topic_.seq_num = 0;
     this->test_topic_.ping = 0;
     this->test_topic_.data.length (this->datalen_);
+    calculate_clock_overhead();
   }
 
   void
