@@ -1,15 +1,20 @@
+Thu Mar 11 09:39:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_3215_Regression/ServerORBInitializer2.{h,cpp}:
+          Layout changes
+
 Tue Mar  9 20:06:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/ami4ccm_conn_ex_idl.cpp:
-        
+
           Added code generation of IDL local interfaces related to
           the generated IDL connector.
-          
+
         * TAO_IDL/be/be_visitor_component/context_svh.cpp:
         * TAO_IDL/be/be_visitor_component/context_ex_idl.cpp:
         * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
         * TAO_IDL/be/be_visitor_component/context_svs.cpp:
-        
+
           Fixed memory leaks and made minor formatting changes
           to generated code.
 
