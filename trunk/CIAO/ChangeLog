@@ -1,3 +1,11 @@
+Thu Mar 11 13:30:45 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/run_test.pl:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/performance-tests/Latency/Sender/Latency_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Latency/Sender/Latency_Test_Sender_exec.h:
+        Decrease roundtrip_time with clock_overhead_time. Set buffersizes in Qos file. 
+
 Thu Mar 11 08:34:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DomainParticipant.cpp:
