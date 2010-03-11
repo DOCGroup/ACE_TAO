@@ -152,7 +152,11 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     this->reader_->read_all (
             queryfiltertest_info_seq,
             readinfo_seq);
-
+    if (queryfiltertest_info_seq->length () == 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::read_all : "
+                              "No samples available in Reader!\n"));
+      }
     for (CORBA::ULong it = 0; it < queryfiltertest_info_seq->length (); ++it)
       {
         if ((*readinfo_seq)[it].access_status == ::CCM_DDS::FRESH_INFO)

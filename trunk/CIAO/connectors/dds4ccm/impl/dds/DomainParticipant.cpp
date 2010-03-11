@@ -563,7 +563,7 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_i::lookup_topicdescription");
 
       ::DDS::TopicDescription_var retval = ::DDS::TopicDescription::_nil ();
-      DDS4CCM_DEBUG (7, (LM_DEBUG, "Looking up topic: name <%C>\n",
+      DDS4CCM_DEBUG (7, (LM_DEBUG, CLINFO "Looking up topic: name <%C>\n",
                                    name));
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDSTopicDescription* topic = this->impl ()->lookup_topicdescription (name);
