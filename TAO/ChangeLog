@@ -1,3 +1,17 @@
+Thu Mar 11 15:44:15 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/TAO_Internal.cpp:
+          Added a new -ORBIgnoreDefaultSvcConfFile option. It will force to
+          ignore svc.conf if it's present in current directory.
+
+        * tests/Bug_3826_Regression/svc.conf:
+        * tests/Bug_3826_Regression/server.cpp:
+        * tests/Bug_3826_Regression/run_test.pl:
+          Extended the test for using a new option.
+
+        * docs/Options.html:
+          Documented a new -ORBIgnoreDefaultSvcConfFile option.
+
 Thu Mar 11 14:09:46 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * TAO_IDL/be/be_union_branch.cpp:
