@@ -28,4 +28,8 @@
 #include "be_visitor_connector/connector_dds_exh.h"
 #include "be_visitor_connector/connector_dds_exs.h"
 
+#include "be_visitor_connector/connector_ami_exh.h"
+#include "be_visitor_connector/facet_ami_exh.h"
+#include "be_visitor_connector/executor_ami_exh.h"
+
 #endif /* TAO_BE_VISITOR_CONNECTOR_H */

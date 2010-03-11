@@ -85,13 +85,13 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
     {
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
       if (node->is_local ())
         {
           *os << " = 0";
         }
 
       break;
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
     case TAO_CodeGen::TAO_TIE_OPERATION_ARGLIST_SH:
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:

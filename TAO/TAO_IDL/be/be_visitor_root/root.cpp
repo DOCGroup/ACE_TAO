@@ -1526,7 +1526,7 @@ be_visitor_root::visit_connector (be_connector *node)
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
   int status = 0;
-
+  
   switch (this->ctx_->state ())
     {
       case TAO_CodeGen::TAO_ROOT_CNH:
