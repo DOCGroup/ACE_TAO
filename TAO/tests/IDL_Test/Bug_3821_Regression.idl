@@ -16,6 +16,16 @@ module test {
     long e_enum3;
   };
 
+  union UnionAllCoveredWithDefault_EnumerationDiscriminant switch (Enumeration) {
+  case Enum1:
+    long e_enum1;
+  case Enum2:
+    long e_enum2;
+  case Enum3:
+  default:
+    long e_def;
+  };
+
   union UnionWithDefault_EnumerationDiscriminant switch (Enumeration) {
   case Enum1:
     long e_enum1;
@@ -41,6 +51,16 @@ module test {
     long e_enum2;
   case Enum3:
     long e_enum3;
+  };
+
+  union UnionAllCoveredWithDefault_TypedefedEnumerationDiscriminant switch (TypedefedEnumeration) {
+  case Enum1:
+    long e_enum1;
+  case Enum2:
+    long e_enum2;
+  case Enum3:
+  default:
+    long e_def;
   };
 
   union UnionWithDefault_TypedefedEnumerationDiscriminant switch (TypedefedEnumeration) {

@@ -146,9 +146,19 @@ be_union_branch::gen_default_label_value (TAO_OutStream *os,
           AST_ConcreteType *act = bu->disc_type ();
           be_enum *be = be_enum::narrow_from_decl (act);
 
-          // The function value_to_name() takes care of adding
-          // any necessary scoping to the output.
-          *os << be->value_to_name (dv.u.enum_val);
+          UTL_ScopedName *sn = be->value_to_name (dv.u.enum_val);
+          if (sn)
+            {
+              // The function value_to_name() takes care of adding
+              // any necessary scoping to the output.
+              *os << be->value_to_name (dv.u.enum_val);
+            }
+          else
+            {
+              // Since CORBA defines enums to be 32bits, use -1 as the
+              // out-of-bounds value for the _default() function.
+              *os << "(" << be->name () << ") -1";
+            }
           break;
         }
       case AST_Expression::EV_longlong:

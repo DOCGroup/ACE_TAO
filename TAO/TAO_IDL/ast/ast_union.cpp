@@ -885,7 +885,7 @@ AST_Union::compute_default_index (void)
               for (unsigned long j = 0; j < ub->label_list_length (); ++j)
                 {
                   // Check if we are printing the default case.
-                  AST_UnionLabel::UnionLabel ulk = ub->label ()->label_kind ();
+                  AST_UnionLabel::UnionLabel ulk = ub->label (j)->label_kind ();
                   if (ulk == AST_UnionLabel::UL_default)
                     {
                       // Zero based indexing.
