@@ -174,28 +174,26 @@ AST_UnionBranch::label_list_length (void)
 void
 AST_UnionBranch::add_labels (AST_Union *u)
 {
-  AST_UnionLabel *ul = 0;
-  AST_Expression *ex = 0;
-
-  bool enum_labels = (u->udisc_type () == AST_Expression::EV_enum);
-
   for (UTL_LabellistActiveIterator i (this->pd_ll);
        !i.is_done ();
        i.next ())
     {
-      ul = i.item ();
-
-      if (ul->label_kind () == AST_UnionLabel::UL_default)
+      if (AST_UnionLabel::UL_default == i.item ()->label_kind ())
         {
           return;
         }
+    }
 
-      ex = ul->label_val ();
+  const bool enum_labels = (u->udisc_type () == AST_Expression::EV_enum);
+  for (UTL_LabellistActiveIterator i (this->pd_ll);
+       !i.is_done ();
+       i.next ())
+    {
+      AST_Expression *ex = i.item ()->label_val ();
       UTL_ScopedName *n = ex->n ();
-
-      if (n != 0)
+      if (n)
         {
-          u->add_to_name_referenced (ex->n ()->first_component ());
+          u->add_to_name_referenced (n->first_component ());
         }
 
       // If we have enum val labels, we need to set the type and

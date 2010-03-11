@@ -69,12 +69,25 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
           << "void " << be_nl
           << bu->name () << "::_default ()" << be_nl
           << "{" << be_idt_nl
-          << "this->_reset ();" << be_nl;
-      // Since CORBA defines enums to be 32bits, use MAXINT as the
-      // out-of-bounds value for the _default() function. It MUST not
-      // be any already defined enum label.
-      *os << "this->disc_ = (" << bt->name () << ") -1;" << be_uidt_nl;
-      *os << "}" << be_nl << be_nl;
+          << "this->_reset ();" << be_nl
+          << "this->disc_ = ";
+ 
+      // We use one of the enum values that isn't used in this
+      // union if one is available.
+      UTL_ScopedName *sn = node->value_to_name (dv.u.enum_val);
+      if (sn)
+        {
+          // The function value_to_name() takes care of adding
+          // any necessary scoping to the output.
+          *os << sn;
+        }
+      else
+        {
+          // Since CORBA defines enums to be 32bits, use -1 as the
+          // out-of-bounds value for the _default() function.
+          *os << "(" << bt->name () << ") -1";
+        }
+      *os << ";" << be_uidt_nl << "}" << be_nl << be_nl;
     }
 
   // the set method

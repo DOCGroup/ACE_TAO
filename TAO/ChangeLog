@@ -1,3 +1,25 @@
+Thu Mar 11 14:09:46 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * TAO_IDL/be/be_union_branch.cpp:
+        * TAO_IDL/be/be_visitor_union/discriminant_ci.cpp:
+        * TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
+        * TAO_IDL/ast/ast_union_branch.cpp:
+          Fixed code generation for unions related to bug#3821. If union
+          has several case labels for one element and default is not the
+          first label in this list then tao_idl generated non-compilable
+          code. Changed how default label value is generated. tao_idl uses
+          existing but unused enum labels where these exist for maximum
+          compatability with Java ORBs.
+
+        * TAO_IDL/ast/ast_union.cpp:
+          Fixed a typo in the code when union labels are iterated in
+          a loop but only the first label is always checked.
+
+        * tests/Bug_3821_Regression/test.cpp:
+        * tests/Bug_3821_Regression/test.idl:
+        * tests/IDL_Test/Bug_3821_Regression.idl:
+          Updated the test for testing new code.
+
 Thu Mar 11 09:39:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_3215_Regression/ServerORBInitializer2.{h,cpp}:

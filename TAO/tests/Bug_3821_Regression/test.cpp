@@ -28,10 +28,17 @@ namespace
              test::Enumeration wrong_disc,
              test::Enumeration expect_disc)
   {
-    if (!(in >> t) || t._d () == wrong_disc || t._d () != expect_disc)
+    if (!(in >> t))
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "ERROR: Cannot demarshal\n"),
+                           "ERROR: Cannot demarshal (test::Enumeration)\n"),
+                          -1);
+      }
+    if (t._d () == wrong_disc || t._d () != expect_disc)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "ERROR: Demarshalled (test::Enumeration) _d=%d, wrong=%d, expected=%d\n",
+                           t._d (), wrong_disc, expect_disc),
                           -1);
       }
     return 0;
@@ -43,10 +50,17 @@ namespace
              CORBA::Boolean wrong_disc,
              CORBA::Boolean expect_disc)
   {
-    if (!(in >> t) || t._d () == wrong_disc || t._d () != expect_disc)
+    if (!(in >> t))
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "ERROR: Cannot demarshal\n"),
+                           "ERROR: Cannot demarshal (CORBA::Boolean)\n"),
+                          -1);
+      }
+    if (t._d () == wrong_disc || t._d () != expect_disc)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "ERROR: Demarshalled (CORBA::Boolean) _d=%d, wrong=%d, expected=%d\n",
+                           t._d (), wrong_disc, expect_disc),
                           -1);
       }
     return 0;
@@ -58,10 +72,17 @@ namespace
              CORBA::Char wrong_disc,
              CORBA::Char expect_disc)
   {
-    if (!(in >> t) || t._d () == wrong_disc || t._d () != expect_disc)
+    if (!(in >> t))
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "ERROR: Cannot demarshal\n"),
+                           "ERROR: Cannot demarshal (CORBA::Char)\n"),
+                          -1);
+      }
+    if (t._d () == wrong_disc || t._d () != expect_disc)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "ERROR: Demarshalled (CORBA::Char) _d=%d, wrong=%d, expected=%d\n",
+                           t._d (), wrong_disc, expect_disc),
                           -1);
       }
     return 0;
@@ -73,10 +94,17 @@ namespace
              CORBA::Long wrong_disc,
              CORBA::Long expect_disc)
   {
-    if (!(in >> t) || t._d () == wrong_disc || t._d () != expect_disc)
+    if (!(in >> t))
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "ERROR: Cannot demarshal\n"),
+                           "ERROR: Cannot demarshal (CORBA::Long)\n"),
+                          -1);
+      }
+    if (t._d () == wrong_disc || t._d () != expect_disc)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "ERROR: Demarshalled (CORBA::Long) _d=%d, wrong=%d, expected=%d\n",
+                           t._d (), wrong_disc, expect_disc),
                           -1);
       }
     return 0;
@@ -205,7 +233,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
       test::UnionAllCovered_EnumerationDiscriminant uac_ed2_in;
       uac_ed2_in._d (test::Enum1);
-      demarshal (cdr_in, uac_ed2_in, test::Enum1, uac_ed_out._d ());
+      demarshal (cdr_in, uac_ed2_in, test::Enum1, uac_ed2_out._d ());
 
       test::UnionWithDefault_EnumerationDiscriminant uwd_ed_in;
       uwd_ed_in._d (test::Enum1);
@@ -217,7 +245,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
       test::UnionWithImplicitDefault_EnumerationDiscriminant uwid_ed2_in;
       uwid_ed2_in._d (test::Enum1);
-      demarshal (cdr_in, uwid_ed2_in, test::Enum1, uwid_ed_out._d ());
+      demarshal (cdr_in, uwid_ed2_in, test::Enum1, uwid_ed2_out._d ());
 
       test::UnionAllCovered_TypedefedEnumerationDiscriminant uac_ted_in;
       uac_ted_in._d (test::Enum1);
@@ -225,7 +253,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
       test::UnionAllCovered_TypedefedEnumerationDiscriminant uac_ted2_in;
       uac_ted2_in._d (test::Enum1);
-      demarshal (cdr_in, uac_ted2_in, test::Enum1, uac_ted_out._d ());
+      demarshal (cdr_in, uac_ted2_in, test::Enum1, uac_ted2_out._d ());
 
       test::UnionWithDefault_TypedefedEnumerationDiscriminant uwd_ted_in;
       uwd_ted_in._d (test::Enum1);
@@ -237,7 +265,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
       test::UnionWithImplicitDefault_TypedefedEnumerationDiscriminant uwid_ted2_in;
       uwid_ted2_in._d (test::Enum1);
-      demarshal (cdr_in, uwid_ted2_in, test::Enum1, uwid_ted_out._d ());
+      demarshal (cdr_in, uwid_ted2_in, test::Enum1, uwid_ted2_out._d ());
 
       test::UnionAllCovered_BooleanDiscriminant uac_bd_in;
       uac_bd_in._d (false);
@@ -277,7 +305,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
       test::UnionWithImplicitDefault_CharDiscriminant uwid_cd2_in;
       uwid_cd2_in._d ('\1');
-      demarshal (cdr_in, uwid_cd2_in, '\1', uwid_cd_out._d ());
+      demarshal (cdr_in, uwid_cd2_in, '\1', uwid_cd2_out._d ());
 
       test::UnionWithDefault_LongDiscriminant uwd_ld_in;
       uwd_ld_in._d (1);
@@ -289,7 +317,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
       test::UnionWithImplicitDefault_LongDiscriminant uwid_ld2_in;
       uwid_ld2_in._d (1);
-      demarshal (cdr_in, uwid_ld2_in, 1, uwid_ld_out._d ());
+      demarshal (cdr_in, uwid_ld2_in, 1, uwid_ld2_out._d ());
     }
   catch (const CORBA::Exception& ex)
     {
