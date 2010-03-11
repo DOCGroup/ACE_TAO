@@ -6,7 +6,7 @@
   <label>Latency_Test_Depl_2</label>
   <UUID>Latency_Test_Depl_2</UUID>
 
-  
+
   <implementation xmi:id="Latency_Test_ConnectorComponentImplementation">
     <name>Latency_Test_ConnectorComponentImplementation</name>
     <source/>
@@ -133,7 +133,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>HelloTest_Library#LatencyPubQoS</string>
+          <string>HelloTest_Library#LatencyQoS</string>
         </value>
       </value>
     </configProperty>
@@ -179,8 +179,8 @@
     </configProperty>
   </instance>
 
-  
-  
+
+
   <connection>
     <name>info_listen_data_pub</name>
     <deployRequirement>
@@ -219,7 +219,7 @@
       <instance xmi:idref="Latency_Test_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
-  
+
 
   <connection>
     <name>writer_connection</name>
@@ -240,7 +240,7 @@
       <instance xmi:idref="Latency_Test_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
-  
+
   <connection>
     <name>connector_status_sender</name>
     <deployRequirement>
