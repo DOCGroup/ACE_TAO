@@ -1,3 +1,22 @@
+Thu Mar 11 09:33:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-g++-common.h:
+          PPU 4.1.1 for PPC doesn't have atomic builtin support
+          for datatypes of size 1 and 2
+
+        * ace/Atomic_Op.h:
+        * ace/Atomic_Op.inl:
+          Added defines to just disable short/unsigned short/bool specializations
+
+        * tests/run_test.lst:
+          Enable 2610 but mark it as not fixed
+
+        * ace/Process_Manager.cpp:
+          Layout change
+
+        * ace/WIN32_Asynch_IO.cpp:
+          Const changes
+
 Wed Mar 10 10:31:16 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * ace/Svc_Handler.cpp:

@@ -155,6 +155,11 @@
 # if defined (__powerpc__)
 // The builtins seem to be provided for all powerpc platforms
 #   define ACE_HAS_GCC_ATOMIC_BUILTINS 1
+# if ((__GNUC__ == 4) && (__GNUC_MINOR__ == 1) && (__GNUC_PATCHLEVEL__ == 1))
+// PPU GCC 4.1.1 doesn't have builtin atomic ops for size 1/2
+#  define ACE_LACKS_GCC_ATOMIC_BUILTINS_2
+#  define ACE_LACKS_GCC_ATOMIC_BUILTINS_1
+# endif
 # endif
 # if defined (__ia64)
 // The builtins seem to be provided for the IA64 platforms
