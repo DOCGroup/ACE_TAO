@@ -386,12 +386,12 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::create_filter (
       psl = dynamic_cast <CCM_DDS::PortStatusListener_ptr> (listener.in ());
       this->reader_->set_listener (::DDS::DataReaderListener::_nil (), 0);
     }
-  ::DDS::ReturnCode_t const retval = sub->delete_datareader (this->reader_);
+/*  ::DDS::ReturnCode_t const retval = sub->delete_datareader (this->reader_);
   if (retval != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::create_filter - "
                     "Error: Unable to delete DataReader.\n"));
-    }
+    }*/
   this->reader_ = ::DDS::CCM_DataReader::_nil ();
 
   ::DDS::DataReader_var reader = ::DDS::DataReader::_nil ();
@@ -538,6 +538,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::set_qos (
   const char * library_name,
   const char * profile_name)
 {
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::set_qos");
   this->library_name_ = library_name;
   this->profile_name_ = profile_name;
   this->topic_ = topic;
@@ -549,16 +550,15 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::set_impl (
   ::DDS::DataReader_ptr reader)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::set_impl");
-
   if (::CORBA::is_nil (reader))
     {
-      this->impl_ = 0;
       #if defined (DDS4CCM_USES_QUERY_CONDITION) && (DDS4CCM_USES_QUERY_CONDITION==1)
         if (this->qc_)
           {
             this->impl ()->delete_readcondition (this->qc_);
           }
       #endif
+      this->impl_ = 0;
     }
   else
     {
