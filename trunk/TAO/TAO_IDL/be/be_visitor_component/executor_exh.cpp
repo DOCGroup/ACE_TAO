@@ -98,7 +98,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_facet_exh::")
+                         ACE_TEXT ("be_visitor_executor_exh::")
                          ACE_TEXT ("visit_component - ")
                          ACE_TEXT ("visit_component_scope() ")
                          ACE_TEXT ("failed\n")),

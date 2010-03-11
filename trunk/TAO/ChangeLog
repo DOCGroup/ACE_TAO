@@ -1,3 +1,35 @@
+Thu Mar 11 22:53:51 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_connector/connector_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+        * TAO_IDL/be_include/be_visitor_connector/facet_ami_exh.h:
+        * TAO_IDL/be_include/be_visitor_connector/connector_ami_exh.h:
+        * TAO_IDL/be_include/be_visitor_connector/executor_ami_exh.h:
+
+          New visitors to generate the AMI connector implementation
+          header.
+
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+
+          Removed generation of pure virtual extension to method
+          declarations when generating for implementation header.
+
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+
+          Added temporary code to launch the new visitors until
+          the overarching logic is in place for AMI connectors.
+
+        * TAO_IDL/be/be_visitor_connector.cpp:
+        * TAO_IDL/be_include/be_visitor_connector.h:
+
+          Added new visitor files to the include lists.
+
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+
+          Fixed typo in error message.
+
 Thu Mar 11 15:44:15 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/TAO_Internal.cpp:
