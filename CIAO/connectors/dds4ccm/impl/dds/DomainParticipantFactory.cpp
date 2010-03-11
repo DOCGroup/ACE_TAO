@@ -53,7 +53,7 @@ namespace CIAO
                             CORBA::NO_MEMORY ());
         }
 
-      ACE_CString qos_profile = "#";
+      ACE_CString qos_profile = ACE_TEXT ("default");
 
       ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
                       this->dps_mutex_, CORBA::INTERNAL ());
@@ -81,16 +81,17 @@ namespace CIAO
                               CCM_DDS_DomainParticipant_i (part),
                               CORBA::NO_MEMORY ());
             part->enable ();
-            this->dps_[qos_profile] = ccm_dds_dp;
-            CCM_DDS_DomainParticipant_i *ccm_dds_dp = dynamic_cast < CCM_DDS_DomainParticipant_i *> (retval.in ());
+            ccm_dds_dp = dynamic_cast < CCM_DDS_DomainParticipant_i *> (retval.in ());
             ccm_dds_dp->set_impl (part);
+
+            this->dps_[qos_profile] = ccm_dds_dp;
 
             return retval._retn ();
           }
         else
           {
             DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_DomainParticipantFactory_i::create_participant_with_profile - "
-                        "Re-using participant for QOS profile <%C> and domin <%d>.\n",
+                        "Re-using participant for QOS profile <%C> and domain <%d>.\n",
                         qos_profile.c_str (),
                         domain_id));
             return ::DDS::DomainParticipant::_duplicate (ccm_dds_dp);
