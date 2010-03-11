@@ -1,3 +1,8 @@
+Thu Mar 11 14:08:05 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryFilter/descriptors/Plan.cdp:
+          Using the right port.
+
 Thu Mar 11 13:41:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/OMG-CCM-Tutorial.ppt:
