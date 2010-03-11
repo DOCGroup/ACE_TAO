@@ -1,3 +1,15 @@
+Thu Mar 11 20:03:08 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DomainParticipant.cpp:
+          Improved logging.
+
+        * connectors/dds4ccm/impl/dds/Reader_T.cpp:
+          Code layout. Do not call delete_datareader when applying
+          filter.
+
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.cpp:
+          Test whether DDS returns samples at all.
+
 Thu Mar 11 19:45:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Latency/descriptors/Plan_pub.cdp:
