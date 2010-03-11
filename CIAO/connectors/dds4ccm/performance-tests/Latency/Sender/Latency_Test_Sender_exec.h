@@ -133,6 +133,7 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     void calc_results (void);
     void reset_results (void);
     void init_values (void);
+    void calculate_clock_overhead(void); 
 
 
   private:
@@ -165,6 +166,7 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     CORBA::Octet* buffer_;
     CORBA::Long* duration_times;
     CORBA::Short* datalen_range_;
+    CORBA::Long _clock_overhead_;
 };
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

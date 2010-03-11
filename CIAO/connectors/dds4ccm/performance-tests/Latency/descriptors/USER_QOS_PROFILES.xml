@@ -134,6 +134,25 @@ RTI Data Distribution Service user manual.
           <kind>EXCLUSIVE_OWNERSHIP_QOS</kind>
         </ownership>
       </datareader_qos>
+      <participant_qos>
+        <receiver_pool>
+          <buffer_size>8712</buffer_size>
+        </receiver_pool>
+       <property>
+          <value>
+            <element>
+              <name>dds.transport.builtin.mask</name>
+              <value>DDS_TRANSPORTBUILTIN_UDPv4</value>
+              <name>dds.transport.UDPv4.builtin.parent.message_size_max</name>
+              <value>8712</value>
+              <name>dds.transport.UDPv4.builtin.recv_socket_buffer_size</name>
+              <value>17424</value>
+              <name>dds.transport.UDPv4.builtin.send_socket_buffer_size</name>
+              <value>8712</value>
+            </element>
+          </value>
+        </property>
+      </participant_qos>
     </qos_profile>
 
     <qos_profile name="LatencySubQoS" is_default_qos="true">
@@ -193,7 +212,25 @@ RTI Data Distribution Service user manual.
           <direct_communication>true</direct_communication>
         </durability>
       </datareader_qos>
-
+      <participant_qos>
+        <receiver_pool>
+          <buffer_size>8712</buffer_size>
+        </receiver_pool>
+        <property>
+          <value>
+            <element>
+              <name>dds.transport.builtin.mask</name>
+              <value>DDS_TRANSPORTBUILTIN_UDPv4</value>
+              <name>dds.transport.UDPv4.builtin.parent.message_size_max</name>
+              <value>8712</value>
+              <name>dds.transport.UDPv4.builtin.recv_socket_buffer_size</name>
+              <value>17424</value>
+              <name>dds.transport.UDPv4.builtin.send_socket_buffer_size</name>
+              <value>8712</value>
+            </element>
+          </value>
+        </property>
+      </participant_qos>
     </qos_profile>
   </qos_library>
 
