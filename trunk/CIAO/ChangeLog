@@ -1,3 +1,25 @@
+Thu Mar 11 07:46:28 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Array/VTS_Array_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Seq/VTS_Seq_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_String/VTS_String_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsState/Connector/VTopics_Connector.idl:
+          Moved templated connector to the VTopics namespace.
+
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Union:
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Union/VTS_Union_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Union/VTS_Union_Connector.mpc:
+          Added an union connector.
+
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Valuetype:
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Valuetype/VTS_Valuetype_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Valuetype/VTS_Valuetype_Connector.mpc:
+          Added a valuetype connector.
+
+        * connectors/dds4ccm/tests/VariousTopicsState/Receiver/VTopics_Receiver.mpc:
+        * connectors/dds4ccm/tests/VariousTopicsState/Sender/VTopics_Sender.mpc:
+          Added the union and valuetype connectors to these mpc files.
+
 Wed Mar 10 22:59:02 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/IDL_Test/Glfa/B.mpc:
