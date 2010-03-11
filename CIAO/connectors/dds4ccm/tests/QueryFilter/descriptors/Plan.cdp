@@ -257,7 +257,7 @@
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>push_consumer_data</portName>
+      <portName>pull_consumer_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="QueryFilter_Test_ConnectorComponentInstance2" />
@@ -281,26 +281,6 @@
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="QueryFilter_Test_ConnectorComponentInstance2" />
-    </internalEndpoint>
-  </connection>
-
-  <connection>
-    <name>read_port_connector_status_sender</name>
-    <deployRequirement>
-      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
-      <resourceType>Local_Interface</resourceType>
-    </deployRequirement>
-    <internalEndpoint>
-      <portName>read_port_connector_status</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="SenderComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>error_listener</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="QueryFilter_Test_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
 
