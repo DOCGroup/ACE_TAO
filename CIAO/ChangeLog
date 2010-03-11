@@ -1,3 +1,12 @@
+Thu Mar 11 08:34:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DomainParticipant.cpp:
+          Also reusing the topic for the default qos.
+
+        * connectors/dds4ccm/impl/dds/DomainParticipantFactory.cpp:
+          Resolved bug regarding reusing the domainparticipant for
+          default qos.
+
 Thu Mar 11 07:46:28 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/VariousTopicsState/Conn_Array/VTS_Array_Connector.idl:
