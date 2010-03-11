@@ -135,7 +135,8 @@ namespace
   parse_private_args_i (int &argc,
                         ACE_TCHAR **argv,
                         ACE_ARGV & svc_config_argv,
-                        bool & skip_service_config_open);
+                        bool & skip_service_config_open,
+                        bool & ignore_default_svc_conf_file);
 
   /**
    * Initialize ORB-local (private) ACE Service Configurator
@@ -301,10 +302,13 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
         return -1;
     }
 
+  bool ignore_default_svc_conf_file = false;
+
   if (parse_private_args_i (tmpargc,
           tmpargv,
           global_svc_config_argv,
-          skip_service_config_open) == -1)
+          skip_service_config_open,
+          ignore_default_svc_conf_file) == -1)
     return -1;
 
   // register_global_services_i depends on the parsing of at least the
@@ -318,7 +322,8 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
   int status = open_private_services_i (theone,
                                         global_svc_config_argc,
                                         global_svc_config_argv.argv (),
-                                        skip_service_config_open);
+                                        skip_service_config_open,
+                                        ignore_default_svc_conf_file);
 
   // okay?
   if (status == -1)
@@ -413,12 +418,14 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
   // Should we skip the ACE_Service_Config::open() method?,
   // e.g., because of -ORBSkipServiceConfigOpen
   bool skip_service_config_open = false;
+  bool ignore_default_svc_conf_file = false;
 
   // Extract any ORB options from the argument vector.
   if (parse_private_args_i (argc,
                             argv,
                             svc_config_argv,
-                            skip_service_config_open) == -1)
+                            skip_service_config_open,
+                            ignore_default_svc_conf_file) == -1)
     {
       return -1;
     }
@@ -457,7 +464,8 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
         open_private_services_i (pcfg,
                                  svc_config_argc,
                                  svc_config_argv.argv (),
-                                 skip_service_config_open);
+                                 skip_service_config_open,
+                                 ignore_default_svc_conf_file);
     }
 
   if (status < 0 && TAO_debug_level > 0)
@@ -530,7 +538,7 @@ namespace
     return pcfg->open (command_line.get_argc (),
                        command_line.get_TCHAR_argv (),
                        0,
-                       0, // Don't ignore static services.
+                       false, // Don't ignore static services.
                        ignore_default_svc_conf_file);
   }
 
@@ -825,7 +833,8 @@ namespace
   parse_private_args_i (int &argc,
                         ACE_TCHAR **argv,
                         ACE_ARGV &svc_config_argv,
-                        bool & skip_service_config_open)
+                        bool & skip_service_config_open,
+                        bool & ignore_default_svc_conf_file)
   {
     // Extract the Service Configurator ORB options from the argument
     // vector.
@@ -838,6 +847,13 @@ namespace
             (ACE_TEXT ("-ORBSkipServiceConfigOpen")))
           {
             skip_service_config_open = true;
+
+            arg_shifter.consume_arg ();
+          }
+        if (0 == arg_shifter.cur_arg_strncasecmp
+            (ACE_TEXT ("-ORBIgnoreDefaultSvcConfFile")))
+          {
+            ignore_default_svc_conf_file = true;
 
             arg_shifter.consume_arg ();
           }

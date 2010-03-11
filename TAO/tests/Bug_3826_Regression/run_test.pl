@@ -26,7 +26,7 @@ print STDOUT "Testing with -ORBSvcConf\n";
 
 $SV = $server->CreateProcess ("server",
     "-a \"AAA -ORBdebuglevel $debug_level -ORBSvcConf $server_svc_conf -ORBGestalt LOCAL\" " .
-    "-b \"BBB\"");
+    "-b \"BBB\" -e 1");
 
 $server_status = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
@@ -39,7 +39,20 @@ print STDOUT "Testing with default svc.conf\n";
 
 $SV = $server->CreateProcess ("server",
     "-a \"AAA -ORBdebuglevel $debug_level -ORBGestalt LOCAL\" " .
-    "-b \"BBB\"");
+    "-b \"BBB\" -e 2");
+
+$server_status = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    exit 1;
+}
+
+print STDOUT "Testing with -ORBIgnoreDefaultSvcConfFile\n";
+
+$SV = $server->CreateProcess ("server",
+    "-a \"AAA -ORBdebuglevel $debug_level -ORBIgnoreDefaultSvcConfFile\" " .
+    "-b \"BBB -ORBGestalt LOCAL\" -e 0"); # -e 0 means no expected value.
 
 $server_status = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
@@ -50,10 +63,11 @@ if ($server_status != 0) {
 
 print STDOUT "Testing with -ORBSvcConfDirective\n";
 
+$directive = "static Resource_Factory \\\\\\\"-ORBConnectionCacheMax 3\\\\\\\"";
 $SV = $server->CreateProcess ("server",
-    "-a \"AAA -ORBdebuglevel $debug_level -ORBGestalt LOCAL " .
-        "-ORBSvcConfDirective \\\"static Resource_Factory \\\\\\\"-ORBConnectionCacheMax 1\\\\\\\"\\\"\" " .
-    "-b \"BBB\"");
+    "-a \"AAA -ORBdebuglevel $debug_level -ORBGestalt LOCAL -ORBIgnoreDefaultSvcConfFile " .
+        "-ORBSvcConfDirective \\\"$directive\\\"\" " .
+    "-b \"BBB\" -e 3");
 
 $server_status = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 

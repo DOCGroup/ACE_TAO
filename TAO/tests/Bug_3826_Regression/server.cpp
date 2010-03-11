@@ -10,11 +10,12 @@ ACE_TCHAR const *orb1_args =
   ACE_TEXT ("AAA -ORBGestalt LOCAL -ORBSvcConf MY_TEST_ORB_1.conf");
 ACE_TCHAR const *orb2_args =
   ACE_TEXT ("BBB");
+int expected_value = 0;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("a:b:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("a:b:e:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -26,12 +27,16 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'b':
         orb2_args = get_opts.opt_arg ();
         break;
+      case 'e':
+        expected_value = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("usage:  %s")
                            ACE_TEXT (" -a <orb1_args>")
                            ACE_TEXT (" -b <orb2_args>")
+                           ACE_TEXT (" -e <expected value of ORBConnectionCacheMax>")
                            ACE_TEXT ("\n"),
                            argv [0]),
                           -1);
@@ -88,7 +93,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             -1);
         }
 
-      if (trf1->cache_maximum () == trf2->cache_maximum ())
+      if (trf1->cache_maximum () == trf2->cache_maximum () ||
+          (0 != expected_value && trf1->cache_maximum () != expected_value))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("ERROR: '-ORBConnectionCacheMax' is ")
