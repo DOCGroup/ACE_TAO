@@ -261,11 +261,12 @@ ACE_Process_Manager::ACE_Process_Manager (size_t size,
 {
   ACE_TRACE ("ACE_Process_Manager::ACE_Process_Manager");
 
-  if (this->open (size,
-                  r) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Process_Manager")));
+  if (this->open (size, r) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("ACE_Process_Manager")));
+    }
 }
 
 // Close up and release all resources.

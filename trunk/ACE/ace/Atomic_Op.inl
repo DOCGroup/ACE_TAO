@@ -466,6 +466,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator= (unsigned long rhs)
   return *this;
 }
 
+#if !defined (ACE_LACKS_GCC_ATOMIC_BUILTINS_2)
 ACE_INLINE
 ACE_Atomic_Op<ACE_Thread_Mutex, short>::ACE_Atomic_Op (void) :
   ACE_Atomic_Op_GCC<short>()
@@ -517,7 +518,9 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned short>::operator= (unsigned short rhs)
   ACE_Atomic_Op_GCC<unsigned short>::operator= (rhs);
   return *this;
 }
+#endif
 
+#if !defined (ACE_LACKS_GCC_ATOMIC_BUILTINS_1)
 ACE_INLINE
 ACE_Atomic_Op<ACE_Thread_Mutex, bool>::ACE_Atomic_Op (void) :
   ACE_Atomic_Op_GCC<bool> ()
@@ -543,6 +546,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, bool>::operator= (bool rhs)
   ACE_Atomic_Op_GCC<bool>::operator= (rhs);
   return *this;
 }
+#endif
 
 #endif /* ACE_HAS_GCC_ATOMIC_BUILTINS==1 */
 
