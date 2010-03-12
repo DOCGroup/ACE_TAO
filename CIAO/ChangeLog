@@ -1,3 +1,13 @@
+Fri Mar 12 20:49:58 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/docs/OMG-DnC-Tutorial.ppt:
+        
+          Updated runtime diagram. 
+        
+        * DAnCE/docs/sources/dance-deployment.odg:
+
+          Source for runtime diagram. 
+
 Fri Mar 12 14:47:49 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DDS_Get_T.cpp:
