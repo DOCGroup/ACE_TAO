@@ -40,7 +40,6 @@ public:
 private:
   be_interface *op_scope_;
   const char *comment_border_;
-  const char *your_code_here_;
 };
 
 #endif /* _BE_COMPONENT_FACET_EXS_H_ */

@@ -18,8 +18,7 @@ be_visitor_facet_exs::be_visitor_facet_exs (
   : be_visitor_component_scope (ctx),
     op_scope_ (0),
     comment_border_ ("//=============================="
-                     "=============================="),
-    your_code_here_ ("/* Your code here. */")
+                     "==============================")
 {
 }
 

@@ -81,7 +81,7 @@ public:
 
   /// Returns the original operation from which this one was created,
   /// applies only to implied IDL
-  be_operation *original_operation ();
+  be_operation *original_operation (void);
 
   // Narrowing
 

@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 be_visitor_executor_ami_exh::be_visitor_executor_ami_exh (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -53,7 +52,14 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
       << "virtual ~" << node->local_name () << suffix
       << " (void);";
 
-  // TODO - visit scope and generate get_provides_*
+  if (this->visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_executor_ami_exh::")
+                         ACE_TEXT ("visit_connector - ")
+                         ACE_TEXT ("visit_scope() failed\n")),
+                        -1);
+    }
 
   os_ << be_nl << be_nl
       << "virtual void" << be_nl
@@ -71,7 +77,25 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
       << smart_scope << scope->full_name () << "::CCM_"
       << node->local_name () << "_Context_var context_;" << be_nl;
 
-      // TODO - rest of members.
+  /// We make use of the naming conventions AMI_xxx_Connector
+  /// and AMI_xxx for the AMI connector and 'sendc' interface.
+  /// First, we strip off the "_Connector" suffix.
+  ACE_CString connector_name (node->local_name ());
+  ACE_CString half_stripped_name (
+    connector_name.substr (0, connector_name.find ("_Connector")));
+  
+  os_ << smart_scope << scope->full_name () << "::"
+      << half_stripped_name.c_str ()
+      << "Callback_var callback_;" << be_nl;
+      
+  /// Now we strip off the "AMI_" prefix.    
+  ACE_CString stripped_name (
+    half_stripped_name.substr (ACE_OS::strlen ("AMI_")));
+    
+  os_ << smart_scope << scope->full_name () << "::"
+      << stripped_name.c_str () << "_var receptacle_;" << be_nl;
+      
+  os_ << half_stripped_name.c_str () <<  "_exec_i *facet_exec_;";
 
   os_ << be_uidt_nl
       << "};";
@@ -80,8 +104,18 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
 }
 
 int
-be_visitor_executor_ami_exh::visit_provides (be_provides *)
+be_visitor_executor_ami_exh::visit_provides (be_provides *node)
 {
+  AST_Type *t = node->provides_type ();
+  AST_Decl *scope = ScopeAsDecl (t->defined_in ());
+  bool global = (scope->node_type () == AST_Decl::NT_root);
+  const char *smart_scope = (global ? "" : "::");
+  
+  os_ << be_nl << be_nl
+      << "virtual " << smart_scope << scope->full_name ()
+      << "::CCM_" << t->local_name () << "_ptr" << be_nl
+      << "get_" << node->local_name () << " (void);";
+  
   return 0;
 }
 

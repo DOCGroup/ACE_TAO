@@ -1,11 +1,12 @@
 
 //=============================================================================
 /**
- *  @file    connector_ami_exh.cpp
+ *  @file    connector_ami_exs.cpp
  *
  *  $Id$
  *
- *  Visitor generating code for AMI4CCM Connectors in the exec impl header.
+ *  Visitor generating code for AMI4CCM Connectors in the exec
+ *  impl source.
  *
  *
  *  @author Jeff Parsons
@@ -13,23 +14,18 @@
 //=============================================================================
 
 
-be_visitor_connector_ami_exh::be_visitor_connector_ami_exh (
+be_visitor_connector_ami_exs::be_visitor_connector_ami_exs (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
 {
-  // This is initialized in the base class to svnt_export_macro()
-  // or skel_export_macro(), since there are many more visitor
-  // classes generating servant code. So we can just override
-  // all that here.
-  this->export_macro_ = be_global->conn_export_macro ();
 }
 
-be_visitor_connector_ami_exh::~be_visitor_connector_ami_exh (void)
+be_visitor_connector_ami_exs::~be_visitor_connector_ami_exs (void)
 {
 }
 
 int
-be_visitor_connector_ami_exh::visit_connector (be_connector *node)
+be_visitor_connector_ami_exs::visit_connector (be_connector *node)
 {
   if (node->imported ())
     {
@@ -45,23 +41,23 @@ be_visitor_connector_ami_exh::visit_connector (be_connector *node)
       << "_Impl" << be_nl
       << "{" << be_idt;
       
-  be_visitor_facet_ami_exh facet_visitor (this->ctx_);
+  be_visitor_facet_ami_exs facet_visitor (this->ctx_);
   
   if (facet_visitor.visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_connector_ami_exh::")
+                         ACE_TEXT ("be_visitor_connector_ami_exs::")
                          ACE_TEXT ("visit_connector - ")
                          ACE_TEXT ("facet visitor failed\n")),
                         -1);
     }
-      
-  be_visitor_executor_ami_exh exec_visitor (this->ctx_);
+            
+  be_visitor_executor_ami_exs exec_visitor (this->ctx_);
   
   if (exec_visitor.visit_connector (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_connector_ami_exh::")
+                         ACE_TEXT ("be_visitor_connector_ami_exs::")
                          ACE_TEXT ("visit_connector - ")
                          ACE_TEXT ("exec visitor failed\n")),
                         -1);
@@ -76,12 +72,24 @@ be_visitor_connector_ami_exh::visit_connector (be_connector *node)
 }
 
 void
-be_visitor_connector_ami_exh::gen_entrypoint (void)
+be_visitor_connector_ami_exs::gen_entrypoint (void)
 {
   os_ << be_nl << be_nl
-      << "extern \"C\" " << this->export_macro_.c_str ()
-      << " ::Components::EnterpriseComponent_ptr" << be_nl
+      << "extern \"C\" ::Components::EnterpriseComponent_ptr"
+      << be_nl
       << "create_" << this->node_->flat_name ()
-      << "_Impl (void);";
+      << "_Impl (void)" << be_nl
+      << "{" << be_idt_nl
+      << "::Components::EnterpriseComponent_ptr retval ="
+      << be_idt_nl
+      << "::Components::EnterpriseComponent::_nil ();"
+      << be_uidt_nl << be_nl
+      << "ACE_NEW_RETURN (" << be_idt_nl
+      << "retval," << be_nl
+      << this->node_->local_name () << "_exec_i," << be_nl
+      << "::Components::EnterpriseComponent::_nil ());"
+      << be_nl << be_nl
+      << "return retval;" << be_uidt_nl
+      << "}";
 }
 

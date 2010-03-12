@@ -1,3 +1,29 @@
+Fri Mar 12 20:34:24 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_visitor_connector/connector_ami_exs.h:
+        * TAO_IDL/be/be_visitor_connector/connector_ami_exs.cpp:
+        * TAO_IDL/be_include/be_visitor_connector/executor_ami_exs.h:
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+        * TAO_IDL/be_include/be_visitor_connector/facet_ami_exs.h:
+
+          New visitors, generating the source code for the AMI
+          connector implementation.
+
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_connector.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exs.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+        * TAO_IDL/be_include/be_operation.h:
+        * TAO_IDL/be_include/be_visitor_connector.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_exs.h:
+
+          Changes related to the new visitors described above,
+          and other minor changes.
+
 Fri Mar 12 11:19:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
