@@ -1138,6 +1138,60 @@ ace_ctype_test (void)
 }
 
 int
+ceilf_test (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Testing ceilf method\n")));
+
+  float values[]  = {-2.5, -1.5, 1.5, 2.5};
+  float results[] = {-2.0, -1.0, 2.0, 3.0};
+  float result = 0.0;
+  int error_count = 0;
+
+  for (size_t i = 0 ; i < sizeof (values) / sizeof (float) ; i++)
+    {
+      result = ACE_OS::ceil (values [i]);
+      if (!is_equal(result, results[i]))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("ceilf error: input %.1F, output %1F, expected %1F\n"),
+                      values [i],
+                      result,
+                      results [i]));
+          error_count++;
+        }
+    }
+
+  return error_count;
+}
+
+int
+floorf_test (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Testing floorf method\n")));
+
+  float values[]  = {-2.5, -1.5, 1.5, 2.5};
+  float results[] = {-3.0, -2.0, 1.0, 2.0};
+  float result = 0.0;
+  int error_count = 0;
+
+  for (size_t i = 0 ; i < sizeof (values) / sizeof (float) ; i++)
+    {
+      result = ACE_OS::floor (values [i]);
+      if (!is_equal(result, results[i]))
+        {
+          ACE_ERROR ((LM_ERROR, 
+                      ACE_TEXT ("floorf error: input %.1F, output %1F, expected %1F\n"), 
+                      values [i], result, results [i]));
+          error_count++;
+        }
+    }
+
+  return error_count;
+}
+
+int
 ceil_test (void)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -1306,6 +1360,12 @@ run_main (int, ACE_TCHAR *[])
       status = result;
 
   if ((result = pagesize_test ()) != 0)
+      status = result;
+
+  if ((result = ceilf_test ()) != 0)
+      status = result;
+
+  if ((result = floorf_test ()) != 0)
       status = result;
 
   if ((result = ceil_test ()) != 0)

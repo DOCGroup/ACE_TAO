@@ -1,3 +1,13 @@
+Fri Mar 12 12:09:02 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_math.h:
+        * ace/OS_NS_math.inl:
+          Rewrote ceil and floor functions using templates and overloaded
+          ceil/floor functions provided by standard C++.
+
+        * tests/OS_Test.cpp:
+          Added a test for ceil(loat) and floor(float).
+        
 Thu Mar 11 09:33:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-g++-common.h:
