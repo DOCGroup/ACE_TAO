@@ -1026,8 +1026,8 @@ be_visitor_module::visit_connector (be_connector *node)
           /// visitor creation based on connector inheritance.
           if (base == 0)
             {
-//              be_visitor_connector_ami_exh v (&ctx);
-//              status = node->accept (&v);
+              be_visitor_connector_ami_exs v (&ctx);
+              status = node->accept (&v);
               break;
             }
             
