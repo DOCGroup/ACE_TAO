@@ -202,6 +202,8 @@ sub iboot_cycle_power {
 
   if (defined($iboot_outlet) && defined($iboot_user) && defined($iboot_passwd)) {
     # We perform case #3
+    # This case doesn't support shutdown
+    return if $mode == 1;
 
     my $t = new Net::Telnet();
 

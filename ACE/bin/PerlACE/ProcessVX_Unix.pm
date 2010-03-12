@@ -83,6 +83,41 @@ sub DESTROY
 
 ###############################################################################
 
+# Use the "expect" program to invoke telnet, doesn't need Perl's Net::Telnet.
+# This is run by the child process which was forked from Spawn().
+sub expect_telnet
+{
+  my($host, $port, $prompt, $cmdsRef) = @_;
+  my $pid = open(EXP, "|expect -f -") or die "ERROR: Could not run 'expect'";
+  $SIG{'TERM'} = sub {         # If the parent wants to Kill() this process,
+    kill 'TERM', $pid;         # send a SIGTERM to the expect process and
+    $SIG{'TERM'} = 'DEFAULT';  # then go back to the normal handler for TERM
+    kill 'TERM', $$;           # and invoke it.
+  };
+  print EXP <<EOT;
+set timeout -1
+spawn telnet $host $port
+expect -re "$prompt"
+EOT
+  # target login and password are not currently implemented
+  for my $cmd (@$cmdsRef) {
+    my $cmdEsc = $cmd;
+    $cmdEsc =~ s/\"/\\\"/g; # escape quotes
+    print EXP <<EOT;
+send "$cmdEsc\r"
+expect -re "$prompt"
+EOT
+  }
+  print EXP <<EOT;
+send "exit\r"
+expect -re "Au revoir!"
+exit 0
+EOT
+  close EXP;
+  waitpid $pid, 0;
+}
+
+
 # Spawn the process and continue.
 
 sub Spawn ()
@@ -262,7 +297,12 @@ sub Spawn ()
             }
             if (!defined $telnet_port)  {
                 $telnet_port = 23;
-              }
+            }
+            if (defined $ENV{'ACE_RUN_VX_USE_EXPECT'}) {
+              expect_telnet($telnet_host, $telnet_port, $prompt, \@cmds);
+              sleep(2);
+              exit;
+            }
             if (defined $ENV{'ACE_TEST_VERBOSE'}) {
                 print "Opening telnet connection <" . $telnet_host . ":". $telnet_port . ">\n";
             }
@@ -424,7 +464,8 @@ sub Kill ()
     my $self = shift;
 
     if ($self->{RUNNING} && !defined $ENV{'ACE_TEST_WINDOW'}) {
-        kill ('KILL', $self->{PROCESS});
+        kill ((defined $ENV{'ACE_RUN_VX_USE_EXPECT'}) ? 'TERM' : 'KILL',
+              $self->{PROCESS});
         waitpid ($self->{PROCESS}, 0);
         $self->check_return_value ($?);
     }
