@@ -235,7 +235,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>TestSquare</string>
+          <string>OIT_Topic</string>
         </value>
       </value>
     </configProperty>
@@ -254,7 +254,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>TestSquare</string>
+          <string>OIT_Topic</string>
         </value>
       </value>
     </configProperty>
@@ -274,7 +274,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>TestSquare</string>
+          <string>OIT_Topic</string>
         </value>
       </value>
     </configProperty>

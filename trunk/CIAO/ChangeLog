@@ -1,3 +1,11 @@
+Fri Mar 12 10:45:51 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/descriptors/Plan.cdp:
+          Renamed topic names.
+
+        * connectors/dds4ccm/tests/VariousTopicsState/Base/VTopics_Base.mpc:
+          Resolved linking issues on Windows.
+
 Fri Mar 12 09:12:45 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Getter/descriptors/Plan.cdp:
