@@ -498,7 +498,7 @@ namespace CIAO
 
       CCM_DDS_Topic_i *top = dynamic_cast< CCM_DDS_Topic_i *> (a_topic);
 
-      if (top == 0)
+      if (!top)
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic - "
                        "Unable to cast provided object reference to servant.\n"));
@@ -508,6 +508,28 @@ namespace CIAO
       DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic - "
                    "Successfully casted provided object reference to servant.\n"));
 
+      ::DDS::TopicDescription_var td =
+          lookup_topicdescription (ACE_TEXT ("DDS4CCMContentFilteredTopic"));
+      if (!CORBA::is_nil (td.in ()))
+        {
+          ::DDS::ContentFilteredTopic_var cft = ::DDS::ContentFilteredTopic::_narrow (td.in ());
+          if (!CORBA::is_nil (cft.in ()))
+            {
+              ::DDS::ReturnCode_t const ret = this->delete_contentfilteredtopic (cft.in ());
+              if (ret != ::DDS::RETCODE_OK)
+                {
+                  DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic - "
+                                              "Unable to delete ContentFilteredTopic. Retval is %C.\n",
+                                              translate_retcode (ret)));
+                }
+            }
+          else
+            {
+              DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic - "
+                                           "Unable to narrow found TopicDescription to "
+                                           "a ContentFilteredTopic.\n"));
+            }
+        }
       DDS_ReturnCode_t const retval = this->impl ()->delete_topic (top->get_impl ());
 
       if (retval != DDS_RETCODE_OK)
@@ -659,11 +681,22 @@ namespace CIAO
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_i::delete_contentfilteredtopic (::DDS::ContentFilteredTopic_ptr /*a_contentfilteredtopic*/)
+    CCM_DDS_DomainParticipant_i::delete_contentfilteredtopic (::DDS::ContentFilteredTopic_ptr a_contentfilteredtopic)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::delete_contentfilteredtopic");
-      throw CORBA::NO_IMPLEMENT ();
-
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      CCM_DDS_ContentFilteredTopic_i *ccm_dds_cft =
+          dynamic_cast < CCM_DDS_ContentFilteredTopic_i *> (a_contentfilteredtopic);
+      if (!ccm_dds_cft)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_i::delete_contentfilteredtopic - "
+                       "Unable to cast provided ContentFilteredTopic.\n"));
+          return ::DDS::RETCODE_BAD_PARAMETER;
+        }
+      return this->impl ()->delete_contentfilteredtopic (ccm_dds_cft->get_impl ());
+#else
+      return this->impl ()->delete_contentfilteredtopic (a_contentfilteredtopic);
+#endif
     }
 
     ::DDS::MultiTopic_ptr

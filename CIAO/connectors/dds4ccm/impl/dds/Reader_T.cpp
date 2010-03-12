@@ -369,7 +369,6 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::create_filter (
                     "Error: Unable to get Participant.\n"));
       throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
     }
-
   this->cft_ = dp->create_contentfilteredtopic (
                         "DDS4CCMContentFilteredTopic",
                         this->topic_.in (),
@@ -388,12 +387,6 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::create_filter (
       psl = dynamic_cast <CCM_DDS::PortStatusListener_ptr> (listener.in ());
       this->reader_->set_listener (::DDS::DataReaderListener::_nil (), 0);
     }
-/*  ::DDS::ReturnCode_t const retval = sub->delete_datareader (this->reader_);
-  if (retval != ::DDS::RETCODE_OK)
-    {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::create_filter - "
-                    "Error: Unable to delete DataReader.\n"));
-    }*/
   this->reader_ = ::DDS::CCM_DataReader::_nil ();
 
   ::DDS::DataReader_var reader = ::DDS::DataReader::_nil ();

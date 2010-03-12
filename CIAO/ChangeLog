@@ -1,3 +1,17 @@
+Fri Mar 12 14:47:49 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Listen_T.cpp:
+          Don't delete the datareader when a ContentFilteredTopic is
+          used.
+
+        * connectors/dds4ccm/impl/dds/DomainParticipant.cpp:
+          Implemented delete_contentfilteredtopic. Also trying to
+          delete the contentfiltered topic when it's topic is deleted.
+
+        * connectors/dds4ccm/impl/dds/Reader_T.cpp:
+          Removed commented code.
+
 Fri Mar 12 14:00:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Latency/Sender/Latency_Test_Sender_exec.cpp
