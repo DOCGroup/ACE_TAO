@@ -1527,16 +1527,36 @@ be_visitor_root::visit_connector (be_connector *node)
   ctx.node (node);
   int status = 0;
   
+  AST_Connector *base = node->base_connector ();
+
   switch (this->ctx_->state ())
     {
       case TAO_CodeGen::TAO_ROOT_CNH:
         {
+          /// Hack until we get logic in place to strategize
+          /// visitor creation based on connector inheritance.
+          if (base == 0)
+            {
+              be_visitor_connector_ami_exh v (&ctx);
+              status = node->accept (&v);
+              break;
+            }
+            
           be_visitor_connector_dds_exh visitor (&ctx);
           status = node->accept (&visitor);
           break;
         }
       case TAO_CodeGen::TAO_ROOT_CNS:
         {
+          /// Hack until we get logic in place to strategize
+          /// visitor creation based on connector inheritance.
+          if (base == 0)
+            {
+              be_visitor_connector_ami_exs v (&ctx);
+              status = node->accept (&v);
+              break;
+            }
+            
           be_visitor_connector_dds_exs visitor (&ctx);
           status = node->accept (&visitor);
           break;

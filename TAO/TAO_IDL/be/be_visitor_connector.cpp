@@ -13,6 +13,7 @@
 //=============================================================================
 
 #include "ast_template_module_inst.h"
+#include "ast_uses.h"
 
 #include "utl_identifier.h"
 
@@ -21,6 +22,7 @@
 #include "be_connector.h"
 #include "be_provides.h"
 #include "be_operation.h"
+#include "be_argument.h"
 
 #include "be_visitor_connector.h"
 #include "be_visitor_operation.h"
@@ -31,5 +33,8 @@
 #include "be_visitor_connector/connector_dds_exs.cpp"
 
 #include "be_visitor_connector/connector_ami_exh.cpp"
+#include "be_visitor_connector/connector_ami_exs.cpp"
 #include "be_visitor_connector/facet_ami_exh.cpp"
+#include "be_visitor_connector/facet_ami_exs.cpp"
 #include "be_visitor_connector/executor_ami_exh.cpp"
+#include "be_visitor_connector/executor_ami_exs.cpp"

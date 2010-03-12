@@ -112,17 +112,18 @@ be_visitor_facet_ami_exh::gen_reply_handler_class (void)
       << "public:" << be_idt_nl
       << iface_name << suffix << " (" << be_idt_nl
       << "::" << scope_name << "::" << iface_name
-      << "Callback_ptr the_callback);" << be_uidt_nl << be_nl
+      << "Callback_ptr callback);" << be_uidt_nl << be_nl
       << "virtual ~" << iface_name << suffix << " (void);";
      
-  ACE_CString callback_str (iface_name);
-  callback_str += "Callback";
-  Identifier id (callback_str.c_str ());
+  ACE_CString handler_str (iface_name);
+  handler_str += "Handler";
+  Identifier id (handler_str.c_str ());
   
   /// We can depend on this implied IDL interface to have been
-  /// added to the scope of this connector.
+  /// added to the same scope as the connector, due to the -GC
+  /// option.
   AST_Decl *d =
-    node_->defined_in ()->lookup_by_name_local (&id, 0);
+    this->node_->defined_in ()->lookup_by_name_local (&id, 0);
     
   be_interface *callback_iface =
     be_interface::narrow_from_decl (d);
@@ -139,7 +140,7 @@ be_visitor_facet_ami_exh::gen_reply_handler_class (void)
   os_ << be_uidt_nl << be_nl
       << "private:" << be_idt_nl
       << "::" << scope_name << "::" << iface_name
-      << "Callback_var the_callback_;" << be_uidt_nl
+      << "Callback_var callback_;" << be_uidt_nl
       << "};";
       
   return 0;
