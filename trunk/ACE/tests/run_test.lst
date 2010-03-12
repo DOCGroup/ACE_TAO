@@ -142,7 +142,7 @@ Object_Manager_Test
 Object_Manager_Flipping_Test
 Obstack_Test
 OrdMultiSet_Test
-Pipe_Test: !PHARLAP
+Pipe_Test: !PHARLAP !VxWorks
 Priority_Buffer_Test
 Priority_Reactor_Test: !ACE_FOR_TAO
 Priority_Task_Test: !Unicos
