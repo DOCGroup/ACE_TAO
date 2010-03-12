@@ -2,7 +2,7 @@
 // $Id$
 
 #include "ConnectorStatusListener_Test_Receiver_exec.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
 
 namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl

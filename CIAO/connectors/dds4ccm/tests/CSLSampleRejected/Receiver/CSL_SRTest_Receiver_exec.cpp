@@ -6,7 +6,7 @@
 // in Sender <max_instances>2</max_instances>, in Receiver <max_instances>1</max_instances>
 
 #include "CSL_SRTest_Receiver_exec.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_time.h"
 #include "dds4ccm/impl/dds/Utils.h"

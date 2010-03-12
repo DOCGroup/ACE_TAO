@@ -2,7 +2,6 @@
 // $Id$
 
 #include "Event_Connection_Test_Sender_exec.h"
-#include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO_Event_Connection_Test_Sender_Impl
 {
