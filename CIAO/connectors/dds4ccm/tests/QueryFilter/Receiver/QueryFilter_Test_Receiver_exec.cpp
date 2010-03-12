@@ -15,7 +15,7 @@
 #define MAX_ITERATION_1 "5"
 
 #define MIN_ITERATION_2 "12"
-#define MAX_ITERATION_2 "15"
+#define MAX_ITERATION_2 "25"
 
 
 namespace CIAO_QueryFilter_Test_Receiver_Impl
@@ -38,8 +38,10 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   {
     ACE_DEBUG ((LM_DEBUG, "Checking if last sample "
                           "is available in DDS...\n"));
-    if (this->callback_.check_last ())
-      this->callback_.run (this->run_);
+    if (this->run_ == 1 || this->callback_.check_last ())
+      {
+        this->callback_.run (this->run_);
+      }
     return 0;
   }
 
@@ -104,8 +106,8 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
         ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::check_last - "
                               "last iteration <%d> - <%d>\n",
                                queryfiltertest_info.iteration,
-                               current_max_iteration_ - 1));
-        return queryfiltertest_info.iteration >= current_max_iteration_ - 1;
+                               this->current_max_iteration_ - 1));
+        return queryfiltertest_info.iteration >= this->current_max_iteration_ - 1;
       }
     catch (...)
       {
@@ -332,8 +334,6 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
         this->reader_->filter (filter);
         this->current_min_iteration_ = ACE_OS::atoi (MIN_ITERATION_2);
         this->current_max_iteration_ = ACE_OS::atoi (MAX_ITERATION_2);
-        ACE_OS::sleep (2);
-        this->restarter_->restart_write ();
       }
     catch (const CCM_DDS::InternalError& ex)
       {
@@ -396,12 +396,18 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
         {
           test_exception ();
           set_filter ();
-          test_all ();
-          check_filter ();
-          test_set_query_parameters ();
+          this->restarter_->restart_write ();
         }
         break;
       case 2:
+        {
+          test_all ();
+          check_filter ();
+          test_set_query_parameters ();
+          this->restarter_->restart_write ();
+        }
+        break;
+      case 3:
         {
           test_all ();
           check_filter ();
