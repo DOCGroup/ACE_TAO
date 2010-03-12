@@ -5,7 +5,7 @@
 //Test for ConnectorStatusListener: on_requested_incompatible_qos
 
 #include "CSL_QoSTest_Receiver_exec.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
 
 namespace CIAO_CSL_QoSTest_Receiver_Impl

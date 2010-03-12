@@ -3,7 +3,7 @@
 // $Id$
 
 #include "LOBO_Test_Receiver_exec.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 
 namespace CIAO_LOBO_Test_Receiver_Impl
 {

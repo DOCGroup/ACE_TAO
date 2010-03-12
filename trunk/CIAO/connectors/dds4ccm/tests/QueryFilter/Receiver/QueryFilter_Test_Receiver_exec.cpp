@@ -7,7 +7,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 
 #define QUERY "( (iteration > %0) AND (iteration < %1) )"
 

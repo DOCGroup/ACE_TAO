@@ -2,10 +2,10 @@
 //
 // $Id$
 
-// Test for statelistener: MANY_BY_MANY. Expect the operations on_creation, on_deletion, on_many_updates 
+// Test for statelistener: MANY_BY_MANY. Expect the operations on_creation, on_deletion, on_many_updates
 
 #include "SL_ManyByMany_Receiver_exec.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_time.h"
 #include "dds4ccm/impl/dds/Utils.h"
@@ -102,7 +102,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected info.instance_status ")
                                   ACE_TEXT ("'CCM_DDS::INSTANCE_UPDATED'")
                                   ACE_TEXT ("  with operation 'on_many_updates' from StateListener in Receiver\n")
-                        )); 
+                        ));
 
           }
         ACE_Time_Value tv;
@@ -182,7 +182,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
     update_data_(false),
     reader_data_(false)
   {
-    this->ticker_ = new read_action_Generator (*this); 
+    this->ticker_ = new read_action_Generator (*this);
   }
 
   Receiver_exec_i::~Receiver_exec_i (void)
@@ -238,9 +238,9 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
   ::CCM_DDS::TestTopic::CCM_StateListener_ptr
     Receiver_exec_i::get_info_out_data_listener (void)
   {
-    return new StateListener_exec_i(this->no_operation_, 
-                                     this->on_creation_, 
-                                     this->on_many_update_, 
+    return new StateListener_exec_i(this->no_operation_,
+                                     this->on_creation_,
+                                     this->on_many_update_,
                                      this->on_deletion_,
                                      this->create_data_,
                                      this->update_data_);
@@ -306,49 +306,49 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
          no_error = false;
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did receive an unexpected ")
                                ACE_TEXT (" operation 'on_one_update' from StateListener in Receiver\n")
-                    )); 
+                    ));
       }
     if(!this->on_creation_ .value ())
       {
          no_error = false;
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: didn't receive the expected ")
                                ACE_TEXT (" operation 'on_creation' from StateListener in Receiver\n")
-                    )); 
+                    ));
       }
     if(!this->create_data_ .value ())
       {
          no_error = false;
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: didn't receive the expected ")
                                ACE_TEXT (" data with 'on_creation' from StateListener in Receiver\n")
-                    )); 
+                    ));
       }
     if(!this->on_many_update_.value  ())
       {
          no_error = false;
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR:didn't receive the expected ")
                                ACE_TEXT (" operation 'on_many_updates' from StateListener in Receiver\n")
-                    )); 
+                    ));
       }
     if(!this->update_data_.value  ())
       {
          no_error = false;
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR:didn't receive the expected ")
                                ACE_TEXT (" data with 'on_many_updates' from StateListener in Receiver\n")
-                    )); 
+                    ));
       }
     if(!this->on_deletion_.value ())
       {
          no_error = false;
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: didn't receive the expected ")
                                ACE_TEXT (" operation 'on_deletion' from StateListener in Receiver\n")
-                    )); 
+                    ));
       }
       if(this->reader_data_.value ())
       {
          no_error = false;
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did receive unexpected ")
                                ACE_TEXT (" data on the Reader in combination with StateListener in Receiver\n")
-                    )); 
+                    ));
       }
     if(no_error==true)
       {

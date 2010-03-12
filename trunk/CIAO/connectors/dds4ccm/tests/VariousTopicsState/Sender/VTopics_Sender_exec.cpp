@@ -5,7 +5,7 @@
 //Test different topic types, with DDS_STATE connector, look for 'SUBSCRIPTION_MATCHED_STATUS
 #include "VTopics_Sender_exec.h"
 #include "ace/Guard_T.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
 #include "dds4ccm/impl/dds/Utils.h"
 
@@ -95,7 +95,7 @@ namespace CIAO_VTopics_Sender_Impl
   Sender_exec_i::configuration_complete (void)
   {
   }
- 
+
   void
   Sender_exec_i::ccm_activate (void)
   {

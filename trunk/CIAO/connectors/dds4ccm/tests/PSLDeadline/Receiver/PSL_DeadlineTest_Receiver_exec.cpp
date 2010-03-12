@@ -2,12 +2,12 @@
 //
 // $Id$
 
-// Test for PORTSTUSLISTENER in DDS_LISTEN and DDS_Get port: on_requested_deadline_missed. 
+// Test for PORTSTUSLISTENER in DDS_LISTEN and DDS_Get port: on_requested_deadline_missed.
 // Writer writes every sec, Reader starts reading after 2 sec and try to read every 1,1 sec, but has a minimum seperation time of 1.5 sec (QoS)
-// and a deadline of 2 sec (QoS), so periodically  the deadline will be missed. 
+// and a deadline of 2 sec (QoS), so periodically  the deadline will be missed.
 
 #include "PSL_DeadlineTest_Receiver_exec.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_time.h"
 #include "dds4ccm/impl/dds/Utils.h"
@@ -125,7 +125,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
     thread_id_listener_1_ (0),
     thread_id_listener_2_ (0)
   {
-    this->ticker_ = new read_action_Generator (*this); 
+    this->ticker_ = new read_action_Generator (*this);
   }
 
   Receiver_exec_i::~Receiver_exec_i (void)

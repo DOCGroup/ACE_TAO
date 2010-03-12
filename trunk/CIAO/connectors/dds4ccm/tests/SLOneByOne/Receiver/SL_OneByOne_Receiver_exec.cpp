@@ -2,10 +2,10 @@
 //
 // $Id$
 
-// Test for statelistener: ONE_BY_ONE. Expect the operations on_creation, on_deletion, on_one_update 
+// Test for statelistener: ONE_BY_ONE. Expect the operations on_creation, on_deletion, on_one_update
 
 #include "SL_OneByOne_Receiver_exec.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_time.h"
 #include "dds4ccm/impl/dds/Utils.h"

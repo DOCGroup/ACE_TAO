@@ -2,7 +2,6 @@
 // $Id$
 
 #include "Latency_Test_Sender_exec.h"
-#include "ciao/Logger/Log_Macros.h"
 #include "tao/ORB_Core.h"
 #include "ace/Timer_Queue.h"
 #include "ace/Reactor.h"
@@ -29,9 +28,9 @@ namespace CIAO_Latency_Test_Sender_Impl
                                   const LatencyTest & an_instance,
                                   const ::CCM_DDS::ReadInfo &)
   {
-    ACE_UINT64  receive_time = 0;
+    ACE_UINT64 receive_time = 0;
 
-    // Only interested in messages received with a latency_ping = 0 
+    // Only interested in messages received with a latency_ping = 0
     // (messages sent back by receiver)
     if( an_instance.ping == 0)
       {
@@ -50,8 +49,8 @@ namespace CIAO_Latency_Test_Sender_Impl
   // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
   //============================================================
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (
-                                        Atomic_Boolean &matched, 
-                                        int number_of_subscribers, 
+                                        Atomic_Boolean &matched,
+                                        int number_of_subscribers,
                                         Sender_exec_i &callback)
    : callback_ (callback),
     matched_ (matched),
@@ -84,7 +83,7 @@ namespace CIAO_Latency_Test_Sender_Impl
 
   void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
      ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedDeadlineMissedStatus & /*status*/) 
+     const DDS::OfferedDeadlineMissedStatus & /*status*/)
   {
   }
 
@@ -96,10 +95,10 @@ namespace CIAO_Latency_Test_Sender_Impl
 
   void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr the_entity,
-    ::DDS::StatusKind  status_kind)
+    ::DDS::StatusKind status_kind)
   {
     CORBA::ULong kind = status_kind;
-    if((!CORBA::is_nil(the_entity)) && 
+    if((!CORBA::is_nil(the_entity)) &&
        (kind==DDS::PUBLICATION_MATCHED_STATUS))
       {
         ::DDS::PublicationMatchedStatus_var stat;
@@ -111,9 +110,9 @@ namespace CIAO_Latency_Test_Sender_Impl
         ::DDS::ReturnCode_t retval = wr->get_publication_matched_status(stat.out ());
         if (retval == DDS::RETCODE_OK)
           {
-          
-            if((stat.in().current_count >= 
-             (this->number_of_subscribers_ + 1)) && 
+
+            if((stat.in().current_count >=
+             (this->number_of_subscribers_ + 1)) &&
              !this->matched_.value())
             {
               this->matched_ = true;
@@ -157,7 +156,7 @@ namespace CIAO_Latency_Test_Sender_Impl
       timer_(false),
       received_(false),
       seq_num_(0),
-      sigma_duration_squared_(0) 
+      sigma_duration_squared_(0)
   {
     this->ticker_ = new WriteTicker (*this);
   }
@@ -183,7 +182,7 @@ namespace CIAO_Latency_Test_Sender_Impl
     if( (this->number_of_msg_ == 0) || ( this->received_.value()))
     {
       // All messages send, stop timer.
-      if((this->iterations_ != 0) && 
+      if((this->iterations_ != 0) &&
          (this->number_of_msg_ >= this->iterations_ ))
         {
            if( this->datalen_idx_ >= (this->nr_of_runs_ - 1))
@@ -221,7 +220,7 @@ namespace CIAO_Latency_Test_Sender_Impl
         catch (const CCM_DDS::InternalError& )
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
-                        ACE_TEXT ("while wrinting sample with sequence_number <%u>.\n"),
+                        ACE_TEXT ("while writing sample with sequence_number <%u>.\n"),
                         this->test_topic_.seq_num));
           }
         ++this->number_of_msg_;
@@ -250,29 +249,29 @@ namespace CIAO_Latency_Test_Sender_Impl
     this->number_of_msg_ = 0;
     this->received_ = false;
     this->seq_num_ = 0;
-    this->sigma_duration_squared_ = 0; 
+    this->sigma_duration_squared_ = 0;
   }
 
   void
   Sender_exec_i::calc_results()
   {
     // Sort all duration times.
-    qsort(this->duration_times, 
+    qsort(this->duration_times,
           this->count_,
-          sizeof(CORBA::Long), 
+          sizeof(CORBA::Long),
           compare_two_longs);
 
-    // Show latency_50_percentile, latency_90_percentile, 
+    // Show latency_50_percentile, latency_90_percentile,
     // latency_99_percentile and latency_99.99_percentile.
-    // For example duration_times[per50] is the median i.e. 50% of the 
+    // For example duration_times[per50] is the median i.e. 50% of the
     // samples have a latency time  <=  duration_times[per50]
     int per50 = this->count_/2;
     int per90 = (int)(this->count_ * 0.90);
     int per99 = (int)(this->count_ * 0.990);
     int per9999 = (int)(this->count_ * 0.9999);
-  
+
     double avg = this->tv_total_.value () / this->count_;
-    // Calculate standard deviation.   
+    // Calculate standard deviation.
     double _roundtrip_time_std  = sqrt(
         (this->sigma_duration_squared_ / (double)this->count_) -
         (avg * avg));
@@ -433,7 +432,7 @@ Sender_exec_i::record_time (ACE_UINT64  receive_time)
   }
 
   void
-  Sender_exec_i::calculate_clock_overhead() 
+  Sender_exec_i::calculate_clock_overhead()
   {
     int num_of_loops_clock = 320;
     ACE_UINT64 begin_time;
@@ -461,7 +460,7 @@ Sender_exec_i::record_time (ACE_UINT64  receive_time)
 
     this->datalen_ = this->datalen_range_[0];
 
-    //make  instances of Topic
+    // make instances of Topic
     this->test_topic_.seq_num = 0;
     this->test_topic_.ping = 0;
     this->test_topic_.data.length (this->datalen_);
@@ -508,7 +507,7 @@ Sender_exec_i::record_time (ACE_UINT64  receive_time)
       }
     this->init_values();
   }
-  
+
   void
   Sender_exec_i::stop (void)
   {
@@ -518,7 +517,7 @@ Sender_exec_i::record_time (ACE_UINT64  receive_time)
        delete this->ticker_;
     }
   }
-  
+
   void
   Sender_exec_i::ccm_passivate (void)
   {
@@ -533,19 +532,19 @@ Sender_exec_i::record_time (ACE_UINT64  receive_time)
         ACE_DEBUG ((LM_DEBUG, "SUMMARY SENDER : %u of %u runs completed.\n"
                              " Number of messages sent of last run (%u): %u\n",
                           (this->datalen_idx_ + 1),
-                           this->nr_of_runs_, 
+                           this->nr_of_runs_,
                           (this->datalen_idx_ + 1),
                            this->number_of_msg_));
       }
     else
       {
-        ACE_UINT64 test_time_usec = this->end_time_test_ - 
+        ACE_UINT64 test_time_usec = this->end_time_test_ -
                                     this->start_time_test_;
 
         double sec =  (double)test_time_usec / (1000 * 1000);
         ACE_DEBUG ((LM_DEBUG, "TEST successful, number of runs (%u) of "
                               "%u messages in %3.3f seconds.\n",
-                               this->nr_of_runs_, 
+                               this->nr_of_runs_,
                                this->number_of_msg_, sec));
       }
   }
