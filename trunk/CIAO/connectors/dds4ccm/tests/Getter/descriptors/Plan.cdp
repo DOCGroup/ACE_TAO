@@ -272,7 +272,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Getter_Test</string>
+          <string>Getter_Fixed</string>
         </value>
       </value>
     </configProperty>
@@ -290,7 +290,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Getter_Test</string>
+          <string>Getter_Fixed</string>
         </value>
       </value>
     </configProperty>
