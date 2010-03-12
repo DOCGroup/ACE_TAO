@@ -1,3 +1,21 @@
+Fri Mar 12 21:53:30 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/PerlACE/ProcessVX.pm:
+        * bin/PerlACE/ProcessVX_Unix.pm:
+
+          Added an option to use the 'expect' program to interact with
+          the remote target (via telnet).  This is only enabled when the
+          environment variable ACE_RUN_VX_USE_EXPECT is defined.
+
+        * tests/Log_Msg_Test.cpp:
+
+          Updated the ACE_VXWORKS version check to include version 6.8.
+
+        * tests/run_test.lst:
+
+          Added !VxWorks to exclude Pipe_Test which can't be run
+          on VxWorks (kernel mode) because it depends on ACE_Process::spawn().
+
 Fri Mar 12 12:09:02 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_math.h:
@@ -7,7 +25,7 @@ Fri Mar 12 12:09:02 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * tests/OS_Test.cpp:
           Added tests for ceil(float) and floor(float).
-        
+
 Thu Mar 11 09:33:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-g++-common.h:
