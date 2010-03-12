@@ -3,7 +3,7 @@
 // $Id$
 
 #include "Getter_Test_Receiver_exec.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 #include "ace/OS_NS_sys_time.h"

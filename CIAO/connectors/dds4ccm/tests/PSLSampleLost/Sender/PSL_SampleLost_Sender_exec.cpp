@@ -3,7 +3,7 @@
 
 #include "PSL_SampleLost_Sender_exec.h"
 #include "ace/Guard_T.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
@@ -23,7 +23,7 @@ namespace CIAO_PSL_SampleLost_Sender_Impl
 
   // Operations from ::CCM_DDS::ConnectorStatusListener
   void ConnectorStatusListener_exec_i::on_inconsistent_topic (
-    ::DDS::Topic_ptr /*the_topic*/, 
+    ::DDS::Topic_ptr /*the_topic*/,
      const DDS::InconsistentTopicStatus & /*status*/)
   {
   }

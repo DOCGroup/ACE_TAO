@@ -4,7 +4,7 @@
 #include "CoherentUpdate_Test_Sender_exec.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 
 #define SAMPLE_KEY_NAME "KEY_1"
 

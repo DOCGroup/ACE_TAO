@@ -9,7 +9,7 @@
 #include "dds4ccm/impl/dds/Utils.h"
 #include "dds4ccm/impl/dds/ndds/InstanceHandle_t.h"
 
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 
 namespace CIAO_Writer_Sender_Impl
 {

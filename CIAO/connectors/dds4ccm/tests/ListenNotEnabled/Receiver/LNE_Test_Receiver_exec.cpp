@@ -3,7 +3,7 @@
 // $Id$
 
 #include "LNE_Test_Receiver_exec.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 
 namespace CIAO_LNE_Test_Receiver_Impl
 {

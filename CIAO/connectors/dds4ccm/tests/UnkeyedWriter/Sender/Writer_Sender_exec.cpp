@@ -3,7 +3,7 @@
 
 #include "Writer_Sender_exec.h"
 #include "ace/Guard_T.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 

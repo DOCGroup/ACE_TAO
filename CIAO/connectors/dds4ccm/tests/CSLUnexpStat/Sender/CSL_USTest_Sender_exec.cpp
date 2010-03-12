@@ -5,7 +5,7 @@
 //Test for on_unexpected_status with status LIVELINESS_CHANGED_STATUS' and 'PUBLICATION_MATCHED_STATUS
 #include "CSL_USTest_Sender_exec.h"
 #include "ace/Guard_T.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 #include "dds4ccm/impl/dds/Utils.h"

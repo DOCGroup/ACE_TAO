@@ -3,7 +3,7 @@
 
 #include "SL_OneByOne_Sender_exec.h"
 #include "ace/Guard_T.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
@@ -61,13 +61,13 @@ namespace CIAO_SL_OneByOne_Sender_Impl
     catch (const CCM_DDS::AlreadyCreated &)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: AlreadyCreated with test updater create_one <%C>.\n"),
-                      i.key.in()));   
+                      i.key.in()));
         result = false;
       }
     catch (const CCM_DDS::InternalError& )
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while create_one for <%C>.\n"),
-                      i.key.in()));   
+                      i.key.in()));
         result = false;
       }
     return result;
@@ -88,13 +88,13 @@ namespace CIAO_SL_OneByOne_Sender_Impl
     catch (const CCM_DDS::NonExistent &)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater update_one <%C>.\n"),
-                       i.key.in()));   
+                       i.key.in()));
         result = false;
       }
     catch (const CCM_DDS::InternalError& )
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while update_one for <%C>.\n"),
-                        i.key.in()));   
+                        i.key.in()));
         result = false;
       }
     return result;
@@ -115,13 +115,13 @@ namespace CIAO_SL_OneByOne_Sender_Impl
     catch (const CCM_DDS::NonExistent &)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater delete_one <%C>.\n"),
-                       i.key.in()));   
+                       i.key.in()));
         result = false;
       }
     catch (const CCM_DDS::InternalError& )
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while delete_one for <%C>.\n"),
-                        i.key.in())); 
+                        i.key.in()));
         result = false;
       }
       return result;
@@ -141,14 +141,14 @@ namespace CIAO_SL_OneByOne_Sender_Impl
       }
     catch (const CCM_DDS::NonExistent& )
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater create_many\n")));   
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater create_many\n")));
       }
     catch (const CCM_DDS::InternalError& ex)
       {
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
                      ACE_TEXT ("in updater: create_many: index <%d> - retval <%d>\n"),
                      ex.index, ex.error_code));
-            
+
       }
     return result;
   }
@@ -166,7 +166,7 @@ namespace CIAO_SL_OneByOne_Sender_Impl
       }
     catch (const CCM_DDS::NonExistent& )
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater update_many.\n")));   
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater update_many.\n")));
         result = false;
       }
     catch (const CCM_DDS::InternalError& ex)
@@ -193,7 +193,7 @@ namespace CIAO_SL_OneByOne_Sender_Impl
       }
     catch (const CCM_DDS::NonExistent& )
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater delete_many\n")));   
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater delete_many\n")));
         result = false;
       }
     catch (const CCM_DDS::InternalError& ex)
@@ -203,7 +203,7 @@ namespace CIAO_SL_OneByOne_Sender_Impl
                    ex.index, ex.error_code));
         result = false;
       }
-     
+
     return result;
   }
 
@@ -214,7 +214,7 @@ namespace CIAO_SL_OneByOne_Sender_Impl
     this->topic_seq_one_.length (total);
     //sequence for tests with .._one
     for (int i = 1; i < (total + 1); i++)
-      {  
+      {
         char key[7];
         TestTopic new_key;
         ACE_OS::sprintf (key, "KEY_%d", i);
@@ -225,7 +225,7 @@ namespace CIAO_SL_OneByOne_Sender_Impl
     //sequence for tests with .._many
     this->topic_seq_many_.length (total);
     for (int i = 1; i < (total + 1); i++)
-      {  
+      {
         char key[7];
         TestTopic new_key;
         ACE_OS::sprintf (key, "many_%d", i);

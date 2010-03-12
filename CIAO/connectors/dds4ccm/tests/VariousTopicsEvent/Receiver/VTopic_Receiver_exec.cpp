@@ -5,7 +5,7 @@
 //Test for different topictypes with DDS_Event connector, look for 'SUBSCRIPTION_MATCHED_STATUS
 
 #include "VTopic_Receiver_exec.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_time.h"
 #include "dds4ccm/impl/dds/Utils.h"
