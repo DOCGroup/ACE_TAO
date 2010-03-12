@@ -241,9 +241,9 @@
     </configProperty>
   </instance>
 
-  <instance xmi:id="ConnectorStatusListener_TestSec_ConnectorComponentInstanceSec">
+  <instance xmi:id="ConnectorStatusListener_TestSec_ConnectorComponentInstance">
     <name>ConnectorStatusListener_Test_ConnectorComponentSec</name>
-    <node>SenderNode</node>
+    <node>ReceiverNode</node>
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="ConnectorStatusListener_TestSec_ConnectorComponentImplementation" />
@@ -261,24 +261,6 @@
   </instance>
 
 
-  <instance xmi:id="ConnectorStatusListener_Test_ConnectorComponentInstance2">
-    <name>ConnectorStatusListener_Test_ConnectorComponent2</name>
-    <node>ReceiverNode</node>
-    <!-- hostname -->
-    <source/>
-    <implementation xmi:idref="ConnectorStatusListener_Test_ConnectorComponentImplementation" />
-    <configProperty>
-      <name>topic_name</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>OIT_Topic</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
   <instance xmi:id="SenderComponentInstance">
     <name>SenderComponent</name>
     <node>SenderNode</node>
@@ -303,7 +285,7 @@
       <portName>push_consumer_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="ConnectorStatusListener_Test_ConnectorComponentInstance2" />
+      <instance xmi:idref="ConnectorStatusListener_TestSec_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
   <connection>
@@ -322,7 +304,7 @@
       <portName>push_consumer_status</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ConnectorStatusListener_Test_ConnectorComponentInstance2" />
+      <instance xmi:idref="ConnectorStatusListener_TestSec_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
   <connection>
@@ -341,7 +323,7 @@
       <portName>push_consumer_data_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ConnectorStatusListener_Test_ConnectorComponentInstance2" />
+      <instance xmi:idref="ConnectorStatusListener_TestSec_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
   <connection>
@@ -360,7 +342,7 @@
       <portName>error_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ConnectorStatusListener_Test_ConnectorComponentInstance2" />
+      <instance xmi:idref="ConnectorStatusListener_TestSec_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
   <connection>
@@ -379,29 +361,7 @@
       <portName>error_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ConnectorStatusListener_TestSec_ConnectorComponentInstanceSec" />
-    </internalEndpoint>
-  </connection>
-
-
-
-  <connection>
-    <name>writer_connection2</name>
-    <deployRequirement>
-      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
-      <resourceType>Local_Interface</resourceType>
-    </deployRequirement>
-    <internalEndpoint>
-      <portName>test_sec_topic_write_data</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="SenderComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>supplier_data</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="ConnectorStatusListener_TestSec_ConnectorComponentInstanceSec" />
+      <instance xmi:idref="ConnectorStatusListener_Test_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
 
