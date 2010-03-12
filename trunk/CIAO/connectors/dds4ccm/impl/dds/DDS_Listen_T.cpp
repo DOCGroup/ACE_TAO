@@ -133,9 +133,23 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE>::remove (
   DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE>::remove");
   try
     {
-      subscriber->delete_datareader (this->data_reader_.in ());
+      //check wether a ContentFilteredTopic has been set...
+      ::DDS::DomainParticipant_var dp = subscriber->get_participant ();
+      if (CORBA::is_nil (dp.in ()))
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                        "DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::remove - "
+                        "Error: Unable to get Participant.\n"));
+          throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
+        }
+      ::DDS::TopicDescription_var td =
+        dp->lookup_topicdescription ("DDS4CCMContentFilteredTopic");
+      if (CORBA::is_nil (td.in ()))
+        { //otherwise the filter method on the reader has already done this.
+          subscriber->delete_datareader (this->data_reader_.in ());
+          this->data_reader_ = ::DDS::CCM_DataReader::_nil ();
+        }
       this->ccm_dds_reader_.set_impl (0);
-      this->data_reader_ = ::DDS::CCM_DataReader::_nil ();
       this->dds_read_.set_impl (0);
     }
   catch (...)
