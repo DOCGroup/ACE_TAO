@@ -88,14 +88,16 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::read_without_instance (
                                        this->qc_);
     }
   else
-    throw ::CCM_DDS::InternalError (retval, 0);
-#else
-  retval = this->impl ()->read (data,
-                                sample_info,
-                                DDS_LENGTH_UNLIMITED,
-                                DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE,
-                                DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-                                DDS_ALIVE_INSTANCE_STATE);
+    {
+#endif
+      retval = this->impl ()->read (data,
+                                    sample_info,
+                                    DDS_LENGTH_UNLIMITED,
+                                    DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE,
+                                    DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
+                                    DDS_ALIVE_INSTANCE_STATE);
+#if defined (DDS4CCM_USES_QUERY_CONDITION) && (DDS4CCM_USES_QUERY_CONDITION==1)
+    }
 #endif
   if (retval != DDS_RETCODE_OK && retval != DDS_RETCODE_NO_DATA)
     {
