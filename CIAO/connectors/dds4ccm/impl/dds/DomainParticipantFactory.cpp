@@ -185,7 +185,6 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_i::remove_participant");
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
                       this->dps_mutex_, CORBA::INTERNAL ());
 
@@ -210,8 +209,6 @@ namespace CIAO
                     "Don't delete participant since it's still used - ref_count <%d>\n",
                     part->_refcount_value ()));
         }
-#else
-#endif
     }
 
     ::DDS::ReturnCode_t
@@ -233,7 +230,7 @@ namespace CIAO
 
       this->remove_participant (part);
 
-      DDS::ReturnCode_t retval = DDS::RETCODE_OK;
+      ::DDS::ReturnCode_t retval = DDS::RETCODE_OK;
 
       if (part->_refcount_value () == 1)
         {
@@ -261,7 +258,7 @@ namespace CIAO
     {
       ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
-      DDSDomainParticipant* dp = DDSDomainParticipantFactory::get_instance ()->lookup_participant (domain_id);
+      ::DDSDomainParticipant* dp = DDSDomainParticipantFactory::get_instance ()->lookup_participant (domain_id);
       ACE_NEW_THROW_EX (retval,
                         CCM_DDS_DomainParticipant_i (dp),
                         CORBA::NO_MEMORY ());

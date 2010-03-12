@@ -70,7 +70,7 @@ CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::set_impl 
     {
       CCM_DDS_DataWriter_i *rdw = dynamic_cast <CCM_DDS_DataWriter_i *> (writer);
 
-      if (rdw == 0)
+      if (!rdw)
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::InstanceHandleManager_T::data_writer - "
                        "Unable to cast provided DataWriter to servant\n"));

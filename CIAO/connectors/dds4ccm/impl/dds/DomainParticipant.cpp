@@ -140,7 +140,6 @@ namespace CIAO
     ::DDS::ReturnCode_t
     CCM_DDS_DomainParticipant_i::delete_publisher (::DDS::Publisher_ptr p)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       CCM_DDS_Publisher_i *ccm_dds_pub = dynamic_cast < CCM_DDS_Publisher_i * > (p);
 
       if (!ccm_dds_pub)
@@ -161,13 +160,13 @@ namespace CIAO
                        "Error: RTI delete_publisher returned non-ok error code %C\n",
                        translate_retcode (retval)));
         }
-      else DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_i::delete_publisher - "
+      else
+        {
+          DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_i::delete_publisher - "
                         "Provided publisher successfully deleted\n"));
+        }
 
       return retval;
-#else
-      return this->impl ()->delete_publisher (p);
-#endif
     }
 
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
@@ -497,7 +496,6 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::delete_topic");
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       CCM_DDS_Topic_i *top = dynamic_cast< CCM_DDS_Topic_i *> (a_topic);
 
       if (top == 0)
@@ -525,9 +523,6 @@ namespace CIAO
         }
 
       return retval;
-#else
-      return this->impl ()->delete_topic (a_topic);
-#endif
     }
 
     ::DDS::Topic_ptr
@@ -562,14 +557,15 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_i::lookup_topicdescription");
 
-      ::DDS::TopicDescription_var retval = ::DDS::TopicDescription::_nil ();
       DDS4CCM_DEBUG (7, (LM_DEBUG, CLINFO "Looking up topic: name <%C>\n",
                                    name));
+
+      ::DDS::TopicDescription_var retval = ::DDS::TopicDescription::_nil ();
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDSTopicDescription* topic = this->impl ()->lookup_topicdescription (name);
       if (topic)
         {
-          //Check the entity: is it a Topic or a ContentFilteredTopic
+          // Check the entity: is it a Topic or a ContentFilteredTopic
           ::DDSTopic * tp = dynamic_cast < ::DDSTopic *> (topic);
           if (tp)
             {

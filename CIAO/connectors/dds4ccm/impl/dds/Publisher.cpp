@@ -370,14 +370,12 @@ namespace CIAO
 
       ccm_dds_qos <<= a_dataimpl_qos;
       ccm_dds_topic_qos <<= a_impl_qos;
-      ::DDS::ReturnCode_t retcode =
-          this->impl()->copy_from_topic_qos (ccm_dds_qos,
-                                             ccm_dds_topic_qos);
+      ::DDS::ReturnCode_t const retcode =
+          this->impl()->copy_from_topic_qos (ccm_dds_qos, ccm_dds_topic_qos);
       a_dataimpl_qos <<= ccm_dds_qos;
       return retcode;
 #else
-      return this->impl()->copy_from_topic_qos (a_dataimpl_qos,
-                                                a_impl_qos);
+      return this->impl()->copy_from_topic_qos (a_dataimpl_qos, a_impl_qos);
 #endif
     }
 
