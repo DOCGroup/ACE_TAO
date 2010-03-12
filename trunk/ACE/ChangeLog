@@ -6,7 +6,7 @@ Fri Mar 12 12:09:02 UTC 2010  Olli Savia  <ops@iki.fi>
           ceil/floor functions provided by standard C++.
 
         * tests/OS_Test.cpp:
-          Added a test for ceil(loat) and floor(float).
+          Added tests for ceil(float) and floor(float).
         
 Thu Mar 11 09:33:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
