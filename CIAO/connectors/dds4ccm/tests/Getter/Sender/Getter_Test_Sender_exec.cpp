@@ -177,7 +177,7 @@ namespace CIAO_Getter_Test_Sender_Impl
 
         this->writer_->write_one (*new_key, ::DDS::HANDLE_NIL);
         this->fixed_->write_one (fixed_key, ::DDS::HANDLE_NIL);
-        ACE_DEBUG ((LM_DEBUG, CLINFO "Written keys <%C> and <%u> with <%d>\n",
+        ACE_DEBUG ((LM_DEBUG, "Written keys <%C> and <%u> with <%d>\n",
                     new_key->key.in (), fixed_key.key, last_iter_));
 
         ++last_iter_;
