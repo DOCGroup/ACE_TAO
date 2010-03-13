@@ -89,7 +89,7 @@ project(Large_Connector_exec) : ciao_executor , dds4ccm_impl  {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags   = LARGE_CONNECTOR_EXEC_BUILD_DLL
+  dynamicflags   = LARGE_CONNECTOR_CONN_BUILD_DLL
 
   IDL_Files {
   }
@@ -111,12 +111,12 @@ project(Large_Connector_exec) : ciao_executor , dds4ccm_impl  {
 project(Large_Connector_svnt) : ciao_servant , dds4ccm_skel  {
   after      +=   Large_Connector_lem_stub
   sharedname  = Large_Connector_svnt
-  libs       += Large_Connector_stub Large_Connector_lem_stub 
+  libs       += Large_Connector_stub Large_Connector_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
   dynamicflags = LARGE_CONNECTOR_SVNT_BUILD_DLL
-  
+
   IDL_Files {
   }
 
