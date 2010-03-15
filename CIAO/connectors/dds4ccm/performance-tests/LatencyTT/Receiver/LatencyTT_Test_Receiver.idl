@@ -1,0 +1,23 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ */
+
+#ifndef RECEIVER_IDL
+#define RECEIVER_IDL
+
+#include "Connector/LatencyTT_Test_Connector.idl"
+#include "SecConnector/LatencyTT_TestSec_Connector.idl"
+
+module LatencyTT_Test
+{
+  component Receiver
+  {
+    port CCM_DDS::LatencyTTTest::DDS_Listen info_listen;
+    port CCM_DDS::LatencyTTTestSec::DDS_Write write_ping;
+  };
+};
+
+#endif

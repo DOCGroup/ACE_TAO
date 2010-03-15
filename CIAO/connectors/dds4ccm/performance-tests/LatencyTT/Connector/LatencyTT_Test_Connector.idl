@@ -1,0 +1,31 @@
+// $Id$
+
+/**
+ * @file LatencyTT_Test_Connector.idl
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ *
+ * by-hand translation of the idl3p.
+ */
+
+#ifndef LATENCYTT_TEST_CONNECTOR_IDL_
+#define LATENCYTT_TEST_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/LatencyTT_Test_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Connector/LatencyTT_Test_ConnectorE.idl"
+
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::LatencyTTTest, ::LatencyTTTest_Seq> LatencyTTTest;
+};
+
+module LatencyTT_Test
+{
+  connector LatencyTT_Test_Connector : ::CCM_DDS::LatencyTTTest::DDS_Event
+  {
+  };
+};
+
+#endif /* LatencyTT_Test_CONNECTOR_IDL_ */

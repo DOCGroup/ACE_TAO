@@ -1,0 +1,37 @@
+// $Id$
+
+/**
+ * @file LatencyTT_Test_Base.idl
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ */
+
+#ifndef LATENCYTT_TEST_BASE_IDL
+#define LATENCYTT_TEST_BASE_IDL
+
+#pragma ndds typesupport "Base/LatencyTT_Test_BaseSupport.h"
+
+const short MAX_DATA_SEQUENCE_LENGTH = 8192;
+typedef sequence<octet, MAX_DATA_SEQUENCE_LENGTH> OctetSeq;
+
+//#pragma DCPS_DATA_TYPE "LatencyTTTest"
+
+struct LatencyTTTest {
+  long seq_num;
+  long ping;
+  OctetSeq data;
+ };
+
+
+
+typedef sequence<LatencyTTTest> LatencyTTTest_Seq;
+
+
+struct LatencyTTTestSec {
+  long seq_num;
+  long ping;
+  OctetSeq data;
+ };
+
+typedef sequence<LatencyTTTestSec> LatencyTTTestSec_Seq;
+
+#endif
