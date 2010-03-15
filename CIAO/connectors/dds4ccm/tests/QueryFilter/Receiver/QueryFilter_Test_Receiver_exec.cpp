@@ -505,6 +505,12 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_passivate (void)
   {
+    if (this->ticker_)
+      {
+        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
+        delete this->ticker_;
+        this->ticker_ = 0;
+      }
   }
 
   void
