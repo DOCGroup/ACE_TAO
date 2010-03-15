@@ -10,12 +10,13 @@
 #define DDS4CCM_DEADLINEQOSPOLICY_H
 
 #include "Duration_t.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+#if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::DeadlineQosPolicy DDS_DeadlineQosPolicy;
 #endif
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::DeadlineQosPolicy &ddsqos, const ::DDS_DeadlineQosPolicy & qos)
 {

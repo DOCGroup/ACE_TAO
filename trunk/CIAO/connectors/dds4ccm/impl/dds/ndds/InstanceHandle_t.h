@@ -10,18 +10,20 @@
 #ifndef DDS4CCM_INSTANCEHANDLE_T_H
 #define DDS4CCM_INSTANCEHANDLE_T_H
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#include "dds4ccm/impl/dds4ccm_conf.h"
+
+#if (CIAO_DDS4CCM_NDDS==1)
 #include "ndds/ndds_cpp.h"
 #define DDS_INSTANCE_HANDLE_T_IN const ::DDS::InstanceHandle_t &
 #define DDS_INSTANCE_HANDLE_T_RETN ::DDS::InstanceHandle_t
 #endif
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+#if (CIAO_DDS4CCM_OPENDDS==1)
 #define DDS_INSTANCE_HANDLE_T_IN ::DDS::InstanceHandle_t
 #define DDS_INSTANCE_HANDLE_T_RETN ::DDS::InstanceHandle_t
 #endif
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::InstanceHandle_t &ddsinstancehandle, const ::DDS_InstanceHandle_t & instancehandle)
 {

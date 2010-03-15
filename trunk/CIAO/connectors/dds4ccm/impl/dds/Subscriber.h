@@ -16,14 +16,15 @@
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "dds4ccm/impl/dds/dds4ccm_dds_impl_export.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 
 #include "tao/LocalObject.h"
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
 #include "ndds/ndds_cpp.h"
 #endif
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+#if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::Subscriber DDSSubscriber;
 typedef ::DDS::DataReaderListener DDSDataReaderListener;
 typedef ::DDS::DataReader DDSDataReader;
@@ -60,7 +61,7 @@ namespace CIAO
         ::DDS::DataReaderListener_ptr a_listener,
         ::DDS::StatusMask mask);
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       virtual ::DDS::DataReader_ptr
       create_datareader_with_profile (
         ::DDS::TopicDescription_ptr a_topic,
@@ -150,7 +151,7 @@ namespace CIAO
         ::DDS::StatusMask mask,
          const ::DDS::DataReaderQos & qos);
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDSDataReader *
       create_datareader_with_profile (
         DDSContentFilteredTopic * topic,
@@ -160,7 +161,7 @@ namespace CIAO
         ::DDS::StatusMask mask);
 #endif
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDSDataReader *
       create_datareader_with_profile (
         DDSTopic * topic,

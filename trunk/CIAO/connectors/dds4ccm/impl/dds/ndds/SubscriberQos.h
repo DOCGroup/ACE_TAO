@@ -14,11 +14,13 @@
 #include "PartitionQosPolicy.h"
 #include "PresentationQosPolicy.h"
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+#include "dds4ccm/impl/dds4ccm_conf.h"
+
+#if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::SubscriberQos DDS_SubscriberQos;
 #endif
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::SubscriberQos &ddsqos, const ::DDS_SubscriberQos & qos)
 {

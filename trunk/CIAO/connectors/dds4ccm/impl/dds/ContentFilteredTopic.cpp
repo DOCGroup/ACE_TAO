@@ -6,6 +6,7 @@
 #include "ndds/StringSeq.h"
 
 #include "dds4ccm/impl/logger/Log_Macros.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 
 namespace CIAO
 {
@@ -32,7 +33,7 @@ namespace CIAO
       ::DDS::StringSeq & expression_parameters)
     {
       DDS4CCM_TRACE ("CCM_DDS_ContentFilteredTopic_i::get_expression_parameters");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDS_StringSeq parameters;
       ::DDS::ReturnCode_t retval = this->impl ()->get_expression_parameters (
                                                                   parameters);
@@ -50,7 +51,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_ContentFilteredTopic_i::set_expression_parameters");
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDS_StringSeq parameters;
       parameters <<= expression_parameters;
       return this->impl ()->set_expression_parameters (parameters);
@@ -65,7 +66,7 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_ContentFilteredTopic_i::get_related_topic");
 
       ::DDS::Topic_var retval = ::DDS::Topic::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDSTopic *topic = this->impl ()->get_related_topic ();
       ACE_NEW_THROW_EX (retval,
                         CCM_DDS_Topic_i (topic),
@@ -83,7 +84,7 @@ namespace CIAO
     char *
     CCM_DDS_ContentFilteredTopic_i::get_type_name (void)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       return CORBA::string_dup (this->impl ()->get_type_name ());
 #else
       return this->impl ()->get_type_name ();
@@ -93,7 +94,7 @@ namespace CIAO
     char *
     CCM_DDS_ContentFilteredTopic_i::get_name (void)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       return CORBA::string_dup (this->impl ()->get_name ());
 #else
       return this->impl ()->get_name ();
@@ -104,7 +105,7 @@ namespace CIAO
     CCM_DDS_ContentFilteredTopic_i::get_participant (void)
     {
       ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDSDomainParticipant* p = this->impl ()->get_participant ();
       ACE_NEW_THROW_EX (retval,
                         CCM_DDS_DomainParticipant_i (p),

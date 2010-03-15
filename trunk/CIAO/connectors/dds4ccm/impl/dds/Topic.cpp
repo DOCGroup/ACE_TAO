@@ -10,6 +10,7 @@
 #include "ndds/TopicQos.h"
 
 #include "dds4ccm/impl/logger/Log_Macros.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 
 namespace CIAO
 {
@@ -27,7 +28,7 @@ namespace CIAO
     ::DDS::ReturnCode_t
     CCM_DDS_Topic_i::set_qos (const ::DDS::TopicQos &qos)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_TopicQos ddsqos;
       ddsqos <<= qos;
       return this->impl ()->set_qos (ddsqos);
@@ -39,7 +40,7 @@ namespace CIAO
     ::DDS::ReturnCode_t
     CCM_DDS_Topic_i::get_qos (::DDS::TopicQos &qos)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_TopicQos ddsqos;
       ::DDS_ReturnCode_t const retval = this->impl ()->get_qos (ddsqos);
       qos <<= ddsqos;
@@ -56,7 +57,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_Topic_i::set_listener");
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       CCM_DDS_TopicListener_i *ccm_dds_impl_list = 0;
       if (!CORBA::is_nil (a_listener))
         {
@@ -75,7 +76,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_Topic_i::get_listener");
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDSTopicListener *ccm_dds_topic_list = this->impl ()->get_listener ();
       CCM_DDS_TopicListener_i *list_proxy = dynamic_cast <CCM_DDS_TopicListener_i *> (ccm_dds_topic_list);
       if (!list_proxy)
@@ -94,7 +95,7 @@ namespace CIAO
     CCM_DDS_Topic_i::get_inconsistent_topic_status (
       ::DDS::InconsistentTopicStatus & a_status)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDS_InconsistentTopicStatus ddsstatus;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_inconsistent_topic_status (ddsstatus);
       a_status <<= ddsstatus;;
@@ -114,7 +115,7 @@ namespace CIAO
     CCM_DDS_Topic_i::get_statuscondition (void)
     {
       ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
       ACE_NEW_THROW_EX (retval,
                         CCM_DDS_StatusCondition_i (sc),
@@ -137,7 +138,7 @@ namespace CIAO
     ::DDS::InstanceHandle_t
     CCM_DDS_Topic_i::get_instance_handle (void)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandle_t const rtihandle = this->impl ()->get_instance_handle ();
       ::DDS::InstanceHandle_t handle;
       handle <<= rtihandle;
@@ -150,7 +151,7 @@ namespace CIAO
     char *
     CCM_DDS_Topic_i::get_type_name (void)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       return CORBA::string_dup (this->impl ()->get_type_name ());
 #else
       return this->impl ()->get_type_name ();
@@ -160,7 +161,7 @@ namespace CIAO
     char *
     CCM_DDS_Topic_i::get_name (void)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       return CORBA::string_dup (this->impl ()->get_name ());
 #else
       return this->impl ()->get_name ();
@@ -171,7 +172,7 @@ namespace CIAO
     CCM_DDS_Topic_i::get_participant (void)
     {
       ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDSDomainParticipant* p = this->impl ()->get_participant ();
       if (p)
         {

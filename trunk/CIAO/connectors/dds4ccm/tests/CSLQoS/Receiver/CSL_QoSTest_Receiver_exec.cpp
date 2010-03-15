@@ -8,6 +8,8 @@
 #include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
 
+#include "dds4ccm/impl/dds4ccm_conf.h"
+
 namespace CIAO_CSL_QoSTest_Receiver_Impl
 {
   //============================================================
@@ -190,7 +192,7 @@ namespace CIAO_CSL_QoSTest_Receiver_Impl
         ACE_ERROR ((LM_ERROR, "RECEIVER ERROR: "
                               "Thread ID for ConnectorStatusListener not set!\n"));
       }
-    #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
+    #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
     else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
                                 ACE_Thread::self ()))
       {

@@ -1,49 +1,169 @@
+Mon Mar 15 14:14:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
+        * connectors/dds4ccm/idl/dds_rtf2_dcps_i_handle.idl:
+        * connectors/dds4ccm/idl/dds_rtf2_dcps_instance_handle.idl:
+        * connectors/dds4ccm/impl/dds/Coherent_Changes_Guard.h:
+        * connectors/dds4ccm/impl/dds/ContentFilteredTopic.h:
+        * connectors/dds4ccm/impl/dds/ContentFilteredTopic.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/dds/DataReader.h:
+        * connectors/dds4ccm/impl/dds/DataReader.cpp:
+        * connectors/dds4ccm/impl/dds/DataReaderListener.h:
+        * connectors/dds4ccm/impl/dds/DataReaderListener.cpp:
+        * connectors/dds4ccm/impl/dds/DataWriter.h:
+        * connectors/dds4ccm/impl/dds/DataWriter.cpp:
+        * connectors/dds4ccm/impl/dds/DataWriterListener.h:
+        * connectors/dds4ccm/impl/dds/DataWriterListener.cpp:
+        * connectors/dds4ccm/impl/dds/DataWriterListener_T.h:
+        * connectors/dds4ccm/impl/dds/DataWriterListener_T.cpp:
+        * connectors/dds4ccm/impl/dds/DomainParticipant.h:
+        * connectors/dds4ccm/impl/dds/DomainParticipant.cpp:
+        * connectors/dds4ccm/impl/dds/DomainParticipantFactory.h:
+        * connectors/dds4ccm/impl/dds/DomainParticipantFactory.cpp:
+        * connectors/dds4ccm/impl/dds/DomainParticipantListener.h:
+        * connectors/dds4ccm/impl/dds/DomainParticipantListener_T.h:
+        * connectors/dds4ccm/impl/dds/DomainParticipantListener_T.cpp:
+        * connectors/dds4ccm/impl/dds/Getter_T.h:
+        * connectors/dds4ccm/impl/dds/Publisher.h:
+        * connectors/dds4ccm/impl/dds/Publisher.cpp:
+        * connectors/dds4ccm/impl/dds/PublisherListener.h:
+        * connectors/dds4ccm/impl/dds/PublisherListener.cpp:
+        * connectors/dds4ccm/impl/dds/PublisherListener_T.h:
+        * connectors/dds4ccm/impl/dds/PublisherListener_T.cpp:
+        * connectors/dds4ccm/impl/dds/QueryCondition.h:
+        * connectors/dds4ccm/impl/dds/QueryCondition.cpp:
+        * connectors/dds4ccm/impl/dds/ReadCondition.h:
+        * connectors/dds4ccm/impl/dds/Reader_T.h:
+        * connectors/dds4ccm/impl/dds/Reader_T.cpp:
+        * connectors/dds4ccm/impl/dds/StatusCondition.h:
+        * connectors/dds4ccm/impl/dds/Subscriber.h:
+        * connectors/dds4ccm/impl/dds/SubscriberListener.h:
+        * connectors/dds4ccm/impl/dds/SubscriberListener.cpp:
+        * connectors/dds4ccm/impl/dds/Topic.h:
+        * connectors/dds4ccm/impl/dds/Topic.cpp:
+        * connectors/dds4ccm/impl/dds/TopicDescription.h:
+        * connectors/dds4ccm/impl/dds/TopicDescription.cpp:
+        * connectors/dds4ccm/impl/dds/TopicListener.h:
+        * connectors/dds4ccm/impl/dds/TopicListener.cpp:
+        * connectors/dds4ccm/impl/dds/Utils.h:
+        * connectors/dds4ccm/impl/dds/ndds/BuiltinTopicKey_t.h:
+        * connectors/dds4ccm/impl/dds/ndds/DataReaderQos.h:
+        * connectors/dds4ccm/impl/dds/ndds/DataWriterQos.h:
+        * connectors/dds4ccm/impl/dds/ndds/DeadlineQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/DestinationOrderQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/DomainParticipantFactoryQos.h:
+        * connectors/dds4ccm/impl/dds/ndds/DomainParticipantQos.h:
+        * connectors/dds4ccm/impl/dds/ndds/DurabilityQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/DurabilityServiceQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/Duration_t.h:
+        * connectors/dds4ccm/impl/dds/ndds/EntityFactoryQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/GroupDataQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/HistoryQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/InconsistentTopicStatus.h:
+        * connectors/dds4ccm/impl/dds/ndds/InstanceHandleSeq.h:
+        * connectors/dds4ccm/impl/dds/ndds/InstanceHandle_t.h:
+        * connectors/dds4ccm/impl/dds/ndds/LatencyBudgetQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/LifespanQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/LivelinessChangedStatus.h:
+        * connectors/dds4ccm/impl/dds/ndds/LivelinessLostStatus.h:
+        * connectors/dds4ccm/impl/dds/ndds/LivelinessQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/OfferedDeadlineMissedStatus.h:
+        * connectors/dds4ccm/impl/dds/ndds/OfferedIncompatibleQosStatus.h:
+        * connectors/dds4ccm/impl/dds/ndds/OwnershipQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/OwnershipStrengthQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/PartitionQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/PresentationQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/PublicationBuiltinTopicData.h:
+        * connectors/dds4ccm/impl/dds/ndds/PublicationMatchedStatus.h:
+        * connectors/dds4ccm/impl/dds/ndds/PublisherQos.h:
+        * connectors/dds4ccm/impl/dds/ndds/QosPolicyCountSeq.h:
+        * connectors/dds4ccm/impl/dds/ndds/ReaderDataLifecycleQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/ReliabilityQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/RequestedDeadlineMissedStatus.h:
+        * connectors/dds4ccm/impl/dds/ndds/RequestedIncompatibleQosStatus.h:
+        * connectors/dds4ccm/impl/dds/ndds/ResourceLimitsQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/SampleInfo.h:
+        * connectors/dds4ccm/impl/dds/ndds/SampleLostStatus.h:
+        * connectors/dds4ccm/impl/dds/ndds/SampleRejectedStatus.h:
+        * connectors/dds4ccm/impl/dds/ndds/StringSeq.h:
+        * connectors/dds4ccm/impl/dds/ndds/SubscriberQos.h:
+        * connectors/dds4ccm/impl/dds/ndds/SubscriptionBuiltinTopicData.h:
+        * connectors/dds4ccm/impl/dds/ndds/SubscriptionMatchedStatus.h:
+        * connectors/dds4ccm/impl/dds/ndds/TimeBasedFilterQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/Time_t.h:
+        * connectors/dds4ccm/impl/dds/ndds/TopicDataQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/TopicQos.h:
+        * connectors/dds4ccm/impl/dds/ndds/TransportPriorityQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/UserDataQosPolicy.h:
+        * connectors/dds4ccm/impl/dds/ndds/WriterDataLifecycleQosPolicy.h:
+        * connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/CSLQoS/Receiver/CSL_QoSTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CSLQoS/Sender/CSL_QoSTest_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ListenOneByOne/Receiver/LOBO_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Receiver/ConnectorStatusListener_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Sender/ConnectorStatusListener_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver_exec.cpp:
+        * connectors/dds4ccm/impl/dds4ccm_conf.h:
+          Added dds4ccm_conf header file. In this file, all defines and includes can be
+          managed. Therefor we don't check if a define is there, we just check its
+          value. This should force the user to include this file when needed.
+
 Mon Mar 15 11:55:10 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
-	* connectors/dds4ccm/performance-tests/LatencyTT:
-	* connectors/dds4ccm/performance-tests/LatencyTT/Base:
-	* connectors/dds4ccm/performance-tests/LatencyTT/Base/LatencyTT_Test_Base.idl:
-	* connectors/dds4ccm/performance-tests/LatencyTT/Base/LatencyTT_Test_Base.mpc:
-	* connectors/dds4ccm/performance-tests/LatencyTT/Connector:
-	* connectors/dds4ccm/performance-tests/LatencyTT/Connector/LatencyTT_Test_Connector.idl:
-	* connectors/dds4ccm/performance-tests/LatencyTT/Connector/LatencyTT_Test_Connector.mpc:
-	* connectors/dds4ccm/performance-tests/LatencyTT/descriptors:
-	* connectors/dds4ccm/performance-tests/LatencyTT/descriptors/Plan_pub.cdp:
-	* connectors/dds4ccm/performance-tests/LatencyTT/descriptors/Plan_sub.cdp:
-	* connectors/dds4ccm/performance-tests/LatencyTT/descriptors/README:
-	* connectors/dds4ccm/performance-tests/LatencyTT/descriptors/run_test.pl:
-	* connectors/dds4ccm/performance-tests/LatencyTT/descriptors/USER_QOS_PROFILES.xml:
-	* connectors/dds4ccm/performance-tests/LatencyTT/Receiver:
-	* connectors/dds4ccm/performance-tests/LatencyTT/Receiver/LatencyTT_Test_Receiver.idl:
-	* connectors/dds4ccm/performance-tests/LatencyTT/Receiver/LatencyTT_Test_Receiver.mpc:
-	* connectors/dds4ccm/performance-tests/LatencyTT/Receiver/LatencyTT_Test_Receiver_exec.cpp:
-	* connectors/dds4ccm/performance-tests/LatencyTT/Receiver/LatencyTT_Test_Receiver_exec.h:
-	* connectors/dds4ccm/performance-tests/LatencyTT/SecConnector:
-	* connectors/dds4ccm/performance-tests/LatencyTT/SecConnector/LatencyTT_TestSec_Connector.idl:
-	* connectors/dds4ccm/performance-tests/LatencyTT/SecConnector/LatencyTT_TestSec_Connector.mpc:
-	* connectors/dds4ccm/performance-tests/LatencyTT/Sender:
-	* connectors/dds4ccm/performance-tests/LatencyTT/Sender/LatencyTT_Test_Sender.idl:
-	* connectors/dds4ccm/performance-tests/LatencyTT/Sender/LatencyTT_Test_Sender.mpc:
-	* connectors/dds4ccm/performance-tests/LatencyTT/Sender/LatencyTT_Test_Sender_exec.cpp:
-	* connectors/dds4ccm/performance-tests/LatencyTT/Sender/LatencyTT_Test_Sender_exec.h:
-	New Latency test which used Two Topics to calculate round trip time.
-	
+        * connectors/dds4ccm/performance-tests/LatencyTT:
+        * connectors/dds4ccm/performance-tests/LatencyTT/Base:
+        * connectors/dds4ccm/performance-tests/LatencyTT/Base/LatencyTT_Test_Base.idl:
+        * connectors/dds4ccm/performance-tests/LatencyTT/Base/LatencyTT_Test_Base.mpc:
+        * connectors/dds4ccm/performance-tests/LatencyTT/Connector:
+        * connectors/dds4ccm/performance-tests/LatencyTT/Connector/LatencyTT_Test_Connector.idl:
+        * connectors/dds4ccm/performance-tests/LatencyTT/Connector/LatencyTT_Test_Connector.mpc:
+        * connectors/dds4ccm/performance-tests/LatencyTT/descriptors:
+        * connectors/dds4ccm/performance-tests/LatencyTT/descriptors/Plan_pub.cdp:
+        * connectors/dds4ccm/performance-tests/LatencyTT/descriptors/Plan_sub.cdp:
+        * connectors/dds4ccm/performance-tests/LatencyTT/descriptors/README:
+        * connectors/dds4ccm/performance-tests/LatencyTT/descriptors/run_test.pl:
+        * connectors/dds4ccm/performance-tests/LatencyTT/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/performance-tests/LatencyTT/Receiver:
+        * connectors/dds4ccm/performance-tests/LatencyTT/Receiver/LatencyTT_Test_Receiver.idl:
+        * connectors/dds4ccm/performance-tests/LatencyTT/Receiver/LatencyTT_Test_Receiver.mpc:
+        * connectors/dds4ccm/performance-tests/LatencyTT/Receiver/LatencyTT_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/performance-tests/LatencyTT/Receiver/LatencyTT_Test_Receiver_exec.h:
+        * connectors/dds4ccm/performance-tests/LatencyTT/SecConnector:
+        * connectors/dds4ccm/performance-tests/LatencyTT/SecConnector/LatencyTT_TestSec_Connector.idl:
+        * connectors/dds4ccm/performance-tests/LatencyTT/SecConnector/LatencyTT_TestSec_Connector.mpc:
+        * connectors/dds4ccm/performance-tests/LatencyTT/Sender:
+        * connectors/dds4ccm/performance-tests/LatencyTT/Sender/LatencyTT_Test_Sender.idl:
+        * connectors/dds4ccm/performance-tests/LatencyTT/Sender/LatencyTT_Test_Sender.mpc:
+        * connectors/dds4ccm/performance-tests/LatencyTT/Sender/LatencyTT_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/performance-tests/LatencyTT/Sender/LatencyTT_Test_Sender_exec.h:
+        New Latency test which used Two Topics to calculate round trip time.
+
 Mon Mar 15 11:50:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* connectors/ami4ccm/ami4ccm/ami4ccm.idl:
-	  Updated ciao lem pragma
+        * connectors/ami4ccm/ami4ccm/ami4ccm.idl:
+          Updated ciao lem pragma
 
 Mon Mar 15 11:28:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* connectors/ami4ccm/ami4ccm/ami4ccm.idl:
-	  Added CCM_AMI::AMI_Base connector, all AMI4CCM implied
-	  connectors will be derived from this base connector
+        * connectors/ami4ccm/ami4ccm/ami4ccm.idl:
+          Added CCM_AMI::AMI_Base connector, all AMI4CCM implied
+          connectors will be derived from this base connector
 
-	* connectors/ami4ccm/ami4ccm/ami4ccm.mpc:
-	  Uses now ccm
+        * connectors/ami4ccm/ami4ccm/ami4ccm.mpc:
+          Uses now ccm
 
-	* connectors/ami4ccm/ami4ccm/ami4ccm_lem_stub.mpc:
-	  new file to generate the lem stub dll
+        * connectors/ami4ccm/ami4ccm/ami4ccm_lem_stub.mpc:
+          new file to generate the lem stub dll
 
 Mon Mar 15 10:48:10 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 

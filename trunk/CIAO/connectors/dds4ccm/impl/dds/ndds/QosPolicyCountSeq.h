@@ -10,11 +10,13 @@
 #ifndef DDS4CCM_QOSPOLICYCOUNTSEQ_H
 #define DDS4CCM_QOSPOLICYCOUNTSEQ_H
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+#include "dds4ccm/impl/dds4ccm_conf.h"
+
+#if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::QosPolicyCountSeq DDS_QosPolicyCountSeq;
 #endif
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::QosPolicyCountSeq & ddspolicycount, const ::DDS_QosPolicyCountSeq & policycount)
 {

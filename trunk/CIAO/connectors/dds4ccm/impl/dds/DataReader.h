@@ -15,14 +15,15 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
 
 #include "dds4ccm/impl/dds/dds4ccm_dds_impl_export.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 #include "dds4ccm/impl/dds/ndds/InstanceHandle_t.h"
 #include "tao/LocalObject.h"
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
 # include "ndds/ndds_cpp.h"
 #endif
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+#if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::DataReader DDSDataReader;
 #endif
 

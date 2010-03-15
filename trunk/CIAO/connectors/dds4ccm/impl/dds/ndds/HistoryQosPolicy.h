@@ -9,11 +9,13 @@
 #ifndef DDS4CCM_HISTORYQOSPOLICY_H
 #define DDS4CCM_HISTORYQOSPOLICY_H
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+#include "dds4ccm/impl/dds4ccm_conf.h"
+
+#if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::HistoryQosPolicy DDS_HistoryQosPolicy;
 #endif
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::HistoryQosPolicy &ddsqos, const ::DDS_HistoryQosPolicy & qos)
 {

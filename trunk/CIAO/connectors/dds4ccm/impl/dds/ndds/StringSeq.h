@@ -9,12 +9,14 @@
 #ifndef DDS4CCM_STRINGSEQ_T_H
 #define DDS4CCM_STRINGSEQ_T_H
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+#include "dds4ccm/impl/dds4ccm_conf.h"
+
+#if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::StringSeq DDS_StringSeq;
 typedef long DDS_Long;
 #endif
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::StringSeq & string_seq, const ::DDS_StringSeq & dds_string_seq)
 {

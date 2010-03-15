@@ -12,6 +12,7 @@
 
 #include "dds4ccm_dds_impl_export.h"
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 
 namespace CIAO
 {
@@ -59,7 +60,7 @@ namespace CIAO
           RTI_DDS_RETCODE (DDS::PUBLICATION_MATCHED_STATUS);
           RTI_DDS_RETCODE (DDS::SUBSCRIPTION_MATCHED_STATUS);
           //RTI_DDS_RETCODE (DDS::RELIABLE_WRITER_CACHE_CHANGED_STATUS);
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
           RTI_DDS_RETCODE (DDS::RELIABLE_READER_ACTIVITY_CHANGED_STATUS);
 #endif  
           //RTI_DDS_RETCODE (DDS::DATA_WRITER_CACHE_STATUS);

@@ -15,6 +15,7 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
 
 #include "dds4ccm/impl/dds/dds4ccm_dds_impl_export.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 
 #include "tao/LocalObject.h"
 
@@ -42,7 +43,7 @@ namespace CIAO
       virtual ~CCM_DDS_DomainParticipantFactory_i (void);
 
     public:
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+#if (CIAO_DDS4CCM_OPENDDS==1)
       virtual ::DDS::DomainParticipantFactory_ptr get_instance (void);
 #endif
 
@@ -52,7 +53,7 @@ namespace CIAO
                                                          ::DDS::DomainParticipantListener_ptr a_listener,
                                                          ::DDS::StatusMask mask);
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       virtual
         ::DDS::DomainParticipant_ptr create_participant_with_profile (::DDS::DomainId_t domain_id,
                                                         const char * library_name,
@@ -79,7 +80,7 @@ namespace CIAO
       virtual
         ::DDS::ReturnCode_t get_qos (::DDS::DomainParticipantFactoryQos & qos);
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       virtual ::DDS::ReturnCode_t set_default_participant_qos_with_profile(
                                                         const char * library_name,
                                                         const char * profile_name);

@@ -13,6 +13,8 @@
 #include "dds4ccm/impl/dds/Utils.h"
 #include "dds4ccm/impl/dds/TimeUtilities.h"
 
+#include "dds4ccm/impl/dds4ccm_conf.h"
+
 namespace CIAO_PSL_DeadlineTest_Receiver_Impl
 {
   //============================================================
@@ -284,7 +286,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
         ACE_ERROR ((LM_ERROR, "ERROR: "
                               "Thread ID for PortStatusListener I not set!\n"));
       }
-    #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
+    #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
     else if (ACE_OS::thr_equal (this->thread_id_listener_1_.value (),
                                 ACE_Thread::self ()))
       {
@@ -330,7 +332,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
         ACE_ERROR ((LM_ERROR, "ERROR: "
                               "Thread ID for PortStatusListener II not set!\n"));
       }
-    #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
+    #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
     else if (ACE_OS::thr_equal (this->thread_id_listener_2_.value (),
                                 ACE_Thread::self ()))
       {

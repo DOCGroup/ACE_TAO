@@ -11,12 +11,13 @@
 #define DDS4CCM_INSTANCEHANDLESEQ_H
 
 #include "InstanceHandle_t.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+#if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::InstanceHandleSeq DDS_InstanceHandleSeq;
 #endif
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
 template <typename corbaseq, typename ddsseq>
 void convert_dds_to_corba_sequence(corbaseq & target, const ddsseq& source) {
   target.length (source.length ());

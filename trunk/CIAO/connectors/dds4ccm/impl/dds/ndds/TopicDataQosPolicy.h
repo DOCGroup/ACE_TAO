@@ -10,12 +10,13 @@
 #define DDS4CCM_TOPICDATAQOSPOLICY_H
 
 #include "OctetSeq.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+#if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::TopicDataQosPolicy DDS_TopicDataQosPolicy;
 #endif
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::TopicDataQosPolicy &ddsqos, const ::DDS_TopicDataQosPolicy & qos)
 {
