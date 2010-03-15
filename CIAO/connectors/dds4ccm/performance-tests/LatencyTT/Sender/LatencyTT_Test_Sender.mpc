@@ -2,7 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -p DDS_LatencyTT_Test_Base -l ../lib -o ../lib -c controller -u DDS Sender"
 
 project(DDS_LatencyTT_Test_Sender_idl_gen) : componentidldefaults, dds4ccm {
-  after += DDS_LatencyTT_Test_Connector_idl_gen DDS_LatencyTT_TestSec_Connector_idl_gen DDS_Starter_idl_gen
+  after += DDS_LatencyTT_Test_Connector_idl_gen DDS_LTT_TestSec_Connector_idl_gen DDS_Starter_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SENDER_STUB_Export \
               -Wb,stub_export_include=Sender_stub_export.h \

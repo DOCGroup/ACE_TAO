@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p DDS_LatencyTT_Test_Base -l .. -o ../lib -u DDS LatencyTT_TestSec_Connector"
 
-project(DDS_LatencyTT_TestSec_Connector_idl_gen) : connectoridldefaults, dds4ccm {
+project(DDS_LTT_TestSec_Connector_idl_gen) : connectoridldefaults, dds4ccm {
   after += DDS4CCM_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=LATENCYTT_TESTSEC_CONNECTOR_STUB_Export \
@@ -19,9 +19,9 @@ project(DDS_LatencyTT_TestSec_Connector_idl_gen) : connectoridldefaults, dds4ccm
   }
 }
 
-project(DDS_LatencyTT_TestSec_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
+project(DDS_LTT_TestSec_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   custom_only = 1
-  after += DDS_LatencyTT_TestSec_Connector_idl_gen
+  after += DDS_LTT_TestSec_Connector_idl_gen
   idlflags += -Wb,stub_export_macro=LATENCYTT_TESTSEC_CONNECTOR_LEM_STUB_Export \
               -Wb,stub_export_include=LatencyTT_TestSec_Connector_lem_stub_export.h \
               -SS -Gxhst \
@@ -33,7 +33,7 @@ project(DDS_LatencyTT_TestSec_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
 }
 
 project(DDS_LTT_TestSec_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
-  after += DDS_LatencyTT_TestSec_Connector_lem_gen DDS_LatencyTT_TestSec_Connector_stub DDS_LatencyTT_Test_Base_stub DDS4CCM_lem_stub
+  after += DDS_LTT_TestSec_Connector_lem_gen DDS_LatencyTT_TestSec_Connector_stub DDS_LatencyTT_Test_Base_stub DDS4CCM_lem_stub
   libs  += DDS_LatencyTT_Test_Base_stub DDS_LatencyTT_TestSec_Connector_stub DDS4CCM_lem_stub
   libpaths += ../lib
   libout = ../lib
@@ -59,7 +59,7 @@ project(DDS_LTT_TestSec_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
 }
 
 project(DDS_LatencyTT_TestSec_Connector_stub) : ccm_stub, dds4ccm_base {
-  after += DDS_LatencyTT_TestSec_Connector_idl_gen DDS_LatencyTT_Test_Base_stub
+  after += DDS_LTT_TestSec_Connector_idl_gen DDS_LatencyTT_Test_Base_stub
   libs  += DDS_LatencyTT_Test_Base_stub
   libpaths += ../lib
   libout = ../lib
@@ -108,7 +108,6 @@ project(DDS_LatencyTT_TestSec_Connector_exec) : ciao_executor, dds4ccm_impl {
   Inline_Files {
   }
 }
-
 
 project(DDS_LatencyTT_TestSec_Connector_svnt) : ciao_servant, dds4ccm_skel {
   after      += DDS_LTT_TestSec_Connector_lem_stub DDS_LatencyTT_TestSec_Connector_exec DDS_LatencyTT_TestSec_Connector_stub DDS4CCM_lem_stub
