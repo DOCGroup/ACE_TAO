@@ -1,3 +1,28 @@
+Mon Mar 15 07:58:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/High_Res_Timer.cpp
+	* ace/High_Res_Timer.h
+	* ace/High_Res_Timer.inl
+	  Use 64bit calculations to increase our precision. If you want to have the 32bit
+	  calculations, add ACE_USE_WINDOWS_32BIT_HIGH_RES_TIMER_CALCULATIONS as define. If
+	  the scoreboard doesn't show any platforms requiring 32bit, we will remove that code
+	  before the next micro release goes out
+	  Thanks to Alon Diamant <diamant dot alon at gmail dot com> for supplying the patches.
+	  This fixes bugzilla 3703.
+
+	* ace/Timer_Queue_Adapters.cpp
+	* ace/Timer_Queue_Adapters.h
+	* ace/Timer_Queue_Adapters.inl
+	  Make it possible to use a customer event handler in ACE_Thread_Timer_Queue_Adapter.
+	  Thanks to Alon Diamant <diamant dot alon at gmail dot com> for supplying the patches.
+	  This fixes bugzilla 3614
+
+	* tests/tests.mpc:
+	* tests/Thread_Timer_Queue_Adapter_Test.cpp:
+	  New test for testing custom event handlers in ACE_Thread_Timer_Queue_Adapter.
+	  Thanks to Alon Diamant <diamant dot alon at gmail dot com> for creating
+	  this new test
+
 Fri Mar 12 21:53:30 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * bin/PerlACE/ProcessVX.pm:
