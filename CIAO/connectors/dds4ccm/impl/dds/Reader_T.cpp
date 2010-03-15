@@ -416,7 +416,6 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::create_filter (
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::create_filter - "
                     "Error: Unable to create a new DataReader.\n"));
     }
-  this->reader_ = ::DDS::CCM_DataReader::_narrow (reader);
   this->set_impl (reader);
 }
 
