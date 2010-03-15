@@ -5,7 +5,7 @@
 
 #include <Components.idl>
 
-#pragma ciao lem "ami4ccmE.idl"
+#pragma ciao lem "connectors/ami4ccm/ami4ccm/ami4ccmE.idl"
 
 module CCM_AMI
 {
