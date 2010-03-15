@@ -43,24 +43,11 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_USE_WINDOWS_32BIT_HIGH_RES_TIMER_CALCULATIONS)
-
-    // Initialize the global_scale_factor_ to 1.  The first
-    // ACE_High_Res_Timer instance construction will override this
-    // value.
-    /* static */
-    ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1u;
-
-#else  
-  
-    /// This a higher-precision version, specific for Windows systems 
-    // Initialize the global_scale_factor_ to 1.  The first
-    // ACE_High_Res_Timer instance construction will override this
-    // value.
-    /* static */
-    ACE_UINT64 ACE_High_Res_Timer::global_scale_factor_ = 1u;    
-    
-#endif
+  // Initialize the global_scale_factor_ to 1.  The first
+  // ACE_High_Res_Timer instance construction will override this
+  // value.
+  /* static */
+  ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1u;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
@@ -203,18 +190,8 @@ ACE_High_Res_Timer::get_cpuinfo (void)
 }
 #endif /* linux */
 
-
-// Return value is based on required precision.
-#if defined (ACE_USE_WINDOWS_32BIT_HIGH_RES_TIMER_CALCULATIONS)
-
-    ACE_UINT32 ACE_High_Res_Timer::global_scale_factor (void)
-    
-#else
-
-    // This a higher-precision version, specific for Windows systems 
-    ACE_UINT64 ACE_High_Res_Timer::global_scale_factor (void)
-    
-#endif
+ACE_UINT32
+ACE_High_Res_Timer::global_scale_factor (void)
 {
 #if (defined (ACE_WIN32) || defined (ACE_HAS_POWERPC_TIMER) || \
      defined (ACE_HAS_PENTIUM) || defined (ACE_HAS_ALPHA_TIMER)) && \
@@ -234,50 +211,27 @@ ACE_High_Res_Timer::get_cpuinfo (void)
       if (ACE_High_Res_Timer::global_scale_factor_status_ == 0)
         {
 #         if defined (ACE_WIN32)
-#             if defined (ACE_LACKS_LONGLONG_T) || \
-                 defined (ACE_USE_WINDOWS_32BIT_HIGH_RES_TIMER_CALCULATIONS)       
-                
+            LARGE_INTEGER freq;
+            if (::QueryPerformanceFrequency (&freq))
+              {
+                // We have a high-res timer
+#             if defined (ACE_LACKS_LONGLONG_T)
+                ACE_UINT64 uint64_freq(freq.u.LowPart, (ACE_UINT32) freq.u.HighPart);
+                ACE_High_Res_Timer::global_scale_factor
+                  (uint64_freq / (ACE_UINT32) ACE_ONE_SECOND_IN_USECS);
+#             else
+                ACE_High_Res_Timer::global_scale_factor
+                  (static_cast<unsigned int> (freq.QuadPart / ACE_HR_SCALE_CONVERSION));
+#             endif // (ACE_LACKS_LONGLONG_T)
 
-                LARGE_INTEGER freq;
-                if (::QueryPerformanceFrequency (&freq))
-                  {
-                    // We have a high-res timer
-#                 if defined (ACE_LACKS_LONGLONG_T)
-                    ACE_UINT64 uint64_freq(freq.u.LowPart, (ACE_UINT32) freq.u.HighPart);
-                    ACE_High_Res_Timer::global_scale_factor
-                      (uint64_freq / (ACE_UINT32) ACE_ONE_SECOND_IN_USECS);
-#                 else
-                    ACE_High_Res_Timer::global_scale_factor
-                      (static_cast<unsigned int> (freq.QuadPart / ACE_HR_SCALE_CONVERSION));
-#                 endif // (ACE_LACKS_LONGLONG_T)
+                ACE_High_Res_Timer::global_scale_factor_status_ = 1;
+              }
+            else
+              // High-Res timers not supported
+              ACE_High_Res_Timer::global_scale_factor_status_ = -1;
 
-                    ACE_High_Res_Timer::global_scale_factor_status_ = 1;
-                  }
-                else
-                  // High-Res timers not supported
-                  ACE_High_Res_Timer::global_scale_factor_status_ = -1;
+            return ACE_High_Res_Timer::global_scale_factor_;
 
-                return ACE_High_Res_Timer::global_scale_factor_;
-#             else // defined (ACE_LACKS_LONGLONG_T) || \
-                   // defined (ACE_USE_WINDOWS_32BIT_HIGH_RES_TIMER_CALCULATIONS)                     
-
-                // This a higher-precision version, specific for Windows systems 
-                LARGE_INTEGER freq;
-                if (::QueryPerformanceFrequency (&freq))
-                {
-                    ACE_High_Res_Timer::global_scale_factor(freq.QuadPart);
-                    
-                    ACE_High_Res_Timer::global_scale_factor_status_ = 1;
-                }
-                else
-                {
-                  // High-Res timers not supported
-                  ACE_High_Res_Timer::global_scale_factor_status_ = -1;
-                }
-
-                return ACE_High_Res_Timer::global_scale_factor_;
-                
-#             endif
 #         elif defined (linux)
             ACE_High_Res_Timer::global_scale_factor (ACE_High_Res_Timer::get_cpuinfo ());
 #         endif /* ! ACE_WIN32 && ! (linux && __alpha__) */
@@ -313,7 +267,7 @@ ACE_UINT32
 ACE_High_Res_Timer::calibrate (const ACE_UINT32 usec,
                                const u_int iterations)
 {
-  ACE_Time_Value const sleep_time (0, usec);
+  const ACE_Time_Value sleep_time (0, usec);
   ACE_Stats delta_hrtime;
   // In units of 100 usec, to avoid overflow.
   ACE_Stats actual_sleeps;
@@ -446,46 +400,26 @@ ACE_High_Res_Timer::elapsed_time_incr (ACE_Time_Value &tv) const
 void
 ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds) const
 {
-#if defined (ACE_USE_WINDOWS_32BIT_HIGH_RES_TIMER_CALCULATIONS)
-
-      // Please do _not_ rearrange this equation.  It is carefully
-      // designed and tested to avoid overflow on machines that don't have
-      // native 64-bit ints. In particular, division can be a problem.
-      // For more background on this, please see bugzilla #1024.
-      nanoseconds = ACE_High_Res_Timer::elapsed_hrtime (this->end_, this->start_)
-                * (1024000u / ACE_High_Res_Timer::global_scale_factor ());
-      // Caution - Borland has a problem with >>=, so resist the temptation.
-      nanoseconds = nanoseconds >> 10;
-      // Right shift is implemented for non native 64-bit ints
-      // operator/ only for a 32 bit result !
-#else
-
-      // This a higher-precision version, specific for Windows systems 
-      nanoseconds = 
-        (ACE_High_Res_Timer::elapsed_hrtime (this->end_, this->start_) * ACE_HR_SCALE_CONVERSION * 1000u) / 
-        ACE_High_Res_Timer::global_scale_factor ();                      
-
-#endif
+  // Please do _not_ rearrange this equation.  It is carefully
+  // designed and tested to avoid overflow on machines that don't have
+  // native 64-bit ints. In particular, division can be a problem.
+  // For more background on this, please see bugzilla #1024.
+  nanoseconds = ACE_High_Res_Timer::elapsed_hrtime (this->end_, this->start_)
+            * (1024000u / ACE_High_Res_Timer::global_scale_factor ());
+  // Caution - Borland has a problem with >>=, so resist the temptation.
+  nanoseconds = nanoseconds >> 10;
+  // Right shift is implemented for non native 64-bit ints
+  // operator/ only for a 32 bit result !
 }
 
 void
 ACE_High_Res_Timer::elapsed_time_incr (ACE_hrtime_t &nanoseconds) const
 {
-#if defined (ACE_USE_WINDOWS_32BIT_HIGH_RES_TIMER_CALCULATIONS)
-
-    // Same as above.
-    nanoseconds = this->total_
+  // Same as above.
+  nanoseconds = this->total_
             * (1024000u / ACE_High_Res_Timer::global_scale_factor ());
-    // Caution - Borland has a problem with >>=, so resist the temptation.
-    nanoseconds = nanoseconds >> 10;
-#else    
-
-    // This a higher-precision version, specific for Windows systems 
-    nanoseconds = 
-        this->total_ * 1000000000u / 
-        ACE_High_Res_Timer::global_scale_factor ();
-        
-#endif    
+  // Caution - Borland has a problem with >>=, so resist the temptation.
+  nanoseconds = nanoseconds >> 10;
 }
 
 void
