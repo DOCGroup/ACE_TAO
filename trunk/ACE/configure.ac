@@ -3306,15 +3306,6 @@ ACE_CHECK_LACKS_FUNCS(strtoul)
 
 ACE_FUNC_STRTOULL
 
-ACE_CHECK_LACKS_FUNCS(floor ceil)
-# floorl and ceill are somtimes present (maybe as a stub) in the math
-# library but not declared in any header. To avoid introducing an
-# undocumented dependency, try these as decls first.
-AH_TEMPLATE([ACE_LACKS_CEILL], [Platform lacks the ceill() function])
-AH_TEMPLATE([ACE_LACKS_FLOORL], [Platform lacks the floorl() function])
-AC_CHECK_DECL(ceill,[],[AC_DEFINE([ACE_LACKS_CEILL])])
-AC_CHECK_DECL(floorl,[],[AC_DEFINE([ACE_LACKS_FLOORL])])
-
 # swab() comes in a number of forms:
 #   swab (const void*, void*, size_t) is POSIX, XPG4, SUS, SUSv2 standard.
 #   swab (const char*, char*, size_t) is SVID third edition.
