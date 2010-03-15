@@ -17,6 +17,11 @@
 # define CLINFO "(%P|%t) [%M] - %T - "
 #endif
 
+// By default tracing is turned off.
+#if !defined (DDS4CCM_NTRACE)
+#  define DDS4CCM_NTRACE 1
+#endif /* DDS4CCM_NTRACE */
+
 #if (DDS4CCM_NTRACE == 1)
 #  if !defined (ACE_NTRACE)
 #    define DDS4CCM_TRACE(X) do {} while (0)

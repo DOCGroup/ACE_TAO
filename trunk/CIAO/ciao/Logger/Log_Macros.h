@@ -19,6 +19,11 @@
 
 extern CIAO_Logger_Export unsigned int CIAO_debug_level;
 
+// By default tracing is turned off.
+#if !defined (CIAO_NTRACE)
+#  define CIAO_NTRACE 1
+#endif /* CIAO_NTRACE */
+
 #if (CIAO_NTRACE == 1)
 #  if !defined (ACE_NTRACE)
 #    define CIAO_TRACE(X) do {} while (0)
@@ -48,8 +53,8 @@ extern CIAO_Logger_Export unsigned int CIAO_debug_level;
 #if defined (CIAO_NLOGGING)
 # define CIAO_ERROR(L, X) do {} while (0)
 # define CIAO_DEBUG(L, X) do {} while (0)
-#define CIAO_ERROR_RETURN(L, X, Y) return (Y)
-#define CIAO_ERROR_BREAK(L, X) { break; }
+# define CIAO_ERROR_RETURN(L, X, Y) return (Y)
+# define CIAO_ERROR_BREAK(L, X) { break; }
 #else
 # if !defined (CIAO_ERROR)
 #  define CIAO_ERROR(L, X) \
