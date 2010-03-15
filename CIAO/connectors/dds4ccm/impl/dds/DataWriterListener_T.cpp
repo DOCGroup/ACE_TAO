@@ -48,7 +48,7 @@ CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_publication_matched 
 {
 }
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_reliable_reader_activity_changed (

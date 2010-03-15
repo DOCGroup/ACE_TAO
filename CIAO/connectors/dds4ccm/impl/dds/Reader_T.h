@@ -11,8 +11,9 @@
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+#if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::InstanceHandle_t DDS_InstanceHandle_t;
 typedef ::DDS::SampleInfoSeq DDS_SampleInfoSeq;
 #endif
@@ -72,7 +73,7 @@ namespace CIAO
         ACE_CString library_name_;
         ACE_CString profile_name_;
 
-        #if defined (DDS4CCM_USES_QUERY_CONDITION) && (DDS4CCM_USES_QUERY_CONDITION==1)
+        #if (DDS4CCM_USES_QUERY_CONDITION==1)
           ::DDSQueryCondition * qc_;
         #else
           DDS::ContentFilteredTopic_var cft_;

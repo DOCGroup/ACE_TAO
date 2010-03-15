@@ -8,7 +8,9 @@
 #ifndef BUILTINTOPICKEY_T_H
 #define BUILTINTOPICKEY_T_H
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#include "dds4ccm/impl/dds4ccm_conf.h"
+
+#if (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::BuiltinTopicKey_t &ddsbuiltintopickey, const ::DDS_BuiltinTopicKey_t & builtintopickey)
 {

@@ -5,7 +5,7 @@
 
 #pragma ciao lem "connectors/dds4ccm/idl/dds_rtf2_dcps_i_handleE.idl"
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
 
 module DDS {
     struct NativeInstanceHandle_t {

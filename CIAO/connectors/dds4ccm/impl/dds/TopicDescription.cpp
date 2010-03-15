@@ -23,7 +23,7 @@ namespace CIAO
     char *
     CCM_DDS_TopicDescription_i::get_type_name (void)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       return CORBA::string_dup (this->impl ()->get_type_name ());
 #else
       return this->impl ()->get_type_name ();
@@ -33,7 +33,7 @@ namespace CIAO
     char *
     CCM_DDS_TopicDescription_i::get_name (void)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       return CORBA::string_dup (this->impl ()->get_name ());
 #else
       return this->impl ()->get_name ();
@@ -44,7 +44,7 @@ namespace CIAO
     CCM_DDS_TopicDescription_i::get_participant (void)
     {
       ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDSDomainParticipant* p = this->impl ()->get_participant ();
       if (p)
         {

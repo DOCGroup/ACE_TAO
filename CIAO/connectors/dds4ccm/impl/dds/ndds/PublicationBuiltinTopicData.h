@@ -25,7 +25,9 @@
 #include "TopicDataQosPolicy.h"
 #include "GroupDataQosPolicy.h"
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#include "dds4ccm/impl/dds4ccm_conf.h"
+
+#if (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::PublicationBuiltinTopicData &ddstopicdata, const ::DDS_PublicationBuiltinTopicData & topicdata)
 {

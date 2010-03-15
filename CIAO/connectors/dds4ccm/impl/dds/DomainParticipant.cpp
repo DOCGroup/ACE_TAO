@@ -41,7 +41,7 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_i::~CCM_DDS_DomainParticipant_i");
     }
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
     ::DDS::Publisher_ptr
     CCM_DDS_DomainParticipant_i::create_publisher_with_profile (
       const char* library_name,
@@ -95,7 +95,7 @@ namespace CIAO
       ::DDS::StatusMask mask)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_publisher");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ACE_UNUSED_ARG (qos);
       DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_i::create_publisher - "
                    "Creating Publisher\n"));
@@ -169,7 +169,7 @@ namespace CIAO
       return retval;
     }
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
     ::DDS::Subscriber_ptr
     CCM_DDS_DomainParticipant_i::create_subscriber_with_profile (
       const char* library_name,
@@ -224,7 +224,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_subscriber");
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ACE_UNUSED_ARG (qos);
 
       DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_i::create_subscriber - "
@@ -270,7 +270,7 @@ namespace CIAO
     ::DDS::ReturnCode_t
     CCM_DDS_DomainParticipant_i::delete_subscriber (::DDS::Subscriber_ptr s)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       CCM_DDS_Subscriber_i *ccm_dds_sub = dynamic_cast < CCM_DDS_Subscriber_i * > (s);
 
       if (!ccm_dds_sub)
@@ -307,7 +307,7 @@ namespace CIAO
     CCM_DDS_DomainParticipant_i::get_builtin_subscriber (void)
     {
       ::DDS::Subscriber_var retval = ::DDS::Subscriber::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDSSubscriber* sub = this->impl ()->get_builtin_subscriber ();
       if (sub)
         {
@@ -336,7 +336,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_topic");
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ACE_UNUSED_ARG (qos);
 
       if (impl_name == 0)
@@ -414,7 +414,7 @@ namespace CIAO
 #endif
     }
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
     ::DDS::Topic_ptr
     CCM_DDS_DomainParticipant_i::create_topic_with_profile (
         const char *impl_name,
@@ -546,7 +546,7 @@ namespace CIAO
                                          const ::DDS::Duration_t & timeout)
     {
       ::DDS::Topic_var retval = ::DDS::Topic::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_Duration_t ddstimeout;
       ddstimeout <<= timeout;
       ::DDSTopic* topic = this->impl ()->find_topic (impl_name, ddstimeout);
@@ -577,7 +577,7 @@ namespace CIAO
                                    name));
 
       ::DDS::TopicDescription_var retval = ::DDS::TopicDescription::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDSTopicDescription* topic = this->impl ()->lookup_topicdescription (name);
       if (topic)
         {
@@ -621,7 +621,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_contentfilteredtopic");
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       CCM_DDS_Topic_i *top = dynamic_cast< CCM_DDS_Topic_i *> (related_topic);
       if (!top)
         {
@@ -678,7 +678,7 @@ namespace CIAO
     CCM_DDS_DomainParticipant_i::delete_contentfilteredtopic (::DDS::ContentFilteredTopic_ptr a_contentfilteredtopic)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::delete_contentfilteredtopic");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       CCM_DDS_ContentFilteredTopic_i *ccm_dds_cft =
           dynamic_cast < CCM_DDS_ContentFilteredTopic_i *> (a_contentfilteredtopic);
       if (!ccm_dds_cft)
@@ -724,7 +724,7 @@ namespace CIAO
     CCM_DDS_DomainParticipant_i::set_qos (const ::DDS::DomainParticipantQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::set_qos");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_DomainParticipantQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       return this->impl()->set_qos (ccm_dds_qos);
@@ -737,7 +737,7 @@ namespace CIAO
     CCM_DDS_DomainParticipant_i::get_qos (::DDS::DomainParticipantQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_qos");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_DomainParticipantQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode = this->impl()-> get_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
@@ -751,7 +751,7 @@ namespace CIAO
     CCM_DDS_DomainParticipant_i::set_listener (::DDS::DomainParticipantListener_ptr a_listener,
                                            ::DDS::StatusMask mask)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       CCM_DDS_DomainPublisherListener_i* ccm_dds_impl_list = 0;
       if (!CORBA::is_nil (a_listener))
         {
@@ -770,7 +770,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_listener");
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDSDomainParticipantListener *ccm_dds_dp_list = this->impl ()->get_listener ();
       CCM_DDS_DomainPublisherListener_i *list_proxy = dynamic_cast <CCM_DDS_DomainPublisherListener_i *> (ccm_dds_dp_list);
       if (!list_proxy)
@@ -788,7 +788,7 @@ namespace CIAO
     ::DDS::ReturnCode_t
     CCM_DDS_DomainParticipant_i::ignore_participant (DDS_INSTANCE_HANDLE_T_IN handle)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandle_t ccm_dds_handle;
       ccm_dds_handle <<= handle;
       return this->impl ()->ignore_participant (ccm_dds_handle);
@@ -800,7 +800,7 @@ namespace CIAO
     ::DDS::ReturnCode_t
     CCM_DDS_DomainParticipant_i::ignore_topic (DDS_INSTANCE_HANDLE_T_IN handle)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandle_t ccm_dds_handle;
       ccm_dds_handle <<= handle;
       return this->impl ()->ignore_topic (ccm_dds_handle);
@@ -812,7 +812,7 @@ namespace CIAO
     ::DDS::ReturnCode_t
     CCM_DDS_DomainParticipant_i::ignore_publication (DDS_INSTANCE_HANDLE_T_IN handle)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandle_t ccm_dds_handle;
       ccm_dds_handle <<= handle;
       return this->impl ()->ignore_publication (ccm_dds_handle);
@@ -824,7 +824,7 @@ namespace CIAO
     ::DDS::ReturnCode_t
     CCM_DDS_DomainParticipant_i::ignore_subscription (DDS_INSTANCE_HANDLE_T_IN handle)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandle_t ccm_dds_handle;
       ccm_dds_handle <<= handle;
       return this->impl ()->ignore_subscription (ccm_dds_handle);
@@ -849,7 +849,7 @@ namespace CIAO
     CCM_DDS_DomainParticipant_i::set_default_publisher_qos (const ::DDS::PublisherQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::set_default_publisher_qos");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_PublisherQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       return this->impl()->set_default_publisher_qos (ccm_dds_qos);
@@ -862,7 +862,7 @@ namespace CIAO
     CCM_DDS_DomainParticipant_i::get_default_publisher_qos (::DDS::PublisherQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_default_publisher_qos");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_PublisherQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode = this->impl()-> get_default_publisher_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
@@ -876,7 +876,7 @@ namespace CIAO
     CCM_DDS_DomainParticipant_i::set_default_subscriber_qos (const ::DDS::SubscriberQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::set_default_subscriber_qos");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_SubscriberQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       return this->impl()->set_default_subscriber_qos (ccm_dds_qos);
@@ -889,7 +889,7 @@ namespace CIAO
     CCM_DDS_DomainParticipant_i::get_default_subscriber_qos (::DDS::SubscriberQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_default_subscriber_qos");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_SubscriberQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode =
             this->impl()-> get_default_subscriber_qos (ccm_dds_qos);
@@ -904,7 +904,7 @@ namespace CIAO
     CCM_DDS_DomainParticipant_i::set_default_topic_qos (const ::DDS::TopicQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::set_default_topic_qos");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_TopicQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       return this->impl()->set_default_topic_qos (ccm_dds_qos);
@@ -917,7 +917,7 @@ namespace CIAO
     CCM_DDS_DomainParticipant_i::get_default_topic_qos (::DDS::TopicQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_default_topic_qos");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_TopicQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode =
             this->impl()-> get_default_topic_qos (ccm_dds_qos);
@@ -931,7 +931,7 @@ namespace CIAO
     ::DDS::ReturnCode_t
     CCM_DDS_DomainParticipant_i::get_discovered_participants (::DDS::InstanceHandleSeq & impl_handles)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandleSeq rtiseq;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_discovered_participants (rtiseq);
       impl_handles <<= rtiseq;
@@ -952,7 +952,7 @@ namespace CIAO
     ::DDS::ReturnCode_t
     CCM_DDS_DomainParticipant_i::get_discovered_topics (::DDS::InstanceHandleSeq & impl_handles)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandleSeq rtiseq;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_discovered_topics (rtiseq);
       impl_handles <<= rtiseq;
@@ -973,7 +973,7 @@ namespace CIAO
     ::CORBA::Boolean
     CCM_DDS_DomainParticipant_i::contains_entity (DDS_INSTANCE_HANDLE_T_IN a_handle)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandle_t ccm_dds_handle;
       ccm_dds_handle <<= a_handle;
       return this->impl ()->contains_entity (ccm_dds_handle);
@@ -985,7 +985,7 @@ namespace CIAO
     ::DDS::ReturnCode_t
     CCM_DDS_DomainParticipant_i::get_current_time (::DDS::Time_t & current_time)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDS_Time_t ccm_dds_time;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_current_time (ccm_dds_time);
       current_time <<= ccm_dds_time;
@@ -1005,7 +1005,7 @@ namespace CIAO
     CCM_DDS_DomainParticipant_i::get_statuscondition (void)
     {
       ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
       if (sc)
         {
@@ -1034,7 +1034,7 @@ namespace CIAO
     DDS_INSTANCE_HANDLE_T_RETN
     CCM_DDS_DomainParticipant_i::get_instance_handle (void)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandle_t const rtihandle = this->impl ()->get_instance_handle ();
       ::DDS::InstanceHandle_t handle;
       handle <<= rtihandle;

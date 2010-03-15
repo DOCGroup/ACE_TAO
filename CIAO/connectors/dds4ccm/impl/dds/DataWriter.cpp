@@ -35,7 +35,7 @@ namespace CIAO
     CCM_DDS_DataWriter_i::set_qos (const ::DDS::DataWriterQos & qos)
     {
       DDS4CCM_TRACE ("CCM_DDS_DataWriter_i::set_qos");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_DataWriterQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       return this->impl()->set_qos (ccm_dds_qos);
@@ -48,7 +48,7 @@ namespace CIAO
     CCM_DDS_DataWriter_i::get_qos (::DDS::DataWriterQos & qos)
     {
       DDS4CCM_TRACE ("CCM_DDS_DataWriter_i::get_qos");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_DataWriterQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       ::DDS::ReturnCode_t retcode =
@@ -64,7 +64,7 @@ namespace CIAO
     CCM_DDS_DataWriter_i::set_listener (::DDS::DataWriterListener_ptr a_listener,
                                     ::DDS::StatusMask mask)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       CCM_DDS_DataWriterListener_i* ccm_dds_impl_list = 0;
       if (!CORBA::is_nil (a_listener))
         {
@@ -81,7 +81,7 @@ namespace CIAO
     ::DDS::DataWriterListener_ptr
     CCM_DDS_DataWriter_i::get_listener (void)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDSDataWriterListener *wr = this->impl ()->get_listener ();
       CCM_DDS_DataWriterListener_i *list_proxy = dynamic_cast <CCM_DDS_DataWriterListener_i *> (wr);
       if (!list_proxy)
@@ -100,7 +100,7 @@ namespace CIAO
     CCM_DDS_DataWriter_i::get_topic (void)
     {
       ::DDS::Topic_var retval = ::DDS::Topic::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDSTopic* t = this->impl ()->get_topic ();
       ACE_NEW_THROW_EX (retval,
                         CCM_DDS_Topic_i (t),
@@ -118,7 +118,7 @@ namespace CIAO
     CCM_DDS_DataWriter_i::get_publisher (void)
     {
       ::DDS::Publisher_var retval = ::DDS::Publisher::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDSPublisher* p = this->impl ()->get_publisher ();
       ACE_NEW_THROW_EX (retval,
                         CCM_DDS_Publisher_i (p),
@@ -135,7 +135,7 @@ namespace CIAO
     ::DDS::ReturnCode_t
     CCM_DDS_DataWriter_i::wait_for_acknowledgments (const ::DDS::Duration_t & max_wait)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
      ::DDS_Duration_t rtiduration;
      rtiduration <<= max_wait;
      return this->impl ()->wait_for_acknowledgments (rtiduration);
@@ -147,7 +147,7 @@ namespace CIAO
     ::DDS::ReturnCode_t
     CCM_DDS_DataWriter_i::get_liveliness_lost_status (::DDS::LivelinessLostStatus & status)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_LivelinessLostStatus ddsstatus;
       ddsstatus <<= status;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_liveliness_lost_status (ddsstatus);
@@ -161,7 +161,7 @@ namespace CIAO
     ::DDS::ReturnCode_t
     CCM_DDS_DataWriter_i::get_offered_deadline_missed_status (::DDS::OfferedDeadlineMissedStatus & status)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_OfferedDeadlineMissedStatus ddsstatus;
       ddsstatus <<= status;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_offered_deadline_missed_status (ddsstatus);
@@ -175,7 +175,7 @@ namespace CIAO
     ::DDS::ReturnCode_t
     CCM_DDS_DataWriter_i::get_offered_incompatible_qos_status (::DDS::OfferedIncompatibleQosStatus & status)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_OfferedIncompatibleQosStatus ddsstatus;
       ddsstatus <<= status;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_offered_incompatible_qos_status (ddsstatus);
@@ -189,7 +189,7 @@ namespace CIAO
     ::DDS::ReturnCode_t
     CCM_DDS_DataWriter_i::get_publication_matched_status (::DDS::PublicationMatchedStatus & status)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_PublicationMatchedStatus ddsstatus;
       ddsstatus <<= status;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_publication_matched_status (ddsstatus);
@@ -209,7 +209,7 @@ namespace CIAO
     ::DDS::ReturnCode_t
     CCM_DDS_DataWriter_i::get_matched_subscriptions (::DDS::InstanceHandleSeq & subscription_handles)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandleSeq rtiseq;
       rtiseq <<= subscription_handles;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_matched_subscriptions (rtiseq);
@@ -225,7 +225,7 @@ namespace CIAO
                                                          DDS_INSTANCE_HANDLE_T_IN subscription_handle)
     {
       DDS4CCM_TRACE ("CCM_DDS_DataWriter_i::get_matched_subscription_data");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_SubscriptionBuiltinTopicData ccm_dds_sub_data;
       ::DDS_InstanceHandle_t ccm_dds_sub_handle;
       ccm_dds_sub_data <<= subscription_data;
@@ -249,7 +249,7 @@ namespace CIAO
     CCM_DDS_DataWriter_i::get_statuscondition (void)
     {
       ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
       ACE_NEW_THROW_EX (retval,
                         CCM_DDS_StatusCondition_i (sc),
@@ -272,7 +272,7 @@ namespace CIAO
     DDS_INSTANCE_HANDLE_T_RETN
     CCM_DDS_DataWriter_i::get_instance_handle (void)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandle_t const rtihandle = this->impl ()->get_instance_handle ();
       ::DDS::InstanceHandle_t handle;
       handle <<= rtihandle;

@@ -10,6 +10,7 @@
 #include "dds4ccm/impl/dds/PortStatusListener_T.h"
 
 #include "dds4ccm/impl/logger/Log_Macros.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::DDS_Event_Connector_T (void) :
@@ -127,7 +128,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_activate (void)
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_activate");
   ACE_Reactor* reactor = 0;
-#if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
+#if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
   reactor = this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ();
 #endif
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (reactor);

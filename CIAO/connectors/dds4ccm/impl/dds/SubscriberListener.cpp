@@ -51,7 +51,7 @@ namespace CIAO
       ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
       ACE_NEW (dds_reader,
                CCM_DDS_DataReader_i (the_reader));
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::RequestedDeadlineMissedStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_requested_deadline_missed (dds_reader.in (), ddsstatus);
@@ -70,7 +70,7 @@ namespace CIAO
       ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
       ACE_NEW (dds_reader,
                CCM_DDS_DataReader_i (the_reader));
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::RequestedIncompatibleQosStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_requested_incompatible_qos (dds_reader.in (), ddsstatus);
@@ -89,7 +89,7 @@ namespace CIAO
       ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
       ACE_NEW (dds_reader,
                CCM_DDS_DataReader_i (the_reader));
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::SampleRejectedStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_sample_rejected (dds_reader.in (), ddsstatus);
@@ -108,7 +108,7 @@ namespace CIAO
       ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
       ACE_NEW (dds_reader,
                CCM_DDS_DataReader_i (the_reader));
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::LivelinessChangedStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_liveliness_changed (dds_reader.in (), ddsstatus);
@@ -139,7 +139,7 @@ namespace CIAO
       ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
       ACE_NEW (dds_reader,
                CCM_DDS_DataReader_i (the_reader));
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::SubscriptionMatchedStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_subscription_matched (dds_reader.in (), ddsstatus);
@@ -158,7 +158,7 @@ namespace CIAO
       ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
       ACE_NEW (dds_reader,
                CCM_DDS_DataReader_i (the_reader));
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::SampleLostStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_sample_lost (dds_reader.in (), ddsstatus);

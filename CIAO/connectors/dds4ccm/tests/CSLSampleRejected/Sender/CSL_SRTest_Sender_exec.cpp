@@ -12,6 +12,8 @@
 #include "ace/Reactor.h"
 #include "dds4ccm/impl/dds/Utils.h"
 
+#include "dds4ccm/impl/dds4ccm_conf.h"
+
 namespace CIAO_CSL_SRTest_Sender_Impl
 {
   //============================================================
@@ -219,7 +221,7 @@ namespace CIAO_CSL_SRTest_Sender_Impl
         ACE_ERROR ((LM_ERROR, "SENDER ERROR: "
                               "Thread ID for ConnectorStatusListener not set!\n"));
       }
-    #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
+    #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
     else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
                                 ACE_Thread::self ()))
       {

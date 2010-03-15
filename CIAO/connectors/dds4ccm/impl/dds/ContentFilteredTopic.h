@@ -15,7 +15,7 @@
 #include "dds4ccm/impl/dds/dds4ccm_dds_impl_export.h"
 #include "tao/LocalObject.h"
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+#if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::ContentFilteredTopic DDSContentFilteredTopic;
 #endif
 

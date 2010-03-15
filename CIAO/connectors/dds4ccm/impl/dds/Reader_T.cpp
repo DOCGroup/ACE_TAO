@@ -19,7 +19,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::Reader_T (void)
     impl_ (0)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::Reader_T");
-  #if defined (DDS4CCM_USES_QUERY_CONDITION) && (DDS4CCM_USES_QUERY_CONDITION==1)
+  #if (DDS4CCM_USES_QUERY_CONDITION==1)
     this->qc_ = 0;
   #else
     this->cft_ = ::DDS::ContentFilteredTopic::_nil ();
@@ -79,7 +79,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::read_without_instance (
   DDS_SampleInfoSeq & sample_info)
 {
   DDS_ReturnCode_t retval = DDS_RETCODE_ERROR;
-#if defined (DDS4CCM_USES_QUERY_CONDITION) && (DDS4CCM_USES_QUERY_CONDITION==1)
+#if (DDS4CCM_USES_QUERY_CONDITION==1)
   if (this->qc_)
     {
       retval = this->impl ()->read_w_condition (data,
@@ -96,7 +96,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::read_without_instance (
                                     DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE,
                                     DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
                                     DDS_ALIVE_INSTANCE_STATE);
-#if defined (DDS4CCM_USES_QUERY_CONDITION) && (DDS4CCM_USES_QUERY_CONDITION==1)
+#if (DDS4CCM_USES_QUERY_CONDITION==1)
     }
 #endif
   if (retval != DDS_RETCODE_OK && retval != DDS_RETCODE_NO_DATA)
@@ -423,7 +423,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
  ::CCM_DDS::QueryFilter *
  CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::filter (void)
 {
-  #if defined (DDS4CCM_USES_QUERY_CONDITION) && (DDS4CCM_USES_QUERY_CONDITION==1)
+  #if (DDS4CCM_USES_QUERY_CONDITION==1)
     if (!this->qc_)
       {
         DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::filter - "
@@ -471,7 +471,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
   const ::CCM_DDS::QueryFilter & filter)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::filter");
-  #if defined (DDS4CCM_USES_QUERY_CONDITION) && (DDS4CCM_USES_QUERY_CONDITION==1)
+  #if (DDS4CCM_USES_QUERY_CONDITION==1)
     if (!this->qc_)
       {
         ::DDS_StringSeq dds_qp;
@@ -546,7 +546,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::set_impl (
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::set_impl");
   if (::CORBA::is_nil (reader))
     {
-      #if defined (DDS4CCM_USES_QUERY_CONDITION) && (DDS4CCM_USES_QUERY_CONDITION==1)
+      #if (DDS4CCM_USES_QUERY_CONDITION==1)
         if (this->qc_)
           {
             this->impl ()->delete_readcondition (this->qc_);

@@ -11,6 +11,7 @@
 #define DDS_PUBLISHERLISTENER_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 #include "ace/Copy_Disabled.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -48,7 +49,7 @@ namespace CIAO
         ::DDS::DataWriter_ptr the_Writer,
         const ::DDS::PublicationMatchedStatus & status);
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       virtual void on_reliable_reader_activity_changed (
         ::DDS::DataWriter_ptr the_Writer,
         const ::DDS::ReliableReaderActivityChangedStatus & status);

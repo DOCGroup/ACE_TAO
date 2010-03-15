@@ -4,6 +4,8 @@
 #include "dds4ccm/impl/dds/DataReader.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds4ccm/impl/dds/DataReaderHandler_T.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
+
 #include "tao/ORB_Core.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -122,7 +124,7 @@ CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE>::on_data_on_reade
 {
 }
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE>::on_reliable_reader_activity_changed (

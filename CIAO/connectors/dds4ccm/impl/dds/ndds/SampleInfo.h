@@ -10,10 +10,12 @@
 #define SAMPLE_INFO_H
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
+
 #include "Time_t.h"
 #include "InstanceHandle_t.h"
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+#if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::SampleStateKind DDS_SampleStateKind;
 typedef ::DDS::SampleInfo DDS_SampleInfo;
 #endif
@@ -34,13 +36,13 @@ operator<<= (::CCM_DDS::AccessStatus & access_status, const ::DDS_SampleStateKin
 inline void
 operator<<= (::CCM_DDS::ReadInfo& ccm_dds_readinfo, const ::DDS_SampleInfo& sample_info)
 {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
   ccm_dds_readinfo.source_timestamp <<= sample_info.source_timestamp;
 #else
   ccm_dds_readinfo.source_timestamp = sample_info.source_timestamp;
 #endif  
   ccm_dds_readinfo.access_status <<= sample_info.sample_state;
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
   ccm_dds_readinfo.instance_handle <<= sample_info.instance_handle;
 #else
   ccm_dds_readinfo.instance_handle = sample_info.instance_handle;

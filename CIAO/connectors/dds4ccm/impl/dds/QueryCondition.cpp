@@ -51,7 +51,7 @@ namespace CIAO
     CCM_DDS_QueryCondition_i::get_datareader (void)
     {
       ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDSDataReader* reader = this->impl ()->get_datareader ();
       if (reader)
         {
@@ -74,7 +74,7 @@ namespace CIAO
     char *
     CCM_DDS_QueryCondition_i::get_query_expression (void)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       return ::CORBA::string_dup (this->impl ()->get_query_expression ());
 #else
       return this->impl ()->get_query_expression ();
@@ -85,7 +85,7 @@ namespace CIAO
     CCM_DDS_QueryCondition_i::get_query_parameters (
       ::DDS::StringSeq & query_parameters)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDS_StringSeq parameters;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_query_parameters (parameters);
       query_parameters <<= parameters;
@@ -99,7 +99,7 @@ namespace CIAO
     CCM_DDS_QueryCondition_i::set_query_parameters (
       const ::DDS::StringSeq & query_parameters)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDS_StringSeq parameters;
       parameters <<= query_parameters;
       return this->impl ()->set_query_parameters (parameters);
