@@ -1,3 +1,9 @@
+Mon Mar 15 12:50:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/MakeProjectCreator/templates/gnu.mpd:
+	  When generating with -static set static_libs_only to 1. This fixes
+	  bugzilla 3815. Thanks to Chad Elliot for assisting with this
+
 Mon Mar 15 09:41:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	Reverted change below, it breaks unix builds

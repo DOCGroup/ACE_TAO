@@ -20,6 +20,9 @@ BIN_UNCHECKED    = <%exename%>
 
 LIB_PREFIX      ?= lib
 <%endif%>
+<%if(need_staticflags)%>
+static_libs_only ?= 1
+<%endif%>
 <%if(staticname)%>
 
 ## LIB_CHECKED may be set to empty later on in this file
