@@ -42,7 +42,7 @@ be_visitor_component_svs::visit_component (be_component *node)
     {
       return 0;
     }
-  
+
   be_visitor_facet_svs facet_visitor (this->ctx_);
 
   if (facet_visitor.visit_component_scope (node) == -1)
@@ -60,7 +60,7 @@ be_visitor_component_svs::visit_component (be_component *node)
       << "namespace CIAO_" << node->flat_name ()
       << "_Impl" << be_nl
       << "{" << be_idt;
-      
+
   be_visitor_context_svs context_visitor (this->ctx_);
 
   if (context_visitor.visit_component (node) == -1)
@@ -71,7 +71,7 @@ be_visitor_component_svs::visit_component (be_component *node)
                          ACE_TEXT ("context visitor failed\n")),
                         -1);
     }
-    
+
   be_visitor_servant_svs servant_visitor (this->ctx_);
 
   if (servant_visitor.visit_component (node) == -1)
@@ -82,7 +82,7 @@ be_visitor_component_svs::visit_component (be_component *node)
                          ACE_TEXT ("servant visitor failed\n")),
                         -1);
     }
-    
+
   this->gen_entrypoint (node);
 
   os_ << be_uidt_nl
@@ -119,19 +119,17 @@ be_visitor_component_svs::gen_entrypoint (AST_Component *node)
       << "_var x =" << be_idt_nl
       << global << sname << "::CCM_" << lname
       << "::_narrow (p);" << be_uidt_nl << be_nl
-      << "if ( ::CORBA::is_nil (x.in ()))" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
       << "::PortableServer::Servant retval = 0;" << be_nl
-      << "ACE_NEW_RETURN (retval," << be_nl
-      << "                " << lname << "_Servant (" << be_idt_nl
-      << "                x.in ()," << be_nl
-      << "                ::Components::CCMHome::_nil ()," << be_nl
-      << "                ins_name," << be_nl
-      << "                0," << be_nl
-      << "                c)," << be_uidt_nl
-      << "                0);" << be_nl << be_nl
+      << "if (! ::CORBA::is_nil (x.in ()))" << be_idt_nl
+      << "{" << be_idt_nl
+      << "ACE_NEW_NORETURN (retval," << be_nl
+      << "                  " << lname << "_Servant (" << be_idt_nl
+      << "                  x.in ()," << be_nl
+      << "                  ::Components::CCMHome::_nil ()," << be_nl
+      << "                  ins_name," << be_nl
+      << "                  0," << be_nl
+      << "                  c));" << be_uidt << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
       << "return retval;" << be_uidt_nl
       << "}";
 }
