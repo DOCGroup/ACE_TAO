@@ -1,3 +1,16 @@
+Mon Mar 15 20:21:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ciao/Containers/Session/Session_Container.h:
+	  Const change
+
+	* ciao/Logger/Log_Macros.h:
+	* connectors/dds4ccm/impl/logger/Log_Macros.h:
+	* DAnCE/Logger/Log_Macros.h:
+	  Disable tracing by default
+
+	* connectors/ami4ccm/ami4ccm/ami4ccm.mpc:
+	  Added svnt macros
+
 Mon Mar 15 15:20:10 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/LatencyTT/Receiver/LatencyTT_Test_Receiver.mpc:

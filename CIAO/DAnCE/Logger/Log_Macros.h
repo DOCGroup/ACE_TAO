@@ -17,6 +17,11 @@
 
 extern DAnCE_Logger_Export unsigned int DAnCE_debug_level;
 
+// By default tracing is turned off.
+#if !defined (DANCE_NTRACE)
+#  define DANCE_NTRACE 1
+#endif /* DANCE_NTRACE */
+
 #if (DANCE_NTRACE == 1)
 #  if !defined (ACE_NTRACE)
 #    define DANCE_TRACE(X) do {} while (0)
