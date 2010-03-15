@@ -1393,6 +1393,13 @@ project(Thread Pool Test) : acetest {
   }
 }
 
+project(Thread_Timer_Queue_Adapter_Test) : acetest {
+  exename = Thread_Timer_Queue_Adapter_Test
+  Source_Files {
+    Thread_Timer_Queue_Adapter_Test.cpp
+  }
+}
+
 project(Thread Creation Threshold Test) : acetest {
   exename = Thread_Creation_Threshold_Test
   Source_Files {
