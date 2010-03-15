@@ -1,48 +1,62 @@
+Mon Mar 15 20:08:32 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * ace/config-WinCE.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-lynxos.h:
+        * ace/config-netbsd.h:
+        * ace/config-openbsd.h:
+        * ace/config-sunos5.10.h:
+        * ace/config-sunos5.5.h:
+        * ace/config-vxworks6.4.h:
+        * configure.ac:
+          Removed floorl and ceill related settings which are no longer
+          needed.
+
 Mon Mar 15 12:50:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/MakeProjectCreator/templates/gnu.mpd:
-	  When generating with -static set static_libs_only to 1. This fixes
-	  bugzilla 3815. Thanks to Chad Elliot for assisting with this
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          When generating with -static set static_libs_only to 1. This fixes
+          bugzilla 3815. Thanks to Chad Elliot for assisting with this
 
 Mon Mar 15 09:41:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	Reverted change below, it breaks unix builds
+        Reverted change below, it breaks unix builds
 
-	Mon Mar 15 07:58:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
-	* ace/High_Res_Timer.cpp
-	* ace/High_Res_Timer.h
-	* ace/High_Res_Timer.inl
-	  Use 64bit calculations to increase our precision. If you want to have the 32bit
-	  calculations, add ACE_USE_WINDOWS_32BIT_HIGH_RES_TIMER_CALCULATIONS as define. If
-	  the scoreboard doesn't show any platforms requiring 32bit, we will remove that code
-	  before the next micro release goes out
-	  Thanks to Alon Diamant <diamant dot alon at gmail dot com> for supplying the patches.
-	  This fixes bugzilla 3703.
+        Mon Mar 15 07:58:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+        * ace/High_Res_Timer.cpp
+        * ace/High_Res_Timer.h
+        * ace/High_Res_Timer.inl
+          Use 64bit calculations to increase our precision. If you want to have the 32bit
+          calculations, add ACE_USE_WINDOWS_32BIT_HIGH_RES_TIMER_CALCULATIONS as define. If
+          the scoreboard doesn't show any platforms requiring 32bit, we will remove that code
+          before the next micro release goes out
+          Thanks to Alon Diamant <diamant dot alon at gmail dot com> for supplying the patches.
+          This fixes bugzilla 3703.
 
 Mon Mar 15 07:58:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/High_Res_Timer.cpp
-	* ace/High_Res_Timer.h
-	* ace/High_Res_Timer.inl
-	  Use 64bit calculations to increase our precision. If you want to have the 32bit
-	  calculations, add ACE_USE_WINDOWS_32BIT_HIGH_RES_TIMER_CALCULATIONS as define. If
-	  the scoreboard doesn't show any platforms requiring 32bit, we will remove that code
-	  before the next micro release goes out
-	  Thanks to Alon Diamant <diamant dot alon at gmail dot com> for supplying the patches.
-	  This fixes bugzilla 3703.
+        * ace/High_Res_Timer.cpp
+        * ace/High_Res_Timer.h
+        * ace/High_Res_Timer.inl
+          Use 64bit calculations to increase our precision. If you want to have the 32bit
+          calculations, add ACE_USE_WINDOWS_32BIT_HIGH_RES_TIMER_CALCULATIONS as define. If
+          the scoreboard doesn't show any platforms requiring 32bit, we will remove that code
+          before the next micro release goes out
+          Thanks to Alon Diamant <diamant dot alon at gmail dot com> for supplying the patches.
+          This fixes bugzilla 3703.
 
-	* ace/Timer_Queue_Adapters.cpp
-	* ace/Timer_Queue_Adapters.h
-	* ace/Timer_Queue_Adapters.inl
-	  Make it possible to use a customer event handler in ACE_Thread_Timer_Queue_Adapter.
-	  Thanks to Alon Diamant <diamant dot alon at gmail dot com> for supplying the patches.
-	  This fixes bugzilla 3614
+        * ace/Timer_Queue_Adapters.cpp
+        * ace/Timer_Queue_Adapters.h
+        * ace/Timer_Queue_Adapters.inl
+          Make it possible to use a customer event handler in ACE_Thread_Timer_Queue_Adapter.
+          Thanks to Alon Diamant <diamant dot alon at gmail dot com> for supplying the patches.
+          This fixes bugzilla 3614
 
-	* tests/tests.mpc:
-	* tests/Thread_Timer_Queue_Adapter_Test.cpp:
-	  New test for testing custom event handlers in ACE_Thread_Timer_Queue_Adapter.
-	  Thanks to Alon Diamant <diamant dot alon at gmail dot com> for creating
-	  this new test
+        * tests/tests.mpc:
+        * tests/Thread_Timer_Queue_Adapter_Test.cpp:
+          New test for testing custom event handlers in ACE_Thread_Timer_Queue_Adapter.
+          Thanks to Alon Diamant <diamant dot alon at gmail dot com> for creating
+          this new test
 
 Fri Mar 12 21:53:30 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
