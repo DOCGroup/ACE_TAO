@@ -32,13 +32,13 @@ be_visitor_ami4ccm_conn_ex_idl::visit_interface (be_interface *node)
   const char *smart_scope = (global ? "" : "::");
 
   os_ << be_nl << be_nl
-      << "connector AMI_" << oln << "_Connector" << be_nl
+      << "connector AMI_" << oln << "_Connector : ::CCM_AMI::AMI_Base" << be_nl
       << "{" << be_idt_nl
       << "uses " << oln << " uses_" << oln << ";" << be_nl
       << "provides AMI_" << oln << " provides_" << oln
       << ";" << be_uidt_nl
       << "};";
-      
+
   os_ << be_nl << be_nl
       << "local interface CCM_AMI_CONN_" << oln << be_idt_nl
       << ": ::Components::EnterpriseComponent" << be_uidt_nl
@@ -46,7 +46,7 @@ be_visitor_ami4ccm_conn_ex_idl::visit_interface (be_interface *node)
       << smart_scope << scope->full_name () << "::CCM_AMI_"
       << oln << " get_provides_" << oln << " ();" << be_uidt_nl
       << "};";
-      
+
   os_ << be_nl << be_nl
       << "local interface CCM_AMI_CONN_" << oln
       << "_Context" << be_idt_nl
