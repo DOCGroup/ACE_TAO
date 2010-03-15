@@ -1,0 +1,145 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p DDS_LatencyTT_Test_Base -l .. -o ../lib -u DDS LatencyTT_TestSec_Connector"
+
+project(DDS_LatencyTT_TestSec_Connector_idl_gen) : connectoridldefaults, dds4ccm {
+  after += DDS4CCM_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=LATENCYTT_TESTSEC_CONNECTOR_STUB_Export \
+              -Wb,stub_export_include=LatencyTT_TestSec_Connector_stub_export.h \
+              -Wb,skel_export_macro=LATENCYTT_TESTSEC_CONNECTOR_SVNT_Export \
+              -Wb,skel_export_include=LatencyTT_TestSec_Connector_svnt_export.h \
+              -Wb,svnt_export_macro=LATENCYTT_TESTSEC_CONNECTOR_SVNT_Export \
+              -Wb,svnt_export_include=LatencyTT_TestSec_Connector_svnt_export.h \
+              -Wb,conn_export_macro=LATENCYTT_TESTSEC_CONNECTOR_CONN_Export \
+              -Wb,conn_export_include=LatencyTT_TestSec_Connector_conn_export.h \
+              -I ..
+
+  IDL_Files {
+    LatencyTT_TestSec_Connector.idl
+  }
+}
+
+project(DDS_LatencyTT_TestSec_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
+  custom_only = 1
+  after += DDS_LatencyTT_TestSec_Connector_idl_gen
+  idlflags += -Wb,stub_export_macro=LATENCYTT_TESTSEC_CONNECTOR_LEM_STUB_Export \
+              -Wb,stub_export_include=LatencyTT_TestSec_Connector_lem_stub_export.h \
+              -SS -Gxhst \
+              -I .. -I $(CIAO_ROOT)/connectors -I$(CIAO_ROOT)/connectors/dds4ccm/idl
+
+  IDL_Files {
+    LatencyTT_TestSec_ConnectorE.idl
+  }
+}
+
+project(DDS_LTT_TestSec_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
+  after += DDS_LatencyTT_TestSec_Connector_lem_gen DDS_LatencyTT_TestSec_Connector_stub DDS_LatencyTT_Test_Base_stub DDS4CCM_lem_stub
+  libs  += DDS_LatencyTT_Test_Base_stub DDS_LatencyTT_TestSec_Connector_stub DDS4CCM_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = DDS_LTT_TestSec_Connector_lem_stub
+  dynamicflags   = LATENCYTT_TESTSEC_CONNECTOR_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    LatencyTT_TestSec_ConnectorEC.cpp
+  }
+
+  Header_Files {
+    LatencyTT_TestSec_ConnectorEC.h
+    LatencyTT_TestSec_Connector_lem_stub_export.h
+  }
+
+  Inline_Files {
+    LatencyTT_TestSec_ConnectorEC.inl
+  }
+}
+
+project(DDS_LatencyTT_TestSec_Connector_stub) : ccm_stub, dds4ccm_base {
+  after += DDS_LatencyTT_TestSec_Connector_idl_gen DDS_LatencyTT_Test_Base_stub
+  libs  += DDS_LatencyTT_Test_Base_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = DDS_LatencyTT_TestSec_Connector_stub
+  dynamicflags   = LATENCYTT_TESTSEC_CONNECTOR_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    LatencyTT_TestSec_ConnectorC.cpp
+  }
+
+  Header_Files {
+    LatencyTT_TestSec_ConnectorC.h
+    LatencyTT_TestSec_Connector_stub_export.h
+  }
+
+  Inline_Files {
+    LatencyTT_TestSec_ConnectorC.inl
+  }
+}
+
+project(DDS_LatencyTT_TestSec_Connector_exec) : ciao_executor, dds4ccm_impl {
+  after   += DDS_LTT_TestSec_Connector_lem_stub DDS_LatencyTT_TestSec_Connector_stub DDS4CCM_lem_stub
+  sharedname = DDS_LatencyTT_TestSec_Connector_exec
+  libs += DDS_LatencyTT_TestSec_Connector_stub DDS_LTT_TestSec_Connector_lem_stub DDS_LatencyTT_Test_Base_stub DDS4CCM_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags   = LATENCYTT_TESTSEC_CONNECTOR_CONN_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    LatencyTT_TestSec_Connector_conn.cpp
+  }
+
+  Header_Files {
+    LatencyTT_TestSec_Connector_conn.h
+    LatencyTT_TestSec_Connector_conn_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(DDS_LatencyTT_TestSec_Connector_svnt) : ciao_servant, dds4ccm_skel {
+  after      += DDS_LTT_TestSec_Connector_lem_stub DDS_LatencyTT_TestSec_Connector_exec DDS_LatencyTT_TestSec_Connector_stub DDS4CCM_lem_stub
+  sharedname  = DDS_LatencyTT_TestSec_Connector_svnt
+  libs       += DDS_LatencyTT_TestSec_Connector_stub \
+                DDS_LTT_TestSec_Connector_lem_stub  \
+                DDS_LatencyTT_Test_Base_stub \
+                DDS_LatencyTT_TestSec_Connector_exec \
+                DDS4CCM_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags = LATENCYTT_TESTSEC_CONNECTOR_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    LatencyTT_TestSec_ConnectorS.cpp
+    LatencyTT_TestSec_Connector_svnt.cpp
+  }
+
+  Header_Files {
+    LatencyTT_TestSec_ConnectorS.h
+    LatencyTT_TestSec_Connector_svnt.h
+    LatencyTT_TestSec_Connector_svnt_export.h
+  }
+
+  Inline_Files {
+    LatencyTT_TestSec_ConnectorS.inl
+  }
+}
+
+
