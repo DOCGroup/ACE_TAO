@@ -24,30 +24,6 @@
 #include "ace/OS_NS_time.h"
 #include "ace/Time_Value.h"
 
-/// 2009-06-03, Alon Diamant <diamant.alon@gmail.com>
-///
-/// On Windows, the high-resolution timer calculations were done 
-/// using 32-bit integers. Since the timer actually uses 64-bit
-/// integers for its frequency and counter values, the values
-/// had to be divided - resulting in a loss of precision that
-/// is in the range of a hundreth of a percent. On my system,
-/// I experienced a lack of precision of up to 0.007% - which 
-/// translates to a 1 second loss of precision every 4 hours.
-///
-/// I changed the high-resolution timer class to add support for
-/// native 64-bit calculations - which are supported by a vast
-/// majority of Windows machines nowadays. The loss of precision
-/// that resulted from the 32-bit arithmetic is therefore gone.
-///
-/// Define ACE_USE_WINDOWS_32BIT_HIGH_RES_TIMER_CALCULATIONS
-/// in config.h to disable this feature and use the old 32-bit 
-/// timer calculations.
-///
-/// Note that this flag is only allowed on Windows systems.
-#if !defined (ACE_WIN32)
-#undef ACE_USE_WINDOWS_32BIT_HIGH_RES_TIMER_CALCULATIONS
-#endif
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -126,8 +102,6 @@ class ACE_Export ACE_High_Res_Timer
 public:
   // = Initialization method.
 
-#if defined (ACE_USE_WINDOWS_32BIT_HIGH_RES_TIMER_CALCULATIONS)
-
   /**
    * global_scale_factor_ is set to @a gsf.  All High_Res_Timers use
    * global_scale_factor_.  This allows applications to set the scale
@@ -145,22 +119,6 @@ public:
 
   /// Returns the global_scale_factor.
   static ACE_UINT32 global_scale_factor (void);
-  
-#else  
-  
-  /**
-   * global_scale_factor_ is set to @a gsf.  All High_Res_Timers use
-   * global_scale_factor_.  This allows applications to set the scale
-   * factor just once for all High_Res_Timers.  
-   * This a higher-precision version, specific for Windows systems 
-   * with 64-bit support.
-   */
-  static void global_scale_factor (ACE_UINT64 gsf);
-
-  /// Returns the global_scale_factor.
-  static ACE_UINT64 global_scale_factor (void);
-  
-#endif
 
 #ifndef  ACE_HR_SCALE_CONVERSION
 #  define ACE_HR_SCALE_CONVERSION (ACE_ONE_SECOND_IN_USECS)
@@ -329,21 +287,9 @@ private:
   /// Start time of incremental timing.
   ACE_hrtime_t start_incr_;
 
-#if defined (ACE_USE_WINDOWS_32BIT_HIGH_RES_TIMER_CALCULATIONS)
-
   /// Converts ticks to microseconds.  That is, ticks /
   /// global_scale_factor_ == microseconds.
   static ACE_UINT32 global_scale_factor_;
-  
-#else  
-
-  /// This a higher-precision version, specific for Windows systems 
-
-  /// Converts ticks to microseconds.  That is, ticks /
-  /// global_scale_factor_ == microseconds.  
-  static ACE_UINT64 global_scale_factor_;
-  
-#endif  
 
   /**
    * Indicates the status of the global scale factor,
