@@ -1,3 +1,18 @@
+Mon Mar 15 09:41:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	Reverted change below, it breaks unix builds
+
+	Mon Mar 15 07:58:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+	* ace/High_Res_Timer.cpp
+	* ace/High_Res_Timer.h
+	* ace/High_Res_Timer.inl
+	  Use 64bit calculations to increase our precision. If you want to have the 32bit
+	  calculations, add ACE_USE_WINDOWS_32BIT_HIGH_RES_TIMER_CALCULATIONS as define. If
+	  the scoreboard doesn't show any platforms requiring 32bit, we will remove that code
+	  before the next micro release goes out
+	  Thanks to Alon Diamant <diamant dot alon at gmail dot com> for supplying the patches.
+	  This fixes bugzilla 3703.
+
 Mon Mar 15 07:58:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/High_Res_Timer.cpp
