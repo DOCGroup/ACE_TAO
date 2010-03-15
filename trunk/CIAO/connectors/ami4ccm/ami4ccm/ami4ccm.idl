@@ -3,6 +3,10 @@
 #if !defined (AMI4CCM_IDL_H)
 #define AMI4CCM_IDL_H
 
+#include <Components.idl>
+
+#pragma ciao lem "ami4ccmE.idl"
+
 module CCM_AMI
 {
   native UserExceptionBase;
@@ -14,6 +18,10 @@ module CCM_AMI
 
   /// Base interface for the Callback model
   local interface ReplyHandler
+  {
+  };
+
+  connector AMI_Base
   {
   };
 };
