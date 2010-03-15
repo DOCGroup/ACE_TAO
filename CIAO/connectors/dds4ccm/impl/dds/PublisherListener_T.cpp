@@ -5,6 +5,7 @@
 #include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds4ccm/impl/dds/DataReaderHandler_T.h"
 #include "dds4ccm/impl/dds/DDSCallbackStatusHandler.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 #include "tao/ORB_Core.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -212,7 +213,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_publication_matched (
   this->on_unexpected_status (the_Writer, ::DDS::PUBLICATION_MATCHED_STATUS);
 }
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_reliable_reader_activity_changed (
@@ -246,7 +247,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
 /*      
               ::DDS::OFFERED_DEADLINE_MISSED_STATUS |
              ::DDS::OFFERED_INCOMPATIBLE_QOS_STATUS |
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
              ::DDS::RELIABLE_READER_ACTIVITY_CHANGED_STATUS |
 #endif
              ::DDS::LIVELINESS_LOST_STATUS |

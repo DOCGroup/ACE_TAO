@@ -5,11 +5,11 @@
 
 #pragma ciao lem "connectors/dds4ccm/idl/dds_rtf2_dcpsE.idl"
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+#if (CIAO_DDS4CCM_OPENDDS==1)
 # include "dds/DdsDcps.idl"
 #endif
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
 
 #define DOMAINID_TYPE_NATIVE    long
 #define HANDLE_TYPE_NATIVE      long

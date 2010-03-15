@@ -10,6 +10,8 @@
 #include "ace/Reactor.h"
 #include "dds4ccm/impl/dds/Utils.h"
 
+#include "dds4ccm/impl/dds4ccm_conf.h"
+
 namespace CIAO_CSL_USTest_Sender_Impl
 {
   //============================================================
@@ -311,7 +313,7 @@ namespace CIAO_CSL_USTest_Sender_Impl
         ACE_ERROR ((LM_ERROR, "SENDER ERROR: "
                               "Thread ID for 'SUBSCRIPTION_MATCHED_STATUS' not set!\n"));
       }
-    #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
+    #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
     else if (ACE_OS::thr_equal (this->thread_id_listener_subscription_matched_.value (),
                                 ACE_Thread::self ()))
       {
@@ -357,7 +359,7 @@ namespace CIAO_CSL_USTest_Sender_Impl
         ACE_ERROR ((LM_ERROR, "SENDER ERROR: "
                               "Thread ID for 'PUBLICATION_MATCHED_STATUS' not set!\n"));
       }
-    #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
+    #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
     else if (ACE_OS::thr_equal (this->thread_id_listener_publication_matched_.value (),
                                 ACE_Thread::self ()))
       {
@@ -403,7 +405,7 @@ namespace CIAO_CSL_USTest_Sender_Impl
         ACE_ERROR ((LM_ERROR, "SENDER ERROR: "
                               "Thread ID for 'LIVELINESS_CHANGED_STATUS' not set!\n"));
       }
-    #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
+    #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
     else if (ACE_OS::thr_equal (this->thread_id_listener_liveliness_changed_.value (),
                                 ACE_Thread::self ()))
       {
@@ -449,7 +451,7 @@ namespace CIAO_CSL_USTest_Sender_Impl
         ACE_ERROR ((LM_ERROR, "SENDER ERROR: "
                               "Thread ID for 'LIVELINESS_LOST_STATUS' not set!\n"));
       }
-    #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
+    #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
     else if (ACE_OS::thr_equal (this->thread_id_listener_liveliness_lost_.value (),
                                 ACE_Thread::self ()))
       {
@@ -496,7 +498,7 @@ namespace CIAO_CSL_USTest_Sender_Impl
         ACE_ERROR ((LM_ERROR, "SENDER ERROR: "
                               "Thread ID for 'RELIABLE_READER_ACTIVITY_CHANGED_STATUS' not set!\n"));
       }
-    #if defined (CIAO_DDS4CCM_CONTEXT_SWITCH) && (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
+    #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
     else if (ACE_OS::thr_equal (this->thread_id_reliable_dr_activity_changed_.value (),
                                 ACE_Thread::self ()))
       {

@@ -7,6 +7,8 @@
 #include "ndds/OfferedIncompatibleQosStatus.h"
 #include "ndds/OfferedDeadlineMissedStatus.h"
 
+#include "dds4ccm/impl/dds4ccm_conf.h"
+
 namespace CIAO
 {
   namespace DDS4CCM
@@ -26,7 +28,7 @@ namespace CIAO
       const ::DDS_OfferedDeadlineMissedStatus & status)
     {
       ::DDS::DataWriter_var dds_writer = ::DDS::DataWriter::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::OfferedDeadlineMissedStatus ddsstatus;
       ddsstatus <<= status;
       ACE_NEW (dds_writer, 
@@ -45,7 +47,7 @@ namespace CIAO
       const ::DDS_OfferedIncompatibleQosStatus & status)
     {
       ::DDS::DataWriter_var dds_writer = ::DDS::DataWriter::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::OfferedIncompatibleQosStatus ddsstatus;
       ddsstatus <<= status;
       ACE_NEW (dds_writer, 
@@ -64,7 +66,7 @@ namespace CIAO
       const ::DDS_LivelinessLostStatus & status)
     {
       ::DDS::DataWriter_var dds_writer = ::DDS::DataWriter::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::LivelinessLostStatus ddsstatus;
       ddsstatus <<= status;
       ACE_NEW (dds_writer, 
@@ -83,7 +85,7 @@ namespace CIAO
       const ::DDS_PublicationMatchedStatus & status)
     {
       ::DDS::DataWriter_var dds_writer = ::DDS::DataWriter::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::PublicationMatchedStatus ddsstatus;
       ddsstatus <<= status;
       ACE_NEW (dds_writer, 

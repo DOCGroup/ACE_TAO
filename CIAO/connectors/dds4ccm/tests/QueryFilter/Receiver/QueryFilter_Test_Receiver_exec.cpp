@@ -9,6 +9,8 @@
 #include "ace/Reactor.h"
 #include "ace/Log_Msg.h"
 
+#include "dds4ccm/impl/dds4ccm_conf.h"
+
 #define QUERY "( (iteration > %0) AND (iteration < %1) )"
 
 #define MIN_ITERATION_1 "2"
@@ -171,7 +173,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   void
   Receiver_exec_i::get_all (void)
   {
-#if defined (DDS4CCM_USES_QUERY_CONDITION) && (DDS4CCM_USES_QUERY_CONDITION==1)
+#if (DDS4CCM_USES_QUERY_CONDITION==1)
     if (CORBA::is_nil (this->getter_))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: No Getter\n"));

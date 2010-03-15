@@ -11,8 +11,9 @@
 
 #include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+#if (CIAO_DDS4CCM_OPENDDS==1)
 typedef  ::DDS::DomainParticipantFactory DDSDomainParticipantFactory;
 #endif
 
@@ -38,7 +39,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_i::create_participant");
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ACE_UNUSED_ARG (qos);
 
       DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipantFactory_i::create_participant - "
@@ -107,7 +108,7 @@ namespace CIAO
 #endif
     }
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
     ::DDS::DomainParticipant_ptr
     CCM_DDS_DomainParticipantFactory_i::create_participant_with_profile (
       ::DDS::DomainId_t domain_id,
@@ -216,7 +217,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_i::delete_participant");
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       CCM_DDS_DomainParticipant_i *part = dynamic_cast< CCM_DDS_DomainParticipant_i * > (a_participant);
 
       if (!part)
@@ -257,7 +258,7 @@ namespace CIAO
     CCM_DDS_DomainParticipantFactory_i::lookup_participant (::DDS::DomainId_t domain_id)
     {
       ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDSDomainParticipant* dp = DDSDomainParticipantFactory::get_instance ()->lookup_participant (domain_id);
       ACE_NEW_THROW_EX (retval,
                         CCM_DDS_DomainParticipant_i (dp),
@@ -275,7 +276,7 @@ namespace CIAO
     CCM_DDS_DomainParticipantFactory_i::set_default_participant_qos (const ::DDS::DomainParticipantQos & qos)
     {
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_i::set_default_participant_qos");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDS_DomainParticipantQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       return DDSDomainParticipantFactory::get_instance ()->set_default_participant_qos (ccm_dds_qos);
@@ -288,7 +289,7 @@ namespace CIAO
     CCM_DDS_DomainParticipantFactory_i::get_default_participant_qos (::DDS::DomainParticipantQos & qos)
     {
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_i::get_default_participant_qos");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDS_DomainParticipantQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode =
         DDSDomainParticipantFactory::get_instance ()->get_default_participant_qos (ccm_dds_qos);
@@ -303,7 +304,7 @@ namespace CIAO
     CCM_DDS_DomainParticipantFactory_i::set_qos (const ::DDS::DomainParticipantFactoryQos & qos)
     {
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_i::set_qos");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDS_DomainParticipantFactoryQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       return DDSDomainParticipantFactory::get_instance ()->set_qos (ccm_dds_qos);
@@ -316,7 +317,7 @@ namespace CIAO
     CCM_DDS_DomainParticipantFactory_i::get_qos (::DDS::DomainParticipantFactoryQos & qos)
     {
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_i::get_qos");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       DDS_DomainParticipantFactoryQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode =
         DDSDomainParticipantFactory::get_instance ()->get_qos (ccm_dds_qos);
@@ -327,7 +328,7 @@ namespace CIAO
 #endif
     }
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
     ::DDS::ReturnCode_t
     CCM_DDS_DomainParticipantFactory_i::set_default_participant_qos_with_profile (
                                                         const char * library_name,
@@ -339,7 +340,7 @@ namespace CIAO
     }
 #endif
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+#if (CIAO_DDS4CCM_OPENDDS==1)
     ::DDS::DomainParticipantFactory_ptr
     CCM_DDS_DomainParticipantFactory_i::get_instance (void)
     {

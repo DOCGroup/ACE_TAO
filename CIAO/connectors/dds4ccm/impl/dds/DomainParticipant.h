@@ -15,12 +15,13 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
 #include "dds4ccm/impl/dds/ndds/InstanceHandle_t.h"
 #include "dds4ccm/impl/dds/dds4ccm_dds_impl_export.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
 #include "ndds/ndds_cpp.h"
 #endif
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+#if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::DomainParticipant DDSDomainParticipant;
 #endif
 
@@ -46,7 +47,7 @@ namespace CIAO
         ::DDS::PublisherListener_ptr a_listener,
         ::DDS::StatusMask mask);
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       virtual ::DDS::Publisher_ptr create_publisher_with_profile (
         const char* library_name,
         const char *profile_name,
@@ -61,7 +62,7 @@ namespace CIAO
         ::DDS::SubscriberListener_ptr a_listener,
         ::DDS::StatusMask mask);
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       virtual ::DDS::Subscriber_ptr create_subscriber_with_profile(
         const char* library_name,
         const char *profile_name,
@@ -80,7 +81,7 @@ namespace CIAO
         ::DDS::TopicListener_ptr a_listener,
         ::DDS::StatusMask mask);
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       virtual ::DDS::Topic_ptr create_topic_with_profile (
         const char * impl_name,
         const char * type_name,

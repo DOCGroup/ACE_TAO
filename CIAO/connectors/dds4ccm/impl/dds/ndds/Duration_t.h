@@ -10,11 +10,13 @@
 #ifndef DDS4CCM_DURATION_T_H
 #define DDS4CCM_DURATION_T_H
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+#include "dds4ccm/impl/dds4ccm_conf.h"
+
+#if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::Duration_t DDS_Duration_t;
 #endif
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::Duration_t &ddsduration, const ::DDS_Duration_t & duration)
 {

@@ -30,7 +30,7 @@ namespace CIAO
       ::DDS::Topic_var dds_topic = ::DDS::Topic::_nil ();
       ACE_NEW (dds_topic,
                CCM_DDS_Topic_i (the_topic));
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::InconsistentTopicStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_inconsistent_topic (dds_topic.in (), ddsstatus);

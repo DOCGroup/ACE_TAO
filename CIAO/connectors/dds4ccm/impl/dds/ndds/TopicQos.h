@@ -23,11 +23,13 @@
 #include "LifespanQosPolicy.h"
 #include "OwnershipQosPolicy.h"
 
-#if defined (CIAO_DDS4CCM_OPENDDS) && (CIAO_DDS4CCM_OPENDDS==1)
+#include "dds4ccm/impl/dds4ccm_conf.h"
+
+#if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::TopicQos DDS_TopicQos;
 #endif
 
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+#if (CIAO_DDS4CCM_NDDS==1)
 inline void
 operator<<= (::DDS::TopicQos &ddsqos, const ::DDS_TopicQos & qos)
 {
