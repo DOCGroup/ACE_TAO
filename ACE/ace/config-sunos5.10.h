@@ -32,14 +32,6 @@
 #  undef ACE_LACKS_ISBLANK
 #endif
 
-#if defined (ACE_LACKS_CEILL)
-#  undef ACE_LACKS_CEILL
-#endif
-
-#if defined (ACE_LACKS_FLOORL)
-#  undef ACE_LACKS_FLOORL
-#endif
-
 // Solaris 10 delivers pthread_attr_setstack
 #if defined (ACE_LACKS_PTHREAD_ATTR_SETSTACK)
 #  undef ACE_LACKS_PTHREAD_ATTR_SETSTACK
