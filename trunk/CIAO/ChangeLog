@@ -1,12 +1,23 @@
+Mon Mar 15 10:48:10 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DomainParticipant.cpp:
+          Removed unnecessary logging.
+
+        * connectors/dds4ccm/impl/dds/Reader_T.cpp:
+          Removed unnecessary narrowing of a DataReader.
+
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.cpp:
+          Shutdown timer when ccm_remove is invoked.
+
 Fri Mar 12 20:49:58 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/docs/OMG-DnC-Tutorial.ppt:
-        
-          Updated runtime diagram. 
-        
+
+          Updated runtime diagram.
+
         * DAnCE/docs/sources/dance-deployment.odg:
 
-          Source for runtime diagram. 
+          Source for runtime diagram.
 
 Fri Mar 12 14:47:49 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 

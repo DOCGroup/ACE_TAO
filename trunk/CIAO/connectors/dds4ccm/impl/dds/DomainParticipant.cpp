@@ -523,12 +523,6 @@ namespace CIAO
                                               translate_retcode (ret)));
                 }
             }
-          else
-            {
-              DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic - "
-                                           "Unable to narrow found TopicDescription to "
-                                           "a ContentFilteredTopic.\n"));
-            }
         }
       DDS_ReturnCode_t const retval = this->impl ()->delete_topic (top->get_impl ());
 
