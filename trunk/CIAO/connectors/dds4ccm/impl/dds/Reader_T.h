@@ -62,12 +62,10 @@ namespace CIAO
 
         void set_impl (::DDS::DataReader_ptr reader);
         void set_qos (
-          ::DDS::Topic_ptr topic,
           const char * libary_name,
           const char * profile_name);
 
       private:
-        ::DDS::Topic_var topic_;
         ::DDS::DataReader_var reader_;
 
         ACE_CString library_name_;
@@ -76,10 +74,11 @@ namespace CIAO
         #if (DDS4CCM_USES_QUERY_CONDITION==1)
           ::DDSQueryCondition * qc_;
         #else
-          DDS::ContentFilteredTopic_var cft_;
+          ::DDSContentFilteredTopic * cft_;
         #endif
 
         typename DDS_TYPE::data_reader * impl_;
+        typename DDS_TYPE::data_reader * original_impl_;
 
         typename DDS_TYPE::data_reader * impl (void);
 
@@ -102,6 +101,10 @@ namespace CIAO
 
         void create_filter (
           const ::CCM_DDS::QueryFilter & filter);
+
+        void create_contentfilteredtopic (
+          const ::CCM_DDS::QueryFilter & filter,
+          ::DDSSubscriber * sub);
       };
     }
   }
