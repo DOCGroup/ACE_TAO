@@ -1,15 +1,30 @@
+Tue Mar 16 11:39:20 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Listen_T.cpp:
+          Don't need to check for the existence of a ContentFilteredTopic.
+          It's now ok to just delete the existent DataReader.
+
+        * connectors/dds4ccm/impl/dds/DataReader.cpp:
+          Implemented get_topicdescription.
+
+        * connectors/dds4ccm/impl/dds/Reader_T.h:
+        * connectors/dds4ccm/impl/dds/Reader_T.cpp:
+          Rewritten ContentFilteredTopic implementation using
+          just the DDS entities.
+
 Mon Mar 15 20:21:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ciao/Containers/Session/Session_Container.h:
-	  Const change
+        * ciao/Containers/Session/Session_Container.h:
+          Const change
 
-	* ciao/Logger/Log_Macros.h:
-	* connectors/dds4ccm/impl/logger/Log_Macros.h:
-	* DAnCE/Logger/Log_Macros.h:
-	  Disable tracing by default
+        * ciao/Logger/Log_Macros.h:
+        * connectors/dds4ccm/impl/logger/Log_Macros.h:
+        * DAnCE/Logger/Log_Macros.h:
+          Disable tracing by default
 
-	* connectors/ami4ccm/ami4ccm/ami4ccm.mpc:
-	  Added svnt macros
+        * connectors/ami4ccm/ami4ccm/ami4ccm.mpc:
+          Added svnt macros
 
 Mon Mar 15 15:20:10 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
