@@ -13,16 +13,16 @@
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::Reader_T (void)
-  : topic_ (0),
-    library_name_ (""),
+  : library_name_ (""),
     profile_name_ (""),
-    impl_ (0)
+    impl_ (0),
+    original_impl_ (0)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::Reader_T");
   #if (DDS4CCM_USES_QUERY_CONDITION==1)
     this->qc_ = 0;
   #else
-    this->cft_ = ::DDS::ContentFilteredTopic::_nil ();
+    this->cft_ = 0;
   #endif
 }
 
@@ -351,72 +351,126 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_all (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
+CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::create_contentfilteredtopic (
+  const ::CCM_DDS::QueryFilter & filter,
+  ::DDSSubscriber * sub)
+{
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::create_contentfilteredtopic");
+
+  // To create a ContentFilteredTopic we need a DDSTopic.
+  // Since a ContentFilteredTopic is created on the DomainParticipant,
+  // we need to obtain the DomainParticipant through the
+  // Subscriber.
+  ::DDSDomainParticipant * dp = sub->get_participant ();
+  if (!dp)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::create_contentfilteredtopic - "
+                        "Unable to get the Participant from the DDS Subscriber\n"));
+      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
+    }
+  // now, get the topic.
+  ::DDSTopicDescription * td = this->impl_->get_topicdescription ();
+  if (!td)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::create_contentfilteredtopic - "
+                        "Unable to get the TopicDescription from the DDS DomainParticipant\n"));
+      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 2);
+    }
+  ::DDSTopic * tp = ::DDSTopic::narrow (td);
+  if (!tp)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::create_contentfilteredtopic - "
+                        "Unable to narrow the DDS TopicDescription to a DDS Topic\n"));
+      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 3);
+    }
+  //now create the ContentFilteredTopic
+  DDS_StringSeq params;
+  params <<= filter.query_parameters;
+  this->cft_ = dp->create_contentfilteredtopic (
+                        "DDS4CCMContentFilteredTopic",
+                        tp,
+                        filter.query,
+                        params);
+  if (!this->cft_)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::create_contentfilteredtopic - "
+                    "Error: Unable to create ContentFilteredTopic.\n"));
+      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 4);
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::create_filter (
   const ::CCM_DDS::QueryFilter & filter)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::create_filter");
-  ::DDS::Subscriber_var sub = this->reader_->get_subscriber ();
-  if (CORBA::is_nil (sub.in ()))
+
+  // we need to use the DDS entities direct since we're not allowed
+  // to change the CORBA interfaces.  These are known to component
+  // the end user has created.
+
+  // To set a ContentFilteredTopic on a DataReader, the DataReader
+  // should be recreated. Since the Getter uses the same DataReader,
+  // the original DataReader should not be destroyed.
+  ::DDSSubscriber * sub = this->impl_->get_subscriber ();
+  if (!sub)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::create_filter - "
-                    "Error: Unable to get Subscriber.\n"));
+                        "Unable to get the Subscriber from the type specific DDS DataReader\n"));
       throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
     }
-  ::DDS::DomainParticipant_var dp = sub->get_participant ();
-  if (CORBA::is_nil (dp.in ()))
-    {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::create_filter - "
-                    "Error: Unable to get Participant.\n"));
-      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
-    }
-  this->cft_ = dp->create_contentfilteredtopic (
-                        "DDS4CCMContentFilteredTopic",
-                        this->topic_.in (),
-                        filter.query,
-                        filter.query_parameters);
-  if (CORBA::is_nil (this->cft_))
-    {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::create_filter - "
-                    "Error: Unable to create ContentFilteredTopic.\n"));
-      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
-    }
-  ::DDS::DataReaderListener_var listener = this->reader_->get_listener ();
-  CCM_DDS::PortStatusListener_ptr psl = CCM_DDS::PortStatusListener::_nil ();
-  if (!CORBA::is_nil (listener))
-    {
-      psl = dynamic_cast <CCM_DDS::PortStatusListener_ptr> (listener.in ());
-      this->reader_->set_listener (::DDS::DataReaderListener::_nil (), 0);
-    }
-  this->reader_ = ::DDS::CCM_DataReader::_nil ();
+  this->create_contentfilteredtopic (filter, sub);
 
-  ::DDS::DataReader_var reader = ::DDS::DataReader::_nil ();
+  // Now recreate the DataReader, using the ContentFilteredTopic.
+  // After recreation, connect the original DataReaderListener to it.
+  ::DDSDataReaderListener *drl = this->impl ()->get_listener ();
+  ::DDS::DataReaderListener_var dr_listener = this->reader_->get_listener ();
+
+  ::DDSDataReader * dr = 0;
   if (this->library_name_.length () > 0 &&
       this->profile_name_.length () > 0)
     {
-      reader = sub->create_datareader_with_profile (
-                        this->cft_,
-                        this->library_name_.c_str (),
-                        this->profile_name_.c_str (),
-                        listener,
-                        ::CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
-                          psl));
+      dr = sub->create_datareader_with_profile (this->cft_,
+                                                this->library_name_.c_str (),
+                                                this->profile_name_.c_str (),
+                                                drl,
+                                                ::DDS::DATA_AVAILABLE_STATUS |
+                                                ::DDS::REQUESTED_DEADLINE_MISSED_STATUS |
+                                                ::DDS::SAMPLE_LOST_STATUS);
     }
   else
     {
-      ::DDS::DataReaderQos drqos;
-      reader = sub->create_datareader (
-                        this->cft_,
-                        drqos,
-                        listener,
-                        ::CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
-                          psl));
+      DDS_DataReaderQos const qos = DDS_DATAREADER_QOS_DEFAULT;
+      dr = sub->create_datareader (this->cft_,
+                                   qos,
+                                   drl,
+                                   ::DDS::DATA_AVAILABLE_STATUS |
+                                   ::DDS::REQUESTED_DEADLINE_MISSED_STATUS |
+                                   ::DDS::SAMPLE_LOST_STATUS);
     }
-  if (CORBA::is_nil(reader))
+  if (!dr)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::create_filter - "
                     "Error: Unable to create a new DataReader.\n"));
+      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
     }
-  this->set_impl (reader);
+  // now we need to set the new created DataReader in our proxy classes.
+  CCM_DDS_DataReader_i *rdr = dynamic_cast <CCM_DDS_DataReader_i *> (this->reader_.in ());
+
+  if (!rdr)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::create_filter - "
+                    "Unable to cast provided DataReader to servant\n"));
+      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 2);
+    }
+  rdr->set_impl (dr);
+  // We're not allowed to touch the original datareader. We need to keep this.
+  // Therefore assing it to another pointer. When set_impl (0) is called,
+  // we savely can delete this DataReader.
+  this->original_impl_ = this->impl_;
+  // Replace the existing DataReader.
+  this->impl_ =  DDS_TYPE::data_reader::narrow (rdr->get_impl ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -440,7 +494,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
     filter->query_parameters <<= dds_qp;
     return filter._retn ();
   #else
-    if (CORBA::is_nil (this->cft_))
+    if (!this->cft_)
       {
         DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::filter - "
                       "Error: No ContentFilter set yet. First set a filter.\n"));
@@ -451,8 +505,10 @@ template <typename DDS_TYPE, typename CCM_TYPE>
                       ::CCM_DDS::QueryFilter(),
                       CORBA::NO_MEMORY ());
     filter->query = this->cft_->get_filter_expression ();
+    DDS_StringSeq params;
     ::DDS::ReturnCode_t const retval = this->cft_->get_expression_parameters (
-                                          filter->query_parameters);
+                                          params);
+    filter->query_parameters <<= params;
     if (retval != DDS::RETCODE_OK)
       {
         DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::filter - "
@@ -505,14 +561,16 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
           }
       }
   #else
-    if (CORBA::is_nil (this->cft_))
+    if (!this->cft_)
       {
         this->create_filter (filter);
       }
     else
       {
+        DDS_StringSeq params;
+        params <<= filter.query_parameters;
         ::DDS::ReturnCode_t retval = this->cft_->set_expression_parameters (
-          filter.query_parameters);
+          params);
         if (retval != ::DDS::RETCODE_OK)
           {
             DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::filter - "
@@ -528,14 +586,12 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::filter (
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::set_qos (
-  ::DDS::Topic_ptr topic,
   const char * library_name,
   const char * profile_name)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::set_qos");
   this->library_name_ = library_name;
   this->profile_name_ = profile_name;
-  this->topic_ = topic;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -550,6 +606,22 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE>::set_impl (
         if (this->qc_)
           {
             this->impl ()->delete_readcondition (this->qc_);
+          }
+      #else
+        if (this->original_impl_)
+          {
+            ::DDSSubscriber * sub = this->original_impl_->get_subscriber ();
+            if (sub)
+              {
+                DDS_ReturnCode_t const retval = sub->delete_datareader (this->original_impl_);
+                if (retval != DDS_RETCODE_OK)
+                  {
+                    DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::set_impl - "
+                                              "Unable to delete original DataReader. "
+                                              "Retval is %C\n",
+                                              translate_retcode(retval)));
+                  }
+              }
           }
       #endif
       this->impl_ = 0;

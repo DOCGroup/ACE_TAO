@@ -7,6 +7,8 @@
 #include "QueryCondition.h"
 #include "Subscriber.h"
 #include "TopicDescription.h"
+#include "Topic.h"
+#include "ContentFilteredTopic.h"
 
 #include "ndds/SampleLostStatus.h"
 #include "ndds/SubscriptionMatchedStatus.h"
@@ -252,9 +254,24 @@ namespace CIAO
       ::DDS::TopicDescription_var dds_td = ::DDS::TopicDescription::_nil ();
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDSTopicDescription* td = this->impl ()->get_topicdescription ();
-      ACE_NEW_THROW_EX (dds_td,
-                        CCM_DDS_TopicDescription_i (td),
-                        CORBA::NO_MEMORY ());
+      ::DDSTopic * tp = ::DDSTopic::narrow (td);
+      if (tp)
+        {
+          ACE_NEW_THROW_EX (dds_td,
+                            CCM_DDS_Topic_i (tp),
+                            CORBA::NO_MEMORY ());
+        }
+      else
+        {
+          ::DDSContentFilteredTopic * cft =
+            DDSContentFilteredTopic::narrow (td);
+          if (cft)
+            {
+              ACE_NEW_THROW_EX (dds_td,
+                                CCM_DDS_ContentFilteredTopic_i (cft),
+                                CORBA::NO_MEMORY ());
+            }
+        }
 #else
       ::DDS::TopicDescription_var td = this->impl ()->get_topicdescription ();
       ACE_NEW_THROW_EX (dds_td,
