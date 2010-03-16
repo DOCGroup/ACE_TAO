@@ -27,15 +27,15 @@ extern CIAO_Logger_Export unsigned int CIAO_debug_level;
 #if (CIAO_NTRACE == 1)
 #  if !defined (ACE_NTRACE)
 #    define CIAO_TRACE(X) do {} while (0)
-#    define CIAO_ENABLE_TRACE(X) do {} while (0)
-#    define CIAO_DISABLE_TRACE(X) do {} while (0)
+#    define CIAO_ENABLE_TRACE() do {} while (0)
+#    define CIAO_DISABLE_TRACE() do {} while (0)
 #  else
 #    if (ACE_NTRACE == 0)
 #      error CIAO_TRACE cannot be disabled if ACE_TRACE is enabled
 #    else
 #      define CIAO_TRACE(X) do {} while (0)
-#      define CIAO_ENABLE_TRACE(X) do {} while (0)
-#      define CIAO_DISABLE_TRACE(X) do {} while (0)
+#      define CIAO_ENABLE_TRACE() do {} while (0)
+#      define CIAO_DISABLE_TRACE() do {} while (0)
 #    endif
 #  endif
 #else
