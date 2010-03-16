@@ -25,15 +25,15 @@ extern DAnCE_Logger_Export unsigned int DAnCE_debug_level;
 #if (DANCE_NTRACE == 1)
 #  if !defined (ACE_NTRACE)
 #    define DANCE_TRACE(X) do {} while (0)
-#    define DANCE_ENABLE_TRACE(X) do {} while (0)
-#    define DANCE_DISABLE_TRACE(X) do {} while (0)
+#    define DANCE_ENABLE_TRACE() do {} while (0)
+#    define DANCE_DISABLE_TRACE() do {} while (0)
 #  else
 #    if (ACE_NTRACE == 0)
 #      error DANCE_TRACE cannot be disabled if ACE_TRACE is enabled
 #    else
 #      define DANCE_TRACE(X) do {} while (0)
-#      define DANCE_ENABLE_TRACE(X) do {} while (0)
-#      define DANCE_DISABLE_TRACE(X) do {} while (0)
+#      define DANCE_ENABLE_TRACE() do {} while (0)
+#      define DANCE_DISABLE_TRACE() do {} while (0)
 #    endif
 #  endif
 #else
