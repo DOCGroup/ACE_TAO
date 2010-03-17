@@ -278,6 +278,7 @@ public:
   int start_ciao_exec_idl (const char *fname);
   int start_ciao_conn_header (const char *fname);
   int start_ciao_conn_source (const char *fname);
+  int start_ciao_ami_conn_idl (const char *fname);
 
   /// Generate code at the end such as the <<= and >>= operators along
   /// with the ending #endif statement.
@@ -323,6 +324,7 @@ public:
   int end_ciao_exec_idl (void);
   int end_ciao_conn_header (void);
   int end_ciao_conn_source (void);
+  int end_ciao_ami_conn_idl (void);
 
   /// Get the client header stream.
   TAO_OutStream *client_header (void);
@@ -383,6 +385,9 @@ public:
 
   /// Get the CIAO connector impl source stream.
   TAO_OutStream *ciao_conn_source (void);
+  
+  /// Get the CIAO AMI connector IDL stream.
+  TAO_OutStream *ciao_ami_conn_idl (void);
 
   /// Set the gperf input file stream.
   void gperf_input_stream (TAO_OutStream *gperf_input);
@@ -466,6 +471,7 @@ private:
   void gen_exec_idl_includes (void);
   void gen_conn_hdr_includes (void);
   void gen_conn_src_includes (void);
+  void gen_ami_conn_idl_includes (void);
   
   void gen_export_file (const char *filename,
                         const char *macro,
@@ -534,6 +540,9 @@ private:
 
   /// Component connector impl source file.
   TAO_OutStream *ciao_conn_source_;
+
+  /// Component connector impl source file.
+  TAO_OutStream *ciao_ami_conn_idl_;
 
   /// Currently used out stream.
   TAO_OutStream *curr_os_;

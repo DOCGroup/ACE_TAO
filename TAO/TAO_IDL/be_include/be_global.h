@@ -133,6 +133,9 @@ public:
   static const char *be_get_ciao_conn_src_fname (
       bool base_name_only = false);
 
+  static const char *be_get_ciao_ami_conn_idl_fname (
+      bool base_name_only = false);
+
   // Helper functions: obtain the names of each generated file given
   // the IDL file name.
   // The parameter <base_name_only> set to 0 (no base name, but full
@@ -217,6 +220,10 @@ public:
     bool base_name_only = false);
 
   static const char *be_get_dds_typesupport_header (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
+
+  static const char *be_get_ciao_ami_conn_idl (
     UTL_String *idl_file_name,
     bool base_name_only = false);
 
@@ -486,6 +493,10 @@ public:
   void dds_typesupport_hdr_ending (const char* s);
   const char* dds_typesupport_hdr_ending (void) const;
 
+  /// For optionally generating CIAO AMI connector IDL file.
+  void ciao_ami_conn_idl_ending (const char* s);
+  const char* ciao_ami_conn_idl_ending (void) const;
+
   /// Set the clonable_in_args.
   void use_clonable_in_args (bool clonable);
 
@@ -710,19 +721,10 @@ public:
   be_module *messaging (void);
 
   /// Accessor for the member, sets it on the first call.
-  be_module *ami4ccm (void);
-
-  /// Accessor for the member, sets it on the first call.
   be_valuetype *messaging_exceptionholder (void);
 
   /// Accessor for the member, sets it on the first call.
-  be_valuetype *ami4ccm_exceptionholder (void);
-
-  /// Accessor for the member, sets it on the first call.
   be_interface *messaging_replyhandler (void);
-
-  /// Accessor for the member, sets it on the first call.
-  be_interface *ami4ccm_replyhandler (void);
 
   /// Accessors for the member.
   bool gen_anyop_files (void) const;
@@ -860,75 +862,78 @@ private:
   /// Text that closes a "versioned" namepace.
   ACE_CString versioning_end_;
 
-  // Client's header file name ending. Default is "C.h".
+  /// Client's header file name ending. Default is "C.h".
   char* client_hdr_ending_;
 
-  // Client's stub's file name ending. Default is "C.cpp".
+  /// Client's stub's file name ending. Default is "C.cpp".
   char* client_stub_ending_;
 
-  // Client's inline file name ending. Default is "C.i".
+  /// Client's inline file name ending. Default is "C.i".
   char* client_inline_ending_;
 
-  // Server's hdr file name ending. Default is "S.h".
+  /// Server's hdr file name ending. Default is "S.h".
   char* server_hdr_ending_;
 
-  // Implementation's hdr file name ending. Default is "I.h".
+  /// Implementation's hdr file name ending. Default is "I.h".
   char* implementation_hdr_ending_;
 
   // Implementation's skeleton file name ending. Default is "I.cpp".
   char* implementation_skel_ending_;
 
-  //Implementaion class prefix
+  /// Implementaion class prefix
   char* impl_class_prefix_;
 
-  //Implementation class suffix
+  /// Implementation class suffix
   char* impl_class_suffix_;
 
-  // Server's template hdr file name ending. Default is "S_T.h".
+  /// Server's template hdr file name ending. Default is "S_T.h".
   char* server_template_hdr_ending_;
 
-  // Server's skeleton file name ending. Default is "S.cpp".
+  /// Server's skeleton file name ending. Default is "S.cpp".
   char* server_skeleton_ending_;
 
-  // Server's template skeleton file name ending. Default is
-  // "S_T.cpp".
+  /// Server's template skeleton file name ending. Default is
+  /// "S_T.cpp".
   char* server_template_skeleton_ending_;
 
-  // Server's inline file name ending. Default is "S.i".
+  /// Server's inline file name ending. Default is "S.i".
   char* server_inline_ending_;
 
-  // Anyop header file name ending. Default is "A.h".
+  /// Anyop header file name ending. Default is "A.h".
   char* anyop_hdr_ending_;
 
-  // Anyop source file name ending. Default is "A.cpp".
+  /// Anyop source file name ending. Default is "A.cpp".
   char* anyop_src_ending_;
 
-  // CIAO servant header file name ending. Default is "_svnt.h".
+  /// CIAO servant header file name ending. Default is "_svnt.h".
   char* ciao_svnt_hdr_ending_;
 
-  // CIAO servant source file name ending. Default is "_svnt.cpp".
+  /// CIAO servant source file name ending. Default is "_svnt.cpp".
   char* ciao_svnt_src_ending_;
 
-  // CIAO executor impl header file name ending. Default is "_exec.h".
+  /// CIAO executor impl header file name ending. Default is "_exec.h".
   char* ciao_exec_hdr_ending_;
 
-  // CIAO executor impl source file name ending. Default is "_exec.cpp".
+  /// CIAO executor impl source file name ending. Default is "_exec.cpp".
   char* ciao_exec_src_ending_;
 
-  // CIAO executor stub header file name ending. Default is "EC.h".
+  /// CIAO executor stub header file name ending. Default is "EC.h".
   char* ciao_exec_stub_hdr_ending_;
 
-  // CIAO executor IDL file name ending. Default is "E.idl".
+  /// CIAO executor IDL file name ending. Default is "E.idl".
   char* ciao_exec_idl_ending_;
 
-  // CIAO connector impl header file name ending. Default is "_conn.h".
+  /// CIAO connector impl header file name ending. Default is "_conn.h".
   char* ciao_conn_hdr_ending_;
 
-  // CIAO connector impl source file name ending. Default is "_conn.cpp".
+  /// CIAO connector impl source file name ending. Default is "_conn.cpp".
   char* ciao_conn_src_ending_;
 
-  // DDS TypeSupport header file name ending. Default is "Support.h".
+  /// DDS TypeSupport header file name ending. Default is "Support.h".
   char* dds_typesupport_hdr_ending_;
+
+  /// CIAO AMI connector IDL file name ending. Default is "A.idl".
+  char* ciao_ami_conn_idl_ending_;
 
   /**
    * Directory where all the IDL-Compiler-Generated files are to be
@@ -1043,20 +1048,11 @@ private:
   /// Storage for the messaging exceptions holder's virtual scope.
   be_module *messaging_;
 
-  /// Storage for the ami4ccm exceptions holder's virtual scope.
-  be_module *ami4ccm_;
-
   /// Storage for exception holders' base class node.
   be_valuetype *messaging_exceptionholder_;
 
-  /// Storage for exception holders' base class node.
-  be_valuetype *ami4ccm_exceptionholder_;
-
   /// Storage for the reply handlers' base class node.
   be_interface *messaging_replyhandler_;
-
-  /// Storage for the reply handlers' base class node.
-  be_interface *ami4ccm_replyhandler_;
 
   /// Separate files for generated Any operators?
   bool gen_anyop_files_;

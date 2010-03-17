@@ -27,6 +27,10 @@ int
 be_visitor_ami4ccm_rh_ex_idl::visit_interface (be_interface *node)
 {
   os_ << be_nl
+      << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
+  os_ << be_nl << be_nl
       << "local interface AMI_"
       << node->original_local_name ()
       << "Callback" << be_idt_nl
@@ -78,15 +82,6 @@ be_visitor_ami4ccm_rh_ex_idl::visit_interface (be_interface *node)
   os_ << be_uidt_nl
       << "};";
       
-  os_ << be_nl << be_nl
-      << "local interface CCM_AMI_"
-      << node->original_local_name ()
-      << "Callback" << be_idt_nl
-      << ": AMI_" << node->original_local_name ()
-      << "Callback" << be_uidt_nl
-      << "{" << be_nl
-      << "};";
-     
   return 0;
 }
 

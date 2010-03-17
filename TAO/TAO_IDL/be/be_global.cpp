@@ -77,6 +77,7 @@ BE_GlobalData::BE_GlobalData (void)
     ciao_conn_hdr_ending_ (ACE::strnew ("_conn.h")),
     ciao_conn_src_ending_ (ACE::strnew ("_conn.cpp")),
     dds_typesupport_hdr_ending_ (ACE::strnew ("Support.h")),
+    ciao_ami_conn_idl_ending_ (ACE::strnew ("A.idl")),
     output_dir_ (0),
     skel_output_dir_ (0),
     anyop_output_dir_ (0),
@@ -107,11 +108,8 @@ BE_GlobalData::BE_GlobalData (void)
     void_type_ (0),
     ccmobject_ (0),
     messaging_ (0),
-    ami4ccm_ (0),
     messaging_exceptionholder_ (0),
-    ami4ccm_exceptionholder_ (0),
     messaging_replyhandler_ (0),
-    ami4ccm_replyhandler_ (0),
     gen_anyop_files_ (false),
     gen_skel_files_ (true),
     gen_client_inline_ (true),
@@ -486,128 +484,162 @@ BE_GlobalData::be_get_dds_typesupport_header (
 }
 
 const char *
+BE_GlobalData::be_get_ciao_ami_conn_idl (
+  UTL_String *idl_file_name,
+  bool base_name_only)
+{
+  return
+    be_change_idl_file_extension (
+      idl_file_name,
+      be_global->ciao_ami_conn_idl_ending (),
+      base_name_only);
+}
+
+const char *
 BE_GlobalData::be_get_client_hdr_fname (
   bool base_name_only)
 {
-  return be_get_client_hdr (idl_global->stripped_filename (),
-                            base_name_only);
+  return
+    be_get_client_hdr (idl_global->stripped_filename (),
+                       base_name_only);
 }
 
 const char *
 BE_GlobalData::be_get_client_stub_fname (void)
 {
-  return be_get_client_stub (idl_global->stripped_filename ());
+  return
+    be_get_client_stub (idl_global->stripped_filename ());
 }
 
 const char *
-BE_GlobalData::be_get_client_inline_fname (bool base_name_only)
+BE_GlobalData::be_get_client_inline_fname (
+  bool base_name_only)
 {
-  return be_get_client_inline (idl_global->stripped_filename (),
+  return
+    be_get_client_inline (idl_global->stripped_filename (),
+                          base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_server_hdr_fname (
+  bool base_name_only)
+{
+  return
+    be_get_server_hdr (idl_global->stripped_filename (),
+                       base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_implementation_hdr_fname (
+  bool base_name_only)
+{
+  return
+    be_get_implementation_hdr (idl_global->stripped_filename (),
                                base_name_only);
 }
 
 const char *
-BE_GlobalData::be_get_server_hdr_fname (bool base_name_only)
+BE_GlobalData::be_get_implementation_skel_fname (
+  bool base_name_only)
 {
-  return be_get_server_hdr (idl_global->stripped_filename (),
-                            base_name_only);
+  return
+    be_get_implementation_skel (idl_global->stripped_filename (),
+                                base_name_only);
 }
 
 const char *
-BE_GlobalData::be_get_implementation_hdr_fname (bool base_name_only)
+BE_GlobalData::be_get_server_template_hdr_fname (
+  bool base_name_only)
 {
-  return be_get_implementation_hdr (idl_global->stripped_filename (),
-                                    base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_implementation_skel_fname (bool base_name_only)
-{
-  return be_get_implementation_skel (idl_global->stripped_filename (),
-                                     base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_server_template_hdr_fname (bool base_name_only)
-{
-  return be_get_server_template_hdr (idl_global->stripped_filename (),
-                                     base_name_only);
+  return
+    be_get_server_template_hdr (idl_global->stripped_filename (),
+                                base_name_only);
 }
 
 const char *
 BE_GlobalData::be_get_server_skeleton_fname (void)
 {
-  return be_get_server_skeleton (idl_global->stripped_filename ());
+  return
+    be_get_server_skeleton (idl_global->stripped_filename ());
 }
 
 const char *
 BE_GlobalData::be_get_implementation_skeleton_fname (void)
 {
-  return be_get_implementation_skel (idl_global->stripped_filename ());
+  return
+    be_get_implementation_skel (idl_global->stripped_filename ());
 }
 
 const char *
 BE_GlobalData::be_get_server_template_skeleton_fname (
   bool base_name_only)
 {
-  return be_get_server_template_skeleton (idl_global->stripped_filename (),
-                                          base_name_only);
+  return
+    be_get_server_template_skeleton (idl_global->stripped_filename (),
+                                     base_name_only);
 }
 
 const char *
 BE_GlobalData::be_get_server_inline_fname (
   bool base_name_only)
 {
-  return be_get_server_inline (idl_global->stripped_filename (),
-                               base_name_only);
+  return
+    be_get_server_inline (idl_global->stripped_filename (),
+                          base_name_only);
 }
 
 const char *
 BE_GlobalData::be_get_anyop_source_fname (
   bool base_name_only)
 {
-  return be_get_anyop_source (idl_global->stripped_filename (),
-                              base_name_only);
+  return
+    be_get_anyop_source (idl_global->stripped_filename (),
+                         base_name_only);
 }
 
 const char *
 BE_GlobalData::be_get_anyop_header_fname (
   bool base_name_only)
 {
-  return be_get_anyop_header (idl_global->stripped_filename (),
-                              base_name_only);
+  return
+    be_get_anyop_header (idl_global->stripped_filename (),
+                         base_name_only);
 }
 
 const char *
 BE_GlobalData::be_get_ciao_svnt_hdr_fname (
   bool base_name_only)
 {
-  return be_get_ciao_svnt_header (idl_global->stripped_filename (),
-                                  base_name_only);
+  return
+    be_get_ciao_svnt_header (idl_global->stripped_filename (),
+                             base_name_only);
 }
 
 const char *
 BE_GlobalData::be_get_ciao_svnt_src_fname (
   bool base_name_only)
 {
-  return be_get_ciao_svnt_source (idl_global->stripped_filename (),
-                                  base_name_only);
+  return
+    be_get_ciao_svnt_source (idl_global->stripped_filename (),
+                             base_name_only);
 }
 
 const char *
 BE_GlobalData::be_get_ciao_exec_hdr_fname (
   bool base_name_only)
 {
-  return be_get_ciao_exec_header (idl_global->stripped_filename (),
-                                  base_name_only);
+  return
+    be_get_ciao_exec_header (idl_global->stripped_filename (),
+                             base_name_only);
 }
 
 const char *
 BE_GlobalData::be_get_ciao_exec_src_fname (
   bool base_name_only)
 {
-  return be_get_ciao_exec_source (idl_global->stripped_filename (),
-                                  base_name_only);
+  return
+    be_get_ciao_exec_source (idl_global->stripped_filename (),
+                             base_name_only);
 }
 
 const char *
@@ -634,16 +666,27 @@ const char *
 BE_GlobalData::be_get_ciao_conn_hdr_fname (
   bool base_name_only)
 {
-  return be_get_ciao_conn_header (idl_global->stripped_filename (),
-                                  base_name_only);
+  return
+    be_get_ciao_conn_header (idl_global->stripped_filename (),
+                             base_name_only);
 }
 
 const char *
 BE_GlobalData::be_get_ciao_conn_src_fname (
   bool base_name_only)
 {
-  return be_get_ciao_conn_source (idl_global->stripped_filename (),
-                                  base_name_only);
+  return
+    be_get_ciao_conn_source (idl_global->stripped_filename (),
+                             base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_ciao_ami_conn_idl_fname (
+  bool base_name_only)
+{
+  return
+    be_get_ciao_ami_conn_idl (idl_global->stripped_filename (),
+                              base_name_only);
 }
 
 const char*
@@ -1298,6 +1341,19 @@ BE_GlobalData::dds_typesupport_hdr_ending (void) const
 }
 
 void
+BE_GlobalData::ciao_ami_conn_idl_ending (const char* s)
+{
+  ACE::strdelete (this->ciao_ami_conn_idl_ending_);
+  this->ciao_ami_conn_idl_ending_ = ACE::strnew (s);
+}
+
+const char *
+BE_GlobalData::ciao_ami_conn_idl_ending (void) const
+{
+  return this->ciao_ami_conn_idl_ending_;
+}
+
+void
 BE_GlobalData::output_dir (const char* s)
 {
   ACE::strdelete (this->output_dir_);
@@ -1771,6 +1827,9 @@ BE_GlobalData::destroy (void)
 
   ACE::strdelete (this->dds_typesupport_hdr_ending_);
   this->dds_typesupport_hdr_ending_ = 0;
+  
+  ACE::strdelete (this->ciao_ami_conn_idl_ending_);
+  this->ciao_ami_conn_idl_ending_ = 0;
 
   ACE::strdelete (this->output_dir_);
   this->output_dir_ = 0;
@@ -1785,13 +1844,6 @@ BE_GlobalData::destroy (void)
       this->messaging_ = 0;
     }
 
-  if (0 != this->ami4ccm_)
-    {
-      this->ami4ccm_->destroy ();
-      delete this->ami4ccm_;
-      this->ami4ccm_ = 0;
-    }
-
   if (0 != this->messaging_exceptionholder_)
     {
       this->messaging_exceptionholder_->destroy ();
@@ -1799,25 +1851,11 @@ BE_GlobalData::destroy (void)
       this->messaging_exceptionholder_ = 0;
     }
 
-  if (0 != this->ami4ccm_exceptionholder_)
-    {
-      this->ami4ccm_exceptionholder_->destroy ();
-      delete this->ami4ccm_exceptionholder_;
-      this->ami4ccm_exceptionholder_ = 0;
-    }
-
   if (0 != this->messaging_replyhandler_)
     {
       this->messaging_replyhandler_->destroy ();
       delete this->messaging_replyhandler_;
       this->messaging_replyhandler_ = 0;
-    }
-
-  if (0 != this->ami4ccm_replyhandler_)
-    {
-      this->ami4ccm_replyhandler_->destroy ();
-      delete this->ami4ccm_replyhandler_;
-      this->ami4ccm_replyhandler_ = 0;
     }
 
   if (0 != tao_cg)
@@ -1911,33 +1949,6 @@ BE_GlobalData::messaging (void)
   return this->messaging_;
 }
 
-be_module *
-BE_GlobalData::ami4ccm (void)
-{
-  if (0 == this->ami4ccm_)
-    {
-      Identifier *id = 0;
-      UTL_ScopedName *sn = 0;
-
-      ACE_NEW_RETURN (id,
-                      Identifier ("CCM_AMI"),
-                      0);
-
-      ACE_NEW_RETURN (sn,
-                      UTL_ScopedName (id,
-                                      0),
-                      0);
-
-      ACE_NEW_RETURN (this->ami4ccm_,
-                      be_module (sn),
-                      0);
-
-      this->ami4ccm_->set_name (sn);
-    }
-
-  return this->ami4ccm_;
-}
-
 be_valuetype *
 BE_GlobalData::messaging_exceptionholder (void)
 {
@@ -2005,73 +2016,6 @@ BE_GlobalData::messaging_exceptionholder (void)
   return this->messaging_exceptionholder_;
 }
 
-be_valuetype *
-BE_GlobalData::ami4ccm_exceptionholder (void)
-{
-  if (0 == this->ami4ccm_exceptionholder_)
-    {
-      Identifier *id = 0;
-      be_module *msg = this->ami4ccm ();
-      idl_global->scopes ().push (msg);
-
-      ACE_NEW_RETURN (id,
-                      Identifier ("CCM_AMI"),
-                      0);
-
-      // Create a valuetype "ExceptionHolder"
-      // from which we inherit.
-      UTL_ScopedName *full_name = 0;
-      ACE_NEW_RETURN (full_name,
-                      UTL_ScopedName (id,
-                                      0),
-                      0);
-
-      ACE_NEW_RETURN (id,
-                      Identifier ("ExceptionHolder"),
-                      0);
-
-      UTL_ScopedName *local_name = 0;
-      ACE_NEW_RETURN (local_name,
-                      UTL_ScopedName (id,
-                                      0),
-                      0);
-
-      full_name->nconc (local_name);
-
-      ACE_NEW_RETURN (this->ami4ccm_exceptionholder_,
-                      be_valuetype (full_name,
-                                    0,
-                                    0,
-                                    0,
-                                    0,
-                                    0,
-                                    0,
-                                    0,
-                                    0,
-                                    0,
-                                    0,
-                                    0),
-                      0);
-
-      this->ami4ccm_exceptionholder_->set_name (full_name);
-
-      // Notice the valuetype "ExceptionHolder" that it is defined in the
-      // "Messaging" module
-      this->ami4ccm_exceptionholder_->set_defined_in (msg);
-      this->ami4ccm_exceptionholder_->set_prefix_with_typeprefix (
-                                            "omg.org"
-                                          );
-
-      idl_global->scopes ().pop ();
-
-      // Notice the interface "ReplyHandler" that it is defined in the
-      // "Messaging" module.
-      this->ami4ccm_exceptionholder_->set_defined_in (msg);
-    }
-
-  return this->ami4ccm_exceptionholder_;
-}
-
 be_interface *
 BE_GlobalData::messaging_replyhandler (void)
 {
@@ -2128,64 +2072,6 @@ BE_GlobalData::messaging_replyhandler (void)
     }
 
   return this->messaging_replyhandler_;
-}
-
-be_interface *
-BE_GlobalData::ami4ccm_replyhandler (void)
-{
-  if (0 == this->ami4ccm_replyhandler_)
-    {
-      be_module *msg = this->ami4ccm ();
-      idl_global->scopes ().push (msg);
-
-      Identifier *id = 0;
-      UTL_ScopedName *local_name = 0;
-
-      // Create a virtual module named "Messaging"
-      // "and an interface "ReplyHandler"
-      // from which we inherit.
-      ACE_NEW_RETURN (id,
-                      Identifier ("CCM_AMI"),
-                      0);
-
-      UTL_ScopedName *full_name = 0;
-      ACE_NEW_RETURN (full_name,
-                      UTL_ScopedName (id,
-                                      0),
-                      0);
-
-      ACE_NEW_RETURN (id,
-                      Identifier ("ReplyHandler"),
-                      0);
-
-      ACE_NEW_RETURN (local_name,
-                      UTL_ScopedName (id,
-                                      0),
-                      0);
-
-      full_name->nconc (local_name);
-
-      ACE_NEW_RETURN (this->ami4ccm_replyhandler_,
-                      be_interface (full_name,
-                                    0,  // inherited interfaces
-                                    0,  // number of inherited interfaces
-                                    0,  // ancestors
-                                    0,  // number of ancestors
-                                    1,  // not local
-                                    0), // not abstract
-                      0);
-
-      this->ami4ccm_replyhandler_->set_name (full_name);
-      this->ami4ccm_replyhandler_->set_prefix_with_typeprefix ("omg.org");
-
-      idl_global->scopes ().pop ();
-
-      // Notice the interface "ReplyHandler" that it is defined in the
-      // "CCM_AMI" module.
-      this->ami4ccm_replyhandler_->set_defined_in (msg);
-    }
-
-  return this->ami4ccm_replyhandler_;
 }
 
 bool

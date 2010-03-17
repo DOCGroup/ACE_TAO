@@ -1001,42 +1001,40 @@ be_visitor_module::visit_connector (be_connector *node)
   ctx.node (node);
   int status = 0;
 
-  AST_Connector *base = node->base_connector ();
-
   switch (this->ctx_->state ())
     {
       case TAO_CodeGen::TAO_ROOT_CNH:
         {
-          /// Hack until we get logic in place to strategize
-          /// visitor creation based on connector inheritance.
-          if (base == 0)
-            {
-              be_visitor_connector_ami_exh v (&ctx);
-              status = node->accept (&v);
+          if (node->dds_connector ())
+            {  
+              be_visitor_connector_dds_exh visitor (&ctx);
+              status = node->accept (&visitor);
               break;
             }
-            
-          be_visitor_connector_dds_exh visitor (&ctx);
-          status = node->accept (&visitor);
-          break;
+          else if (node->ami_connector ())
+            {
+              be_visitor_connector_ami_exh visitor (&ctx);
+              status = node->accept (&visitor);
+              break;
+            }
         }
       case TAO_CodeGen::TAO_ROOT_CNS:
         {
-          /// Hack until we get logic in place to strategize
-          /// visitor creation based on connector inheritance.
-          if (base == 0)
-            {
-              be_visitor_connector_ami_exs v (&ctx);
-              status = node->accept (&v);
+          if (node->dds_connector ())
+            {  
+              be_visitor_connector_dds_exs visitor (&ctx);
+              status = node->accept (&visitor);
               break;
             }
-            
-          be_visitor_connector_dds_exs visitor (&ctx);
-          status = node->accept (&visitor);
-          break;
+          else if (node->ami_connector ())
+            {
+              be_visitor_connector_ami_exs visitor (&ctx);
+              status = node->accept (&visitor);
+              break;
+            }
         }
       // Skip these contexts, the connector impl is
-      // generated in a separate pass, using the states
+      // generated in a separate pass, using the context states
       // above.
       case TAO_CodeGen::TAO_ROOT_EXH:
       case TAO_CodeGen::TAO_ROOT_EXS:
@@ -1044,6 +1042,15 @@ be_visitor_module::visit_connector (be_connector *node)
       default:
         // In all other cases, same as component.
         return this->visit_component (node);
+    }
+    
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_module::")
+                         ACE_TEXT ("visit_connector - ")
+                         ACE_TEXT ("failed to accept visitor\n")),
+                        -1);
     }
     
   return 0;
