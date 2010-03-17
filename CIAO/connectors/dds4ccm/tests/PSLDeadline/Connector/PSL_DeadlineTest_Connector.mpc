@@ -25,7 +25,7 @@ project(DDS_PSL_DT_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   idlflags += -Wb,stub_export_macro=PSL_DEADLINETEST_CONNECTOR_LEM_STUB_Export \
               -Wb,stub_export_include=PSL_DeadlineTest_Connector_lem_stub_export.h \
               -SS -Gxhst \
-              -I .. -I $(CIAO_ROOT)/connectors -I$(CIAO_ROOT)/connectors/dds4ccm/idl
+              -I ..
 
   IDL_Files {
     PSL_DeadlineTest_ConnectorE.idl

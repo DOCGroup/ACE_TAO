@@ -1,3 +1,73 @@
+Thu Mar 18 08:58:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* MPC/config/dds4ccm.mpb:
+	  Added default includes
+
+	* connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.mpc
+	* connectors/dds4ccm/examples/Large_Deployment/Connector/Large_Connector.mpc
+	* connectors/dds4ccm/examples/Large_Deployment/DDS_Pub/DDS_Pub.mpc
+	* connectors/dds4ccm/examples/Large_Deployment/DDS_Sub/DDS_Sub.mpc
+	* connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.mpc
+	* connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.mpc
+	* connectors/dds4ccm/performance-tests/Keyed/Connector/Perf_Keyed_Test_Connector.mpc
+	* connectors/dds4ccm/performance-tests/Latency/Connector/Latency_Test_Connector.mpc
+	* connectors/dds4ccm/performance-tests/Latency/Sender/Latency_Test_Sender_exec.cpp
+	* connectors/dds4ccm/performance-tests/LatencyTT/Connector/LatencyTT_Test_Connector.mpc
+	* connectors/dds4ccm/performance-tests/LatencyTT/SecConnector/LatencyTT_TestSec_Connector.mpc
+	* connectors/dds4ccm/tests/CoherentUpdater/Connector/CoherentUpdate_Test_Connector.mpc
+	* connectors/dds4ccm/tests/CoherentWriter/Connector/CoherentWrite_Test_Connector.mpc
+	* connectors/dds4ccm/tests/CSLDeadline/Connector/CSL_DeadlineTest_Connector.mpc
+	* connectors/dds4ccm/tests/CSLQoS/Connector/CSL_QoSTest_Connector.mpc
+	* connectors/dds4ccm/tests/CSLSampleRejected/Connector/CSL_SRTest_Connector.mpc
+	* connectors/dds4ccm/tests/CSLUnexpStat/Connector/CSL_USTest_Connector.mpc
+	* connectors/dds4ccm/tests/DDSWriterEntity/Connector/Writer_Connector.mpc
+	* connectors/dds4ccm/tests/DoubleNestedModule/Connector/DNM_Connector.mpc
+	* connectors/dds4ccm/tests/Event_Connection_Test/Connector/Event_Connection_Test_Connector.mpc
+	* connectors/dds4ccm/tests/FixedSizeStruct/EventConnector/Connector/FSS_Event_Connector.mpc
+	* connectors/dds4ccm/tests/FixedSizeStruct/StateConnector/Connector/FSS_State_Connector.mpc
+	* connectors/dds4ccm/tests/Getter/Connector/Getter_Test_Connector.mpc
+	* connectors/dds4ccm/tests/InstanceHandle/Connector/Writer_Connector.mpc
+	* connectors/dds4ccm/tests/KeyedSamples/Connector/Keyed_Test_Connector.mpc
+	* connectors/dds4ccm/tests/KeyedWriter/Connector/Writer_Connector.mpc
+	* connectors/dds4ccm/tests/ListenManyByMany/Connector/LMBM_Test_Connector.mpc
+	* connectors/dds4ccm/tests/ListenNotEnabled/Connector/LNE_Test_Connector.mpc
+	* connectors/dds4ccm/tests/ListenOneByOne/Connector/LOBO_Test_Connector.mpc
+	* connectors/dds4ccm/tests/NoModule/NoModule_Connector.mpc
+	* connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector.mpc
+	* connectors/dds4ccm/tests/On_Inconsistent_Topic/Connector/ConnectorStatusListener_Test_Connector.mpc
+	* connectors/dds4ccm/tests/On_Inconsistent_Topic/SecConnector/ConnectorStatusListener_TestSec_Connector.mpc
+	* connectors/dds4ccm/tests/PSLDeadline/Connector/PSL_DeadlineTest_Connector.mpc
+	* connectors/dds4ccm/tests/PSLSampleLost/Connector/PSL_SampleLost_Connector.mpc
+	* connectors/dds4ccm/tests/QueryFilter/Connector/QueryFilter_Test_Connector.mpc
+	* connectors/dds4ccm/tests/Reader/Connector/Reader_Test_Connector.mpc
+	* connectors/dds4ccm/tests/SetConnectorAttributes/Connector/SetConnectorAttribute_Connector.mpc
+	* connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector1/Connector1.mpc
+	* connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector2/Connector2.mpc
+	* connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector3/Connector3.mpc
+	* connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Connector/Connector.mpc
+	* connectors/dds4ccm/tests/SLDisabled/Connector/SL_Disabled_Connector.mpc
+	* connectors/dds4ccm/tests/SLManyByMany/Connector/SL_ManyByMany_Connector.mpc
+	* connectors/dds4ccm/tests/SLOneByOne/Connector/SLOneByOne_Connector.mpc
+	* connectors/dds4ccm/tests/State_Connection_Test/Connector/State_Connection_Test_Connector.mpc
+	* connectors/dds4ccm/tests/TwoTopics/Connector/TwoTopics_Connector.mpc
+	* connectors/dds4ccm/tests/TwoTopicsDifferentNs/Connector/Connector.mpc
+	* connectors/dds4ccm/tests/UnkeyedSamples/Connector/Unkeyed_Test_Connector.mpc
+	* connectors/dds4ccm/tests/UnkeyedWriter/Connector/Writer_Connector.mpc
+	* connectors/dds4ccm/tests/Updater/Connector/Updater_Connector.mpc
+	* connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Array/VT_Array_Connector.mpc
+	* connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Seq/VT_Seq_Connector.mpc
+	* connectors/dds4ccm/tests/VariousTopicsEvent/Conn_String/VT_String_Connector.mpc
+	* connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Union/VT_Union_Connector.mpc
+	* connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Valuetype/VT_Valuetype_Connector.mpc
+	* connectors/dds4ccm/tests/VariousTopicsEvent/Connector/VTopic_Connector.mpc
+	* connectors/dds4ccm/tests/VariousTopicsState/Conn_Array/VTS_Array_Connector.mpc
+	* connectors/dds4ccm/tests/VariousTopicsState/Conn_Seq/VTS_Seq_Connector.mpc
+	* connectors/dds4ccm/tests/VariousTopicsState/Conn_String/VTS_String_Connector.mpc
+	* connectors/dds4ccm/tests/VariousTopicsState/Conn_Union/VTS_Union_Connector.mpc
+	* connectors/dds4ccm/tests/VariousTopicsState/Conn_Valuetype/VTS_Valuetype_Connector.mpc
+	* connectors/dds4ccm/tests/VariousTopicsState/Connector/VTopics_Connector.mpc
+	  Simplified these projects
+
 Wed Mar 17 07:46:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DDS_Read_T.cpp:

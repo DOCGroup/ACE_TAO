@@ -28,9 +28,9 @@ project(Large_DDS_Sub_lem_gen) : ciaoidldefaults , dds4ccm  {
   }
 }
 
-project(Large_DDS_Sub_lem_stub) : ccm_svnt , dds4ccm_base  {
+project(Large_DDS_Sub_lem_stub) : ccm_svnt, dds4ccm_base  {
   after += Large_DDS_Sub_lem_gen Large_DDS_Sub_stub Large_Deployment_stub
-  libs  +=  DDS_Sub_stub Large_Deployment_stub 
+  libs  +=  DDS_Sub_stub Large_Deployment_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -54,7 +54,7 @@ project(Large_DDS_Sub_lem_stub) : ccm_svnt , dds4ccm_base  {
   }
 }
 
-project(Large_DDS_Sub_stub) : ccm_stub , dds4ccm_base  {
+project(Large_DDS_Sub_stub) : ccm_stub, dds4ccm_base  {
   after += Large_DDS_Sub_idl_gen Large_Deployment_stub
   libs  += Large_Deployment_stub
   libpaths += ../lib
@@ -80,7 +80,7 @@ project(Large_DDS_Sub_stub) : ccm_stub , dds4ccm_base  {
   }
 }
 
-project(Large_DDS_Sub_exec) : ciao_executor , dds4ccm_base  {
+project(Large_DDS_Sub_exec) : ciao_executor, dds4ccm_base  {
   after   += Large_DDS_Sub_lem_stub Large_DDS_Sub_stub Large_Connector_stub
   sharedname = DDS_Sub_exec
   libs += DDS_Sub_stub DDS_Sub_lem_stub Large_Deployment_stub Large_Connector_stub
@@ -106,7 +106,7 @@ project(Large_DDS_Sub_exec) : ciao_executor , dds4ccm_base  {
 }
 
 
-project(Large_DDS_Sub_svnt) : ciao_servant , dds4ccm_base  {
+project(Large_DDS_Sub_svnt) : ciao_servant, dds4ccm_base  {
   after      +=   Large_DDS_Sub_lem_stub Large_Connector_stub
   sharedname  = DDS_Sub_svnt
   libs       += DDS_Sub_stub DDS_Sub_lem_stub  Large_Deployment_stub Large_Connector_stub
@@ -114,7 +114,7 @@ project(Large_DDS_Sub_svnt) : ciao_servant , dds4ccm_base  {
   libout = ../lib
   includes += ..
   dynamicflags = DDS_SUB_SVNT_BUILD_DLL
-  
+
   IDL_Files {
   }
 

@@ -24,7 +24,7 @@ project(DDS_FSS_Event_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   idlflags += -Wb,stub_export_macro=FIXED_SIZE_STRUCT_EVENT_CONNECTOR_LEM_STUB_Export \
               -Wb,stub_export_include=FSS_Event_Connector_lem_stub_export.h \
               -SS -Gxhst \
-              -I .. -I $(CIAO_ROOT)/connectors -I$(CIAO_ROOT)/connectors/dds4ccm/idl
+              -I ..
 
   IDL_Files {
     FSS_Event_ConnectorE.idl
