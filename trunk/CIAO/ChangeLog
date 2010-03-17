@@ -1,8 +1,13 @@
+Wed Mar 17 07:46:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DDS_Read_T.cpp:
+          Fixed compile issues for State connectors.
+
 Tue Mar 16 15:50:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ciao/Logger/Log_Macros.h
-	* DAnCE/Logger/Log_Macros.h
-	  Fixed enable/disable macros
+        * ciao/Logger/Log_Macros.h
+        * DAnCE/Logger/Log_Macros.h
+          Fixed enable/disable macros
 
 Tue Mar 16 11:39:20 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
