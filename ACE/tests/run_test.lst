@@ -114,6 +114,7 @@ Logging_Strategy_Test: !LynxOS !STATIC !ST
 Manual_Event_Test
 MEM_Stream_Test: !VxWorks !nsk !ACE_FOR_TAO !PHARLAP !QNX !LynxOS
 MM_Shared_Memory_Test: !Unicos !VxWorks !nsk !ACE_FOR_TAO
+MT_NonBlocking_Connect_Test: !ST
 MT_Reactor_Timer_Test
 MT_Reactor_Upcall_Test: !nsk
 MT_Reference_Counted_Event_Handler_Test: !OpenVMS_IA64Crash

@@ -1,3 +1,30 @@
+Wed Mar 17 11:58:10 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        Committed the changes that I had to revert before x.7.7.
+
+        * ace/Strategies_T.cpp:
+          Changed the code so that close() is called in case of failure
+          instead of destroy().
+
+        * ace/Connector.cpp:
+        * ace/Connector.h:
+          Changed the fix for bug#3731. Now NBCH adds a reference in
+          constructor and removes it in destructor if the SVC_HANDLER that
+          it owns is reference counted. This is a cleaner solution than the
+          one used before.
+
+        * tests/NonBlocking_Conn_Test.h:
+        * tests/Process_Strategy_Test.cpp:
+        * tests/NonBlocking_Conn_Test.cpp:
+          Extended NonBlocking_Conn_Test and changed Process_Strategy_Test
+          because of the change in Strategies_T.cpp.
+
+        * tests/MT_NonBlocking_Connect_Test.cpp:
+        * tests/tests.mpc:
+        * tests/run_test.lst:
+          Added a new test. This can be a reproducer for the bug#3731 which
+          currently doesn't have its own test.
+
 Wed Mar 17 08:57:30 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * ace/Service_Gestalt.h:

@@ -24,6 +24,7 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::ACE_NonBlocking_Connect_Handler
  long id)
   : connector_ (connector)
   , svc_handler_ (sh)
+  , cleanup_svc_handler_ (0)
   , timer_id_ (id)
 {
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::ACE_NonBlocking_Connect_Handler");
@@ -31,8 +32,25 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::ACE_NonBlocking_Connect_Handler
   this->reference_counting_policy ().value
     (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 
-  if (this->svc_handler_ != 0)
-    this->svc_handler_->add_reference ();
+  if (this->svc_handler_ != 0 &&
+      this->svc_handler_->reference_counting_policy ().value () ==
+        ACE_Event_Handler::Reference_Counting_Policy::ENABLED)
+    {
+      // If SVC_HANDLER is reference counted then NBCH holds a reference
+      // in cleanup_svc_handle_ which is both a pointer to SVC_HANDLER
+      // and a flag that triggers remove_reference in NBCH destructor.
+      this->cleanup_svc_handler_ = sh;
+      this->cleanup_svc_handler_->add_reference ();
+    }
+}
+
+template <class SVC_HANDLER>
+ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::~ACE_NonBlocking_Connect_Handler (void)
+{
+  if (this->cleanup_svc_handler_)
+    {
+      this->cleanup_svc_handler_->remove_reference ();
+    }
 }
 
 template <class SVC_HANDLER> SVC_HANDLER *
@@ -132,9 +150,6 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_timeout
     svc_handler->handle_close (svc_handler->get_handle (),
                                ACE_Event_Handler::TIMER_MASK);
 
-  if (svc_handler != 0)
-    svc_handler->remove_reference ();
-
   return retval;
 }
 
@@ -153,8 +168,6 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_input (ACE_HANDLE)
   if (svc_handler != 0)
     {
       svc_handler->close (NORMAL_CLOSE_OPERATION);
-
-      svc_handler->remove_reference ();
     }
 
   return retval;
@@ -174,8 +187,6 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_output (ACE_HANDLE handle)
   if (svc_handler != 0)
     {
       connector.initialize_svc_handler (handle, svc_handler);
-
-      svc_handler->remove_reference ();
     }
 
   return retval;
