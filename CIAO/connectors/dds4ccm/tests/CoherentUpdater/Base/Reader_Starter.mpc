@@ -28,7 +28,7 @@ project(DDS_Coh_Update_ReaderStarter_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(DDS_Coh_Update_ReaderStarter_lem_stub) : ccm_svnt, dds4ccm_base  {
+project(DDS_Coh_Update_ReaderStarter_lem_stub) : ccm_svnt, dds4ccm_base {
   after += DDS_Coh_Update_ReaderStarter_lem_gen DDS_Coh_Update_ReaderStarter_stub
   libs  += Reader_Starter_stub
   libpaths += ../lib

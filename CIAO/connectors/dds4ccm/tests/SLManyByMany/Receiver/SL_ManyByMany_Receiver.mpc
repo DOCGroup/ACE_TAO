@@ -29,7 +29,7 @@ project(DDS_SL_ManyByMany_Receiver_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(DDS_SL_MBM_Receiver_lem_stub) : ccm_svnt, dds4ccm_base  {
+project(DDS_SL_MBM_Receiver_lem_stub) : ccm_svnt, dds4ccm_base {
   after += DDS_SL_ManyByMany_Receiver_lem_gen DDS_SL_ManyByMany_Receiver_stub  DDS_SL_ManyByMany_Connector_stub DDS_SL_ManyByMany_Base_stub
   libs  +=  Receiver_stub DDS_SL_ManyByMany_Connector_stub DDS_SL_ManyByMany_Base_stub
   libpaths += ../lib

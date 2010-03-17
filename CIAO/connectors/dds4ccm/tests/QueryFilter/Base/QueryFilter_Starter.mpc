@@ -28,7 +28,7 @@ project(DDS_QueryFilter_Starter_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(DDS_QueryFilter_Starter_lem_stub) : ccm_svnt, dds4ccm_base  {
+project(DDS_QueryFilter_Starter_lem_stub) : ccm_svnt, dds4ccm_base {
   after += DDS_QueryFilter_Starter_lem_gen DDS_QueryFilter_Starter_stub
   libs  += QueryFilter_Starter_stub
   libpaths += ../lib
