@@ -122,7 +122,7 @@ class CTestEventHandler : public ICustomEventHandler
         /// Default constructor.
         ///
         /// @return
-        CTestEventHandler(int* p_iCallCount)
+        CTestEventHandler(long* p_iCallCount)
         : m_p_iCallCount(p_iCallCount)
         {
             ACE_DEBUG((LM_DEBUG, ACE_TEXT("%I(%t) Initializing test event handler.\n")));
@@ -142,7 +142,7 @@ class CTestEventHandler : public ICustomEventHandler
         /// @param p_vParameter
         virtual int operator() (void* p_vParameter)
         {
-            int iParameter = (int) p_vParameter;
+            long iParameter = (long) p_vParameter;
 
             ACE_DEBUG((LM_DEBUG,
                        ACE_TEXT("%I(%t) Incrementing test event handler call count by %d.\n"),
@@ -158,7 +158,7 @@ class CTestEventHandler : public ICustomEventHandler
 
     private:
 
-        int* m_p_iCallCount;
+        long* m_p_iCallCount;
         ACE_Thread_Mutex m_Mutex;
 };
 
@@ -184,7 +184,7 @@ run_main (int, ACE_TCHAR *[])
     // Single timer
     {
         // Create a test event handler
-        int iCallCount = 0;
+        long iCallCount = 0;
         CTestEventHandler* p_TestEventHandler = 0;
         ACE_NEW_RETURN(p_TestEventHandler, CTestEventHandler(&iCallCount), -1);
 
@@ -206,7 +206,7 @@ run_main (int, ACE_TCHAR *[])
     // Single timer with cancellation
     {
         // Create a test event handler
-        int iCallCount = 0;
+        long iCallCount = 0;
         CTestEventHandler* p_TestEventHandler = 0;
         ACE_NEW_RETURN(p_TestEventHandler, CTestEventHandler(&iCallCount), -1);
 
@@ -233,7 +233,7 @@ run_main (int, ACE_TCHAR *[])
     // Repeating timer with cancellation
     {
         // Create a test event handler
-        int iCallCount = 0;
+        long iCallCount = 0;
         CTestEventHandler* p_TestEventHandler = 0;
         ACE_NEW_RETURN(p_TestEventHandler, CTestEventHandler(&iCallCount), -1);
 
@@ -262,7 +262,7 @@ run_main (int, ACE_TCHAR *[])
     // Multiple timers
     {
         // Create a test event handler
-        int iCallCount = 0;
+        long iCallCount = 0;
         CTestEventHandler* p_TestEventHandler = 0;
         ACE_NEW_RETURN(p_TestEventHandler, CTestEventHandler(&iCallCount), -1);
 
