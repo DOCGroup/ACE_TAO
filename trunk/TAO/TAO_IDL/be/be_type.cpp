@@ -258,8 +258,8 @@ be_type::gen_common_varout (TAO_OutStream *os)
 
   *os << be_nl << be_nl
       << "typedef" << be_idt_nl
-      << (st == AST_Type::FIXED ? "TAO_Fixed_Var_T<"
-                                : "TAO_Var_Var_T<")
+      << (st == AST_Type::FIXED ? "::TAO_Fixed_Var_T<"
+                                : "::TAO_Var_Var_T<")
       << be_idt << be_idt_nl
       << this->local_name () << be_uidt_nl
       << ">" << be_uidt_nl
@@ -274,7 +274,7 @@ be_type::gen_common_varout (TAO_OutStream *os)
   else
     {
       *os << "typedef" << be_idt_nl
-          << "TAO_Out_T<" << be_idt << be_idt_nl
+          << "::TAO_Out_T<" << be_idt << be_idt_nl
           << this->local_name () << be_uidt_nl
           << ">" << be_uidt_nl
           << this->local_name () << "_out;" << be_uidt;
