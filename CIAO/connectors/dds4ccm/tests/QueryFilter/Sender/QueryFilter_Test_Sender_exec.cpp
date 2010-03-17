@@ -68,7 +68,7 @@ namespace CIAO_QueryFilter_Test_Sender_Impl
   void
   Sender_exec_i::start (void)
   {
-    if (!CORBA::is_nil (this->starter_))
+    if (! ::CORBA::is_nil (this->starter_))
       {
         this->starter_->set_reader_properties (this->keys_, this->iterations_);
       }

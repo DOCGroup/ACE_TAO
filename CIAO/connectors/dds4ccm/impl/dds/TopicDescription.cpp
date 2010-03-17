@@ -54,7 +54,7 @@ namespace CIAO
         }
 #else
       ::DDS::DomainParticipant_var p = this->impl ()->get_participant ();
-      if (!CORBA::is_nil (p.in ()))
+      if (! ::CORBA::is_nil (p.in ()))
         {
           ACE_NEW_THROW_EX (retval,
                             CCM_DDS_DomainParticipant_i (p.in ()),

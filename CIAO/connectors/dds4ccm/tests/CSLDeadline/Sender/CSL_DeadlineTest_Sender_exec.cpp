@@ -52,7 +52,7 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
     const DDS::OfferedDeadlineMissedStatus & status)
   {
     this->thread_id_ = ACE_Thread::self ();
-    if(status.last_instance_handle.isValid && !CORBA::is_nil (the_writer))
+    if(status.last_instance_handle.isValid && ! ::CORBA::is_nil (the_writer))
       {
         this->deadline_missed_ = true;
       }
@@ -119,7 +119,7 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
       {
         try
           {
-            if (!CORBA::is_nil (this->writer_) )
+            if (! ::CORBA::is_nil (this->writer_) )
             {
               ACE_OS::sleep (2);
               ::DDS::InstanceHandle_t hnd = this->writer_->register_instance (i->second);

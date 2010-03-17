@@ -80,7 +80,7 @@ namespace CIAO_Reader_Test_Sender_Impl
     if (!this->done_ && this->ccm_activated_)
       {
         this->done_ = true;
-        if (!CORBA::is_nil (this->starter_))
+        if (! ::CORBA::is_nil (this->starter_))
           {
             this->starter_->set_reader_properties (this->keys_, this->iterations_);
             this->starter_->read_no_data ();

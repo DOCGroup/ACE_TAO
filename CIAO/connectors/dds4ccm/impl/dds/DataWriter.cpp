@@ -51,8 +51,7 @@ namespace CIAO
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_DataWriterQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
-      ::DDS::ReturnCode_t retcode =
-            this->impl()->get_qos (ccm_dds_qos);
+      ::DDS::ReturnCode_t retcode = this->impl()->get_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
 #else
@@ -64,18 +63,14 @@ namespace CIAO
     CCM_DDS_DataWriter_i::set_listener (::DDS::DataWriterListener_ptr a_listener,
                                     ::DDS::StatusMask mask)
     {
-#if (CIAO_DDS4CCM_NDDS==1)
       CCM_DDS_DataWriterListener_i* ccm_dds_impl_list = 0;
-      if (!CORBA::is_nil (a_listener))
+      if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_impl_list,
                             CCM_DDS_DataWriterListener_i (a_listener),
                             CORBA::NO_MEMORY ());
         }
       return this->impl ()->set_listener (ccm_dds_impl_list, mask);
-#else
-      return this->impl ()->set_listener (a_listener, mask);
-#endif
     }
 
     ::DDS::DataWriterListener_ptr

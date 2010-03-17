@@ -28,7 +28,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
   const char* profile_name)
 {
   DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
-  if (CORBA::is_nil  (this->data_writer_.in ()))
+  if (::CORBA::is_nil  (this->data_writer_.in ()))
     {
       try
         {
@@ -72,7 +72,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::activate ()
   DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::activate");
   try
     {
-      if (CORBA::is_nil (this->data_listener_.in ()))
+      if (::CORBA::is_nil (this->data_listener_.in ()))
         {
           ACE_NEW_THROW_EX (this->data_listener_,
                             DataWriterListener (),

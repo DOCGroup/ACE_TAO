@@ -33,7 +33,7 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
 
   try
     {
-      if (CORBA::is_nil (this->data_reader_.in ()))
+      if (::CORBA::is_nil (this->data_reader_.in ()))
         {
           ::DDS::DataReader_var reader;
           if (library_name && profile_name)
@@ -79,7 +79,7 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE>::activate (
 
   try
     {
-      if (CORBA::is_nil (this->data_listener_.in ()))
+      if (::CORBA::is_nil (this->data_listener_.in ()))
         {
           ACE_NEW_THROW_EX (this->data_listener_,
                             DataReaderStateListener (

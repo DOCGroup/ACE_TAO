@@ -50,7 +50,7 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
   {
     this->thread_id_ = ACE_Thread::self ();
     if (status.last_reason == DDS::REJECTED_BY_INSTANCES_LIMIT &&
-        !CORBA::is_nil(the_reader))
+        ! ::CORBA::is_nil(the_reader))
       {
         this->rejected_ = true;
       }
@@ -156,7 +156,7 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
   void
   Receiver_exec_i::read_all (void)
   {
-    if (CORBA::is_nil (this->reader_.in ()))
+    if (::CORBA::is_nil (this->reader_.in ()))
       {
         return;
       }
@@ -269,7 +269,7 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
     ::CCM_DDS::DataListenerControl_var lc =
     this->context_->get_connection_info_out_data_control ();
 
-    if (CORBA::is_nil (lc.in ()))
+    if (::CORBA::is_nil (lc.in ()))
       {
         ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw CORBA::INTERNAL ();

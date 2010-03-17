@@ -46,7 +46,7 @@ namespace CIAO_SL_OneByOne_Sender_Impl
     TestTopic i = this->topic_seq_one_[0];
     try
       {
-        if (!CORBA::is_nil (this->updater_) )
+        if (! ::CORBA::is_nil (this->updater_) )
           {
             this->updater_->create_one(i);
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("SL_OneByOne: create_one with instance key <%C>\n"),

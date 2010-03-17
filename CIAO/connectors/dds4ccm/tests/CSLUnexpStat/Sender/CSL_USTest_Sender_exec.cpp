@@ -99,27 +99,27 @@ namespace CIAO_CSL_USTest_Sender_Impl
                           "received <%C>\n",
                           CIAO::DDS4CCM::translate_statuskind (status_kind)));
 
-    if (!CORBA::is_nil (the_entity) && status_kind == DDS::SUBSCRIPTION_MATCHED_STATUS)
+    if (! ::CORBA::is_nil (the_entity) && status_kind == DDS::SUBSCRIPTION_MATCHED_STATUS)
       {
         this->subscription_matched_received_ = true;
         this->thread_id_subcription_matched_ = ACE_Thread::self ();
       }
-    else if (!CORBA::is_nil(the_entity) && status_kind == DDS::LIVELINESS_CHANGED_STATUS)
+    else if (! ::CORBA::is_nil(the_entity) && status_kind == DDS::LIVELINESS_CHANGED_STATUS)
       {
         this->liveliness_changed_received_ = true;
         this->thread_id_liveliness_changed_ = ACE_Thread::self ();
       }
-    else if (!CORBA::is_nil(the_entity) && status_kind == DDS::LIVELINESS_LOST_STATUS)
+    else if (! ::CORBA::is_nil(the_entity) && status_kind == DDS::LIVELINESS_LOST_STATUS)
       {
         this->liveliness_lost_received_ = true;
         this->thread_id_liveliness_lost_ = ACE_Thread::self ();
       }
-    else if (!CORBA::is_nil(the_entity) && status_kind == DDS::PUBLICATION_MATCHED_STATUS)
+    else if (! ::CORBA::is_nil(the_entity) && status_kind == DDS::PUBLICATION_MATCHED_STATUS)
       {
         this->publication_matched_received_ = true;
         this->thread_id_publication_matched_ = ACE_Thread::self ();
       }
-    else if (!CORBA::is_nil(the_entity) && status_kind == DDS::RELIABLE_READER_ACTIVITY_CHANGED_STATUS)
+    else if (! ::CORBA::is_nil(the_entity) && status_kind == DDS::RELIABLE_READER_ACTIVITY_CHANGED_STATUS)
       {
         this->reliable_dr_activity_changed_received_ = true;
         this->thread_id_reliable_dr_activity_changed_ = ACE_Thread::self ();
@@ -170,7 +170,7 @@ namespace CIAO_CSL_USTest_Sender_Impl
       {
         try
           {
-            if (!CORBA::is_nil (this->writer_))
+            if (! ::CORBA::is_nil (this->writer_))
               {
                 this->writer_->write_one(i->second,::DDS::HANDLE_NIL);
                 ACE_DEBUG ((LM_DEBUG, "Written sample: <%C> - <%d>\n",

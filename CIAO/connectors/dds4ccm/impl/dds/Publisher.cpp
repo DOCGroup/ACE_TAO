@@ -54,7 +54,7 @@ namespace CIAO
         }
 
       DDSDataWriterListener *ccm_dds_drl = 0;
-      if (!CORBA::is_nil (a_listener))
+      if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_drl,
                             CCM_DDS_DataWriterListener_i (a_listener),
@@ -114,7 +114,7 @@ namespace CIAO
         }
 
       DDSDataWriterListener *ccm_dds_drl = 0;
-      if (!CORBA::is_nil (a_listener))
+      if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_drl,
                             CCM_DDS_DataWriterListener_i (a_listener),
@@ -244,7 +244,7 @@ namespace CIAO
 
 #if (CIAO_DDS4CCM_NDDS==1)
       CCM_DDS_PublisherListener_i *ccm_dds_impl_list  = 0;
-      if (!CORBA::is_nil (a_listener))
+      if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_impl_list,
                             CCM_DDS_PublisherListener_i (a_listener),

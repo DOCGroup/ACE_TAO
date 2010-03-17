@@ -98,12 +98,12 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
     ::DDS::DataReader_ptr the_reader,
     const ::DDS::RequestedDeadlineMissedStatus & status)
   {
-    if (this->port_nr_ == 1 && !CORBA::is_nil( the_reader) && status.total_count!= 0)
+    if (this->port_nr_ == 1 && ! ::CORBA::is_nil( the_reader) && status.total_count!= 0)
       {
         this->deadline_port_1_ = true;
         this->thread_id_1_ = ACE_Thread::self ();
       }
-    if (this->port_nr_ == 2 && !CORBA::is_nil (the_reader) && status.total_count!= 0)
+    if (this->port_nr_ == 2 && ! ::CORBA::is_nil (the_reader) && status.total_count!= 0)
       {
         this->deadline_port_2_ = true;
         this->thread_id_2_ = ACE_Thread::self ();
@@ -138,7 +138,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
   void
   Receiver_exec_i::read_all (void)
   {
-    if (CORBA::is_nil (this->reader_.in ()))
+    if (::CORBA::is_nil (this->reader_.in ()))
       {
         return;
       }
@@ -225,7 +225,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
     ::CCM_DDS::DataListenerControl_var lc =
     this->context_->get_connection_info_out_data_control ();
 
-    if (CORBA::is_nil (lc.in ()))
+    if (::CORBA::is_nil (lc.in ()))
       {
         ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw CORBA::INTERNAL ();

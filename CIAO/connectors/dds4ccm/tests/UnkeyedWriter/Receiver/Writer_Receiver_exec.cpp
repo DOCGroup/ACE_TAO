@@ -123,7 +123,7 @@ namespace CIAO_Writer_Receiver_Impl
     ::CCM_DDS::DataListenerControl_var lc =
     this->context_->get_connection_info_out_data_control ();
 
-    if (CORBA::is_nil (lc.in ()))
+    if (::CORBA::is_nil (lc.in ()))
       {
         ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw CORBA::INTERNAL ();

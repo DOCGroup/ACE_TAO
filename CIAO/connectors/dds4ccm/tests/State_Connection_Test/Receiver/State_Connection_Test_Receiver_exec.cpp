@@ -109,44 +109,44 @@ namespace CIAO_State_Connection_Test_Receiver_Impl
     //DDS_Read
     this->reader_data_ =
       this->context_->get_connection_info_read_data ();
-    this->reader_data_ok_ = !CORBA::is_nil (this->reader_data_);
+    this->reader_data_ok_ = ! ::CORBA::is_nil (this->reader_data_);
 
     this->reader_dds_entity_ =
       this->context_->get_connection_info_read_dds_entity ();
-    this->reader_dds_entity_ok_ = !CORBA::is_nil (this->reader_dds_entity_);
+    this->reader_dds_entity_ok_ = ! ::CORBA::is_nil (this->reader_dds_entity_);
 
     //DDS_Get
     this->getter_data_ =
       this->context_->get_connection_info_get_data ();
-    this->getter_data_ok_ = !CORBA::is_nil (this->getter_data_);
+    this->getter_data_ok_ = ! ::CORBA::is_nil (this->getter_data_);
     this->getter_fresh_data_ =
       this->context_->get_connection_info_get_fresh_data ();
-    this->getter_fresh_data_ok_ = !CORBA::is_nil (this->getter_fresh_data_);
+    this->getter_fresh_data_ok_ = ! ::CORBA::is_nil (this->getter_fresh_data_);
     this->getter_dds_entity_ =
       this->context_->get_connection_info_get_dds_entity ();
-    this->getter_dds_entity_ok_ = !CORBA::is_nil (this->getter_dds_entity_);
+    this->getter_dds_entity_ok_ = ! ::CORBA::is_nil (this->getter_dds_entity_);
 
     //DDS_Listen
     this->listen_data_ =
       this->context_->get_connection_info_listen_data ();
-    this->listen_data_ok_ = !CORBA::is_nil (this->listen_data_);
+    this->listen_data_ok_ = ! ::CORBA::is_nil (this->listen_data_);
     this->listen_data_control_ =
       this->context_->get_connection_info_listen_data_control ();
-    this->listen_data_control_ok_ = !CORBA::is_nil (this->listen_data_control_);
+    this->listen_data_control_ok_ = ! ::CORBA::is_nil (this->listen_data_control_);
     this->listen_dds_entity_ =
       this->context_->get_connection_info_listen_dds_entity ();
-    this->listen_dds_entity_ok_ = !CORBA::is_nil (this->listen_dds_entity_);
+    this->listen_dds_entity_ok_ = ! ::CORBA::is_nil (this->listen_dds_entity_);
 
     //DDS_StateListen
     this->statelisten_data_ =
       this->context_->get_connection_info_statelisten_data ();
-    this->statelisten_data_ok_ = !CORBA::is_nil (this->statelisten_data_);
+    this->statelisten_data_ok_ = ! ::CORBA::is_nil (this->statelisten_data_);
     this->statelisten_data_control_ =
       this->context_->get_connection_info_statelisten_data_control ();
-    this->statelisten_data_control_ok_ = !CORBA::is_nil (this->statelisten_data_control_);
+    this->statelisten_data_control_ok_ = ! ::CORBA::is_nil (this->statelisten_data_control_);
     this->statelisten_dds_entity_ =
       this->context_->get_connection_info_statelisten_dds_entity ();
-    this->statelisten_dds_entity_ok_ = !CORBA::is_nil (this->statelisten_dds_entity_);
+    this->statelisten_dds_entity_ok_ = ! ::CORBA::is_nil (this->statelisten_dds_entity_);
   }
 
   void

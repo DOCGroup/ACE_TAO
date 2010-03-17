@@ -59,7 +59,7 @@ namespace CIAO
         }
 #else
       ::DDS::StatusCondition_var sc = this->impl ()->get_statuscondition ();
-      if (!CORBA::is_nil (sc.in ()))
+      if (! ::CORBA::is_nil (sc.in ()))
         {
           ACE_NEW_THROW_EX (retval,
                             CCM_DDS_StatusCondition_i (sc.in ()),
@@ -105,7 +105,7 @@ namespace CIAO
         }
 #else
       ::DDS::ReadCondition_var rc = this->impl ()->create_readcondition (sample_states, view_states, instance_states);
-      if (!CORBA::is_nil (rc.in ()))
+      if (! ::CORBA::is_nil (rc.in ()))
         {
           ACE_NEW_THROW_EX (retval,
                             CCM_DDS_StatusCondition_i (sc.in ()),
@@ -148,7 +148,7 @@ namespace CIAO
                                      query_expression,
                                      query_parameters);
 
-      if (!CORBA::is_nil (qc.in ()))
+      if (! ::CORBA::is_nil (qc.in ()))
         {
           ACE_NEW_THROW_EX (retval,
                             CCM_DDS_QueryCondition_i (qc.in ()),
@@ -216,7 +216,7 @@ namespace CIAO
 
 #if (CIAO_DDS4CCM_NDDS==1)
       CCM_DDS_DataReaderListener_i *ccm_dds_drl = 0;
-      if (!CORBA::is_nil (a_listener))
+      if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_drl,
                             CCM_DDS_DataReaderListener_i (a_listener),

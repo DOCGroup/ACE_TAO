@@ -140,7 +140,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::init_default_topic (void)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::init_default_topic");
 
-  if (CORBA::is_nil (this->topic_))
+  if (::CORBA::is_nil (this->topic_))
     {
       try
         {
@@ -195,7 +195,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::init_subscriber (void)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::init_subscriber");
 
-  if (CORBA::is_nil (this->subscriber_.in ()))
+  if (::CORBA::is_nil (this->subscriber_.in ()))
     {
       try
         {
@@ -233,7 +233,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::init_publisher (void)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::init_publisher");
 
-  if (CORBA::is_nil (this->publisher_.in ()))
+  if (::CORBA::is_nil (this->publisher_.in ()))
     {
       if (this->library_name_ && this->profile_name_)
         {
@@ -263,7 +263,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_default_topic (ACE_React
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::activate_default_topic");
   try
     {
-      if (CORBA::is_nil (this->topiclistener_.in ()))
+      if (::CORBA::is_nil (this->topiclistener_.in ()))
         {
           ACE_NEW_THROW_EX (this->topiclistener_,
                             TopicListener (
@@ -292,7 +292,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_subscriber (ACE_Reactor*
 
   try
     {
-      if (CORBA::is_nil (this->subscriber_listener_.in ()))
+      if (::CORBA::is_nil (this->subscriber_listener_.in ()))
         {
           ACE_NEW_THROW_EX (this->subscriber_listener_,
                             SubscriberListener (
@@ -321,7 +321,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_publisher (ACE_Reactor* 
 
   try
     {
-      if (CORBA::is_nil (this->publisher_listener_.in ()))
+      if (::CORBA::is_nil (this->publisher_listener_.in ()))
         {
           ACE_NEW_THROW_EX (this->publisher_listener_,
                             PublisherListener (

@@ -34,7 +34,7 @@ CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::on_inconsistent_topic (
               ACE_TEXT ("total count <%d> - total change <%d> - "),
               status.total_count, status.total_count_change));
 
-  if (!CORBA::is_nil (this->error_listener_.in ()))
+  if (! ::CORBA::is_nil (this->error_listener_.in ()))
     {
       if (this->reactor_)
         {
@@ -66,7 +66,7 @@ CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::TopicListener_T::get_mask");
 
-  if (!CORBA::is_nil (error_listener) || CIAO_debug_level >= 10)
+  if (! ::CORBA::is_nil (error_listener) || CIAO_debug_level >= 10)
     {
       return ::DDS::INCONSISTENT_TOPIC_STATUS;
     }

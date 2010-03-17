@@ -31,7 +31,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
 
   try
     {
-      if (CORBA::is_nil (this->data_reader_.in ()))
+      if (::CORBA::is_nil (this->data_reader_.in ()))
         {
           ::DDS::DataReader_var reader;
           if (profile_name && library_name)
@@ -77,7 +77,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::activate (
   DDS4CCM_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::activate");
   try
     {
-      if (CORBA::is_nil (this->status_.in ()))
+      if (::CORBA::is_nil (this->status_.in ()))
         {
           ACE_NEW_THROW_EX (this->status_,
                             PortStatusListener (listener, reactor),

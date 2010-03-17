@@ -1,3 +1,76 @@
+Thu Mar 18 10:12:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp
+	* connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp
+	* connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp
+	* connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.cpp
+	* connectors/dds4ccm/impl/dds/DataReader.cpp
+	* connectors/dds4ccm/impl/dds/DataReaderListener_T.cpp
+	* connectors/dds4ccm/impl/dds/DataReaderStateListener_T.cpp
+	* connectors/dds4ccm/impl/dds/DataWriter.cpp
+	* connectors/dds4ccm/impl/dds/DDS_Base_Connector_T.cpp
+	* connectors/dds4ccm/impl/dds/DDS_Get_T.cpp
+	* connectors/dds4ccm/impl/dds/DDS_Listen_T.cpp
+	* connectors/dds4ccm/impl/dds/DDS_Read_T.cpp
+	* connectors/dds4ccm/impl/dds/DDS_StateListen_T.cpp
+	* connectors/dds4ccm/impl/dds/DDS_TopicBase_Connector_T.cpp
+	* connectors/dds4ccm/impl/dds/DDS_Update_T.cpp
+	* connectors/dds4ccm/impl/dds/DDS_Write_T.cpp
+	* connectors/dds4ccm/impl/dds/DomainParticipant.cpp
+	* connectors/dds4ccm/impl/dds/DomainParticipantFactory.cpp
+	* connectors/dds4ccm/impl/dds/PortStatusListener_T.cpp
+	* connectors/dds4ccm/impl/dds/Publisher.cpp
+	* connectors/dds4ccm/impl/dds/PublisherListener_T.cpp
+	* connectors/dds4ccm/impl/dds/QueryCondition.cpp
+	* connectors/dds4ccm/impl/dds/Subscriber.cpp
+	* connectors/dds4ccm/impl/dds/SubscriberListener_T.cpp
+	* connectors/dds4ccm/impl/dds/Topic.cpp
+	* connectors/dds4ccm/impl/dds/TopicDescription.cpp
+	* connectors/dds4ccm/impl/dds/TopicListener_T.cpp
+	* connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender_exec.cpp
+	* connectors/dds4ccm/performance-tests/Latency/Sender/Latency_Test_Sender_exec.cpp
+	* connectors/dds4ccm/performance-tests/LatencyTT/Sender/LatencyTT_Test_Sender_exec.cpp
+	* connectors/dds4ccm/tests/CoherentUpdater/Sender/CoherentUpdate_Test_Sender_exec.cpp
+	* connectors/dds4ccm/tests/CoherentWriter/Sender/CoherentWrite_Test_Sender_exec.cpp
+	* connectors/dds4ccm/tests/CSLDeadline/Receiver/CSL_DeadlineTest_Receiver_exec.cpp
+	* connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender_exec.cpp
+	* connectors/dds4ccm/tests/CSLQoS/Receiver/CSL_QoSTest_Receiver_exec.cpp
+	* connectors/dds4ccm/tests/CSLQoS/Sender/CSL_QoSTest_Sender_exec.cpp
+	* connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver_exec.cpp
+	* connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender_exec.cpp
+	* connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.cpp
+	* connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.cpp
+	* connectors/dds4ccm/tests/DDSWriterEntity/Receiver/Writer_Receiver_exec.cpp
+	* connectors/dds4ccm/tests/Event_Connection_Test/Receiver/Event_Connection_Test_Receiver_exec.cpp
+	* connectors/dds4ccm/tests/Event_Connection_Test/Sender/Event_Connection_Test_Sender_exec.cpp
+	* connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.cpp
+	* connectors/dds4ccm/tests/KeyedWriter/Receiver/Writer_Receiver_exec.cpp
+	* connectors/dds4ccm/tests/On_Inconsistent_Topic/Receiver/ConnectorStatusListener_Test_Receiver_exec.cpp
+	* connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.cpp
+	* connectors/dds4ccm/tests/PSLDeadline/Sender/PSL_DeadlineTest_Sender_exec.cpp
+	* connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver_exec.cpp
+	* connectors/dds4ccm/tests/PSLSampleLost/Sender/PSL_SampleLost_Sender_exec.cpp
+	* connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.cpp
+	* connectors/dds4ccm/tests/QueryFilter/Sender/QueryFilter_Test_Sender_exec.cpp
+	* connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.cpp
+	* connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender_exec.cpp
+	* connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.cpp
+	* connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender_exec.cpp
+	* connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.cpp
+	* connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender_exec.cpp
+	* connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.cpp
+	* connectors/dds4ccm/tests/SLOneByOne/Sender/SL_OneByOne_Sender_exec.cpp
+	* connectors/dds4ccm/tests/State_Connection_Test/Receiver/State_Connection_Test_Receiver_exec.cpp
+	* connectors/dds4ccm/tests/State_Connection_Test/Sender/State_Connection_Test_Sender_exec.cpp
+	* connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver_exec.cpp
+	* connectors/dds4ccm/tests/UnkeyedWriter/Receiver/Writer_Receiver_exec.cpp
+	* connectors/dds4ccm/tests/Updater/Sender/Updater_Sender_exec.cpp
+	* connectors/dds4ccm/tests/VariousTopicsEvent/Receiver/VTopic_Receiver_exec.cpp
+	* connectors/dds4ccm/tests/VariousTopicsEvent/Sender/VTopic_Sender_exec.cpp
+	* connectors/dds4ccm/tests/VariousTopicsState/Receiver/VTopics_Receiver_exec.cpp
+	* connectors/dds4ccm/tests/VariousTopicsState/Sender/VTopics_Sender_exec.cpp
+	  Make sure we get the global CORBA namespace
+
 Thu Mar 18 09:42:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* connectors/dds4ccm/examples/Large_Deployment/Connector/Large_Connector.mpc

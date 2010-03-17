@@ -311,7 +311,7 @@ namespace CIAO_Quoter_Broker_Impl
     ::CCM_DDS::DataListenerControl_var lc =
     this->context_->get_connection_info_out_data_control ();
 
-    if (CORBA::is_nil (lc.in ()))
+    if (::CORBA::is_nil (lc.in ()))
       {
         ACE_DEBUG ((LM_DEBUG, "Error:  Listener control receptacle is null!\n"));
         throw CORBA::INTERNAL ();
