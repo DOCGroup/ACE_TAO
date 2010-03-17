@@ -5,6 +5,15 @@ USER VISIBLE CHANGES BETWEEN ACE-5.7.7 and ACE-5.7.8
   unsigned short, long, unsigned long, int, unsigned int,
   and bool. This makes our Atomic_Op around 7 times faster
 
+. ACE Service Configuration Framework now process first service
+  configuration files and then command-line directives. Thus if
+  application uses both service configuration files and command-line
+  directives then the command-line directives may override results of
+  directives in the configuration files. At the same time if the
+  application uses only the default svc.conf file and command-line
+  directives then the directives from svc.conf can not override
+  results of the user provided command-line directives.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.7.6 and ACE-5.7.7
 ====================================================
 

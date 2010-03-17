@@ -1,3 +1,18 @@
+Wed Mar 17 08:57:30 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/Service_Gestalt.h:
+        * ace/Service_Config.h:
+          Extended doxygen documentaion related to the order of processing
+          of command-line directives and service configuration files.
+
+        * ace/Service_Gestalt.cpp:
+          Changed the order of processing. First, service configuration files
+          are processed then command-line directive. This way default svc.conf
+          can not override results of user provided command-line directives.
+
+        * NEWS:
+          Added a news entry for this change.
+
 Mon Mar 15 20:08:32 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * ace/config-WinCE.h:

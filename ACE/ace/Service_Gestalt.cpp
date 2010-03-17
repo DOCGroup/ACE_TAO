@@ -1092,10 +1092,10 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
     result = -1;
   else
     {
-      if (this->process_commandline_directives () == -1)
+      if (this->process_directives (ignore_default_svc_conf_file) == -1)
         result = -1;
       else
-        result = this->process_directives (ignore_default_svc_conf_file);
+        result = this->process_commandline_directives ();
     }
 
 
