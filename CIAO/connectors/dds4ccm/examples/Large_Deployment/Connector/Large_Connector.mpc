@@ -2,6 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -l ../lib -o ../lib -b dds4ccm_base -u Large Large_Connector"
 
 project(Large_Connector_idl_gen) : connectoridldefaults , dds4ccm  {
+  after += DDS4CCM_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=LARGE_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=Large_Connector_stub_export.h \
@@ -85,7 +86,7 @@ project(Large_Connector_stub) : ccm_stub, dds4ccm_base  {
 project(Large_Connector_exec) : ciao_executor , dds4ccm_impl  {
   after   += Large_Connector_lem_stub Large_Connector_stub
   sharedname = Large_Connector_exec
-  libs += Large_Connector_stub Large_Connector_lem_stub
+  libs += Large_Connector_stub Large_Connector_lem_stub DDS4CCM_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
