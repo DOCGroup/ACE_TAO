@@ -145,11 +145,12 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
               ACE_DEFAULT_THREAD_PRIORITY));
 
 
+  RTScheduling::Current::IdType_var guid = this->current_->id ();
   IOP::ServiceContext* srv_con = new IOP::ServiceContext;
   srv_con->context_id = Client_Interceptor::SchedulingInfo;
   srv_con->context_data.length (sizeof (size_t));
   ACE_OS::memcpy (srv_con->context_data.get_buffer (),
-                  current_->id ()->get_buffer (),
+                  guid->get_buffer (),
                   sizeof (size_t));
   request_info->add_request_service_context (*srv_con,
                                              0);

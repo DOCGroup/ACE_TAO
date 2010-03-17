@@ -36,13 +36,14 @@ Test_Thread_Action::_cxx_do (CORBA::VoidData data)
 
   Data* tmp = (Data*) data;
   ACE_DEBUG ((LM_DEBUG,
-              "Test_Thread_Action::do %s\n",
+              "Test_Thread_Action::do %C\n",
               tmp->data.c_str ()));
 
   size_t count = 0;
+  RTScheduling::Current::IdType_var id = tmp->current->id ();
   ACE_OS::memcpy (&count,
-                  tmp->current->id ()->get_buffer (),
-                  tmp->current->id ()->length ());
+                  id->get_buffer (),
+                  id->length ());
 
   ACE_DEBUG ((LM_DEBUG,
               "The spawned DT Guid is %d\n",
@@ -58,7 +59,7 @@ Test_Thread_Action::_cxx_do (CORBA::VoidData data)
   for (unsigned int i = 0; i < segment_name_list->length (); i++)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%s\n",
-                  static_cast<char const*>((*segment_name_list) [i])));
+                  "%C\n",
+                  (*segment_name_list)[i].in ()));
     }
 }

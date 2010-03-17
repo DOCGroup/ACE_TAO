@@ -45,13 +45,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       "Invoking DT spawn without calling begin_scheduling_segment...\n"));
 
           ACE_CString data ("Harry Potter");
-          current->spawn (&thread_action,
-                          const_cast<char *> (data.c_str ()),
-                          name,
-                          sched_param,
-                          implicit_sched_param,
-                          0,
-                          0);
+          RTScheduling::DistributableThread_var dt =
+            current->spawn (&thread_action,
+                            const_cast<char *> (data.c_str ()),
+                            name,
+                            sched_param,
+                            implicit_sched_param,
+                            0,
+                            0);
         }
       catch (const CORBA::BAD_INV_ORDER& )
         {
@@ -71,9 +72,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                          implicit_sched_param);
 
       size_t count = 0;
+      RTScheduling::Current::IdType_var id = current->id ();
       ACE_OS::memcpy (&count,
-                      current->id ()->get_buffer (),
-                      current->id ()->length ());
+                      id->get_buffer (),
+                      id->length ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "The Current DT Guid is %d\n",
@@ -87,25 +89,27 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "Spawning a new DT...\n"));
       RTScheduling::DistributableThread_var dt =
-      current->spawn (&thread_action,
-                      &spawn_data,
-                      "Chamber of Secrets",
-                      sched_param,
-                      implicit_sched_param,
-                      0,
-                      0);
+        current->spawn (&thread_action,
+                        &spawn_data,
+                        "Chamber of Secrets",
+                        sched_param,
+                        implicit_sched_param,
+                        0,
+                        0);
 
       current->end_scheduling_segment (name);
       ACE_DEBUG ((LM_DEBUG,
                   "End - Scheduling Segment %d\n",
                   count));
+
+      ACE_Thread_Manager::instance ()->wait ();
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Caught Exception\n");
     }
-
-  ACE_Thread_Manager::instance ()->wait ();
 
   return 0;
 }

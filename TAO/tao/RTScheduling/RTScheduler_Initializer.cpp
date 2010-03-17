@@ -23,10 +23,8 @@ ACE_RCSID (TAO, RTScheduler_Initializer, "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-static TAO_RTScheduler_Current_var current_cleanup;
-
 void
- TAO_RTScheduler_ORB_Initializer::pre_init (
+TAO_RTScheduler_ORB_Initializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
   //
@@ -56,20 +54,20 @@ void
       throw ::CORBA::INTERNAL ();
     }
 
-
-  ACE_NEW_THROW_EX (this->current_,
+  TAO_RTScheduler_Current *tmp_current = 0;
+  ACE_NEW_THROW_EX (tmp_current,
                     TAO_RTScheduler_Current,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-
-  current_cleanup = this->current_;
+  this->current_ = tmp_current;
 
   this->current_->init (tao_info->orb_core ());
 
-  CORBA::Object_var current_obj = RTScheduling::Current::_narrow (this->current_);
+  CORBA::Object_var current_obj =
+    RTScheduling::Current::_narrow (this->current_.in ());
 
   info->register_initial_reference ("RTScheduler_Current", current_obj.in ());
 
@@ -89,7 +87,7 @@ void
 
   Server_Interceptor *server_interceptor = 0;
   ACE_NEW_THROW_EX (server_interceptor,
-                    Server_Interceptor (this->current_),
+                    Server_Interceptor (this->current_.in ()),
                     CORBA::NO_MEMORY (
                         CORBA::SystemException::_tao_minor_code (
                         TAO::VMCID,
