@@ -1,3 +1,51 @@
+Wed Mar 17 19:10:37 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ami4ccm_pre_proc.cpp:
+        * TAO_IDL/be_include/be_visitor_ami4ccm_pre_proc.h:
+
+          Removed this visitor, it was a temporary experiment.
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/be/be_visitor_interface/ami4ccm_sendc_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_interface/ami4ccm_conn_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_interface/ami4ccm_rh_ex_idl.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_connector.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be_include/be_connector.h:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_helper.h:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Further work on implementation of AMI connector code
+          generation. The presence of any
+          #pragma ciao ami4ccm interface "xxx" directives will
+          trigger the generation of an *A.idl file containing
+          AMI-related types associated with each interface -
+          a local AMI callback interface, a local interface
+          containing the corresponding sendc_* operations
+          (in a separate interface rather than added to the
+          original interface as in CORBA AMI so that users
+          connecting to a component but not wishing to use
+          AMI will not be burdened with the extra footprint),
+          and a connector declaration, in the form of an
+          instantiation of a template module (parameterized on
+          the original interface and the sendc_* operation
+          interface) containing a porttype with a 'uses'
+          port using the interface type and a 'provides' port
+          using the sendc_* operation interface type, and a
+          connector declaration using the porttype. This new
+          generated IDL file will be treated like any other
+          IDL file containing a connector declaration, that is,
+          executor IDL, a servant class, a context class,
+          and a connector implementation will be generated in
+          turn from it.
+
 Wed Mar 17 13:44:06 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/RTScheduling/Request_Interceptor.cpp:

@@ -223,7 +223,6 @@ IDL_GlobalData::reset_flag_seen (void)
   abstract_iface_seen_ = false;
   abstractbase_seen_ = false;
   aggregate_seen_ = false;
-//ambiguous_type_seen_
   any_arg_seen_ = false;
   any_seen_ = false;
   any_seq_seen_ = false;
@@ -278,6 +277,10 @@ IDL_GlobalData::reset_flag_seen (void)
   vt_seq_seen_ = false;
   wchar_seq_seen_ = false;
   wstring_seq_seen_ = false;
+  dds_connector_seen_ = false;
+  dds_event_connector_seen_ = false;
+  dds_state_connector_seen_ = false;
+  ami_connector_seen_ = false;
 
   need_skeleton_includes_ = false;
 }

@@ -49,6 +49,7 @@ TAO_CodeGen::TAO_CodeGen (void)
     ciao_exec_idl_ (0),
     ciao_conn_header_ (0),
     ciao_conn_source_ (0),
+    ciao_ami_conn_idl_ (0),
     curr_os_ (0),
     gperf_input_filename_ (0),
     visitor_factory_ (0)
@@ -1455,6 +1456,49 @@ TAO_CodeGen::ciao_conn_source (void)
   return this->ciao_conn_source_;
 }
 
+int
+TAO_CodeGen::start_ciao_ami_conn_idl (const char *fname)
+{
+  // Clean up between multiple files.
+  delete this->ciao_ami_conn_idl_;
+
+  ACE_NEW_RETURN (this->ciao_ami_conn_idl_,
+                  TAO_OutStream,
+                  -1);
+
+  int status =
+    this->ciao_ami_conn_idl_->open (fname,
+                                    TAO_OutStream::CIAO_AMI_CONN_IDL);
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("TAO_CodeGen::start_ciao_ami_conn_idl - ")
+                         ACE_TEXT ("Error opening file\n")),
+                        -1);
+    }
+
+  TAO_OutStream &os = *this->ciao_ami_conn_idl_;
+
+  os << be_nl;
+
+  // Generate the #ifndef clause.
+  this->gen_ifndef_string (fname,
+                           this->ciao_ami_conn_idl_,
+                           "_CIAO_",
+                           "_IDL_");
+
+  this->gen_ami_conn_idl_includes ();
+
+  return 0;
+}
+
+TAO_OutStream *
+TAO_CodeGen::ciao_ami_conn_idl (void)
+{
+  return this->ciao_ami_conn_idl_;
+}
+
 // Set the server header stream.
 int
 TAO_CodeGen::start_implementation_header (const char *fname)
@@ -1896,6 +1940,14 @@ int
 TAO_CodeGen::end_ciao_conn_source (void)
 {
   *this->ciao_conn_source_ << "\n";
+
+  return 0;
+}
+
+int
+TAO_CodeGen::end_ciao_ami_conn_idl (void)
+{
+  *this->ciao_ami_conn_idl_ << "\n\n#endif /* ifndef */\n";
 
   return 0;
 }
@@ -3306,40 +3358,80 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
 
   *this->ciao_conn_header_ << be_nl;
   
-  BE_GlobalData::DDS_IMPL the_dds_impl =
-    be_global->dds_impl ();
-
-  switch (the_dds_impl)
+  if (idl_global->dds_connector_seen_)
     {
-      case BE_GlobalData::NDDS:
-        this->gen_standard_include (
-          this->ciao_conn_header_,
-          "connectors/dds4ccm/impl/dds/DDS4CCM_Traits.h");
-          
-        break;
-      case BE_GlobalData::OPENSPLICE:
-      case BE_GlobalData::OPENDDS:
-        break;
+      BE_GlobalData::DDS_IMPL the_dds_impl =
+        be_global->dds_impl ();
+
+      switch (the_dds_impl)
+        {
+          case BE_GlobalData::NDDS:
+            this->gen_standard_include (
+              this->ciao_conn_header_,
+              "connectors/dds4ccm/impl/dds/DDS4CCM_Traits.h");
+              
+            break;
+          case BE_GlobalData::OPENSPLICE:
+          case BE_GlobalData::OPENDDS:
+            break;
+        }
+
+      if (idl_global->dds_event_connector_seen_)
+        {
+          this->gen_standard_include (
+            this->ciao_conn_header_,
+            "connectors/dds4ccm/impl/dds/DDS_Event_Connector_T.h");
+        }
+
+      if (idl_global->dds_state_connector_seen_)
+        {
+          this->gen_standard_include (
+            this->ciao_conn_header_,
+            "connectors/dds4ccm/impl/dds/DDS_State_Connector_T.h");
+        }
+    
+      /// The default, and we have to set the reference to
+      /// something.  
+      ACE_Unbounded_Queue<char *> &ts_files =
+        idl_global->ciao_rti_ts_file_names ();
+
+      switch (the_dds_impl)
+        {
+          case BE_GlobalData::NDDS:
+            break;
+          case BE_GlobalData::OPENSPLICE:
+            ts_files =
+              idl_global->ciao_spl_ts_file_names ();
+            break;
+          case BE_GlobalData::OPENDDS:
+            ts_files =
+              idl_global->ciao_oci_ts_file_names ();
+            break;
+        }
+
+      if (ts_files.size () > 0)
+        {
+          *this->ciao_conn_header_ << be_nl;
+        }
+
+      for (ACE_Unbounded_Queue_Iterator<char *> iter (
+             ts_files);
+           iter.done () == 0;
+           iter.advance ())
+        {
+          iter.next (path_tmp);
+
+          this->gen_standard_include (
+            this->ciao_conn_header_,
+            *path_tmp);
+        }
     }
-
-  // Placeholder for forthcoming real-world logic.
-  bool dds_event_connector = true;
-
-  if (dds_event_connector)
+    
+  if (idl_global->ami_connector_seen_)
     {
       this->gen_standard_include (
         this->ciao_conn_header_,
-        "connectors/dds4ccm/impl/dds/DDS_Event_Connector_T.h");
-    }
-
-  // Placeholder for forthcoming real-world logic.
-  bool dds_state_connector = true;
-
-  if (dds_state_connector)
-    {
-      this->gen_standard_include (
-        this->ciao_conn_header_,
-        "connectors/dds4ccm/impl/dds/DDS_State_Connector_T.h");
+        "tao/LocalObject.h");
     }
 
   for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
@@ -3365,42 +3457,6 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
 
       str.destroy ();
     }
-    
-  /// The default, and we have to set the reference to
-  /// something.  
-  ACE_Unbounded_Queue<char *> &ts_files =
-    idl_global->ciao_rti_ts_file_names ();
-
-  switch (the_dds_impl)
-    {
-      case BE_GlobalData::NDDS:
-        break;
-      case BE_GlobalData::OPENSPLICE:
-        ts_files =
-          idl_global->ciao_spl_ts_file_names ();
-        break;
-      case BE_GlobalData::OPENDDS:
-        ts_files =
-          idl_global->ciao_oci_ts_file_names ();
-        break;
-    }
-
-  if (ts_files.size () > 0)
-    {
-      *this->ciao_conn_header_ << be_nl;
-    }
-
-  for (ACE_Unbounded_Queue_Iterator<char *> iter (
-         ts_files);
-       iter.done () == 0;
-       iter.advance ())
-    {
-      iter.next (path_tmp);
-
-      this->gen_standard_include (
-        this->ciao_conn_header_,
-        *path_tmp);
-    }
 }
 
 void
@@ -3410,6 +3466,22 @@ TAO_CodeGen::gen_conn_src_includes (void)
   this->gen_standard_include (
     this->ciao_conn_source_,
     be_global->be_get_ciao_conn_hdr_fname (true));
+    
+  this->gen_standard_include (
+    this->ciao_conn_source_,
+    "connectors/ami4ccm/ami4ccm/ami4ccm.h");
+}
+
+void
+TAO_CodeGen::gen_ami_conn_idl_includes (void)
+{
+  this->gen_standard_include (
+    this->ciao_ami_conn_idl_,
+    "connectors/ami4ccm/ami4ccm/ami4ccm.idl");
+    
+  this->gen_standard_include (
+    this->ciao_ami_conn_idl_,
+    idl_global->stripped_filename ()->get_string ());
 }
 
 void
@@ -3500,6 +3572,7 @@ TAO_CodeGen::destroy (void)
   delete this->ciao_conn_header_;
   delete this->ciao_conn_source_;
   delete this->ciao_exec_idl_;
+  delete this->ciao_ami_conn_idl_;
   delete this->gperf_input_stream_;
   delete [] this->gperf_input_filename_;
   this->curr_os_ = 0;
