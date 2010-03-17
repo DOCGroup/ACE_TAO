@@ -45,7 +45,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_requested_incompatib
                   status.policies[i].count));
     }
 
-  if (!CORBA::is_nil (this->error_listener_))
+  if (! ::CORBA::is_nil (this->error_listener_))
     {
       try
         {
@@ -90,7 +90,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_unexpected_status (
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::SubscriberListener_T::on_unexpected_status");
 
-  if (!CORBA::is_nil (this->error_listener_))
+  if (! ::CORBA::is_nil (this->error_listener_))
     {
       try
         {
@@ -167,7 +167,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::on_sample_rejected (
               status.last_instance_handle.length,
               status.last_instance_handle.isValid));
 
-  if (!CORBA::is_nil (this->error_listener_))
+  if (! ::CORBA::is_nil (this->error_listener_))
     {
       try
         {
@@ -262,7 +262,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
   ::CCM_DDS::ConnectorStatusListener_ptr csl)
 {
-  if (!CORBA::is_nil (csl) || CIAO_debug_level >= 10)
+  if (! ::CORBA::is_nil (csl) || CIAO_debug_level >= 10)
     {
       return ::DDS::REQUESTED_INCOMPATIBLE_QOS_STATUS |
              ::DDS::SAMPLE_REJECTED_STATUS |

@@ -35,13 +35,13 @@ namespace CIAO_Event_Connection_Test_Sender_Impl
   {
     this->writer_ =
         this->context_->get_connection_info_write_data ();
-    if (!CORBA::is_nil (this->writer_))
+    if (! ::CORBA::is_nil (this->writer_))
       {
         this->writer_ok_ = true;
       }
     this->writer_dds_datawriter_ =
         this->context_->get_connection_info_write_dds_entity ();
-    if (!CORBA::is_nil (this->writer_dds_datawriter_))
+    if (! ::CORBA::is_nil (this->writer_dds_datawriter_))
       {
         this->writer_dds_datawriter_ok_ = true;
       }

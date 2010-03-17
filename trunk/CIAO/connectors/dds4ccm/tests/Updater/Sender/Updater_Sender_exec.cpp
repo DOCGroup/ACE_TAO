@@ -48,7 +48,7 @@ namespace CIAO_Updater_Sender_Impl
     TestTopic i = this->topic_seq_one_[0];
     try
     {
-      if (!CORBA::is_nil (this->updater_) ) {
+      if (! ::CORBA::is_nil (this->updater_) ) {
         this->updater_->create_one(i);
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: create_one with instance key <%C>\n"),
                      i.key.in()));

@@ -176,7 +176,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
   DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate");
   try
     {
-      if (CORBA::is_nil (this->domainparticipantlistener_.in ()))
+      if (::CORBA::is_nil (this->domainparticipantlistener_.in ()))
         {
           ACE_NEW_THROW_EX (this->domainparticipantlistener_,
                             DomainParticipantListener(

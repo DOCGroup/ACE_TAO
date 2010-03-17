@@ -53,7 +53,7 @@ namespace CIAO
         }
 #else
       ::DDS::StatusCondition_var sc = this->impl ()->get_statuscondition ();
-      if (!CORBA::is_nil (sc.in ()))
+      if (! ::CORBA::is_nil (sc.in ()))
         {
           ACE_NEW_THROW_EX (retval,
                             CCM_DDS_StatusCondition_i (sc.in ()),
@@ -170,7 +170,7 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_Subscriber_i::create_datareader");
       ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
       DDSDataReaderListener *ccm_dds_drl = 0;
-      if (!CORBA::is_nil (a_listener))
+      if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_drl,
                             CCM_DDS_DataReaderListener_i (a_listener),
@@ -228,7 +228,7 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_Subscriber_i::create_datareader_with_profile");
       ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
       DDSDataReaderListener *ccm_dds_drl = 0;
-      if (!CORBA::is_nil (a_listener))
+      if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_drl,
                             CCM_DDS_DataReaderListener_i (a_listener),
@@ -392,7 +392,7 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_Subscriber_i::set_listener");
 
       CCM_DDS_SubscriberListener_i* ccm_dds_impl_list = 0;
-      if (!CORBA::is_nil (a_listener))
+      if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_impl_list,
                             CCM_DDS_SubscriberListener_i (a_listener),
@@ -443,7 +443,7 @@ namespace CIAO
         }
 #else
       ::DDS::DomainParticipant_var p = this->impl ()->get_participant ();
-      if (!CORBA::is_nil (p.in))
+      if (! ::CORBA::is_nil (p.in))
         {
           ACE_NEW_THROW_EX (retval,
                             CCM_DDS_DomainParticipant_i (p.in ()),

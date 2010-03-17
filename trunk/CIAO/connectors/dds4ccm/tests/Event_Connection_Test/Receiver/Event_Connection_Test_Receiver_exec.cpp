@@ -81,19 +81,19 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
     //DDS_Get
     this->getter_getter_ =
         this->context_->get_connection_info_get_fresh_data ();
-    if (!CORBA::is_nil (this->getter_getter_))
+    if (! ::CORBA::is_nil (this->getter_getter_))
       {
         this->getter_ok_ = true;
       }
     this->getter_dds_data_reader_ =
         this->context_->get_connection_info_get_dds_entity ();
-    if (!CORBA::is_nil (this->getter_dds_data_reader_))
+    if (! ::CORBA::is_nil (this->getter_dds_data_reader_))
       {
         this->getter_dds_data_reader_ok_ = true;
       }
     this->getter_reader_ =
         this->context_->get_connection_info_get_data ();
-    if (!CORBA::is_nil (this->getter_reader_))
+    if (! ::CORBA::is_nil (this->getter_reader_))
       {
         this->getter_reader_ok_ = true;
       }
@@ -101,19 +101,19 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
     this->listen_data_control_ =
         this->context_->get_connection_info_listen_data_control ();
 
-    if (!CORBA::is_nil (this->listen_data_control_))
+    if (! ::CORBA::is_nil (this->listen_data_control_))
       {
         this->listen_data_control_ok_ = true;
       }
     this->listen_reader_ =
         this->context_->get_connection_info_listen_data ();
-    if (!CORBA::is_nil (this->listen_reader_))
+    if (! ::CORBA::is_nil (this->listen_reader_))
       {
         this->listen_reader_ok_ = true;
       }
     this->listen_dds_data_reader_ =
         this->context_->get_connection_info_listen_dds_entity ();
-    if (!CORBA::is_nil (this->listen_dds_data_reader_))
+    if (! ::CORBA::is_nil (this->listen_dds_data_reader_))
       {
         this->listen_dds_data_reader_ok_ = true;
       }

@@ -135,7 +135,7 @@ namespace CIAO_Quoter_Distributor_Impl
             if (i->second->current < i->second->low)
               i->second->low = i->second->current;
 
-            if (!CORBA::is_nil (this->writer_)) {
+            if (! ::CORBA::is_nil (this->writer_)) {
               ACE_DEBUG ((LM_DEBUG, "WRITE AND CREATE stock_info for <%C> %u:%u:%u\n",
                             i->first.c_str (),
                             i->second->low,

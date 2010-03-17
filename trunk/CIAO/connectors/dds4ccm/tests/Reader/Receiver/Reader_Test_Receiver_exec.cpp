@@ -85,7 +85,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
   {
     try
       {
-        if (!CORBA::is_nil (this->reader_))
+        if (! ::CORBA::is_nil (this->reader_))
           {
             ReaderTest readertest_info;
             ::CCM_DDS::ReadInfo readinfo;

@@ -118,7 +118,7 @@ namespace CIAO_PSL_SampleLost_Sender_Impl
       {
          try
           {
-            if (!CORBA::is_nil (this->writer_) )
+            if (! ::CORBA::is_nil (this->writer_) )
               {
                 this->writer_->write_one(i->second,::DDS::HANDLE_NIL);
                 i->second->x++;

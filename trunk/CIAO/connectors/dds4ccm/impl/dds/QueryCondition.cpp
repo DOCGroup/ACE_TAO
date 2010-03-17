@@ -61,7 +61,7 @@ namespace CIAO
         }
 #else
       ::DDS::DataReader_var reader = this->impl ()->get_datareader ();
-      if (!CORBA::is_nil (reader.in ()))
+      if (! ::CORBA::is_nil (reader.in ()))
         {
           ACE_NEW_THROW_EX (dds_reader,
                             CCM_DDS_DataReader_i (reader.in ()),

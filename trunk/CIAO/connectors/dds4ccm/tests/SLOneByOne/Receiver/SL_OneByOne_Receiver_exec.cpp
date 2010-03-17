@@ -163,7 +163,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
     ::CCM_DDS::StateListenerControl_var lc =
     this->context_->get_connection_info_out_data_control ();
 
-    if (CORBA::is_nil (lc.in ()))
+    if (::CORBA::is_nil (lc.in ()))
       {
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw CORBA::INTERNAL ();

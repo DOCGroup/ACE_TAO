@@ -49,7 +49,7 @@ namespace CIAO_CSL_SRTest_Sender_Impl
   {
     this->thread_id_ = ACE_Thread::self ();
     if (status.last_reason == DDS::REJECTED_BY_INSTANCES_LIMIT &&
-        !CORBA::is_nil(the_reader))
+        ! ::CORBA::is_nil(the_reader))
       {
         this->rejected_ = true;
       }
@@ -121,7 +121,7 @@ namespace CIAO_CSL_SRTest_Sender_Impl
       {
         try
           {
-            if (!CORBA::is_nil (this->writer_))
+            if (! ::CORBA::is_nil (this->writer_))
               {
                 this->writer_->write_one(i->second,::DDS::HANDLE_NIL);
                 i->second->x++;

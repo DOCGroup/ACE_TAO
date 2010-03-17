@@ -65,7 +65,7 @@ namespace CIAO_Keyed_Test_Receiver_Impl
   void
   Receiver_exec_i::read (void)
   {
-    if (CORBA::is_nil (this->reader_.in ()))
+    if (::CORBA::is_nil (this->reader_.in ()))
       {
         return;
       }

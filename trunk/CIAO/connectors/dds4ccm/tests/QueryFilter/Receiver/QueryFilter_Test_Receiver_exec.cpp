@@ -174,7 +174,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   Receiver_exec_i::get_all (void)
   {
 #if (DDS4CCM_USES_QUERY_CONDITION==1)
-    if (CORBA::is_nil (this->getter_))
+    if (::CORBA::is_nil (this->getter_))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: No Getter\n"));
       }
@@ -493,7 +493,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     DDS::Duration_t to;
     to.sec = 5;
     to.nanosec = 0;
-    if (!CORBA::is_nil (this->getter_))
+    if (! ::CORBA::is_nil (this->getter_))
       {
         this->getter_->time_out (to);
       }

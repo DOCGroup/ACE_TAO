@@ -56,7 +56,7 @@ namespace CIAO_VTopic_Receiver_Impl
     ::DDS::Entity_ptr the_entity,
     ::DDS::StatusKind  status_kind)  {
       CORBA::ULong kind = status_kind;
-      if((!CORBA::is_nil(the_entity)) && (kind==DDS::SUBSCRIPTION_MATCHED_STATUS))
+      if((! ::CORBA::is_nil(the_entity)) && (kind==DDS::SUBSCRIPTION_MATCHED_STATUS))
       {
         this->unexpected_matched_ = true;
       }
