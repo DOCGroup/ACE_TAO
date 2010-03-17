@@ -25,7 +25,7 @@ project(DDS_CSL_SRTest_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   idlflags += -Wb,stub_export_macro=CSL_SRTEST_CONNECTOR_LEM_STUB_Export \
               -Wb,stub_export_include=CSL_SRTest_Connector_lem_stub_export.h \
               -SS -Gxhst \
-              -I .. -I $(CIAO_ROOT)/connectors -I$(CIAO_ROOT)/connectors/dds4ccm/idl
+              -I ..
 
   IDL_Files {
     CSL_SRTest_ConnectorE.idl

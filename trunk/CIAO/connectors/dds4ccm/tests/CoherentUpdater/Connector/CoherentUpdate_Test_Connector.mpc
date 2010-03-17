@@ -25,7 +25,7 @@ project(CoherentUpdate_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   idlflags += -Wb,stub_export_macro=COHERENT_UPDATE_TEST_CONNECTOR_LEM_STUB_Export \
               -Wb,stub_export_include=CoherentUpdate_Connector_lem_stub_export.h \
               -SS -Gxhst \
-              -I .. -I $(CIAO_ROOT)/connectors -I$(CIAO_ROOT)/connectors/dds4ccm/idl
+              -I ..
 
   IDL_Files {
     CoherentUpdate_Test_ConnectorE.idl

@@ -3,19 +3,25 @@
 feature(dds4ccm_opendds) : taoidldefaults, dcps {
   macros += CIAO_DDS4CCM_OPENDDS=1
   idlflags += -DCIAO_DDS4CCM_OPENDDS=1 \
-              -Wb,dds_impl=opendds
+              -Wb,dds_impl=opendds \
+              -I $(CIAO_ROOT)/connectors \
+              -I $(CIAO_ROOT)/connectors/dds4ccm/idl
 }
 
 feature(dds4ccm_splice) : taoidldefaults {
   macros += CIAO_DDS4CCM_SPLICE=1
   idlflags += -DCIAO_DDS4CCM_SPLICE=1 \
-              -Wb,dds_impl=opensplice
+              -Wb,dds_impl=opensplice \
+              -I $(CIAO_ROOT)/connectors \
+              -I $(CIAO_ROOT)/connectors/dds4ccm/idl
 }
 
 feature(dds4ccm_ndds) : taoidldefaults {
   macros += CIAO_DDS4CCM_NDDS=1
   idlflags += -DCIAO_DDS4CCM_NDDS=1 \
-              -Wb,dds_impl=ndds
+              -Wb,dds_impl=ndds \
+              -I $(CIAO_ROOT)/connectors \
+              -I $(CIAO_ROOT)/connectors/dds4ccm/idl
 }
 
 feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_splice) {

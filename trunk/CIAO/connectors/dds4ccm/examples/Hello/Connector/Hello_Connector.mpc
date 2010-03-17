@@ -1,7 +1,6 @@
 // $Id$
 
 project(DDS_Hello_Connector_idl_gen) : connectoridldefaults, dds4ccm {
-  avoids += ace_for_tao
   after  += DDS4CCM_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_CONNECTOR_STUB_Export \
@@ -20,15 +19,12 @@ project(DDS_Hello_Connector_idl_gen) : connectoridldefaults, dds4ccm {
 }
 
 project(DDS_Hello_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
-  avoids += ace_for_tao
   custom_only = 1
   after += DDS_Hello_Connector_idl_gen
   idlflags += -Wb,stub_export_macro=HELLO_CONNECTOR_LEM_STUB_Export \
               -Wb,stub_export_include=Hello_Connector_lem_stub_export.h \
               -SS -Gxhst \
-              -I .. \
-              -I $(CIAO_ROOT)/connectors \
-              -I $(CIAO_ROOT)/connectors/dds4ccm/idl
+              -I ..
 
   IDL_Files {
     Hello_ConnectorE.idl
@@ -36,7 +32,6 @@ project(DDS_Hello_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
 }
 
 project(DDS_Hello_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
-  avoids += ace_for_tao
   after  += DDS_Hello_Connector_lem_gen \
             DDS_Hello_Connector_stub \
             DDS_Hello_Base_stub \
@@ -68,7 +63,6 @@ project(DDS_Hello_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
 }
 
 project(DDS_Hello_Connector_stub) : ccm_stub, dds4ccm_base {
-  avoids += ace_for_tao
   after  += DDS_Hello_Connector_idl_gen DDS_Hello_Base_stub
   libs   += DDS_Hello_Base_stub
   libpaths += ../lib
@@ -95,7 +89,6 @@ project(DDS_Hello_Connector_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(DDS_Hello_Connector_exec) : ciao_executor, dds4ccm_impl {
-  avoids += ace_for_tao
   after  += DDS_Hello_Connector_lem_stub \
             DDS_Hello_Connector_stub \
             DDS4CCM_lem_stub \
