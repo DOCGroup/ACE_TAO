@@ -29,7 +29,7 @@ project(DDS_PSL_SampleLost_Receiver_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(DDS_PSL_SL_Receiver_lem_stub) : ccm_svnt, dds4ccm_base  {
+project(DDS_PSL_SL_Receiver_lem_stub) : ccm_svnt, dds4ccm_base {
   after += DDS_PSL_SampleLost_Receiver_lem_gen DDS_PSL_SampleLost_Receiver_stub  DDS_PSL_SampleLost_Connector_stub DDS_PSL_SampleLost_Base_stub
   libs  +=  Receiver_stub DDS_PSL_SampleLost_Connector_stub DDS_PSL_SampleLost_Base_stub
   libpaths += ../lib

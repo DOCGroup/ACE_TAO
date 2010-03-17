@@ -30,7 +30,7 @@ project(DDS_Broker_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(DDS_Broker_lem_stub) : ccm_svnt, dds4ccm_base  {
+project(DDS_Broker_lem_stub) : ccm_svnt, dds4ccm_base {
   after += DDS_Broker_lem_gen DDS_Broker_stub  DDS_Quoter_Connector_stub DDS_Quoter_Base_stub
   libs  +=  Broker_stub DDS_Quoter_Connector_stub DDS_Quoter_Base_stub
   libpaths += ../lib

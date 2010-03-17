@@ -29,7 +29,7 @@ project(DDS_Get_Invoker_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(DDS_Get_Invoker_lem_stub) : ccm_svnt, dds4ccm_base  {
+project(DDS_Get_Invoker_lem_stub) : ccm_svnt, dds4ccm_base {
   after += DDS_Get_Invoker_lem_gen DDS_Get_Invoker_stub
   libs  += Get_Invoker_stub
   libpaths += ../lib

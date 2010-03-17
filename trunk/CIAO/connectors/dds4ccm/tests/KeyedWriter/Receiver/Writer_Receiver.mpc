@@ -29,7 +29,7 @@ project(DDS_KeyedWriterReceiver_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(DDS_KeyedWriterReceiver_lem_stub) : ccm_svnt, dds4ccm_base  {
+project(DDS_KeyedWriterReceiver_lem_stub) : ccm_svnt, dds4ccm_base {
   after += DDS_KeyedWriterReceiver_lem_gen DDS_KeyedWriterReceiver_stub  DDS_KeyedWriterConnector_stub DDS_KeyedWriterBase_stub
   libs  +=  Receiver_stub DDS_KeyedWriterConnector_stub DDS_KeyedWriterBase_stub
   libpaths += ../lib

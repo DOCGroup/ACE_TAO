@@ -101,13 +101,13 @@ namespace CIAO_Latency_Test_Sender_Impl
     if((!CORBA::is_nil(the_entity)) &&
        (kind==DDS::PUBLICATION_MATCHED_STATUS))
       {
-        ::DDS::PublicationMatchedStatus_var stat;
         DDS::DataWriter_var wr = ::DDS::DataWriter::_narrow(the_entity);
         if(CORBA::is_nil(wr))
          {
             throw ::CORBA::INTERNAL ();
          }
-        ::DDS::ReturnCode_t retval = wr->get_publication_matched_status(stat.out ());
+        ::DDS::PublicationMatchedStatus_var stat;
+        ::DDS::ReturnCode_t const retval = wr->get_publication_matched_status(stat.out ());
         if (retval == DDS::RETCODE_OK)
           {
 

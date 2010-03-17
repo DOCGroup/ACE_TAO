@@ -29,7 +29,7 @@ project(DDS_Perf_Keyed_Test_Receiver_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(DDS_Perf_Keyed_Test_Receiver_lem_stub) : ccm_svnt, dds4ccm_base  {
+project(DDS_Perf_Keyed_Test_Receiver_lem_stub) : ccm_svnt, dds4ccm_base {
   after += DDS_Perf_Keyed_Test_Receiver_lem_gen DDS_Perf_Keyed_Test_Receiver_stub  \
            DDS_Perf_Keyed_Test_Connector_stub DDS_Perf_Keyed_Test_Base_stub
   libs  +=  Receiver_stub DDS_Perf_Keyed_Test_Connector_stub \
