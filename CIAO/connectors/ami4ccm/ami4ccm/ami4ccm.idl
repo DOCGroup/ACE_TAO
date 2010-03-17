@@ -24,6 +24,20 @@ module CCM_AMI
   connector AMI_Base
   {
   };
+  
+  module Connector_T<interface T, interface AMI_T>
+  {
+    porttype AMI_Port
+    {
+      provides AMI_T sendc_run;
+      uses T run;
+    };
+    
+    connector The_Connector : AMI_Base
+    {
+      port AMI_Port The_Port;
+    };
+  };
 };
 
 #endif /* AMI4CCM_IDL_H */
