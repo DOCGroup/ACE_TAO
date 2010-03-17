@@ -3,6 +3,8 @@
 #include "be_connector.h"
 #include "be_visitor.h"
 
+#include "utl_identifier.h"
+
 be_connector::be_connector (
       UTL_ScopedName *n,
       AST_Connector *base_connector)
@@ -45,8 +47,14 @@ be_connector::be_connector (
                   0,
                   0,
                   0,
-                  0)
+                  0),
+    dds_connector_ (false),
+    ami_connector_ (false)
 {
+  if (! this->imported ())
+    {
+      this->check_ancestors ();
+    }
 }
 
 be_connector::~be_connector (void)
@@ -64,6 +72,59 @@ int
 be_connector::accept (be_visitor *visitor)
 {
   return visitor->visit_connector (this);
+}
+
+bool
+be_connector::dds_connector (void)
+{
+  return this->dds_connector_;
+}
+
+bool
+be_connector::ami_connector (void)
+{
+  return this->ami_connector_;
+}
+
+void
+be_connector::check_ancestors (void)
+{
+  AST_Connector *base = this->base_connector ();
+  
+  while (base != 0)
+    {
+      const char *base_fname = base->full_name ();
+      const char *base_lname = base->local_name ()->get_string ();
+      
+      if (ACE_OS::strcmp (base_lname, "DDS_Event") == 0)
+        {
+          this->dds_connector_ = true;
+          idl_global->dds_connector_seen_ = true;
+          idl_global->dds_event_connector_seen_ = true;
+          break;
+        }
+      else if (ACE_OS::strcmp (base_lname, "DDS_State") == 0)
+        {
+          this->dds_connector_ = true;
+          idl_global->dds_connector_seen_ = true;
+          idl_global->dds_state_connector_seen_ = true;
+          break;
+        }
+      else if (ACE_OS::strcmp (base_fname, "CCM_DDS::DDS_Base") == 0)
+        {
+          this->dds_connector_ = true;
+          idl_global->dds_connector_seen_ = true;
+          break;
+        }
+      else if (ACE_OS::strcmp (base_fname, "CCM_AMI::AMI_Base") == 0)
+        {
+          this->ami_connector_ = true;
+          idl_global->ami_connector_seen_ = true;
+          break;
+        }
+        
+      base = base->base_connector ();
+    }
 }
 
 IMPL_NARROW_FROM_DECL (be_connector)

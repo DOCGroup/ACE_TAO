@@ -109,42 +109,6 @@ int be_visitor_root::visit_root (be_root *node)
         break;
       case TAO_CodeGen::TAO_ROOT_EX_IDL:
         {
-          if (be_global->ami4ccm_call_back ())
-            {
-              for (ACE_Unbounded_Queue<char *>::CONST_ITERATOR i (
-                     idl_global->ciao_ami_iface_names ());
-                   ! i.done ();
-                   i.advance ())
-                {
-                  char **item = 0;
-                  i.next (item);
-                  
-                  UTL_ScopedName *sn =
-                    idl_global->string_to_scoped_name (*item);
-                    
-                  UTL_Scope *s =
-                    idl_global->scopes ().top_non_null ();
-                    
-                  AST_Decl *d = s->lookup_by_name (sn, true);
-                  
-                  if (d == 0)
-                    {
-                      idl_global->err ()->lookup_error (sn);
-                      continue;
-                    }
-                    
-                  be_interface *iface =
-                    be_interface::narrow_from_decl (d);
-                    
-                  if (iface == 0)
-                    {
-                      idl_global->err ()->interface_expected (d);
-                      continue;
-                    }
-                    
-                  iface->gen_ami4ccm_idl (this->ctx_->stream ());
-                }
-            }
         }
         
         break;
@@ -1526,43 +1490,41 @@ be_visitor_root::visit_connector (be_connector *node)
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
   int status = 0;
-  
-  AST_Connector *base = node->base_connector ();
 
   switch (this->ctx_->state ())
     {
       case TAO_CodeGen::TAO_ROOT_CNH:
         {
-          /// Hack until we get logic in place to strategize
-          /// visitor creation based on connector inheritance.
-          if (base == 0)
-            {
-              be_visitor_connector_ami_exh v (&ctx);
-              status = node->accept (&v);
+          if (node->dds_connector ())
+            {  
+              be_visitor_connector_dds_exh visitor (&ctx);
+              status = node->accept (&visitor);
               break;
             }
-            
-          be_visitor_connector_dds_exh visitor (&ctx);
-          status = node->accept (&visitor);
-          break;
+          else if (node->ami_connector ())
+            {
+              be_visitor_connector_ami_exh visitor (&ctx);
+              status = node->accept (&visitor);
+              break;
+            }
         }
       case TAO_CodeGen::TAO_ROOT_CNS:
         {
-          /// Hack until we get logic in place to strategize
-          /// visitor creation based on connector inheritance.
-          if (base == 0)
-            {
-              be_visitor_connector_ami_exs v (&ctx);
-              status = node->accept (&v);
+          if (node->dds_connector ())
+            {  
+              be_visitor_connector_dds_exs visitor (&ctx);
+              status = node->accept (&visitor);
               break;
             }
-            
-          be_visitor_connector_dds_exs visitor (&ctx);
-          status = node->accept (&visitor);
-          break;
+          else if (node->ami_connector ())
+            {
+              be_visitor_connector_ami_exs visitor (&ctx);
+              status = node->accept (&visitor);
+              break;
+            }
         }
       // Skip these contexts, the connector impl is
-      // generated in a separate pass, using the states
+      // generated in a separate pass, using the context states
       // above.
       case TAO_CodeGen::TAO_ROOT_EXH:
       case TAO_CodeGen::TAO_ROOT_EXS:
