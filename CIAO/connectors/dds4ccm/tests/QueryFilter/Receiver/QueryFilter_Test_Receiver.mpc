@@ -29,7 +29,7 @@ project(QueryFilter_Test_Receiver_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(QueryFilter_Test_Receiver_lem_stub) : ccm_svnt, dds4ccm_base  {
+project(QueryFilter_Test_Receiver_lem_stub) : ccm_svnt, dds4ccm_base {
   after += QueryFilter_Test_Receiver_lem_gen QueryFilter_Test_Receiver_stub  \
            QueryFilter_Test_Connector_stub QueryFilter_Test_Base_stub \
            DDS_QueryFilter_Starter_stub

@@ -29,7 +29,7 @@ project(DDS_CSL_DeadlineTest_Receiver_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(DDS_CSL_DT_Receiver_lem_stub) : ccm_svnt, dds4ccm_base  {
+project(DDS_CSL_DT_Receiver_lem_stub) : ccm_svnt, dds4ccm_base {
   after += DDS_CSL_DeadlineTest_Receiver_lem_gen DDS_CSL_DeadlineTest_Receiver_stub  DDS_CSL_DeadlineTest_Connector_stub DDS_CSL_DeadlineTest_Base_stub
   libs  +=  Receiver_stub DDS_CSL_DeadlineTest_Connector_stub DDS_CSL_DeadlineTest_Base_stub
   libpaths += ../lib

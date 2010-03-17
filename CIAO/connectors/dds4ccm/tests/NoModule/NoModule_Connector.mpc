@@ -52,7 +52,7 @@ project(NoModule_Connector_lem_stub) : ccm_svnt , dds4ccm_lem_stub  {
   }
 }
 
-project(NoModule_Connector_stub) : ccm_stub, dds4ccm_base  {
+project(NoModule_Connector_stub) : ccm_stub, dds4ccm_base {
   after += NoModule_Connector_idl_gen NoModule_stub
   libs  += NoModule_stub
 

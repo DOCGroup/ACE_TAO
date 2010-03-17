@@ -29,7 +29,7 @@ project(DDS_SL_Disabled_Receiver_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(DDS_SL_OC_Receiver_lem_stub) : ccm_svnt, dds4ccm_base  {
+project(DDS_SL_OC_Receiver_lem_stub) : ccm_svnt, dds4ccm_base {
   after += DDS_SL_Disabled_Receiver_lem_gen DDS_SL_Disabled_Receiver_stub  DDS_SL_Disabled_Connector_stub DDS_SL_Disabled_Base_stub
   libs  +=  Receiver_stub DDS_SL_Disabled_Connector_stub DDS_SL_Disabled_Base_stub
   libpaths += ../lib

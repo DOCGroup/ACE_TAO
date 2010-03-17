@@ -29,7 +29,7 @@ project(DDS_VTopics_Receiver_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(DDS_VTopics_Receiver_lem_stub) : ccm_svnt, dds4ccm_base  {
+project(DDS_VTopics_Receiver_lem_stub) : ccm_svnt, dds4ccm_base {
   after += DDS_VTopics_Receiver_lem_gen DDS_VTopics_Receiver_stub DDS_VTopics_Base_stub \
            DDS_VTopics_Connector_stub DDS_VTS_String_Connector_stub \
            DDS_VTS_Array_Connector_stub DDS_VTS_Seq_Connector_stub \

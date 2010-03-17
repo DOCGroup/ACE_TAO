@@ -29,7 +29,7 @@ project(CoherentUpdate_Test_Receiver_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(CoherentUpdate_Test_Receiver_lem_stub) : ccm_svnt, dds4ccm_base  {
+project(CoherentUpdate_Test_Receiver_lem_stub) : ccm_svnt, dds4ccm_base {
   after += CoherentUpdate_Test_Receiver_lem_gen CoherentUpdate_Test_Receiver_stub  \
            CoherentUpdate_Connector_stub CoherentUpdate_Test_Base_stub \
            DDS_Coh_Update_ReaderStarter_stub

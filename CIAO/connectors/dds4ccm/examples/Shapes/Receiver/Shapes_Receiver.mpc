@@ -30,7 +30,7 @@ project(DDS_Shapes_Receiver_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(DDS_Shapes_Receiver_lem_stub) : ccm_svnt, dds4ccm_base  {
+project(DDS_Shapes_Receiver_lem_stub) : ccm_svnt, dds4ccm_base {
   after += DDS_Shapes_Receiver_lem_gen DDS_Shapes_Receiver_stub  DDS_Shapes_Connector_stub DDS_Shapes_Base_stub
   libs  +=  Receiver_stub DDS_Shapes_Connector_stub DDS_Shapes_Base_stub
   libpaths += ../lib

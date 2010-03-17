@@ -29,7 +29,7 @@ project(CoherentWrite_Test_Receiver_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(CoherentWrite_Test_Receiver_lem_stub) : ccm_svnt, dds4ccm_base  {
+project(CoherentWrite_Test_Receiver_lem_stub) : ccm_svnt, dds4ccm_base {
   after += CoherentWrite_Test_Receiver_lem_gen CoherentWrite_Test_Receiver_stub  \
            CoherentWrite_Test_Connector_stub CoherentWrite_Test_Base_stub \
            DDS_Coherent_Reader_Starter_stub

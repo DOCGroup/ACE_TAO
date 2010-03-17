@@ -29,7 +29,7 @@ project(DDS_DDSWriterEntityReceiver_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(DDS_DDSWriterEntityReceiver_lem_stub) : ccm_svnt, dds4ccm_base  {
+project(DDS_DDSWriterEntityReceiver_lem_stub) : ccm_svnt, dds4ccm_base {
   after += DDS_DDSWriterEntityReceiver_lem_gen DDS_DDSWriterEntityReceiver_stub  DDS_DDSWriterEntityConnector_stub DDS_DDSWriterEntityBase_stub
   libs  +=  Receiver_stub DDS_DDSWriterEntityConnector_stub DDS_DDSWriterEntityBase_stub
   libpaths += ../lib
