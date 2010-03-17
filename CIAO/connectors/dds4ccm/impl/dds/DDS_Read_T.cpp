@@ -59,7 +59,7 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
           this->ccm_dds_reader_.set_impl (rd->get_impl ());
           this->data_ = ::DDS::CCM_DataReader::_narrow (reader);
           this->dds_read_.set_impl (reader);
-          this->dds_read_.set_qos (topic, library_name, profile_name);
+          this->dds_read_.set_qos (library_name, profile_name);
         }
     }
   catch (...)
