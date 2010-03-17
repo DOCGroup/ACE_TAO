@@ -1,3 +1,17 @@
+Wed Mar 17 09:14:50 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * docs/Options.html:
+          Improved readability of description for -ORBIgnoreDefaultSvcConfFile.
+
+        * tests/Bug_3826_Regression/run_test.pl:
+          Removed -ORBIgnoreDefaultSvcConfFile in a subtest for
+          -ORBSvcConfDirective as it is not needed after the following
+          change in ACE.
+          Wed Mar 17 08:57:30 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * NEWS:
+          Added news entry about -ORBIgnoreDefaultSvcConfFile.
+
 Fri Mar 15 11:49:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAO_IDL/be/be_visitor_interface/ami4ccm_conn_ex_idl.cpp:

@@ -65,7 +65,7 @@ print STDOUT "Testing with -ORBSvcConfDirective\n";
 
 $directive = "static Resource_Factory \\\\\\\"-ORBConnectionCacheMax 3\\\\\\\"";
 $SV = $server->CreateProcess ("server",
-    "-a \"AAA -ORBdebuglevel $debug_level -ORBGestalt LOCAL -ORBIgnoreDefaultSvcConfFile " .
+    "-a \"AAA -ORBdebuglevel $debug_level -ORBGestalt LOCAL " .
         "-ORBSvcConfDirective \\\"$directive\\\"\" " .
     "-b \"BBB\" -e 3");
 
