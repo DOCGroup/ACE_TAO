@@ -1,3 +1,9 @@
+Wed Mar 15 10:43:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* TAO_IDL/be/be_visitor_array/array.cpp:
+	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
+	  Use fully scoped TAO namespace
+
 Wed Mar 17 09:14:50 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * docs/Options.html:
@@ -12,12 +18,12 @@ Wed Mar 17 09:14:50 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
         * NEWS:
           Added news entry about -ORBIgnoreDefaultSvcConfFile.
 
-Fri Mar 15 11:49:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+Mon Mar 15 11:49:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAO_IDL/be/be_visitor_interface/ami4ccm_conn_ex_idl.cpp:
 	  Derive the implied AMI4CCM connector from ::CCM_AMI::AMI_Base
 
-Fri Mar 15 11:25:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+Mon Mar 15 11:25:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAO_IDL/be/be_visitor_component/component_svs.cpp:
 	  Simplified generated factory method

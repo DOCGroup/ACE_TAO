@@ -102,11 +102,11 @@ be_visitor_array::visit_string (be_string *node)
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << "TAO::String_Manager";
+      *os << "::TAO::String_Manager";
     }
   else
     {
-      *os << "TAO::WString_Manager";
+      *os << "::TAO::WString_Manager";
     }
 
   return 0;
@@ -138,13 +138,13 @@ be_visitor_array::visit_typedef (be_typedef *node)
   // the node's type name, possibly suffixed with '_var'.
   if (nt == AST_Decl::NT_string)
     {
-      *os << "TAO::String_Manager";
+      *os << "::TAO::String_Manager";
 
       return 0;
     }
   else if (nt == AST_Decl::NT_wstring)
     {
-      *os << "TAO::WString_Manager";
+      *os << "::TAO::WString_Manager";
 
       return 0;
     }
