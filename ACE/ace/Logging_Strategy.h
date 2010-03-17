@@ -100,6 +100,22 @@ public:
                               const void* arg);
 
   /**
+   * This function helps to cancel timer events for this logging strategy
+   * in reactor during shutdown.
+   */
+  virtual int handle_close (ACE_HANDLE,
+                            ACE_Reactor_Mask);
+
+  /**
+   * Reactor accessors. If reactor changes then we need remove this
+   * event handler from previous reactor and scheduler for timer events
+   * in a new one.
+   */
+  virtual void reactor (ACE_Reactor *r);
+
+  virtual ACE_Reactor * reactor (void) const;
+
+  /**
    * Parse arguments provided in svc.conf file.
    * @arg '-f' Pass in the flags (such as OSTREAM, STDERR, LOGGER, VERBOSE,
    *           SILENT, VERBOSE_LITE) used to control logging.

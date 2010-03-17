@@ -386,11 +386,6 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
               if (this->reactor () == 0)
                 // Use singleton.
                 this->reactor (ACE_Reactor::instance ());
-
-              this->reactor ()->schedule_timer
-                (this, 0,
-                 ACE_Time_Value (this->interval_),
-                 ACE_Time_Value (this->interval_));
             }
         }
       // Now set the flags for Log_Msg
@@ -549,6 +544,43 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
     }
 
   return 0;
+}
+
+int
+ACE_Logging_Strategy::handle_close (ACE_HANDLE,
+                                    ACE_Reactor_Mask)
+{
+  // This will reset reactor member and cancel timer events.
+  this->reactor (0);
+  return 0;
+}
+
+void
+ACE_Logging_Strategy::reactor (ACE_Reactor *r)
+{
+  if (this->reactor () != r)
+    {
+      if (this->reactor () && this->interval_ > 0 && this->max_size_ > 0)
+        {
+          this->reactor ()->cancel_timer (this);
+        }
+
+      ACE_Service_Object::reactor (r);
+
+      if (this->reactor ())
+        {
+          this->reactor ()->schedule_timer
+            (this, 0,
+             ACE_Time_Value (this->interval_),
+             ACE_Time_Value (this->interval_));
+        }
+    }
+}
+
+ACE_Reactor *
+ACE_Logging_Strategy::reactor (void) const
+{
+  return ACE_Service_Object::reactor ();
 }
 
 void
