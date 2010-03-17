@@ -1,3 +1,57 @@
+Wed Mar 17 13:44:06 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/RTScheduling/Request_Interceptor.cpp:
+        * tao/RTScheduling/RTScheduler_Manager.inl:
+        * tao/RTScheduling/Current.cpp:
+        * tao/RTScheduling/Current.h:
+        * tao/RTScheduling/RTScheduler_Initializer.cpp:
+        * tao/RTScheduling/RTScheduler_Initializer.h:
+          Fixed a number of memory leaks.
+
+        * tests/RTScheduling/DT_Spawn/test.cpp:
+        * tests/RTScheduling/DT_Spawn/Thread_Action.h:
+        * tests/RTScheduling/Scheduler.cpp:
+        * tests/RTScheduling/Current/Thread_Task.cpp:
+        * tests/RTScheduling/Scheduling_Interceptor/test_server.cpp:
+        * tests/RTScheduling/VoidData/test_client.cpp:
+        * tests/RTScheduling/Thread_Cancel/Thread_Task.h:
+        * tests/RTScheduling/Thread_Cancel/test.cpp:
+        * tests/RTScheduling/Thread_Cancel/Thread_Task.cpp:
+        * examples/Kokyu_dsrt_schedulers/fp_example/client.cpp:
+        * examples/Kokyu_dsrt_schedulers/fp_example/server.cpp:
+        * examples/Kokyu_dsrt_schedulers/fp_example/test_i.cpp:
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/mif_example/client.cpp:
+        * examples/Kokyu_dsrt_schedulers/mif_example/server.cpp:
+        * examples/Kokyu_dsrt_schedulers/mif_example/test_i.cpp:
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/muf_example/client.cpp:
+        * examples/Kokyu_dsrt_schedulers/muf_example/server.cpp:
+        * examples/Kokyu_dsrt_schedulers/muf_example/test_i.cpp:
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/EDF_Scheduler.cpp:
+        * examples/RTScheduling/Thread_Task.h:
+        * examples/RTScheduling/POA_Holder.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.h:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/test.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/test.h:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Task.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl:
+        * examples/RTScheduling/Job_i.cpp:
+        * examples/RTScheduling/DT_Creator.cpp:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.cpp:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.h:
+        * examples/RTScheduling/MIF_Scheduler/test.cpp:
+        * examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.cpp:
+        * examples/RTScheduling/MIF_Scheduler/test.h:
+        * examples/RTScheduling/MIF_Scheduler/run_test.pl:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Task.cpp:
+        * examples/RTScheduling/Thread_Task.cpp:
+        * examples/RTScheduling/DT_Creator.h:
+          Fixed a lot of memory leaks which are actually similar from test
+          to test.
+
 Wed Mar 15 10:57:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAO_IDL/be/be_sequence.cpp:

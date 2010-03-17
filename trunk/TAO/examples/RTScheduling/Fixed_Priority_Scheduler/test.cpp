@@ -4,10 +4,49 @@
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "tao/ORB_Core.h"
 #include "ace/Arg_Shifter.h"
-#include "../Thread_Task.h"
 #include "../Task_Stats.h"
 #include "../Synch_i.h"
 #include "ace/OS_NS_errno.h"
+
+#include "ace/Event_Handler.h"
+#include "ace/Sig_Handler.h"
+
+class TestShutdown : public ACE_Event_Handler
+{
+public:
+  TestShutdown (CORBA::ORB_ptr orb)
+    : orb_(CORBA::ORB::_duplicate (orb))
+  {
+#if !defined(ACE_LACKS_UNIX_SIGNALS)
+    this->shutdown_.register_handler (SIGTERM, this);
+    this->shutdown_.register_handler (SIGINT, this);
+#elif defined(ACE_WIN32)
+    this->shutdown_.register_handler (SIGINT, this);
+#endif
+  }
+
+  ~TestShutdown (void)
+  {
+#if !defined(ACE_LACKS_UNIX_SIGNALS)
+    this->shutdown_.remove_handler (SIGTERM);
+    this->shutdown_.remove_handler (SIGINT);
+#elif defined(ACE_WIN32)
+    this->shutdown_.remove_handler (SIGINT);
+#endif
+  }
+
+  virtual int handle_signal (int, siginfo_t*, ucontext_t*)
+  {
+    ACE_DEBUG ((LM_DEBUG, "Shutting down...\n"));
+    this->orb_->shutdown ();
+    return 0;
+  }
+
+private:
+  CORBA::ORB_var orb_;
+
+  ACE_Sig_Handler shutdown_;
+};
 
 DT_Test::DT_Test (void)
 {
@@ -74,16 +113,16 @@ DT_Test::init (int argc, ACE_TCHAR *argv [])
 
   TASK_STATS::instance ()->init (dt_creator_->total_load ());
 
-  CORBA::Object_ptr manager_obj = orb_->resolve_initial_references ("RTSchedulerManager");
+  CORBA::Object_var manager_obj = orb_->resolve_initial_references ("RTSchedulerManager");
 
-  TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj);
+  TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ());
 
 
   ACE_NEW_RETURN (scheduler_,
                   Fixed_Priority_Scheduler (orb_.in ()),
                   -1);
 
-  manager->rtscheduler (scheduler_);
+  manager->rtscheduler (scheduler_.in ());
 
   CORBA::Object_var object =
     orb_->resolve_initial_references ("RTScheduler_Current");
@@ -119,6 +158,8 @@ DT_Test::run (int argc, ACE_TCHAR* argv [])
 {
   init (argc,argv);
 
+  TestShutdown killer (this->orb_.in ());
+
   if (this->dt_creator_->resolve_naming_service () == -1)
     return;
 
@@ -132,8 +173,7 @@ DT_Test::run (int argc, ACE_TCHAR* argv [])
   this->dt_creator_->activate_job_list ();
   this->dt_creator_->activate_schedule ();
 
-  DT_Creator* dt_creator = this->dt_creator_;
-  dt_creator->register_synch_obj ();
+  this->dt_creator_->register_synch_obj ();
 
   ACE_DEBUG ((LM_DEBUG,
               "Registered Synch Object\n"));
@@ -146,10 +186,13 @@ DT_Test::run (int argc, ACE_TCHAR* argv [])
 
   char msg [BUFSIZ];
   ACE_OS::sprintf (msg, "ORB RUN\n");
-  dt_creator_->log_msg (msg);
+  this->dt_creator_->log_msg (msg);
 
-  //ACE_Thread_Manager::instance ()->wait ();
   orb_->run ();
+
+  ACE_Thread_Manager::instance ()->wait ();
+
+  orb_->destroy ();
 }
 
 void
@@ -167,7 +210,7 @@ DT_Test::dt_creator (void)
 Fixed_Priority_Scheduler*
 DT_Test::scheduler (void)
 {
-  return this->scheduler_;
+  return this->scheduler_.in ();
 }
 
 int

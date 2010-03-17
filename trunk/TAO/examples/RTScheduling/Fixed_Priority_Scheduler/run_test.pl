@@ -44,12 +44,12 @@ $NS = $nstarget->CreateProcess ("../../../orbsvcs/Naming_Service/Naming_Service"
                                 "-o $nstarget_iorfile");
 $SV = $server->CreateProcess ("test",
                               "-ORBInitRef NameService=file://$server_iorfile ".
-                              "-ORBSvcConf $server_svcfile");
+                              "-ORBSvcConf $server_svcfile -ORBDebugLevel $debug_level");
 $CL = $client->CreateProcess ("test",
                               "-ORBInitRef NameService=file://$client_iorfile ".
                               "-ORBSvcConf $client_svcfile");
-$ST = $client->CreateProcess ("Starter",
-                              "-ORBInitRef NameService=file://$starter_iorfile");
+$ST = $starter->CreateProcess ("Starter",
+                               "-ORBInitRef NameService=file://$starter_iorfile");
 
 print STDERR "Starting Naming Service\n";
 

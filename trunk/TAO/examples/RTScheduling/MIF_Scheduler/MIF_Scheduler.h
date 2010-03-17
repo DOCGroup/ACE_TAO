@@ -136,10 +136,9 @@ public ::CORBA::LocalObject
   RTScheduling::Current_var current_;
   RTCORBA::PriorityMappingManager_var mapping_manager_;
   TAO_SYNCH_MUTEX lock_;
-  TAO_SYNCH_MUTEX wait_lock_;
   TAO_SYNCH_CONDITION wait_cond_;
   DT_Message_Queue ready_que_;
-  DT_Message_Queue wait_que_;
+  DT_Message_Queue free_que_;
   int wait_;
 };
 
