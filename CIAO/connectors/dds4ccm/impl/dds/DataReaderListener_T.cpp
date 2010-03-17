@@ -30,7 +30,7 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(::DDS
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderListener_T::on_data_available");
 
-  if (!CORBA::is_nil (this->control_.in ()) && this->control_->mode () != ::CCM_DDS::NOT_ENABLED)
+  if (! ::CORBA::is_nil (this->control_.in ()) && this->control_->mode () != ::CCM_DDS::NOT_ENABLED)
     {
       if (this->reactor_)
         {
@@ -56,7 +56,7 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (::
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderListener_T::on_data_available_i");
 
-  if (CORBA::is_nil (this->control_.in ()) || this->control_->mode () == ::CCM_DDS::NOT_ENABLED)
+  if (::CORBA::is_nil (this->control_.in ()) || this->control_->mode () == ::CCM_DDS::NOT_ENABLED)
     {
       return;
     }
@@ -159,7 +159,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
   typename CCM_TYPE::listener_type::_ptr_type listener)
 {
-  if (!CORBA::is_nil (listener) || CIAO_debug_level >= 10)
+  if (! ::CORBA::is_nil (listener) || CIAO_debug_level >= 10)
     {
       return ::DDS::DATA_AVAILABLE_STATUS |
              ::DDS::REQUESTED_DEADLINE_MISSED_STATUS |

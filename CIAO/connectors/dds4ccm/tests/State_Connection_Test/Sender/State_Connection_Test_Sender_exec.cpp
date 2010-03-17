@@ -42,13 +42,13 @@ namespace CIAO_State_Connection_Test_Sender_Impl
   {
     this->updater_ =
         this->context_->get_connection_info_update_data ();
-    if (!CORBA::is_nil (this->updater_))
+    if (! ::CORBA::is_nil (this->updater_))
       {
         this->updater_ok_ = true;
       }
     this->updater_dds_datawriter_ =
         this->context_->get_connection_info_update_dds_entity ();
-    if (!CORBA::is_nil (this->updater_dds_datawriter_))
+    if (! ::CORBA::is_nil (this->updater_dds_datawriter_))
       {
         this->updater_dds_datawriter_ok_ = true;
       }

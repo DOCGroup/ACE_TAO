@@ -31,7 +31,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
 
   try
     {
-      if (CORBA::is_nil (this->data_writer_.in ()))
+      if (::CORBA::is_nil (this->data_writer_.in ()))
         {
           ::DDS::DataWriter_var dwv_tmp;
           if (library_name && profile_name)
@@ -72,7 +72,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::activate ()
   DDS4CCM_TRACE ("DDS_Write_T<DDS_TYPE, CCM_TYPE>::activate");
   try
     {
-      if (CORBA::is_nil (this->data_listener_.in ()))
+      if (::CORBA::is_nil (this->data_listener_.in ()))
         {
           ACE_NEW_THROW_EX (this->data_listener_,
                             DataWriterListener (),

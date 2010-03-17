@@ -58,7 +58,7 @@ namespace CIAO_CSL_QoSTest_Sender_Impl
     const DDS::OfferedIncompatibleQosStatus & /*status*/)
   {
     this->thread_id_ = ACE_Thread::self ();
-    if(!CORBA::is_nil(the_writer))
+    if(! ::CORBA::is_nil(the_writer))
       {
         this->incompatible_ = true;
       }

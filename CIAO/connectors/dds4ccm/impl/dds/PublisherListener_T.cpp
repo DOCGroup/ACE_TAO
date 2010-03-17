@@ -32,7 +32,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_unexpected_status (
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_unexpected_status");
 
-  if (!CORBA::is_nil (this->error_listener_))
+  if (! ::CORBA::is_nil (this->error_listener_))
     {
       try
         {
@@ -84,7 +84,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_deadline_miss
               status.last_instance_handle.length,
               status.last_instance_handle.isValid));
 
-  if (!CORBA::is_nil (this->error_listener_))
+  if (! ::CORBA::is_nil (this->error_listener_))
     {
       try
         {
@@ -141,7 +141,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_incompatible_
                   status.policies[i].count));
     }
 
-  if (!CORBA::is_nil (this->error_listener_))
+  if (! ::CORBA::is_nil (this->error_listener_))
     {
       try
         {
@@ -241,10 +241,10 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
   ::CCM_DDS::ConnectorStatusListener_ptr error_listener)
 {
-  if (!CORBA::is_nil (error_listener) || CIAO_debug_level >= 10)
+  if (! ::CORBA::is_nil (error_listener) || CIAO_debug_level >= 10)
     {
       return DDS_STATUS_MASK_ALL;
-/*      
+/*
               ::DDS::OFFERED_DEADLINE_MISSED_STATUS |
              ::DDS::OFFERED_INCOMPATIBLE_QOS_STATUS |
 #if (CIAO_DDS4CCM_NDDS==1)

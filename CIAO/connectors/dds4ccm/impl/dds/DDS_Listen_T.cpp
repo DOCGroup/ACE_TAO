@@ -16,7 +16,7 @@
 template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_Listen_T<DDS_TYPE, CCM_TYPE>::DDS_Listen_T (void) :
   data_control_ (new CCM_DDS_DataListenerControl_T
-    < ::CCM_DDS::CCM_DataListenerControl> ()), 
+    < ::CCM_DDS::CCM_DataListenerControl> ()),
   ccm_dds_reader_ (0)
 {
 }
@@ -38,7 +38,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
 
   try
     {
-      if (CORBA::is_nil (this->data_reader_.in ()))
+      if (::CORBA::is_nil (this->data_reader_.in ()))
         {
           ::DDS::DataReader_var reader;
           if (library_name && profile_name)
@@ -84,7 +84,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE>::activate (
   DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE>::activate");
   try
     {
-      if (CORBA::is_nil (this->data_listener_.in ()))
+      if (::CORBA::is_nil (this->data_listener_.in ()))
         {
           ACE_NEW_THROW_EX (this->data_listener_,
                             DataReaderListener (

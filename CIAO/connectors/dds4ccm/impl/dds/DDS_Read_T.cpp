@@ -33,7 +33,7 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
 
   try
     {
-      if (CORBA::is_nil (this->data_.in ()))
+      if (::CORBA::is_nil (this->data_.in ()))
         {
           ::DDS::DataReader_var reader;
           if (profile_name && library_name)
@@ -79,7 +79,7 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE>::activate (
 
   try
     {
-      if (CORBA::is_nil (this->status_.in ()))
+      if (::CORBA::is_nil (this->status_.in ()))
         {
           ACE_NEW_THROW_EX (this->status_,
                             PortStatusListener (listener, reactor),

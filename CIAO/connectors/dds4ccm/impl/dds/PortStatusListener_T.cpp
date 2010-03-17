@@ -37,7 +37,7 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadline_m
               status.total_count, status.total_count_change,
               status.last_instance_handle.length, status.last_instance_handle.isValid));
 
-  if (!CORBA::is_nil (this->port_status_listener_))
+  if (! ::CORBA::is_nil (this->port_status_listener_))
     {
       try
         {
@@ -87,7 +87,7 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
               ACE_TEXT ("total count <%d> - total change <%d>\n"),
               status.total_count, status.total_count_change));
 
-  if (!CORBA::is_nil (this->port_status_listener_))
+  if (! ::CORBA::is_nil (this->port_status_listener_))
     {
       try
         {
@@ -170,7 +170,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
   ::CCM_DDS::PortStatusListener_ptr psl)
 {
-  if (!CORBA::is_nil (psl) || CIAO_debug_level >= 10)
+  if (! ::CORBA::is_nil (psl) || CIAO_debug_level >= 10)
     {
       return DDS_REQUESTED_DEADLINE_MISSED_STATUS |
              DDS_SAMPLE_LOST_STATUS;

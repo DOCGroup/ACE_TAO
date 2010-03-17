@@ -54,7 +54,7 @@ namespace CIAO
       DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_i::create_publisher_with_profile - "
                    "Creating Publisher\n"));
       CCM_DDS_PublisherListener_i *ccm_dds_pl = 0;
-      if (!CORBA::is_nil (a_listener))
+      if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_pl,
                             CCM_DDS_PublisherListener_i (a_listener),
@@ -103,7 +103,7 @@ namespace CIAO
       DDS_PublisherQos ccm_dds_qos = DDS_PUBLISHER_QOS_DEFAULT;
 
       CCM_DDS_PublisherListener_i *ccm_dds_pl = 0;
-      if (!CORBA::is_nil (a_listener))
+      if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_pl,
                             CCM_DDS_PublisherListener_i (a_listener),
@@ -183,7 +183,7 @@ namespace CIAO
                    "Creating Subscriber\n"));
 
       CCM_DDS_SubscriberListener_i *ccm_dds_sl = 0;
-      if (!CORBA::is_nil (a_listener))
+      if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_sl,
                             CCM_DDS_SubscriberListener_i (a_listener),
@@ -231,7 +231,7 @@ namespace CIAO
                    "Creating Subscriber\n"));
 
       CCM_DDS_SubscriberListener_i *ccm_dds_sl = 0;
-      if (!CORBA::is_nil (a_listener))
+      if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_sl,
                             CCM_DDS_SubscriberListener_i (a_listener),
@@ -317,7 +317,7 @@ namespace CIAO
         }
 #else
       ::DDS::Subscriber_var sub = this->impl ()->get_builtin_subscriber ();
-      if (!CORBA::is_nil (sub.in ()))
+      if (! ::CORBA::is_nil (sub.in ()))
         {
           ACE_NEW_THROW_EX (retval,
                             CCM_DDS_Subscriber_i (sub.in ()),
@@ -360,7 +360,7 @@ namespace CIAO
                    impl_name, type_name));
 
       CCM_DDS_TopicListener_i *ccm_dds_tl = 0;
-      if (!CORBA::is_nil (a_listener))
+      if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_tl,
                             CCM_DDS_TopicListener_i (a_listener),
@@ -370,7 +370,7 @@ namespace CIAO
       DDS_TopicQos ccm_dds_qos = DDS_TOPIC_QOS_DEFAULT;
 
       ::DDS::TopicDescription_var td = this->lookup_topicdescription (impl_name);
-      if (CORBA::is_nil (td))
+      if (::CORBA::is_nil (td))
         {
           DDSTopic *ccm_dds_topic = this->impl ()->create_topic (impl_name,
                                                           type_name,
@@ -445,10 +445,10 @@ namespace CIAO
                    impl_name, type_name));
 
       ::DDS::TopicDescription_var td = this->lookup_topicdescription (impl_name);
-      if (CORBA::is_nil (td))
+      if (::CORBA::is_nil (td))
         {
           CCM_DDS_TopicListener_i *ccm_dds_tl = 0;
-          if (!CORBA::is_nil (a_listener))
+          if (! ::CORBA::is_nil (a_listener))
             {
               ACE_NEW_THROW_EX (ccm_dds_tl,
                                 CCM_DDS_TopicListener_i (a_listener),
@@ -510,10 +510,10 @@ namespace CIAO
 
       ::DDS::TopicDescription_var td =
           lookup_topicdescription (ACE_TEXT ("DDS4CCMContentFilteredTopic"));
-      if (!CORBA::is_nil (td.in ()))
+      if (! ::CORBA::is_nil (td.in ()))
         {
           ::DDS::ContentFilteredTopic_var cft = ::DDS::ContentFilteredTopic::_narrow (td.in ());
-          if (!CORBA::is_nil (cft.in ()))
+          if (! ::CORBA::is_nil (cft.in ()))
             {
               ::DDS::ReturnCode_t const ret = this->delete_contentfilteredtopic (cft.in ());
               if (ret != ::DDS::RETCODE_OK)
@@ -558,7 +558,7 @@ namespace CIAO
         }
 #else
       ::DDS::Topic_var topic = this->impl ()->find_topic (impl_name, timeout);
-      if (!CORBA::is_nil (topic.in ())
+      if (! ::CORBA::is_nil (topic.in ())
         {
           ACE_NEW_RETURN (retval,
                           CCM_DDS_Topic_i (topic.in ()),
@@ -753,7 +753,7 @@ namespace CIAO
     {
 #if (CIAO_DDS4CCM_NDDS==1)
       CCM_DDS_DomainPublisherListener_i* ccm_dds_impl_list = 0;
-      if (!CORBA::is_nil (a_listener))
+      if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_impl_list,
                             CCM_DDS_DomainPublisherListener_i (a_listener),
@@ -1015,7 +1015,7 @@ namespace CIAO
         }
 #else
       ::DDS::StatusCondition_var sc = this->impl ()->get_statuscondition ();
-      if (!CORBA::is_nil (sc.in ()))
+      if (! ::CORBA::is_nil (sc.in ()))
         {
           ACE_NEW_THROW_EX (retval,
                             CCM_DDS_StatusCondition_i (sc.in ()),
