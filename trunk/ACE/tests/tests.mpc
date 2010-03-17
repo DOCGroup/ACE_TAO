@@ -1630,6 +1630,15 @@ project(NonBlocking Conn Test) : acetest {
   }
 }
 
+project(MT NonBlocking Connect Test) : acetest {
+  exename = MT_NonBlocking_Connect_Test
+  Source_Files {
+    MT_NonBlocking_Connect_Test.cpp
+  }
+  Header_Files {
+  }
+}
+
 project(Reference Counted Event Handler Test) : acetest {
   exename = Reference_Counted_Event_Handler_Test
   Source_Files {

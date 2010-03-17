@@ -67,6 +67,9 @@ public:
                                    SVC_HANDLER *,
                                    long timer_id);
 
+  /// Destructor.
+  ~ACE_NonBlocking_Connect_Handler (void);
+
   /// Close up and return underlying SVC_HANDLER through @c sh.
   /**
    * If the return value is true the close was performed succesfully,
@@ -126,6 +129,9 @@ private:
 
   /// Associated SVC_HANDLER.
   SVC_HANDLER *svc_handler_;
+
+  /// Same as svc_handler_ if svc_handler_ is reference counted.
+  SVC_HANDLER *cleanup_svc_handler_;
 
   /// Associated timer id.
   long timer_id_;
