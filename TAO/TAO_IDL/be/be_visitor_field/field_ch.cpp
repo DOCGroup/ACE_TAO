@@ -391,11 +391,11 @@ be_visitor_field_ch::visit_string (be_string *node)
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << "TAO::String_Manager";
+      *os << "::TAO::String_Manager";
     }
   else
     {
-      *os << "TAO::WString_Manager";
+      *os << "::TAO::WString_Manager";
     }
 
   return 0;
