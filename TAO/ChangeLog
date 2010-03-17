@@ -52,14 +52,14 @@ Wed Mar 17 13:44:06 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
           Fixed a lot of memory leaks which are actually similar from test
           to test.
 
-Wed Mar 15 10:57:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Mar 17 10:57:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAO_IDL/be/be_sequence.cpp:
 	* TAO_IDL/be/be_type.cpp:
 	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
 	  Use fully scoped TAO namespace
 
-Wed Mar 15 10:43:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Mar 17 10:43:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAO_IDL/be/be_visitor_array/array.cpp:
 	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
