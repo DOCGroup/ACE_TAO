@@ -92,6 +92,14 @@ MIF_Scheduler::MIF_Scheduler (CORBA::ORB_ptr orb)
 
 MIF_Scheduler::~MIF_Scheduler (void)
 {
+  while (free_que_.message_count () > 0)
+    {
+      DT *dt = 0;
+      ACE_Message_Block *msg = 0;
+      free_que_.dequeue_head (msg);
+      dt = dynamic_cast<DT*> (msg);
+      delete dt;
+    }
 }
 
 void
@@ -148,9 +156,11 @@ MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
                                              CORBA::Policy_ptr)
 {
   size_t count = 0;
+  RTScheduling::Current::IdType_var guid = this->current_->id ();
+
   ACE_OS::memcpy (&count,
-                  this->current_->id ()->get_buffer (),
-                  this->current_->id ()->length ());
+                  guid->get_buffer (),
+                  guid->length ());
 
 
   MIF_Scheduling::SegmentSchedulingParameterPolicy_var sched_param =
@@ -200,9 +210,11 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &/
                                           CORBA::Policy_ptr /*implicit_sched_param*/)
 {
   size_t count = 0;
+  RTScheduling::Current::IdType_var guid = this->current_->id ();
+
   ACE_OS::memcpy (&count,
-                  this->current_->id ()->get_buffer (),
-                  this->current_->id ()->length ());
+                  guid->get_buffer (),
+                  guid->length ());
 
   MIF_Scheduling::SegmentSchedulingParameterPolicy_var sched_param =
     MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (sched_policy);
@@ -234,6 +246,7 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &/
           run_dt->resume ();
           new_dt->suspend ();
           lock_.release ();
+          free_que_.enqueue_prio (run_dt);
         }
       else
         {
@@ -266,6 +279,7 @@ MIF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid
       lock_.acquire ();
       run_dt->resume ();
       lock_.release ();
+      free_que_.enqueue_prio (run_dt);
     }
 }
 
@@ -279,43 +293,47 @@ MIF_Scheduler::end_nested_scheduling_segment (const RTScheduling::Current::IdTyp
 void
 MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_info)
 {
+  CORBA::Policy_var sched_param = current_->scheduling_parameter ();
+
   MIF_Scheduling::SegmentSchedulingParameterPolicy_var sched_param_var =
-    MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (current_->scheduling_parameter ());
+    MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (sched_param.in ());
 
-  IOP::ServiceContext* srv_con = new IOP::ServiceContext;
-  srv_con->context_id = Client_Interceptor::SchedulingInfo;
+  IOP::ServiceContext srv_con;
+  srv_con.context_id = Client_Interceptor::SchedulingInfo;
 
-  int guid_length = current_->id ()->length ();
+  RTScheduling::Current::IdType_var guid = current_->id ();
 
-  RTScheduling::Current::IdType* guid = current_->id ();
+  int guid_length = guid->length ();
 
-  CORBA::Octet *seq_buf = CORBA::OctetSeq::allocbuf (guid_length);
-  ACE_OS::memcpy (seq_buf,
+  CORBA::OctetSeq seq_buf (guid_length);
+  seq_buf.length (seq_buf.maximum ());
+  ACE_OS::memcpy (seq_buf.get_buffer (),
                   guid->get_buffer (),
                   guid_length);
 
   int cxt_data_length = sizeof (int) + guid_length;
-  srv_con->context_data.length (cxt_data_length);
+  srv_con.context_data.length (cxt_data_length);
 
   int i = 0;
   for (;i < guid_length;i++)
     {
-      srv_con->context_data [i] = seq_buf [i];
+      srv_con.context_data [i] = seq_buf [i];
     }
 
   int importance = sched_param_var->importance ();
-  CORBA::Octet *int_buf = CORBA::OctetSeq::allocbuf (sizeof (importance));
-  ACE_OS::memcpy (int_buf,
+  CORBA::OctetSeq int_buf (sizeof (importance));
+  int_buf.length (int_buf.maximum ());
+  ACE_OS::memcpy (int_buf.get_buffer (),
                   &importance,
                   sizeof (importance));
 
   int j = 0;
   for (;i < cxt_data_length;i++)
     {
-      srv_con->context_data [i] = int_buf [j++];
+      srv_con.context_data [i] = int_buf [j++];
     }
 
-  request_info->add_request_service_context (*srv_con,
+  request_info->add_request_service_context (srv_con,
                                              0);
 
   lock_.acquire ();
@@ -352,6 +370,7 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
       ready_que_.dequeue_head (msg);
       run_dt = dynamic_cast<DT*> (msg);
       run_dt->resume ();
+      free_que_.enqueue_prio (run_dt);
     }
   lock_.release ();
 
@@ -369,7 +388,7 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
     ACE_DEBUG ((LM_DEBUG,
                 "MIF_Scheduler::receive_request\n"));
 
-  IOP::ServiceContext* serv_cxt =
+  IOP::ServiceContext_var serv_cxt =
     request_info->get_request_service_context (Server_Interceptor::SchedulingInfo);
 
   if (serv_cxt != 0)
@@ -396,7 +415,8 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
                   gu_id));
 
 
-      CORBA::Octet *int_buf = CORBA::OctetSeq::allocbuf (sizeof (long));
+      CORBA::OctetSeq int_buf (sizeof (long));
+      int_buf.length (int_buf.maximum ());
       int i = sizeof (long);
       for (unsigned int j = 0;j < sizeof (int);j++)
         {
@@ -405,11 +425,11 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
 
       int importance = 0;
       ACE_OS::memcpy (&importance,
-                      int_buf,
+                      int_buf.get_buffer (),
                       sizeof (importance));
 
-      guid_out.ptr () = guid;
-      sched_param_out.ptr () = DT_TEST::instance ()->scheduler ()->create_segment_scheduling_parameter (importance);
+      guid_out = guid;
+      sched_param_out = DT_TEST::instance ()->scheduler ()->create_segment_scheduling_parameter (importance);
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
@@ -434,7 +454,7 @@ void
 MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr)
 {
 
-  RTScheduling::Current::IdType* guid = current_->id ();
+  RTScheduling::Current::IdType_var guid = current_->id ();
 
   size_t count;
   ACE_OS::memcpy (&count,
@@ -454,6 +474,7 @@ MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr)
       lock_.acquire ();
       run_dt->resume ();
       lock_.release ();
+      free_que_.enqueue_prio (run_dt);
     }
 }
 
@@ -469,6 +490,7 @@ MIF_Scheduler::send_exception (PortableInterceptor::ServerRequestInfo_ptr)
       lock_.acquire ();
       run_dt->resume ();
       lock_.release ();
+      free_que_.enqueue_prio (run_dt);
     }
 }
 
@@ -477,7 +499,7 @@ MIF_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr)
 {
   if (TAO_debug_level > 0)
     {
-      RTScheduling::Current::IdType* guid = current_->id ();
+      RTScheduling::Current::IdType_var guid = current_->id ();
 
       size_t count;
       ACE_OS::memcpy (&count,
@@ -499,6 +521,7 @@ MIF_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr)
       lock_.acquire ();
       run_dt->resume ();
       lock_.release ();
+      free_que_.enqueue_prio (run_dt);
     }
 }
 
@@ -510,17 +533,14 @@ MIF_Scheduler::send_poll (PortableInterceptor::ClientRequestInfo_ptr)
 void
 MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr)
 {
+  CORBA::Policy_var sched_param = current_->scheduling_parameter ();
 
   MIF_Scheduling::SegmentSchedulingParameterPolicy_var sched_param_var =
-    MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (current_->scheduling_parameter ());
+    MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (sched_param.in ());
 
   int importance = sched_param_var->importance ();
-  CORBA::Octet *int_buf = CORBA::OctetSeq::allocbuf (sizeof (importance));
-  ACE_OS::memcpy (int_buf,
-                  &importance,
-                  sizeof (importance));
 
-  RTScheduling::Current::IdType* guid = current_->id ();
+  RTScheduling::Current::IdType_var guid = current_->id ();
 
   size_t gu_id;
   ACE_OS::memcpy (&gu_id,
@@ -563,16 +583,14 @@ MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr)
 void
 MIF_Scheduler::receive_exception (PortableInterceptor::ClientRequestInfo_ptr)
 {
+  CORBA::Policy_var sched_param = current_->scheduling_parameter ();
+
   MIF_Scheduling::SegmentSchedulingParameterPolicy_var sched_param_var =
-    MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (current_->scheduling_parameter ());
+    MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (sched_param.in ());
 
   int importance = sched_param_var->importance ();
-  CORBA::Octet *int_buf = CORBA::OctetSeq::allocbuf (sizeof (importance));
-  ACE_OS::memcpy (int_buf,
-                  &importance,
-                  sizeof (importance));
 
-  RTScheduling::Current::IdType* guid = current_->id ();
+  RTScheduling::Current::IdType_var guid = current_->id ();
 
   size_t gu_id;
   ACE_OS::memcpy (&gu_id,
@@ -609,16 +627,14 @@ MIF_Scheduler::receive_exception (PortableInterceptor::ClientRequestInfo_ptr)
 void
 MIF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr)
 {
- MIF_Scheduling::SegmentSchedulingParameterPolicy_var sched_param_var =
-    MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (current_->scheduling_parameter ());
+  CORBA::Policy_var sched_param = current_->scheduling_parameter ();
+
+  MIF_Scheduling::SegmentSchedulingParameterPolicy_var sched_param_var =
+    MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (sched_param.in ());
 
   int importance = sched_param_var->importance ();
-  CORBA::Octet *int_buf = CORBA::OctetSeq::allocbuf (sizeof (importance));
-  ACE_OS::memcpy (int_buf,
-                  &importance,
-                  sizeof (importance));
 
-  RTScheduling::Current::IdType* guid = current_->id ();
+  RTScheduling::Current::IdType_var guid = current_->id ();
 
   size_t gu_id;
   ACE_OS::memcpy (&gu_id,

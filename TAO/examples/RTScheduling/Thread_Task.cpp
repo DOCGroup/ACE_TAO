@@ -18,7 +18,7 @@ Thread_Task::Thread_Task (void)
    dt_creator_ (0),
    base_time_ (0),
    dist_ (0),
-   job_name_ (0),
+   job_name_ (),
    task_stats_ (0)
 {
 }
@@ -41,9 +41,10 @@ Thread_Task::svc (void)
                                                 sched_param_.in (),
                                                 implicit_sched_param.in ());
 
+      RTScheduling::Current::IdType_var guid = this->current_->id ();
       ACE_OS::memcpy (&count_,
-                      this->current_->id ()->get_buffer (),
-                      this->current_->id ()->length ());
+                      guid->get_buffer (),
+                      guid->length ());
 
       ACE_TCHAR msg [BUFSIZ];
       ACE_OS::sprintf (msg,
@@ -90,7 +91,7 @@ Thread_Task::perform_task (void)
 const char*
 Thread_Task::job (void)
 {
-  return job_name_;
+  return job_name_.in ();
 }
 
 void

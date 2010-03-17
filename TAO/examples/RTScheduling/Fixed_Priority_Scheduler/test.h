@@ -10,6 +10,7 @@
 #include "ace/Synch.h"
 #include "ace/Task.h"
 #include "FP_DT_Creator.h"
+#include "tao/Utils/Servant_Var.h"
 
 class Task_Stats;
 
@@ -36,8 +37,6 @@ class DT_Test :public ACE_Task <ACE_SYNCH>
 
   ACE_hrtime_t base_t;
 
-  void register_synch_obj (void);
-
   protected:
   /// task svc
   virtual int svc (void);
@@ -54,7 +53,7 @@ class DT_Test :public ACE_Task <ACE_SYNCH>
   int min_priority_;
   RTScheduling::Current_var current_;
   FP_DT_Creator* dt_creator_;
-  Fixed_Priority_Scheduler* scheduler_;
+  TAO::Utils::Servant_Var<Fixed_Priority_Scheduler> scheduler_;
   RTCORBA::RTORB_var rt_orb_;
   /// Reference to the root poa.
   PortableServer::POA_var root_poa_;

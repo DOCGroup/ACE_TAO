@@ -99,7 +99,6 @@ DT_Creator::init (int argc, ACE_TCHAR *argv [])
         {
           dt_count_ = ACE_OS::atoi (current_arg);
           ACE_NEW_RETURN (dt_list_, Thread_Task*[dt_count_], -1);
-          active_dt_count_ = dt_count_;
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-POA_Count"))))
@@ -111,7 +110,6 @@ DT_Creator::init (int argc, ACE_TCHAR *argv [])
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-JOB_Count"))))
         {
           job_count_ = ACE_OS::atoi (current_arg);
-          active_job_count_ = job_count_;
           ACE_NEW_RETURN (job_list_, Job_i*[job_count_], -1);
           arg_shifter.consume_arg ();
         }
@@ -154,12 +152,12 @@ DT_Creator::init (int argc, ACE_TCHAR *argv [])
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-OutFile"))))
         {
-          file_name_ = ACE_OS::strdup (current_arg);
+          file_name_ = current_arg;
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-LogFile"))))
         {
-          log_file_name_ = ACE_OS::strdup (current_arg);
+          log_file_name_ = current_arg;
           arg_shifter.consume_arg ();
         }
       else
@@ -298,6 +296,8 @@ DT_Creator::activate_job_list (void)
 
   for (int i = 0; i < job_count_; ++i)
     {
+      ++active_job_count_;
+
       job = job_list_[i];
 
       if (TAO_debug_level > 0)
@@ -415,8 +415,6 @@ DT_Creator::resolve_naming_service (void)
   this->naming_ =
     CosNaming::NamingContextExt::_narrow (naming_obj.in ());
 
-  //@@tmp hack, otherwise crashes on exit!..??
-  CosNaming::NamingContextExt::_duplicate (this->naming_.in());
   return 0;
 }
 
@@ -434,11 +432,18 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current)
 
   while (!this->synch ()->synched ())
     {
-      this->orb_->perform_work ();
+      try
+        {
+          this->orb_->perform_work ();
+        }
+      catch (const CORBA::Exception &)
+        {
+          return;
+        }
     }
 
   CORBA::Policy_var sched_param;
-  sched_param = CORBA::Policy::_duplicate (this->sched_param (100));
+  sched_param = this->sched_param (100);
   const char * name = 0;
   current->begin_scheduling_segment (name,
               sched_param.in (),
@@ -468,17 +473,18 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current)
           (elapsed_time.sec () < dt_list_[i]->start_time ()))
   {
     time_t suspension_time = dt_list_[i]->start_time () - elapsed_time.sec ();
-    ACE_OS::sprintf (buf, "suspension_tome = %lu\n", suspension_time);
+    ACE_OS::sprintf (buf, "suspension_time = %lu\n", suspension_time);
     log [log_index++] = ACE_OS::strdup (buf);
     yield (suspension_time, dt_list_[i]);
   }
 
-      sched_param = CORBA::Policy::_duplicate (this->sched_param (dt_list_ [i]->importance ()));
+      sched_param = this->sched_param (dt_list_ [i]->importance ());
       dt_list_ [i]->activate_task (current,
            sched_param.in (),
            flags,
            base_time_);
 
+      ++active_dt_count_;
     }
 
   this->wait ();
@@ -509,6 +515,8 @@ DT_Creator::job_ended (void)
   {
     ACE_GUARD (ACE_Lock, ace_mon, *state_lock_);
     --active_job_count_;
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "Active job count = %d\n",active_job_count_));
     char buf [BUFSIZ];
     ACE_OS::sprintf (buf,"Active job count = %d\n",active_job_count_);
     log [log_index++] = ACE_OS::strdup (buf);
@@ -536,7 +544,6 @@ DT_Creator::check_ifexit (void)
   // All tasks have finished and all jobs have been shutdown.
   if (active_dt_count_ == 0 && active_job_count_ == 0)
     {
-
       ACE_DEBUG ((LM_DEBUG, "Shutdown in progress ...\n"));
 
       /*
@@ -550,13 +557,13 @@ DT_Creator::check_ifexit (void)
     job_list_[i]->dump_stats ();
         }
       */
-      TASK_STATS::instance ()->dump_samples (file_name_,
+      TASK_STATS::instance ()->dump_samples (file_name_.c_str (),
                ACE_TEXT("#Schedule Output"),
                ACE_High_Res_Timer::global_scale_factor ());
 
       shutdown = 1;
 
-      FILE* log_file = ACE_OS::fopen (log_file_name_, "w");
+      FILE* log_file = ACE_OS::fopen (log_file_name_.c_str (), "w");
 
       if (log_file != 0)
         {
@@ -597,8 +604,8 @@ DT_Creator::DT_Creator (void)
    active_job_count_ (0),
    log (0),
    base_time_ (0),
-   file_name_ (0),
-   log_file_name_ (0),
+   file_name_ (),
+   log_file_name_ (),
    gsf_ (0),
    synch_ (0)
 {
@@ -606,10 +613,15 @@ DT_Creator::DT_Creator (void)
 
 DT_Creator::~DT_Creator (void)
 {
-  // for (int i = 0; i < (BUFSIZ * 100); i++)
+  for (int i = 0; i < log_index; ++i)
+    ACE_OS::free (log[i]);
   delete[] log;
 
+  for (int i = 0; i < this->dt_count_; ++i)
+    delete this->dt_list_[i];
   delete[] dt_list_;
+  for (int i = 0; i < this->poa_count_; ++i)
+    delete this->poa_list_[i];
   delete[] poa_list_;
   delete[] job_list_;
 
@@ -654,5 +666,5 @@ DT_Creator::base_time (ACE_Time_Value* base_time)
 Synch_i*
 DT_Creator::synch (void)
 {
-  return this->synch_;
+  return this->synch_.in ();
 }

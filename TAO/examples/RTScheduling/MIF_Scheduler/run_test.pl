@@ -44,12 +44,12 @@ $NS = $nstarget->CreateProcess ("../../../orbsvcs/Naming_Service/Naming_Service"
                                 "-o $nstarget_iorfile");
 $SV = $server->CreateProcess ("test",
                               "-ORBInitRef NameService=file://$server_iorfile ".
-                              "-ORBSvcConf $server_svcfile");
+                              "-ORBSvcConf $server_svcfile -ORBDebugLevel $debug_level");
 $CL = $client->CreateProcess ("test",
                               "-ORBInitRef NameService=file://$client_iorfile ".
                               "-ORBSvcConf $client_svcfile");
-$ST = $client->CreateProcess ("Starter",
-                              "-ORBInitRef NameService=file://$starter_iorfile");
+$ST = $starter->CreateProcess ("Starter",
+                               "-ORBInitRef NameService=file://$starter_iorfile");
 
 print STDERR "Starting Naming Service\n";
 
@@ -113,7 +113,7 @@ if ($client_status != 0) {
 
 sleep (5);
 
-$starter_status = $ST->SpawnWaitKill ($starter->ProcessStartWaitInterval() + 185);
+$starter_status = $ST->SpawnWaitKill ($starter->ProcessStartWaitInterval());
 
 if ($starter_status != 0) {
     print STDERR "ERROR: starter returned $starter_status\n";
@@ -123,14 +123,28 @@ if ($starter_status != 0) {
     exit 1;
 }
 
-$server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
+$server_status = $SV->Wait ($server->ProcessStopWaitInterval() + 90);
+
+if ($server_status == -1) {
+    # if SV is still alive terminate it.
+    $server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
+} else {
+    $server_status = $SV->Kill ($server->ProcessStopWaitInterval())
+}
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }
 
-$client_status = $CL->TerminateWaitKill ($client->ProcessStopWaitInterval());
+$client_status = $CL->Wait ($client->ProcessStopWaitInterval());
+
+if ($client_status == -1) {
+    # if CL is still alive terminate it.
+    $client_status = $CL->TerminateWaitKill ($client->ProcessStopWaitInterval());
+} else {
+    $client_status = $CL->Kill ($client->ProcessStopWaitInterval());
+}
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";

@@ -294,8 +294,8 @@ TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (
   : orb_ (orb),
     guid_ (guid),
     name_ (CORBA::string_dup (name)),
-    sched_param_ (sched_param),
-    implicit_sched_param_ (implicit_sched_param),
+    sched_param_ (CORBA::Policy::_duplicate (sched_param)),
+    implicit_sched_param_ (CORBA::Policy::_duplicate (implicit_sched_param)),
     dt_ (RTScheduling::DistributableThread::_duplicate (dt)),
     previous_current_ (prev_current),
     dt_hash_ (dt_hash)
@@ -455,7 +455,7 @@ TAO_RTScheduler_Current_i::end_scheduling_segment (const char * name)
       // scheduling segment.
       this->scheduler_->end_nested_scheduling_segment (this->guid_,
                                                        name,
-                                                       this->previous_current_->sched_param_
+                                                       this->previous_current_->sched_param_.in ()
                                                       );
 
       // Cleanup current.
@@ -519,7 +519,8 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
       ACE_ERROR((LM_ERROR,
                  "Unable to activate DistributableThread\n"));
 
-      RTScheduling::DistributableThread::_nil ();
+      delete dttask;
+      return RTScheduling::DistributableThread::_nil ();
     }
 
   return dt._retn ();
@@ -641,13 +642,13 @@ TAO_RTScheduler_Current_i::id (void)
 CORBA::Policy_ptr
 TAO_RTScheduler_Current_i::scheduling_parameter (void)
 {
-  return CORBA::Policy::_duplicate (this->sched_param_);
+  return CORBA::Policy::_duplicate (this->sched_param_.in ());
 }
 
 CORBA::Policy_ptr
 TAO_RTScheduler_Current_i::implicit_scheduling_parameter (void)
 {
-  return CORBA::Policy::_duplicate (this->implicit_sched_param_);
+  return CORBA::Policy::_duplicate (this->implicit_sched_param_.in ());
 }
 
 RTScheduling::Current::NameList *
@@ -673,7 +674,7 @@ TAO_RTScheduler_Current_i::current_scheduling_segment_names (void)
 const char*
 TAO_RTScheduler_Current_i::name (void)
 {
-  return CORBA::string_dup (this->name_.in ());
+  return this->name_.in ();
 }
 
 #if defined (THREAD_CANCELLED)

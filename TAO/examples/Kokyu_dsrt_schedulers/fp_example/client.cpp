@@ -142,6 +142,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
+      RTScheduling::Scheduler_var sched_owner;
+
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
@@ -165,7 +167,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (enable_dynamic_scheduling)
         {
           ACE_DEBUG ((LM_DEBUG, "Dyn Sched enabled\n"));
-          CORBA::Object_ptr manager_obj =
+          CORBA::Object_var manager_obj =
             orb->resolve_initial_references ("RTSchedulerManager");
 
           TAO_RTScheduler_Manager_var manager =
@@ -186,6 +188,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                          disp_impl_type,
                                          sched_policy,
                                          sched_scope), -1);
+          sched_owner = scheduler;
 
           manager->rtscheduler (scheduler);
 
@@ -255,6 +258,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       scheduler->shutdown ();
       ACE_DEBUG ((LM_DEBUG, "scheduler shutdown done\n"));
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

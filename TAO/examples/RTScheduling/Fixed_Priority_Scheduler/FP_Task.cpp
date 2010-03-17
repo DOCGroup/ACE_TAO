@@ -32,11 +32,11 @@ FP_Task::activate_task (RTScheduling::Current_ptr current,
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "Thread_Task::activate %d\n",
+                "FP_Task::activate %d\n",
                 importance_));
 
   char msg [BUFSIZ];
-  ACE_OS::sprintf (msg, "Thread_Task::activate task\n");
+  ACE_OS::sprintf (msg, "FP_Task::activate task\n");
   dt_creator_->log_msg (msg);
 
   base_time_ = base_time;
