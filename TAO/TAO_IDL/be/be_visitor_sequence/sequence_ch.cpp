@@ -220,7 +220,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           << "::CORBA::ULong length," << be_nl
           << "const ACE_Message_Block* mb" << be_uidt_nl
           << ")" << be_uidt_nl
-          << "  : TAO::unbounded_value_sequence< ::CORBA::Octet>"
+          << "  : ::TAO::unbounded_value_sequence< ::CORBA::Octet>"
           << " (length, mb) {}" << "\n"
           << "#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */";
     }
@@ -245,8 +245,8 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
     AST_Type::SIZE_TYPE st = elem->size_type ();
 
     *os << "typedef" << be_idt_nl
-        << (st == AST_Type::FIXED ? "TAO_FixedSeq_Var_T<"
-                                  : "TAO_VarSeq_Var_T<")
+        << (st == AST_Type::FIXED ? "::TAO_FixedSeq_Var_T<"
+                                  : "::TAO_VarSeq_Var_T<")
         << be_idt << be_idt_nl
         << node->local_name ();
 
@@ -256,7 +256,7 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
 
     *os << be_nl << be_nl
         << "typedef" << be_idt_nl
-        << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
+        << "::TAO_Seq_Out_T<" << be_idt << be_idt_nl
         << node->local_name () << be_uidt_nl
         << ">" << be_uidt_nl
         << node->local_name () << "_out;" << be_uidt;
