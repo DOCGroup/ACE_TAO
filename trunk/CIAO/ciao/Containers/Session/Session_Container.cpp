@@ -674,8 +674,8 @@ namespace CIAO
     catch (const ::Components::InvalidName &ex)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO "Session_Container::connect_local_facet - "
-                        ACE_TEXT ("Caught exception InvalidName while connecting")
-                        ACE_TEXT ("<%C> to <%C>\n"),
+                        "Caught exception InvalidName while connecting"
+                        "<%C> to <%C>\n",
                         provider_port,
                         user_port));
         throw ex;
