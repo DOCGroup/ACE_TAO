@@ -122,5 +122,5 @@ endif
 
 PIC      = -fPIC
 AR      ?= ar
-ARFLAGS  = rsuv
+ARFLAGS ?= rsuv
 RANLIB   = @true
