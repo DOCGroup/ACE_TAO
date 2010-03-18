@@ -43,7 +43,7 @@ be_visitor_connector_ami_exs::visit_connector (be_connector *node)
       
   be_visitor_facet_ami_exs facet_visitor (this->ctx_);
   
-  if (facet_visitor.visit_scope (node) == -1)
+  if (facet_visitor.visit_component (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_connector_ami_exs::")
