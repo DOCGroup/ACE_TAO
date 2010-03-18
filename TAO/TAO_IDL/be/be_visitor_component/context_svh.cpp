@@ -28,7 +28,7 @@ be_visitor_context_svh::visit_component (be_component *node)
   // This visitor is spawned by be_visitor_component_svh,
   // which already does a check for imported node, so none
   // is needed here.
-  
+
   node_ = node;
 
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
@@ -143,7 +143,7 @@ be_visitor_context_svh::visit_uses (be_uses *node)
     {
       os_ << be_nl << be_nl
           << "virtual ";
-      
+
       if (is_multiple)
         {
           os_ << "::" << node_->full_name () << "::"
@@ -183,7 +183,7 @@ be_visitor_context_svh::visit_uses (be_uses *node)
             {
               os_ << "void);";
             }
-            
+
           op_name->destroy ();
           delete op_name;
           op_name = 0;
