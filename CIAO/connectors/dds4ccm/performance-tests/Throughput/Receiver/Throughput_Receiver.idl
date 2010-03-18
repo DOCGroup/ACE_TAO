@@ -1,0 +1,23 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ */
+
+#ifndef RECEIVER_IDL
+#define RECEIVER_IDL
+
+#include "Connector/Throughput_Connector.idl"
+#include "SecConnector/Throughput_Sec_Connector.idl"
+
+module Throughput
+{
+  component Receiver
+  {
+    port CCM_DDS::ThroughputTest::DDS_Listen info_listen;
+    port CCM_DDS::ThroughputCommand::DDS_Listen command_listen;
+  };
+};
+
+#endif

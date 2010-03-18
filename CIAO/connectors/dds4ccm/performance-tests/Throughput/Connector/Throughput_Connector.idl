@@ -1,0 +1,31 @@
+// $Id$
+
+/**
+ * @file Throughput_Connector.idl
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ *
+ * by-hand translation of the idl3p.
+ */
+
+#ifndef THROUGHPUT_CONNECTOR_IDL_
+#define THROUGHPUT_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/Throughput_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Connector/Throughput_ConnectorE.idl"
+
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::ThroughputTest, ::ThroughputTest_Seq> ThroughputTest;
+};
+
+module Throughput
+{
+  connector Throughput_Connector : ::CCM_DDS::ThroughputTest::DDS_Event
+  {
+  };
+};
+
+#endif /* Throughput_CONNECTOR_IDL_ */
