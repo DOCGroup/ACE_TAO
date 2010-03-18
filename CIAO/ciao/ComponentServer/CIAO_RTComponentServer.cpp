@@ -26,10 +26,15 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
       // Wait for the threads to exit.
       //ACE_Thread_Manager::instance ()->wait ();
     }
-  catch (CIAO::Deployment::RTComponentServer_Task::Error &e)
+  catch (const CIAO::Deployment::RTComponentServer_Task::Error &e)
     {
       CIAO_DEBUG (6, (LM_ALERT, CLINFO "CIAO_RTComponentServer main: Caught ComponentServer exception: %C\n",
                   e.err_.c_str ()));
+      retval = -1;
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("CIAO_RTComponentServer main: Caught corba exception:");
       retval = -1;
     }
   catch (...)
