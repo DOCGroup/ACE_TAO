@@ -165,8 +165,8 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   *os << "static void _is_a_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & req," << be_nl
       << "void * servant_upcall," << be_nl
-      << "void * servant" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+      << "void * servant);" << be_uidt
+      << be_uidt_nl << be_nl;
 
   if (!be_global->gen_minimum_corba ())
     {
@@ -174,8 +174,8 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       *os << "static void _non_existent_skel (" << be_idt << be_idt_nl
           << "TAO_ServerRequest & req," << be_nl
           << "void * servant_upcall," << be_nl
-          << "void * servant" << be_uidt_nl
-          << ");" << be_uidt_nl << be_nl;
+          << "void * servant);" << be_uidt
+          << be_uidt_nl << be_nl;
     }
 
   if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
@@ -184,8 +184,8 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       *os << "static void _interface_skel (" << be_idt << be_idt_nl
           << "TAO_ServerRequest & req," << be_nl
           << "void * servant_upcall," << be_nl
-          << "void * servant" << be_uidt_nl
-          << ");" << be_uidt_nl << be_nl;
+          << "void * servant);" << be_uidt
+          << be_uidt_nl << be_nl;
     }
 
   if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
@@ -194,8 +194,8 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       *os << "static void _component_skel (" << be_idt << be_idt_nl
           << "TAO_ServerRequest & req," << be_nl
           << "void * servant_upcall," << be_nl
-          << "void * servant" << be_uidt_nl
-          << ");" << be_uidt_nl << be_nl;
+          << "void * servant);" << be_uidt
+          << be_uidt_nl << be_nl;
     }
 
   if (!be_global->gen_minimum_corba ())
@@ -234,11 +234,10 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   // Generate skeletons for operations of our base classes. These
   // skeletons just cast the pointer to the appropriate type
   // before invoking the call.
-  int status =
+  int const status =
     node->traverse_inheritance_graph (
               be_interface::gen_skel_helper,
-              os
-            );
+              os);
 
   if (status == -1)
     {
