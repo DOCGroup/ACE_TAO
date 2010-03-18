@@ -34,6 +34,7 @@ public:
   
   ~be_visitor_facet_ami_exh (void);
   
+  virtual int visit_component (be_component *node);
   virtual int visit_provides (be_provides *node);
   virtual int visit_operation (be_operation *node);
   

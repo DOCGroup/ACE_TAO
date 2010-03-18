@@ -47,7 +47,10 @@ be_visitor_connector_ami_exh::visit_connector (be_connector *node)
       
   be_visitor_facet_ami_exh facet_visitor (this->ctx_);
   
-  if (facet_visitor.visit_scope (node) == -1)
+  /// We call visit_component() so the visitor base class member
+  /// node_ can be set. If a facet is defined in a porttype, it
+  /// complicates navigation to the component.
+  if (facet_visitor.visit_component (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_connector_ami_exh::")

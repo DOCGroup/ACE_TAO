@@ -3446,8 +3446,14 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
 
       char * const idl_name =
         idl_global->included_idl_files ()[j];
+        
+      bool system_file =
+        ACE_OS::strcmp (idl_name, "Components.idl") == 0
+        || ACE_OS::strcmp (
+             idl_name,
+             "connectors/ami4ccm/ami4ccm/ami4ccm.idl") == 0;
 
-      if (ACE_OS::strcmp (idl_name, "Components.idl") == 0)
+      if (system_file)
         {
           continue;
         }
@@ -3456,10 +3462,15 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
 
       this->gen_standard_include (
         this->ciao_conn_header_,
-        BE_GlobalData::be_get_client_hdr (&str));
-
+        BE_GlobalData::be_get_server_hdr (&str));
+        
       str.destroy ();
     }
+        
+  this->gen_standard_include (
+    this->ciao_conn_header_,
+    BE_GlobalData::be_get_ciao_exec_stub_header (
+      idl_global->stripped_filename ()));
 }
 
 void

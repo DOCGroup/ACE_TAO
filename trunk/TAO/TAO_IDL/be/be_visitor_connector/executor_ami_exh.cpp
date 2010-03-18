@@ -35,13 +35,11 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
 
   const char *suffix = "_exec_i";
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
-  bool global = (scope->node_type () == AST_Decl::NT_root);
-  const char *smart_scope = (global ? "" : "::");
 
   os_ << be_nl << be_nl
       << "class " << this->export_macro_.c_str ()
       << node->local_name () << suffix << be_idt_nl
-      << ": public virtual " << smart_scope
+      << ": public virtual " << "::"
       << scope->full_name () << "::CCM_"
       << node->local_name () << "," << be_idt_nl
       << "public virtual ::CORBA::LocalObject"
@@ -74,17 +72,27 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
 
   os_ << be_uidt_nl << be_nl
       << "private:" << be_idt_nl
-      << smart_scope << scope->full_name () << "::CCM_"
+      << "::" << scope->full_name () << "::CCM_"
       << node->local_name () << "_Context_var context_;" << be_nl;
 
   /// We make use of the naming conventions AMI_xxx_Connector
-  /// and AMI_xxx for the AMI connector and 'sendc' interface.
+  /// and AMI_xxx for the AMI connector instantiated module
+  /// (it's the module name that's unique, the connector inside
+  /// it is always called The_Connector, so it's the module name
+  /// that we use for building related names)
+  /// and 'sendc' interface, respectively.
   /// First, we strip off the "_Connector" suffix.
-  ACE_CString connector_name (node->local_name ());
+  ACE_CString connector_name (scope->local_name ()->get_string ());
   ACE_CString half_stripped_name (
     connector_name.substr (0, connector_name.find ("_Connector")));
+    
+  /// And remember that the implied IDL interfaces are created
+  /// in the same scope as the instantiated module.
+  AST_Decl *i_scope = ScopeAsDecl (scope->defined_in ());
+  bool global = (i_scope->node_type () == AST_Decl::NT_root);
+  const char *smart_scope = (global ? "" : "::");
   
-  os_ << smart_scope << scope->full_name () << "::"
+  os_ << smart_scope << i_scope->full_name () << "::"
       << half_stripped_name.c_str ()
       << "Callback_var callback_;" << be_nl;
       
