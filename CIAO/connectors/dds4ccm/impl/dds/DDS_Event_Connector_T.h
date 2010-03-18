@@ -73,7 +73,7 @@ private:
    * DDS_Listen push_consumer
    */
   //@{
-  DDS_Listen_T <DDS_TYPE, CCM_TYPE> push_consumer_;
+  DDS_Listen_T <DDS_TYPE, CCM_TYPE, FIXED> push_consumer_;
   //@}
 
   /**

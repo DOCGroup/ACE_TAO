@@ -12,12 +12,12 @@
 #include "Base/VTopics_Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
-#pragma ciao lem "ConnSeq/VTS_Seq_ConnectorE.idl"
+#pragma ciao lem "Conn_Seq/VTS_Seq_ConnectorE.idl"
 
 module VTopics
 {
   module ::CCM_DDS::Typed < ::TopicSeq, ::TopicSeqSeq> TopicSeqConn;
-  connector VTSSeq_Connector : TopicSeqConn::DDS_State
+  connector VTS_Seq_Connector : TopicSeqConn::DDS_State
   {
   };
 };

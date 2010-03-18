@@ -13,28 +13,28 @@
 
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-DDS_Listen_T<DDS_TYPE, CCM_TYPE>::DDS_Listen_T (void) :
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::DDS_Listen_T (void) :
   data_control_ (new CCM_DDS_DataListenerControl_T
     < ::CCM_DDS::CCM_DataListenerControl> ()),
   ccm_dds_reader_ (0)
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-DDS_Listen_T<DDS_TYPE, CCM_TYPE>::~DDS_Listen_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::~DDS_Listen_T (void)
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
-DDS_Listen_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
+DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
   ::DDS::Topic_ptr topic,
   ::DDS::Subscriber_ptr subscriber,
   const char* library_name,
   const char* profile_name)
 {
-  DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
+  DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete");
 
   try
     {
@@ -64,7 +64,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
           this->ccm_dds_reader_.set_impl (rd->get_impl ());
           this->data_reader_ = ::DDS::CCM_DataReader::_narrow (reader);
           this->dds_read_.set_impl (this->data_reader_.in ());
-          this->dds_read_.set_qos (library_name, profile_name);
+          this->dds_read_.set_contentfilteredtopic_data (library_name, profile_name);
         }
     }
   catch (...)
@@ -74,14 +74,14 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
-DDS_Listen_T<DDS_TYPE, CCM_TYPE>::activate (
+DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::activate (
   typename CCM_TYPE::listener_type::_ptr_type listener,
   ::CCM_DDS::PortStatusListener_ptr status,
   ACE_Reactor* reactor)
 {
-  DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE>::activate");
+  DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::activate");
   try
     {
       if (::CORBA::is_nil (this->data_listener_.in ()))
@@ -106,11 +106,11 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE>::activate (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
-DDS_Listen_T<DDS_TYPE, CCM_TYPE>::passivate ()
+DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::passivate ()
 {
-  DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE>::passivate");
+  DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::passivate");
   try
     {
       this->ccm_dds_reader_.set_listener (
@@ -125,12 +125,12 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE>::passivate ()
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
-DDS_Listen_T<DDS_TYPE, CCM_TYPE>::remove (
+DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::remove (
   ::DDS::Subscriber_ptr subscriber)
 {
-  DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE>::remove");
+  DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::remove");
   try
     {
       subscriber->delete_datareader (this->data_reader_.in ());
@@ -146,29 +146,29 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE>::remove (
 }
 
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 typename CCM_TYPE::reader_type::_ptr_type
-DDS_Listen_T<DDS_TYPE, CCM_TYPE>::get_data (void)
+DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::get_data (void)
 {
-  DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE>::get_data");
+  DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::get_data");
 
   return &this->dds_read_;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 ::DDS::CCM_DataReader_ptr
-DDS_Listen_T<DDS_TYPE, CCM_TYPE>::get_dds_entity (void)
+DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::get_dds_entity (void)
 {
-  DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE>::get_dds_entity");
+  DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::get_dds_entity");
 
   return &this->ccm_dds_reader_;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 ::CCM_DDS::CCM_DataListenerControl_ptr
-DDS_Listen_T<DDS_TYPE, CCM_TYPE>::get_data_control (void)
+DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::get_data_control (void)
 {
-  DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE>::get_data_control");
+  DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::get_data_control");
 
   return ::CCM_DDS::CCM_DataListenerControl::_duplicate (this->data_control_.in ());
 }

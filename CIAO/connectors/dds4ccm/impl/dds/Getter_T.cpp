@@ -23,7 +23,11 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::~Getter_Base_T (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::~Getter_Base_T");
-  delete ws_;
+  if (this->ws_)
+    {
+      delete this->ws_;
+      this->ws_ = 0;
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -182,40 +186,50 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::max_delivered_data (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::passivate ()
+CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::remove_conditions ()
 {
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::remove_conditions");
+
   DDS_ReturnCode_t retcode = this->ws_->detach_condition (this->rd_condition_);
   if (retcode != DDS_RETCODE_OK)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "Getter_Base_T::passivate - "
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "Getter_Base_T::remove_conditions - "
                       "Unable to detach read condition from waitset.\n"));
     }
   else
     {
-      DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "Getter_Base_T::passivate - "
-                      "Read condition succesfully detached from waitset.\n"));
+      DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "Getter_Base_T::remove_conditions - "
+                      "Read condition successfully detached from waitset.\n"));
     }
   if (retcode != DDS_RETCODE_OK)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "Getter_Base_T::passivate - "
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "Getter_Base_T::remove_conditions - "
                       "Unable to detach guard condition from waitset.\n"));
     }
   else
     {
-      DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "Getter_Base_T::passivate - "
-                      "Guard condition succesfully detached from waitset.\n"));
+      DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "Getter_Base_T::remove_conditions - "
+                      "Guard condition successfully detached from waitset.\n"));
     }
   retcode = this->impl ()->delete_readcondition (this->rd_condition_);
   if (retcode != DDS_RETCODE_OK)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "Getter_Base_T::passivate - "
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "Getter_Base_T::remove_conditions - "
                       "Unable to delete read condition from DDSDataReader.\n"));
     }
   else
     {
-      DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "Getter_Base_T::passivate - "
-                      "Read condition succesfully deleted from DDSDataReader.\n"));
+      DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "Getter_Base_T::remove_conditions - "
+                      "Read condition successfully deleted from DDSDataReader.\n"));
     }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::passivate ()
+{
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::passivate");
+  this->remove_conditions ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -227,9 +241,12 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::set_impl (
 
   if (::CORBA::is_nil (reader))
     {
-      impl_ = 0;
-      delete this->ws_;
-      this->ws_ = 0;
+      if (this->ws_)
+        {
+          delete this->ws_;
+          this->ws_ = 0;
+        }
+      this->impl_ = 0;
     }
   else
     {
@@ -265,6 +282,21 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::set_impl (
           throw CCM_DDS::InternalError (retcode, 1);
         }
     }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::replace_datareader (
+  ::DDS::DataReader_ptr reader)
+{
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::replace_datareader");
+  this->remove_conditions ();
+  if (this->ws_)
+    {
+      delete this->ws_;
+      this->ws_ = 0;
+    }
+  this->set_impl (reader);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>

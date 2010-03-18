@@ -11,17 +11,16 @@
 
 /// Defines whether the Reader uses a QueryCondition.
 /// If not, it uses a ContentFilteredTopic.
-#define DDS4CCM_USES_QUERY_CONDITION  0
+#if !defined (DDS4CCM_USES_QUERY_CONDITION)
+#  define DDS4CCM_USES_QUERY_CONDITION 0
+#endif /* DDS4CCM_USES_QUERY_CONDITION */
 
 /// Defines whether DDS4CCM does a thread switch when
 /// a DDS callback has been received. If this is not
 /// defined, DDS4CCM uses the DDS thread to handle the
 /// callbacks.
-#define CIAO_DDS4CCM_CONTEXT_SWITCH   0
-
-/// DDS Vendor settings
-#define CIAO_DDS4CCM_NDDS     1
-#define CIAO_DDS4CCM_OPENDDS  0
-#define CIAO_DDS4CCM_SPLICE   0
+#if !defined (CIAO_DDS4CCM_CONTEXT_SWITCH)
+#  define CIAO_DDS4CCM_CONTEXT_SWITCH 1
+#endif /* CIAO_DDS4CCM_CONTEXT_SWITCH */
 
 #endif /* DDS4CCM_CONF_H_ */

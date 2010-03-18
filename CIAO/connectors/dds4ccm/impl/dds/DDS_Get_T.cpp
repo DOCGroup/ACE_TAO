@@ -58,7 +58,9 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
           this->data_reader_ = ::DDS::CCM_DataReader::_narrow (reader);
           this->dds_get_.set_impl (reader);
           this->dds_read_.set_impl (reader);
-          this->dds_read_.set_qos (library_name, profile_name);
+          this->dds_read_.set_contentfilteredtopic_data (library_name,
+                                                         profile_name,
+                                                         &this->dds_get_);
         }
     }
   catch (...)
@@ -103,6 +105,13 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::passivate (void)
   try
     {
       this->dds_get_.passivate ();
+      if (this->dds_read_.get_dds_datareader () != this->ccm_dds_reader_.get_impl ())
+        { // the Reader has recreated the DataReader since the user has used a
+          // ContententFilteredTopic. Since the old DataReader has been deleted
+          // by the Reader and ccm_dds_reader_ is still using this old pointer,
+          // we need to reset it.
+          this->ccm_dds_reader_.set_impl (this->dds_read_.get_dds_datareader ());
+        }
       this->ccm_dds_reader_.set_listener (
               ::DDS::DataReaderListener::_nil (),
               0);

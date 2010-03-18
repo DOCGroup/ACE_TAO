@@ -32,10 +32,10 @@ project(DDS_VTopics_Receiver_lem_gen) : ciaoidldefaults, dds4ccm {
 project(DDS_VTopics_Receiver_lem_stub) : ccm_svnt, dds4ccm_base {
   after += DDS_VTopics_Receiver_lem_gen DDS_VTopics_Receiver_stub DDS_VTopics_Base_stub \
            DDS_VTopics_Connector_stub DDS_VTS_String_Connector_stub \
-           DDS_VTS_Array_Connector_stub DDS_VTSSeq_Connector_stub \
+           DDS_VTS_Array_Connector_stub DDS_VTS_Seq_Connector_stub \
            DDS_VTS_Valuetype_Connector_stub DDS_VTS_Union_Connector_stub
   libs  +=  Receiver_stub DDS_VTopics_Connector_stub DDS_VTS_String_Connector_stub \
-            DDS_VTS_Array_Connector_stub DDS_VTSSeq_Connector_stub DDS_VTopics_Base_stub \
+            DDS_VTS_Array_Connector_stub DDS_VTS_Seq_Connector_stub DDS_VTopics_Base_stub \
             DDS_VTS_Valuetype_Connector_stub DDS_VTS_Union_Connector_stub
   libpaths += ../lib
   libout = ../lib
@@ -67,10 +67,10 @@ project(DDS_VTopics_Receiver_stub) : ccm_stub, dds4ccm_base {
            DDS_VTS_Array_Connector_stub DDS_VTS_Array_Connector_lem_gen \
            DDS_VTS_Valuetype_Connector_stub DDS_VTS_Valuetype_Connector_lem_gen \
            DDS_VTS_Union_Connector_stub DDS_VTS_Union_Connector_lem_gen \
-           DDS_VTSSeq_Connector_stub DDS_VTSSeq_Connector_lem_gen
+           DDS_VTS_Seq_Connector_stub DDS_VTS_Seq_Connector_lem_gen
   libs  += DDS_VTopics_Connector_stub DDS_VTS_Valuetype_Connector_stub \
            DDS_VTS_String_Connector_stub DDS_VTS_Array_Connector_stub \
-           DDS_VTS_Union_Connector_stub DDS_VTSSeq_Connector_stub \
+           DDS_VTS_Union_Connector_stub DDS_VTS_Seq_Connector_stub \
            DDS_VTopics_Base_stub
   libpaths += ../lib
   libout = ../lib
@@ -102,12 +102,12 @@ project(DDS_VTopics_Receiver_exec) : ciao_executor, dds4ccm_base {
                DDS_VTS_Array_Connector_stub DDS_VTS_Array_Connector_lem_stub \
                DDS_VTS_Valuetype_Connector_stub DDS_VTS_Valuetype_Connector_lem_stub \
                DDS_VTS_Union_Connector_stub DDS_VTS_Union_Connector_lem_stub \
-               DDS_VTSSeq_Connector_stub DDS_VTSSeq_Connector_lem_stub \
+               DDS_VTS_Seq_Connector_stub DDS_VTS_Seq_Connector_lem_stub \
                DDS4CCM_lem_stub
   sharedname = Receiver_exec
   libs      += Receiver_stub Receiver_lem_stub DDS_VTopics_Base_stub \
                DDS_VTopics_Connector_stub DDS_VTS_String_Connector_stub \
-               DDS_VTS_Array_Connector_stub DDS_VTSSeq_Connector_stub \
+               DDS_VTS_Array_Connector_stub DDS_VTS_Seq_Connector_stub \
                DDS_VTopics_Connector_lem_stub DDS4CCM_lem_stub \
                DDS_VTS_Valuetype_Connector_stub DDS_VTS_Union_Connector_stub
   libpaths += ../lib
@@ -139,12 +139,12 @@ project(DDS_VTopics_Receiver_svnt) : ciao_servant, dds4ccm_base {
                 DDS_VTS_Array_Connector_stub DDS_VTS_Array_Connector_svnt DDS_VTS_Array_Connector_lem_stub \
                 DDS_VTS_Valuetype_Connector_stub DDS_VTS_Valuetype_Connector_svnt DDS_VTS_Valuetype_Connector_lem_stub \
                 DDS_VTS_Union_Connector_stub DDS_VTS_Union_Connector_svnt DDS_VTS_Union_Connector_lem_stub \
-                DDS_VTSSeq_Connector_stub DDS_VTSSeq_Connector_svnt DDS_VTSSeq_Connector_lem_stub \
+                DDS_VTS_Seq_Connector_stub DDS_VTS_Seq_Connector_svnt DDS_VTS_Seq_Connector_lem_stub \
                 DDS4CCM_lem_stub DDS4CCM_skel
   sharedname  = Receiver_svnt
   libs       += Receiver_stub Receiver_lem_stub DDS_VTopics_Base_stub \
-                DDS_VTopics_Connector_stub DDS_VTS_String_Connector_stub DDS_VTS_Array_Connector_stub DDS_VTSSeq_Connector_stub \
-                DDS_VTopics_Connector_svnt DDS_VTS_String_Connector_svnt DDS_VTS_Array_Connector_svnt DDS_VTSSeq_Connector_svnt  \
+                DDS_VTopics_Connector_stub DDS_VTS_String_Connector_stub DDS_VTS_Array_Connector_stub DDS_VTS_Seq_Connector_stub \
+                DDS_VTopics_Connector_svnt DDS_VTS_String_Connector_svnt DDS_VTS_Array_Connector_svnt DDS_VTS_Seq_Connector_svnt  \
                 DDS_VTS_Valuetype_Connector_svnt DDS_VTS_Valuetype_Connector_stub \
                 DDS_VTS_Union_Connector_svnt DDS_VTS_Union_Connector_stub \
                 Receiver_exec DDS_VTopics_Connector_lem_stub \
