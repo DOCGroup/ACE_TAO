@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file VTS_Seq_Connector.idl
+ * @file VTSSeq_Connector.idl
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
  */
 
@@ -12,12 +12,12 @@
 #include "Base/VTopics_Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
-#pragma ciao lem "Conn_Seq/VTS_Seq_ConnectorE.idl"
+#pragma ciao lem "ConnSeq/VTSSeq_ConnectorE.idl"
 
 module VTopics
 {
-  module ::CCM_DDS::Typed < ::TopicSeq, ::TopicSeq_Seq> TopicSeqConn;
-  connector VTS_Seq_Connector : TopicSeqConn::DDS_State
+  module ::CCM_DDS::Typed < ::TopicSeq, ::TopicSeqSeq> TopicSeqConn;
+  connector VTSSeq_Connector : TopicSeqConn::DDS_State
   {
   };
 };

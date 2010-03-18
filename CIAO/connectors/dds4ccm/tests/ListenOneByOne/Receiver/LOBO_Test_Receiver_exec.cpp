@@ -58,7 +58,7 @@ namespace CIAO_LOBO_Test_Receiver_Impl
 
   void
   ListenOneByOneTest_Listener_exec_i::on_many_data (
-                                  const ListenOneByOneTest_Seq & an_instance,
+                                  const ListenOneByOneTestSeq & an_instance,
                                   const ::CCM_DDS::ReadInfoSeq & /*info*/)
   {
     //just count. Is checked on ccm_remove.

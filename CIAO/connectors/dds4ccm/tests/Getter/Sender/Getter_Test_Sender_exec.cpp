@@ -104,7 +104,7 @@ namespace CIAO_Getter_Test_Sender_Impl
   void
   Sender_exec_i::write_many (void)
   {
-    GetterTest_Seq write_many;
+    GetterTestSeq write_many;
     write_many.length (this->keys_ * this->iterations_);
     for (CORBA::UShort key = 1; key < this->keys_ + 1; ++key)
       {

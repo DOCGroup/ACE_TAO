@@ -79,7 +79,7 @@ namespace CIAO_CoherentWrite_Test_Sender_Impl
                           this->run_,
                           this->iterations ()));
 
-    CoherentWriteTest_Seq write_many_seq;
+    CoherentWriteTestSeq write_many_seq;
     write_many_seq.length (this->iterations_);
     for (int i = 1; i < this->iterations_ + 1; ++i)
       {

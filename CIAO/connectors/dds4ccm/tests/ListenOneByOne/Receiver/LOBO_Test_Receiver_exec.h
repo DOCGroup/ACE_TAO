@@ -47,7 +47,7 @@ namespace CIAO_LOBO_Test_Receiver_Impl
       const ::CCM_DDS::ReadInfo & info);
     virtual void
     on_many_data (
-      const ListenOneByOneTest_Seq & an_instance,
+      const ListenOneByOneTestSeq & an_instance,
       const ::CCM_DDS::ReadInfoSeq & info);
   private:
     Atomic_ULong &received_one_by_one_;

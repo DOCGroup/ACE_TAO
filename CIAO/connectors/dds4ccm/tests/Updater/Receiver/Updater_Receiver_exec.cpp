@@ -58,7 +58,7 @@ namespace CIAO_Updater_Receiver_Impl
 
   void
   ListenOneByOneTest_Listener_exec_i::on_many_data (
-                                  const TestTopic_Seq & ,
+                                  const TestTopicSeq & ,
                                   const ::CCM_DDS::ReadInfoSeq & )
   {
   }

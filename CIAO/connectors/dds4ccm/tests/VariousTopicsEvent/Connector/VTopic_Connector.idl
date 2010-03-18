@@ -16,7 +16,7 @@
 
 module VTopic
 {
-  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopic_Seq> TestTopicConn;
+  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> TestTopicConn;
   connector VTopic_Connector : TestTopicConn::DDS_Event
   {
   };

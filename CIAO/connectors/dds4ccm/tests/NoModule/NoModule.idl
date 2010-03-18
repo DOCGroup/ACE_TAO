@@ -9,6 +9,6 @@ struct NoModuleType {
   string value; //@key
 };
 
-typedef sequence<NoModuleType> NoModuleType_Seq;
+typedef sequence<NoModuleType> NoModuleTypeSeq;
 
 #endif

@@ -16,7 +16,7 @@
 
 module CCM_DDS
 {
-  module ::CCM_DDS::Typed < ::ReaderTest, ::ReaderTest_Seq> ReaderTest;
+  module ::CCM_DDS::Typed < ::ReaderTest, ::ReaderTestSeq> ReaderTest;
 };
 
 module Reader_Test

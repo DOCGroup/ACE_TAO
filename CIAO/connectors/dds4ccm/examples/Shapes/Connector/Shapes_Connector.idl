@@ -16,7 +16,7 @@
 
 module Shapes
 {
-  module ::CCM_DDS::Typed < ::ShapeType, ::ShapeType_Seq> ShapeTypeConn;
+  module ::CCM_DDS::Typed < ::ShapeType, ::ShapeTypeSeq> ShapeTypeConn;
   connector Shapes_Connector : ShapeTypeConn::DDS_Event
   {
   };

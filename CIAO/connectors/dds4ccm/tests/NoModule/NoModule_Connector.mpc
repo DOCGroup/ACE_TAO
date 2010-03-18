@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -b dds4ccm_base NoModule_Connector"
 
-project(NoModule_Connector_idl_gen) : connectoridldefaults , dds4ccm  {
+project(NoModule_Connector_idl_gen) : connectoridldefaults, dds4ccm {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=NOMODULE_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=NoModule_Connector_stub_export.h \
@@ -15,7 +15,7 @@ project(NoModule_Connector_idl_gen) : connectoridldefaults , dds4ccm  {
   }
 }
 
-project(NoModule_Connector_lem_gen) : ciaoidldefaults , dds4ccm  {
+project(NoModule_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   after += NoModule_Connector_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=NOMODULE_CONNECTOR_LEM_STUB_Export \
@@ -27,7 +27,7 @@ project(NoModule_Connector_lem_gen) : ciaoidldefaults , dds4ccm  {
   }
 }
 
-project(NoModule_Connector_lem_stub) : ccm_svnt , dds4ccm_lem_stub  {
+project(NoModule_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub  {
   after += NoModule_Connector_lem_gen NoModule_Connector_stub
   libs  +=  NoModule_Connector_stub
 
@@ -77,7 +77,7 @@ project(NoModule_Connector_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(NoModule_Connector_exec) : ciao_executor , dds4ccm_impl  {
+project(NoModule_Connector_exec) : ciao_executor, dds4ccm_impl  {
   after   += NoModule_Connector_lem_stub NoModule_Connector_stub
   sharedname = NoModule_Connector_exec
   libs += NoModule_Connector_stub NoModule_Connector_lem_stub NoModule_stub

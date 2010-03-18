@@ -17,12 +17,12 @@
 
 module TT_Connector
 {
-  module ::CCM_DDS::Typed < HelloTopic, HelloTopic_Seq> HelloConn;
+  module ::CCM_DDS::Typed < HelloTopic, HelloTopicSeq> HelloConn;
   connector TwoTopicsHello_Connector : HelloConn::DDS_Event
   {
   };
 
-  module ::CCM_DDS::Typed < GoodbyeTopic, GoodbyeTopic_Seq> GoodbyeConn;
+  module ::CCM_DDS::Typed < GoodbyeTopic, GoodbyeTopicSeq> GoodbyeConn;
   connector TwoTopicsGoodbye_Connector : GoodbyeConn::DDS_Event
   {
   };

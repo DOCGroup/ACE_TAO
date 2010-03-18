@@ -15,6 +15,6 @@ struct FixedStructSizeTest {
   long two;
 };
 
-typedef sequence<FixedStructSizeTest> FixedStructSizeTest_Seq;
+typedef sequence<FixedStructSizeTest> FixedStructSizeTestSeq;
 
 #endif

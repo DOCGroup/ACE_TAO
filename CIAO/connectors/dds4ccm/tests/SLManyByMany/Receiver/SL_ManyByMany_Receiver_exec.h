@@ -61,7 +61,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
       public virtual ::CORBA::LocalObject
   {
   public:
-    StateListener_exec_i (Atomic_Boolean &, Atomic_Boolean &, Atomic_Boolean &, 
+    StateListener_exec_i (Atomic_Boolean &, Atomic_Boolean &, Atomic_Boolean &,
                           Atomic_Boolean &, Atomic_Boolean &, Atomic_Boolean &);
     virtual ~StateListener_exec_i (void);
 
@@ -75,7 +75,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
         const ::CCM_DDS::ReadInfo & info);
      virtual void
       on_many_updates (
-        const ::TestTopic_Seq & data,
+        const ::TestTopicSeq & data,
         const ::CCM_DDS::ReadInfoSeq & infos);
     virtual void
       on_deletion (

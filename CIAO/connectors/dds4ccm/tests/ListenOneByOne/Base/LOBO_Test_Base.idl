@@ -15,6 +15,6 @@ struct ListenOneByOneTest {
   long iteration;
 };
 
-typedef sequence<ListenOneByOneTest> ListenOneByOneTest_Seq;
+typedef sequence<ListenOneByOneTest> ListenOneByOneTestSeq;
 
 #endif

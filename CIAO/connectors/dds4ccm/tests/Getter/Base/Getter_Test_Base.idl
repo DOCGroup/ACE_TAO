@@ -17,7 +17,7 @@ struct GetterTest {
   string key;
   long iteration;
 };
-typedef sequence<GetterTest> GetterTest_Seq;
+typedef sequence<GetterTest> GetterTestSeq;
 
 #pragma DCPS_DATA_TYPE "GetterFixed"
 
@@ -25,6 +25,6 @@ struct GetterFixed {
   long key;
   long iteration;
 };
-typedef sequence<GetterFixed> GetterFixed_Seq;
+typedef sequence<GetterFixed> GetterFixedSeq;
 
 #endif

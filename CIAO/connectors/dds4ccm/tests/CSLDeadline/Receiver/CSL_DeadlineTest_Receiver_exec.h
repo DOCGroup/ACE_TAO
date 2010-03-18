@@ -42,7 +42,7 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
 
     virtual void
     on_many_data (
-      const ::TestTopic_Seq & data,
+      const ::TestTopicSeq & data,
       const ::CCM_DDS::ReadInfoSeq & info);
 
   private:

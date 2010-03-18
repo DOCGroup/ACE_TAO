@@ -16,7 +16,7 @@
 
 module CCM_DDS
 {
-  module ::CCM_DDS::Typed < ::SharedDPTest3, ::SharedDPTest3_Seq> SharedDPTest3;
+  module ::CCM_DDS::Typed < ::SharedDPTest3, ::SharedDPTest3Seq> SharedDPTest3;
 };
 
 module SharedDP_Connector3

@@ -18,7 +18,7 @@
 
 module CCM_DDS
 {
-  module ::CCM_DDS::Typed < ::PerfKeyedTest, ::PerfKeyedTest_Seq> PerfKeyedTest;
+  module ::CCM_DDS::Typed < ::PerfKeyedTest, ::PerfKeyedTestSeq> PerfKeyedTest;
 };
 
 module Perf_Keyed_Test

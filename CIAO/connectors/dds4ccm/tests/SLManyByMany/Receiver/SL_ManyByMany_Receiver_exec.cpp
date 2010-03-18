@@ -91,7 +91,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
   }
 
   void
-  StateListener_exec_i::on_many_updates (const ::TestTopic_Seq & data,
+  StateListener_exec_i::on_many_updates (const ::TestTopicSeq & data,
                                          const ::CCM_DDS::ReadInfoSeq & readinfoseq)
   {
     this->on_many_update_ = true;
@@ -197,7 +197,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
       {
         return;
       }
-    TestTopic_Seq_var TestTopic_infos;
+    TestTopicSeq_var TestTopic_infos;
     ::CCM_DDS::ReadInfoSeq_var readinfoseq;
     try
       {

@@ -19,6 +19,6 @@ struct DDSHello {
   short iterator;
 };
 
-typedef sequence<DDSHello> DDSHello_Seq;
+typedef sequence<DDSHello> DDSHelloSeq;
 
 #endif

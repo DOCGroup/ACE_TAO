@@ -16,7 +16,7 @@
 
 module CSL_QoSTest
 {
-  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopic_Seq> TestTopicConn;
+  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> TestTopicConn;
   connector CSL_QoSTest_Connector : TestTopicConn::DDS_Event
   {
   };

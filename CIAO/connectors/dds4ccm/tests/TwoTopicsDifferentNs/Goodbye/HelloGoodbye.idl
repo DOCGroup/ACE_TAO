@@ -14,7 +14,7 @@ module Goodbye
     string goodbye;  //@key
     long iteration;
   };
-  typedef sequence<HelloGoodbye> HelloGoodbye_Seq;
+  typedef sequence<HelloGoodbye> HelloGoodbyeSeq;
 };
 
 #endif /* GOODBYE_IDL_ */

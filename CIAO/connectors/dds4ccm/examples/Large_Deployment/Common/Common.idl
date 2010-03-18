@@ -9,7 +9,7 @@ struct LargeType {
   string value; //@key
 };
 
-typedef sequence<LargeType> LargeType_Seq;
+typedef sequence<LargeType> LargeTypeSeq;
 
 interface Simple_Service
 {

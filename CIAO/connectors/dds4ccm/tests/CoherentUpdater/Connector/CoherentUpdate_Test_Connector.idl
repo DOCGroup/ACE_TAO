@@ -16,7 +16,7 @@
 
 module CoherentUpdate_Test
 {
-  module ::CCM_DDS::Typed < ::CoherentUpdateTest, ::CoherentUpdateTest_Seq> CoherentUpdateTestConn;
+  module ::CCM_DDS::Typed < ::CoherentUpdateTest, ::CoherentUpdateTestSeq> CoherentUpdateTestConn;
   connector CoherentUpdate_Test_Connector : CoherentUpdateTestConn::DDS_State
   {
   };

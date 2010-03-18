@@ -17,6 +17,6 @@ struct SharedDPTest {
   string key;
   long iteration;
 };
-typedef sequence<SharedDPTest> SharedDPTest_Seq;
+typedef sequence<SharedDPTest> SharedDPTestSeq;
 
 #endif

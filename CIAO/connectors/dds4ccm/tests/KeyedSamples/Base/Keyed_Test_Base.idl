@@ -18,6 +18,6 @@ struct KeyedTest {
   long iteration;
 };
 
-typedef sequence<KeyedTest> KeyedTest_Seq;
+typedef sequence<KeyedTest> KeyedTestSeq;
 
 #endif

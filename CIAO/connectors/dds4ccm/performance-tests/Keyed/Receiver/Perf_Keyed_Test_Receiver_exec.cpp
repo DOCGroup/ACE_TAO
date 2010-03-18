@@ -26,7 +26,7 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
                                   const PerfKeyedTest & an_instance,
                                   const ::CCM_DDS::ReadInfo & /*info*/)
   {
-   
+
     // Record time, not for ping messages , already pinged back.
     if (an_instance.latency_ping != -1L)
     {
@@ -42,7 +42,7 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
 
   void
   PerfKeyedTest_Listener_exec_i::on_many_data (
-                                  const PerfKeyedTest_Seq & /*an_instance*/,
+                                  const PerfKeyedTestSeq & /*an_instance*/,
                                   const ::CCM_DDS::ReadInfoSeq & /*info*/)
   {
   }
@@ -58,8 +58,8 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
       interval_bytes_received_(0L),
       bytes_received_(0L),
       interval_data_length_(0L),
-      first_time_ (0L), 
-      finished_(false) 
+      first_time_ (0L),
+      finished_(false)
   {
   }
 
@@ -82,19 +82,19 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
     dlc->mode (::CCM_DDS::ONE_BY_ONE);
   }
 
-  void 
+  void
   Receiver_exec_i::record_time (unsigned long datalen)
   {
     ++this->count_;
     if( datalen == INITIALIZE_SIZE)
-      {  
+      {
         // store the info for this interval
         ACE_High_Res_Timer::gettimeofday_hr ().to_usec (this->first_time_);
         this->messages_received_=1;
       }
     else if ( datalen == FINISHED_SIZE)
       {  // store the info for this interval
-        ACE_UINT64 last_time; 
+        ACE_UINT64 last_time;
         ACE_High_Res_Timer::gettimeofday_hr ().to_usec (last_time);
         this->interval_time_ =  (last_time  - this->first_time_);
         this->interval_messages_received_ = ++this->messages_received_;
@@ -152,21 +152,21 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
   {
     if(!this->finished_.value())  // proces ended before received last message
       {
-        ACE_UINT64 last_time; 
+        ACE_UINT64 last_time;
         ACE_High_Res_Timer::gettimeofday_hr ().to_usec (last_time);
         this->interval_time_ =  (last_time  - this->first_time_);
         this->interval_messages_received_ = ++this->messages_received_;
         this->interval_bytes_received_ = this->bytes_received_;
       }
     if ((this->count_.value () > 0) && (this->interval_time_ > 0))
-      {  
+      {
          double per_sec = (double)1000000/ this->interval_time_;
-         double mbps = 
+         double mbps =
            (this->interval_bytes_received_.value()* per_sec)* (8.0/1000.0/1000.0);
          ACE_DEBUG((LM_DEBUG, "SUMMARY RECEIVER:\n "
                                "Data Length: %u  Messages: %u  Messages/s(ave): "
                                "%6.01f,   Mbps(ave): %7.01f \n",
-                       this->interval_data_length_.value(), 
+                       this->interval_data_length_.value(),
                        this->interval_messages_received_.value(),
                        this->interval_messages_received_.value()* per_sec,
                        mbps));

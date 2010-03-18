@@ -180,7 +180,7 @@ namespace CIAO_Writer_Sender_Impl
   {
     bool expected_exception_thrown = false;
 
-    WriterTest_Seq write_many_seq;
+    WriterTestSeq write_many_seq;
     write_many_seq.length (this->keys_ * this->iterations_);
     int iter_key = 0;
     for (Writer_Table::iterator iter = this->ktests_.begin ();

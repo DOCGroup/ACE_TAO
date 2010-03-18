@@ -109,7 +109,7 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
   {
     try
       {
-        CoherentUpdateTest_Seq   *coherentwrite_info_seq;
+        CoherentUpdateTestSeq   *coherentwrite_info_seq;
         ::CCM_DDS::ReadInfoSeq  *readinfo_seq;
         this->reader_->read_all (
                 coherentwrite_info_seq,

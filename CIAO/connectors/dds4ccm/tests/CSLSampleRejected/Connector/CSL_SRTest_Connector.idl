@@ -16,7 +16,7 @@
 
 module CSL_SRTest
 {
-  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopic_Seq> TestTopicConn;
+  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> TestTopicConn;
   connector CSL_SRTest_Connector : TestTopicConn::DDS_Event
   {
   };

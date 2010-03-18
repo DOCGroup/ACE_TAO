@@ -33,7 +33,7 @@ namespace CIAO_Writer_Receiver_Impl
       const ::CCM_DDS::ReadInfo & info);
     virtual void
     on_many_data (
-      const WriterTest_Seq & an_instance,
+      const WriterTestSeq & an_instance,
       const ::CCM_DDS::ReadInfoSeq & info);
   };
 
