@@ -3357,7 +3357,7 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
     }
 
   *this->ciao_conn_header_ << be_nl;
-  
+
   if (idl_global->dds_connector_seen_)
     {
       BE_GlobalData::DDS_IMPL the_dds_impl =
@@ -3369,7 +3369,7 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
             this->gen_standard_include (
               this->ciao_conn_header_,
               "connectors/dds4ccm/impl/dds/DDS4CCM_Traits.h");
-              
+
             break;
           case BE_GlobalData::OPENSPLICE:
           case BE_GlobalData::OPENDDS:
@@ -3389,9 +3389,9 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
             this->ciao_conn_header_,
             "connectors/dds4ccm/impl/dds/DDS_State_Connector_T.h");
         }
-    
+
       /// The default, and we have to set the reference to
-      /// something.  
+      /// something.
       ACE_Unbounded_Queue<char *> &ts_files =
         idl_global->ciao_rti_ts_file_names ();
 
@@ -3426,7 +3426,7 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
             *path_tmp);
         }
     }
-    
+
   if (idl_global->ami_connector_seen_)
     {
       this->gen_standard_include (
@@ -3466,19 +3466,27 @@ TAO_CodeGen::gen_conn_src_includes (void)
   this->gen_standard_include (
     this->ciao_conn_source_,
     be_global->be_get_ciao_conn_hdr_fname (true));
-    
-  this->gen_standard_include (
-    this->ciao_conn_source_,
-    "connectors/ami4ccm/ami4ccm/ami4ccm.h");
+
+  // Include the AMI4CCM library entry point, if AMI4CCM is enabled.
+  if (be_global->ami4ccm_call_back ())
+    {
+      this->gen_standard_include (
+        this->ciao_conn_source_,
+        "connectors/ami4ccm/ami4ccm/ami4ccm.h");
+    }
 }
 
 void
 TAO_CodeGen::gen_ami_conn_idl_includes (void)
 {
-  this->gen_standard_include (
-    this->ciao_ami_conn_idl_,
-    "connectors/ami4ccm/ami4ccm/ami4ccm.idl");
-    
+  // Include the AMI4CCM library entry point, if AMI4CCM is enabled.
+  if (be_global->ami4ccm_call_back ())
+    {
+      this->gen_standard_include (
+        this->ciao_ami_conn_idl_,
+        "connectors/ami4ccm/ami4ccm/ami4ccm.idl");
+    }
+
   this->gen_standard_include (
     this->ciao_ami_conn_idl_,
     idl_global->stripped_filename ()->get_string ());

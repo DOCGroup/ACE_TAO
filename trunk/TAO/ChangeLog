@@ -1,4 +1,18 @@
-Thu Mar 18 07:59:37 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+Thu Mar 18 08:02:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Only when -GM is enabled on the commandline generate the ami4ccm
+          includes. Fixes the problems that the dds4ccm connectors also
+          got this include
+
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be_include/be_global.h:
+          Default the dds implementation to NONE
+
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+          With RTI DDS the dds implicit sequence now has a RTISeq postfix
+
+Thu Mar 18 07:59:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAO_IDL/Makefile.am:
 	  Removed obsolete files

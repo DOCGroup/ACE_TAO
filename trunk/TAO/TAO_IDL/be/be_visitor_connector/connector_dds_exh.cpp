@@ -144,7 +144,7 @@ be_visitor_connector_dds_exh::gen_dds_traits (void)
   // We depend on the DDS datatype being the first template
   // argument for now, this may change.
   AST_Decl **datatype = 0;
-  int status = this->t_args_->get (datatype, 0UL);
+  int const status = this->t_args_->get (datatype, 0UL);
 
   if (status != 0)
     {
@@ -158,17 +158,23 @@ be_visitor_connector_dds_exh::gen_dds_traits (void)
 
   UTL_ScopedName *dt_name = (*datatype)->name ();
 
-  // More generic logic TBI.
-  bool rti_dds_connector = true;
-
-  if (rti_dds_connector)
+  if (be_global->dds_impl () != ::BE_GlobalData::NONE)
     {
       os_ << be_nl
           << "typedef ::CIAO::DDS4CCM::Type_Traits <"
           << be_idt_nl
-          << "::" << dt_name << "," << be_nl
-          << "::" << dt_name << "Seq," << be_nl
-          << "::" << dt_name << "TypeSupport," << be_nl
+          << "::" << dt_name << "," << be_nl;
+
+      if (be_global->dds_impl () == ::BE_GlobalData::NDDS)
+        {
+          os_ << "::" << dt_name << "RTISeq," << be_nl;
+        }
+      else
+        {
+          os_ << "::" << dt_name << "Seq," << be_nl;
+        }
+
+      os_ << "::" << dt_name << "TypeSupport," << be_nl
           << "::" << dt_name << "DataWriter," << be_nl
           << "::" << dt_name << "DataReader> ";
       os_ << this->dds_traits_name_.c_str () << ";" << be_uidt;
