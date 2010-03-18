@@ -80,7 +80,7 @@ private:
    * DDS_Read passive_observer
    */
   //@{
-  DDS_Read_T <DDS_TYPE, CCM_TYPE> passive_observer_;
+  DDS_Read_T <DDS_TYPE, CCM_TYPE, FIXED> passive_observer_;
   //@}
 
   /**
@@ -94,14 +94,14 @@ private:
    * DDS_Listen push_observer
    */
   //@{
-  DDS_Listen_T <DDS_TYPE, CCM_TYPE> push_observer_;
+  DDS_Listen_T <DDS_TYPE, CCM_TYPE, FIXED> push_observer_;
   //@}
 
   /**
    * DDS_StateListen push_state_observer
    */
   //@{
-  DDS_StateListen_T <DDS_TYPE, CCM_TYPE> push_state_observer_;
+  DDS_StateListen_T <DDS_TYPE, CCM_TYPE, FIXED> push_state_observer_;
   //@}
 };
 

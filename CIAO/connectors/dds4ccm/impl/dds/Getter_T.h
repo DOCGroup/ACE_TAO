@@ -77,6 +77,8 @@ namespace CIAO
 
         void passivate (void);
 
+        void replace_datareader (::DDS::DataReader_ptr reader);
+
       protected:
         typename DDS_TYPE::data_reader *impl_;
 
@@ -86,6 +88,7 @@ namespace CIAO
         DDSWaitSet* ws_;
         DDSReadCondition* rd_condition_;
 
+        void remove_conditions ();
         bool wait (DDSConditionSeq& active_conditions);
 
         typename DDS_TYPE::data_reader * impl (void);

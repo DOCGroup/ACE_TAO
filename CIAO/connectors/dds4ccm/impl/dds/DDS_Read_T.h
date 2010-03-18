@@ -10,7 +10,7 @@
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 class DDS_Read_T
 {
 public:
@@ -49,7 +49,7 @@ private:
   //@{
   ::DDS::CCM_DataReader_var data_;
   ::DDS::DataReaderListener_var status_;
-  ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE> dds_read_;
+  ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED> dds_read_;
   ::CIAO::DDS4CCM::CCM_DDS_DataReader_i ccm_dds_reader_;
   //@}
   typedef ::CIAO::DDS4CCM::PortStatusListener_T <DDS_TYPE, CCM_TYPE> PortStatusListener;
