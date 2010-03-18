@@ -285,7 +285,6 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_valuetype_fwd.cpp \
   be/be_visitor.cpp \
   be/be_visitor_amh_pre_proc.cpp \
-  be/be_visitor_ami4ccm_pre_proc.cpp \
   be/be_visitor_ami_pre_proc.cpp \
   be/be_visitor_any_extracted_type_decl.cpp \
   be/be_visitor_arg_traits.cpp \
@@ -393,7 +392,6 @@ noinst_HEADERS += \
   be_include/be_valuetype_fwd.h \
   be_include/be_visitor.h \
   be_include/be_visitor_amh_pre_proc.h \
-  be_include/be_visitor_ami4ccm_pre_proc.h \
   be_include/be_visitor_ami_pre_proc.h \
   be_include/be_visitor_any_extracted_type_decl.h \
   be_include/be_visitor_arg_traits.h \
