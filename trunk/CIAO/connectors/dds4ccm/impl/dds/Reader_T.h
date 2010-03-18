@@ -66,12 +66,12 @@ namespace CIAO
           const char * profile_name,
           Getter_T<DDS_TYPE, CCM_TYPE, FIXED> * dds_get=0);
 
-        void set_impl (::DDS::DataReader_ptr reader);
+        void set_impl (CCM_DDS_DataReader_i *reader);
 
         ::DDSDataReader * get_dds_datareader ();
 
       private:
-        ::DDS::DataReader_var reader_;
+        CCM_DDS_DataReader_i *reader_;
 
         Getter_T<DDS_TYPE, CCM_TYPE, FIXED> * dds_get_;
 
@@ -83,8 +83,6 @@ namespace CIAO
         #else
           ::DDSContentFilteredTopic * cft_;
         #endif
-
-        typename DDS_TYPE::data_reader * impl_;
 
         typename DDS_TYPE::data_reader * impl (void);
 
@@ -104,6 +102,9 @@ namespace CIAO
         CORBA::ULong get_nr_valid_samples (
           const DDS_SampleInfoSeq & sample_info,
           bool determine_last = false);
+
+        void delete_datareader (
+          ::DDSSubscriber * sub);
 
         void create_filter (
           const ::CCM_DDS::QueryFilter & filter);

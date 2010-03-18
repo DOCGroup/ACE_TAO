@@ -13,10 +13,10 @@
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::Reader_T (void)
-  : dds_get_ (0),
+  : reader_ (0),
+    dds_get_ (0),
     library_name_ (""),
-    profile_name_ (""),
-    impl_ (0)
+    profile_name_ ("")
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::Reader_T");
   #if (DDS4CCM_USES_QUERY_CONDITION==1)
@@ -36,9 +36,9 @@ template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 typename DDS_TYPE::data_reader *
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::impl (void)
 {
-  if (this->impl_)
+  if (this->reader_)
     {
-      return this->impl_;
+      return DDS_TYPE::data_reader::narrow (this->reader_->get_impl ());
     }
   else
     {
@@ -369,7 +369,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::create_contentfilte
       throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
     }
   // now, get the topic.
-  ::DDSTopicDescription * td = this->impl_->get_topicdescription ();
+  ::DDSTopicDescription * td = this->reader_->get_impl ()->get_topicdescription ();
   if (!td)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::create_contentfilteredtopic - "
@@ -401,6 +401,22 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::create_contentfilte
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
+CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::delete_datareader (
+  ::DDSSubscriber * sub)
+{
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::create_filter");
+  DDS_ReturnCode_t const retval = sub->delete_datareader (this->impl ());
+  if (retval != DDS_RETCODE_OK)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::create_filter - "
+                                "Unable to delete original DataReader. "
+                                "Retval is %C\n",
+                                translate_retcode(retval)));
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+void
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::create_filter (
   const ::CCM_DDS::QueryFilter & filter)
 {
@@ -413,7 +429,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::create_filter (
   // To set a ContentFilteredTopic on a DataReader, the DataReader
   // should be recreated. Since the Getter uses the same DataReader,
   // the original DataReader should not be destroyed.
-  ::DDSSubscriber * sub = this->impl_->get_subscriber ();
+  ::DDSSubscriber * sub = this->impl ()->get_subscriber ();
   if (!sub)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::create_filter - "
@@ -454,35 +470,20 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::create_filter (
                     "Error: Unable to create a new DataReader.\n"));
       throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
     }
-  // now we need to set the new created DataReader in our proxy classes.
-  CCM_DDS_DataReader_i *rdr = dynamic_cast <CCM_DDS_DataReader_i *> (this->reader_.in ());
-
-  if (!rdr)
-    {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::create_filter - "
-                    "Unable to cast provided DataReader to servant\n"));
-      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 2);
-    }
-  rdr->set_impl (dr);
-
   // Inform the Getter that there's a new DataReader created
   if (this->dds_get_)
     {
-      this->dds_get_->replace_datareader (this->reader_);
+      this->dds_get_->remove_conditions ();
+      this->delete_datareader (sub);
+      // now we need to set the new created DataReader in our proxy classes.
+      this->reader_->set_impl (dr);
+      this->dds_get_->set_impl (this->reader_);
     }
-
-  // Now we should be able to savely remove the current DataReader
-  // from DDS.
-  DDS_ReturnCode_t const retval = sub->delete_datareader (this->impl_);
-  if (retval != DDS_RETCODE_OK)
+  else
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::create_filter - "
-                                "Unable to delete original DataReader. "
-                                "Retval is %C\n",
-                                translate_retcode(retval)));
+      this->delete_datareader (sub);
+      this->reader_->set_impl (dr);
     }
-  // Replace the existing DataReader.
-  this->impl_ =  DDS_TYPE::data_reader::narrow (rdr->get_impl ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
@@ -611,10 +612,10 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::set_contentfiltered
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::set_impl (
-  ::DDS::DataReader_ptr reader)
+  CCM_DDS_DataReader_i *reader)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::set_impl");
-  if (::CORBA::is_nil (reader))
+  if (!reader)
     {
       #if (DDS4CCM_USES_QUERY_CONDITION==1)
         if (this->qc_)
@@ -622,27 +623,15 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::set_impl (
             this->impl ()->delete_readcondition (this->qc_);
           }
       #endif
-      this->impl_ = 0;
     }
   else
     {
       this->reader_ = reader;
-      CCM_DDS_DataReader_i *rdr = dynamic_cast <CCM_DDS_DataReader_i *> (reader);
 
-      if (!rdr)
+      if (!this->reader_)
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::data_reader - "
                        "Unable to cast provided DataReader to servant\n"));
-          throw ::CORBA::INTERNAL ();
-        }
-
-      this->impl_ =  DDS_TYPE::data_reader::narrow (rdr->get_impl ());
-
-      if (!this->impl ())
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::data_reader - "
-                       "Unable to narrow the provided reader entity to the specific "
-                       "type necessary to publish messages\n"));
           throw ::CORBA::INTERNAL ();
         }
     }
@@ -652,13 +641,5 @@ template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 ::DDSDataReader *
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::get_dds_datareader ()
 {
-  CCM_DDS_DataReader_i *rdr = dynamic_cast <CCM_DDS_DataReader_i *> (this->reader_.in ());
-
-  if (!rdr)
-    {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::data_reader - "
-                    "Unable to cast provided DataReader to servant\n"));
-      throw ::CORBA::INTERNAL ();
-    }
-  return rdr->get_impl ();
+  return this->reader_->get_impl ();
 }
