@@ -14,8 +14,8 @@ namespace CIAO_Throughput_Sender_Impl
   // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
   //============================================================
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (
-                                           Atomic_Boolean &matched, 
-                                           int number_of_subscribers, 
+                                           Atomic_Boolean &matched,
+                                           int number_of_subscribers,
                                            Sender_exec_i &callback)
    : callback_ (callback),
     matched_ (matched),
@@ -63,7 +63,7 @@ namespace CIAO_Throughput_Sender_Impl
     ::DDS::StatusKind  status_kind)
   {
     CORBA::ULong kind = status_kind;
-    if((!CORBA::is_nil(the_entity)) && 
+    if((!CORBA::is_nil(the_entity)) &&
        (kind==DDS::PUBLICATION_MATCHED_STATUS))
       {
         ::DDS::PublicationMatchedStatus_var stat;
@@ -72,13 +72,13 @@ namespace CIAO_Throughput_Sender_Impl
          {
             throw ::CORBA::INTERNAL ();
          }
-        ::DDS::ReturnCode_t retval = 
+        ::DDS::ReturnCode_t retval =
                           wr->get_publication_matched_status(stat.out());
         if (retval == DDS::RETCODE_OK)
           {
-          
-            if((stat.in().current_count >= 
-             (this->number_of_subscribers_ + 1)) && 
+
+            if((stat.in().current_count >=
+             (this->number_of_subscribers_ + 1)) &&
              !this->matched_.value())
               {
                 this->matched_ = true;
@@ -142,12 +142,12 @@ namespace CIAO_Throughput_Sender_Impl
     else
       {
         this->test_topic_cmd_.command = THROUGHPUT_COMMAND_START;
-        this->test_topic_cmd_.data_length = this->datalen_; 
+        this->test_topic_cmd_.data_length = this->datalen_;
         this->test_topic_cmd_.current_publisher_effort = this->load_;
         this->test_topic_cmd_.final_publisher_effort = this->max_load_;
         try
           {
-            this->cmd_writer_->write_one(this->test_topic_cmd_, 
+            this->cmd_writer_->write_one(this->test_topic_cmd_,
                                          ::DDS::HANDLE_NIL);
           }
         catch (const CCM_DDS::InternalError& )
@@ -160,13 +160,13 @@ namespace CIAO_Throughput_Sender_Impl
         ACE_High_Res_Timer::gettimeofday_hr ().to_usec (this->start_time_);
         while (!test_complete)
           {
-            for (int current_load = 0;
+            for (CORBA::ULongLong current_load = 0;
                  current_load < this->load_ && !test_complete;
                  ++current_load, ++this->test_topic_.seq_num)
               {
                 try
                   {
-                    this->writer_->write_one(this->test_topic_, 
+                    this->writer_->write_one(this->test_topic_,
                                              ::DDS::HANDLE_NIL);
                     ++this->number_of_msg_;
                   }
@@ -174,7 +174,7 @@ namespace CIAO_Throughput_Sender_Impl
                   {
                     if (err.error_code == DDS::RETCODE_TIMEOUT)
                       {
-                        ACE_ERROR ((LM_ERROR, 
+                        ACE_ERROR ((LM_ERROR,
                                     ACE_TEXT ("ERROR: Internal Error ")
                                     ACE_TEXT ("Write Timeout please increase "
                                               "-maxBlockingTime parameter for "
@@ -182,10 +182,10 @@ namespace CIAO_Throughput_Sender_Impl
                       }
                     else
                       {
-                        ACE_ERROR ((LM_ERROR, 
+                        ACE_ERROR ((LM_ERROR,
                                     ACE_TEXT ("ERROR: Internal Error ")
-                                    ACE_TEXT ("while updating writer "
-                                              "info for <%u>.\n"),
+                                    ACE_TEXT ("while updating writer ")
+                                    ACE_TEXT ("info for <%u>.\n"),
                                     this->test_topic_.seq_num));
                                     test_complete= true;
                       }
@@ -198,7 +198,7 @@ namespace CIAO_Throughput_Sender_Impl
             if(interval > (this->duration_run_ * 1000 * 1000))
               {
                 test_complete = true;
-                this->test_topic_cmd_.command = THROUGHPUT_COMMAND_COMPLETE; 
+                this->test_topic_cmd_.command = THROUGHPUT_COMMAND_COMPLETE;
                 this->cmd_writer_->write_one (this->test_topic_cmd_,
                                               ::DDS::HANDLE_NIL);
               }
@@ -222,7 +222,7 @@ namespace CIAO_Throughput_Sender_Impl
   void
   Sender_exec_i::start (void)
   {
-    unsigned int sec = this->duration_run_ + 5; 
+    unsigned int sec = this->duration_run_ + 5;
     (void) ACE_High_Res_Timer::global_scale_factor ();
     this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->timer_queue()->gettimeofday (&ACE_High_Res_Timer::gettimeofday_hr);
     if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer(
@@ -343,13 +343,13 @@ namespace CIAO_Throughput_Sender_Impl
   Sender_exec_i::datalen (::CORBA::UShort datalen)
   {
     this->overhead_size_ = sizeof(CORBA::ULong) + sizeof(CORBA::ULongLong);
-    if((datalen <= this->overhead_size_) || 
+    if((datalen <= this->overhead_size_) ||
        (datalen > MAX_DATA_SEQUENCE_LENGTH))
     {
        ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("ERROR: datalen has to be bigger"
                             " as %u and smaller as %u\n"),
-                            this->overhead_size_, 
+                            this->overhead_size_,
                             MAX_DATA_SEQUENCE_LENGTH));
        throw ::CORBA::BAD_PARAM ();
     }
@@ -374,7 +374,7 @@ namespace CIAO_Throughput_Sender_Impl
     try
       {
         this->writer_ = this->context_->get_connection_info_write_data ();
-         this->cmd_writer_ = 
+         this->cmd_writer_ =
                this->context_->get_connection_command_write_data ();
         if(CORBA::is_nil(this->writer_))
         {
@@ -406,7 +406,7 @@ namespace CIAO_Throughput_Sender_Impl
     while(!this->matched_.value())
       ACE_OS::sleep(1);
   }
-  
+
   void
   Sender_exec_i::stop (void)
   {
