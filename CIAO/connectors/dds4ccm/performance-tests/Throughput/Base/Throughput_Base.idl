@@ -27,7 +27,7 @@ struct ThroughputTest {
  OctetSeq data;
  };
 
-typedef sequence<ThroughputTest> ThroughputTest_Seq;
+typedef sequence<ThroughputTest> ThroughputTestSeq;
 
 struct ThroughputCommand
 {
@@ -37,6 +37,6 @@ struct ThroughputCommand
     unsigned long long final_publisher_effort;
 };
 
-typedef sequence<ThroughputCommand> ThroughputCommand_Seq;
+typedef sequence<ThroughputCommand> ThroughputCommandSeq;
 
 #endif
