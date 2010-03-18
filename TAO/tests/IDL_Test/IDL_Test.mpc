@@ -246,7 +246,7 @@ project(*NDDS_IDL): ndds_ts_defaults {
     full.idl
     fwd.idl
     generic_object.idl
-//    gperf.idl
+    gperf.idl
     included.idl
     including.idl
     inherit.idl
@@ -255,23 +255,23 @@ project(*NDDS_IDL): ndds_ts_defaults {
     module.idl
     nested_scope.idl
     old_array.idl
-//    old_constants.idl
+    old_constants.idl
     old_sequence.idl
     old_struct.idl
     old_union.idl
 //    old_union2.idl
     params.idl
-//    pragma.idl
+    pragma.idl
     primtypes.idl
     reopened_modules.idl
     reopen_include1.idl
     reopen_include2.idl
-//    repo_id_mod.idl
-//    sequence.idl
+    repo_id_mod.idl
+    sequence.idl
     simple.idl
     simple2.idl
     struct.idl
-//    typecode.idl
+    typecode.idl
     typedef.idl
     typeprefix.idl
     union.idl
@@ -294,27 +294,27 @@ project(*NDDS_Lib): taolib, messaging, gen_ostream, nddslib {
   }
 
   Source_Files {
-//    anonymous.cxx
-//    anonymousPlugin.cxx
-//    anonymousSupport.cxx
-//    array.cxx
-//    arrayPlugin.cxx
-//    arraySupport.cxx
-//    array_only.cxx
-//    array_onlyPlugin.cxx
-//    array_onlySupport.cxx
+    anonymous.cxx
+    anonymousPlugin.cxx
+    anonymousSupport.cxx
+    array.cxx
+    arrayPlugin.cxx
+    arraySupport.cxx
+    array_only.cxx
+    array_onlyPlugin.cxx
+    array_onlySupport.cxx
     attribute.cxx
     attributePlugin.cxx
     attributeSupport.cxx
-//    Bug_2350_Regression.cxx
-//    Bug_2350_RegressionPlugin.cxx
-//    Bug_2350_RegressionSupport.cxx
+    Bug_2350_Regression.cxx
+    Bug_2350_RegressionPlugin.cxx
+    Bug_2350_RegressionSupport.cxx
     Bug_2577_Regression.cxx
     Bug_2577_RegressionPlugin.cxx
     Bug_2577_RegressionSupport.cxx
-//    Bug_2582_Regression.cxx
-//    Bug_2582_RegressionPlugin.cxx
-//    Bug_2582_RegressionSupport.cxx
+    Bug_2582_Regression.cxx
+    Bug_2582_RegressionPlugin.cxx
+    Bug_2582_RegressionSupport.cxx
 //    Bug_2583_Regression.cxx
 //    Bug_2583_RegressionPlugin.cxx
 //    Bug_2583_RegressionSupport.cxx
@@ -333,9 +333,9 @@ project(*NDDS_Lib): taolib, messaging, gen_ostream, nddslib {
 //    Bug_3821_Regression.cxx
 //    Bug_3821_RegressionPlugin.cxx
 //    Bug_3821_RegressionSupport.cxx
-  //  constants.cxx
-  //  constantsPlugin.cxx
-  //  constantsSupport.cxx
+    constants.cxx
+    constantsPlugin.cxx
+    constantsSupport.cxx
     dif2.cxx
     dif2Plugin.cxx
     dif2Support.cxx
@@ -345,51 +345,51 @@ project(*NDDS_Lib): taolib, messaging, gen_ostream, nddslib {
     full.cxx
     fullPlugin.cxx
     fullSupport.cxx
-//    fwd.cxx
-//    fwdPlugin.cxx
-//    fwdSupport.cxx
+    fwd.cxx
+    fwdPlugin.cxx
+    fwdSupport.cxx
 //    generic_object.cxx
 //    generic_objectPlugin.cxx
 //    generic_objectSupport.cxx
-//    included.cxx
-//    includedPlugin.cxx
-//    includedSupport.cxx
-//    including.cxx
-//    includingPlugin.cxx
-//    includingSupport.cxx
+    included.cxx
+    includedPlugin.cxx
+    includedSupport.cxx
+    including.cxx
+    includingPlugin.cxx
+    includingSupport.cxx
     inherit.cxx
     inheritPlugin.cxx
     inheritSupport.cxx
-//    interface.cxx
-//    interfacePlugin.cxx
-//    interfaceSupport.cxx
+    interface.cxx
+    interfacePlugin.cxx
+    interfaceSupport.cxx
 //    keywords.cxx
 //    keywordsPlugin.cxx
 //    keywordsSupport.cxx
     module.cxx
     modulePlugin.cxx
     moduleSupport.cxx
-//    nested_scope.cxx
-//    nested_scopePlugin.cxx
-//    nested_scopeSupport.cxx
-//    old_array.cxx
-//    old_arrayPlugin.cxx
-//    old_arraySupport.cxx
-//    old_sequence.cxx
-//    old_sequencePlugin.cxx
-//    old_sequenceSupport.cxx
+    nested_scope.cxx
+    nested_scopePlugin.cxx
+    nested_scopeSupport.cxx
+    old_array.cxx
+    old_arrayPlugin.cxx
+    old_arraySupport.cxx
+    old_sequence.cxx
+    old_sequencePlugin.cxx
+    old_sequenceSupport.cxx
     old_struct.cxx
     old_structPlugin.cxx
     old_structSupport.cxx
-//    old_union.cxx
-//    old_unionPlugin.cxx
-//    old_unionSupport.cxx
+    old_union.cxx
+    old_unionPlugin.cxx
+    old_unionSupport.cxx
     params.cxx
     paramsPlugin.cxx
     paramsSupport.cxx
-//    pragma.cxx
-//    pragmaPlugin.cxx
-//    pragmaSupport.cxx
+    pragma.cxx
+    pragmaPlugin.cxx
+    pragmaSupport.cxx
     primtypes.cxx
     primtypesPlugin.cxx
     primtypesSupport.cxx
@@ -402,9 +402,9 @@ project(*NDDS_Lib): taolib, messaging, gen_ostream, nddslib {
     reopen_include2.cxx
     reopen_include2Plugin.cxx
     reopen_include2Support.cxx
-//    repo_id_mod.cxx
-//    repo_id_modPlugin.cxx
-//    repo_id_modSupport.cxx
+    repo_id_mod.cxx
+    repo_id_modPlugin.cxx
+    repo_id_modSupport.cxx
 //    sequence.cxx
 //    sequencePlugin.cxx
 //    sequenceSupport.cxx
@@ -429,9 +429,9 @@ project(*NDDS_Lib): taolib, messaging, gen_ostream, nddslib {
 //    union.cxx
 //    unionPlugin.cxx
 //    unionSupport.cxx
-//    valuetype.cxx
-//    valuetypePlugin.cxx
-//    valuetypeSupport.cxx
+    valuetype.cxx
+    valuetypePlugin.cxx
+    valuetypeSupport.cxx
   }
 
   Template_Files {
