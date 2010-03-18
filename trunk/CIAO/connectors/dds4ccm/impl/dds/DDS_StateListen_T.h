@@ -8,7 +8,7 @@
 #ifndef DDS_STATELISTEN_T_H_
 #define DDS_STATELISTEN_T_H_
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 class DDS_StateListen_T
 {
 public:
@@ -52,7 +52,7 @@ private:
   ::DDS::CCM_DataReader_var data_reader_;
   ::CCM_DDS::CCM_StateListenerControl_var data_control_;
   ::DDS::DataReaderListener_var data_listener_;
-  ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE> dds_read_;
+  ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED> dds_read_;
   ::CIAO::DDS4CCM::CCM_DDS_DataReader_i ccm_dds_reader_;
   //@}
   typedef ::CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE> DataReaderStateListener;

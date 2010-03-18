@@ -129,7 +129,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
         test,
         sample.symbol.in (),
         sample.iteration));
-    if (sample.iteration <= this->current_min_iteration_)
+    if (sample.iteration <= ACE_OS::atoi (MIN_ITERATION_1))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: %C ALL: "
                               "Didn't expect samples with iterations "
@@ -163,17 +163,13 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
       }
     for (CORBA::ULong it = 0; it < queryfiltertest_info_seq->length (); ++it)
       {
-        if ((*readinfo_seq)[it].access_status == ::CCM_DDS::FRESH_INFO)
-          {
-            this->check_iter ((*queryfiltertest_info_seq)[it], "READ");
-          }
+        this->check_iter ((*queryfiltertest_info_seq)[it], "READ");
       }
   }
 
   void
   Receiver_exec_i::get_all (void)
   {
-#if (DDS4CCM_USES_QUERY_CONDITION==1)
     if (::CORBA::is_nil (this->getter_))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: No Getter\n"));
@@ -185,9 +181,11 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     while (result)
       {
         result = this->getter_->get_one (qf_info, readinfo);
-        this->check_iter (*qf_info, "GET");
+        if (result)
+          {
+            this->check_iter (*qf_info, "GET");
+          }
       }
-#endif
   }
 
   void

@@ -14,7 +14,7 @@
 #include "ciao/Logger/Log_Macros.h"
 
 #if !defined (CLINFO)
-# define CLINFO "(%P|%t) [%M] - %T - "
+#  define CLINFO "(%P|%t) [%M] - %T - "
 #endif
 
 // By default tracing is turned off.

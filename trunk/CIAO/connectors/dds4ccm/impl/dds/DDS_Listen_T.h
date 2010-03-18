@@ -12,7 +12,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Reactor;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 class DDS_Listen_T
 {
 public:
@@ -55,7 +55,7 @@ private:
   ::DDS::CCM_DataReader_var data_reader_;
   ::CCM_DDS::CCM_DataListenerControl_var data_control_;
   ::DDS::DataReaderListener_var data_listener_;
-  ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE> dds_read_;
+  ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED> dds_read_;
   ::CIAO::DDS4CCM::CCM_DDS_DataReader_i ccm_dds_reader_;
   //@}
   typedef ::CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE> DataReaderListener;

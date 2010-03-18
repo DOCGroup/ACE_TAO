@@ -1,3 +1,49 @@
+Thu Mar 18 09:44:29 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DDS_Event_Connector_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Get_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Listen_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Read_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Read_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_StateListen_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_State_Connector_T.h:
+        * connectors/dds4ccm/impl/dds/Getter_T.h:
+        * connectors/dds4ccm/impl/dds/Getter_T.cpp:
+        * connectors/dds4ccm/impl/dds/Reader_T.h:
+        * connectors/dds4ccm/impl/dds/Reader_T.cpp:
+          Replaced the DataReader of the Getter when a
+          contentfiltered topic is created by the Reader (i.e. the
+          user creates a filter on the DataReader). Therefor
+          the template arguments of the Reader should be
+          extended with 'FIXED'. Because of that, several other
+          template classes needed to be extended with this.
+
+        * connectors/dds4ccm/impl/dds/DomainParticipant.cpp:
+          Optimized logging.
+
+        * connectors/dds4ccm/impl/dds4ccm_conf.h:
+          Added check whether DDS4CCM_USES_QUERY_CONDITION and
+          CIAO_DDS4CCM_CONTEXT_SWITCH are not already defined.
+
+        * connectors/dds4ccm/impl/logger/Log_Macros.h:
+          Layout changes.
+
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.cpp:
+          The getter test also runs when DDS4CCM_USES_QUERY_CONDITION is 0.
+
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Seq/VT_Seq_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Seq/VT_Seq_Connector.mpc:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Receiver/VTopic_Receiver.mpc:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Sender/VTopic_Sender.mpc:
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Seq/VTS_Seq_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Seq/VTS_Seq_Connector.mpc:
+        * connectors/dds4ccm/tests/VariousTopicsState/Receiver/VTopics_Receiver.mpc:
+        * connectors/dds4ccm/tests/VariousTopicsState/Sender/VTopics_Sender.mpc:
+          Resolved compile issues related to renaming '_Seq' into 'Seq'.
+
 Thu Mar 18 07:59:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Base/Hello_Base.idl

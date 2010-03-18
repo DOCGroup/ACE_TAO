@@ -12,6 +12,7 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
+#include "dds4ccm/impl/dds/Getter_T.h"
 
 #if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::InstanceHandle_t DDS_InstanceHandle_t;
@@ -24,7 +25,7 @@ namespace CIAO
   {
     namespace DDS_CCM
     {
-      template <typename DDS_TYPE, typename CCM_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
       class Reader_T :
           public virtual CCM_TYPE::reader_type,
           public virtual ::CORBA::LocalObject,
@@ -60,13 +61,19 @@ namespace CIAO
 
         virtual void filter (const ::CCM_DDS::QueryFilter & filter);
 
-        void set_impl (::DDS::DataReader_ptr reader);
-        void set_qos (
+        void set_contentfilteredtopic_data (
           const char * libary_name,
-          const char * profile_name);
+          const char * profile_name,
+          Getter_T<DDS_TYPE, CCM_TYPE, FIXED> * dds_get=0);
+
+        void set_impl (::DDS::DataReader_ptr reader);
+
+        ::DDSDataReader * get_dds_datareader ();
 
       private:
         ::DDS::DataReader_var reader_;
+
+        Getter_T<DDS_TYPE, CCM_TYPE, FIXED> * dds_get_;
 
         ACE_CString library_name_;
         ACE_CString profile_name_;
@@ -78,7 +85,6 @@ namespace CIAO
         #endif
 
         typename DDS_TYPE::data_reader * impl_;
-        typename DDS_TYPE::data_reader * original_impl_;
 
         typename DDS_TYPE::data_reader * impl (void);
 

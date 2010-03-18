@@ -145,12 +145,12 @@ namespace CIAO
       if (!ccm_dds_pub)
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_i::delete_publisher - "
-                       "Unable to cast provided object refence to servant pointer.\n"));
+                       "Unable to cast provided object reference to servant pointer.\n"));
           return ::DDS::RETCODE_ERROR;
         }
 
       DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_i::delete_publisher - "
-                   "Successfully casted provided object refence to CCM_DDS_Publisher_i\n"));
+                   "Successfully casted provided object reference to CCM_DDS_Publisher_i\n"));
 
       DDS_ReturnCode_t const retval = this->impl ()->delete_publisher (ccm_dds_pub->get_impl ());
 
@@ -276,12 +276,12 @@ namespace CIAO
       if (!ccm_dds_sub)
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_i::delete_subscriber - "
-                       "Unable to cast provided object refence to servant pointer.\n"));
+                       "Unable to cast provided object reference to servant pointer.\n"));
           return ::DDS::RETCODE_ERROR;
         }
 
       DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_i::delete_subscriber - "
-                   "Successfully casted provided object refence to CCM_DDS_Subscriber_i\n"));
+                   "Successfully casted provided object reference to CCM_DDS_Subscriber_i\n"));
 
       DDS_ReturnCode_t const retval = this->impl ()->delete_subscriber (ccm_dds_sub->get_impl ());
 
