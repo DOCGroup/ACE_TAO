@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -l ../lib -o ../lib -b dds4ccm_base -u Large DDS_Sub"
 
-project(Large_DDS_Sub_idl_gen) : componentidldefaults , dds4ccm  {
+project(Large_DDS_Sub_idl_gen) : componentidldefaults, dds4ccm {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=DDS_SUB_STUB_Export \
               -Wb,stub_export_include=DDS_Sub_stub_export.h \
@@ -16,7 +16,7 @@ project(Large_DDS_Sub_idl_gen) : componentidldefaults , dds4ccm  {
   }
 }
 
-project(Large_DDS_Sub_lem_gen) : ciaoidldefaults , dds4ccm  {
+project(Large_DDS_Sub_lem_gen) : ciaoidldefaults, dds4ccm {
   after += Large_DDS_Sub_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=DDS_SUB_LEM_STUB_Export \
