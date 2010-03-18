@@ -1,3 +1,25 @@
+Thu Mar 18 18:33:20 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+        * TAO_IDL/be_include/be_visitor_connector/facet_ami_exh.h:
+        * TAO_IDL/be_include/be_visitor_connector/facet_ami_exs.h:
+
+          Changes to AMI connector impl generation, mostly due
+          to the declaration of the AMI connector in IDL as a
+          template module instantiation.
+
+        * TAO_IDL/fe/fe_utils.cpp:
+
+          Commented out the destruction of template arguments
+          for the time being until a way can be found to
+          avoid the call on AST nodes that are already
+          destroyed.
+
 Thu Mar 18 09:30:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Hello/IDL_Test.mpc:
@@ -19,12 +41,12 @@ Thu Mar 18 08:02:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Mar 18 07:59:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO_IDL/Makefile.am:
-	  Removed obsolete files
+	      * TAO_IDL/Makefile.am:
+	        Removed obsolete files
 
-	* TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp
-	  Changed layout of generated code
+	      * TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+	      * TAO_IDL/be/be_visitor_interface/interface_sh.cpp
+	        Changed layout of generated code
 
 Wed Mar 17 19:10:37 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 

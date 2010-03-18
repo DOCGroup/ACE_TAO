@@ -26,11 +26,16 @@ be_visitor_facet_ami_exs::~be_visitor_facet_ami_exs (void)
 }
 
 int
+be_visitor_facet_ami_exs::visit_component (be_component *node)
+{
+  this->node_ = node;
+  
+  return this->visit_scope (node);
+}
+
+int
 be_visitor_facet_ami_exs::visit_provides (be_provides *node)
 {
-  this->node_ =
-    be_component::narrow_from_scope (node->defined_in ());
-    
   this->iface_ =
     be_interface::narrow_from_decl (node->provides_type ());
     
@@ -116,7 +121,7 @@ be_visitor_facet_ami_exs::gen_reply_handler_class (void)
   this->for_reply_handler_ = true;
 
   const char *suffix = "_reply_hander";
-  AST_Decl *scope = ScopeAsDecl (this->node_->defined_in ());
+  AST_Decl *scope = ScopeAsDecl (this->iface_->defined_in ());
   const char *scope_name = scope->full_name ();
   bool global = (scope->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (global ? "" : "::");
@@ -142,14 +147,15 @@ be_visitor_facet_ami_exs::gen_reply_handler_class (void)
       << "}";
 
   ACE_CString handler_str (iface_name);
-  handler_str += "Handler";
+  handler_str += "Callback";
   Identifier id (handler_str.c_str ());
   
-  /// We can depend on this implied IDL interface to have been
-  /// added to the same scope as the connector, due to the -GC
-  /// option.
+  /// The connector is defined in the template module instantiation,
+  /// the callback interface is created in that module's
+  /// containing scope.
+  AST_Decl *m = ScopeAsDecl (this->node_->defined_in ());
   AST_Decl *d =
-    this->node_->defined_in ()->lookup_by_name_local (&id, 0);
+    m->defined_in ()->lookup_by_name_local (&id, 0);
     
   be_interface *callback_iface =
     be_interface::narrow_from_decl (d);
@@ -173,7 +179,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
 
   const char *suffix = "_exec_i";
   const char *scope_name =
-    ScopeAsDecl (this->node_->defined_in ())->full_name ();
+    ScopeAsDecl (this->iface_->defined_in ())->full_name ();
   const char *iface_name = this->iface_->local_name ();
   
   os_ << be_nl << be_nl

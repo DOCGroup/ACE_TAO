@@ -30,11 +30,16 @@ be_visitor_facet_ami_exh::~be_visitor_facet_ami_exh (void)
 }
 
 int
+be_visitor_facet_ami_exh::visit_component (be_component *node)
+{
+  this->node_ = node;
+  
+  return this->visit_scope (node);
+}
+
+int
 be_visitor_facet_ami_exh::visit_provides (be_provides *node)
 {
-  this->node_ =
-    be_component::narrow_from_scope (node->defined_in ());
-    
   this->iface_ =
     be_interface::narrow_from_decl (node->provides_type ());
     
@@ -97,7 +102,7 @@ int
 be_visitor_facet_ami_exh::gen_reply_handler_class (void)
 {
   const char *suffix = "_reply_hander";
-  AST_Decl *scope = ScopeAsDecl (this->node_->defined_in ());
+  AST_Decl *scope = ScopeAsDecl (this->iface_->defined_in ());
   const char *scope_name = scope->full_name ();
   bool global = (scope->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (global ? "" : "::");
@@ -116,14 +121,15 @@ be_visitor_facet_ami_exh::gen_reply_handler_class (void)
       << "virtual ~" << iface_name << suffix << " (void);";
      
   ACE_CString handler_str (iface_name);
-  handler_str += "Handler";
+  handler_str += "Callback";
   Identifier id (handler_str.c_str ());
   
-  /// We can depend on this implied IDL interface to have been
-  /// added to the same scope as the connector, due to the -GC
-  /// option.
+  /// The connector is defined in the template module instantiation,
+  /// the callback interface is created in that module's
+  /// containing scope.
+  AST_Decl *m = ScopeAsDecl (this->node_->defined_in ());
   AST_Decl *d =
-    this->node_->defined_in ()->lookup_by_name_local (&id, 0);
+    m->defined_in ()->lookup_by_name_local (&id, 0);
     
   be_interface *callback_iface =
     be_interface::narrow_from_decl (d);
@@ -151,7 +157,7 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
 {
   const char *suffix = "_exec_i";
   const char *scope_name =
-    ScopeAsDecl (this->node_->defined_in ())->full_name ();
+    ScopeAsDecl (this->iface_->defined_in ())->full_name ();
   const char *iface_name = this->iface_->local_name ();
   
   os_ << be_nl << be_nl
@@ -192,9 +198,9 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
       << "private:" << be_idt_nl
       << "::" << scope_name << "::" << orig_iface_name
       << "_var receptacle_objref_;" << be_nl
-      << "::" << scope_name << "::CCM_"
-      << this->node_->local_name () << "_Context_var context_;"
-      << be_uidt_nl
+      << "::" << ScopeAsDecl (this->node_->defined_in ())->name ()
+      << "::CCM_" << this->node_->local_name ()
+      << "_Context_var context_;" << be_uidt_nl
       << "};"; 
       
   return 0;

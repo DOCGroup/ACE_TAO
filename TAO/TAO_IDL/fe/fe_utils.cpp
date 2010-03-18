@@ -54,7 +54,11 @@ FE_Utils::T_ARGLIST::destroy (void)
     {
       i.next (d);
       tmp = *d;
-
+      
+      /// This is a problem - nodes that aren't NT_const have
+      /// already been destroyed. Must find some other way of
+      /// ferreting out the NT_const arglist nodes.
+/*
       // These were created on the fly and not part of any scope
       // so we manage their lifetime here.
       if (tmp->node_type () == AST_Decl::NT_const)
@@ -62,7 +66,7 @@ FE_Utils::T_ARGLIST::destroy (void)
           tmp->destroy ();
           delete tmp;
           tmp = 0;
-        }
+        } */
     }
 }
 
