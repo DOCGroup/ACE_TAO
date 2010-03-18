@@ -1,3 +1,12 @@
+Thu Mar 18 12:26:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Throughput/Base/Throughput_Base.idl
+        * connectors/dds4ccm/performance-tests/Throughput/Connector/Throughput_Connector.idl
+        * connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver_exec.cpp
+        * connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver_exec.h
+        * connectors/dds4ccm/performance-tests/Throughput/SecConnector/Throughput_Sec_Connector.idl
+          _Seq to Seq update
+
 Thu Mar 18 11:51:29 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Throughput
@@ -26,7 +35,7 @@ Thu Mar 18 11:51:29 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender_exec.cpp
         * connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender_exec.h
         Throughput test DDS4ccm.
-        
+
 Thu Mar 18 11:50:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/CIAO_ComponentServer.cpp:
