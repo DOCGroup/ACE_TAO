@@ -104,7 +104,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_orb_h_include_ (true),
     gen_empty_anyop_header_ (false),
     lookup_strategy_ (TAO_PERFECT_HASH),
-    dds_impl_ (NDDS),
+    dds_impl_ (NONE),
     void_type_ (0),
     ccmobject_ (0),
     messaging_ (0),
