@@ -1,0 +1,31 @@
+// $Id$
+
+/**
+ * @file Throughput_Sec_Connector.idl
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ *
+ * by-hand translation of the idl3p.
+ */
+
+#ifndef THROUGHPUT_SEC_CONNECTOR_IDL_
+#define THROUGHPUT_SEC_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/Throughput_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "SecConnector/Throughput_Sec_ConnectorE.idl"
+
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::ThroughputCommand, ::ThroughputCommand_Seq> ThroughputCommand;
+};
+
+module Throughput
+{
+  connector Throughput_Sec_Connector : ::CCM_DDS::ThroughputCommand::DDS_Event
+  {
+  };
+};
+
+#endif /* Throughput_Sec_CONNECTOR_IDL_ */

@@ -1,0 +1,32 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ *
+ * by-hand idl3 translation of sender components.
+ */
+
+#ifndef DDS_THROUGHPUT_SENDER_IDL
+#define DDS_THROUGHPUT_SENDER_IDL
+
+#include "Connector/Throughput_Connector.idl"
+#include "SecConnector/Throughput_Sec_Connector.idl"
+
+module Throughput
+{
+  component Sender
+  {
+    port CCM_DDS::ThroughputTest::DDS_Write info_write;
+    port CCM_DDS::ThroughputCommand::DDS_Write command_write;
+    attribute unsigned long start_load;
+    attribute unsigned long incr_load;
+    attribute unsigned long long max_load;
+    attribute unsigned short recover_time;  
+    attribute unsigned short datalen; //minimal 24
+    attribute unsigned short number_of_sub; //number of subscribers
+    provides CCM_DDS::ConnectorStatusListener connector_status;
+  };
+};
+
+#endif
