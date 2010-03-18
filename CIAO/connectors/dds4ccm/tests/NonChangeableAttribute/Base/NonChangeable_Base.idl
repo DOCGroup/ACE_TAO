@@ -15,6 +15,6 @@ struct NonChangeableTest {
   long iteration;
 };
 
-typedef sequence<NonChangeableTest> NonChangeableTest_Seq;
+typedef sequence<NonChangeableTest> NonChangeableTestSeq;
 
 #endif

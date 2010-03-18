@@ -26,6 +26,6 @@ struct PerfKeyedTest {
   unsigned long long nanotime;
 };
 
-typedef sequence<PerfKeyedTest> PerfKeyedTest_Seq;
+typedef sequence<PerfKeyedTest> PerfKeyedTestSeq;
 
 #endif

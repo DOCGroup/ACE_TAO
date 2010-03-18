@@ -18,6 +18,6 @@ struct CoherentWriteTest {
   long iteration;
 };
 
-typedef sequence<CoherentWriteTest> CoherentWriteTest_Seq;
+typedef sequence<CoherentWriteTest> CoherentWriteTestSeq;
 
 #endif

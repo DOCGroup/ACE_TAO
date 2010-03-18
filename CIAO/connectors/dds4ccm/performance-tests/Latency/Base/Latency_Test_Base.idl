@@ -21,6 +21,6 @@ struct LatencyTest {
   OctetSeq data;
  };
 
-typedef sequence<LatencyTest> LatencyTest_Seq;
+typedef sequence<LatencyTest> LatencyTestSeq;
 
 #endif

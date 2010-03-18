@@ -31,6 +31,6 @@ struct Attributes {
   float speed;
 };
 
-typedef sequence<ShapeType> ShapeType_Seq;
+typedef sequence<ShapeType> ShapeTypeSeq;
 
 #endif

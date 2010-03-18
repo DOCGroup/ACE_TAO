@@ -16,7 +16,7 @@
 
 module CCM_DDS
 {
-  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopic_Seq> TestTopic;
+  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> TestTopic;
 };
 
 module Updater

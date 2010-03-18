@@ -37,7 +37,7 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
       const ::CCM_DDS::ReadInfo & info);
     virtual void
     on_many_data (
-      const LatencyTTTestSec_Seq & an_instance,
+      const LatencyTTTestSecSeq & an_instance,
       const ::CCM_DDS::ReadInfoSeq & info);
   private:
     Sender_exec_i &callback_;
@@ -50,21 +50,21 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
   public:
     ConnectorStatusListener_exec_i (Atomic_Boolean &, int,  Sender_exec_i &callback_);
     virtual ~ConnectorStatusListener_exec_i (void);
-    
+
     virtual
-    void on_inconsistent_topic( ::DDS::Topic_ptr the_topic, 
+    void on_inconsistent_topic( ::DDS::Topic_ptr the_topic,
                                 const DDS::InconsistentTopicStatus & status);
     virtual
     void on_requested_incompatible_qos( ::DDS::DataReader_ptr the_reader,
                                         const DDS::RequestedIncompatibleQosStatus & status);
     virtual
-    void on_sample_rejected( ::DDS::DataReader_ptr the_reader, 
+    void on_sample_rejected( ::DDS::DataReader_ptr the_reader,
                              const DDS::SampleRejectedStatus & status);
     virtual
     void on_offered_deadline_missed( ::DDS::DataWriter_ptr the_writer,
                                      const DDS::OfferedDeadlineMissedStatus & status);
     virtual
-    void on_offered_incompatible_qos( ::DDS::DataWriter_ptr the_writer, 
+    void on_offered_incompatible_qos( ::DDS::DataWriter_ptr the_writer,
                                       const DDS::OfferedIncompatibleQosStatus & status);
     virtual
     void on_unexpected_status( ::DDS::Entity_ptr the_entity,
@@ -73,8 +73,8 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
   private:
     Sender_exec_i &callback_;
     Atomic_Boolean &matched_;
-    int number_of_subscribers_; 
-  
+    int number_of_subscribers_;
+
   };
   //============================================================
   // WriteTicker
@@ -133,7 +133,7 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     void calc_results (void);
     void reset_results (void);
     void init_values (void);
-    void calculate_clock_overhead(void); 
+    void calculate_clock_overhead(void);
 
 
   private:
@@ -155,7 +155,7 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     CORBA::UShort number_of_msg_;
     Atomic_Boolean timer_;
     Atomic_Boolean received_;
-    Atomic_Long seq_num_; 
+    Atomic_Long seq_num_;
     CORBA::Double sigma_duration_squared_;
     ACE_UINT64 start_time_;
     ACE_UINT64 start_time_test_;

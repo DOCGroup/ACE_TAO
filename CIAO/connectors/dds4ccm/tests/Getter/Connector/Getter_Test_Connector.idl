@@ -16,12 +16,12 @@
 
 module Getter_Test
 {
-  module ::CCM_DDS::Typed < ::GetterTest, ::GetterTest_Seq> GetterTestConn;
+  module ::CCM_DDS::Typed < ::GetterTest, ::GetterTestSeq> GetterTestConn;
   connector Getter_Test_Connector : GetterTestConn::DDS_Event
   {
   };
 
-  module ::CCM_DDS::Typed < ::GetterFixed, ::GetterFixed_Seq> GetterFixedConn;
+  module ::CCM_DDS::Typed < ::GetterFixed, ::GetterFixedSeq> GetterFixedConn;
   connector Getter_Fixed_Connector : GetterFixedConn::DDS_Event
   {
   };

@@ -35,17 +35,17 @@ namespace CIAO_DDS_Sub_Impl
   //============================================================
   // Facet Executor Implementation Class: Listener_exec_i
   //============================================================
-  
+
   Listener_exec_i::Listener_exec_i (void)
   {
   }
-  
+
   Listener_exec_i::~Listener_exec_i (void)
   {
   }
-  
+
   // Operations from ::LargeTypeConn::Listener
-  
+
   void
   Listener_exec_i::on_one_data (
     const ::LargeType & /* datum */,
@@ -53,10 +53,10 @@ namespace CIAO_DDS_Sub_Impl
   {
     /* Your code here. */
   }
-  
+
   void
   Listener_exec_i::on_many_data (
-    const ::LargeType_Seq & /* data */,
+    const ::LargeTypeSeq & /* data */,
     const ::CCM_DDS::ReadInfoSeq & /* infos */)
   {
     /* Your code here. */
@@ -64,17 +64,17 @@ namespace CIAO_DDS_Sub_Impl
   //============================================================
   // Facet Executor Implementation Class: PortStatusListener_exec_i
   //============================================================
-  
+
   PortStatusListener_exec_i::PortStatusListener_exec_i (void)
   {
   }
-  
+
   PortStatusListener_exec_i::~PortStatusListener_exec_i (void)
   {
   }
-  
+
   // Operations from ::CCM_DDS::PortStatusListener
-  
+
   void
   PortStatusListener_exec_i::on_requested_deadline_missed (
     ::DDS::DataReader_ptr /* the_reader */,
@@ -82,7 +82,7 @@ namespace CIAO_DDS_Sub_Impl
   {
     /* Your code here. */
   }
-  
+
   void
   PortStatusListener_exec_i::on_sample_lost (
     ::DDS::DataReader_ptr /* the_reader */,
@@ -93,89 +93,89 @@ namespace CIAO_DDS_Sub_Impl
   //============================================================
   // Component Executor Implementation Class: DDS_Sub_exec_i
   //============================================================
-  
+
   DDS_Sub_exec_i::DDS_Sub_exec_i (void)
   {
   }
-  
+
   DDS_Sub_exec_i::~DDS_Sub_exec_i (void)
   {
   }
-  
+
   // Supported operations and attributes.
-  
+
   // Component attributes and port operations.
-  
+
   ::LargeTypeConn::CCM_Listener_ptr
   DDS_Sub_exec_i::get_info_in_data_listener (void)
   {
     /* Your code here. */
     return ::LargeTypeConn::CCM_Listener::_nil ();
   }
-  
+
   ::CCM_DDS::CCM_PortStatusListener_ptr
   DDS_Sub_exec_i::get_info_in_status (void)
   {
     /* Your code here. */
     return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
-  
+
   ::CCM_DDS::CCM_PortStatusListener_ptr
   DDS_Sub_exec_i::get_ingo_get_status (void)
   {
     /* Your code here. */
     return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
-  
+
   // Operations from Components::SessionComponent.
-  
+
   void
   DDS_Sub_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
     this->context_ =
       ::CCM_DDS_Sub_Context::_narrow (ctx);
-    
+
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }
   }
-  
+
   void
   DDS_Sub_exec_i::configuration_complete (void)
   {
     /* Your code here. */
   }
-  
+
   void
   DDS_Sub_exec_i::ccm_activate (void)
   {
     /* Your code here. */
   }
-  
+
   void
   DDS_Sub_exec_i::ccm_passivate (void)
   {
     /* Your code here. */
   }
-  
+
   void
   DDS_Sub_exec_i::ccm_remove (void)
   {
     /* Your code here. */
   }
-  
+
   extern "C" DDS_SUB_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_DDS_Sub_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+
     ACE_NEW_NORETURN (
       retval,
       DDS_Sub_exec_i);
-    
+
     return retval;
   }
 }

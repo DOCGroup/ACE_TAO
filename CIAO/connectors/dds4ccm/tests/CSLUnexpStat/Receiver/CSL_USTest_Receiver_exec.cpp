@@ -140,7 +140,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
 
   void
   TestTopic_RawListener_exec_i::on_many_data (
-    const TestTopic_Seq & /*an_instance */,
+    const TestTopicSeq & /*an_instance */,
     const ::CCM_DDS::ReadInfoSeq & /* info */)
   {
   }
@@ -242,7 +242,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   {
     try
       {
-        TestTopic_Seq           *readertest_info_seq;
+        TestTopicSeq           *readertest_info_seq;
         ::CCM_DDS::ReadInfoSeq  *readinfo_seq;
         if (this->received_ < 30)
           {

@@ -23,7 +23,7 @@ struct LatencyTTTest {
 
 
 
-typedef sequence<LatencyTTTest> LatencyTTTest_Seq;
+typedef sequence<LatencyTTTest> LatencyTTTestSeq;
 
 
 struct LatencyTTTestSec {
@@ -32,6 +32,6 @@ struct LatencyTTTestSec {
   OctetSeq data;
  };
 
-typedef sequence<LatencyTTTestSec> LatencyTTTestSec_Seq;
+typedef sequence<LatencyTTTestSec> LatencyTTTestSecSeq;
 
 #endif

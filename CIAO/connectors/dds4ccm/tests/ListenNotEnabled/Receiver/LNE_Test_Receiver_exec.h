@@ -39,7 +39,7 @@ namespace CIAO_LNE_Test_Receiver_Impl
       const ::CCM_DDS::ReadInfo & info);
     virtual void
     on_many_data (
-      const ListenNotEnabledTest_Seq & an_instance,
+      const ListenNotEnabledTestSeq & an_instance,
       const ::CCM_DDS::ReadInfoSeq & info);
   private:
     Atomic_ULong &received_one_by_one_;

@@ -17,6 +17,6 @@ struct WriterTest {
   string key; //@key
 };
 
-typedef sequence<WriterTest> WriterTest_Seq;
+typedef sequence<WriterTest> WriterTestSeq;
 
 #endif

@@ -15,6 +15,6 @@ struct Event_ConnectionTest {
   long iteration;
 };
 
-typedef sequence<Event_ConnectionTest> Event_ConnectionTest_Seq;
+typedef sequence<Event_ConnectionTest> Event_ConnectionTestSeq;
 
 #endif

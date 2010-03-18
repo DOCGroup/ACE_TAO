@@ -16,7 +16,7 @@
 
 module CCM_DDS
 {
-  module ::CCM_DDS::Typed < ::KeyedTest, ::KeyedTest_Seq> KeyedTest;
+  module ::CCM_DDS::Typed < ::KeyedTest, ::KeyedTestSeq> KeyedTest;
 };
 
 module Keyed_Test

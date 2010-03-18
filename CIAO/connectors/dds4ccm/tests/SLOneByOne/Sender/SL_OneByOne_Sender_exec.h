@@ -22,7 +22,7 @@ namespace CIAO_SL_OneByOne_Sender_Impl
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
 
   class Sender_exec_i;
-  
+
   enum UPDATER_TEST {
     UPDATE_CREATE,
     UPDATE_ONE,
@@ -76,8 +76,8 @@ namespace CIAO_SL_OneByOne_Sender_Impl
     CCM_DDS::TestTopic::Updater_var updater_;
     UPDATER_TEST test_nr_;
     Atomic_Boolean test_ok_;
-    TestTopic_Seq topic_seq_one_;
-    TestTopic_Seq topic_seq_many_;
+    TestTopicSeq topic_seq_one_;
+    TestTopicSeq topic_seq_many_;
  };
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_SL_OneByOne_Sender_Impl (void);

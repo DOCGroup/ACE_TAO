@@ -18,6 +18,6 @@ struct ListenNotEnabledTest {
   long iteration;
 };
 
-typedef sequence<ListenNotEnabledTest> ListenNotEnabledTest_Seq;
+typedef sequence<ListenNotEnabledTest> ListenNotEnabledTestSeq;
 
 #endif

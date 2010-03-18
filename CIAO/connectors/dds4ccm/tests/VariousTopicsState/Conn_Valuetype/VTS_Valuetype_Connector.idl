@@ -16,7 +16,7 @@
 
 module VTopics
 {
-  module ::CCM_DDS::Typed < ::TopicValuetype, ::TopicValuetype_Seq> TopicValuetypeConn;
+  module ::CCM_DDS::Typed < ::TopicValuetype, ::TopicValuetypeSeq> TopicValuetypeConn;
   connector VTS_Valuetype_Connector : TopicValuetypeConn::DDS_State
   {
   };

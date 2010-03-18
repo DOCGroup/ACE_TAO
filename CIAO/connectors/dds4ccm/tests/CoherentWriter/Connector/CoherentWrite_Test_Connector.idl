@@ -16,7 +16,7 @@
 
 module CCM_DDS
 {
-  module ::CCM_DDS::Typed < ::CoherentWriteTest, ::CoherentWriteTest_Seq> CoherentWriteTest;
+  module ::CCM_DDS::Typed < ::CoherentWriteTest, ::CoherentWriteTestSeq> CoherentWriteTest;
 };
 
 module CoherentWrite_Test

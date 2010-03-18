@@ -18,6 +18,6 @@ struct WriterTest {
   long iteration;
 };
 
-typedef sequence<WriterTest> WriterTest_Seq;
+typedef sequence<WriterTest> WriterTestSeq;
 
 #endif

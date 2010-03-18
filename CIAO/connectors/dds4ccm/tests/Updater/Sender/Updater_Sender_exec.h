@@ -83,8 +83,8 @@ namespace CIAO_Updater_Sender_Impl
     CCM_DDS::TestTopic::Updater_var updater_;
     UPDATER_TEST test_nr_;
     Atomic_Boolean test_ok_;
-    TestTopic_Seq topic_seq_one_;
-    TestTopic_Seq topic_seq_many_;
+    TestTopicSeq topic_seq_one_;
+    TestTopicSeq topic_seq_many_;
  };
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Updater_Sender_Impl (void);

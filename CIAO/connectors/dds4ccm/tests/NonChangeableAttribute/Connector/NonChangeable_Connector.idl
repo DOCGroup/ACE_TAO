@@ -16,7 +16,7 @@
 
 module CCM_DDS
 {
-  module ::CCM_DDS::Typed < ::NonChangeableTest, ::NonChangeableTest_Seq> NonChangeableTest;
+  module ::CCM_DDS::Typed < ::NonChangeableTest, ::NonChangeableTestSeq> NonChangeableTest;
 };
 
 module NonChangeable

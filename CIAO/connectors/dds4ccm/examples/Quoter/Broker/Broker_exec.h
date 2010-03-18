@@ -56,7 +56,7 @@ namespace CIAO_Quoter_Broker_Impl
       const ::CCM_DDS::ReadInfo & info);
     virtual void
     on_many_data (
-      const ::Quoter::Stock_Info_Seq & an_instance,
+      const ::Quoter::Stock_InfoSeq & an_instance,
       const ::CCM_DDS::ReadInfoSeq & info);
   };
 

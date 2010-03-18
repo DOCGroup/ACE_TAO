@@ -10,7 +10,7 @@
 
 #pragma ndds typesupport "Base/Writer_BaseSupport.h"
 
-typedef sequence<octet> Octet_Seq;
+typedef sequence<octet> OctetSeq;
 
 #pragma DCPS_DATA_TYPE "WriterTest"
 #pragma DCPS_DATA_KEY "WriterTest key"
@@ -18,9 +18,9 @@ typedef sequence<octet> Octet_Seq;
 struct WriterTest {
   string key;
   long iteration;
-  Octet_Seq data;
+  OctetSeq data;
 };
 
-typedef sequence<WriterTest> WriterTest_Seq;
+typedef sequence<WriterTest> WriterTestSeq;
 
 #endif

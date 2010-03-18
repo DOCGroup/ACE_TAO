@@ -62,7 +62,7 @@ namespace CIAO_Quoter_Broker_Impl
   {
     ACE_DEBUG ((LM_DEBUG, "read_all\n"));
 
-    ::Quoter::Stock_Info_Seq_var  stock_infos;
+    ::Quoter::Stock_InfoSeq_var  stock_infos;
     ::CCM_DDS::ReadInfoSeq_var readinfoseq;
     this->reader_->read_all(stock_infos.out (), readinfoseq.out ());
     if(readinfoseq->length()!= 0)
@@ -92,7 +92,7 @@ namespace CIAO_Quoter_Broker_Impl
   {
     ACE_DEBUG ((LM_DEBUG, "read_all_history\n"));
 
-    ::Quoter::Stock_Info_Seq_var  stock_infos;
+    ::Quoter::Stock_InfoSeq_var  stock_infos;
     ::CCM_DDS::ReadInfoSeq_var readinfoseq;
     this->reader_->read_all(stock_infos.out (), readinfoseq.out ());
     if(readinfoseq->length()!= 0)
@@ -126,7 +126,7 @@ namespace CIAO_Quoter_Broker_Impl
     ::Quoter::Stock_Info  stock_info;
     stock_info.symbol= "IBM";  //key of instance to read
 
-    ::Quoter::Stock_Info_Seq_var  stock_infos;
+    ::Quoter::Stock_InfoSeq_var  stock_infos;
     ::CCM_DDS::ReadInfoSeq_var readinfoseq;
     try
       {
@@ -173,7 +173,7 @@ namespace CIAO_Quoter_Broker_Impl
 
   void
   Stock_Info_Listener_exec_i::on_many_data (
-    const ::Quoter::Stock_Info_Seq & /* an_instance */,
+    const ::Quoter::Stock_InfoSeq & /* an_instance */,
     const ::CCM_DDS::ReadInfoSeq & /* info */)
   {
   }

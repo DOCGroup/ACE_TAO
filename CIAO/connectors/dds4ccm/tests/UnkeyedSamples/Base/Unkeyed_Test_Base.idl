@@ -18,6 +18,6 @@ struct UnkeyedTest {
   long iteration;
 };
 
-typedef sequence<UnkeyedTest> UnkeyedTest_Seq;
+typedef sequence<UnkeyedTest> UnkeyedTestSeq;
 
 #endif

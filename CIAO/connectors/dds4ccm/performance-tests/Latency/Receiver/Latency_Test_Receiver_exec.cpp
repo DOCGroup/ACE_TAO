@@ -35,7 +35,7 @@ namespace CIAO_Latency_Test_Receiver_Impl
 
   void
   LatencyTest_Listener_exec_i::on_many_data (
-                                  const LatencyTest_Seq & /*an_instance*/,
+                                  const LatencyTestSeq & /*an_instance*/,
                                   const ::CCM_DDS::ReadInfoSeq & /*info*/)
   {
   }

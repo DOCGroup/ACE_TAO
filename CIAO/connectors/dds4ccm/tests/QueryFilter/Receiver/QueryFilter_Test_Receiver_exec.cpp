@@ -151,7 +151,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   void
   Receiver_exec_i::read_all (void)
   {
-    QueryFilterTest_Seq     *queryfiltertest_info_seq;
+    QueryFilterTestSeq     *queryfiltertest_info_seq;
     ::CCM_DDS::ReadInfoSeq  *readinfo_seq;
     this->reader_->read_all (
             queryfiltertest_info_seq,

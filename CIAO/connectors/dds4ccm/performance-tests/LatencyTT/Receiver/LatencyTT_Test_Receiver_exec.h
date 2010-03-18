@@ -38,7 +38,7 @@ namespace CIAO_LatencyTT_Test_Receiver_Impl
       const ::CCM_DDS::ReadInfo & info);
     virtual void
     on_many_data (
-      const LatencyTTTest_Seq & an_instance,
+      const LatencyTTTestSeq & an_instance,
       const ::CCM_DDS::ReadInfoSeq & info);
   private:
     Receiver_exec_i &callback_;

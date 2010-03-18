@@ -86,7 +86,7 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
 
   void
   TestTopic_RawListener_exec_i::on_many_data (
-    const TestTopic_Seq & /*an_instance */,
+    const TestTopicSeq & /*an_instance */,
     const ::CCM_DDS::ReadInfoSeq & /* info */)
   {
   }

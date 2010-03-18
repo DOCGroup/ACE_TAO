@@ -180,7 +180,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
         for (CORBA::UShort i = 1; i < this->keys_ + 1; ++i)
           {
             ReaderTest              readertest_info;
-            ReaderTest_Seq          *readertest_info_seq;
+            ReaderTestSeq          *readertest_info_seq;
             ::CCM_DDS::ReadInfoSeq  *readinfo_seq;
             char key[100];
             ACE_OS::sprintf (key, "KEY_%d", i);
@@ -254,7 +254,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
   {
     try
       {
-        ReaderTest_Seq          *readertest_info_seq;
+        ReaderTestSeq          *readertest_info_seq;
         ::CCM_DDS::ReadInfoSeq  *readinfo_seq;
         this->reader_->read_last (
                 readertest_info_seq,
@@ -304,7 +304,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
   {
     try
       {
-        ReaderTest_Seq          *readertest_info_seq;
+        ReaderTestSeq          *readertest_info_seq;
         ::CCM_DDS::ReadInfoSeq  *readinfo_seq;
         this->reader_->read_all (
                 readertest_info_seq,
@@ -460,7 +460,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
   {
     try
       {
-        ReaderTest_Seq          *readertest_info_seq;
+        ReaderTestSeq          *readertest_info_seq;
         ::CCM_DDS::ReadInfoSeq  *readinfo_seq;
         this->reader_->read_all (
                 readertest_info_seq,

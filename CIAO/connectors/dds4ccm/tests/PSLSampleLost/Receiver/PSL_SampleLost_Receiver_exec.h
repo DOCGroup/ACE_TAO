@@ -44,10 +44,9 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
 
     virtual void
     on_many_data (
-      const ::TestTopic_Seq & data,
+      const ::TestTopicSeq & data,
       const ::CCM_DDS::ReadInfoSeq & info);
   };
-
 
   //============================================================
   // ConnectorStatusListener_exec_i
@@ -98,7 +97,6 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
   private:
     /// Maintains a handle that actually process the event
     Receiver_exec_i &pulse_callback_;
-
   };
 
   //============================================================
@@ -179,7 +177,7 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
     Atomic_Boolean sample_port_2_;
     Atomic_ThreadId thread_id_listener_1_;
     Atomic_ThreadId thread_id_listener_2_;
-};
+  };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_PSL_SampleLost_Receiver_Impl (void);

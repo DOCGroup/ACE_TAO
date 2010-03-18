@@ -35,7 +35,7 @@ namespace CIAO_Hello_Receiver_Impl
 
     virtual void
     on_many_data (
-      const DDSHello_Seq & an_instance,
+      const DDSHelloSeq & an_instance,
       const ::CCM_DDS::ReadInfoSeq & info);
   private:
     Atomic_ULong &received_;

@@ -67,7 +67,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
 
   void
   TestTopic_RawListener_exec_i::on_many_data (
-    const TestTopic_Seq & /*an_instance */,
+    const TestTopicSeq & /*an_instance */,
     const ::CCM_DDS::ReadInfoSeq & /* info */)
   {
   }
@@ -142,7 +142,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
       {
         return;
       }
-    TestTopic_Seq_var TestTopic_infos;
+    TestTopicSeq_var TestTopic_infos;
     ::CCM_DDS::ReadInfoSeq_var readinfoseq;
     try
       {

@@ -115,7 +115,7 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
   // Operations from ::CCM_DDS::TestTopic_Listener
   void
   TestTopic_Listener_exec_i::on_many_data (
-    const TestTopic_Seq & /* an_instance */,
+    const TestTopicSeq & /* an_instance */,
     const ::CCM_DDS::ReadInfoSeq & /* info */)
   {
   }
@@ -160,7 +160,7 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
       {
         return;
       }
-    TestTopic_Seq_var TestTopic_infos;
+    TestTopicSeq_var TestTopic_infos;
     ::CCM_DDS::ReadInfoSeq_var readinfoseq;
     this->reader_->read_all(TestTopic_infos.out(), readinfoseq.out());
     for(CORBA::ULong i = 0; i < readinfoseq->length(); ++i)

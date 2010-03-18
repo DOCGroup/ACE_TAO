@@ -18,7 +18,7 @@
 
 module CCM_DDS
 {
-  module ::CCM_DDS::Typed < ::LatencyTest, ::LatencyTest_Seq> LatencyTest;
+  module ::CCM_DDS::Typed < ::LatencyTest, ::LatencyTestSeq> LatencyTest;
 };
 
 module Latency_Test

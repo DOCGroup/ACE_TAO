@@ -26,7 +26,7 @@ namespace CIAO_LatencyTT_Test_Receiver_Impl
                                   const LatencyTTTest & an_instance,
                                   const ::CCM_DDS::ReadInfo & /*info*/)
   {
-    // Send back a packet 
+    // Send back a packet
     LatencyTTTestSec sec_instance;
     CORBA::ULong length = an_instance.data.length();
     sec_instance.data.length(length);
@@ -37,7 +37,7 @@ namespace CIAO_LatencyTT_Test_Receiver_Impl
 
   void
   LatencyTTTest_Listener_exec_i::on_many_data (
-                                  const LatencyTTTest_Seq & /*an_instance*/,
+                                  const LatencyTTTestSeq & /*an_instance*/,
                                   const ::CCM_DDS::ReadInfoSeq & /*info*/)
   {
   }

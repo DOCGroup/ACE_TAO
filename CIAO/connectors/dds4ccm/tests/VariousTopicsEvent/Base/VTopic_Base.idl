@@ -65,11 +65,11 @@ struct TopicValuetype {
 };
 
 // Sequences
-typedef sequence<TestTopic> TestTopic_Seq;
-typedef sequence<TopicString> TopicString_Seq;
-typedef sequence<TopicArray> TopicArray_Seq;
-typedef sequence<TopicUnion> TopicUnion_Seq;
-typedef sequence<TopicSeq> TopicSeq_Seq;
-typedef sequence<TopicValuetype> TopicValuetype_Seq;
+typedef sequence<TestTopic> TestTopicSeq;
+typedef sequence<TopicString> TopicStringSeq;
+typedef sequence<TopicArray> TopicArraySeq;
+typedef sequence<TopicUnion> TopicUnionSeq;
+typedef sequence<TopicSeq> TopicSeqSeq;
+typedef sequence<TopicValuetype> TopicValuetypeSeq;
 
 #endif
