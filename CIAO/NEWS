@@ -70,12 +70,30 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.7.7 and CIAO-0.7.8
   1) dance_plan_launcher may now deploy locality-constrained plans directly to
      a NodeManager.
   2) dance_plan_launcher now has the ability to deploy CDR encoded deployment
-     plans in a portable manner. 
+     plans in a portable manner.
   3) dance_plan_launcher's command line options have been cleaned up to be
      more intuitive. The major user-visible change is -q (for application
-     teardown) has been renamed -s.  
+     teardown) has been renamed -s.
   4) Most plan_launcher business logic is encapsulated in an implementation
      library that may be leveraved by users to write custom executor agents.
+
+. All DDS4CCM callbacks will be deliverd to the user component on the CCM
+  thread, not on the DDS thread. This does mean a small performance penalty,
+  if you don't want to get this threadswitch, define CIAO_DDS4CCM_CONTEXT_SWITCH
+  to zero in your config.h file
+
+. DDS4CCM uses a ContentFilteredTopic to implement the QueryFilter. If you
+  want to use DDS QueryCondition instead add DDS4CCM_USES_QUERY_CONDITION
+  as 1 to your config.h file
+
+. The user sequences in our DDS4CCM examples and tests have been updated to use
+  Seq as postfix instead of _Seq. The RTI DDS specific sequence is now named
+  with the RTISeq postfix
+
+. DDS4CCM doesn't work anymore with RTI DDS 4.4d, you will need to use at
+  least 4.5b version with an updated CCK
+
+
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.6 and CIAO-0.7.7
 =======================================================
