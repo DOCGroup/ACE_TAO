@@ -28,7 +28,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
   const char* profile_name)
 {
   DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
-  if (::CORBA::is_nil  (this->data_writer_.in ()))
+  if (!this->ccm_dds_writer_.get_impl ())
     {
       try
         {
@@ -54,8 +54,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
           ::CIAO::DDS4CCM::CCM_DDS_DataWriter_i  *rw =
             dynamic_cast < ::CIAO::DDS4CCM::CCM_DDS_DataWriter_i  *> (dwv_tmp.in ());
           this->ccm_dds_writer_.set_impl (rw->get_impl ());
-          this->data_writer_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
-          this->dds_update_.set_impl (dwv_tmp);
+          this->dds_update_.set_impl (&this->ccm_dds_writer_);
         }
       catch (...)
         {
@@ -116,9 +115,8 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove (
   DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove");
   try
     {
-      publisher->delete_datawriter (this->data_writer_.in ());
+      publisher->delete_datawriter (&this->ccm_dds_writer_);
       this->ccm_dds_writer_.set_impl (0);
-      this->data_writer_ = ::DDS::CCM_DataWriter::_nil ();
       this->dds_update_.set_impl (0);
     }
   catch (...)

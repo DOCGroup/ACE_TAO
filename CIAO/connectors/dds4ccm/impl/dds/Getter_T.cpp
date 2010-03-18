@@ -8,13 +8,13 @@
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::Getter_Base_T (void) :
-   impl_ (0),
-   condition_(0),
-   time_out_ (),
-   max_delivered_data_ (0),
-   ws_ (0),
-   rd_condition_ (0)
+CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::Getter_Base_T (void)
+  : reader_ (0),
+    condition_(0),
+    time_out_ (),
+    max_delivered_data_ (0),
+    ws_ (0),
+    rd_condition_ (0)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::Getter_Base_T");
 }
@@ -34,9 +34,9 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 typename DDS_TYPE::data_reader *
 CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::impl (void)
 {
-  if (this->impl_)
+  if (this->reader_)
     {
-      return this->impl_;
+      return DDS_TYPE::data_reader::narrow (this->reader_->get_impl ());
     }
   else
     {
@@ -201,16 +201,6 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::remove_conditions ()
       DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "Getter_Base_T::remove_conditions - "
                       "Read condition successfully detached from waitset.\n"));
     }
-  if (retcode != DDS_RETCODE_OK)
-    {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "Getter_Base_T::remove_conditions - "
-                      "Unable to detach guard condition from waitset.\n"));
-    }
-  else
-    {
-      DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "Getter_Base_T::remove_conditions - "
-                      "Guard condition successfully detached from waitset.\n"));
-    }
   retcode = this->impl ()->delete_readcondition (this->rd_condition_);
   if (retcode != DDS_RETCODE_OK)
     {
@@ -221,6 +211,11 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::remove_conditions ()
     {
       DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "Getter_Base_T::remove_conditions - "
                       "Read condition successfully deleted from DDSDataReader.\n"));
+    }
+  if (this->ws_)
+    {
+      delete this->ws_;
+      this->ws_ = 0;
     }
 }
 
@@ -234,69 +229,45 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::passivate ()
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
+CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::create_conditions ()
+{
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::set_datareader");
+
+  // Now create the waitset conditions
+  ACE_NEW_THROW_EX (this->ws_,
+                    DDSWaitSet (),
+                    CORBA::NO_MEMORY ());
+  this->rd_condition_ = this->impl ()->create_readcondition (DDS_NOT_READ_SAMPLE_STATE,
+                                                    DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
+                                                    DDS_ALIVE_INSTANCE_STATE | DDS_NOT_ALIVE_INSTANCE_STATE);
+  DDS_ReturnCode_t retcode = this->ws_->attach_condition (this->rd_condition_);
+  if (retcode != DDS_RETCODE_OK)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "GETTER: Unable to attach read condition to waitset.\n"));
+      throw CCM_DDS::InternalError (retcode, 1);
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
 CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::set_impl (
-  ::DDS::DataReader_ptr reader)
+  CCM_DDS_DataReader_i *reader)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::set_impl");
 
-  if (::CORBA::is_nil (reader))
+  if (!reader)
     {
       if (this->ws_)
         {
           delete this->ws_;
           this->ws_ = 0;
         }
-      this->impl_ = 0;
     }
   else
     {
-      CCM_DDS_DataReader_i *rdr = dynamic_cast <CCM_DDS_DataReader_i *> (reader);
-      if (!rdr)
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::data_reader - "
-                       "Unable to cast provided DataReader to servant\n"));
-          throw CORBA::INTERNAL ();
-        }
-
-      this->impl_ =  DDS_TYPE::data_reader::narrow (rdr->get_impl ());
-
-      if (!this->impl_)
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::data_reader - "
-                       "Unable to narrow the provided writer entity to the specific "
-                       "type necessary to publish messages\n"));
-          throw CORBA::INTERNAL ();
-        }
-
-      // Now create the waitset conditions
-      ACE_NEW_THROW_EX (this->ws_,
-                        DDSWaitSet (),
-                        CORBA::NO_MEMORY ());
-      this->rd_condition_ = this->impl ()->create_readcondition (DDS_NOT_READ_SAMPLE_STATE,
-                                                       DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-                                                       DDS_ALIVE_INSTANCE_STATE | DDS_NOT_ALIVE_INSTANCE_STATE);
-      DDS_ReturnCode_t retcode = this->ws_->attach_condition (this->rd_condition_);
-      if (retcode != DDS_RETCODE_OK)
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "GETTER: Unable to attach read condition to waitset.\n"));
-          throw CCM_DDS::InternalError (retcode, 1);
-        }
+      this->reader_ = reader;
+      this->create_conditions ();
     }
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
-CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::replace_datareader (
-  ::DDS::DataReader_ptr reader)
-{
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::replace_datareader");
-  this->remove_conditions ();
-  if (this->ws_)
-    {
-      delete this->ws_;
-      this->ws_ = 0;
-    }
-  this->set_impl (reader);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>

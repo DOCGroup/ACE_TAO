@@ -36,12 +36,12 @@ namespace CIAO
         const typename DDS_TYPE::value_type & datum,
         const ::DDS::InstanceHandle_t & instance_handle);
 
-      void set_impl (::DDS::DataWriter_ptr writer);
+      void set_impl (CCM_DDS_DataWriter_i *writer);
 
       typename DDS_TYPE::data_writer * impl (void);
 
     private:
-      typename DDS_TYPE::data_writer *impl_;
+      CCM_DDS_DataWriter_i *writer_;
     };
   }
 }

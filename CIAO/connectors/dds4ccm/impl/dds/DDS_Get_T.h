@@ -51,7 +51,6 @@ private:
    * DDS_Get
    */
   //@{
-  ::DDS::CCM_DataReader_var data_reader_;
   ::DDS::DataReaderListener_var status_;
   ::CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, FIXED> dds_get_;
   ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED> dds_read_;

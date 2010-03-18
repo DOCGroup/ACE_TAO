@@ -49,7 +49,6 @@ private:
    * DDS_Listen
    */
   //@{
-  ::DDS::CCM_DataReader_var data_reader_;
   ::CCM_DDS::CCM_StateListenerControl_var data_control_;
   ::DDS::DataReaderListener_var data_listener_;
   ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED> dds_read_;
