@@ -14,6 +14,7 @@ feature(dds4ccm_splice) : dds4ccm, splice_ts_defaults {
 
 feature(dds4ccm_ndds) : dds4ccm, ndds_ts_defaults, nddslib {
   Define_Custom(DDSGenerator) : NDDSTypeSupport {
+    commandflags += -typeSequenceSuffix RTISeq -enableEscapeChar -verbosity 1
   }
 
   dynamicflags += NDDS_USER_DLL_EXPORT

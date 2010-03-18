@@ -33,7 +33,7 @@ namespace CIAO_LMBM_Test_Receiver_Impl
 
   void
   ListenManyByManyTest_Listener_exec_i::on_many_data (
-                                  const ListenManyByManyTest_Seq & an_instance,
+                                  const ListenManyByManyTestSeq & an_instance,
                                   const ::CCM_DDS::ReadInfoSeq & info)
   {
     if (an_instance.length () == 0)

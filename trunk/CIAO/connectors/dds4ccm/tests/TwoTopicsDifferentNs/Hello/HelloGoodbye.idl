@@ -14,7 +14,7 @@ module Hello
     string hello;  //@key
     long iteration;
   };
-  typedef sequence<HelloGoodbye> HelloGoodbye_Seq;
+  typedef sequence<HelloGoodbye> HelloGoodbyeSeq;
 };
 
 

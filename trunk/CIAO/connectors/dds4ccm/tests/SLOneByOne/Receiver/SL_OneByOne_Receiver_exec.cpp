@@ -76,7 +76,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
   }
 
   void
-  StateListener_exec_i::on_many_updates (const ::TestTopic_Seq & /*data*/,
+  StateListener_exec_i::on_many_updates (const ::TestTopicSeq & /*data*/,
                                          const ::CCM_DDS::ReadInfoSeq & /*infos*/)
   {
     this->on_many_updates_ = true;

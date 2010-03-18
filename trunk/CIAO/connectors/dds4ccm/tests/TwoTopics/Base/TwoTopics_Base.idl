@@ -14,12 +14,12 @@ struct HelloTopic {
   string hello; //@key
   long iteration;
 };
-typedef sequence<HelloTopic> HelloTopic_Seq;
+typedef sequence<HelloTopic> HelloTopicSeq;
 
 struct GoodbyeTopic {
   string goodbye; //@key
   long iteration;
 };
-typedef sequence<GoodbyeTopic> GoodbyeTopic_Seq;
+typedef sequence<GoodbyeTopic> GoodbyeTopicSeq;
 
 #endif

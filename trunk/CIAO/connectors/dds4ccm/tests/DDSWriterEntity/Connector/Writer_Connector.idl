@@ -16,7 +16,7 @@
 
 module CCM_DDS
 {
-  module ::CCM_DDS::Typed < ::WriterTest, ::WriterTest_Seq> WriterTest;
+  module ::CCM_DDS::Typed < ::WriterTest, ::WriterTestSeq> WriterTest;
 };
 
 module Writer

@@ -14,6 +14,6 @@ struct TestTopic {
   string key; //@key
   long x;
 };
-typedef sequence<TestTopic> TestTopic_Seq;
+typedef sequence<TestTopic> TestTopicSeq;
 
 #endif

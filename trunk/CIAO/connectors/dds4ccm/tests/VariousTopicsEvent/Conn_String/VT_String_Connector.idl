@@ -16,7 +16,7 @@
 
 module VTopic
 {
-  module ::CCM_DDS::Typed < ::TopicString, ::TopicString_Seq> TopicStringConn;
+  module ::CCM_DDS::Typed < ::TopicString, ::TopicStringSeq> TopicStringConn;
   connector VT_String_Connector : TopicStringConn::DDS_Event
   {
   };

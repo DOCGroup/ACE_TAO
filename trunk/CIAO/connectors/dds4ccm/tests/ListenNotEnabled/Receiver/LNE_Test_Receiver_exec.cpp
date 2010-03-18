@@ -33,7 +33,7 @@ namespace CIAO_LNE_Test_Receiver_Impl
 
   void
   ListenNotEnabledTest_Listener_exec_i::on_many_data (
-                                  const ListenNotEnabledTest_Seq & /*an_instance*/,
+                                  const ListenNotEnabledTestSeq & /*an_instance*/,
                                   const ::CCM_DDS::ReadInfoSeq & /*info*/)
   {
     //just count; this value is checked on ccm_remove.

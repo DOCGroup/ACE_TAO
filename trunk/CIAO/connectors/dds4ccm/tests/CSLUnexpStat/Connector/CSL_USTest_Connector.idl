@@ -16,7 +16,7 @@
 
 module CSL_USTest
 {
-  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopic_Seq> TestTopicConn;
+  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> TestTopicConn;
   connector CSL_USTest_Connector : TestTopicConn::DDS_Event
   {
   };

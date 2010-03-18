@@ -153,7 +153,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
                           this->getter_->time_out ().sec,
                           this->getter_->time_out ().nanosec));
 
-    GetterTest_Seq *gettertest_seq = 0;
+    GetterTestSeq *gettertest_seq = 0;
     ::CCM_DDS::ReadInfoSeq *readinfo = 0;
     bool result = this->getter_->get_many (gettertest_seq, readinfo);
     if (result)
@@ -448,7 +448,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
                               "sec <%d> - nanosec <%u>\n",
                               this->getter_->time_out ().sec,
                               this->getter_->time_out ().nanosec));
-        GetterTest_Seq *gettertest_seq;
+        GetterTestSeq *gettertest_seq;
         ::CCM_DDS::ReadInfoSeq *readinfo;
         bool result = this->getter_->get_many (gettertest_seq, readinfo);
         if (result)

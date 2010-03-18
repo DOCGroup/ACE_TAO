@@ -18,6 +18,6 @@ struct ListenManyByManyTest {
   long iteration;
 };
 
-typedef sequence<ListenManyByManyTest> ListenManyByManyTest_Seq;
+typedef sequence<ListenManyByManyTest> ListenManyByManyTestSeq;
 
 #endif

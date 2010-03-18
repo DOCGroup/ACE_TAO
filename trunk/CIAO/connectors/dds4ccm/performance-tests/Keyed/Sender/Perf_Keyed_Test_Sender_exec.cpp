@@ -39,7 +39,7 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
 
   void
   PerfKeyedTest_Listener_exec_i::on_many_data (
-                                  const PerfKeyedTest_Seq & /*an_instance*/,
+                                  const PerfKeyedTestSeq & /*an_instance*/,
                                   const ::CCM_DDS::ReadInfoSeq & /*info*/)
   {
   }

@@ -95,7 +95,7 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
       const ::CCM_DDS::ReadInfo & info);
     virtual void
     on_many_data (
-      const TestTopic_Seq & an_instance,
+      const TestTopicSeq & an_instance,
       const ::CCM_DDS::ReadInfoSeq & info);
   private:
     Atomic_ULong &received_;

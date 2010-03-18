@@ -40,7 +40,7 @@ namespace CIAO_LNE_Test_Sender_Impl
   void
   Sender_exec_i::write_many (void)
   {
-    ListenNotEnabledTest_Seq write_many;
+    ListenNotEnabledTestSeq write_many;
     write_many.length (this->keys_ * this->iterations_);
     for (CORBA::UShort key = 1; key < this->keys_ + 1; ++key)
       {

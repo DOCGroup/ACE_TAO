@@ -58,7 +58,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
 
     virtual void
     on_many_data (
-      const ::TestTopic_Seq & data,
+      const ::TestTopicSeq & data,
       const ::CCM_DDS::ReadInfoSeq & info);
 
   private:
@@ -96,7 +96,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
     void on_offered_deadline_missed (::DDS::DataWriter_ptr the_writer,
                                      const DDS::OfferedDeadlineMissedStatus & status);
     virtual
-    void on_offered_incompatible_qos( ::DDS::DataWriter_ptr the_writer, 
+    void on_offered_incompatible_qos( ::DDS::DataWriter_ptr the_writer,
                                       const DDS::OfferedIncompatibleQosStatus & status);
     virtual
     void on_unexpected_status( ::DDS::Entity_ptr the_entity,

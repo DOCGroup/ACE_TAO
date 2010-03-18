@@ -15,6 +15,6 @@ struct SetConnectorAttributeTest {
   long iteration;
 };
 
-typedef sequence<SetConnectorAttributeTest> SetConnectorAttributeTest_Seq;
+typedef sequence<SetConnectorAttributeTest> SetConnectorAttributeTestSeq;
 
 #endif

@@ -71,7 +71,7 @@ namespace CIAO_Writer_Sender_Impl
         try
           {
             ++this->last_key->second->iteration;
-            Octet_Seq_var reply_mesg = new Octet_Seq (1);
+            OctetSeq_var reply_mesg = new OctetSeq (1);
             reply_mesg->length (1);
             this->last_key->second->data = *reply_mesg._retn ();
             this->writer_->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
@@ -114,7 +114,7 @@ namespace CIAO_Writer_Sender_Impl
   Sender_exec_i::write_many ()
   {
     CORBA::ULong nr_samples = this->keys_ * this->iterations_;
-    WriterTest_Seq write_many_no_excep;
+    WriterTestSeq write_many_no_excep;
     write_many_no_excep.length (nr_samples);
     //write with no exception
     for (CORBA::ULong i = 1; i < nr_samples - 1; ++i)
@@ -122,7 +122,7 @@ namespace CIAO_Writer_Sender_Impl
         WriterTest new_key;
         new_key.key = CORBA::string_dup("KEY_1");
         new_key.iteration = i;
-        Octet_Seq_var reply_mesg = new Octet_Seq (1);
+        OctetSeq_var reply_mesg = new OctetSeq (1);
         reply_mesg->length (1);
         new_key.data = *reply_mesg._retn ();
         write_many_no_excep[i-1] = new_key;
@@ -151,8 +151,8 @@ namespace CIAO_Writer_Sender_Impl
           {
             ++this->last_key->second->iteration;
             const long length = 100000;
-            Octet_Seq_var reply_mesg =
-              new Octet_Seq (length);
+            OctetSeq_var reply_mesg =
+              new OctetSeq (length);
             reply_mesg->length (length);
             this->last_key->second->data = *reply_mesg._retn ();
             this->writer_->write_one (this->last_key->second, ::DDS::HANDLE_NIL);

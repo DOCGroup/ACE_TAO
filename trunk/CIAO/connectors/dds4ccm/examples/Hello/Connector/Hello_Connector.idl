@@ -16,7 +16,7 @@
 
 module Hello
 {
-  module ::CCM_DDS::Typed <::DDSHello, ::DDSHello_Seq> HelloConn;
+  module ::CCM_DDS::Typed <::DDSHello, ::DDSHelloSeq> HelloConn;
 
   connector Hello_Connector : HelloConn::DDS_Event
   {

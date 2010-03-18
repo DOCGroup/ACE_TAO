@@ -23,18 +23,18 @@ struct SharedDPTest1 {
   string key1;
   long iteration1;
 };
-typedef sequence<SharedDPTest1> SharedDPTest1_Seq;
+typedef sequence<SharedDPTest1> SharedDPTest1Seq;
 
 struct SharedDPTest2 {
   string key2;
   long iteration2;
 };
-typedef sequence<SharedDPTest2> SharedDPTest2_Seq;
+typedef sequence<SharedDPTest2> SharedDPTest2Seq;
 
 struct SharedDPTest3 {
   string key3;
   long iteration3;
 };
-typedef sequence<SharedDPTest3> SharedDPTest3_Seq;
+typedef sequence<SharedDPTest3> SharedDPTest3Seq;
 
 #endif

@@ -9,7 +9,7 @@
 
 #pragma ciao lem "Connector/Large_ConnectorE.idl"
 
-module ::CCM_DDS::Typed < ::LargeType, ::LargeType_Seq> LargeTypeConn;
+module ::CCM_DDS::Typed < ::LargeType, ::LargeTypeSeq> LargeTypeConn;
 connector Large_Connector : LargeTypeConn::DDS_Event
 {
 };

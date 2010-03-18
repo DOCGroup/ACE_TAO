@@ -33,7 +33,7 @@ namespace CIAO_Writer_Receiver_Impl
 
   void
   WriterTest_Listener_exec_i::on_many_data (
-    const WriterTest_Seq & an_instance,
+    const WriterTestSeq & an_instance,
     const ::CCM_DDS::ReadInfoSeq & /* info */)
   {
     for (unsigned int i = 0; i < an_instance.length (); ++i)

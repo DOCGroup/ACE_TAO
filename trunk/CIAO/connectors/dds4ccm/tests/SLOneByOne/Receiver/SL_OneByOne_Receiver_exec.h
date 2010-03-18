@@ -49,7 +49,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
         const ::CCM_DDS::ReadInfo & info);
      virtual void
       on_many_updates (
-        const ::TestTopic_Seq & data,
+        const ::TestTopicSeq & data,
         const ::CCM_DDS::ReadInfoSeq & infos);
     virtual void
       on_deletion (

@@ -16,7 +16,7 @@
 
 module CCM_DDS
 {
-  module ::CCM_DDS::Typed < ::ListenOneByOneTest, ::ListenOneByOneTest_Seq> ListenOneByOneTest;
+  module ::CCM_DDS::Typed < ::ListenOneByOneTest, ::ListenOneByOneTestSeq> ListenOneByOneTest;
 };
 
 module LOBO_Test

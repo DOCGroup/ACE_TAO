@@ -23,7 +23,7 @@ module Quoter
     unsigned long current;
     string symbol; //@key
   };
-  typedef sequence<Stock_Info> Stock_Info_Seq;
+  typedef sequence<Stock_Info> Stock_InfoSeq;
 };
 
 #endif

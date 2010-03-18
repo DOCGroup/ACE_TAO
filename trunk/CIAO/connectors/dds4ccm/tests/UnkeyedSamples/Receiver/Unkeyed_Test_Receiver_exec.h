@@ -28,19 +28,19 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
     ConnectorStatusListener_exec_i ();
     virtual ~ConnectorStatusListener_exec_i (void);
 
-    virtual void 
+    virtual void
     on_inconsistent_topic( ::DDS::Topic_ptr the_topic,
                            const DDS::InconsistentTopicStatus & status);
-    virtual void 
+    virtual void
     on_requested_incompatible_qos( ::DDS::DataReader_ptr the_reader,
                            const DDS::RequestedIncompatibleQosStatus & status);
-    virtual void 
+    virtual void
     on_sample_rejected( ::DDS::DataReader_ptr the_reader,
                            const DDS::SampleRejectedStatus & status);
-    virtual void 
+    virtual void
     on_offered_deadline_missed( ::DDS::DataWriter_ptr the_writer,
                            const DDS::OfferedDeadlineMissedStatus & status);
-    virtual void 
+    virtual void
     on_offered_incompatible_qos( ::DDS::DataWriter_ptr the_writer,
                            const DDS::OfferedIncompatibleQosStatus & status);
     virtual void on_unexpected_status( ::DDS::Entity_ptr the_entity,
@@ -61,7 +61,7 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
       const ::CCM_DDS::ReadInfo & info);
     virtual void
     on_many_data (
-      const UnkeyedTest_Seq & an_instance,
+      const UnkeyedTestSeq & an_instance,
       const ::CCM_DDS::ReadInfoSeq & info);
   private:
     Atomic_ULong &received_;

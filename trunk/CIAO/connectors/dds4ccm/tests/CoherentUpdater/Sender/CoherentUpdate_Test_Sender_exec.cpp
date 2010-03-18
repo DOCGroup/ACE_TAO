@@ -81,7 +81,7 @@ namespace CIAO_CoherentUpdate_Test_Sender_Impl
                           this->run_,
                           this->iterations ()));
 
-    CoherentUpdateTest_Seq update_many_seq;
+    CoherentUpdateTestSeq update_many_seq;
     update_many_seq.length (this->iterations_);
     for (int i = 1; i < this->iterations_ + 1; ++i)
       {

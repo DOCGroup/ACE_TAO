@@ -112,7 +112,7 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
 
   void
   UnkeyedTest_Listener_exec_i::on_many_data (
-    const UnkeyedTest_Seq & /* an_instance */,
+    const UnkeyedTestSeq & /* an_instance */,
     const ::CCM_DDS::ReadInfoSeq & /* info */)
   {
   }

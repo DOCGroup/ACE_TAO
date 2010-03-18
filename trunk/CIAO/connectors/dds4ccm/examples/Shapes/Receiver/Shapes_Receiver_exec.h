@@ -58,7 +58,7 @@ namespace CIAO_Shapes_Receiver_Impl
       const ::CCM_DDS::ReadInfo & info);
     virtual void
     on_many_data (
-      const ShapeType_Seq & an_instance,
+      const ShapeTypeSeq & an_instance,
       const ::CCM_DDS::ReadInfoSeq & info);
   };
 

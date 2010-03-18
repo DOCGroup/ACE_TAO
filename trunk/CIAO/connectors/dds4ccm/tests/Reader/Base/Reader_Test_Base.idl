@@ -18,6 +18,6 @@ struct ReaderTest {
   long iteration;
 };
 
-typedef sequence<ReaderTest> ReaderTest_Seq;
+typedef sequence<ReaderTest> ReaderTestSeq;
 
 #endif

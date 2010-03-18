@@ -18,6 +18,6 @@ struct State_ConnectionTest {
   long iteration;
 };
 
-typedef sequence<State_ConnectionTest> State_ConnectionTest_Seq;
+typedef sequence<State_ConnectionTest> State_ConnectionTestSeq;
 
 #endif

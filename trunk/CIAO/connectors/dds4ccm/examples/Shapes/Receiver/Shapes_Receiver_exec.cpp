@@ -50,7 +50,7 @@ namespace CIAO_Shapes_Receiver_Impl
   // Operations from ::CCM_DDS::ShapeType_Listener
   void
   ShapeType_Listener_exec_i::on_many_data (
-    const ShapeType_Seq & /* an_instance */,
+    const ShapeTypeSeq & /* an_instance */,
     const ::CCM_DDS::ReadInfoSeq & /* info */)
   {
   }
@@ -147,7 +147,7 @@ namespace CIAO_Shapes_Receiver_Impl
   void
   Receiver_exec_i::read_all (void)
   {
-    ShapeType_Seq_var shape_infos;
+    ShapeTypeSeq_var shape_infos;
     ::CCM_DDS::ReadInfoSeq_var readinfoseq;
     this->reader_->read_all(shape_infos.out(), readinfoseq.out());
     for(unsigned int i = 0; i < readinfoseq->length(); ++i)

@@ -16,7 +16,7 @@
 
 module CCM_DDS
 {
-  module ::CCM_DDS::Typed < ::Event_ConnectionTest, ::Event_ConnectionTest_Seq> Event_ConnectionTest;
+  module ::CCM_DDS::Typed < ::Event_ConnectionTest, ::Event_ConnectionTestSeq> Event_ConnectionTest;
 };
 
 module Event_Connection_Test
