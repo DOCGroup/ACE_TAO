@@ -30,8 +30,8 @@ namespace CIAO_Throughput_Receiver_Impl
   }
   void
   ThroughputTest_Listener_exec_i::on_many_data (
-                                  const ThroughputTestSeq & data_seq,
-                                  const ::CCM_DDS::ReadInfoSeq & info_seq)
+                                  const ThroughputTestSeq & /*data_seq*/,
+                                  const ::CCM_DDS::ReadInfoSeq & /*info_seq*/)
   {
   }
 
@@ -58,8 +58,8 @@ namespace CIAO_Throughput_Receiver_Impl
 
   void
   ThroughputCommand_Listener_exec_i::on_many_data (
-                                  const ThroughputCommandSeq & data_seq,
-                                  const ::CCM_DDS::ReadInfoSeq & info_seq)
+                                  const ThroughputCommandSeq & /*data_seq*/,
+                                  const ::CCM_DDS::ReadInfoSeq & /*info_seq*/)
   {
   }
 
