@@ -38,7 +38,7 @@ namespace CIAO_Throughput_Receiver_Impl
       const ::CCM_DDS::ReadInfo & info);
     virtual void
     on_many_data (
-      const ThroughputTest_Seq & an_instance,
+      const ThroughputTestSeq & an_instance,
       const ::CCM_DDS::ReadInfoSeq & info);
   private:
     Receiver_exec_i &callback_;
@@ -61,7 +61,7 @@ namespace CIAO_Throughput_Receiver_Impl
       const ::CCM_DDS::ReadInfo & info);
     virtual void
     on_many_data (
-      const ThroughputCommand_Seq & an_instance,
+      const ThroughputCommandSeq & an_instance,
       const ::CCM_DDS::ReadInfoSeq & info);
   private:
     Receiver_exec_i &callback_;
@@ -118,7 +118,7 @@ namespace CIAO_Throughput_Receiver_Impl
     CORBA::ULongLong demand_;
     CORBA::ULongLong seq_num_;
     CORBA::ULongLong messages_lost_;
-    Atomic_Bool log_; 
+    Atomic_Bool log_;
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
