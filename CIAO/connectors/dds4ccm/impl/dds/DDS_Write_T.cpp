@@ -31,7 +31,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
 
   try
     {
-      if (::CORBA::is_nil (this->data_writer_.in ()))
+      if (!this->ccm_dds_writer_i.get_impl ())
         {
           ::DDS::DataWriter_var dwv_tmp;
           if (library_name && profile_name)
@@ -55,8 +55,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
           ::CIAO::DDS4CCM::CCM_DDS_DataWriter_i *rw =
             dynamic_cast < ::CIAO::DDS4CCM::CCM_DDS_DataWriter_i  *> (dwv_tmp.in ());
           this->ccm_dds_writer_i.set_impl (rw->get_impl ());
-          this->data_writer_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
-          this->writer_t_.set_impl (dwv_tmp);
+          this->writer_t_.set_impl (&this->ccm_dds_writer_i);
         }
     }
   catch (...)
@@ -116,9 +115,8 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::remove (
   DDS4CCM_TRACE ("DDS_Write_T<DDS_TYPE, CCM_TYPE>::remove");
   try
     {
-      publisher->delete_datawriter (this->data_writer_.in ());
+      publisher->delete_datawriter (&this->ccm_dds_writer_i);
       this->ccm_dds_writer_i.set_impl (0);
-      this->data_writer_ = ::DDS::CCM_DataWriter::_nil ();
       this->writer_t_.set_impl (0);
     }
   catch (...)

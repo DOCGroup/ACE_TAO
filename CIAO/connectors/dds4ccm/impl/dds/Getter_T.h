@@ -73,22 +73,22 @@ namespace CIAO
         /**
          * Set the actual pointer to DDS Datareader
          */
-        void set_impl (::DDS::DataReader_ptr reader);
+        void set_impl (CCM_DDS_DataReader_i *reader);
 
         void passivate (void);
 
-        void replace_datareader (::DDS::DataReader_ptr reader);
+        void remove_conditions ();
 
       protected:
-        typename DDS_TYPE::data_reader *impl_;
-
+        CCM_DDS_DataReader_i *reader_;
         DDSQueryCondition* condition_;
         ::DDS::Duration_t time_out_;
         ::CCM_DDS::DataNumber_t max_delivered_data_;
         DDSWaitSet* ws_;
         DDSReadCondition* rd_condition_;
 
-        void remove_conditions ();
+        void create_conditions ();
+
         bool wait (DDSConditionSeq& active_conditions);
 
         typename DDS_TYPE::data_reader * impl (void);

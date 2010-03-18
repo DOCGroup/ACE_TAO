@@ -9,7 +9,6 @@
 
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
 CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::InstanceHandleManager_T (void)
-  : impl_ (0)
 {
 }
 
@@ -23,9 +22,9 @@ template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
 typename DDS_TYPE::data_writer *
 CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::impl (void)
 {
-  if (this->impl_)
+  if (this->writer_)
     {
-      return this->impl_;
+      return DDS_TYPE::data_writer::narrow (this->writer_->get_impl ());
     }
   else
     {
@@ -58,34 +57,17 @@ CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::unregiste
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
 void
 CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::set_impl (
-  ::DDS::DataWriter_ptr writer)
+  CCM_DDS_DataWriter_i *writer)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::InstanceHandleManager_T::set_impl");
 
-  if (::CORBA::is_nil (writer))
+  if (!writer)
     {
-      impl_ = 0;
+      this->writer_ = 0;
     }
   else
     {
-      CCM_DDS_DataWriter_i *rdw = dynamic_cast <CCM_DDS_DataWriter_i *> (writer);
-
-      if (!rdw)
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::InstanceHandleManager_T::data_writer - "
-                       "Unable to cast provided DataWriter to servant\n"));
-          throw ::CORBA::INTERNAL ();
-        }
-
-      this->impl_ =  DDS_TYPE::data_writer::narrow (rdw->get_impl ());
-
-      if (!this->impl_)
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::InstanceHandleManager_T::data_writer - "
-                       "Unable to narrow the provided writer entity to the specific "
-                       "type necessary to publish messages\n"));
-          throw ::CORBA::INTERNAL ();
-        }
+      this->writer_ = writer;
     }
 }
 

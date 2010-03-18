@@ -1,3 +1,29 @@
+Thu Mar 18 14:52:48 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DDS_Get_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Listen_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Read_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Read_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_StateListen_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Update_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Write_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/dds/Getter_T.h:
+        * connectors/dds4ccm/impl/dds/Getter_T.cpp:
+        * connectors/dds4ccm/impl/dds/InstanceHandleManager_T.h:
+        * connectors/dds4ccm/impl/dds/InstanceHandleManager_T.cpp:
+        * connectors/dds4ccm/impl/dds/Reader_T.h:
+        * connectors/dds4ccm/impl/dds/Reader_T.cpp:
+          The CORBA representative of the DDS entities were passed to
+          the underlying ports. There's no need to do that and so there's no
+          need to keep these interfaces as a member in the proxy classes
+          of the ports.
+          We're now passing the proxies to the underlying implementation.
+
 Thu Mar 18 12:36:29 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * bin/ciao_tests.lst

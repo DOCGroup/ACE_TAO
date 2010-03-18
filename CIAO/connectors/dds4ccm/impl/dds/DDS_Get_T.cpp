@@ -31,7 +31,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
 
   try
     {
-      if (::CORBA::is_nil (this->data_reader_.in ()))
+      if (!this->ccm_dds_reader_.get_impl ())
         {
           ::DDS::DataReader_var reader;
           if (profile_name && library_name)
@@ -55,9 +55,8 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
           ::CIAO::DDS4CCM::CCM_DDS_DataReader_i *rd =
             dynamic_cast < ::CIAO::DDS4CCM::CCM_DDS_DataReader_i *> (reader.in ());
           this->ccm_dds_reader_.set_impl (rd->get_impl ());
-          this->data_reader_ = ::DDS::CCM_DataReader::_narrow (reader);
-          this->dds_get_.set_impl (reader);
-          this->dds_read_.set_impl (reader);
+          this->dds_get_.set_impl (&this->ccm_dds_reader_);
+          this->dds_read_.set_impl (&this->ccm_dds_reader_);
           this->dds_read_.set_contentfilteredtopic_data (library_name,
                                                          profile_name,
                                                          &this->dds_get_);
@@ -105,13 +104,6 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::passivate (void)
   try
     {
       this->dds_get_.passivate ();
-      if (this->dds_read_.get_dds_datareader () != this->ccm_dds_reader_.get_impl ())
-        { // the Reader has recreated the DataReader since the user has used a
-          // ContententFilteredTopic. Since the old DataReader has been deleted
-          // by the Reader and ccm_dds_reader_ is still using this old pointer,
-          // we need to reset it.
-          this->ccm_dds_reader_.set_impl (this->dds_read_.get_dds_datareader ());
-        }
       this->ccm_dds_reader_.set_listener (
               ::DDS::DataReaderListener::_nil (),
               0);
@@ -132,8 +124,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::remove (
   DDS4CCM_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::remove");
   try
     {
-      subscriber->delete_datareader (this->data_reader_.in ());
-      this->data_reader_ = ::DDS::CCM_DataReader::_nil ();
+      subscriber->delete_datareader (&this->ccm_dds_reader_);
       this->dds_get_.set_impl (0);
       this->dds_read_.set_impl (0);
       this->ccm_dds_reader_.set_impl (0);
