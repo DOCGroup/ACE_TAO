@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file VTSeq_Connector.idl
+ * @file VT_Seq_Connector.idl
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
  */
 
@@ -12,7 +12,7 @@
 #include "Base/VTopic_Base.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
-#pragma ciao lem "ConnSeq/VTSeq_ConnectorE.idl"
+#pragma ciao lem "ConnSeq/VT_Seq_ConnectorE.idl"
 
 module VTopic
 {
