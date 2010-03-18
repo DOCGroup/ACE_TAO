@@ -3372,6 +3372,7 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
 
             break;
           case BE_GlobalData::OPENSPLICE:
+          case BE_GlobalData::NONE:
           case BE_GlobalData::OPENDDS:
             break;
         }
@@ -3406,6 +3407,8 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
           case BE_GlobalData::OPENDDS:
             ts_files =
               idl_global->ciao_oci_ts_file_names ();
+            break;
+          case BE_GlobalData::NONE:
             break;
         }
 
