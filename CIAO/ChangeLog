@@ -1,3 +1,20 @@
+Thu Mar 18 18:38:35 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MPC/config/ami4ccm_lem_stub.mpb:
+        * MPC/config/ami4ccm_servant.mpb:
+        
+          New base projects for AMI4CCM applications.
+          
+        * connectors/ami4ccm/ami4ccm/ami4ccm_lem_stub.mpc:
+        
+          Removed this MPC file and copied its projects to
+          the modified file below.
+          
+        * connectors/ami4ccm/ami4ccm/ami4ccm.mpc:
+        
+          Copied the lem-related projects from the removed
+          file above, and added a servant project.
+
 Thu Mar 18 14:52:48 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DDS_Get_T.h:
