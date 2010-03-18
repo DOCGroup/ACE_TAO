@@ -1,3 +1,8 @@
+Thu Mar 18 10:40:29 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/NonBlocking_Conn_Test.cpp:
+          Made logging a bit more verbose.
+
 Wed Mar 17 20:00:45 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_linux_common.GNU: Make the ARFLAGS

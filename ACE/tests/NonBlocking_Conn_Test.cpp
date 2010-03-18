@@ -62,6 +62,15 @@ Svc_Handler::open (void *)
   *this->status_ = Svc_Handler::Conn_SUCCEEDED;
   (*this->completion_counter_)++;
 
+  ACE_TCHAR buf[BUFSIZ];
+  ACE_INET_Addr raddr;
+  this->peer ().get_remote_addr (raddr);
+  raddr.addr_to_string (buf, sizeof buf);
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Connection to %s is opened\n"),
+              buf));
+
   return 0;
 }
 
