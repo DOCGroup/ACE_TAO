@@ -33,14 +33,15 @@ my $server_iorfile = $server->LocalFile ($iorbase);
 my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
+my $bogus_host = 'tao_test_nonexistent_host';
 
 $SV = $server->CreateProcess ("../Hello/server",
                               "-ORBdebuglevel $debug_level " .
                               "-o $server_iorfile " .
-                              "-ORBUseSharedProfile $use_shared_profile ",
-                              "-OrbEndPoint iiop://$hostname:$port1/hostname_in_ior=bogus.com " .
+                              "-ORBUseSharedProfile $use_shared_profile " .
+                              "-OrbEndPoint iiop://$hostname:$port1/hostname_in_ior=$bogus_host " .
                               "-OrbEndPoint iiop://$hostname:$port2 " .
-                              "-OrbEndPoint iiop://$hostname:$port3/hostname_in_ior=bogus.com");
+                              "-OrbEndPoint iiop://$hostname:$port3/hostname_in_ior=$bogus_host");
 
 $CL = $client->CreateProcess ("../Hello/client", "-k file://$client_iorfile");
 

@@ -1,3 +1,57 @@
+Fri Mar 19 14:18:40 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * examples/PluggableUDP/tests/SimplePerformance/server.cpp:
+
+          Removed redefinition of ACE_MAIN on VxWorks.
+
+        * orbsvcs/DevGuideExamples/NamingService/corbaname_Messenger/run_test.pl
+:
+
+          Use the TestTarget's HOSTNAME property.
+
+        * tests/AlternateIIOP/run_test.pl:
+
+          Fixed a bug where ',' was used to join two Perl strings instead
+          of '.'.  Changed hostname of "bogus" host.
+
+        * tests/Bug_1495_Regression/run_test.pl:
+
+          Swapped client and server TestTargets (client is now target #1).
+
+        * tests/Bug_2183_Regression/hang_client.pl:
+        * tests/Bug_2183_Regression/run_test.pl:
+
+          Pass the remote target's hostname to hang_client.pl and run the
+          client processes on TestTarget #2.
+
+        * tests/Bug_2805_Regression/client.cpp:
+        * tests/Bug_2909_Regression/client.cpp:
+        * tests/UNKNOWN_Exception/server.cpp:
+
+          Running orb->perform_work() in a tight loop may starve-out the
+          other threads.  Added ACE_OS::thr_yield().
+
+        * tests/CSD_Strategy_Tests/TP_Test_Static/run_test.pl:
+
+          TestTarget #1 is created before the loop, start with #2.
+
+        * tests/ForwardOnceUponException/run_test.pl:
+
+          Select a new random port each time through the loop.
+
+        * tests/HandleExhaustion/run_test.pl:
+
+          Let the client process run a little while longer before killing it.
+
+        * tests/HandleExhaustion/server.cpp:
+
+          On VxWorks (kernel), hard-code the executable name as "server.out".
+
+        * tests/Hang_Shutdown/client.conf:
+
+          Added the three other svc.conf settings that are required when
+          -ORBClientConnectionHandler rw is used.
+
 Fri Mar 19 11:55:18 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * examples/RTScheduling/Fixed_Priority_Scheduler/test.cpp:
@@ -55,12 +109,12 @@ Thu Mar 18 08:02:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Mar 18 07:59:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	      * TAO_IDL/Makefile.am:
-	        Removed obsolete files
+              * TAO_IDL/Makefile.am:
+                Removed obsolete files
 
-	      * TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
-	      * TAO_IDL/be/be_visitor_interface/interface_sh.cpp
-	        Changed layout of generated code
+              * TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+              * TAO_IDL/be/be_visitor_interface/interface_sh.cpp
+                Changed layout of generated code
 
 Wed Mar 17 19:10:37 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -166,16 +220,16 @@ Wed Mar 17 13:44:06 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
 Wed Mar 17 10:57:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO_IDL/be/be_sequence.cpp:
-	* TAO_IDL/be/be_type.cpp:
-	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
-	  Use fully scoped TAO namespace
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+          Use fully scoped TAO namespace
 
 Wed Mar 17 10:43:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO_IDL/be/be_visitor_array/array.cpp:
-	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
-	  Use fully scoped TAO namespace
+        * TAO_IDL/be/be_visitor_array/array.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+          Use fully scoped TAO namespace
 
 Wed Mar 17 09:14:50 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
@@ -193,16 +247,16 @@ Wed Mar 17 09:14:50 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
 Mon Mar 15 11:49:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO_IDL/be/be_visitor_interface/ami4ccm_conn_ex_idl.cpp:
-	  Derive the implied AMI4CCM connector from ::CCM_AMI::AMI_Base
+        * TAO_IDL/be/be_visitor_interface/ami4ccm_conn_ex_idl.cpp:
+          Derive the implied AMI4CCM connector from ::CCM_AMI::AMI_Base
 
 Mon Mar 15 11:25:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO_IDL/be/be_visitor_component/component_svs.cpp:
-	  Simplified generated factory method
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+          Simplified generated factory method
 
-	* TAO_IDL/be/be_visitor_component/context_svs.cpp:
-	  Fixed issue with the layout of the generated code
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+          Fixed issue with the layout of the generated code
 
 Fri Mar 12 20:34:24 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 

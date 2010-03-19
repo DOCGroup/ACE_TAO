@@ -10,6 +10,8 @@ use PerlACE::TestTarget;
 
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+
 
 # The server IOR file
 $iorbase = "server.ior";
@@ -32,8 +34,9 @@ $SV = $server->CreateProcess ("server",
                               "-ORBEndpoint iiop://:$port " .
                               "-ORBSvcConf $server_conf");
 
-$CL1 = $server->CreateProcess ("client", "-k file://$server_ior_file");
-$CL2 = $server->CreateProcess ("$perl_executable", "hang_client.pl");
+$CL1 = $client->CreateProcess ("client", "-k file://$server_ior_file");
+$CL2 = $client->CreateProcess ("$perl_executable", "hang_client.pl ".
+                                                   $server->{'HOSTNAME'});
 
 $CL2->IgnoreHostRoot(1);
 $CL2->IgnoreExeSubDir(1);
