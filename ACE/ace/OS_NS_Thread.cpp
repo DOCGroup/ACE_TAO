@@ -5353,4 +5353,18 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, int stacksz, ...)
   // successful
   return ret > 0 ? _vx_call_rc : 255;
 }
+
+#ifdef ACE_AS_STATIC_LIBS
+/** Wind River workbench allows the user to spawn a kernel task as a
+    "Debug Configuration".  Use this function as the entrypoint so that
+    the arguments are translated into the form that ace_main() requires.
+ */
+int ace_wb_exec (int arg0, int arg1, int arg2, int arg3, int arg4,
+                 int arg5, int arg6, int arg7, int arg8, int arg9)
+{
+  return spaef ((FUNCPTR) ace_main, arg0, arg1, arg2, arg3, arg4,
+                arg5, arg6, arg7, arg8, arg9);
+}
+#endif /* ACE_AS_STATIC_LIBS */
+
 #endif /* ACE_VXWORKS && !__RTP__ */
