@@ -39,8 +39,8 @@ namespace CIAO
                                                                   parameters);
       expression_parameters <<= parameters;
 #else
-      ::DDS::ReturnCode_t retval = this->impl ()->get_expression_parameters (
-                                                                  expression_parameters);
+      ::DDS::ReturnCode_t retval =
+        this->impl ()->get_expression_parameters (expression_parameters);
 #endif
       return retval;
     }

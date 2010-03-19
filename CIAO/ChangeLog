@@ -1,3 +1,12 @@
+Fri Mar 19 19:05:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/ContentFilteredTopic.cpp
+        * connectors/dds4ccm/impl/dds/DataReader.h
+        * connectors/dds4ccm/impl/dds/DataWriter.cpp
+        * connectors/dds4ccm/impl/dds/Publisher.cpp
+        * connectors/dds4ccm/impl/dds/Reader_T.cpp
+          Layout/docu changes
+
 Fri Mar 19 15:30:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/tests/IDL_Test:

@@ -223,7 +223,6 @@ namespace CIAO
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_SubscriptionBuiltinTopicData ccm_dds_sub_data;
       ::DDS_InstanceHandle_t ccm_dds_sub_handle;
-      ccm_dds_sub_data <<= subscription_data;
       ccm_dds_sub_handle <<= subscription_handle;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_matched_subscription_data (ccm_dds_sub_data,
                                                                                        ccm_dds_sub_handle);
