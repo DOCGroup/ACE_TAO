@@ -1,3 +1,9 @@
+Fri Mar 19 16:52:08 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/MT_NonBlocking_Connect_Test.cpp:
+          And another attempt to workaround WFMO reactor. The previous
+          changes could break the test on other platforms.
+
 Fri Mar 19 16:44:37 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/Dev_Poll_Reactor.cpp (find_handler): If the handle isn't
