@@ -2140,8 +2140,14 @@ ACE_Dev_Poll_Reactor::find_handler (ACE_HANDLE handle)
 
   Event_Tuple *info = this->handler_rep_.find (handle);
   if (info)
-    info->event_handler->add_reference ();
-  return info->event_handler;
+    {
+      info->event_handler->add_reference ();
+      return info->event_handler;
+    }
+  else
+    {
+      return 0;
+    }
 }
 
 int
