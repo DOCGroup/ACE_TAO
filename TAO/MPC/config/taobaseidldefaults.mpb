@@ -56,6 +56,22 @@ project: build_files {
     optional(header_pre_extension) {
       commandflags(-GA && !-oA || -GX) += A
     }
+
+    optional(source_pre_extension) {
+      commandflags(-Gsv) += _svnt
+    }
+
+    optional(header_pre_extension) {
+      commandflags(-Gsv) += _svnt
+    }
+
+    optional(generic_outputext) {
+      commandflags(-Glem) += E.idl
+    }
+
+    optional(generic_outputext) {
+      commandflags(-GM) += A.idl
+    }
   }
 
   after    += TAO_IDL_EXE
