@@ -84,7 +84,8 @@ be_visitor_connector_ami_exh::gen_entrypoint (void)
   os_ << be_nl << be_nl
       << "extern \"C\" " << this->export_macro_.c_str ()
       << " ::Components::EnterpriseComponent_ptr" << be_nl
-      << "create_" << this->node_->flat_name ()
+      << "create_"
+      << ScopeAsDecl (this->node_->defined_in ())->flat_name ()
       << "_Impl (void);";
 }
 

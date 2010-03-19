@@ -38,7 +38,7 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
 
   os_ << be_nl << be_nl
       << "class " << this->export_macro_.c_str ()
-      << node->local_name () << suffix << be_idt_nl
+      << scope->local_name () << suffix << be_idt_nl
       << ": public virtual " << "::"
       << scope->full_name () << "::CCM_"
       << node->local_name () << "," << be_idt_nl
@@ -46,8 +46,8 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
       << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << node->local_name () << suffix << " (void);" << be_nl
-      << "virtual ~" << node->local_name () << suffix
+      << scope->local_name () << suffix << " (void);" << be_nl
+      << "virtual ~" << scope->local_name () << suffix
       << " (void);";
 
   if (this->visit_scope (node) == -1)
@@ -100,7 +100,7 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
   ACE_CString stripped_name (
     half_stripped_name.substr (ACE_OS::strlen ("AMI_")));
     
-  os_ << smart_scope << scope->full_name () << "::"
+  os_ << smart_scope << i_scope->full_name () << "::"
       << stripped_name.c_str () << "_var receptacle_;" << be_nl;
       
   os_ << half_stripped_name.c_str () <<  "_exec_i *facet_exec_;";
@@ -122,7 +122,15 @@ be_visitor_executor_ami_exh::visit_provides (be_provides *node)
   os_ << be_nl << be_nl
       << "virtual " << smart_scope << scope->full_name ()
       << "::CCM_" << t->local_name () << "_ptr" << be_nl
-      << "get_" << node->local_name () << " (void);";
+      << "get_";
+      
+  /// The port is the only thing in the connector's scope, and
+  /// we need to insert its name into the operation name.    
+  UTL_ScopeActiveIterator i (this->node_, UTL_Scope::IK_decls);
+  AST_Decl *d = i.item ();
+  
+  os_ << d->local_name () << "_"
+      << node->local_name () << " (void);";
   
   return 0;
 }

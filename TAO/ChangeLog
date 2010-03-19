@@ -1,3 +1,18 @@
+Fri Mar 19 18:53:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_connector.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+        * TAO_IDL/be_include/be_visitor_ami_pre_proc.h:
+
+          More changes debugging the generation of an AMI4CCM
+          connector implementation.
+
 Fri Mar 19 14:18:40 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * examples/PluggableUDP/tests/SimplePerformance/server.cpp:

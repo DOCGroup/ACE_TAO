@@ -120,8 +120,9 @@ be_visitor_facet_ami_exs::gen_reply_handler_class (void)
 {
   this->for_reply_handler_ = true;
 
-  const char *suffix = "_reply_hander";
-  AST_Decl *scope = ScopeAsDecl (this->iface_->defined_in ());
+  const char *suffix = "_reply_handler";
+  UTL_Scope *s = this->iface_->defined_in ();
+  AST_Decl *scope = ScopeAsDecl (s);
   const char *scope_name = scope->full_name ();
   bool global = (scope->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (global ? "" : "::");
@@ -146,16 +147,22 @@ be_visitor_facet_ami_exs::gen_reply_handler_class (void)
       << "{" << be_nl
       << "}";
 
-  ACE_CString handler_str (iface_name);
-  handler_str += "Callback";
-  Identifier id (handler_str.c_str ());
+  /// The reply handler class we are generating inherits from the
+  /// CORBA AMI skeleton class, not the AMI_xxxCallback class
+  /// generated from the corresponding interface in this IDl file.
+  /// So to get the correct *_excep operation signatures, we
+  /// visit the scope of the AMI_xxxHandler interface generated
+  /// by -GC, which must be applied to this IDL file.
+  ACE_CString handler_str (this->iface_->full_name ());
+  handler_str += "Handler";
   
-  /// The connector is defined in the template module instantiation,
-  /// the callback interface is created in that module's
-  /// containing scope.
-  AST_Decl *m = ScopeAsDecl (this->node_->defined_in ());
-  AST_Decl *d =
-    m->defined_in ()->lookup_by_name_local (&id, 0);
+  UTL_ScopedName *sn =
+    idl_global->string_to_scoped_name (handler_str.c_str ());
+  AST_Decl *d = s->lookup_by_name (sn, true);
+  
+  sn->destroy ();
+  delete sn;
+  sn = 0;
     
   be_interface *callback_iface =
     be_interface::narrow_from_decl (d);
@@ -214,9 +221,10 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
       << "::Components::SessionContext_ptr ctx)" << be_uidt_nl
       << "{" << be_idt_nl
       << "this->context_ =" << be_idt_nl
-      << smart_scope << scope_name << "::CCM_"
-      << this->node_->local_name () << "_Context::_narrow (ctx);"
-      << be_uidt_nl << be_nl
+      << "::"
+      << ScopeAsDecl (this->node_->defined_in ())->full_name ()
+      << "::CCM_" << this->node_->local_name ()
+      << "_Context::_narrow (ctx);" << be_uidt_nl << be_nl
       << "if ( ::CORBA::is_nil (this->context_.in ()))"
       << be_idt_nl
       << "{" << be_idt_nl
@@ -225,7 +233,15 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
       << "this->receptacle_objref_ =" << be_idt_nl
       << "this->context_->get_connection_";
       
-  for (UTL_ScopeActiveIterator i (this->node_, UTL_Scope::IK_decls);
+  /// The port is the only item in the connector's scope.    
+  UTL_ScopeActiveIterator j (this->node_, UTL_Scope::IK_decls);
+  AST_Extended_Port *p =
+    AST_Extended_Port::narrow_from_decl (j.item ());
+    
+  /// The port name is used in construction of the operation name.  
+  os_ << p->local_name () << "_";
+      
+  for (UTL_ScopeActiveIterator i (p->port_type (), UTL_Scope::IK_decls);
        !i.is_done ();
        i.next ())
     {
