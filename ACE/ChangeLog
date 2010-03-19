@@ -1,3 +1,8 @@
+Fri Mar 19 08:56:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux.GNU:
+          Added support for archmodelflag
+
 Thu Mar 18 10:40:29 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/NonBlocking_Conn_Test.cpp:
