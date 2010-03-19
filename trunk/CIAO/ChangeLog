@@ -1,3 +1,9 @@
+Fri Mar 19 10:35:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/ciaoidldefaults.mpb:
+          Moved commandline arg handling to TAO MPC file, it are features
+          of tao_idl
+
 Fri Mar 19 10:33:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender_exec.cpp
