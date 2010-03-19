@@ -250,6 +250,10 @@ DT_Test::svc (void)
 
       dt_creator_->create_distributable_threads (current_.in ());
     }
+  catch (const CORBA::BAD_INV_ORDER &)
+    {
+      // This exception can occur if ORB is already shutdown.
+    }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Caught exception:");

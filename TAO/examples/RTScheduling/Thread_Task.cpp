@@ -62,6 +62,10 @@ Thread_Task::svc (void)
 
       dt_creator_->dt_ended () ;
     }
+  catch (const CORBA::THREAD_CANCELLED &)
+    {
+      // Threads can be cancelled.
+    }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Caught exception:");
