@@ -15,10 +15,9 @@ project(Glfa_A_idl_gen) : taoidldefaults   {
 }
 
 project(Glfa_A_stub) : ccm_stub   {
-  after += Glfa_A_idl_gen 
-  libs  += 
-  
-  
+  after += Glfa_A_idl_gen
+  libs  +=
+
   sharedname = A_stub
   dynamicflags   = A_STUB_BUILD_DLL
 
@@ -44,11 +43,11 @@ project(Glfa_A_skel) : ciao_executor   {
   after      +=  Glfa_A_stub Glfa_A_lem_stub
   sharedname  = A_skel
   libs       += A_stub
- 
-  
-  
+
+
+
   dynamicflags = A_SKEL_BUILD_DLL
-  
+
   IDL_Files {
   }
 
