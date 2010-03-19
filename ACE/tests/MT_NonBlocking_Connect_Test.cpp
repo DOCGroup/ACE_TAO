@@ -206,7 +206,7 @@ Connect_Thread::svc (void)
 
       // Complete connection. It's what complete_connection() in TAO does.
       // Not exactly but for the test it's enough.
-      bool one_run_for_wfmo = false;
+      bool one_run_for_wfmo = true;
       while (this->reactor_.work_pending () > 0 || one_run_for_wfmo)
         {
           ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
