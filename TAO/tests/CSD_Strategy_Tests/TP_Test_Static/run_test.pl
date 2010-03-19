@@ -38,7 +38,7 @@ $SV = $server->CreateProcess ("server_main", "-ORBdebuglevel $debug_level ".
 @clients_iorfile = ();
 
 for ($i = 0; $i < $num_clients; $i++) {
-    $clients[$i] = PerlACE::TestTarget::create_target ($i+1) || die "Create target $i+1 failed\n";
+    $clients[$i] = PerlACE::TestTarget::create_target ($i + 2) || die "Create target " . ($i + 2) . " failed\n";
 
     $clients_iorfile[$i] = $clients[$i]->LocalFile ($iorbase);
     $clients[$i]->DeleteFile($iorbase);

@@ -94,13 +94,13 @@ my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 fail
 
 my $iorbase = "test.ior";
 my $host = $server->HostName(); #"localhost";
-my $port = $server->RandomPort();
 my $server_iorfile = $server->LocalFile ($iorbase);
 my $client_iorfile = $client->LocalFile ($iorbase);
 
 for $test (@configurations) {
     print STDERR "\n==== Running $test->{description} \n\n";
 
+    my $port = $server->RandomPort();
     $server->DeleteFile($iorbase);
     $client->DeleteFile($iorbase);
 

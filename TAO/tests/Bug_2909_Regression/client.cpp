@@ -241,6 +241,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             {
               orb->perform_work();
             }
+
+          // On some systems this loop must yield or else the other threads
+          // will not get a chance to run.
+          ACE_OS::thr_yield();
         }
 
       if (debug)
