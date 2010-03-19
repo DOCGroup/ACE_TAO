@@ -60,75 +60,13 @@ be_visitor_ami_pre_proc::visit_root (be_root *node)
                         -1);
     }
     
-  /// The interfaces in the list below are from this IDL file,
-  /// which then must be processed with the -GC option, so we
-  /// know we'll get here - a good place to generate the *A.idl
-  /// file containing the local interfaces and connector
-  /// associated with each interface in the list.
-    
-  ACE_Unbounded_Queue<char *> &ccm_ami_ifaces =
-    idl_global->ciao_ami_iface_names ();
-    
-  /// If the queue is empty, we're done.  
-  if (ccm_ami_ifaces.size () == 0)
+  /// Generate the *A.idl file containing AMI4CCM-related
+  /// interfaces and connector.  
+  if (be_global->ami4ccm_call_back ())
     {
-      return 0;
+      return this->generate_ami4ccm_idl ();
     }
     
-  /// Open the *A.idl file and create the file stream.  
-  int status =
-    tao_cg->start_ciao_ami_conn_idl (
-      be_global->be_get_ciao_ami_conn_idl_fname ());
-
-  if (status == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ami_pre_proc")
-                         ACE_TEXT ("::visit_root - ")
-                         ACE_TEXT ("Error opening CIAO AMI ")
-                         ACE_TEXT ("connector IDL file\n")),
-                        -1);
-    }
-
-  for (ACE_Unbounded_Queue<char *>::CONST_ITERATOR i (
-         ccm_ami_ifaces);
-       ! i.done ();
-       i.advance ())
-    {
-      char **item = 0;
-      i.next (item);
-      
-      UTL_ScopedName *sn =
-        idl_global->string_to_scoped_name (*item);
-        
-      UTL_Scope *s =
-        idl_global->scopes ().top_non_null ();
-        
-      AST_Decl *d = s->lookup_by_name (sn, true);
-      
-      if (d == 0)
-        {
-          idl_global->err ()->lookup_error (sn);
-          continue;
-        }
-        
-      be_interface *iface =
-        be_interface::narrow_from_decl (d);
-        
-      if (iface == 0)
-        {
-          idl_global->err ()->interface_expected (d);
-          continue;
-        }
-        
-      /// The interface's method encapsulates the code that
-      /// spawns the appropriate visitors. We just pass it
-      /// the file stream.  
-      iface->gen_ami4ccm_idl (tao_cg->ciao_ami_conn_idl ());
-    }
-
-  tao_cg->end_ciao_ami_conn_idl ();
-  
   return 0;
 }
 
@@ -212,6 +150,7 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
     }
 
   be_interface *reply_handler = this->create_reply_handler (node);
+  
   if (reply_handler)
     {
       reply_handler->set_defined_in (node->defined_in ());
@@ -1343,4 +1282,79 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
     }
 
   return retval;
+}
+
+int
+be_visitor_ami_pre_proc::generate_ami4ccm_idl (void)
+{
+  /// The interfaces in the list below are from this IDL file,
+  /// which then must be processed with the -GC option, so we
+  /// know we'll get here - a good place to generate the *A.idl
+  /// file containing the local interfaces and connector
+  /// associated with each interface in the list.
+    
+  ACE_Unbounded_Queue<char *> &ccm_ami_ifaces =
+    idl_global->ciao_ami_iface_names ();
+    
+  /// If the queue is empty, we're done.  
+  if (ccm_ami_ifaces.size () == 0)
+    {
+      return 0;
+    }
+    
+  /// Open the *A.idl file and create the file stream.  
+  int status =
+    tao_cg->start_ciao_ami_conn_idl (
+      be_global->be_get_ciao_ami_conn_idl_fname ());
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_ami_pre_proc")
+                         ACE_TEXT ("::generate_ami4ccm_idl - ")
+                         ACE_TEXT ("Error opening CIAO AMI ")
+                         ACE_TEXT ("connector IDL file\n")),
+                        -1);
+    }
+
+  for (ACE_Unbounded_Queue<char *>::CONST_ITERATOR i (
+         ccm_ami_ifaces);
+       ! i.done ();
+       i.advance ())
+    {
+      char **item = 0;
+      i.next (item);
+      
+      UTL_ScopedName *sn =
+        idl_global->string_to_scoped_name (*item);
+        
+      UTL_Scope *s =
+        idl_global->scopes ().top_non_null ();
+        
+      AST_Decl *d = s->lookup_by_name (sn, true);
+      
+      if (d == 0)
+        {
+          idl_global->err ()->lookup_error (sn);
+          continue;
+        }
+        
+      be_interface *iface =
+        be_interface::narrow_from_decl (d);
+        
+      if (iface == 0)
+        {
+          idl_global->err ()->interface_expected (d);
+          continue;
+        }
+        
+      /// The interface's method encapsulates the code that
+      /// spawns the appropriate visitors. We just pass it
+      /// the file stream.  
+      iface->gen_ami4ccm_idl (tao_cg->ciao_ami_conn_idl ());
+    }
+
+  tao_cg->end_ciao_ami_conn_idl ();
+  
+  return 0;
 }
