@@ -1,0 +1,50 @@
+// $Id$
+
+#ifndef HELLO_IDL
+#define HELLO_IDL
+
+#pragma ciao lem "Base/HelloE.idl"
+#pragma ciao ami4ccm interface "Hello::MyFoo"
+#pragma ciao ami4ccm interface "Hello::MyDerived"
+#pragma ciao ami4ccm interface "Foo::MyFoo"
+
+module Hello
+{
+  exception InternalError
+    {
+      long id;
+      string error_string;
+    };
+
+  interface MyFoo
+    {
+      long foo (in string in_str, out string answer)
+        raises (InternalError);
+      void hello (out long answer)
+        raises (InternalError);
+
+      attribute short rw_attrib
+        getraises (InternalError)
+        setraises (InternalError);
+
+      readonly attribute short ro_attrib
+        raises (InternalError);
+    };
+
+  interface MyDerived : MyFoo
+    {
+      long do_someting (in string str);
+      attribute long my_attribute;
+    };
+};
+
+module Foo
+{
+  interface MyFoo
+    {
+      long myop (in string str);
+    };
+}
+
+#endif
+
