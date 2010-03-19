@@ -60,15 +60,14 @@ namespace CIAO_Throughput_Sender_Impl
 
   void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr the_entity,
-    ::DDS::StatusKind  status_kind)
+    ::DDS::StatusKind status_kind)
   {
-    CORBA::ULong kind = status_kind;
     if((!CORBA::is_nil(the_entity)) &&
-       (kind==DDS::PUBLICATION_MATCHED_STATUS))
+       (status_kind == DDS::PUBLICATION_MATCHED_STATUS))
       {
         ::DDS::PublicationMatchedStatus_var stat;
         DDS::DataWriter_var wr = ::DDS::DataWriter::_narrow(the_entity);
-        if(CORBA::is_nil(wr))
+        if(CORBA::is_nil(wr.in ()))
          {
             throw ::CORBA::INTERNAL ();
          }
@@ -222,7 +221,7 @@ namespace CIAO_Throughput_Sender_Impl
   void
   Sender_exec_i::start (void)
   {
-    unsigned int sec = this->duration_run_ + 5;
+    ACE_UINT64 const sec = this->duration_run_ + 5;
     (void) ACE_High_Res_Timer::global_scale_factor ();
     this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->timer_queue()->gettimeofday (&ACE_High_Res_Timer::gettimeofday_hr);
     if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer(
@@ -374,7 +373,7 @@ namespace CIAO_Throughput_Sender_Impl
     try
       {
         this->writer_ = this->context_->get_connection_info_write_data ();
-         this->cmd_writer_ =
+        this->cmd_writer_ =
                this->context_->get_connection_command_write_data ();
         if(CORBA::is_nil(this->writer_))
         {
@@ -399,7 +398,7 @@ namespace CIAO_Throughput_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-    //make  instances of Topic
+    // Make instances of Topic
     this->test_topic_.key = 1;
     this->test_topic_.seq_num = 0;
     this->test_topic_.data.length (this->datalen_ - this->overhead_size_);
