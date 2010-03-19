@@ -120,7 +120,7 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     CORBA::ULong incr_load_;
     CORBA::UShort datalen_;
     CORBA::UShort recover_time_;
-    CORBA::UShort duration_run_;
+    ACE_UINT64 duration_run_;
     Atomic_Boolean matched_;
     CORBA::UShort number_of_subscribers_;
     CORBA::ULongLong number_of_msg_;
