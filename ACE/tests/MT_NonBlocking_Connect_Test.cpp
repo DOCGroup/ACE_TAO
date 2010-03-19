@@ -206,13 +206,16 @@ Connect_Thread::svc (void)
 
       // Complete connection. It's what complete_connection() in TAO does.
       // Not exactly but for the test it's enough.
-      while (this->reactor_.work_pending ())
+      bool one_run_for_wfmo = false;
+      while (this->reactor_.work_pending () > 0 || one_run_for_wfmo)
         {
           ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
                             this->reactor_lock_, -1);
 
-          if (this->reactor_.work_pending ())
+          if (this->reactor_.work_pending () > 0 || one_run_for_wfmo)
             {
+              one_run_for_wfmo = false;
+
               ACE_DEBUG ((LM_DEBUG,
                           "%t waiting for connection to %s...\n",
                           hosts[i]));
