@@ -42,17 +42,13 @@ namespace CIAO
       /// Destructor
       virtual ~CCM_DDS_DataReader_i (void);
 
-      virtual ::DDS::ReturnCode_t
-      enable (void);
+      virtual ::DDS::ReturnCode_t enable (void);
 
-      virtual ::DDS::StatusCondition_ptr
-      get_statuscondition (void);
+      virtual ::DDS::StatusCondition_ptr get_statuscondition (void);
 
-      virtual ::DDS::StatusMask
-      get_status_changes (void);
+      virtual ::DDS::StatusMask get_status_changes (void);
 
-      virtual DDS_INSTANCE_HANDLE_T_RETN
-      get_instance_handle (void);
+      virtual DDS_INSTANCE_HANDLE_T_RETN get_instance_handle (void);
 
       virtual ::DDS::ReadCondition_ptr
       create_readcondition (
@@ -72,28 +68,22 @@ namespace CIAO
       delete_readcondition (
         ::DDS::ReadCondition_ptr a_condition);
 
-      virtual ::DDS::ReturnCode_t
-      delete_contained_entities (void);
+      virtual ::DDS::ReturnCode_t delete_contained_entities (void);
 
-      virtual ::DDS::ReturnCode_t
-      set_qos (const ::DDS::DataReaderQos & qos);
+      virtual ::DDS::ReturnCode_t set_qos (const ::DDS::DataReaderQos & qos);
 
-      virtual ::DDS::ReturnCode_t
-      get_qos (::DDS::DataReaderQos & qos);
+      virtual ::DDS::ReturnCode_t get_qos (::DDS::DataReaderQos & qos);
 
       virtual ::DDS::ReturnCode_t
       set_listener (
         ::DDS::DataReaderListener_ptr a_listener,
         ::DDS::StatusMask mask);
 
-      virtual ::DDS::DataReaderListener_ptr
-      get_listener (void);
+      virtual ::DDS::DataReaderListener_ptr get_listener (void);
 
-      virtual ::DDS::TopicDescription_ptr
-      get_topicdescription (void);
+      virtual ::DDS::TopicDescription_ptr get_topicdescription (void);
 
-      virtual ::DDS::Subscriber_ptr
-      get_subscriber (void);
+      virtual ::DDS::Subscriber_ptr get_subscriber (void);
 
       virtual ::DDS::ReturnCode_t
       get_sample_rejected_status (::DDS::SampleRejectedStatus & status);
