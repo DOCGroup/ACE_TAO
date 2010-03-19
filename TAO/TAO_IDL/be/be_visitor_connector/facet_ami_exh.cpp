@@ -101,8 +101,9 @@ be_visitor_facet_ami_exh::visit_operation (be_operation *node)
 int
 be_visitor_facet_ami_exh::gen_reply_handler_class (void)
 {
-  const char *suffix = "_reply_hander";
-  AST_Decl *scope = ScopeAsDecl (this->iface_->defined_in ());
+  const char *suffix = "_reply_handler";
+  UTL_Scope *s = this->iface_->defined_in ();
+  AST_Decl *scope = ScopeAsDecl (s);
   const char *scope_name = scope->full_name ();
   bool global = (scope->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (global ? "" : "::");
@@ -120,16 +121,22 @@ be_visitor_facet_ami_exh::gen_reply_handler_class (void)
       << "Callback_ptr callback);" << be_uidt_nl << be_nl
       << "virtual ~" << iface_name << suffix << " (void);";
      
-  ACE_CString handler_str (iface_name);
-  handler_str += "Callback";
-  Identifier id (handler_str.c_str ());
+  /// The reply handler class we are generating inherits from the
+  /// CORBA AMI skeleton class, not the AMI_xxxCallback class
+  /// generated from the corresponding interface in this IDl file.
+  /// So to get the correct *_excep operation signatures, we
+  /// visit the scope of the AMI_xxxHandler interface generated
+  /// by -GC, which must be applied to this IDL file.
+  ACE_CString handler_str (this->iface_->full_name ());
+  handler_str += "Handler";
   
-  /// The connector is defined in the template module instantiation,
-  /// the callback interface is created in that module's
-  /// containing scope.
-  AST_Decl *m = ScopeAsDecl (this->node_->defined_in ());
-  AST_Decl *d =
-    m->defined_in ()->lookup_by_name_local (&id, 0);
+  UTL_ScopedName *sn =
+    idl_global->string_to_scoped_name (handler_str.c_str ());
+  AST_Decl *d = s->lookup_by_name (sn, true);
+  
+  sn->destroy ();
+  delete sn;
+  sn = 0;
     
   be_interface *callback_iface =
     be_interface::narrow_from_decl (d);

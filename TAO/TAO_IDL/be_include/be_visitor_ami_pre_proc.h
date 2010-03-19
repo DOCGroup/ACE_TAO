@@ -110,6 +110,9 @@ private:
   /// Create an inheritance list for the reply handler.
   AST_Type **create_inheritance_list (be_interface *node,
                                       long &n_parents);
+                                      
+  /// Generate an *A.idl file for AMI4CCM.
+  int generate_ami4ccm_idl (void);
 };
 
 

@@ -14,6 +14,8 @@
 
 #include "ast_template_module_inst.h"
 #include "ast_uses.h"
+#include "ast_module.h"
+#include "ast_extended_port.h"
 
 #include "utl_identifier.h"
 

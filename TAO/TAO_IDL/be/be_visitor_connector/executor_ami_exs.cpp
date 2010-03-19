@@ -33,7 +33,7 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
   const char *scope_name = scope->full_name ();
   bool global = (scope->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (global ? "" : "::");
-  ACE_CString class_name_str (node->local_name ());
+  ACE_CString class_name_str (scope->local_name ()->get_string ());
   class_name_str += suffix;
   const char *class_name = class_name_str.c_str ();
   
@@ -41,8 +41,13 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
       << class_name << "::"
       << class_name << " (void)" << be_idt_nl
       << ": facet_exec_ (new ";
+      
+  /// The port is the only item in the connector's scope.    
+  UTL_ScopeActiveIterator j (node, UTL_Scope::IK_decls);
+  AST_Extended_Port *p =
+    AST_Extended_Port::narrow_from_decl (j.item ());
 
-  for (UTL_ScopeActiveIterator i (node, UTL_Scope::IK_decls);
+  for (UTL_ScopeActiveIterator i (p->port_type (), UTL_Scope::IK_decls);
        !i.is_done ();
        i.next ())
     {
@@ -79,12 +84,12 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
       << "void" << be_nl
       << class_name << "::set_session_context (" << be_idt_nl
       << "::Components::SessionContext_ptr ctx)"
-      << be_uidt << be_uidt_nl
+      << be_uidt_nl
       << "{" << be_idt_nl
       << "this->context_ =" << be_idt_nl
       << smart_scope << scope_name
       << "::CCM_" << node->local_name ()
-      << "_Context::_narrow (ctx);" << be_nl << be_nl
+      << "_Context::_narrow (ctx);" << be_uidt_nl << be_nl
       << "if ( ::CORBA::is_nil (this->context_.in ()))"
       << be_idt_nl
       << "{" << be_idt_nl
@@ -132,7 +137,15 @@ be_visitor_executor_ami_exs::visit_provides (be_provides *node)
   os_ << be_nl << be_nl
       << smart_scope << scope->full_name () << "::CCM_"
       << t->local_name () << "_ptr" << be_nl
-      << this->node_->local_name () << "_exec_i::get_"
+      << ScopeAsDecl (this->node_->defined_in ())->local_name ()
+      << "_exec_i::get_";
+      
+  /// The port is the only thing in the connector's scope, and
+  /// we need to insert its name into the operation name.    
+  UTL_ScopeActiveIterator i (this->node_, UTL_Scope::IK_decls);
+  AST_Decl *d = i.item ();
+  
+  os_ << d->local_name () << "_"
       << node->local_name () << " (void)" << be_nl
       << "{" << be_idt_nl
       << "return this->facet_exec_;" << be_uidt_nl
