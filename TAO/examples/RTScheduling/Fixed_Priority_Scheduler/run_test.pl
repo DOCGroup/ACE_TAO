@@ -123,14 +123,14 @@ if ($starter_status != 0) {
     exit 1;
 }
 
-$server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
+$server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval() + 15);
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }
 
-$client_status = $CL->TerminateWaitKill ($client->ProcessStopWaitInterval());
+$client_status = $CL->TerminateWaitKill ($client->ProcessStopWaitInterval() + 15);
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
