@@ -33,7 +33,6 @@ sub new
     $self->{PROCESS} = undef;
     $self->{EXECUTABLE} = shift;
     $self->{ARGUMENTS} = shift;
-    $self->{TARGET} = shift;
     if (!defined $PerlACE::ProcessVX::WAIT_DELAY_FACTOR) {
         $PerlACE::ProcessVX::WAIT_DELAY_FACTOR = 3;
     }
