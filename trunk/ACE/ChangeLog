@@ -1,3 +1,8 @@
+Fri Mar 19 16:16:30 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/MT_NonBlocking_Connect_Test.cpp:
+          Fixed a typo in previous commit.
+
 Fri Mar 19 15:58:52 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/MT_NonBlocking_Connect_Test.cpp:
