@@ -1,3 +1,18 @@
+Fri Mar 19 13:23:18 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/OS_NS_Thread.cpp:
+
+          Added a helper function for starting tasks on VxWorks.
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+        * bin/PerlACE/TestTarget_VxWorks.pm:
+
+          Fixed a bug that was triggered with CreateProcess was called with
+          only one argument.
+          Also, set the correct relative path to the executable when it's not
+          in the current directory.
+
 Fri Mar 19 08:56:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux.GNU:

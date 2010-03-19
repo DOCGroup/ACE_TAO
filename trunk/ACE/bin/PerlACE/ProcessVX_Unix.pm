@@ -54,7 +54,6 @@ sub new
     $self->{PROCESS} = undef;
     $self->{EXECUTABLE} = shift;
     $self->{ARGUMENTS} = shift;
-    $self->{TARGET} = shift;
     if (!defined $PerlACE::ProcessVX::WAIT_DELAY_FACTOR) {
         $PerlACE::ProcessVX::WAIT_DELAY_FACTOR = 2;
     }
@@ -151,14 +150,11 @@ sub Spawn ()
     $self->reboot();
 
     my $program = $self->Executable ();
-    my $cwdrel = dirname ($program);
+    my $exe_cwdrel = dirname ($program);
     my $prjroot = defined $ENV{"ACE_RUN_VX_PRJ_ROOT"} ? $ENV{"ACE_RUN_VX_PRJ_ROOT"} : $ENV{"ACE_ROOT"};
-    if (length ($cwdrel) > 0) {
-        $cwdrel = File::Spec->abs2rel( cwd(), $prjroot );
-    }
-    else {
-        $cwdrel = File::Spec->abs2rel( $cwdrel, $prjroot );
-    }
+    $exe_cwdrel = cwd() if length ($exe_cwdrel) == 0;
+    $exe_cwdrel = File::Spec->abs2rel($exe_cwdrel, $prjroot);
+    my $cwdrel = File::Spec->abs2rel(cwd(), $prjroot);
     $program = basename($program, $PerlACE::ProcessVX::ExeExt);
 
     my @cmds;
@@ -244,7 +240,7 @@ sub Spawn ()
           }
         }
 
-        @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . "/" . $exesubdir . '"';
+        @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $exe_cwdrel . "/" . $exesubdir . '"';
         @cmds[$cmdnr++] = 'putenv("TMPDIR=' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . '")';
 
         if (defined $ENV{'ACE_RUN_VX_CHECK_RESOURCES'}) {
