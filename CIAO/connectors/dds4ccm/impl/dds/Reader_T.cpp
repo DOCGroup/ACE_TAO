@@ -368,7 +368,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::create_contentfilte
                         "Unable to get the Participant from the DDS Subscriber\n"));
       throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
     }
-  // now, get the topic.
+  // Now, get the topic.
   ::DDSTopicDescription * td = this->reader_->get_impl ()->get_topicdescription ();
   if (!td)
     {
@@ -383,7 +383,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::create_contentfilte
                         "Unable to narrow the DDS TopicDescription to a DDS Topic\n"));
       throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 3);
     }
-  //now create the ContentFilteredTopic
+  // Now create the ContentFilteredTopic
   DDS_StringSeq params;
   params <<= filter.query_parameters;
   this->cft_ = dp->create_contentfilteredtopic (
@@ -475,7 +475,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::create_filter (
     {
       this->dds_get_->remove_conditions ();
       this->delete_datareader (sub);
-      // now we need to set the new created DataReader in our proxy classes.
+      // Now we need to set the new created DataReader in our proxy classes.
       this->reader_->set_impl (dr);
       this->dds_get_->set_impl (this->reader_);
     }
@@ -604,9 +604,9 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::set_contentfiltered
   Getter_T<DDS_TYPE, CCM_TYPE, FIXED> * dds_get)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::set_qos");
-  this->dds_get_ = dds_get;
   this->library_name_ = library_name;
   this->profile_name_ = profile_name;
+  this->dds_get_ = dds_get;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>

@@ -214,7 +214,7 @@ namespace CIAO
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_PublisherQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
-      return this->impl()->set_qos (ccm_dds_qos);
+      return this->impl ()->set_qos (ccm_dds_qos);
 #else
       return this->impl ()->set_qos (qos);
 #endif
