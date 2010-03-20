@@ -59,14 +59,14 @@ be_visitor_ami_pre_proc::visit_root (be_root *node)
                          "visit scope failed\n"),
                         -1);
     }
-    
+
   /// Generate the *A.idl file containing AMI4CCM-related
-  /// interfaces and connector.  
+  /// interfaces and connector.
   if (be_global->ami4ccm_call_back ())
     {
       return this->generate_ami4ccm_idl ();
     }
-    
+
   return 0;
 }
 
@@ -150,7 +150,7 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
     }
 
   be_interface *reply_handler = this->create_reply_handler (node);
-  
+
   if (reply_handler)
     {
       reply_handler->set_defined_in (node->defined_in ());
@@ -1292,17 +1292,17 @@ be_visitor_ami_pre_proc::generate_ami4ccm_idl (void)
   /// know we'll get here - a good place to generate the *A.idl
   /// file containing the local interfaces and connector
   /// associated with each interface in the list.
-    
+
   ACE_Unbounded_Queue<char *> &ccm_ami_ifaces =
     idl_global->ciao_ami_iface_names ();
-    
-  /// If the queue is empty, we're done.  
+
+  /// If the queue is empty, we're done.
   if (ccm_ami_ifaces.size () == 0)
     {
       return 0;
     }
-    
-  /// Open the *A.idl file and create the file stream.  
+
+  /// Open the *A.idl file and create the file stream.
   int status =
     tao_cg->start_ciao_ami_conn_idl (
       be_global->be_get_ciao_ami_conn_idl_fname ());
@@ -1324,37 +1324,38 @@ be_visitor_ami_pre_proc::generate_ami4ccm_idl (void)
     {
       char **item = 0;
       i.next (item);
-      
+
       UTL_ScopedName *sn =
         idl_global->string_to_scoped_name (*item);
-        
+
       UTL_Scope *s =
         idl_global->scopes ().top_non_null ();
-        
+
       AST_Decl *d = s->lookup_by_name (sn, true);
-      
+
       if (d == 0)
         {
           idl_global->err ()->lookup_error (sn);
           continue;
         }
-        
+
       be_interface *iface =
         be_interface::narrow_from_decl (d);
-        
+
       if (iface == 0)
         {
           idl_global->err ()->interface_expected (d);
           continue;
         }
-        
+
       /// The interface's method encapsulates the code that
       /// spawns the appropriate visitors. We just pass it
-      /// the file stream.  
+      /// the file stream.
       iface->gen_ami4ccm_idl (tao_cg->ciao_ami_conn_idl ());
     }
 
   tao_cg->end_ciao_ami_conn_idl ();
-  
+
   return 0;
 }
+
