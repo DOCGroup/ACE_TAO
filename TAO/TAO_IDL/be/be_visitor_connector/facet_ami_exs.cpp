@@ -29,7 +29,7 @@ int
 be_visitor_facet_ami_exs::visit_component (be_component *node)
 {
   this->node_ = node;
-  
+
   return this->visit_scope (node);
 }
 
@@ -38,7 +38,7 @@ be_visitor_facet_ami_exs::visit_provides (be_provides *node)
 {
   this->iface_ =
     be_interface::narrow_from_decl (node->provides_type ());
-    
+
   if (this->gen_reply_handler_class () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -48,7 +48,7 @@ be_visitor_facet_ami_exs::visit_provides (be_provides *node)
                          ACE_TEXT ("failed\n")),
                         -1);
     }
-    
+
   if (this->gen_facet_executor_class () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -58,7 +58,7 @@ be_visitor_facet_ami_exs::visit_provides (be_provides *node)
                          ACE_TEXT ("failed\n")),
                         -1);
     }
-    
+
   return 0;
 }
 
@@ -67,7 +67,7 @@ be_visitor_facet_ami_exs::visit_operation (be_operation *node)
 {
   AST_Decl *d =
     ScopeAsDecl (node->defined_in ());
-    
+
   /// We end up here also from the visit_scope() call on the
   /// connector. We want to skip the CCM-related operations
   /// that were added to the connector since it's a component.
@@ -76,7 +76,7 @@ be_visitor_facet_ami_exs::visit_operation (be_operation *node)
     {
       return  0;
     }
-    
+
   if (this->for_reply_handler_)
     {
       return this->gen_reply_hander_op (node);
@@ -127,7 +127,7 @@ be_visitor_facet_ami_exs::gen_reply_handler_class (void)
   bool global = (scope->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (global ? "" : "::");
   const char *iface_name = this->iface_->local_name ();
-  
+
   os_ << be_nl
       << iface_name << suffix << "::"
       << iface_name << suffix << " ("
@@ -140,7 +140,7 @@ be_visitor_facet_ami_exs::gen_reply_handler_class (void)
       << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "}";
-      
+
   os_ << be_nl << be_nl
       << iface_name << suffix << "::~"
       << iface_name << suffix << " (void)" << be_nl
@@ -155,18 +155,18 @@ be_visitor_facet_ami_exs::gen_reply_handler_class (void)
   /// by -GC, which must be applied to this IDL file.
   ACE_CString handler_str (this->iface_->full_name ());
   handler_str += "Handler";
-  
+
   UTL_ScopedName *sn =
     idl_global->string_to_scoped_name (handler_str.c_str ());
   AST_Decl *d = s->lookup_by_name (sn, true);
-  
+
   sn->destroy ();
   delete sn;
   sn = 0;
-    
+
   be_interface *callback_iface =
     be_interface::narrow_from_decl (d);
-    
+
   if (this->visit_scope (callback_iface) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -175,7 +175,7 @@ be_visitor_facet_ami_exs::gen_reply_handler_class (void)
                   ACE_TEXT ("visit_scope() on callback ")
                   ACE_TEXT ("interface failed\n")));
     }
-      
+
   return 0;
 }
 
@@ -188,19 +188,19 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
   const char *scope_name =
     ScopeAsDecl (this->iface_->defined_in ())->full_name ();
   const char *iface_name = this->iface_->local_name ();
-  
+
   os_ << be_nl << be_nl
       << iface_name << suffix << "::"
       << iface_name << suffix << " (void)" << be_nl
       << "{" << be_nl
       << "}";
-      
+
   os_ << be_nl << be_nl
       << iface_name << suffix << "::~"
       << iface_name << suffix << " (void)" << be_nl
-      << "{" << be_nl 
+      << "{" << be_nl
       << "}";
-  
+
   if (this->visit_scope (this->iface_) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -209,11 +209,11 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
                   ACE_TEXT ("visit_scope() on sendc ")
                   ACE_TEXT ("interface failed\n")));
     }
-    
+
   ACE_CString scope_str (scope_name, 0, false);
-  const char *smart_scope =
-    (scope_str.empty () ? "" : "::"); 
-    
+//  const char *smart_scope =
+//    (scope_str.empty () ? "" : "::");
+
   os_ << be_nl << be_nl
       << "void" << be_nl
       << iface_name << "_exec_i::set_session_context ("
@@ -232,32 +232,32 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
       << "}" << be_uidt_nl << be_nl
       << "this->receptacle_objref_ =" << be_idt_nl
       << "this->context_->get_connection_";
-      
-  /// The port is the only item in the connector's scope.    
+
+  /// The port is the only item in the connector's scope.
   UTL_ScopeActiveIterator j (this->node_, UTL_Scope::IK_decls);
   AST_Extended_Port *p =
     AST_Extended_Port::narrow_from_decl (j.item ());
-    
-  /// The port name is used in construction of the operation name.  
+
+  /// The port name is used in construction of the operation name.
   os_ << p->local_name () << "_";
-      
+
   for (UTL_ScopeActiveIterator i (p->port_type (), UTL_Scope::IK_decls);
        !i.is_done ();
        i.next ())
     {
       AST_Decl *d = i.item ();
       AST_Uses *u = AST_Uses::narrow_from_decl (d);
-      
+
       if (u != 0)
         {
           os_ << u->local_name ();
         }
     }
-      
+
   os_ << " ();"
       << be_uidt << be_uidt_nl
       << "}";
-      
+
   return 0;
 }
 
@@ -268,9 +268,9 @@ be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
       << "void" << be_nl
       << this->iface_->local_name () << "_reply_handler::"
       << node->local_name ();
-      
+
   be_visitor_operation_arglist al_visitor (this->ctx_);
-  
+
   if (node->accept (&al_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -280,10 +280,10 @@ be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
                          ACE_TEXT ("list failed\n")),
                         -1);
     }
-    
+
   int c = node->argument_count ();
   bool is_excep = false;
-  
+
   if (c == 1)
     {
       UTL_ScopeActiveIterator i (node, UTL_Scope::IK_decls);
@@ -292,16 +292,16 @@ be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
         AST_Argument::narrow_from_decl (d);
       AST_Type *t = arg->field_type ();
       ACE_CString type_name = t->full_name ();
-      
+
       if (type_name == "Messaging::ExceptionHolder")
         {
           is_excep = true;
         }
     }
-    
+
   os_ << be_nl
       << "{" << be_idt_nl;
-     
+
   if (is_excep)
     {
       os_ << "::CCM_AMI::ExceptionHolder_i holder (excep_holder);"
@@ -310,7 +310,7 @@ be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
           << " (&holder);";
     }
   else
-    {    
+    {
       os_ << "this->callback_->" << node->local_name () << " (";
 
       if (c == 0)
@@ -348,7 +348,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
       << node->local_name ();
 
   be_visitor_operation_arglist al_visitor (this->ctx_);
-  
+
   if (node->accept (&al_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -358,7 +358,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
                          ACE_TEXT ("list failed\n")),
                         -1);
     }
-    
+
   os_ << be_nl
       << "{" << be_idt_nl
       << "if (! ::CORBA::is_nil (this->receptacle_objref_.in ()))"
@@ -377,11 +377,11 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
       << "this->receptacle_objref_->" << node->local_name ()
       << " (" << be_idt_nl
       << "the_handler_var.in ()";
-      
+
   unsigned long index = 0UL;
-      
+
   /// Quick scope iteration to catch all the args except the
-  /// first one, which is replace above by the local _var.    
+  /// first one, which is replace above by the local _var.
   for (UTL_ScopeActiveIterator i (node, UTL_Scope::IK_decls);
        !i.is_done ();
        i.next (), ++index)
@@ -391,17 +391,17 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
         {
           continue;
         }
-        
+
       AST_Decl *d = i.item ();
-        
+
       os_ << "," << be_nl
           << d->local_name ();
     }
-    
+
   os_ << ");" << be_uidt << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
       << "}";
-     
+
   return 0;
 }
 
