@@ -27,22 +27,6 @@ namespace CIAO_QFLE_Test_Sender_Impl
   }
 
   //============================================================
-  // WriteManyHandler
-  //============================================================
-  WriteManyHandler::WriteManyHandler (Sender_exec_i &callback)
-    : callback_ (callback)
-  {
-  }
-
-  int
-  WriteManyHandler::handle_exception (ACE_HANDLE)
-  {
-    this->callback_.write_one ();
-    return 0;
-  }
-
-
-  //============================================================
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
   Sender_exec_i::Sender_exec_i (void)
