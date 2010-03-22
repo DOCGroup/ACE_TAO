@@ -139,7 +139,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_AMI_Sender_Servant</string>
+          <string>create_Hello_AMI_MyFoo_Connector_The_Connector_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -223,7 +223,7 @@
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>sendc_run_my_foo</portName>
+      <portName>The_Port_sendc_run</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
@@ -239,7 +239,7 @@
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>run_my_foo</portName>
+      <portName>The_Port_run</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
