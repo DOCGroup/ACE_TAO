@@ -7,8 +7,8 @@ project(AMI_Hello_idl_gen) : componentidldefaults, ami, ami4ccm_stub {
               -Wb,stub_export_include=Hello_stub_export.h \
               -Wb,skel_export_macro=HELLO_SKEL_Export \
               -Wb,skel_export_include=Hello_skel_export.h \
-              -Wb,conn_export_include=Hello_conn_export.h \
               -Wb,conn_export_macro=HELLO_CONN_Export \
+              -Wb,conn_export_include=Hello_conn_export.h \
               -I.. -GM -Gxhcn
   idlflags -= -Gsv
 
@@ -36,7 +36,11 @@ project(AMI_Hello_lema_gen) : ciaoidldefaults {
               -Wb,stub_export_include=Hello_stub_export.h \
               -Wb,conn_export_macro=HELLO_CONN_Export \
               -Wb,conn_export_include=Hello_conn_export.h \
-              -I.. -SS -Gsv -Gcn -Glem -GC -Gxhst
+              -Wb,svnt_export_macro=HELLO_SVNT_Export \
+              -Wb,svnt_export_include=Hello_svnt_export.h \
+              -Wb,skel_export_macro=HELLO_SKEL_Export \
+              -Wb,skel_export_include=Hello_skel_export.h \
+              -I.. -Gsv -Gcn -Glem -GC -Gxhst -Gxhsv
 
   IDL_Files {
     HelloA.idl
@@ -111,7 +115,7 @@ project(AMI_Hello_lem_stub) : ccm_executor, ami, ami4ccm_lem_stub {
   }
 }
 
-project(AMI_Hello_skel) : ciao_executor, ami   {
+project(AMI_Hello_skel) : ciao_executor, ami, ami4ccm_servant {
   after      += AMI_Hello_stub
   sharedname  = Hello_skel
   libs       += Hello_stub
@@ -126,6 +130,7 @@ project(AMI_Hello_skel) : ciao_executor, ami   {
 
   Source_Files {
     HelloS.cpp
+    HelloAS.cpp
   }
 
   Header_Files {
@@ -156,6 +161,30 @@ project(AMI_Hello_conn) : ciao_executor, ami, ami4ccm_lem_stub {
   Header_Files {
     HelloA_conn.h
     HelloA_conn_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+project(AMI_Hello_svnt) : ciao_servant, ami, ami4ccm_servant {
+  after   += AMI_Hello_lem_stub Hello_Base_AMI_stub AMI_Hello_skel AMI_Hello_lema_gen AMI_Hello_lemae_gen AMI_Hello_conn
+  sharedname = Hello_svnt
+  libs += Hello_stub Hello_skel Hello_lem_stub Hello_conn
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags = HELLO_SVNT_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    HelloA_svnt.cpp
+  }
+
+  Header_Files {
+    HelloA_svnt.h
+    HelloA_svnt_export.h
   }
 
   Inline_Files {

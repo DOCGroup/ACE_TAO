@@ -117,7 +117,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_AMI_AMI_Impl</string>
+          <string>create_Hello_AMI_MyFoo_Connector_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -266,7 +266,7 @@
     <name>Hello.ImplementationArtifacts.AMIArtifacts.AMI_svnt</name>
     <source/>
     <node/>
-    <location>AMI_svnt</location>
+    <location>Hello_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -274,7 +274,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_AMI_AMIHome_Servant</string>
+          <string>create_Hello_AMI_MyFoo_Connector_The_Connector_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -284,7 +284,7 @@
     <name>Hello.ImplementationArtifacts.AMIArtifacts.AMI_exec</name>
     <source/>
     <node/>
-    <location>AMI_exec</location>
+    <location>Hello_conn</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -292,7 +292,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_AMI_AMIHome_Impl</string>
+          <string>create_Hello_AMI_MyFoo_Connector_Impl</string>
         </value>
       </value>
     </execParameter>

@@ -339,8 +339,9 @@ namespace CIAO
     if (!hcreator)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
-                     "Session_Container::install_home - Error: Entry point "
+                     "Session_Container::install_home - Error: Entry point [%C] "
                      "invalid in dll [%C]\n",
+                     entry_point,
                      primary_artifact));
         throw Components::Deployment::ImplEntryPointNotFound ();
       }
@@ -348,8 +349,9 @@ namespace CIAO
     if (!screator)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
-                     "Session_Container::install_home - Error: Entry point "
+                     "Session_Container::install_home - Error: Entry point [%C] "
                      "invalid in dll [%C]\n",
+                     servant_entrypoint,
                      servant_artifact));
         throw Components::Deployment::ImplEntryPointNotFound ();
       }
@@ -540,8 +542,9 @@ namespace CIAO
     if (!ccreator)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
-                     "Session_Container::install_home - Error: Entry point "
+                     "Session_Container::install_home - Error: Entry point [%C] "
                      "invalid in dll [%C]\n",
+                     entry_point,
                      primary_artifact));
         throw Components::Deployment::ImplEntryPointNotFound ();
       }
@@ -549,8 +552,9 @@ namespace CIAO
     if (!screator)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
-                     "Session_Container::install_home - Error: Entry point "
+                     "Session_Container::install_home - Error: Entry point [%C] "
                      "invalid in dll [%C]\n",
+                     servant_entrypoint,
                      servant_artifact));
         throw Components::Deployment::ImplEntryPointNotFound ();
       }

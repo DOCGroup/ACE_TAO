@@ -5,7 +5,9 @@ project(AMI4CCM_idl_gen) : componentidldefaults {
   idlflags += -Wb,stub_export_macro=AMI4CCM_STUB_Export \
               -Wb,stub_export_include=ami4ccm_stub_export.h \
               -Wb,svnt_export_macro=AMI4CCM_SVNT_Export \
-              -Wb,svnt_export_include=ami4ccm_svnt_export.h
+              -Wb,svnt_export_include=ami4ccm_svnt_export.h \
+              -Wb,skel_export_macro=AMI4CCM_SVNT_Export \
+              -Wb,skel_export_include=ami4ccm_svnt_export.h
 
   IDL_Files {
     ami4ccm.idl
@@ -67,7 +69,7 @@ project (AMI4CCM_lem_stub) : ccm_lem_stub, ciao_lib, ciao_output, taolib, valuet
   Header_Files {
    ami4ccmEC.h
   }
-  
+
   Inline_Files {
    ami4ccmEC.inl
   }
@@ -79,21 +81,21 @@ project (AMI4CCM_svnt) : ciao_servant, ciao_lib {
   includes += $(CIAO_ROOT)/connectors
   sharedname = AMI4CCM_svnt
   dynamicflags += AMI4CCM_SVNT_BUILD_DLL
-  
+
   IDL_Files {
   }
-  
+
   Source_Files {
     ami4ccmS.cpp
     ami4ccm_svnt.cpp
   }
-  
+
   Header_Files {
     ami4ccmS.h
     ami4ccm_svnt.h
     ami4ccm_svnt_export.h
   }
-  
+
   Inline_Files {
     ami4ccmS.inl
     ami4ccm_svnt.inl
