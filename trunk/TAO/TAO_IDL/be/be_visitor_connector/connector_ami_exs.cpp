@@ -31,18 +31,18 @@ be_visitor_connector_ami_exs::visit_connector (be_connector *node)
     {
       return 0;
     }
-    
+
   this->node_ = node;
-    
+
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
   os_ << be_nl << be_nl
       << "namespace CIAO_" << node->flat_name ()
       << "_Impl" << be_nl
       << "{" << be_idt;
-      
+
   be_visitor_facet_ami_exs facet_visitor (this->ctx_);
-  
+
   if (facet_visitor.visit_component (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -51,9 +51,9 @@ be_visitor_connector_ami_exs::visit_connector (be_connector *node)
                          ACE_TEXT ("facet visitor failed\n")),
                         -1);
     }
-            
+
   be_visitor_executor_ami_exs exec_visitor (this->ctx_);
-  
+
   if (exec_visitor.visit_connector (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -62,9 +62,9 @@ be_visitor_connector_ami_exs::visit_connector (be_connector *node)
                          ACE_TEXT ("exec visitor failed\n")),
                         -1);
     }
-      
+
   this->gen_entrypoint ();
-      
+
   os_ << be_uidt_nl
       << "}";
 
@@ -85,11 +85,10 @@ be_visitor_connector_ami_exs::gen_entrypoint (void)
       << be_idt_nl
       << "::Components::EnterpriseComponent::_nil ();"
       << be_uidt_nl << be_nl
-      << "ACE_NEW_RETURN (" << be_idt_nl
+      << "ACE_NEW_NORETURN (" << be_idt_nl
       << "retval," << be_nl
-      << s->local_name () << "_exec_i," << be_nl
-      << "::Components::EnterpriseComponent::_nil ());"
-      << be_nl << be_nl
+      << s->local_name () << "_exec_i);" << be_nl
+      << be_nl
       << "return retval;" << be_uidt_nl
       << "}";
 }
