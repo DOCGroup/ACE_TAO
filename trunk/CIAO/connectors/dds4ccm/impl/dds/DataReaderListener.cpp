@@ -104,7 +104,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_i::on_data_available");
       ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
-      ACE_NEW (dds_reader, 
+      ACE_NEW (dds_reader,
                CCM_DDS_DataReader_i (the_reader));
 #if (CIAO_DDS4CCM_NDDS==1)
       this->impl_->on_data_available (dds_reader.in ());

@@ -120,6 +120,8 @@ template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (void)
 {
+  DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete");
+
   DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete ();
   this->observable_.configuration_complete (
     this->topic_.in (),
@@ -156,6 +158,8 @@ template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_activate (void)
 {
+  DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_activate");
+
   ACE_Reactor* reactor = 0;
 #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
   reactor = this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ();
@@ -187,6 +191,8 @@ template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_passivate (void)
 {
+  DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_passivate");
+
   this->observable_.passivate ();
   this->push_observer_.passivate ();
   this->push_state_observer_.passivate ();
@@ -199,6 +205,8 @@ template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_remove (void)
 {
+  DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_remove");
+
   this->observable_.remove (this->publisher_.in ());
   this->push_observer_.remove (this->subscriber_.in ());
   this->push_state_observer_.remove (this->subscriber_.in ());
