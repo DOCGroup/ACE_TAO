@@ -519,7 +519,7 @@ namespace CIAO
 
       CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                   "Servant_Impl_Base::add_receptacle - Added new connection to "
-                  "existing receptacle named  (%C)\n",
+                  "existing receptacle named (%C)\n",
                   receptacle_name));
     }
 
