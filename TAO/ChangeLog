@@ -1,3 +1,10 @@
+Mon Mar 22 09:49:04 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * examples/RTScheduling/Fixed_Priority_Scheduler/test.cpp:
+        * examples/RTScheduling/DT_Creator.cpp:
+        * examples/RTScheduling/MIF_Scheduler/test.cpp:
+          Fixed these examples on Windows builds.
+
 Mon Mar 20 09:43:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:

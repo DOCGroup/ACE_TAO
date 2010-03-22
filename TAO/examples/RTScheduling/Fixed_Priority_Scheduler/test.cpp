@@ -272,20 +272,23 @@ DT_Test::orb (void)
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  int status = 0;
+
+  ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_FP_DT_Creator);
+
   try
     {
-      ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_FP_DT_Creator);
-
       DT_TEST::instance ()->run (argc, argv);
-
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Caught exception:");
-      return 1;
+      status = 1;
     }
 
-  return 0;
+  ACE_Service_Config::static_svcs ()->remove ("FP_DT_Creator");
+
+  return status;
 }
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
