@@ -1,7 +1,21 @@
+Mon Mar 22 19:23:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Session/Session_Container.cpp:
+          Extended logging when retrieving the entry points fails
+
+        * connectors/ami4ccm/ami4ccm/ami4ccm.mpc:
+          Added skel export macro
+
+        * connectors/ami4ccm/examples/Hello/Base/Hello.mpc:
+          Build svnt library
+
+        * connectors/ami4ccm/examples/Hello/descriptors/Plan.cdp:
+          First set of fixes after all rename actions
+
 Mon Mar 22 18:07:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * connectors/ami4ccm/examples/Hello/Base/Hello.mpc:
-        
+
           Removed exec export macro and include from AMI_Hello_idl_gen
           project. The former was not used, probably intended to
           be used for the same thing as the lem stub export macro
@@ -12,12 +26,12 @@ Mon Mar 22 18:07:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Mon Mar 22 17:44:03 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * connectors/ami4ccm/examples/Hello/Connector:
-        
+
           Removed this directory again, after SVN automatically restored
           it after my update with modified files in that directory.
-          
+
         * connectors/ami4ccm/examples/Hello/Base/Hello.mpc:
-        
+
           Cosmetic changes.
 
 Mon Mar 22 16:08:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
