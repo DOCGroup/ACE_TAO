@@ -317,7 +317,7 @@ is used as a toggle to enable or disable debugging messages.</td>
 generate more output (try 10). The default value of this option is 0.</td>
       </tr>
       <tr>
-        <td><code>-ORBVerboseLogging <em>level (0|1|2)</em</code></td>
+        <td><code>-ORBVerboseLogging</code> <em>level (0|1|2)</em></td>
         <td>Controls the amount of status data printed on each line of
         the debug log. Higher numbers generate more output.
         The default value of this option is 0. </td>
@@ -326,6 +326,14 @@ generate more output (try 10). The default value of this option is 0.</td>
         <td><code>-ORBLogFile</code> <em>Logfilename</em></td>
         <td>Causes all <code>ACE_DEBUG</code> and <code>ACE_ERROR</code>
 output to be redirected to the designated <code>Logfilename</code>. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBHandleLoggingStrategyEvents</code>
+<em>LoggingStrategyServiceName</em></td>
+        <td>Causes use of ORB reactor for dispatching timer events to
+ACE_Logging_Strategy configured as a dynamic service with name
+<code>LoggingStrategyServiceName</code>. This allows to implement log file
+rotation. </td>
       </tr>
       <tr>
         <td><code>-ORBObjRefStyle</code> <em>IOR/URL</em></td>

@@ -56,6 +56,7 @@
 #include "ace/Static_Object_Lock.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/CORBA_macros.h"
+#include "ace/Logging_Strategy.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // Needed to set ACE_LOG_MSG::msg_ostream()
@@ -870,6 +871,20 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
             }
 
           (ACE_LOG_MSG->*flagop)(value);
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBHandleLoggingStrategyEvents"))))
+        {
+          ACE_Logging_Strategy *logging_strategy =
+            dynamic_cast<ACE_Logging_Strategy*> (
+              ACE_Dynamic_Service<ACE_Service_Object>::instance (current_arg));
+
+          if (logging_strategy != 0)
+            {
+              logging_strategy->reactor (this->reactor ());
+            }
+
+          arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBUseIMR"))))
