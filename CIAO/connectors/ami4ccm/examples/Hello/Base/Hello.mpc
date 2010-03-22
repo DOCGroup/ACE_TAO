@@ -47,7 +47,8 @@ project(AMI_Hello_lemae_gen) : ciaoidldefaults {
   after += AMI_Hello_lema_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_LEM_STUB_Export \
-              -Wb,stub_export_include=Hello_lem_stub_export.h -I.. -SS
+              -Wb,stub_export_include=Hello_lem_stub_export.h \
+              -I.. -SS
 
   IDL_Files {
     HelloAE.idl
