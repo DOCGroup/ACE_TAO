@@ -27,7 +27,7 @@ namespace CIAO_Hello_Sender_Impl
       ::Messaging::ExceptionHolder * excep_holder,
       const char* func);
 
-  // Worker thread for asynchronous invocations
+  /// Worker thread for asynchronous invocations
   class asynch_foo_generator : public virtual ACE_Task_Base
   {
   public:
@@ -39,7 +39,7 @@ namespace CIAO_Hello_Sender_Impl
     ::Hello::AMI_MyFoo_var my_foo_ami_;
   };
 
-  // Worker thread for synchronous invocations
+  /// Worker thread for synchronous invocations
   class synch_foo_generator : public virtual ACE_Task_Base
   {
   public:
@@ -68,18 +68,18 @@ namespace CIAO_Hello_Sender_Impl
 
     virtual void hello_excep (::CCM_AMI::ExceptionHolder_ptr excep_holder);
 
-    //GET rw_attrib Reply Handler
+    // GET rw_attrib Reply Handler
     virtual void get_rw_attrib (
       ::CORBA::Short ami_return_val);
     virtual void get_rw_attrib_excep (
       ::CCM_AMI::ExceptionHolder_ptr excep_holder);
 
-    //SET rw_attrib Reply Handler
+    // SET rw_attrib Reply Handler
     virtual void set_rw_attrib (void);
     virtual void set_rw_attrib_excep (
       ::CCM_AMI::ExceptionHolder_ptr excep_holder);
 
-    //ro_attrib Reply Handler
+    // ro_attrib Reply Handler
     virtual void get_ro_attrib (
       ::CORBA::Short ami_return_val);
     virtual void get_ro_attrib_excep (
