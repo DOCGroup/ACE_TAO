@@ -1,3 +1,10 @@
+Mon Mar 22 14:11:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DataReaderStateListener_T.cpp:
+          No return_loan was invoked when using ONE_BY_ONE mode. Therfor
+          a precondition_not_met error was given when the datareader
+          was removed.
+
 Mon Mar 22 13:29:41 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
