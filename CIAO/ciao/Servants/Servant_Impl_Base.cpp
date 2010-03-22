@@ -96,15 +96,12 @@ namespace CIAO
       }
 
       Components::SessionComponent_var temp = this->get_executor ();
-      temp->ccm_remove ();
-
-      CORBA::Object_var objref = this->container_->get_objref (this);
-
-      Components::CCMObject_var ccmobjref =
-        Components::CCMObject::_narrow (objref.in ());
+      if (!::CORBA::is_nil (temp.in ()))
+        {
+          temp->ccm_remove ();
+        }
 
       PortableServer::ObjectId_var oid;
-
       this->container_->uninstall_servant (this,
                                            Container_Types::COMPONENT_t,
                                            oid.out ());
