@@ -213,14 +213,14 @@ DT_Creator::register_synch_obj (void)
   ACE_Time_Value timestamp = ACE_OS::gettimeofday ();
 
   char buf [BUFSIZ];
-  ACE_OS::sprintf(buf, "%lu\n", timestamp.sec ());
+  ACE_OS::sprintf(buf, "%lu", timestamp.sec ());
   synch_name += buf;
 
   name [0].id =
     CORBA::string_dup (synch_name.c_str ());
 
   ACE_DEBUG ((LM_DEBUG,
-        "Synch Name %C\n",
+        "Synch Name %C\n\n",
         synch_name.c_str ()));
 
   ACE_NEW (synch_,
