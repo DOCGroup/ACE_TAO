@@ -93,7 +93,9 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.7.7 and CIAO-0.7.8
 . DDS4CCM doesn't work anymore with RTI DDS 4.4d, you will need to use at
   least 4.5b version with an updated CCK
 
-
+. AMI4CCM has been mostly implemented into TAO_IDL and the Hello example has been
+  updated. The naming conventions and exact code generated will be reviewed
+  after this micro release.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.6 and CIAO-0.7.7
 =======================================================
