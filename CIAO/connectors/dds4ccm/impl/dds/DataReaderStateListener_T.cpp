@@ -216,9 +216,9 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_
                 }
               this->listener_->on_many_updates (*inst_seq, *infoseq);
             }
-          // Return the loan
-          reader->return_loan(data, sample_info);
         }
+      // Return the loan
+      reader->return_loan(data, sample_info);
     }
   catch (...)
     {
