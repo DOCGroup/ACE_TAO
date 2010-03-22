@@ -1,3 +1,14 @@
+Mon Mar 22 18:07:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * connectors/ami4ccm/examples/Hello/Base/Hello.mpc:
+        
+          Removed exec export macro and include from AMI_Hello_idl_gen
+          project. The former was not used, probably intended to
+          be used for the same thing as the lem stub export macro
+          and include in AMI_Hello_lem_gen. This latter project had
+          no command to actually generate the export header file,
+          so -Gxhst was added to that project.
+
 Mon Mar 22 17:44:03 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * connectors/ami4ccm/examples/Hello/Connector:
