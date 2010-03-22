@@ -2042,8 +2042,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest & server_request, " << be_nl
                       << "void * servant_upcall," << be_nl
-                      << "void * servant" << be_uidt_nl
-                      << ");" << be_uidt;
+                      << "void * servant);" << be_uidt
+                      << be_uidt;
                 }
               else
                 { // Generate code in the inline file.
@@ -2055,8 +2055,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest & server_request," << be_nl
                       << "void * servant_upcall," << be_nl
-                      << "void * servant" << be_uidt_nl
-                      << ")" << be_uidt_nl
+                      << "void * servant)" << be_uidt
+                      << be_uidt_nl
                       << "{" << be_idt_nl;
 
                   *os << ancestor->full_skel_name ()
@@ -2069,8 +2069,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "server_request," << be_nl
                       << "servant_upcall," << be_nl
-                      << "impl" << be_uidt_nl
-                      << ");" << be_uidt << be_uidt_nl
+                      << "impl);" << be_uidt
+                      << be_uidt << be_uidt_nl
                       << "}";
                 }
             }
@@ -2093,8 +2093,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest & server_request," << be_nl
                       << "void * servant_upcall," << be_nl
-                      << "void * servant" << be_uidt_nl
-                      << ");" << be_uidt;
+                      << "void * servant);" << be_uidt
+                      << be_uidt;
                 }
               else
                 { // Generate code in the inline file.
@@ -2106,8 +2106,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest & server_request," << be_nl
                       << "void * servant_upcall," << be_nl
-                      << "void * servant" << be_uidt_nl
-                      << ")" << be_uidt_nl
+                      << "void * servant)" << be_uidt
+                      << be_uidt_nl
                       << "{" << be_idt_nl;
 
                   *os << ancestor->full_skel_name ()
@@ -2120,8 +2120,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "server_request," << be_nl
                       << "servant_upcall," << be_nl
-                      << "impl" << be_uidt_nl
-                      << ");" << be_uidt << be_uidt_nl
+                      << "impl);" << be_uidt
+                      << be_uidt << be_uidt_nl
                       << "}";
                 }
 
@@ -2138,8 +2138,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "_skel (" << be_idt << be_idt_nl
                           << "TAO_ServerRequest & server_request," << be_nl
                           << "void * servant_upcall," << be_nl
-                          << "void * servant" << be_uidt_nl
-                          << ");" << be_uidt;
+                          << "void * servant);" << be_uidt
+                          << be_uidt;
                     }
                   else
                     { // Generate code in the inline file.
@@ -2152,8 +2152,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "_skel (" << be_idt << be_idt_nl
                           << "TAO_ServerRequest & server_request," << be_nl
                           << "void * servant_upcall," << be_nl
-                          << "void * servant" << be_uidt_nl
-                          << ")" << be_uidt_nl
+                          << "void * servant)" << be_uidt
+                          << be_uidt_nl
                           << "{" << be_idt_nl;
 
                       *os << ancestor->full_skel_name ()
@@ -2166,8 +2166,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "_skel (" << be_idt << be_idt_nl
                           << "server_request," << be_nl
                           << "servant_upcall," << be_nl
-                          << "impl" << be_uidt_nl
-                          << ");" << be_uidt << be_uidt_nl
+                          << "impl);" << be_uidt
+                          << be_uidt << be_uidt_nl
                           << "}";
                     }
                 }
@@ -2940,44 +2940,44 @@ be_interface::gen_ami4ccm_idl (TAO_OutStream *os)
     }
 
   this->gen_nesting_open (*os);
-  
+
   be_visitor_context ctx;
   ctx.stream (os);
 
   be_visitor_ami4ccm_rh_ex_idl rh_visitor (&ctx);
-  
+
   if (rh_visitor.visit_interface (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_interface::gen_ami4ccm_idl - ")
                          ACE_TEXT ("reply handler visitor failed\n")),
-                        -1);         
+                        -1);
     }
-    
+
   be_visitor_ami4ccm_sendc_ex_idl sendc_visitor (&ctx);
-  
+
   if (sendc_visitor.visit_interface (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_interface::gen_ami4ccm_idl - ")
                          ACE_TEXT ("sendc op visitor failed\n")),
-                        -1);         
+                        -1);
     }
-    
+
   be_visitor_ami4ccm_conn_ex_idl conn_visitor (&ctx);
-  
+
   if (conn_visitor.visit_interface (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_interface::gen_ami4ccm_idl - ")
                          ACE_TEXT ("connector visitor failed\n")),
-                        -1);         
+                        -1);
     }
-     
+
   this->gen_nesting_close (*os);
-  
+
   this->ami4ccm_ex_idl_gen (true);
-  
+
   return 0;
 }
 

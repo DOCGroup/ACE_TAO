@@ -40,6 +40,14 @@ be_visitor_scope::~be_visitor_scope (void)
 int
 be_visitor_scope::visit_scope (be_scope *node)
 {
+  if (node == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        "(%N:%l) be_visitor_scope::visit_scope - "
+                         "nill node passed\n"),
+                        -1);
+    }
+
   // Proceed if the number of members in our scope is greater than 0.
   this->elem_number_ = 0;
 
@@ -66,7 +74,7 @@ be_visitor_scope::visit_scope (be_scope *node)
 
       // Set the node to be visited.
       this->ctx_->node (bd);
-      this->elem_number_++;
+      ++this->elem_number_;
 
       // Do any pre processing using the next item info.
       if (this->pre_process (bd) == -1)
