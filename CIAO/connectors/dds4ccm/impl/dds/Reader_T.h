@@ -68,8 +68,6 @@ namespace CIAO
 
         void set_impl (CCM_DDS_DataReader_i *reader);
 
-        ::DDSDataReader * get_dds_datareader ();
-
       private:
         CCM_DDS_DataReader_i *reader_;
 

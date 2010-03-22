@@ -58,6 +58,7 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
             dynamic_cast < ::CIAO::DDS4CCM::CCM_DDS_DataReader_i *> (reader.in ());
           this->ccm_dds_reader_.set_impl (rd->get_impl ());
           this->dds_read_.set_impl (&this->ccm_dds_reader_);
+          this->dds_read_.set_contentfilteredtopic_data (library_name, profile_name);
         }
     }
   catch (...)
@@ -84,7 +85,7 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED>::activate (
                             DataReaderStateListener (
                               listener,
                               status,
-                              data_control_.in (),
+                              this->data_control_.in (),
                               reactor),
                             CORBA::NO_MEMORY ());
         }

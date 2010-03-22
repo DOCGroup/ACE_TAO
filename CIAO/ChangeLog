@@ -1,3 +1,27 @@
+Mon Mar 22 13:29:41 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/QueryFilterListenState/*:
+          Added test which tests the Queryfilter in combination
+          with a StateListener.
+
+        * connectors/dds4ccm/impl/dds/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/dds/DataReaderListener.cpp:
+          Layout changes.
+
+        * connectors/dds4ccm/impl/dds/DDS_State_Connector_T.cpp:
+          Added trace info for configuration_complete, activate,
+          passivate and remove.
+
+        * connectors/dds4ccm/impl/dds/Reader_T.h:
+        * connectors/dds4ccm/impl/dds/Reader_T.cpp:
+          Removed unnecessary method. Removed unnecessary
+          log info.
+
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender_exec.h:
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender_exec.cpp:
+          Optimized comments.
+
 Mon Mar 22 12:11:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Servant_Impl_Base.cpp:
