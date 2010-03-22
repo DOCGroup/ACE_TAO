@@ -515,8 +515,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
           << "TAO_Stub *objref," << be_nl
           << "::CORBA::Boolean _tao_collocated," << be_nl
           << "TAO_Abstract_ServantBase *servant," << be_nl
-          << "TAO_ORB_Core *oc" << be_uidt_nl
-          << ")" << be_nl
+          << "TAO_ORB_Core *oc)" << be_uidt_nl
           << ": ";
 
       bool the_check =
