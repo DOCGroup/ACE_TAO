@@ -1,3 +1,23 @@
+Mon Mar 22 15:05:44 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * NEWS:
+        * tao/ORB_Core.cpp:
+        * docs/Options.html:
+          Implemented -ORBHandleLoggingStrategyEvents option. Updated NEWS
+          for it and added corresponding documentation. This fixes bug#3837.
+
+        * tests/Bug_3837_Regression/client.cpp:
+        * tests/Bug_3837_Regression/Bug_3837_Regression.mpc:
+        * tests/Bug_3837_Regression/logger.conf:
+        * tests/Bug_3837_Regression/Hello.cpp:
+        * tests/Bug_3837_Regression/Test.idl:
+        * tests/Bug_3837_Regression/server.cpp:
+        * tests/Bug_3837_Regression/Hello.h:
+        * tests/Bug_3837_Regression/README:
+        * tests/Bug_3837_Regression/run_test.pl:
+        * bin/tao_orb_tests.lst:
+          Added a test for a new feature and scheduled it for run.
+
 Mon Mar 20 10:39:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
