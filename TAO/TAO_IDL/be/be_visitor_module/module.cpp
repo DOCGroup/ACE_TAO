@@ -280,7 +280,6 @@ be_visitor_module::visit_interface (be_interface *node)
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_ROOT_CH:
-      // This is the only context state involved in strategies.
       ctx.state (TAO_CodeGen::TAO_INTERFACE_CH);
       break;
     case TAO_CodeGen::TAO_ROOT_CI:
@@ -895,6 +894,12 @@ be_visitor_module::visit_component_fwd (be_component_fwd *node)
     case TAO_CodeGen::TAO_ROOT_CH:
       {
         be_visitor_component_fwd_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
+      {
+        be_visitor_component_fwd_any_op_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
