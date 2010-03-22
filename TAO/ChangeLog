@@ -1,3 +1,8 @@
+Mon Mar 20 10:39:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
+          Generate missing space when connector export macro is used
+
 Mon Mar 20 10:00:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/taobaseidldefaults.mpb:
