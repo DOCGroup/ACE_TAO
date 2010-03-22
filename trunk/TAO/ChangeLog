@@ -1,3 +1,19 @@
+Mon Mar 20 15:52:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ci.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+          Layout changes to the generated code
+
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
+          Commented out the generation of the receptacle_ member, it
+          is not used in the generated code as far as I can tell
+
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+          Const change
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp
+
 Mon Mar 22 15:05:44 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * NEWS:

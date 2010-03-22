@@ -79,11 +79,11 @@ int be_visitor_exception_ctor::visit_exception (be_exception *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
     {
-      *os << be_uidt_nl << ");" << be_uidt;
+      *os << ");" << be_uidt << be_uidt;
     }
   else
     {
-      *os << be_uidt_nl << ")" << be_uidt;
+      *os << ")" << be_uidt << be_uidt;
     }
 
   return 0;
