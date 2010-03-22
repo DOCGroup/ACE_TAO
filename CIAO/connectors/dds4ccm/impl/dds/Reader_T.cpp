@@ -404,11 +404,11 @@ void
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::delete_datareader (
   ::DDSSubscriber * sub)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::create_filter");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::delete_datareader");
   DDS_ReturnCode_t const retval = sub->delete_datareader (this->impl ());
   if (retval != DDS_RETCODE_OK)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::create_filter - "
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::delete_datareader - "
                                 "Unable to delete original DataReader. "
                                 "Retval is %C\n",
                                 translate_retcode(retval)));
@@ -627,19 +627,5 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::set_impl (
   else
     {
       this->reader_ = reader;
-
-      if (!this->reader_)
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::data_reader - "
-                       "Unable to cast provided DataReader to servant\n"));
-          throw ::CORBA::INTERNAL ();
-        }
     }
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-::DDSDataReader *
-CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::get_dds_datareader ()
-{
-  return this->reader_->get_impl ();
 }

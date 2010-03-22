@@ -14,7 +14,7 @@
 namespace CIAO_Writer_Sender_Impl
 {
   //============================================================
-  // ReadHandler
+  // StartHandler
   //============================================================
   StartHandler::StartHandler(Sender_exec_i &callback)
     : callback_ (callback)

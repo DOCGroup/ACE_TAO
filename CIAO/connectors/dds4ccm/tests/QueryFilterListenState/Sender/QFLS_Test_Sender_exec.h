@@ -5,7 +5,7 @@
 #define CIAO_SENDER_EXEC_H_
 
 
-#include "Writer_SenderEC.h"
+#include "QFLS_Test_SenderEC.h"
 
 #include /**/ "Sender_exec_export.h"
 
@@ -15,13 +15,9 @@
 
 #include "tao/LocalObject.h"
 
-#include "dds4ccm/impl/dds/DataWriter.h"
-
 #include <map>
 
-class WriterTestDataWriter;
-
-namespace CIAO_Writer_Sender_Impl
+namespace CIAO_QFLS_Test_Sender_Impl
 {
   class Sender_exec_i;
 
@@ -39,8 +35,20 @@ namespace CIAO_Writer_Sender_Impl
   };
 
   //============================================================
-  // Sender_exec_i
+  // UpdateTicker
   //============================================================
+  class UpdateTicker :
+    public ACE_Event_Handler
+  {
+  public:
+    UpdateTicker (Sender_exec_i &callback);
+    int handle_timeout (const ACE_Time_Value &, const void *);
+  private:
+    /// Maintains a handle that actually process the event
+    Sender_exec_i &callback_;
+    CORBA::UShort last_iter_;
+  };
+
   class Sender_exec_i
     : public virtual Sender_Exec,
       public virtual ::CORBA::LocalObject
@@ -48,6 +56,10 @@ namespace CIAO_Writer_Sender_Impl
   public:
     Sender_exec_i (void);
     virtual ~Sender_exec_i (void);
+
+    virtual ::CORBA::UShort iterations (void);
+
+    virtual void iterations (::CORBA::UShort iterations);
 
     virtual ::CORBA::UShort keys (void);
 
@@ -61,32 +73,22 @@ namespace CIAO_Writer_Sender_Impl
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
 
-    void run ();
+    void start (void);
+    void run (void);
+    void update_one (CORBA::UShort iter);
 
   private:
-    void start (void);
+    ::QFLS_Test::CCM_Sender_Context_var context_;
+    ::QFLS_Test::QueryFilterListenStateTestConn::Updater_var updater_;
 
-    WriterTestDataWriter * dds_writer_;
-    CCM_DDS::WriterTest::Writer_var ccm_writer_;
+    UpdateTicker *ticker_;
 
-    ::Writer::CCM_Sender_Context_var context_;
+    CORBA::UShort iterations_;
     CORBA::UShort keys_;
-
-    void register_handles ();
-    void unregister_handles ();
-    void test_equality ();
-    void test_non_equality ();
-
-    TAO_SYNCH_MUTEX mutex_;
-    typedef std::map<ACE_CString, WriterTest_var> Writer_Table;
-    Writer_Table ktests_;
-
-    typedef std::map<ACE_CString, ::DDS::InstanceHandle_t> CCM_Handles;
-    CCM_Handles handles_;
-  };
+ };
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_Writer_Sender_Impl (void);
+  create_QFLS_Test_Sender_Impl (void);
 }
 
 #endif /* ifndef */
