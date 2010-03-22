@@ -65,6 +65,14 @@ project: build_files {
       commandflags(-Gsv) += _svnt
     }
 
+    optional(source_pre_extension) {
+      commandflags(-Gcn) += _conn
+    }
+
+    optional(header_pre_extension) {
+      commandflags(-Gcn) += _conn
+    }
+
     optional(generic_outputext) {
       commandflags(-Glem) += E.idl
     }
