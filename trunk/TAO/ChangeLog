@@ -1,3 +1,17 @@
+Mon Mar 22 19:55:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_root.cpp:
+        * TAO_IDL/be_include/be_visitor_root/root.h:
+        * TAO_IDL/be_include/be_root.h:
+        * TAO_IDL/be_include/be_visitor_root.h:
+        
+          Made class be_root inherit from be_module (as AST_Root
+          inherits from aST_Module) and be_visitor_root inherit
+          from be_visitor_module. This change enabled ~1200 lines
+          of code to be eliminated from be_visitor_root.
+
 Mon Mar 20 15:52:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:

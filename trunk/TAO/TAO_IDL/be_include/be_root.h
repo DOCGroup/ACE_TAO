@@ -17,15 +17,13 @@
 #ifndef TAO_BE_ROOT_H
 #define TAO_BE_ROOT_H
 
-#include "be_decl.h"
-#include "be_scope.h"
+#include "be_module.h"
 #include "ast_root.h"
 
 class be_visitor;
 
 class be_root : public virtual AST_Root,
-                public virtual be_scope,
-                public virtual be_decl
+                public virtual be_module
 {
   // = TITLE
   //    The back end extension of the AST_Root class
