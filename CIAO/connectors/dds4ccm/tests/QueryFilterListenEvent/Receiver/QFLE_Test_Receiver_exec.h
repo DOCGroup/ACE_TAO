@@ -28,14 +28,14 @@ namespace CIAO_QFLE_Test_Receiver_Impl
   //============================================================
   // QueryFilterListenEventTest_Listener_exec_i
   //============================================================
-  class RECEIVER_EXEC_Export QueryFilterListenEventTest_Listener_exec_i
+  class RECEIVER_EXEC_Export QueryFilterListenEventTest_Listener
     : public virtual ::QFLE_Test::QueryFilterListenEventTestConn::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
-    QueryFilterListenEventTest_Listener_exec_i (
+    QueryFilterListenEventTest_Listener (
                             Atomic_ThreadId &thread_id);
-    virtual ~QueryFilterListenEventTest_Listener_exec_i (void);
+    virtual ~QueryFilterListenEventTest_Listener (void);
 
     virtual void
     on_one_data (
@@ -75,9 +75,6 @@ namespace CIAO_QFLE_Test_Receiver_Impl
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_listen_status (void);
-
-    virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
-    get_info_listen_connector_status (void);
 
     virtual void
     set_session_context (
