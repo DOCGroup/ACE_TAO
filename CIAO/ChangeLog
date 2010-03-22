@@ -1,3 +1,8 @@
+Mon Mar 22 15:43:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/Base/Hello.mpc:
+          Build more projects
+
 Mon Mar 22 14:33:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/docs/ccm_dds.idl:
