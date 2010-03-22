@@ -1,3 +1,8 @@
+Mon Mar 22 14:33:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/docs/ccm_dds.idl:
+          Layout changes.
+
 Mon Mar 22 14:11:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DataReaderStateListener_T.cpp:

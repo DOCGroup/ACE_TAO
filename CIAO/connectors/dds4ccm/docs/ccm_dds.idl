@@ -11,7 +11,7 @@ module CCM_DDS {
         // ---------------------------
         // Enums, structs and Typedefs
         // ---------------------------
-        typedef unsigned long                           DataNumber_t;   // count or index of data
+        typedef unsigned long                   DataNumber_t;   // count or index of data
         typedef sequence<DataNumber_t>          DataNumberSeq;
 
         const DataNumber_t UNLIMITED = 0;
@@ -30,16 +30,16 @@ module CCM_DDS {
                 };
 
         struct ReadInfo {
-                DDS::InstanceHandle_t   instance_handle;
-                DDS::Time_t                             source_timestamp;
+                DDS::InstanceHandle_t           instance_handle;
+                DDS::Time_t                     source_timestamp;
                 AccessStatus                    access_status;
                 InstanceStatus                  instance_status;
                 };
-        typedef sequence<ReadInfo> ReadInfoSeq;
+        typedef sequence<ReadInfo>              ReadInfoSeq;
 
         struct QueryFilter {
                 string                          query;
-                DDS::StringSeq          query_parameters;
+                DDS::StringSeq                  query_parameters;
                 };
 
         // Data Listener control
@@ -63,12 +63,12 @@ module CCM_DDS {
 
         exception InternalError{
                 DDS::ReturnCode_t error_code;   // DDS codes that are relevant:
-                                                                                // ERROR (1);
-                                                                                // UNSUPPORTED (2);
-                                                                                // BAD_PARAMETER (3)
-                                                                                // PRECONDITION_NOT_MET (4)
-                                                                                // OUT_OF_RESOURCE (5)
-                DataNumber_t index;                             // of the erroneous
+                                                // ERROR (1);
+                                                // UNSUPPORTED (2);
+                                                // BAD_PARAMETER (3)
+                                                // PRECONDITION_NOT_MET (4)
+                                                // OUT_OF_RESOURCE (5)
+                DataNumber_t index;             // of the erroneous
                 };
 
         exception NonChangeable {};
@@ -80,59 +80,59 @@ module CCM_DDS {
         // Listener Control
         // ----------------
         local interface DataListenerControl {
-                attribute ListenerMode          mode;                           // default NOT_ENABLED
+                attribute ListenerMode          mode;                   // default NOT_ENABLED
                 attribute DataNumber_t          max_delivered_data;     // default 0 (no limit)
                 };
 
         local interface StateListenerControl : DataListenerControl {
-                attribute boolean                       is_filter_interpreted;  // default FALSE
+                attribute boolean               is_filter_interpreted;  // default FALSE
                 };
 
         // Status Access
         // -------------
         local interface PortStatusListener {    // status that are relevant to the component
                 void on_requested_deadline_missed(
-                        in DDS::DataReader                                              the_reader,
+                        in DDS::DataReader                      the_reader,
                         in DDS::RequestedDeadlineMissedStatus   status);
                 void on_sample_lost(
-                        in DDS::DataReader                                              the_reader,
-                        in DDS::SampleLostStatus                                status);
+                        in DDS::DataReader                      the_reader,
+                        in DDS::SampleLostStatus                status);
                 };
 
         local interface ConnectorStatusListener { // status that are relevant system-wide
                 void on_inconsistent_topic(
-                        in DDS::Topic                                                   the_topic,
-                        in DDS::InconsistentTopicStatus                 status);
+                        in DDS::Topic                           the_topic,
+                        in DDS::InconsistentTopicStatus         status);
                 void on_requested_incompatible_qos(
-                        in DDS::DataReader                                              the_reader,
+                        in DDS::DataReader                      the_reader,
                         in DDS::RequestedIncompatibleQosStatus  status);
                 void on_sample_rejected(
-                        in DDS::DataReader                                              the_reader,
-                        in DDS::SampleRejectedStatus                    status);
+                        in DDS::DataReader                      the_reader,
+                        in DDS::SampleRejectedStatus            status);
                 void on_offered_deadline_missed(
-                        in DDS::DataWriter                                              the_writer,
+                        in DDS::DataWriter                      the_writer,
                         in DDS::OfferedDeadlineMissedStatus     status);
                 void on_offered_incompatible_qos(
-                        in DDS::DataWriter                                              the_writer,
+                        in DDS::DataWriter                      the_writer,
                         in DDS::OfferedIncompatibleQosStatus    status);
                 void on_unexpected_status (
-                        in DDS::Entity                                                  the_entity,
-                        in DDS::StatusKind                                              status_kind);
+                        in DDS::Entity                          the_entity,
+                        in DDS::StatusKind                      status_kind);
                 };
 
         // ---------------
         // Connector bases
         // ---------------
         connector DDS_Base {
-                uses ConnectorStatusListener            error_listener;
+                uses ConnectorStatusListener                    error_listener;
                 attribute DDS::DomainId_t                       domain_id
                         setraises (NonChangeable);
-                attribute string                                        qos_profile     // File URL or XML string
+                attribute string                                qos_profile     // File URL or XML string
                         setraises (NonChangeable);
                 };
 
         connector DDS_TopicBase : DDS_Base {
-                attribute string                                        topic_name
+                attribute string                                topic_name
                         setraises (NonChangeable);
                 attribute DDS::StringSeq                        key_fields
                         setraises (NonChangeable);
@@ -266,8 +266,8 @@ module CCM_DDS {
                                 raises (InternalError);
                         boolean get_many (out TSeq data, out ReadInfoSeq infos)
                                 raises (InternalError);
-                        attribute DDS::Duration_t       time_out;
-                        attribute DataNumber_t          max_delivered_data;     // default 0 (no limit)
+                        attribute DDS::Duration_t time_out;
+                        attribute DataNumber_t    max_delivered_data;     // default 0 (no limit)
                         // behavior
                         // --------
                         // - get operations are performed with the following parameters
@@ -332,34 +332,34 @@ module CCM_DDS {
                 // ---------
 
                 porttype DDS_Write {
-                        uses Writer                                     data;
+                        uses Writer                     data;
                         uses DDS::DataWriter            dds_entity;
                         };
 
                 porttype DDS_Update {
-                        uses Updater                            data;
+                        uses Updater                    data;
                         uses DDS::DataWriter            dds_entity;
                         };
 
                 porttype DDS_Read {
-                        uses Reader                                     data;
+                        uses Reader                     data;
                         uses DDS::DataReader            dds_entity;
                         provides PortStatusListener     status;
                         };
 
                 porttype DDS_Get {
-                        uses Reader                                     data;
-                        uses Getter                                     fresh_data;
+                        uses Reader                     data;
+                        uses Getter                     fresh_data;
                         uses DDS::DataReader            dds_entity;
                         provides PortStatusListener     status;
                         };
 
                 porttype DDS_Listen {
-                        uses Reader                                     data;
+                        uses Reader                     data;
                         uses DataListenerControl        data_control;
-                        provides Listener                       data_listener;
+                        provides Listener               data_listener;
                         uses DDS::DataReader            dds_entity;
-                        provides PortStatusListener status;
+                        provides PortStatusListener     status;
                         };
 
                 porttype DDS_StateListen {
@@ -367,7 +367,7 @@ module CCM_DDS {
                         uses StateListenerControl       data_control;
                         provides StateListener          data_listener;
                         uses DDS::DataReader            dds_entity;
-                        provides PortStatusListener status;
+                        provides PortStatusListener     status;
                         };
 
                 // ----------------------------
@@ -376,21 +376,18 @@ module CCM_DDS {
                 // ----------------------------
 
                 connector DDS_State : DDS_TopicBase {
-                        mirrorport DDS_Update                                   observable;
-                        mirrorport DDS_Read                                     passive_observer;
-                        mirrorport DDS_Get                                      pull_observer;
-                        mirrorport DDS_Listen                                   push_observer;
-                        mirrorport DDS_StateListen                              push_state_observer;
+                        mirrorport DDS_Update           observable;
+                        mirrorport DDS_Read             passive_observer;
+                        mirrorport DDS_Get              pull_observer;
+                        mirrorport DDS_Listen           push_observer;
+                        mirrorport DDS_StateListen      push_state_observer;
                         };
 
                 connector DDS_Event : DDS_TopicBase {
-                        mirrorport DDS_Write                                    supplier;
-                        mirrorport DDS_Get                                      pull_consumer;
-                        mirrorport DDS_Listen                                   push_consumer;
+                        mirrorport DDS_Write            supplier;
+                        mirrorport DDS_Get              pull_consumer;
+                        mirrorport DDS_Listen           push_consumer;
                         };
                 };
         };
-
-
-
 
