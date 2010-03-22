@@ -7,8 +7,6 @@ project(AMI_Hello_idl_gen) : componentidldefaults, ami, ami4ccm_stub {
               -Wb,stub_export_include=Hello_stub_export.h \
               -Wb,skel_export_macro=HELLO_SKEL_Export \
               -Wb,skel_export_include=Hello_skel_export.h \
-              -Wb,exec_export_macro=HELLO_EXEC_Export \
-              -Wb,exec_export_include=Hello_exec_export.h \
               -Wb,conn_export_include=Hello_conn_export.h \
               -Wb,conn_export_macro=HELLO_CONN_Export \
               -I.. -GM -Gxhcn
@@ -23,7 +21,8 @@ project(AMI_Hello_lem_gen) : ciaoidldefaults {
   after += AMI_Hello_idl_gen AMI_Hello_lema_gen
   custom_only = 1
   idlflags += -Wb,export_macro=HELLO_LEM_STUB_Export \
-              -Wb,export_include=Hello_lem_stub_export.h -I.. -SS
+              -Wb,export_include=Hello_lem_stub_export.h \
+              -I.. -SS -Gxhst
 
   IDL_Files {
     HelloE.idl
@@ -36,7 +35,8 @@ project(AMI_Hello_lema_gen) : ciaoidldefaults {
   idlflags += -Wb,stub_export_macro=HELLO_STUB_Export \
               -Wb,stub_export_include=Hello_stub_export.h \
               -Wb,conn_export_macro=HELLO_CONN_Export \
-              -Wb,conn_export_include=Hello_conn_export.h -I.. -SS -Gsv -Gcn -Glem -GC -Gxhst
+              -Wb,conn_export_include=Hello_conn_export.h \
+              -I.. -SS -Gsv -Gcn -Glem -GC -Gxhst
 
   IDL_Files {
     HelloA.idl
@@ -103,7 +103,7 @@ project(AMI_Hello_lem_stub) : ccm_executor, ami, ami4ccm_lem_stub {
 
   Header_Files {
     HelloEC.h
-    Hello_exec_export.h
+    Hello_lem_stub_export.h
 }
 
   Inline_Files {
