@@ -109,7 +109,7 @@ CORBA::UShort domain_id = 0;
         ACE_High_Res_Timer::gettimeofday_hr ().to_usec (start_time);
         while (!test_complete)
           {
-            for (int current_load = 0;
+            for (CORBA::ULongLong current_load = 0;
                  current_load < load && !test_complete;
                  ++current_load, ++instance->seq_num)
               {
