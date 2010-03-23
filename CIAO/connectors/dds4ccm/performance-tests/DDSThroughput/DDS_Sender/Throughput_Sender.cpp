@@ -1,3 +1,5 @@
+// $Id$
+
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "tao/ORB_Core.h"
@@ -243,7 +245,7 @@ CORBA::UShort domain_id = 0;
 
     /* Create data sample for writing */
     instance = ThroughputTestTypeSupport::create_data();
-    if (instance == NULL)
+    if (instance == 0)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data sample.\n")));
         goto clean_exit;
@@ -256,7 +258,7 @@ CORBA::UShort domain_id = 0;
 
     /* Create data sample for writing */
     instance_cmd = ThroughputCommandTypeSupport::create_data();
-    if (instance_cmd == NULL)
+    if (instance_cmd == 0)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create command sample.\n")));
       goto clean_exit;

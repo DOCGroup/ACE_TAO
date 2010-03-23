@@ -1,3 +1,5 @@
+// $Id$
+
 project(*sender) : nddslib, acelib, taolib {
   after += DDS_Throughput_Base_stub
   exename = DDS_Sender
@@ -6,7 +8,7 @@ project(*sender) : nddslib, acelib, taolib {
   libout = ../lib
   includes += ../Base
   libs  += DDS_Throughput_Base_stub
-  
+
   Source_Files {
     Throughput_Sender.cpp
   }
