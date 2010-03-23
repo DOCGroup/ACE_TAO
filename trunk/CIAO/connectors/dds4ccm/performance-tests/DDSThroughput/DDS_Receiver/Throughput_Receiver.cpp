@@ -18,7 +18,7 @@ CORBA::UShort run_ = 0;
 ACE_UINT64 first_time_  = 0;
 CORBA::LongLong  messages_lost_ = 0;
 CORBA::Boolean logres = false;
-CORBA::LongLong seq_num_ = 0;
+CORBA::ULongLong seq_num_ = 0;
 CORBA::LongLong demand_ = 0;
 
 ThroughputTest *instance =0;
