@@ -1,14 +1,35 @@
+Tue Mar 23 15:57:50 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/OBV/Truncatable/run_test.pl:
+        * tests/Optimized_Connection/run_test.pl:
+
+          Pass -ORBDebugLevel if the perl script is started with -debug.
+
+        * tests/ORB_shutdown/run_test.pl:
+        * tests/Oneway_Send_Timeouts/run_test.pl:
+
+          Extend the timeout.
+
+        * tests/Portable_Interceptors/Bug_3079/server.cpp:
+
+          Fixed an ACE logging call to have the correct number of params.
+
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/run_test.pl:
+        * tests/Portable_Interceptors/Redirection/run_test.pl:
+
+          Use multiple TestTargets for running concurrent processes.
+
 Tue Mar 23 12:50:46 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation.cpp:
         * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
-        
+
           Fixed size_t to ACE_CDR::ULong conversion warnings.
 
 Tue Mar 23 12:42:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_root.cpp:
-        
+
           Fixed warning from wrong order of constructors.
 
 Mon Mar 22 19:55:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -19,7 +40,7 @@ Mon Mar 22 19:55:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be_include/be_visitor_root/root.h:
         * TAO_IDL/be_include/be_root.h:
         * TAO_IDL/be_include/be_visitor_root.h:
-        
+
           Made class be_root inherit from be_module (as AST_Root
           inherits from aST_Module) and be_visitor_root inherit
           from be_visitor_module. This change enabled ~1200 lines
