@@ -27,10 +27,10 @@ be_root::be_root (UTL_ScopedName *n)
     UTL_Scope (AST_Decl::NT_root),
     AST_Module (n),
     AST_Root (n),
-    be_module (n),
     be_scope (AST_Decl::NT_root),
     be_decl (AST_Decl::NT_root,
-             n)
+             n),
+    be_module (n)
 {
 }
 
