@@ -1,3 +1,9 @@
+Tue Mar 23 12:42:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_root.cpp:
+        
+          Fixed warning from wrong order of constructors.
+
 Mon Mar 22 19:55:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_root/root.cpp:
