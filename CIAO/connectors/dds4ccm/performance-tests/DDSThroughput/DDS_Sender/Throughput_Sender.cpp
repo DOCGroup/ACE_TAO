@@ -248,7 +248,7 @@ CORBA::UShort domain_id = 0;
     long overhead_size = sizeof(CORBA::ULong) + sizeof(CORBA::ULongLong);
     instance->key = 1;
     instance->seq_num = 0;
-    instance->data.maximum (MAX_DATA_SEQUENCE_LENGTH); 
+    //instance->data.maximum (MAX_DATA_SEQUENCE_LENGTH); 
     instance->data.length(datalen - overhead_size);
   
     /* Create data sample for writing */
