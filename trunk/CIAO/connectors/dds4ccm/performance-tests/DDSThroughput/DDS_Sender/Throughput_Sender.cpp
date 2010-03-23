@@ -279,7 +279,7 @@ CORBA::UShort domain_id = 0;
     ACE_OS::sleep (1);
 
     /* --- Write Data ----------------------------------------------------- */
-    for( int i = start_load; i < (max_load + incr_load); i+= incr_load)
+    for(CORBA::ULong i = start_load; i < (max_load + incr_load); i+= incr_load)
     {
       write();
       ACE_OS::sleep (5);
