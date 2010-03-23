@@ -1,6 +1,6 @@
 // $Id$
 
-project(*sender) : nddslib, acelib, taolib {
+project(*sender_plain) : nddslib, acelib, taolib {
   after += DDS_Throughput_Base_stub_plain
   exename = DDS_Sender
   avoids += ace_for_tao
