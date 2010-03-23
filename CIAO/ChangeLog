@@ -1,3 +1,20 @@
+Tue Mar 23 11:27:07 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/DDSThroughput
+        * connectors/dds4ccm/performance-tests/DDSThroughput/Base
+        * connectors/dds4ccm/performance-tests/DDSThroughput/Base/Throughput_Base.idl
+        * connectors/dds4ccm/performance-tests/DDSThroughput/Base/Throughput_Base.mpc
+        * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Receiver
+        * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Receiver/DDS_Receiver.mpc
+        * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Receiver/Throughput_Receiver.cpp
+        * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Receiver/USER_QOS_PROFILES.xml
+        * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Sender
+        * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Sender/DDS_Sender.mpc
+        * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Sender/Throughput_Sender.cpp
+        * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Sender/USER_QOS_PROFILES.xml
+        Throughput test without CCM.
+
+
 Tue Mar 23 07:27:07 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
