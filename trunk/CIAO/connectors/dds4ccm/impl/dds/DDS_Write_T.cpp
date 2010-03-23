@@ -10,7 +10,7 @@
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_Write_T<DDS_TYPE, CCM_TYPE>::DDS_Write_T (void) :
-  ccm_dds_writer_i (0)
+  ccm_dds_writer_ (0)
 {
 }
 
@@ -31,7 +31,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
 
   try
     {
-      if (!this->ccm_dds_writer_i.get_impl ())
+      if (!this->ccm_dds_writer_.get_impl ())
         {
           ::DDS::DataWriter_var dwv_tmp;
           if (library_name && profile_name)
@@ -54,13 +54,13 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
             }
           ::CIAO::DDS4CCM::CCM_DDS_DataWriter_i *rw =
             dynamic_cast < ::CIAO::DDS4CCM::CCM_DDS_DataWriter_i  *> (dwv_tmp.in ());
-          this->ccm_dds_writer_i.set_impl (rw->get_impl ());
-          this->writer_t_.set_impl (&this->ccm_dds_writer_i);
+          this->ccm_dds_writer_.set_impl (rw->get_impl ());
+          this->writer_t_.set_impl (&this->ccm_dds_writer_);
         }
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Write_T::configuration_complete: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Write_T::configuration_complete: Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -77,13 +77,13 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::activate ()
                             DataWriterListener (),
                             CORBA::NO_MEMORY ());
         }
-      this->ccm_dds_writer_i.set_listener (
+      this->ccm_dds_writer_.set_listener (
         this->data_listener_.in (),
         ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Write_T::activate: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Write_T::activate: Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -95,14 +95,14 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::passivate ()
   DDS4CCM_TRACE ("DDS_Write_T<DDS_TYPE, CCM_TYPE>::passivate");
   try
     {
-      this->ccm_dds_writer_i.set_listener (
+      this->ccm_dds_writer_.set_listener (
         ::DDS::DataWriterListener::_nil (),
         0);
       this->data_listener_ = ::DDS::DataWriterListener::_nil ();
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Write_T::passivate: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Write_T::passivate: Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -115,13 +115,22 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::remove (
   DDS4CCM_TRACE ("DDS_Write_T<DDS_TYPE, CCM_TYPE>::remove");
   try
     {
-      publisher->delete_datawriter (&this->ccm_dds_writer_i);
-      this->ccm_dds_writer_i.set_impl (0);
+      DDS::ReturnCode_t const retval =
+        publisher->delete_datawriter (&this->ccm_dds_writer_);
+      if (retval != DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+            "DDS_Write_T::remove - "
+            "Unable to delete DataWriter: <%C>\n",
+            ::CIAO::DDS4CCM::translate_retcode (retval)));
+          throw CORBA::INTERNAL ();
+        }
+      this->ccm_dds_writer_.set_impl (0);
       this->writer_t_.set_impl (0);
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Write_T::remove: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Write_T::remove: Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -142,6 +151,6 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::get_dds_entity (void)
 {
   DDS4CCM_TRACE ("DDS_Write_T<DDS_TYPE, CCM_TYPE>::get_dds_entity");
 
-  return &this->ccm_dds_writer_i;
+  return &this->ccm_dds_writer_;
 }
 

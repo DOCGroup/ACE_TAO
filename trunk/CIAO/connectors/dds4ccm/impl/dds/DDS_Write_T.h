@@ -48,7 +48,7 @@ private:
   //@{
   ::DDS::DataWriterListener_var data_listener_;
   ::CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE> writer_t_;
-  ::CIAO::DDS4CCM::CCM_DDS_DataWriter_i ccm_dds_writer_i;
+  ::CIAO::DDS4CCM::CCM_DDS_DataWriter_i ccm_dds_writer_;
   //@}
 
   typedef ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE> DataWriterListener;
