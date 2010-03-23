@@ -5,45 +5,6 @@
 ## DP: load libraries with their complete name
 
 @DPATCH@
-diff -rupd ACE_wrappers.orig/TAO/CIAO/DAnCE/Starter/Starter.cpp ACE_wrappers/TAO/CIAO/DAnCE/Starter/Starter.cpp
---- ACE_wrappers.orig/TAO/CIAO/DAnCE/Starter/Starter.cpp	2009-12-14 00:42:19.502255634 +0100
-+++ ACE_wrappers/TAO/CIAO/DAnCE/Starter/Starter.cpp	2009-12-14 00:59:12.215257079 +0100
-@@ -562,7 +562,7 @@ Starter::initNodeManager (const char * n
-     if (0 == loader)
-       {
-         ACE_Service_Config::process_directive (ACE_DYNAMIC_SERVICE_DIRECTIVE ("NodeManager_Loader",
--                                                                              "DAnCE_NodeManager",
-+                                                                              "libDAnCE_NodeManager-0.7.5.so",
-                                                                               "_make_DAnCE_NodeManager_Module",
-                                                                               ""));
-         loader = ACE_Dynamic_Service<TAO_Object_Loader>::instance ("NodeManager_Loader");
-@@ -592,7 +592,7 @@ Starter::initExecutionManager()
-     DANCE_DEBUG ( (LM_TRACE, "[%M] Starting ExecutionManager...\n"));
-     ACE_Service_Config::process_directive (
-         ACE_DYNAMIC_SERVICE_DIRECTIVE ("ExecutionManager_Loader"
--            , "DAnCE_ExecutionManager"
-+            , "libDAnCE_ExecutionManager-0.7.5.so"
-             , "_make_DAnCE_ExecutionManager_Module"
-             , ""));
-     TAO_Object_Loader * loader = ACE_Dynamic_Service<TAO_Object_Loader>::instance ("ExecutionManager_Loader");
-@@ -623,7 +623,7 @@ Starter::runPlanLauncher()
-         DANCE_DEBUG ( (LM_TRACE, "[%M] Starting PlanLauncher...\n"));
-         ACE_Service_Config::process_directive (
-             ACE_DYNAMIC_SERVICE_DIRECTIVE ("PlanLauncher_Loader"
--                , "DAnCE_Plan_Launcher"
-+                , "libDAnCE_Plan_Launcher-0.7.5.so"
-                 , "_make_DAnCE_Plan_Launcher_Module"
-                 , ""));
-       }
-@@ -632,7 +632,7 @@ Starter::runPlanLauncher()
-         DANCE_DEBUG ( (LM_TRACE, "[%M] Starting PlanLauncherBase...\n"));
-         ACE_Service_Config::process_directive (
-             ACE_DYNAMIC_SERVICE_DIRECTIVE ("PlanLauncher_Loader"
--                , "DAnCE_Plan_Launcher_Base"
-+                , "libDAnCE_Plan_Launcher_Base-0.7.5.so"
-                 , "_make_DAnCE_Plan_Launcher_Base_Module"
-                 , ""));
-       }
 diff -rupd ACE_wrappers.orig/TAO/orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp ACE_wrappers/TAO/orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp
 --- ACE_wrappers.orig/TAO/orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp	2009-12-14 00:42:05.534162607 +0100
 +++ ACE_wrappers/TAO/orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp	2009-12-14 00:59:12.215257079 +0100
@@ -52,7 +13,7 @@ diff -rupd ACE_wrappers.orig/TAO/orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORB
  static const char pg_poa_factory_name[] = "TAO_GOA";
  static const ACE_TCHAR pg_poa_factory_directive[] = ACE_DYNAMIC_SERVICE_DIRECTIVE(
 -  "TAO_GOA", "TAO_PortableGroup", "_make_TAO_PG_Object_Adapter_Factory", "");
-+  "TAO_GOA", "libTAO_PortableGroup-1.7.5.so", "_make_TAO_PG_Object_Adapter_Factory", "");
++  "TAO_GOA", "libTAO_PortableGroup-1.7.7.so", "_make_TAO_PG_Object_Adapter_Factory", "");
  
  TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  
@@ -64,7 +25,7 @@ diff -rupd ACE_wrappers.orig/TAO/orbsvcs/tests/Bug_3486_Regression/server.cpp AC
  ACE_TCHAR const * const scpc_loadNamingService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
    "testNamingService",
 -  "TAO_CosNaming_Serv",
-+  "libTAO_CosNaming_Serv-1.7.5.so",
++  "libTAO_CosNaming_Serv-1.7.7.so",
    "_make_TAO_Naming_Loader",
    ""
  );
@@ -76,7 +37,7 @@ diff -rupd ACE_wrappers.orig/TAO/orbsvcs/tests/Notify/Bug_2926_Regression/server
  ACE_TCHAR const * const scpc_loadNotifyService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
    "testNotifyService",
 -  "TAO_CosNotification_Serv",
-+  "libTAO_CosNotification_Serv-1.7.5.so",
++  "libTAO_CosNotification_Serv-1.7.7.so",
    "_make_TAO_CosNotify_Service",
    ""
  );
@@ -88,7 +49,7 @@ diff -rupd ACE_wrappers.orig/TAO/orbsvcs/tests/Notify/Bug_3252_Regression/server
  ACE_TCHAR const * const scpc_loadNotifyService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
    "testNotifyService",
 -  "TAO_CosNotification_Serv",
-+  "libTAO_CosNotification_Serv-1.7.5.so",
++  "libTAO_CosNotification_Serv-1.7.7.so",
    "_make_TAO_CosNotify_Service",
    "-UseSeparateDispatchingORB 1"
  );
@@ -100,7 +61,7 @@ diff -rupd ACE_wrappers.orig/TAO/orbsvcs/tests/Notify/Bug_3646b_Regression/serve
  ACE_TCHAR const * const scpc_loadNotifyService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
    "testNotifyService",
 -  "TAO_Notify_Service",
-+  "libTAO_Notify_Service-1.7.5.so",
++  "libTAO_Notify_Service-1.7.7.so",
    "_make_TAO_Notify_Service_Driver",
    "-NoNameSvc -RunThreads 0"
  );
@@ -112,7 +73,7 @@ diff -rupd ACE_wrappers.orig/TAO/orbsvcs/tests/Notify/Bug_3646c_Regression/serve
  ACE_TCHAR scpc_loadNotifyService[max_length] = ACE_DYNAMIC_SERVICE_DIRECTIVE(
    "testNotifyService",
 -  "TAO_Notify_Service",
-+  "libTAO_Notify_Service-1.7.5.so",
++  "libTAO_Notify_Service-1.7.7.so",
    "_make_TAO_Notify_Service_Driver",
    "-Channel -ChannelName Channel1 -ChannelName Channel2 -RunThreads 0 -ORBInitRef NameService=iioploc://%s:%s/NameService -IORoutput %s"
  );
@@ -124,7 +85,7 @@ diff -rupd ACE_wrappers.orig/TAO/orbsvcs/tests/Notify/Bug_3646d_Regression/serve
  ACE_TCHAR const * const scpc_loadNotifyService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
    "testNotifyService",
 -  "TAO_Notify_Service",
-+  "libTAO_Notify_Service-1.7.5.so",
++  "libTAO_Notify_Service-1.7.7.so",
    "_make_TAO_Notify_Service_Driver",
    "-Channel -ChannelName Channel1 -ChannelName Channel2 -RunThreads 10 -ORBInitRef NameService=file://naming.ior -IORoutput notify.ior"
  );
@@ -133,7 +94,7 @@ diff -rupd ACE_wrappers.orig/TAO/orbsvcs/tests/Notify/Bug_3646d_Regression/serve
  ACE_TCHAR const * const scpc_loadNameService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
    "testNamingService",
 -  "TAO_CosNaming_Serv",
-+  "libTAO_CosNaming_Serv-1.7.5.so",
++  "libTAO_CosNaming_Serv-1.7.7.so",
    "_make_TAO_Naming_Loader",
    "testNameService testNameService -ORBId testDllOrb -m 0 -o naming.ior"
  );
@@ -145,7 +106,7 @@ diff -rupd ACE_wrappers.orig/TAO/orbsvcs/tests/Notify/Bug_3663_Regression/server
  ACE_TCHAR const * const scpc_loadNotifyService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
    "testNotifyService",
 -  "TAO_Notify_Service",
-+  "libTAO_Notify_Service-1.7.5.so",
++  "libTAO_Notify_Service-1.7.7.so",
    "_make_TAO_Notify_Service_Driver_INCORRECT",
    "-NoNameSvc -RunThreads 0"
  );
@@ -157,7 +118,7 @@ diff -rupd ACE_wrappers.orig/TAO/orbsvcs/tests/Notify/Bug_3688b_Regression/serve
  ACE_TCHAR const * const scpc_loadNameService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
    "testNamingService",
 -  "TAO_CosNaming_Serv",
-+  "libTAO_CosNaming_Serv-1.7.5.so",
++  "libTAO_CosNaming_Serv-1.7.7.so",
    "_make_TAO_Naming_Loader",
    "testNameService testNameService -ORBId testDllOrb -m 0 -o naming.ior"
  );
@@ -166,7 +127,7 @@ diff -rupd ACE_wrappers.orig/TAO/orbsvcs/tests/Notify/Bug_3688b_Regression/serve
  ACE_TCHAR const * const scpc_loadNotifyService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
    "testNotifyService",
 -  "TAO_Notify_Service",
-+  "libTAO_Notify_Service-1.7.5.so",
++  "libTAO_Notify_Service-1.7.7.so",
    "_make_TAO_Notify_Service_Driver",
    "-Channel -ChannelName Channel1 -ChannelName Channel2 -RunThreads 1 -ORBInitRef NameService=file://naming.ior -IORoutput notify.ior"
  );
@@ -178,7 +139,7 @@ diff -rupd ACE_wrappers.orig/TAO/tao/Codeset/Codeset_Manager_i.cpp ACE_wrappers/
      ACE_Service_Config::process_directive
        (ACE_DYNAMIC_SERVICE_DIRECTIVE ("UTF8_Latin1_Factory",
 -                                      "TAO_Codeset",
-+                                      "libTAO_Codeset-1.7.5.so",
++                                      "libTAO_Codeset-1.7.7.so",
                                        "_make_TAO_UTF8_Latin1_Factory",
                                        ""));
    else
@@ -187,7 +148,7 @@ diff -rupd ACE_wrappers.orig/TAO/tao/Codeset/Codeset_Manager_i.cpp ACE_wrappers/
      ACE_Service_Config::process_directive
        (ACE_DYNAMIC_SERVICE_DIRECTIVE ("UTF16_BOM_Factory",
 -                                      "TAO_Codeset",
-+                                      "libTAO_Codeset-1.7.5.so",
++                                      "libTAO_Codeset-1.7.7.so",
                                        "_make_TAO_UTF16_BOM_Factory",
                                        ""));
    else
@@ -199,7 +160,7 @@ diff -rupd ACE_wrappers.orig/TAO/tao/CSD_Framework/CSD_ORBInitializer.cpp ACE_wr
    ACE_DYNAMIC_SERVICE_DIRECTIVE(
      "TAO_CSD_Object_Adapter_Factory",
 -    "TAO_CSD_Framework",
-+    "libTAO_CSD_Framework-1.7.5.so",
++    "libTAO_CSD_Framework-1.7.7.so",
      "_make_TAO_CSD_Object_Adapter_Factory",
      "");
  
@@ -211,7 +172,7 @@ diff -rupd ACE_wrappers.orig/TAO/tao/ORB_Core.cpp ACE_wrappers/TAO/tao/ORB_Core.
        this->configuration ()->process_directive (
          ACE_DYNAMIC_SERVICE_DIRECTIVE("PolicyFactory_Loader",
 -                                      "TAO_PI",
-+                                      "libTAO_PI-1.7.5.so",
++                                      "libTAO_PI-1.7.7.so",
                                        "_make_TAO_PolicyFactory_Loader",
                                        ""));
        loader =
@@ -220,7 +181,7 @@ diff -rupd ACE_wrappers.orig/TAO/tao/ORB_Core.cpp ACE_wrappers/TAO/tao/ORB_Core.
        this->configuration ()->process_directive (
          ACE_DYNAMIC_SERVICE_DIRECTIVE ("ORBInitializer_Registry",
 -                                       "TAO_PI",
-+                                       "libTAO_PI-1.7.5.so",
++                                       "libTAO_PI-1.7.7.so",
                                         "_make_ORBInitializer_Registry",
                                         ""));
        this->orbinitializer_registry_ =
@@ -229,7 +190,7 @@ diff -rupd ACE_wrappers.orig/TAO/tao/ORB_Core.cpp ACE_wrappers/TAO/tao/ORB_Core.
        this->configuration ()->process_directive
          (ACE_DYNAMIC_SERVICE_DIRECTIVE("TypeCodeFactory",
 -                                       "TAO_TypeCodeFactory",
-+                                       "libTAO_TypeCodeFactory-1.7.5.so",
++                                       "libTAO_TypeCodeFactory-1.7.7.so",
                                         "_make_TAO_TypeCodeFactory_Loader",
                                         ""));
        loader =
@@ -238,7 +199,7 @@ diff -rupd ACE_wrappers.orig/TAO/tao/ORB_Core.cpp ACE_wrappers/TAO/tao/ORB_Core.
        this->configuration()->process_directive
          (ACE_DYNAMIC_SERVICE_DIRECTIVE("CodecFactory",
 -                                       "TAO_CodecFactory",
-+                                       "libTAO_CodecFactory-1.7.5.so",
++                                       "libTAO_CodecFactory-1.7.7.so",
                                         "_make_TAO_CodecFactory_Loader",
                                         ""));
        loader =
@@ -247,7 +208,7 @@ diff -rupd ACE_wrappers.orig/TAO/tao/ORB_Core.cpp ACE_wrappers/TAO/tao/ORB_Core.
        this->configuration()->process_directive
          (ACE_DYNAMIC_SERVICE_DIRECTIVE("Compression",
 -                                       "TAO_Compression",
-+                                       "libTAO_Compression-1.7.5.so",
++                                       "libTAO_Compression-1.7.7.so",
                                         "_make_TAO_Compression_Loader",
                                         ""));
        loader =
@@ -256,7 +217,7 @@ diff -rupd ACE_wrappers.orig/TAO/tao/ORB_Core.cpp ACE_wrappers/TAO/tao/ORB_Core.
        this->configuration()->process_directive
          (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_POA_Current_Factory",
 -                                       "TAO_PortableServer",
-+                                       "libTAO_PortableServer-1.7.5.so",
++                                       "libTAO_PortableServer-1.7.7.so",
                                         "_make_TAO_POA_Current_Factory",
                                         ""));
        loader =
@@ -265,7 +226,7 @@ diff -rupd ACE_wrappers.orig/TAO/tao/ORB_Core.cpp ACE_wrappers/TAO/tao/ORB_Core.
        this->configuration ()->process_directive
          (ACE_DYNAMIC_SERVICE_DIRECTIVE("PICurrent_Loader",
 -                                       "TAO_PI",
-+                                       "libTAO_PI-1.7.5.so",
++                                       "libTAO_PI-1.7.7.so",
                                         "_make_TAO_PICurrent_Loader",
                                         ""));
        loader =
@@ -274,7 +235,7 @@ diff -rupd ACE_wrappers.orig/TAO/tao/ORB_Core.cpp ACE_wrappers/TAO/tao/ORB_Core.
        this->configuration ()->process_directive
          (ACE_DYNAMIC_SERVICE_DIRECTIVE("DynamicAny_Loader",
 -                                       "TAO_DynamicAny",
-+                                       "libTAO_DynamicAny-1.7.5.so",
++                                       "libTAO_DynamicAny-1.7.7.so",
                                         "_make_TAO_DynamicAny_Loader",
                                         ""));
        loader =
@@ -283,7 +244,7 @@ diff -rupd ACE_wrappers.orig/TAO/tao/ORB_Core.cpp ACE_wrappers/TAO/tao/ORB_Core.
        this->configuration()->process_directive
          (ACE_DYNAMIC_SERVICE_DIRECTIVE("IORManip_Loader",
 -                                       "TAO_IORManip",
-+                                       "libTAO_IORManip-1.7.5.so",
++                                       "libTAO_IORManip-1.7.7.so",
                                         "_make_TAO_IORManip_Loader",
                                         ""));
        loader =
@@ -292,7 +253,7 @@ diff -rupd ACE_wrappers.orig/TAO/tao/ORB_Core.cpp ACE_wrappers/TAO/tao/ORB_Core.
        this->configuration ()->process_directive
          (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_IORTable",
 -                                       "TAO_IORTable",
-+                                       "libTAO_IORTable-1.7.5.so",
++                                       "libTAO_IORTable-1.7.7.so",
                                         "_make_TAO_Table_Adapter_Factory",
                                         ""));
        factory =
@@ -301,7 +262,7 @@ diff -rupd ACE_wrappers.orig/TAO/tao/ORB_Core.cpp ACE_wrappers/TAO/tao/ORB_Core.
        this->configuration ()->process_directive
          (ACE_DYNAMIC_SERVICE_DIRECTIVE("Monitor_Init",
 -                                       "TAO_Monitor",
-+                                       "libTAO_Monitor-1.7.5.so",
++                                       "libTAO_Monitor-1.7.7.so",
                                         "_make_TAO_Monitor_Init",
                                         ""));
        loader =
@@ -313,7 +274,7 @@ diff -rupd ACE_wrappers.orig/TAO/tao/ORBInitializer_Registry.cpp ACE_wrappers/TA
          ACE_Service_Config::process_directive (
            ACE_DYNAMIC_SERVICE_DIRECTIVE("ORBInitializer_Registry",
 -                                        "TAO_PI",
-+                                        "libTAO_PI-1.7.5.so",
++                                        "libTAO_PI-1.7.7.so",
                                          "_make_ORBInitializer_Registry",
                                          ""));
          orbinitializer_registry_ =
@@ -325,7 +286,7 @@ diff -rupd ACE_wrappers.orig/TAO/tao/params.cpp ACE_wrappers/TAO/tao/params.cpp
    , poa_factory_directive_
        (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Object_Adapter_Factory",
 -                                     "TAO_PortableServer",
-+                                     "libTAO_PortableServer-1.7.5.so",
++                                     "libTAO_PortableServer-1.7.7.so",
                                       "_make_TAO_Object_Adapter_Factory",
                                       ""))
    , forward_invocation_on_object_not_exist_ (false)
@@ -337,7 +298,7 @@ diff -rupd ACE_wrappers.orig/TAO/tao/PI/ORBInitInfo.cpp ACE_wrappers/TAO/tao/PI/
            ACE_Service_Config::process_directive (
              ACE_DYNAMIC_SERVICE_DIRECTIVE("CodecFactory",
 -                                          "TAO_CodecFactory",
-+                                          "libTAO_CodecFactory-1.7.5.so",
++                                          "libTAO_CodecFactory-1.7.7.so",
                                            "_make_TAO_CodecFactory_Loader",
                                            ""));
            loader =
@@ -349,7 +310,7 @@ diff -rupd ACE_wrappers.orig/TAO/tao/PortableServer/LifespanStrategyPersistent.c
                ACE_Service_Config::process_directive (
                  ACE_DYNAMIC_SERVICE_DIRECTIVE(
 -                  "ImR_Client_Adapter", "TAO_ImR_Client",
-+                  "ImR_Client_Adapter", "libTAO_ImR_Client-1.7.5.so",
++                  "ImR_Client_Adapter", "libTAO_ImR_Client-1.7.7.so",
                    "_make_ImR_Client_Adapter_Impl", ""));
  
                adapter =
@@ -361,7 +322,7 @@ diff -rupd ACE_wrappers.orig/TAO/tao/RTCORBA/RT_ORBInitializer.cpp ACE_wrappers/
    ACE_DYNAMIC_SERVICE_DIRECTIVE(
      "TAO_RT_Object_Adapter_Factory",
 -    "TAO_RTPortableServer",
-+    "libTAO_RTPortableServer-1.7.5.so",
++    "libTAO_RTPortableServer-1.7.7.so",
      "_make_TAO_RT_Object_Adapter_Factory",
      "");
  
@@ -373,7 +334,7 @@ diff -rupd ACE_wrappers.orig/TAO/tao/TAO_Internal.cpp ACE_wrappers/TAO/tao/TAO_I
                ACE_DYNAMIC_SERVICE_DIRECTIVE (
                  "TAO_Codeset",
 -                "TAO_Codeset",
-+                "libTAO_Codeset-1.7.5.so",
++                "libTAO_Codeset-1.7.7.so",
                  "_make_TAO_Codeset_Manager_Factory",
                  ""));
  
@@ -385,7 +346,7 @@ diff -rupd ACE_wrappers.orig/TAO/tests/DLL_ORB/client.cpp ACE_wrappers/TAO/tests
          ACE_DYNAMIC_SERVICE_DIRECTIVE(
            "Client_Module",
 -          "Test_Client_Module",
-+          "libTest_Client_Module-1.7.5.so",
++          "libTest_Client_Module-1.7.7.so",
            "_make_Test_Client_Module",
            "-k file://test.ior")) != 0)
      {
@@ -409,7 +370,7 @@ diff -rupd ACE_wrappers.orig/TAO/tests/ORB_Local_Config/Service_Dependency/Test.
        one->process_directive (
          ACE_DYNAMIC_SERVICE_DIRECTIVE("ORBInitializer_Registry",
 -                                      "TAO_PI",
-+                                      "libTAO_PI-1.7.5.so",
++                                      "libTAO_PI-1.7.7.so",
                                        "_make_ORBInitializer_Registry",
                                        ""));
        oir =
@@ -418,7 +379,7 @@ diff -rupd ACE_wrappers.orig/TAO/tests/ORB_Local_Config/Service_Dependency/Test.
    one->process_directive
      (ACE_DYNAMIC_SERVICE_DIRECTIVE("PolicyFactory_Loader",
 -                                   "TAO_PI",
-+                                   "libTAO_PI-1.7.5.so",
++                                   "libTAO_PI-1.7.7.so",
                                     "_make_TAO_PolicyFactory_Loader",
                                     ""));
  
@@ -427,7 +388,7 @@ diff -rupd ACE_wrappers.orig/TAO/tests/ORB_Local_Config/Service_Dependency/Test.
      int result = one->process_directive
        (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Codeset",
 -                                     "TAO_Codeset",
-+                                     "libTAO_Codeset-1.7.5.so",
++                                     "libTAO_Codeset-1.7.7.so",
                                       "_make_TAO_Codeset_Manager_Factory",
                                       ""));
      if (result != 0)
@@ -439,7 +400,7 @@ diff -rupd ACE_wrappers.orig/TAO/tests/TransportCurrent/Framework/simple.cpp ACE
            int ret = ACE_Service_Config::process_directive
              (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Transport_Current_Loader",
 -                                           "TAO_Transport_Current",
-+                                           "libTAO_Transport_Current-1.7.5.so",
++                                           "libTAO_Transport_Current-1.7.7.so",
                                             "_make_TAO_Transport_Current_Loader",
                                             ""));
            ACE_ASSERT (ret == 0);
