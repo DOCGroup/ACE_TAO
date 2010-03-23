@@ -39,7 +39,7 @@ CORBA::UShort domain_id = 0;
   {
     ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("d:l:r:s:m:i:O"));
     int c;
- 
+
     while ((c = get_opts ()) != -1)
       switch (c)
         {
@@ -91,7 +91,7 @@ CORBA::UShort domain_id = 0;
     else
       {
         instance_cmd->command = THROUGHPUT_COMMAND_START;
-        instance_cmd->data_length = datalen; 
+        instance_cmd->data_length = datalen;
         instance_cmd->current_publisher_effort = load;
         instance_cmd->final_publisher_effort = max_load;
         try
@@ -120,21 +120,21 @@ CORBA::UShort domain_id = 0;
                   }
                 catch (const CORBA::Exception&)
                   {
-                     ACE_ERROR ((LM_ERROR, 
+                     ACE_ERROR ((LM_ERROR,
                                  ACE_TEXT ("ERROR: Internal Error ")
                                  ACE_TEXT ("while updating writer "
                                             "info for <%q>.\n"),
                                    number_of_msg));
                      test_complete= true;
                    }
-              } 
+              }
             ACE_UINT64 end_time;
             ACE_High_Res_Timer::gettimeofday_hr ().to_usec (end_time);
             ACE_UINT64 interval = end_time - start_time;
             if(interval > (duration_run_ * 1000 * 1000))
               {
                 test_complete = true;
-                instance_cmd->command = THROUGHPUT_COMMAND_COMPLETE; 
+                instance_cmd->command = THROUGHPUT_COMMAND_COMPLETE;
                 cmd_data_writer->write ( *instance_cmd, ::DDS::HANDLE_NIL);
               }
             if (!test_complete)
@@ -149,14 +149,17 @@ CORBA::UShort domain_id = 0;
   int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
   {
     ::DDS::ReturnCode_t retcode;
-     
-    int    main_result = 1; /* error by default */
+    long overhead_size = 0;
+    const char * type_name_cmd = 0;
+    const char * type_name = 0;
+
+    int  main_result = 1; /* error by default */
 
     if (parse_args (argc, argv) != 0)
       return 1;
 
      /* Create the domain participant */
-    ::DDS::DomainParticipant *participant = 
+    ::DDS::DomainParticipant *participant =
                              ::DDS::DomainParticipantFactory::get_instance()->
                              create_participant_with_profile(
                                 domain_id,                   /* Domain ID */
@@ -165,13 +168,13 @@ CORBA::UShort domain_id = 0;
                                 0,                           /* Listener */
                                 DDS_STATUS_MASK_NONE);
     if (!participant) {
-        ACE_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Unable to create domain participant.\n")));
         goto clean_exit;
     }
 
     /* Register type before creating topic */
-    const char * type_name = ThroughputTestTypeSupport::get_type_name();
+    type_name = ThroughputTestTypeSupport::get_type_name();
     retcode = ThroughputTestTypeSupport::register_type(
                                                 participant, type_name);
     if (retcode != DDS_RETCODE_OK)
@@ -192,7 +195,7 @@ CORBA::UShort domain_id = 0;
     }
 
     /* Register type before creating topic */
-    const char * type_name_cmd = ThroughputCommandTypeSupport::get_type_name();
+    type_name_cmd = ThroughputCommandTypeSupport::get_type_name();
     retcode = ThroughputCommandTypeSupport::register_type(
         participant, type_name_cmd);
     if (retcode != DDS_RETCODE_OK)
@@ -205,7 +208,7 @@ CORBA::UShort domain_id = 0;
                                           DDS_TOPIC_QOS_DEFAULT,/* Topic QoS */
                                           0,                    /* Listener  */
                                           DDS_STATUS_MASK_NONE);
-    if (!topic) 
+    if (!topic)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create topic.\n")));
         goto clean_exit;
@@ -220,7 +223,7 @@ CORBA::UShort domain_id = 0;
                                 DDS_STATUS_MASK_NONE);
     if (!cmd_writer)
       {
-        ACE_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Unable to create cmd data writer.\n")));
         goto clean_exit;
       }
@@ -245,12 +248,12 @@ CORBA::UShort domain_id = 0;
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data sample.\n")));
         goto clean_exit;
       }
-    long overhead_size = sizeof(CORBA::ULong) + sizeof(CORBA::ULongLong);
+    overhead_size = sizeof(CORBA::ULong) + sizeof(CORBA::ULongLong);
     instance->key = 1;
     instance->seq_num = 0;
-    //instance->data.maximum (MAX_DATA_SEQUENCE_LENGTH); 
+    //instance->data.maximum (MAX_DATA_SEQUENCE_LENGTH);
     instance->data.length(datalen - overhead_size);
-  
+
     /* Create data sample for writing */
     instance_cmd = ThroughputCommandTypeSupport::create_data();
     if (instance_cmd == NULL)
@@ -258,7 +261,7 @@ CORBA::UShort domain_id = 0;
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create command sample.\n")));
       goto clean_exit;
     }
-  
+
     /* Perform a safe type-cast from a generic data writer into a
      * specific data writer for the types "ThroughputTestDataWriter"
      * and "ThroughputCommandDataWriter"
@@ -267,24 +270,24 @@ CORBA::UShort domain_id = 0;
     cmd_data_writer =  ThroughputCommandDataWriter::narrow(cmd_writer);
     if (!test_data_writer || !cmd_data_writer)
       {
-        ACE_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("DDS_StringDataWriter_narrow failed.\n")));
         goto clean_exit;
      }
-    
+
     // Sleep a couple seconds to allow discovery to happen
     ACE_OS::sleep (1);
-    
+
     /* --- Write Data ----------------------------------------------------- */
     for( int i = start_load; i < (max_load + incr_load); i+= incr_load)
-    {  
+    {
       write();
       ACE_OS::sleep (5);
     }
-    
+
     /* --- Clean Up ------------------------------------------------------- */
     ACE_OS::sleep (5);
-  
+
     main_result = 0;
 clean_exit:
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Exiting.")));
