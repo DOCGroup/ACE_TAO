@@ -91,7 +91,7 @@ namespace CIAO
           }
         else
           {
-            DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_DomainParticipantFactory_i::create_participant_with_profile - "
+            DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_DomainParticipantFactory_i::create_participant - "
                         "Re-using participant for QOS profile <%C> and domain <%d>.\n",
                         qos_profile.c_str (),
                         domain_id));
@@ -141,7 +141,7 @@ namespace CIAO
 
         if (!ccm_dds_dp)
           {
-            DDS4CCM_DEBUG (6, (LM_DEBUG, "CCM_DDS_DomainParticipantFactory_i::create_participant_with_profile - "
+            DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_DomainParticipantFactory_i::create_participant_with_profile - "
                                       "Creating participant: profile <%C> - domain <%d>\n",
                                       qos_profile.c_str (),
                                       domain_id));
