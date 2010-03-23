@@ -167,6 +167,7 @@ public:
     ::DDS::DataReader *data_reader = 0;
     ::DDS::DataReader *cmd_data_reader = 0;
     const char * type_name_cmd = 0;
+    const char * type_name = 0;
     if (parse_args (argc, argv) != 0)
       return 1;
 
@@ -186,7 +187,7 @@ public:
         goto clean_exit;
       }
     /* Register type before creating topic */
-    const char * type_name = ThroughputTestTypeSupport::get_type_name();
+    type_name = ThroughputTestTypeSupport::get_type_name();
     retcode = ThroughputTestTypeSupport::register_type(participant, type_name);
       if (retcode != DDS_RETCODE_OK)
         {
