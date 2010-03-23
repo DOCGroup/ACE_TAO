@@ -251,7 +251,7 @@ int be_visitor_root::visit_root (be_root *node)
       ctx.state (TAO_CodeGen::TAO_MODULE_OBV_CS);
       break;
     default:
-      obv = 0;
+      obv = false;
       break;
     }
 
