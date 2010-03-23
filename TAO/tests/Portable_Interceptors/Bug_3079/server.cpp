@@ -105,8 +105,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file <%s> for writing "
-                           "IOR: %s",
-                           ior.in ()),
+                           "IOR: %C\n",
+                           ior_file, ior.in ()),
                           1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
