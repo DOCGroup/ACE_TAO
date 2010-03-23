@@ -414,7 +414,16 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::remove_default_topic (void)
 
   try
     {
-      this->domain_participant_->delete_topic (this->topic_.in ());
+      DDS::ReturnCode_t retval =
+        this->domain_participant_->delete_topic (this->topic_.in ());
+      if (retval != DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+            "DDS_TopicBase_Connector_T::remove - "
+            "Unable to delete Topic: <%C>\n",
+            ::CIAO::DDS4CCM::translate_retcode (retval)));
+          throw CORBA::INTERNAL ();
+        }
       this->topic_ = ::DDS::Topic::_nil ();
     }
   catch (...)

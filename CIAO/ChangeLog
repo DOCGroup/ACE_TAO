@@ -1,3 +1,31 @@
+Tue Mar 23 07:27:07 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
+          Layout changes
+
+        * connectors/dds4ccm/impl/dds/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Read_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Write_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Write_T.cpp:
+          Throw an exception when something goes wrong during
+          shutdown.
+
+        * connectors/dds4ccm/impl/dds/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/dds/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/dds/Reader_T.cpp:
+          When an error occurs during return_loan, a log message is
+          generated.
+
+        * connectors/dds4ccm/impl/dds/Getter_T.h:
+        * connectors/dds4ccm/impl/dds/Getter_T.cpp:
+          When an error occurs during return_loan, a log message is
+          generated.
+          Renamed ccm_dds_writer_i to ccm_dds_writer_
+
 Mon Mar 22 19:47:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Servant_Impl_Base.cpp:

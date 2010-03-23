@@ -1171,7 +1171,7 @@ module DDS {
     //      in InstanceHandle_t previous_handle,
     //      in ReadCondition a_condition);
 
-    //  ReturnCode_t return_loan(
+    //  ReturnCode_t return_loan (
     //      inout DataSeq data_values,
     //      inout SampleInfoSeq sample_infos);
 

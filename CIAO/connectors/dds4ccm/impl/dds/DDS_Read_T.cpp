@@ -63,7 +63,7 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Read_T::configuration_complete: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Read_T::configuration_complete: Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -91,7 +91,7 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE, FIXED>::activate (
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Read_T::activate: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Read_T::activate: Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -109,7 +109,7 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE, FIXED>::passivate ()
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Read_T::passivate: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Read_T::passivate: Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -123,13 +123,22 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE, FIXED>::remove (
 
   try
     {
-      subscriber->delete_datareader (&this->ccm_dds_reader_);
+      DDS::ReturnCode_t retval =
+        subscriber->delete_datareader (&this->ccm_dds_reader_);
+      if (retval != DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+            "DDS_Read_T::remove - "
+            "Unable to delete DataReader: <%C>\n",
+            ::CIAO::DDS4CCM::translate_retcode (retval)));
+          throw CORBA::INTERNAL ();
+        }
       this->ccm_dds_reader_.set_impl (0);
       this->dds_read_.set_impl (0);
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Read_T::remove: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Read_T::remove: Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }

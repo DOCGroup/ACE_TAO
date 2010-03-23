@@ -101,7 +101,14 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_without_instan
 #endif
   if (retval != DDS_RETCODE_OK && retval != DDS_RETCODE_NO_DATA)
     {
-      this->impl ()->return_loan(data, sample_info);
+      DDS_ReturnCode_t const retval = this->impl ()->return_loan (data, sample_info);
+      if (retval != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+            "CIAO::DDS4CCM::DDS_CCM::Reader_T::read_without_instance - "
+            "Error returning loan to DDS - <%C>\n",
+            translate_retcode (retval)));
+        }
       DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::DDS_CCM::Reader_T::read_without_instance - ")
                             ACE_TEXT ("retval is %C\n"), translate_retcode(retval)));
       throw ::CCM_DDS::InternalError (retval, 0);
@@ -154,7 +161,14 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_last (
     }
 
   // Return the loan
-  this->impl ()->return_loan(data,sample_info);
+  DDS_ReturnCode_t const retval = this->impl ()->return_loan (data, sample_info);
+  if (retval != DDS_RETCODE_OK)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+        "CIAO::DDS4CCM::DDS_CCM::Reader_T::read_last - "
+        "Error returning loan to DDS - <%C>\n",
+        translate_retcode (retval)));
+    }
   infos = infoseq;
   instances = inst_seq;
 }
@@ -203,7 +217,14 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_all (
     }
 
   // Return the loan
-  this->impl ()->return_loan(data,sample_info);
+  DDS_ReturnCode_t const retval = this->impl ()->return_loan (data, sample_info);
+  if (retval != DDS_RETCODE_OK)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+        "CIAO::DDS4CCM::DDS_CCM::Reader_T::read_all - "
+        "Error returning loan to DDS - <%C>\n",
+        translate_retcode (retval)));
+    }
 
   infos = infoseq;
   instances = inst_seq;
@@ -251,7 +272,14 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_with_instance 
                                       DDS_ALIVE_INSTANCE_STATE);
   if (retval != DDS_RETCODE_OK && retval != DDS_RETCODE_NO_DATA)
     {
-      this->impl ()->return_loan(data, sample_info);
+      DDS_ReturnCode_t const retval = this->impl ()->return_loan (data, sample_info);
+      if (retval != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+            "CIAO::DDS4CCM::DDS_CCM::Reader_T::read_with_instance - "
+            "Error returning loan to DDS - <%C>\n",
+            translate_retcode (retval)));
+        }
       DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::DDS_CCM::Reader_T::read_with_instance - ")
                             ACE_TEXT ("retval is %C\n"), translate_retcode(retval)));
       throw ::CCM_DDS::InternalError (retval, 0);
@@ -291,7 +319,14 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_one_last (
         }
     }
   // Return the loan
-  this->impl ()->return_loan(data, sample_info);
+  DDS_ReturnCode_t const retval = this->impl ()->return_loan (data, sample_info);
+  if (retval != DDS_RETCODE_OK)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+        "CIAO::DDS4CCM::DDS_CCM::Reader_T::read_one_last - "
+        "Error returning loan to DDS - <%C>\n",
+        translate_retcode (retval)));
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
@@ -343,7 +378,14 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_one_all (
     }
 
   // Return the loan
-  this->impl ()->return_loan(data, sample_info);
+  DDS_ReturnCode_t const retval = this->impl ()->return_loan (data, sample_info);
+  if (retval != DDS_RETCODE_OK)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+        "CIAO::DDS4CCM::DDS_CCM::Reader_T::read_one_all - "
+        "Error returning loan to DDS - <%C>\n",
+        translate_retcode (retval)));
+    }
 
   infos = infoseq;
   instances = inst_seq;
