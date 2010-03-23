@@ -1,3 +1,15 @@
+Tue Mar 23 11:43:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Enabled dds throughput test
+
+        * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Receiver/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Sender/USER_QOS_PROFILES.xml:
+          Deleted
+
+        * connectors/dds4ccm/performance-tests/DDSThroughput/descriptors/USER_QOS_PROFILES.xml:
+          Added
+
 Tue Mar 23 11:41:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Sender/Throughput_Sender.cpp:
