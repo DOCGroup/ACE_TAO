@@ -1,3 +1,8 @@
+Tue Mar 23 10:59:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debianbuild/patches/34-bts386713.dpatch:
+          Updated from debian
+
 Fri Mar 19 16:52:08 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/MT_NonBlocking_Connect_Test.cpp:
