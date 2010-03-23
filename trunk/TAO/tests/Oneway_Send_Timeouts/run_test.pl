@@ -51,7 +51,8 @@ if ($test != 0) {
     exit 1;
 }
 
-$test = $TV->WaitKill ($target->ProcessStartWaitInterval());
+$test = $TV->WaitKill ($target->ProcessStartWaitInterval() +
+                       $target->ProcessStopWaitInterval());
 
 if ($test != 0) {
     print STDERR "ERROR 2: test returned $test\n";
