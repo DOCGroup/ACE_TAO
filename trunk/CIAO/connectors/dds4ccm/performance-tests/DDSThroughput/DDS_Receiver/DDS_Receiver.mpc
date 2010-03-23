@@ -1,0 +1,13 @@
+project(*receiver) : nddslib, acelib, taolib {
+  after += DDS_Throughput_Base_stub
+  exename = DDS_receiver
+  libpaths += ../lib
+  libout = ../lib
+  includes += ../Base
+  libs  += DDS_Throughput_Base_stub
+
+  Source_Files {
+    Throughput_Receiver.cpp
+  }
+}
+

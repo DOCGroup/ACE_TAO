@@ -1,0 +1,13 @@
+project(*sender) : nddslib, acelib, taolib {
+  after += DDS_Throughput_Base_stub
+  exename = DDS_Sender
+  avoids += ace_for_tao
+  libpaths += ../lib
+  libout = ../lib
+  includes += ../Base
+  libs  += DDS_Throughput_Base_stub
+  
+  Source_Files {
+    Throughput_Sender.cpp
+  }
+}
