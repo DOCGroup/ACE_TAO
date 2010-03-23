@@ -64,7 +64,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Get_T::configuration_complete: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Get_T::configuration_complete: Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -91,7 +91,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::activate (
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Get_T::activate: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Get_T::activate: Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -103,7 +103,15 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::passivate (void)
   DDS4CCM_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::passivate");
   try
     {
-      this->dds_get_.passivate ();
+      DDS_ReturnCode_t const retcode  = this->dds_get_.passivate ();
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+            "DDS_Get_T::passivate - "
+            "Unable to passivate Getter: <%C>\n",
+            ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw CORBA::INTERNAL ();
+        }
       this->ccm_dds_reader_.set_listener (
               ::DDS::DataReaderListener::_nil (),
               0);
@@ -111,7 +119,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::passivate (void)
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Get_T::passivate: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Get_T::passivate: Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -124,14 +132,23 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::remove (
   DDS4CCM_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::remove");
   try
     {
-      subscriber->delete_datareader (&this->ccm_dds_reader_);
+      DDS::ReturnCode_t const retval =
+        subscriber->delete_datareader (&this->ccm_dds_reader_);
+      if (retval != DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+            "DDS_Get_T::remove - "
+            "Unable to delete DataReader: <%C>\n",
+            ::CIAO::DDS4CCM::translate_retcode (retval)));
+          throw CORBA::INTERNAL ();
+        }
       this->dds_get_.set_impl (0);
       this->dds_read_.set_impl (0);
       this->ccm_dds_reader_.set_impl (0);
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Get_T::remove: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Get_T::remove: Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }

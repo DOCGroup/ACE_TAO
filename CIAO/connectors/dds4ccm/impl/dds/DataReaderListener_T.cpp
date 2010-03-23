@@ -107,7 +107,7 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (::
             {
               ::CCM_DDS::ReadInfo info;
               info <<= sample_info[i];
-              listener_->on_one_data (data[i], info);
+              this->listener_->on_one_data (data[i], info);
             }
         }
     }
@@ -146,12 +146,19 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (::
                   ++ix;
                 }
             }
-          listener_->on_many_data (*inst_seq, *infoseq);
+          this->listener_->on_many_data (*inst_seq, *infoseq);
         }
     }
 
   // Return the loan
-  reader->return_loan(data, sample_info);
+  DDS_ReturnCode_t const retval = reader->return_loan (data, sample_info);
+  if (retval != DDS_RETCODE_OK)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+        "CIAO::DDS4CCM::DataReaderListener_T::on_data_available_i - "
+        "Error returning loan to DDS - <%C>\n",
+        translate_retcode (retval)));
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>

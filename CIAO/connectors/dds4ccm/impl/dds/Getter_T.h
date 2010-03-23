@@ -75,9 +75,9 @@ namespace CIAO
          */
         void set_impl (CCM_DDS_DataReader_i *reader);
 
-        void passivate (void);
+        DDS_ReturnCode_t passivate (void);
 
-        void remove_conditions ();
+        DDS_ReturnCode_t remove_conditions (void);
 
       protected:
         CCM_DDS_DataReader_i *reader_;

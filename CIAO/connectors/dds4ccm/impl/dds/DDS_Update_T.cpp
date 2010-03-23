@@ -58,7 +58,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
         }
       catch (...)
         {
-          DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Update_T::configuration_complete: Caught unknown c++ exception.\n"));
+          DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Update_T::configuration_complete: Caught unexpected exception.\n"));
           throw CORBA::INTERNAL ();
         }
     }
@@ -83,7 +83,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::activate ()
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Update_T::activate: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Update_T::activate: Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -102,7 +102,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::passivate ()
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Update_T::passivate: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Update_T::passivate: Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -115,13 +115,22 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove (
   DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove");
   try
     {
-      publisher->delete_datawriter (&this->ccm_dds_writer_);
+      DDS::ReturnCode_t retval =
+        publisher->delete_datawriter (&this->ccm_dds_writer_);
+      if (retval != DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+            "DDS_Update_T::remove - "
+            "Unable to delete DataWriter: <%C>\n",
+            ::CIAO::DDS4CCM::translate_retcode (retval)));
+          throw CORBA::INTERNAL ();
+        }
       this->ccm_dds_writer_.set_impl (0);
       this->dds_update_.set_impl (0);
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Update_T::remove: Caught unknown c++ exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Update_T::remove: Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }

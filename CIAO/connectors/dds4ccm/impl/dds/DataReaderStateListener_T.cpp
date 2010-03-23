@@ -218,7 +218,14 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_
             }
         }
       // Return the loan
-      reader->return_loan(data, sample_info);
+      DDS_ReturnCode_t const retval = reader->return_loan (data, sample_info);
+      if (retval != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+            "CIAO::DDS4CCM::DataReaderStateListener_T::on_data_available_i - "
+            "Error returning loan to DDS - <%C>\n",
+            translate_retcode (retval)));
+        }
     }
   catch (...)
     {
