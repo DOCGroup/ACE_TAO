@@ -15,7 +15,7 @@ CORBA::LongLong interval_messages_received_ = 0;
 CORBA::LongLong interval_bytes_received_ = 0;
 CORBA::Long interval_data_length_ = 0;
 CORBA::UShort run_ = 0;
-ACE_UINT64 first_time_  = 0; 
+ACE_UINT64 first_time_  = 0;
 CORBA::LongLong  messages_lost_ = 0;
 CORBA::Boolean logres = false;
 CORBA::LongLong seq_num_ = 0;
@@ -37,7 +37,7 @@ CORBA::UShort domain_id = 0;
   {
     ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("d:O"));
     int c;
-  
+
     while ((c = get_opts ()) != -1)
       switch (c)
         {
@@ -69,14 +69,14 @@ public:
   void on_data_available(::DDS::DataReader *reader);
 };
 
-  void 
+  void
   show_results()
   {
     if ((count_ > 0) && (interval_time_ > 0))
-      {  
+      {
         double per_sec = (double)1000000/ interval_time_;
         double mbps = (interval_bytes_received_* per_sec)* (8.0/1000.0/1000.0);
-     
+
         if(run_ == 1)
           {
              ACE_DEBUG((LM_DEBUG,
@@ -127,12 +127,12 @@ public:
     if( an_instance.command == THROUGHPUT_COMMAND_COMPLETE)
      {
        logres = false;
-       ACE_UINT64 last_time; 
+       ACE_UINT64 last_time;
        ACE_High_Res_Timer::gettimeofday_hr ().to_usec (last_time);
        interval_time_ =  (last_time  - first_time_);
        ++run_;
        show_results();
-       if(an_instance.current_publisher_effort == 
+       if(an_instance.current_publisher_effort ==
           an_instance.final_publisher_effort)
          {
            shutdown_flag = true;
@@ -140,7 +140,7 @@ public:
      }
   }
 
-  void 
+  void
   record_data (ThroughputTest & an_instance)
   {
     ++count_; // total count of all received messages
@@ -150,27 +150,28 @@ public:
         interval_bytes_received_ += interval_data_length_;
         if (an_instance.seq_num != seq_num_)
         {
-            ++messages_lost_;  
+            ++messages_lost_;
             /* Reset sequence number */
             seq_num_ = an_instance.seq_num;
           }
         ++seq_num_;
       }
   }
-  
+
   int ACE_TMAIN(int argc, ACE_TCHAR** argv)
   {
     ::DDS::ReturnCode_t retcode;
     HelloListener listener;
     CmdListener cmd_listener;
-    int main_result = 1; /* error by default */ 
+    int main_result = 1; /* error by default */
     ::DDS::DataReader *data_reader = 0;
     ::DDS::DataReader *cmd_data_reader = 0;
+    const char * type_name_cmd = 0;
     if (parse_args (argc, argv) != 0)
       return 1;
 
     /* Create the domain participant on domain ID 0 */
-    ::DDS::DomainParticipant *participant = 
+    ::DDS::DomainParticipant *participant =
                ::DDS::DomainParticipantFactory::get_instance()->
         create_participant_with_profile(
                            domain_id,          /* Domain ID */
@@ -178,16 +179,16 @@ public:
                            part_name,           /* QoS */
                            0,                   /* Listener */
                            DDS_STATUS_MASK_NONE);
-    if (!participant) 
+    if (!participant)
       {
-        ACE_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Unable to create domain participant.\n")));
         goto clean_exit;
       }
     /* Register type before creating topic */
     const char * type_name = ThroughputTestTypeSupport::get_type_name();
     retcode = ThroughputTestTypeSupport::register_type(participant, type_name);
-      if (retcode != DDS_RETCODE_OK) 
+      if (retcode != DDS_RETCODE_OK)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Unable to register topic type.\n")));
@@ -205,12 +206,12 @@ public:
       goto clean_exit;
     }
     /* Register type before creating command topic */
-    const char * type_name_cmd = ThroughputCommandTypeSupport::get_type_name();
+    type_name_cmd = ThroughputCommandTypeSupport::get_type_name();
     retcode = ThroughputCommandTypeSupport::register_type(
         participant, type_name_cmd);
-    if (retcode != DDS_RETCODE_OK) 
+    if (retcode != DDS_RETCODE_OK)
       {
-        ACE_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Unable to register command topic type.\n")));
         goto clean_exit;
       }
@@ -221,7 +222,7 @@ public:
                                       DDS_TOPIC_QOS_DEFAULT,    /* Topic QoS */
                                       0,                        /* Listener  */
                                       DDS_STATUS_MASK_NONE);
-    if (!cmd_topic) 
+    if (!cmd_topic)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create cmd_topic.\n")));
         goto clean_exit;
@@ -252,7 +253,7 @@ public:
      * Distribution Service will call the on_data_available_callback function.
     */
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ready to read data.\n")));
-    for (;;) 
+    for (;;)
     {
       ACE_OS::sleep (1);
       if(shutdown_flag)
@@ -306,37 +307,37 @@ clean_exit:
     /* Perform a safe type-cast from a generic data reader into a
      * specific data reader for the type "ThroughputTestDataReader"
      */
-    ThroughputTestDataReader * test_reader = 
+    ThroughputTestDataReader * test_reader =
                              ThroughputTestDataReader::narrow(reader);
     ThroughputTest *instance = new ThroughputTest;
     if (!test_reader)
     {
       /* In this specific case, this will never fail */
-      ACE_ERROR ((LM_ERROR, 
+      ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("::DDS::StringDataReader::narrow failed.\n")));
       return;
     }
 
     /* Loop until there are messages available in the queue */
-     for(;;) 
+     for(;;)
        {
          ::DDS::SampleInfo        info;
          ::DDS::ReturnCode_t retcode = test_reader->take_next_sample(*instance,
                                                                      info);
-         if (retcode == DDS_RETCODE_NO_DATA) 
+         if (retcode == DDS_RETCODE_NO_DATA)
            {
              /*  No more samples */
              break;
            }
-         else if (retcode != DDS_RETCODE_OK) 
+         else if (retcode != DDS_RETCODE_OK)
            {
-             ACE_ERROR ((LM_ERROR, 
+             ACE_ERROR ((LM_ERROR,
                          ACE_TEXT ("Unable to take data from data reader,"
-                                   " error %d.\n"), 
+                                   " error %d.\n"),
                                    retcode));
              return;
            }
-         if (info.valid_data) 
+         if (info.valid_data)
            {
              record_data(*instance);
            }
@@ -345,16 +346,16 @@ clean_exit:
  /* This method gets called back by DDS when one or more data samples
  *  have beenreceived.
  */
-  void CmdListener::on_data_available(::DDS::DataReader *reader) 
+  void CmdListener::on_data_available(::DDS::DataReader *reader)
   {
-    ThroughputCommandDataReader * cmd_reader = 
+    ThroughputCommandDataReader * cmd_reader =
                               ThroughputCommandDataReader::narrow(reader);
     ThroughputCommand *instance = new ThroughputCommand;
 
-    if (!cmd_reader) 
+    if (!cmd_reader)
       {
       /* In this specific case, this will never fail */
-        ACE_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("::DDS::StringDataReader::narrow failed.\n")));
         return;
       }
@@ -373,14 +374,14 @@ clean_exit:
           }
         else if (retcode != DDS_RETCODE_OK)
           {
-            ACE_ERROR ((LM_ERROR, 
+            ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("Unable to take data from data reader,"
                                   " error %d.\n"), retcode));
             return;
           }
-        if (info.valid_data) 
+        if (info.valid_data)
           {
-            handle_run(*instance); 
+            handle_run(*instance);
           }
        }
   }
