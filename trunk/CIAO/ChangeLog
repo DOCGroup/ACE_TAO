@@ -1,3 +1,12 @@
+Tue Mar 23 11:41:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Sender/Throughput_Sender.cpp:
+          TAO sequence doesn't have maximum setter
+
+        * connectors/dds4ccm/performance-tests/DDSThroughput/descriptors:
+        * connectors/dds4ccm/performance-tests/DDSThroughput/descriptors/run_test_dds.pl:
+          Added one button perl script
+
 Tue Mar 23 11:27:07 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/DDSThroughput
@@ -12,8 +21,7 @@ Tue Mar 23 11:27:07 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Sender/DDS_Sender.mpc
         * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Sender/Throughput_Sender.cpp
         * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Sender/USER_QOS_PROFILES.xml
-        Throughput test without CCM.
-
+          Throughput test without CCM.
 
 Tue Mar 23 07:27:07 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
