@@ -1,7 +1,7 @@
 // $Id$
 
 project(*receiver) : nddslib, acelib, taolib {
-  after += DDS_Throughput_Base_stub
+  after += DDS_Throughput_Base_stub_plain
   exename = DDS_receiver
   libpaths += ../lib
   libout = ../lib
