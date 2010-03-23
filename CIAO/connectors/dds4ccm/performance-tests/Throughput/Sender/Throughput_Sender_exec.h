@@ -16,16 +16,16 @@
 
 namespace CIAO_Throughput_Sender_Impl
 {
-  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
-
   class Sender_exec_i;
 
-class SENDER_EXEC_Export ConnectorStatusListener_exec_i
+  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
+
+  class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     : public virtual ::CCM_DDS::CCM_ConnectorStatusListener,
       public virtual ::CORBA::LocalObject
   {
   public:
-    ConnectorStatusListener_exec_i (Atomic_Boolean &, int,  Sender_exec_i &callback_);
+    ConnectorStatusListener_exec_i (int,  Sender_exec_i &callback_);
     virtual ~ConnectorStatusListener_exec_i (void);
 
     virtual
@@ -49,9 +49,8 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
 
   private:
     Sender_exec_i &callback_;
-    Atomic_Boolean &matched_;
     int number_of_subscribers_;
-
+    Atomic_Boolean started_;
   };
   //============================================================
   // WriteTicker
@@ -60,11 +59,13 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     public ACE_Event_Handler
   {
   public:
-    WriteTicker (Sender_exec_i &callback);
+    WriteTicker (Sender_exec_i &callback,
+                 Atomic_Boolean &running);
     int handle_timeout (const ACE_Time_Value &, const void *);
   private:
     /// Maintains a handle that actually process the event
     Sender_exec_i &callback_;
+    Atomic_Boolean running_;
   };
 
   class Sender_exec_i
@@ -121,19 +122,16 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     CORBA::UShort datalen_;
     CORBA::UShort recover_time_;
     ACE_UINT64 duration_run_;
-    Atomic_Boolean matched_;
     CORBA::UShort number_of_subscribers_;
     CORBA::ULongLong number_of_msg_;
-    Atomic_Boolean timer_;
     CORBA::ULongLong load_;
     CORBA::UShort overhead_size_;
-
-    CORBA::UShort count_;
-    ACE_UINT64 start_time_;
 
     ThroughputTest test_topic_;
     ThroughputCommand test_topic_cmd_;
     CORBA::Octet* buffer_;
+
+    Atomic_Boolean running_;
 };
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

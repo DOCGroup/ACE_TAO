@@ -1,3 +1,19 @@
+Tue Mar 23 13:54:13 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DomainParticipantFactory.cpp:
+          Optimized logging.
+
+        * connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver_exec.cpp:
+          Optimized logging.
+
+        * connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender.idl:
+          Removed unused attribute.
+
+        * connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender_exec.h:
+        * connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender_exec.cpp:
+          Layout changes. Changed starting up since the sender does not start when the
+          thread switch is turned on.
+
 Tue Mar 23 11:43:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao_tests.lst:

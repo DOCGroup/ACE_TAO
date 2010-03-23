@@ -14,12 +14,11 @@ namespace CIAO_Throughput_Sender_Impl
   // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
   //============================================================
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (
-                                           Atomic_Boolean &matched,
                                            int number_of_subscribers,
                                            Sender_exec_i &callback)
-   : callback_ (callback),
-    matched_ (matched),
-    number_of_subscribers_ (number_of_subscribers)
+    : callback_ (callback),
+      number_of_subscribers_ (number_of_subscribers),
+      started_ (false)
   {
   }
 
@@ -68,19 +67,19 @@ namespace CIAO_Throughput_Sender_Impl
         ::DDS::PublicationMatchedStatus_var stat;
         DDS::DataWriter_var wr = ::DDS::DataWriter::_narrow(the_entity);
         if(CORBA::is_nil(wr.in ()))
-         {
+          {
             throw ::CORBA::INTERNAL ();
-         }
+          }
         ::DDS::ReturnCode_t retval =
                           wr->get_publication_matched_status(stat.out());
         if (retval == DDS::RETCODE_OK)
           {
-
-            if((stat.in().current_count >=
-             (this->number_of_subscribers_ + 1)) &&
-             !this->matched_.value())
+            if (stat.in ().current_count >= this->number_of_subscribers_ + 1 &&
+                !this->started_.value ())
               {
-                this->matched_ = true;
+                ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_unexpected_status - "
+                          "on_publication_matched status received. Starting application\n"));
+                this->started_ = true;
                 this->callback_.start();
               }
           }
@@ -90,8 +89,10 @@ namespace CIAO_Throughput_Sender_Impl
   //============================================================
   // WriteTickerHandler
   //============================================================
-  WriteTicker::WriteTicker (Sender_exec_i &callback)
-    : callback_ (callback)
+  WriteTicker::WriteTicker (Sender_exec_i &callback,
+                            Atomic_Boolean &running)
+    : callback_ (callback),
+      running_ (running)
   {
   }
 
@@ -99,7 +100,10 @@ namespace CIAO_Throughput_Sender_Impl
   WriteTicker::handle_timeout (const ACE_Time_Value &, const void *)
   {
     // Notify the subscribers
-    this->callback_.write();
+    if (!this->running_.value ())
+      {
+        this->callback_.write();
+      }
     return 0;
   }
 
@@ -107,21 +111,20 @@ namespace CIAO_Throughput_Sender_Impl
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
   Sender_exec_i::Sender_exec_i (void)
-    : max_load_ (1000),
+    : ticker_ (0),
+      max_load_ (1000),
       start_load_ (100),
       incr_load_ (100),
-      datalen_(1024),
-      recover_time_(1), // Specifies how long (in ms) to sleep after writing a
-                        // specific effort specified by start_load , incr_load
-      duration_run_(10),
-      matched_(false),
-      number_of_subscribers_(1),
-      number_of_msg_(0),
-      timer_(false),
-      load_(0),
-      overhead_size_(0)
+      datalen_ (1024),
+      recover_time_ (1), // Specifies how long (in s) to sleep after writing a
+                         // specific effort specified by start_load , incr_load
+      duration_run_ (10),
+      number_of_subscribers_ (1),
+      number_of_msg_ (0),
+      load_ (0),
+      overhead_size_ (0),
+      running_ (false)
   {
-    this->ticker_ = new WriteTicker (*this);
   }
 
   Sender_exec_i::~Sender_exec_i (void)
@@ -131,13 +134,13 @@ namespace CIAO_Throughput_Sender_Impl
   void
   Sender_exec_i::write(void)
   {
+    this->running_ = true;
     CORBA::Boolean test_complete = false;
     this->load_ += this->incr_load_;
-    if ( this->load_ >= this->max_load_)
-    {
-      this->stop();
-      this->timer_ = false;
-    }
+    if (this->load_ >= this->max_load_)
+      {
+        this->stop();
+      }
     else
       {
         this->test_topic_cmd_.command = THROUGHPUT_COMMAND_START;
@@ -156,7 +159,8 @@ namespace CIAO_Throughput_Sender_Impl
           }
         test_complete = false;
         // get start time
-        ACE_High_Res_Timer::gettimeofday_hr ().to_usec (this->start_time_);
+        ACE_UINT64 start_time;
+        ACE_High_Res_Timer::gettimeofday_hr ().to_usec (start_time);
         while (!test_complete)
           {
             for (CORBA::ULongLong current_load = 0;
@@ -186,14 +190,13 @@ namespace CIAO_Throughput_Sender_Impl
                                     ACE_TEXT ("while updating writer ")
                                     ACE_TEXT ("info for <%u>.\n"),
                                     this->test_topic_.seq_num));
-                                    test_complete= true;
+                        test_complete= true;
                       }
                   }
-                ++this->count_;
               }
             ACE_UINT64 end_time;
             ACE_High_Res_Timer::gettimeofday_hr ().to_usec (end_time);
-            ACE_UINT64 interval = end_time - this->start_time_;
+            ACE_UINT64 interval = end_time - start_time;
             if(interval > (this->duration_run_ * 1000 * 1000))
               {
                 test_complete = true;
@@ -207,13 +210,13 @@ namespace CIAO_Throughput_Sender_Impl
               }
           }
       }
+    this->running_ = false;
   }
 
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Sender_exec_i::get_connector_status (void)
   {
     return new ConnectorStatusListener_exec_i (
-      this->matched_,
       this->number_of_subscribers_,
       *this);
   }
@@ -224,7 +227,8 @@ namespace CIAO_Throughput_Sender_Impl
     ACE_UINT64 const sec = this->duration_run_ + 5;
     (void) ACE_High_Res_Timer::global_scale_factor ();
     this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->timer_queue()->gettimeofday (&ACE_High_Res_Timer::gettimeofday_hr);
-    if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer(
+    this->ticker_ = new WriteTicker (*this, this->running_);
+    if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
                     this->ticker_,
                     0,
                     ACE_Time_Value (5, 0),
@@ -233,7 +237,6 @@ namespace CIAO_Throughput_Sender_Impl
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
                               ACE_TEXT ("Error scheduling timer")));
       }
-      this->timer_ = true;
    }
 
   ::CORBA::ULongLong
@@ -253,9 +256,9 @@ namespace CIAO_Throughput_Sender_Impl
         throw ::CORBA::BAD_PARAM ();
       }
     else
-    {
-      this->max_load_ = max_load;
-    }
+      {
+        this->max_load_ = max_load;
+      }
   }
 
   ::CORBA::ULong
@@ -296,9 +299,9 @@ namespace CIAO_Throughput_Sender_Impl
         throw ::CORBA::BAD_PARAM ();
       }
     else
-    {
-      this->incr_load_ = incr_load;
-    }
+      {
+        this->incr_load_ = incr_load;
+      }
   }
 
   ::CORBA::UShort
@@ -402,18 +405,17 @@ namespace CIAO_Throughput_Sender_Impl
     this->test_topic_.key = 1;
     this->test_topic_.seq_num = 0;
     this->test_topic_.data.length (this->datalen_ - this->overhead_size_);
-    while(!this->matched_.value())
-      ACE_OS::sleep(1);
   }
 
   void
   Sender_exec_i::stop (void)
   {
-    if (this->timer_.value ())
+    if (this->ticker_)
      {
        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
        delete this->ticker_;
-    }
+       this->ticker_ = 0;
+     }
   }
 
   void
