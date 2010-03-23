@@ -13,7 +13,7 @@ CORBA::ULong start_load = 1000;
 CORBA::ULong incr_load = 1000;
 CORBA::ULongLong max_load = 9000;
 CORBA::ULongLong number_of_msg = 0;
-CORBA::UShort duration_run_ = 10;  // in sec
+ACE_UINT64 duration_run_ = 10;  // in sec
 
 CORBA::ULongLong load = 0;
 ACE_UINT64 start_time = 0;
