@@ -1,3 +1,5 @@
+// $Id$
+
 project(*receiver) : nddslib, acelib, taolib {
   after += DDS_Throughput_Base_stub
   exename = DDS_receiver
