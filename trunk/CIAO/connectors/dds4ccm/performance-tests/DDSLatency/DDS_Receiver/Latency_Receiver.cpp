@@ -1,6 +1,9 @@
+// $Id$
+
 #include "ace/Get_Opt.h"
 #include "tao/ORB_Core.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/Env_Value_T.h"
 #include "Latency_Base.h"
 #include "Latency_BaseSupport.h"
 #include "Latency_BasePlugin.h"
@@ -80,6 +83,9 @@ public:
     HelloListener listener;
     ::DDS::DataReader *data_reader = 0;
     const char * type_name = 0;
+
+    ACE_Env_Value<int> id (ACE_TEXT("DDS4CCM_DEFAULT_DOMAIN_ID"), domain_id);
+    domain_id = id;
 
     int main_result = 1; /* error by default */
     if (parse_args (argc, argv) != 0)
