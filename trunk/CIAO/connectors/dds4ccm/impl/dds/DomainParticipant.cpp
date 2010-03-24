@@ -403,7 +403,15 @@ namespace CIAO
                       "Re-using topic with name %C and type %C.\n",
                       impl_name, type_name));
           ::DDS::Topic_var tp = ::DDS::Topic::_narrow (td.in ());
-          return ::DDS::Topic::_duplicate (tp);
+          if (CORBA::is_nil (tp.in ()))
+            {
+              return ::DDS::Topic::_nil ();
+            }
+          else
+            {
+              tp->_add_ref ();
+              return ::DDS::Topic::_duplicate (tp);
+            }
         }
 #else
       return this->impl ()->create_topic (impl_name,
@@ -486,7 +494,15 @@ namespace CIAO
                       "Re-using topic with name %C and type %C.\n",
                       impl_name, type_name));
           ::DDS::Topic_var tp = ::DDS::Topic::_narrow (td.in ());
-          return ::DDS::Topic::_duplicate (tp);
+          if (CORBA::is_nil (tp.in ()))
+            {
+              return ::DDS::Topic::_nil ();
+            }
+          else
+            {
+              tp->_add_ref ();
+              return ::DDS::Topic::_duplicate (tp);
+            }
         }
     }
 #endif
@@ -508,36 +524,44 @@ namespace CIAO
       DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic - "
                    "Successfully casted provided object reference to servant.\n"));
 
-      ::DDS::TopicDescription_var td =
-          lookup_topicdescription (ACE_TEXT ("DDS4CCMContentFilteredTopic"));
-      if (! ::CORBA::is_nil (td.in ()))
+      ::DDS::ReturnCode_t retval = DDS::RETCODE_OK;
+
+      if (top->_refcount_value () == 1)
         {
-          ::DDS::ContentFilteredTopic_var cft = ::DDS::ContentFilteredTopic::_narrow (td.in ());
-          if (! ::CORBA::is_nil (cft.in ()))
+          ::DDS::TopicDescription_var td =
+              lookup_topicdescription (ACE_TEXT ("DDS4CCMContentFilteredTopic"));
+          if (! ::CORBA::is_nil (td.in ()))
             {
-              ::DDS::ReturnCode_t const ret = this->delete_contentfilteredtopic (cft.in ());
-              if (ret != ::DDS::RETCODE_OK)
+              ::DDS::ContentFilteredTopic_var cft = ::DDS::ContentFilteredTopic::_narrow (td.in ());
+              if (! ::CORBA::is_nil (cft.in ()))
                 {
-                  DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic - "
-                                              "Unable to delete ContentFilteredTopic. Retval is %C.\n",
-                                              translate_retcode (ret)));
+                  ::DDS::ReturnCode_t const ret = this->delete_contentfilteredtopic (cft.in ());
+                  if (ret != ::DDS::RETCODE_OK)
+                    {
+                      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic - "
+                                                  "Unable to delete ContentFilteredTopic. Retval is %C.\n",
+                                                  translate_retcode (ret)));
+                    }
                 }
             }
-        }
-      DDS_ReturnCode_t const retval = this->impl ()->delete_topic (top->get_impl ());
+          retval = this->impl ()->delete_topic (top->get_impl ());
 
-      if (retval != DDS_RETCODE_OK)
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic - "
-                       "Error: RTI delete_topic returned non-ok error code %C\n",
-                       translate_retcode (retval)));
+          if (retval != DDS_RETCODE_OK)
+            {
+              DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic - "
+                          "Error: RTI delete_topic returned non-ok error code %C\n",
+                          translate_retcode (retval)));
+            }
+          else
+            {
+              DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic - "
+                            "Provided topic successfully deleted\n"));
+            }
         }
       else
         {
-           DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic - "
-                        "Provided topic successfully deleted\n"));
+          top->_remove_ref ();
         }
-
       return retval;
     }
 

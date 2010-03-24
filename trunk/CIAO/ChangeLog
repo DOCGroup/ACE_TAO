@@ -1,3 +1,11 @@
+Wed Mar 24 10:35:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DomainParticipant.cpp:
+          Resolved issues in delete_topic. When more than one topic
+          with the same name are created, this first topic is reused.
+          Use _refcount_value to determine the last topic. This last
+          topic has to be deleted.
+
 Wed Mar 24 09:59:35 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
