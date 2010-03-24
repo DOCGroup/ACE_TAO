@@ -2,6 +2,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/Env_Value_T.h"
 #include "tao/ORB_Core.h"
 #include "Throughput_Base.h"
 #include "Throughput_BaseSupport.h"
@@ -156,6 +157,9 @@ CORBA::UShort domain_id = 0;
     const char * type_name = 0;
 
     int  main_result = 1; /* error by default */
+
+    ACE_Env_Value<int> id (ACE_TEXT("DDS4CCM_DEFAULT_DOMAIN_ID"), domain_id);
+    domain_id = id;
 
     if (parse_args (argc, argv) != 0)
       return 1;
