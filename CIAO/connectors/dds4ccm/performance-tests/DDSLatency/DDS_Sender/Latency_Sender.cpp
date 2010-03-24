@@ -24,7 +24,7 @@ CORBA::UShort count_ = 0;
 CORBA::UShort number_of_msg_ = 0;
 Atomic_Boolean timer_ = false;
 Atomic_Boolean received_ = false;
-Atomic_Long seq_num_ = 0; 
+Atomic_Long seq_num_ = 0;
 CORBA::Double sigma_duration_squared_;
 ACE_UINT64 start_time_ = 0;
 ACE_UINT64 start_time_test_ = 0;
@@ -69,7 +69,7 @@ int
   {
     ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("d:i:s:O"));
     int c;
- 
+
     while ((c = get_opts ()) != -1)
       switch (c)
         {
@@ -246,8 +246,8 @@ int
                             "No samples reveived back.\n"));
        }
   }
- 
-  
+
+
   void
   write_one (void)
   {
@@ -343,22 +343,23 @@ int
       received_ = true;
     }
   }
- 
+
   int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
   {
     ::DDS::ReturnCode_t retcode;
     ::DDS::DataReader *data_reader = 0;
     HelloListener listener;
+    const char * type_name = 0;
     int    main_result = 1; /* error by default */
 
     if (parse_args (argc, argv) != 0){
-        ACE_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Error arguments.\n")));
         return 1;
     }
 
     /* Create the domain participant */
-    ::DDS::DomainParticipant *participant = 
+    ::DDS::DomainParticipant *participant =
                              ::DDS::DomainParticipantFactory::get_instance()->
                              create_participant_with_profile(
                                 domain_id,                   /* Domain ID */
@@ -367,13 +368,13 @@ int
                                 0,                           /* Listener */
                                 DDS_STATUS_MASK_NONE);
     if (!participant) {
-        ACE_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Unable to create domain participant.\n")));
         goto clean_exit;
     }
 
     /* Register type before creating topic */
-    const char * type_name = LatencyTestTypeSupport::get_type_name();
+    type_name = LatencyTestTypeSupport::get_type_name();
     retcode = LatencyTestTypeSupport::register_type(
                                                 participant, type_name);
     if (retcode != DDS_RETCODE_OK)
@@ -414,7 +415,7 @@ int
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data reader.\n")));
         goto clean_exit;
       }
-   
+
     /* Create data sample for writing */
     instance = LatencyTestTypeSupport::create_data();
     if (instance == NULL)
@@ -423,22 +424,22 @@ int
         goto clean_exit;
       }
 
-    init_values(); 
+    init_values();
 
     test_data_writer = LatencyTestDataWriter::narrow(data_writer);
     if (!test_data_writer )
       {
-        ACE_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("LatencyTestDataWriter_narrow failed.\n")));
         goto clean_exit;
      }
-    
+
     // Sleep a couple seconds to allow discovery to happen
     ACE_OS::sleep (5);
 
     // handle writing of messages
     start();
- 
+
     /* --- Clean Up ------------------------------------------------------- */
     ACE_OS::sleep (5);
     main_result = 0;
@@ -484,37 +485,37 @@ clean_exit:
 }
 void HelloListener::on_data_available(::DDS::DataReader *reader)
   {
-    LatencyTestDataReader * test_reader = 
+    LatencyTestDataReader * test_reader =
                              LatencyTestDataReader::narrow(reader);
     LatencyTest *instance = new LatencyTest;
     if (!test_reader)
     {
       /* In this specific case, this will never fail */
-      ACE_ERROR ((LM_ERROR, 
+      ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("LatencyTestDataReader::narrow failed.\n")));
       return;
     }
 
     /* Loop until there are messages available in the queue */
-     for(;;) 
+     for(;;)
        {
          ::DDS::SampleInfo        info;
          ::DDS::ReturnCode_t retcode = test_reader->take_next_sample(*instance,
                                                                      info);
-         if (retcode == DDS_RETCODE_NO_DATA) 
+         if (retcode == DDS_RETCODE_NO_DATA)
            {
              /*  No more samples */
              break;
            }
-         else if (retcode != DDS_RETCODE_OK) 
+         else if (retcode != DDS_RETCODE_OK)
            {
-             ACE_ERROR ((LM_ERROR, 
+             ACE_ERROR ((LM_ERROR,
                          ACE_TEXT ("Unable to take data from data reader,"
-                                   " error %d.\n"), 
+                                   " error %d.\n"),
                                    retcode));
              return;
            }
-         if (info.valid_data) 
+         if (info.valid_data)
            {
              ACE_UINT64 receive_time = 0;
 
