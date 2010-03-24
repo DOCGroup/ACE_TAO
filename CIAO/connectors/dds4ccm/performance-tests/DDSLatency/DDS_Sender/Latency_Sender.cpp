@@ -149,14 +149,22 @@ int
     ACE_UINT64 interval =  ( receive_time  - start_time_);
     ++count_;
     long duration = static_cast <CORBA::Long>(interval) - _clock_overhead_;
-    int i = count_;
-    duration_times[i-1] = duration;
-    sigma_duration_squared_ += (double)duration * (double)duration;
-    tv_total_ += duration;
-    if (duration > tv_max_.value ()|| (tv_max_.value () == 0L))
-      tv_max_ = duration;
-    if (duration < tv_min_.value () || (tv_min_.value () == 0L))
-      tv_min_ = duration;
+    if(count_ > iterations_)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: Internal error while getting more "
+                    "messages back as expected.\n"));
+      }
+    else
+    {
+      int i = count_;
+      duration_times[i-1] = duration;
+      sigma_duration_squared_ += (double)duration * (double)duration;
+      tv_total_ += duration;
+      if (duration > tv_max_.value ()|| (tv_max_.value () == 0L))
+        tv_max_ = duration;
+      if (duration < tv_min_.value () || (tv_min_.value () == 0L))
+        tv_min_ = duration;
+    }
   }
 
   void
