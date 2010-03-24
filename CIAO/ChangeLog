@@ -1,3 +1,24 @@
+Wed Mar 24 09:11:26 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
+        * connectors/dds4ccm/impl/dds/DataWriterListener_T.h:
+        * connectors/dds4ccm/impl/dds/DataWriterListener_T.cpp:
+        * connectors/dds4ccm/impl/dds/DomainParticipantListener_T.h:
+        * connectors/dds4ccm/impl/dds/DomainParticipantListener_T.cpp:
+        * connectors/dds4ccm/impl/dds/Utils.h:
+        * connectors/dds4ccm/impl/dds/ndds/ReliableWriterCacheChangedStatus.h:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.h:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.cpp:
+          Added RELIABLE_WRITER_CACHE_CHANGED_STATUS.
+
+        * connectors/dds4ccm/impl/dds/PublisherListener.h:
+        * connectors/dds4ccm/impl/dds/PublisherListener.cpp:
+        * connectors/dds4ccm/impl/dds/PublisherListener_T.h:
+        * connectors/dds4ccm/impl/dds/PublisherListener_T.cpp:
+        * connectors/dds4ccm/impl/dds/ndds/ReliableReaderActivityChangedStatus.h:
+          Added RELIABLE_WRITER_CACHE_CHANGED_STATUS and fixed
+          issues regarding RELIABLE_DR_CHANGED_STATUS.
+
 Wed Mar 24 07:11:48 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DDS_Get_T.cpp:
