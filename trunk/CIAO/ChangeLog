@@ -1,3 +1,16 @@
+Wed Mar 25 12:24:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DataWriterListener_T.cpp:
+        * connectors/dds4ccm/impl/dds/Subscriber.cpp:
+        * connectors/dds4ccm/impl/dds/SubscriberListener_T.cpp:
+          Layout changes
+
+        * connectors/dds4ccm/impl/dds/Publisher.cpp:
+          Added some more logging
+
+        * connectors/dds4ccm/performance-tests/LatencyTT/Sender/LatencyTT_Test_Sender_exec.cpp:
+          Fixed typo
+
 Wed Mar 25 11:41:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Receiver/Throughput_Receiver.cpp:

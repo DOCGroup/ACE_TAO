@@ -226,7 +226,6 @@ namespace CIAO
       ::DDS::StatusMask mask)
     {
       DDS4CCM_TRACE ("CCM_DDS_Subscriber_i::create_datareader_with_profile");
-      ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
       DDSDataReaderListener *ccm_dds_drl = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
@@ -250,18 +249,22 @@ namespace CIAO
               throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
             }
           else
-            ccm_dds_dr = this->create_datareader_with_profile (cf_topic->get_impl (),
+            {
+              ccm_dds_dr = this->create_datareader_with_profile (cf_topic->get_impl (),
                                                            library_name,
                                                            profile_name,
                                                            ccm_dds_drl,
                                                            mask);
+            }
         }
       else
-        ccm_dds_dr = this->create_datareader_with_profile (topic->get_impl (),
-                                                           library_name,
-                                                           profile_name,
-                                                           ccm_dds_drl,
-                                                           mask);
+        {
+          ccm_dds_dr = this->create_datareader_with_profile (topic->get_impl (),
+                                                             library_name,
+                                                             profile_name,
+                                                             ccm_dds_drl,
+                                                             mask);
+        }
 
       if (!ccm_dds_dr)
         {
@@ -278,10 +281,13 @@ namespace CIAO
                        profile_name));
         }
 
-      ccm_dds_dr->enable ();
+      ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
       ACE_NEW_THROW_EX (retval,
                         CCM_DDS_DataReader_i (ccm_dds_dr),
                         CORBA::NO_MEMORY ());
+
+      ccm_dds_dr->enable ();
+
       return retval._retn ();
     }
 

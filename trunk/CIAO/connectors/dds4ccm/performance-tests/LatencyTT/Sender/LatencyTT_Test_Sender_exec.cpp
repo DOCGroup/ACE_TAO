@@ -319,7 +319,7 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
      else
        {
          ACE_ERROR ((LM_ERROR, "SUMMARY SENDER latency time:\n "
-                            "No samples reveived back.\n"));
+                               "No samples received back.\n"));
        }
   }
 
