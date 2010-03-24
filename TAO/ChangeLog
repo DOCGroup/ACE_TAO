@@ -1,3 +1,62 @@
+Wed Mar 24 18:48:59 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ci.cpp:
+        * TAO_IDL/be/be_visitor_root/root_sth.cpp:
+        * TAO_IDL/be/be_visitor_root/root_exs.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ih.cpp:
+        * TAO_IDL/be/be_visitor_root/root_svh.cpp:
+        * TAO_IDL/be/be_visitor_root/cdr_op.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_root/serializer_op.cpp:
+        * TAO_IDL/be/be_visitor_root/root_cs.cpp:
+        * TAO_IDL/be/be_visitor_root/root_cnh.cpp:
+        * TAO_IDL/be/be_visitor_root/root_sh.cpp:
+        * TAO_IDL/be/be_visitor_root/root_svs.cpp:
+        * TAO_IDL/be/be_visitor_root/root_is.cpp:
+        * TAO_IDL/be/be_visitor_root/root_si.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_root/any_op.cpp:
+        * TAO_IDL/be/be_visitor_root/root_cns.cpp:
+        * TAO_IDL/be/be_visitor_root/root_exh.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ss.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_decl.cpp:
+        * TAO_IDL/be_include/be_visitor_root/root_ch.h:
+        * TAO_IDL/be_include/be_visitor_root/root_ci.h:
+        * TAO_IDL/be_include/be_visitor_root/root_sth.h:
+        * TAO_IDL/be_include/be_visitor_root/root_exs.h:
+        * TAO_IDL/be_include/be_visitor_root/root_svh.h:
+        * TAO_IDL/be_include/be_visitor_root/root_ih.h:
+        * TAO_IDL/be_include/be_visitor_root/cdr_op.h:
+        * TAO_IDL/be_include/be_visitor_root/root_ex_idl.h:
+        * TAO_IDL/be_include/be_visitor_root/root_cs.h:
+        * TAO_IDL/be_include/be_visitor_root/root_cnh.h:
+        * TAO_IDL/be_include/be_visitor_root/root_sh.h:
+        * TAO_IDL/be_include/be_visitor_root/root_si.h:
+        * TAO_IDL/be_include/be_visitor_root/root_is.h:
+        * TAO_IDL/be_include/be_visitor_root/root_svs.h:
+        * TAO_IDL/be_include/be_visitor_root/root.h:
+        * TAO_IDL/be_include/be_visitor_root/any_op.h:
+        * TAO_IDL/be_include/be_visitor_root/root_cns.h:
+        * TAO_IDL/be_include/be_visitor_root/root_exh.h:
+        * TAO_IDL/be_include/be_visitor_root/root_ss.h:
+        * TAO_IDL/be_include/be_visitor_decl.h:
+        * TAO_IDL/be_include/be_visitor_root.h:
+
+          Refactored the huge visit_root() method in base
+          class be_visitor_root into visit_root() methods
+          (also added) in the subclasses, which are the
+          ones actually instantiated at the top level of
+          the backend AST traversal. Also, additional
+          code generation and AST traversals, besides the
+          main AST traversal, were factored out into
+          self_explanatory methods in the appropriate
+          root visitor classes.
+
 Tue Mar 23 16:08:50 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * bin/tao_orb_tests.lst:

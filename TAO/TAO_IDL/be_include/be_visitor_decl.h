@@ -12,12 +12,12 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_VISITOR_DECL_H
 #define TAO_BE_VISITOR_DECL_H
 
 #include "be_visitor.h"
 #include "be_codegen.h"
+#include "be_helper.h"
 
 /**
  * @class be_visitor_decl
@@ -37,9 +37,6 @@ public:
   be_visitor_context *ctx (void);
 
 protected:
-  // Using a protected mechanism will allow derived visitors to access this
-  // information.
-
   /// Any context information required by the visitor.
   be_visitor_context *ctx_;
 
@@ -47,6 +44,9 @@ protected:
   /// contained by another.
   int gen_anonymous_base_type (be_type *bt,
                                TAO_CodeGen::CG_STATE cg_state);
+     
+  /// Our file stream.                             
+  TAO_OutStream &os_;
 };
 
 #endif // TAO_BE_VISITOR_DECL_H

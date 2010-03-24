@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ********************************
 // Root visitor for CIAO executor IDL
 // ********************************
@@ -25,6 +24,30 @@ be_visitor_root_ex_idl::be_visitor_root_ex_idl (
 
 be_visitor_root_ex_idl::~be_visitor_root_ex_idl (void)
 {
+}
+
+int
+be_visitor_root_ex_idl::visit_root (be_root *node)
+{
+  if (this->init () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_root_ex_idl::init - ")
+                         ACE_TEXT ("failed to initialize\n")),
+                        -1);
+    }
+    
+  if (this->visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_root_ex_idl::visit_root - ")
+                         ACE_TEXT ("codegen for scope failed\n")),
+                        -1);
+    }
+
+  (void) tao_cg->end_ciao_exec_idl ();
+
+  return 0;
 }
 
 int

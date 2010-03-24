@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_ROOT_ROOT_H_
 #define _BE_VISITOR_ROOT_ROOT_H_
 
@@ -33,15 +32,9 @@ public:
 
   ~be_visitor_root (void);
 
-  /// These are the only methods that differ from those of the
+  /// This is the only method that differs from that of the
   /// be_visitor_module bass class.
-  virtual int visit_root (be_root *node);
   virtual int visit_module (be_module *node);
-
-  // =helper. This is used by derived clases to set the right context
-
-  /// will be overridden by derived classes that set the appropriate context
-  virtual int init (void);
 };
 
 #endif /* _BE_VISITOR_ROOT_ROOT_H_ */

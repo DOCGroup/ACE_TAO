@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 // ********************************
 // Root visitor for CIAO connector impl header
 // ********************************
@@ -25,6 +24,30 @@ be_visitor_root_cnh::be_visitor_root_cnh (be_visitor_context *ctx)
 
 be_visitor_root_cnh::~be_visitor_root_cnh (void)
 {
+}
+
+int
+be_visitor_root_cnh::visit_root (be_root *node)
+{
+  if (this->init () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_root_cnh::init - ")
+                         ACE_TEXT ("failed to initialize\n")),
+                        -1);
+    }
+    
+  if (this->visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_root_cnh::visit_root - ")
+                         ACE_TEXT ("codegen for scope failed\n")),
+                        -1);
+    }
+
+  (void) tao_cg->end_ciao_conn_header ();
+
+  return 0;
 }
 
 int
