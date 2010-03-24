@@ -14,7 +14,10 @@ NDDS_QOS_PROFILES is defined and points to this file.
 For more information about XML QoS Profiles see Chapter 15 in the
 RTI Data Distribution Service user manual.
 -->
-<dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="c:/ndds/ndds.4.4d/scripts/../resource/rtiddsgen/../qos_profiles_4.4d/schema/rti_dds_qos_profiles.xsd" version="4.4d">
+<dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:noNamespaceSchemaLocation="/home/ndds/ndds.4.5b/scripts/../resource/rtiddsgen/../qos_profiles_4.5b/schema/rti_dds_qos_profiles.xsd"
+     version="4.5b">
+
   <!-- QoS Library containing the QoS profile used in the generated example.
 
         A QoS library is a named set of QoS profiles.
@@ -28,43 +31,69 @@ RTI Data Distribution Service user manual.
     <qos_profile name="LatencyQoS" is_default_qos="true">
       <!-- QoS used to configure the data writer created in the example code -->
       <participant_qos>
-        <receiver_pool>
+          <receiver_pool>
           <!-- (payload) 8192 + (est. overhead) 8 + 512 -->
-          <buffer_size>92160</buffer_size>
+          <buffer_size>8712</buffer_size>
         </receiver_pool>
 
-         </participant_qos>
+        <transport_builtin>
+            <mask>DDS_TRANSPORTBUILTIN_UDPv4</mask>
+        </transport_builtin>
+
+        <property>
+          <value>
+            <element>
+              <name>dds.transport.UDPv4.builtin.parent.message_size_max</name>
+              <value>8712</value></element>
+            <element>
+              <name>dds.transport.UDPv4.builtin.recv_socket_buffer_size</name>
+              <value>17424</value></element>
+            <element>
+              <name>dds.transport.UDPv4.builtin.send_socket_buffer_size</name>
+              <value>8712</value></element>
+          </value>
+        </property>
+      </participant_qos>
+
       <datawriter_qos>
         <reliability>
-          <kind>RELIABLE_RELIABILITY_QOS</kind>
-          <max_blocking_time>
-            <sec>DURATION_INFINITE_SEC</sec>
-            <nanosec>DURATION_INFINITE_NSEC</nanosec>
-          </max_blocking_time>
+          <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
         </reliability>
-        <history>
-          <kind>KEEP_ALL_HISTORY_QOS</kind>
+        <history><kind>DDS_KEEP_LAST_HISTORY_QOS</kind>
+           <depth>1</depth>
         </history>
         <durability>
-          <kind>TRANSIENT_DURABILITY_QOS</kind>
-            <!--kind>VOLATILE_DURABILITY_QOS</kind>
-          <direct_communication>true</direct_communication-->
+          <kind>VOLATILE_DURABILITY_QOS</kind>
         </durability>
         <resource_limits>
           <max_instances>1</max_instances>
           <initial_instances>1</initial_instances>
-          <max_samples>LENGTH_UNLIMITED</max_samples>
-          <initial_samples>100</initial_samples>
-          <max_samples_per_instance>LENGTH_UNLIMITED</max_samples_per_instance>
+          <max_samples>3</max_samples>
+          <initial_samples>3</initial_samples>
+          <max_samples_per_instance>3</max_samples_per_instance>
         </resource_limits>
-       </datawriter_qos>
+        <protocol>
+          <rtps_reliable_writer>
+            <!-- piggyback every sample -->
+            <heartbeats_per_max_samples>3</heartbeats_per_max_samples>
+            <max_nack_response_delay><sec>0</sec>
+                                     <nanosec>0</nanosec></max_nack_response_delay>
+            <!-- 1 year -->
+            <heartbeat_period><sec>604800</sec>
+                               <nanosec>1000000</nanosec></heartbeat_period>
+            <!-- 1 ms -->
+            <fast_heartbeat_period><sec>0</sec>
+                                   <nanosec>1000000</nanosec></fast_heartbeat_period>
+          </rtps_reliable_writer>
+        </protocol>
+      </datawriter_qos>
       <!-- QoS used to configure the data reader created in the example code -->
       <datareader_qos>
         <reliability>
-          <kind>RELIABLE_RELIABILITY_QOS</kind>
+           <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
         </reliability>
-        <history>
-          <kind>KEEP_ALL_HISTORY_QOS</kind>
+        <history><kind>DDS_KEEP_LAST_HISTORY_QOS</kind>
+           <depth>1</depth>
         </history>
         <resource_limits>
           <initial_samples>100</initial_samples>
@@ -74,11 +103,18 @@ RTI Data Distribution Service user manual.
           <max_samples_per_instance>LENGTH_UNLIMITED</max_samples_per_instance>
         </resource_limits>
         <durability>
-          <kind>TRANSIENT_DURABILITY_QOS</kind>
-          <!-->VOLATILE_DURABILITY_QOS</kind>
-          <direct_communication>true</direct_communication-->
+          <kind>VOLATILE_DURABILITY_QOS</kind>
+          <direct_communication>true</direct_communication>
         </durability>
+        <protocol>
+          <rtps_reliable_reader>
+            <max_heartbeat_response_delay><sec>0</sec>
+                                          <nanosec>0</nanosec>
+            </max_heartbeat_response_delay>
+          </rtps_reliable_reader>
+        </protocol>
       </datareader_qos>
     </qos_profile>
-   </qos_library>
+  </qos_library>
+
 </dds>
