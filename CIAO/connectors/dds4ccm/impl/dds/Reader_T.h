@@ -68,6 +68,8 @@ namespace CIAO
 
         void set_impl (CCM_DDS_DataReader_i *reader);
 
+        DDS_ReturnCode_t passivate (void);
+
       private:
         CCM_DDS_DataReader_i *reader_;
 
