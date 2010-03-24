@@ -6,7 +6,7 @@
   <label>Throughput_Depl_2</label>
   <UUID>Throughput_Depl_2</UUID>
 
-  
+
   <implementation xmi:id="Throughput_ConnectorComponentImplementation">
     <name>Throughput_ConnectorComponentImplementation</name>
     <source/>
@@ -110,8 +110,8 @@
       </value>
     </execParameter>
   </implementation>
-  
-  
+
+
   <implementation xmi:id="SenderComponentImplementation">
     <name>SenderComponentImplementation</name>
     <source/>
@@ -187,7 +187,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>HelloTest_Library#ThroughputQoS</string>
+          <string>HelloTest_Library#ThroughputPartQoS</string>
         </value>
       </value>
     </configProperty>
@@ -263,7 +263,7 @@
       </value>
     </configProperty>
     <configProperty>
-      <!-- Specifies how long (in ms) to sleep after writing a specific--> 
+      <!-- Specifies how long (in ms) to sleep after writing a specific-->
       <!-- effort specified by start_load and incr_load -->
       <name>recover_time</name>
       <value>
@@ -336,7 +336,7 @@
       <instance xmi:idref="Throughput_Sec_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
-  
+
   <connection>
     <name>connector_status_sender</name>
     <deployRequirement>
