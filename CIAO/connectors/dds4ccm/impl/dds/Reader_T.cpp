@@ -645,7 +645,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::set_contentfiltered
   const char * profile_name,
   Getter_T<DDS_TYPE, CCM_TYPE, FIXED> * dds_get)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::set_qos");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::set_contentfilteredtopic_data");
   this->library_name_ = library_name;
   this->profile_name_ = profile_name;
   this->dds_get_ = dds_get;
