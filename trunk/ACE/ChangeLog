@@ -1,3 +1,8 @@
+Wed Mar 24 07:17:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/fuzz.pl:
+          Added dds4ccm_trace checks.
+
 Tue Mar 23 10:59:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debianbuild/patches/34-bts386713.dpatch:
