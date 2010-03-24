@@ -42,13 +42,6 @@ $tg_naming = 0;
 $tg_exe_man = 0;
 $tg_executor = 0;
 
-$ENV{"DANCE_TRACE_ENABLE"} = 0;
-$ENV{"CIAO_TRACE_ENABLE"} = 0;
-$ENV{"CIAO_LOG_LEVEL"} = 5;
-$ENV{"DANCE_LOG_LEVEL"} = 5;
-# $ENV{"DDS4CCM_NDDS_LOG_VERBOSITY"} =  31;
-
-
 $status = 0;
 $cdp_file = "Plan_sub.cdp";
 $cdp_file_two = "Plan_pub.cdp";

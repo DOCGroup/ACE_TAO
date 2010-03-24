@@ -1,3 +1,23 @@
+Wed Mar 25 11:21:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_pub.pl
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_pub3.pl
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_pub_BE.pl
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_sub.pl
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_sub2.pl
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_sub3.pl
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_sub_BE.pl
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_test.pl
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/run_pub.pl
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/run_sub.pl
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/run_test.pl
+        * connectors/dds4ccm/performance-tests/LatencyTT/descriptors/run_test.pl
+        * connectors/dds4ccm/performance-tests/Throughput/descriptors/Plan_pub.cdp
+        * connectors/dds4ccm/performance-tests/Throughput/descriptors/Plan_sub.cdp
+        * connectors/dds4ccm/performance-tests/Throughput/descriptors/run_test.pl
+        * connectors/dds4ccm/tests/DDSWriterEntity/descriptors/run_test.pl
+          Don't change log/trace levels in the scripts
+
 Wed Mar 24 10:35:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DomainParticipant.cpp:
