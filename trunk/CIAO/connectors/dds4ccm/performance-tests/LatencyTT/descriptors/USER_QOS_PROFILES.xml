@@ -57,7 +57,7 @@ RTI Data Distribution Service user manual.
 
       <datawriter_qos>
         <reliability>
-          <kind>RELIABLE_RELIABILITY_QOS</kind>
+          <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
         </reliability>
         <history><kind>DDS_KEEP_LAST_HISTORY_QOS</kind>
            <depth>1</depth>
@@ -90,7 +90,7 @@ RTI Data Distribution Service user manual.
       <!-- QoS used to configure the data reader created in the example code -->
       <datareader_qos>
         <reliability>
-           <kind>RELIABLE_RELIABILITY_QOS</kind>
+           <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
         </reliability>
         <history><kind>DDS_KEEP_LAST_HISTORY_QOS</kind>
            <depth>1</depth>
@@ -108,9 +108,8 @@ RTI Data Distribution Service user manual.
         </durability>
         <protocol>
           <rtps_reliable_reader>
-            <max_heartbeat_response_delay>
-              <sec>0</sec>
-              <nanosec>0</nanosec>
+            <max_heartbeat_response_delay><sec>0</sec>
+                                          <nanosec>0</nanosec>
             </max_heartbeat_response_delay>
           </rtps_reliable_reader>
         </protocol>
