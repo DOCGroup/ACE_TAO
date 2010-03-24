@@ -14,22 +14,22 @@
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
 #if (CIAO_DDS4CCM_OPENDDS==1)
-typedef  ::DDS::DomainParticipantFactory DDSDomainParticipantFactory;
+  typedef  ::DDS::DomainParticipantFactory DDSDomainParticipantFactory;
 #endif
 
 namespace CIAO
 {
   namespace DDS4CCM
   {
-     CCM_DDS_DomainParticipantFactory_i::CCM_DDS_DomainParticipantFactory_i (void)
-     {
-       DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_i::CCM_DDS_DomainParticipantFactory_i");
-     }
+    CCM_DDS_DomainParticipantFactory_i::CCM_DDS_DomainParticipantFactory_i (void)
+    {
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_i::CCM_DDS_DomainParticipantFactory_i");
+    }
 
-     CCM_DDS_DomainParticipantFactory_i::~CCM_DDS_DomainParticipantFactory_i (void)
-     {
-       DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_i::~CCM_DDS_DomainParticipantFactory_i");
-     }
+    CCM_DDS_DomainParticipantFactory_i::~CCM_DDS_DomainParticipantFactory_i (void)
+    {
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_i::~CCM_DDS_DomainParticipantFactory_i");
+    }
 
     ::DDS::DomainParticipant_ptr
     CCM_DDS_DomainParticipantFactory_i::create_participant (::DDS::DomainId_t domain_id,
@@ -172,7 +172,7 @@ namespace CIAO
         else
           {
             DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_DomainParticipantFactory_i::create_participant_with_profile - "
-                        "Re-using participant for QOS profile <%C> and domin <%d>.\n",
+                        "Re-using participant for QOS profile <%C> and domain <%d>.\n",
                         qos_profile.c_str (),
                         domain_id));
             return ::DDS::DomainParticipant::_duplicate (ccm_dds_dp);
