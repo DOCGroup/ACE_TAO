@@ -1614,7 +1614,8 @@ sub check_for_bad_ace_trace()
                 # Look for TRACE statements
                 if (m/ACE_OS_TRACE\s*\(\s*\"(.*)\"/
                     || m/ACE_TRACE\s*\(\s*\"(.*)\"/
-                    || m/CIAO_TRACE\s*\(\s*\"(.*)\"/) {
+                    || m/CIAO_TRACE\s*\(\s*\"(.*)\"/
+                    || m/DDS4CCM_TRACE\s*\(\s*\"(.*)\"/) {
                     my $trace = $1;
 
                     # reduce the classname
