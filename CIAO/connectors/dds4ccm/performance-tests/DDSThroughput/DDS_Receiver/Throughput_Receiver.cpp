@@ -2,6 +2,7 @@
 
 #include "ace/Get_Opt.h"
 #include "tao/ORB_Core.h"
+#include "ace/Env_Value_T.h"
 #include "ace/High_Res_Timer.h"
 #include "Throughput_Base.h"
 #include "Throughput_BaseSupport.h"
@@ -170,6 +171,10 @@ public:
     ::DDS::DataReader *cmd_data_reader = 0;
     const char * type_name_cmd = 0;
     const char * type_name = 0;
+
+    ACE_Env_Value<int> id (ACE_TEXT("DDS4CCM_DEFAULT_DOMAIN_ID"), domain_id);
+    domain_id = id;
+
     if (parse_args (argc, argv) != 0)
       return 1;
 

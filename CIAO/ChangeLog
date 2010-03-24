@@ -1,3 +1,10 @@
+Wed Mar 25 11:41:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Receiver/Throughput_Receiver.cpp:
+        * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Sender/Throughput_Sender.cpp:
+          Reuse the DDS4CCM_DEFAULT_DOMAINID, this is unique on all
+          build systems
+
 Wed Mar 25 11:21:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_pub.pl
