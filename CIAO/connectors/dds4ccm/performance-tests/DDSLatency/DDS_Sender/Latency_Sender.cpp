@@ -1,8 +1,11 @@
+// $Id$
+
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "tao/ORB_Core.h"
 #include "ace/Timer_Queue.h"
 #include "ace/Reactor.h"
+#include "ace/Env_Value_T.h"
 #include "Latency_Base.h"
 #include "Latency_BaseSupport.h"
 #include "Latency_BasePlugin.h"
@@ -155,7 +158,8 @@ int
     if (duration < tv_min_.value () || (tv_min_.value () == 0L))
       tv_min_ = duration;
   }
-   void
+
+  void
   reset_results()
   {
     count_ = 0;
@@ -351,6 +355,9 @@ int
     HelloListener listener;
     const char * type_name = 0;
     int    main_result = 1; /* error by default */
+
+    ACE_Env_Value<int> id (ACE_TEXT("DDS4CCM_DEFAULT_DOMAIN_ID"), domain_id);
+    domain_id = id;
 
     if (parse_args (argc, argv) != 0){
         ACE_ERROR ((LM_ERROR,
