@@ -28,7 +28,7 @@ CORBA::UShort domain_id = 0;
   {
     ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("d:O"));
     int c;
-  
+
     while ((c = get_opts ()) != -1)
       switch (c)
         {
@@ -79,13 +79,14 @@ public:
     ::DDS::ReturnCode_t retcode;
     HelloListener listener;
     ::DDS::DataReader *data_reader = 0;
+    const char * type_name = 0;
 
-    int main_result = 1; /* error by default */ 
+    int main_result = 1; /* error by default */
     if (parse_args (argc, argv) != 0)
       return 1;
 
     /* Create the domain participant on domain ID 0 */
-    ::DDS::DomainParticipant *participant = 
+    ::DDS::DomainParticipant *participant =
                ::DDS::DomainParticipantFactory::get_instance()->
         create_participant_with_profile(
                            domain_id,          /* Domain ID */
@@ -93,16 +94,16 @@ public:
                            part_name,           /* QoS */
                            0,                   /* Listener */
                            DDS_STATUS_MASK_NONE);
-    if (!participant) 
+    if (!participant)
       {
-        ACE_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Unable to create domain participant.\n")));
         goto clean_exit;
       }
     /* Register type before creating topic */
-    const char * type_name = LatencyTestTypeSupport::get_type_name();
+    type_name = LatencyTestTypeSupport::get_type_name();
     retcode = LatencyTestTypeSupport::register_type(participant, type_name);
-      if (retcode != DDS_RETCODE_OK) 
+      if (retcode != DDS_RETCODE_OK)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Unable to register topic type.\n")));
@@ -119,7 +120,7 @@ public:
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create topic.\n")));
       goto clean_exit;
     }
-   
+
     /* Create the data reader using the default publisher */
     data_reader = participant->create_datareader_with_profile(
                                                  topic,
@@ -127,7 +128,7 @@ public:
                                                  prof_name,    /* QoS */
                                                  &listener,    /* Listener */
                                                  DDS_DATA_AVAILABLE_STATUS);
-                                              
+
     if (!data_reader )
       {
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data reader.\n")));
@@ -148,7 +149,7 @@ public:
      test_data_writer = LatencyTestDataWriter::narrow(data_writer);
     if (!test_data_writer )
       {
-        ACE_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("DDS_StringDataWriter_narrow failed.\n")));
         goto clean_exit;
      }
@@ -159,7 +160,7 @@ public:
      * Distribution Service will call the on_data_available_callback function.
     */
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ready to read data.\n")));
-    for (;;) 
+    for (;;)
     {
       ACE_OS::sleep (1);
       if(shutdown_flag)
