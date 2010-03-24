@@ -597,3 +597,4 @@ TAO_OutStream::print (AST_Expression *expr)
 
   return *this;
 }
+

@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_ROOT_CDR_OP_H_
 #define _BE_VISITOR_ROOT_CDR_OP_H_
 
@@ -29,15 +28,11 @@
  */
 class be_visitor_root_cdr_op : public be_visitor_root
 {
-
 public:
-  /// constructor
   be_visitor_root_cdr_op (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_root_cdr_op (void);
 
-  /// visit root
   virtual int visit_root (be_root *node);
 };
 

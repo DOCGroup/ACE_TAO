@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "be_codegen.h"
 #include "be_helper.h"
 #include "be_visitor_factory.h"
@@ -1640,7 +1639,8 @@ TAO_CodeGen::end_client_header (void)
         << be_nl << be_nl;
     }
 
-  *this->client_header_ << "#endif /* ifndef */" << be_nl << be_nl;
+  *this->client_header_ << "#endif /* ifndef */\n"
+                        << "\n";
 
   return 0;
 }
@@ -1653,6 +1653,8 @@ TAO_CodeGen::end_client_inline (void)
   // End versioned namespace support.  Do not place include directives
   // before this.
   *this->client_inline_ << be_global->versioning_end ();
+
+  *this->client_inline_ << "\n";
 }
 
 void
@@ -1663,6 +1665,8 @@ TAO_CodeGen::end_client_stubs (void)
   // End versioned namespace support.  Do not place include directives
   // before this.
   *this->client_stubs_ << be_global->versioning_end ();
+
+  *this->client_stubs_ << "\n";
 }
 
 int
@@ -1705,7 +1709,9 @@ TAO_CodeGen::end_server_header (void)
                             << "\"\n";
     }
 
-  *this->server_header_ << "#endif /* ifndef */\n";
+  *this->server_header_ << "#endif /* ifndef */\n"
+                        << "\n";
+                        
   return 0;
 }
 
@@ -1717,6 +1723,8 @@ TAO_CodeGen::end_server_inline (void)
   // End versioned namespace support.  Do not place include directives
   // before this.
   *this->server_inline_ << be_global->versioning_end ();
+
+  *this->server_inline_ << "\n";
 }
 
 int
@@ -1804,7 +1812,8 @@ TAO_CodeGen::end_server_template_header (void)
                                      << "\"\n";
     }
 
-  *this->server_template_header_ << "#endif /* ifndef */\n";
+  *this->server_template_header_ << "#endif /* ifndef */\n"
+                                 << "\n";
   return 0;
 }
 
@@ -1816,7 +1825,8 @@ TAO_CodeGen::end_server_template_skeletons (void)
   *this->server_template_skeletons_ << be_global->versioning_end ();
 
   // Code to put the last #endif.
-  *this->server_template_skeletons_ << "\n#endif /* ifndef */\n";
+  *this->server_template_skeletons_ << "\n#endif /* ifndef */\n"
+                                    << "\n";
 
   return 0;
 }
@@ -1829,7 +1839,8 @@ TAO_CodeGen::end_server_skeletons (void)
   *this->server_skeletons_ << be_global->versioning_end ();
 
   // Code to put the last #endif.
-  *this->server_skeletons_ << "\n\n#endif /* ifndef */\n";
+  *this->server_skeletons_ << "\n\n#endif /* ifndef */\n"
+                           << "\n";
 
   return 0;
 }

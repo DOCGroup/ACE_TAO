@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_ROOT_ROOT_CS_H_
 #define _BE_VISITOR_ROOT_ROOT_CS_H_
 
@@ -24,19 +23,30 @@
  *
  * @brief be_visitor_root_cs
  *
- * This is a concrete visitor to generate the client stubs for root
+ * This is a concrete visitor to generate the client
+ * stubs for root
  */
 class be_visitor_root_cs : public be_visitor_root
 {
 public:
-  /// constructor
   be_visitor_root_cs (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_root_cs (void);
 
-  /// set the right context and make a visitor
-  virtual int init (void);
+  virtual int visit_root (be_root *node);
+
+private:
+  /// Open file and initialize stream.
+  int init (void);
+
+  /// Encapsulating various bits of code generation peculiar
+  /// to the client source file, done either before or after
+  /// he main scope traversal.
+  int gen_arg_traits (be_root *node);
+  int gen_obv_defns (be_root *node);
+  int gen_any_ops (be_root *node);
+  int gen_cdr_ops (be_root *node);
+  int gen_dds_serializer_ops (be_root *node);
 };
 
 #endif /* _BE_VISITOR_ROOT_ROOT_CS_H_ */
