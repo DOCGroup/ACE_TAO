@@ -1,4 +1,6 @@
-project(*sender_plian) : nddslib, acelib, taolib {
+// $Id$
+
+project(*latency_sender_plain) : nddslib, acelib, taolib {
   after += DDS_Latency_Base_plain_stub
   exename = DDS_Sender
   avoids += ace_for_tao
@@ -6,7 +8,7 @@ project(*sender_plian) : nddslib, acelib, taolib {
   libout = ../lib
   includes += ../Base
   libs  += DDS_Latency_Base_plain_stub
-  
+
   Source_Files {
     Latency_Sender.cpp
   }
