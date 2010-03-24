@@ -103,12 +103,21 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::passivate (void)
   DDS4CCM_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::passivate");
   try
     {
-      DDS_ReturnCode_t const retcode  = this->dds_get_.passivate ();
+      DDS_ReturnCode_t retcode  = this->dds_get_.passivate ();
       if (retcode != DDS_RETCODE_OK)
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
             "DDS_Get_T::passivate - "
             "Unable to passivate Getter: <%C>\n",
+            ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw CORBA::INTERNAL ();
+        }
+      retcode = this->dds_read_.passivate ();
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+            "DDS_Get_T::passivate - "
+            "Unable to passivate Reader: <%C>\n",
             ::CIAO::DDS4CCM::translate_retcode (retcode)));
           throw CORBA::INTERNAL ();
         }

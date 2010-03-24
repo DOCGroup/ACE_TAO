@@ -652,22 +652,23 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::set_contentfiltered
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+DDS_ReturnCode_t
+CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::passivate ()
+{
+  #if (DDS4CCM_USES_QUERY_CONDITION==1)
+    if (this->qc_)
+      {
+        return this->impl ()->delete_readcondition (this->qc_);
+      }
+  #endif
+  return DDS_RETCODE_OK;
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::set_impl (
   CCM_DDS_DataReader_i *reader)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::set_impl");
-  if (!reader)
-    {
-      #if (DDS4CCM_USES_QUERY_CONDITION==1)
-        if (this->qc_)
-          {
-            this->impl ()->delete_readcondition (this->qc_);
-          }
-      #endif
-    }
-  else
-    {
-      this->reader_ = reader;
-    }
+  this->reader_ = reader;
 }

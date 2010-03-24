@@ -152,7 +152,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   Receiver_exec_i::read_all (void)
   {
     QueryFilterTestSeq     *queryfiltertest_info_seq;
-    ::CCM_DDS::ReadInfoSeq  *readinfo_seq;
+    ::CCM_DDS::ReadInfoSeq *readinfo_seq;
     this->reader_->read_all (
             queryfiltertest_info_seq,
             readinfo_seq);

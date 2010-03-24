@@ -1,3 +1,16 @@
+Wed Mar 24 07:11:48 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/dds/Reader_T.h:
+        * connectors/dds4ccm/impl/dds/Reader_T.cpp:
+          Created passivate on Reader. This prevents precondition_not_met errors.
+
+        * connectors/dds4ccm/impl/dds/Getter_T.cpp:
+          Setting internal reader to nil in set_impl.
+
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.cpp:
+          Layout changes.
+
 Tue Mar 23 15:16:13 UTC 2010  Martin Corino <mcorino@remedy.nl>
 
         * DAnCE/Plan_Launcher/Plan_Launcher.cpp:

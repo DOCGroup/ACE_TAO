@@ -242,7 +242,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::create_conditions ()
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::set_datareader");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::create_conditions");
 
   // Now create the waitset conditions
   ACE_NEW_THROW_EX (this->ws_,
@@ -273,6 +273,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::set_impl (
           delete this->ws_;
           this->ws_ = 0;
         }
+      this->reader_ = 0;
     }
   else
     {
@@ -303,6 +304,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one (
             {
               DDS_SampleInfoSeq sample_info;
               typename DDS_TYPE::dds_seq_type data;
+//               printf ("GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE %p\n", this->impl ());
               DDS_ReturnCode_t retcode = this->impl ()->read_w_condition (
                                                                   data,
                                                                   sample_info,
@@ -389,6 +391,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false>::get_one (
             {
               DDS_SampleInfoSeq sample_info;
               typename DDS_TYPE::dds_seq_type data;
+              printf ("GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE %p\n", this->impl ());
               DDS_ReturnCode_t retcode = this->impl ()->read_w_condition (
                                                                   data,
                                                                   sample_info,
