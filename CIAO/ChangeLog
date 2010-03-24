@@ -1,3 +1,8 @@
+Wed Mar 24 09:59:35 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Errors in CSLUnexpStat are fixed.
+
 Wed Mar 24 09:11:26 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
