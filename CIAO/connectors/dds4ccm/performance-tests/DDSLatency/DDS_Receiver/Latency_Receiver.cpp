@@ -15,10 +15,10 @@ bool shutdown_flag = false;
 CORBA::LongLong count_ = 0; // total count of all received messages
 
 LatencyTest *instance =0;
-::DDS::Topic *topic = 0;
+::DDS::Topic *send_topic = 0;
+::DDS::Topic *receive_topic = 0;
 ::DDS::DataWriter *data_writer = 0;
 LatencyTestDataWriter *test_data_writer = 0;
-
 
 const char *lib_name = "HelloTest_Library";
 const char *prof_name = "LatencyQoS";
@@ -115,13 +115,24 @@ public:
                       ACE_TEXT ("Unable to register topic type.\n")));
           goto clean_exit;
         }
-    topic = participant->create_topic(
-                        "Test data",            /* Topic name*/
+    send_topic = participant->create_topic(
+                        "send",            /* Topic name*/
                         type_name,               /* Type name */
                         DDS_TOPIC_QOS_DEFAULT,   /* Topic QoS */
                         0,                       /* Listener  */
                         DDS_STATUS_MASK_NONE);
-    if (!topic)
+    if (!send_topic)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create topic.\n")));
+      goto clean_exit;
+    }
+    receive_topic = participant->create_topic(
+                        "receive",            /* Topic name*/
+                        type_name,               /* Type name */
+                        DDS_TOPIC_QOS_DEFAULT,   /* Topic QoS */
+                        0,                       /* Listener  */
+                        DDS_STATUS_MASK_NONE);
+    if (!receive_topic)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create topic.\n")));
       goto clean_exit;
@@ -129,7 +140,7 @@ public:
 
     /* Create the data reader using the default publisher */
     data_reader = participant->create_datareader_with_profile(
-                                                 topic,
+                                                 send_topic,
                                                  lib_name,
                                                  prof_name,    /* QoS */
                                                  &listener,    /* Listener */
@@ -140,9 +151,9 @@ public:
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data reader.\n")));
          goto clean_exit;
       }
-/* Create the data writer using the default publisher */
+    /* Create the data writer using the default publisher */
     data_writer = participant->create_datawriter_with_profile(
-                                topic,
+                                receive_topic,
                                 lib_name,
                                 prof_name,             /* QoS */
                                 0,                     /* Listener */
@@ -152,7 +163,7 @@ public:
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data writer.\n")));
         goto clean_exit;
       }
-     test_data_writer = LatencyTestDataWriter::narrow(data_writer);
+    test_data_writer = LatencyTestDataWriter::narrow(data_writer);
     if (!test_data_writer )
       {
         ACE_ERROR ((LM_ERROR,
@@ -220,41 +231,40 @@ clean_exit:
     /* Perform a safe type-cast from a generic data reader into a
      * specific data reader for the type "LatencyTestDataReader"
      */
-
-     LatencyTestDataReader * test_reader = 
+    LatencyTestDataReader * test_reader =
                              LatencyTestDataReader::narrow(reader);
     LatencyTest *instance = new LatencyTest;
     if (!test_reader)
     {
       /* In this specific case, this will never fail */
-      ACE_ERROR ((LM_ERROR, 
+      ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("::DDS::StringDataReader::narrow failed.\n")));
       return;
     }
 
     /* Loop until there are messages available in the queue */
-     for(;;) 
+     for(;;)
        {
          ::DDS::SampleInfo        info;
          ::DDS::ReturnCode_t retcode = test_reader->take_next_sample(*instance,
                                                                      info);
-         if (retcode == DDS_RETCODE_NO_DATA) 
+         if (retcode == DDS_RETCODE_NO_DATA)
            {
              /*  No more samples */
              break;
            }
-         else if (retcode != DDS_RETCODE_OK) 
+         else if (retcode != DDS_RETCODE_OK)
            {
-             ACE_ERROR ((LM_ERROR, 
+             ACE_ERROR ((LM_ERROR,
                          ACE_TEXT ("Unable to take data from data reader,"
-                                   " error %d.\n"), 
+                                   " error %d.\n"),
                                    retcode));
              return;
            }
-         if (info.valid_data) 
+         if (info.valid_data)
            {
                write_back(*instance);
            }
         }
   }
- 
+

@@ -19,9 +19,9 @@ $tg_receiver->AddLibPath ('../lib');
 print "Start receiver\n";
 $R = $tg_receiver->CreateProcess ("$CIAO_ROOT/connectors/dds4ccm/performance-tests/DDSLatency/DDS_Receiver/DDS_receiver", "");
 $R->Spawn();
+sleep (5);
 print "Start sender\n";
 $S = $tg_sender->CreateProcess ("$CIAO_ROOT/connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/DDS_Sender", "");
 $S->SpawnWaitKill ($tg_sender->ProcessStartWaitInterval () + 180);
 $R->Kill ();
-
 exit 0;
