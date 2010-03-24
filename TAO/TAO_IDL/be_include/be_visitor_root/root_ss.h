@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_ROOT_ROOT_SS_H_
 #define _BE_VISITOR_ROOT_ROOT_SS_H_
 
@@ -29,14 +28,20 @@
 class be_visitor_root_ss : public be_visitor_root
 {
 public:
-  /// constructor
   be_visitor_root_ss (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_root_ss (void);
 
-  /// set the right context and make a visitor
-  virtual int init (void);
+  virtual int visit_root (be_root *node);
+
+private:
+  /// Open file and initialize stream.
+  int init (void);
+  
+  /// Generate arg template trait specializations in
+  /// the skeleton source file, done before the main
+  /// scope traversal.
+  int gen_arg_traits (be_root *node);
 };
 
 #endif /* _BE_VISITOR_ROOT_ROOT_SS_H_ */

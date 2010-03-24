@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_ROOT_ROOT_SVS_H_
 #define _BE_VISITOR_ROOT_ROOT_SVS_H_
 
@@ -33,9 +32,12 @@ public:
   be_visitor_root_svs (be_visitor_context *ctx);
 
   ~be_visitor_root_svs (void);
+  
+  virtual int visit_root (be_root *node);
 
+private:
   /// Set the right context and make a visitor.
-  virtual int init (void);
+  int init (void);
 };
 
 #endif /* _BE_VISITOR_ROOT_ROOT_SVS_H_ */

@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 // ***************************************************************************
 // Sequence visitor for generating CDR operator declarations in the client header
 // ***************************************************************************
@@ -70,28 +69,33 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
           << "\n#define _TAO_CDR_OP_" << node->flat_name () << "_H_";
     }
 
-  *os << be_global->core_versioning_begin () << be_nl;
+  *os << be_global->core_versioning_begin ();
 
+  *os << be_nl
+      << be_global->stub_export_macro () << " ::CORBA::Boolean"
+      << " operator<< (" << be_idt_nl
+      << "TAO_OutputCDR &strm," << be_nl
+      << "const " << node->name () << " &_tao_sequence);"
+      << be_uidt;
+      
   *os << be_nl << be_nl
       << be_global->stub_export_macro () << " ::CORBA::Boolean"
-      << " operator<< (" << be_idt << be_idt_nl
-      << "TAO_OutputCDR &strm," << be_nl
-      << "const " << node->name () << " &_tao_sequence" << be_uidt_nl
-      << ");" << be_uidt_nl;
-  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
-      << " operator>> (" << be_idt << be_idt_nl
+      << " operator>> (" << be_idt_nl
       << "TAO_InputCDR &strm," << be_nl
-      << node->name () << " &_tao_sequence" << be_uidt_nl
-      << ");" << be_uidt;
+      << node->name () << " &_tao_sequence);" << be_uidt;
 
   if (be_global->gen_ostream_operators ())
     {
-      *os << be_global->stub_export_macro () << " std::ostream&"
-          << " operator<< (std::ostream &strm, const "
-          << node->name () << " &_tao_sequence);" << be_nl;
+      *os << be_nl << be_nl
+          << be_global->stub_export_macro () << " std::ostream&"
+          << " operator<< (" << be_idt_nl
+          << "std::ostream &strm," << be_nl
+          << "const " << node->name () << " &_tao_sequence);"
+          << be_uidt;
     }
 
-  *os << be_global->core_versioning_end () << be_nl;
+  *os << be_nl
+      << be_global->core_versioning_end () << be_nl;
 
   if (tdef == 0)
     {

@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ******************************************************
 // Generic Module visitor
 // ******************************************************
@@ -38,8 +37,8 @@ be_visitor_module::visit_module (be_module *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_module::visit_module - "
-                         "codegen for scope failed\n"),
+                         ACE_TEXT ("be_visitor_module::visit_module - ")
+                         ACE_TEXT ("codegen for scope failed\n")),
                         -1);
     }
 

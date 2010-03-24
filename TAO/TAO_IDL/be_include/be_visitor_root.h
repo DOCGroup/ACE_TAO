@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_VISITOR_ROOT_H
 #define TAO_BE_VISITOR_ROOT_H
 

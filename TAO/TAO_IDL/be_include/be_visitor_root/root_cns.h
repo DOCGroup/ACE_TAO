@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_ROOT_ROOT_CNS_H_
 #define _BE_VISITOR_ROOT_ROOT_CNS_H_
 
@@ -34,8 +33,10 @@ public:
 
   ~be_visitor_root_cns (void);
 
-  /// Set the right context and make a visitor.
-  virtual int init (void);
+  virtual int visit_root (be_root *node);
+
+  /// Open file and initialize stream.
+  int init (void);
 };
 
 #endif /* _BE_VISITOR_ROOT_ROOT_CNS_H_ */

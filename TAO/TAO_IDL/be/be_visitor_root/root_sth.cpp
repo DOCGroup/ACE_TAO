@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ****************************************
 // Root visitor for server template header
 // ****************************************
@@ -27,66 +26,30 @@ be_visitor_root_sth::~be_visitor_root_sth (void)
 }
 
 int
-be_visitor_root_sth::init (void)
+be_visitor_root_sth::visit_root (be_root *node)
 {
-  // Open the file.
-  if (tao_cg->start_server_template_header (
-          be_global->be_get_server_template_hdr_fname ()
-        )
-      == -1)
+  if (! be_global->gen_tie_classes ())
     {
-      ACE_ERROR_RETURN ((
-          LM_ERROR,
-          "(%N:%l) be_visitor_root_sth::init - "
-          "Error:Unable to open server template header file : %s\n",
-          be_global->be_get_server_template_hdr_fname ()
-        ),
-        -1
-      );
+      return 0;
+    }
+    
+  if (this->init () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_root_sth::init - ")
+                         ACE_TEXT ("failed to initialize\n")),
+                        -1);
+    }
+    
+  if (this->visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_root_sth::visit_root - ")
+                         ACE_TEXT ("codegen for scope failed\n")),
+                        -1);
     }
 
-  // Set the stream and the next state.
-  this->ctx_->stream (tao_cg->server_template_header ());
-  return 0;
-}
-
-int
-be_visitor_root_sth::visit_scope (be_scope *node)
-{
-  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
-       !si.is_done ();
-       si.next ())
-    {
-      AST_Decl *d = si.item ();
-
-      if (d == 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_root_sth::visit_scope - "
-                             "bad node in this scope\n"),
-                            -1);
-        }
-
-      be_decl *bd = be_decl::narrow_from_decl (d);
-
-      // Set the scope node as "node" in which the code is being
-      // generated so that elements in the node's scope can use it
-      // for code generation.
-      this->ctx_->scope (node);
-
-      // Set the node to be visited.
-      this->ctx_->node (bd);
-
-      // Send the visitor.
-      if (bd == 0 || bd->accept (this) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_root_sth::visit_scope - "
-                             "codegen for scope failed\n"),
-                            -1);
-
-        }
-    }
+  (void) tao_cg->end_server_template_header ();
 
   return 0;
 }
@@ -166,5 +129,27 @@ int
 be_visitor_root_sth::visit_component (be_component *node)
 {
   return this->visit_interface (node);
+}
+
+int
+be_visitor_root_sth::init (void)
+{
+  /// First open the server-side file for writing
+  int status =
+    tao_cg->start_server_template_header (
+      be_global->be_get_server_template_hdr_fname ());
+  
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_root_sth::init - ")
+                         ACE_TEXT ("Error opening server ")
+                         ACE_TEXT ("template header file\n")),
+                        -1);
+    }
+
+  /// Initialize the stream.
+  this->ctx_->stream (tao_cg->server_template_header ());
+  return 0;
 }
 

@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #include "be_visitor_decl.h"
 #include "be_visitor_sequence.h"
 #include "be_visitor_context.h"
@@ -21,9 +20,9 @@
 #include "be_type.h"
 #include "ace/Log_Msg.h"
 
-// Root visitor for client header
 be_visitor_decl::be_visitor_decl (be_visitor_context *ctx)
-  : ctx_ (ctx)
+  : ctx_ (ctx),
+    os_ (*ctx->stream ())
 {
 }
 

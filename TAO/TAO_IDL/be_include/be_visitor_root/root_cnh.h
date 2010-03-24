@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_ROOT_ROOT_CNH_H_
 #define _BE_VISITOR_ROOT_ROOT_CNH_H_
 
@@ -25,7 +24,7 @@
  * @brief be_visitor_root_cnh
  *
  * This is a concrete visitor to generate the CIAO connector
- * header for root
+ * header for root.
  */
 class be_visitor_root_cnh : public be_visitor_root
 {
@@ -34,8 +33,11 @@ public:
 
   ~be_visitor_root_cnh (void);
 
-  /// Set the right context and make a visitor.
-  virtual int init (void);
+  virtual int visit_root (be_root *node);
+
+private:
+  /// Open file and initialize stream.
+  int init (void);
 };
 
 #endif /* _BE_VISITOR_ROOT_ROOT_CNH_H_ */

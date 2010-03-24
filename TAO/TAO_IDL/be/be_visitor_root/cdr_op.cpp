@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 // ***************************************************************************
 // Root visitor for generating CDR operator declarations in the client header
 // and stub
@@ -34,8 +33,9 @@ be_visitor_root_cdr_op::visit_root (be_root *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_root_cdr_op::visit_root - "
-                         "codegen for scope failed\n"), 
+                         ACE_TEXT ("be_visitor_root_cdr_op::")
+                         ACE_TEXT ("visit_root - codegen ")
+                         ACE_TEXT ("for scope failed\n")), 
                         -1);
     }
 

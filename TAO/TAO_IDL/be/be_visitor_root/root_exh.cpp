@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 // ********************************
 // Root visitor for CIAO exec impl header
 // ********************************
@@ -25,6 +24,30 @@ be_visitor_root_exh::be_visitor_root_exh (be_visitor_context *ctx)
 
 be_visitor_root_exh::~be_visitor_root_exh (void)
 {
+}
+
+int
+be_visitor_root_exh::visit_root (be_root *node)
+{
+  if (this->init () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_root_exh::init - ")
+                         ACE_TEXT ("failed to initialize\n")),
+                        -1);
+    }
+    
+  if (this->visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_root_exh::visit_root - ")
+                         ACE_TEXT ("codegen for scope failed\n")),
+                        -1);
+    }
+
+  (void) tao_cg->end_ciao_exec_header ();
+
+  return 0;
 }
 
 int
