@@ -22,7 +22,6 @@ LatencyTestDataWriter *test_data_writer = 0;
 
 const char *lib_name = "HelloTest_Library";
 const char *prof_name = "LatencyQoS";
-const char *part_name = "LatencyPartQoS";
 
 CORBA::UShort domain_id = 0;
 
@@ -97,7 +96,7 @@ public:
         create_participant_with_profile(
                            domain_id,          /* Domain ID */
                            lib_name,
-                           part_name,           /* QoS */
+                           prof_name,           /* QoS */
                            0,                   /* Listener */
                            DDS_STATUS_MASK_NONE);
     if (!participant)

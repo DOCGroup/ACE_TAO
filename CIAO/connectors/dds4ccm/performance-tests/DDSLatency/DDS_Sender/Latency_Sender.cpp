@@ -47,7 +47,6 @@ LatencyTestDataWriter *test_data_writer = 0;
 
 const char *lib_name = "HelloTest_Library";
 const char *prof_name = "LatencyQoS";
-const char *part_name = "LatencyPartQoS";
 
 CORBA::UShort domain_id = 0;
 
@@ -380,7 +379,7 @@ int
                              create_participant_with_profile(
                                 domain_id,                   /* Domain ID */
                                 lib_name,
-                                part_name,                   /* QoS */
+                                prof_name,                   /* QoS */
                                 0,                           /* Listener */
                                 DDS_STATUS_MASK_NONE);
     if (!participant) {
@@ -444,7 +443,7 @@ int
 
     /* Create data sample for writing */
     instance = LatencyTestTypeSupport::create_data();
-    if (instance == NULL)
+    if (instance == 0)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data sample.\n")));
         goto clean_exit;
