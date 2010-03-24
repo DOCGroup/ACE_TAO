@@ -40,7 +40,8 @@ CORBA::Long _clock_overhead_;
 
 LatencyTest *instance = 0;
 
-::DDS::Topic *topic = 0;
+::DDS::Topic *send_topic = 0;
+::DDS::Topic *receive_topic = 0;
 ::DDS::DataWriter *data_writer = 0;
 LatencyTestDataWriter *test_data_writer = 0;
 
@@ -397,19 +398,29 @@ int
         goto clean_exit;
       }
 
-    topic = participant->create_topic(
-                                      "Test data",    /* Topic name*/
+    send_topic = participant->create_topic(
+                                      "send",    /* Topic name*/
                                       type_name,      /* Type name */
                                       DDS_TOPIC_QOS_DEFAULT, /* Topic QoS */
                                       0,                     /* Listener  */
                                       DDS_STATUS_MASK_NONE);
-    if (!topic) {
+    if (!send_topic) {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create topic.\n")));
+        goto clean_exit;
+    }
+    receive_topic = participant->create_topic(
+                                      "receive",    /* Topic name*/
+                                      type_name,      /* Type name */
+                                      DDS_TOPIC_QOS_DEFAULT, /* Topic QoS */
+                                      0,                     /* Listener  */
+                                      DDS_STATUS_MASK_NONE);
+    if (!receive_topic) {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create topic.\n")));
         goto clean_exit;
     }
     /* Create the data writer using the default publisher */
     data_writer = participant->create_datawriter_with_profile(
-                                topic,
+                                send_topic,
                                 lib_name,
                                 prof_name,             /* QoS */
                                 0,                     /* Listener */
@@ -420,12 +431,12 @@ int
         goto clean_exit;
       }
     data_reader = participant->create_datareader_with_profile(
-                                                 topic,
+                                                 receive_topic,
                                                  lib_name,
                                                  prof_name,    /* QoS */
                                                  &listener,    /* Listener */
                                                  DDS_DATA_AVAILABLE_STATUS);
-    if (!data_writer)
+    if (!data_reader)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data reader.\n")));
         goto clean_exit;
