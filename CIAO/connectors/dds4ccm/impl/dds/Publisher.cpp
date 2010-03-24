@@ -134,6 +134,13 @@ namespace CIAO
           delete ccm_dds_drl;
           throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
+      else
+        {
+          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_Publisher_i::create_datareader_with_profile - "
+                       "Successfully created datawriter with profile <%C#%C>.\n",
+                       library_name,
+                       profile_name));
+        }
 
       ::DDS::DataWriter_var retval = ::DDS::DataWriter::_nil ();
       ACE_NEW_THROW_EX (retval,
@@ -141,8 +148,6 @@ namespace CIAO
                         CORBA::NO_MEMORY ());
 
       ccm_dds_dw->enable ();
-      CCM_DDS_DataWriter_i *dw = dynamic_cast< CCM_DDS_DataWriter_i * > (retval.in ());
-      dw->set_impl (ccm_dds_dw);
 
       return retval._retn ();
     }
@@ -174,8 +179,11 @@ namespace CIAO
                        "Error: RTI delete_datawriter returned non-ok error code %C\n",
                        translate_retcode (retval)));
         }
-      else DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_Publisher_i::delete_datawriter - "
+      else
+        {
+          DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_Publisher_i::delete_datawriter - "
                         "Provided datawriter successfully deleted\n"));
+        }
 
       return retval;
 #else
