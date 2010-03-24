@@ -161,8 +161,8 @@
       </value>
     </execParameter>
   </implementation>
-  
-  
+
+
   <instance xmi:id="ReceiverComponentInstance">
     <name>ReceiverComponent</name>
     <node>ReceiverNode</node>
@@ -194,7 +194,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>HelloTest_Library#ThroughputQoS</string>
+          <string>HelloTest_Library#ThroughputPartQoS</string>
         </value>
       </value>
     </configProperty>
@@ -309,7 +309,7 @@
       <instance xmi:idref="Throughput_Sec_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
-  
+
   <artifact xmi:id="Throughput_Connector_ExecArtifact">
     <name>Throughput_Connector_exec</name>
     <source/>
