@@ -52,6 +52,11 @@ namespace CIAO
 
 #if (CIAO_DDS4CCM_NDDS==1)
       virtual void
+      on_reliable_writer_cache_changed (
+        ::DDS::DataWriter_ptr ,
+        const ::DDS::ReliableWriterCacheChangedStatus & );
+
+      virtual void
       on_reliable_reader_activity_changed (
         ::DDS::DataWriter_ptr ,
         const ::DDS::ReliableReaderActivityChangedStatus & );

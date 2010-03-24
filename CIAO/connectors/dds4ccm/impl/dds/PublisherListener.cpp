@@ -8,6 +8,8 @@
 #include "ndds/LivelinessLostStatus.h"
 #include "ndds/OfferedIncompatibleQosStatus.h"
 #include "ndds/OfferedDeadlineMissedStatus.h"
+#include "ndds/ReliableReaderActivityChangedStatus.h"
+#include "ndds/ReliableWriterCacheChangedStatus.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
@@ -101,6 +103,46 @@ namespace CIAO
       this->impl_->on_publication_matched (dds_writer.in (), ddsstatus);
 #else
       this->impl_->on_publication_matched (dds_writer.in (), status);
+#endif
+    }
+
+    void
+    CCM_DDS_PublisherListener_i::on_reliable_reader_activity_changed (
+      ::DDSDataWriter *writer,
+      const ::DDS_ReliableReaderActivityChangedStatus & status)
+    {
+      DDS4CCM_TRACE ("CCM_DDS_PublisherListener_i::on_reliable_reader_activity_changed");
+
+      ::DDS::DataWriter_var dds_writer = ::DDS::DataWriter::_nil ();
+      ACE_NEW (dds_writer,
+               CCM_DDS_DataWriter_i (writer));
+
+#if (CIAO_DDS4CCM_NDDS==1)
+      ::DDS::ReliableReaderActivityChangedStatus ddsstatus;
+      ddsstatus <<= status;
+      this->impl_->on_reliable_reader_activity_changed (dds_writer.in (), ddsstatus);
+#else
+      this->impl_->on_reliable_reader_activity_changed (dds_writer.in (), status);
+#endif
+    }
+
+    void
+    CCM_DDS_PublisherListener_i::on_reliable_writer_cache_changed (
+      ::DDSDataWriter* writer,
+      const ::DDS_ReliableWriterCacheChangedStatus & status)
+    {
+      DDS4CCM_TRACE ("CCM_DDS_PublisherListener_i::on_reliable_writer_cache_changed");
+
+      ::DDS::DataWriter_var dds_writer = ::DDS::DataWriter::_nil ();
+      ACE_NEW (dds_writer,
+               CCM_DDS_DataWriter_i (writer));
+
+#if (CIAO_DDS4CCM_NDDS==1)
+      ::DDS::ReliableWriterCacheChangedStatus ddsstatus;
+      ddsstatus <<= status;
+      this->impl_->on_reliable_writer_cache_changed (dds_writer.in (), ddsstatus);
+#else
+      this->impl_->on_reliable_writer_cache_changed (dds_writer.in (), status);
 #endif
     }
 

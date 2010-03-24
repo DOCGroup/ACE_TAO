@@ -216,6 +216,40 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_publication_matched (
 #if (CIAO_DDS4CCM_NDDS==1)
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
+CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_reliable_writer_cache_changed (
+  ::DDS::DataWriter_ptr the_Writer,
+  const ::DDS::ReliableWriterCacheChangedStatus & status)
+{
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::PublisherListener_T::on_reliable_writer_cache_changed");
+
+  DDS4CCM_DEBUG (10, (LM_DEBUG, CLINFO
+              ACE_TEXT ("PublisherListener_T::on_reliable_writer_cache_changed: ")
+              ACE_TEXT ("empty_reliable_writer_cache.total_count <%d> - ")
+              ACE_TEXT ("empty_reliable_writer_cache.total_count_change <%d> - ")
+              ACE_TEXT ("full_reliable_writer_cache.total_count <%d> - ")
+              ACE_TEXT ("full_reliable_writer_cache.total_count_change <%d> - ")
+              ACE_TEXT ("low_watermark_reliable_writer_cache.total_count <%d> - ")
+              ACE_TEXT ("low_watermark_reliable_writer_cache.total_count_change <%d> - ")
+              ACE_TEXT ("high_watermark_reliable_writer_cache.total_count <%d> - ")
+              ACE_TEXT ("high_watermark_reliable_writer_cache.total_count_change <%d> - ")
+              ACE_TEXT ("unacknowledged_sample_count <%d> - ")
+              ACE_TEXT ("unacknowledged_sample_count_peak <%d>\n"),
+              status.empty_reliable_writer_cache.total_count,
+              status.empty_reliable_writer_cache.total_count_change,
+              status.full_reliable_writer_cache.total_count,
+              status.full_reliable_writer_cache.total_count_change,
+              status.low_watermark_reliable_writer_cache.total_count,
+              status.low_watermark_reliable_writer_cache.total_count_change,
+              status.high_watermark_reliable_writer_cache.total_count,
+              status.high_watermark_reliable_writer_cache.total_count_change,
+              status.unacknowledged_sample_count,
+              status.unacknowledged_sample_count_peak));
+
+  this->on_unexpected_status (the_Writer, ::DDS::RELIABLE_WRITER_CACHE_CHANGED_STATUS);
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
 CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_reliable_reader_activity_changed (
   ::DDS::DataWriter_ptr the_Writer,
   const ::DDS::ReliableReaderActivityChangedStatus & status)
@@ -228,7 +262,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_reliable_reader_activ
               ACE_TEXT ("not active count <%d> - inactive count change <%d>")
               ACE_TEXT ("last instance handle <length <%d> - isValid <%d>\n"),
               status.active_count, status.active_count_change,
-              status.not_active_count, status.inactive_count_change,
+              status.inactive_count, status.inactive_count_change,
               status.last_instance_handle.length,
               status.last_instance_handle.isValid));
 
@@ -243,15 +277,14 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
 {
   if (! ::CORBA::is_nil (error_listener) || CIAO_debug_level >= 10)
     {
-      return DDS_STATUS_MASK_ALL;
-/*
-              ::DDS::OFFERED_DEADLINE_MISSED_STATUS |
+      return ::DDS::OFFERED_DEADLINE_MISSED_STATUS |
              ::DDS::OFFERED_INCOMPATIBLE_QOS_STATUS |
 #if (CIAO_DDS4CCM_NDDS==1)
+             ::DDS::RELIABLE_WRITER_CACHE_CHANGED_STATUS |
              ::DDS::RELIABLE_READER_ACTIVITY_CHANGED_STATUS |
 #endif
              ::DDS::LIVELINESS_LOST_STATUS |
-             ::DDS::PUBLICATION_MATCHED_STATUS;*/
+             ::DDS::PUBLICATION_MATCHED_STATUS;
     }
   else
     {

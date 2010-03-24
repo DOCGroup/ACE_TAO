@@ -29,6 +29,7 @@ typedef ::DDS::OfferedDeadlineMissedStatus DDS_OfferedDeadlineMissedStatus;
 typedef ::DDS::OfferedIncompatibleQosStatus DDS_OfferedIncompatibleQosStatus;
 typedef ::DDS::LivelinessLostStatus DDS_LivelinessLostStatus;
 typedef ::DDS::PublicationMatchedStatus DDS_PublicationMatchedStatus;
+typedef ::DDS::ReliableWriterCacheChangedStatus DDS_ReliableWriterCacheChangedStatus;
 #endif
 
 #include "tao/LocalObject.h"
@@ -59,13 +60,25 @@ namespace CIAO
 
       virtual void
       on_liveliness_lost (
-        ::DDSDataWriter* writer,
+        ::DDSDataWriter *writer,
         const ::DDS_LivelinessLostStatus & status);
 
       virtual void
       on_publication_matched (
         ::DDSDataWriter *writer,
         const ::DDS_PublicationMatchedStatus & status);
+
+#if (CIAO_DDS4CCM_NDDS==1)
+      virtual void
+      on_reliable_reader_activity_changed (
+        ::DDSDataWriter *writer,
+        const ::DDS_ReliableReaderActivityChangedStatus & status);
+
+      virtual void
+      on_reliable_writer_cache_changed (
+        ::DDSDataWriter *writer,
+        const ::DDS_ReliableWriterCacheChangedStatus & status);
+#endif
 
       ::DDS::PublisherListener_ptr get_publisher_listener (void);
     private:
