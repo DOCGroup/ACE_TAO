@@ -50,6 +50,10 @@ namespace CIAO
         const ::DDS::PublicationMatchedStatus & status);
 
 #if (CIAO_DDS4CCM_NDDS==1)
+      virtual void on_reliable_writer_cache_changed (
+        ::DDS::DataWriter_ptr the_writer,
+        const ::DDS::ReliableWriterCacheChangedStatus & status);
+
       virtual void on_reliable_reader_activity_changed (
         ::DDS::DataWriter_ptr the_Writer,
         const ::DDS::ReliableReaderActivityChangedStatus & status);

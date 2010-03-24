@@ -101,6 +101,7 @@ module DDS {
     const StatusKind LIVELINESS_CHANGED_STATUS                = 0x0001 << 12;
     const StatusKind PUBLICATION_MATCHED_STATUS               = 0x0001 << 13;
     const StatusKind SUBSCRIPTION_MATCHED_STATUS              = 0x0001 << 14;
+    const StatusKind RELIABLE_WRITER_CACHE_CHANGED_STATUS     = 0x00000001 << 24;
     const StatusKind RELIABLE_READER_ACTIVITY_CHANGED_STATUS  = 0x00000001 << 25;
 
     struct InconsistentTopicStatus {
@@ -193,10 +194,23 @@ module DDS {
 
     struct ReliableReaderActivityChangedStatus {
         long                 active_count;
-        long                 not_active_count;
+        long                 inactive_count;
         long                 active_count_change;
         long                 inactive_count_change;
         InstanceHandle_t     last_instance_handle;
+    };
+
+    struct ReliableWriterCacheEventCount {
+        long                 total_count;
+        long                 total_count_change;
+    };
+    struct ReliableWriterCacheChangedStatus {
+        ReliableWriterCacheEventCount       empty_reliable_writer_cache;
+        ReliableWriterCacheEventCount       full_reliable_writer_cache;
+        ReliableWriterCacheEventCount       low_watermark_reliable_writer_cache;
+        ReliableWriterCacheEventCount       high_watermark_reliable_writer_cache;
+        long                                unacknowledged_sample_count;
+        long                                unacknowledged_sample_count_peak;
     };
 
     // ----------------------------------------------------------------------
@@ -236,6 +250,9 @@ module DDS {
         void on_publication_matched(
             in DataWriter writer,
             in PublicationMatchedStatus status);
+        void on_reliable_writer_cache_changed (
+            in DataWriter writer,
+            in ReliableWriterCacheChangedStatus status);
         void on_reliable_reader_activity_changed (
             in DataWriter writer,
             in ReliableReaderActivityChangedStatus status);
