@@ -1,0 +1,13 @@
+project(*receiver_plain) : nddslib, acelib, taolib {
+  after += DDS_Latency_Base_plain_stub
+  exename = DDS_receiver
+  libpaths += ../lib
+  libout = ../lib
+  libs  += DDS_Latency_Base_plain_stub
+  includes += ../Base
+
+  Source_Files {
+    Latency_Receiver.cpp
+  }
+}
+
