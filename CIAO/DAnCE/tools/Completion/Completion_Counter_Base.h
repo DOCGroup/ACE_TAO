@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    CompletionCounter.h
+ *  @file    Completion_Counter_Base.h
  *
  *  $Id$
  *
