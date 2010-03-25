@@ -181,7 +181,7 @@ namespace CIAO
     }
 #endif
 
-    void
+    bool
     CCM_DDS_DomainParticipantFactory_i::remove_participant (CCM_DDS_DomainParticipant_i * part)
     {
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_i::remove_participant");
@@ -209,7 +209,9 @@ namespace CIAO
           DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipantFactory_i::remove_participant - "
                     "Don't delete participant since it's still used - ref_count <%d>\n",
                     part->_refcount_value ()));
+          return false;
         }
+      return true;
     }
 
     ::DDS::ReturnCode_t
@@ -229,11 +231,8 @@ namespace CIAO
       DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipantFactory_i::delete_participant - "
                    "Successfully casted provided object reference to servant type.\n"));
 
-      this->remove_participant (part);
-
       ::DDS::ReturnCode_t retval = DDS::RETCODE_OK;
-
-      if (part->_refcount_value () == 1)
+      if (this->remove_participant (part))
         {
           retval = DDSDomainParticipantFactory::get_instance ()->
               delete_participant (part->get_impl ());

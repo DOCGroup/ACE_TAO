@@ -87,7 +87,7 @@ namespace CIAO
 #endif
 
     private:
-      void remove_participant (CCM_DDS_DomainParticipant_i * part);
+      bool remove_participant (CCM_DDS_DomainParticipant_i * part);
 
       TAO_SYNCH_MUTEX dps_mutex_;
       typedef std::map<ACE_CString, CCM_DDS_DomainParticipant_i *> DomainParticipants;

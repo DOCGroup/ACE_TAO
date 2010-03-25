@@ -512,7 +512,7 @@ namespace CIAO
     }
 #endif
 
-    void
+    bool
     CCM_DDS_DomainParticipant_i::remove_topic (CCM_DDS_Topic_i * topic)
     {
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_i::remove_topic");
@@ -538,33 +538,35 @@ namespace CIAO
       else
         {
           DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_i::remove_topic - "
-                    "Don't delete topic since it's still used - ref_count <%d>\n",
+                    "Don't delete topic %C since it's still used - ref_count <%d>\n",
+                    topic->get_name (),
                     topic->_refcount_value ()));
+          return false;
         }
+      return true;
     }
 
     ::DDS::ReturnCode_t
     CCM_DDS_DomainParticipant_i::delete_topic (::DDS::Topic_ptr a_topic)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::delete_topic");
-
-      CCM_DDS_Topic_i *top = this->tps_[a_topic->get_name ()];
+      const char * topic_name = a_topic->get_name ();
+      CCM_DDS_Topic_i *top = this->tps_[topic_name];
 
       if (!top)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic - "
-                       "Unable to cast provided object reference to servant.\n"));
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic <%C> - "
+                       "Unable to cast provided object reference to servant.\n",
+                       topic_name));
           return ::DDS::RETCODE_BAD_PARAMETER;
         }
 
-      DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic - "
-                   "Successfully casted provided object reference to servant.\n"));
-
-      this->remove_topic (top);
+      DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic <%C> - "
+                   "Successfully casted provided object reference to servant.\n",
+                   topic_name));
 
       ::DDS::ReturnCode_t retval = DDS::RETCODE_OK;
-
-      if (top->_refcount_value () == 1)
+      if (this->remove_topic (top))
         {
           ::DDS::TopicDescription_var td =
               lookup_topicdescription (ACE_TEXT ("DDS4CCMContentFilteredTopic"));
@@ -576,8 +578,9 @@ namespace CIAO
                   ::DDS::ReturnCode_t const ret = this->delete_contentfilteredtopic (cft.in ());
                   if (ret != ::DDS::RETCODE_OK)
                     {
-                      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic - "
+                      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic <%C> - "
                                                   "Unable to delete ContentFilteredTopic. Retval is %C.\n",
+                                                  topic_name,
                                                   translate_retcode (ret)));
                     }
                 }
@@ -586,14 +589,16 @@ namespace CIAO
 
           if (retval != DDS_RETCODE_OK)
             {
-              DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic - "
+              DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic <%C> - "
                           "Error: RTI delete_topic returned non-ok error code %C\n",
+                          topic_name,
                           translate_retcode (retval)));
             }
           else
             {
-              DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic - "
-                            "Provided topic successfully deleted\n"));
+              DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic <%C> - "
+                            "Provided topic successfully deleted\n",
+                            topic_name));
             }
         }
       return retval;
