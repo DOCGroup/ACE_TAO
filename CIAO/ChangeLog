@@ -1,3 +1,19 @@
+Thu Mar 25 11:44:13 UTC 2010  Marijke Hengstmengel <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/LatencyTT/Base/LatencyTT_Test_Base.idl
+        * connectors/dds4ccm/performance-tests/LatencyTT/descriptors/Plan_SharedMem.cdp
+        * connectors/dds4ccm/performance-tests/LatencyTT/descriptors/Plan_UDPv4.cdp
+        * connectors/dds4ccm/performance-tests/LatencyTT/Receiver/LatencyTT_Test_Receiver.idl
+        * connectors/dds4ccm/performance-tests/LatencyTT/Receiver/LatencyTT_Test_Receiver.mpc
+        * connectors/dds4ccm/performance-tests/LatencyTT/Receiver/LatencyTT_Test_Receiver_exec.cpp
+        * connectors/dds4ccm/performance-tests/LatencyTT/Receiver/LatencyTT_Test_Receiver_exec.h
+        * connectors/dds4ccm/performance-tests/LatencyTT/SecConnector
+        * connectors/dds4ccm/performance-tests/LatencyTT/Sender/LatencyTT_Test_Sender.idl
+        * connectors/dds4ccm/performance-tests/LatencyTT/Sender/LatencyTT_Test_Sender.mpc
+        * connectors/dds4ccm/performance-tests/LatencyTT/Sender/LatencyTT_Test_Sender_exec.cpp
+        * connectors/dds4ccm/performance-tests/LatencyTT/Sender/LatencyTT_Test_Sender_exec.h
+        Change from 2 topics, 2 idl types and 2 connectors to 2 topics, 1 idl type and 1 connector.
+
 Thu Mar 25 10:52:13 UTC 2010  Martin Corino <mcorino@remedy.nl>
 
         * tools/Completion/Completion_Counter_Base.h:

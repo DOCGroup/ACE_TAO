@@ -26,13 +26,7 @@ namespace CIAO_LatencyTT_Test_Receiver_Impl
                                   const LatencyTTTest & an_instance,
                                   const ::CCM_DDS::ReadInfo & /*info*/)
   {
-    // Send back a packet
-    LatencyTTTestSec sec_instance;
-    CORBA::ULong length = an_instance.data.length();
-    sec_instance.data.length(length);
-    sec_instance.ping = 0;
-    sec_instance.seq_num = an_instance.seq_num;
-    this->callback_.write_one(sec_instance);
+    this->callback_.write_one(const_cast<LatencyTTTest&> (an_instance));
   }
 
   void
@@ -55,9 +49,10 @@ namespace CIAO_LatencyTT_Test_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::write_one (LatencyTTTestSec & an_instance)
+  Receiver_exec_i::write_one (LatencyTTTest & an_instance)
   {
     ++this->count_;
+    an_instance.ping = 0;
     this->writer_->write_one(an_instance, ::DDS::HANDLE_NIL);
   }
 

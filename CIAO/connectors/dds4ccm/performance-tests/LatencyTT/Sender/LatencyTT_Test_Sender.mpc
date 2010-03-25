@@ -2,7 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -p DDS_LatencyTT_Test_Base -l ../lib -o ../lib -c controller -u DDS Sender"
 
 project(DDS_LatencyTT_Test_Sender_idl_gen) : componentidldefaults, dds4ccm {
-  after += DDS_LatencyTT_Test_Connector_idl_gen DDS_LTT_TestSec_Connector_idl_gen DDS_Starter_idl_gen
+  after += DDS_LatencyTT_Test_Connector_idl_gen DDS_Starter_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SENDER_STUB_Export \
               -Wb,stub_export_include=Sender_stub_export.h \
@@ -60,8 +60,8 @@ project(DDS_LatencyTT_Test_Sender_lem_stub) : ccm_svnt, dds4ccm_base {
 
 project(DDS_LatencyTT_Test_Sender_stub) : ccm_stub, dds4ccm_base {
   after += DDS_LatencyTT_Test_Sender_idl_gen DDS_LatencyTT_Test_Base_stub \
-           DDS_LatencyTT_Test_Connector_stub DDS_LatencyTT_TestSec_Connector_stub
-  libs  += DDS_LatencyTT_Test_Base_stub DDS_LatencyTT_Test_Connector_stub DDS_LatencyTT_TestSec_Connector_stub
+           DDS_LatencyTT_Test_Connector_stub
+  libs  += DDS_LatencyTT_Test_Base_stub DDS_LatencyTT_Test_Connector_stub
   includes += ..
   libpaths += ../lib
   libout = ../lib
@@ -88,12 +88,10 @@ project(DDS_LatencyTT_Test_Sender_stub) : ccm_stub, dds4ccm_base {
 project(DDS_LatencyTT_Test_Sender_exec) : ciao_executor, dds4ccm_base {
   after   += DDS_LatencyTT_Test_Sender_lem_stub DDS_LatencyTT_Test_Sender_stub \
              DDS_LTT_Test_Connector_lem_stub DDS_LatencyTT_Test_Connector_stub \
-             DDS_LTT_TestSec_Connector_lem_stub DDS_LatencyTT_TestSec_Connector_stub \
              DDS4CCM_lem_stub
   sharedname = Sender_exec
   libs    += Sender_stub Sender_lem_stub DDS_LatencyTT_Test_Base_stub \
              DDS_LTT_Test_Connector_lem_stub DDS_LatencyTT_Test_Connector_stub \
-             DDS_LTT_TestSec_Connector_lem_stub DDS_LatencyTT_TestSec_Connector_stub \
              DDS4CCM_lem_stub
   libpaths += ../lib
   includes += ..
@@ -119,15 +117,11 @@ project(DDS_LatencyTT_Test_Sender_exec) : ciao_executor, dds4ccm_base {
 project(DDS_LatencyTT_Test_Sender_svnt) : ciao_servant, dds4ccm_base {
   after      += DDS_LatencyTT_Test_Base_stub  DDS_LatencyTT_Test_Sender_lem_stub \
                 DDS4CCM_lem_stub DDS4CCM_skel DDS_LatencyTT_Test_Connector_stub \
-                DDS_LatencyTT_Test_Connector_svnt DDS_LTT_Test_Connector_lem_stub \
-                DDS_LatencyTT_TestSec_Connector_stub \
-                DDS_LatencyTT_TestSec_Connector_svnt DDS_LTT_TestSec_Connector_lem_stub
+                DDS_LatencyTT_Test_Connector_svnt DDS_LTT_Test_Connector_lem_stub
   sharedname  = Sender_svnt
   libs       += Sender_stub Sender_lem_stub DDS_LatencyTT_Test_Base_stub DDS4CCM_lem_stub \
                 DDS4CCM_skel DDS_LatencyTT_Test_Connector_stub DDS_LatencyTT_Test_Connector_svnt \
-                DDS_LTT_Test_Connector_lem_stub \
-                DDS_LatencyTT_TestSec_Connector_stub \
-                DDS_LatencyTT_TestSec_Connector_svnt DDS_LTT_TestSec_Connector_lem_stub
+                DDS_LTT_Test_Connector_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
