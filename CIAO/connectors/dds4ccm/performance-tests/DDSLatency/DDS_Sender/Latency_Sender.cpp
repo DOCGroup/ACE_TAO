@@ -50,6 +50,7 @@ const char * lib_name_  = 0;
 const char * prof_name_ = 0;
 
 CORBA::UShort domain_id_ = 0;
+CORBA::Boolean both_read_write_ = false;
 
 ACE_Reactor * reactor_ = 0;
 
@@ -59,6 +60,9 @@ WriteTicker * ticker_ = 0;
 class HelloListener: public DDSDataReaderListener {
 public:
   void on_data_available(DDSDataReader *reader);
+};
+/* The dummy listener of events and data from the middleware */
+class DummyListener: public DDSDataReaderListener {
 };
 
 class WriteTicker :public ACE_Event_Handler
@@ -93,7 +97,7 @@ split_qos (const char * qos)
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("q:d:i:s:O"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:d:i:s:q:O"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -109,6 +113,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
           case 's':
             sleep_ = ACE_OS::atoi (get_opts.opt_arg ());
             break;
+          case 'b':
+            both_read_write_  = true;
+            break;
           case 'q':
             {
                const char * qos = get_opts.opt_arg ();
@@ -123,6 +130,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                                 "  -i <iterations >\n"
                                 "  -s <sleep>\n"
                                 "  -q <QoS profile>\n"
+                                "  -b " 
                                 "\n"),
                               -1);
         }
@@ -384,13 +392,17 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
 {
   DDS_ReturnCode_t retcode;
   ::DDS::DataReader * data_reader = 0;
+  ::DDS::DataReader * dum_data_reader = 0;
+
   HelloListener listener;
+  DummyListener dum_listener;
   const char * type_name = 0;
   int main_result = 1; /* error by default */
 
   ::DDS::Topic * receive_topic = 0;
   ::DDS::Topic * send_topic = 0;
   ::DDS::DataWriter * data_writer = 0;
+  ::DDS::DataWriter * dum_data_writer = 0;
 
   ACE_Env_Value<int> id (ACE_TEXT("DDS4CCM_DEFAULT_DOMAIN_ID"), domain_id_);
   domain_id_ = id;
@@ -464,6 +476,26 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
         goto clean_exit;
       }
 
+    /* Create a data reader, which will not be used, but is there for 
+     *  compatibility with DDS4CCM latency test, where there is always a
+     *  reader and a writer per connector. 
+    */
+    if (both_read_write_)
+      {
+        dum_data_reader = participant->create_datareader_with_profile(
+                                                send_topic,
+                                                lib_name_,
+                                                prof_name_,
+                                                &dum_listener,
+                                                DDS_DATA_AVAILABLE_STATUS);
+
+      if (!dum_data_reader )
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create dummy data reader.\n")));
+          goto clean_exit;
+        }
+      }
+
     data_reader = participant->create_datareader_with_profile(
                                                 receive_topic,
                                                 lib_name_,
@@ -474,6 +506,25 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data reader.\n")));
         goto clean_exit;
+      }
+
+    /* Create a data writer, which will not be used, but is there for 
+     *   compatibility with DDS4CCM latency test, where there is always a
+     *  reader and a writer per connector 
+    */
+    if (both_read_write_)
+      {
+        dum_data_writer = participant->create_datawriter_with_profile(
+                                   receive_topic,
+                                    lib_name_,
+                                    prof_name_,
+                                    0,
+                                    DDS_STATUS_MASK_NONE);
+        if (!dum_data_writer)
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create dummy data writer.\n")));
+            goto clean_exit;
+          }
       }
 
     /* Create data sample for writing */
@@ -505,14 +556,26 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
     main_result = 0;
 
 clean_exit:
+    char * read_write_str;
+    if (both_read_write_)
+      {
+        read_write_str = "Used a extra dummy reader and writer per topic.";
+      }
+    else
+      {
+        read_write_str = "Used a reader for one topic and a writer for other topic.";
+      }
+
     if((nr_of_runs_ -1) != datalen_idx_)
       {
         ACE_DEBUG ((LM_DEBUG, "SUMMARY SENDER : %u of %u runs completed.\n"
-                            " Number of messages sent of last run (%u): %u\n",
+                            " Number of messages sent of last run (%u): %u\n"
+                            "%C\n\n",
                             datalen_idx_,
                             nr_of_runs_,
                             datalen_idx_ + 1,
-                            number_of_msg_));
+                            number_of_msg_,
+                            read_write_str));
       }
     else
       {
@@ -520,10 +583,12 @@ clean_exit:
 
         double sec = (double)test_time_usec / (1000 * 1000);
         ACE_DEBUG ((LM_DEBUG, "TEST successful, number of runs (%u) of "
-                              "%u messages in %3.3f seconds.\n",
+                              "%u messages in %3.3f seconds.\n"
+                               "%C\n\n",
                               nr_of_runs_,
                               number_of_msg_,
-                              sec));
+                              sec,
+                              read_write_str));
       }
     if (participant)
       {

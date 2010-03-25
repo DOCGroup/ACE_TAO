@@ -8,6 +8,12 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{'ACE_ROOT'}/bin";
 use PerlACE::TestTarget;
 
+foreach $i (@ARGV) {
+    if ($i eq '-b') {
+        $rw_extra = '-b:';
+    }
+}
+
 $nr_runs = 2;
 @profiles = ("Latency_Library#UDPv4QoS", "Latency_Library#SharedMemQos");
 
@@ -25,11 +31,13 @@ sub run_tests {
         $qos = $profiles[$i];
 
         print "Start receiver with QoS profile <$qos>\n";
-        $R = $tg_receiver->CreateProcess ("$DDS4CCM_ROOT/performance-tests/DDSLatency/DDS_Receiver/DDS_receiver", "-q $qos");
+        $R = $tg_receiver->CreateProcess ("$DDS4CCM_ROOT/performance-tests/DDSLatency/DDS_Receiver/DDS_receiver", "-q $qos $rw_extra");
+
         $R->Spawn();
 
         print "Start sender with QoS profile <$qos>\n";
-        $S = $tg_sender->CreateProcess ("$DDS4CCM_ROOT/performance-tests/DDSLatency/DDS_Sender/DDS_Sender", "-q $qos");
+        $S = $tg_sender->CreateProcess ("$DDS4CCM_ROOT/performance-tests/DDSLatency/DDS_Sender/DDS_Sender", "-q $qos $rw_extra");
+  
         $S->SpawnWaitKill ($tg_sender->ProcessStartWaitInterval () + 180);
         $R->Kill ();
     }
