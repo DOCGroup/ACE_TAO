@@ -1,11 +1,62 @@
 <Deployment:DeploymentPlan
-   xmlns:Deployment="http://www.omg.org/Deployment"
-   xmlns:xmi="http://www.omg.org/XMI"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
-  <label>LatencyTT_Test_Depl_2</label>
-  <UUID>LatencyTT_Test_Depl_2</UUID>
-
+                          xmlns:Deployment="http://www.omg.org/Deployment"
+                          xmlns:xmi="http://www.omg.org/XMI"
+                          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                          xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>LatencyTT_Test_Depl</label>
+  <UUID>LatencyTT_Test_Depl</UUID>
+  
+  <implementation xmi:id="ReceiverComponentImplementation">
+    <name>ReceiverComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Receiver_ExecArtifact" />
+    <artifact xmi:idref="Receiver_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_LatencyTT_Test_Receiver_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_LatencyTT_Test_Receiver_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
   
   <implementation xmi:id="LatencyTT_Test_ConnectorComponentImplementation">
     <name>LatencyTT_Test_ConnectorComponentImplementation</name>
@@ -58,10 +109,9 @@
       </value>
     </execParameter>
   </implementation>
-
-
+  
   <implementation xmi:id="LatencyTT_TestSec_ConnectorComponentImplementation">
-    <name>LatencyTT_Test_ConnectorComponentImplementation</name>
+    <name>LatencyTT_TestSec_ConnectorComponentImplementation</name>
     <source/>
     <artifact xmi:idref="LatencyTT_TestSec_Connector_ExecArtifact" />
     <artifact xmi:idref="LatencyTT_TestSec_Connector_SvntArtifact" />
@@ -163,9 +213,18 @@
       </value>
     </execParameter>
   </implementation>
-  <instance xmi:id="LatencyTT_Test_ConnectorComponentInstance">
-    <name>LatencyTT_Test_ConnectorComponent</name>
-    <node>SenderNode</node>
+  
+  <instance xmi:id="ReceiverComponentInstance">
+    <name>ReceiverComponent</name>
+    <node>ReceiverNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ReceiverComponentImplementation" />
+  </instance>
+  
+  <instance xmi:id="LatencyTT_Test_ConnectorComponentInstance2">
+    <name>LatencyTT_Test_ConnectorComponent2</name>
+    <node>ReceiverNode</node>
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="LatencyTT_Test_ConnectorComponentImplementation" />
@@ -187,15 +246,15 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>HelloTest_Library#LatencyQoS</string>
+          <string>Latency_Library#SharedMemQos</string>
         </value>
       </value>
     </configProperty>
   </instance>
-
-  <instance xmi:id="LatencyTT_TestSec_ConnectorComponentInstance">
-    <name>LatencyTT_TestSec_ConnectorComponent</name>
-    <node>SenderNode</node>
+  
+  <instance xmi:id="LatencyTT_TestSec_ConnectorComponentInstance2">
+    <name>LatencyTT_TestSec_ConnectorComponent2</name>
+    <node>ReceiverNode</node>
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="LatencyTT_TestSec_ConnectorComponentImplementation" />
@@ -206,7 +265,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>LatSec_Test</string>
+          <string>LTT_TestSec</string>
         </value>
       </value>
     </configProperty>
@@ -217,7 +276,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>HelloTest_Library#LatencyQoS</string>
+          <string>Latency_Library#SharedMemQos</string>
         </value>
       </value>
     </configProperty>
@@ -252,19 +311,137 @@
       </value>
     </configProperty>
     <configProperty>
-    <name>number_of_sub</name>
-    <value>
-      <type>
-        <kind>tk_ushort</kind>
-      </type>
+      <name>number_of_sub</name>
       <value>
-        <ushort>1</ushort>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <ushort>1</ushort>
+        </value>
       </value>
-    </value>
     </configProperty>
   </instance>
-
   
+  <instance xmi:id="LatencyTT_Test_ConnectorComponentInstance">
+    <name>LatencyTT_Test_ConnectorComponent</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="LatencyTT_Test_ConnectorComponentImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>LTT_Test</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Latency_Library#SharedMemQos</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  
+  <instance xmi:id="LatencyTT_TestSec_ConnectorComponentInstance">
+    <name>LatencyTT_TestSec_ConnectorComponent2</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="LatencyTT_TestSec_ConnectorComponentImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>LTT_TestSec</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Latency_Library#SharedMemQos</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  
+  <connection>
+    <name>info_listen_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_listen_data_listener</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="LatencyTT_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  
+  <connection>
+    <name>info_listen_data_control</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_listen_data_control</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data_control</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="LatencyTT_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  
+  <connection>
+    <name>writer_connection_receiver</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>write_ping_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="LatencyTT_TestSec_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
   
   <connection>
     <name>info_listen_data_pub</name>
@@ -285,6 +462,7 @@
       <instance xmi:idref="LatencyTT_TestSec_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
+  
   <connection>
     <name>ping_listen_data_control</name>
     <deployRequirement>
@@ -305,9 +483,8 @@
     </internalEndpoint>
   </connection>
   
-
   <connection>
-    <name>writer_connection</name>
+    <name>writer_connection_sender</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
       <resourceType>Local_Interface</resourceType>
@@ -345,7 +522,25 @@
       <instance xmi:idref="LatencyTT_Test_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
-
+  
+  <artifact xmi:id="Receiver_ExecArtifact">
+    <name>Receiver_exec</name>
+    <source/>
+    <node/>
+    <location>Receiver_exec</location>
+  </artifact>
+  <artifact xmi:id="Receiver_SvntArtifact">
+    <name>Receiver_svnt</name>
+    <source/>
+    <node/>
+    <location>Receiver_svnt</location>
+  </artifact>
+  <artifact xmi:id="Receiver_StubArtifact">
+    <name>Receiver_stub</name>
+    <source/>
+    <node/>
+    <location>Receiver_stub</location>
+  </artifact>
   <artifact xmi:id="Sender_ExecArtifact">
     <name>Sender_exec</name>
     <source/>
@@ -400,4 +595,4 @@
     <node/>
     <location>DDS_LatencyTT_TestSec_Connector_stub</location>
   </artifact>
- </Deployment:DeploymentPlan>
+</Deployment:DeploymentPlan>
