@@ -2,10 +2,10 @@
 // $Id$
 
 project(Execution_Manager_Exec) : dance_exe, naming, \
-                                dance_domainapplicationmanager, \
-                                dance_executionmanager_skel, \
+                                  dance_domainapplicationmanager, \
+                                  dance_executionmanager_skel, \
 				utils, dance_logger, avoids_minimum_corba, \
-				iortable, dance_split_plan {
+				iortable, dance_split_plan, dance_tools {
   exename = dance_execution_manager
 
   Source_Files {

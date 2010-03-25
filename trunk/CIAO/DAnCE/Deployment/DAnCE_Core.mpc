@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Deployment_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream {
+project(Deployment_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream, ami, amh {
   custom_only = 1
   idlflags     += -Wb,stub_export_macro=DEPLOYMENT_STUB_Export \
                   -Wb,stub_export_include=Deployment_stub_export.h \
@@ -38,7 +38,7 @@ project(Deployment_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream
   }
 }
 
-project(Deployment_ApplicationManager_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream, ami {
+project(Deployment_ApplicationManager_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream, ami, amh {
   custom_only = 1
   idlflags     += -Wb,stub_export_macro=DEPLOYMENT_APPLICATIONMANAGER_STUB_Export \
                   -Wb,stub_export_include=Deployment_ApplicationManager_stub_export.h \
@@ -78,7 +78,7 @@ project(Deployment_RepositoryManager_IDL) : ciaolib_with_idl, dance_output, valu
   }
 }
 
-project(Deployment_ExecutionManager_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream {
+project(Deployment_ExecutionManager_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream, amh {
   custom_only = 1
   idlflags     += -Wb,stub_export_macro=DEPLOYMENT_EXECUTIONMANAGER_STUB_Export \
                   -Wb,stub_export_include=Deployment_ExecutionManager_stub_export.h \
@@ -91,7 +91,7 @@ project(Deployment_ExecutionManager_IDL) : ciaolib_with_idl, dance_output, value
   }
 }
 
-project(Deployment_DAM_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream {
+project(Deployment_DAM_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream, amh {
   custom_only = 1
   idlflags     += -Wb,stub_export_macro=DEPLOYMENT_DOMAINAPPLICATIONMANAGER_STUB_Export \
                   -Wb,stub_export_include=Deployment_DomainApplicationManager_stub_export.h \
@@ -104,7 +104,7 @@ project(Deployment_DAM_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ost
   }
 }
 
-project(Deployment_DomainApplication_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream {
+project(Deployment_DomainApplication_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream, amh {
   custom_only = 1
   idlflags     += -Wb,stub_export_macro=DEPLOYMENT_DOMAINAPPLICATION_STUB_Export \
                   -Wb,stub_export_include=Deployment_DomainApplication_stub_export.h \
@@ -117,7 +117,7 @@ project(Deployment_DomainApplication_IDL) : ciaolib_with_idl, dance_output, valu
   }
 }
 
-project(Deployment_NAM_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream {
+project(Deployment_NAM_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream, ami {
   custom_only = 1
   idlflags     += -Wb,stub_export_macro=DEPLOYMENT_NODEAPPLICATIONMANAGER_STUB_Export \
                   -Wb,stub_export_include=Deployment_NodeApplicationManager_stub_export.h \
@@ -158,7 +158,7 @@ project(Deployment_NodeApplication_IDL) : ciaolib_with_idl, dance_output, valuet
 
 // Valuetype library must be linked for this project.
 // Please don't remove.
-project(Deployment_stub) : ciaolib_with_idl, dance_output, valuetype, ifr_client, messaging, dance_lib, dance_logger, gen_ostream {
+project(Deployment_stub) : ciaolib_with_idl, dance_output, valuetype, ifr_client, messaging, dance_lib, dance_logger, gen_ostream, ami, amh {
   sharedname   =  DAnCE_Deployment_stub
   after += Deployment_IDL
 
@@ -185,7 +185,7 @@ project(Deployment_stub) : ciaolib_with_idl, dance_output, valuetype, ifr_client
   }
 }
 
-project(Deployment_AM_stub) : dance_output, dance_deployment_stub {
+project(Deployment_AM_stub) : dance_output, dance_deployment_stub, amh {
   sharedname = DAnCE_ApplicationManager_stub
   after += Deployment_ApplicationManager_IDL
   dynamicflags = DEPLOYMENT_APPLICATIONMANAGER_STUB_BUILD_DLL
@@ -201,7 +201,7 @@ project(Deployment_AM_stub) : dance_output, dance_deployment_stub {
   }
 }
 
-project(Deployment_AM_skel) : dance_output, dance_deployment_skel, dance_applicationmanager_stub {
+project(Deployment_AM_skel) : dance_output, dance_deployment_skel, dance_applicationmanager_stub, amh {
   sharedname = DAnCE_ApplicationManager_skel
   after += Deployment_AM_stub
   dynamicflags = DEPLOYMENT_APPLICATIONMANAGER_SKEL_BUILD_DLL
@@ -218,7 +218,7 @@ project(Deployment_AM_skel) : dance_output, dance_deployment_skel, dance_applica
 }
 
 
-project(Deployment_DAM_stub) : dance_output, dance_applicationmanager_stub {
+project(Deployment_DAM_stub) : dance_output, dance_applicationmanager_stub, amh {
   sharedname = DAnCE_DomainApplicationManager_stub
   after += Deployment_DAM_IDL
   dynamicflags = DEPLOYMENT_DOMAINAPPLICATIONMANAGER_STUB_BUILD_DLL
@@ -234,7 +234,7 @@ project(Deployment_DAM_stub) : dance_output, dance_applicationmanager_stub {
   }
 }
 
-project(Deployment_DAM_skel) : dance_output, dance_applicationmanager_skel, dance_domainapplicationmanager_stub {
+project(Deployment_DAM_skel) : dance_output, dance_applicationmanager_skel, dance_domainapplicationmanager_stub, amh {
   sharedname = DAnCE_DomainApplicationManager_skel
   after += Deployment_DAM_stub
   dynamicflags = DEPLOYMENT_DOMAINAPPLICATIONMANAGER_SKEL_BUILD_DLL
@@ -250,7 +250,7 @@ project(Deployment_DAM_skel) : dance_output, dance_applicationmanager_skel, danc
   }
 }
 
-project(Deployment_ExecutionManager_stub) : dance_output, dance_deployment_stub, dance_domainapplicationmanager_stub {
+project(Deployment_ExecutionManager_stub) : dance_output, dance_deployment_stub, dance_domainapplicationmanager_stub, amh {
   sharedname = DAnCE_ExecutionManager_stub
   after += Deployment_ExecutionManager_IDL
   dynamicflags = DEPLOYMENT_EXECUTIONMANAGER_STUB_BUILD_DLL
@@ -266,7 +266,7 @@ project(Deployment_ExecutionManager_stub) : dance_output, dance_deployment_stub,
   }
 }
 
-project(Deployment_ExecutionManager_skel) : dance_output, dance_deployment_skel, dance_executionmanager_stub {
+project(Deployment_ExecutionManager_skel) : dance_output, dance_deployment_skel, dance_executionmanager_stub, amh {
   sharedname = DAnCE_ExecutionManager_skel
   after += Deployment_ExecutionManager_stub
   dynamicflags = DEPLOYMENT_EXECUTIONMANAGER_SKEL_BUILD_DLL
@@ -282,7 +282,7 @@ project(Deployment_ExecutionManager_skel) : dance_output, dance_deployment_skel,
   }
 }
 
-project(Deployment_DomainApplication_stub) : dance_output, dance_deployment_stub {
+project(Deployment_DomainApplication_stub) : dance_output, dance_deployment_stub, amh {
   sharedname = DAnCE_DomainApplication_stub
   after += Deployment_DomainApplication_IDL
   dynamicflags = DEPLOYMENT_DOMAINAPPLICATION_STUB_BUILD_DLL
@@ -298,7 +298,7 @@ project(Deployment_DomainApplication_stub) : dance_output, dance_deployment_stub
   }
 }
 
-project(Deployment_DomainApplication_skel) : dance_output, dance_deployment_skel, dance_domainapplication_stub {
+project(Deployment_DomainApplication_skel) : dance_output, dance_deployment_skel, dance_domainapplication_stub, amh {
   sharedname = DAnCE_DomainApplication_skel
   after += Deployment_DomainApplication_stub
   dynamicflags = DEPLOYMENT_DOMAINAPPLICATION_SKEL_BUILD_DLL
@@ -346,7 +346,7 @@ project(Deployment_NAM_skel) : dance_output, dance_applicationmanager_skel, danc
   }
 }
 
-project(Deployment_NodeManager_stub) : dance_output, dance_deployment_stub, dance_nodeapplicationmanager_stub, dance_targetmanager_stub {
+project(Deployment_NodeManager_stub) : dance_output, dance_deployment_stub, dance_nodeapplicationmanager_stub, dance_targetmanager_stub, ami {
   sharedname = DAnCE_NodeManager_stub
   after += Deployment_NodeManager_IDL
   dynamicflags = DEPLOYMENT_NODEMANAGER_STUB_BUILD_DLL
@@ -362,7 +362,7 @@ project(Deployment_NodeManager_stub) : dance_output, dance_deployment_stub, danc
   }
 }
 
-project(Deployment_NodeManager_skel) : dance_output, dance_deployment_skel, dance_nodemanager_stub, dance_nodeapplicationmanager_skel {
+project(Deployment_NodeManager_skel) : dance_output, dance_deployment_skel, dance_nodemanager_stub, dance_nodeapplicationmanager_skel, ami {
   sharedname = DAnCE_NodeManager_skel
   after += Deployment_NodeManager_stub
   dynamicflags = DEPLOYMENT_NODEMANAGER_SKEL_BUILD_DLL
@@ -476,7 +476,8 @@ project(Deployment_NodeApplication_skel) : dance_output, dance_deployment_skel, 
 
 // CIAO_DnC_Client library must be linked for this project.
 // Please don't remove. dance_deployment_stub,
-project(Deployment_skel) : dance_deployment_stub, dance_output, ciaolib_with_idl, portableserver, valuetype, ifr_client, naming, dance_lib, dance_logger, messaging, gen_ostream {
+project(Deployment_skel) : dance_deployment_stub, dance_output, ciaolib_with_idl, portableserver, valuetype, \
+                           ifr_client, naming, dance_lib, dance_logger, messaging, gen_ostream, ami, amh {
   sharedname   =  DAnCE_Deployment_skel
   dynamicflags =  DEPLOYMENT_SKEL_BUILD_DLL
   after += Deployment_IDL

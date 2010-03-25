@@ -1,3 +1,26 @@
+Thu Mar 25 08:52:13 UTC 2010  Martin Corino <mcorino@remedy.nl>
+
+        * Deployment/DAnCE_Core.mpc:
+        * DomainApplicationManager/DomainApplicationManager.mpc:
+        * DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DomainApplicationManager/DomainApplicationManager_Impl.h:
+        * DomainApplication/Domain_Application_Impl.h:
+        * DomainApplication/DomainApplication.mpc:
+        * DomainApplication/Domain_Application_Impl.cpp:
+        * ExecutionManager/ExecutionManager_Impl.cpp:
+        * ExecutionManager/ExecutionManager_Impl.h:
+        * ExecutionManager/ExecutionManager.mpc:
+        * tools/Completion/CompletionHandler_T.h:
+        * tools/Completion/Completion_Counter_Base.h:
+        * tools/Completion/Completion_Counter_Base.inl:
+        * tools/Completion/Completion_Counter_Base.cpp:
+  
+        Changed implementation of deployment operations global to local entities 
+        (preparePlan, startLaunch etc.) to use a combination of AMH and AMI to
+        make this part of the deployment fully asynchronous.
+        The sequentiality of the operations is still maintained (i.e. a plan needs to
+        be fully prepared before a launch operation can be started etc.).
+  
 Thu Mar 25 07:39:14 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/LatencyTT/descriptors/Plan_SharedMem.cdp:
