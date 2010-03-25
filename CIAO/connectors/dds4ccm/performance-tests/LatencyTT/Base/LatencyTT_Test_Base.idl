@@ -14,7 +14,7 @@ const short MAX_DATA_SEQUENCE_LENGTH = 8192;
 typedef sequence<octet, MAX_DATA_SEQUENCE_LENGTH> OctetSeq;
 
 #pragma DCPS_DATA_TYPE "LatencyTTTest"
-#pragma DCPS_DATA_TYPE "LatencyTTTestSec"
+//#pragma DCPS_DATA_TYPE "LatencyTTTestSec"
 
 struct LatencyTTTest {
   long seq_num;
@@ -24,12 +24,12 @@ struct LatencyTTTest {
 
 typedef sequence<LatencyTTTest> LatencyTTTestSeq;
 
-struct LatencyTTTestSec {
+/*struct LatencyTTTestSec {
   long seq_num;
   long ping;
   OctetSeq data;
  };
 
 typedef sequence<LatencyTTTestSec> LatencyTTTestSecSeq;
-
+*/
 #endif

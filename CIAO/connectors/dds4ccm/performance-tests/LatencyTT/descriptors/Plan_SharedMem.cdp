@@ -5,7 +5,7 @@
                           xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
   <label>LatencyTT_Test_Depl</label>
   <UUID>LatencyTT_Test_Depl</UUID>
-  
+
   <implementation xmi:id="ReceiverComponentImplementation">
     <name>ReceiverComponentImplementation</name>
     <source/>
@@ -57,7 +57,7 @@
       </value>
     </execParameter>
   </implementation>
-  
+
   <implementation xmi:id="LatencyTT_Test_ConnectorComponentImplementation">
     <name>LatencyTT_Test_ConnectorComponentImplementation</name>
     <source/>
@@ -109,15 +109,14 @@
       </value>
     </execParameter>
   </implementation>
-  
-  <implementation xmi:id="LatencyTT_TestSec_ConnectorComponentImplementation">
+
+  <!--implementation xmi:id="LatencyTT_TestSec_ConnectorComponentImplementation">
     <name>LatencyTT_TestSec_ConnectorComponentImplementation</name>
     <source/>
     <artifact xmi:idref="LatencyTT_TestSec_Connector_ExecArtifact" />
     <artifact xmi:idref="LatencyTT_TestSec_Connector_SvntArtifact" />
     <execParameter>
-      <!-- entrypoint as exec parameter (see 10.6.1) -->
-      <name>component factory</name>
+        <name>component factory</name>
       <value>
         <type>
           <kind>tk_string</kind>
@@ -160,8 +159,8 @@
         </value>
       </value>
     </execParameter>
-  </implementation>
-  
+  </implementation-->
+
   <implementation xmi:id="SenderComponentImplementation">
     <name>SenderComponentImplementation</name>
     <source/>
@@ -213,7 +212,7 @@
       </value>
     </execParameter>
   </implementation>
-  
+
   <instance xmi:id="ReceiverComponentInstance">
     <name>ReceiverComponent</name>
     <node>ReceiverNode</node>
@@ -221,7 +220,7 @@
     <source/>
     <implementation xmi:idref="ReceiverComponentImplementation" />
   </instance>
-  
+
   <instance xmi:id="LatencyTT_Test_ConnectorComponentInstance2">
     <name>LatencyTT_Test_ConnectorComponent2</name>
     <node>ReceiverNode</node>
@@ -251,13 +250,13 @@
       </value>
     </configProperty>
   </instance>
-  
-  <instance xmi:id="LatencyTT_TestSec_ConnectorComponentInstance2">
-    <name>LatencyTT_TestSec_ConnectorComponent2</name>
+
+  <instance xmi:id="LatencyTT_Test_ConnectorComponentInstanceb2">
+    <name>LatencyTT_TestSec_ConnectorComponentb2</name>
     <node>ReceiverNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="LatencyTT_TestSec_ConnectorComponentImplementation" />
+    <implementation xmi:idref="LatencyTT_Test_ConnectorComponentImplementation" />
     <configProperty>
       <name>topic_name</name>
       <value>
@@ -281,7 +280,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <instance xmi:id="SenderComponentInstance">
     <name>SenderComponent</name>
     <node>SenderNode</node>
@@ -322,7 +321,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <instance xmi:id="LatencyTT_Test_ConnectorComponentInstance">
     <name>LatencyTT_Test_ConnectorComponent</name>
     <node>SenderNode</node>
@@ -352,13 +351,13 @@
       </value>
     </configProperty>
   </instance>
-  
-  <instance xmi:id="LatencyTT_TestSec_ConnectorComponentInstance">
-    <name>LatencyTT_TestSec_ConnectorComponent2</name>
+
+  <instance xmi:id="LatencyTT_Test_ConnectorComponentInstanceb">
+    <name>LatencyTT_TestSec_ConnectorComponentb</name>
     <node>SenderNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="LatencyTT_TestSec_ConnectorComponentImplementation" />
+    <implementation xmi:idref="LatencyTT_Test_ConnectorComponentImplementation" />
     <configProperty>
       <name>topic_name</name>
       <value>
@@ -382,7 +381,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <connection>
     <name>info_listen_data</name>
     <deployRequirement>
@@ -402,7 +401,7 @@
       <instance xmi:idref="LatencyTT_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
-  
+
   <connection>
     <name>info_listen_data_control</name>
     <deployRequirement>
@@ -422,7 +421,7 @@
       <instance xmi:idref="LatencyTT_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
-  
+
   <connection>
     <name>writer_connection_receiver</name>
     <deployRequirement>
@@ -439,10 +438,10 @@
       <portName>supplier_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="LatencyTT_TestSec_ConnectorComponentInstance2" />
+      <instance xmi:idref="LatencyTT_Test_ConnectorComponentInstanceb2" />
     </internalEndpoint>
   </connection>
-  
+
   <connection>
     <name>info_listen_data_pub</name>
     <deployRequirement>
@@ -459,10 +458,10 @@
       <portName>push_consumer_data_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="LatencyTT_TestSec_ConnectorComponentInstance" />
+      <instance xmi:idref="LatencyTT_Test_ConnectorComponentInstanceb" />
     </internalEndpoint>
   </connection>
-  
+
   <connection>
     <name>ping_listen_data_control</name>
     <deployRequirement>
@@ -479,10 +478,10 @@
       <portName>push_consumer_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="LatencyTT_TestSec_ConnectorComponentInstance" />
+      <instance xmi:idref="LatencyTT_Test_ConnectorComponentInstanceb" />
     </internalEndpoint>
   </connection>
-  
+
   <connection>
     <name>writer_connection_sender</name>
     <deployRequirement>
@@ -502,7 +501,7 @@
       <instance xmi:idref="LatencyTT_Test_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
-  
+
   <connection>
     <name>connector_status_sender</name>
     <deployRequirement>
@@ -522,7 +521,7 @@
       <instance xmi:idref="LatencyTT_Test_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
-  
+
   <artifact xmi:id="Receiver_ExecArtifact">
     <name>Receiver_exec</name>
     <source/>
@@ -577,7 +576,7 @@
     <node/>
     <location>DDS_LatencyTT_Test_Connector_stub</location>
   </artifact>
-  <artifact xmi:id="LatencyTT_TestSec_Connector_ExecArtifact">
+  <!-->artifact xmi:id="LatencyTT_TestSec_Connector_ExecArtifact">
     <name>LatencyTT_TestSec_Connector_exec</name>
     <source/>
     <node/>
@@ -594,5 +593,5 @@
     <source/>
     <node/>
     <location>DDS_LatencyTT_TestSec_Connector_stub</location>
-  </artifact>
+  </artifact-->
 </Deployment:DeploymentPlan>
