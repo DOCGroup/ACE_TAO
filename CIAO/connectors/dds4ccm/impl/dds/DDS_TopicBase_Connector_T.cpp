@@ -183,7 +183,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::init_default_topic (void)
       catch (...)
         {
           DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::init_default_topic: "
-                                    "Caught unknown C++ exception.\n"));
+                                    "Caught unexpected exception.\n"));
           throw CORBA::INTERNAL ();
         }
     }
@@ -221,7 +221,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::init_subscriber (void)
       catch (...)
         {
           DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::init_subscriber: "
-                                    "Caught unknown C++ exception.\n"));
+                                    "Caught unexpected exception.\n"));
           throw CORBA::INTERNAL ();
         }
     }
@@ -279,7 +279,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_default_topic (ACE_React
   catch (...)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::activate_default_topic: "
-                                "Caught unknown C++ exception.\n"));
+                                "Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -308,7 +308,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_subscriber (ACE_Reactor*
   catch (...)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::activate_subscriber: "
-                                "Caught unknown C++ exception.\n"));
+                                "Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -337,7 +337,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_publisher (ACE_Reactor* 
   catch (...)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::activate_publisher: "
-                                "Caught unknown C++ exception.\n"));
+                                "Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -359,7 +359,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::passivate_default_topic (void)
   catch (...)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::passivate_default_topic: "
-                                "Caught unknown C++ exception.\n"));
+                                "Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -380,7 +380,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::passivate_subscriber (void)
   catch (...)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::passivate_subscriber: "
-                                "Caught unknown C++ exception.\n"));
+                                "Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -401,7 +401,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::passivate_publisher (void)
   catch (...)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::passivate_default_topic: "
-                                "Caught unknown C++ exception.\n"));
+                                "Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -429,7 +429,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::remove_default_topic (void)
   catch (...)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::remove_default_topic: "
-                                "Caught unknown C++ exception.\n"));
+                                "Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -448,7 +448,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::remove_subscriber (void)
   catch (...)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::remove_subscriber: "
-                                "Caught unknown C++ exception.\n"));
+                                "Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -467,7 +467,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::remove_publisher (void)
   catch (...)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::remove_publisher: "
-                                "Caught unknown C++ exception.\n"));
+                                "Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
