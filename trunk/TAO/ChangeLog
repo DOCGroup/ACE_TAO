@@ -1,3 +1,13 @@
+Thu Mar 25 20:11:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exs.cpp:
+        
+          Changed the point of copying, in generated code, the
+          component executor's context reference passed to the
+          constructor of the facet executor.
+
 Thu Mar 25 17:44:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/facet_private_exh.cpp:
