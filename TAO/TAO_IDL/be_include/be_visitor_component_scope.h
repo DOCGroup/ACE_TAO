@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_COMPONENT_COMPONENT_SCOPE_H_
 #define _BE_COMPONENT_COMPONENT_SCOPE_H_
 
@@ -40,17 +39,20 @@ public:
   virtual int visit_extended_port (be_extended_port *node);
   virtual int visit_mirror_port (be_mirror_port *node);
 
-  // Automatically recurses to the ancestor scopes, if any.
+  /// Automatically recurses to the ancestor scopes, if any.
   int visit_component_scope (be_component *node);
 
-  // These two methods are used instead of overriding
-  // visit_porttype so we can traverse a porttype only
-  // when it is referenced.
+  /// These two methods are used instead of overriding
+  // /visit_porttype so we can traverse a porttype only
+  /// when it is referenced.
 
   int visit_porttype_scope (be_porttype *node);
 
-  // Swaps uses for provides members and vice versa.S
+  /// Swaps uses for provides members and vice versa.S
   int visit_porttype_scope_mirror (be_porttype *node);
+  
+  /// Set the member.
+  void node (be_component *c);
 
 protected:
   void gen_svnt_entrypoint_decl (void);

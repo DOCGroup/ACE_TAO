@@ -75,6 +75,7 @@
 #include "be_visitor_component/context_ex_idl.cpp"
 #include "be_visitor_component/component_exh.cpp"
 #include "be_visitor_component/facet_exh.cpp"
+#include "be_visitor_component/facet_private_exh.cpp"
 #include "be_visitor_component/executor_exh.cpp"
 #include "be_visitor_component/component_exs.cpp"
 #include "be_visitor_component/facet_exs.cpp"

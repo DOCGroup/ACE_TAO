@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_COMPONENT_FACET_EXH_H_
 #define _BE_COMPONENT_FACET_EXH_H_
 
