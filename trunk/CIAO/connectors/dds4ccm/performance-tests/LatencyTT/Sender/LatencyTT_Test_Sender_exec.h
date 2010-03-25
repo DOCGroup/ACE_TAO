@@ -23,21 +23,21 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
   //============================================================
   // LatencyTTTest_Listener_exec_i
   //============================================================
-  class SENDER_EXEC_Export LatencyTTTestSec_Listener_exec_i
-    : public virtual ::CCM_DDS::LatencyTTTestSec::CCM_Listener,
+  class SENDER_EXEC_Export LatencyTTTest_Listener_exec_i
+    : public virtual ::CCM_DDS::LatencyTTTest::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
-    LatencyTTTestSec_Listener_exec_i (Sender_exec_i &callback);
-    virtual ~LatencyTTTestSec_Listener_exec_i (void);
+    LatencyTTTest_Listener_exec_i (Sender_exec_i &callback);
+    virtual ~LatencyTTTest_Listener_exec_i (void);
 
     virtual void
     on_one_data (
-      const LatencyTTTestSec & an_instance,
+      const LatencyTTTest & an_instance,
       const ::CCM_DDS::ReadInfo & info);
     virtual void
     on_many_data (
-      const LatencyTTTestSecSeq & an_instance,
+      const LatencyTTTestSeq & an_instance,
       const ::CCM_DDS::ReadInfoSeq & info);
   private:
     Sender_exec_i &callback_;
@@ -101,7 +101,7 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
     get_connector_status (void);
 
-    virtual ::CCM_DDS::LatencyTTTestSec::CCM_Listener_ptr
+    virtual ::CCM_DDS::LatencyTTTest::CCM_Listener_ptr
     get_ping_listen_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -129,7 +129,7 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     void start (void);
     void stop (void);
     void write_one (void);
-    void read (LatencyTTTestSec & instance,ACE_UINT64 receive_time);
+    void read (LatencyTTTest & instance,ACE_UINT64 receive_time);
     void calc_results (void);
     void reset_results (void);
     void init_values (void);

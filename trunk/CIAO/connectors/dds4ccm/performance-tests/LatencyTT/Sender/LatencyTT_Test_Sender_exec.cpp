@@ -12,21 +12,21 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
 {
 
   //============================================================
-  // LatencyTTTestSec_Listener_exec_i
+  // LatencyTTTest_Listener_exec_i
   //============================================================
-  LatencyTTTestSec_Listener_exec_i::LatencyTTTestSec_Listener_exec_i (
+  LatencyTTTest_Listener_exec_i::LatencyTTTest_Listener_exec_i (
             Sender_exec_i &callback)
     : callback_ (callback)
   {
   }
 
-  LatencyTTTestSec_Listener_exec_i::~LatencyTTTestSec_Listener_exec_i (void)
+  LatencyTTTest_Listener_exec_i::~LatencyTTTest_Listener_exec_i (void)
   {
   }
 
   void
-  LatencyTTTestSec_Listener_exec_i::on_one_data (
-                                  const LatencyTTTestSec & an_instance,
+  LatencyTTTest_Listener_exec_i::on_one_data (
+                                  const LatencyTTTest & an_instance,
                                   const ::CCM_DDS::ReadInfo &)
   {
     ACE_UINT64  receive_time = 0;
@@ -36,13 +36,13 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
     if( an_instance.ping == 0)
       {
         ACE_High_Res_Timer::gettimeofday_hr ().to_usec ( receive_time);
-        this->callback_.read(const_cast<LatencyTTTestSec&> (an_instance), receive_time);
+        this->callback_.read(const_cast<LatencyTTTest&> (an_instance), receive_time);
       }
    }
 
   void
-  LatencyTTTestSec_Listener_exec_i::on_many_data (
-                                  const LatencyTTTestSecSeq & /*an_instance*/,
+  LatencyTTTest_Listener_exec_i::on_many_data (
+                                  const LatencyTTTestSeq & /*an_instance*/,
                                   const ::CCM_DDS::ReadInfoSeq & /*info*/)
   {
   }
@@ -230,7 +230,7 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
   }
 
   void
-  Sender_exec_i::read(LatencyTTTestSec & an_instance,ACE_UINT64  receive_time)
+  Sender_exec_i::read(LatencyTTTest & an_instance,ACE_UINT64  receive_time)
   {
     if (an_instance.seq_num == this->seq_num_.value())
     {
@@ -332,10 +332,10 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
       *this);
   }
 
-  ::CCM_DDS::LatencyTTTestSec::CCM_Listener_ptr
+  ::CCM_DDS::LatencyTTTest::CCM_Listener_ptr
   Sender_exec_i::get_ping_listen_data_listener (void)
   {
-    return new LatencyTTTestSec_Listener_exec_i (*this);
+    return new LatencyTTTest_Listener_exec_i (*this);
   }
 
    ::CCM_DDS::CCM_PortStatusListener_ptr

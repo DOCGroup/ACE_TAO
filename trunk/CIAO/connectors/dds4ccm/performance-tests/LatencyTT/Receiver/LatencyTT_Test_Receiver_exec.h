@@ -73,11 +73,11 @@ namespace CIAO_LatencyTT_Test_Receiver_Impl
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
 
-    void write_one (LatencyTTTestSec & an_instance);
+    void write_one (LatencyTTTest & an_instance);
 
   private:
     ::LatencyTT_Test::CCM_Receiver_Context_var context_;
-    CCM_DDS::LatencyTTTestSec::Writer_var writer_;
+    CCM_DDS::LatencyTTTest::Writer_var writer_;
 
     Atomic_ULong  count_;
 
