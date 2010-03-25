@@ -208,7 +208,7 @@ namespace CIAO
       DDSDomainParticipant * impl (void);
 
     private:
-      void remove_topic (CCM_DDS_Topic_i * topic);
+      bool remove_topic (CCM_DDS_Topic_i * topic);
 
       TAO_SYNCH_MUTEX tps_mutex_;
       typedef std::map<ACE_CString, CCM_DDS_Topic_i *> Topics;
