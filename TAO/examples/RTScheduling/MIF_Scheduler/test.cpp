@@ -183,7 +183,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       status = 1;
     }
 
-  ACE_Service_Config::static_svcs ()->remove ("MIF_DT_Creator");
+  ACE_Service_Config::static_svcs ()->remove (ACE_TEXT ("MIF_DT_Creator"));
 
   ACE_DEBUG ((LM_DEBUG, "END\n"));
   return status;

@@ -1,3 +1,11 @@
+Thu Mar 25 08:56:11 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_3837_Regression/client.cpp:
+        * tests/Bug_3837_Regression/server.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/test.cpp:
+        * examples/RTScheduling/MIF_Scheduler/test.cpp:
+          Fixed code for Unicode builds.
+
 Wed Mar 24 18:48:59 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
