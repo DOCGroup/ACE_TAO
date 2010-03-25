@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    
+
     Description
     XML QoS Profile
-    
+
     The QoS configuration of the DDS entities in the generated example is
     loaded from this file.
-    
+
     This file is used only when it is in the current working directory
     or when the enviroment variable
     NDDS_QOS_PROFILES is defined and points to this file.
-    
+
     For more information about XML QoS Profiles see Chapter 15 in the
     RTI Data Distribution Service user manual.
     -->
 <dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
      xsi:noNamespaceSchemaLocation="/home/ndds/ndds.4.5b/scripts/../resource/rtiddsgen/../qos_profiles_4.5b/schema/rti_dds_qos_profiles.xsd"
      version="4.5b">
-  
+
   <!-- QoS Library containing the QoS profile used in the generated example.
-       
+
        A QoS library is a named set of QoS profiles.
        -->
   <qos_library name="Latency_Library">
     <!-- QoS profile used to configure reliable communication between the DataWriter
          and DataReader created in the example code.
-         
+
          A QoS profile groups a set of related QoS.
          -->
     <qos_profile name="UDPv4QoS" is_default_qos="true">
@@ -35,11 +35,11 @@
           <!-- (payload) 8192 + (est. overhead) 8 + 512 -->
           <buffer_size>8712</buffer_size>
         </receiver_pool>
-        
+
         <transport_builtin>
           <mask>DDS_TRANSPORTBUILTIN_UDPv4</mask>
         </transport_builtin>
-        
+
         <property>
           <value>
             <element>
@@ -54,7 +54,7 @@
           </value>
         </property>
       </participant_qos>
-      
+
       <datawriter_qos>
         <reliability>
           <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
@@ -122,7 +122,7 @@
         </protocol>
       </datareader_qos>
     </qos_profile>
-    
+
     <qos_profile name="SharedMemQos" is_default_qos="true">
       <participant_qos>
         <transport_builtin>
@@ -159,7 +159,7 @@
       </datawriter_qos>
       <datareader_qos>
         <reliability>
-          <kind>RELIABLE_RELIABILITY_QOS</kind>
+          <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
         </reliability>
         <resource_limits>
           <initial_samples>100</initial_samples>
@@ -174,6 +174,6 @@
         </durability>
       </datareader_qos>
     </qos_profile>
-    
+
   </qos_library>
 </dds>
