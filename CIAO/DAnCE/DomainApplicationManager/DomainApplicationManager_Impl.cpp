@@ -764,7 +764,7 @@ void DAM_NM_ReplyHandlerImpl::preparePlan_excep (
     {
       excep_holder->raise_exception ();
     }
-  catch (Deployment::StartError &e)
+  catch (Deployment::StartError &)
     {
       DANCE_ERROR (1, (LM_ERROR, DLINFO
                     ACE_TEXT("DAM_NM_ReplyHandlerImpl::preparePlan_excep - ")
@@ -827,7 +827,7 @@ void DAM_NM_ReplyHandlerImpl::destroyManager_excep (
     {
       excep_holder->raise_exception ();
     }
-  catch (Deployment::StopError &e)
+  catch (Deployment::StopError &)
     {
       DANCE_ERROR (1, (LM_ERROR, DLINFO
                     ACE_TEXT("DAM_NM_ReplyHandlerImpl::destroyApplication_excep - ")

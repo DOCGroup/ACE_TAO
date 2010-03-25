@@ -538,7 +538,7 @@ namespace DAnCE
         {
           excep_holder->raise_exception ();
         }
-      catch (Deployment::StartError &e)
+      catch (Deployment::StartError &)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO
                         ACE_TEXT("DA_NAM_ReplyHandlerImpl::startLaunch_excep - ")
@@ -607,7 +607,7 @@ namespace DAnCE
         {
           excep_holder->raise_exception ();
         }
-      catch (Deployment::StopError &e)
+      catch (Deployment::StopError &)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO
                         ACE_TEXT("DA_NAM_ReplyHandlerImpl::destroyApplication_excep - ")
@@ -719,7 +719,7 @@ namespace DAnCE
         {
           excep_holder->raise_exception ();
         }
-      catch (Deployment::StartError &e)
+      catch (Deployment::StartError &)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO
                           ACE_TEXT("DA_NA_ReplyHandlerImpl::finishLaunch_excep - ")
@@ -784,7 +784,7 @@ namespace DAnCE
         {
           excep_holder->raise_exception ();
         }
-      catch (Deployment::StartError &e)
+      catch (Deployment::StartError &)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO
                           ACE_TEXT("DA_NA_ReplyHandlerImpl::start_excep - ")
