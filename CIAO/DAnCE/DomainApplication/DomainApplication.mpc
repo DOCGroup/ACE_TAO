@@ -2,7 +2,9 @@
 // $Id$
 
 project: dance_lib, dance_output, dance_domainapplication_skel, \
-    dance_nodeapplicationmanager_stub, dance_tools, dance_logger {
+    dance_nodeapplicationmanager_stub, \
+    dance_nodeapplicationmanager_skel, \
+    dance_tools, dance_logger {
   sharedname   = DAnCE_DomainApplication
   dynamicflags = DOMAIN_APPLICATION_BUILD_DLL
 
