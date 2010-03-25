@@ -792,6 +792,9 @@ public:
 
   bool gen_lem_force_all (void) const;
   void gen_lem_force_all (bool val);
+  
+  unsigned long tab_size (void) const;
+  void tab_size (unsigned long val);
 
   /// Command line passed to ACE_Process::spawn. Different
   /// implementations in IDL and IFR backends.
@@ -1127,6 +1130,9 @@ private:
   /// Toggles generation of exec IDL for facets with imported
   /// interface types (not in main IDL file).
   bool gen_lem_force_all_;
+  
+  /// 2 spaces by default, can be set from the command line.
+  unsigned int tab_size_;
 };
 
 #endif /* _BE_GLOBAL_H */

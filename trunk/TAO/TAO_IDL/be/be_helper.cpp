@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "be_helper.h"
 #include "be_codegen.h"
 #include "be_extern.h"
@@ -79,6 +78,12 @@ TAO_OutStream::TAO_OutStream (void)
   : fp_ (0),
     indent_level_ (0)
 {
+  for (unsigned long i = 0; i < be_global->tab_size (); ++i)
+    {
+      this->tab_unit_str_ += ' ';
+    }
+    
+  this->tab_unit_ = this->tab_unit_str_.c_str ();
 }
 
 TAO_OutStream::~TAO_OutStream (void)
@@ -203,7 +208,7 @@ TAO_OutStream::indent (void)
     {
       for (int i = 0; i < this->indent_level_; i++)
         {
-          ACE_OS::fprintf (this->fp_, "  ");
+          ACE_OS::fprintf (this->fp_, this->tab_unit_);
         }
     }
 
