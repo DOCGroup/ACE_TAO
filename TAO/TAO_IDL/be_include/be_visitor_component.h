@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_VISITOR_COMPONENT_H
 #define TAO_BE_VISITOR_COMPONENT_H
 
@@ -41,6 +40,7 @@
 #include "be_visitor_component/context_ex_idl.h"
 #include "be_visitor_component/component_exh.h"
 #include "be_visitor_component/facet_exh.h"
+#include "be_visitor_component/facet_private_exh.h"
 #include "be_visitor_component/executor_exh.h"
 #include "be_visitor_component/component_exs.h"
 #include "be_visitor_component/facet_exs.h"

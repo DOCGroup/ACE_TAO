@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 be_visitor_executor_exh::be_visitor_executor_exh (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -123,13 +122,26 @@ be_visitor_executor_exh::visit_component (be_component *node)
       << "virtual void ccm_remove (void);";
 
   os_ << be_nl
-      << "//@}" << be_nl;
+      << "//@}";
 
   os_ << be_uidt_nl << be_nl
       << "private:" << be_idt_nl
       << global << sname << "::CCM_" << lname
-      << "_Context_var context_;"
-      << be_uidt_nl
+      << "_Context_var ciao_context_;";
+      
+  be_visitor_facet_private_exh v (this->ctx_);
+  
+  if (v.visit_component_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_executor_exh::")
+                         ACE_TEXT ("visit_component - ")
+                         ACE_TEXT ("facet private member ")
+                         ACE_TEXT ("visitor failed\n")),
+                        -1);
+    }
+      
+  os_ << be_uidt_nl
       << "};";
 
   return 0;

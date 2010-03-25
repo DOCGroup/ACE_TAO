@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 be_visitor_facet_exh::be_visitor_facet_exh (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -53,6 +52,10 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
       << "// " << __FILE__ << ":" << __LINE__
       << be_nl;
 
+  AST_Decl *c_scope = ScopeAsDecl (this->node_->defined_in ());
+  bool is_global = (c_scope->node_type () == AST_Decl::NT_root);
+  const char *smart_scope = (is_global ? "" : "::");
+      
   os_ << be_nl
       << "class " << export_macro_.c_str () << " "
       << lname << "_exec_i" << be_idt_nl
@@ -62,7 +65,10 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
       << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << lname << "_exec_i (void);" << be_nl
+      << lname << "_exec_i (" << be_idt_nl
+      << smart_scope << c_scope->full_name () << "::CCM_"
+      << this->node_->local_name ()
+      << "_Context_ptr ctx);" << be_uidt_nl
       << "virtual ~" << lname << "_exec_i (void);";
    
   if (impl->node_type () == AST_Decl::NT_interface)
@@ -90,7 +96,11 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
         }
     }
     
-  os_ << be_uidt_nl
+  os_ << be_uidt_nl << be_nl
+      << "private:" << be_idt_nl
+      << smart_scope << c_scope->full_name () << "::CCM_"
+      << this->node_->local_name ()
+      << "_Context_var ciao_context_;" << be_uidt_nl
       << "};" << be_nl;
       
   impl->exec_hdr_facet_gen (true);

@@ -41,6 +41,7 @@ be_visitor_component_exs::visit_component (be_component *node)
       << "{" << be_idt;
       
   be_visitor_facet_exs facet_visitor (this->ctx_);
+  facet_visitor.node (node);
 
   // (JP) Should this be visit_component_scope(), i.e., 
   // generate inherited facets as well? Probably the

@@ -201,6 +201,12 @@ be_visitor_component_scope::visit_porttype_scope_mirror (be_porttype *node)
 }
 
 void
+be_visitor_component_scope::node (be_component *c)
+{
+  this->node_ = c;
+}
+
+void
 be_visitor_component_scope::gen_svnt_entrypoint_decl (void)
 {
   os_ << be_nl << be_nl
