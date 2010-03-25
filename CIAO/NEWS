@@ -97,6 +97,10 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.7.7 and CIAO-0.7.8
   updated. The naming conventions and exact code generated will be reviewed
   after this micro release.
 
+. The DDS4CCM connectors do initialize themselves completely after creation,
+  this does mean that one DDS_Event connector has always 1 writer and 2 readers, also
+  when you just write samples and don't use read or listen
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.6 and CIAO-0.7.7
 =======================================================
 
