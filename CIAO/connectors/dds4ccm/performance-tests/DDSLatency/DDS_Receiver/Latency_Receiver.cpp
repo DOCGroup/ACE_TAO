@@ -22,6 +22,7 @@ const char * lib_name_ = 0;
 const char * prof_name_ = 0;
 
 CORBA::UShort domain_id_ = 0;
+CORBA::Boolean both_read_write_ = false;
 
 void
 split_qos (const char * qos)
@@ -48,13 +49,16 @@ split_qos (const char * qos)
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("q:d:O"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("d:b:q:O"));
   int c;
 
   while ((c = get_opts ()) != -1)
     {
       switch (c)
         {
+          case 'b':
+            both_read_write_  = true;
+            break;
           case 'd':
             domain_id_  = ACE_OS::atoi (get_opts.opt_arg ());
             break;
@@ -66,10 +70,12 @@ parse_args (int argc, ACE_TCHAR *argv[])
           break;
           case '?':
           default:
+            printf("c = <%c>\n",c);
             ACE_ERROR_RETURN ((LM_ERROR,
                                 "usage:\n\n"
                                 "  -d <domain_id>\n"
                                 "  -q <QoS profile>\n"
+                                "  -b use both a writer and reader per topic.\n"
                                 "\n"),
                               -1);
         }
@@ -84,6 +90,9 @@ public:
   void on_data_available(::DDS::DataReader *reader);
 };
 
+/* The dummy listener of events and data from the middleware */
+class DummyListener: public ::DDS::DataReaderListener {
+};
 
 void
 write_back (LatencyTest & an_instance)
@@ -108,11 +117,14 @@ int ACE_TMAIN(int argc, ACE_TCHAR** argv)
 {
   ::DDS::ReturnCode_t retcode;
   HelloListener listener;
+  DummyListener dum_listener;
   ::DDS::DataReader *data_reader = 0;
+  ::DDS::DataReader *dum_data_reader = 0;
   const char * type_name = 0;
   ::DDS::Topic * send_topic = 0;
   ::DDS::Topic * receive_topic = 0;
   ::DDS::DataWriter * data_writer = 0;
+  ::DDS::DataWriter * dum_data_writer = 0;
 
   ACE_Env_Value<int> id (ACE_TEXT("DDS4CCM_DEFAULT_DOMAIN_ID"), domain_id_);
   domain_id_ = id;
@@ -186,6 +198,24 @@ int ACE_TMAIN(int argc, ACE_TCHAR** argv)
       goto clean_exit;
     }
 
+  /* Create a data writer, which will not be used, but is there for 
+  *   compatibility with DDS4CCM latency test, where there is always a
+  *  reader and a writer per connector 
+  */
+  if (both_read_write_)
+    {
+    dum_data_writer = participant->create_datawriter_with_profile(
+                                send_topic,
+                                lib_name_,
+                                prof_name_,
+                                0,
+                                DDS_STATUS_MASK_NONE);
+    if (!dum_data_writer)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data writer.\n")));
+        goto clean_exit;
+      }
+    }
   /* Create the data writer using the default publisher */
   data_writer = participant->create_datawriter_with_profile(
                               receive_topic,
@@ -197,6 +227,26 @@ int ACE_TMAIN(int argc, ACE_TCHAR** argv)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data writer.\n")));
       goto clean_exit;
+    }
+
+  /* Create a data reader, which will not be used, but is there for 
+  *  compatibility with DDS4CCM latency test, where there is always a
+  *  reader and a writer per connector. 
+  */
+  if (both_read_write_)
+    {
+      dum_data_reader = participant->create_datareader_with_profile(
+                                              receive_topic,
+                                              lib_name_,
+                                              prof_name_,
+                                              &dum_listener,
+                                              DDS_DATA_AVAILABLE_STATUS);
+
+    if (!dum_data_reader )
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data reader.\n")));
+        goto clean_exit;
+      }
     }
 
   test_data_writer_ = LatencyTestDataWriter::narrow (data_writer);
@@ -226,7 +276,6 @@ int ACE_TMAIN(int argc, ACE_TCHAR** argv)
 
   main_result = 0;
 clean_exit:
-
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Exiting.")));
   if (count_ > 0)
     {
@@ -288,7 +337,7 @@ void HelloListener::on_data_available(::DDS::DataReader *reader)
         {
           /*  No more samples */
           break;
-        }
+          }
       else if (retcode != DDS_RETCODE_OK)
         {
           ACE_ERROR ((LM_ERROR,
