@@ -8,7 +8,11 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{'ACE_ROOT'}/bin";
 use PerlACE::TestTarget;
 
+$nr_runs = 2;
+@profiles = ("Latency_Library#UDPv4QoS", "Latency_Library#SharedMemQos");
+
 $CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
+$DDS4CCM_ROOT = "$CIAO_ROOT/connectors/dds4ccm";
 
 $tg_sender = PerlACE::TestTarget::create_target (1) || die "Create target for EM failed\n";
 $tg_receiver = PerlACE::TestTarget::create_target (1) || die "Create target for EM failed\n";
@@ -16,12 +20,21 @@ $tg_receiver = PerlACE::TestTarget::create_target (1) || die "Create target for 
 $tg_sender->AddLibPath ('../lib');
 $tg_receiver->AddLibPath ('../lib');
 
-print "Start receiver\n";
-$R = $tg_receiver->CreateProcess ("$CIAO_ROOT/connectors/dds4ccm/performance-tests/DDSLatency/DDS_Receiver/DDS_receiver", "");
-$R->Spawn();
-sleep (5);
-print "Start sender\n";
-$S = $tg_sender->CreateProcess ("$CIAO_ROOT/connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/DDS_Sender", "");
-$S->SpawnWaitKill ($tg_sender->ProcessStartWaitInterval () + 180);
-$R->Kill ();
+sub run_tests {
+    for ($i = 0; $i < $nr_runs; ++$i) {
+        $qos = $profiles[$i];
+
+        print "Start receiver with QoS profile <$qos>\n";
+        $R = $tg_receiver->CreateProcess ("$DDS4CCM_ROOT/performance-tests/DDSLatency/DDS_Receiver/DDS_receiver", "-q $qos");
+        $R->Spawn();
+
+        print "Start sender with QoS profile <$qos>\n";
+        $S = $tg_sender->CreateProcess ("$DDS4CCM_ROOT/performance-tests/DDSLatency/DDS_Sender/DDS_Sender", "-q $qos");
+        $S->SpawnWaitKill ($tg_sender->ProcessStartWaitInterval () + 180);
+        $R->Kill ();
+    }
+}
+
+run_tests ();
+
 exit 0;
