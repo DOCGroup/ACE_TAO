@@ -136,7 +136,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::init_default_domain (void)
   catch (...)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, "DDS_Base_Connector_T::init_default_domain: "
-                                "Caught unknown C++ exception while configuring default domain <%d>\n",
+                                "Caught unexpected exception while configuring default domain <%d>\n",
                                 this->domain_id_));
       throw CORBA::INTERNAL ();
     }
@@ -191,7 +191,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
   catch (...)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, "DDS_Base_Connector_T::ccm_activate: "
-                                "Caught unknown C++ exception while configuring default domain\n"));
+                                "Caught unexpected exception while configuring default domain\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -211,7 +211,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
   catch (...)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, "DDS_Base_Connector_T::ccm_passivate: "
-                                "Caught unknown C++ exception while configuring default domain\n"));
+                                "Caught unexpected exception while configuring default domain\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -222,7 +222,17 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove");
 
-  DPFACTORY->delete_participant (
-    this->domain_participant_.in ());
+  ::DDS::ReturnCode_t const retcode = DPFACTORY->delete_participant (
+                                  this->domain_participant_.in ());
+  if (retcode != ::DDS::RETCODE_OK)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+        "DDS_Base_Connector_T::ccm_remove - "
+        "Unable to delete participant: <%C>\n",
+        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+      throw CORBA::INTERNAL ();
+    }
+
+
   this->domain_participant_ = ::DDS::DomainParticipant::_nil ();
 }
