@@ -1,3 +1,11 @@
+Thu Mar 25 14:52:18 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+        * TAO_IDL/be/be_visitor_root/any_op.cpp:
+        
+          Fixed bug in code generation logic when the options
+          -Sa and -GA both are present on the command line.
+
 Thu Mar 25 08:56:11 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Bug_3837_Regression/client.cpp:
