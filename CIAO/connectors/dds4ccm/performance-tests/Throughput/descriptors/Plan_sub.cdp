@@ -194,7 +194,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>HelloTest_Library#ThroughputPartQoS</string>
+          <string>HelloTest_Library#ThroughputQoS</string>
         </value>
       </value>
     </configProperty>
