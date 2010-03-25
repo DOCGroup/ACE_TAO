@@ -286,7 +286,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       status = 1;
     }
 
-  ACE_Service_Config::static_svcs ()->remove ("FP_DT_Creator");
+  ACE_Service_Config::static_svcs ()->remove (ACE_TEXT ("FP_DT_Creator"));
 
   return status;
 }
