@@ -1,3 +1,19 @@
+Thu Mar 25 07:39:14 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/LatencyTT/descriptors/Plan_SharedMem.cdp:
+        * connectors/dds4ccm/performance-tests/LatencyTT/descriptors/Plan_UDPv4.cdp:
+        * connectors/dds4ccm/performance-tests/LatencyTT/descriptors/USER_QOS_PROFILES.xml:
+          Merged two deployment plans into one.
+          Merged two qos files into one.
+
+        * connectors/dds4ccm/performance-tests/LatencyTT/descriptors/run_test.pl:
+          Changed run_test.pl to run all deployment plans in this directory.
+
+        * connectors/dds4ccm/performance-tests/LatencyTT/descriptors/Plan_pub.cdp:
+        * connectors/dds4ccm/performance-tests/LatencyTT/descriptors/Plan_sub.cdp:
+        * connectors/dds4ccm/performance-tests/LatencyTT/descriptors/USER_QOS_PROFILES.xml.shmem:
+          Removed these files.
+
 Wed Mar 25 13:52:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Receiver/Latency_Receiver.cpp
