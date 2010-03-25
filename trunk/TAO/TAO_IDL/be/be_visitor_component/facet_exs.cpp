@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 be_visitor_facet_exs::be_visitor_facet_exs (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx),
@@ -82,9 +81,17 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
       << lname << "_exec_i" << be_nl
       << comment_border_;
 
+  AST_Decl *c_scope = ScopeAsDecl (this->node_->defined_in ());
+  bool is_global = (c_scope->node_type () == AST_Decl::NT_root);
+  const char *smart_scope = (is_global ? "" : "::");
+      
   os_ << be_nl << be_nl
       << lname << "_exec_i::" << lname
-      << "_exec_i (void)" << be_nl
+      << "_exec_i (" << be_idt << be_idt << be_idt_nl
+      << smart_scope << c_scope->full_name () << "::CCM_"
+      << this->node_->local_name () << "_Context_ptr ctx)"
+      << be_uidt << be_uidt_nl
+      << ": ciao_context_ (ctx)" << be_uidt_nl
       << "{" << be_nl
       << "}";
 

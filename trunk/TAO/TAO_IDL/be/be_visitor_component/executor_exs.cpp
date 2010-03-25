@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 be_visitor_executor_exs::be_visitor_executor_exs (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx),
@@ -145,10 +144,11 @@ be_visitor_executor_exs::visit_component (be_component *node)
       << lname << "_exec_i::set_session_context (" << be_idt_nl
       << "::Components::SessionContext_ptr ctx)" << be_uidt_nl
       << "{" << be_idt_nl
-      << "this->context_ =" << be_idt_nl
+      << "this->ciao_context_ =" << be_idt_nl
       << global << sname << "::CCM_" << lname
       << "_Context::_narrow (ctx);" << be_uidt_nl << be_nl
-      << "if ( ::CORBA::is_nil (this->context_.in ()))" << be_idt_nl
+      << "if ( ::CORBA::is_nil (this->ciao_context_.in ()))"
+      << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
@@ -202,6 +202,10 @@ be_visitor_executor_exs::visit_provides (be_provides *node)
 
   // No '_cxx_' prefix.
   const char *lname = obj->original_local_name ()->get_string ();
+  
+  AST_Decl *c_scope = ScopeAsDecl (this->node_->defined_in ());
+  bool is_global = (c_scope->node_type () == AST_Decl::NT_root);
+  const char *smart_scope = (is_global ? "" : "::");
 
   os_ << be_nl << be_nl
       << global << sname << "::CCM_" << lname
@@ -209,9 +213,26 @@ be_visitor_executor_exs::visit_provides (be_provides *node)
       << node_->local_name () << "_exec_i::get_"
       << port_name << " (void)" << be_nl
       << "{" << be_idt_nl
-      << your_code_here_ << be_nl
-      << "return " << global << sname << "::CCM_"
-      << lname << "::_nil ();" << be_uidt_nl
+      << "if ( ::CORBA::is_nil (this->ciao_" << port_name
+      << "_.in ()))" << be_idt_nl
+      << "{" << be_idt_nl
+      << lname << "_exec_i *tmp = 0;" << be_nl
+      << "ACE_NEW_RETURN (" << be_idt_nl
+      << "tmp," << be_nl
+      << lname << "_exec_i (" << be_idt_nl
+      << smart_scope << c_scope->full_name () << "::CCM_"
+      << this->node_->local_name () << "_Context::_duplicate ("
+      << be_idt_nl
+      << "this->ciao_context_.in ()))," << be_uidt << be_uidt_nl
+      << global << sname << "::CCM_" << lname << "::_nil ());"
+      << be_uidt_nl << be_nl
+      << "this->ciao_" << port_name << "_ = tmp;" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
+      << "return" << be_idt_nl
+      << global << sname << "::CCM_" << lname
+      << "::_duplicate (" << be_idt_nl
+      << "this->ciao_" << port_name << "_.in ());"
+      << be_uidt << be_uidt << be_uidt_nl
       << "}";
 
   return 0;

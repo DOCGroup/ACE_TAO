@@ -1,3 +1,42 @@
+Thu Mar 25 17:44:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/facet_private_exh.cpp:
+        * TAO_IDL/be_include/be_visitor_component/facet_private_exh.h:
+
+          New visitor, generating private members in the component
+          executor to hold references to facet executors, if any.
+
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exh.cpp:
+        * TAO_IDL/be/be_visitor_component_scope.cpp:
+        * TAO_IDL/be_include/be_visitor_component_scope.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_exh.h:
+        * TAO_IDL/be_include/be_visitor_component.h:
+
+          - Added class member to the facet executor impl to
+            hold a reference to its component's context.
+
+          - Change the facet exectutor impl's constructor
+            signature to pass in a reference to aforementioned
+            context.
+
+          - Added generation of a private member in the component
+            executor impl for each facet.
+
+          - Filled in the body of the component executor's generated
+            get_<port name>_<facet name> operation to actually
+            create a facet executor (passing in a copy of the
+            component executor's context) and store it (if not
+            already created) and return a copy to the caller.
+
+            These changes close [BUGID:3830].
+
 Thu Mar 25 14:52:18 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_root/root_ch.cpp:

@@ -31,7 +31,7 @@ be_visitor_component_exh::~be_visitor_component_exh (void)
 int
 be_visitor_component_exh::visit_component (be_component *node)
 {
-  node_ = node;
+  this->node_ = node;
 
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
@@ -41,6 +41,7 @@ be_visitor_component_exh::visit_component (be_component *node)
       << "{" << be_idt;
      
   be_visitor_facet_exh facet_visitor (this->ctx_);
+  facet_visitor.node (node);
   
   // (JP) Should this be visit_component_scope(), i.e., 
   //  generate inherited facets as well? Probably the
