@@ -14,11 +14,11 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_OUTSTRM_H
 #define TAO_BE_OUTSTRM_H
 
 #include "ace/CDR_Base.h"
+#include "ace/SString.h"
 
 class Identifier;
 class UTL_IdList;
@@ -203,6 +203,10 @@ protected:
 
   /// Indentation level
   int indent_level_;
+  
+  /// Used to set tab spaces.
+  ACE_CString tab_unit_str_;
+  const char *tab_unit_;
 };
 
 #endif // if !defined

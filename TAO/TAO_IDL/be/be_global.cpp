@@ -132,7 +132,8 @@ BE_GlobalData::BE_GlobalData (void)
     gen_svnt_export_hdr_file_ (false),
     gen_exec_export_hdr_file_ (false),
     gen_conn_export_hdr_file_ (false),
-    gen_lem_force_all_ (false)
+    gen_lem_force_all_ (false),
+    tab_size_ (2)
 {
 }
 
@@ -2314,6 +2315,18 @@ BE_GlobalData::gen_lem_force_all (bool val)
   this->gen_lem_force_all_ = val;
 }
 
+unsigned long
+BE_GlobalData::tab_size (void) const
+{
+  return this->tab_size_;
+}
+
+void
+BE_GlobalData::tab_size (unsigned long val)
+{
+  this->tab_size_ = val;
+}
+
 ACE_CString
 BE_GlobalData::spawn_options (void)
 {
@@ -3174,6 +3187,23 @@ BE_GlobalData::parse_args (long &i, char **av)
           }
 
         break;
+      case 'T':
+        if (av[i][2] == 'S')
+          {
+            unsigned long ul = ACE_OS::strtoul (av[i + 1], 0, 10);
+            be_global->tab_size (ul);
+            ++i;
+          }
+        else
+          {
+            ACE_ERROR ((
+                LM_ERROR,
+                ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
+                av[i]
+              ));
+          }
+          
+        break;
       default:
         ACE_ERROR ((
             LM_ERROR,
@@ -3874,6 +3904,11 @@ BE_GlobalData::usage (void) const
       ACE_TEXT ("(i.e. $TAO_ROOT, $TAO_ROOT/tao, $TAO_ROOT/orbsvcs,\n\t\t\t")
       ACE_TEXT ("$TAO_ROOT/CIAO, $TAO_ROOT/CIAO/ciao, $TAO_ROOT/CIAO/ccm)\n\t\t\t")
       ACE_TEXT (" (enabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -TS <value>\t\tset tab size for generated files")
+      ACE_TEXT (" (default is 2 spaces)\n")
     ));
 }
 
