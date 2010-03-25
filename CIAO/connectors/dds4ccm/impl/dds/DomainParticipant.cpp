@@ -369,50 +369,52 @@ namespace CIAO
 
       DDS_TopicQos ccm_dds_qos = DDS_TOPIC_QOS_DEFAULT;
 
-      ::DDS::TopicDescription_var td = this->lookup_topicdescription (impl_name);
-      if (::CORBA::is_nil (td))
-        {
-          DDSTopic *ccm_dds_topic = this->impl ()->create_topic (impl_name,
-                                                          type_name,
-                                                          ccm_dds_qos,
-                                                          ccm_dds_tl,
-                                                          mask);
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
+                      this->tps_mutex_, CORBA::INTERNAL ());
+      {
+        CCM_DDS_Topic_i *ccm_dds_tp = this->tps_[impl_name];
 
-          if (ccm_dds_topic == 0)
-            {
-              DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic - "
-                          "Error: RTI DDS returned a nil topic\n"));
-              delete ccm_dds_tl;
-              throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
-            }
+        if (!ccm_dds_tp)
+          {
+            DDSTopic *dds_topic = this->impl ()->create_topic (impl_name,
+                                                            type_name,
+                                                            ccm_dds_qos,
+                                                            ccm_dds_tl,
+                                                            mask);
 
-          ::DDS::Topic_var retval = ::DDS::Topic::_nil ();
-          ACE_NEW_THROW_EX (retval,
-                            CCM_DDS_Topic_i (ccm_dds_topic),
-                            CORBA::NO_MEMORY ());
+            if (dds_topic == 0)
+              {
+                DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic - "
+                            "Error: RTI DDS returned a nil topic\n"));
+                delete ccm_dds_tl;
+                throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+              }
 
-          DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "DDS_DomainParticipant_i::create_topic - "
-                      "Successfully created topic with name %C and type %C\n",
-                      impl_name, type_name));
+            ::DDS::Topic_var retval = ::DDS::Topic::_nil ();
+            ACE_NEW_THROW_EX (retval,
+                              CCM_DDS_Topic_i (dds_topic),
+                              CORBA::NO_MEMORY ());
 
-          return retval._retn ();
-        }
-      else
-        {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "DDS_DomainParticipant_i::create_topic_with_profile - "
-                      "Re-using topic with name %C and type %C.\n",
-                      impl_name, type_name));
-          ::DDS::Topic_var tp = ::DDS::Topic::_narrow (td.in ());
-          if (CORBA::is_nil (tp.in ()))
-            {
-              return ::DDS::Topic::_nil ();
-            }
-          else
-            {
-              tp->_add_ref ();
-              return ::DDS::Topic::_duplicate (tp);
-            }
-        }
+            DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "DDS_DomainParticipant_i::create_topic - "
+                        "Successfully created topic with name %C and type %C\n",
+                        impl_name, type_name));
+
+            ccm_dds_tp = dynamic_cast < CCM_DDS_Topic_i *> (retval.in ());
+            ccm_dds_tp->set_impl (dds_topic);
+
+            this->tps_[impl_name] = ccm_dds_tp;
+
+            return retval._retn ();
+          }
+        else
+          {
+            DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "DDS_DomainParticipant_i::create_topic_with_profile - "
+                        "Re-using topic with name %C and type %C.\n",
+                        impl_name, type_name));
+
+            return ::DDS::Topic::_duplicate (ccm_dds_tp);
+          }
+      }
 #else
       return this->impl ()->create_topic (impl_name,
                                                       type_name,
@@ -452,67 +454,101 @@ namespace CIAO
                    "Attempting to create topic with name %C and type %C\n",
                    impl_name, type_name));
 
-      ::DDS::TopicDescription_var td = this->lookup_topicdescription (impl_name);
-      if (::CORBA::is_nil (td))
+      CCM_DDS_TopicListener_i *ccm_dds_tl = 0;
+      if (! ::CORBA::is_nil (a_listener))
         {
-          CCM_DDS_TopicListener_i *ccm_dds_tl = 0;
-          if (! ::CORBA::is_nil (a_listener))
-            {
-              ACE_NEW_THROW_EX (ccm_dds_tl,
-                                CCM_DDS_TopicListener_i (a_listener),
-                                CORBA::NO_MEMORY ());
-            }
-          DDSTopic *ccm_dds_topic = this->impl ()->create_topic_with_profile (impl_name,
+          ACE_NEW_THROW_EX (ccm_dds_tl,
+                            CCM_DDS_TopicListener_i (a_listener),
+                            CORBA::NO_MEMORY ());
+        }
+
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
+                      this->tps_mutex_, CORBA::INTERNAL ());
+      {
+        CCM_DDS_Topic_i *ccm_dds_tp = this->tps_[impl_name];
+
+        if (!ccm_dds_tp)
+          {
+            DDSTopic *dds_topic = this->impl ()->create_topic_with_profile (
+                                                          impl_name,
                                                           type_name,
                                                           library_name,
                                                           profile_name,
                                                           ccm_dds_tl,
                                                           mask);
 
-          if (ccm_dds_topic == 0)
-            {
-              DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic_with_profile - "
+            if (dds_topic == 0)
+              {
+                DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "DDS_DomainParticipant_i::create_topic_with_profile - "
                           "Error: RTI DDS returned a nil topic\n"));
-              delete ccm_dds_tl;
-              throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+                delete ccm_dds_tl;
+                throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+              }
+
+            ::DDS::Topic_var retval = ::DDS::Topic::_nil ();
+            ACE_NEW_THROW_EX (retval,
+                              CCM_DDS_Topic_i (dds_topic),
+                              CORBA::NO_MEMORY ());
+
+            DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "DDS_DomainParticipant_i::create_topic_with_profile - "
+                        "Successfully created topic with name %C and type %C\n",
+                        impl_name, type_name));
+
+            ccm_dds_tp = dynamic_cast < CCM_DDS_Topic_i *> (retval.in ());
+            ccm_dds_tp->set_impl (dds_topic);
+
+            this->tps_[impl_name] = ccm_dds_tp;
+
+            return retval._retn ();
+          }
+        else
+          {
+            DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "DDS_DomainParticipant_i::create_topic_with_profile - "
+                        "Re-using topic with name %C and type %C.\n",
+                        impl_name, type_name));
+            return ::DDS::Topic::_duplicate (ccm_dds_tp);
+          }
+      }
+    }
+#endif
+
+    void
+    CCM_DDS_DomainParticipant_i::remove_topic (CCM_DDS_Topic_i * topic)
+    {
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_i::remove_topic");
+
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
+                      this->tps_mutex_, CORBA::INTERNAL ());
+
+      if (topic->_refcount_value () == 1)
+        {
+          Topics::iterator pos;
+          for (pos = this->tps_.begin(); pos != this->tps_.end(); ++pos)
+            {
+              if (pos->second == topic)
+                {
+                  DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_i::remove_topic - "
+                            "Removing topic for %C from list.\n",
+                            pos->first.c_str ()));
+                  this->tps_.erase (pos->first);
+                  break;
+                }
             }
-
-          ::DDS::Topic_var retval = ::DDS::Topic::_nil ();
-          ACE_NEW_THROW_EX (retval,
-                            CCM_DDS_Topic_i (ccm_dds_topic),
-                            CORBA::NO_MEMORY ());
-
-          DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "DDS_DomainParticipant_i::create_topic_with_profile - "
-                      "Successfully created topic with name %C and type %C\n",
-                      impl_name, type_name));
-
-          return retval._retn ();
         }
       else
         {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "DDS_DomainParticipant_i::create_topic_with_profile - "
-                      "Re-using topic with name %C and type %C.\n",
-                      impl_name, type_name));
-          ::DDS::Topic_var tp = ::DDS::Topic::_narrow (td.in ());
-          if (CORBA::is_nil (tp.in ()))
-            {
-              return ::DDS::Topic::_nil ();
-            }
-          else
-            {
-              tp->_add_ref ();
-              return ::DDS::Topic::_duplicate (tp);
-            }
+          DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_i::remove_topic - "
+                    "Don't delete topic since it's still used - ref_count <%d>\n",
+                    topic->_refcount_value ()));
         }
     }
-#endif
 
     ::DDS::ReturnCode_t
     CCM_DDS_DomainParticipant_i::delete_topic (::DDS::Topic_ptr a_topic)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::delete_topic");
 
-      CCM_DDS_Topic_i *top = dynamic_cast< CCM_DDS_Topic_i *> (a_topic);
+      CCM_DDS_Topic_i *top = this->tps_[a_topic->get_name ()];
 
       if (!top)
         {
@@ -523,6 +559,8 @@ namespace CIAO
 
       DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic - "
                    "Successfully casted provided object reference to servant.\n"));
+
+      this->remove_topic (top);
 
       ::DDS::ReturnCode_t retval = DDS::RETCODE_OK;
 
@@ -557,10 +595,6 @@ namespace CIAO
               DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic - "
                             "Provided topic successfully deleted\n"));
             }
-        }
-      else
-        {
-          top->_remove_ref ();
         }
       return retval;
     }
