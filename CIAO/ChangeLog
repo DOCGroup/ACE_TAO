@@ -1,3 +1,28 @@
+Thu Mar 25 12:32:13 UTC 2010  Martin Corino <mcorino@remedy.nl>
+
+        * EM-Redeployment:
+        * EM-Redeployment/run_test.pl:
+        * EM-Redeployment/README:
+        Added test for faultless redeployments.
+
+        * Components/SimpleFailure.mpc:
+        * Components/SimpleFailure_exec.cpp:
+        * Components/SimpleFailure_exec.h:
+        * Components/SimpleFailure.idl:
+        * EM-Launch-Failures:
+        * EM-Launch-Failures/5NodeFailureAtStartup.cdp:
+        * EM-Launch-Failures/1NodeNoFailure.cdp:
+        * EM-Launch-Failures/2NodeNoFailure.cdp:
+        * EM-Launch-Failures/5NodeNoFailure.cdp:
+        * EM-Launch-Failures/1NodeFailureAtActivate.cdp:
+        * EM-Launch-Failures/2NodeFailureAtActivate.cdp:
+        * EM-Launch-Failures/1NodeFailureAtStartup.cdp:
+        * EM-Launch-Failures/2NodeFailureAtStartup.cdp:
+        * EM-Launch-Failures/run_test.pl:
+        * EM-Launch-Failures/5NodeFailureAtActivate.cdp:
+        * EM-Launch-Failures/README:
+        Added test for redeployments after launch failures.
+        
 Thu Mar 25 12:14:57 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Throughput/descriptors/Plan_pub.cdp:
