@@ -17,6 +17,8 @@
 #include "dds4ccm/impl/dds/dds4ccm_dds_impl_export.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
+#include <map>
+
 #if (CIAO_DDS4CCM_NDDS==1)
 #include "ndds/ndds_cpp.h"
 #endif
@@ -31,6 +33,8 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
+    class CCM_DDS_Topic_i;
+
     class DDS4CCM_DDS_IMPL_Export CCM_DDS_DomainParticipant_i :
       public virtual ::DDS::CCM_DomainParticipant,
       public virtual ::CORBA::LocalObject
@@ -202,6 +206,13 @@ namespace CIAO
       DDSDomainParticipant *impl_;
 
       DDSDomainParticipant * impl (void);
+
+    private:
+      void remove_topic (CCM_DDS_Topic_i * topic);
+
+      TAO_SYNCH_MUTEX tps_mutex_;
+      typedef std::map<ACE_CString, CCM_DDS_Topic_i *> Topics;
+      Topics tps_;
     };
   }
 }
