@@ -10,6 +10,7 @@ Thu Mar 25 21:26:01 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be_include/be_global.h:
         
           New option -TS to set tab size for generated files.
+          Closes [BUGID:3829].
           
         * docs/compiler.html:
         
