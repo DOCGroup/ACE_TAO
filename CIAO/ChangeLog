@@ -1,3 +1,18 @@
+Thu Mar 25 10:33:19 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Receiver/Latency_Receiver.cpp:
+        * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/Latency_Sender.cpp:
+          Layout changes.
+          Addes -q as a commandline parameter. One can set the qos_profile name with
+          this commandline parameter.
+
+        * connectors/dds4ccm/performance-tests/DDSLatency/descriptors/USER_QOS_PROFILES.xml:
+          Copied from the LatencyTT test.
+
+        * connectors/dds4ccm/performance-tests/DDSLatency/descriptors/run_test_dds.pl:
+          Changed this script in order to run more test with different
+          qos names.
+
 Thu Mar 25 08:52:13 UTC 2010  Martin Corino <mcorino@remedy.nl>
 
         * Deployment/DAnCE_Core.mpc:
@@ -14,13 +29,13 @@ Thu Mar 25 08:52:13 UTC 2010  Martin Corino <mcorino@remedy.nl>
         * tools/Completion/Completion_Counter_Base.h:
         * tools/Completion/Completion_Counter_Base.inl:
         * tools/Completion/Completion_Counter_Base.cpp:
-  
-        Changed implementation of deployment operations global to local entities 
+
+        Changed implementation of deployment operations global to local entities
         (preparePlan, startLaunch etc.) to use a combination of AMH and AMI to
         make this part of the deployment fully asynchronous.
         The sequentiality of the operations is still maintained (i.e. a plan needs to
         be fully prepared before a launch operation can be started etc.).
-  
+
 Thu Mar 25 07:39:14 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/LatencyTT/descriptors/Plan_SharedMem.cdp:
