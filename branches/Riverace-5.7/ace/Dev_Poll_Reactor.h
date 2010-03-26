@@ -246,6 +246,10 @@ protected:
   ACE_Notification_Queue notification_queue_;
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
+  /// Lock and flag to say whether we're already dispatching notifies.
+  /// Purpose is to only dispatch notifies from one thread at a time.
+  ACE_SYNCH_MUTEX dispatching_lock_;
+  bool dispatching_;
 };
 
 // ---------------------------------------------------------------------

@@ -34,7 +34,7 @@ Bug_1890_Regression_Test
 Bug_2368_Regression_Test: ALL !DISABLED
 Bug_2497_Regression_Test
 Bug_2540_Regression_Test
-#Bug_2609_Regression_Test: !ST !ACE_FOR_TAO
+Bug_2609_Regression_Test: !ST !ACE_FOR_TAO
 #Bug_2610_Regression_Test: !ST !ACE_FOR_TAO
 Bug_2659_Regression_Test: !ST !VxWorks64 !VxWorks65
 Bug_2653_Regression_Test: !ST
@@ -94,6 +94,7 @@ Logging_Strategy_Test: !LynxOS !STATIC !ST
 Manual_Event_Test
 MEM_Stream_Test: !VxWorks !nsk !ACE_FOR_TAO !PHARLAP !QNX
 MM_Shared_Memory_Test: !Unicos !VxWorks !nsk !ACE_FOR_TAO
+MT_NonBlocking_Connect_Test: !ST
 MT_Reactor_Timer_Test
 MT_Reactor_Upcall_Test: !nsk
 MT_Reference_Counted_Event_Handler_Test: !OpenVMS_IA64Crash
