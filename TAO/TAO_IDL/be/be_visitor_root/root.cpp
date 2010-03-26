@@ -43,23 +43,6 @@ be_visitor_root::visit_module (be_module *node)
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ROOT_CI:
-    case TAO_CodeGen::TAO_ROOT_SI:
-    case TAO_CodeGen::TAO_ROOT_SS:
-    case TAO_CodeGen::TAO_ROOT_IS:
-    case TAO_CodeGen::TAO_ROOT_CS:
-    case TAO_CodeGen::TAO_ROOT_SVH:
-    case TAO_CodeGen::TAO_ROOT_SVS:
-    case TAO_CodeGen::TAO_ROOT_EXH:
-    case TAO_CodeGen::TAO_ROOT_EXS:
-    case TAO_CodeGen::TAO_ROOT_CNH:
-    case TAO_CodeGen::TAO_ROOT_CNS:
-    case TAO_CodeGen::TAO_ROOT_EX_IDL:
-      {
-        be_visitor_module visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
     case TAO_CodeGen::TAO_ROOT_SH:
       {
         be_visitor_module_sh visitor (&ctx);
@@ -95,11 +78,9 @@ be_visitor_root::visit_module (be_module *node)
       }
     default:
       {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%N:%l) be_visitor_root::"
-                           "visit_module - "
-                           "Bad context state\n"),
-                          -1);
+        be_visitor_module visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
       }
     }
 

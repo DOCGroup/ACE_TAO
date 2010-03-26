@@ -30,12 +30,14 @@ be_visitor_facet_private_exh::visit_provides (be_provides *node)
   AST_Decl *i_scope = ScopeAsDecl (impl->defined_in ());
   bool is_global = (i_scope->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (is_global ? "" : "::");
+  ACE_CString scope_name =
+    IdentifierHelper::orig_sn (i_scope->name (), false);
   
   os_ << be_nl
-      << smart_scope << i_scope->full_name () << "::CCM_"
-      << impl->local_name () << "_var ciao_"
-      << this->port_prefix_.c_str () << node->local_name ()
-      << "_;";
+      << smart_scope << scope_name.c_str () << "::CCM_"
+      << impl->original_local_name () << "_var ciao_"
+      << this->port_prefix_.c_str ()
+      << node->original_local_name () << "_;";
   
   return 0;
 }

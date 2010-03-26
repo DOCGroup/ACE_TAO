@@ -203,9 +203,6 @@ be_visitor_executor_exs::visit_provides (be_provides *node)
   // No '_cxx_' prefix.
   const char *lname = obj->original_local_name ()->get_string ();
 
-  AST_Decl *c_scope = ScopeAsDecl (this->node_->defined_in ());
-  //bool is_global = (c_scope->node_type () == AST_Decl::NT_root);
-
   os_ << be_nl << be_nl
       << global << sname << "::CCM_" << lname
       << "_ptr" << be_nl

@@ -331,7 +331,7 @@ public:
 
   /// Returns the original interface from which this one was created,
   /// applies only to implied IDL
-  be_interface *original_interface ();
+  be_interface *original_interface (void);
 
   /// Returns an interface, which can be used instead.
   /// Needs to get set by the strategy.
