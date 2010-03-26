@@ -1,3 +1,8 @@
+Fri Mar 26 09:58:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Hello/IDL_Test.mpc:
+          Disabled some generated ndds code, result in compile warnings
+
 Fri Mar 26 09:56:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
