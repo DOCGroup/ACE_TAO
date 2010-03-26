@@ -1,6 +1,18 @@
+Fri Mar 26 17:02:30 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_global.cpp (recursion_start):
+        
+          Added code to strip off trailing slashes on the string
+          passed to this method. It is assumed the string denotes
+          a directory path, and the slashes are not only redundant,
+          but also cause problems down the line when using ACE
+          utilities to find the directory. Thanks to Abdullah
+          Sowayan <sowayan at gmail dot com> for reporting the
+          bug.
+
 Fri Mar 26 10:07:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * TAO_IDL/be/be_visitor_component/executor_exs.cpp
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
           Fixed variable not used warning
 
 Fri Mar 26 09:58:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>

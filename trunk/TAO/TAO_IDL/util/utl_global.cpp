@@ -1808,7 +1808,20 @@ void
 IDL_GlobalData::recursion_start (const char *val)
 {
   ACE::strdelete (this->recursion_start_);
-  this->recursion_start_ = ACE::strnew (val);
+  
+  /// Strip off any trailing slashes (not needed
+  /// for further processing).
+  ACE_CString tmp (val);
+  ACE_CString::size_type len = tmp.length ();
+  ACE_TCHAR c = tmp[len - 1];
+  
+  while (c == '\\' || c == '/')
+    {
+      tmp = tmp.substr (0, --len);
+      c = tmp[len - 1];
+    }
+    
+  this->recursion_start_ = ACE::strnew (tmp.c_str ());
 }
 
 bool
