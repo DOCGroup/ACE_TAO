@@ -38,7 +38,7 @@ be_visitor_executor_exs::visit_operation (be_operation *node)
     {
       return 0;
     }
-    
+
   be_visitor_operation_exs v (this->ctx_);
   v.scope (op_scope_);
   return v.visit_operation (node);
@@ -71,7 +71,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
     }
 
   node_ = node;
-  
+
   const char *lname = node->local_name ();
 
   os_ << be_nl
@@ -192,7 +192,7 @@ be_visitor_executor_exs::visit_provides (be_provides *node)
   ACE_CString prefix (this->port_prefix_);
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
-  
+
   be_type *obj = node->provides_type ();
 
   AST_Decl *scope = ScopeAsDecl (obj->defined_in ());
@@ -202,10 +202,9 @@ be_visitor_executor_exs::visit_provides (be_provides *node)
 
   // No '_cxx_' prefix.
   const char *lname = obj->original_local_name ()->get_string ();
-  
+
   AST_Decl *c_scope = ScopeAsDecl (this->node_->defined_in ());
   bool is_global = (c_scope->node_type () == AST_Decl::NT_root);
-  const char *smart_scope = (is_global ? "" : "::");
 
   os_ << be_nl << be_nl
       << global << sname << "::CCM_" << lname

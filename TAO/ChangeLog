@@ -1,19 +1,24 @@
+Fri Mar 26 09:56:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+          Fixed variable not used warning
+
 Thu Mar 25 21:26:01 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component.cpp:
-        
+
           Cosmetic changes.
-          
+
         * TAO_IDL/be/be_helper.cpp:
         * TAO_IDL/be/be_global.cpp:
         * TAO_IDL/be_include/be_helper.h:
         * TAO_IDL/be_include/be_global.h:
-        
+
           New option -TS to set tab size for generated files.
           Closes [BUGID:3829].
-          
+
         * docs/compiler.html:
-        
+
           Updated command line options table.
 
 Thu Mar 25 20:11:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -21,7 +26,7 @@ Thu Mar 25 20:11:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_component.cpp:
         * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
         * TAO_IDL/be/be_visitor_component/facet_exs.cpp:
-        
+
           Changed the point of copying, in generated code, the
           component executor's context reference passed to the
           constructor of the facet executor.
@@ -69,7 +74,7 @@ Thu Mar 25 14:52:18 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_root/root_ch.cpp:
         * TAO_IDL/be/be_visitor_root/any_op.cpp:
-        
+
           Fixed bug in code generation logic when the options
           -Sa and -GA both are present on the command line.
 
