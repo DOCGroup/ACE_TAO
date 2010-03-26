@@ -14,6 +14,10 @@ USER VISIBLE CHANGES BETWEEN ACE-5.7.7 and ACE-5.7.8
   directives then the directives from svc.conf can not override
   results of the user provided command-line directives.
 
+. ACE_Dev_Poll_Reactor now dispatches notifications in only one thread at
+  a time. This brings notification handling more in line with behavior in
+  other Reactor implementations.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.7.6 and ACE-5.7.7
 ====================================================
 

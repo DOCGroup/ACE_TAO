@@ -53,6 +53,7 @@ ACE_Dev_Poll_Reactor_Notify::ACE_Dev_Poll_Reactor_Notify (void)
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
   , notification_queue_ ()
 #endif  /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
+  , dispatching_ (false)
 {
 }
 
@@ -279,12 +280,12 @@ ACE_Dev_Poll_Reactor_Notify::handle_input (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor_Notify::handle_input");
 
-  // @@ We may end up dispatching this event handler twice:  once when
-  //    performing the speculative read on the notification pipe
-  //    handle, and once more when dispatching the IO events.
-
-  // Precondition: this->select_reactor_.token_.current_owner () ==
-  // ACE_Thread::self ();
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->dispatching_lock_, -1));
+    if (this->dispatching_)
+      return 0;
+    this->dispatching_ = true;
+  }
 
   int number_dispatched = 0;
   int result = 0;
@@ -311,11 +312,7 @@ ACE_Dev_Poll_Reactor_Notify::handle_input (ACE_HANDLE handle)
       number_dispatched = -1;
     }
 
-  // Enqueue ourselves into the list of waiting threads.  When we
-  // reacquire the token we'll be off and running again with ownership
-  // of the token.  The postcondition of this call is that
-  // <select_reactor_.token_.current_owner> == <ACE_Thread::self>.
-  //this->select_reactor_->renew ();
+  this->dispatching_ = false;
 
   return number_dispatched;
 }
@@ -1336,11 +1333,14 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
         guard.release_token ();
 
         // Dispatch the detected event; will do the repeated upcalls
-        // if callback returns > 0. We come back with either 0 or < 0.
+        // if callback returns > 0, unless it's the notify handler (which
+        // returns the number of notfies dispatched, not an indication of
+        // re-callback requested). If anything other than the notify, come
+        // back with either 0 or < 0.
         status = this->upcall (eh, callback, handle);
 
         if (eh == this->notify_handler_)
-          return status == 0 ? 1 : -1;
+          return status;
 
         // If the callback returned 0, epoll-based needs to resume the
         // suspended handler but dev/poll doesn't.
