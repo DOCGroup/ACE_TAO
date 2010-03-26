@@ -304,7 +304,6 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one (
             {
               DDS_SampleInfoSeq sample_info;
               typename DDS_TYPE::dds_seq_type data;
-//               printf ("GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE %p\n", this->impl ());
               DDS_ReturnCode_t retcode = this->impl ()->read_w_condition (
                                                                   data,
                                                                   sample_info,
@@ -391,7 +390,6 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false>::get_one (
             {
               DDS_SampleInfoSeq sample_info;
               typename DDS_TYPE::dds_seq_type data;
-              printf ("GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE_GET_ONE %p\n", this->impl ());
               DDS_ReturnCode_t retcode = this->impl ()->read_w_condition (
                                                                   data,
                                                                   sample_info,
