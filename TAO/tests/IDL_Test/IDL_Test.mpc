@@ -345,9 +345,9 @@ project(*NDDS_Lib): taolib, messaging, gen_ostream, nddslib {
     full.cxx
     fullPlugin.cxx
     fullSupport.cxx
-    fwd.cxx
-    fwdPlugin.cxx
-    fwdSupport.cxx
+//    fwd.cxx
+//    fwdPlugin.cxx
+//    fwdSupport.cxx
 //    generic_object.cxx
 //    generic_objectPlugin.cxx
 //    generic_objectSupport.cxx
@@ -360,9 +360,9 @@ project(*NDDS_Lib): taolib, messaging, gen_ostream, nddslib {
     inherit.cxx
     inheritPlugin.cxx
     inheritSupport.cxx
-    interface.cxx
-    interfacePlugin.cxx
-    interfaceSupport.cxx
+//    interface.cxx
+//    interfacePlugin.cxx
+//    interfaceSupport.cxx
 //    keywords.cxx
 //    keywordsPlugin.cxx
 //    keywordsSupport.cxx
@@ -429,9 +429,9 @@ project(*NDDS_Lib): taolib, messaging, gen_ostream, nddslib {
 //    union.cxx
 //    unionPlugin.cxx
 //    unionSupport.cxx
-    valuetype.cxx
-    valuetypePlugin.cxx
-    valuetypeSupport.cxx
+//    valuetype.cxx
+//    valuetypePlugin.cxx
+//    valuetypeSupport.cxx
   }
 
   Template_Files {
