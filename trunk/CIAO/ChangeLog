@@ -1,3 +1,13 @@
+Fri Mar 26 12:20:07 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component_exec.h:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component_exec.cpp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/Plan.cdp:
+          Added extra component and connector in order to detect runtime errors during shutdown.
+          The shutdown errors which occured were related to the implementation of topic reuse
+          in the dds4ccm connector.
+
 Fri Mar 26 10:07:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component_exec.cpp:

@@ -36,12 +36,17 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
 
     virtual void configuration_complete (void);
 
+    CORBA::Boolean perform_test (void);
+    void perform_test (CORBA::Boolean perform_test);
+
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
 
   private:
     ::SharedDP::CCM_SharedDPComponent_Context_var context_;
+
+    CORBA::Boolean perform_test_;
 
     SharedDPTest1DataWriter * writer1_;
     SharedDPTest2DataWriter * writer2_;
