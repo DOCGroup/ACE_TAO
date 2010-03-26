@@ -51,7 +51,6 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
   void
   Component_exec_i::ccm_activate (void)
   {
-    const DDS_Duration_t dur = { 1, 0 };
     try
       {
         DDS::DataWriter_var dw1 =
@@ -61,9 +60,10 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
         DDSDataWriter * dds_dw1 = ccm_dds_rd1->get_impl ();
         DDSPublisher * dds_p1 = dds_dw1->get_publisher ();
         this->dds_dp1_ = dds_p1->get_participant ();
-        this->dds_tp1_ = this->dds_dp1_->find_topic (
-                                    CORBA::string_dup (tp_name_conn_1_),
-                                    dur);
+
+        DDSTopicDescription * td1 =
+          this->dds_dp1_->lookup_topicdescription (tp_name_conn_1_);
+        this->dds_tp1_ = DDSTopic::narrow (td1);
       }
     catch (...)
       {
@@ -79,9 +79,9 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
         DDSDataWriter * dds_dw2 = ccm_dds_rd2->get_impl ();
         DDSPublisher * dds_p2 = dds_dw2->get_publisher ();
         this->dds_dp2_ = dds_p2->get_participant ();
-        this->dds_tp2_ = this->dds_dp2_->find_topic (
-                                    CORBA::string_dup (tp_name_conn_2_),
-                                    dur);
+        DDSTopicDescription * td2 =
+          this->dds_dp2_->lookup_topicdescription (tp_name_conn_2_);
+        this->dds_tp2_ = DDSTopic::narrow (td2);
       }
     catch (...)
       {
@@ -97,9 +97,9 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
         DDSDataWriter * dds_dw3 = ccm_dds_rd3->get_impl ();
         DDSPublisher * dds_p3 = dds_dw3->get_publisher ();
         this->dds_dp3_ = dds_p3->get_participant ();
-        this->dds_tp3_ = this->dds_dp3_->find_topic (
-                                    CORBA::string_dup (tp_name_conn_3_),
-                                    dur);
+        DDSTopicDescription * td3 =
+          this->dds_dp3_->lookup_topicdescription (tp_name_conn_3_);
+        this->dds_tp3_ = DDSTopic::narrow (td3);
       }
     catch (...)
       {
@@ -115,9 +115,9 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
         DDSDataWriter * dds_dw4 = ccm_dds_rd4->get_impl ();
         DDSPublisher * dds_p4 = dds_dw4->get_publisher ();
         this->dds_dp4_ = dds_p4->get_participant ();
-        this->dds_tp4_ = this->dds_dp4_->find_topic (
-                                    CORBA::string_dup (tp_name_conn_4_),
-                                    dur);
+        DDSTopicDescription * td4 =
+          this->dds_dp4_->lookup_topicdescription (tp_name_conn_4_);
+        this->dds_tp4_ = DDSTopic::narrow (td4);
       }
     catch (...)
       {
