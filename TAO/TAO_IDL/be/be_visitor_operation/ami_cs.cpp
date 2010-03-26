@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 // ************************************************************
 // Operation visitor for client stubs
 // ************************************************************
@@ -210,7 +209,8 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   be_interface *intf = be_interface::narrow_from_decl (parent);
 
   const char *lname = node->local_name ()->get_string ();
-  size_t opname_len = ACE_OS::strlen (lname);
+  ACE_CDR::ULong opname_len =
+    static_cast<ACE_CDR::ULong> (ACE_OS::strlen (lname));
   ACE_CString opname;
 
   if (this->ctx_->attribute ())
