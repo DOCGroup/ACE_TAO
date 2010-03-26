@@ -1,3 +1,10 @@
+Fri Mar 26 10:07:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component_exec.cpp:
+          Don't use find_topic since it creates a new topic which has
+          to be deleted. Use lookup_description instead. This way, there're no
+          errors when deleting the DomainParticipant.
+
 Fri Mar 26 08:25:43 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/Latency_Sender.cpp:
