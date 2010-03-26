@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ************************************************************
 // Generic Operation visitor
 // ************************************************************
@@ -240,8 +239,9 @@ be_visitor_operation::gen_stub_operation_body (
     }
 
   // Use the name without the possible '_cxx_' here.
-  size_t tmp_len =
-    ACE_OS::strlen (node->original_local_name ()->get_string ());
+  ACE_CDR::ULong tmp_len =
+    static_cast<ACE_CDR::ULong> (
+      ACE_OS::strlen (node->original_local_name ()->get_string ()));
 
   *os << be_nl << be_nl
       << "TAO::" << (node->is_abstract () ? "AbstractBase_" : "" )

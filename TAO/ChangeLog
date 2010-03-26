@@ -1,3 +1,13 @@
+Fri Mar 26 20:30:48 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation.cpp:
+        
+          Another attempt to get a value of type size_t inserted
+          into an IDL compiler file output stream in a way that
+          makes all supported compilers happy.
+
 Fri Mar 26 20:11:31 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/arglist.cpp:
