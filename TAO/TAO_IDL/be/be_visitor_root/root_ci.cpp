@@ -35,7 +35,7 @@ be_visitor_root_ci::visit_root (be_root *node)
                          ACE_TEXT ("failed to initialize\n")),
                         -1);
     }
-    
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -66,7 +66,7 @@ be_visitor_root_ci::init (void)
   int status =
     tao_cg->start_client_inline (
       be_global->be_get_client_inline_fname ());
-  
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -88,3 +88,4 @@ be_visitor_root_ci::gen_obv_defns (be_root *node)
   be_visitor_obv_module obv_visitor (&ctx);
   return obv_visitor.visit_scope (node);
 }
+
