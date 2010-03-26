@@ -109,6 +109,37 @@
     </execParameter>
   </implementation>
 
+  <!-- This connector is used to detect run_time errors,
+       not for functional testing.-->
+  <instance xmi:id="Connector0Instance">
+    <name>Connector0Instance</name>
+    <node>ComponentNode</node>
+    <source/>
+    <implementation xmi:idref="ConnectorImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SharedDP</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Shared_Library#Shared_Profile</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
   <instance xmi:id="Connector1Instance">
     <name>Connector1Instance</name>
     <node>ComponentNode</node>
@@ -230,7 +261,118 @@
     <node>ComponentNode</node>
     <source/>
     <implementation xmi:idref="ComponentImplementation" />
+    <configProperty>
+      <name>perform_test</name>
+      <value>
+        <type>
+          <kind>tk_boolean</kind>
+        </type>
+        <value>
+          <boolean>true</boolean>
+        </value>
+      </value>
+    </configProperty>
   </instance>
+
+  <!-- This component is used to detect run_time errors,
+       not for functional testing.-->
+  <instance xmi:id="Component0Instance">
+    <name>Component0</name>
+    <node>ComponentNode</node>
+    <source/>
+    <implementation xmi:idref="ComponentImplementation" />
+    <configProperty>
+      <name>perform_test</name>
+      <value>
+        <type>
+          <kind>tk_boolean</kind>
+        </type>
+        <value>
+          <boolean>false</boolean>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <connection>
+    <name>writer_connection01</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>write1_dds_entity</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Component0Instance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_dds_entity</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Connector0Instance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>writer_connection02</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>write2_dds_entity</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Component0Instance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_dds_entity</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Connector0Instance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>writer_connection03</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>write3_dds_entity</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Component0Instance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_dds_entity</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Connector0Instance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>writer_connection04</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>write4_dds_entity</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Component0Instance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_dds_entity</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Connector0Instance" />
+    </internalEndpoint>
+  </connection>
 
   <connection>
     <name>writer_connection1</name>
