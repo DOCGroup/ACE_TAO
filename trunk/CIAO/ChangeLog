@@ -1,3 +1,8 @@
+Fri Mar 26 13:03:58 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/Getter_T.cpp:
+          Removed unnecessary code.
+
 Fri Mar 26 12:20:07 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component.idl:
