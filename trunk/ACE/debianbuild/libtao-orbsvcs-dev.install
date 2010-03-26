@@ -39,6 +39,7 @@ usr/lib/libTAO_FT_ClientORB.so
 usr/lib/libTAO_FTORB_Utils.so
 usr/lib/libTAO_FaultTolerance.so
 usr/lib/libTAO_HTIOP.so
+usr/lib/libTAO_ZIOP.so
 usr/lib/libTAO_IFRService.so
 usr/lib/libTAO_PortableGroup.so
 usr/lib/libTAO_RTCORBAEvent.so
@@ -115,3 +116,19 @@ usr/lib/pkgconfig/TAO_Svc_Utils.pc
 #usr/lib/pkgconfig/TAO_FTRT_EventChannel.pc
 #usr/lib/pkgconfig/TAO_FtRtEvent.pc
 #usr/lib/pkgconfig/TAO_FTRT_ClientORB.pc
+usr/lib/libTAO_CosLifeCycle_Skel.so
+usr/lib/libTAO_Notify_Service.so
+usr/lib/libTAO_CosTime_Serv.so
+usr/lib/libTAO_CosTime_Skel.so
+usr/lib/pkgconfig/TAO_CosTime_Skel.pc
+usr/lib/pkgconfig/TAO_CosLifeCycle_Skel.pc
+usr/lib/pkgconfig/TAO_CosTime_Serv.pc
+usr/lib/pkgconfig/TAO_ZIOP.pc
+usr/lib/libTAO_Monitor.so
+usr/lib/pkgconfig/TAO_Monitor.pc
+usr/lib/libTAO_Catior_i.so
+usr/include/tao/ZIOP
+usr/include/tao/ETCL
+usr/include/tao/Monitor
+usr/include/utils/catior
+

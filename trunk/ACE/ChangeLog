@@ -1,3 +1,11 @@
+Fri Mar 26 13:43:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debianbuild/tao-utils.install:
+          Corrected filenames
+
+        * debianbuild/libtao-orbsvcs-dev.install:
+          Added missing libraries
+
 Fri Mar 26 09:02:50 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/run_test.pl:
