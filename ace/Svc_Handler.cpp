@@ -302,7 +302,11 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::handle_close (ACE_HANDLE,
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::handle_close");
 
-  this->destroy ();
+  if (this->reference_counting_policy ().value () ==
+      ACE_Event_Handler::Reference_Counting_Policy::DISABLED)
+    {
+      this->destroy ();
+    }
 
   return 0;
 }

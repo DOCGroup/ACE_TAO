@@ -34,10 +34,17 @@ static int test_select_reactor = 1;
 static int test_tp_reactor = 1;
 static int test_wfmo_reactor = 1;
 
-Svc_Handler::Svc_Handler (void)
+Svc_Handler::Svc_Handler (bool is_ref_counted)
   : status_ (0),
-    completion_counter_ (0)
+    completion_counter_ (0),
+    is_ref_counted_ (is_ref_counted)
 {
+  if (this->is_ref_counted_)
+    {
+      // Enable reference counting on the event handler.
+      this->reference_counting_policy ().value (
+        ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
+    }
 }
 
 void
@@ -51,7 +58,7 @@ Svc_Handler::connection_status (Connection_Status &status,
 int
 Svc_Handler::open (void *)
 {
-  *this->status_ = SUCCEEDED;
+  *this->status_ = Svc_Handler::Conn_SUCCEEDED;
   (*this->completion_counter_)++;
 
   return 0;
@@ -61,11 +68,19 @@ int
 Svc_Handler::handle_close (ACE_HANDLE handle,
                            ACE_Reactor_Mask mask)
 {
-  *this->status_ = FAILED;
+  *this->status_ = Svc_Handler::Conn_FAILED;
   (*this->completion_counter_)++;
 
-  return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::handle_close (handle,
-                                                                         mask);
+  // Only if there is no reference counting can call parent's
+  // handle_close() as it does plain 'delete this'.
+  if (!this->is_ref_counted_)
+    {
+      typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> super;
+
+      return super::handle_close (handle, mask);
+    }
+
+  return 0;
 }
 
 typedef ACE_Connector<Svc_Handler,
@@ -74,7 +89,7 @@ typedef ACE_Connector<Svc_Handler,
 
 static const char* hosts[] = {
   "www.russiantvguide.com:80",
-  "www.pakarmy.gov.pk:80",
+  "news.bbc.co.uk:80",
   "www.cnn.com:80",
   "www.waca.com.au:80",
   "www.uganda.co.ug:80",
@@ -82,15 +97,17 @@ static const char* hosts[] = {
   "www.dre.vanderbilt.edu:80",
   "www.dhm.gov.np:80",
   "www.msn.com:80",
-  "www.presidencymaldives.gov.mv:80" };
+  "www.presidencymaldives.gov.mv:80"
+};
 
 static int number_of_connections = 0;
+static bool with_ref_counting = false;
 
 void
 test_connect (ACE_Reactor &reactor,
               ACE_INET_Addr *addresses,
               ACE_Synch_Options &synch_options,
-              int complete_nonblocking_connections)
+              Svc_Handler::Completion_Status complete_nonblocking_connections)
 {
   CONNECTOR connector (&reactor);
 
@@ -106,7 +123,7 @@ test_connect (ACE_Reactor &reactor,
   for (i = 0; i < number_of_connections; ++i)
     {
       svc_handlers[i] =
-        new Svc_Handler;
+        new Svc_Handler (with_ref_counting);
 
       svc_handlers[i]->connection_status (connection_status[i],
                                           completion_counter);
@@ -121,7 +138,7 @@ test_connect (ACE_Reactor &reactor,
   if (!synch_options[ACE_Synch_Options::USE_REACTOR])
     ACE_ASSERT (completion_counter == number_of_connections);
 
-  if (complete_nonblocking_connections)
+  if (complete_nonblocking_connections != Svc_Handler::Comp_NO)
     {
       while (completion_counter != number_of_connections)
         {
@@ -141,10 +158,16 @@ test_connect (ACE_Reactor &reactor,
       ACE_DEBUG ((LM_DEBUG,
                   "Connection to %s %s\n",
                   buffer,
-                  connection_status[i] == Svc_Handler::SUCCEEDED ?
+                  connection_status[i] == Svc_Handler::Conn_SUCCEEDED ?
                   "succeeded" : "failed"));
 
-      if (connection_status[i] == Svc_Handler::SUCCEEDED)
+      ACE_Event_Handler_var release_guard;
+      if (with_ref_counting)
+        {
+          release_guard.reset (svc_handlers[i]);
+        }
+
+      if (connection_status[i] == Svc_Handler::Conn_SUCCEEDED)
         {
           svc_handlers[i]->close ();
         }
@@ -174,10 +197,6 @@ test (ACE_Reactor_Impl *impl)
   ACE_Reactor reactor (impl,
                        1);
 
-  int complete_nonblocking_connections = 1;
-  int dont_wait_for_nonblocking_connections = 0;
-  int ignored = 99;
-
   ACE_Synch_Options blocking_connect =
     ACE_Synch_Options::defaults;
 
@@ -187,7 +206,7 @@ test (ACE_Reactor_Impl *impl)
   test_connect (reactor,
                 addresses,
                 blocking_connect,
-                ignored);
+                Svc_Handler::Comp_IGNORE);
 
   blocking_connect.set (ACE_Synch_Options::USE_TIMEOUT,
                         ACE_Time_Value (0, 50 * 1000));
@@ -198,7 +217,7 @@ test (ACE_Reactor_Impl *impl)
   test_connect (reactor,
                 addresses,
                 blocking_connect,
-                ignored);
+                Svc_Handler::Comp_IGNORE);
 
   ACE_Synch_Options nonblocking_connect
     (ACE_Synch_Options::USE_REACTOR);
@@ -209,7 +228,7 @@ test (ACE_Reactor_Impl *impl)
   test_connect (reactor,
                 addresses,
                 nonblocking_connect,
-                complete_nonblocking_connections);
+                Svc_Handler::Comp_YES);
 
   ACE_DEBUG ((LM_DEBUG,
               "\nNon-blocking connections (without waiting for completions)...\n\n"));
@@ -217,7 +236,7 @@ test (ACE_Reactor_Impl *impl)
   test_connect (reactor,
                 addresses,
                 nonblocking_connect,
-                dont_wait_for_nonblocking_connections);
+                Svc_Handler::Comp_NO);
 
   nonblocking_connect.set (ACE_Synch_Options::USE_REACTOR |
                            ACE_Synch_Options::USE_TIMEOUT,
@@ -229,7 +248,7 @@ test (ACE_Reactor_Impl *impl)
   test_connect (reactor,
                 addresses,
                 nonblocking_connect,
-                complete_nonblocking_connections);
+                Svc_Handler::Comp_YES);
 
   delete[] addresses;
 }
@@ -289,6 +308,13 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "\n\nTesting Select Reactor....\n\n"));
 
+      with_ref_counting = false;
+      test (new ACE_Select_Reactor);
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "Testing Select Reactor (ref counted)....\n"));
+
+      with_ref_counting = true;
       test (new ACE_Select_Reactor);
     }
 
@@ -297,6 +323,13 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "\n\nTesting TP Reactor....\n\n"));
 
+      with_ref_counting = false;
+      test (new ACE_TP_Reactor);
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "Testing TP Reactor (ref counted)....\n"));
+
+      with_ref_counting = true;
       test (new ACE_TP_Reactor);
     }
 
@@ -307,6 +340,13 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "\n\nTesting WFMO Reactor....\n\n"));
 
+      with_ref_counting = false;
+      test (new ACE_WFMO_Reactor);
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "Testing WFMO Reactor (ref counted)....\n"));
+
+      with_ref_counting = true;
       test (new ACE_WFMO_Reactor);
     }
 
@@ -316,4 +356,3 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-

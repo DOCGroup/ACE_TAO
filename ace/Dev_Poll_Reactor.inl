@@ -57,33 +57,6 @@ ACE_Dev_Poll_Handler_Guard::ACE_Dev_Poll_Handler_Guard
 
   if (do_incr && this->refcounted_)
     eh->add_reference ();
-
-  /**
-   * The below comments were here when I replaced the old refcount
-   * scheme was replaced. They may still need addressing.   -Steve Huston
-   */
-
-  /**
-   * @todo Suspend the handler so that other threads will not cause
-   *       an event that is already in an upcall from being dispatched
-   *       again.
-   *
-   * @note The naive approach would be to simply call
-   *       suspend_handler_i() on the reactor.  However, that would
-   *       cause a system call (write()) to occur.  Obviously this
-   *       can potentially have an adverse affect on performance.
-   *       Ideally, the handler would only be marked as "suspended" in
-   *       the handler repository.  If an event arrives for a
-   *       suspended handler that event can be "queued" in a
-   *       "handle readiness queue."  "Queued" is quoted since a real
-   *       queue need not be used since duplicate events can be
-   *       coalesced, thus avoiding unbounded queue growth.  Event
-   *       coalescing is already done by Linux's event poll driver
-   *       (/dev/epoll) so Solaris' poll driver (/dev/poll) is the
-   *       main concern here.  The largest the queue can be is the
-   *       same size as the number of handlers stored in the handler
-   *       repository.
-   */
 }
 
 ACE_INLINE
@@ -91,15 +64,6 @@ ACE_Dev_Poll_Handler_Guard::~ACE_Dev_Poll_Handler_Guard (void)
 {
   if (this->refcounted_ && this->eh_ != 0)
     this->eh_->remove_reference ();
-
-  /**
-   * The below comments were here when I replaced the old refcount
-   * scheme was replaced. They may still need addressing.   -Steve Huston
-   */
-  /**
-   * @todo Resume the handler so that other threads will be allowed to
-   *       dispatch the handler.
-   */
 }
 
 ACE_INLINE void
@@ -125,7 +89,7 @@ ACE_Dev_Poll_Reactor::upcall (ACE_Event_Handler *event_handler,
     {
       status = (event_handler->*callback) (handle);
     }
-  while (status > 0);
+  while (status > 0 && event_handler != this->notify_handler_);
 
   return status;
 }
