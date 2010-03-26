@@ -24,6 +24,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
   //============================================================
 
   Component_exec_i::Component_exec_i (void)
+    : perform_test_ (false)
   {
   }
 
@@ -46,6 +47,18 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
   void
   Component_exec_i::configuration_complete (void)
   {
+  }
+
+  CORBA::Boolean
+  Component_exec_i::perform_test (void)
+  {
+    return this->perform_test_;
+  }
+
+  void
+  Component_exec_i::perform_test (CORBA::Boolean perform_test)
+  {
+    this->perform_test_ = perform_test;
   }
 
   void
@@ -128,75 +141,85 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
   void
   Component_exec_i::ccm_passivate (void)
   {
-    if (!this->dds_dp1_)
-      ACE_ERROR ((LM_ERROR, "ERROR: DomainParticipant for Connector 1 seems to be NIL\n"));
-    if (!this->dds_dp2_)
-      ACE_ERROR ((LM_ERROR, "ERROR: DomainParticipant for Connector 2 seems to be NIL\n"));
-    if (!this->dds_dp3_)
-      ACE_ERROR ((LM_ERROR, "ERROR: DomainParticipant for Connector 3 seems to be NIL\n"));
-    if (!this->dds_dp4_)
-      ACE_ERROR ((LM_ERROR, "ERROR: DomainParticipant for Connector 4 seems to be NIL\n"));
+    if (this->perform_test_)
+      {
+        if (!this->dds_dp1_)
+          ACE_ERROR ((LM_ERROR, "ERROR: DomainParticipant for Connector 1 seems to be NIL\n"));
+        if (!this->dds_dp2_)
+          ACE_ERROR ((LM_ERROR, "ERROR: DomainParticipant for Connector 2 seems to be NIL\n"));
+        if (!this->dds_dp3_)
+          ACE_ERROR ((LM_ERROR, "ERROR: DomainParticipant for Connector 3 seems to be NIL\n"));
+        if (!this->dds_dp4_)
+          ACE_ERROR ((LM_ERROR, "ERROR: DomainParticipant for Connector 4 seems to be NIL\n"));
 
-    if (!this->dds_tp1_)
-      ACE_ERROR ((LM_ERROR, "ERROR: Topic for Connector 1 seems to be NIL\n"));
-    if (!this->dds_tp2_)
-      ACE_ERROR ((LM_ERROR, "ERROR: Topic for Connector 2 seems to be NIL\n"));
-    if (!this->dds_tp3_)
-      ACE_ERROR ((LM_ERROR, "ERROR: Topic for Connector 3 seems to be NIL\n"));
-    if (!this->dds_tp4_)
-      ACE_ERROR ((LM_ERROR, "ERROR: Topic for Connector 4 seems to be NIL\n"));
+        if (!this->dds_tp1_)
+          ACE_ERROR ((LM_ERROR, "ERROR: Topic for Connector 1 seems to be NIL\n"));
+        if (!this->dds_tp2_)
+          ACE_ERROR ((LM_ERROR, "ERROR: Topic for Connector 2 seems to be NIL\n"));
+        if (!this->dds_tp3_)
+          ACE_ERROR ((LM_ERROR, "ERROR: Topic for Connector 3 seems to be NIL\n"));
+        if (!this->dds_tp4_)
+          ACE_ERROR ((LM_ERROR, "ERROR: Topic for Connector 4 seems to be NIL\n"));
+      }
   }
 
   void
   Component_exec_i::ccm_remove (void)
   {
-    //check shared DomainParticipants
-    if (this->dds_dp1_ != this->dds_dp2_)
+    if (this->perform_test_)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 2 don't seem to "
-                              "share the same DomainParticipant\n"));
-      }
-    else
-      {
-        ACE_DEBUG ((LM_DEBUG, "Connector 1 and 2 seems to  "
-                              "share the same DomainParticipant\n"));
-      }
-    if (this->dds_dp1_ == this->dds_dp4_)
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 4 seem to "
-                              "share the same DomainParticipant\n"));
-      }
-    if (this->dds_dp2_ == this->dds_dp4_)
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: Connector 2 and 4 seem to "
-                              "share the same DomainParticipant\n"));
-      }
-    if (this->dds_dp3_ == this->dds_dp4_)
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: Connector 3 and 4 seem to "
-                              "share the same DomainParticipant\n"));
-      }
+        //check shared DomainParticipants
+        if (this->dds_dp1_ != this->dds_dp2_)
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 2 don't seem to "
+                                  "share the same DomainParticipant\n"));
+          }
+        else
+          {
+            ACE_DEBUG ((LM_DEBUG, "Connector 1 and 2 seems to  "
+                                  "share the same DomainParticipant\n"));
+          }
+        if (this->dds_dp1_ == this->dds_dp4_)
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 4 seem to "
+                                  "share the same DomainParticipant\n"));
+          }
+        if (this->dds_dp2_ == this->dds_dp4_)
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: Connector 2 and 4 seem to "
+                                  "share the same DomainParticipant\n"));
+          }
+        if (this->dds_dp3_ == this->dds_dp4_)
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: Connector 3 and 4 seem to "
+                                  "share the same DomainParticipant\n"));
+          }
 
-    //check shared Topics
-    if (this->dds_tp1_ != this->dds_tp2_)
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 2 don't seem to "
-                              "share the same Topic\n"));
+        //check shared Topics
+        if (this->dds_tp1_ != this->dds_tp2_)
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 2 don't seem to "
+                                  "share the same Topic\n"));
+          }
+        else
+          {
+            ACE_DEBUG ((LM_DEBUG, "Connector 1 and 2 seems to  "
+                                  "share the same Topic\n"));
+          }
+        if (this->dds_tp1_ == this->dds_tp3_)
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 3 seem to "
+                                  "share the same Topic\n"));
+          }
+        if (this->dds_tp1_ == this->dds_tp4_)
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 4 seem to "
+                                  "share the same Topic\n"));
+          }
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, "Connector 1 and 2 seems to  "
-                              "share the same Topic\n"));
-      }
-    if (this->dds_tp1_ == this->dds_tp3_)
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 3 seem to "
-                              "share the same Topic\n"));
-      }
-    if (this->dds_tp1_ == this->dds_tp4_)
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 4 seem to "
-                              "share the same Topic\n"));
+        ACE_DEBUG ((LM_DEBUG, "Don't test this component. It's used for compilation errors.\n"));
       }
   }
 

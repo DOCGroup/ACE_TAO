@@ -19,6 +19,8 @@ module SharedDP
     port CCM_DDS::SharedDPTest::DDS_Write write2;
     port CCM_DDS::SharedDPTest::DDS_Write write3;
     port CCM_DDS::SharedDPTest::DDS_Write write4;
+
+    attribute boolean perform_test;
   };
 };
 
