@@ -556,7 +556,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
     main_result = 0;
 
 clean_exit:
-    char * read_write_str;
+    const char * read_write_str;
     if (both_read_write_)
       {
         read_write_str = "Used a extra dummy reader and writer per topic.";
