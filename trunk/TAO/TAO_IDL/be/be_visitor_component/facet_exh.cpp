@@ -32,11 +32,16 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
 {
   be_type *impl = node->provides_type ();
   
+  /// For the moment, we are generating multiple facet
+  /// executor classes if the same interface is used in
+  /// multiple components. I'm leaving the code here in
+  /// case we change our minds later.
+/*
   if (impl->exec_hdr_facet_gen ())
     {
       return 0;
     }
-    
+*/    
   // We don't want a '_cxx_' prefix here.
   const char *lname =
     impl->original_local_name ()->get_string ();
@@ -47,14 +52,13 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
   const char *sname = sname_str.c_str ();
   const char *global = (sname_str == "" ? "" : "::");
   
-  os_ << be_nl
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__
-      << be_nl;
-
   AST_Decl *c_scope = ScopeAsDecl (this->node_->defined_in ());
   bool is_global = (c_scope->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (is_global ? "" : "::");
+      
+  os_ << be_nl << be_nl
+      << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
       
   os_ << be_nl
       << "class " << export_macro_.c_str () << " "
@@ -79,10 +83,23 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
       os_ << be_nl << be_nl
           << "// Operations and attributes from ::"
           << intf->full_name ();
-         
+          
+      be_visitor_context ctx (*this->ctx_);  
+      be_visitor_interface_ih v (&ctx);
+      
+      if (v.visit_scope (intf) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_facet_exh::")
+                             ACE_TEXT ("visit_provides - ")
+                             ACE_TEXT ("visit_scope() ")
+                             ACE_TEXT ("failed\n")),
+                            -1);
+        }
+        
       int status =
         intf->traverse_inheritance_graph (
-          be_interface::op_attr_decl_helper,
+          be_visitor_interface_ih::method_helper,
           &os_);
 
       if (status == -1)
@@ -101,9 +118,9 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
       << smart_scope << c_scope->full_name () << "::CCM_"
       << this->node_->local_name ()
       << "_Context_var ciao_context_;" << be_uidt_nl
-      << "};" << be_nl;
+      << "};";
       
-  impl->exec_hdr_facet_gen (true);
+//  impl->exec_hdr_facet_gen (true);
 
   return 0;
 }

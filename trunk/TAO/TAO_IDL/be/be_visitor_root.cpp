@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "be_constant.h"
 #include "be_enum.h"
 #include "be_exception.h"
@@ -83,4 +82,3 @@
 #include "be_visitor_root/any_op.cpp"
 #include "be_visitor_root/cdr_op.cpp"
 #include "be_visitor_root/serializer_op.cpp"
-

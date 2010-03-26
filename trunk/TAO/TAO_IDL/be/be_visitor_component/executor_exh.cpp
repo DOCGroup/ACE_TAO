@@ -47,7 +47,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   const char *global = (sname_str == "" ? "" : "::");
 
-  os_ << be_nl
+  os_ << be_nl << be_nl
       << "class " << export_macro_.c_str () << " " << lname
       << "_exec_i" << be_idt_nl
       << ": public virtual " << lname << "_Exec," << be_idt_nl

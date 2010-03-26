@@ -45,8 +45,6 @@ be_visitor_module::visit_module (be_module *node)
   return 0;
 }
 
-// All common visit methods for module visitor.
-
 int
 be_visitor_module::visit_constant (be_constant *node)
 {

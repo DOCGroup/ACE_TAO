@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 be_visitor_component_exh::be_visitor_component_exh (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)

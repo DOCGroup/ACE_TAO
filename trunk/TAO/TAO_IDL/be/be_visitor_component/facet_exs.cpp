@@ -66,15 +66,24 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
 {
   be_type *impl = node->provides_type ();
 
+  /// For the moment, we are generating multiple facet
+  /// executor classes if the same interface is used in
+  /// multiple components. I'm leaving the code here in
+  /// case we change our minds later.
+/*
   if (impl->exec_src_facet_gen ())
     {
       return 0;
     }
-    
+*/    
   // We don't want any '_cxx_' prefix here.
   const char *lname =
     impl->original_local_name ()->get_string ();
 
+  os_ << be_nl << be_nl
+      << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+      
   os_ << be_nl
       << comment_border_ << be_nl
       << "// Facet Executor Implementation Class: "
@@ -140,7 +149,7 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
         }
     }
 
-  impl->exec_src_facet_gen (true);
+//  impl->exec_src_facet_gen (true);
 
   return 0;
 }
