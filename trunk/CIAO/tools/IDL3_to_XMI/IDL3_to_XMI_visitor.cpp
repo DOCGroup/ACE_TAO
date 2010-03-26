@@ -2579,12 +2579,12 @@ namespace CIAO
           IdentifierHelper::original_local_name (
             port_node->local_name ());
 
-        this->set_attribute (LITERALS[NAME], id->get_string ());
+        this->set_attribute (LITERALS[NAME], ACE_TEXT_CHAR_TO_TCHAR (id->get_string ()));
         this->set_attribute (LITERALS[MULT], ACE_TEXT ("1"));
 
         this->find_and_set_xid_as_attr (
           LITERALS[TYPE],
-          port_node->field_type ()->repoID ());
+          ACE_TEXT_CHAR_TO_TCHAR (port_node->field_type ()->repoID ()));
 
         id->destroy ();
         delete id;
