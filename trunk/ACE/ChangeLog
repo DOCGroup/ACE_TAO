@@ -1,3 +1,13 @@
+Fri Mar 26 14:07:55 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dev_Poll_Reactor.{h inl cpp}: Refinements to the way notifies
+          are handled:
+            1. The notify handler was being dispatched multiple times per
+               notify; this has been fixed, which increases performance.
+            2. Notifications are now dispatched in only one thread at a time.
+               This brings more parity to the way notifies are handled in
+               other reactor implementations.
+
 Fri Mar 26 13:43:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debianbuild/tao-utils.install:
