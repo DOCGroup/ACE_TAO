@@ -88,4 +88,3 @@ be_visitor_root_ci::gen_obv_defns (be_root *node)
   be_visitor_obv_module obv_visitor (&ctx);
   return obv_visitor.visit_scope (node);
 }
-

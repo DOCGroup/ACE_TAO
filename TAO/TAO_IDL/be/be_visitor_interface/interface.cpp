@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ******************************************************
 // Generic Interface visitor
 // ******************************************************
@@ -410,6 +409,7 @@ be_visitor_interface::visit_operation (be_operation *node)
         status = node->accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_EXH:
     case TAO_CodeGen::TAO_ROOT_IH:
       {
         be_visitor_operation_ih visitor (&ctx);

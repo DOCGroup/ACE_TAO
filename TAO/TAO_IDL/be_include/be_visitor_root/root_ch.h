@@ -52,6 +52,13 @@ private:
   int gen_any_ops (be_root *node);
   int gen_cdr_ops (be_root *node);
   int gen_dds_serializer_ops (be_root *node);
+  
+private:
+  /// Can't use base class be_visitor_decl's member since
+  /// its constructor is called too soon to initialize the
+  /// stream. This class is the only root visitor that
+  /// contains filestream output.
+  TAO_OutStream *o_;
 };
 
 #endif /* _BE_VISITOR_ROOT_ROOT_CH_H_ */
