@@ -383,7 +383,7 @@ sub delete_temp_files ()
 
 ################################################################################
 
-if (!getopts ('dhtvo:') || $opt_h) {
+if (!getopts ('dhtvo:l:') || $opt_h) {
     print "run_test.pl [-h] [-v] [-o <output file>] [-t file1 file2 ...]\n";
     print "\n";
     print "Runs the tests listed in run_test.lst\n";
@@ -392,6 +392,7 @@ if (!getopts ('dhtvo:') || $opt_h) {
     print "    -d         Debug mode (do not run tests)\n";
     print "    -h         Display this help\n";
     print "    -t         Runs all the tests passed via the cmd line\n";
+    print "    -l list    Load the list and run only those tests\n";
     print "\n";
     print "Pass in configs using \"-Config XXXXX\"\n";
     print "\n";
@@ -415,6 +416,10 @@ check_for_more_configs ();
 
 if (defined $opt_t) {
     @tests = @ARGV;
+}
+elsif (defined $opt_l) {
+    $config_list->load ("$opt_l");
+    @tests = $config_list->valid_entries ();
 }
 else {
     $config_list->load ("run_test.lst");
