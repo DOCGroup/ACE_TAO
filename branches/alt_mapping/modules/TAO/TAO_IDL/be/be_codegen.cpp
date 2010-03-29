@@ -2501,6 +2501,19 @@ TAO_CodeGen::gen_stub_src_includes (void)
       this->gen_standard_include (this->client_stubs_,
                                   "ace/Auto_Ptr.h");
     }
+    
+  if (be_global->alt_mapping () && idl_global->seq_seen_)
+    {
+      this->gen_standard_include (this->client_stubs_,
+                                  "tao/Vector_CDR_T.h");
+                                  
+      if (be_global->any_support ())
+        {
+          this->gen_standard_include (
+            this->client_stubs_,
+            "tao/AnyTypeCode/Vector_AnyOp_T.h");
+        }
+    }
 }
 
 void

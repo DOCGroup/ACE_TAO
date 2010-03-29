@@ -18,10 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_sequence,
-           any_op_ch,
-           "$Id$")
-
 // ***************************************************************************
 // Sequence visitor for generating Any operator declarations in the client header
 // ***************************************************************************
@@ -54,7 +50,9 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
 
   ACE_CString name;
   
-  if (be_global->alt_mapping ())
+  bool alt = be_global->alt_mapping ();
+  
+  if (alt)
     {
       be_type *bt =
         be_type::narrow_from_decl (node->base_type ());
@@ -77,17 +75,20 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
       << name.c_str ()
       << " &); // copying version" << be_nl;
       
-  *os << macro
-      << " void"
-      << " operator<<= ( ::CORBA::Any &, "
-      << name.c_str ()
-      << "*); // noncopying version" << be_nl;
+  if (!alt)
+    {    
+      *os << macro
+          << " void"
+          << " operator<<= ( ::CORBA::Any &, "
+          << name.c_str ()
+          << "*); // noncopying version" << be_nl;
       
-  *os << macro
-      << " ::CORBA::Boolean"
-      << " operator>>= (const ::CORBA::Any &, "
-      << name.c_str ()
-      << " *&); // deprecated" << be_nl;
+      *os << macro
+          << " ::CORBA::Boolean"
+          << " operator>>= (const ::CORBA::Any &, "
+          << name.c_str ()
+          << " *&); // deprecated" << be_nl;
+        }
       
   *os << macro
       << " ::CORBA::Boolean"
