@@ -102,6 +102,7 @@ Hash_Map_Bucket_Iterator_Test
 Hash_Map_Manager_Test
 Hash_Multi_Map_Manager_Test
 High_Res_Timer_Test: !ACE_FOR_TAO
+NDDS_Timer_Test: NDDS
 INET_Addr_Test: !NO_NETWORK
 IOStream_Test
 Integer_Truncate_Test
