@@ -6,14 +6,12 @@
 //#pragma ndds typesupport "Base/Latency_BaseSupport.h"
 
 const short MAX_DATA_SEQUENCE_LENGTH = 8192;
-typedef sequence<octet, MAX_DATA_SEQUENCE_LENGTH> OctetSeq;
 
 //#pragma DCPS_DATA_TYPE "Latency"
 
 struct LatencyTest {
   long seq_num;
-  long ping;
-  OctetSeq data;
+  sequence<octet, MAX_DATA_SEQUENCE_LENGTH> data;
  };
 
 //typedef sequence<LatencyTest> LatencyTest_Seq;
