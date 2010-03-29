@@ -151,7 +151,7 @@ run_main (int argc, ACE_TCHAR *argv[])
           RTINtpTime_unpackToNanosec (sec, nanoseconds, duration);
 
           time_t const interval_usec =
-            interval.sec * ACE_ONE_SECOND_IN_USECS + interval.nanosec / 1000;
+            interval.sec () * ACE_ONE_SECOND_IN_USECS + interval.usec ();
           time_t const measured_usec =
             sec * ACE_ONE_SECOND_IN_USECS + microseconds;
 
