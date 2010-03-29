@@ -38,7 +38,7 @@ public:
   virtual int visit_provides (be_provides *node);
   
 private:
-  be_interface *op_scope_;
+  be_provides *op_scope_;
   const char *comment_border_;
 };
 

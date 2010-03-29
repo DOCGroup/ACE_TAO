@@ -194,18 +194,21 @@ be_visitor_executor_exs::visit_provides (be_provides *node)
   const char *port_name = prefix.c_str ();
 
   be_type *obj = node->provides_type ();
+  const char *iname =
+    obj->original_local_name ()->get_string ();
 
   AST_Decl *scope = ScopeAsDecl (obj->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
   const char *global = (sname_str == "" ? "" : "::");
 
-  // No '_cxx_' prefix.
-  const char *lname = obj->original_local_name ()->get_string ();
+  ACE_CString lname_str (this->port_prefix_);
+  lname_str += node->original_local_name ()->get_string ();
+  const char *lname = lname_str.c_str ();
 
   os_ << be_nl << be_nl
-      << global << sname << "::CCM_" << lname
-      << "_ptr" << be_nl
+      << global << sname << "::CCM_"
+      << iname << "_ptr" << be_nl
       << node_->local_name () << "_exec_i::get_"
       << port_name << " (void)" << be_nl
       << "{" << be_idt_nl
@@ -217,12 +220,12 @@ be_visitor_executor_exs::visit_provides (be_provides *node)
       << "tmp," << be_nl
       << lname << "_exec_i (" << be_idt_nl
       << "this->ciao_context_.in ())," << be_uidt_nl
-      << global << sname << "::CCM_" << lname << "::_nil ());"
+      << global << sname << "::CCM_" << iname << "::_nil ());"
       << be_uidt_nl << be_nl
       << "this->ciao_" << port_name << "_ = tmp;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "return" << be_idt_nl
-      << global << sname << "::CCM_" << lname
+      << global << sname << "::CCM_" << iname
       << "::_duplicate (" << be_idt_nl
       << "this->ciao_" << port_name << "_.in ());"
       << be_uidt << be_uidt << be_uidt_nl

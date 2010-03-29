@@ -41,13 +41,13 @@ public:
 
   virtual int post_process (be_decl *bd);
 
-  void scope (be_interface *node);
+  void scope (be_decl *node);
 
 private:
   int gen_op_body (be_operation *node);
 
 private:
-  be_interface *scope_;
+  be_decl *scope_;
 };
 
 #endif /* _BE_VISITOR_OPERATION_OPERATION_SVS_H_ */
