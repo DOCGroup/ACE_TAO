@@ -14,7 +14,7 @@
 #include <ndds/ndds_namespace_cpp.h>
 
 //typedefs
-typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Long > Atomic_Long;
+typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_UINT64> Atomic_Long;
 typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean> Atomic_Boolean;
 
 //forward declarations
@@ -26,9 +26,9 @@ CORBA::UShort datalen_ = 100;
 CORBA::UShort datalen_idx_ = 0;
 CORBA::UShort nr_of_runs_ = 10;
 CORBA::UShort sleep_ = 2;
-Atomic_Long  tv_total_ = 0;
-Atomic_Long  tv_max_ = 0;
-Atomic_Long  tv_min_ = 0;
+Atomic_Long tv_total_ = 0;
+Atomic_Long tv_max_ = 0;
+Atomic_Long tv_min_ = 0;
 CORBA::UShort count_ = 0;
 CORBA::UShort number_of_msg_ = 0;
 Atomic_Boolean received_ = false;
@@ -38,9 +38,9 @@ ACE_UINT64 start_time_ = 0;
 ACE_UINT64 start_time_test_ = 0;
 ACE_UINT64 end_time_test_ = 0;
 
-CORBA::Long * duration_times_;
+ACE_UINT64 * duration_times_;
 CORBA::Short * datalen_range_;
-CORBA::Long clock_overhead_;
+ACE_UINT64 clock_overhead_;
 
 LatencyTest * instance_ = 0;
 
@@ -53,18 +53,17 @@ CORBA::UShort domain_id_ = 0;
 CORBA::Boolean both_read_write_ = false;
 
 ACE_Reactor * reactor_ = 0;
-
 WriteTicker * ticker_ = 0;
 
 /* The listener of events and data from the middleware */
-class HelloListener: public DDSDataReaderListener {
+class HelloListener: public DDSDataReaderListener
+{
 public:
   void on_data_available(DDSDataReader *reader);
 };
 /* The dummy listener of events and data from the middleware */
 class DummyListener: public DDSDataReaderListener {
 };
-
 class WriteTicker :public ACE_Event_Handler
 {
   public:
@@ -130,7 +129,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                                 "  -i <iterations >\n"
                                 "  -s <sleep>\n"
                                 "  -q <QoS profile>\n"
-                                "  -b " 
+                                "  -b "
                                 "\n"),
                               -1);
         }
@@ -151,7 +150,7 @@ calculate_clock_overhead (void)
       ACE_High_Res_Timer::gettimeofday_hr ().to_usec (clock_roundtrip_time);
     }
   ACE_UINT64 total_time =  clock_roundtrip_time - begin_time;
-  clock_overhead_ = (long)(total_time /num_of_loops_clock);
+  clock_overhead_ = (ACE_UINT64)(total_time /num_of_loops_clock);
 }
 
 void
@@ -168,7 +167,7 @@ stop (void)
 void
 init_values (void)
 {
-  duration_times_ = new CORBA::Long[iterations_];
+  duration_times_ = new ACE_UINT64[iterations_];
   datalen_range_ = new CORBA::Short[nr_of_runs_];
   int start = 16;
   for(int i = 0; i < nr_of_runs_; i++)
@@ -187,11 +186,11 @@ init_values (void)
 }
 
 void
-record_time (ACE_UINT64  receive_time)
+record_time (ACE_UINT64 receive_time)
 {
-  ACE_UINT64 interval = receive_time  - start_time_;
   ++count_;
-  long duration = static_cast <CORBA::Long> (interval) - clock_overhead_;
+  ACE_UINT64 const interval = receive_time - start_time_;
+  ACE_UINT64 const duration = interval - clock_overhead_;
   if (count_ > iterations_)
     {
       ACE_ERROR ((LM_ERROR, "ERROR: Internal error while getting more "
@@ -217,7 +216,7 @@ void
 reset_results (void)
 {
   count_ = 0;
-  duration_times_ = new CORBA::Long[iterations_];
+  duration_times_ = new ACE_UINT64[iterations_];
   tv_total_ = 0L;
   tv_max_ = 0L;
   tv_min_ = 0L;
@@ -229,7 +228,7 @@ reset_results (void)
 
 static int compare_two_longs (const void * long1, const void * long2)
 {
-  return (*(CORBA::Long*)long1 - *(CORBA::Long*)long2);
+  return (int)((*(ACE_UINT64*)long1 - *(ACE_UINT64*)long2));
 }
 
 void
@@ -238,7 +237,7 @@ calc_results()
   // Sort all duration times.
   qsort(duration_times_,
         count_,
-        sizeof(CORBA::Long),
+        sizeof(ACE_UINT64),
         compare_two_longs);
 
   // Show latency_50_percentile, latency_90_percentile,
@@ -254,7 +253,7 @@ calc_results()
   double roundtrip_time_std = 0;
   if (count_ > 0)
     {
-      avg = tv_total_.value () / count_;
+      avg = (double)(tv_total_.value () / count_);
       // Calculate standard deviation.
       roundtrip_time_std  = sqrt(
         (sigma_duration_squared_ / (double)count_) -
@@ -383,7 +382,7 @@ read (LatencyTest & an_instance, ACE_UINT64 receive_time)
 {
   if (an_instance.seq_num == seq_num_.value ())
     {
-      record_time( receive_time);
+      record_time (receive_time);
       received_ = true;
     }
 }
@@ -476,9 +475,9 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
         goto clean_exit;
       }
 
-    /* Create a data reader, which will not be used, but is there for 
+    /* Create a data reader, which will not be used, but is there for
      *  compatibility with DDS4CCM latency test, where there is always a
-     *  reader and a writer per connector. 
+     *  reader and a writer per connector.
     */
     if (both_read_write_)
       {
@@ -508,9 +507,9 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
         goto clean_exit;
       }
 
-    /* Create a data writer, which will not be used, but is there for 
+    /* Create a data writer, which will not be used, but is there for
      *   compatibility with DDS4CCM latency test, where there is always a
-     *  reader and a writer per connector 
+     *  reader and a writer per connector
     */
     if (both_read_write_)
       {
@@ -643,13 +642,12 @@ void HelloListener::on_data_available(DDSDataReader *reader)
         }
       if (info.valid_data)
         {
-          ACE_UINT64 receive_time = 0;
-
           // Only interested in messages received with a latency_ping = 0
           // (messages sent back by receiver)
           if (instance->ping == 0)
             {
-              ACE_High_Res_Timer::gettimeofday_hr ().to_usec ( receive_time);
+              ACE_UINT64 receive_time = 0;
+              ACE_High_Res_Timer::gettimeofday_hr ().to_usec (receive_time);
               read(*instance, receive_time);
             }
         }
