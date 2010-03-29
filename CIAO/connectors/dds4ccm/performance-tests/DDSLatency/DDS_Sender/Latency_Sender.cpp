@@ -148,7 +148,7 @@ calculate_clock_overhead (void)
       ACE_High_Res_Timer::gettimeofday_hr ().to_usec (clock_roundtrip_time);
     }
   ACE_UINT64 const total_time = clock_roundtrip_time - begin_time;
-  clock_overhead_ = (ACE_UINT64)(total_time /num_of_loops_clock);
+  clock_overhead_ = (ACE_UINT64) (total_time / num_of_loops_clock);
 }
 
 void
@@ -270,11 +270,10 @@ calc_results()
             "bytes ,stdev us,ave us, min us, 50%% us, 90%% us, 99%% us, 99.99%%,"
             " max us\n"
             "------,-------,-------,-------,-------,-------,-------,-------,"
-            "-------\n", count_));
+            "-------\n", count_, clock_overhead_));
         }
       ACE_DEBUG ((LM_DEBUG,
         "%6d,%7.1f,%7.1f,%7.1f,%7.1f,%7.1f,%7.1f,%7.1f,%7.1f\n",
-        clock_overhead_,
         datalen_,
         roundtrip_time_std,
         avg,

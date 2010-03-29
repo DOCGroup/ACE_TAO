@@ -142,15 +142,16 @@ void
 calculate_clock_overhead (void)
 {
   int num_of_loops_clock = 320;
-  ACE_UINT64 begin_time;
-  ACE_UINT64 clock_roundtrip_time;
-  ACE_High_Res_Timer::gettimeofday_hr ().to_usec (begin_time);
-  for (int i = 0; i < num_of_loops_clock; ++i)
-    {
-      ACE_High_Res_Timer::gettimeofday_hr ().to_usec (clock_roundtrip_time);
-    }
-  ACE_UINT64 const total_time = clock_roundtrip_time - begin_time;
-  clock_overhead_ = (ACE_UINT64)(total_time /num_of_loops_clock);
+  struct RTINtpTime begin_time = RTI_NTP_TIME_ZERO;
+  struct RTINtpTime clock_roundtrip_time = RTI_NTP_TIME_ZERO;
+
+  timer->getTime(timer, &begin_time);
+  for (int i = 0; i < num_of_loops_clock; ++i) {
+      timer->getTime(timer, &clock_roundtrip_time);
+  }
+  RTINtpTime_decrement(clock_roundtrip_time, begin_time);
+  clock_overhead_ = (ACE_UINT64)(1E6 * RTINtpTime_toDouble(&clock_roundtrip_time) /
+      (double)num_of_loops_clock);
 }
 
 void
@@ -191,7 +192,7 @@ record_time (struct RTINtpTime& receive_time)
   ++count_;
   RTINtpTime roundtrip = {0,0};
   RTINtpTime_subtract(roundtrip, receive_time, start_time_);
-  ACE_UINT64 duration = 
+  ACE_UINT64 duration =
     (ACE_UINT64)(1E6 * RTINtpTime_toDouble(&roundtrip));// - _clock_overhead;
 
   if (count_ > iterations_)
@@ -271,10 +272,11 @@ calc_results()
           ACE_DEBUG ((LM_DEBUG,
             "Collecting statistics on %d samples per message size.\n"
             "This is the roundtrip time, *not* the one-way-latency\n"
+            "Clock overhead %d\n"
             "bytes ,stdev us,ave us, min us, 50%% us, 90%% us, 99%% us, 99.99%%,"
             " max us\n"
             "------,-------,-------,-------,-------,-------,-------,-------,"
-            "-------\n", count_));
+            "-------\n", count_, clock_overhead_));
         }
       ACE_DEBUG ((LM_DEBUG,
         "%6d,%7.1f,%7.1f,%7.1f,%7.1f,%7.1f,%7.1f,%7.1f,%7.1f\n",
