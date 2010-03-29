@@ -1,3 +1,18 @@
+Mon Mar 29 17:13:54 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Vector_CDR_T.h:
+        
+          Cosmetic changes.
+          
+        * tao/Vector_AnyOp_T.h:
+        
+          New file defining no-op Any insertion and extraction operators
+          for std::vector, in various categories of element types.
+          
+        * tao/tao.mpc:
+        
+          Added above files to the MPC project.
+
 Tue Mar  2 23:18:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Param_Test/param_test_i.cpp:
