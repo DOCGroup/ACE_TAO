@@ -698,6 +698,13 @@ project(High Res Timer Test) : acetest {
   }
 }
 
+project(NDDS Timer Test) : acetest, nddsexe {
+  exename = NDDS_Timer_Test
+  Source_Files {
+    NDDS_Timer_Test.cpp
+  }
+}
+
 project(Hash Map Manager Test) : acetest {
   exename = Hash_Map_Manager_Test
   Source_Files {

@@ -1,3 +1,10 @@
+Mon Mar 29 11:05:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/NDDS_Timer_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Added timer test which uses the ndds timers.
+
 Mon Mar 29 06:59:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/ace_qt4reactor.mpb:
