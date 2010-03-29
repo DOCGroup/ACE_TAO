@@ -38,14 +38,16 @@ public:
 
   virtual int visit_operation (be_operation *node);
   
-  void scope (be_interface *node);
+  void scope (be_decl *node);
+  void port_prefix (ACE_CString &prefix);
 
 private:
   int gen_op_body (be_type *return_type);
   
 private:
   TAO_OutStream &os_;
-  be_interface *scope_;
+  be_decl *scope_;
+  ACE_CString port_prefix_;
   const char *your_code_here_;
 };
 

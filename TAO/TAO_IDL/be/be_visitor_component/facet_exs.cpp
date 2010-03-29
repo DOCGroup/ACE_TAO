@@ -40,6 +40,7 @@ be_visitor_facet_exs::visit_operation (be_operation *node)
     
   be_visitor_operation_exs v (this->ctx_);
   v.scope (op_scope_);
+  v.port_prefix (this->port_prefix_);
   return v.visit_operation (node);
 }
 
@@ -66,19 +67,9 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
 {
   be_type *impl = node->provides_type ();
 
-  /// For the moment, we are generating multiple facet
-  /// executor classes if the same interface is used in
-  /// multiple components. I'm leaving the code here in
-  /// case we change our minds later.
-/*
-  if (impl->exec_src_facet_gen ())
-    {
-      return 0;
-    }
-*/    
-  // We don't want any '_cxx_' prefix here.
-  const char *lname =
-    impl->original_local_name ()->get_string ();
+  ACE_CString lname_str (this->port_prefix_);
+  lname_str += node->original_local_name ()->get_string ();
+  const char *lname = lname_str.c_str ();
 
   os_ << be_nl << be_nl
       << "// TAO_IDL - Generated from" << be_nl
@@ -114,12 +105,12 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
       << "{" << be_nl
       << "}";
 
+  op_scope_ = node;
+
   if (impl->node_type () == AST_Decl::NT_interface)
     {
       be_interface *intf =
         be_interface::narrow_from_decl (impl);
-
-      op_scope_ = intf;
 
       os_ << be_nl << be_nl
           << "// Operations from ::" << intf->full_name ();

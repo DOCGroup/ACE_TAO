@@ -1,3 +1,28 @@
+Mon Mar 29 16:25:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation_exs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+        * TAO_IDL/be/be_visitor_operation.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exh.cpp:
+        * TAO_IDL/be/be_visitor_attribute.cpp:
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+        * TAO_IDL/be_include/be_visitor_operation/operation_exs.h:
+        * TAO_IDL/be_include/be_visitor_operation/operation_svs.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_exs.h:
+        * TAO_IDL/be_include/be_visitor_attribute/attribute.h:
+
+          Changed code generation for the facet executor implementation
+          class to use a name built on the facet name rather than on
+          the interface name. If two facets in a component use the
+          same interface, it's likely that the intention is to 
+          implement the operations of this interface differently
+          in each facet. This change allows the application developer
+          to do that.
+
 Fri Mar 26 20:30:48 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation.cpp:
