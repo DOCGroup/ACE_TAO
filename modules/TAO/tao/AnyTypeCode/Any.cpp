@@ -522,6 +522,12 @@ operator <<= (CORBA::Any &any, std::string & str)
   any <<= str.c_str ();
 }
 
+ACE_INLINE void
+operator <<= (CORBA::Any &any, std::string * str)
+{
+  // TODO
+}
+
 // Extraction: these are safe and hence we have to check that the
 // typecode of the Any is equal to the one we are trying to extract
 // into.

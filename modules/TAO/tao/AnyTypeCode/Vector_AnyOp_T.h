@@ -16,11 +16,21 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
+  /// Copying
   template<typename T>
   void
   insert_value_vector (
     CORBA::Any &,
-    std::vector<T> &)
+    const std::vector<T> &)
+  {
+  }
+    
+  /// Non-copying  
+  template<typename T>
+  void
+  insert_value_vector (
+    CORBA::Any &,
+    std::vector<T> *)
   {
   }
     
@@ -33,11 +43,21 @@ namespace TAO
     return true;
   }  
 
+  /// Copying
   template<typename T>
   void
   insert_objref_vector (
     CORBA::Any &,
-    std::vector<T::_ptr_type> &)
+    const std::vector<T::_ptr_type> &)
+  {
+  }
+    
+  /// Non-copying
+  template<typename T>
+  void
+  insert_objref_vector (
+    CORBA::Any &,
+    std::vector<T::_ptr_type> *)
   {
   }
     
@@ -50,11 +70,21 @@ namespace TAO
     return true;
   }  
 
+  /// Copying
   template<typename T_forany>
   void
   insert_array_vector (
     CORBA::Any &,
-    std::vector<T_forany::_slice_type *> &)
+    const std::vector<T_forany::_slice_type *> &)
+  {
+  }
+    
+  /// Non-copying
+  template<typename T_forany>
+  void
+  insert_array_vector (
+    CORBA::Any &,
+    std::vector<T_forany::_slice_type *> *)
   {
   }
     
