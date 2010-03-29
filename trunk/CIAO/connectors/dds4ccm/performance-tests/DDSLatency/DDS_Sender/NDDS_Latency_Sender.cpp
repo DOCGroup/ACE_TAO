@@ -647,7 +647,6 @@ void HelloListener::on_data_available(DDSDataReader *reader)
           // (messages sent back by receiver)
           if (instance->ping == 0)
             {
-              ACE_UINT64 receive_time = 0;
               struct RTINtpTime finish_time;
               RTINtpTime_setZero(&finish_time);
               timer->getTime(timer, &finish_time);
