@@ -48,8 +48,8 @@ namespace CIAO
     {
     public:
       //      XML_Helper (void);
-      
-      // Initialize the resolver we should use.
+
+      /// Initialize the resolver we should use.
       XML_Helper (Resolver &resolver, Error_Handler &eh);
 
       ~XML_Helper (void);
@@ -62,13 +62,13 @@ namespace CIAO
       create_dom (const ACE_TCHAR *root,
                   const ACE_TCHAR *ns,
                   XERCES_CPP_NAMESPACE::DOMDocumentType * doctype = 0) const;
-      
+
       XERCES_CPP_NAMESPACE::DOMDocumentType *
       create_doctype (const ACE_TCHAR *qn,
                       const ACE_TCHAR *pid,
                       const ACE_TCHAR *sid) const;
-                      
-      //Writes out a DOMDocument to an XML file
+
+      /// Writes out a DOMDocument to an XML file
       bool write_DOM (XERCES_CPP_NAMESPACE::DOMDocument *doc,
                       const ACE_TCHAR *file) const;
 
@@ -85,12 +85,12 @@ namespace CIAO
       bool initialized_;
       XERCES_CPP_NAMESPACE::DOMImplementation *impl_;
       mutable std::auto_ptr<XERCES_CPP_NAMESPACE::XercesDOMParser> parser_;
-      
+
       Resolver &resolver_;
       Error_Handler &e_handler_;
     };
-    
-   
+
+
   }
 }
 
