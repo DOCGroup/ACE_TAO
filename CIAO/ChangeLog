@@ -1,3 +1,11 @@
+Mon Mar 29 12:03:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/tests/IDL_Test/AMI4CCM_IDLTest.mpc:
+          Added several projects
+
+        * connectors/ami4ccm/examples/Hello/Base/Hello.mpc:
+          Added another export macro
+
 Mon Mar 29 10:33:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/tests/IDL_Test/Hello.idl:
