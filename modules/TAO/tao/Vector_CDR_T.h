@@ -17,7 +17,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   template<typename T>
-  bool marshal_value_vector (
+  bool
+  marshal_value_vector (
     TAO_OutputCDR &strm,
     const std::vector<T> &source)
   {
@@ -42,7 +43,8 @@ namespace TAO
   }
 
   template<typename T>
-  bool demarshal_value_vector (
+  bool
+  demarshal_value_vector (
     TAO_InputCDR &strm,
     std::vector<T> &target)
   {
@@ -77,7 +79,8 @@ namespace TAO
   }
   
   template<typename T>
-  bool marshal_objref_vector (
+  bool
+  marshal_objref_vector (
     TAO_OutputCDR &strm,
     const std::vector<T::_ptr_type> &source)
   {
@@ -102,7 +105,8 @@ namespace TAO
   }
 
   template<typename T>
-  bool demarshal_objref_vector (
+  bool
+  demarshal_objref_vector (
     TAO_InputCDR &strm,
     std::vector<T::_ptr_type> &target)
   {
@@ -137,7 +141,8 @@ namespace TAO
   }
 
   template<typename T_forany>
-  bool marshal_array_vector (
+  bool
+  marshal_array_vector (
     TAO_OutputCDR &strm,
     const std::vector<T_forany::_slice_type *> &source)
   {
@@ -169,7 +174,8 @@ namespace TAO
   }
 
   template<typename T_forany>
-  bool demarshal_array_vector (
+  bool
+  demarshal_array_vector (
     TAO_InputCDR &strm,
     const std::vector<T_forany::_slice_type *> &source)
   {
