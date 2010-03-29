@@ -88,16 +88,16 @@ time_interval (const DDS_Duration_t& interval,
                unsigned long long& nanoseconds,
                unsigned long long& microseconds)
 {
-  RTIClock *timer;
-  timer = RTIHighResolutionClock_new();
+  RTIClock *timer = RTIHighResolutionClock_new();
 
   struct RTINtpTime start_time;
   struct RTINtpTime finish_time;
 
-  // Initialize
-  timer->reset(timer);
   RTINtpTime_setZero(&start_time);
   RTINtpTime_setZero(&finish_time);
+
+  // Initialize
+  timer->reset(timer);
 
   // Run the test
   timer->getTime(timer, &start_time);
