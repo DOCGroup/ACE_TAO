@@ -1,3 +1,9 @@
+Mon Mar 29 06:59:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ace_qt4reactor.mpb:
+          New base project, thanks to Marek Brudka <mbrudka at aster dot pl>
+          for providing this
+
 Mon Mar 29 06:54:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debianbuild/*:
