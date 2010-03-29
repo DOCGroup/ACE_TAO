@@ -48,7 +48,6 @@ const char * prof_name_ = 0;
 CORBA::UShort domain_id_ = 0;
 CORBA::Boolean both_read_write_ = false;
 
-ACE_Reactor * reactor_ = 0;
 WriteTicker * ticker_ = 0;
 
 /* The listener of events and data from the middleware */
@@ -157,7 +156,7 @@ stop (void)
 {
   if (ticker_)
     {
-      reactor_->cancel_timer (ticker_);
+      ACE_Reactor::instance ()->cancel_timer (ticker_);
       delete ticker_;
       ticker_ = 0;
     }
@@ -355,7 +354,7 @@ void start (void)
   // This->sleep_ is in ms
   unsigned int sec = sleep_/1000;
   unsigned int usec = (sleep_ % 1000) * 1000;
-  if (reactor_->schedule_timer (
+  if (ACE_Reactor::instance ()->schedule_timer (
                   ticker_,
                   0,
                   ACE_Time_Value (5, 0),
@@ -364,7 +363,7 @@ void start (void)
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("start : ")
                             ACE_TEXT ("Error scheduling timer")));
     }
-  reactor_->run_reactor_event_loop ();
+  ACE_Reactor::instance ()->run_reactor_event_loop ();
 }
 
 void
