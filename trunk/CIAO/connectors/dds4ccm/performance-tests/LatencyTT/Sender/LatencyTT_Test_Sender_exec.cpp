@@ -30,15 +30,9 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
                                   const ::CCM_DDS::ReadInfo &)
   {
     ACE_UINT64  receive_time = 0;
-
-    // Only interested in messages received with a latency_ping = 0
-    // (messages sent back by receiver)
-    if( an_instance.ping == 0)
-      {
-        ACE_High_Res_Timer::gettimeofday_hr ().to_usec ( receive_time);
-        this->callback_.read(const_cast<LatencyTTTest&> (an_instance), receive_time);
-      }
-   }
+    ACE_High_Res_Timer::gettimeofday_hr ().to_usec ( receive_time);
+    this->callback_.read(const_cast<LatencyTTTest&> (an_instance), receive_time);
+  }
 
   void
   LatencyTTTest_Listener_exec_i::on_many_data (
@@ -207,9 +201,6 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
         {
         try
           {
-            // Send messages with indicator (ping = 1L) so that subscriber knows
-            // that this message has to sent back.
-            this->test_topic_.ping = 1L;
             this->test_topic_.seq_num =  this->number_of_msg_;
 
             // Keep last sent seq_num, to control if message is sent back.
@@ -460,9 +451,8 @@ Sender_exec_i::record_time (ACE_UINT64  receive_time)
 
     this->datalen_ = this->datalen_range_[0];
 
-    //make  instances of Topic
+    // make instances of Topic
     this->test_topic_.seq_num = 0;
-    this->test_topic_.ping = 0;
     this->test_topic_.data.length (this->datalen_);
     calculate_clock_overhead();
   }
