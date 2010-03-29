@@ -1,3 +1,8 @@
+Mon Mar 29 12:25:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/NDDS_Timer_Test.cpp:
+          Resolved test issues.
+
 Mon Mar 29 11:05:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/NDDS_Timer_Test.cpp:

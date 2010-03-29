@@ -83,10 +83,9 @@ check_micro_nano (unsigned long long microinterval, unsigned long long nanointer
 }
 
 static
-DDS_Duration_t
+void
 time_interval (const DDS_Duration_t& interval,
-               unsigned long long& nanoseconds,
-               unsigned long long& microseconds)
+               RTINtpTime& duration)
 {
   RTIClock *timer = RTIHighResolutionClock_new();
 
@@ -105,18 +104,7 @@ time_interval (const DDS_Duration_t& interval,
   timer->getTime(timer, &finish_time);
 
   // Measure.
-  struct RTINtpTime duration;
   RTINtpTime_subtract(duration, finish_time, start_time);
-
-  int s;
-  RTINtpTime_unpackToMicrosec (s, microseconds, duration);
-  RTINtpTime_unpackToNanosec (s, nanoseconds, duration);
-
-  DDS_Duration_t measured;
-  measured.sec = duration.sec;
-  measured.nanosec = nanoseconds;
-
-  return measured;
 }
 
 
@@ -155,16 +143,19 @@ run_main (int argc, ACE_TCHAR *argv[])
           interval.sec = 0;
           interval.nanosec = intervals[i] * 1000;
 
-          unsigned long long nanoseconds;
-          unsigned long long microseconds;
-          DDS_Duration_t const measured = time_interval (interval,
-                                                         nanoseconds,
-                                                         microseconds);
+          RTINtpTime duration;
+          time_interval (interval, duration);
+
+          unsigned long long microseconds, nanoseconds;
+          int sec;
+          RTINtpTime_unpackToMicrosec (sec, microseconds, duration);
+          RTINtpTime_unpackToNanosec (sec, nanoseconds, duration);
 
           time_t const interval_usec =
             interval.sec * ACE_ONE_SECOND_IN_USECS + interval.nanosec / 1000;
           time_t const measured_usec =
-            measured.sec * ACE_ONE_SECOND_IN_USECS + measured.nanosec / 1000;
+            sec * ACE_ONE_SECOND_IN_USECS + microseconds;
+
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("interval: %: usec, measured: %: usec %s\n"),
@@ -178,25 +169,14 @@ run_main (int argc, ACE_TCHAR *argv[])
             {
               errors += check (interval.sec * ACE_ONE_SECOND_IN_USECS
                                + interval.nanosec / 1000,
-                               measured.sec * ACE_ONE_SECOND_IN_USECS
-                               + measured.nanosec / 1000);
+                               sec * ACE_ONE_SECOND_IN_USECS + microseconds);
               // Don't check for error for intervals below 10 msec.
             }
-          // Check the ACE_Timer_Value-calculated microseconds against
-          // the ACE_NDDS_Timer-calculated nanoseconds.
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("DDS_Duration usec: %:, HR nsec: %Q\n"),
-                      measured_usec,
-                      nanoseconds));
-          // This gives problems -> should be fixed
-          errors += check_micro_nano (measured.sec * ACE_ONE_SECOND_IN_USECS
-                                      + measured.nanosec / 1000,
-                                      nanoseconds);
+          errors += check_micro_nano (microseconds, nanoseconds);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("NDDS_Timer usec: %Q, nsec: %Q\n"),
                       microseconds,
                       nanoseconds));
-          errors += check_micro_nano (microseconds, nanoseconds);
         }
     }
 
