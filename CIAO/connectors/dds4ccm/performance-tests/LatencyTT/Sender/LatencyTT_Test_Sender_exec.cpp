@@ -356,18 +356,23 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
    }
 
 void
-Sender_exec_i::record_time (ACE_UINT64  receive_time)
+Sender_exec_i::record_time (ACE_UINT64 receive_time)
   {
+    ++this->count_;
     ACE_UINT64 interval = receive_time  - this->start_time_;
     ACE_UINT64 duration = interval - this->_clock_overhead_;
-    int i = ++this->count_;
+    int i = this->count_
     this->duration_times[i-1] = duration;
     this->sigma_duration_squared_ += (double)duration * (double)duration;
     this->tv_total_ += duration;
     if (duration > this->tv_max_ || (this->tv_max_ == 0L))
-      this->tv_max_ = duration;
+      {
+        this->tv_max_ = duration;
+      }
     if (duration < this->tv_min_ || (this->tv_min_ == 0L))
-      this->tv_min_ = duration;
+      {
+        this->tv_min_ = duration;
+      }
   }
 
   ::CORBA::ULong
