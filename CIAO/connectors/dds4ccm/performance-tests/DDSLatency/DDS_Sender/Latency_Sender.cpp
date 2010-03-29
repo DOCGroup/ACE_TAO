@@ -26,9 +26,9 @@ CORBA::UShort datalen_ = 100;
 CORBA::UShort datalen_idx_ = 0;
 CORBA::UShort nr_of_runs_ = 10;
 CORBA::UShort sleep_ = 2;
-Atomic_Long tv_total_ = 0;
-Atomic_Long tv_max_ = 0;
-Atomic_Long tv_min_ = 0;
+ACE_UINT64 tv_total_ = 0;
+ACE_UINT64 tv_max_ = 0;
+ACE_UINT64 tv_min_ = 0;
 CORBA::UShort count_ = 0;
 CORBA::UShort number_of_msg_ = 0;
 Atomic_Boolean received_ = false;
@@ -201,11 +201,11 @@ record_time (ACE_UINT64 receive_time)
       duration_times_[count_-1] = duration;
       sigma_duration_squared_ += (double)duration * (double)duration;
       tv_total_ += duration;
-      if (duration > tv_max_.value () || (tv_max_.value () == 0L))
+      if (duration > tv_max_ || (tv_max_ == 0L))
         {
           tv_max_ = duration;
         }
-      if (duration < tv_min_.value () || (tv_min_.value () == 0L))
+      if (duration < tv_min_ || (tv_min_ == 0L))
         {
           tv_min_ = duration;
         }
@@ -253,7 +253,7 @@ calc_results()
   double roundtrip_time_std = 0;
   if (count_ > 0)
     {
-      avg = (double)(tv_total_.value () / count_);
+      avg = (double)(tv_total_ / count_);
       // Calculate standard deviation.
       roundtrip_time_std  = sqrt(
         (sigma_duration_squared_ / (double)count_) -
@@ -278,12 +278,12 @@ calc_results()
         datalen_,
         roundtrip_time_std,
         avg,
-        (double)tv_min_.value (),
+        (double)tv_min_,
         (double)duration_times_[per50-1],
         (double)duration_times_[per90-1],
         (double)duration_times_[per99-1],
         (double)duration_times_[per9999-1],
-        (double)tv_max_.value ()));
+        (double)tv_max_));
     }
   else
     {

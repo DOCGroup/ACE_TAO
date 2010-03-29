@@ -48,7 +48,7 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
       public virtual ::CORBA::LocalObject
   {
   public:
-    ConnectorStatusListener_exec_i (Atomic_Boolean &, int,  Sender_exec_i &callback_);
+    ConnectorStatusListener_exec_i (bool&, int, Sender_exec_i &callback_);
     virtual ~ConnectorStatusListener_exec_i (void);
 
     virtual
@@ -72,7 +72,7 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
 
   private:
     Sender_exec_i &callback_;
-    Atomic_Boolean &matched_;
+    bool &matched_;
     int number_of_subscribers_;
 
   };
@@ -146,25 +146,23 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     CORBA::UShort datalen_idx_;
     CORBA::UShort nr_of_runs_;
     CORBA::UShort sleep_;
-    Atomic_Boolean matched_;
+    bool matched_;
     CORBA::UShort number_of_subscribers_;
-    Atomic_Long  tv_total_;
-    Atomic_Long  tv_max_;
-    Atomic_Long  tv_min_;
+    ACE_UINT64 tv_total_;
+    ACE_UINT64 tv_max_;
+    ACE_UINT64 tv_min_;
     CORBA::UShort count_;
     CORBA::UShort number_of_msg_;
-    Atomic_Boolean timer_;
+    bool timer_;
     Atomic_Boolean received_;
-    Atomic_Long seq_num_;
+    CORBA::Long seq_num_;
     CORBA::Double sigma_duration_squared_;
     ACE_UINT64 start_time_;
     ACE_UINT64 start_time_test_;
     ACE_UINT64 end_time_test_;
 
-    TAO_SYNCH_MUTEX mutex_;
     LatencyTest test_topic_;
-    CORBA::Octet* buffer_;
-    CORBA::Long* duration_times;
+    ACE_UINT64* duration_times;
     CORBA::Short* datalen_range_;
     CORBA::Long _clock_overhead_;
 };

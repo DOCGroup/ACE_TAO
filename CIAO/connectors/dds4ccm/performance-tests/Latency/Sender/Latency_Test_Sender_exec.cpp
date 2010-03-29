@@ -49,12 +49,12 @@ namespace CIAO_Latency_Test_Sender_Impl
   // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
   //============================================================
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (
-                                        Atomic_Boolean &matched,
+                                        bool& matched,
                                         int number_of_subscribers,
                                         Sender_exec_i &callback)
    : callback_ (callback),
-    matched_ (matched),
-    number_of_subscribers_ (number_of_subscribers)
+     matched_ (matched),
+     number_of_subscribers_ (number_of_subscribers)
   {
   }
 
@@ -113,7 +113,7 @@ namespace CIAO_Latency_Test_Sender_Impl
 
             if((stat.in().current_count >=
              (this->number_of_subscribers_ + 1)) &&
-             !this->matched_.value())
+             !this->matched_)
             {
               this->matched_ = true;
               this->callback_.start();
@@ -167,7 +167,7 @@ namespace CIAO_Latency_Test_Sender_Impl
 
   static int compare_two_longs(const void *long1, const void *long2)
   {
-    return (*(CORBA::Long*)long1 - *(CORBA::Long*)long2 );
+    return (int)(*(ACE_UINT64*)long1 - *(ACE_UINT64*)long2 );
   }
 
   void
@@ -231,7 +231,7 @@ namespace CIAO_Latency_Test_Sender_Impl
   void
   Sender_exec_i::read(LatencyTest & an_instance,ACE_UINT64  receive_time)
   {
-    if (an_instance.seq_num == this->seq_num_.value())
+    if (an_instance.seq_num == this->seq_num_)
     {
       this->record_time( receive_time);
       this->received_ = true;
@@ -242,7 +242,7 @@ namespace CIAO_Latency_Test_Sender_Impl
   Sender_exec_i::reset_results()
   {
     this->count_ = 0;
-    this->duration_times = new CORBA::Long[this->iterations_];
+    this->duration_times = new ACE_UINT64[this->iterations_];
     this->tv_total_ = 0L;
     this->tv_max_ = 0L;
     this->tv_min_ = 0L;
@@ -270,7 +270,7 @@ namespace CIAO_Latency_Test_Sender_Impl
     int per99 = (int)(this->count_ * 0.990);
     int per9999 = (int)(this->count_ * 0.9999);
 
-    double avg = this->tv_total_.value () / this->count_;
+    double avg = (double)(this->tv_total_ / this->count_);
     // Calculate standard deviation.
     double _roundtrip_time_std  = sqrt(
         (this->sigma_duration_squared_ / (double)this->count_) -
@@ -293,12 +293,12 @@ namespace CIAO_Latency_Test_Sender_Impl
               this->datalen_,
               _roundtrip_time_std,
               avg,
-              (double)this->tv_min_.value (),
+              (double)this->tv_min_,
               (double)this->duration_times[per50-1],
               (double)this->duration_times[per90-1],
               (double)this->duration_times[per99-1],
               (double)this->duration_times[per9999-1],
-              (double)this->tv_max_.value ()));
+              (double)this->tv_max_));
           }
         else
           {
@@ -307,12 +307,12 @@ namespace CIAO_Latency_Test_Sender_Impl
               this->datalen_,
               _roundtrip_time_std,
               avg,
-              (double)this->tv_min_.value (),
+              (double)this->tv_min_,
               (double)this->duration_times[per50-1],
               (double)this->duration_times[per90-1],
               (double)this->duration_times[per99-1],
               (double)this->duration_times[per9999-1],
-              (double)this->tv_max_.value ()));
+              (double)this->tv_max_));
           }
        }
      else
@@ -366,16 +366,15 @@ namespace CIAO_Latency_Test_Sender_Impl
 void
 Sender_exec_i::record_time (ACE_UINT64  receive_time)
   {
-    ACE_UINT64 interval =  ( receive_time  - this->start_time_);
-    ++this->count_;
-    long duration = static_cast <CORBA::Long>(interval) - this->_clock_overhead_;
-    int i = this->count_;
+    ACE_UINT64 interval = receive_time - this->start_time_;
+    ACE_UINT64 duration = interval - this->_clock_overhead_;
+    int i = ++this->count_;
     this->duration_times[i-1] = duration;
     this->sigma_duration_squared_ += (double)duration * (double)duration;
     this->tv_total_ += duration;
-    if (duration > this->tv_max_.value ()|| (this->tv_max_.value () == 0L))
+    if (duration > this->tv_max_ || (this->tv_max_ == 0L))
       this->tv_max_ = duration;
-    if (duration < this->tv_min_.value () || (this->tv_min_.value () == 0L))
+    if (duration < this->tv_min_ || (this->tv_min_ == 0L))
       this->tv_min_ = duration;
   }
 
@@ -449,7 +448,7 @@ Sender_exec_i::record_time (ACE_UINT64  receive_time)
   void
   Sender_exec_i::init_values (void)
   {
-    this->duration_times = new CORBA::Long[this->iterations_];
+    this->duration_times = new ACE_UINT64[this->iterations_];
     this->datalen_range_ = new CORBA::Short[this->nr_of_runs_];
     int start = 16;
     for(int i = 0; i < this->nr_of_runs_; i++)
@@ -511,7 +510,7 @@ Sender_exec_i::record_time (ACE_UINT64  receive_time)
   void
   Sender_exec_i::stop (void)
   {
-    if (this->timer_.value ())
+    if (this->timer_)
      {
        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
        delete this->ticker_;
