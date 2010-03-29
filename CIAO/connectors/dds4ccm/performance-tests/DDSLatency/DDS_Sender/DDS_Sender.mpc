@@ -12,6 +12,18 @@ project(*latency_sender_plain) : nddslib, acelib, taolib {
   Source_Files {
     Latency_Sender.cpp
   }
+}
 
+project(*ndds_latency_sender_plain) : nddslib, acelib, taolib {
+  after += DDS_Latency_Base_plain_stub
+  exename = DDS_NDDS_Sender
+  avoids += ace_for_tao
+  libpaths += ../lib
+  libout = ../lib
+  includes += ../Base
+  libs  += DDS_Latency_Base_plain_stub
 
+  Source_Files {
+    NDDS_Latency_Sender.cpp
+  }
 }
