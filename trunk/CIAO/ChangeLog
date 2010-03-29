@@ -1,3 +1,8 @@
+Mon Mar 29 12:18:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/Latency_Sender.cpp:
+          Use more ACE_UINT64 to avoid truncations
+
 Mon Mar 29 12:03:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/tests/IDL_Test/AMI4CCM_IDLTest.mpc:
