@@ -499,3 +499,4 @@ be_visitor_attribute::port_prefix (ACE_CString &prefix)
 {
   this->port_prefix_ = prefix;
 }
+
