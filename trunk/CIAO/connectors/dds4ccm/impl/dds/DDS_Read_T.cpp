@@ -123,7 +123,7 @@ DDS_Read_T<DDS_TYPE, CCM_TYPE, FIXED>::remove (
 
   try
     {
-      DDS::ReturnCode_t retval =
+      DDS::ReturnCode_t const retval =
         subscriber->delete_datareader (&this->ccm_dds_reader_);
       if (retval != DDS::RETCODE_OK)
         {
