@@ -1,19 +1,99 @@
-ace (5.7.4-1) unstable; urgency=low
+ace (5.7.7-1) unstable; urgency=low
 
+  [ Marek Brudka ]
+  * New upstream release
+  * Install fix related with MPC bug for *.ins files
+  * Reverted mpc-ace changes
+  * Dropped 25-remove-duplicate-file patch
+  * Added PerlACE to mpc-ace. This should resolve #522557
+  
+ -- Marek Brudka <mbrudka@aster.pl>  Sat, 27 Mar 2010 20:00:00 +0100
+
+ace (5.7.5-2) unstable; urgency=low
+  [ Marek Brudka ]
+  * Change build method to MPC generated makefiles
+  * Changed installation method to MPC/prj_install.pl
+  * Changed .so naming from -x.y.z.so to so.x.y.z
+
+ace (5.7.5-1) unstable; urgency=low
+
+  [ Pau Garcia i Quiles ]
   * New upstream release
   * Add dependency on ${misc:Depends}
   * Add new libraries and update patch 34-bts386713 accordingly
-  * Remove patch 15-fix-fltk-include (fixed upstream)
+  * Update patch 02-qt4 (partially fixed upstream)
+  * Drop patch 05-autoconf-fox (fixed upstream)
+  * Drop patch 06-fix-kokyu-mpc (fixed upstream)
+  * Drop patch 07-autoconf-fix-gperf (fixed upstream)
+  * Drop patch 08-fix-perl-shebang (fixed upstream)
+  * Drop patch 10-fix-fox-resource-export (fixed upstream)
+  * Drop patch 11-fix-fox-reactor.dpatch (fixed upstream)
+  * Update patch 12-fix-fox-include
+  * Drop patch 13-fix-fox-errors (fixed upstream except for the #include, which
+    I have now merged in 12-fix-fox-include)
+  * Drop patch 14-autoconf-tao (fixed upstream)
+  * Drop patch 15-fix-fltk-include (fixed upstream)
+  * Drop patch 17-protect-mpc-path (fixed upstream)
+  * Drop patch 18-fix-bswap-detection (fixed upstream)
+  * Update patch 19-gcc43
+  * Drop patch 20-fix-iostream-detection (fixed upstream)
+  * Drop patch 22-remove-Ge-doc (fixed upstream)
+  * Drop patch 23-add-sh-shebang (fixed upstream)
+  * Update patch 24-add-missing-headers (WORK IN PROGRESS)
+  * Update patch 34-bts386713
+  * Drop patch 49-missing-template (fixed upstream)
+  * Update patch 90-patch-mpc-basedir
+  * Update patch 91-patch-dg-basedir
+  * Add patch 93-hack-to-fix-libtoolize
+  * Add patch 94-build-crosscompile
+  * ??? Add patch 95-build-ace-for-tao
+  * Add patch 96-build-athena3d
   * Remove DH_COMPAT definition from the debian/rules file, it's already in
     debian/compat
+  * Fix fox-config location, detection method has changed since 5.6.3
+  [Marek Brudka]
+  * renamed gperf-ace to ace_gperf to follow the upstream convention
+  * fixed fidone once again
+  * created gperf-ace-5.7.5 and gperf-ace-dev package for gperf runtime libraries
+  * included number of runtime and static libraries with headers (Monitor, ZIOP, ETCL, Catior) to libtao-orbsvcs-* packages
+  * renamed split-cpp to split-cpp.pl in libace-dev to follow the upstream 
+    conventions
+  * renamed utilities (ns{add,del,list> to tao_ns{add,del,list}) in tao-utils 
+    to follow the upstream changes
+  * removed permission fixes for example in debian/rules as there is nothing to fix
+  * created libace_gperf runtime and devel libraries
+  * added libACE_ETCL to libace (separate package?)
+  * added libACE_Monitor_Control to libace (separate package?)
+  * added libACE_gperf to libace (separate package?)
+  * added usr/bin/m[w,p]c.pl to avoid some problems related with $0 and workspace generation
+  * temporarily excluded logWalker from build
+ -- Pau Garcia i Quiles <pgquiles@elpauer.org>, Marek Brudka <mbrudka@aster.pl>  Sun, 25 Oct 2009 12:59:18 +0100
 
- -- Pau Garcia i Quiles <pgquiles@elpauer.org>  Sun, 25 Oct 2009 12:59:18 +0100
+ace (5.6.3-6) unstable; urgency=low
 
-ace (5.6.6-1) experimental; urgency=low
+  [ Thomas Girard ]
+  * Remove obsolete maintainers:
+    - Konstantinos Margaritis <markos@debian.org>
+    - Brian Nelson <pyro@debian.org>
+    Closes: #521487.
+  * Bump Standards-Version: to 3.8.3.
+  * Remove erroneous #define ACE_SCANDIR_CMP_USES_CONST_VOIDPTR in config.h;
+    causing diagnostics to FTBFS. Closes: #552899.
+  * Remove extra ACLOCAL_AMFLAGS from already existing Makefile.am; causing
+    recent aclocal to abort. Thanks to Pau Garcia i Quiles for the patch.
+    Closes: #518735.
+  * Add README.source.
+  * Add Pau Garcia i Quiles to the list of maintainers.
+  * Fix many issues spotted by lintian.
 
-  * New upstream release.
+  [ Pau Garcia i Quiles ]
+  * Add new patches:
+    - Remove duplicate files from .mpc files so that Makefile.am files do
+      not have duplicates 
+    - Run autoupdate and autoreconf in the ACE and TAO directories in order
+      to update from libtool 1.5 (what upstream uses) to libtool 2.2
 
- -- Thomas Girard <thomas.g.girard@free.fr>  Fri, 03 Oct 2008 21:57:29 +0000
+ -- Thomas Girard <thomas.g.girard@free.fr>  Sun, 13 Dec 2009 11:47:50 +0100
 
 ace (5.6.3-5) unstable; urgency=low
 
