@@ -166,8 +166,8 @@ run_main (int argc, ACE_TCHAR *argv[])
 
           if (intervals[i] > TIMER_RESOLUTION)
             {
-              errors += check (interval.sec * ACE_ONE_SECOND_IN_USECS
-                               + interval.nanosec / 1000,
+              errors += check (interval.sec () * ACE_ONE_SECOND_IN_USECS
+                               + interval.usec (),
                                sec * ACE_ONE_SECOND_IN_USECS + microseconds);
               // Don't check for error for intervals below 10 msec.
             }
