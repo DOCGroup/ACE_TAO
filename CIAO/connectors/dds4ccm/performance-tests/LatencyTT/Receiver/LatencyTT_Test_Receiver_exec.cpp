@@ -26,7 +26,7 @@ namespace CIAO_LatencyTT_Test_Receiver_Impl
                                   const LatencyTTTest & an_instance,
                                   const ::CCM_DDS::ReadInfo & /*info*/)
   {
-    this->callback_.write_one(const_cast<LatencyTTTest&> (an_instance));
+    this->callback_.write_one(an_instance);
   }
 
   void
@@ -49,10 +49,9 @@ namespace CIAO_LatencyTT_Test_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::write_one (LatencyTTTest & an_instance)
+  Receiver_exec_i::write_one (const LatencyTTTest & an_instance)
   {
     ++this->count_;
-    an_instance.ping = 0;
     this->writer_->write_one(an_instance, ::DDS::HANDLE_NIL);
   }
 

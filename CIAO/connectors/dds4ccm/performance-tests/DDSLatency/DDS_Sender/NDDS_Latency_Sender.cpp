@@ -181,7 +181,6 @@ init_values (void)
 
   // make instances of Topic
   instance_->seq_num = 0;
-  instance_->ping = 0;
   instance_->data.length (datalen_);
   calculate_clock_overhead ();
 }
@@ -333,9 +332,6 @@ write_one (void)
         {
           try
             {
-              // Send messages with indicator (ping = 1L) so that subscriber knows
-              // that this message has to sent back.
-              instance_->ping = 1L;
               instance_->seq_num =  number_of_msg_;
               // Keep last sent seq_num, to control if message is sent back.
               seq_num_ = number_of_msg_;
@@ -643,15 +639,10 @@ void HelloListener::on_data_available(DDSDataReader *reader)
         }
       if (info.valid_data)
         {
-          // Only interested in messages received with a latency_ping = 0
-          // (messages sent back by receiver)
-          if (instance->ping == 0)
-            {
-              struct RTINtpTime finish_time;
-              RTINtpTime_setZero(&finish_time);
-              timer->getTime(timer, &finish_time);
-              read(*instance, finish_time);
-            }
+          struct RTINtpTime finish_time;
+          RTINtpTime_setZero(&finish_time);
+          timer->getTime(timer, &finish_time);
+          read(*instance, finish_time);
         }
     }
 }

@@ -98,8 +98,6 @@ void
 write_back (LatencyTest & an_instance)
 {
   ++count_;
-  // Change ping , so this receiever doesn't sent this message back again
-  an_instance.ping = 0L;
 
   try
     {
