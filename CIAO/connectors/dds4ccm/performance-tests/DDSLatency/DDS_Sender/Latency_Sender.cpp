@@ -13,14 +13,10 @@
 
 #include <ndds/ndds_namespace_cpp.h>
 
-//typedefs
-typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_UINT64> Atomic_Long;
-typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean> Atomic_Boolean;
-
-//forward declarations
+// Forward declarations
 class WriteTicker;
 
-//Global variables
+// Global variables
 CORBA::UShort iterations_ = 1000;
 CORBA::UShort datalen_ = 100;
 CORBA::UShort datalen_idx_ = 0;
@@ -31,7 +27,7 @@ ACE_UINT64 tv_max_ = 0;
 ACE_UINT64 tv_min_ = 0;
 CORBA::UShort count_ = 0;
 CORBA::UShort number_of_msg_ = 0;
-Atomic_Boolean received_ = false;
+bool received_ = false;
 CORBA::Long seq_num_ = 0;
 CORBA::Double sigma_duration_squared_;
 ACE_UINT64 start_time_ = 0;
@@ -302,7 +298,7 @@ write_one (void)
     }
   // First message sent always, next messages only as previous sent message
   // is received back.
-  if ((number_of_msg_ == 0) || received_.value())
+  if ((number_of_msg_ == 0) || received_)
     {
       // All messages send, stop timer.
       if ((iterations_ != 0) &&
