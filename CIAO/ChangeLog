@@ -1,3 +1,9 @@
+Mon Mar 29 10:15:13 UTC 2010  Martin Corino <mcorino@remedy.nl>
+
+        * tools/Completion/Completion_Counter_Base.h:
+        * tools/Completion/Completion_Counter_Base.inl:
+          Fix compile warnings concerning non-virtual destructor.
+
 Fri Mar 26 15:50:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/Getter_T.h:

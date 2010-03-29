@@ -32,6 +32,7 @@ namespace DAnCE
       typedef ACE_LOCK lock_type;
       Completion_Counter_Base (unsigned int exec_count,
                                unsigned int fail_count);
+      virtual ~Completion_Counter_Base ();
 
       void  decrement_exec_count ();
       void  increment_fail_count ();

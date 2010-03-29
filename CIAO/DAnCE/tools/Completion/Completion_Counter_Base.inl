@@ -6,12 +6,17 @@ namespace DAnCE
   {
 
     template <class ACE_LOCK>
+    ACE_INLINE Completion_Counter_Base<ACE_LOCK>::~Completion_Counter_Base ()
+      {
+      }
+    
+    template <class ACE_LOCK>
     ACE_INLINE Completion_Counter_Base<ACE_LOCK>::Completion_Counter_Base (
         unsigned int exec_count,
         unsigned int fail_count)
       : exec_count_ (exec_count), fail_count_ (fail_count)
-    {
-    }
+      {
+      }
 
     template <class ACE_LOCK>
     ACE_INLINE void
