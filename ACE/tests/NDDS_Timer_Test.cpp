@@ -85,7 +85,7 @@ check_micro_nano (unsigned long long microinterval, unsigned long long nanointer
 static
 void
 time_interval (RTIClock *timer,
-               const DDS_Duration_t& interval,
+               const ACE_Time_Value & interval,
                RTINtpTime& duration)
 {
   struct RTINtpTime start_time;
@@ -99,7 +99,7 @@ time_interval (RTIClock *timer,
 
   // Run the test
   timer->getTime(timer, &start_time);
-  NDDSUtility::sleep(interval);
+  ACE_OS::sleep (interval);
   timer->getTime(timer, &finish_time);
 
   // Measure.
@@ -140,9 +140,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       for (u_int j = 0; j < iterations; ++j)
         {
-          DDS_Duration_t interval;
-          interval.sec = 0;
-          interval.nanosec = intervals[i] * 1000;
+          ACE_Time_Value const interval (0, intervals[i]);
 
           RTINtpTime duration;
           time_interval (timer, interval, duration);
