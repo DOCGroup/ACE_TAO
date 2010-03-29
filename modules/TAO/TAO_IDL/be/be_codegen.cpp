@@ -272,9 +272,12 @@ TAO_CodeGen::start_client_header (const char *fname)
     }
   else
     {
-      *this->client_header_ << "\n#include <string>";
-      *this->client_header_ << "\n#include <vector>\n";
-
+      if (be_global->alt_mapping ())
+        {
+          *this->client_header_ << "#include <string>"
+                                << "\n#include <vector>\n";
+        }
+        
       this->gen_stub_hdr_includes ();
 
       size_t const nfiles = idl_global->n_included_idl_files ();
@@ -2477,6 +2480,19 @@ TAO_CodeGen::gen_stub_src_includes (void)
       this->gen_any_file_includes (this->client_stubs_);
     }
 
+  if (be_global->alt_mapping () && idl_global->seq_seen_)
+    {
+      this->gen_standard_include (this->client_stubs_,
+                                  "tao/Vector_CDR_T.h");
+                                  
+      if (be_global->any_support ())
+        {
+          this->gen_standard_include (
+            this->client_stubs_,
+            "tao/AnyTypeCode/Vector_AnyOp_T.h");
+        }
+    }
+    
   // Includes whatever arg helper template classes that may be needed.
   this->gen_stub_arg_file_includes (this->client_stubs_);
 
@@ -2500,19 +2516,6 @@ TAO_CodeGen::gen_stub_src_includes (void)
       // Necessary for the AIX compiler.
       this->gen_standard_include (this->client_stubs_,
                                   "ace/Auto_Ptr.h");
-    }
-    
-  if (be_global->alt_mapping () && idl_global->seq_seen_)
-    {
-      this->gen_standard_include (this->client_stubs_,
-                                  "tao/Vector_CDR_T.h");
-                                  
-      if (be_global->any_support ())
-        {
-          this->gen_standard_include (
-            this->client_stubs_,
-            "tao/AnyTypeCode/Vector_AnyOp_T.h");
-        }
     }
 }
 

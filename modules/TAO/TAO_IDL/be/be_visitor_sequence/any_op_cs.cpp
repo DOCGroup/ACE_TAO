@@ -84,12 +84,11 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
         
       *os << be_nl
           << "void operator<<= (" << be_idt_nl
-          << "::CORBA::Any &any," << be_nl
+          << "::CORBA::Any &_tao_any," << be_nl
           << "const std::vector<" << bt->full_name ()
-          << "> &val" << be_uidt_nl
+          << "> &_tao_elem" << be_uidt_nl
           << "{" << be_idt_nl
-          << "return" << be_idt_nl
-          << "TAO_VERSIONED_NAMESPACE_NAME::TAO::";
+          << "TAO::";
           
       switch (tc)
         {
@@ -111,20 +110,45 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
         }
           
       *os << be_idt_nl
-          << "any," << be_nl
-          << "val);" << be_uidt << be_uidt << be_uidt_nl
+          << "_tao_any," << be_nl
+          << "_tao_elem);" << be_uidt << be_uidt_nl
           << "}";
           
       *os << be_nl << be_nl
           << "::CORBA::Boolean operator>>= (" << be_idt_nl
-          << "const ::CORBA::Any &," << be_nl
+          << "const ::CORBA::Any &_tao_any," << be_nl
           << "std::vector<" << bt->full_name ()
-          << ">" << be_uidt_nl
+          << "> &_tao_elem" << be_uidt_nl
           << "{" << be_idt_nl
-          << "return true;" << be_uidt_nl
+          << "return" << be_idt_nl
+          << "TAO::";
+          
+      switch (tc)
+        {
+          case ANY_OBJREF:
+            *os << "extract_objref_vector<"
+                << bt->full_name () << "_ptr> (";
+                
+            break;
+          case ANY_ARRAY:
+            *os << "extract_array_vector<"
+                << bt->full_name () << "_forany> (";
+                
+            break;
+          default:
+            *os << "extract_value_vector<"
+                << bt->full_name () << "> (";
+                
+            break;
+        }
+          
+      *os << be_idt_nl
+          << "_tao_any," << be_nl
+          << "_tao_elem);" << be_uidt << be_uidt << be_uidt_nl
           << "}";
-
-      *os << be_global->core_versioning_end () << be_nl;
+          
+      *os << be_nl
+          << be_global->core_versioning_end () << be_nl;
       
       node->cli_stub_any_op_gen (true);
       return 0;

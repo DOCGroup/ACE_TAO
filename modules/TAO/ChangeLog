@@ -1,3 +1,11 @@
+Mon Mar 29 20:28:34 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be_visitor_sequence/any_op_cs.cpp:
+        
+          Minor mods to codegen for STL includes and STL any
+          operators.
+
 Mon Mar 29 18:49:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
