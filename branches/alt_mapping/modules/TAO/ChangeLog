@@ -1,3 +1,16 @@
+Mon Mar 29 18:46:20 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/AnyTypeCode/Any.h:
+        * tao/AnyTypeCode/Any.cpp:
+        
+          Added non-copying Any insertion operator for std::string.
+          Not yet implemented, still a no-op.
+          
+        * tao/tao.mpc:
+        * tao/Vector_AnyOp_T.h:
+        
+          Moved this template file to the AnyTypeCode directory.
+
 Mon Mar 29 17:13:54 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Vector_CDR_T.h:
