@@ -42,10 +42,7 @@ be_visitor_component_exh::visit_component (be_component *node)
   be_visitor_facet_exh facet_visitor (this->ctx_);
   facet_visitor.node (node);
   
-  // (JP) Should this be visit_component_scope(), i.e., 
-  //  generate inherited facets as well? Probably the
-  // behavior should be tied to the LEM force-all option.
-  if (facet_visitor.visit_scope (node) == -1)
+  if (facet_visitor.visit_component_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_component_exh::")

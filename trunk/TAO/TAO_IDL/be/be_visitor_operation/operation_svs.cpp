@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 be_visitor_operation_svs::be_visitor_operation_svs (
       be_visitor_context *ctx)
   : be_visitor_scope (ctx),
@@ -155,7 +154,7 @@ be_visitor_operation_svs::post_process (be_decl *bd)
 }
 
 void
-be_visitor_operation_svs::scope (be_interface *node)
+be_visitor_operation_svs::scope (be_decl *node)
 {
   this->scope_ = node;
 }

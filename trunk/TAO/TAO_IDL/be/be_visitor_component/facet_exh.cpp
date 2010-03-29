@@ -31,20 +31,12 @@ int
 be_visitor_facet_exh::visit_provides (be_provides *node)
 {
   be_type *impl = node->provides_type ();
-  
-  /// For the moment, we are generating multiple facet
-  /// executor classes if the same interface is used in
-  /// multiple components. I'm leaving the code here in
-  /// case we change our minds later.
-/*
-  if (impl->exec_hdr_facet_gen ())
-    {
-      return 0;
-    }
-*/    
-  // We don't want a '_cxx_' prefix here.
-  const char *lname =
+  const char *iname =
     impl->original_local_name ()->get_string ();
+  
+  ACE_CString lname_str (this->port_prefix_);
+  lname_str += node->original_local_name ()->get_string ();
+  const char *lname = lname_str.c_str ();
   
   AST_Decl *s = ScopeAsDecl (impl->defined_in ());
   ACE_CString sname_str =
@@ -64,7 +56,7 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
       << "class " << export_macro_.c_str () << " "
       << lname << "_exec_i" << be_idt_nl
       << ": public virtual " << global << sname << "::CCM_"
-      << lname << "," << be_idt_nl
+      << iname << "," << be_idt_nl
       << "public virtual ::CORBA::LocalObject"
       << be_uidt << be_uidt_nl
       << "{" << be_nl
@@ -120,8 +112,6 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
       << "_Context_var ciao_context_;" << be_uidt_nl
       << "};";
       
-//  impl->exec_hdr_facet_gen (true);
-
   return 0;
 }
 

@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 be_visitor_operation_exs::be_visitor_operation_exs (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
     os_ (*ctx->stream ()),
@@ -60,6 +59,7 @@ be_visitor_operation_exs::visit_operation (be_operation *node)
 
   // Generate the operation name
   os_ << be_nl
+      << this->port_prefix_.c_str ()
       << scope_->original_local_name ()->get_string ()
       << "_exec_i::"
       << node->local_name ();
@@ -86,9 +86,15 @@ be_visitor_operation_exs::visit_operation (be_operation *node)
 }
 
 void
-be_visitor_operation_exs::scope (be_interface *node)
+be_visitor_operation_exs::scope (be_decl *node)
 {
   this->scope_ = node;
+}
+
+void
+be_visitor_operation_exs::port_prefix (ACE_CString &prefix)
+{
+  this->port_prefix_ = prefix;
 }
 
 int
