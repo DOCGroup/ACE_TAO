@@ -1,3 +1,26 @@
+Mon Mar 29 18:49:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+        
+          Cosmetic changes.
+          
+        * TAO_IDL/be/be_codegen.cpp:
+        
+          Added generation of includes for CDR and Any operator
+          template header files.
+          
+        * TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        
+          Added code generation for Any insertions and extraction
+          operators for std::vector<> types representing IDL
+          sequences.
+          
+        * TAO_IDL/be/be_global.cpp:
+        
+          Added command line option to trigger code generation for
+          alternate C++ mapping.
+
 Mon Mar 29 18:46:20 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnyTypeCode/Any.h:

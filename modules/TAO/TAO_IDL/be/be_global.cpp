@@ -33,10 +33,6 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_ctype.h"
 
-ACE_RCSID (be,
-           be_global,
-           "$Id$")
-
 TAO_IDL_BE_Export BE_GlobalData *be_global = 0;
 
 BE_GlobalData::BE_GlobalData (void)
@@ -2537,6 +2533,12 @@ BE_GlobalData::parse_args (long &i, char **av)
                 // CIAO static configuration code generation.
                 be_global->gen_ciao_static_config (true);
               }
+            else if (av[i][3] == 't' && av[i][4] == 'l')
+              {
+                // Generate code using STL types for strings
+                // and sequences.
+                be_global->alt_mapping (true);
+              }
             else
               {
                 ACE_ERROR ((
@@ -3415,6 +3417,11 @@ BE_GlobalData::usage (void) const
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Gsp\t\t\tGenerate the code for Smart Proxies\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gstl\t\t\tGenerate the alternate C++ mapping for")
+      ACE_TEXT (" IDL strings and sequences\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
