@@ -266,6 +266,7 @@ calc_results()
           ACE_DEBUG ((LM_DEBUG,
             "Collecting statistics on %d samples per message size.\n"
             "This is the roundtrip time, *not* the one-way-latency\n"
+            "Clock overhead %d\n"
             "bytes ,stdev us,ave us, min us, 50%% us, 90%% us, 99%% us, 99.99%%,"
             " max us\n"
             "------,-------,-------,-------,-------,-------,-------,-------,"
@@ -273,6 +274,7 @@ calc_results()
         }
       ACE_DEBUG ((LM_DEBUG,
         "%6d,%7.1f,%7.1f,%7.1f,%7.1f,%7.1f,%7.1f,%7.1f,%7.1f\n",
+        clock_overhead_,
         datalen_,
         roundtrip_time_std,
         avg,
