@@ -1,3 +1,16 @@
+Mon Mar 29 13:11:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DDS_Event_Connector_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Event_Connector_T.cpp:
+          Added booleans to determine which ports were connected.
+          This to prevent starting unnecessary DataReaders/DataWriters.
+
+        * connectors/dds4ccm/impl/dds/DDS_State_Connector_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_State_Connector_T.cpp:
+          Added booleans to determine which ports were connected.
+          This to prevent starting unnecessary DataReaders/DataWriters.
+          Added tracing.
+
 Mon Mar 29 12:43:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/Latency_Sender.cpp:
