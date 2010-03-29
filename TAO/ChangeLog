@@ -1,3 +1,15 @@
+Mon Mar 29 21:13:20 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/TypeCodeFactory/Recursive_TypeCode.h:
+        * tao/TypeCodeFactory/Recursive_TypeCode.inl:
+        * tao/TypeCodeFactory/Recursive_TypeCode.cpp:
+
+          When typecodes are created for a recursive structure make the
+          link back up the tree a *_ptr rather than a *_var.  This avoids
+          creating a loop of reference counts thereby eliminating a leak
+          in the interface repository.
+          Developed by Dale Wilson <wilsond at ociweb dot com>.
+
 Mon Mar 29 16:25:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation_exs.cpp:
@@ -18,7 +30,7 @@ Mon Mar 29 16:25:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
           Changed code generation for the facet executor implementation
           class to use a name built on the facet name rather than on
           the interface name. If two facets in a component use the
-          same interface, it's likely that the intention is to 
+          same interface, it's likely that the intention is to
           implement the operations of this interface differently
           in each facet. This change allows the application developer
           to do that.
@@ -28,7 +40,7 @@ Fri Mar 26 20:30:48 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_operation/operation.cpp:
         * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
         * TAO_IDL/be/be_visitor_operation.cpp:
-        
+
           Another attempt to get a value of type size_t inserted
           into an IDL compiler file output stream in a way that
           makes all supported compilers happy.
@@ -59,7 +71,7 @@ Fri Mar 26 20:11:31 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
             occur each time an interface is used in a component
             facet, rather than once per interface as before.
 
-          - Fixed bugs in generation of type names for 
+          - Fixed bugs in generation of type names for
             component executors' facet executor reference
             members.
 
@@ -72,7 +84,7 @@ Fri Mar 26 20:11:31 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Fri Mar 26 17:02:30 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_global.cpp (recursion_start):
-        
+
           Added code to strip off trailing slashes on the string
           passed to this method. It is assumed the string denotes
           a directory path, and the slashes are not only redundant,
