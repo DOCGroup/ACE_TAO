@@ -32,7 +32,7 @@ Atomic_Long tv_min_ = 0;
 CORBA::UShort count_ = 0;
 CORBA::UShort number_of_msg_ = 0;
 Atomic_Boolean received_ = false;
-Atomic_Long seq_num_ = 0;
+CORBA::Long seq_num_ = 0;
 CORBA::Double sigma_duration_squared_;
 ACE_UINT64 start_time_ = 0;
 ACE_UINT64 start_time_test_ = 0;
@@ -380,7 +380,7 @@ void start (void)
 void
 read (LatencyTest & an_instance, ACE_UINT64 receive_time)
 {
-  if (an_instance.seq_num == seq_num_.value ())
+  if (an_instance.seq_num == seq_num_)
     {
       record_time (receive_time);
       received_ = true;
