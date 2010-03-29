@@ -57,9 +57,12 @@ class HelloListener: public DDSDataReaderListener
 public:
   void on_data_available(DDSDataReader *reader);
 };
+
 /* The dummy listener of events and data from the middleware */
-class DummyListener: public DDSDataReaderListener {
+class DummyListener: public DDSDataReaderListener
+{
 };
+
 class WriteTicker :public ACE_Event_Handler
 {
   public:
@@ -145,7 +148,7 @@ calculate_clock_overhead (void)
     {
       ACE_High_Res_Timer::gettimeofday_hr ().to_usec (clock_roundtrip_time);
     }
-  ACE_UINT64 total_time =  clock_roundtrip_time - begin_time;
+  ACE_UINT64 const total_time = clock_roundtrip_time - begin_time;
   clock_overhead_ = (ACE_UINT64)(total_time /num_of_loops_clock);
 }
 
@@ -345,22 +348,13 @@ write_one (void)
     }
 }
 
-ACE_Reactor *
-reactor_used (void)
-{
-  return ACE_Reactor::instance ();
-}
-
 void start (void)
 {
-  reactor_ = reactor_used();
   ticker_ = new WriteTicker();
 
   // This->sleep_ is in ms
   unsigned int sec = sleep_/1000;
   unsigned int usec = (sleep_ % 1000) * 1000;
-  (void) ACE_High_Res_Timer::global_scale_factor ();
-  reactor_->timer_queue()->gettimeofday (&ACE_High_Res_Timer::gettimeofday_hr);
   if (reactor_->schedule_timer (
                   ticker_,
                   0,
@@ -408,6 +402,9 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
                   ACE_TEXT ("Error arguments.\n")));
       return 1;
     }
+
+  (void) ACE_High_Res_Timer::global_scale_factor ();
+  ACE_Reactor::instance ()->timer_queue()->gettimeofday (&ACE_High_Res_Timer::gettimeofday_hr);
 
   /* Create the domain participant */
   DDSDomainParticipant * participant =
