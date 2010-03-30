@@ -1393,15 +1393,25 @@ be_visitor_ccm_pre_proc::lookup_one_exception (be_component *node,
 int
 be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
 {
-  AST_Interface *event_consumer = 0;
   UTL_Scope *s = node->defined_in ();
-  AST_Module *m = AST_Module::narrow_from_scope (s);
 
   UTL_ScopedName *consumer_name =
     this->create_scoped_name (0,
                               node->local_name (),
                               "Consumer",
                               ScopeAsDecl (node->defined_in ()));
+           
+  /// We need to create event consumers even for forward
+  /// declared eventtypes. Since forward declarations can
+  /// appear any number of times, we need to check that this
+  /// event consumer hasn't already been created.                            
+  if (s->lookup_by_name (consumer_name, true) != 0)
+    {
+      return 0;
+    }
+
+  AST_Interface *event_consumer = 0;
+  AST_Module *m = AST_Module::narrow_from_scope (s);
 
   // We're at global scope here so we need to fool the scope stack
   // for a minute so the correct repo id can be calculated at
