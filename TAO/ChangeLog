@@ -1,10 +1,17 @@
+Tue Mar 30 18:20:44 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taobaseidldefaults.mpb:
+          Improved handling of -Glem and -GM so that all generated
+          files are removed. Thanks to Adam Mitz for explaining
+          how to do this
+
 Tue Mar 30 17:32:44 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/lex.yy.cpp:
         * TAO_IDL/fe/idl.ll:
 
           Added recognition and handling of a new pragma
-          that stores names of receptacles we want to 
+          that stores names of receptacles we want to
           use with AMI.
 
         * TAO_IDL/include/idl_global.h:
