@@ -37,7 +37,7 @@ namespace CIAO
     {
       this->init_parser ();
     }
-*/    
+*/
     // TODO this is stub implementation
     template <typename Resolver, typename Error>
     XML_Helper<Resolver, Error>::XML_Helper (Resolver &resolver, Error &eh)
@@ -53,14 +53,14 @@ namespace CIAO
     {
       this->terminate_parser ();
     }
-    
+
     template <typename Resolver, typename Error>
     bool
     XML_Helper<Resolver, Error>::is_initialized (void) const
     {
       return this->initialized_ == true;
     }
-    
+
     template <typename Resolver, typename Error>
     void
     XML_Helper<Resolver, Error>::init_parser (void)
@@ -105,7 +105,7 @@ namespace CIAO
       this->initialized_ = true;
       return;
     }
-    
+
     template <typename Resolver, typename Error>
     XERCES_CPP_NAMESPACE::DOMDocument *
     XML_Helper<Resolver, Error>::create_dom (const ACE_TCHAR *root,
@@ -119,7 +119,7 @@ namespace CIAO
                                           XStr (root),
                                           doctype);
     }
-    
+
     template <typename Resolver, typename Error>
     XERCES_CPP_NAMESPACE::DOMDocumentType *
     XML_Helper<Resolver, Error>::create_doctype (const ACE_TCHAR *qn,
@@ -142,10 +142,10 @@ namespace CIAO
         {
           if (this->parser_.get () == 0)
             this->parser_.reset ((new xercesc::XercesDOMParser ()));
-          
+
           // Perform Namespace processing.
           this->parser_->setDoNamespaces (true);
-          
+
           // Discard comment nodes in the document
           this->parser_->setCreateCommentNodes (false);
 
@@ -158,7 +158,7 @@ namespace CIAO
           // corresponding to their fully expanded sustitution text will be
           // created.
           this->parser_->setCreateEntityReferenceNodes (false);
-          
+
           // Perform Validation
           this->parser_->setValidationScheme (xercesc::AbstractDOMParser::Val_Always);
 
@@ -182,10 +182,10 @@ namespace CIAO
           this->parser_->setEntityResolver (&resolver_);
 
           this->parser_->parse (ACE_TEXT_ALWAYS_CHAR (url));
-          
+
           if (e_handler_.getErrors ())
             return 0;
-          
+
           return this->parser_->getDocument ();
         }
       catch (const DOMException& e)
@@ -239,9 +239,9 @@ namespace CIAO
       this->initialized_ = false;
       return;
     }
-    
+
     template <typename Resolver, typename Error>
-    bool 
+    bool
     XML_Helper<Resolver, Error>::write_DOM (XERCES_CPP_NAMESPACE::DOMDocument *doc,
                                             const ACE_TCHAR *file) const
     {
@@ -252,29 +252,29 @@ namespace CIAO
           XERCES_CPP_NAMESPACE::DOMLSSerializer *serializer (impl_->createLSSerializer ());
           XERCES_CPP_NAMESPACE::DOMConfiguration *ser_config (serializer->getDomConfig ());
           XERCES_CPP_NAMESPACE::DOMLSOutput *output (impl_->createLSOutput ());
-          
+
           if (ser_config->canSetParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true))
             ser_config->setParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true);
-          
+
           XMLFormatTarget *format_target = new XERCES_CPP_NAMESPACE::LocalFileFormatTarget (ACE_TEXT_ALWAYS_CHAR (file));
-          
+
           output->setByteStream (format_target);
-          
+
           retn = serializer->write (doc, output);
-          
+
           output->release ();
           serializer->release ();
           return retn;
-#else          
+#else
           std::auto_ptr <XERCES_CPP_NAMESPACE::DOMWriter> writer (impl_->createDOMWriter());
-          
+
           if (writer->canSetFeature (XMLUni::fgDOMWRTFormatPrettyPrint,
                                      true))
             writer->setFeature (XMLUni::fgDOMWRTFormatPrettyPrint, true);
-          
-          std::auto_ptr <xercesc::XMLFormatTarget> ft (new xercesc::LocalFileFormatTarget(file));
+
+          std::auto_ptr <xercesc::XMLFormatTarget> ft (new xercesc::LocalFileFormatTarget(ACE_TEXT_ALWAYS_CHAR (file)));
           retn = writer->writeNode(ft.get (), *doc);
-          
+
           return retn;
 #endif
         }
@@ -287,7 +287,7 @@ namespace CIAO
           char* name =
             XMLString::transcode (e.getType());
           ACE_Auto_Basic_Array_Ptr<char> cleanup_name (name);
-          
+
           ACE_ERROR ((LM_ERROR, "Caught exception while serializing DOM to file.\n"
                       "Name: %s\n"
                       "Message: %s\n"
