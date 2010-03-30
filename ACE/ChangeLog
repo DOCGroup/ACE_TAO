@@ -1,3 +1,8 @@
+Tue Mar 30 07:50:02 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/MT_NonBlocking_Connect_Test.cpp:
+          Fixed compilation problem for single threaded builds.
+
 Mon Mar 29 12:25:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/NDDS_Timer_Test.cpp:
