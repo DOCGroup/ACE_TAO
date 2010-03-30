@@ -1,3 +1,11 @@
+Tue Mar 30 08:35:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds4ccm_lem_stub.mpc:
+          Layout changes.
+
+        * connectors/dds4ccm/tests/NoModule/NoModule_Connector.mpc:
+          Resolved linking issues on Windows.
+
 Tue Mar 30 08:22:24 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DDS_Event_Connector_T.h:
