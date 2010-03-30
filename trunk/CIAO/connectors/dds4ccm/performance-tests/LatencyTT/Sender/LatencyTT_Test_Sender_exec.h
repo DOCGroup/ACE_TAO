@@ -155,7 +155,7 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     CORBA::UShort number_of_msg_;
     Atomic_Boolean timer_;
     Atomic_Boolean received_;
-    CORBA::ULong seq_num_;
+    CORBA::Long seq_num_;
     CORBA::Double sigma_duration_squared_;
     ACE_UINT64 start_time_;
     ACE_UINT64 start_time_test_;
