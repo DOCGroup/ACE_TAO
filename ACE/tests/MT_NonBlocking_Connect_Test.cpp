@@ -403,7 +403,7 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_END_TEST;
 
-  return result;
+  return 0;
 }
 
 #endif /* ACE_HAS_THREADS */
