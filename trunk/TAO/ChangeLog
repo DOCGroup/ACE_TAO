@@ -1,3 +1,12 @@
+Tue Mar 30 19:20:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp(create_event_consumer):
+        
+          Added a check for exisiting event consumer before creating.
+          Since event consumers are created for forward declared
+          eventtypes, multiple forward declarations were causing
+          'illegal redefinition' diagnostics from the IDL compiler.
+
 Tue Mar 30 18:59:47 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_connector/executor_ami_exs.cpp:
